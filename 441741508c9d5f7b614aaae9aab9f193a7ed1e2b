@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "81b6df1f_19207269",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-10T16:27:55Z",
+      "side": 1,
+      "message": "Adding a StopFling function that calls fling_controller_.StopFling() SGTM, thanks.",
+      "parentUuid": "03c24ccd_018c06a6",
+      "range": {
+        "startLine": 340,
+        "startChar": 24,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "441741508c9d5f7b614aaae9aab9f193a7ed1e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "635c3693_e4962895",
         "filename": "content/browser/renderer_host/input/input_router_impl.cc",
         "patchSetId": 2
