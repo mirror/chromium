@@ -6,6 +6,7 @@
 
 #include "chrome/test/base/testing_profile.h"
 #include "components/ukm/ukm_source.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
@@ -37,9 +38,20 @@ void TestWebContentsObserver::WebContentsDestroyed() {
 TabActivityTestBase::TabActivityTestBase() = default;
 TabActivityTestBase::~TabActivityTestBase() = default;
 
+void TabActivityTestBase::Navigate(
+    content::WebContents* web_contents,
+    const GURL& url,
+    ui::PageTransition page_transition = ui::PAGE_TRANSITION_LINK) {
+  std::unique_ptr<content::NavigationSimulator> navigation =
+      content::NavigationSimulator::CreateBrowserInitiated(url, web_contents);
+  navigation->SetTransition(page_transition);
+  navigation->Commit();
+}
+
 content::WebContents* TabActivityTestBase::AddWebContentsAndNavigate(
     TabStripModel* tab_strip_model,
-    const GURL& initial_url) {
+    const GURL& initial_url,
+    ui::PageTransition page_transition) {
   content::WebContents::CreateParams params(profile(), nullptr);
   // Create as a background tab if there are other tabs in the tab strip.
   params.initially_hidden = tab_strip_model->count() > 0;
@@ -52,7 +64,7 @@ content::WebContents* TabActivityTestBase::AddWebContentsAndNavigate(
       std::make_unique<TestWebContentsObserver>(test_contents));
 
   tab_strip_model->AppendWebContents(test_contents, false);
-  WebContentsTester::For(test_contents)->NavigateAndCommit(initial_url);
+  Navigate(test_contents, initial_url, page_transition);
   return test_contents;
 }
 

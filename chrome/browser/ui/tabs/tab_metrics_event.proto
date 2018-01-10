@@ -78,6 +78,38 @@ message TabMetricsEvent {
   }
 
   repeated ProtocolHandlerScheme enabled_protocol_handlers = 2;
+
+  // Corresponds roughly to the type of navigation that led to the current page.
+  // Based on the ui::PageTransition provided by the NavigationHandle.
+  enum NavigationSource {
+    // Could not be determined or not available.
+    NAVIGATION_SOURCE_UNKNOWN = 0;
+
+    // Not one of the sources below.
+    NAVIGATION_SOURCE_OTHER = 1;
+
+    // Explicit navigation from the address bar, such as typing a URL or search
+    // query, selecting an autocompletion, or dragging and dropping a link into
+    // the omnibox.
+    NAVIGATION_SOURCE_ADDRESS_BAR = 2;
+
+    // Opened from a bookmark or a browser command, as from a menu or keyboard
+    // shortcut.
+    NAVIGATION_SOURCE_BOOKMARK = 3;
+
+    // Opened by following a link. Includes dragging a link or bookmark into the
+    // tabstrip or webview, and tabs opened by an extension.
+    NAVIGATION_SOURCE_LINK = 4;
+
+    // Navigation caused by submitting a form.
+    NAVIGATION_SOURCE_FORM_SUBMIT = 5;
+
+    // Page reloaded or re-opened as part of an undo-close or session restore
+    // operation.
+    NAVIGATION_SOURCE_RELOAD = 6;
+  }
+
+  optional NavigationSource navigation_source = 3;
 }
 
 // Defines specialized fields used by the TabManager.WindowMetrics UKM event
