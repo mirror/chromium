@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648f7eb1_94128c55",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T17:20:28Z",
+      "side": 1,
+      "message": "I agree that this is dangerous in reporting false errors if we get packets of exact |buf_len| size.",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 795,
+        "endChar": 36
+      },
+      "revId": "653f8a564f41724892c1d18fee410b2970e14598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac62535_9c4f4afd",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T17:20:28Z",
+      "side": 1,
+      "message": "I think we also need tests that cover truly and falsely truncated message.",
+      "range": {
+        "startLine": 942,
+        "startChar": 5,
+        "endLine": 942,
+        "endChar": 32
+      },
+      "revId": "653f8a564f41724892c1d18fee410b2970e14598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
