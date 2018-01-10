@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include "base/location.h"
 #include "base/logging.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
@@ -419,6 +420,71 @@ TEST_F(HttpTest, PostRequest) {
   ASSERT_STREQ(base::SysNSStringToUTF8(request_body).c_str(),
                base::SysNSStringToUTF8(response_body).c_str());
   ASSERT_TRUE(block_used);
+}
+
+// Tests that the network thread priority can be changed after
+// Cronet has been started.
+TEST_F(HttpTest, ChangeThreadPriorityAfterStart) {
+  // iOS Simulator doesn't support changing thread priorities.
+  // Therefore, run this test only on a physical device.
+  if (IsSimulator())
+    return;
+
+  // Get current (default) priority of the network thread.
+  __block double default_priority;
+  PostBlockToNetworkThread(FROM_HERE, ^{
+    default_priority = NSThread.threadPriority;
+  });
+
+  // Modify the network thread priority.
+  const double new_priority = 1.0;
+  [Cronet setNetworkThreadPriority:new_priority];
+
+  // Get modified priority of the network thread.
+  dispatch_semaphore_t lock = dispatch_semaphore_create(0);
+  __block double actual_priority;
+  PostBlockToNetworkThread(FROM_HERE, ^{
+    actual_priority = NSThread.threadPriority;
+    dispatch_semaphore_signal(lock);
+  });
+
+  // Wait until the posted tasks are completed.
+  dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+
+  EXPECT_EQ(new_priority, actual_priority);
+  EXPECT_EQ(0.5, default_priority);
+}
+
+// Tests that the network thread priority can be changed before
+// Cronet has been started.
+TEST_F(HttpTest, ChangeThreadPriorityBeforeStart) {
+  // iOS Simulator doesn't support changing thread priorities.
+  // Therefore, run this test only on a physical device.
+  if (IsSimulator())
+    return;
+
+  // Start a new Cronet engine modifying the network thread priority before the
+  // start.
+  [Cronet shutdownForTesting];
+  const double new_priority = 0.8;
+  [Cronet setNetworkThreadPriority:new_priority];
+  [Cronet start];
+
+  // Get modified priority of the network thread.
+  dispatch_semaphore_t lock = dispatch_semaphore_create(0);
+  __block double actual_priority;
+  PostBlockToNetworkThread(FROM_HERE, ^{
+    actual_priority = NSThread.threadPriority;
+    dispatch_semaphore_signal(lock);
+  });
+
+  // Wait until the posted task is completed.
+  dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+
+  // Check that the priority was modified and is close to the set priority.
+  EXPECT_TRUE(abs(actual_priority - new_priority) < 0.01)
+      << "Unexpected thread priority. Expected " << new_priority << " but got "
+      << actual_priority;
 }
 
 #pragma clang diagnostic push
