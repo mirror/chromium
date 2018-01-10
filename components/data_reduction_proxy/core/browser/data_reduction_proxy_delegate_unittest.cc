@@ -130,7 +130,6 @@ class TestDataReductionProxyDelegate : public DataReductionProxyDelegate {
     }
   }
 
-  using DataReductionProxyDelegate::OnAlternativeProxyBroken;
   using DataReductionProxyDelegate::QuicProxyStatus;
 
  private:
@@ -611,8 +610,6 @@ TEST_F(DataReductionProxyDelegateTest, AlternativeProxy) {
               "DataReductionProxy.Quic.ProxyStatus", 0);
         }
       }
-      histogram_tester.ExpectTotalCount(
-          "DataReductionProxy.Quic.OnAlternativeProxyBroken", 0);
     }
 
     {
@@ -651,8 +648,6 @@ TEST_F(DataReductionProxyDelegateTest, AlternativeProxy) {
               "DataReductionProxy.Quic.ProxyStatus", 0);
         }
       }
-      histogram_tester.ExpectTotalCount(
-          "DataReductionProxy.Quic.OnAlternativeProxyBroken", 0);
     }
 
     {
@@ -677,9 +672,6 @@ TEST_F(DataReductionProxyDelegateTest, AlternativeProxy) {
         histogram_tester.ExpectTotalCount("DataReductionProxy.Quic.ProxyStatus",
                                           0);
       }
-
-      histogram_tester.ExpectTotalCount(
-          "DataReductionProxy.Quic.OnAlternativeProxyBroken", 0);
     }
 
     // Test if the alternative proxy is correctly marked as broken.
@@ -698,16 +690,19 @@ TEST_F(DataReductionProxyDelegateTest, AlternativeProxy) {
       EXPECT_EQ(net::ProxyServer::SCHEME_QUIC,
                 alternative_proxy_server_to_first_proxy.scheme());
 
-      delegate.OnAlternativeProxyBroken(first_proxy);
-      delegate.OnResolveProxy(test.gurl, "GET", empty_proxy_retry_info,
-                              &proxy_info);
+      net::ProxyRetryInfoMap proxy_retry_info;
+      net::ProxyRetryInfo bad_proxy_info;
+      bad_proxy_info.bad_until = base::TimeTicks() + base::TimeDelta::Max();
+      proxy_retry_info[alternative_proxy_server_to_first_proxy.ToURI()] =
+          bad_proxy_info;
+
+      delegate.OnResolveProxy(test.gurl, "GET", proxy_retry_info, &proxy_info);
       ASSERT_EQ(first_proxy, proxy_info.proxy_server());
+      EXPECT_FALSE(proxy_info.alternative_proxy().is_valid());
 
       delegate.VerifyQuicHistogramCounts(
           histogram_tester, expect_alternative_proxy_server_to_first_proxy,
           test.proxy_supports_quic, true);
-      histogram_tester.ExpectTotalCount(
-          "DataReductionProxy.Quic.OnAlternativeProxyBroken", 1);
       EXPECT_FALSE(proxy_info.alternative_proxy().is_valid());
     }
   }
