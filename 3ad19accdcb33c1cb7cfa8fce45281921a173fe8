@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28bbbb47_61687779",
+        "filename": "android_webview/renderer/aw_url_loader_throttle_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T23:37:50Z",
+      "side": 1,
+      "message": "The intended usage is to have one of such object on the render thread; and one for each worker fetch context, which is used on a worker thread.\nIIUC, they are not relaxed to \"sequences\".\n\nWe should be able to change this fairly easily if needed in the future. WDYT?",
+      "parentUuid": "2e2f6b99_2ae20271",
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42bed532_c979f428",
         "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2319a282_75cb7c87",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T23:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42bed532_c979f428",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 16
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3208c769_32785103",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T23:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92392c47_d63ec711",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 4
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e99cb5_7082d57a",
         "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
         "patchSetId": 11
@@ -85,6 +151,30 @@
       "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f445a7dc_fd7ddd9d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2526,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T23:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e99cb5_7082d57a",
+      "range": {
+        "startLine": 2526,
+        "startChar": 2,
+        "endLine": 2526,
+        "endChar": 6
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
