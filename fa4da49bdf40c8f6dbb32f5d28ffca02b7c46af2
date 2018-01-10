@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a0fddc_b40d136b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 46
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Nit: this makes it sound like cross-document navigations are committed using legacy IPC, but they also go over Mojo.",
+      "range": {
+        "startLine": 13,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed465d06_6b67b5d6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 3006,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Kind of feels like this logic should be shared as well (I think it\u0027s identical to the cross-document version?)",
+      "range": {
+        "startLine": 2991,
+        "startChar": 0,
+        "endLine": 3006,
+        "endChar": 3
+      },
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7bb7ce_2111a60e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 3025,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Nit: committed",
+      "range": {
+        "startLine": 3025,
+        "startChar": 55,
+        "endLine": 3025,
+        "endChar": 63
+      },
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12eb97ee_fe59ec47",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Please declare these in the same order as they are in the mojom.",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a67780_0da37552",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 46
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Does this still need to be optional with same-page navigations separated out?\n\n(I guess it does, another instance it might be null is if the global object is reused)",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d3232b_036795a9",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 46
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Group this near DidCommitProvisionalLoad.",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a1e7ee_ee70c06d",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T11:46:40Z",
+      "side": 1,
+      "message": "Ditto about ordering here.",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
