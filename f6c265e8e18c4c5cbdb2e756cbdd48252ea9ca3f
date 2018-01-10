@@ -138,6 +138,24 @@
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3455850_736a8095",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-10T14:30:13Z",
+      "side": 1,
+      "message": "Then another problem could happen, when user requests another state, but it’s not changed. Then aura and ws will be in sync, but in reality the window will have another state. I guess it must be handled differently - maybe having some sanity check, which says if we are in the process of changing the state? It’s unlikely, but still same problem.",
+      "parentUuid": "af4fb99d_b8190b4b",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
