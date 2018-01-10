@@ -418,30 +418,6 @@ void ImageDocument::UpdateImageStyle() {
       style_checker_size_ = new_checker_size;
       style_mouse_cursor_mode_ = new_cursor_mode;
 
-      image_style.Append("background-position: 0px 0px, ");
-      image_style.Append(AtomicString::Number(style_checker_size_));
-      image_style.Append("px ");
-      image_style.Append(AtomicString::Number(style_checker_size_));
-      image_style.Append("px;");
-
-      int tile_size = style_checker_size_ * 2;
-      image_style.Append("background-size: ");
-      image_style.Append(AtomicString::Number(tile_size));
-      image_style.Append("px ");
-      image_style.Append(AtomicString::Number(tile_size));
-      image_style.Append("px;");
-
-      // Generating the checkerboard pattern this way is not exactly cheap.
-      // If rasterization performance becomes an issue, we could look at using
-      // a cheaper shader (e.g. pre-generate a scaled tile + base64-encode +
-      // inline dataURI => single bitmap shader).
-      image_style.Append(
-          "background-image:"
-          "linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, "
-          "#eee 75%, #eee 100%),"
-          "linear-gradient(45deg, #eee 25%, white 25%, white 75%, "
-          "#eee 75%, #eee 100%);");
-
       if (shrink_to_fit_mode_ == kDesktop) {
         if (style_mouse_cursor_mode_ == kZoomIn)
           image_style.Append("cursor: zoom-in;");
