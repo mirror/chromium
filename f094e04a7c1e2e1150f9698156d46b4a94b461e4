@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93a09475_7dd23181",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-10T01:10:55Z",
+      "side": 1,
+      "message": "Answers:\n1.-2. I treat the two terms differently here: (display)orientation is about the degree the device is rotated from it\u0027s default orientation(may be portrait or landscape), and (camera)rotation is the degree we need to rotate the captured frame for a right frame present according to orientation change. We need to calculate the camera rotation from the device orientation.\nFix the comment above. \n\n3. We use 0/90/180/270 directly in VideoCaptureDeviceClient, https://cs.chromium.org/chromium/src/media/capture/video/video_capture_device_client.cc?l\u003d146, and also in Android video capture. I think this is fine to all the implementations for each platform.\n\n4. I didn\u0027t get any response from jschuh@ yet.",
+      "parentUuid": "6adb81be_8982a86d",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d172295_6c7e15f5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7f606663_005c87a4",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-10T01:10:55Z",
+      "side": 1,
+      "message": "Done\n\nIs this better?",
+      "parentUuid": "9d172295_6c7e15f5",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b20b1a_e3262cf5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740211a3_978f001f",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-10T01:10:55Z",
+      "side": 1,
+      "message": "Done\nOnly the active internal panel is concerned.\n|internal_display_device| contains the device info of the active internal device. Then we\u0027ll only check its setting, for not to mess up with external monitors.",
+      "parentUuid": "12b20b1a_e3262cf5",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
