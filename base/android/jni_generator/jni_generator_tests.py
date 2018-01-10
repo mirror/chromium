@@ -46,6 +46,7 @@ class TestOptions(object):
     self.javap = 'javap'
     self.native_exports_optional = True
     self.enable_profiling = False
+    self.trace_native_execution = True
 
 class TestGenerator(unittest.TestCase):
   def assertObjEquals(self, first, second):
