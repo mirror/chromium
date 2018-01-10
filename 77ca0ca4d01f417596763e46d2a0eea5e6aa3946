@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "580d7737_a323d2b7",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T13:29:43Z",
+      "side": 1,
+      "message": "\u003e Cool. In the comment, I would suggest replacing \"seem to have any effect for some reason\" with \"have any effect\" :)\n\nDone.\n\n\u003e On the other hand, is the window.location behavior being tested here actually relevant to the doodle logging, or would it belong better in one of the above tests?\n\nIt\u0027s relevant to test that the target_url_params get appended to the target URL. The most straightforward way to do this is to check the URL after the navigation.\n\nSimilar code should of course be added to all the other tests that should exercise clicking on a Doodle, but that\u0027s for another CL.",
+      "parentUuid": "31976160_d3b76f75",
+      "range": {
+        "startLine": 694,
+        "startChar": 17,
+        "endLine": 694,
+        "endChar": 0
+      },
+      "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a56ae6_65887e8f",
         "filename": "chrome/test/data/local_ntp/simple.html",
         "patchSetId": 10
@@ -63,6 +87,24 @@
       "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3a89c3_adec12c3",
+        "filename": "chrome/test/data/local_ntp/simple.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T13:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a56ae6_65887e8f",
+      "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
