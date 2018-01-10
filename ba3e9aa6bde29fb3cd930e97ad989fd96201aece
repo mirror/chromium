@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34290cf2_b3747c29",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5340,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 0,
+      "message": "This function should be removed from the .h file if you remove its implementation.",
+      "revId": "ba3e9aa6bde29fb3cd930e97ad989fd96201aece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

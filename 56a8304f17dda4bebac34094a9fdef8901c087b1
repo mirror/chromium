@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "738a2475_0590a438",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 1,
+      "message": "nit: Factoring state update during commit in RenderFrame",
+      "revId": "56a8304f17dda4bebac34094a9fdef8901c087b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95614a7c_7b764004",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 1,
+      "message": "nit: s/navigation_state/navigation state\ns/renderer/RenderFrameImpl",
+      "revId": "56a8304f17dda4bebac34094a9fdef8901c087b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db87c11_b926d2aa",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5588,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 1,
+      "message": "This is not used in same-document navigations (we\u0027re not leaving the page).",
+      "revId": "56a8304f17dda4bebac34094a9fdef8901c087b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f626bb_cf69fa5e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5631,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 1,
+      "message": "I don\u0027t think any of those functions need to be executed in the case of a same-document commit, so we can probably remove this function and just have one UpdateStateForCommit method that we call before sending the commit message.",
+      "revId": "56a8304f17dda4bebac34094a9fdef8901c087b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf0a06d_7a9992a8",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:41:36Z",
+      "side": 1,
+      "message": "s/Updates the internal commit state/Updates the internal state following a navigation commit\n\nSame below.",
+      "revId": "56a8304f17dda4bebac34094a9fdef8901c087b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
