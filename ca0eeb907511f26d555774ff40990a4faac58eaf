@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d3eed83_b5f12bea",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-10T13:26:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b2ee74a_ed2dfeda",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 143,
+        "endChar": 63
+      },
+      "revId": "ca0eeb907511f26d555774ff40990a4faac58eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d50a774_b356b68d",
         "filename": "chrome/common/mac/launchd.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ca0eeb907511f26d555774ff40990a4faac58eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebc205d_ea007036",
+        "filename": "chrome/common/mac/launchd.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-10T13:26:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d50a774_b356b68d",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "ca0eeb907511f26d555774ff40990a4faac58eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
