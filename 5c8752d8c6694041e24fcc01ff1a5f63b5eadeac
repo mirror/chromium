@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f80e1d_eb901722",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T18:13:56Z",
+      "side": 0,
+      "message": "I suggest to keep code that sets send buffer size to some default value here (e.g. 64kB). WebRTC code in renderer sets the buffer size, but only for video channel (see https://codesearch.chromium.org/chromium/src/third_party/webrtc/media/engine/webrtcvideoengine.cc?type\u003dcs\u0026l\u003d1491). Setting the explicit default value here will ensure that we have consistent behavior across all platforms.",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 22
+      },
+      "revId": "5c8752d8c6694041e24fcc01ff1a5f63b5eadeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
