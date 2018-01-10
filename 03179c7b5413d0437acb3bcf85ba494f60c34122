@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b4eab2_6b77793a",
+        "filename": "ui/message_center/views/notification_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-10T14:58:56Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "03179c7b5413d0437acb3bcf85ba494f60c34122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1d398b_ecc9449d",
+        "filename": "ui/message_center/views/notification_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-10T14:58:56Z",
+      "side": 1,
+      "message": "switch statement can become DCHECK",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 19
+      },
+      "revId": "03179c7b5413d0437acb3bcf85ba494f60c34122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

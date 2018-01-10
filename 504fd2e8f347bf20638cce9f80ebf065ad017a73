@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2be95d_9f159231",
+        "filename": "ui/message_center/views/notification_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-10T14:58:56Z",
+      "side": 0,
+      "message": "is this string still used somewhere?",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "504fd2e8f347bf20638cce9f80ebf065ad017a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
