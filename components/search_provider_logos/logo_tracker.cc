@@ -319,15 +319,15 @@ void LogoTracker::OnFreshLogoAvailable(
     encoded_logo->metadata.mime_type = cached_logo_->metadata.mime_type;
     SetCachedMetadata(encoded_logo->metadata);
     download_outcome = DOWNLOAD_OUTCOME_LOGO_REVALIDATED;
-  } else if (encoded_logo && image.isNull()) {
+    //} else if (encoded_logo && image.isNull()) {
     // Image decoding failed. Do nothing.
-    download_outcome = DOWNLOAD_OUTCOME_DECODING_FAILED;
+    // download_outcome = DOWNLOAD_OUTCOME_DECODING_FAILED;
   } else {
     // Check if the server returned a valid, non-empty response.
     if (encoded_logo) {
       UMA_HISTOGRAM_BOOLEAN("NewTabPage.LogoImageDownloaded", from_http_cache);
 
-      DCHECK(!image.isNull());
+      // DCHECK(!image.isNull());
       logo.reset(new Logo());
       logo->metadata = encoded_logo->metadata;
       logo->image = image;

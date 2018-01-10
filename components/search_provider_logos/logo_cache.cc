@@ -118,7 +118,8 @@ void LogoCache::SetCachedLogo(const EncodedLogo* logo) {
   std::unique_ptr<LogoMetadata> metadata;
   if (logo) {
     metadata = base::MakeUnique<LogoMetadata>(logo->metadata);
-    logo_num_bytes_ = static_cast<int>(logo->encoded_image->size());
+    if (logo->encoded_image)
+      logo_num_bytes_ = static_cast<int>(logo->encoded_image->size());
   }
   UpdateMetadata(std::move(metadata));
   WriteLogo(logo ? logo->encoded_image : nullptr);
