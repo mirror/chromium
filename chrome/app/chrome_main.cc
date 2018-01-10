@@ -127,5 +127,10 @@ int ChromeMain(int argc, const char** argv) {
 
   int rv = content::ContentMain(params);
 
+  // Terminate all process / all threads at once, skipping static
+  // uninitialization problems and not wasting time cleaning the carpet before
+  // burning down the building :) https://crbug.com/800808.
+  base::Process::TerminateCurrentProcessImmediately(rv);
+
   return rv;
 }
