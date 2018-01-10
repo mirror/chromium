@@ -1130,8 +1130,16 @@ void HTMLInputElement::setValue(const String& value,
                         selection);
   input_type_view_->DidSetValue(sanitized_value, value_changed);
 
-  if (value_changed)
+  if (value_changed) {
     NotifyFormStateChanged();
+    // if (UserGestureIndicator::ProcessingUserGesture()) {
+    if (auto* frame = GetDocument().GetFrame()) {
+      if (auto* page = frame->GetPage()) {
+        page->GetChromeClient().DidChangeValueInTextField(*this);
+      }
+    }
+    // }
+  }
 }
 
 void HTMLInputElement::SetNonAttributeValue(const String& sanitized_value) {
