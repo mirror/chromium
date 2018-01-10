@@ -392,7 +392,8 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
     RenderWidgetHost* host,
     bool is_guest_view_hack,
     bool is_mus_browser_plugin_guest)
-    : host_(RenderWidgetHostImpl::From(host)),
+    : RenderWidgetHostViewBase(RenderWidgetHostImpl::From(host)->is_hidden()),
+      host_(RenderWidgetHostImpl::From(host)),
       is_mus_browser_plugin_guest_(is_mus_browser_plugin_guest),
       window_(nullptr),
       in_shutdown_(false),
@@ -545,7 +546,8 @@ void RenderWidgetHostViewAura::Show() {
     return;
 
   window_->Show();
-  WasUnOccluded();
+  if (IsShowing())
+    WasShown();
 }
 
 void RenderWidgetHostViewAura::Hide() {
@@ -553,7 +555,7 @@ void RenderWidgetHostViewAura::Hide() {
     return;
 
   window_->Hide();
-  WasOccluded();
+  WasHidden();
 }
 
 void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
@@ -689,10 +691,10 @@ bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
 }
 
 bool RenderWidgetHostViewAura::IsShowing() {
-  return window_->IsVisible();
+  return window_->IsVisible() && !parent_is_hidden();
 }
 
-void RenderWidgetHostViewAura::WasUnOccluded() {
+void RenderWidgetHostViewAura::WasShown() {
   if (!host_->is_hidden())
     return;
 
@@ -724,7 +726,7 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
 #endif
 }
 
-void RenderWidgetHostViewAura::WasOccluded() {
+void RenderWidgetHostViewAura::WasHidden() {
   if (!host_->is_hidden()) {
     host_->WasHidden();
     if (delegated_frame_host_)

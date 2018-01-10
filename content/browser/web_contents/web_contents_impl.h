@@ -225,8 +225,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
     return screen_orientation_provider_.get();
   }
 
-  bool should_normally_be_visible() { return should_normally_be_visible_; }
-
   // Broadcasts the mode change to all frames.
   void SetAccessibilityMode(ui::AXMode mode);
 
@@ -342,7 +340,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   const std::string& GetEncoding() const override;
   void IncrementCapturerCount(const gfx::Size& capture_size) override;
   void DecrementCapturerCount() override;
-  bool IsBeingCaptured() const override;
+  bool IsBeingCaptured() override;
   bool IsAudioMuted() const override;
   void SetAudioMuted(bool mute) override;
   bool IsCurrentlyAudible() override;
@@ -358,9 +356,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void SetLastActiveTime(base::TimeTicks last_active_time) override;
   void WasShown() override;
   void WasHidden() override;
+  Visibility GetVisibility() const override;
   bool IsVisible() const override;
-  void WasOccluded() override;
-  void WasUnOccluded() override;
   bool NeedToFireBeforeUnload() override;
   void DispatchBeforeUnload() override;
   void AttachToOuterWebContentsFrame(
@@ -867,8 +864,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
     return media_web_contents_observer_.get();
   }
 
-  // Update the web contents visibility.
-  void UpdateWebContentsVisibility(bool visible);
+  // Invoked when the visibility of the WebContents' view changes.
+  void OnVisibilityChanged(Visibility visibility);
 
   // Called by FindRequestManager when find replies come in from a renderer
   // process.
@@ -1047,12 +1044,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // watching |web_contents|. No-op if there is no such observer.
   void RemoveDestructionObserver(WebContentsImpl* web_contents);
 
-  // Traverses all the RenderFrameHosts in the FrameTree and creates a set
-  // all the unique RenderWidgetHostViews.
-  std::set<RenderWidgetHostView*> GetRenderWidgetHostViewsInTree();
-
-  // Calls WasUnOccluded() on all RenderWidgetHostViews in the frame tree.
-  void DoWasUnOccluded();
+  // Invoked when the WebContents is shown/hidden.
+  void DoWasShown();
+  void DoWasHidden();
 
   // Called with the result of a DownloadImage() request.
   void OnDidDownloadImage(const ImageDownloadCallback& callback,
@@ -1314,10 +1308,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   static DownloadUrlParameters::RequestHeadersType ParseDownloadHeaders(
       const std::string& headers);
 
-  // Sets the visibility of immediate child views, i.e. views whose parent view
-  // is that of the main frame.
-  void SetVisibilityForChildViews(bool visible);
-
   // Reattaches this inner WebContents to its outer WebContents.
   void ReattachToOuterWebContentsFrame();
 
@@ -1449,17 +1439,20 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // be told it is hidden.
   int capturer_count_;
 
-  // Tracks whether RWHV should be visible once capturer_count_ becomes zero.
-  bool should_normally_be_visible_;
+  // The visibility of the WebContents. A WebContents created without
+  // |CreateParams::initially_hidden| is VISIBLE before it is notified by its
+  // view that it became VISIBLE or OCCLUDED (even if it isn't actually VISIBLE
+  // during that time).
+  Visibility visibility_ = Visibility::HIDDEN;
 
-  // Tracks whether RWHV should be occluded once |capturer_count_| becomes zero.
-  bool should_normally_be_occluded_;
+  // Whether DoWasShown() was ever called. Used to ensure that DoWasShown() is
+  // called the first time that OnVisibilityChanged(VISIBLE) is called, even if
+  // |visibility_| started VISIBLE.
+  bool was_ever_shown_ = false;
 
-  // Tracks whether this WebContents was ever set to be visible. Used to
-  // facilitate WebContents being loaded in the background by setting
-  // |should_normally_be_visible_|. Ensures WasShown() will trigger when first
-  // becoming visible to the user, and prevents premature unloading.
-  bool did_first_set_visible_;
+  // Whether OnVisibilityChanged(HIDDEN) can call DoWasHidden(). Details in
+  // OnVisibilityChanged().
+  bool can_be_hidden_ = false;
 
   // See getter above.
   bool is_being_destroyed_;

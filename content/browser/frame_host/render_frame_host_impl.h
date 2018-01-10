@@ -629,10 +629,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
 #endif
 
-  // Propagates the visibility state along the immediate local roots by calling
-  // RenderWidgetHostViewChildFrame::Show()/Hide(). Calling this on a pending
-  // or speculative RenderFrameHost (that has not committed) should be avoided.
-  void SetVisibilityForChildViews(bool visible);
+  // Propagates the visibility state of the parent along the immediate local
+  // roots by calling RenderWidgetHostViewChildFrame::SetParentIsHidden().
+  // Calling this on a pending or speculative RenderFrameHost (that has not
+  // committed) should be avoided.
+  void SetParentIsHiddenForChildViews(bool parent_is_hidden);
 
   // Returns an unguessable token for this RFHI.  This provides a temporary way
   // to identify a RenderFrameHost that's compatible with IPC.  Else, one needs
