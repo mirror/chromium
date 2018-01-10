@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04af6187_463fb0d7",
+        "filename": "chrome/renderer/security_filter_peer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-10T10:06:52Z",
+      "side": 1,
+      "message": "i\u0027m surprised we\u0027re not escaping the message for html?",
+      "revId": "03a35c3a121de011de1a85099455fff38fa2e266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
