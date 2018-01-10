@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "base/bind.h"
+#include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/run_loop.h"
@@ -120,8 +121,9 @@ class PlatformNotificationContextTest : public ::testing::Test {
   // Returns the testing browsing context that can be used for this test.
   BrowserContext* browser_context() { return &browser_context_; }
 
-  // Returns whether the last invoked callback finished successfully.
-  bool success() const { return success_; }
+  // Returns the value of success that the most recently invoked callback was
+  // called with. If no callbacks were invoked, returns false.
+  bool callback_success_status() const { return success_; }
 
   // Returns the NotificationDatabaseData associated with the last invoked
   // ReadNotificationData callback.
@@ -153,7 +155,7 @@ TEST_F(PlatformNotificationContextTest, ReadNonExistentNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The read operation should have failed, as it does not exist.
-  ASSERT_FALSE(success());
+  ASSERT_FALSE(callback_success_status());
 }
 
 TEST_F(PlatformNotificationContextTest, WriteReadNotification) {
@@ -172,7 +174,7 @@ TEST_F(PlatformNotificationContextTest, WriteReadNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The write operation should have succeeded with a notification id.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(notification_id().empty());
 
   context->ReadNotificationData(
@@ -183,7 +185,7 @@ TEST_F(PlatformNotificationContextTest, WriteReadNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The read operation should have succeeded, with the right notification.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
 
   const NotificationDatabaseData& read_database_data = database_data();
   EXPECT_EQ(notification_database_data.origin, read_database_data.origin);
@@ -215,7 +217,7 @@ TEST_F(PlatformNotificationContextTest, WriteReadReplacedNotification) {
   std::string read_notification_id = notification_id();
 
   // The write operation should have succeeded with a notification id.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(read_notification_id.empty());
 
   notification_database_data.notification_data.title =
@@ -229,7 +231,7 @@ TEST_F(PlatformNotificationContextTest, WriteReadReplacedNotification) {
 
   base::RunLoop().RunUntilIdle();
 
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   ASSERT_FALSE(notification_id().empty());
   ASSERT_EQ(notification_id(), read_notification_id);
 
@@ -243,7 +245,7 @@ TEST_F(PlatformNotificationContextTest, WriteReadReplacedNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The read operation should have succeeded, with the right notification.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
 
   ASSERT_EQ(1u, notification_database_datas.size());
 
@@ -266,7 +268,7 @@ TEST_F(PlatformNotificationContextTest, DeleteInvalidNotification) {
   // The notification may not have existed, but since the goal of deleting data
   // is to make sure that it's gone, the goal has been satisfied. As such,
   // deleting a non-existent notification is considered to be a success.
-  EXPECT_TRUE(success());
+  EXPECT_TRUE(callback_success_status());
 }
 
 TEST_F(PlatformNotificationContextTest, DeleteNotification) {
@@ -284,7 +286,7 @@ TEST_F(PlatformNotificationContextTest, DeleteNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The write operation should have succeeded with a notification id.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(notification_id().empty());
 
   context->DeleteNotificationData(
@@ -295,7 +297,7 @@ TEST_F(PlatformNotificationContextTest, DeleteNotification) {
   base::RunLoop().RunUntilIdle();
 
   // The notification existed, so it should have been removed successfully.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
 
   context->ReadNotificationData(
       notification_id(), origin,
@@ -306,7 +308,7 @@ TEST_F(PlatformNotificationContextTest, DeleteNotification) {
 
   // The notification was removed, so we shouldn't be able to read it from
   // the database anymore.
-  EXPECT_FALSE(success());
+  EXPECT_FALSE(callback_success_status());
 }
 
 TEST_F(PlatformNotificationContextTest, ServiceWorkerUnregistered) {
@@ -351,7 +353,7 @@ TEST_F(PlatformNotificationContextTest, ServiceWorkerUnregistered) {
 
   base::RunLoop().RunUntilIdle();
 
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(notification_id().empty());
 
   ServiceWorkerStatusCode unregister_status;
@@ -373,7 +375,7 @@ TEST_F(PlatformNotificationContextTest, ServiceWorkerUnregistered) {
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(success());
+  EXPECT_FALSE(callback_success_status());
 }
 
 TEST_F(PlatformNotificationContextTest, DestroyDatabaseOnStorageWiped) {
@@ -391,7 +393,7 @@ TEST_F(PlatformNotificationContextTest, DestroyDatabaseOnStorageWiped) {
   base::RunLoop().RunUntilIdle();
 
   // The write operation should have succeeded with a notification id.
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(notification_id().empty());
 
   // Call the OnStorageWiped override from the ServiceWorkerContextCoreObserver,
@@ -408,9 +410,39 @@ TEST_F(PlatformNotificationContextTest, DestroyDatabaseOnStorageWiped) {
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(success());
+  EXPECT_FALSE(callback_success_status());
 }
 
+// Checks that the appropriate subdirectory of the filepath provided to the
+// PlatformNotificationContextImpl's constructor is used for the notification
+// database, when the provided filepath is non-empty.
+TEST_F(PlatformNotificationContextTest, ConstructWithNonEmptyFilePath) {
+  base::ScopedTempDir database_dir;
+  ASSERT_TRUE(database_dir.CreateUniqueTempDir());
+
+  scoped_refptr<PlatformNotificationContextImpl> context(
+      new PlatformNotificationContextImpl(database_dir.GetPath(),
+                                          browser_context(), nullptr));
+
+  // Trigger a read-operation to force creating the database.
+  OverrideTaskRunnerForTesting(context.get());
+  context->ReadNotificationData(
+      "invalid-notification-id", GURL("https://example.com"),
+      base::Bind(&PlatformNotificationContextTest::DidReadNotificationData,
+                 base::Unretained(this)));
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(IsDirectoryEmpty(database_dir.GetPath()));
+
+  base::FileEnumerator files(
+      database_dir.GetPath(), false /* recursive */,
+      base::FileEnumerator::FILES | base::FileEnumerator::DIRECTORIES);
+  EXPECT_EQ(files.Next().BaseName().value(), "Platform Notifications");
+  EXPECT_TRUE(files.Next().empty());
+}
+
+// Checks that the notification database directory is destroyed when storage is
+// wiped.
 TEST_F(PlatformNotificationContextTest, DestroyOnDiskDatabase) {
   base::ScopedTempDir database_dir;
   ASSERT_TRUE(database_dir.CreateUniqueTempDir());
@@ -421,22 +453,18 @@ TEST_F(PlatformNotificationContextTest, DestroyOnDiskDatabase) {
       new PlatformNotificationContextImpl(database_dir.GetPath(),
                                           browser_context(), nullptr));
 
-  OverrideTaskRunnerForTesting(context.get());
-
   // Trigger a read-operation to force creating the database.
+  OverrideTaskRunnerForTesting(context.get());
   context->ReadNotificationData(
       "invalid-notification-id", GURL("https://example.com"),
       base::Bind(&PlatformNotificationContextTest::DidReadNotificationData,
                  base::Unretained(this)));
-
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(IsDirectoryEmpty(database_dir.GetPath()));
-  EXPECT_FALSE(success());
+  ASSERT_FALSE(IsDirectoryEmpty(database_dir.GetPath()));
 
   // Blow away the database by faking a Service Worker Context wipe-out.
   context->OnStorageWiped();
-
   base::RunLoop().RunUntilIdle();
 
   // The database's directory should be empty at this point.
@@ -457,7 +485,7 @@ TEST_F(PlatformNotificationContextTest, ReadAllServiceWorkerDataEmpty) {
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(success());
+  EXPECT_TRUE(callback_success_status());
   EXPECT_EQ(0u, notification_database_datas.size());
 }
 
@@ -482,7 +510,7 @@ TEST_F(PlatformNotificationContextTest, ReadAllServiceWorkerDataFilled) {
 
     base::RunLoop().RunUntilIdle();
 
-    ASSERT_TRUE(success());
+    ASSERT_TRUE(callback_success_status());
   }
 
   // Now read the notifications from the database again. There should be ten,
@@ -495,7 +523,7 @@ TEST_F(PlatformNotificationContextTest, ReadAllServiceWorkerDataFilled) {
 
   base::RunLoop().RunUntilIdle();
 
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   ASSERT_EQ(10u, notification_database_datas.size());
 
   for (int i = 0; i < 10; ++i) {
@@ -525,7 +553,7 @@ TEST_F(PlatformNotificationContextTest, SynchronizeNotifications) {
                  base::Unretained(this)));
 
   base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   EXPECT_FALSE(notification_id().empty());
 
   PlatformNotificationService* service =
@@ -543,7 +571,7 @@ TEST_F(PlatformNotificationContextTest, SynchronizeNotifications) {
 
   base::RunLoop().RunUntilIdle();
 
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   ASSERT_EQ(1u, notification_database_datas.size());
 
   // Delete the notification from the display service without removing it from
@@ -555,7 +583,7 @@ TEST_F(PlatformNotificationContextTest, SynchronizeNotifications) {
                  base::Unretained(this), &notification_database_datas));
   base::RunLoop().RunUntilIdle();
 
-  ASSERT_TRUE(success());
+  ASSERT_TRUE(callback_success_status());
   ASSERT_EQ(0u, notification_database_datas.size());
 
   context->ReadNotificationData(
@@ -567,7 +595,7 @@ TEST_F(PlatformNotificationContextTest, SynchronizeNotifications) {
 
   // The notification was removed, so we shouldn't be able to read it from
   // the database anymore.
-  EXPECT_FALSE(success());
+  EXPECT_FALSE(callback_success_status());
 }
 
 }  // namespace content

@@ -24,7 +24,7 @@ namespace content {
 namespace {
 
 // Name of the directory in the user's profile directory where the notification
-// database files should be stored.
+// database files get stored.
 const base::FilePath::CharType kPlatformNotificationsDirectory[] =
     FILE_PATH_LITERAL("Platform Notifications");
 
