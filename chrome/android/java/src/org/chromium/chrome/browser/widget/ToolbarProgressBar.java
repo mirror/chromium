@@ -362,7 +362,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         mSmoothProgressAnimator.cancel();
 
         if (fadeOut) {
-            postDelayed(() -> hideProgressBar(true), HIDE_DELAY_MS);
+            postOnAnimationDelayed(() -> hideProgressBar(true), HIDE_DELAY_MS);
         } else {
             hideProgressBar(false);
         }
