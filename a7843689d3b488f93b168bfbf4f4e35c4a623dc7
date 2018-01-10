@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef9b480b_9fb7c5ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-10T18:21:51Z",
+      "side": 1,
+      "message": "Absolutely not.",
+      "parentUuid": "2d563075_75bcfef5",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac1da515_d977949e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268cd0cd_cc0eb5ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-10T18:21:51Z",
+      "side": 1,
+      "message": "Yes, notifyDataSetChanged works.\n\nI didn\u0027t want to put the refresh in the adapter because this is a padding related fix, which is something I don\u0027t feel the adapter should care about. The only reason this is necessary is because of the item decorations, which may not be an issue at some point.",
+      "parentUuid": "7586fefb_14400eec",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
