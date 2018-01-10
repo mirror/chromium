@@ -3183,7 +3183,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimatedBegin(
     ScrollStateData scroll_state_end_data;
     scroll_state_end_data.is_ending = true;
     ScrollState scroll_state_end(scroll_state_end_data);
-    ScrollEnd(&scroll_state_end);
+    ScrollEndImpl(&scroll_state_end);
   }
   return scroll_status;
 }
@@ -3356,7 +3356,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
     }
   }
   scroll_state.set_is_ending(true);
-  ScrollEnd(&scroll_state);
+  ScrollEndImpl(&scroll_state);
   if (settings_.is_layer_tree_for_subframe &&
       scroll_status.thread == SCROLL_ON_IMPL_THREAD) {
     // If we get to here, we shouldn't return SCROLL_ON_IMPL_THREAD as otherwise
@@ -3713,6 +3713,8 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
 
   bool did_scroll_x = scroll_state->caused_scroll_x();
   bool did_scroll_y = scroll_state->caused_scroll_y();
+  did_scroll_x_for_scroll_gesture_ |= did_scroll_x;
+  did_scroll_y_for_scroll_gesture_ |= did_scroll_y;
   bool did_scroll_content = did_scroll_x || did_scroll_y;
   if (did_scroll_content) {
     ShowScrollbarsForImplScroll(current_scrolling_node->element_id);
@@ -3793,20 +3795,51 @@ void LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset(
   SetNeedsRedraw();
 }
 
+bool LayerTreeHostImpl::SnapAtScrollEnd() {
+  ScrollNode* scroll_node = CurrentlyScrollingNode();
+  if (!scroll_node || !scroll_node->snap_container_data.has_value())
+    return false;
+
+  SnapContainerData data = scroll_node->snap_container_data.value();
+  ScrollTree& scroll_tree = active_tree()->property_trees()->scroll_tree;
+  gfx::ScrollOffset current_position =
+      scroll_tree.current_scroll_offset(scroll_node->element_id);
+
+  gfx::ScrollOffset snap_position =
+      data.FindSnapPosition(current_position, did_scroll_x_for_scroll_gesture_,
+                            did_scroll_y_for_scroll_gesture_);
+  if (snap_position == current_position)
+    return false;
+
+  ScrollAnimationCreate(
+      scroll_node, ScrollOffsetToVector2dF(snap_position - current_position),
+      base::TimeDelta());
+  return true;
+}
+
 void LayerTreeHostImpl::ClearCurrentlyScrollingNode() {
   active_tree_->ClearCurrentlyScrollingNode();
   did_lock_scrolling_layer_ = false;
   scroll_affects_scroll_handler_ = false;
   accumulated_root_overscroll_ = gfx::Vector2dF();
+  did_scroll_x_for_scroll_gesture_ = false;
+  did_scroll_y_for_scroll_gesture_ = false;
 }
 
-void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state) {
+void LayerTreeHostImpl::ScrollEndImpl(ScrollState* scroll_state) {
   DCHECK(scroll_state);
   DCHECK(scroll_state->delta_x() == 0 && scroll_state->delta_y() == 0);
 
   DistributeScrollDelta(scroll_state);
   browser_controls_offset_manager_->ScrollEnd();
   ClearCurrentlyScrollingNode();
+}
+
+void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state, bool should_snap) {
+  if (should_snap && SnapAtScrollEnd())
+    return;
+
+  ScrollEndImpl(scroll_state);
 }
 
 InputHandler::ScrollStatus LayerTreeHostImpl::FlingScrollBegin() {
@@ -4615,7 +4648,7 @@ void LayerTreeHostImpl::ScrollOffsetAnimationFinished() {
   // TODO(majidvp): We should pass in the original starting scroll position here
   ScrollStateData scroll_state_data;
   ScrollState scroll_state(scroll_state_data);
-  ScrollEnd(&scroll_state);
+  ScrollEndImpl(&scroll_state);
 }
 
 gfx::ScrollOffset LayerTreeHostImpl::GetScrollOffsetForAnimation(
