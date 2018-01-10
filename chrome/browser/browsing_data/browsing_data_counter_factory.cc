@@ -69,10 +69,10 @@ BrowsingDataCounterFactory::GetForProfileAndPref(Profile* profile,
     return base::MakeUnique<CacheCounter>(profile);
   }
 
-  if (pref_name == browsing_data::prefs::kDeleteCookies &&
-      IsSiteDataCounterEnabled()) {
+  if (pref_name == browsing_data::prefs::kDeleteCookies) {
     return base::MakeUnique<SiteDataCounter>(profile);
   }
+
   if (pref_name == browsing_data::prefs::kDeleteCookiesBasic) {
     // The cookies option on the basic tab doesn't use a counter.
     return nullptr;
