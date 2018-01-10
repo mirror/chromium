@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2188b6_13eced83",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-10T23:28:19Z",
+      "side": 0,
+      "message": "OOC: why remove that?",
+      "range": {
+        "startLine": 711,
+        "startChar": 15,
+        "endLine": 711,
+        "endChar": 34
+      },
+      "revId": "ffce62f681e72a5ec20243eb3c1cb798f8c79b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
