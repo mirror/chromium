@@ -301,6 +301,9 @@ struct CONTENT_EXPORT RequestNavigationParams {
   // passed in the |CommonNavigationParams::url| field.
   std::string data_url_as_string;
 #endif
+
+  // This is null while navigating to a javascript URL or an interstitial URL.
+  base::Optional<int64_t> navigation_id;
 };
 
 // Helper struct keeping track in one place of all the parameters the browser
