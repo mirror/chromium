@@ -29,12 +29,6 @@ NotificationMenuModel::NotificationMenuModel(const Notification& notification)
   AddItem(kTogglePermissionCommand,
           l10n_util::GetStringFUTF16(IDS_MESSAGE_CENTER_NOTIFIER_DISABLE,
                                      notification.display_source()));
-
-#if defined(OS_CHROMEOS)
-  // Add settings menu item.
-  AddItem(kShowSettingsCommand,
-          l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS));
-#endif
 }
 
 NotificationMenuModel::~NotificationMenuModel() {}
