@@ -22,6 +22,30 @@
       "revId": "fb3d9367e6fa62fe2e7f3d040910d1a437c2619c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e410b06c_63994360",
+        "filename": "content/public/browser/zygote_handle_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-10T21:48:17Z",
+      "side": 1,
+      "message": "I thought about that, but this isn\u0027t inside a class and I didn\u0027t want to introduce more identifiers into the content namespace itself.",
+      "parentUuid": "95da5a0e_8fa1f72d",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "fb3d9367e6fa62fe2e7f3d040910d1a437c2619c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
