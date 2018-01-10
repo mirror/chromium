@@ -14,6 +14,7 @@
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 
 namespace base {
+class RunLoop;
 class Value;
 }  // namespace base
 
@@ -43,6 +44,9 @@ class ProfilingTestDriver {
     // The profiling mode to test.
     ProfilingProcessHost::Mode mode;
 
+    // The stack profiling mode to test.
+    profiling::mojom::StackMode stack_mode;
+
     // Whether the caller has already started profiling with the given mode.
     // TODO(erikchen): Implement and test the case where this member is false.
     // Starting profiling is an asynchronous operation, so this requires adding
@@ -64,10 +68,7 @@ class ProfilingTestDriver {
  private:
   // Populates |initialization_success_| with the result of
   // |RunInitializationOnUIThread|, and then signals |wait_for_ui_thread_|.
-  void RunInitializationOnUIThreadAndSignal();
-
-  // Starts profiling. Makes allocations.
-  bool RunInitializationOnUIThread();
+  void CheckOrStartProfilingOnUIThreadAndSignal();
 
   // If profiling is expected to already be started, confirm it.
   // Otherwise, start profiling with the given mode.
@@ -91,6 +92,9 @@ class ProfilingTestDriver {
   bool ValidateBrowserAllocations(base::Value* dump_json);
   bool ValidateRendererAllocations(base::Value* dump_json);
 
+  bool ShouldProfileBrowser();
+  bool HasPseudoFrames();
+
   Options options_;
 
   // Allocations made by this class. Intentionally leaked, since deallocating
@@ -111,6 +115,14 @@ class ProfilingTestDriver {
 
   // Whether an error has occurred.
   bool initialization_success_ = false;
+
+  // When |true|, initialization will wait for the allocator shim to enable
+  // before continuing.
+  bool wait_for_profiling_to_start_ = false;
+
+  // When this is not-null, initialization should wait for the QuitClosure to be
+  // called.
+  std::unique_ptr<base::RunLoop> wait_for_profiling_to_start_run_loop_;
 
   base::WaitableEvent wait_for_ui_thread_;
 
