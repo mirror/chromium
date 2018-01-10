@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba9bd811_19affd0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-10T20:58:09Z",
+      "side": 1,
+      "message": "I do agree this is likely out of the scope of this CL, but I think I don\u0027t want to invest a ton of time in this class as I don\u0027t see it\u0027s use in the new system going forward.\n\nHad this not been going on in parallel with your ModalDialogManager work, then I would have suggested VR dialogs be implemented in two phases (potentially in parallel):\n1.) Add a VR dialog and add support for a VR ModalDialogManager (javascript dialogs are testable in this framework already, so that would have been an initial thing VR could test with)\n2.) Port permission dialogs to the ModalDialogManager framework\n\nThe problem is I\u0027m still unclear of what the transition plan to get from this world to the one mentioned above.\n\nAs mentioned in the last patch, there is still more work to get this to be supported for permissions, but I don\u0027t want to see that time invested in code that I don\u0027t see a compelling need for.  Maybe that is where I need some initial clarifications on, is the intent to continue with ChromeAlertDialog/DialogRenderer going forward?  If so, why?\n\nThe current state is definitely less than ideal (alas...that\u0027s development :-/).  I had imagined the timing of the two CLs to be different and I think the holidays really messed that all up, but I want to make sure we\u0027re spending our time wisely and have a clear migration plan.",
+      "parentUuid": "0b22d86c_a62d65a1",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbb8efbd_de64bdec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 12
