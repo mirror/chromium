@@ -8,7 +8,8 @@
 #include <memory>
 #include <set>
 
-#include "base/containers/small_map.h"
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -16,8 +17,10 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
+#include "chrome/browser/media/router/providers/cast/parsed_media_source.h"
 #include "chrome/common/media_router/discovery/media_sink_service_base.h"
 #include "components/cast_channel/cast_channel_enum.h"
+#include "components/cast_channel/cast_message_util.h"
 #include "components/cast_channel/cast_socket.h"
 #include "net/base/backoff_entry.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -27,6 +30,8 @@ class CastSocketService;
 }  // namespace cast_channel
 
 namespace media_router {
+
+class CastMessageHandler;
 
 // Discovers and manages Cast MediaSinks using CastSocketService.
 // This class may be created on any thread. All methods, unless otherwise noted,
@@ -45,14 +50,16 @@ class CastMediaSinkServiceImpl
   // before we can say confidently that it is unlikely to be a Cast device.
   static constexpr int kMaxDialSinkFailureCount = 10;
 
-  // |callback|: Callback passed to MediaSinkServiceBase.
+  // |sinks_discovered_cb|: Callback passed to MediaSinkServiceBase.
+  // |sink_query_cb|: Callback to invoke when sink query has been updated.
   // |cast_socket_service|: CastSocketService to use to open Cast channels to
   // discovered devices.
   // |network_monitor|: DiscoveryNetworkMonitor to use to listen for network
   // changes.
   // |url_request_context_getter|: URLRequestContextGetter used for making
   // network requests.
-  CastMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
+  CastMediaSinkServiceImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb,
+                           const SinkQueryCallback& sink_query_cb,
                            cast_channel::CastSocketService* cast_socket_service,
                            DiscoveryNetworkMonitor* network_monitor,
                            const scoped_refptr<net::URLRequestContextGetter>&
@@ -95,6 +102,9 @@ class CastMediaSinkServiceImpl
   // to perform dual discovery). It is safe to invoke this callback after |this|
   // is destroyed.
   OnDialSinkAddedCallback GetDialSinkAddedCallback();
+
+  void StartObservingMediaSinks(const ParsedMediaSource& source);
+  void StopObservingMediaSinks(const MediaSource::Id& source_id);
 
  private:
   friend class CastMediaSinkServiceImplTest;
@@ -269,11 +279,16 @@ class CastMediaSinkServiceImpl
                               cast_channel::CastSocket* socket,
                               SinkSource sink_source);
 
+  void AddOrReplaceSink(const net::IPEndPoint& ip_endpoint,
+                        const MediaSinkInternal& sink,
+                        cast_channel::CastSocket* socket);
+
   // Invoked when opening cast channel on IO thread fails after all retry
   // attempts.
   // |ip_endpoint|: ip endpoint of cast channel failing to connect to.
-  // |sink_source|: Method of sink discovery.
-  void OnChannelOpenFailed(const net::IPEndPoint& ip_endpoint);
+  // |sink_id|: ID of MediaSink associated with the cast channel.
+  void OnChannelOpenFailed(const net::IPEndPoint& ip_endpoint,
+                           const MediaSink::Id& sink_id);
 
   // Returns whether the given DIAL-discovered |sink| is probably a non-Cast
   // device. This is heuristically determined by two things: |sink| has been
@@ -284,6 +299,10 @@ class CastMediaSinkServiceImpl
   // for the device description URL advertised by Cast devices to determine the
   // long term solution for restricting dual discovery.
   bool IsProbablyNonCastDevice(const MediaSinkInternal& sink) const;
+
+  void OnAppAvailability(const MediaSink::Id& sink_id,
+                         const std::string& app_id,
+                         cast_channel::GetAppAvailabilityResult result);
 
   base::WeakPtr<CastMediaSinkServiceImpl> GetWeakPtr() {
     return weak_ptr_factory_.GetWeakPtr();
@@ -296,10 +315,51 @@ class CastMediaSinkServiceImpl
   // RecordDeviceCounts().
   std::set<net::IPEndPoint> known_ip_endpoints_;
 
-  using MediaSinkInternalMap = std::map<net::IPEndPoint, MediaSinkInternal>;
+  using MediaSinkInternalMap =
+      base::flat_map<net::IPEndPoint, MediaSinkInternal>;
 
   // Map of sinks with opened cast channels keyed by IP endpoint.
   MediaSinkInternalMap current_sinks_map_;
+
+  // Sink queries.
+  enum class AppAvailability { kAvailable, kUnavailable };
+
+  // Maps an app ID to an availability value.
+  class SinkAvailabilityTracker {
+   public:
+    SinkAvailabilityTracker();
+    ~SinkAvailabilityTracker();
+
+    bool HasSource(const ParsedMediaSource& source) const;
+    std::vector<std::string> RegisterSource(const ParsedMediaSource& source);
+    void UnregisterSource(const MediaSource::Id& source_id);
+
+    void UpdateSinkAvailability(const MediaSink::Id& sink_id,
+                                const std::string& app_id,
+                                AppAvailability availability);
+    void RemoveResultsForSink(const MediaSink::Id& sink_id);
+    bool IsAvailabilityKnown(const MediaSink::Id& sink_id,
+                             const std::string& app_id) const;
+    base::flat_set<std::string> GetRegisteredApps() const;
+
+    // Returns a list of sink IDs compatible with |source|, using the current
+    // availability info.
+    base::flat_set<MediaSink::Id> GetAvailableSinks(
+        const ParsedMediaSource& source) const;
+
+   private:
+    using AppAvailabilityMap = base::flat_map<std::string, AppAvailability>;
+    base::flat_map<MediaSource::Id, ParsedMediaSource> registered_sources_;
+    base::flat_map<std::string, int> observer_count_by_app_id_;
+    base::flat_map<MediaSink::Id, AppAvailabilityMap> app_availabilities_;
+    base::flat_map<std::string, base::flat_set<MediaSink::Id>>
+        available_sinks_by_app_id_;
+
+    DISALLOW_COPY_AND_ASSIGN(SinkAvailabilityTracker);
+  };
+
+  SinkQueryCallback sink_query_cb_;
+  SinkAvailabilityTracker availability_tracker_;
 
   // Raw pointer of leaky singleton CastSocketService, which manages adding and
   // removing Cast channels.
@@ -331,7 +391,7 @@ class CastMediaSinkServiceImpl
   // failed to open a cast channel for a sink that is discovered via DIAL
   // exclusively. The count is reset for a sink when it is discovered via mDNS,
   // or if we detected a network change.
-  base::small_map<std::map<net::IPAddress, int>> dial_sink_failure_count_;
+  base::flat_map<net::IPAddress, int> dial_sink_failure_count_;
 
   // The SequencedTaskRunner on which methods are run. This shares the
   // same SequencedTaskRunner as the one used by |cast_socket_service_|.
@@ -342,6 +402,9 @@ class CastMediaSinkServiceImpl
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
   base::Clock* clock_;
+
+  base::flat_set<std::string> registered_apps_;
+  std::unique_ptr<CastMessageHandler> message_handler_;
 
   SEQUENCE_CHECKER(sequence_checker_);
   base::WeakPtrFactory<CastMediaSinkServiceImpl> weak_ptr_factory_;

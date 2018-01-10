@@ -10,6 +10,8 @@
 #include "base/callback.h"
 #include "base/memory/scoped_refptr.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
+#include "chrome/common/media_router/media_source.h"
+#include "url/origin.h"
 
 namespace base {
 class SequencedTaskRunner;
@@ -25,6 +27,21 @@ void RunSinksDiscoveredCallbackOnSequence(
     const scoped_refptr<base::SequencedTaskRunner>& task_runner,
     const OnSinksDiscoveredCallback& callback,
     std::vector<MediaSinkInternal> sinks);
+
+// |source_id|: The source of the query.
+// |sinks|: The list of sinks compatible with |source_id|.
+// |origins|: If non-empty, list of origins for which the query is valid.
+using SinkQueryCallback =
+    base::RepeatingCallback<void(const MediaSource::Id& source_id,
+                                 const std::vector<MediaSinkInternal>& sinks,
+                                 const std::vector<url::Origin>& origins)>;
+
+void RunSinkQueryCallbackOnSequence(
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+    const SinkQueryCallback& callback,
+    const MediaSource::Id& source_id,
+    const std::vector<MediaSinkInternal>& sinks,
+    const std::vector<url::Origin>& origins);
 
 }  // namespace media_router
 

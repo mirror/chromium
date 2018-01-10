@@ -7,6 +7,7 @@
 
 #include <utility>
 
+#include "base/containers/flat_map.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
@@ -95,6 +96,7 @@ class MediaSinkInternal {
 
   // Must only be called if the sink is a Cast sink.
   const CastSinkExtraData& cast_data() const;
+  CastSinkExtraData& cast_data();
 
   bool is_dial_sink() const { return sink_type_ == SinkType::DIAL; }
   bool is_cast_sink() const { return sink_type_ == SinkType::CAST; }

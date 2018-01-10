@@ -15,8 +15,10 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
+#include "chrome/browser/media/router/providers/cast/parsed_media_source.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service_util.h"
+#include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace media_router {
@@ -45,8 +47,10 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   // Starts Cast sink discovery. No-ops if already started.
   // |sink_discovery_cb|: Callback to invoke when the list of discovered sinks
   // has been updated.
-  // Marked virtual for tests.
-  virtual void Start(const OnSinksDiscoveredCallback& sinks_discovered_cb);
+  // |sink_query_cb|: Callback to invoke when sink query result has been
+  // updated. Marked virtual for tests.
+  virtual void Start(const OnSinksDiscoveredCallback& sinks_discovered_cb,
+                     const SinkQueryCallback& sink_query_cb);
 
   // Initiates discovery immediately in response to a user gesture
   // (i.e., opening the Media Router dialog).
@@ -54,9 +58,13 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   // Marked virtual for tests.
   virtual void OnUserGesture();
 
+  void StartObservingMediaSinks(const ParsedMediaSource& source);
+  void StopObservingMediaSinks(const MediaSource::Id& source_id);
+
   // Marked virtual for tests.
   virtual std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
-  CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb);
+  CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb,
+             const SinkQueryCallback& sink_query_cb);
 
   // Registers with DnsSdRegistry to listen for Cast devices. Note that this is
   // called on |Start()| on all platforms except for Windows. On Windows, this
