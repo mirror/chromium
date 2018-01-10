@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a9c0f3d_a2dbec37",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-10T20:27:41Z",
+      "side": 1,
+      "message": "Yes, the first two are in external/wpt/resources, the second two are in external/wpt/resource-timing/resources. If we start having more and more copies of webperftestharness.js and webperftestharnessextension.js I think we would just move them to the outer resources folder.",
+      "parentUuid": "dc466dc6_094a94ff",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "0af33801322e17b5fc158c2b3dfa66662cf545c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ace3e44b_56dbc584",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-10T20:18:49Z",
       "side": 1,
       "message": "Can we just use a relative path?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "0af33801322e17b5fc158c2b3dfa66662cf545c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18d3eec_a4d93fa6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-10T20:27:41Z",
+      "side": 1,
+      "message": "This is just the end of the path (the first \u0027/\u0027 is just because the first substring does not include the needed \u0027/\u0027). In test_resource_entries, we check that this path is entry.name. Not sure I understand the question.",
+      "parentUuid": "ace3e44b_56dbc584",
       "range": {
         "startLine": 22,
         "startChar": 5,
@@ -92,6 +140,30 @@
       "revId": "0af33801322e17b5fc158c2b3dfa66662cf545c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7c460a_ba6cb346",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-10T20:27:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f374c96e_771be992",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "0af33801322e17b5fc158c2b3dfa66662cf545c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
