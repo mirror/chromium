@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60a1365_2cb4a226",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-10T21:28:51Z",
+      "side": 0,
+      "message": "fast/workers/chromium/worker-crash-with-invalid-location-expected.txt was the only test that expected this message.",
+      "revId": "ecea539bf5a74ba88ee08319e3e594a174878b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b903ca_1e545feb",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-10T21:28:51Z",
+      "side": 0,
+      "message": "Making this generic to all errors is needed to get correct behavior for image loads that fail synchronously because of e.g., content/ blocking the url in a WillSendRequest() callback.",
+      "revId": "ecea539bf5a74ba88ee08319e3e594a174878b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7544d56d_2d9d4d64",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-10T21:28:51Z",
+      "side": 0,
+      "message": "kAbort and kBlock now do the same thing, so just return a bool for whether the request should proceed.",
+      "revId": "ecea539bf5a74ba88ee08319e3e594a174878b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

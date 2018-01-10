@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f7f021d_7bc99d5b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-10T21:28:51Z",
+      "side": 1,
+      "message": "ResourceForBlockedRequest() may now create a Resource with an invalid url (in the previous cases where ResourceFetcher::PrepareRequest returned kAbort). This is the only place that appears to be sensitive to that, as attempting to hash a null KURL to do a hashmap lookup will crashes.",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450f9411_48403e01",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-10T21:28:51Z",
+      "side": 1,
+      "message": "This causes the change to mhtml/resource_not_found_in_archive-expected.html, which shows a broken image instead of nothing at all. That seems ok to me.",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
