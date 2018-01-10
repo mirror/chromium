@@ -358,13 +358,7 @@ TEST_P(RTCVideoDecoderTest, GetVDAErrorCounterForNotifyError) {
 
 // Tests/Verifies that |rtc_encoder_| increases its error counter when it runs
 // out of pending buffers.
-//
-// TODO(sergeyu): This test is flaky as it depends on CPU scheduler behavior:
-// it assumes that RequestBufferDecode() task posted from the first Decode() is
-// executed after the last Decode() call. Fix this test or delete it.
-// https://crbug.com/795387
-TEST_P(RTCVideoDecoderTest,
-       DISABLED_GetVDAErrorCounterForRunningOutOfPendingBuffers) {
+TEST_P(RTCVideoDecoderTest, GetVDAErrorCounterForRunningOutOfPendingBuffers) {
   const webrtc::VideoCodecType codec_type = GetParam();
   CreateDecoder(codec_type);
   Initialize();
@@ -378,9 +372,14 @@ TEST_P(RTCVideoDecoderTest,
   input_image._frameType = webrtc::kVideoFrameKey;
   input_image._length = sizeof(buffer);
 
-  for (size_t i = 0; i < rtc_video_decoder::kMaxNumOfPendingBuffers; ++i) {
+  EXPECT_CALL(*mock_vda_, Decode(_))
+      .Times(rtc_video_decoder::kMaxNumOfPendingBuffers);
+  for (size_t i = 0; i < rtc_video_decoder::kMaxNumOfPendingBuffers +
+                             rtc_video_decoder::kNumSharedMemorySegments;
+       ++i) {
     EXPECT_EQ(WEBRTC_VIDEO_CODEC_OK,
               rtc_decoder_->Decode(input_image, false, nullptr, nullptr, 0));
+    RunUntilIdle();
   }
 
   // Expect the next call to increase error counter.

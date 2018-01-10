@@ -43,6 +43,9 @@ struct SyncToken;
 namespace rtc_video_decoder {
 // Maximum number of pending WebRTC buffers that are waiting for shared memory.
 static const size_t kMaxNumOfPendingBuffers = 8;
+
+// Number of allocated shared memory segments.
+static const size_t kNumSharedMemorySegments = 16;
 }  // namespace rtc_video_decoder
 
 namespace content {

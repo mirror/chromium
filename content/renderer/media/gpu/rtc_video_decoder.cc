@@ -45,9 +45,6 @@ const uint32_t kNumVDAErrorsBeforeSWFallback = 5;
 // resources.
 static const size_t kMaxInFlightDecodes = 8;
 
-// Number of allocated shared memory segments.
-static const size_t kNumSharedMemorySegments = 16;
-
 RTCVideoDecoder::BufferData::BufferData(int32_t bitstream_buffer_id,
                                         uint32_t timestamp,
                                         size_t size,
@@ -818,7 +815,8 @@ std::unique_ptr<base::SharedMemory> RTCVideoDecoder::GetSHM_Locked(
   factories_->GetTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&RTCVideoDecoder::CreateSHM, weak_factory_.GetWeakPtr(),
-                     kNumSharedMemorySegments, min_size * 2));
+                     rtc_video_decoder::kNumSharedMemorySegments,
+                     min_size * 2));
 
   // We'll be called again after the shared memory is created.
   return nullptr;
