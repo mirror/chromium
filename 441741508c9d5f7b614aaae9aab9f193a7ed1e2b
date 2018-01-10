@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03c24ccd_018c06a6",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2018-01-10T15:56:00Z",
+      "side": 1,
+      "message": "Fling is in a weird situation right now: touchpad fling happens on the browser but autoscroll and touch still happens on the renderer.\n\nThis function traditionally was called in InputRouterImpl::SendKeyboardEvent to let the gesture event queue know that the renderer has halted (or will halt) the fling.\n\nOnce touch fling and autoscroll fling are handled on the browser then the function name must change to HaltTheFling or StopFling. If it makes things clearer I can keep this function as it is and have a StopFling function that calls fling_controller_.StopFling().",
+      "parentUuid": "af6669fd_1f8deec5",
+      "range": {
+        "startLine": 340,
+        "startChar": 24,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "441741508c9d5f7b614aaae9aab9f193a7ed1e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "635c3693_e4962895",
         "filename": "content/browser/renderer_host/input/input_router_impl.cc",
         "patchSetId": 2
