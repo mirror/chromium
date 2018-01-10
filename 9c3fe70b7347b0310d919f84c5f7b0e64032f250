@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f7ca2f0_d5b977d8",
+        "filename": "chrome/common/sandbox_status_extension_android.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-10T19:47:02Z",
+      "side": 1,
+      "message": "Please add a comment that this is interface is called by the browser on the renderer.",
+      "revId": "9c3fe70b7347b0310d919f84c5f7b0e64032f250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689fd15c_6924ddb0",
+        "filename": "chrome/common/sandbox_status_extension_android.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-10T19:47:02Z",
+      "side": 1,
+      "message": "nit: extra blank line",
+      "revId": "9c3fe70b7347b0310d919f84c5f7b0e64032f250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8a57b1_b8b654e2",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-10T19:47:02Z",
+      "side": 1,
+      "message": "Is Unretained right here? OnDestruct is called from RenderFrameImpl\u0027s destructor, and RFI holds associated_interfaces_ as a member, so this pointer will be dangling during teardown.",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "9c3fe70b7347b0310d919f84c5f7b0e64032f250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
