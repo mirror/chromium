@@ -10,6 +10,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
@@ -21,6 +22,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/web/public/referrer.h"
@@ -43,6 +45,8 @@
 @property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 // Coordinator for the omnibox popup.
 @property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
+// Coordinator for the toolsMenu.
+@property(nonatomic, strong) ToolsMenuCoordinator* toolsMenuCoordinator;
 
 @end
 
@@ -52,6 +56,7 @@
 @synthesize locationBarCoordinator = _locationBarCoordinator;
 @synthesize omniboxPopupCoordinator = _omniboxPopupCoordinator;
 @synthesize started = _started;
+@synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 @synthesize toolbarViewController = _toolbarViewController;
 @synthesize URLLoader = _URLLoader;
 @synthesize webStateList = _webStateList;
@@ -59,13 +64,16 @@
 #pragma mark - ChromeCoordinator
 
 - (instancetype)
-initWithToolsMenuConfigurationProvider:(id)configurationProvider
-                            dispatcher:(id)dispatcher
+initWithToolsMenuConfigurationProvider:
+    (id<ToolsMenuConfigurationProvider>)configurationProvider
+                            dispatcher:(CommandDispatcher*)dispatcher
                           browserState:(ios::ChromeBrowserState*)browserState {
   self = [super initWithBaseViewController:nil browserState:browserState];
   if (self) {
-    // TODO(crbug.com/799422): Initialize the toolsMenu.
     _dispatcher = dispatcher;
+    self.toolsMenuCoordinator = [[ToolsMenuCoordinator alloc] init];
+    self.toolsMenuCoordinator.dispatcher = dispatcher;
+    self.toolsMenuCoordinator.configurationProvider = configurationProvider;
   }
   return self;
 }
@@ -74,19 +82,25 @@ initWithToolsMenuConfigurationProvider:(id)configurationProvider
   if (self.started)
     return;
 
+  [self.dispatcher startDispatchingToTarget:self
+                                forProtocol:@protocol(ToolbarCommands)];
+
+  [self.toolsMenuCoordinator start];
+
   self.started = YES;
   BOOL isIncognito = self.browserState->IsOffTheRecord();
 
   self.locationBarCoordinator = [[LocationBarCoordinator alloc] init];
   self.locationBarCoordinator.browserState = self.browserState;
-  self.locationBarCoordinator.dispatcher = self.dispatcher;
+  self.locationBarCoordinator.dispatcher =
+      static_cast<id<ApplicationCommands, BrowserCommands>>(self.dispatcher);
   [self.locationBarCoordinator start];
 
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
   // created.
   _locationBar = std::make_unique<LocationBarControllerImpl>(
       self.locationBarCoordinator.locationBarView, self.browserState, self,
-      self.dispatcher);
+      static_cast<id<ApplicationCommands, BrowserCommands>>(self.dispatcher));
   self.omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
   [self.omniboxPopupCoordinator start];
   // End of TODO(crbug.com/785253):.
@@ -94,15 +108,27 @@ initWithToolsMenuConfigurationProvider:(id)configurationProvider
   ToolbarStyle style = isIncognito ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
-  buttonFactory.dispatcher = self.dispatcher;
+  buttonFactory.dispatcher =
+      static_cast<id<ApplicationCommands, BrowserCommands, ToolbarCommands>>(
+          self.dispatcher);
   buttonFactory.visibilityConfiguration =
       [[ToolbarButtonVisibilityConfiguration alloc] initWithType:PRIMARY];
 
   self.toolbarViewController = [[PrimaryToolbarViewController alloc]
       initWithButtonFactory:buttonFactory];
-  self.toolbarViewController.dispatcher = self.dispatcher;
+  self.toolbarViewController.dispatcher =
+      static_cast<id<ApplicationCommands, BrowserCommands>>(self.dispatcher);
   self.toolbarViewController.locationBarView =
       self.locationBarCoordinator.locationBarView;
+}
+
+- (void)stop {
+  self.started = NO;
+  [self.dispatcher stopDispatchingToTarget:self];
+  [self.toolsMenuCoordinator stop];
+  self.toolbarViewController = nil;
+  [self.omniboxPopupCoordinator stop];
+  [self.locationBarCoordinator stop];
 }
 
 #pragma mark - Property Accessors

@@ -38,9 +38,7 @@ initWithToolsMenuConfigurationProvider:
     NS_UNAVAILABLE;
 
 // Dispatcher.
-@property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
-        dispatcher;
+@property(nonatomic, weak) CommandDispatcher* dispatcher;
 // The web state list this ToolbarCoordinator is handling.
 @property(nonatomic, assign) WebStateList* webStateList;
 // Delegate for this coordinator.
