@@ -399,6 +399,10 @@ void FindMatchesByUsername(const PasswordFormFillData& fill_data,
   } else {
     // Scan additional logins for a match.
     for (const auto& it : fill_data.additional_logins) {
+      if (!it.second.realm.empty()) {
+        // Do not autofill PSL matched credentials.
+        continue;
+      }
       if (DoUsernamesMatch(it.first, current_username, exact_username_match)) {
         *username = it.first;
         *password = it.second.password;
