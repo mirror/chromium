@@ -34,6 +34,7 @@
 #include "remoting/signaling/xmpp_login_handler.h"
 #include "remoting/signaling/xmpp_stream_parser.h"
 #include "services/network/public/cpp/proxy_resolving_client_socket.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 #include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 // Use 50 seconds keep-alive interval, in case routers terminate
@@ -117,6 +118,7 @@ class XmppSignalStrategy::Core : public XmppLoginHandler::Delegate {
 
   void SendKeepAlive();
 
+  network::ProxyResolvingClientSocketFactory proxy_resolving_socket_factory_;
   net::ClientSocketFactory* socket_factory_;
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   XmppServerConfig xmpp_server_config_;
@@ -153,7 +155,9 @@ XmppSignalStrategy::Core::Core(
     net::ClientSocketFactory* socket_factory,
     const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
     const XmppSignalStrategy::XmppServerConfig& xmpp_server_config)
-    : socket_factory_(socket_factory),
+    : proxy_resolving_socket_factory_(socket_factory,
+                                      request_context_getter.get()),
+      socket_factory_(socket_factory),
       request_context_getter_(request_context_getter),
       xmpp_server_config_(xmpp_server_config) {
 #if defined(NDEBUG)
@@ -178,8 +182,8 @@ void XmppSignalStrategy::Core::Connect() {
   for (auto& observer : listeners_)
     observer.OnSignalStrategyStateChange(CONNECTING);
 
-  socket_ = std::make_unique<network::ProxyResolvingClientSocket>(
-      socket_factory_, request_context_getter_, net::SSLConfig(),
+  socket_ = proxy_resolving_socket_factory_.CreateSocket(
+      net::SSLConfig(),
       GURL("https://" +
            net::HostPortPair(xmpp_server_config_.host, xmpp_server_config_.port)
                .ToString()));
