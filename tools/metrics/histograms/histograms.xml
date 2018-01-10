@@ -100316,6 +100316,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="XR.Presentation.RenderPath" enum="XRRenderPath">
+  <owner>klausw@chromium.org</owner>
+  <summary>
+    Records the WebXR/WebVR presentation render path that was selected based on
+    the current settings and device capabilities.
+  </summary>
+</histogram>
+
 <histogram name="ZeroSuggest.AllResults">
   <owner>hfung@chromium.org</owner>
   <summary>
