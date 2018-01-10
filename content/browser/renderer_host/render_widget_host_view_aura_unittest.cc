@@ -1913,9 +1913,11 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
 
 // Flaky on Fuchsia.  http://crbug.com/800771 and 800415
 #if defined(OS_FUCHSIA)
-#define MAYBE_TimerBasedLatchingBreaksWithMouseMove DISABLED_TimerBasedLatchingBreaksWithMouseMove
+#define MAYBE_TimerBasedLatchingBreaksWithMouseMove \
+  DISABLED_TimerBasedLatchingBreaksWithMouseMove
 #else
-#define MAYBE_TimerBasedLatchingBreaksWithMouseMove TimerBasedLatchingBreaksWithMouseMove
+#define MAYBE_TimerBasedLatchingBreaksWithMouseMove \
+  TimerBasedLatchingBreaksWithMouseMove
 #endif
 TEST_F(RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest,
        MAYBE_TimerBasedLatchingBreaksWithMouseMove) {
