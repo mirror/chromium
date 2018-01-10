@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26d3f67e_22be8fbf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3890,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "Would it make sense to have `EmbedSurface()` merged into `Init()`?",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79f0df6_cff662e7",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "Is this called somewhere?",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859aa4ef_2ad25c82",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "GetContentClient() and browser() could both be null, right?",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe0be26_7fb9640b",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "We don\u0027t do video in surfaces for WebMediaPlayerMS? Sounds that we should fix this as PIPing this videos would be a strong use case.",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbe824e_36b85611",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "Two things:\n1. add comments :)\n2. the name says \"Updated\" but it seems to be only used for \"started\". Do we intend to actually use it for updates or should this be renamed for clarity?",
+      "range": {
+        "startLine": 108,
+        "startChar": 15,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f560dd97_aadcc592",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "Should this be named `enterPictureInPicture()`?",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 23
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e54c2b5_4dc8514a",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:53:27Z",
+      "side": 1,
+      "message": "Should this be named `EnterPictureInPicture` or `RequestPictureInPicture()`? I assumed that we would have an `ExitPictureInPicture()`, is that correct?",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
