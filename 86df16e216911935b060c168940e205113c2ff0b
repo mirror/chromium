@@ -88,6 +88,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d35c0c7_83320b5c",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-10T14:10:52Z",
+      "side": 0,
+      "message": "The mock parts MockPlatformWindowDelegate are required for the existing tests, so that would rule out ui/platform_window/ as the location then, even if it would be a more useful location.",
+      "parentUuid": "6dadd0e6_46b87219",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
