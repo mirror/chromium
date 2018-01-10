@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4473182b_75b94715",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T19:27:24Z",
+      "side": 1,
+      "message": "Just curious:  Is there a reason for not just making this part of the test binary?",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7af71f_5d1161f3",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T19:27:24Z",
+      "side": 1,
+      "message": "Mention what happens when local port is 0.  Also suggest moving the comment about \"local_port()\" just just above the local_port() method, to avoid confusion with the new argument.\n\nAnd actually...shouldn\u0027t these comments be in the header, on TcpSocketProxy instead?  That\u0027s the more important API to document, since third parties will be using it.",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 30
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e451d8_68bab3ca",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T19:27:24Z",
+      "side": 1,
+      "message": "Why do we need to accept a port?  It prevents running things in parallel.",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c06cbcc_8605147d",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T19:27:24Z",
+      "side": 1,
+      "message": "Just add a default value to port, and use a single constructor?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0670e879_4d49b0fd",
+        "filename": "net/test/tcp_socket_proxy_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T19:27:24Z",
+      "side": 1,
+      "message": "TcpSocketProxyTest IO Thread?",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
