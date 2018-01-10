@@ -164,6 +164,30 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9668f9e8_4acf1aa3",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-10T15:44:09Z",
+      "side": 1,
+      "message": "Replying to that, if I change this value to e.g. 0x00\n\n[ RUN      ] GLImageIOSurface/GLImageBindTest/1.BindTexImage\n../../ui/gl/test/gl_test_helper.cc:77: Failure\nThe difference between expected and actual is 255, which exceeds error, where\nexpected evaluates to 0,\nactual evaluates to 255, and\nerror evaluates to 1.\n at 0, 0 channel 3\n\n ... many channel 3 failures ...\n\n[  FAILED  ] GLImageIOSurface/GLImageBindTest/1.BindTexImage, where TypeParam \u003d \u003ctype\u003e (20 ms)\n\nand\n\n[ RUN      ] GLImageIOSurface/GLImageCopyTest/0.CopyTexImage\n../../ui/gl/test/gl_test_helper.cc:77: Failure\nThe difference between expected and actual is 255, which exceeds error, where\nexpected evaluates to 0,\nactual evaluates to 255, and\nerror evaluates to 1.\n at 0, 0 channel 3\n\n ... many channel 3 failures ...\n\n[  FAILED  ] GLImageIOSurface/GLImageCopyTest/0.CopyTexImage, where TypeParam \u003d \u003ctype\u003e (48 ms)\n\n\n\nIf I was to write a 0x07, again \"actual\" evaluates to 255, so\nI believe the alpha is ignored, hence BGRX, correct?",
+      "parentUuid": "908750f0_f3e011b9",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
