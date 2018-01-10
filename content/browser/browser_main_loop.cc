@@ -102,9 +102,9 @@
 #include "content/public/browser/swap_metrics_driver.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/service_names.mojom.h"
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
@@ -588,7 +588,7 @@ BrowserMainLoop* BrowserMainLoop::GetInstance() {
 BrowserMainLoop::BrowserMainLoop(const MainFunctionParams& parameters)
     : parameters_(parameters),
       parsed_command_line_(parameters.command_line),
-      result_code_(RESULT_CODE_NORMAL_EXIT),
+      result_code_(base::RESULT_CODE_NORMAL_EXIT),
       created_threads_(false),
       // ContentMainRunner should have enabled tracing of the browser process
       // when kTraceStartup or kTraceConfigFile is in the command line.

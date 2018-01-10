@@ -16,7 +16,7 @@
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/context_factory.h"
 #include "content/public/browser/devtools_agent_host.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/shell/browser/shell_devtools_manager_delegate.h"
 #include "extensions/browser/browser_context_keyed_service_factories.h"
 #include "extensions/browser/extension_system.h"
@@ -244,7 +244,7 @@ bool ShellBrowserMainParts::MainMessageLoopRun(int* result_code) {
   if (!run_message_loop_)
     return true;
   desktop_controller_->Run();
-  *result_code = content::RESULT_CODE_NORMAL_EXIT;
+  *result_code = base::RESULT_CODE_NORMAL_EXIT;
   return true;
 }
 
