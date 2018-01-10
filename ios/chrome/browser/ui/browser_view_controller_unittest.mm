@@ -147,7 +147,6 @@ using web::WebStateImpl;
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)selectedTabChanged;
-- (void)dismissToolsMenuPopup;
 - (void)cancelOmniboxEdit;
 - (void)setBackgroundAlpha:(CGFloat)alpha;
 - (void)browserStateDestroyed;
@@ -182,9 +181,6 @@ using web::WebStateImpl;
   return NO;
 }
 - (void)selectedTabChanged {
-  return;
-}
-- (void)dismissToolsMenuPopup {
   return;
 }
 - (void)cancelOmniboxEdit {

@@ -42,9 +42,6 @@
 // Following methods will be removed shortly by CL 741466.
 @optional
 #pragma mark - ToolsMenu
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration;
-- (void)dismissToolsMenuPopup;
 @property(nonatomic, readonly, strong)
     ToolsPopupController* toolsPopupController;
 @end
