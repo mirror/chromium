@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "c4cbc012_b022767a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T09:37:06Z",
+      "side": 1,
+      "message": "Can we write most of these utilities in platform/wtf/TypeTraits.h?\nThen, we can use it as\n\n    typename WrapInVectorType\u003cNativeValueTraits\u003cIDLType\u003e::ImplType\u003e::type\n\nI think it\u0027s good to have the following utilities in platform/wtf/TypeTraits.h.\n\n    T \u003d\u003e Member\u003cT\u003e or T itself\n    T \u003d\u003e HeapVector\u003cMember\u003cT\u003e\u003e or Vector\u003cT\u003e\n    T1, T2 \u003d\u003e HeapVector\u003cstd::pair\u003cT1, T2\u003e\u003e or Vector\u003cstd::pair\u003cT1, T2\u003e\u003e with optionally Member\u003cT\u003e.",
+      "parentUuid": "88f2fcb1_e22dc333",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b03434_5f97a25c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 1
