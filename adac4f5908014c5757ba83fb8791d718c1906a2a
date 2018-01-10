@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad2f787b_accb75c2",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-10T19:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc964222_826a54d3",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "482f038f_f7480d74",
         "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cb5ae9ed_924b6067",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-10T19:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482f038f_f7480d74",
+      "range": {
+        "startLine": 44,
+        "startChar": 38,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e286b31f_302fec1a",
         "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd85310f_41f6b440",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-10T19:43:07Z",
+      "side": 1,
+      "message": "Done.\n\nWasn\u0027t sure whether it was worth it, but it\u0027s nice if it can avoid UAF in the future.",
+      "parentUuid": "e286b31f_302fec1a",
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
