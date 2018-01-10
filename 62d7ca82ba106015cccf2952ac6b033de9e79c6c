@@ -16,6 +16,24 @@
       "revId": "62d7ca82ba106015cccf2952ac6b033de9e79c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6e73b4_bbebe308",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-10T14:22:12Z",
+      "side": 1,
+      "message": "I am trying to keep everything inside the view for now, the plan is to have the public API of the view to be reduced to the minimum (and possible hidden behind a common protocol for Primary and Secondary view).",
+      "parentUuid": "834c3cbf_de8e09d0",
+      "revId": "62d7ca82ba106015cccf2952ac6b033de9e79c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

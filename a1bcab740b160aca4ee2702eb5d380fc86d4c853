@@ -22,6 +22,30 @@
       "revId": "a1bcab740b160aca4ee2702eb5d380fc86d4c853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f8b12e_823d1562",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-10T14:22:12Z",
+      "side": 1,
+      "message": "In a followup CL.",
+      "parentUuid": "a607701d_f18acb4f",
+      "range": {
+        "startLine": 38,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "a1bcab740b160aca4ee2702eb5d380fc86d4c853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
