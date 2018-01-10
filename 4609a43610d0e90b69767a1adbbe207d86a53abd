@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3be83d_96233a6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "2018 now :p",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d06a49_6f4f795e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "hmm, can this be made show up as a move/copy I wonder, would make diff a lot easier to read, git cl upload has a similarity parameter, although not sure if that\u0027s still there with gerrit",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ef2bbc_eff1351f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "native and java window don\u0027t match? that\u0027s not a very good state",
+      "range": {
+        "startLine": 405,
+        "startChar": 57,
+        "endLine": 405,
+        "endChar": 69
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618122a2_3ca661b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "how much of this can be deduped with the constructor?",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3504c7f6_00d592ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "huh? if VR needs this called, whatever calls onExitVR should call this instead",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0d3fab_fef4370c",
+        "filename": "chrome/browser/android/compositor/compositor_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T04:57:29Z",
+      "side": 1,
+      "message": "what does this have to do with SetCompositorWindow?",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
