@@ -18,9 +18,9 @@ using net::test::IsOk;
 
 namespace net {
 
-class RemoteTestServerProxyTest : public testing::Test {
+class TcpSocketProxyTest : public testing::Test {
  public:
-  RemoteTestServerProxyTest() : io_thread_("RemoteTestServer IO Thread") {
+  TcpSocketProxyTest() : io_thread_("RemoteTestServer IO Thread") {
     EXPECT_TRUE(io_thread_.StartWithOptions(
         base::Thread::Options(base::MessageLoop::TYPE_IO, 0)));
 
@@ -102,7 +102,7 @@ class RemoteTestServerProxyTest : public testing::Test {
   IPEndPoint proxy_address_;
 };
 
-TEST_F(RemoteTestServerProxyTest, SendAndReceive) {
+TEST_F(TcpSocketProxyTest, SendAndReceive) {
   std::unique_ptr<StreamSocket> client_socket;
   std::unique_ptr<StreamSocket> server_socket;
   MakeConnection(&client_socket, &server_socket);
@@ -110,7 +110,7 @@ TEST_F(RemoteTestServerProxyTest, SendAndReceive) {
   SendAndReceiveData(server_socket.get(), client_socket.get());
 }
 
-TEST_F(RemoteTestServerProxyTest, TwoConnections) {
+TEST_F(TcpSocketProxyTest, TwoConnections) {
   std::unique_ptr<StreamSocket> client_socket1;
   std::unique_ptr<StreamSocket> server_socket1;
   MakeConnection(&client_socket1, &server_socket1);
@@ -127,7 +127,7 @@ TEST_F(RemoteTestServerProxyTest, TwoConnections) {
 
 // Close socket on the server side and verify that it's closed on the client
 // side.
-TEST_F(RemoteTestServerProxyTest, DisconnectServer) {
+TEST_F(TcpSocketProxyTest, DisconnectServer) {
   std::unique_ptr<StreamSocket> client_socket;
   std::unique_ptr<StreamSocket> server_socket;
   MakeConnection(&client_socket, &server_socket);
@@ -137,7 +137,7 @@ TEST_F(RemoteTestServerProxyTest, DisconnectServer) {
 
 // Close socket on the client side and verify that it's closed on the server
 // side.
-TEST_F(RemoteTestServerProxyTest, DisconnectClient) {
+TEST_F(TcpSocketProxyTest, DisconnectClient) {
   std::unique_ptr<StreamSocket> client_socket;
   std::unique_ptr<StreamSocket> server_socket;
   MakeConnection(&client_socket, &server_socket);
