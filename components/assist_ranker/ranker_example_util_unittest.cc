@@ -103,28 +103,43 @@ TEST_F(RankerExampleUtilTest, GetOneHotValue) {
   EXPECT_FALSE(GetOneHotValue("foo", example_, &value));
 }
 
-TEST_F(RankerExampleUtilTest, FeatureToInt) {
+TEST_F(RankerExampleUtilTest, ScalarFeatureInt64Conversion) {
   Feature feature;
-  int int_value;
+
   feature.set_bool_value(true);
-  EXPECT_TRUE(FeatureToInt(feature, &int_value));
-  EXPECT_EQ(1, int_value);
-  feature.set_bool_value(false);
-  EXPECT_TRUE(FeatureToInt(feature, &int_value));
-  EXPECT_EQ(0, int_value);
+  EXPECT_EQ(FeatureToInt64(feature), 72057594037927937LL);
 
-  feature.set_int32_value(42);
-  EXPECT_TRUE(FeatureToInt(feature, &int_value));
-  EXPECT_EQ(42, int_value);
-  feature.set_int32_value(-3);
-  EXPECT_TRUE(FeatureToInt(feature, &int_value));
-  EXPECT_EQ(-3, int_value);
+  feature.set_int32_value(std::numeric_limits<int32_t>::max());
+  EXPECT_EQ(FeatureToInt64(feature), 216172784261267455LL);
 
-  // Float and string values are not implemented yet.
-  feature.set_float_value(12.345f);
-  EXPECT_FALSE(FeatureToInt(feature, &int_value));
+  feature.set_int32_value(std::numeric_limits<int32_t>::lowest());
+  EXPECT_EQ(FeatureToInt64(feature), 216172784261267456LL);
+
   feature.set_string_value("foo");
-  EXPECT_FALSE(FeatureToInt(feature, &int_value));
+  EXPECT_EQ(FeatureToInt64(feature), 288230377439557724LL);
+}
+
+TEST_F(RankerExampleUtilTest, FloatFeatureInt64Conversion) {
+  Feature feature;
+  feature.set_float_value(std::numeric_limits<float>::epsilon());
+  EXPECT_EQ(FeatureToInt64(feature), 144115188948271104LL);
+
+  feature.set_float_value(-std::numeric_limits<float>::epsilon());
+  EXPECT_EQ(FeatureToInt64(feature), 144115191095754752LL);
+
+  feature.set_float_value(std::numeric_limits<float>::max());
+  EXPECT_EQ(FeatureToInt64(feature), 144115190214950911LL);
+
+  feature.set_float_value(std::numeric_limits<float>::lowest());
+  EXPECT_EQ(FeatureToInt64(feature), 144115192362434559LL);
+}
+
+TEST_F(RankerExampleUtilTest, StringListInt64Conversion) {
+  Feature feature;
+  feature.mutable_string_list()->add_string_value("");
+  feature.mutable_string_list()->add_string_value("TEST");
+
+  EXPECT_EQ(FeatureToInt64(feature, 1), 360287974776690660LL);
 }
 
 TEST_F(RankerExampleUtilTest, HashExampleFeatureNames) {

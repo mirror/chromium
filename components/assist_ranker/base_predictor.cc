@@ -65,12 +65,26 @@ void BasePredictor::LogFeatureToUkm(const std::string& feature_name,
     return;
   }
 
-  int feature_int_value;
-  if (FeatureToInt(feature, &feature_int_value)) {
-    DVLOG(3) << "Logging: " << feature_name << ": " << feature_int_value;
-    ukm_builder->AddMetric(feature_name.c_str(), feature_int_value);
-  } else {
-    DVLOG(0) << "Could not convert feature to int: " << feature_name;
+  switch (feature.feature_type_case()) {
+    case Feature::kBoolValue:
+    case Feature::kFloatValue:
+    case Feature::kInt32Value:
+    case Feature::kStringValue: {
+      const int64_t feature_int64_value = FeatureToInt64(feature);
+      DVLOG(3) << "Logging: " << feature_name << ": " << feature_int64_value;
+      ukm_builder->AddMetric(feature_name.c_str(), feature_int64_value);
+      break;
+    }
+    case Feature::kStringList: {
+      for (int i = 0; i < feature.string_list().string_value_size(); ++i) {
+        const int64_t feature_int64_value = FeatureToInt64(feature, i);
+        DVLOG(3) << "Logging: " << feature_name << ": " << feature_int64_value;
+        ukm_builder->AddMetric(feature_name.c_str(), feature_int64_value);
+      }
+      break;
+    }
+    default:
+      DVLOG(0) << "Could not convert feature to int: " << feature_name;
   }
 }
 
