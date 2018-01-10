@@ -218,7 +218,7 @@ class PLATFORM_EXPORT NetworkStateNotifier {
                                         WebConnectionType,
                                         double max_bandwidth_mbps);
   void SetNetworkQualityInfoOverride(WebEffectiveConnectionType effective_type,
-                                     unsigned long transport_rtt_msec,
+                                     unsigned long http_rtt_msec,
                                      double downlink_throughput_mbps);
   void SetSaveDataEnabledOverride(bool enabled);
   void ClearOverride();
