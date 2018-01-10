@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "289c0c05_3529644f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5354,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-10T21:45:58Z",
+      "side": 1,
+      "message": "These strings have now been updated based on Shimi\u0027s suggestions.",
+      "parentUuid": "4c5e039e_dd58f672",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba835dc5_da493ffc",
         "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
         "patchSetId": 5
