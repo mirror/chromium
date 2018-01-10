@@ -5,12 +5,15 @@
 #include "chrome/browser/ui/webui/signin/login_ui_test_utils.h"
 
 #include "base/run_loop.h"
+#include "base/scoped_observer.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/signin/signin_tracker_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/signin_view_controller_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/notification_service.h"
@@ -98,6 +101,29 @@ class SignInObserver : public SigninTracker::Observer {
   // prior to adding account to cookie.
   bool wait_for_account_cookies_;
   scoped_refptr<MessageLoopRunner> message_loop_runner_;
+};
+
+class LoginUIServiceObserver : public LoginUIService::Observer {
+ public:
+  void WaitForLoginUIClosed() {
+    if (sync_confirmation_ui_closed_)
+      return;
+
+    base::RunLoop run_loop;
+    quit_closure_ = run_loop.QuitClosure();
+    run_loop.Run();
+  }
+
+ private:
+  void OnSyncConfirmationUIClosed(
+      LoginUIService::SyncConfirmationUIClosedResult result) override {
+    sync_confirmation_ui_closed_ = true;
+    if (quit_closure_)
+      std::move(quit_closure_).Run();
+  }
+
+  bool sync_confirmation_ui_closed_ = false;
+  base::OnceClosure quit_closure_;
 };
 
 void RunLoopFor(base::TimeDelta duration) {
@@ -275,10 +301,19 @@ bool SignInWithUI(Browser* browser,
 }
 
 bool DismissSyncConfirmationDialog(Browser* browser, base::TimeDelta timeout) {
+  LoginUIServiceObserver login_ui_service_observer;
+  ScopedObserver<LoginUIService, LoginUIService::Observer>
+      scoped_login_ui_service_observer(&login_ui_service_observer);
+  scoped_login_ui_service_observer.Add(
+      LoginUIServiceFactory::GetForProfile(browser->profile()));
+
   const base::Time expire_time = base::Time::Now() + timeout;
   while (base::Time::Now() <= expire_time) {
-    if (SigninViewControllerTestUtil::TryDismissSyncConfirmationDialog(browser))
+    if (SigninViewControllerTestUtil::TryDismissSyncConfirmationDialog(
+            browser)) {
+      login_ui_service_observer.WaitForLoginUIClosed();
       return true;
+    }
     RunLoopFor(base::TimeDelta::FromMilliseconds(1000));
   }
   return false;
