@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca75d61_ecbd34a5",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-10T22:53:17Z",
+      "side": 1,
+      "message": "nit: add \"#include \u003cvector\u003e\" for this.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "f3e2f3119becfe7df1001fa55aecaf12842c588f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b07eed_359e1523",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-10T22:53:17Z",
+      "side": 1,
+      "message": "nit: add \"#include \u003calgorithm\u003e\" for this.",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "f3e2f3119becfe7df1001fa55aecaf12842c588f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
