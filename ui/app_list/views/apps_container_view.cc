@@ -162,7 +162,7 @@ gfx::Rect AppsContainerView::GetSearchBoxBounds() const {
 }
 
 gfx::Rect AppsContainerView::GetSearchBoxBoundsForState(
-    AppListModel::State state) const {
+    ash::AppListState state) const {
   if (!is_fullscreen_app_list_enabled_)
     return AppListPage::GetSearchBoxBounds();
 
@@ -173,7 +173,7 @@ gfx::Rect AppsContainerView::GetSearchBoxBoundsForState(
   if (is_in_drag) {
     search_box_bounds.set_y(GetSearchBoxTopPaddingDuringDragging());
   } else {
-    if (state == AppListModel::STATE_START)
+    if (state == ash::AppListState::STATE_START)
       search_box_bounds.set_y(kSearchBoxPeekingTopPadding);
     else
       search_box_bounds.set_y(GetSearchBoxFinalTopPadding());
@@ -183,19 +183,20 @@ gfx::Rect AppsContainerView::GetSearchBoxBoundsForState(
 }
 
 gfx::Rect AppsContainerView::GetPageBoundsForState(
-    AppListModel::State state) const {
+    ash::AppListState state) const {
   gfx::Rect onscreen_bounds = GetDefaultContentsBounds();
 
   if (!is_fullscreen_app_list_enabled_) {
-    if (state == AppListModel::STATE_APPS)
+    if (state == ash::AppListState::STATE_APPS)
       return onscreen_bounds;
     return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
   }
 
   // Both STATE_START and STATE_APPS are AppsContainerView page.
-  if (state == AppListModel::STATE_APPS || state == AppListModel::STATE_START) {
+  if (state == ash::AppListState::STATE_APPS ||
+      state == ash::AppListState::STATE_START) {
     int y = GetSearchBoxBoundsForState(state).bottom();
-    if (state == AppListModel::STATE_START)
+    if (state == ash::AppListState::STATE_START)
       y -= (kSearchBoxBottomPadding - kSearchBoxPeekingBottomPadding);
     onscreen_bounds.set_y(y);
     return onscreen_bounds;
@@ -205,7 +206,7 @@ gfx::Rect AppsContainerView::GetPageBoundsForState(
 }
 
 gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
-    AppListModel::State state) const {
+    ash::AppListState state) const {
   float app_list_y_position_in_screen =
       contents_view()->app_list_view()->app_list_y_position_in_screen();
   float drag_amount =
@@ -241,7 +242,8 @@ gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
 
   gfx::Rect onscreen_bounds = GetPageBoundsForState(state);
   // Both STATE_START and STATE_APPS are AppsContainerView page.
-  if (state == AppListModel::STATE_APPS || state == AppListModel::STATE_START)
+  if (state == ash::AppListState::STATE_APPS ||
+      state == ash::AppListState::STATE_START)
     onscreen_bounds.set_y(y);
 
   return onscreen_bounds;
