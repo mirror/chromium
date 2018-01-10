@@ -22,6 +22,30 @@
       "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7728a5_abe86996",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T12:31:27Z",
+      "side": 1,
+      "message": "Actually, just recalled, you do get constexpr construction here but since it\u0027s not a constexpr expression you wouldn\u0027t get a compile-time error if the compiler couldn\u0027t do it for some reason :(\n\nAll-in-all, I think it\u0027s safe to remove usage of LazyInstance on all of these, thanks!\n\n+brucedawson/fdoray whom have dealt with static initializers recently : correct?",
+      "parentUuid": "07121a99_8e1cf9e5",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
