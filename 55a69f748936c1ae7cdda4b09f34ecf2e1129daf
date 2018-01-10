@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7e9e6a_0cc8af29",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-10T18:20:34Z",
+      "side": 1,
+      "message": "Nit: \"a new |show_cleanup| value\"",
+      "revId": "55a69f748936c1ae7cdda4b09f34ecf2e1129daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d20e3cd_fc2aeea8",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-10T18:20:34Z",
+      "side": 1,
+      "message": "Is it possible to add a test with isPoweredByPartner false, to make sure the logo is hidden in that case?",
+      "revId": "55a69f748936c1ae7cdda4b09f34ecf2e1129daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
