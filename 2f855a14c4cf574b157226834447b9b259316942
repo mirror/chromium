@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ed943c_b1441449",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T22:53:59Z",
+      "side": 1,
+      "message": "Can you change input_region into a base::Optional\u003ccc::Region\u003e instead? I think the only logic that needs to be adjusted for this is https://cs.chromium.org/chromium/src/components/exo/surface.cc?l\u003d555, where we just need to add an if-statement.",
+      "range": {
+        "startLine": 728,
+        "startChar": 26,
+        "endLine": 728,
+        "endChar": 38
+      },
+      "revId": "2f855a14c4cf574b157226834447b9b259316942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
