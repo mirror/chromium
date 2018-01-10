@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52159f34_5e356c2b",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T13:19:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2e35550_19934a3a",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 427,
+        "endChar": 59
+      },
+      "revId": "5dc51f13aa0bbc88f365396836b596d158cd3fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9920b29e_315a064d",
         "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-10T13:10:15Z",
       "side": 1,
       "message": "Here I am not sure why we read g_browser_exe_main_entry_point_ticks second time after the null check. This does seem to eliminate a potential race.\n\nI\u0027m OK with any policy related to copying to \u0027const base::TimeTicks\u0027, just wanted to be more consistent, and have not figured the policy.",
+      "range": {
+        "startLine": 611,
+        "startChar": 4,
+        "endLine": 611,
+        "endChar": 79
+      },
+      "revId": "5dc51f13aa0bbc88f365396836b596d158cd3fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cb73c0_58c8b092",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T13:19:36Z",
+      "side": 1,
+      "message": "Pretty sure this was merely about avoiding accessing the LazyInstance twice (and const because it happened to be).\n\nLet\u0027s inline this, none of it is/was thread-safe anyways (it\u0027s all accessed from the main thread).",
+      "parentUuid": "9920b29e_315a064d",
       "range": {
         "startLine": 611,
         "startChar": 4,
