@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e46906_c05a91f8",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "contain",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82c88ba_9295b276",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "contain",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6047dcd3_31ad6bc4",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "Optional nit: note you can use #pragma mark here too.",
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2fbd61_4bda53a0",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "Optional tiny nit: Setup, setup, setUp, etc :)\nMaybe just rename the 2 new methods into setUpXxx.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6db2b20_181bc673",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "Or more shortly:  _allButtons \u003d [self.leadingStackViewButtons arrayByAddingObjectsFromArray:self.trailingStackViewButtons];",
+      "range": {
+        "startLine": 190,
+        "startChar": 18,
+        "endLine": 190,
+        "endChar": 25
+      },
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd37a12e_e1271d3d",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "Any reason for this to be before the call to super, like line 60?",
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c264574b_0300816e",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-10T14:51:55Z",
+      "side": 1,
+      "message": "Tiny nit: b",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "7c0fabb07d1dae003e0b94630dcf880285f9b0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
