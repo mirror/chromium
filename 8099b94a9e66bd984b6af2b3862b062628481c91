@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c998ad1_42089c5d",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T20:21:09Z",
+      "side": 1,
+      "message": "Why current_id \u003d\u003d prev_id? Is that just to prevent an endless loop?\n\nMaybe we should just CHECK() or LOG(FATAL) in that case. No way we should ever have 2 billion IDs all actually active.",
+      "revId": "8099b94a9e66bd984b6af2b3862b062628481c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a1bafd_8f645226",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T20:21:09Z",
+      "side": 1,
+      "message": "Maybe this file should just be ax_unique_id.h?\n\nI\u0027m fine with it being in the platform/ directory - but\nsince the class name is AXUniqueID generally the file name\nshould match.",
+      "revId": "8099b94a9e66bd984b6af2b3862b062628481c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddfffcf_47a1a814",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T20:21:09Z",
+      "side": 1,
+      "message": "Why pass a max id? I don\u0027t see why it can\u0027t just be a constant.\n\nIf it\u0027s only for testing, maybe make it protected and make the test\na friend, or at least comment it as only for testing.",
+      "revId": "8099b94a9e66bd984b6af2b3862b062628481c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
