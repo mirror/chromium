@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7de2d21c_0e9f7a81",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T21:45:24Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 166,
+        "startChar": 52,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f8ed4f_18abd29f",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T21:45:24Z",
+      "side": 1,
+      "message": "!fake_peripheral",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 32
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c001b575_7e3b8c0d",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T21:45:24Z",
+      "side": 1,
+      "message": "This ends up searching |gatt_services_| twice. Instead,\n\nauto it \u003d gatt_services_.find(identifier);\nif (it \u003d\u003d gatt_services_.end())\n  return false;\n\ngatt_services_.erase(it);\nreturn true;",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a039c745_c0e50b77",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/service-is-removed.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T21:45:24Z",
+      "side": 1,
+      "message": "Should this step be implicit in calling fake_service.remove()?",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
