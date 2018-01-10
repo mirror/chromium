@@ -138,7 +138,7 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
     const NGInlineItem& item = *item_result.item;
     if (item.Type() == NGInlineItem::kText ||
         item.Type() == NGInlineItem::kControl) {
-      DCHECK(item.GetLayoutObject()->IsText() ||
+      DCHECK(!item.GetLayoutObject() || item.GetLayoutObject()->IsText() ||
              item.GetLayoutObject()->IsLayoutNGListItem());
       DCHECK(!box->text_metrics.IsEmpty());
       if (item_result.shape_result) {
