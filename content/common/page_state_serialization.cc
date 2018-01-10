@@ -17,7 +17,7 @@
 #include "content/public/common/referrer_struct_traits.h"
 #include "content/public/common/resource_request_body.h"
 #include "ipc/ipc_message_utils.h"
-#include "mojo/common/common_custom_types_struct_traits.h"
+#include "mojo/common/string16_struct_traits.h"
 #include "mojo/common/time_struct_traits.h"
 #include "third_party/WebKit/public/platform/WebHistoryScrollRestorationType.h"
 #include "ui/display/display.h"
