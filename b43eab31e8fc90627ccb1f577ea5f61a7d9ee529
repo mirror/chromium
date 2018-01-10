@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b31b4e_018aff1e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T21:22:43Z",
+      "side": 1,
+      "message": "Web platform tests defines a specific set of origins (www1.web-platform.test, www2.web-platform.test, etc.) you can use for your tests. You should use these for cross-origin tests as described in the test server documentation here:\n\nhttp://web-platform-tests.org/writing-tests/server-features.html\n\nYou can use this WebUSB cross-origin test as an example:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webusb/usb-disabled-by-feature-policy.https.sub.html",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "b43eab31e8fc90627ccb1f577ea5f61a7d9ee529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
