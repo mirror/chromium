@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95da5a0e_8fa1f72d",
+        "filename": "content/public/browser/zygote_handle_linux.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-10T21:33:25Z",
+      "side": 1,
+      "message": "Consider making this a type like |using CreateZygoteProcess \u003d base::OnceCallback…| ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "fb3d9367e6fa62fe2e7f3d040910d1a437c2619c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
