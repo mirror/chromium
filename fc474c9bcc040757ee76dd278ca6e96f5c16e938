@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdde9a6_1cc45b41",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-10T21:24:31Z",
+      "side": 0,
+      "message": "I believe this is now dead, and with it a lot of the code above. Probably a bunch of comments too.",
+      "range": {
+        "startLine": 418,
+        "startChar": 6,
+        "endLine": 418,
+        "endChar": 25
+      },
+      "revId": "fc474c9bcc040757ee76dd278ca6e96f5c16e938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
