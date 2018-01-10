@@ -225,6 +225,7 @@
 #include "net/base/mime_util.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
+#include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
@@ -3825,6 +3826,13 @@ void ChromeContentBrowserClient::CreateUsbChooserService(
   UsbTabHelper* tab_helper =
       UsbTabHelper::GetOrCreateForWebContents(web_contents);
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
+}
+
+std::unique_ptr<net::ClientCertStore>
+ChromeContentBrowserClient::CreateClientCertStore(
+    content::ResourceContext* resource_context) {
+  return ProfileIOData::FromResourceContext(resource_context)
+      ->CreateClientCertStore();
 }
 
 // Static; handles rewriting Web UI URLs.

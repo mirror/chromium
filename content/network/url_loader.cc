@@ -27,6 +27,8 @@
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/base/upload_file_element_reader.h"
 #include "net/cert/symantec_certs.h"
+#include "net/ssl/client_cert_store.h"
+#include "net/ssl/ssl_private_key.h"
 #include "net/url_request/url_request_context.h"
 #include "services/network/public/cpp/net_adapters.h"
 
@@ -188,6 +190,41 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
   return std::make_unique<net::ElementsUploadDataStream>(
       std::move(element_readers), body->identifier());
 }
+
+class SSLPrivateKeyInternal : public net::SSLPrivateKey {
+ public:
+  SSLPrivateKeyInternal(mojom::SSLPrivateKeyPtr ssl_private_key,
+                        const std::vector<uint16_t>& algorithm_perferences)
+      : ssl_private_key_(std::move(ssl_private_key)),
+        algorithm_perferences_(algorithm_perferences) {}
+
+  // net::SSLPrivateKey:
+  std::vector<uint16_t> GetAlgorithmPreferences() override {
+    return algorithm_perferences_;
+  }
+
+  // net::SSLPrivateKey:
+  void Sign(uint16_t algorithm,
+            base::span<const uint8_t> input,
+            const net::SSLPrivateKey::SignCallback& callback) override {
+    std::vector<uint8_t> input_vector(input.begin(), input.end());
+    ssl_private_key_->Sign(
+        algorithm, input_vector,
+        base::Bind(&SSLPrivateKeyInternal::Callback, this, callback));
+  }
+
+ private:
+  ~SSLPrivateKeyInternal() override = default;
+
+  void Callback(const net::SSLPrivateKey::SignCallback& callback,
+                int32_t net_error,
+                const std::vector<uint8_t>& input) {
+    callback.Run(static_cast<net::Error>(net_error), input);
+  }
+
+  mojom::SSLPrivateKeyPtr ssl_private_key_;
+  std::vector<uint16_t> algorithm_perferences_;
+};
 
 }  // namespace
 
@@ -377,8 +414,16 @@ void URLLoader::OnAuthRequired(net::URLRequest* unused,
 
 void URLLoader::OnCertificateRequested(net::URLRequest* unused,
                                        net::SSLCertRequestInfo* cert_info) {
-  NOTIMPLEMENTED() << "http://crbug.com/756654";
-  net::URLRequest::Delegate::OnCertificateRequested(unused, cert_info);
+  // The network service can be null in tests.
+  if (!context_->network_service()) {
+    OnCertificateRequestedResponse(nullptr, std::vector<uint16_t>(), nullptr);
+    return;
+  }
+
+  context_->network_service()->client()->OnCertificateRequested(
+      process_id_, render_frame_id_, cert_info,
+      base::Bind(&URLLoader::OnCertificateRequestedResponse,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void URLLoader::OnSSLCertificateError(net::URLRequest* request,
@@ -690,6 +735,20 @@ void URLLoader::OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
   }
 
   url_request_->CancelWithSSLError(net_error, ssl_info);
+}
+
+void URLLoader::OnCertificateRequestedResponse(
+    const scoped_refptr<net::X509Certificate>& x509_certificate,
+    const std::vector<uint16_t>& algorithm_preferences,
+    mojom::SSLPrivateKeyPtr ssl_private_key) {
+  if (x509_certificate) {
+    scoped_refptr<net::SSLPrivateKey> key(new SSLPrivateKeyInternal(
+        std::move(ssl_private_key), algorithm_preferences));
+    url_request_->ContinueWithCertificate(std::move(x509_certificate),
+                                          std::move(key));
+  } else {
+    url_request_->CancelWithError(net::ERR_SSL_CLIENT_AUTH_CERT_NEEDED);
+  }
 }
 
 }  // namespace content
