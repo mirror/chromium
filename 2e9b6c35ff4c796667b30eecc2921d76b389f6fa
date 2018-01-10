@@ -16,6 +16,24 @@
       "revId": "2e9b6c35ff4c796667b30eecc2921d76b389f6fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec01d95_5590c17b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkDataGridNode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2018-01-10T17:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c21b14_217c8f14",
+      "revId": "2e9b6c35ff4c796667b30eecc2921d76b389f6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
