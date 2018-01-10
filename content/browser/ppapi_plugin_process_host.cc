@@ -38,9 +38,9 @@
 #include "services/service_manager/sandbox/switches.h"
 #include "ui/base/ui_base_switches.h"
 
-#if defined(OS_POSIX)
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // defined(OS_POSIX)
+#if defined(OS_LINUX)
+#include "content/public/common/zygote_handle_linux.h"
+#endif  // defined(OS_LINUX)
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"

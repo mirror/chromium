@@ -25,12 +25,14 @@
 
 #if defined(OS_WIN)
 #include "sandbox/win/src/sandbox_types.h"
-#else
+#endif
+
+#if defined(OS_POSIX)
 #include "content/public/browser/posix_file_descriptor_info.h"
 #endif
 
 #if defined(OS_LINUX)
-#include "content/public/common/zygote_handle.h"
+#include "content/public/common/zygote_handle_linux.h"
 #endif
 
 #if defined(OS_MACOSX)
