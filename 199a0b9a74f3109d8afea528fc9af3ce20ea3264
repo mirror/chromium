@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "28c16153_9adfde8b",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T22:48:54Z",
+      "side": 1,
+      "message": "nit: In browser test, session manager instance is ChromeSessionManager, which sets ACTIVE session state in its SessionStarted impl. So this line can be removed.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a97edca7_616c8674",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -55,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "dd8dd8b8_c8256a46",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T22:48:54Z",
+      "side": 1,
+      "message": "GetActiveUserProfile() should return sign-in profile before user profile is fully loaded.\n\nI would vote to use GetActiveUserProfile() and get rid of |profile| arg if we could make it work.",
+      "parentUuid": "ae01694c_7d2ad6c3",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "054582a9_5346823c",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -66,6 +101,29 @@
       "writtenOn": "2018-01-10T17:47:49Z",
       "side": 1,
       "message": "If this is waiting for A11yControllerClient to send to ash, can it call A11yControllerClient.FlushForTesting() instead? That makes it clearer which thing we\u0027re waiting for.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45ed099_0eac4a49",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T22:48:54Z",
+      "side": 1,
+      "message": "This only works when putting in a private section.",
+      "range": {
+        "startLine": 577,
+        "startChar": 2,
+        "endLine": 577,
+        "endChar": 26
+      },
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +158,24 @@
       "writtenOn": "2018-01-10T17:47:49Z",
       "side": 1,
       "message": "+xiyuan -- does this test make any sense to you? In particular, the old code was creating a test session then setting prefs before login.\n\nwarx, would this test work if you deleted this line and used GetActiveUserProfile() below? In theory that should return the signin screen profile at the login screen.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cef8b0f_c420388e",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T22:48:54Z",
+      "side": 1,
+      "message": "When user changes a11y prefs in the login screen, the pref is stored in the sign-in. And when a user signs in, the a11y prefs are copied to the user profile (when certain conditions are met) [1]. ResumeSavedPref is testing this behavior. \n\nHowever, it looks like the current test code is broken (due to my CL https://codereview.chromium.org/2918203002 that fixes ProfileManager::GetActiveUserProfile can skip UserSessionManager to load user profile). All SetXXXPref actually writes user profile after my change and ResumeSavedPref is not testing what is supposed to test. :( And good this CL would fix that.\n\nWe should move the CreateSession and user profile loading down around SessionStarted to make the intention of the test more clear.\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/accessibility/accessibility_manager.cc?rcl\u003df88fdc177092bb375d7f1a38a70a23f8e14abc03\u0026l\u003d191-211",
+      "parentUuid": "9f934891_24defd52",
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
