@@ -15,11 +15,10 @@ def main():
   args = parser.parse_args()
   assert args.out
 
-  return subprocess.call([
-      'alternate_version_generator.exe',
-      '--force',
-      '--out=' + args.out,
-      ])
+  generator = './alternate_version_generator'
+  if sys.platform == 'win32':
+    generator += '.exe'
+  return subprocess.call([generator, '--force', '--out=' + args.out])
 
 
 if '__main__' == __name__:
