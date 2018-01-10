@@ -48,11 +48,11 @@ void WebWidgetTestClient::AnimateNow() {
   if (animation_scheduled_) {
     blink::WebWidget* web_widget = web_widget_test_proxy_base_->web_widget();
     animation_scheduled_ = false;
-    base::TimeDelta animate_time = base::TimeTicks::Now() - base::TimeTicks();
-    web_widget->BeginFrame(animate_time.InSecondsF());
+    base::TimeTicks now = base::TimeTicks::Now();
+    web_widget->BeginFrame(now);
     web_widget->UpdateAllLifecyclePhases();
     if (blink::WebPagePopup* popup = web_widget->GetPagePopup()) {
-      popup->BeginFrame(animate_time.InSecondsF());
+      popup->BeginFrame(now);
       popup->UpdateAllLifecyclePhases();
     }
   }

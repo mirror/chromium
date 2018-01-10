@@ -162,7 +162,7 @@ WebInputEventResult GestureManager::HandleGestureTap(
         static_cast<WebInputEvent::Modifiers>(
             modifiers |
             WebInputEvent::Modifiers::kIsCompatibilityEventForTouch),
-        gesture_event.TimeStampSeconds());
+        gesture_event.TimeStamp());
     mouse_event_manager_->SetMousePositionAndDispatchMouseEvent(
         current_hit_test.InnerNode(), current_hit_test.CanvasRegionId(),
         EventTypeNames::mousemove, fake_mouse_move);
@@ -204,7 +204,7 @@ WebInputEventResult GestureManager::HandleGestureTap(
       static_cast<WebInputEvent::Modifiers>(
           modifiers | WebInputEvent::Modifiers::kLeftButtonDown |
           WebInputEvent::Modifiers::kIsCompatibilityEventForTouch),
-      gesture_event.TimeStampSeconds());
+      gesture_event.TimeStamp());
 
   // TODO(mustaq): We suppress MEs plus all it's side effects. What would that
   // mean for for TEs?  What's the right balance here? crbug.com/617255
@@ -254,7 +254,7 @@ WebInputEventResult GestureManager::HandleGestureTap(
       WebPointerProperties::Button::kLeft, gesture_event.TapCount(),
       static_cast<WebInputEvent::Modifiers>(
           modifiers | WebInputEvent::Modifiers::kIsCompatibilityEventForTouch),
-      gesture_event.TimeStampSeconds());
+      gesture_event.TimeStamp());
   WebInputEventResult mouse_up_event_result =
       suppress_mouse_events_from_gestures_
           ? WebInputEventResult::kHandledSuppressed
@@ -377,7 +377,7 @@ WebInputEventResult GestureManager::SendContextMenuEventForGesture(
         /* clickCount */ 0,
         static_cast<WebInputEvent::Modifiers>(
             modifiers | WebInputEvent::kIsCompatibilityEventForTouch),
-        gesture_event.TimeStampSeconds());
+        gesture_event.TimeStamp());
     mouse_event_manager_->SetMousePositionAndDispatchMouseEvent(
         targeted_event.GetHitTestResult().InnerNode(),
         targeted_event.CanvasRegionId(), EventTypeNames::mousemove,
@@ -394,7 +394,7 @@ WebInputEventResult GestureManager::SendContextMenuEventForGesture(
       /* clickCount */ 0,
       static_cast<WebInputEvent::Modifiers>(
           modifiers | WebInputEvent::kIsCompatibilityEventForTouch),
-      gesture_event.TimeStampSeconds());
+      gesture_event.TimeStamp());
 
   if (!suppress_mouse_events_from_gestures_ && frame_->View()) {
     HitTestRequest request(HitTestRequest::kActive);

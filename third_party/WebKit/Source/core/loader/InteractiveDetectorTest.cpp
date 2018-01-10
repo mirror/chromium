@@ -86,7 +86,8 @@ class InteractiveDetectorTest : public ::testing::Test {
 
   void SimulateInteractiveInvalidatingInput(double timestamp) {
     RunTillTimestamp(timestamp);
-    detector_->OnInvalidatingInputEvent(timestamp);
+    detector_->OnInvalidatingInputEvent(
+        base::TimeTicks() + base::TimeDelta::FromSecondsD(timestamp));
   }
 
   void RunTillTimestamp(double target_time) {

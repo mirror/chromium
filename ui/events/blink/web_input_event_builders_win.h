@@ -7,6 +7,7 @@
 
 #include <windows.h>
 
+#include "base/time/time.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
@@ -20,7 +21,7 @@ class WebMouseEventBuilder {
       UINT message,
       WPARAM wparam,
       LPARAM lparam,
-      double time_stamp,
+      base::TimeTicks time_stamp,
       blink::WebPointerProperties::PointerType pointer_type);
 };
 
@@ -31,7 +32,7 @@ class WebMouseWheelEventBuilder {
       UINT message,
       WPARAM wparam,
       LPARAM lparam,
-      double time_stamp,
+      base::TimeTicks time_stamp,
       blink::WebPointerProperties::PointerType pointer_type);
 };
 

@@ -90,10 +90,9 @@ class ScrollElasticityControllerTest : public testing::Test {
 
   void SendGestureScrollBegin(InertialPhaseState inertialPhase) {
     TickCurrentTime();
-    blink::WebGestureEvent event(
-        blink::WebInputEvent::kGestureScrollBegin,
-        blink::WebInputEvent::kNoModifiers,
-        (current_time_ - base::TimeTicks()).InSecondsF());
+    blink::WebGestureEvent event(blink::WebInputEvent::kGestureScrollBegin,
+                                 blink::WebInputEvent::kNoModifiers,
+                                 current_time_);
     event.source_device = blink::kWebGestureDeviceTouchpad;
     event.data.scroll_begin.inertial_phase =
         static_cast<blink::WebGestureEvent::InertialPhaseState>(inertialPhase);
@@ -110,10 +109,9 @@ class ScrollElasticityControllerTest : public testing::Test {
       const cc::OverscrollBehavior& overscroll_behavior =
           cc::OverscrollBehavior()) {
     TickCurrentTime();
-    blink::WebGestureEvent event(
-        blink::WebInputEvent::kGestureScrollUpdate,
-        blink::WebInputEvent::kNoModifiers,
-        (current_time_ - base::TimeTicks()).InSecondsF());
+    blink::WebGestureEvent event(blink::WebInputEvent::kGestureScrollUpdate,
+                                 blink::WebInputEvent::kNoModifiers,
+                                 current_time_);
     event.source_device = blink::kWebGestureDeviceTouchpad;
     event.data.scroll_update.inertial_phase =
         static_cast<blink::WebGestureEvent::InertialPhaseState>(inertialPhase);
@@ -131,10 +129,9 @@ class ScrollElasticityControllerTest : public testing::Test {
 
   void SendGestureScrollEnd() {
     TickCurrentTime();
-    blink::WebGestureEvent event(
-        blink::WebInputEvent::kGestureScrollEnd,
-        blink::WebInputEvent::kNoModifiers,
-        (current_time_ - base::TimeTicks()).InSecondsF());
+    blink::WebGestureEvent event(blink::WebInputEvent::kGestureScrollEnd,
+                                 blink::WebInputEvent::kNoModifiers,
+                                 current_time_);
     event.source_device = blink::kWebGestureDeviceTouchpad;
 
     controller_.ObserveGestureEventAndResult(event,

@@ -294,7 +294,7 @@ WebInputEventResult PageWidgetEventHandler::HandleInputEventIncludingTouch(
       WebPointerEvent pointer_event =
           WebPointerEvent::CreatePointerCausesUaActionEvent(
               WebPointerProperties::PointerType::kUnknown,
-              input_event.TimeStampSeconds());
+              input_event.TimeStamp());
       return HandleInputEventInternal(WebCoalescedInputEvent(pointer_event));
     }
     const WebTouchEvent touch_event =
