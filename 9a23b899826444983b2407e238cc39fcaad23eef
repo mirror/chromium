@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad916b8_236081d1",
+        "filename": "third_party/WebKit/Source/platform/heap/Handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T16:09:47Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me if I should add this include or have callers include HeapTraits.h explicitly.",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0bfc76_be2de398",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T16:09:47Z",
+      "side": 1,
+      "message": "This is not my favorite name, but the include guards would conflict with platform/wtf\u0027s if I called this header TypeTraits.h.",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a60d779_720e8323",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T16:09:47Z",
+      "side": 1,
+      "message": "Not sure if I need to add all template arguments that Vector (and the other containers) uses.",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
