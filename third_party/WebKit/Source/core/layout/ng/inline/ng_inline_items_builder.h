@@ -90,7 +90,12 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
                     LayoutObject* = nullptr);
 
   // Append a Bidi control character, for LTR or RTL depends on the style.
-  void AppendBidiControl(const ComputedStyle*, UChar ltr, UChar rtl);
+  void AppendBidiControl(LayoutObject*,
+                         const ComputedStyle*,
+                         UChar ltr_enter,
+                         UChar rtl_enter,
+                         UChar exit);
+  void AppendBidiControl(LayoutObject*, UChar enter, UChar exit);
 
   void EnterBlock(const ComputedStyle*);
   void ExitBlock();
@@ -108,11 +113,12 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
   // white space is collapsed.
   OffsetMappingBuilder mapping_builder_;
 
-  typedef struct OnExitNode {
+  struct BidiContext {
     LayoutObject* node;
-    UChar character;
-  } OnExitNode;
-  Vector<OnExitNode> exits_;
+    UChar enter;
+    UChar exit;
+  };
+  Vector<BidiContext> bidi_context_;
 
   enum class CollapsibleSpace { kNone, kSpace, kNewline, kSpaceNoWrap };
 
@@ -152,7 +158,6 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
                                                 unsigned,
                                                 const ComputedStyle*);
 
-  void Enter(LayoutObject*, UChar);
   void Exit(LayoutObject*);
 };
 
