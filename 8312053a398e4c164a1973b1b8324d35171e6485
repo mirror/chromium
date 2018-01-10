@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9605785_83611c29",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "Let\u0027s make this error message more descriptive as well as actionable. This allows developers can figure out what\u0027s wrong. This is especially important because we are being more restrictive than what\u0027s required by the standard here.",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cb6696_00a40f31",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "To be more closely aligned with the spec, let\u0027s make sure to do step 6 here as well, i.e. throw a SecurityError if the effective domain is not a valid domain.\n\nSecurityOrigin::Domain should give you https://html.spec.whatwg.org/multipage/origin.html#concept-origin-effective-domain.\n\n!empty \u0026\u0026 !OriginAccessEntry::HostIsIPAddress should give you\nhttps://url.spec.whatwg.org/#valid-domain",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412988ae_f700436c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "Please add either extensive unit tests (in CredentialsContainerTest.cpp) or layout tests (http/tests/credentialmanager/*) for rpId and domain checks. Also, we will want layout tests exercising the scenario when the website sets document.domain.\n\nAn example for layout test with an array of test cases: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-store-basics.html?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d53-108",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ae4c73_d2b366ca",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "nit: This will probably need to be kAllowSubdomains, at least the steps here are quite restrictive:\n\nhttps://html.spec.whatwg.org/multipage/origin.html#is-a-registrable-domain-suffix-of-or-is-equal-to",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb93b9ef_083507f9",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "nit: Same here, let\u0027s make these error messages specific and actionable.",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 71
+      },
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b9bb89_0606e89a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T12:00:42Z",
+      "side": 1,
+      "message": "nit: should we set rpId in the Mojo struct according to Step 7/NotPresent?",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
