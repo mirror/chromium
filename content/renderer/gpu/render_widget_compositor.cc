@@ -474,6 +474,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(300);
   settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
 
+  settings.check_damage_early = cmd.HasSwitch(cc::switches::kCheckDamageEarly);
+
 #if defined(OS_ANDROID)
   bool using_synchronous_compositor =
       GetContentClient()->UsingSynchronousCompositing();
@@ -481,6 +483,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.use_stream_video_draw_quad = true;
   settings.using_synchronous_renderer_compositor = using_synchronous_compositor;
+  settings.check_damage_early = using_synchronous_compositor;
   if (using_synchronous_compositor) {
     // Android WebView uses system scrollbars, so make ours invisible.
     // http://crbug.com/677348: This can't be done using hide_scrollbars
