@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf9e14_fcd7138e",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-10T10:14:48Z",
+      "side": 1,
+      "message": "Sorry for the dumb question ... I don\u0027t understand this logic, and the comment just restates it.\n\nWhat has the ability to resize got to do with immersive mode?",
+      "revId": "0b835eba029c316fa12c6a227bfd15d491b561bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
