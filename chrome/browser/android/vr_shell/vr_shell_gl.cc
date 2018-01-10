@@ -13,6 +13,7 @@
 #include "base/callback_helpers.h"
 #include "base/containers/queue.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -260,12 +261,13 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
       content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
-  webvr_experimental_rendering_ =
-      base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering);
 
-  // TODO(https://crbug.com/760389): force this on for S8 via whitelist?
-  if (gl::GLFence::IsGpuFenceSupported() && webvr_experimental_rendering_) {
-    webvr_use_gpu_fence_ = true;
+  std::string render_path_string = base::GetFieldTrialParamValueByFeature(
+      features::kWebXrRenderPath, features::kWebXrRenderPathParamName);
+  DVLOG(1) << __FUNCTION__ << ": WebXrRenderPath=" << render_path_string;
+  if (render_path_string == features::kWebXrRenderPathParamValueGpuFence) {
+    // TODO(https://crbug.com/760389): force this on for S8 via whitelist?
+    webvr_use_gpu_fence_ = gl::GLFence::IsGpuFenceSupported();
   }
 
   // InitializeRenderer calls GvrDelegateReady which triggers actions such as
