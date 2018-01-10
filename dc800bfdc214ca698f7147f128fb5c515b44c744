@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bfd887c_5cf79c6c",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done, also deprecate DOWNLOAD_INITIATED_BY_EXTENSION.",
+      "parentUuid": "f21e624f_1a84f054",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9d0a36_c6c554cb",
         "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfe326e_9c7d4945",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab9d0a36_c6c554cb",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b63b7ae_8c638c54",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2368836_891da93f",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fbb3182_62bdc05f",
         "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b006b0fc_8754de38",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fbb3182_62bdc05f",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a007ff3e_4ae4f19b",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e702fa_416d94d2",
+      "range": {
+        "startLine": 1378,
+        "startChar": 43,
+        "endLine": 1378,
+        "endChar": 48
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45d6dcfc_f79e69b9",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de752214_c552a5f1",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d6dcfc_f79e69b9",
+      "range": {
+        "startLine": 1379,
+        "startChar": 21,
+        "endLine": 1379,
+        "endChar": 22
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "21d631f6_625eaee4",
+        "filename": "content/browser/download/download_item_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Ack, this class\u0027s 3 ctors are all really big.",
+      "parentUuid": "5b127c01_9ead8b61",
+      "range": {
+        "startLine": 755,
+        "startChar": 36,
+        "endLine": 755,
+        "endChar": 59
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66d0ac8_c161f329",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-08T22:01:20Z",
       "side": 1,
       "message": "Does the following work?\n\nreturn std::make_unique\u003cDownloadResourceHandler\u003e(request, download_source);",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081bcdf0_1549cf6d",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t compile, probably because it needs to return base class unique ptr.",
+      "parentUuid": "a66d0ac8_c161f329",
       "range": {
         "startLine": 152,
         "startChar": 9,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "860cc76d_c9022e07",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done, good idea.",
+      "parentUuid": "1ab60d44_e47f8837",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 63
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a9f086_e7a3f759",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2962127_f1d59ddc",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Histogram marco need a constant |name|. Referred from:\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_functions.h?type\u003dcs\u0026q\u003dUmaHistogramEnumeration\u0026l\u003d19\n\nI guess histogram macros generate some intermediate structure which baked in the name during compile time. So all runtime generated name will be the same.",
+      "parentUuid": "34a9f086_e7a3f759",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 31
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "b6f37409_660b3a75",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "557f7990_6b05631b",
+      "range": {
+        "startLine": 353,
+        "startChar": 31,
+        "endLine": 354,
+        "endChar": 10
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87cb9a5_3637d4fd",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -275,6 +539,30 @@
       "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f82c2b_386dc100",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17196,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 1,
+      "message": "Done, I updated several related histogram in this CL, if we want to convert all histograms, we can do it in a separate patch.",
+      "parentUuid": "d87cb9a5_3637d4fd",
+      "range": {
+        "startLine": 17196,
+        "startChar": 9,
+        "endLine": 17196,
+        "endChar": 28
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

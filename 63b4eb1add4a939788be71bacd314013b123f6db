@@ -22,6 +22,30 @@
       "revId": "63b4eb1add4a939788be71bacd314013b123f6db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927a7d5c_8f2a0c85",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2307,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T01:24:49Z",
+      "side": 0,
+      "message": "Done, current path deprecated this enum, but it\u0027s probably better to keep these two.\n\nAlso updated related files so this is just partially deprecated.",
+      "parentUuid": "9a7809ed_901b99a5",
+      "range": {
+        "startLine": 2307,
+        "startChar": 2,
+        "endLine": 2307,
+        "endChar": 22
+      },
+      "revId": "63b4eb1add4a939788be71bacd314013b123f6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
