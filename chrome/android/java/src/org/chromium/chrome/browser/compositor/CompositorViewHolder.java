@@ -49,7 +49,6 @@ import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
-import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.widget.ClipDrawableProgressBar.DrawingInfo;
 import org.chromium.chrome.browser.widget.ControlContainer;
@@ -109,7 +108,6 @@ public class CompositorViewHolder extends FrameLayout
     /** The currently attached View. */
     private View mView;
 
-    private TabModelSelectorObserver mTabModelSelectorObserver;
     private TabObserver mTabObserver;
 
     // Cache objects that should not be created frequently.
@@ -126,6 +124,8 @@ public class CompositorViewHolder extends FrameLayout
     private View mOverlayContentView;
     private int mOverlayContentWidthMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
     private int mOverlayContentHeightMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
+
+    private boolean mSizeDecoupledFromParentForVr;
 
     /**
      * This view is created on demand to display debugging information.
@@ -205,18 +205,6 @@ public class CompositorViewHolder extends FrameLayout
             @Override
             public void onContentChanged(Tab tab) {
                 CompositorViewHolder.this.onContentChanged();
-            }
-        };
-
-        mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
-            @Override
-            public void onChange() {
-                onContentChanged();
-            }
-
-            @Override
-            public void onNewTabCreated(Tab tab) {
-                initializeTab(tab);
             }
         };
 
@@ -476,7 +464,7 @@ public class CompositorViewHolder extends FrameLayout
      * @param h Height of the view.
      */
     public void setSize(WebContents webContents, View view, int w, int h) {
-        if (webContents == null || view == null) return;
+        if (webContents == null || view == null || mSizeDecoupledFromParentForVr) return;
         // The view size takes into account of the browser controls whose height
         // should be subtracted from the view if they are visible, therefore shrink
         // Blink-side view size.
@@ -840,7 +828,20 @@ public class CompositorViewHolder extends FrameLayout
                 androidContentContainer, contextualSearchManager,
                 mCompositorView.getResourceManager().getDynamicResourceLoader());
 
-        attachToTabModelSelector(tabModelSelector);
+        mTabModelSelector = tabModelSelector;
+        tabModelSelector.addObserver(new EmptyTabModelSelectorObserver() {
+            @Override
+            public void onChange() {
+                onContentChanged();
+            }
+
+            @Override
+            public void onNewTabCreated(Tab tab) {
+                initializeTab(tab);
+            }
+        });
+
+        mLayerTitleCache.setTabModelSelector(mTabModelSelector);
 
         onContentChanged();
     }
@@ -1014,37 +1015,20 @@ public class CompositorViewHolder extends FrameLayout
     }
 
     /**
-     * Detach and return the {@link TabModelSelector} in order to disconnect this
-     * {@link CompositorViewHolder} so that VR can take ownership of Chrome's rendering.
-     * @return The detached {@link TabModelSelector}.
+     * Detach rendering from this {@link CompositorView} so that VR can take ownership of content
+     * rendering.
      */
-    public TabModelSelector detachForVr() {
-        if (mTabModelSelector != null) mTabModelSelector.removeObserver(mTabModelSelectorObserver);
-        TabModelSelector selector = mTabModelSelector;
-        mTabModelSelector = null;
-        mLayerTitleCache.setTabModelSelector(null);
-        setTab(null);
-        getCompositorView().setVisibility(View.INVISIBLE);
-        return selector;
+    public CompositorView decoupleSizeFromParentForVr() {
+        mSizeDecoupledFromParentForVr = true;
+        return getCompositorView();
     }
 
     /**
-     * Restores the {@link TabModelSelector} to this {@link CompositorViewHolder} after exiting VR
-     * so that it can take back ownership of Chrome's rendering.
-     * @param tabModelSelector
+     * Restores ownership of content rendering to this {@link CompositorView}.
      */
-    public void onExitVr(TabModelSelector tabModelSelector) {
-        getCompositorView().setVisibility(View.VISIBLE);
-        attachToTabModelSelector(tabModelSelector);
-    }
-
-    private void attachToTabModelSelector(TabModelSelector tabModelSelector) {
-        assert mTabModelSelector == null;
-        mTabModelSelector = tabModelSelector;
-        mTabModelSelector.addObserver(mTabModelSelectorObserver);
-
-        mLayerTitleCache.setTabModelSelector(mTabModelSelector);
-        onContentChanged();
+    public void onExitVr() {
+        mSizeDecoupledFromParentForVr = false;
+        onUpdateViewportSize();
     }
 
     @Override

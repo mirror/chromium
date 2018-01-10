@@ -134,6 +134,7 @@ import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
+import org.chromium.chrome.browser.vr_shell.VrViewContainer;
 import org.chromium.chrome.browser.webapps.AddToHomescreenManager;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
@@ -305,6 +306,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             VrShellDelegate.setVrModeEnabled(this);
         }
 
+        injectVrRootView();
+
         // Force a partner customizations refresh if it has yet to be initialized.  This can happen
         // if Chrome is killed and you refocus a previous activity from Android recents, which does
         // not go through ChromeLauncherActivity that would have normally triggered this.
@@ -316,6 +319,19 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
         mFullscreenManager = createFullscreenManager();
         mCreatedFullscreenManager = true;
+    }
+
+    // Inject a view into the hierarchy above R.id.content so that the rest of Chrome can remain
+    // unaware/uncaring of its existence. This view is used to draw the view hierarchy into a
+    // texture when browsing in VR. See https://crbug.com/793430.
+    private void injectVrRootView() {
+        View content = getWindow().findViewById(android.R.id.content);
+        ViewGroup parent = (ViewGroup) content.getParent();
+        VrViewContainer vr_view = new VrViewContainer(this);
+        vr_view.setId(R.id.vr_view_container);
+        parent.removeView(content);
+        parent.addView(vr_view);
+        vr_view.addView(content);
     }
 
     @SuppressLint("NewApi")
