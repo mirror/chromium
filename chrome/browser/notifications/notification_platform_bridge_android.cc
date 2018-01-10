@@ -353,7 +353,7 @@ void NotificationPlatformBridgeAndroid::Close(
   regenerated_notification_infos_.erase(iterator);
 
   Java_NotificationPlatformBridge_closeNotification(
-      env, java_object_, j_notification_id, j_origin, j_scope_url, j_tag,
+      env, java_object_, j_notification_id, j_scope_url,
       has_queried_webapk_package, j_webapk_package);
 }
 

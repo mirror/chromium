@@ -14,10 +14,9 @@
 namespace content {
 namespace {
 
-const char kPersistentNotificationPrefix[] = "p:";
-const char kNonPersistentNotificationPrefix[] = "n:";
-
-const char kSeparator = '#';
+const char kPersistentNotificationPrefix[] = "p#";
+const char kNonPersistentNotificationPrefix[] = "n#";
+const char kNotificationTagSeparator[] = "#";
 
 }  // namespace
 
@@ -54,6 +53,12 @@ std::string NotificationIdGenerator::GenerateForPersistentNotification(
   return stream.str();
 }
 
+/**
+  Note: Several functions NotificationPlatformBridge class
+  rely on the format of the notification generated here.
+  Code: chrome/android/java/src/org/chromium/chrome/browser/notifications/
+  NotificationPlatformBridge.java
+**/
 std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
     const GURL& origin,
     const std::string& tag,
@@ -66,11 +71,12 @@ std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
 
   stream << kNonPersistentNotificationPrefix;
   stream << origin;
+  stream << kNotificationTagSeparator;
 
   stream << base::IntToString(!tag.empty());
   if (tag.empty()) {
     stream << base::IntToString(render_process_id);
-    stream << kSeparator;
+    stream << kNotificationTagSeparator;
 
     stream << base::IntToString(request_id);
   } else {
