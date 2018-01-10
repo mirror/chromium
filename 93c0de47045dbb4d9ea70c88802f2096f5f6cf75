@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "2682b470_bd2bf237",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-10T21:09:42Z",
+      "side": 1,
+      "message": "It most certainly could be simplified.  My goal here, given the short timeline, is just to get something that works, and not try to build infrastructure to get it to work easier.",
+      "parentUuid": "b9a1e08d_b5edc2aa",
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc86fbe_8521048e",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -73,6 +91,30 @@
       "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9314ea6_c3233c32",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-10T21:09:42Z",
+      "side": 1,
+      "message": "XR.Devices could be talking about the underlying hardware as well as the WebVR/XR API, so I\u0027d like to leave namespace room for that.\n\nApi is fine with me.  I don\u0027t have a strong preference between XR.DevicesApi or XR.Devices.Api, but slightly prefer what I have.",
+      "parentUuid": "dbc86fbe_8521048e",
+      "range": {
+        "startLine": 2355,
+        "startChar": 23,
+        "endLine": 2355,
+        "endChar": 27
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "6da96c55_0c87f0d0",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-10T21:09:42Z",
+      "side": 1,
+      "message": "RequestedAvailableDevices sounds good.",
+      "parentUuid": "bd6deed3_da723d28",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 33
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02c76951_fbdad5cc",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -119,6 +185,30 @@
       "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999501f2_d9dedd2a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-10T21:09:42Z",
+      "side": 1,
+      "message": "HasPresentationCapableDevice sounds ok to me.",
+      "parentUuid": "02c76951_fbdad5cc",
+      "range": {
+        "startLine": 2367,
+        "startChar": 19,
+        "endLine": 2367,
+        "endChar": 37
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
