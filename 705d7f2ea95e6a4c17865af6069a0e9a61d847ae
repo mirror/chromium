@@ -46,6 +46,29 @@
       "revId": "705d7f2ea95e6a4c17865af6069a0e9a61d847ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b8aa86_bc5f8884",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T09:31:12Z",
+      "side": 1,
+      "message": "optional: IMO just \"MAX\" is enough, since it\u0027ll always be referred to as \"ContentSuggestionsNotificationImpression::MAX\". If you do change it, please change the other two as well.\n\nIt\u0027s also really a \"COUNT\" rather than a \"MAX\", but that\u0027s a pre-existing thing so I guess it\u0027s fine to leave as is.",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "705d7f2ea95e6a4c17865af6069a0e9a61d847ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
