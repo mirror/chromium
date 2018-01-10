@@ -17,7 +17,7 @@ namespace base {
 // DiscardableMemory instances backed by heap memory.
 class TestDiscardableMemoryAllocator : public DiscardableMemoryAllocator {
  public:
-  TestDiscardableMemoryAllocator();
+  constexpr TestDiscardableMemoryAllocator();
   ~TestDiscardableMemoryAllocator() override;
 
   // Overridden from DiscardableMemoryAllocator:

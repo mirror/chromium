@@ -53,7 +53,8 @@ class DiscardableMemoryImpl : public DiscardableMemory {
 
 }  // namespace
 
-TestDiscardableMemoryAllocator::TestDiscardableMemoryAllocator() = default;
+constexpr TestDiscardableMemoryAllocator::TestDiscardableMemoryAllocator() =
+    default;
 
 TestDiscardableMemoryAllocator::~TestDiscardableMemoryAllocator() = default;
 
