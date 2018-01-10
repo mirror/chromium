@@ -108,7 +108,8 @@ class CORE_EXPORT StyleEngine final
   const ActiveStyleSheetVector ActiveStyleSheetsForInspector();
 
   bool NeedsActiveStyleUpdate() const;
-  void SetNeedsActiveStyleUpdate(TreeScope&);
+  void SetNeedsActiveStyleUpdate(TreeScope&, InvalidationScope =
+                                                 kInvalidateCurrentScope);
   void AddStyleSheetCandidateNode(Node&);
   void RemoveStyleSheetCandidateNode(Node&, ContainerNode& insertion_point);
   void ModifiedStyleSheetCandidateNode(Node&);
@@ -233,7 +234,11 @@ class CORE_EXPORT StyleEngine final
                              TextPosition start_position,
                              StyleEngineContext&);
 
-  void CollectScopedStyleFeaturesTo(RuleFeatureSet&) const;
+  void CollectFeaturesTo(RuleFeatureSet& features) const {
+    CollectUserStyleFeaturesTo(features);
+    CollectScopedStyleFeaturesTo(features);
+  }
+
   void EnsureUAStyleForFullscreen();
   void EnsureUAStyleForElement(const Element&);
 
@@ -333,6 +338,9 @@ class CORE_EXPORT StyleEngine final
 
   void CreateResolver();
   void ClearResolvers();
+
+  void CollectUserStyleFeaturesTo(RuleFeatureSet&) const;
+  void CollectScopedStyleFeaturesTo(RuleFeatureSet&) const;
 
   CSSStyleSheet* ParseSheet(Element&,
                             const String& text,
