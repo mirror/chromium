@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11833afd_ad1bbc2d",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-10T21:40:13Z",
+      "side": 1,
+      "message": "Space missing after \"/*\" and before \"*/\" (here and elsewhere).",
+      "range": {
+        "startLine": 399,
+        "startChar": 34,
+        "endLine": 399,
+        "endChar": 36
+      },
+      "revId": "8ac216b896d2e0bcc6a1c81e8e1447bfd7439b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42583e98_31916cce",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-10T21:40:13Z",
+      "side": 1,
+      "message": "The test names would probably be more readable if renamed as follows:\n\nonInfectedResultsProvidedByPartner -\u003e onInfectedResultsProvidedByPartner_True\nonInfectedResultsNotProvidedByPartner -\u003e onInfectedResultsProvidedByPartner_False\n\nonCleaningResultsProvidedByPartner -\u003e onCleaningResultsProvidedByPartner_True\nonCleaningResultsNotProvidedByPartner -\u003e onCleaningResultsProvidedByPartner_False",
+      "range": {
+        "startLine": 402,
+        "startChar": 8,
+        "endLine": 402,
+        "endChar": 45
+      },
+      "revId": "8ac216b896d2e0bcc6a1c81e8e1447bfd7439b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
