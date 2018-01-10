@@ -143,11 +143,9 @@ using web::WebStateImpl;
 - (void)updateToolbarState;
 - (void)adjustToolbarHeight;
 - (void)setShareButtonEnabled:(BOOL)enabled;
-- (id)toolsPopupController;
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)selectedTabChanged;
-- (void)dismissToolsMenuPopup;
 - (void)cancelOmniboxEdit;
 - (void)setBackgroundAlpha:(CGFloat)alpha;
 - (void)browserStateDestroyed;
@@ -172,9 +170,6 @@ using web::WebStateImpl;
 - (void)setShareButtonEnabled:(BOOL)enabled {
   return;
 }
-- (id)toolsPopupController {
-  return nil;
-}
 - (BOOL)isOmniboxFirstResponder {
   return NO;
 }
@@ -182,9 +177,6 @@ using web::WebStateImpl;
   return NO;
 }
 - (void)selectedTabChanged {
-  return;
-}
-- (void)dismissToolsMenuPopup {
   return;
 }
 - (void)cancelOmniboxEdit {
