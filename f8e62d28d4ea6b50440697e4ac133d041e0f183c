@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7c215173_dbee5c77",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-10T14:47:24Z",
+      "side": 1,
+      "message": "\u003e \u003e Probably, we should add \u0027\u0026\u0026 event_behavior \u003d\u003d kDispatchNoEvent \u0026\u0026 isConnected()\u0027\n\u003e \n\u003e I disagree that we should call DidChangeValueInTextField only if |event_behavior \u003d\u003d kDispatchNoEvent|. To me, if the value has changed, we should always notify the autofill client. For example, SetAutofillValue use kDispatchInputAndChangeEvent. We want to be sure the password manager ALWAYS knows about changes in fields, otherwise site\u0027s tricks confuses the password manager.\n\u003e \n\u003e To me, it is a bit strange we need to check |isConnected()| here. I believe |IsConnected| should be checked earlier. We don\u0027t do this check for |NotifyFormStateChanged| while it is a sort of notification as well. Moreover, we want to be notified about changes in fields that has just been disconnected.\n\nWe also don\u0027t need |UserGestureIndicator::ProcessingUserGesture()| because we check it in the renderer (https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_tracker.cc?rcl\u003d5d0f1f9834c1bb63757210f0d6dbc75be35399e8\u0026l\u003d80). Test: https://cs.chromium.org/chromium/src/chrome/renderer/autofill/autofill_renderer_browsertest.cc?rcl\u003d8fbaaa49a274c3dd9bf54b4b299414c4a64950e8\u0026l\u003d361",
+      "parentUuid": "a447f9f3_44610ffb",
+      "revId": "f8e62d28d4ea6b50440697e4ac133d041e0f183c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f38faf8_32352903",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
         "patchSetId": 1
