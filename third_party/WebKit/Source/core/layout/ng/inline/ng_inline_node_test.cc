@@ -63,7 +63,10 @@ class NGInlineNodeForTest : public NGInlineNode {
     NGInlineNode::SegmentText(data);
   }
 
-  void CollectInlines() { NGInlineNode::CollectInlines(MutableData()); }
+  bool CanUseNewLayout() { return NGInlineNode::CanUseNewLayout(); }
+
+  bool CollectInlines() { return NGInlineNode::CollectInlines(MutableData()); }
+
   void ShapeText() { NGInlineNode::ShapeText(MutableData()); }
 };
 
@@ -145,11 +148,33 @@ class NGInlineNodeTest : public NGLayoutTest {
   EXPECT_EQ(end, item.EndOffset());                       \
   EXPECT_EQ(direction, item.Direction())
 
+TEST_F(NGInlineNodeTest, CollectInlinesEditable) {
+  SetupHtml("t",
+            "<div id=t>"
+            "abc <span contenteditable>editable</span> xyz"
+            "</div>");
+  NGInlineNodeForTest node = CreateInlineNode();
+  EXPECT_FALSE(node.CollectInlines());
+  EXPECT_FALSE(node.CanUseNewLayout());
+}
+
+TEST_F(NGInlineNodeTest, CollectInlinesRuby) {
+  SetupHtml("t",
+            "<div id=t>"
+            "abc <ruby style=display:inline>foo<rt>bar</rt></ruby> xyz"
+            "</div>");
+  NGInlineNodeForTest node = CreateInlineNode();
+  EXPECT_FALSE(node.CollectInlines());
+  EXPECT_FALSE(node.CanUseNewLayout());
+}
+
 TEST_F(NGInlineNodeTest, CollectInlinesText) {
   SetupHtml("t", "<div id=t>Hello <span>inline</span> world.</div>");
   NGInlineNodeForTest node = CreateInlineNode();
   node.CollectInlines();
   EXPECT_FALSE(node.IsBidiEnabled());
+  ASSERT_TRUE(node.CollectInlines());
+  EXPECT_TRUE(node.CanUseNewLayout());
   Vector<NGInlineItem>& items = node.Items();
   TEST_ITEM_TYPE_OFFSET(items[0], kText, 0u, 6u);
   TEST_ITEM_TYPE_OFFSET(items[1], kOpenTag, 6u, 6u);
@@ -162,7 +187,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesText) {
 TEST_F(NGInlineNodeTest, CollectInlinesBR) {
   SetupHtml("t", u"<div id=t>Hello<br>World</div>");
   NGInlineNodeForTest node = CreateInlineNode();
-  node.CollectInlines();
+  ASSERT_TRUE(node.CollectInlines());
+  EXPECT_TRUE(node.CanUseNewLayout());
   EXPECT_EQ("Hello\nWorld", node.Text());
   EXPECT_FALSE(node.IsBidiEnabled());
   Vector<NGInlineItem>& items = node.Items();
@@ -196,7 +222,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesRtl) {
 TEST_F(NGInlineNodeTest, CollectInlinesRtlWithSpan) {
   SetupHtml("t", u"<div id=t dir=rtl>\u05E2 <span>\u05E2</span> \u05E2</div>");
   NGInlineNodeForTest node = CreateInlineNode();
-  node.CollectInlines();
+  ASSERT_TRUE(node.CollectInlines());
+  EXPECT_TRUE(node.CanUseNewLayout());
   EXPECT_TRUE(node.IsBidiEnabled());
   node.SegmentText();
   EXPECT_TRUE(node.IsBidiEnabled());
@@ -212,7 +239,7 @@ TEST_F(NGInlineNodeTest, CollectInlinesRtlWithSpan) {
 TEST_F(NGInlineNodeTest, CollectInlinesMixedText) {
   SetupHtml("t", u"<div id=t>Hello, \u05E2 <span>\u05E2</span></div>");
   NGInlineNodeForTest node = CreateInlineNode();
-  node.CollectInlines();
+  ASSERT_TRUE(node.CollectInlines());
   EXPECT_TRUE(node.IsBidiEnabled());
   node.SegmentText();
   EXPECT_TRUE(node.IsBidiEnabled());
@@ -228,7 +255,8 @@ TEST_F(NGInlineNodeTest, CollectInlinesMixedText) {
 TEST_F(NGInlineNodeTest, CollectInlinesMixedTextEndWithON) {
   SetupHtml("t", u"<div id=t>Hello, \u05E2 <span>\u05E2!</span></div>");
   NGInlineNodeForTest node = CreateInlineNode();
-  node.CollectInlines();
+  ASSERT_TRUE(node.CollectInlines());
+  EXPECT_TRUE(node.CanUseNewLayout());
   EXPECT_TRUE(node.IsBidiEnabled());
   node.SegmentText();
   EXPECT_TRUE(node.IsBidiEnabled());

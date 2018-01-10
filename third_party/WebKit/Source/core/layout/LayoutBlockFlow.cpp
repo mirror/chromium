@@ -360,9 +360,11 @@ bool LayoutBlockFlow::CheckIfIsSelfCollapsingBlock() const {
   // text control are known, so they don't get layout until their parent has had
   // layout - this is unique in the layout tree and means when we call
   // isSelfCollapsingBlock on them we find that they still need layout.
-  DCHECK(!NeedsLayout() || (GetNode() && GetNode()->IsElementNode() &&
-                            ToElement(GetNode())->ShadowPseudoId() ==
-                                "-webkit-input-placeholder"));
+  if (NeedsLayout()) {
+    DCHECK_EQ(ToElement(GetNode())->ShadowPseudoId(),
+              "-webkit-input-placeholder")
+        << GetNode();
+  }
 
   if (LogicalHeight() > LayoutUnit() || BorderAndPaddingLogicalHeight() ||
       Style()->LogicalMinHeight().IsPositive() ||
@@ -2942,6 +2944,12 @@ void LayoutBlockFlow::StyleDidChange(StyleDifference diff,
                                      const ComputedStyle* old_style) {
   bool had_self_painting_layer = HasSelfPaintingLayer();
   LayoutBlock::StyleDidChange(diff, old_style);
+
+  // TODO(layout-dev): Once LayoutNG supports contenteditable, we should remove
+  // this if-statement to mark collect inlines.
+  if (IsLayoutNGMixin() && old_style &&
+      StyleRef().UserModify() != old_style->UserModify())
+    MarkContainerNeedsCollectInlines();
 
   // After our style changed, if we lose our ability to propagate floats into
   // next sibling blocks, then we need to find the top most parent containing

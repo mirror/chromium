@@ -63,6 +63,7 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
                                  const LayoutObject* offset_container);
 
   bool CanUseNewLayout() const;
+  static bool CanUseNewLayout(const LayoutBox&);
 
   String ToString() const;
 

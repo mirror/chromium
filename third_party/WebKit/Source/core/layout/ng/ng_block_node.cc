@@ -301,7 +301,19 @@ bool NGBlockNode::CanUseNewLayout() const {
   if (!box_->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+
+  NGLayoutInputNode first_child = FirstChild();
+  if (!first_child || !first_child.IsInline())
+    return true;
+
+  return ToNGInlineNode(first_child).CanUseNewLayout();
+}
+
+// static
+bool NGBlockNode::CanUseNewLayout(const LayoutBox& box) {
+  return NGBlockNode(const_cast<LayoutBox*>(&box)).CanUseNewLayout();
 }
 
 String NGBlockNode::ToString() const {
@@ -554,7 +566,8 @@ scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
   }
 
   if (box_->IsLayoutNGMixin() && box_->NeedsLayout()) {
-    ToLayoutBlockFlow(box_)->LayoutBlockFlow::UpdateBlockLayout(true);
+    LayoutBlockFlow* const block_flow = ToLayoutBlockFlow(box_);
+    block_flow->LayoutBlockFlow::UpdateBlockLayout(true);
   } else {
     box_->ForceLayout();
   }
