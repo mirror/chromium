@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1e46ea9_4f1c267b",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5288258_885684a4",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d34020_5ad0401b",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f88d2a5_6bbf4d84",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "I changed it to the other solution so configuring kWebRtcMaxCpuConsumptionPercentage. So no need a feature here as it is mostly for debugging purpose. Also see new description of the CL. Thx.",
+      "parentUuid": "d1d34020_5ad0401b",
+      "range": {
+        "startLine": 180,
+        "startChar": 20,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d190f44_836ab08d",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7819f373_bffe0fc4",
+      "range": {
+        "startLine": 207,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc751c8e_ab3c1db6",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab58204_f28331dd",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "Thx for the suggestion but it is missing the \"-last_capture_duration\" when throttling_enabled_ is false. But in the end I will configure kMaximumCpuConsumptionPercentage as you suggested so I will keep the formating of the existing code to avoid potential regressions.",
+      "parentUuid": "fc751c8e_ab3c1db6",
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "27350ff3_fe95ae7d",
+        "filename": "content/browser/media/capture/desktop_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "It was not easy but after many attempts I managed to do what you suggested.",
+      "parentUuid": "ac0f4085_72ea2e00",
+      "range": {
+        "startLine": 227,
+        "startChar": 28,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47998b40_e2a277aa",
         "filename": "content/public/common/content_switches.h",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f59268c_4053f5f1",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-10T16:42:15Z",
+      "side": 1,
+      "message": "I was also surprised but otherwise I get \"undefined symbol: switches::kDisableWebRtcCaptureThrottling\". I think it is because I use it in the unit test.",
+      "parentUuid": "47998b40_e2a277aa",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
