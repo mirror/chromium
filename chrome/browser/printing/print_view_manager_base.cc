@@ -92,7 +92,7 @@ PrintViewManagerBase::PrintViewManagerBase(content::WebContents* web_contents)
   printing_enabled_.Init(
       prefs::kPrintingEnabled, profile->GetPrefs(),
       base::Bind(&PrintViewManagerBase::UpdatePrintingEnabled,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 PrintViewManagerBase::~PrintViewManagerBase() {
@@ -122,9 +122,10 @@ void PrintViewManagerBase::PrintForPrintPreview(
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&PrintViewManagerBase::CreateQueryWithSettings,
-                     base::Unretained(this), std::move(job_settings), rfh,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(job_settings),
+                     rfh,
                      base::BindOnce(&PrintViewManagerBase::OnPrintSettingsDone,
-                                    base::Unretained(this), print_data,
+                                    weak_ptr_factory_.GetWeakPtr(), print_data,
                                     page_count, std::move(callback))));
 }
 
@@ -204,7 +205,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::BindOnce(&PrintViewManagerBase::SystemDialogCancelled,
-                       base::Unretained(this)));
+                       weak_ptr_factory_.GetWeakPtr()));
 #endif
     std::move(callback).Run(base::Value());
     return;
@@ -224,7 +225,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(&PrintViewManagerBase::StartLocalPrintJob,
-                     base::Unretained(this), print_data, page_count,
+                     weak_ptr_factory_.GetWeakPtr(), print_data, page_count,
                      printer_query, std::move(callback)));
 }
 
@@ -256,7 +257,7 @@ void PrintViewManagerBase::StartLocalPrintJob(
 void PrintViewManagerBase::UpdatePrintingEnabled() {
   web_contents()->ForEachFrame(
       base::Bind(&PrintViewManagerBase::SendPrintingEnabled,
-                 base::Unretained(this), printing_enabled_.GetValue()));
+                 weak_ptr_factory_.GetWeakPtr(), printing_enabled_.GetValue()));
 }
 
 void PrintViewManagerBase::NavigationStopped() {
