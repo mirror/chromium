@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37a30bde_0f6e0f1b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-10T09:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d2eeeb_7979cbeb",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9805ad_f18422dc",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T23:10:30Z",
       "side": 1,
       "message": "So this factory is just reset every time it is called?",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63994695_614a000a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4242,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-10T09:18:14Z",
+      "side": 1,
+      "message": "Yes, since the renderer only need one factory at a time anyways.",
+      "parentUuid": "5b9805ad_f18422dc",
       "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3e74d2_5fe4f940",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4269,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-10T09:18:14Z",
+      "side": 1,
+      "message": "I expanded the comment a bit, PTAL.",
+      "parentUuid": "53887630_73c17264",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
