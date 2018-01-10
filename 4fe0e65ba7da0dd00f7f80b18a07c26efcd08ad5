@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11324e82_4ea85726",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-10T01:54:26Z",
+      "side": 1,
+      "message": "BrowserHandler has more responsibilities than just histograms. Declaring these for the scope of the file misleads into thinking about histogram types as being frequently used whereas you only mention them twice in your code. As a result we add 7 lines of code, contribute to the namespace we don\u0027t own, mislead user for very little benefit.",
+      "parentUuid": "01028f90_664082a9",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71874be_9817bec2",
         "filename": "content/browser/devtools/protocol/browser_handler.cc",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027d rather not. It just adds cruft and distraction to the code, and forces several lines to be folded.",
       "parentUuid": "c71874be_9817bec2",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4141cfc6_27ce221c",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-10T01:54:26Z",
+      "side": 1,
+      "message": "We don\u0027t do that for std:: and rarely do that for base:: for the sake of readability and search-ability. Most of the code navigation happens via code search and trimming namespace adds to the ambiguity. Both also help understand that you use a feature from base:: or std::. I don\u0027t think you\u0027ll find using std::unique_ptr anywhere in the chrome source base.",
+      "parentUuid": "53d56423_8509087a",
       "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "3bd83b38_135a7dd7",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "405574b5_3ac60170",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-10T01:54:26Z",
+      "side": 1,
+      "message": "You did not respond to this one.",
+      "parentUuid": "e04c3de6_0fff9d48",
       "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
