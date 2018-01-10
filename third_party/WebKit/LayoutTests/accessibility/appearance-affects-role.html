@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<!--
+// TODO: Explain what this test does.
+ -->
+
+<style>
+* {
+    -webkit-appearance: none;
+    appearance: none;
+}
+</style>
+
+<div class="container">
+    <progress value="20" max="100" id="progress"></progress>
+</div>
+
+<script>
+function check(id, expectedRole) {
+    
+}
+
+test(function(t) {
+    var axObject = accessibilityController.accessibleElementById("progress");
+    assert_equals(axObject.role, "AXRole: AXProgressIndicator");
+}, "Test computed AX role for some common objects");
+</script>
