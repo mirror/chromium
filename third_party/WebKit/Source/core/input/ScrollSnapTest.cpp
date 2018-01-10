@@ -16,7 +16,8 @@ namespace blink {
 
 class ScrollSnapTest : public SimTest {
  protected:
-  void SetUp() override;
+  void SetUpForDiv();
+  void SetUpForBody();
   // The following x, y, hint_x, hint_y, delta_x, delta_y are represents
   // the pointer/finger's location on touch screen.
   void ScrollBegin(double x, double y, double hint_x, double hint_y);
@@ -25,8 +26,7 @@ class ScrollSnapTest : public SimTest {
   void SetInitialScrollOffset(double x, double y);
 };
 
-void ScrollSnapTest::SetUp() {
-  SimTest::SetUp();
+void ScrollSnapTest::SetUpForDiv() {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(400, 400));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -59,6 +59,40 @@ void ScrollSnapTest::SetUp() {
       <div id='container'>
         <div id='area'></div>
       </div>
+    </div>
+  )HTML");
+
+  Compositor().BeginFrame();
+}
+
+void ScrollSnapTest::SetUpForBody() {
+  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
+  WebView().Resize(WebSize(300, 300));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+    <style>
+    body {
+      scroll-snap-type: both mandatory;
+      margin: 0px;
+    }
+    #container {
+      margin: 0px;
+      padding: 0px;
+      width: 500px;
+      height: 500px;
+    }
+    #area {
+      position: relative;
+      left: 200px;
+      top: 200px;
+      width: 100px;
+      height: 100px;
+      scroll-snap-align: start;
+    }
+    </style>
+    <div id='container'>
+      <div id='area'></div>
     </div>
   )HTML");
 
@@ -117,6 +151,7 @@ void ScrollSnapTest::SetInitialScrollOffset(double x, double y) {
 }
 
 TEST_F(ScrollSnapTest, ScrollSnapOnX) {
+  SetUpForDiv();
   SetInitialScrollOffset(50, 150);
   ScrollBegin(100, 100, -50, 0);
   // The finger moves left.
@@ -136,6 +171,7 @@ TEST_F(ScrollSnapTest, ScrollSnapOnX) {
 }
 
 TEST_F(ScrollSnapTest, ScrollSnapOnY) {
+  SetUpForDiv();
   SetInitialScrollOffset(150, 50);
   ScrollBegin(100, 100, 0, -50);
   // The finger moves up.
@@ -155,6 +191,7 @@ TEST_F(ScrollSnapTest, ScrollSnapOnY) {
 }
 
 TEST_F(ScrollSnapTest, ScrollSnapOnBoth) {
+  SetUpForDiv();
   SetInitialScrollOffset(50, 50);
   ScrollBegin(100, 100, 0, -50);
   // The finger moves left.
@@ -172,6 +209,25 @@ TEST_F(ScrollSnapTest, ScrollSnapOnBoth) {
   // A scroll gesture that has move in both x and y would snap on both axes.
   ASSERT_EQ(scroller->scrollLeft(), 200);
   ASSERT_EQ(scroller->scrollTop(), 200);
+}
+
+TEST_F(ScrollSnapTest, SnapOnViewport) {
+  SetUpForBody();
+  ScrollBegin(100, 100, 0, -50);
+  // The finger moves left.
+  ScrollUpdate(100, 100, 0, -50);
+  // The finger moves up.
+  ScrollUpdate(100, 50, -50, 0);
+  ScrollEnd(50, 50);
+
+  // Wait for animation to finish.
+  Compositor().BeginFrame();  // update run_state_.
+  Compositor().BeginFrame();  // Set start_time = now.
+  Compositor().BeginFrame(0.3);
+
+  // A scroll gesture that has move in both x and y would snap on both axes.
+  ASSERT_EQ(Window().scrollX(), 200);
+  ASSERT_EQ(Window().scrollY(), 200);
 }
 
 }  // namespace blink
