@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d91aade8_56126092",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "I didn\u0027t think we updated copyright on file moves? Whatever, updated to 2018 :P",
+      "parentUuid": "6d3be83d_96233a6e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d06a49_6f4f795e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
         "patchSetId": 15
@@ -39,6 +63,24 @@
       "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb98c6_620e8446",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "I tried. Locally, git detects it as a move, but gerrit ignores that. The only changes to this file are mechanical - changing the callbacks to use surfaceHolder().getSurface() instead of just surfaceHolder()",
+      "parentUuid": "71d06a49_6f4f795e",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5fd25952_fb222843",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "Updated the stored WindowAndroid here.",
+      "parentUuid": "b5ef2bbc_eff1351f",
+      "range": {
+        "startLine": 405,
+        "startChar": 57,
+        "endLine": 405,
+        "endChar": 69
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618122a2_3ca661b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 15
@@ -79,6 +145,24 @@
       "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fd2f60_6196c953",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "2 lines, and it would require re-ordering the constructor lines. I don\u0027t think it\u0027s worth de-duping.",
+      "parentUuid": "618122a2_3ca661b4",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "e4d64a0f_882b6e48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "Changed to mCompositorSurfaceManager.setVisibility(getVisibility()). We need the visibility to be set correctly when recreating the surfaceManager. I don\u0027t see why this would be the caller\u0027s responsibility.",
+      "parentUuid": "3504c7f6_00d592ff",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c0d3fab_fef4370c",
         "filename": "chrome/browser/android/compositor/compositor_view.cc",
         "patchSetId": 15
@@ -113,6 +215,24 @@
       "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89675d5_e72384e2",
+        "filename": "chrome/browser/android/compositor/compositor_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T16:54:49Z",
+      "side": 1,
+      "message": "Moved restoring the root layer into SetRootWindow.",
+      "parentUuid": "0c0d3fab_fef4370c",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
