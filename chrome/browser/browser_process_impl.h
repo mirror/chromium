@@ -63,15 +63,19 @@ class ChromeNetLog;
 namespace policy {
 class BrowserPolicyConnector;
 class PolicyService;
-};
+}  // namespace policy
 
 // Real implementation of BrowserProcess that creates and returns the services.
 class BrowserProcessImpl : public BrowserProcess,
                            public KeepAliveStateObserver {
  public:
-  // |local_state_task_runner| must be a shutdown-blocking task runner.
-  explicit BrowserProcessImpl(
-      base::SequencedTaskRunner* local_state_task_runner);
+  BrowserProcessImpl(
+      std::unique_ptr<metrics_services_manager::MetricsServicesManager>
+          metrics_services_manager,
+      std::unique_ptr<policy::BrowserPolicyConnector> browser_policy_connector,
+      std::unique_ptr<PrefService> local_state,
+      scoped_refptr<base::SequencedTaskRunner> local_state_task_runner,
+      std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory);
   ~BrowserProcessImpl() override;
 
   // Called before the browser threads are created.
@@ -173,7 +177,6 @@ class BrowserProcessImpl : public BrowserProcess,
 
   void CreateWatchdogThread();
   void CreateProfileManager();
-  void CreateLocalState();
   void CreateViewedPageTracker();
   void CreateIconManager();
   void CreateIntranetRedirectDetector();
@@ -209,14 +212,13 @@ class BrowserProcessImpl : public BrowserProcess,
 
   std::unique_ptr<IOThread> io_thread_;
 
-  bool created_watchdog_thread_;
+  bool created_watchdog_thread_ = false;
   std::unique_ptr<WatchDogThread> watchdog_thread_;
 
-  bool created_browser_policy_connector_;
   // Must be destroyed after |local_state_|.
   std::unique_ptr<policy::BrowserPolicyConnector> browser_policy_connector_;
 
-  bool created_profile_manager_;
+  bool created_profile_manager_ = false;
   std::unique_ptr<ProfileManager> profile_manager_;
 
   std::unique_ptr<PrefService> local_state_;
@@ -226,7 +228,7 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<content::NetworkConnectionTracker>
       network_connection_tracker_;
 
-  bool created_icon_manager_;
+  bool created_icon_manager_ = false;
   std::unique_ptr<IconManager> icon_manager_;
 
 #if defined(OS_ANDROID)
@@ -259,34 +261,34 @@ class BrowserProcessImpl : public BrowserProcess,
 #endif
 
   // Manager for desktop notification UI.
-  bool created_notification_ui_manager_;
+  bool created_notification_ui_manager_ = false;
   std::unique_ptr<NotificationUIManager> notification_ui_manager_;
 
   std::unique_ptr<IntranetRedirectDetector> intranet_redirect_detector_;
 
   std::unique_ptr<StatusTray> status_tray_;
 
-  bool created_notification_bridge_;
+  bool created_notification_bridge_ = false;
   std::unique_ptr<NotificationPlatformBridge> notification_bridge_;
 
 #if BUILDFLAG(ENABLE_BACKGROUND_MODE)
   std::unique_ptr<BackgroundModeManager> background_mode_manager_;
 #endif
 
-  bool created_safe_browsing_service_;
+  bool created_safe_browsing_service_ = false;
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service_;
 
-  bool created_subresource_filter_ruleset_service_;
+  bool created_subresource_filter_ruleset_service_ = false;
   std::unique_ptr<subresource_filter::ContentRulesetService>
       subresource_filter_ruleset_service_;
 
-  bool created_optimization_guide_service_;
+  bool created_optimization_guide_service_ = false;
   std::unique_ptr<optimization_guide::OptimizationGuideService>
       optimization_guide_service_;
 
-  bool shutting_down_;
+  bool shutting_down_ = false;
 
-  bool tearing_down_;
+  bool tearing_down_ = false;
 
   // Ensures that all the print jobs are finished before closing the browser.
   std::unique_ptr<printing::PrintJobManager> print_job_manager_;
@@ -361,7 +363,8 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
 #endif
 
-  shell_integration::DefaultWebClientState cached_default_web_client_state_;
+  shell_integration::DefaultWebClientState cached_default_web_client_state_ =
+      shell_integration::UNKNOWN_DEFAULT;
 
   std::unique_ptr<physical_web::PhysicalWebDataSource>
       physical_web_data_source_;

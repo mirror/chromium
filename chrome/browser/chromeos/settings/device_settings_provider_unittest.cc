@@ -60,11 +60,10 @@ class DeviceSettingsProviderTest : public DeviceSettingsTestBase {
     DeviceSettingsTestBase::SetUp();
 
     EXPECT_CALL(*this, SettingChanged(_)).Times(AnyNumber());
-    provider_.reset(
-        new DeviceSettingsProvider(
-            base::Bind(&DeviceSettingsProviderTest::SettingChanged,
-                       base::Unretained(this)),
-            &device_settings_service_));
+    provider_ = CreateDeviceSettingsProvider(
+        &device_settings_service_,
+        base::Bind(&DeviceSettingsProviderTest::SettingChanged,
+                   base::Unretained(this)));
     Mock::VerifyAndClearExpectations(this);
   }
 
