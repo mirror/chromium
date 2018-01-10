@@ -22,6 +22,30 @@
       "revId": "b85d0702d5892a662049a96f24e903a123423779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efea43d0_2bfe73bf",
+        "filename": "tools/perf/contrib/leak_detection/page_sets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-10T12:00:10Z",
+      "side": 1,
+      "message": "This is to bypass pylint check about \"story\" variable is unused.\n\nI typically add \"# unused\" comment to make it clearer",
+      "parentUuid": "0a54fdf1_543704bd",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "b85d0702d5892a662049a96f24e903a123423779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
