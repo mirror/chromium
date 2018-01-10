@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bbfdc01_555aa7c9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/historical-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-10T22:59:09Z",
+      "side": 1,
+      "message": "Some script should now complain that this file can be removed.",
+      "range": {
+        "startLine": 4,
+        "startChar": 5,
+        "endLine": 4,
+        "endChar": 13
+      },
+      "revId": "11fdeabaf185e411da43cf3b5c8b69d0b1a27e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
