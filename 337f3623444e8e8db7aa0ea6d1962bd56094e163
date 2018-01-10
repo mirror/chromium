@@ -22,6 +22,30 @@
       "revId": "337f3623444e8e8db7aa0ea6d1962bd56094e163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a9fb41_1c8aa6b3",
+        "filename": "content/browser/webrtc/webrtc_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T13:07:22Z",
+      "side": 1,
+      "message": "This would be my preference too, but I am not sure what it commonly desired in the Chrome codebase. John, could you please fill us in on the guidelines here?",
+      "parentUuid": "2f982d2b_d3592746",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 46
+      },
+      "revId": "337f3623444e8e8db7aa0ea6d1962bd56094e163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
