@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76f233ea_9a703406",
+        "filename": "components/cronet/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Oops, good catch. Done.",
+      "parentUuid": "7b678001_1a508e81",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6504fb8a_c7558cc2",
         "filename": "components/cronet/cronet_url_request_context.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf8b0c4_1e6d8a96",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6504fb8a_c7558cc2",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 45
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "83e31499_f226f2a2",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e02c8769_048b97c7",
+      "range": {
+        "startLine": 219,
+        "startChar": 29,
+        "endLine": 219,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a9c652_ff3a3430",
         "filename": "components/cronet/cronet_url_request_context.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdcd38b_dc1f1528",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a9c652_ff3a3430",
+      "range": {
+        "startLine": 299,
+        "startChar": 20,
+        "endLine": 299,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "90481391_13e961e7",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3792016d_e80ed5d4",
+      "range": {
+        "startLine": 553,
+        "startChar": 22,
+        "endLine": 553,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c0b7980_4f5284b9",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daca088_ee2b4486",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0b7980_4f5284b9",
+      "range": {
+        "startLine": 50,
+        "startChar": 29,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4ded7d89_fc913d50",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fcc5126_75d9cfc8",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a80734_5583d56a",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 14
@@ -183,6 +351,30 @@
       "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5d30c6_510b8292",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a80734_5583d56a",
+      "range": {
+        "startLine": 59,
+        "startChar": 77,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "983d7fe8_3b463b8c",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc57064f_02d82aaf",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "747cf90f_89272a58",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 14
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-10T17:13:17Z",
       "side": 1,
       "message": "I think this should be a unique_ptr as it\u0027s owned by the context.",
+      "range": {
+        "startLine": 294,
+        "startChar": 31,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8b7296_f8c9ce73",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:01:25Z",
+      "side": 1,
+      "message": "How strongly do you feel about it? \n\nI\u0027m concerned that DeleteSoon() requires std::move(network_tasks_), which will make |network_tasks_| nullptr and some other tasks previously posted to network thread may have a bad time. \n\nI\u0027ve run into similar issue previously, when I was resetting adapter-\u003econtext in Destroy() on client thread.",
+      "parentUuid": "747cf90f_89272a58",
       "range": {
         "startLine": 294,
         "startChar": 31,
