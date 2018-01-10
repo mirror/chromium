@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "357ba1a6_48ad3ea2",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a684c6e4_81712382",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac2685b6_f0af73cd",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bafc88f9_a7d4f059",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2685b6_f0af73cd",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8eb4e91_6d6970c6",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "808ac04991066a30b507264f60c62c682c03cd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3c0df7_0a2a48ed",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8eb4e91_6d6970c6",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "b26763f5_cf88f122",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a66e39_66f87f12",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 10
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "257d4d67_71a90d1c",
         "filename": "content/renderer/media/media_devices_event_dispatcher_unittest.cc",
         "patchSetId": 5
@@ -87,6 +165,30 @@
       "writtenOn": "2018-01-09T14:55:22Z",
       "side": 1,
       "message": "It would be good to add a TODO(): Remove this class\nto  MediaDevicesEventDispatcher.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c44a16_035b6887",
+        "filename": "content/renderer/media/media_devices_event_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Since we\u0027ll be deleting this file when we remove MediaDevicesEventDispatcher in the other CL https://crrev.com/c/844534/, adding a TODO now may be unnecessary?",
+      "parentUuid": "257d4d67_71a90d1c",
       "range": {
         "startLine": 87,
         "startChar": 6,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "3cfa4085_9bd18946",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb82f6a_743f5cc9",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93119ce9_cebf16e6",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
         "patchSetId": 5
@@ -142,6 +268,30 @@
       "revId": "808ac04991066a30b507264f60c62c682c03cd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1addd2_8852072c",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93119ce9_cebf16e6",
+      "range": {
+        "startLine": 102,
+        "startChar": 36,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "cf83bcdf_2266cd6d",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15674311_c36e53c0",
+      "range": {
+        "startLine": 246,
+        "startChar": 40,
+        "endLine": 246,
+        "endChar": 49
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4def20_0474eb4d",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 5
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "eb297a50_b55c7baa",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4def20_0474eb4d",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d479c4_5ed8c3e9",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 5
@@ -211,6 +409,30 @@
       "revId": "808ac04991066a30b507264f60c62c682c03cd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87079070_4c998cb5",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T10:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d479c4_5ed8c3e9",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 41
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
