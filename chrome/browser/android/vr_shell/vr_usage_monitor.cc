@@ -8,9 +8,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/rappor/public/rappor_utils.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 
 namespace vr_shell {
 
@@ -126,6 +128,7 @@ void SendRapporEnteredVideoMode(const GURL& origin, vr::Mode mode) {
       break;
   }
 }
+
 }  // namespace
 
 template <SessionEventName SessionType>
@@ -316,6 +319,27 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
     }
   }
 
+  // Log UKMs
+  if (mode_ == vr::Mode::kNoVr && mode == vr::Mode::kVrBrowsingRegular) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetEnteredBrowsing(1)
+        .Record(ukm_recorder);
+  }
+
+  if (mode == vr::Mode::kVrBrowsingFullscreen) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetEnteredFullscreen(1)
+        .Record(ukm_recorder);
+  }
+
   mode_ = mode;
 }
 
@@ -342,6 +366,8 @@ VrMetricsHelper::VrMetricsHelper(content::WebContents* contents,
   session_video_timer_ =
       base::MakeUnique<SessionTimerImpl<SESSION_VR_WITH_VIDEO>>(
           kMaximumVideoSessionGap, kMinimumVideoSessionDuration);
+
+  ukm::InitializeSourceUrlRecorderForWebContents(contents);
 
   UpdateMode();
 }
@@ -405,6 +431,13 @@ void VrMetricsHelper::DidFinishNavigation(content::NavigationHandle* handle) {
     // look at page loads, since those will underestimate on some pages, and
     // overestimate on others.
     num_session_navigation_++;
+
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetNavigatedToPage(1)
+        .Record(ukm_recorder);
   }
 }
 

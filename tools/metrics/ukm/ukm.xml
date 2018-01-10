@@ -2352,4 +2352,23 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="VR.Browsing" singular="True">
+  <owner>offenwanger@chromium.org</owner>
+  <metric name="EnteredBrowsing">
+    <summary>
+      Indicates that the user entered VR browsing on this page.
+    </summary>
+  </metric>
+  <metric name="EnteredFullscreen">
+    <summary>
+      Indicates that the User entered fullscreen while on this page.
+    </summary>
+  </metric>
+  <metric name="NavigatedToPage">
+    <summary>
+      Indicates that the user navigated to this page in VR browsing.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>
