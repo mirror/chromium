@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a709cfa1_ac9f51b1",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T19:27:00Z",
+      "side": 1,
+      "message": "Please keep this variable name and change the usages below instead of changing the usages.",
+      "revId": "72b475288e2b5ff9a9efe7de1019f9bd63cbb11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
