@@ -69,6 +69,7 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
+#include "net/network_error_logging/network_error_logging_service.h"
 #include "net/reporting/reporting_feature.h"
 #include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
@@ -481,6 +482,9 @@ void ProfileImplIOData::InitializeInternal(
       std::move(profile_params->protocol_handler_interceptor));
 
   builder->set_reporting_policy(MaybeCreateReportingPolicy());
+
+  builder->set_network_error_logging_enabled(
+      base::FeatureList::IsEnabled(features::kNetworkErrorLogging));
 }
 
 void ProfileImplIOData::OnMainRequestContextCreated(
