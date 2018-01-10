@@ -122,6 +122,24 @@
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aae2233_d4efa8f1",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-10T13:11:31Z",
+      "side": 1,
+      "message": "Aha. We seem to always create a MediaQuerySet for \u003cstyle\u003e elements [1]. That means we should modify the condition to check that it actually contains any queries. That\u0027s for another CL.\n\nThe first check is always false for injected sheets because they don\u0027t have an associated element, hence no media attribute.\n\nI\u0027m unsure if there are any other cases where the Document is the owner node than for injected sheets. If that\u0027s the only case, I think we could skip SetNeedsActiveStyleUpdate() here when node \u003d\u003d document and return true from ClearMediaQueryDependentRuleSets also for the sheet-\u003eContents()-\u003eHasMediaQueries() case (that is, set needs_active_style_update \u003d true also in the second if).\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/StyleElement.cpp?type\u003dcs\u0026q\u003dStyleElement::CreateSheet\u0026sq\u003dpackage:chromium\u0026l\u003d157",
+      "parentUuid": "0554ea24_509d91c3",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
