@@ -38,16 +38,12 @@ IsolateHolder::IsolateHolder(
 IsolateHolder::IsolateHolder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     AccessMode access_mode)
-    : IsolateHolder(std::move(task_runner),
-                    access_mode,
-                    kAllowAtomicsWait,
-                    nullptr) {}
+    : IsolateHolder(std::move(task_runner), access_mode, kAllowAtomicsWait) {}
 
 IsolateHolder::IsolateHolder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     AccessMode access_mode,
-    AllowAtomicsWaitMode atomics_wait_mode,
-    v8::StartupData* startup_data)
+    AllowAtomicsWaitMode atomics_wait_mode)
     : access_mode_(access_mode) {
   v8::ArrayBuffer::Allocator* allocator = g_array_buffer_allocator;
   CHECK(allocator) << "You need to invoke gin::IsolateHolder::Initialize first";
@@ -61,12 +57,9 @@ IsolateHolder::IsolateHolder(
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
   params.external_references = g_reference_table;
 
-  if (startup_data) {
-    CHECK(g_reference_table);
-    V8Initializer::GetV8ContextSnapshotData(startup_data);
-    if (startup_data->data) {
-      params.snapshot_blob = startup_data;
-    }
+  V8Initializer::GetV8ContextSnapshotData(&startup_data_);
+  if (startup_data_.data) {
+    params.snapshot_blob = &startup_data_;
   }
   isolate_ = v8::Isolate::New(params);
 
@@ -75,18 +68,15 @@ IsolateHolder::IsolateHolder(
 
 IsolateHolder::IsolateHolder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    v8::StartupData* existing_blob)
+    bool)
     : access_mode_(AccessMode::kSingleThread) {
-  CHECK(existing_blob);
-
   v8::StartupData unused_natives;
-  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, existing_blob);
-  if (!existing_blob->data) {
-    existing_blob = nullptr;
-  }
-
+  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, &startup_data_);
+  v8::StartupData* existing_blob =
+      startup_data_.data ? &startup_data_ : nullptr;
   snapshot_creator_.reset(
       new v8::SnapshotCreator(g_reference_table, existing_blob));
+
   isolate_ = snapshot_creator_->GetIsolate();
 
   DCHECK(task_runner->BelongsToCurrentThread());
