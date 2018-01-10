@@ -27,7 +27,7 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
-#include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/LinkedHashSet.h"
 
 namespace blink {
 
@@ -35,9 +35,9 @@ struct PaintInfo;
 class LineLayoutBox;
 class WordMeasurement;
 
-typedef WTF::ListHashSet<LayoutBox*, 16> TrackedLayoutBoxListHashSet;
+typedef WTF::LinkedHashSet<LayoutBox*> TrackedLayoutBoxLinkedHashSet;
 typedef WTF::HashMap<const LayoutBlock*,
-                     std::unique_ptr<TrackedLayoutBoxListHashSet>>
+                     std::unique_ptr<TrackedLayoutBoxLinkedHashSet>>
     TrackedDescendantsMap;
 typedef WTF::HashMap<const LayoutBox*, LayoutBlock*> TrackedContainerMap;
 typedef Vector<WordMeasurement, 64> WordMeasurements;
@@ -162,7 +162,7 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
   void RemovePositionedObjects(LayoutObject*,
                                ContainingBlockState = kSameContainingBlock);
 
-  TrackedLayoutBoxListHashSet* PositionedObjects() const {
+  TrackedLayoutBoxLinkedHashSet* PositionedObjects() const {
     return HasPositionedObjects() ? PositionedObjectsInternal() : nullptr;
   }
   bool HasPositionedObjects() const {
@@ -179,7 +179,7 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
            PercentHeightDescendantsInternal()->Contains(o);
   }
 
-  TrackedLayoutBoxListHashSet* PercentHeightDescendants() const {
+  TrackedLayoutBoxLinkedHashSet* PercentHeightDescendants() const {
     return HasPercentHeightDescendants() ? PercentHeightDescendantsInternal()
                                          : nullptr;
   }
@@ -461,8 +461,8 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
 
   virtual void RemoveLeftoverAnonymousBlock(LayoutBlock* child);
 
-  TrackedLayoutBoxListHashSet* PositionedObjectsInternal() const;
-  TrackedLayoutBoxListHashSet* PercentHeightDescendantsInternal() const;
+  TrackedLayoutBoxLinkedHashSet* PositionedObjectsInternal() const;
+  TrackedLayoutBoxLinkedHashSet* PercentHeightDescendantsInternal() const;
 
   // Returns true if the positioned movement-only layout succeeded.
   bool TryLayoutDoingPositionedMovementOnly();
