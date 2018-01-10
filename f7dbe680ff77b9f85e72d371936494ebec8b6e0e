@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b145ed58_36c8b984",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-10T23:33:22Z",
+      "side": 1,
+      "message": "I think it would be nicer to update here, rather than introducing a new branch. i.e. \n\n  if (!ExtendClientIntoTitle() \u0026\u0026\n      GetWidget()-\u003ewidget_delegate()-\u003eShouldShowCloseButton()) {",
+      "revId": "f7dbe680ff77b9f85e72d371936494ebec8b6e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bba4bc2_854afbdf",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-10T23:33:22Z",
+      "side": 1,
+      "message": "(otherwise - nit: needs curlies now)",
+      "revId": "f7dbe680ff77b9f85e72d371936494ebec8b6e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67236c8c_b57e62ac",
+        "filename": "ui/views/bubble/bubble_frame_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-10T23:33:22Z",
+      "side": 1,
+      "message": "(yeah - I think we need this - it would be nice if we could just remove the top padding from AppInfoHeaderPanel\u0027s BoxLayout. That improves the issue.. but doesn\u0027t restore the original layout :/).",
+      "revId": "f7dbe680ff77b9f85e72d371936494ebec8b6e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
