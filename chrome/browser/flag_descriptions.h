@@ -443,6 +443,9 @@ extern const char kFramebustingDescription[];
 extern const char kGamepadExtensionsName[];
 extern const char kGamepadExtensionsDescription[];
 
+extern const char kTintGlCompositedContentName[];
+extern const char kTintGlCompositedContentDescription[];
+
 extern const char kGpuRasterizationMsaaSampleCountName[];
 extern const char kGpuRasterizationMsaaSampleCountDescription[];
 extern const char kGpuRasterizationMsaaSampleCountZero[];
