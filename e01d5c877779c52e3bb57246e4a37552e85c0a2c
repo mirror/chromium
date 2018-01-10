@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0562f70c_158de478",
+        "filename": "components/nacl/loader/nacl_loader_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T23:21:34Z",
+      "side": 1,
+      "message": "nit: Is this equivalent to the interfaces below, i.e. implemented by common code, but need to be explicitly exported by nacl_loader\u0027s manifest?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "e01d5c877779c52e3bb57246e4a37552e85c0a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
