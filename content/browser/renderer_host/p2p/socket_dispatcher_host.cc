@@ -322,7 +322,9 @@ void P2PSocketDispatcherHost::OnSend(int socket_id,
     return;
   }
 
-  socket->Send(socket_address, data, options, packet_id);
+  // TODO(crbug.com/656607): Get annotation for mojo interface
+  socket->Send(socket_address, data, options, packet_id,
+               NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void P2PSocketDispatcherHost::OnSetOption(int socket_id,
