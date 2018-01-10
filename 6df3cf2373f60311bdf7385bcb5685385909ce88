@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1596da_50a46282",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/acceptAllDevices/device-with-empty-name.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T18:15:56Z",
+      "side": 1,
+      "message": "drop unnecessary curlies on all these",
+      "revId": "6df3cf2373f60311bdf7385bcb5685385909ce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a9874f_21ba1cee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/acceptAllDevices/device-with-empty-name.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T18:15:56Z",
+      "side": 1,
+      "message": "use test_desc for these tests",
+      "revId": "6df3cf2373f60311bdf7385bcb5685385909ce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
