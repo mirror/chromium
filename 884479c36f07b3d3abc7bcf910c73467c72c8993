@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c107f4_67a9625a",
+        "filename": "third_party/WebKit/Source/platform/graphics/PlaceholderImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-10T18:11:27Z",
+      "side": 1,
+      "message": "This does not seem to account for zoom and/or DPI (depending on the platform). What is \"dps\" in the doc? Does it require additional scaling, particularly for DPI-as-zoom? I would still expect the placeholder to zoom or reflect DPI, even though we apparently do not already do that (note you would need to test on Windows or Linux, as Mac still applies DPI by compositor scale).",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "884479c36f07b3d3abc7bcf910c73467c72c8993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d946c9_c1e4b91b",
+        "filename": "third_party/WebKit/Source/platform/graphics/PlaceholderImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-10T18:11:27Z",
+      "side": 1,
+      "message": "Again, zoom effects?",
+      "range": {
+        "startLine": 87,
+        "startChar": 30,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "884479c36f07b3d3abc7bcf910c73467c72c8993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
