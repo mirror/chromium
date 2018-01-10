@@ -171,10 +171,9 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   RenderWidgetTargetResult FindMouseEventTarget(
       RenderWidgetHostViewBase* root_view,
       const blink::WebMouseEvent& event) const;
-  RenderWidgetHostViewBase* FindMouseWheelEventTarget(
+  RenderWidgetTargetResult FindMouseWheelEventTarget(
       RenderWidgetHostViewBase* root_view,
-      const blink::WebMouseWheelEvent& event,
-      gfx::PointF* transformed_point) const;
+      const blink::WebMouseWheelEvent& event) const;
   // Returns target for first TouchStart in a sequence, or a null target
   // otherwise.
   RenderWidgetTargetResult FindTouchEventTarget(
@@ -186,6 +185,12 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
                           RenderWidgetHostViewBase* target,
                           const blink::WebMouseEvent& mouse_event,
                           const ui::LatencyInfo& latency);
+  // |mouse_wheel_event| is in the coord-space of |root_view|.
+  void DispatchMouseWheelEvent(
+      RenderWidgetHostViewBase* root_view,
+      RenderWidgetHostViewBase* target,
+      const blink::WebMouseWheelEvent& mouse_wheel_event,
+      const ui::LatencyInfo& latency);
   // Assumes |touch_event| has coordinates in the root view's coordinate space.
   void DispatchTouchEvent(RenderWidgetHostViewBase* root_view,
                           RenderWidgetHostViewBase* target,
@@ -202,6 +207,9 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
                              const ui::LatencyInfo& latency) override;
   RenderWidgetHostViewBase* FindViewFromFrameSinkId(
       const viz::FrameSinkId& frame_sink_id) const override;
+
+  void EventAckNoTarget(RenderWidgetHostViewBase* root_view,
+                        const blink::WebInputEvent& event) const;
 
   FrameSinkIdOwnerMap owner_map_;
   TargetMap touchscreen_gesture_target_map_;
