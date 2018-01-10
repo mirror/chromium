@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "448f58f3_0567c6e0",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T13:52:29Z",
+      "side": 1,
+      "message": "nit: These should be |override| rather than |virtual|.\n\nIIUC, we\u0027re in the middle of transition to the right use of |override|.  So, it\u0027s good to use |override| whenever possible.",
+      "revId": "81dfadbe1460bc740a695c2d9b2abeda412b9d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e752ac1b_ed2b7c4b",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T13:52:29Z",
+      "side": 1,
+      "message": "It\u0027s better to avoid using \"using namespace\" in general unless we have a strong reason.\n\nSpecific to this case, we have HTMLNames::aTag and SVGNames::aTag, which could be confusing.  Let\u0027s avoid using \"using namespace\".",
+      "revId": "81dfadbe1460bc740a695c2d9b2abeda412b9d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
