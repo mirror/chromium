@@ -190,16 +190,14 @@ class PLATFORM_EXPORT ResourceFetcher
           FetchParameters::SpeculativePreloadType::kNotSpeculative,
       bool is_link_preload = false);
 
-  enum PrepareRequestResult { kAbort, kContinue, kBlock };
-
   Resource* RequestResource(FetchParameters&,
                             const ResourceFactory&,
                             const SubstituteData&);
-  PrepareRequestResult PrepareRequest(FetchParameters&,
-                                      const ResourceFactory&,
-                                      const SubstituteData&,
-                                      unsigned long identifier,
-                                      ResourceRequestBlockedReason&);
+  bool PrepareRequest(FetchParameters&,
+                      const ResourceFactory&,
+                      const SubstituteData&,
+                      unsigned long identifier,
+                      ResourceRequestBlockedReason&);
 
   Resource* ResourceForStaticData(const FetchParameters&,
                                   const ResourceFactory&,
