@@ -2682,9 +2682,15 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
   return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(
+    base::Optional<int64_t> navigation_id) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+  // Ignores the DidStopLoading IPC message from the previous navigations.
+  if (navigation_id && navigation_handle_ &&
+      *navigation_id != navigation_handle_->GetNavigationId()) {
+    return;
+  }
 
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
@@ -3816,10 +3822,13 @@ void RenderFrameHostImpl::ResetLoadingState() {
     // When pending deletion, just set the loading state to not loading.
     // Otherwise, OnDidStopLoading will take care of that, as well as sending
     // notification to the FrameTreeNode about the change in loading state.
-    if (!is_active())
+    if (!is_active()) {
       is_loading_ = false;
-    else
-      OnDidStopLoading();
+    } else {
+      OnDidStopLoading(navigation_handle_
+                           ? navigation_handle_->GetNavigationId()
+                           : base::Optional<int64_t>());
+    }
   }
 }
 

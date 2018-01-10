@@ -284,7 +284,8 @@ void TestRenderFrameHost::SimulateNavigationErrorPageCommit() {
 
 void TestRenderFrameHost::SimulateNavigationStop() {
   if (is_loading()) {
-    OnDidStopLoading();
+    OnDidStopLoading(navigation_handle_ ? navigation_handle_->GetNavigationId()
+                                        : base::Optional<int64_t>());
   } else if (IsBrowserSideNavigationEnabled()) {
     // Even if the RenderFrameHost is not loading, there may still be an
     // ongoing navigation in the FrameTreeNode. Cancel this one as well.

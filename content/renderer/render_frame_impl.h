@@ -1189,6 +1189,9 @@ class CONTENT_EXPORT RenderFrameImpl
                                  const blink::WebURLError& error,
                                  blink::WebLocalFrame* frame);
 
+  // Sends FrameHostMsg_DidStopLoading IPC.
+  void SendDidStopLoading();
+
   bool ShouldDisplayErrorPageForFailedLoad(int error_code,
                                            const GURL& unreachable_url);
 
@@ -1617,6 +1620,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // Return the mojo interface for making ClipboardHost calls.
   blink::mojom::ClipboardHostPtr clipboard_host_;
 #endif
+
+  base::Optional<int64_t> last_commit_navigation_id_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 
