@@ -34,6 +34,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc2ac82_9531ea3d",
+        "filename": "third_party/WebKit/Source/core/paint/SVGFilterPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-10T03:30:23Z",
+      "side": 0,
+      "message": "What happens if the filtered element is underneath another effect that is not the reference\nfilter? It seems the effect would be to undo the first effect before apply the filter...\n\nIt seems we need special handling of that situation. Maybe reference filters need to be copied\nto each callsite in the effect tree?",
+      "parentUuid": "7a7ec694_240c3906",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
