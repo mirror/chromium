@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7d68415_b32f08d2",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1408a023_e9bc94d8",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c03daee_04bd97cb",
         "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T15:46:35Z",
       "side": 1,
       "message": "(Leaky). Take a look at base/lazy_instance.h.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "650dc8b4_937350d4",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c03daee_04bd97cb",
       "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -140,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "a0927126_92e0f87a",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "This comment is still relevant, but to the class now, instead of just to a global function which no longer exists. That function is now wrapped by the class and the actual id is stored internally, retrievable via .Get().",
+      "parentUuid": "46c8f096_f90ca44c",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac45d88_2b495815",
         "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
         "patchSetId": 26
@@ -151,6 +205,24 @@
       "writtenOn": "2018-01-10T15:46:35Z",
       "side": 1,
       "message": "nit: class docs",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d37d534_a8c84fc5",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "I\u0027ve improved the class docs.",
+      "parentUuid": "9ac45d88_2b495815",
       "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -174,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "94352c99_a0a515ad",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4447c0be_6cd158cc",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3275ce0_355a81e0",
         "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
         "patchSetId": 26
@@ -191,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "1b27fb52_1b6d93ad",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3275ce0_355a81e0",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "608b35d7_ab149a89",
         "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
         "patchSetId": 26
@@ -202,6 +310,24 @@
       "writtenOn": "2018-01-10T15:46:35Z",
       "side": 1,
       "message": "Probably better to define in terms of \u003d\u003d i.e. !(*this \u003d\u003d other)",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc060ed2_8cabb49b",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-10T19:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "608b35d7_ab149a89",
       "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
