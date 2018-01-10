@@ -607,6 +607,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // to the "commit" JS API.
   scoped_refptr<StaticBitmapImage> GetStaticBitmapImage();
 
+  DrawingBuffer* GetDrawingBuffer() const;
+
  protected:
   friend class EXTDisjointTimerQuery;
   friend class EXTDisjointTimerQueryWebGL2;
@@ -696,7 +698,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // Structure for rendering to a DrawingBuffer, instead of directly
   // to the back-buffer of m_context.
   scoped_refptr<DrawingBuffer> drawing_buffer_;
-  DrawingBuffer* GetDrawingBuffer() const;
 
   TraceWrapperMember<WebGLContextGroup> context_group_;
 

@@ -220,6 +220,11 @@ WebGraphicsContext3DProvider* DrawingBuffer::ContextProvider() {
   return context_provider_->ContextProvider();
 }
 
+base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+DrawingBuffer::ContextProviderWeakPtr() {
+  return context_provider_->GetWeakPtr();
+}
+
 void DrawingBuffer::SetIsHidden(bool hidden) {
   if (is_hidden_ == hidden)
     return;

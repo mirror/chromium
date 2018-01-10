@@ -22,6 +22,8 @@ blink_modules_sources("xr") {
     "XRFrameRequestCallbackCollection.h",
     "XRLayer.cpp",
     "XRLayer.h",
+    "XRPresentationContext.cpp",
+    "XRPresentationContext.h",
     "XRPresentationFrame.cpp",
     "XRPresentationFrame.h",
     "XRSession.cpp",
@@ -34,8 +36,6 @@ blink_modules_sources("xr") {
     "XRView.cpp",
     "XRView.h",
     "XRViewport.h",
-    "XRWebGLDrawingBuffer.cpp",
-    "XRWebGLDrawingBuffer.h",
     "XRWebGLLayer.cpp",
     "XRWebGLLayer.h",
   ]
