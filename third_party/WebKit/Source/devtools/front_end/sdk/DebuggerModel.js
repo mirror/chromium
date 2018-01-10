@@ -505,6 +505,12 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    */
   async _pausedScript(
       callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId, asyncCallStackTraceId) {
+    var scriptId = callFrames[0].location.scriptId;
+    var script = this._scripts.get(scriptId);
+    if (this._runtimeModel.executionContext(script.executionContextId).name.includes('PaintWorklet')) {
+      this.resume();
+      return;
+    }
     if (asyncCallStackTraceId) {
       SDK.DebuggerModel._scheduledPauseOnAsyncCall = asyncCallStackTraceId;
       var promises = [];
