@@ -12,6 +12,7 @@
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_util.h"
+#include "gpu/ipc/common/gpu_preferences_util.h"
 #include "media/gpu/vt_video_decode_accelerator_mac.h"
 #include "sandbox/mac/seatbelt.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
@@ -40,8 +41,18 @@ base::OnceClosure MaybeWrapWithGPUSandboxHook(
         // TODO(zmo): Collect basic GPUInfo instead.
         gpu::GetGpuInfoFromCommandLine(*command_line, &gpu_info);
         gpu::CacheGPUInfo(gpu_info);
-        gpu::GpuFeatureInfo gpu_feature_info =
-            gpu::ComputeGpuFeatureInfo(gpu_info, command_line);
+        gpu::GpuPreferences gpu_preferences;
+        if (command_line->HasSwitch(switches::kGpuPreferences)) {
+          std::string value =
+              command_line.GetSwitchValueASCII(switches::kGpuPreferences);
+          bool success =
+              gpu::SwitchValueToGpuPreferences(value, &gpu_preferences);
+          CHECK(success);
+        }
+        gpu::GpuFeatureInfo gpu_feature_info = gpu::ComputeGpuFeatureInfo(
+            gpu_info, gpu_preferences.ignore_gpu_blacklist,
+            gpu_preferences.disable_gpu_driver_bug_workarounds,
+            gpu_preferences.log_gpu_control_list_decisions, command_line);
         gpu::CacheGpuFeatureInfo(gpu_feature_info);
         // Preload either the desktop GL or the osmesa so, depending on the
         // --use-gl flag.
