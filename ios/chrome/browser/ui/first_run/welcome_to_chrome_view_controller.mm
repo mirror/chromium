@@ -8,7 +8,8 @@
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
-
+#include "base/metrics/user_metrics.h"
+#include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_reporting_default_state.h"
@@ -56,6 +57,12 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 // The animation which occurs at launch has run.
 @property(nonatomic, assign) BOOL ranLaunchAnimation;
 
+// The TOS link was tapped.
+@property(nonatomic, assign) BOOL didTapTOSLink;
+
+// The privacy link was tapped.
+@property(nonatomic, assign) BOOL didTapPrivacyLink;
+
 // Presenter for showing sync-related UI.
 @property(nonatomic, readonly, weak) id<SyncPresenter> presenter;
 
@@ -65,6 +72,8 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 
 @implementation WelcomeToChromeViewController
 
+@synthesize didTapPrivacyLink = _didTapPrivacyLink;
+@synthesize didTapTOSLink = _didTapTOSLink;
 @synthesize ranLaunchAnimation = _ranLaunchAnimation;
 @synthesize presenter = _presenter;
 @synthesize dispatcher = _dispatcher;
@@ -160,12 +169,14 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 #pragma mark - WelcomeToChromeViewDelegate
 
 - (void)welcomeToChromeViewDidTapTOSLink {
+  self.didTapTOSLink = YES;
   NSString* title = l10n_util::GetNSString(IDS_IOS_FIRSTRUN_TERMS_TITLE);
   NSURL* tosUrl = [self newTermsOfServiceUrl];
   [self openStaticFileWithURL:tosUrl title:title];
 }
 
 - (void)welcomeToChromeViewDidTapPrivacyLink {
+  self.didTapPrivacyLink = YES;
   NSString* title = l10n_util::GetNSString(IDS_IOS_FIRSTRUN_PRIVACY_TITLE);
   NSURL* privacyUrl = net::NSURLWithGURL(
       GURL("https://www.google.com/chrome/browser/privacy/"));
@@ -175,6 +186,12 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 - (void)welcomeToChromeViewDidTapOKButton:(WelcomeToChromeView*)view {
   GetApplicationContext()->GetLocalState()->SetBoolean(
       metrics::prefs::kMetricsReportingEnabled, view.checkBoxSelected);
+
+  if (self.didTapPrivacyLink)
+    base::RecordAction(base::UserMetricsAction("MobileFrePrivacyLinkTapped"));
+
+  if (self.didTapTOSLink)
+    base::RecordAction(base::UserMetricsAction("MobileFreTOSLinkTapped"));
 
   FirstRunConfiguration* firstRunConfig = [[FirstRunConfiguration alloc] init];
   bool hasSSOAccounts = ios::GetChromeBrowserProvider()
