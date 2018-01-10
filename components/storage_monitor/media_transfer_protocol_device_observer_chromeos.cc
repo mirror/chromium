@@ -102,8 +102,9 @@ MediaTransferProtocolDeviceObserverChromeOS::
       get_storage_info_func_(nullptr),
       notifications_(receiver),
       weak_ptr_factory_(this) {
-  mtp_manager_->AddObserver(this);
-  EnumerateStorages();
+  mtp_manager_->AddObserverAndEnumerateStorages(this, base::BindOnce(
+      &MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages,
+      weak_ptr_factory_.GetWeakPtr()));
 }
 
 // This constructor is only used by unit tests.
@@ -158,64 +159,28 @@ void MediaTransferProtocolDeviceObserverChromeOS::EjectDevice(
 
   // TODO(thestig): Change this to tell the mtp manager to eject the device.
 
-  StorageChanged(false, location);
+  StorageDetached(location);
   callback.Run(StorageMonitor::EJECT_OK);
 }
 
-// device::MediaTransferProtocolManager::Observer override.
-void MediaTransferProtocolDeviceObserverChromeOS::StorageChanged(
-    bool is_attached,
-    const std::string& storage_name) {
-  DCHECK(!storage_name.empty());
-
-  // New storage is attached.
-  if (is_attached) {
-    // Only for the unit test.
-    if (get_storage_info_func_) {
-      DoAttachStorage(storage_name, nullptr);
-      return;
-    }
-    // Real invoke from MediaTransferProtocolManager.
-    mtp_manager_->GetStorageInfo(
-        storage_name,
-        base::BindOnce(
-          &MediaTransferProtocolDeviceObserverChromeOS::DoAttachStorage,
-          weak_ptr_factory_.GetWeakPtr(),
-          storage_name));
-      return;
-  }
-
-  // Existing storage is detached.
-  StorageLocationToInfoMap::iterator it =
-    storage_map_.find(GetDeviceLocationFromStorageName(storage_name));
-  if (it == storage_map_.end())
-    return;
-  notifications_->ProcessDetach(it->second.device_id());
-  storage_map_.erase(it);
-}
-
-void MediaTransferProtocolDeviceObserverChromeOS::DoAttachStorage(
-    const std::string& storage_name,
-    const device::mojom::MtpStorageInfo* mtp_storage_info) {
-
+// New storage is attached.
+void MediaTransferProtocolDeviceObserverChromeOS::StorageAttached(
+    device::mojom::MtpStorageInfo mtp_storage_info) {
   std::string device_id;
   base::string16 storage_label;
   std::string location;
   base::string16 vendor_name;
   base::string16 product_name;
   if (get_storage_info_func_) {
-    get_storage_info_func_(storage_name, &device_id,
-        &storage_label, &location, &vendor_name,
-        &product_name);
+    get_storage_info_func_(mtp_storage_info.storage_name, &device_id,
+                            &storage_label, &location, &vendor_name,
+                            &product_name);
   } else {
-    if (!mtp_storage_info)
-      return;
-
-    device_id = GetDeviceIdFromStorageInfo(*mtp_storage_info);
-    storage_label = GetDeviceLabelFromStorageInfo(*mtp_storage_info);
-    location = GetDeviceLocationFromStorageName(storage_name);
-    vendor_name = base::UTF8ToUTF16(mtp_storage_info->vendor);
-    product_name = base::UTF8ToUTF16(mtp_storage_info->product);
+    device_id = GetDeviceIdFromStorageInfo(mtp_storage_info);
+    storage_label = GetDeviceLabelFromStorageInfo(mtp_storage_info);
+    location = GetDeviceLocationFromStorageName(mtp_storage_info.storage_name);
+    vendor_name = base::UTF8ToUTF16(mtp_storage_info.vendor);
+    product_name = base::UTF8ToUTF16(mtp_storage_info.product);
   }
 
   if (device_id.empty() || storage_label.empty())
@@ -229,20 +194,28 @@ void MediaTransferProtocolDeviceObserverChromeOS::DoAttachStorage(
   notifications_->ProcessAttach(storage_info);
 }
 
-void MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages() {
-  mtp_manager_->GetStorages(base::BindOnce(
-        &MediaTransferProtocolDeviceObserverChromeOS::DoEnumerateStorages,
-        weak_ptr_factory_.GetWeakPtr()));
-}
+// device::MediaTransferProtocolManager::Observer override.
+// Existing storage is detached.
+void MediaTransferProtocolDeviceObserverChromeOS::StorageDetached(
+    const std::string& storage_name) {
+  DCHECK(!storage_name.empty());
 
-void MediaTransferProtocolDeviceObserverChromeOS::DoEnumerateStorages(
-    std::vector<std::string> storages) {
-  typedef std::vector<std::string> StorageList;
-  for (StorageList::const_iterator storage_iter = storages.begin();
-       storage_iter != storages.end(); ++storage_iter) {
-    StorageChanged(true, *storage_iter);
-  }
-}
+  StorageLocationToInfoMap::iterator it =
+    storage_map_.find(GetDeviceLocationFromStorageName(storage_name));
+  if (it == storage_map_.end())
+    return;
+  notifications_->ProcessDetach(it->second.device_id());
+  storage_map_.erase(it);
+ }
+
+void MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages(
+    std::vector<const device::mojom::MtpStorageInfo*> storage_info_list) {
+  typedef std::vector<const device::mojom::MtpStorageInfo*> StorageInfoList;
+  for (StorageInfoList::const_iterator info_iter = storage_info_list.begin();
+       info_iter != storage_info_list.end(); ++info_iter) {
+    StorageAttached(**info_iter);
+   }
+ }
 
 bool MediaTransferProtocolDeviceObserverChromeOS::GetLocationForDeviceId(
     const std::string& device_id,
