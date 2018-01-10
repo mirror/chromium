@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b71f1bae_c0d950b4",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T19:20:06Z",
+      "side": 1,
+      "message": "Ack. We can make changes when the issue comes up.",
+      "parentUuid": "a5f8dc68_153d1a4f",
+      "range": {
+        "startLine": 1637,
+        "startChar": 5,
+        "endLine": 1637,
+        "endChar": 44
+      },
+      "revId": "4fcfb8d3699f2ed3ce7fc65d449e38d7ed8620e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83eb00bf_68e59f90",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "4fcfb8d3699f2ed3ce7fc65d449e38d7ed8620e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e717d077_2a97002e",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T19:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83eb00bf_68e59f90",
+      "range": {
+        "startLine": 477,
+        "startChar": 8,
+        "endLine": 477,
+        "endChar": 9
+      },
+      "revId": "4fcfb8d3699f2ed3ce7fc65d449e38d7ed8620e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
