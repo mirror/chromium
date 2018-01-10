@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad76d9e9_30753e3f",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-10T01:34:36Z",
+      "side": 1,
+      "message": "I think you cannot use a non-static UMA name with UMA_HISTOGRAM_BOOLEAN macro:\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?rcl\u003dfbe6ee1e6db04239a484d47391454fd66120a84c\u0026l\u003d23\n\nUse UmaHistogramBoolean instead.",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b3e548_c3457cb6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34053,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-10T01:34:36Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd that we report key system support in the browser process instead of in the render process. The intention of the old UMA was to track whether the CDM for the key system is available (hence AvailabilityStatus).\n\nAlso, now in most cases the CDM is bundled, we really only care about the case where the CDM is not available when the key system support is checked (which should be 0). Does it make sense that we only report this UMA once per browser process, to catch these rare cases?",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81818c8a_55248736",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34057,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-10T01:34:36Z",
+      "side": 1,
+      "message": "We could end up reporting this more than once if the CDM is not available and then is component updated. That should be rare, but we should mention it for completeness.",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
