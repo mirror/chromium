@@ -188,6 +188,14 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveAddressFunction::Run() {
 
   std::string guid = address->guid ? *address->guid : "";
   autofill::AutofillProfile profile(guid, kSettingsOrigin);
+  // Try to get the original profile, if it exists.
+  if (!guid.empty()) {
+    autofill::AutofillProfile* existing_profile =
+        personal_data->GetProfileByGUID(guid);
+    if (existing_profile) {
+      profile = *existing_profile;
+    }
+  }
 
   // Strings from JavaScript use UTF-8 encoding. This container is used as an
   // intermediate container for functions which require UTF-16 strings.
@@ -375,6 +383,14 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
 
   std::string guid = card->guid ? *card->guid : "";
   autofill::CreditCard credit_card(guid, kSettingsOrigin);
+  // Try to get the original card, if it exists.
+  if (!guid.empty()) {
+    autofill::CreditCard* existing_card =
+        personal_data->GetCreditCardByGUID(guid);
+    if (existing_card) {
+      credit_card = *existing_card;
+    }
+  }
 
   if (card->name) {
     credit_card.SetRawInfo(autofill::CREDIT_CARD_NAME_FULL,
@@ -397,10 +413,6 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
     credit_card.SetRawInfo(
         autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR,
         base::UTF8ToUTF16(*card->expiration_year));
-  }
-
-  if (card->billing_address_id) {
-    credit_card.set_billing_address_id(*card->billing_address_id);
   }
 
   if (!base::IsValidGUID(credit_card.guid())) {
