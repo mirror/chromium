@@ -22,6 +22,30 @@
       "revId": "01dafb3393c1e71a2a250ef54b1371ec006e1667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a77666a_62027fd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-10T00:33:42Z",
+      "side": 1,
+      "message": "Done. Also removed JELLY_BEAN check since min_sdk is JELLY_BEAN.",
+      "parentUuid": "bccafe0a_4bb79365",
+      "range": {
+        "startLine": 420,
+        "startChar": 20,
+        "endLine": 420,
+        "endChar": 49
+      },
+      "revId": "01dafb3393c1e71a2a250ef54b1371ec006e1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
