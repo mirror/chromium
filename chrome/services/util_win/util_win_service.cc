@@ -17,7 +17,7 @@ void OnShellUtilWinRequest(
     service_manager::ServiceContextRefFactory* ref_factory,
     chrome::mojom::ShellUtilWinRequest request) {
   mojo::MakeStrongBinding(
-      std::make_unique<ShellUtilWinImpl>(ref_factory->CreateRef()),
+      std::make_unique<chrome::ShellUtilWinImpl>(ref_factory->CreateRef()),
       std::move(request));
 }
 
