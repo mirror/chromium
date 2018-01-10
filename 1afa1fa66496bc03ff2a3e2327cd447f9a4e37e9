@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "683f68c6_7446a1cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTRegion/constructor.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-10T09:22:48Z",
+      "side": 1,
+      "message": "It might be reasonable to split this into two subtests - one for the the initial values and one for the mutations.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "1afa1fa66496bc03ff2a3e2327cd447f9a4e37e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af82b6a_556f1110",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTRegion/nonVisible.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-10T09:22:48Z",
+      "side": 1,
+      "message": "Perhaps this should be named non-visible-...html or so instead? (Where -.. might be -cue-with-region or so.)",
+      "revId": "1afa1fa66496bc03ff2a3e2327cd447f9a4e37e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
