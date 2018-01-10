@@ -55,6 +55,9 @@ class ASH_EXPORT StatusAreaWidget : public views::Widget,
   // |overview_button_tray_|.
   TrayBackgroundView* GetSystemTrayAnchor() const;
 
+  // Sets system tray visibility. Shows or hides widget if needed.
+  void SetSystemTrayVisibility(bool visible);
+
   StatusAreaWidgetDelegate* status_area_widget_delegate() {
     return status_area_widget_delegate_;
   }
