@@ -65,11 +65,11 @@ P2PSocketHostTcpBase::P2PSocketHostTcpBase(
     P2PSocketType type,
     net::URLRequestContextGetter* url_context)
     : P2PSocketHost(message_sender, socket_id, P2PSocketHost::TCP),
+      proxy_resolving_socket_factory_(nullptr, url_context),
       write_pending_(false),
       connected_(false),
       type_(type),
-      url_context_(url_context) {
-}
+      url_context_(url_context) {}
 
 P2PSocketHostTcpBase::~P2PSocketHostTcpBase() {
   if (state_ == STATE_OPEN) {
@@ -121,10 +121,8 @@ bool P2PSocketHostTcpBase::Init(const net::IPEndPoint& local_address,
 
   // The default SSLConfig is good enough for us for now.
   const net::SSLConfig ssl_config;
-  socket_ = std::make_unique<network::ProxyResolvingClientSocket>(
-      nullptr,  // Default socket pool provided by the net::Proxy.
-      url_context_, ssl_config,
-      GURL("https://" + dest_host_port_pair.ToString()));
+  socket_ = proxy_resolving_socket_factory_.CreateSocket(
+      ssl_config, GURL("https://" + dest_host_port_pair.ToString()));
 
   int status = socket_->Connect(
       base::Bind(&P2PSocketHostTcpBase::OnConnected,
