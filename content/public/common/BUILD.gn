@@ -25,11 +25,14 @@ group("common") {
   }
 }
 
-# This target allows other targets to depend on result_codes.h which is a
-# header-only dependency, without bringing in all of content.
-source_set("result_codes") {
+# This target allows other targets to depend on content_result_codes.h which
+# is a header-only dependency, without bringing in all of content.
+source_set("content_result_codes") {
   sources = [
-    "result_codes.h",
+    "content_result_codes.h",
+  ]
+  deps = [
+    "//base:result_codes",
   ]
 }
 
@@ -133,6 +136,7 @@ jumbo_source_set("common_sources") {
     "content_features.h",
     "content_ipc_logging.h",
     "content_paths.h",
+    "content_result_codes.h",
     "content_switches.cc",
     "content_switches.h",
     "context_menu_params.cc",
@@ -212,7 +216,6 @@ jumbo_source_set("common_sources") {
     "resource_response_info.h",
     "resource_type.cc",
     "resource_type.h",
-    "result_codes.h",
     "sandbox_init.h",
     "sandboxed_process_launcher_delegate.cc",
     "sandboxed_process_launcher_delegate.h",

@@ -14,8 +14,8 @@
 #include "content/public/browser/zygote_handle_linux.h"
 #include "content/public/common/common_sandbox_support_linux.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "gpu/config/gpu_switches.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
@@ -123,7 +123,7 @@ bool ChildProcessLauncherHelper::TerminateProcess(
 // static
 void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
     ChildProcessLauncherHelper::Process process) {
-  process.process.Terminate(RESULT_CODE_NORMAL_EXIT, false);
+  process.process.Terminate(base::RESULT_CODE_NORMAL_EXIT, false);
   // On POSIX, we must additionally reap the child.
   if (process.zygote) {
     // If the renderer was created via a zygote, we have to proxy the reaping

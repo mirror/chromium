@@ -29,9 +29,9 @@
 #include "chrome/common/chrome_utility_printing_messages.h"
 #include "chrome/services/printing/public/interfaces/pdf_to_emf_converter.mojom.h"
 #include "content/public/common/child_process_host.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/sandbox_init.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
@@ -255,7 +255,7 @@ ServiceUtilityProcessHost::ServiceUtilityProcessHost(
 
 ServiceUtilityProcessHost::~ServiceUtilityProcessHost() {
   // We need to kill the child process when the host dies.
-  process_.Terminate(content::RESULT_CODE_NORMAL_EXIT, false);
+  process_.Terminate(base::RESULT_CODE_NORMAL_EXIT, false);
 }
 
 bool ServiceUtilityProcessHost::StartRenderPDFPagesToMetafile(

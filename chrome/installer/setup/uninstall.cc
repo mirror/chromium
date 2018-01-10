@@ -54,7 +54,7 @@
 #include "chrome/installer/util/util_constants.h"
 #include "chrome/installer/util/work_item.h"
 #include "chrome_elf/chrome_elf_constants.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "rlz/lib/rlz_lib.h"
 
 using base::win::RegKey;
@@ -141,9 +141,9 @@ bool RemoveInstallerFiles(const base::FilePath& installer_directory) {
 // Kills all Chrome processes, immediately.
 void CloseAllChromeProcesses() {
   base::CleanupProcesses(installer::kChromeExe, base::TimeDelta(),
-                         content::RESULT_CODE_HUNG, NULL);
+                         base::RESULT_CODE_HUNG, NULL);
   base::CleanupProcesses(installer::kNaClExe, base::TimeDelta(),
-                         content::RESULT_CODE_HUNG, NULL);
+                         base::RESULT_CODE_HUNG, NULL);
 }
 
 // Updates shortcuts to |old_target_exe| that have non-empty args, making them
@@ -392,7 +392,7 @@ DeleteResult DeleteChromeFilesAndFolders(const InstallerState& installer_state,
 InstallStatus IsChromeActiveOrUserCancelled(
     const InstallerState& installer_state,
     const Product& product) {
-  int32_t exit_code = content::RESULT_CODE_NORMAL_EXIT;
+  int32_t exit_code = base::RESULT_CODE_NORMAL_EXIT;
   base::CommandLine options(base::CommandLine::NO_PROGRAM);
   options.AppendSwitch(installer::switches::kUninstall);
 
@@ -411,7 +411,7 @@ InstallStatus IsChromeActiveOrUserCancelled(
             << exit_code;
     if ((exit_code == chrome::RESULT_CODE_UNINSTALL_CHROME_ALIVE) ||
         (exit_code == chrome::RESULT_CODE_UNINSTALL_USER_CANCEL) ||
-        (exit_code == content::RESULT_CODE_HUNG))
+        (exit_code == base::RESULT_CODE_HUNG))
       return installer::UNINSTALL_CANCELLED;
 
     if (exit_code == chrome::RESULT_CODE_UNINSTALL_DELETE_PROFILE)

@@ -5,12 +5,12 @@
 #ifndef CHROME_COMMON_CHROME_RESULT_CODES_H_
 #define CHROME_COMMON_CHROME_RESULT_CODES_H_
 
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 
 namespace chrome {
 
 enum ResultCode {
-  RESULT_CODE_CHROME_START = content::RESULT_CODE_LAST_CODE,
+  RESULT_CODE_CHROME_START = content::RESULT_CODE_CONTENT_LAST_CODE,
 
   // An invalid command line url was given.
   RESULT_CODE_INVALID_CMDLINE_URL = RESULT_CODE_CHROME_START,

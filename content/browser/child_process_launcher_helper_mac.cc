@@ -16,8 +16,8 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_paths.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "sandbox/mac/seatbelt_exec.h"
@@ -220,7 +220,7 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   // Client has gone away, so just kill the process.  Using exit code 0 means
   // that UMA won't treat this as a crash.
-  process.process.Terminate(RESULT_CODE_NORMAL_EXIT, false);
+  process.process.Terminate(base::RESULT_CODE_NORMAL_EXIT, false);
   base::EnsureProcessTerminated(std::move(process.process));
 }
 
