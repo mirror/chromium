@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a9d9ae0_07f3aee9",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:41:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "415c77eb_61267ace",
+      "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8fd30bc_6ad2b558",
         "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd24d8a3_2e1c579e",
+        "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8fd30bc_6ad2b558",
+      "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27c93274_5d49bdfd",
+        "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb6b0634_23621cef",
+      "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67685b72_b0d0295f",
         "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "38cd9759_f48e4d32",
+        "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67685b72_b0d0295f",
+      "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db03088_722017c3",
         "filename": "chrome/browser/ui/ash/network/networking_config_delegate_chromeos.h",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-10T04:52:31Z",
       "side": 1,
       "message": "optional: Maybe this should be renamed to ChromeNetworkingConfigDelegate since all code in this directory is chromeos-only.",
+      "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce81501_979b7cad",
+        "filename": "chrome/browser/ui/ash/network/networking_config_delegate_chromeos.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:41:45Z",
+      "side": 1,
+      "message": "I think NetworkingConfigDelegateChromeos is a little more clear, especially since it\u0027s now outside the chromeos namespace, or at least not less clear, so I\u0027ll leave it as-is.",
+      "parentUuid": "2db03088_722017c3",
       "revId": "d5dfc72bfa1017c84585f32537aae808548d5633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
