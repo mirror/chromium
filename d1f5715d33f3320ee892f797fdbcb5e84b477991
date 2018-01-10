@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "358e7941_c8ec23d0",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T17:21:32Z",
+      "side": 1,
+      "message": "I think we want to at least take the most significant bits out of color[3].",
+      "revId": "d1f5715d33f3320ee892f797fdbcb5e84b477991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
