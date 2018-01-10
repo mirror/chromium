@@ -375,6 +375,9 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
 
   std::string guid = card->guid ? *card->guid : "";
   autofill::CreditCard credit_card(guid, kSettingsOrigin);
+  if (!guid.empty()) {
+    credit_card = *(personal_data->GetCreditCardByGUID(guid));
+  }
 
   if (card->name) {
     credit_card.SetRawInfo(autofill::CREDIT_CARD_NAME_FULL,
@@ -397,10 +400,6 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
     credit_card.SetRawInfo(
         autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR,
         base::UTF8ToUTF16(*card->expiration_year));
-  }
-
-  if (card->billing_address_id) {
-    credit_card.set_billing_address_id(*card->billing_address_id);
   }
 
   if (!base::IsValidGUID(credit_card.guid())) {
