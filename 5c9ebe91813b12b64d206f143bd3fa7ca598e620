@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaeb31af_65f89cea",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe00348_ee5515e4",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1236680a_b225a0b0",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfb8284_749670c2",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Because here file creation is done by base::CreateTemporaryFile, and then the file it\u0027s opened.",
+      "parentUuid": "1236680a_b225a0b0",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "907012cc_3387de4d",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Thanks, I have now changed everywhere to use assert, because the tests rely on file to be valid and that shouldn\u0027t be part of the tests verified conditions.",
+      "parentUuid": "f35331bc_3cdb29bb",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e1540c_bdc4bec4",
         "filename": "media/audio/audio_debug_recording_helper.h",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a58c3e_a54f4d9d",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e1540c_bdc4bec4",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7c1f3bf3_15ae4f48",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1538e993_d58d81b6",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b97ac8_aa462f87",
         "filename": "media/audio/audio_debug_recording_helper.h",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab94e42_51518291",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b97ac8_aa462f87",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,42 @@
     },
     {
       "key": {
+        "uuid": "6229480d_9194ee86",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd8872b_e83019e7",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5c6b964_8cfc78f4",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd8872b_e83019e7",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f37022_fef0af3f",
         "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
         "patchSetId": 17
@@ -135,6 +279,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c71e9c_66e792e5",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f37022_fef0af3f",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "d7b41974_67913d03",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e8c81b8_a50ea144",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ea5b7e_f01691d7",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 17
@@ -166,6 +346,24 @@
       "writtenOn": "2018-01-10T11:22:30Z",
       "side": 1,
       "message": "Creating the task runner each time we need it does not look like a good idea. Why?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cc9e1d_4886dd9d",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "I think it\u0027s acceptable to create a task runner each time we need it because creation cost is low (one object), the task is posted to be executed in a worker pool [1]. So the difference between using the same task runner and creating it each time we needed is an object creation[2], which contains a struct of bools and enums inside (Traits) and a pointer to worker pool.\n\nAlso this solution is temporary, the callback for creating a file will be passed to ADRM from audio service in next CL, and there I will not create a task runner every time a file is created.\n\nEven though the cost difference is not that big, I agree this is not the best solution. here\u0027s why I chose it: AudioManager contains a ADRM object. If the task runner were a member of ADRM created in constructor, creating an AudioManager would call CreateSequenceTaskWithTraits. This becomes a problem in unittests: a lot of objects create AM in unittests using CreateForTest[3]. If a testing::Test object doesn\u0027t contain a scoped task environment and tries to call CreateSequenceTaskRunnerWithTraits, this check fails [4]. So creating a task runner in ADRM constructor would break a lot of test. The best solution to avoid test breakage would be to inject ADRM into AM, and use a mock of ADRM in CreateForTest[3]. I didn\u0027t want to make this change for this CL, especially since this task creation is temporary. But I think we should implement it in a separate CL. What do you think?\n\n[1] https://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_worker_pool.cc?l\u003d64\n[2] https://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_worker_pool.cc?l\u003d88\n[3] https://cs.chromium.org/chromium/src/media/audio/audio_manager.cc?rcl\u003d155699b374fdca49b414a1c57eff49269cfbcfb6\u0026l\u003d296\n[4] https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.cc?rcl\u003d155699b374fdca49b414a1c57eff49269cfbcfb6\u0026l\u003d100",
+      "parentUuid": "33ea5b7e_f01691d7",
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "16781fb1_60a715e7",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "You\u0027re right, we shouldn\u0027t block, I have changed it to SKIP_ON_SHUTDOWN.",
+      "parentUuid": "fced2139_6595cbbe",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b7f6a72_9d37420c",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 17
@@ -203,6 +419,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4d7dbe_57c9adf4",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Good point, I documented this in helper at callback declaration.",
+      "parentUuid": "5b7f6a72_9d37420c",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "392b3d45_b1585340",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c384fc89_222e94c8",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fc8d2b_31cad2a9",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 17
@@ -240,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "5ad9aecb_e21e672d",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fc8d2b_31cad2a9",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b71bbdd9_1fd3c62f",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 17
@@ -254,6 +524,24 @@
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180c986b_4857b63b",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-10T14:04:23Z",
+      "side": 1,
+      "message": "Actually it\u0027s not needed here, I missed removing it. Thanks for spotting it.",
+      "parentUuid": "b71bbdd9_1fd3c62f",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
