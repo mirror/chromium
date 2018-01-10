@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "08685526_4de1c9da",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-10T19:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c405ce0_51cd6766",
+      "range": {
+        "startLine": 276,
+        "startChar": 40,
+        "endLine": 276,
+        "endChar": 45
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec2c927_6fd2c638",
         "filename": "chrome/android/java/AndroidManifest.xml",
         "patchSetId": 1
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "787e9a23_a82ea2c0",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-10T19:14:21Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure to be honest, but every online example of intent-filters for videos has this MIME type. Looking more into it, it looks like it\u0027s used for live-stream videos, which I\u0027m not entirely sure we\u0027re trying to support. Also, though I\u0027ve seen it in some places, on further inspection this is probably not necessary with video/* in there, so I\u0027m going to remove it for now. However, I don\u0027t think video/* is necessarily the ideal end-game, so I\u0027m also adding a TODO to update this filter to only list specific video/image/audio MIME types we support instead of using /* for each one.",
+      "parentUuid": "7ec2c927_6fd2c638",
+      "range": {
+        "startLine": 277,
+        "startChar": 40,
+        "endLine": 277,
+        "endChar": 55
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80630ffe_c645949e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
         "patchSetId": 1
@@ -139,6 +187,30 @@
       "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbfba7a_6efdb567",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-10T19:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80630ffe_c645949e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
