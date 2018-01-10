@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4532a64e_fc2de264",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "nit: that",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217a9c67_9e153a43",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "This implies that there\u0027s a 1-1 correlation between Bind/Connect and datagrams being sent/received, which is very much not true--some consumers will use both, and some consumers will just use one but both send and receive datagrams.  How about \"Use one or both of Bind() or Connect() to specify socket address/default destination address\"?  Or if you don\u0027t want that much information here, just \"Use one or both of Bind() or Connect()\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4fc3ce_7cf846cf",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "I find the server reference misleading; I don\u0027t actually think it\u0027s true.  Anyone who uses SendTo() won\u0027t be using connect, will need to use Bind (probably with port 0 for auto-pick), but is still on the \"client\" side of the connection.  Willing to remove it?",
+      "range": {
+        "startLine": 28,
+        "startChar": 53,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16aadcc_ded718c6",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "Could you mention that this does an auto-bind, as if the port 0 had been supplied to bind?\n\nAlso, can we say anything about which IP address (if the computer has multiple interfaces) will be used for the socket in the auto-bind case if we haven\u0027t explicitly specified one through Bind()?\n\nCan you also mention that this limits where the socket can receive messages from?  I was surprised by that (and am still not clear it\u0027s how Posix sockets behave, though reading the man pages I could see arguing it both ways), so it might be worthwhile documenting.",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2b0302_60dd72fd",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "Can you give an example of when this would happen rather than the datagram being silently dropped on the floor?  It seems weird to have two different ways for the interface to reflect what I think is basically the same failure mode (the sender sending enough packets to overrun whatever resources the receiver has setup for it).",
+      "range": {
+        "startLine": 63,
+        "startChar": 18,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc75aa5_eb8744cf",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "Why have the separate behavior for the two cases?  Why not just always fill in src_addr and make this one case instead of two?",
+      "range": {
+        "startLine": 131,
+        "startChar": 17,
+        "endLine": 131,
+        "endChar": 18
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e57b88_971c10e7",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T22:13:42Z",
+      "side": 1,
+      "message": "How can a graceful close happen on a datagram socket?",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 29
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
