@@ -11,6 +11,10 @@ struct URLLoaderFactoryBundle {
   // The default factory to be used when no others apply.
   URLLoaderFactory default_factory;
 
+  // True if |default_factory| is a Network Service-backed factory and can be
+  // re-created on connection error.
+  bool is_reconnectable_network_service_factory;
+
   // A mapping from URL scheme to factory interface.
   map<string, URLLoaderFactory> factories;
 };

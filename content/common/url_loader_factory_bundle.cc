@@ -20,8 +20,11 @@ URLLoaderFactoryBundleInfo::URLLoaderFactoryBundleInfo(
 
 URLLoaderFactoryBundleInfo::URLLoaderFactoryBundleInfo(
     mojom::URLLoaderFactoryPtrInfo default_factory_info,
+    bool is_reconnectable_network_service_factory,
     std::map<std::string, mojom::URLLoaderFactoryPtrInfo> factories_info)
     : default_factory_info(std::move(default_factory_info)),
+      is_reconnectable_network_service_factory(
+          is_reconnectable_network_service_factory),
       factories_info(std::move(factories_info)) {}
 
 URLLoaderFactoryBundleInfo::~URLLoaderFactoryBundleInfo() = default;
@@ -34,6 +37,8 @@ URLLoaderFactoryBundle::URLLoaderFactoryBundle(URLLoaderFactoryBundle&&) =
 URLLoaderFactoryBundle::URLLoaderFactoryBundle(
     URLLoaderFactoryBundleInfo info) {
   default_factory_.Bind(std::move(info.default_factory_info));
+  is_reconnectable_network_service_factory_ =
+      info.is_reconnectable_network_service_factory;
   for (auto& factory_info : info.factories_info)
     factories_[factory_info.first].Bind(std::move(factory_info.second));
 }
@@ -44,8 +49,16 @@ URLLoaderFactoryBundle& URLLoaderFactoryBundle::operator=(
     URLLoaderFactoryBundle&&) = default;
 
 void URLLoaderFactoryBundle::SetDefaultFactory(
-    mojom::URLLoaderFactoryPtr factory) {
+    mojom::URLLoaderFactoryPtr factory,
+    bool is_reconnectable_network_service_factory) {
   default_factory_ = std::move(factory);
+  is_reconnectable_network_service_factory_ =
+      is_reconnectable_network_service_factory;
+}
+
+void URLLoaderFactoryBundle::SetNetworkServiceFactoryGetter(
+    NetworkServiceFactoryGetter network_service_factory_getter) {
+  network_service_factory_getter_ = std::move(network_service_factory_getter);
 }
 
 void URLLoaderFactoryBundle::RegisterFactory(
@@ -59,11 +72,17 @@ void URLLoaderFactoryBundle::RegisterFactory(
 mojom::URLLoaderFactory* URLLoaderFactoryBundle::GetFactoryForRequest(
     const GURL& url) {
   auto it = factories_.find(url.scheme());
-  if (it == factories_.end()) {
-    DCHECK(default_factory_.is_bound());
-    return default_factory_.get();
+  if (it != factories_.end())
+    return it->second.get();
+
+  DCHECK(default_factory_.is_bound());
+  if (default_factory_.encountered_error() &&
+      is_reconnectable_network_service_factory_ &&
+      network_service_factory_getter_) {
+    network_service_factory_getter_.Run(mojo::MakeRequest(&default_factory_));
   }
-  return it->second.get();
+
+  return default_factory_.get();
 }
 
 URLLoaderFactoryBundleInfo URLLoaderFactoryBundle::PassInfo() {
@@ -72,6 +91,7 @@ URLLoaderFactoryBundleInfo URLLoaderFactoryBundle::PassInfo() {
     factories_info.emplace(factory.first, factory.second.PassInterface());
   DCHECK(default_factory_.is_bound());
   return URLLoaderFactoryBundleInfo(default_factory_.PassInterface(),
+                                    is_reconnectable_network_service_factory_,
                                     std::move(factories_info));
 }
 
@@ -81,7 +101,8 @@ URLLoaderFactoryBundle URLLoaderFactoryBundle::Clone() {
   default_factory_->Clone(mojo::MakeRequest(&cloned_default_factory));
 
   URLLoaderFactoryBundle new_bundle;
-  new_bundle.SetDefaultFactory(std::move(cloned_default_factory));
+  new_bundle.SetDefaultFactory(std::move(cloned_default_factory),
+                               is_reconnectable_network_service_factory_);
   for (auto& factory : factories_) {
     mojom::URLLoaderFactoryPtr cloned_factory;
     factory.second->Clone(mojo::MakeRequest(&cloned_factory));
@@ -89,6 +110,11 @@ URLLoaderFactoryBundle URLLoaderFactoryBundle::Clone() {
   }
 
   return new_bundle;
+}
+
+void URLLoaderFactoryBundle::FlushNetworkInterfaceForTesting() {
+  if (is_reconnectable_network_service_factory_)
+    default_factory_.FlushForTesting();
 }
 
 }  // namespace content

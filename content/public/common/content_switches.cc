@@ -507,6 +507,11 @@ const char kForceGpuRasterization[]        = "force-gpu-rasterization";
 const char kGpuRasterizationMSAASampleCount[] =
     "gpu-rasterization-msaa-sample-count";
 
+// Force use of out-of-process Network Service regardless of the
+// --single-process flag. For testing use only.
+const char kForceOutOfProcessNetworkService[] =
+    "force-out-of-process-network-service";
+
 // Forces use of hardware overlay for fullscreen video playback. Useful for
 // testing the Android overlay fullscreen functionality on other platforms.
 const char kForceOverlayFullscreenVideo[]   = "force-overlay-fullscreen-video";

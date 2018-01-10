@@ -16,6 +16,12 @@ content::mojom::URLLoaderFactoryPtr Traits::default_factory(
 }
 
 // static
+bool Traits::is_reconnectable_network_service_factory(
+    content::URLLoaderFactoryBundle& bundle) {
+  return bundle.is_reconnectable_network_service_factory_;
+}
+
+// static
 std::map<std::string, content::mojom::URLLoaderFactoryPtr> Traits::factories(
     content::URLLoaderFactoryBundle& bundle) {
   return std::move(bundle.factories_);
@@ -25,7 +31,8 @@ std::map<std::string, content::mojom::URLLoaderFactoryPtr> Traits::factories(
 bool Traits::Read(content::mojom::URLLoaderFactoryBundleDataView data,
                   content::URLLoaderFactoryBundle* out_bundle) {
   out_bundle->SetDefaultFactory(
-      data.TakeDefaultFactory<content::mojom::URLLoaderFactoryPtr>());
+      data.TakeDefaultFactory<content::mojom::URLLoaderFactoryPtr>(),
+      data.is_reconnectable_network_service_factory());
   if (!data.ReadFactories(&out_bundle->factories_))
     return false;
   return true;

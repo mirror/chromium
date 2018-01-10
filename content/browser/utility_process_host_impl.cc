@@ -229,7 +229,14 @@ bool UtilityProcessHostImpl::StartProcess() {
   process_->SetName(name_);
   process_->GetHost()->CreateChannelMojo();
 
-  if (RenderProcessHost::run_renderer_in_process()) {
+  bool is_out_of_process_network_service =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceOutOfProcessNetworkService) &&
+      service_identity_ &&
+      service_identity_->name() == mojom::kNetworkServiceName;
+
+  if (RenderProcessHost::run_renderer_in_process() &&
+      !is_out_of_process_network_service) {
     DCHECK(g_utility_main_thread_factory);
     // See comment in RenderProcessHostImpl::Init() for the background on why we
     // support single process mode this way.

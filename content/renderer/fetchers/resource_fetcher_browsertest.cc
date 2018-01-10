@@ -9,19 +9,26 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/browser/utility_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_utils.h"
+#include "content/renderer/render_frame_impl.h"
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -404,6 +411,62 @@ IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcherSetHeader) {
   PostTaskToInProcessRendererAndWait(
       base::Bind(&ResourceFetcherTests::ResourceFetcherSetHeader,
                  base::Unretained(this), url));
+}
+
+class ResourceFetcherNetworkServiceTests : public ResourceFetcherTests {
+ public:
+  ResourceFetcherNetworkServiceTests() {
+    scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
+  }
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ResourceFetcherTests::SetUpCommandLine(command_line);
+    command_line->AppendSwitch(switches::kForceOutOfProcessNetworkService);
+  }
+
+  BrowserContext* browser_context() {
+    return shell()->web_contents()->GetBrowserContext();
+  }
+
+  void FlushNetworkInterfaceForTesting() {
+    static_cast<RenderFrameImpl*>(
+        RenderFrame::FromWebFrame(
+            GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame()))
+        ->FlushNetworkInterfaceForTesting();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(ResourceFetcherNetworkServiceTests);
+};
+
+IN_PROC_BROWSER_TEST_F(ResourceFetcherNetworkServiceTests, DownloadAfterCrash) {
+  // Need to spin up the renderer to same-site URL.
+  ASSERT_TRUE(embedded_test_server()->Start());
+  NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html"));
+
+  GURL url(embedded_test_server()->GetURL("/simple_page.html"));
+
+  PostTaskToInProcessRendererAndWait(base::BindRepeating(
+      &ResourceFetcherTests::ResourceFetcherDownloadOnRenderer,
+      base::Unretained(this), url));
+
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  StoragePartition* partition =
+      BrowserContext::GetDefaultStoragePartition(browser_context());
+  partition->FlushNetworkInterfaceForTesting();
+  PostTaskToInProcessRendererAndWait(base::BindRepeating(
+      &ResourceFetcherNetworkServiceTests::FlushNetworkInterfaceForTesting,
+      base::Unretained(this)));
+
+  // Past the task again, should still pass.
+  PostTaskToInProcessRendererAndWait(base::BindRepeating(
+      &ResourceFetcherNetworkServiceTests::ResourceFetcherDownloadOnRenderer,
+      base::Unretained(this), url));
 }
 
 }  // namespace content
