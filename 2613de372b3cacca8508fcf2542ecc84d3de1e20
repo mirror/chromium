@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e696f7d6_196c6bfa",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-10T22:30:04Z",
+      "side": 1,
+      "message": "Any code to work around fullscreen handling of the Window should likely go in BrowserView::ProcessFullscreen.\n\nTaking a step back, are the maximized bounds incorrect from Windows?",
+      "range": {
+        "startLine": 420,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 25
+      },
+      "revId": "2613de372b3cacca8508fcf2542ecc84d3de1e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
