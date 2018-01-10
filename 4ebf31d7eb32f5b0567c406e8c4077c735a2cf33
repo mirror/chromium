@@ -34,6 +34,24 @@
       "revId": "4ebf31d7eb32f5b0567c406e8c4077c735a2cf33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391b3637_05a751ec",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2018-01-10T16:18:36Z",
+      "side": 1,
+      "message": "It\u0027s part of the style guide. All top level definitions need to have two blank lines between them\n\nhttps://google.github.io/styleguide/pyguide.html#Blank_Lines",
+      "parentUuid": "26bed800_14824aa6",
+      "revId": "4ebf31d7eb32f5b0567c406e8c4077c735a2cf33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
