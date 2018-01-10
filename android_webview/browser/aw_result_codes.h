@@ -5,7 +5,7 @@
 #ifndef ANDROID_WEBVIEW_BROWSER_AW_RESULT_CODES_H_
 #define ANDROID_WEBVIEW_BROWSER_AW_RESULT_CODES_H_
 
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 
 namespace android_webview {
 
