@@ -81176,13 +81176,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Signin.RefreshTokenAnnotationRequest" enum="BooleanSuccess">
-  <owner>pavely@chromium.org</owner>
-  <summary>
-    Track when chrome successfully sends RefreshTokenAnnotationRequest.
-  </summary>
-</histogram>
-
 <histogram name="Signin.SignedInDurationBeforeSignout" units="minutes">
   <owner>mlerman@chromium.org</owner>
   <summary>
