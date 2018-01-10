@@ -7,16 +7,41 @@
 
 #include <stdint.h>
 
+#include "base/macros.h"
 #include "ui/accessibility/ax_export.h"
 
 namespace ui {
 
-// Each platform accessibility object has a unique id that's guaranteed to be a
-// positive number. (It's stored in an int32_t as opposed to uint32_t because
-// some platforms want to negate it, so we want to ensure the range is below the
-// signed int max.) This can be used when the id has to be unique across
-// multiple frames, since node ids are only unique within one tree.
-int32_t AX_EXPORT GetNextAXPlatformNodeUniqueId();
+// AXUniqueID provides IDs for accessibility objects that are guaranteed to be
+// unique for the entire Chrome instance. Instantiating the class is all that
+// is required to generate the ID, and the ID is freed when the AXUniqueID is
+// destroyed.
+//
+// The  unique id that's guaranteed to be a positive number. Becase some
+// platforms want to negate it, we ensure the range is below the signed int max.
+//
+// These ids must not be conflated with the int id, that comes with web node
+// data, which are only unique within their source frame.
+class AX_EXPORT AXUniqueId {
+ public:
+  explicit AXUniqueId(const int32_t max_id);
+  AXUniqueId() : AXUniqueId(INT32_MAX) {}
+  ~AXUniqueId();
+
+  int32_t Get() const { return id_; }
+
+  bool operator==(const AXUniqueId& other) const;
+  bool operator!=(const AXUniqueId& other) const;
+
+ private:
+  int32_t GetNextAXUniqueId(const int32_t max_id);
+
+  bool IsAssigned(int32_t) const;
+
+  int32_t id_;
+
+  DISALLOW_COPY_AND_ASSIGN(AXUniqueId);
+};
 
 }  // namespace ui
 
