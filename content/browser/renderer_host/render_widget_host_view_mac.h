@@ -342,6 +342,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
   gfx::Rect GetBoundsInRootWindow() override;
   void OnSynchronizedDisplayPropertiesChanged() override;
+  void DidNavigate() override;
 
   bool LockMouse() override;
   void UnlockMouse() override;
@@ -529,6 +530,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // can return nullptr; for instance when |render_widget_host_| becomes nullptr
   // in the destruction path of the WebContentsImpl.
   RenderWidgetHostDelegate* GetFocusedRenderWidgetHostDelegate();
+
+  void DidReceiveFirstFrameAfterNavigation();
 
  private:
   friend class RenderWidgetHostViewMacTest;

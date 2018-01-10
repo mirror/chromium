@@ -1085,6 +1085,10 @@ void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
   browser_compositor_->WasResized();
 }
 
+void RenderWidgetHostViewMac::DidNavigate() {
+  browser_compositor_->DidNavigate();
+}
+
 gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
   return browser_compositor_->DelegatedFrameHostDesiredSizeInDIP();
 }
@@ -1719,6 +1723,10 @@ void RenderWidgetHostViewMac::PauseForPendingResizeOrRepaintsAndDraw() {
   if (repaint_state_ == RepaintState::ScreenUpdatesDisabled)
     NSEnableScreenUpdates();
   repaint_state_ = RepaintState::None;
+}
+
+void RenderWidgetHostViewMac::DidReceiveFirstFrameAfterNavigation() {
+  render_widget_host_->DidReceiveFirstFrameAfterNavigation();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
