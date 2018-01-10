@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff00d405_7175622e",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-10T01:22:04Z",
+      "side": 0,
+      "message": "Doesn\u0027t appear to be deleted in this patchset (unless gerrit isn\u0027t showing the file move properly?)",
+      "range": {
+        "startLine": 2401,
+        "startChar": 27,
+        "endLine": 2401,
+        "endChar": 48
+      },
+      "revId": "3678fff804d15e234b9f96c6bf0200487989cad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
