@@ -65,6 +65,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private final TileGroup.Delegate mTileGroupDelegate;
     @Nullable
     private final SuggestionsCarousel mSuggestionsCarousel;
+    private final ContextualSuggestionsSection mSuggestionsSection;
     private final SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
     private final ChromeActivity mActivity;
     private final BottomSheet mSheet;
@@ -143,10 +144,16 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         OfflinePageBridge offlinePageBridge = depsFactory.getOfflinePageBridge(profile);
 
-        mSuggestionsCarousel =
+//        mSuggestionsCarousel =
+//                ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
+//                ? new SuggestionsCarousel(
+//                          uiConfig, mSuggestionsUiDelegate, mContextMenuManager,
+//                          offlinePageBridge)
+//                : null;
+        mSuggestionsCarousel = null;
+        mSuggestionsSection =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
-                ? new SuggestionsCarousel(
-                          uiConfig, mSuggestionsUiDelegate, mContextMenuManager, offlinePageBridge)
+                ? new ContextualSuggestionsSection(mSuggestionsUiDelegate, offlinePageBridge)
                 : null;
 
         // Inflate the logo in a container so its layout attributes are applied, then take it out.
@@ -157,7 +164,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         mAdapter = new NewTabPageAdapter(mSuggestionsUiDelegate,
                 /* aboveTheFoldView = */ null, mLogoView, uiConfig, offlinePageBridge,
-                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel);
+                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel, mSuggestionsSection);
+        if (mSuggestionsSection != null) mSuggestionsSection.setNewTabPageAdapter(mAdapter);
 
         mBottomSheetObserver = new SuggestionsSheetVisibilityChangeObserver(this, activity) {
             @Override
@@ -370,13 +378,23 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void maybeUpdateContextualSuggestions() {
-        if (mSuggestionsCarousel == null) return;
-        assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
+        if (mSuggestionsCarousel != null) {
+            assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
 
-        Tab activeTab = mSheet.getActiveTab();
-        final String currentUrl = activeTab == null ? null : activeTab.getUrl();
+            Tab activeTab = mSheet.getActiveTab();
+            final String currentUrl = activeTab == null ? null : activeTab.getUrl();
 
-        mSuggestionsCarousel.refresh(mSheet.getContext(), currentUrl);
+            mSuggestionsCarousel.refresh(mSheet.getContext(), currentUrl);
+        }
+
+        if (mSuggestionsSection != null) {
+            assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
+
+            Tab activeTab = mSheet.getActiveTab();
+            final String currentUrl = activeTab == null ? null : activeTab.getUrl();
+
+            mSuggestionsSection.refresh(mSheet.getContext(), currentUrl);
+        }
     }
 
     private void updateSearchProviderHasLogo() {

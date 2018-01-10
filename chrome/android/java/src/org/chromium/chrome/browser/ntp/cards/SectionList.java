@@ -339,6 +339,13 @@ public class SectionList
         articlesSection.setHeaderVisibility(false);
     }
 
+    public void forceShowArticlesHeader() {
+        SuggestionsSection articlesSection = mSections.get(KnownCategories.ARTICLES);
+        if (articlesSection == null) return;
+
+        articlesSection.setHeaderVisibility(true);
+    }
+
     /**
      * Checks that the list of categories currently displayed by this list is the same as
      * {@code newCategories}: same categories in the same order.
