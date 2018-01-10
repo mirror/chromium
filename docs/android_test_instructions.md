@@ -53,44 +53,52 @@ adb shell settings put global package_verifier_enable 0
 
 ### Emulator Setup
 
-#### Option 1
+The android SDK includes support for Android Virtual Device emulators (AVD). For
+maximum performance first enable Intel's Virtualization support as described in
+https://developer.android.com/studio/run/emulator-acceleration.html#accel-vm.
 
-Use an emulator (i.e. Android Virtual Device, AVD): Enabling Intel's
-Virtualizaton support provides the fastest, most reliable emulator configuration
-available (i.e. x86 emulator with GPU acceleration and KVM support). Remember to
-build with `target_cpu = "x86"` for x86. Otherwise installing the APKs will fail
-with `INSTALL_FAILED_NO_MATCHING_ABIS`.
+The easiest way to configure and run an emulator is to use Android Studio's
+Virtual Device Manager. See
+https://developer.android.com/studio/run/managing-avds.html.
 
-1.  Enable Intel Virtualization support in the BIOS.
+Creating emulators in Android Studio will modify the current SDK. If you are
+using the project's SDK then this can cause problems the next time you sync
+the project, so it is normally better to use Android Studio's default SDK when
+creating emulators.
 
-2.  Install emulator deps:
+#### Starting an emulator from the command line
 
-    ```shell
-    build/android/install_emulator_deps.py --api-level=23
-    ```
+Once you have created an emulator (using Android Studio or otherwise) you can
+start it from the command line using the
+[emulator](https://developer.android.com/studio/run/emulator-commandline.html)
+command:
 
-    This script will download Android SDK and place it a directory called
-    android\_tools in the same parent directory as your chromium checkout. It
-    will also download the system-images for the emulators (i.e. arm and x86).
-    Note that this is a different SDK download than the Android SDK in the
-    chromium source checkout (i.e. `src/third_party/android_emulator_sdk`).
+```
+{$ANDROID_SDK_ROOT}/tools/emulator @emulatorName
+```
 
-3.  Run the avd.py script. To start up _num_ emulators use -n. For non-x86 use
-    --abi.
+where emulatorName is the name of the emulator you want to start (e.g.
+Nexus_5X_API_27). The command
 
-    ```shell
-    build/android/avd.py --api-level=23
-    ```
+```
+{$ANDROID_SDK_ROOT}/tools/emulator -list-avds
+```
 
-    This script will attempt to use GPU emulation, so you must be running the
-    emulators in an environment with hardware rendering available. See `avd.py
-    --help` for more details.
+will list the available emulators.
 
-#### Option 2
+#### Creating an emulator from the command line
 
-Alternatively, you can create and run your own emulator using the tools provided
-by the Android SDK. When doing so, be sure to enable GPU emulation in hardware
-settings, since Chromium requires it to render.
+New emulators can be created from the command line using the
+[avdmanager](https://developer.android.com/studio/command-line/avdmanager.html)
+command. This, however, does not provide any way of creating new device types,
+and provides far fewer options than the Android Studio UI for creating new
+emulators.
+
+The device types are configured through a devices.xml file. The devices.xml
+file for standard device types are within Android Studio's install, and that
+for any additional devices you define are in $ANDROID_EMULATOR_HOME (defaulting
+to ~/.android/). The contents of devices.xml is, however, undocumented (and
+presumably subject to change), so this is best modified using Android Studio.
 
 ## Building Tests
 
