@@ -7,6 +7,7 @@
 
 #include "base/bind.h"
 #include "base/compiler_specific.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -22,12 +23,18 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/url_loader_interceptor.h"
 #include "net/base/load_timing_info.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/url_request/url_request_file_job.h"
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_interceptor.h"
+#include "net/url_request/url_request_test_job.h"
+#include "net/url_request/url_request_test_util.h"
 #include "url/gurl.h"
 
 // This file tests that net::LoadTimingInfo is correctly hooked up to the
@@ -114,6 +121,57 @@ struct TimingDeltas {
   RelativeTime receive_headers_end;
 };
 
+void CalculateLoadTimingInfo(const TimingDeltas& load_timing_deltas,
+                             const base::TimeTicks& start_time,
+                             net::LoadTimingInfo* load_timing_info) {
+  // Make sure enough time has elapsed since start was called.  If this
+  // fails, the test fixture itself is flaky.
+  if (!load_timing_deltas.receive_headers_end.is_null()) {
+    EXPECT_LE(start_time + load_timing_deltas.receive_headers_end.GetDelta(),
+              base::TimeTicks::Now());
+  }
+
+  // If there are no connect times, but there is a receive headers end time,
+  // then assume the socket is reused.  This shouldn't affect the load timing
+  // information the test checks, just done for completeness.
+  load_timing_info->socket_reused = false;
+  if (load_timing_deltas.connect_start.is_null() &&
+      !load_timing_deltas.receive_headers_end.is_null()) {
+    load_timing_info->socket_reused = true;
+  }
+
+  load_timing_info->proxy_resolve_start =
+      load_timing_deltas.proxy_resolve_start.ToTimeTicks(start_time);
+  load_timing_info->proxy_resolve_end =
+      load_timing_deltas.proxy_resolve_end.ToTimeTicks(start_time);
+
+  load_timing_info->connect_timing.dns_start =
+      load_timing_deltas.dns_start.ToTimeTicks(start_time);
+  load_timing_info->connect_timing.dns_end =
+      load_timing_deltas.dns_end.ToTimeTicks(start_time);
+  load_timing_info->connect_timing.connect_start =
+      load_timing_deltas.connect_start.ToTimeTicks(start_time);
+  load_timing_info->connect_timing.ssl_start =
+      load_timing_deltas.ssl_start.ToTimeTicks(start_time);
+  load_timing_info->connect_timing.connect_end =
+      load_timing_deltas.connect_end.ToTimeTicks(start_time);
+
+  // If there's an SSL start time, use connect end as the SSL end time.
+  // The NavigationTiming API does not have a corresponding field, and there's
+  // no need to test the case when the values are both non-NULL and different.
+  if (!load_timing_deltas.ssl_start.is_null()) {
+    load_timing_info->connect_timing.ssl_end =
+        load_timing_info->connect_timing.connect_end;
+  }
+
+  load_timing_info->send_start =
+      load_timing_deltas.send_start.ToTimeTicks(start_time);
+  load_timing_info->send_end =
+      load_timing_deltas.send_end.ToTimeTicks(start_time);
+  load_timing_info->receive_headers_end =
+      load_timing_deltas.receive_headers_end.ToTimeTicks(start_time);
+}
+
 // Mock UrlRequestJob that returns the contents of a specified file and
 // provides the specified load timing information when queried.
 class MockUrlRequestJobWithTiming : public net::URLRequestFileJob {
@@ -151,53 +209,7 @@ class MockUrlRequestJobWithTiming : public net::URLRequestFileJob {
   }
 
   void GetLoadTimingInfo(net::LoadTimingInfo* load_timing_info) const override {
-    // Make sure enough time has elapsed since start was called.  If this
-    // fails, the test fixture itself is flaky.
-    if (!load_timing_deltas_.receive_headers_end.is_null()) {
-      EXPECT_LE(
-          start_time_ + load_timing_deltas_.receive_headers_end.GetDelta(),
-          base::TimeTicks::Now());
-    }
-
-    // If there are no connect times, but there is a receive headers end time,
-    // then assume the socket is reused.  This shouldn't affect the load timing
-    // information the test checks, just done for completeness.
-    load_timing_info->socket_reused = false;
-    if (load_timing_deltas_.connect_start.is_null() &&
-        !load_timing_deltas_.receive_headers_end.is_null()) {
-      load_timing_info->socket_reused = true;
-    }
-
-    load_timing_info->proxy_resolve_start =
-        load_timing_deltas_.proxy_resolve_start.ToTimeTicks(start_time_);
-    load_timing_info->proxy_resolve_end =
-        load_timing_deltas_.proxy_resolve_end.ToTimeTicks(start_time_);
-
-    load_timing_info->connect_timing.dns_start =
-        load_timing_deltas_.dns_start.ToTimeTicks(start_time_);
-    load_timing_info->connect_timing.dns_end =
-        load_timing_deltas_.dns_end.ToTimeTicks(start_time_);
-    load_timing_info->connect_timing.connect_start =
-        load_timing_deltas_.connect_start.ToTimeTicks(start_time_);
-    load_timing_info->connect_timing.ssl_start =
-        load_timing_deltas_.ssl_start.ToTimeTicks(start_time_);
-    load_timing_info->connect_timing.connect_end =
-        load_timing_deltas_.connect_end.ToTimeTicks(start_time_);
-
-    // If there's an SSL start time, use connect end as the SSL end time.
-    // The NavigationTiming API does not have a corresponding field, and there's
-    // no need to test the case when the values are both non-NULL and different.
-    if (!load_timing_deltas_.ssl_start.is_null()) {
-      load_timing_info->connect_timing.ssl_end =
-          load_timing_info->connect_timing.connect_end;
-    }
-
-    load_timing_info->send_start =
-        load_timing_deltas_.send_start.ToTimeTicks(start_time_);
-    load_timing_info->send_end =
-        load_timing_deltas_.send_end.ToTimeTicks(start_time_);
-    load_timing_info->receive_headers_end =
-        load_timing_deltas_.receive_headers_end.ToTimeTicks(start_time_);
+    CalculateLoadTimingInfo(load_timing_deltas_, start_time_, load_timing_info);
   }
 
  private:
@@ -274,6 +286,37 @@ class LoadTimingBrowserTest : public InProcessBrowserTest {
 
   ~LoadTimingBrowserTest() override {}
 
+  // InProcessBrowserTest:
+  void SetUpOnMainThread() override {
+    if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+      // All mock.http requests get served by the embedded test server.
+      host_resolver()->AddRule(kTestDomain, "127.0.0.1");
+
+      url_loader_interceptor_ =
+          std::make_unique<content::URLLoaderInterceptor>(base::BindRepeating(
+              [](LoadTimingBrowserTest* owner,
+                 content::URLLoaderInterceptor::RequestParams* params) {
+
+                net::LoadTimingInfo load_timing_info;
+                CalculateLoadTimingInfo(owner->load_timing_deltas_,
+                                        owner->start_time_, &load_timing_info);
+
+                content::URLLoaderInterceptor::WriteResponseWithTiming(
+                    net::URLRequestTestJob::test_headers(),
+                    net::URLRequestTestJob::test_data_1(), params->client.get(),
+                    &load_timing_info);
+                return true;
+
+              },
+              this));
+    }
+  }
+
+  void TearDownOnMainThread() override {
+    if (base::FeatureList::IsEnabled(features::kNetworkService))
+      url_loader_interceptor_.reset();
+  }
+
   // Navigates to |url| and writes the resulting navigation timings to
   // |navigation_deltas|.
   void RunTestWithUrl(const GURL& url, TimingDeltas* navigation_deltas) {
@@ -286,26 +329,37 @@ class LoadTimingBrowserTest : public InProcessBrowserTest {
   // |navigation_deltas|.  Uses a generic test page.
   void RunTest(const TimingDeltas& load_timing_deltas,
                TimingDeltas* navigation_deltas) {
-    // None of the tests care about the contents of the test page.  Just do
-    // this here because PathService has thread restrictions on some platforms.
-    base::FilePath path;
-    PathService::Get(chrome::DIR_TEST_DATA, &path);
-    path = path.AppendASCII("title1.html");
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+      // None of the tests care about the contents of the test page.  Just do
+      // this here because PathService has thread restrictions on some
+      // platforms.
+      base::FilePath path;
+      PathService::Get(chrome::DIR_TEST_DATA, &path);
+      path = path.AppendASCII("title1.html");
 
-    // Create and register request interceptor.
-    TestInterceptor* test_interceptor =
-        new TestInterceptor(path, load_timing_deltas);
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&TestInterceptor::Register,
-                                           base::Unretained(test_interceptor)));
+      // Create and register request interceptor.
+      TestInterceptor* test_interceptor =
+          new TestInterceptor(path, load_timing_deltas);
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&TestInterceptor::Register,
+                         base::Unretained(test_interceptor)));
 
-    // Navigate to the page.
-    RunTestWithUrl(GURL(kTestUrl), navigation_deltas);
+      // Navigate to the page.
+      RunTestWithUrl(GURL(kTestUrl), navigation_deltas);
 
-    // Once navigation is complete, unregister the protocol handler.
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&TestInterceptor::Unregister,
-                                           base::Unretained(test_interceptor)));
+      // Once navigation is complete, unregister the protocol handler.
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&TestInterceptor::Unregister,
+                         base::Unretained(test_interceptor)));
+      return;
+    }
+    load_timing_deltas_ = load_timing_deltas;
+
+    ASSERT_TRUE(embedded_test_server()->Start());
+    GURL url = embedded_test_server()->GetURL("mock.http", "/title1.html");
+    RunTestWithUrl(url, navigation_deltas);
   }
 
  private:
@@ -326,16 +380,16 @@ class LoadTimingBrowserTest : public InProcessBrowserTest {
     // applicable.  In that case, leave ssl_start as null.
     bool ssl_start_zero = false;
     ASSERT_TRUE(content::ExecuteScriptAndExtractBool(
-                    browser()->tab_strip_model()->GetActiveWebContents(),
-                    "window.domAutomationController.send("
-                        "performance.timing.secureConnectionStart == 0);",
-                    &ssl_start_zero));
+        browser()->tab_strip_model()->GetActiveWebContents(),
+        "window.domAutomationController.send("
+        "performance.timing.secureConnectionStart == 0);",
+        &ssl_start_zero));
     if (!ssl_start_zero)
       navigation_deltas->ssl_start = GetResultDelta("secureConnectionStart");
 
-    // Simple sanity checks.  Make sure times that correspond to LoadTimingInfo
-    // occur between fetchStart and loadEventEnd.  Relationships between
-    // intervening times are handled by the test bodies.
+    // Simple sanity checks.  Make sure times that correspond to
+    // LoadTimingInfo occur between fetchStart and loadEventEnd.
+    // Relationships between intervening times are handled by the test bodies.
 
     RelativeTime fetch_start = GetResultDelta("fetchStart");
     // While the input dns_start is sometimes null, when read from the
@@ -365,6 +419,10 @@ class LoadTimingBrowserTest : public InProcessBrowserTest {
 
     return RelativeTime(time_ms);
   }
+
+  TimingDeltas load_timing_deltas_;
+  base::TimeTicks start_time_;
+  std::unique_ptr<content::URLLoaderInterceptor> url_loader_interceptor_;
 };
 
 // Test case when no times are given, except the request start times.  This

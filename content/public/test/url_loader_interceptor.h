@@ -70,6 +70,10 @@ class URLLoaderInterceptor {
   static void WriteResponse(const std::string& headers,
                             const std::string& body,
                             mojom::URLLoaderClient* client);
+  static void WriteResponseWithTiming(const std::string& headers,
+                                      const std::string& body,
+                                      mojom::URLLoaderClient* client,
+                                      net::LoadTimingInfo* timing_info);
 
  private:
   class Interceptor;

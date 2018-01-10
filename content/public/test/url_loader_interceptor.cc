@@ -197,12 +197,21 @@ URLLoaderInterceptor::~URLLoaderInterceptor() {
 void URLLoaderInterceptor::WriteResponse(const std::string& headers,
                                          const std::string& body,
                                          mojom::URLLoaderClient* client) {
+  WriteResponseWithTiming(headers, body, client, nullptr);
+}
+void URLLoaderInterceptor::WriteResponseWithTiming(
+    const std::string& headers,
+    const std::string& body,
+    mojom::URLLoaderClient* client,
+    net::LoadTimingInfo* timing_info) {
   net::HttpResponseInfo info;
   info.headers = new net::HttpResponseHeaders(
       net::HttpUtil::AssembleRawHeaders(headers.c_str(), headers.length()));
   content::ResourceResponseHead response;
   response.headers = info.headers;
   response.headers->GetMimeType(&response.mime_type);
+  if (timing_info)
+    response.load_timing = *timing_info;
   client->OnReceiveResponse(response, base::nullopt, nullptr);
 
   uint32_t bytes_written = body.size();
