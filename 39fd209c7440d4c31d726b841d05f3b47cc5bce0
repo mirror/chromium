@@ -46,6 +46,30 @@
       "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f578eee_57676d0f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T10:42:47Z",
+      "side": 1,
+      "message": "Actually we do have a more modern hook for destruction, if you store your object in a SequenceLocalStorageSlot on the IO thread, it will be destroyed when the sequence (thread) goes away (same timing as MessageLoop::DestructionObserver).",
+      "parentUuid": "5a08a0e5_0077c527",
+      "range": {
+        "startLine": 1144,
+        "startChar": 29,
+        "endLine": 1144,
+        "endChar": 54
+      },
+      "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
