@@ -16,6 +16,24 @@
       "revId": "63311997fa94f0a94e07ae894b32b776b934108a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec954c8e_fe00d7a4",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-10T15:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107acb76_311375da",
+      "revId": "63311997fa94f0a94e07ae894b32b776b934108a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
