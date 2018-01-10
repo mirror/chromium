@@ -16,6 +16,24 @@
       "revId": "d8d3fccfd596b5732885aaac2f365de6a28aac02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97bca05_84d73149",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2018-01-10T19:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087bd7ab_64cd2722",
+      "revId": "d8d3fccfd596b5732885aaac2f365de6a28aac02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
