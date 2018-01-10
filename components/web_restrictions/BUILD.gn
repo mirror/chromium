@@ -58,6 +58,7 @@ if (is_android) {
       ":web_restrictions_jni_headers",
       "//base",
       "//content/public/browser",
+      "//content/public/network",
       "//mojo/public/cpp/bindings:bindings",
       "//net:net",
     ]
