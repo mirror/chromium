@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c379e32c_a2552515",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-10T01:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b465c65_9f64bc38",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293ef3e7_3773172b",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-09T22:27:26Z",
       "side": 1,
       "message": "To match the interface this should be called on all non-UI threads. We can probably just add an if (parts_ \u0026\u0026 thread_id !\u003d BrowserThread::UI) parts_-\u003ePreThreadDestroy(thread_id) call before the switch.\n\nSame thing goes for the create function.\n\nThe UI thread is the exception because it\u0027s managed by the embedder rather than the content layer.",
+      "range": {
+        "startLine": 1359,
+        "startChar": 0,
+        "endLine": 1359,
+        "endChar": 56
+      },
+      "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6720a5_df73982a",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-10T01:49:54Z",
+      "side": 1,
+      "message": "Done for both create and destroy functions. The \"thread_id !\u003d BrowserThread::UI\" check seems not needed as thread_id is made greater than BrowserThread::UI in the for-loop above the switch.",
+      "parentUuid": "293ef3e7_3773172b",
       "range": {
         "startLine": 1359,
         "startChar": 0,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "3e272c34_cc5d4cee",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-10T01:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9080500_1ef13221",
+      "range": {
+        "startLine": 77,
+        "startChar": 61,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5feea9d_cc40433f",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-10T01:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "927f57ed_85d557cd",
+      "range": {
+        "startLine": 77,
+        "startChar": 68,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a03a5c_ee5fb068",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3a9ec8_3584bd7e",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-10T01:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a03a5c_ee5fb068",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "781b7da9de0cdd5f2040cccff0d06ebf48316bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
