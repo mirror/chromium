@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86abb710_eafc3c89",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ebcf46_e85dd643",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0591895a_a0b30e5b",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0635b9_9f4221bc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "Ugh. Good catch. Done.",
+      "parentUuid": "0591895a_a0b30e5b",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a6d20d94_7ba3ec8a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "Indeed, in fact I already did so in my upcoming Close implementation CL. No harm in reviewing that sooner. Note: I did both AppId and Tag, because it is more readable and Tag is used more often than once in my Close CL.",
+      "parentUuid": "dd38976c_b1e15458",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d65f97_b691d584",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4fb042_c1965e05",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d65f97_b691d584",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f191e279_5409007f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "This probably warrants a separate CL, because the call to NotificationDisplayServiceImpl::GetDisplayed comes in on a TaskSchedulerForegroundBlockingWorker thread.",
+      "parentUuid": "7c5bc734_8c62a2d5",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "356c4641_40d771d2",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73a3981_c0526b1f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-10T18:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "356c4641_40d771d2",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
