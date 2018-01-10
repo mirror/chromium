@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1de1349_94070729",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-10T17:28:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t need an adjustment for origin before zooming? What if the top-left\nposition of the reference box was not (0, 0)?",
+      "revId": "dea780e44419da26c40e14d4be651a6879e4f35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
