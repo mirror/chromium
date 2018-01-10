@@ -1469,8 +1469,12 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // ENABLE_PLUGINS
 #if defined(OS_CHROMEOS)
     {"ash-enable-night-light", flag_descriptions::kEnableNightLightName,
-     flag_descriptions::kEnableNightLightDescription, kOsAll,
+     flag_descriptions::kEnableNightLightDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(ash::switches::kAshEnableNightLight)},
+    {"ash-disable-v1-back-button",
+     flag_descriptions::kDisableV1AppBackButtonName,
+     flag_descriptions::kDisableV1AppBackButtonDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(ash::switches::kAshDisableV1AppBackButton)},
     {"allow-touchpad-three-finger-click",
      flag_descriptions::kAllowTouchpadThreeFingerClickName,
      flag_descriptions::kAllowTouchpadThreeFingerClickDescription, kOsCrOS,
