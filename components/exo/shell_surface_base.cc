@@ -1137,7 +1137,10 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   // should not result in a configure request.
   DCHECK(!ignore_window_bounds_changes_);
   ignore_window_bounds_changes_ = true;
-  if (new_widget_bounds != widget_->GetWindowBoundsInScreen())
+  gfx::Rect old_bounds = widget_->GetNativeWindow()->bounds();
+  //if (new_widget_bounds != widget_->GetWindowBoundsInScreen())
+
+  if (new_widget_bounds != old_bounds)
     SetWidgetBounds(new_widget_bounds);
   ignore_window_bounds_changes_ = false;
 }
