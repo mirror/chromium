@@ -94,6 +94,30 @@
       "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606b8069_ce5952c0",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-10T23:47:30Z",
+      "side": 1,
+      "message": "BTW, gab@ on chromium-dev just suggested to prefer constexpr ctors over LAZY_INSTANCE: https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-dev/0BEHxQncAKY/xL1nhZqpDgAJ",
+      "parentUuid": "0946b24a_93a7d186",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
