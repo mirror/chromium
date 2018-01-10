@@ -16,6 +16,24 @@
       "revId": "3414764c2d72f68e5ffd9c1c42fce1229fce4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2774a0_fd2fb7a2",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-10T15:08:53Z",
+      "side": 1,
+      "message": "\\o/",
+      "parentUuid": "b15ed8a6_3f28a451",
+      "revId": "3414764c2d72f68e5ffd9c1c42fce1229fce4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
