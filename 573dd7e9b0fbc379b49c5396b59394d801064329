@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ece15714_70c1b72c",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-10T23:57:51Z",
+      "side": 1,
+      "message": "Blank line above here.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d850ed_0cef5ea8",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-10T23:57:51Z",
+      "side": 1,
+      "message": "Blank line above here please.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
