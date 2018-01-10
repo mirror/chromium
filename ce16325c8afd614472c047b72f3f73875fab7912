@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "315ebb3d_9fb3f603",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-10T23:35:42Z",
+      "side": 1,
+      "message": "Talked to ssid. The defaults of SUMMARY_ONLY and BACKGROUND in RequestGlobalMemoryDumpForPid should have low cost.",
+      "parentUuid": "722995d4_bec3b1fd",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee87f532_03571810",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 3
