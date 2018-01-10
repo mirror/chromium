@@ -1230,6 +1230,17 @@ void AppListView::SetState(AppListViewState new_state) {
   // causes bugs.
   GetInitiallyFocusedView()->RequestFocus();
 
+  // Close the folder page if it is going to show the full screen search.
+  if (app_list_main_view_->contents_view()
+          ->apps_container_view()
+          ->IsInFolderView() &&
+      app_list_state_ == AppListViewState::FULLSCREEN_SEARCH && !is_in_drag_) {
+    app_list_main_view_->contents_view()
+        ->apps_container_view()
+        ->app_list_folder_view()
+        ->CloseFolderPage();
+  }
+
   // Updates the visibility of app list items according to the change of
   // |app_list_state_|.
   app_list_main_view_->contents_view()

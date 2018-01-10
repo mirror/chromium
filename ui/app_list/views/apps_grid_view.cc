@@ -994,6 +994,10 @@ void AppsGridView::UpdateControlVisibility(AppListViewState app_list_state,
   }
 
   page_switcher_view_->SetVisible(fullscreen_apps_in_drag);
+
+  // End drag if all items on AppsGridView are set to invisible.
+  if (!fullscreen_apps_in_drag && drag_view_)
+    EndDrag(true);
 }
 
 bool AppsGridView::OnKeyPressed(const ui::KeyEvent& event) {
