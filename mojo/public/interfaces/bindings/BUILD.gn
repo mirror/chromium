@@ -4,12 +4,32 @@
 
 import("../../tools/bindings/mojom.gni")
 
+mojom("native_struct") {
+  sources = [
+    "native_struct.mojom",
+  ]
+
+  allow_native_structs = false
+
+  component_output_prefix = "mojo_public_interfaces_native_struct"
+  export_class_attribute = "MOJO_CPP_NATIVE_STRUCT_EXPORT"
+  export_define = "MOJO_CPP_NATIVE_STRUCT_IMPLEMENTATION"
+  export_header = "mojo/public/cpp/bindings/native_struct_export.h"
+
+  export_class_attribute_shared = "MOJO_CPP_NATIVE_STRUCT_EXPORT"
+  export_define_shared = "MOJO_CPP_NATIVE_STRUCT_IMPLEMENTATION"
+  export_header_shared = "mojo/public/cpp/bindings/native_struct_export.h"
+}
+
 mojom("bindings") {
-  visibility = []
+  visibility = [ ":*" ]
   sources = [
     "interface_control_messages.mojom",
-    "native_struct.mojom",
     "pipe_control_messages.mojom",
+  ]
+
+  public_deps = [
+    ":native_struct",
   ]
 
   allow_native_structs = false
