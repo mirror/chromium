@@ -42,6 +42,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "third_party/WebKit/public/platform/TaskType.h"
 
 namespace content {
 
@@ -157,7 +158,7 @@ void ResourceDispatcher::OnReceivedResponse(
 
   if (!IsResourceTypeFrame(request_info->resource_type)) {
     NotifySubresourceStarted(
-        RenderThreadImpl::GetMainTaskRunner(), request_info->render_frame_id,
+        request_info->task_runner, request_info->render_frame_id,
         request_info->response_url, request_info->response_referrer,
         request_info->response_method, request_info->resource_type,
         response_head.socket_address.host(), response_head.cert_status);
@@ -347,7 +348,8 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
     const GURL& request_url,
     const std::string& method,
     const GURL& referrer,
-    bool download_to_file)
+    bool download_to_file,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : peer(std::move(peer)),
       resource_type(resource_type),
       render_frame_id(render_frame_id),
@@ -357,7 +359,8 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
       response_method(method),
       response_referrer(referrer),
       download_to_file(download_to_file),
-      request_start(base::TimeTicks::Now()) {}
+      request_start(base::TimeTicks::Now()),
+      task_runner(std::move(task_runner)) {}
 
 ResourceDispatcher::PendingRequestInfo::~PendingRequestInfo() {
 }
@@ -411,10 +414,13 @@ int ResourceDispatcher::StartAsync(
 
   // Compute a unique request_id for this renderer process.
   int request_id = MakeRequestID();
+  RenderFrameImpl* frame =
+      RenderFrameImpl::FromRoutingID(request->render_frame_id);
   pending_requests_[request_id] = std::make_unique<PendingRequestInfo>(
       std::move(peer), static_cast<ResourceType>(request->resource_type),
       request->render_frame_id, frame_origin, request->url, request->method,
-      request->referrer, request->download_to_file);
+      request->referrer, request->download_to_file,
+      frame->GetTaskRunner(blink::TaskType::kUnspecedLoading));
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       loading_task_runner ? loading_task_runner : thread_task_runner_;
