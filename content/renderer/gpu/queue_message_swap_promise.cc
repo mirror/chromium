@@ -86,6 +86,13 @@ cc::SwapPromise::DidNotSwapAction QueueMessageSwapPromise::DidNotSwap(
   return DidNotSwapAction::BREAK_PROMISE;
 }
 
+void QueueMessageSwapPromise::DidSwap2(cc::RenderFrameMetadata* metadata) {
+  cc::RenderFrameMetadata meta2;
+  metadata->root_scroll_offset = gfx::Vector2dF(42.0, 1337.0);
+  message_sender_->Send(
+      new ViewMsg_CanHazRenderFrame(message_queue_->routing_id(), *metadata));
+}
+
 void QueueMessageSwapPromise::PromiseCompleted() {
 #if DCHECK_IS_ON()
   completed_ = true;

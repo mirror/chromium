@@ -497,6 +497,9 @@ IPC_MESSAGE_ROUTED1(ViewMsg_CountFeatureOnSharedWorker,
 // for tests.
 IPC_MESSAGE_ROUTED1(ViewMsg_WaitForNextFrameForTests, int /* routing_id */)
 
+IPC_MESSAGE_ROUTED1(ViewMsg_CanHazRenderFrame,
+                    cc::RenderFrameMetadata /* metadata */)
+
 #if BUILDFLAG(ENABLE_PLUGINS)
 // Reply to ViewHostMsg_OpenChannelToPpapiBroker
 // Tells the renderer that the channel to the broker has been created.
