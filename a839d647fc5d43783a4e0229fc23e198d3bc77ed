@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e4da3a6_d1db9ebf",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:30:05Z",
+      "side": 1,
+      "message": "Should this persist in history? If not, the member needs to be reset after commit, or be passed to Navigator::NavigateToEntry directly.",
+      "revId": "a839d647fc5d43783a4e0229fc23e198d3bc77ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
