@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3ac60c_61587569",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-10T22:54:38Z",
+      "side": 1,
+      "message": "nit: remove references to |is_shown_|",
+      "revId": "60fcae56d12d28c4944003a4b229376dabef09bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
