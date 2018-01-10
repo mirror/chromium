@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a980ab1_4704af31",
+        "filename": "third_party/WebKit/Source/core/input/ScrollSnapTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-10T16:40:39Z",
+      "side": 1,
+      "message": "I think you want \u003c!DOCTYPE html\u003e both here and above.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "c7263a2a8dad0d3a82923fb262b7ef1bd9e54810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4160d6ec_67c1052c",
+        "filename": "third_party/WebKit/Source/core/input/ScrollSnapTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-10T16:40:39Z",
+      "side": 1,
+      "message": "Please also add a test when the snap is explicitly on the \u003chtml\u003e element. You should also add a case where the body Element is a scroller by setting `overflow: scroll` on \u003cbody\u003e and `overflow: hidden|scroll` on \u003chtml\u003e.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 8
+      },
+      "revId": "c7263a2a8dad0d3a82923fb262b7ef1bd9e54810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
