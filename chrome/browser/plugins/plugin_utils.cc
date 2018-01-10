@@ -121,6 +121,16 @@ ContentSetting PluginUtils::GetFlashPluginContentSetting(
 }
 
 // static
+void PluginUtils::RememberFlashChangedForSite(
+    HostContentSettingsMap* host_content_settings_map,
+    const GURL& requesting_url,
+    const GURL& top_level_url) {
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      requesting_url, top_level_url, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+      std::string(), std::make_unique<base::Value>(true));
+}
+
+// static
 bool PluginUtils::ShouldPreferHtmlOverPlugins(
     const HostContentSettingsMap* host_content_settings_map) {
   return base::FeatureList::IsEnabled(features::kPreferHtmlOverPlugins);
