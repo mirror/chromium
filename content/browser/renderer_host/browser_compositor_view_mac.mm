@@ -560,4 +560,12 @@ ui::Compositor* BrowserCompositorMac::CompositorForTesting() const {
   return nullptr;
 }
 
+void BrowserCompositorMac::DidNavigate() {
+  delegated_frame_host_->DidNavigate();
+}
+
+void BrowserCompositorMac::DidReceiveFirstFrameAfterNavigation() {
+  client_->DidReceiveFirstFrameAfterNavigation();
+}
+
 }  // namespace content
