@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "7076d152_d8481b86",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T02:01:22Z",
+      "side": 1,
+      "message": "Added an additional tint_color_matrix as discussed offline. PTAL.",
+      "parentUuid": "8e81ad93_638e1a93",
+      "revId": "ca33eeb39bab4c81afc47c25722fd3e62af30438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "882dabda_9bb3ceb6",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
