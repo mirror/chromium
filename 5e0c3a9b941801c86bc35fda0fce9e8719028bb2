@@ -46,6 +46,30 @@
       "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18c0818_358dfb97",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-10T13:11:32Z",
+      "side": 1,
+      "message": "I was just following the suggestion from fdoray@ in this review to remove the LAZY_INSTANCE_INITIALIZER from the new base::TimeTicks global. I agreed with it, done it, and then got a question about it from 2 other reviewers, which suggests to me that we should remove the LAZY_INSTANCE_INITIALIZER for the rest of these TimeTicks for consistency.\n\nPlease review: https://chromium-review.googlesource.com/c/chromium/src/+/859783",
+      "parentUuid": "da7728a5_abe86996",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
