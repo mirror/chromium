@@ -139,6 +139,30 @@ DocumentMarker* SpellCheckMarkerAtPosition(
       *ToText(node), offset, offset, DocumentMarker::MisspellingMarkers());
 }
 
+SelectionInFlatTree AdjustSelectionWithTrailingWhitespace(
+    const SelectionInFlatTree& selection) {
+  if (selection.IsNone())
+    return selection;
+  if (!selection.IsRange())
+    return selection;
+  const bool base_is_first =
+      selection.Base() == selection.ComputeStartPosition();
+  const PositionInFlatTree& end =
+      base_is_first ? selection.Extent() : selection.Base();
+  DCHECK_EQ(end, selection.ComputeEndPosition());
+  const PositionInFlatTree& new_end = SkipWhitespace(end);
+  if (end == new_end)
+    return selection;
+  if (base_is_first) {
+    return SelectionInFlatTree::Builder(selection)
+        .SetBaseAndExtent(selection.Base(), new_end)
+        .Build();
+  }
+  return SelectionInFlatTree::Builder(selection)
+      .SetBaseAndExtent(new_end, selection.Extent())
+      .Build();
+}
+
 }  // namespace
 
 SelectionController::~SelectionController() = default;
