@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f08747b1_43cd6c69",
+        "filename": "chrome/browser/ui/webui/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T12:51:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e4c5d3_3cff7246",
+      "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0375b57_ec75b20c",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac38a153_280f6e1e",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T12:51:06Z",
+      "side": 1,
+      "message": "I was following the example of other initializations in this function. I\u0027ll remove it. Could you please provide the rationale of when to do this, so that I may be able to follow it by myself in the future?",
+      "parentUuid": "e0375b57_ec75b20c",
+      "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
