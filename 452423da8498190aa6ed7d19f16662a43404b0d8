@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bc35613_183a171f",
+        "filename": "content/child/runtime_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec72b43d_3a7753d7",
+      "range": {
+        "startLine": 211,
+        "startChar": 44,
+        "endLine": 211,
+        "endChar": 50
+      },
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce6b6cd_39fdd34a",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91324c92_0b6f35d6",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "I think it ought not to be enabled by default until I\u0027ve had a chance to test it out on a couple of devices.",
+      "parentUuid": "bce6b6cd_39fdd34a",
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "526d7a2b_e2076b56",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b27ed3b_fcaa5f21",
+      "range": {
+        "startLine": 1155,
+        "startChar": 29,
+        "endLine": 1155,
+        "endChar": 35
+      },
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30890ac_6f983d1e",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 7
@@ -79,6 +145,24 @@
       "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638af3e4_dc27c653",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Apparently we can just drop the whole thing. It\u0027s apparently only needed for Blink flags.",
+      "parentUuid": "a30890ac_6f983d1e",
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1c923b63_e6fc6d68",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c1c4a8a_e80ecd68",
+      "range": {
+        "startLine": 1157,
+        "startChar": 15,
+        "endLine": 1157,
+        "endChar": 19
+      },
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79629683_aa59e362",
         "filename": "third_party/WebKit/public/platform/WebRuntimeFeatures.h",
         "patchSetId": 7
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "7d7ff774_0841454c",
+        "filename": "third_party/WebKit/public/platform/WebRuntimeFeatures.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79629683_aa59e362",
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d32ae417_93d7e4ff",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 7
@@ -136,6 +262,24 @@
       "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcb18e2_2254e74a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 26060,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-10T00:05:47Z",
+      "side": 1,
+      "message": "Removed old ones",
+      "parentUuid": "d32ae417_93d7e4ff",
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
