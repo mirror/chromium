@@ -17,6 +17,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
 #include "base/test/mock_entropy_provider.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -39,9 +40,11 @@
 #include "net/http/http_server_properties_manager.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/log/net_log_with_source.h"
+#include "net/network_error_logging/network_error_logging_feature.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_service.h"
+#include "net/reporting/reporting_feature.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_job_factory.h"
@@ -251,6 +254,46 @@ TEST_F(NetworkContextTest, EnableFtpUrlSupport) {
           url::kFtpScheme));
 }
 #endif  // !BUILDFLAG(DISABLE_FTP_SUPPORT)
+
+#if BUILDFLAG(ENABLE_REPORTING)
+TEST_F(NetworkContextTest, DisableReporting) {
+  base::test::ScopedFeatureList scoped_feature_list_;
+  scoped_feature_list_.InitAndDisableFeature(features::kReporting);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(CreateContextParams());
+  EXPECT_FALSE(network_context->url_request_context()->reporting_service());
+}
+
+TEST_F(NetworkContextTest, EnableReporting) {
+  base::test::ScopedFeatureList scoped_feature_list_;
+  scoped_feature_list_.InitAndEnableFeature(features::kReporting);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(CreateContextParams());
+  EXPECT_TRUE(network_context->url_request_context()->reporting_service());
+}
+
+TEST_F(NetworkContextTest, DisableNetworkErrorLogging) {
+  base::test::ScopedFeatureList scoped_feature_list_;
+  scoped_feature_list_.InitAndDisableFeature(features::kNetworkErrorLogging);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(CreateContextParams());
+  EXPECT_FALSE(
+      network_context->url_request_context()->network_error_logging_delegate());
+}
+
+TEST_F(NetworkContextTest, EnableNetworkErrorLogging) {
+  base::test::ScopedFeatureList scoped_feature_list_;
+  scoped_feature_list_.InitAndEnableFeature(features::kNetworkErrorLogging);
+
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(CreateContextParams());
+  EXPECT_TRUE(
+      network_context->url_request_context()->network_error_logging_delegate());
+}
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 TEST_F(NetworkContextTest, Http09Disabled) {
   mojom::NetworkContextParamsPtr context_params = CreateContextParams();
