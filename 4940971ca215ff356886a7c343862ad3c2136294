@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef125252_d6329911",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-10T08:36:51Z",
+      "side": 1,
+      "message": "Will make GetWindowClientInfoOnUI return a ServiceWorkerClientInfoPtr later when mojofying related IPCs.",
+      "range": {
+        "startLine": 526,
+        "startChar": 24,
+        "endLine": 526,
+        "endChar": 47
+      },
+      "revId": "4940971ca215ff356886a7c343862ad3c2136294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f98301_94428b43",
+        "filename": "content/browser/service_worker/service_worker_client_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-10T08:36:51Z",
+      "side": 1,
+      "message": "Will remove this |ClientCallback| later when mojofying related IPCs.",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "4940971ca215ff356886a7c343862ad3c2136294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c47d4d_a6ce2cba",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-10T08:36:51Z",
+      "side": 1,
+      "message": "Once we can make ServiceWorkerObjectInfoPtr contain a reference to ServiceWorkerObjectHost (current ServiceWorkerHandle) later when introducing ServiceWorkerObjectHost interface, we do not need to pass |source_info| (line396 in this file) into |DidFailToDispatchExtendableMessageEvent()| to release the handle reference anymore, at that time we can avoid calling Clone() here but just move |source_info| directly.",
+      "range": {
+        "startLine": 392,
+        "startChar": 10,
+        "endLine": 392,
+        "endChar": 30
+      },
+      "revId": "4940971ca215ff356886a7c343862ad3c2136294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
