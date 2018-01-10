@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "55463dee_179563c0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T09:52:55Z",
+      "side": 1,
+      "message": "Right, so your idea is to drop the CppType part from these classes and have the bindings side pass NVT\u003cIDLType\u003e to them. I think that works too.",
+      "parentUuid": "eaa8a507_e3cd8ed7",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b03434_5f97a25c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 1
