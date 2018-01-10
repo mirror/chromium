@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e35550_19934a3a",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-10T13:10:15Z",
+      "side": 1,
+      "message": "I noted that this change brings double read the globals. This should still report consistent values because all modifications are happening on the UI thread and hence not racy.",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 427,
+        "endChar": 59
+      },
+      "revId": "5dc51f13aa0bbc88f365396836b596d158cd3fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9920b29e_315a064d",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-10T13:10:15Z",
+      "side": 1,
+      "message": "Here I am not sure why we read g_browser_exe_main_entry_point_ticks second time after the null check. This does seem to eliminate a potential race.\n\nI\u0027m OK with any policy related to copying to \u0027const base::TimeTicks\u0027, just wanted to be more consistent, and have not figured the policy.",
+      "range": {
+        "startLine": 611,
+        "startChar": 4,
+        "endLine": 611,
+        "endChar": 79
+      },
+      "revId": "5dc51f13aa0bbc88f365396836b596d158cd3fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
