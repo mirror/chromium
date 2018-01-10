@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b701edf5_f91c009e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-area-element/rellist-feature-detection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T10:28:00Z",
+      "side": 1,
+      "message": "Nice test cases!\n\nWe might want to test that [SameObject] works as expected, too.  element.relList never changes its identity as an object.  e.g.\n\n    let savedRelList \u003d element.relList;\n    element.rel \u003d \"something\";\n    assert_equals(element.relList, savedRelList);\n\nThis is just FYI, and I\u0027m not saying that you must work on it.",
+      "revId": "3e8e1fe0537c7ad4305973fae094276e3b13e312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
