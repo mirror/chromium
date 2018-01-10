@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e94a21b_6d361fec",
+        "filename": "ui/message_center/notification_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-10T14:53:35Z",
+      "side": 1,
+      "message": "These two tests share a lot of code. Lately I\u0027ve been updating test files that have had dozens of tests with copy-pasted code, and it\u0027s much slower to make even mechanical changes to an API because of that, plus it\u0027s harder to see nuanced differences between tests when they\u0027re buried in otherwise identical stanzas of code. So in general, it\u0027s nice to keep copy-pasted code to a minimum. In this case I think the two tests are OK to combine since they are closely related (updating priority with and without quiet mode).",
+      "range": {
+        "startLine": 210,
+        "startChar": 29,
+        "endLine": 210,
+        "endChar": 60
+      },
+      "revId": "8d2596e9273a3484838168521e615c0b528bbedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
