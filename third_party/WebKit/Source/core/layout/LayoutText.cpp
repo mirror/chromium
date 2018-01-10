@@ -49,6 +49,7 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
+#include "core/layout/ng/layout_ng_table_cell.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/runtime_enabled_features.h"
@@ -2222,9 +2223,55 @@ scoped_refptr<AbstractInlineTextBox> LayoutText::FirstAbstractInlineTextBox() {
                                             first_text_box_);
 }
 
+static void GetNGPaintFragmentsInternal(
+    const NGPaintFragment* paint,
+    const LayoutObject* layout_object,
+    Vector<const NGPaintFragment*>& fragments) {
+  if (!paint)
+    return;
+  if (paint->GetLayoutObject() == layout_object)
+    fragments.push_back(paint);
+  for (const auto& child : paint->Children())
+    GetNGPaintFragmentsInternal(child.get(), layout_object, fragments);
+}
+
+static const NGPaintFragment* GetPaintFragment(LayoutBlockFlow* ng_mixin) {
+  if (ng_mixin->IsLayoutNGBlockFlow())
+    return ToLayoutNGBlockFlow(ng_mixin)->PaintFragment();
+  DCHECK_EQ("LayoutNGTableCell", ng_mixin->GetName());
+  return static_cast<const LayoutNGTableCell*>(ng_mixin)->PaintFragment();
+}
+
+static Vector<const NGPaintFragment*> GetNGPaintFragments(
+    LayoutBlockFlow* ng_mixin,
+    const LayoutObject* layout_object) {
+  Vector<const NGPaintFragment*> fragments;
+  GetNGPaintFragmentsInternal(GetPaintFragment(ng_mixin), layout_object,
+                              fragments);
+  return fragments;
+}
+
+static void IvalidateNGPaintFragments(
+    ObjectPaintInvalidator& paint_invalidator,
+    const LayoutObject* layout_object,
+    LayoutBlockFlow* block_flow,
+    PaintInvalidationReason invalidation_reason) {
+  const Vector<const NGPaintFragment*>& paint_fragments =
+      GetNGPaintFragments(block_flow, layout_object);
+  for (const auto& paint_fragment : paint_fragments) {
+    paint_invalidator.InvalidateDisplayItemClient(*paint_fragment,
+                                                  invalidation_reason);
+  }
+}
+
 void LayoutText::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
   ObjectPaintInvalidator paint_invalidator(*this);
+  if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
+    IvalidateNGPaintFragments(paint_invalidator, this, block_flow,
+                              invalidation_reason);
+    return;
+  }
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
