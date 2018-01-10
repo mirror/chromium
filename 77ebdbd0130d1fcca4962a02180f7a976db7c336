@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "2f985ba6_e1eb21e4",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-10T18:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76ca417_c870d887",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa1bdf8_3796c4ef",
         "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.cc",
         "patchSetId": 2
