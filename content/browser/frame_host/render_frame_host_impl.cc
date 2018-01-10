@@ -2682,7 +2682,9 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
   return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(
+    base::Optional<int64_t> last_commit_navigation_id,
+    bool browser_side_navigation_pending) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
@@ -2693,6 +2695,13 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // refactored in Blink. See crbug.com/466089
   if (!is_loading_) {
     LOG(WARNING) << "OnDidStopLoading was called twice.";
+    return;
+  }
+
+  if (navigation_handle_ && last_commit_navigation_id &&
+      !browser_side_navigation_pending &&
+      *last_commit_navigation_id != navigation_handle_->GetNavigationId()) {
+    LOG(ERROR) << "invalid id";
     return;
   }
 
@@ -3816,10 +3825,17 @@ void RenderFrameHostImpl::ResetLoadingState() {
     // When pending deletion, just set the loading state to not loading.
     // Otherwise, OnDidStopLoading will take care of that, as well as sending
     // notification to the FrameTreeNode about the change in loading state.
-    if (!is_active())
+    if (!is_active()) {
       is_loading_ = false;
-    else
-      OnDidStopLoading();
+    } else {
+      // It is OK to set |browser_side_navigation_pending| false, because
+      // |browser_side_navigation_pending| is used to clear
+      // |navigation_handle_|.
+      OnDidStopLoading(navigation_handle_
+                           ? navigation_handle_->GetNavigationId()
+                           : base::Optional<int64_t>(),
+                       false /* browser_side_navigation_pending */);
+    }
   }
 }
 
