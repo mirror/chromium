@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "131335bf_743baa5d",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T10:26:13Z",
+      "side": 1,
+      "message": "Ah, well the ternary operations in the initializer list allows the members to be const (I like as much const as possible and am not against a little ternary to keep it that way).\n\nAs far as my \"assumption\" goes. It\u0027s mostly about the fact that I\u0027d like this to be a DCHECK but am \"assuming\" Francois tried this and the DCHECK hit because the APIs that use ScopedBlockingCall can do so outside of a TaskScheduler instance (e.g. in unit tests or non-chrome embedders without a registered BlockingObserver (TaskScheduler)). In that case the ScopedBlockingCall should be a no-op but shouldn\u0027t crash/dcheck.",
+      "parentUuid": "0650502c_2b44594d",
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ecccd6_ae51619d",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 1
