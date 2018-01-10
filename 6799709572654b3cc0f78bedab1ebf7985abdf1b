@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8540f05_52900c2b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/writeValue/gen-characteristic-is-removed.https.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T20:21:37Z",
+      "side": 1,
+      "message": "this line looks too long",
+      "revId": "6799709572654b3cc0f78bedab1ebf7985abdf1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
