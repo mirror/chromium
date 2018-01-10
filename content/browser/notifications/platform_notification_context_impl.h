@@ -43,8 +43,8 @@ class ResourceContext;
 class ServiceWorkerContextWrapper;
 
 // Implementation of the Web Notification storage context. The public methods
-// defined in this interface must only be called on the IO thread unless
-// otherwise specified.
+// defined in this interface must only be called on the IO thread, unless
+// otherwise specified in their function declaration comments.
 class CONTENT_EXPORT PlatformNotificationContextImpl
     : public PlatformNotificationContext,
       public ServiceWorkerContextCoreObserver {
