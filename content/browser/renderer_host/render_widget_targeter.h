@@ -58,6 +58,9 @@ class RenderWidgetTargeter {
 
     virtual RenderWidgetHostViewBase* FindViewFromFrameSinkId(
         const viz::FrameSinkId& frame_sink_id) const = 0;
+
+    virtual void EventAckNoTarget(RenderWidgetHostViewBase* root_view,
+                                  const blink::WebInputEvent& event) const = 0;
   };
 
   // The delegate must outlive this targeter.
