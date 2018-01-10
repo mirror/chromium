@@ -105,10 +105,12 @@ void PasswordImportConsumer::ConsumePassword(
 
 PasswordManagerPorter::PasswordManagerPorter(
     password_manager::CredentialProviderInterface*
-        credential_provider_interface)
+        credential_provider_interface,
+    ProgressCallback on_export_progress_callback)
     : PasswordManagerPorter(
           std::make_unique<password_manager::PasswordManagerExporter>(
-              credential_provider_interface)) {}
+              credential_provider_interface,
+              std::move(on_export_progress_callback))) {}
 
 PasswordManagerPorter::PasswordManagerPorter(
     std::unique_ptr<password_manager::PasswordManagerExporter> exporter)
@@ -116,12 +118,21 @@ PasswordManagerPorter::PasswordManagerPorter(
 
 PasswordManagerPorter::~PasswordManagerPorter() {}
 
-void PasswordManagerPorter::Store() {
+bool PasswordManagerPorter::Store() {
   // In unittests a null WebContents means: "Abort creating the file Selector."
   if (!web_contents_)
-    return;
+    return true;
   PresentFileSelector(web_contents_,
                       PasswordManagerPorter::Type::PASSWORD_EXPORT);
+
+  // TODO(http://crbug/789561) Reject the request if an export is already in
+  // progress.
+  return true;
+}
+
+password_manager::ExportProgressStatus
+PasswordManagerPorter::GetExportProgressStatus() {
+  return exporter_->GetProgressStatus();
 }
 
 void PasswordManagerPorter::Load() {
