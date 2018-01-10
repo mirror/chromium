@@ -7,6 +7,7 @@
 
 #include <tuple>
 
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
@@ -46,6 +47,16 @@ class WebRtcLocalEventLogsObserver {
   virtual void OnLocalLogStarted(WebRtcEventLogPeerConnectionKey pc_key,
                                  base::FilePath file_path) = 0;
   virtual void OnLocalLogStopped(WebRtcEventLogPeerConnectionKey pc_key) = 0;
+};
+
+struct LogFile {
+  LogFile(base::File file, size_t max_file_size_bytes)
+      : file(std::move(file)),
+        max_file_size_bytes(max_file_size_bytes),
+        file_size_bytes(0) {}
+  base::File file;
+  const size_t max_file_size_bytes;
+  size_t file_size_bytes;
 };
 
 }  // namespace content

@@ -33,6 +33,8 @@
 #include "content/browser/push_messaging/push_messaging_router.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
 #include "content/browser/storage_partition_impl_map.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/blob_handle.h"
 #include "content/public/browser/browser_thread.h"
@@ -511,6 +513,11 @@ void BrowserContext::Initialize(
     RegisterCommonBrowserInterfaces(connection);
     connection->Start();
   }
+
+  auto* webrtc_event_log_manager = WebRtcEventLogManager::GetInstance();
+  if (webrtc_event_log_manager) {
+    webrtc_event_log_manager->OnBrowserContextInitialized(browser_context);
+  }
 }
 
 // static
@@ -551,7 +558,9 @@ ServiceManagerConnection* BrowserContext::GetServiceManagerConnectionFor(
 }
 
 BrowserContext::BrowserContext()
-    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()) {}
+    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()) {
+  WebRtcEventLogManager::GetInstance();  // Ensure creation.
+}
 
 BrowserContext::~BrowserContext() {
   CHECK(GetUserData(kMojoWasInitialized))
@@ -565,6 +574,9 @@ BrowserContext::~BrowserContext() {
 
   if (GetUserData(kDownloadManagerKeyName))
     GetDownloadManager(this)->Shutdown();
+
+  // TODO: !!! Is there some way for me to be informed when this goes down, and
+  // potentially close down something on my end?
 }
 
 void BrowserContext::ShutdownStoragePartitions() {
