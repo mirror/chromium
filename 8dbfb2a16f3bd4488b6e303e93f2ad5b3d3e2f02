@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "e7e8b207_1ed518a9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-10T06:00:50Z",
+      "side": 1,
+      "message": "So what I see is, The actual text_changed event is fired by the android widget TextView.java, which I don\u0027t think we can change. That is then received by HandleEditableTextChanged in web_contents_accessibility_android.cc which then calls handleEditableTextChanged in WebContentsAccessibility.java and this is the place where we send the a11y event and then later event is built and attributes are updated. \n\nAnd same is the flow with selection_changed events. \n\nIn this process I don\u0027t see anywhere where we make an attempt to change the selection index. Where exactly you think I should be placing this?",
+      "parentUuid": "4ae6b575_2675f623",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "140d4558_f9e3a2fe",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 11
