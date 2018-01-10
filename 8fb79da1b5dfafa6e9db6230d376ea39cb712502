@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd730211_b277e13b",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5739,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2018-01-10T19:28:47Z",
+      "side": 1,
+      "message": "I wasn\u0027t clear at first why this was necessary.   Thanks for letting me know (offline).  As we discussed the fact that this is necessary here but not in some other places makes me wonder if the tests might be a bit brittle wrt future changes.",
+      "range": {
+        "startLine": 5739,
+        "startChar": 36,
+        "endLine": 5739,
+        "endChar": 37
+      },
+      "revId": "8fb79da1b5dfafa6e9db6230d376ea39cb712502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "916f2d7a_b3a30ef9",
+        "filename": "net/spdy/chromium/http2_priority_dependencies.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2018-01-10T19:28:47Z",
+      "side": 1,
+      "message": "The changes here and below were not obvious to me.  Paraphrasing your explanation:  Due to differences in the mechanics of stream creation between SPDY and QUIC, some of the assumptions in the old code turned out to be strict for QUIC.   I\u0027m noting that for posterity here, just in case anyone in future is curious enough to dig through blame to find out why these are the way they are.",
+      "revId": "8fb79da1b5dfafa6e9db6230d376ea39cb712502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
