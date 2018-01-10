@@ -16,6 +16,24 @@
       "revId": "01e54b8399c94d3012eff96c21c828fb6fe25f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fe9f84_f6ad9707",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a397fa3_5b8f0ff0",
+      "revId": "01e54b8399c94d3012eff96c21c828fb6fe25f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
