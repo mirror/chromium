@@ -101,6 +101,18 @@ bool StartupUtils::IsEulaAccepted() {
 
 // static
 bool StartupUtils::IsOobeCompleted() {
+#if defined(GOOGLE_CHROME_BUILD)
+  bool is_official_build = true;
+#else
+  bool is_official_build = false;
+#endif
+
+  // An edge case that can be reached for developers if they download and
+  // setup a Chrome OS test image but later deploy their own version of Chrome
+  // on top of it. See https://crbug.com/800776
+  if (is_official_build && !IsEulaAccepted())
+    return false;
+
   return g_browser_process->local_state()->GetBoolean(prefs::kOobeComplete);
 }
 
