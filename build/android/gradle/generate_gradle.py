@@ -746,6 +746,12 @@ def main():
                       action='store_true',
                       help='Generate a project that is compatible with '
                            'Android Studio 3.1 Canary.')
+  parser.add_argument('--use-android-studio-sdk',
+                      action='store_true',
+                      help='Use the SDK installed by Android Studio, rather '
+                      'than that in the Chromium repository. This allows '
+                      'updates and additions to the SDK (e.g. emulator'
+                      'images) without corrupting Chromium\' SDK')
   args = parser.parse_args()
   if args.output_directory:
     constants.SetOutputDirectory(args.output_directory)
@@ -842,7 +848,10 @@ def main():
   _WriteFile(os.path.join(generator.project_dir, 'settings.gradle'),
              _GenerateSettingsGradle(project_entries, add_all_module))
 
-  sdk_path = _RebasePath(build_vars['android_sdk_root'])
+  if args.use_android_studio_sdk:
+    sdk_path = os.path.expanduser('~/Android/Sdk')
+  else:
+    sdk_path = _RebasePath(build_vars['android_sdk_root'])
   _WriteFile(os.path.join(generator.project_dir, 'local.properties'),
              _GenerateLocalProperties(sdk_path))
 
