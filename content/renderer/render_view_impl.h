@@ -512,6 +512,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnumerateDirectoryResponse(int id,
                                     const std::vector<base::FilePath>& paths);
