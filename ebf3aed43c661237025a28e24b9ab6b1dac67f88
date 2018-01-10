@@ -22,6 +22,30 @@
       "revId": "ebf3aed43c661237025a28e24b9ab6b1dac67f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14f2fcc_5d4ccda8",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-10T21:50:01Z",
+      "side": 1,
+      "message": "Thanks for catching this! Done.",
+      "parentUuid": "29567690_22ec7329",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "ebf3aed43c661237025a28e24b9ab6b1dac67f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
