@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6e98ff_fe898aab",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T19:39:32Z",
+      "side": 1,
+      "message": "AFAIK this can return nullptr if the profile isn\u0027t found; is that a problem?  Ditto for credit_card below",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "96293d52eb1aa80e2356e6173e9032387f3dd47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
