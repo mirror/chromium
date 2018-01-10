@@ -12,9 +12,11 @@
 #include "base/process/process_handle.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/trace_event/heap_profiler_event_filter.h"
 #include "base/trace_event/trace_config_memory_test_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/tracing_controller.h"
 #include "content/public/common/service_manager_connection.h"
@@ -22,6 +24,11 @@
 namespace profiling {
 
 namespace {
+
+static const char* kTestCategory = "kTestCategory";
+static const char* kMallocEvent = "kMallocEvent";
+static const char* kPAEvent = "kPAEvent";
+static const char* kVariadicEVent = "kVariadicEVent";
 
 // Make some specific allocations in Browser to do a deeper test of the
 // allocation tracking.
@@ -234,17 +241,26 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
   }
 
   if (running_on_ui_thread_) {
-    if (!RunInitializationOnUIThread())
+    if (!CheckOrStartProfiling())
       return false;
+    if (wait_for_profiling_to_start_run_loop_) {
+      wait_for_profiling_to_start_run_loop_->Run();
+    }
+    MakeTestAllocations();
     CollectResults(true);
   } else {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&ProfilingTestDriver::RunInitializationOnUIThreadAndSignal,
-                   base::Unretained(this)));
+        base::Bind(
+            &ProfilingTestDriver::CheckOrStartProfilingOnUIThreadAndSignal,
+            base::Unretained(this)));
     wait_for_ui_thread_.Wait();
     if (!initialization_success_)
       return false;
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&ProfilingTestDriver::MakeTestAllocations,
+                   base::Unretained(this)));
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&ProfilingTestDriver::CollectResults, base::Unretained(this),
@@ -272,25 +288,19 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
   return true;
 }
 
-void ProfilingTestDriver::RunInitializationOnUIThreadAndSignal() {
+void ProfilingTestDriver::CheckOrStartProfilingOnUIThreadAndSignal() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-  initialization_success_ = RunInitializationOnUIThread();
-  wait_for_ui_thread_.Signal();
-}
+  initialization_success_ = CheckOrStartProfiling();
 
-bool ProfilingTestDriver::RunInitializationOnUIThread() {
-  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-
-  LOG(ERROR) << "RunInitializationOnUIThread: "
-             << base::CommandLine::ForCurrentProcess()->GetCommandLineString();
-  if (!CheckOrStartProfiling())
-    return false;
-
-  MakeTestAllocations();
-  return true;
+  // If the flag is true, then the WaitableEvent will be signalled after
+  // profiling has started.
+  if (!wait_for_profiling_to_start_)
+    wait_for_ui_thread_.Signal();
 }
 
 bool ProfilingTestDriver::CheckOrStartProfiling() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+
   if (options_.profiling_already_started) {
     if (ProfilingProcessHost::has_started())
       return true;
@@ -306,24 +316,60 @@ bool ProfilingTestDriver::CheckOrStartProfiling() {
     return false;
   }
 
-  ProfilingProcessHost::Start(connection, options_.mode);
+  if (ShouldProfileBrowser()) {
+    if (running_on_ui_thread_) {
+      wait_for_profiling_to_start_run_loop_.reset(new base::RunLoop);
+      profiling::SetOnInitAllocatorShimCallbackForTesting(
+          wait_for_profiling_to_start_run_loop_->QuitClosure(),
+          base::ThreadTaskRunnerHandle::Get());
+    } else {
+      wait_for_profiling_to_start_ = true;
+      profiling::SetOnInitAllocatorShimCallbackForTesting(
+          base::Bind(&base::WaitableEvent::Signal,
+                     base::Unretained(&wait_for_ui_thread_)),
+          base::ThreadTaskRunnerHandle::Get());
+    }
+  }
+
+  ProfilingProcessHost::Start(connection, options_.mode, options_.stack_mode);
   return true;
 }
 
 void ProfilingTestDriver::MakeTestAllocations() {
-  leaks_.reserve(2 * kMallocAllocCount + kPartitionAllocSize);
-  for (int i = 0; i < kMallocAllocCount; ++i) {
-    leaks_.push_back(new char[kMallocAllocSize]);
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+
+  leaks_.reserve(2 * kMallocAllocCount + 1 + kPartitionAllocSize);
+
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_EVENT0(kTestCategory, kMallocEvent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kMallocAllocCount; ++i) {
+      leaks_.push_back(new char[kMallocAllocSize]);
+    }
   }
 
-  for (int i = 0; i < kPartitionAllocCount; ++i) {
-    leaks_.push_back(static_cast<char*>(partition_allocator_.root()->Alloc(
-        kPartitionAllocSize, kPartitionAllocTypeName)));
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_EVENT0(kTestCategory, kPAEvent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kPartitionAllocCount; ++i) {
+      leaks_.push_back(static_cast<char*>(partition_allocator_.root()->Alloc(
+          kPartitionAllocSize, kPartitionAllocTypeName)));
+    }
   }
 
-  for (int i = 0; i < kVariadicAllocCount; ++i) {
-    leaks_.push_back(new char[i + 8000]);  // Variadic allocation.
-    total_variadic_allocations_ += i + 8000;
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_EVENT0(kTestCategory, kVariadicEVent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kVariadicAllocCount; ++i) {
+      leaks_.push_back(new char[i + 8000]);  // Variadic allocation.
+      total_variadic_allocations_ += i + 8000;
+    }
   }
 
   // // Navigate around to force allocations in the renderer.
@@ -378,28 +424,39 @@ bool ProfilingTestDriver::ValidateBrowserAllocations(base::Value* dump_json) {
     return true;
   }
 
+  if (!heaps_v2) {
+    LOG(ERROR) << "Browser heap dump missing.";
+    return false;
+  }
+
   bool result = false;
 
-// TODO(ajwong): This step fails on Nexus 5X devices running kit-kat. It works
-// on Nexus 5X devices running oreo. The problem is that all allocations have
-// the same [an effectively empty] backtrace and get glommed together. More
-// investigation is necessary. For now, I'm turning this off for Android.
-// https://crbug.com/786450.
-#if !defined(OS_ANDROID)
-  result = ValidateDump(heaps_v2, kMallocAllocSize * kMallocAllocCount,
-                        kMallocAllocCount, "malloc", nullptr);
-  if (!result) {
-    LOG(ERROR) << "Failed to validate malloc fixed allocations";
-    return false;
-  }
-
-  result = ValidateDump(heaps_v2, total_variadic_allocations_,
-                        kVariadicAllocCount, "malloc", nullptr);
-  if (!result) {
-    LOG(ERROR) << "Failed to validate malloc variadic allocations";
-    return false;
-  }
+  bool should_validate_dumps = true;
+#if defined(OS_ANDROID)
+  // TODO(ajwong): This step fails on Nexus 5X devices running kit-kat. It works
+  // on Nexus 5X devices running oreo. The problem is that all allocations have
+  // the same [an effectively empty] backtrace and get glommed together. More
+  // investigation is necessary. For now, I'm turning this off for Android.
+  // https://crbug.com/786450.
+  if (options_.stack_mode == profiling::mojom::StackMode::NATIVE)
+    should_validate_dumps = false;
 #endif
+
+  if (should_validate_dumps) {
+    result = ValidateDump(heaps_v2, kMallocAllocSize * kMallocAllocCount,
+                          kMallocAllocCount, "malloc", nullptr);
+    if (!result) {
+      LOG(ERROR) << "Failed to validate malloc fixed allocations";
+      return false;
+    }
+
+    result = ValidateDump(heaps_v2, total_variadic_allocations_,
+                          kVariadicAllocCount, "malloc", nullptr);
+    if (!result) {
+      LOG(ERROR) << "Failed to validate malloc variadic allocations";
+      return false;
+    }
+  }
 
   // TODO(ajwong): Like malloc, all Partition-Alloc allocations get glommed
   // together for some Android device/OS configurations. However, since there is
@@ -466,6 +523,12 @@ bool ProfilingTestDriver::ValidateRendererAllocations(base::Value* dump_json) {
   }
 
   return true;
+}
+
+bool ProfilingTestDriver::ShouldProfileBrowser() {
+  return options_.mode == ProfilingProcessHost::Mode::kAll ||
+         options_.mode == ProfilingProcessHost::Mode::kBrowser ||
+         options_.mode == ProfilingProcessHost::Mode::kMinimal;
 }
 
 // Attempt to dump a gpu process.
