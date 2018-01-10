@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b1c0018_471554b9",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-space-at-start-of-wrapped-line.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T05:11:02Z",
+      "side": 1,
+      "message": "nit: How about using template?\nexpected ? `${before}\\n${after}` : `${before} ${after}`\nor\n`${before}${expected ? \u0027\\n\u0027 : \u0027 \u0027}${after}`\nor\nbefore + (expected ? \u0027\\n\u0027 : \u0027 \u0027) + after",
+      "revId": "c319ea18510c4d0b43ab0bf10ffa4f1954f54692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7405909b_9144af0c",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T05:11:02Z",
+      "side": 1,
+      "message": "we could write:\n\nreturn prev_char \u003d\u003d kSpaceCharacter;",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 14
+      },
+      "revId": "c319ea18510c4d0b43ab0bf10ffa4f1954f54692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
