@@ -24,11 +24,13 @@ class AshShellInit;
 class CastConfigClientMediaRouter;
 class ChromeNewWindowClient;
 class ChromeShellContentState;
+class DataPromoNotification;
 class LoginScreenClient;
 class ImeControllerClient;
 class ImmersiveContextMus;
 class ImmersiveHandlerFactoryMus;
 class MediaClient;
+class NetworkConnectDelegateChromeOS;
 class SessionControllerClient;
 class SystemTrayClient;
 class VolumeController;
@@ -50,6 +52,7 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
       content::ServiceManagerConnection* connection) override;
   void PreProfileInit() override;
   void PostProfileInit() override;
+  void PostBrowserStart() override;
   void PostMainMessageLoopRun() override;
 
  private:
@@ -68,6 +71,8 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
   std::unique_ptr<VpnListForwarder> vpn_list_forwarder_;
   std::unique_ptr<AshShellInit> ash_shell_init_;
   std::unique_ptr<LoginScreenClient> login_screen_client_;
+  std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
+  std::unique_ptr<DataPromoNotification> data_promo_notification_;
 
   // Used only for mash.
   std::unique_ptr<ui::UserActivityDetector> user_activity_detector_;

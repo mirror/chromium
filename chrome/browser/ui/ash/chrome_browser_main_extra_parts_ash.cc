@@ -22,6 +22,8 @@
 #include "chrome/browser/ui/ash/ime_controller_client.h"
 #include "chrome/browser/ui/ash/login_screen_client.h"
 #include "chrome/browser/ui/ash/media_client.h"
+#include "chrome/browser/ui/ash/network/data_promo_notification.h"
+#include "chrome/browser/ui/ash/network/network_connect_delegate_chromeos.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/ash/tab_scrubber.h"
@@ -31,6 +33,7 @@
 #include "chrome/browser/ui/views/frame/immersive_handler_factory_mus.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension_factory.h"
+#include "chromeos/network/network_connect.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -97,6 +100,11 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
 }
 
 void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
+  // NetworkConnect handles the network connection state machine for the UI.
+  network_connect_delegate_ =
+      std::make_unique<NetworkConnectDelegateChromeOS>();
+  chromeos::NetworkConnect::Initialize(network_connect_delegate_.get());
+
   if (ash_util::ShouldOpenAshOnStartup())
     ash_shell_init_ = std::make_unique<AshShellInit>();
 
@@ -154,6 +162,10 @@ void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
   TabScrubber::GetInstance();
 }
 
+void ChromeBrowserMainExtraPartsAsh::PostBrowserStart() {
+  data_promo_notification_ = std::make_unique<DataPromoNotification>();
+}
+
 void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
 #if BUILDFLAG(ENABLE_WAYLAND_SERVER)
   // ExoParts uses state from ash, delete it before ash so that exo can
@@ -161,6 +173,7 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   exo_parts_.reset();
 #endif
 
+  data_promo_notification_.reset();
   vpn_list_forwarder_.reset();
   volume_controller_.reset();
   new_window_client_.reset();
@@ -171,6 +184,9 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   media_client_.reset();
   cast_config_client_media_router_.reset();
   session_controller_client_.reset();
+
+  chromeos::NetworkConnect::Shutdown();
+  network_connect_delegate_.reset();
 
   ash_shell_init_.reset();
 }
