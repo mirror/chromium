@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "524778ab_7020122c",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T12:35:41Z",
+      "side": 1,
+      "message": "Since SubscriptionRequest struct has a MediaDevicesListenerPtr field that cannot be copy-assigned, using it as an object instead of a pointer results in compilation errors:\n\n../../content/browser/renderer_host/media/media_devices_manager.cc:233:35: error: object of type \u0027content::MediaDevicesManager::SubscriptionRequest\u0027 cannot be assigned because its copy assignment operator is implicitly deleted\n  subscriptions_[subscription_id] \u003d request;\n                                  ^\n../../content/browser/renderer_host/media/media_devices_manager.cc:95:41: note: copy assignment operator of \u0027SubscriptionRequest\u0027 is implicitly deleted because field \u0027listener\u0027 has a deleted copy assignment operator\n  blink::mojom::MediaDevicesListenerPtr listener;\n                                        ^\n../../mojo/public/cpp/bindings/interface_ptr.h:211:3: note: \u0027operator\u003d\u0027 has been explicitly marked deleted here\n  DISALLOW_COPY_AND_ASSIGN(InterfacePtr);",
+      "parentUuid": "9dc1ddcb_728e13da",
+      "range": {
+        "startLine": 194,
+        "startChar": 32,
+        "endLine": 194,
+        "endChar": 42
+      },
+      "revId": "201d4d5a5a1e5d110825ce3aa57b5d4734e6d4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48d02341_27bb5d2b",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-10T11:17:10Z",
       "side": 1,
       "message": "nit: align this and below parameters with the parameter on line above.",
+      "range": {
+        "startLine": 107,
+        "startChar": 19,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "201d4d5a5a1e5d110825ce3aa57b5d4734e6d4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c381cd7_02565f21",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-10T12:35:41Z",
+      "side": 1,
+      "message": "Aligning with the parameter in the 1st line takes the character count on a line beyond 80. Since, git cl format doesn\u0027t work for mojom files, it becomes little difficult to manually track these things.",
+      "parentUuid": "48d02341_27bb5d2b",
       "range": {
         "startLine": 107,
         "startChar": 19,
