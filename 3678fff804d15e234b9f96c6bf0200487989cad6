@@ -22,6 +22,30 @@
       "revId": "3678fff804d15e234b9f96c6bf0200487989cad6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af92d6e_9cb869e5",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T19:18:40Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ff00d405_7175622e",
+      "range": {
+        "startLine": 2401,
+        "startChar": 27,
+        "endLine": 2401,
+        "endChar": 48
+      },
+      "revId": "3678fff804d15e234b9f96c6bf0200487989cad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
