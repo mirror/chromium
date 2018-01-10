@@ -78,12 +78,14 @@ P2PSocketHostUdp::PendingPacket::PendingPacket(
     const net::IPEndPoint& to,
     const std::vector<char>& content,
     const rtc::PacketOptions& options,
-    uint64_t id)
+    uint64_t id,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : to(to),
       data(new net::IOBuffer(content.size())),
       size(content.size()),
       packet_options(options),
-      id(id) {
+      id(id),
+      traffic_annotation(traffic_annotation) {
   memcpy(data->data(), &content[0], size);
 }
 
@@ -263,10 +265,12 @@ void P2PSocketHostUdp::HandleReadResult(int result) {
   }
 }
 
-void P2PSocketHostUdp::Send(const net::IPEndPoint& to,
-                            const std::vector<char>& data,
-                            const rtc::PacketOptions& options,
-                            uint64_t packet_id) {
+void P2PSocketHostUdp::Send(
+    const net::IPEndPoint& to,
+    const std::vector<char>& data,
+    const rtc::PacketOptions& options,
+    uint64_t packet_id,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (!socket_) {
     // The Send message may be sent after the an OnError message was
     // sent by hasn't been processed the renderer.
@@ -276,11 +280,12 @@ void P2PSocketHostUdp::Send(const net::IPEndPoint& to,
   IncrementTotalSentPackets();
 
   if (send_pending_) {
-    send_queue_.push_back(PendingPacket(to, data, options, packet_id));
+    send_queue_.push_back(
+        PendingPacket(to, data, options, packet_id, traffic_annotation));
     IncrementDelayedBytes(data.size());
     IncrementDelayedPackets();
   } else {
-    PendingPacket packet(to, data, options, packet_id);
+    PendingPacket packet(to, data, options, packet_id, traffic_annotation);
     DoSend(packet);
   }
 }
@@ -341,9 +346,9 @@ void P2PSocketHostUdp::DoSend(const PendingPacket& packet) {
                               packet.size,
                               packet.packet_options.packet_time_params,
                               (send_time - base::TimeTicks()).InMicroseconds());
-  auto callback_binding =
-      base::Bind(&P2PSocketHostUdp::OnSend, base::Unretained(this), packet.id,
-                 packet.packet_options.packet_id, send_time);
+  auto callback_binding = base::Bind(
+      &P2PSocketHostUdp::OnSend, base::Unretained(this), packet.id,
+      packet.packet_options.packet_id, send_time, packet.traffic_annotation);
   int result = socket_->SendTo(packet.data.get(), packet.size, packet.to,
                                callback_binding);
 
@@ -366,10 +371,12 @@ void P2PSocketHostUdp::DoSend(const PendingPacket& packet) {
     DumpRtpPacket(packet.data->data(), packet.size, false);
 }
 
-void P2PSocketHostUdp::OnSend(uint64_t packet_id,
-                              int32_t transport_sequence_number,
-                              base::TimeTicks send_time,
-                              int result) {
+void P2PSocketHostUdp::OnSend(
+    uint64_t packet_id,
+    int32_t transport_sequence_number,
+    base::TimeTicks send_time,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    int result) {
   DCHECK(send_pending_);
   DCHECK_NE(result, net::ERR_IO_PENDING);
 
