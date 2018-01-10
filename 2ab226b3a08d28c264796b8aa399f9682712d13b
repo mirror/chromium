@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1da0ea6_b07dde1f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T11:38:21Z",
+      "side": 1,
+      "message": "Reminder to self - remove this.",
+      "revId": "2ab226b3a08d28c264796b8aa399f9682712d13b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
