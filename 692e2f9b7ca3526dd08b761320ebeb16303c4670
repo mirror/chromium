@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19b4dbf5_965db6f2",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-10T20:48:34Z",
+      "side": 1,
+      "message": "This option seems liable to be a source of pitfalls. What kind of corruption would using chromium\u0027s SDK entail?",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a207667_1660972c",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-10T20:48:34Z",
+      "side": 1,
+      "message": "nit: for consistency, indent subsequent lines of this help text to the depth of the quote on the first line.",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6159a4ef_7c473d22",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-10T20:48:34Z",
+      "side": 1,
+      "message": "nit: use double quotes for strings that contain single quotes rather than escaping, \u0026 should this be \"Chromium\u0027s SDK\" ?",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
