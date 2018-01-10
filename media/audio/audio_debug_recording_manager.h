@@ -74,6 +74,11 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
       const base::FilePath::StringType& file_name_extension,
       const AudioParameters& params);
 
+  // Post file creation on file_task_runner_ and call |reply_callback| on
+  // task_runner_
+  void CreateFile(const base::FilePath& file_name,
+                  base::OnceCallback<void(base::File)> reply_callback);
+
  protected:
   // Creates a AudioDebugRecordingHelper. Overridden by test.
   virtual std::unique_ptr<AudioDebugRecordingHelper>
