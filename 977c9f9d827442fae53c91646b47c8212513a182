@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "67618af3_5d892be8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-10T13:23:37Z",
+      "side": 1,
+      "message": "Given there are only 3 elements, introducing RegisterCusomAssignCallback sounds over-engineering to me.\nI prefer a simple solution which can work. The implementation can be defined in each element\u0027s *.cpp as a static member function.",
+      "parentUuid": "df0e8af8_685012ec",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cfc33fb_9a768feb",
         "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
         "patchSetId": 24
