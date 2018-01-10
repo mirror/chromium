@@ -802,3 +802,8 @@ Console.prototype.context = function(context) {};
  * @return {string}
  */
 var ls = function(strings, vararg) {};
+
+/**
+ * @type {number}
+ */
+Performance.prototype.timeOrigin;
