@@ -3459,6 +3459,9 @@
     ]
   },
 
+  "RestrictAccountsToPattern": {
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
