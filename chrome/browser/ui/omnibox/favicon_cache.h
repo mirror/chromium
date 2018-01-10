@@ -14,6 +14,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/favicon_base/favicon_types.h"
+#include "components/history/core/browser/history_service_observer.h"
+#include "components/history/core/browser/history_types.h"
 
 namespace favicon {
 class FaviconService;
@@ -30,10 +32,11 @@ typedef base::OnceCallback<void(const gfx::Image& favicon)>
 
 // We cache a very small number of favicons so we can synchronously deliver
 // them to prevent flicker as the user types.
-class FaviconCache {
+class FaviconCache : public history::HistoryServiceObserver {
  public:
-  explicit FaviconCache(favicon::FaviconService* favicon_service);
-  virtual ~FaviconCache();
+  FaviconCache(favicon::FaviconService* favicon_service,
+               history::HistoryService* history_service);
+  ~FaviconCache() override;
 
   gfx::Image GetFaviconForPageUrl(const GURL& page_url,
                                   FaviconFetchedCallback on_favicon_fetched);
@@ -41,6 +44,13 @@ class FaviconCache {
  private:
   void OnFaviconFetched(const GURL& page_url,
                         const favicon_base::FaviconImageResult& result);
+
+  // history::HistoryServiceObserver:
+  void OnURLsDeleted(history::HistoryService* history_service,
+                     bool all_history,
+                     bool expired,
+                     const history::URLRows& deleted_rows,
+                     const std::set<GURL>& favicon_urls) override;
 
   // Non-owning pointer to a KeyedService.
   favicon::FaviconService* favicon_service_;

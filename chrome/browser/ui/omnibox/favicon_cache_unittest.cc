@@ -47,7 +47,8 @@ class FaviconCacheTest : public testing::Test {
  protected:
   const GURL kPageURL = GURL("http://www.example.com/");
 
-  FaviconCacheTest() : cache_(&favicon_service_) {}
+  FaviconCacheTest()
+      : cache_(&favicon_service_, nullptr /* history_service */) {}
 
   testing::NiceMock<favicon::MockFaviconService> favicon_service_;
   favicon_base::FaviconImageCallback favicon_service_response_;
