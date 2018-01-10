@@ -962,8 +962,7 @@ void DesktopWindowTreeHostWin::HandleWindowScaleFactorChanged(
     float window_scale_factor) {
   if (compositor()) {
     compositor()->SetScaleAndSize(
-        window_scale_factor,
-        message_handler_->GetClientAreaBounds().size(),
+        window_scale_factor, message_handler_->GetClientAreaBounds().size(),
         window()->GetLocalSurfaceId());
   }
 }
