@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315ec15d_ff4f8c01",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_controller_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-10T14:14:40Z",
+      "side": 1,
+      "message": "autofill_external_delegate_ \u003d std::make_unique\u003cTestAutofillExternalDelegate\u003e(driver-\u003eautofill_manager(), driver, /*call_parent_methods\u003d*/true);",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1580c7a6_a32b4f0d",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-10T14:14:40Z",
+      "side": 1,
+      "message": "nit: external_delegate_ \u003d std::make_unique\u003cTest...\n\nif you\u0027d like to fix in this function that would be great.",
+      "range": {
+        "startLine": 310,
+        "startChar": 22,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d8ec1c_01174a7b",
+        "filename": "components/autofill/core/browser/autofill_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-10T14:14:40Z",
+      "side": 1,
+      "message": "Could this be on test_autofill_external_delegate?",
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcdc5d3_9deae526",
+        "filename": "components/autofill/core/browser/test_autofill_external_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-10T14:14:40Z",
+      "side": 1,
+      "message": "I don\u0027t think RunUntilIdle is what we want here. \n\nRather, the original code seemed to Run() and Quit(). Therefore here you can keep the RunLoop as a member, and call Run() here, and Quit() in OnPopupHidden (resetting the RunLoop as well).",
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
