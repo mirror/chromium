@@ -169,6 +169,7 @@ void InitializeFieldTrialAndFeatureList(
 }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
 void LoadV8ContextSnapshotFile() {
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
   base::FileDescriptorStore& file_descriptor_store =
@@ -186,6 +187,7 @@ void LoadV8ContextSnapshotFile() {
   gin::V8Initializer::LoadV8ContextSnapshot();
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
 }
+#endif  // USE_V8_CONTEXT_SNAPSHOT
 
 void LoadV8SnapshotFile() {
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
@@ -230,9 +232,11 @@ void InitializeV8IfNeeded(const base::CommandLine& command_line,
     return;
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
+  LoadV8ContextSnapshotFile();
+#endif  // USE_V8_CONTEXT_SNAPSHOT
   LoadV8SnapshotFile();
   LoadV8NativesFile();
-  LoadV8ContextSnapshotFile();
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
 }
 
