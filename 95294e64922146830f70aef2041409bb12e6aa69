@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "047ea1f9_4da752c1",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-10T13:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f84684_26e22524",
+      "range": {
+        "startLine": 52,
+        "startChar": 42,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3eaaac4_340beea1",
         "filename": "content/browser/shared_worker/worker_browsertest.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d1965515_ac78ca65",
+        "filename": "content/browser/shared_worker/worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-10T13:32:40Z",
+      "side": 1,
+      "message": "Yes! That\u0027s covered by the layout test.",
+      "parentUuid": "d3eaaac4_340beea1",
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22e15b68_4362c4fe",
         "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-09T02:28:08Z",
       "side": 1,
       "message": "this win is bogus?",
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21aa5c0_f2eb30b2",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-10T13:32:40Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "22e15b68_4362c4fe",
       "revId": "95294e64922146830f70aef2041409bb12e6aa69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "bc5cf097_05b1e408",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-10T13:32:40Z",
+      "side": 1,
+      "message": "This means the number of connections with the shared worker (resources/shared-worker-file-url-worker.js). The shared worker sends it when a new document establishes a connection in \"onconnect\" event handler.\n\nI added more comments and renamed variable names to clarify that.",
+      "parentUuid": "80b7145c_7d6d6296",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d89a887_aaa643e1",
         "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
         "patchSetId": 8
@@ -93,6 +177,30 @@
       "writtenOn": "2018-01-09T03:31:27Z",
       "side": 1,
       "message": "I\u0027m not familiar enough with shared worker to completely understand this test. So maybe some comments would help unfamiliar people like me understand how this test maps to not reusing an existing shared worker.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 76
+      },
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be34cee9_6aac7ac4",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-10T13:32:40Z",
+      "side": 1,
+      "message": "Added more comments.",
+      "parentUuid": "6d89a887_aaa643e1",
       "range": {
         "startLine": 37,
         "startChar": 3,
