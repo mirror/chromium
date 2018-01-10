@@ -341,25 +341,6 @@ class ChromeLauncherControllerInitializer
 class DBusServices {
  public:
   explicit DBusServices(const content::MainFunctionParams& parameters) {
-    // Under mash, some D-Bus clients are owned by other processes.
-    DBusThreadManager::ProcessMask process_mask;
-    switch (GetAshConfig()) {
-      case ash::Config::CLASSIC:
-        process_mask = DBusThreadManager::PROCESS_ALL;
-        break;
-      case ash::Config::MUS:
-        // TODO(jamescook|derat): We need another category for mushrome.
-        process_mask = DBusThreadManager::PROCESS_ALL;
-        break;
-      case ash::Config::MASH:
-        process_mask = DBusThreadManager::PROCESS_BROWSER;
-        break;
-    }
-
-    // Initialize DBusThreadManager for the browser. This must be done after
-    // the main message loop is started, as it uses the message loop.
-    DBusThreadManager::Initialize(process_mask);
-
     bluez::BluezDBusManager::Initialize(
         DBusThreadManager::Get()->GetSystemBus(),
         chromeos::DBusThreadManager::Get()->IsUsingFakes());
@@ -438,7 +419,6 @@ class DBusServices {
     PowerDataCollector::Initialize();
 
     LoginState::Initialize();
-    SystemSaltGetter::Initialize();
     TPMTokenLoader::Initialize();
     CertLoader::Initialize();
 
@@ -462,10 +442,6 @@ class DBusServices {
     // detector starts to monitor changes from the update engine.
     UpgradeDetectorChromeos::GetInstance()->Init();
 
-    // Initialize the device settings service so that we'll take actions per
-    // signals sent from the session manager. This needs to happen before
-    // g_browser_process initializes BrowserPolicyConnector.
-    DeviceSettingsService::Initialize();
     DeviceSettingsService::Get()->SetSessionManager(
         DBusThreadManager::Get()->GetSessionManagerClient(),
         OwnerSettingsServiceChromeOSFactory::GetInstance()->GetOwnerKeyUtil());
@@ -672,6 +648,33 @@ void ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
   if (base::SysInfo::GetLsbReleaseValue(kChromeOSReleaseTrack, &channel))
     chrome::SetChannel(channel);
 #endif
+
+  SystemSaltGetter::Initialize();
+
+  // Initialize the device settings service so that we'll take actions per
+  // signals sent from the session manager. This needs to happen before
+  // g_browser_process initializes BrowserPolicyConnector.
+  chromeos::DeviceSettingsService::Initialize();
+
+  // XXX better factor this.
+  // Under mash, some D-Bus clients are owned by other processes.
+  DBusThreadManager::ProcessMask process_mask;
+  switch (GetAshConfig()) {
+    case ash::Config::CLASSIC:
+      process_mask = DBusThreadManager::PROCESS_ALL;
+      break;
+    case ash::Config::MUS:
+      // TODO(jamescook|derat): We need another category for mushrome.
+      process_mask = DBusThreadManager::PROCESS_ALL;
+      break;
+    case ash::Config::MASH:
+      process_mask = DBusThreadManager::PROCESS_BROWSER;
+      break;
+  }
+
+  // Initialize DBusThreadManager for the browser. This must be done after
+  // the main message loop is started, as it uses the message loop.
+  DBusThreadManager::Initialize(process_mask);
 
   ChromeBrowserMainPartsLinux::PreEarlyInitialization();
 }
