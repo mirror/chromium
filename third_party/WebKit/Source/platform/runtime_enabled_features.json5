@@ -308,6 +308,10 @@
       status: "test",
     },
     {
+      name: "CustomUserTiming",
+      status: "test",
+    },
+    {
       name: "Database",
       status: "stable",
     },
