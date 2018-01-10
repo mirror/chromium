@@ -10904,6 +10904,23 @@
       If this policy is set to 1, ads will not be blocked on sites with intrusive ads.
       If this policy is left not set, 2 will be used.''',
     },
+    {
+      'name': 'RestrictAccountsToPattern',
+      'type': 'string',
+      'schema': { 'type': 'string' },
+      'supported_on': ['android:65-'],
+      'features': {
+        'dynamic_refresh': False,
+        'per_profile': False,
+      },
+      'example_value': '.*@example.com',
+      'id': 410,
+      'caption': '''Restrict accounts that are visible in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex>''',
+      'tags': [],
+      'desc': '''Contains a regular expression which is used to determine which accounts from ones present on the device are visible in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.
+
+      If this policy is left not set or blank then all Google accounts will be visible in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex>.''',
+    },
   ],
 
   'messages': {
