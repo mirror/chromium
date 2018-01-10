@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826d9223_9a10db3f",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T02:41:12Z",
+      "side": 1,
+      "message": "nit: since this class is used on multiple threads, can you document the lifetime/thread usage?",
+      "revId": "817f85d1d757f5053ba8eb3c1533140b0d65d08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
