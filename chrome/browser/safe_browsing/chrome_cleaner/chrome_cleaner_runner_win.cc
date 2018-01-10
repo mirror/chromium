@@ -95,6 +95,9 @@ ChromeCleanerRunner::ChromeCleanerRunner(
 
   // Add the non-IPC switches that should be passed to the Cleaner process.
 
+  // DO NOT SUBMIT
+  cleaner_command_line_.AppendSwitch("enable-test-only-uws");
+
   // Add switches that pass information about this Chrome installation.
   cleaner_command_line_.AppendSwitchASCII(chrome_cleaner::kChromeVersionSwitch,
                                           version_info::GetVersionNumber());
