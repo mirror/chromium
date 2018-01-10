@@ -112,6 +112,12 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   class DelegateView;
   friend class DelegateView;
 
+  // Hides shelf widget if |is_shown_| is true.
+  void HideIfShown();
+
+  // Shows shelf widget if |is_shown_| is false.
+  void ShowIfHidden();
+
   Shelf* shelf_;
 
   // Owned by the shelf container's window.
