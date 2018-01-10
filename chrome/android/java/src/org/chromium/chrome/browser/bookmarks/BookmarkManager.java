@@ -90,6 +90,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
                 }
             }
             mSelectionDelegate.clearSelection();
+            mAdapter.refresh();
         }
 
         @Override
