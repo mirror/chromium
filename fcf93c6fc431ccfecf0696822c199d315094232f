@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b6751c_47f5f135",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T21:46:48Z",
+      "side": 1,
+      "message": "mind using a hyphen/dash here instead of an underscore? the values for kArcAvailable and kArcStartMode both appear to use hyphens.",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a4e3d8_d14a28a4",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T21:46:48Z",
+      "side": 1,
+      "message": "nit: since i think you only use most of these once, consider just inlining them into the calls to initialize the request:\n\n  login_manager::StartArcInstanceRequest request;\n  request.set_native_bridge_experiment(...);\n\n  user_manager...\n  DCHECK(...);\n  request.set_account_id(cryptohome::Identification(...).id());\n\n  request.set_skip_boot_completed_broadcast(\n      !base::FeatureList::...);\n\n  // We only enable ...\n  request.set_scan_vendor_priv_app(chromeos::switches::...);\n\nthe code seems a bit easier to read to me this way, since the logic to determine the values of these fields is right next to the statements that set the fields.",
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7566cf_a87b6767",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T21:46:48Z",
+      "side": 1,
+      "message": "can you add tests for the new code in arc_session_impl_unittest.cc?\n\ni\u0027d also recommend making these values be public static const char[] members so they can be shared with tests.",
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
