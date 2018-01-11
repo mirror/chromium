@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "07747a9d_77c8dfe2",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-11T13:40:35Z",
+      "side": 1,
+      "message": "sgtm, thanks",
+      "parentUuid": "0a029d63_5495ba54",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a351f1_47b51d02",
         "filename": "components/webrtc_logging/OWNERS",
         "patchSetId": 6
