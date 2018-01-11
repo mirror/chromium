@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f0b4d0_77d71c74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-11T11:48:25Z",
+      "side": 1,
+      "message": "please format according to https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "4a8d0ced23d1c42837a8a79a81baad5935edc0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b283891f_e762f72f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-11T11:48:25Z",
+      "side": 1,
+      "message": "why are you changing this? Is this a request from UX?",
+      "revId": "4a8d0ced23d1c42837a8a79a81baad5935edc0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
