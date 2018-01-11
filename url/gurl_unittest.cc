@@ -886,4 +886,12 @@ TEST(GURLTest, EqualsIgnoringRef) {
   }
 }
 
+TEST(GURLTest, DebugAlias) {
+  GURL url("https://foo.com/bar");
+  DEBUG_ALIAS_FOR_GURL(url_debug_alias, url);
+  EXPECT_STREQ("https://foo.com/bar", url_debug_alias);
+  static_assert(std::is_same<char[128], decltype(url_debug_alias)>::value,
+                "Verification that url_debug_alias has expected type");
+}
+
 }  // namespace url
