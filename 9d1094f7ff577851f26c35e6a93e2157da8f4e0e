@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae73192_c5c3a404",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-11T04:19:42Z",
+      "side": 1,
+      "message": "The double use of \"pending\" is confusing (why would \"pending controller request\" not be pending?) but I don\u0027t have a better idea if you don\u0027t. My understanding is \"pending_controller_request\" refers to the fact that the Request is waiting to be sent in the Start message, and \"is_pending\" basically means the Request is non-null.\n\nI might just drop the \"pending_\" from the name.",
+      "revId": "9d1094f7ff577851f26c35e6a93e2157da8f4e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5250065_ff7da568",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-11T04:19:42Z",
+      "side": 1,
+      "message": "great!",
+      "revId": "9d1094f7ff577851f26c35e6a93e2157da8f4e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
