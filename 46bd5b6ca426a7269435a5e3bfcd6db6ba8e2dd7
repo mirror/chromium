@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "573e7f29_4cc0f464",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-11T16:43:42Z",
+      "side": 1,
+      "message": "Can this be BindOnce? you only expect it to be called once.",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "46bd5b6ca426a7269435a5e3bfcd6db6ba8e2dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617ecb4c_1ba1e6e7",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-11T16:43:42Z",
+      "side": 1,
+      "message": "nit: \n\n base::ScopedClosureRunner quit_runner(std::move(quick_callback));",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "46bd5b6ca426a7269435a5e3bfcd6db6ba8e2dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0300bbfb_6baaad37",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-11T16:43:42Z",
+      "side": 1,
+      "message": "You\u0027re only using this once, so how about you drop the temporary in L262, rename the variable in L259 to |timer| and use |(*timer.value())| here?",
+      "range": {
+        "startLine": 272,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 10
+      },
+      "revId": "46bd5b6ca426a7269435a5e3bfcd6db6ba8e2dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
