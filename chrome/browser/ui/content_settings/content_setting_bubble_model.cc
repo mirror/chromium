@@ -1436,7 +1436,9 @@ ContentSettingSubresourceFilterBubbleModel::
 ContentSettingSubresourceFilterBubbleModel::
     ~ContentSettingSubresourceFilterBubbleModel() {}
 
-void ContentSettingSubresourceFilterBubbleModel::SetTitle() {}
+void ContentSettingSubresourceFilterBubbleModel::SetTitle() {
+  set_title(l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_EXPLANATION));
+}
 
 void ContentSettingSubresourceFilterBubbleModel::SetManageText() {
   // The experimental UI includes the permission UI, which allows us to
@@ -1451,9 +1453,7 @@ void ContentSettingSubresourceFilterBubbleModel::SetManageText() {
   set_manage_text_style(ContentSettingBubbleModel::ManageTextStyle::kCheckbox);
 }
 
-void ContentSettingSubresourceFilterBubbleModel::SetMessage() {
-  set_message(l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_EXPLANATION));
-}
+void ContentSettingSubresourceFilterBubbleModel::SetMessage() {}
 
 void ContentSettingSubresourceFilterBubbleModel::OnManageCheckboxChecked(
     bool is_checked) {

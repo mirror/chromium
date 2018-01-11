@@ -56,12 +56,11 @@
 }
 
 - (void)loadView {
-  messageLabel_ =
-      [[NSTextField alloc] initWithFrame:NSMakeRect(18, 96, 282, 28)];
-  [messageLabel_ setEditable:NO];
-  [messageLabel_ setBordered:NO];
-  [self.window.contentView addSubview:messageLabel_];
-  [messageLabel_ release];
+  titleLabel_ = [[NSTextField alloc] initWithFrame:NSMakeRect(18, 96, 282, 28)];
+  [titleLabel_ setEditable:NO];
+  [titleLabel_ setBordered:NO];
+  [self.window.contentView addSubview:titleLabel_];
+  [titleLabel_ release];
 
   // Set up the "Learn more" link.
   // TODO(csharrison): Migrate this to use the help icon to align with
@@ -129,8 +128,8 @@
 
 // For testing.
 
-- (id)messageLabel {
-  return messageLabel_;
+- (id)titleLabel {
+  return titleLabel_;
 }
 
 - (id)learnMoreLink {
