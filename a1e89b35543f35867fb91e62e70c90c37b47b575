@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09044875_bffdc8b2",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:38:08Z",
+      "side": 1,
+      "message": "Are the service worker client IDs also guids? Could we have a TODO here to perhaps use a simple Mojo wrapper struct in the future, when we unify the client IDs of the two?",
+      "revId": "a1e89b35543f35867fb91e62e70c90c37b47b575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
