@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bf19ef0_103104bf",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-11T20:06:52Z",
+      "side": 1,
+      "message": "style nit: {} for multi-line if-else-statements in chromium",
+      "revId": "063ddff3c85708b646f73a4ffb26ecc5c6de1669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
