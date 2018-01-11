@@ -500,25 +500,34 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   else
     target_tree->set_hud_layer(nullptr);
 
+  target_tree->needs_hide_overlay_scrollbars_ = needs_hide_overlay_scrollbars_;
+  needs_hide_overlay_scrollbars_ = false;
+
   target_tree->has_ever_been_drawn_ = false;
 
   // Note: this needs to happen after SetPropertyTrees.
-  target_tree->HandleScrollbarShowRequestsFromMain();
+  target_tree->HandleScrollbarVisibilityRequestsFromMain();
 }
 
-void LayerTreeImpl::HandleScrollbarShowRequestsFromMain() {
+void LayerTreeImpl::HandleScrollbarVisibilityRequestsFromMain() {
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, [this](
                                                            LayerImpl* layer) {
-    if (!layer->needs_show_scrollbars())
-      return;
     ScrollbarAnimationController* controller =
         host_impl_->ScrollbarAnimationControllerForElementId(
             layer->element_id());
-    if (controller) {
+    if (!controller)
+      return;
+
+    if (layer->needs_show_scrollbars()) {
       controller->DidRequestShowFromMainThread();
       layer->set_needs_show_scrollbars(false);
     }
+
+    if (needs_hide_overlay_scrollbars_)
+      controller->DidRequestHideFromMainThread();
   });
+
+  needs_hide_overlay_scrollbars_ = false;
 }
 
 void LayerTreeImpl::MoveChangeTrackingToLayers() {

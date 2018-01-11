@@ -227,6 +227,11 @@ void ScrollbarAnimationController::DidRequestShowFromMainThread() {
   DidScrollUpdate();
 }
 
+void ScrollbarAnimationController::DidRequestHideFromMainThread() {
+  StopAnimation();
+  ApplyOpacityToScrollbars(0.f);
+}
+
 void ScrollbarAnimationController::DidMouseDown() {
   if (!need_thinning_animation_)
     return;

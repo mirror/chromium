@@ -520,6 +520,10 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   void SetURLForUkm(const GURL& url);
 
+  void set_needs_hide_overlay_scrollbars() {
+    needs_hide_overlay_scrollbars_ = true;
+  }
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
@@ -695,6 +699,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   // the callbacks.
   std::map<int, std::vector<PresentationTimeCallback>>
       frame_to_presentation_time_callbacks_;
+
+  bool needs_hide_overlay_scrollbars_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };

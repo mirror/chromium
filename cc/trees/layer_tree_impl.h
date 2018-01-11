@@ -546,7 +546,7 @@ class CC_EXPORT LayerTreeImpl {
   void ClearLayerList();
 
   void BuildLayerListForTesting();
-  void HandleScrollbarShowRequestsFromMain();
+  void HandleScrollbarVisibilityRequestsFromMain();
 
   void InvalidateRegionForImages(
       const PaintImageIdFlatSet& images_to_invalidate);
@@ -556,6 +556,10 @@ class CC_EXPORT LayerTreeImpl {
   bool request_presentation_time() const { return request_presentation_time_; }
   void set_request_presentation_time(bool value) {
     request_presentation_time_ = value;
+  }
+
+  void set_needs_hide_overlay_scrollbars() {
+    needs_hide_overlay_scrollbars_ = true;
   }
 
  protected:
@@ -683,6 +687,8 @@ class CC_EXPORT LayerTreeImpl {
   // If true LayerTreeHostImpl requests a presentation token for the current
   // frame.
   bool request_presentation_time_ = false;
+
+  bool needs_hide_overlay_scrollbars_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeImpl);
 };
