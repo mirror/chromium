@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33893e50_94d9c1ed",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "nit: Why CHECK here? If the return value is nullptr, the line below will cause a crash anyway.",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200e77c1_801bcb35",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "This should be private and if needed to be accessed outside of the class, provide an accessor method.",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8014bc30_b18e1ee4",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "nit: Same comment as the other file, this CHECK isn\u0027t necessary.",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ae0ab7_d5deb30a",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "Move to private and expose an accessor method.",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fd2e35_d510369d",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4aa8ea_a36f0364",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T18:06:09Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
