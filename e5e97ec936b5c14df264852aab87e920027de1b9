@@ -70,6 +70,30 @@
       "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5861e128_cfe62650",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T18:54:12Z",
+      "side": 1,
+      "message": "Well, interestingly, the color itself was unique for offline mode, as opposed to secure (which was green).  So, the is still offline specific.  If this ever changes, we need to change the comment, the condition on the \"if\", and the color.",
+      "parentUuid": "3e428d2f_c72c12b7",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
