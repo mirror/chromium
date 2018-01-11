@@ -332,8 +332,9 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   TestRegisterCallback cb;
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, registration_keys,
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -362,8 +363,9 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
 
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, registration_keys,
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -398,8 +400,9 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   TestRegisterCallback cb;
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, registration_keys,
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      std::move(cb.callback()));
   request->Start();
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
@@ -448,8 +451,8 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithExclusionList) {
 
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, handles, std::vector<uint8_t>(32),
+      std::vector<uint8_t>(32), std::move(cb.callback()));
   discovery.AddDevice(std::move(device));
 
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
@@ -510,8 +513,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithExclusionList) {
 
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, handles, std::vector<uint8_t>(32),
+      std::vector<uint8_t>(32), std::move(cb.callback()));
 
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
@@ -565,8 +568,8 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithDuplicateHandle) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, handles, std::vector<uint8_t>(32),
+      std::vector<uint8_t>(32), std::move(cb.callback()));
   discovery.AddDevice(std::move(device));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&
       response = cb.WaitForCallback();
@@ -629,8 +632,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithDuplicateHandle) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      kTestRelyingPartyId, {&discovery}, std::move(cb.callback()));
+      kTestRelyingPartyId, {&discovery}, handles, std::vector<uint8_t>(32),
+      std::vector<uint8_t>(32), std::move(cb.callback()));
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
   const std::pair<U2fReturnCode, base::Optional<RegisterResponseData>>&

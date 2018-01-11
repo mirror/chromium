@@ -63,10 +63,15 @@ constexpr uint8_t kTestChallengeBytes[] = {
     0x50, 0x5F, 0x8E, 0xD2, 0xB1, 0x6A, 0xE2, 0x2F, 0x16, 0xBB, 0x05,
     0xB8, 0x8C, 0x25, 0xDB, 0x9E, 0x60, 0x26, 0x45, 0xF1, 0x41};
 
-constexpr char kTestClientDataJsonString[] =
+constexpr char kTestRegisterClientDataJsonString[] =
     R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE",)"
     R"("hashAlgorithm":"SHA-256","origin":"google.com","tokenBinding":)"
     R"("unused","type":"webauthn.create"})";
+
+constexpr char kTestSignClientDataJsonString[] =
+    R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE",)"
+    R"("hashAlgorithm":"SHA-256","origin":"google.com","tokenBinding":)"
+    R"("unused","type":"webauthn.get"})";
 
 const SecurityTestCases kValidTestCases[] = {
     {GURL(kTestOrigin1), base::nullopt,
@@ -205,7 +210,7 @@ class TestMakeCredentialCallback {
   }
 
   // TODO(crbug.com/799044) - simplify the runloop usage.
-  std::pair<AuthenticatorStatus, MakeCredentialAuthenticatorResponsePtr>&
+  const std::pair<AuthenticatorStatus, MakeCredentialAuthenticatorResponsePtr>&
   WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
@@ -238,7 +243,7 @@ class TestGetAssertionCallback {
   }
 
   // TODO(crbug.com/799044) - simplify the runloop usage.
-  std::pair<AuthenticatorStatus, GetAssertionAuthenticatorResponsePtr>&
+  const std::pair<AuthenticatorStatus, GetAssertionAuthenticatorResponsePtr>&
   WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
@@ -272,8 +277,8 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOriginAndRpIds) {
 
     TestMakeCredentialCallback cb;
     authenticator->MakeCredential(std::move(options), cb.callback());
-    std::pair<webauth::mojom::AuthenticatorStatus,
-              webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+    const std::pair<webauth::mojom::AuthenticatorStatus,
+                    webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
         response = cb.WaitForCallback();
     EXPECT_EQ(test_case.status, response.first);
   }
@@ -291,8 +296,8 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOriginAndRpIds) {
 
     TestMakeCredentialCallback cb;
     authenticator->MakeCredential(std::move(options), cb.callback());
-    std::pair<webauth::mojom::AuthenticatorStatus,
-              webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+    const std::pair<webauth::mojom::AuthenticatorStatus,
+                    webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
         response = cb.WaitForCallback();
     EXPECT_EQ(test_case.status, response.first);
   }
@@ -310,17 +315,22 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
 
   TestMakeCredentialCallback cb;
   authenticator->MakeCredential(std::move(options), cb.callback());
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::MakeCredentialAuthenticatorResponsePtr>& response =
-      cb.WaitForCallback();
+  const std::pair<webauth::mojom::AuthenticatorStatus,
+                  webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+      response = cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
             response.first);
 }
 
 // Test that client data serializes to JSON properly.
 TEST_F(AuthenticatorImplTest, TestSerializedRegisterClientData) {
-  EXPECT_EQ(kTestClientDataJsonString,
+  EXPECT_EQ(kTestRegisterClientDataJsonString,
             GetTestClientData(client_data::kCreateType).SerializeToJson());
+}
+
+TEST_F(AuthenticatorImplTest, TestSerializedSignClientData) {
+  EXPECT_EQ(kTestSignClientDataJsonString,
+            GetTestClientData(client_data::kGetType).SerializeToJson());
 }
 
 TEST_F(AuthenticatorImplTest, TestMakeCredentialTimeout) {
@@ -353,25 +363,84 @@ TEST_F(AuthenticatorImplTest, TestMakeCredentialTimeout) {
   // Trigger timer.
   base::RunLoop().RunUntilIdle();
   task_runner->FastForwardBy(base::TimeDelta::FromMinutes(1));
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::MakeCredentialAuthenticatorResponsePtr>& response =
-      cb.WaitForCallback();
+  const std::pair<webauth::mojom::AuthenticatorStatus,
+                  webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+      response = cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::TIMED_OUT, response.first);
 }
 
-// Test that service returns NOT_IMPLEMENTED on a call to GetAssertion.
-TEST_F(AuthenticatorImplTest, GetAssertionNotImplemented) {
+// Verify behavior for various combinations of origins and rp id's.
+TEST_F(AuthenticatorImplTest, GetAssertionOriginAndRpIds) {
+  // These instances should return security errors (for circumstances
+  // that would normally crash the renderer).
+  for (const SecurityTestCases& test_case : kCrashingTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+    PublicKeyCredentialRequestOptionsPtr options =
+        GetTestPublicKeyCredentialRequestOptions();
+    options->relying_party_id = test_case.relying_party_id;
+
+    TestGetAssertionCallback cb;
+    authenticator->GetAssertion(std::move(options), cb.callback());
+    const std::pair<webauth::mojom::AuthenticatorStatus,
+                    webauth::mojom::GetAssertionAuthenticatorResponsePtr>&
+        response = cb.WaitForCallback();
+    EXPECT_EQ(test_case.status, response.first);
+  }
+
+  // These instances pass the origin and relying party checks and return at
+  // the algorithm check.
+  for (const SecurityTestCases& test_case : kValidTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+
+    MakePublicKeyCredentialOptionsPtr options =
+        GetTestMakePublicKeyCredentialOptions();
+    options->relying_party->id = test_case.relying_party_id;
+    options->public_key_parameters = GetTestPublicKeyCredentialParameters(123);
+
+    TestMakeCredentialCallback cb;
+    authenticator->MakeCredential(std::move(options), cb.callback());
+    const std::pair<webauth::mojom::AuthenticatorStatus,
+                    webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+        response = cb.WaitForCallback();
+    EXPECT_EQ(test_case.status, response.first);
+  }
+}
+
+TEST_F(AuthenticatorImplTest, TestGetAssertionTimeout) {
   SimulateNavigation(GURL(kTestOrigin1));
-  AuthenticatorPtr authenticator = ConnectToAuthenticator();
   PublicKeyCredentialRequestOptionsPtr options =
       GetTestPublicKeyCredentialRequestOptions();
-
   TestGetAssertionCallback cb;
+
+  // Set up service_manager::Connector for tests.
+  auto fake_hid_manager = std::make_unique<device::FakeHidManager>();
+  service_manager::mojom::ConnectorRequest request;
+  auto connector = service_manager::Connector::Create(&request);
+  service_manager::Connector::TestApi test_api(connector.get());
+  test_api.OverrideBinderForTesting(
+      device::mojom::kServiceName, device::mojom::HidManager::Name_,
+      base::Bind(&device::FakeHidManager::AddBinding,
+                 base::Unretained(fake_hid_manager.get())));
+
+  // Set up a timer for testing.
+  auto task_runner = base::MakeRefCounted<base::TestMockTimeTaskRunner>(
+      base::Time::Now(), base::TimeTicks::Now());
+  auto tick_clock = task_runner->GetMockTickClock();
+  auto timer = std::make_unique<base::OneShotTimer>(tick_clock.get());
+  timer->SetTaskRunner(task_runner);
+  AuthenticatorPtr authenticator =
+      ConnectToAuthenticator(connector.get(), std::move(timer));
+
   authenticator->GetAssertion(std::move(options), cb.callback());
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::GetAssertionAuthenticatorResponsePtr>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_IMPLEMENTED,
-            response.first);
+
+  // Trigger timer.
+  base::RunLoop().RunUntilIdle();
+  task_runner->FastForwardBy(base::TimeDelta::FromMinutes(1));
+  const std::pair<webauth::mojom::AuthenticatorStatus,
+                  webauth::mojom::GetAssertionAuthenticatorResponsePtr>&
+      response = cb.WaitForCallback();
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::TIMED_OUT, response.first);
 }
 }  // namespace content
