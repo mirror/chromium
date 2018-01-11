@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 
 source_set("platform_window") {
@@ -35,4 +36,26 @@ group("platform_impls") {
   } else if (is_win) {
     public_deps += [ "//ui/platform_window/win" ]
   }
+}
+
+jumbo_source_set("test_support_internal") {
+  testonly = true
+  sources = [
+    "mock_platform_window_delegate.cc",
+    "mock_platform_window_delegate.h",
+  ]
+  configs += [ "//build/config:precompiled_headers" ]
+
+  deps = [
+    "//testing/gmock",
+    "//ui/gfx/geometry",
+    "//ui/platform_window:platform_window",
+  ]
+}
+
+jumbo_static_library("test_support") {
+  testonly = true
+  public_deps = [
+    ":test_support_internal",
+  ]
 }
