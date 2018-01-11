@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d918df6_b1aff65d",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T21:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189ac97a_72062ef3",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ce7b63f_05d5903d",
         "filename": "chromeos/network/auto_connect_handler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e7b016_61e0eb1c",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T21:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ce7b63f_05d5903d",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d30dd982_86a44689",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T21:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d164956c_5cc84773",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6588ad6_ccaea1e6",
         "filename": "chromeos/network/auto_connect_handler.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caefa5f6_a3e4b475",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T21:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6588ad6_ccaea1e6",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
