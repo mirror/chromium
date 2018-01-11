@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "6b6d990e_421c0980",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T17:11:14Z",
+      "side": 1,
+      "message": "+1 to this. I think we have to define what we want to measure. I think one of the main advantages of UKM is to know which sites users use in VR. Do we have the number of times a webpage was used with singular\u003d\"True\"?",
+      "parentUuid": "207008ef_188bca55",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752f2154_4a11bdfb",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
