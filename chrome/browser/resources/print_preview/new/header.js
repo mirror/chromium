@@ -41,7 +41,7 @@ Polymer({
     labelInfo_: {
       type: Object,
       computed: 'getLabelInfo_(currentErrorOrState_, destination.id, ' +
-          'settings.copies.value, settings.pages.value, ' +
+          'settings.copies.value, state.currentPageCount, ' +
           'settings.duplex.value)'
     },
   },
@@ -105,7 +105,7 @@ Polymer({
    */
   getLabelInfo_: function() {
     const saveToPdfOrDrive = this.isPdfOrDrive_();
-    let numPages = this.getSetting('pages').value.length;
+    let numPages = this.state.currentPageCount;
     let numSheets = numPages;
     if (!saveToPdfOrDrive && this.getSetting('duplex').value) {
       numSheets = Math.ceil(numPages / 2);
