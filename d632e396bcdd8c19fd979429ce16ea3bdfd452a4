@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e88dbcf_0c92514c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-11T05:08:22Z",
+      "side": 1,
+      "message": "nit: Something like \"Remove non-PlzNavigate code from ServiceWorkerDispatcherHostTest\" would be better?",
+      "revId": "d632e396bcdd8c19fd979429ce16ea3bdfd452a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
