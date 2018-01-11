@@ -16,6 +16,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 
@@ -139,6 +140,7 @@ void DownloadDriverImpl::Start(
     const RequestParams& request_params,
     const std::string& guid,
     const base::FilePath& file_path,
+    std::unique_ptr<storage::BlobDataHandle> blob_handle,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
@@ -167,6 +169,13 @@ void DownloadDriverImpl::Start(
   download_url_params->set_file_path(file_path);
   if (request_params.fetch_error_body)
     download_url_params->set_fetch_error_body(true);
+  if (blob_handle.get() && request_params.method == "POST") {
+    // TODO(shaktisahu) : Collect UMA.
+    scoped_refptr<content::ResourceRequestBody> request_body =
+        new content::ResourceRequestBody;
+    request_body->AppendBlob(blob_handle->uuid());
+    download_url_params->set_post_body(request_body);
+  }
 
   download_manager_->DownloadUrl(std::move(download_url_params));
 }

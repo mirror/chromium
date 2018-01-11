@@ -7,6 +7,7 @@
 #include "base/files/file_path.h"
 #include "components/download/public/download_params.h"
 #include "net/http/http_response_headers.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 namespace test {
@@ -71,6 +72,7 @@ void TestDownloadDriver::Start(
     const RequestParams& params,
     const std::string& guid,
     const base::FilePath& file_path,
+    std::unique_ptr<storage::BlobDataHandle> blob_handle,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DriverEntry entry;
   entry.guid = guid;
