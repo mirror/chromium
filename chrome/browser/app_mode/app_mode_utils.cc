@@ -55,4 +55,13 @@ bool IsRunningInForcedAppMode() {
          command_line->HasSwitch(switches::kForceAndroidAppMode);
 }
 
+bool IsRunningInForeceAppModeForApp(const std::string& app_id) {
+  if (app_id.empty())
+    return false;
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(switches::kForceAppMode))
+    return false;
+  return app_id == command_line->GetSwitchValueASCII(switches::kAppId);
+}
+
 }  // namespace chrome
