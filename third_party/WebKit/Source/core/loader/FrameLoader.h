@@ -95,7 +95,8 @@ class CORE_EXPORT FrameLoader final {
   void Load(const FrameLoadRequest&,
             FrameLoadType = kFrameLoadTypeStandard,
             HistoryItem* = nullptr,
-            HistoryLoadType = kHistoryDifferentDocumentLoad);
+            HistoryLoadType = kHistoryDifferentDocumentLoad,
+            const String& mime_type = String());
 
   // Warning: stopAllLoaders can and will detach the LocalFrame out from under
   // you. All callers need to either protect the LocalFrame or guarantee they
@@ -243,7 +244,8 @@ class CORE_EXPORT FrameLoader final {
   void StartLoad(FrameLoadRequest&,
                  FrameLoadType,
                  NavigationPolicy,
-                 HistoryItem*);
+                 HistoryItem*,
+                 const String& mime_type);
 
   void LoadInSameDocument(const KURL&,
                           scoped_refptr<SerializedScriptValue> state_object,

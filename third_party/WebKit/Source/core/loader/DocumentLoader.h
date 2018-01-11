@@ -238,6 +238,9 @@ class CORE_EXPORT DocumentLoader
     return devtools_navigation_token_;
   }
 
+  void CommitNavigation(const AtomicString& mime_type,
+                        const KURL& overriding_url = KURL());
+
  protected:
   DocumentLoader(LocalFrame*,
                  const ResourceRequest&,
@@ -269,9 +272,6 @@ class CORE_EXPORT DocumentLoader
   void DidInstallNewDocument(Document*);
   void WillCommitNavigation();
   void DidCommitNavigation(WebGlobalObjectReusePolicy);
-
-  void CommitNavigation(const AtomicString& mime_type,
-                        const KURL& overriding_url = KURL());
 
   // Use these method only where it's guaranteed that |m_frame| hasn't been
   // cleared.

@@ -257,7 +257,8 @@ class CORE_EXPORT WebLocalFrameImpl final
             const WebHistoryItem&,
             WebHistoryLoadType,
             bool is_client_redirect,
-            const base::UnguessableToken& devtools_navigation_token) override;
+            const base::UnguessableToken& devtools_navigation_token,
+            const WebString& mime_type) override;
   void LoadData(const WebData&,
                 const WebString& mime_type,
                 const WebString& text_encoding,

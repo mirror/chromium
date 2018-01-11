@@ -3272,7 +3272,7 @@ void RenderFrameImpl::CommitNavigation(
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
                    history_load_type, is_client_redirect,
-                   devtools_navigation_token);
+                   devtools_navigation_token, blink::WebString::FromUTF8(head.mime_type));
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this

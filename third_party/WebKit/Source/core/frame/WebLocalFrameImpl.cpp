@@ -864,7 +864,7 @@ void WebLocalFrameImpl::ReloadWithOverrideURL(const WebURL& override_url,
   request.SetRequestorOrigin(
       WebSecurityOrigin(GetFrame()->GetDocument()->GetSecurityOrigin()));
   Load(request, load_type, WebHistoryItem(), kWebHistoryDifferentDocumentLoad,
-       false, base::UnguessableToken::Create());
+       false, base::UnguessableToken::Create(), WebString());
 }
 
 void WebLocalFrameImpl::ReloadImage(const WebNode& web_node) {
@@ -882,7 +882,7 @@ void WebLocalFrameImpl::LoadRequest(const WebURLRequest& request) {
   // requests.
   Load(request, WebFrameLoadType::kStandard, WebHistoryItem(),
        kWebHistoryDifferentDocumentLoad, false,
-       base::UnguessableToken::Create());
+       base::UnguessableToken::Create(), WebString());
 }
 
 void WebLocalFrameImpl::LoadHTMLString(const WebData& data,
@@ -2029,7 +2029,8 @@ void WebLocalFrameImpl::Load(
     const WebHistoryItem& item,
     WebHistoryLoadType web_history_load_type,
     bool is_client_redirect,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    const WebString& mime_type) {
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
   const ResourceRequest& resource_request = request.ToResourceRequest();
@@ -2051,7 +2052,8 @@ void WebLocalFrameImpl::Load(
   HistoryItem* history_item = item;
   GetFrame()->Loader().Load(
       frame_request, static_cast<FrameLoadType>(web_frame_load_type),
-      history_item, static_cast<HistoryLoadType>(web_history_load_type));
+      history_item, static_cast<HistoryLoadType>(web_history_load_type),
+      mime_type);
 }
 
 void WebLocalFrameImpl::LoadData(const WebData& data,

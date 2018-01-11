@@ -862,7 +862,8 @@ static NavigationPolicy NavigationPolicyForRequest(
 void FrameLoader::Load(const FrameLoadRequest& passed_request,
                        FrameLoadType frame_load_type,
                        HistoryItem* history_item,
-                       HistoryLoadType history_load_type) {
+                       HistoryLoadType history_load_type,
+                       const String& mime_type) {
   DCHECK(frame_->GetDocument());
 
   if (IsBackForwardLoadType(frame_load_type) && !frame_->IsNavigationAllowed())
@@ -961,7 +962,7 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   if (request.GetResourceRequest().IsSameDocumentNavigation())
     return;
 
-  StartLoad(request, new_load_type, policy, history_item);
+  StartLoad(request, new_load_type, policy, history_item, mime_type);
 }
 
 SubstituteData FrameLoader::DefaultSubstituteDataForURL(const KURL& url) {
@@ -1493,7 +1494,8 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             FrameLoadType type,
                             NavigationPolicy navigation_policy,
-                            HistoryItem* history_item) {
+                            HistoryItem* history_item,
+                            const String& mime_type) {
   DCHECK(Client()->HasWebView());
   ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
   NavigationType navigation_type = DetermineNavigationType(
@@ -1586,6 +1588,8 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     // the inspector stored in the matching frameScheduledClientNavigation()
     // is available while sending the request.
     probe::frameClearedScheduledClientNavigation(frame_);
+    if (!mime_type.IsEmpty())
+      provisional_document_loader_->CommitNavigation(AtomicString(mime_type));
   } else {
     probe::frameScheduledClientNavigation(frame_);
   }
