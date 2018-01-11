@@ -30,6 +30,23 @@
 
 namespace blink {
 
+TEST(FontDescriptionTest, CopyFontDescriptionKeepsFamily) {
+  FontFamily font_family_a;
+  scoped_refptr<SharedFontFamily> font_family_b = SharedFontFamily::Create();
+  scoped_refptr<SharedFontFamily> font_family_c = SharedFontFamily::Create();
+  font_family_a.SetFamily("A");
+  font_family_b->SetFamily("B");
+  font_family_c->SetFamily("C");
+  font_family_a.AppendFamily(font_family_b);
+  font_family_b->AppendFamily(font_family_c);
+  FontDescription source;
+  source.SetFamily(font_family_a);
+  FontDescription destination(source);
+  EXPECT_EQ(destination.Family().Family(), AtomicString("A"));
+  EXPECT_EQ(destination.Family().Next()->Family(), AtomicString("B"));
+  EXPECT_EQ(destination.Family().Next()->Next()->Family(), AtomicString("C"));
+}
+
 TEST(FontDescriptionTest, TestHashCollision) {
   FontSelectionValue weights[] = {
       FontSelectionValue(100), FontSelectionValue(200),

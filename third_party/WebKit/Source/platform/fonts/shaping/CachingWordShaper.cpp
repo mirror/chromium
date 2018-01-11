@@ -36,7 +36,7 @@
 namespace blink {
 
 ShapeCache* CachingWordShaper::GetShapeCache() const {
-  return font_.font_fallback_list_->GetShapeCache(font_.font_description_);
+  return font_.font_fallback_list_->GetShapeCache(font_.GetFontDescription());
 }
 
 float CachingWordShaper::Width(const TextRun& run,
@@ -130,7 +130,7 @@ GlyphData CachingWordShaper::EmphasisMarkGlyphData(
   ShapeResultBuffer buffer;
   ShapeResultsForRun(GetShapeCache(), &font_, emphasis_mark_run, &buffer);
 
-  return buffer.EmphasisMarkGlyphData(font_.font_description_);
+  return buffer.EmphasisMarkGlyphData(font_.GetFontDescription());
 }
 
 };  // namespace blink

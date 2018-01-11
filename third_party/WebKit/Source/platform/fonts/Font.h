@@ -40,6 +40,8 @@
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/text/CharacterNames.h"
+#include "platform/fonts/FontDeduplicationRegistry.h"
+
 
 // To avoid conflicts with the CreateWindow macro from the Windows SDK...
 #undef DrawText
@@ -72,7 +74,7 @@ class PLATFORM_EXPORT Font {
   bool operator!=(const Font& other) const { return !(*this == other); }
 
   const FontDescription& GetFontDescription() const {
-    return font_description_;
+    return *font_description_;
   }
 
   void Update(FontSelector*) const;
@@ -213,7 +215,7 @@ class PLATFORM_EXPORT Font {
     return font_fallback_list_ && font_fallback_list_->ShouldSkipDrawing();
   }
 
-  FontDescription font_description_;
+  const FontDescription* font_description_;
   mutable scoped_refptr<FontFallbackList> font_fallback_list_;
   mutable unsigned can_shape_word_by_word_ : 1;
   mutable unsigned shape_word_by_word_computed_ : 1;
@@ -226,12 +228,12 @@ inline Font::~Font() {}
 
 inline const SimpleFontData* Font::PrimaryFont() const {
   DCHECK(font_fallback_list_);
-  return font_fallback_list_->PrimarySimpleFontData(font_description_);
+  return font_fallback_list_->PrimarySimpleFontData(*font_description_);
 }
 
 inline const FontData* Font::FontDataAt(unsigned index) const {
   DCHECK(font_fallback_list_);
-  return font_fallback_list_->FontDataAt(font_description_, index);
+  return font_fallback_list_->FontDataAt(*font_description_, index);
 }
 
 inline FontSelector* Font::GetFontSelector() const {

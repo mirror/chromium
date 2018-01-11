@@ -67,7 +67,6 @@ struct FallbackListCompositeKey {
 
  private:
   static const unsigned kDeletedValueHash = 1;
-  FontDescription font_description_;
   Vector<FontCacheKey> font_cache_keys_;
   unsigned hash_;
 
@@ -95,6 +94,7 @@ struct FallbackListCompositeKeyHash {
 struct FallbackListCompositeKeyTraits
     : WTF::SimpleClassHashTraits<FallbackListCompositeKey> {
   STATIC_ONLY(FallbackListCompositeKeyTraits);
+  static const bool kEmptyValueIsZero = false;
 };
 
 }  // namespace blink

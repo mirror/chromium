@@ -234,6 +234,8 @@ class PLATFORM_EXPORT FontCache {
   void DumpFontPlatformDataCache(base::trace_event::ProcessMemoryDump*);
   void DumpShapeResultCache(base::trace_event::ProcessMemoryDump*);
 
+  long NumEntries(){return font_platform_data_cache_.size();};
+
   ~FontCache() {}
 
  private:
@@ -326,6 +328,7 @@ class PLATFORM_EXPORT FontCache {
 
   friend class SimpleFontData;  // For fontDataFromFontPlatformData
   friend class FontFallbackList;
+  HashSet<unsigned> font_cache_key_set_;
 };
 
 class PLATFORM_EXPORT FontCachePurgePreventer {

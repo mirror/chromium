@@ -38,6 +38,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontOrientation.h"
+#include "platform/fonts/FontObjectsCount.h"
 #include "platform/fonts/SmallCapsIterator.h"
 #include "platform/graphics/paint/PaintFont.h"
 #include "platform/graphics/paint/PaintTypeface.h"
@@ -78,7 +79,7 @@ class Font;
 class HarfBuzzFace;
 class FontVariationSettings;
 
-class PLATFORM_EXPORT FontPlatformData {
+class PLATFORM_EXPORT FontPlatformData : public CountedFontObj<FontPlatformData> {
   USING_FAST_MALLOC(FontPlatformData);
 
  public:
@@ -109,7 +110,7 @@ class PLATFORM_EXPORT FontPlatformData {
                    bool synthetic_bold,
                    bool synthetic_italic,
                    FontOrientation = FontOrientation::kHorizontal);
-  ~FontPlatformData();
+  virtual ~FontPlatformData();
 
 #if defined(OS_MACOSX)
   // These methods return a nullptr for FreeType backed SkTypefaces, compare
@@ -130,6 +131,8 @@ class PLATFORM_EXPORT FontPlatformData {
   bool HasSpaceInLigaturesOrKerning(TypesettingFeatures) const;
   SkFontID UniqueID() const;
   unsigned GetHash() const;
+
+  void CountAndLogFontIds(bool =true);
 
   FontOrientation Orientation() const { return orientation_; }
   bool IsVerticalAnyUpright() const {

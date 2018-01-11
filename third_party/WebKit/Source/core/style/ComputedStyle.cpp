@@ -1391,12 +1391,6 @@ CSSTransitionData& ComputedStyle::AccessTransitions() {
   return *TransitionsInternal();
 }
 
-const Font& ComputedStyle::GetFont() const {
-  return FontInternal();
-}
-const FontDescription& ComputedStyle::GetFontDescription() const {
-  return FontInternal().GetFontDescription();
-}
 float ComputedStyle::SpecifiedFontSize() const {
   return GetFontDescription().SpecifiedSize();
 }
@@ -1598,6 +1592,13 @@ bool ComputedStyle::SetFontDescription(const FontDescription& v) {
 
 void ComputedStyle::SetFont(const Font& font) {
   SetFontInternal(font);
+}
+
+const Font& ComputedStyle::GetFont() const {
+  return FontInternal();
+}
+const FontDescription& ComputedStyle::GetFontDescription() const {
+  return FontInternal().GetFontDescription();
 }
 
 bool ComputedStyle::HasIdenticalAscentDescentAndLineGap(

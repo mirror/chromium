@@ -48,14 +48,19 @@
 #include "platform/wtf/text/Unicode.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
+
 namespace blink {
 
-Font::Font() : can_shape_word_by_word_(0), shape_word_by_word_computed_(0) {}
-
-Font::Font(const FontDescription& fd)
-    : font_description_(fd),
+Font::Font()
+    : font_description_(FontDeduplicationRegistry::checkDuplicate(FontDescription())),
       can_shape_word_by_word_(0),
       shape_word_by_word_computed_(0) {}
+
+Font::Font(const FontDescription& fd)
+    : font_description_(FontDeduplicationRegistry::checkDuplicate(fd)),
+      can_shape_word_by_word_(0),
+      shape_word_by_word_computed_(0) {
+}
 
 Font::Font(const Font& other)
     : font_description_(other.font_description_),
@@ -395,7 +400,7 @@ int Font::OffsetForPosition(const TextRun& run,
 }
 
 ShapeCache* Font::GetShapeCache() const {
-  return font_fallback_list_->GetShapeCache(font_description_);
+  return font_fallback_list_->GetShapeCache(*font_description_);
 }
 
 bool Font::CanShapeWordByWord() const {
@@ -438,7 +443,7 @@ void Font::WillUseFontData(const String& text) const {
 
 scoped_refptr<FontFallbackIterator> Font::CreateFontFallbackIterator(
     FontFallbackPriority fallback_priority) const {
-  return FontFallbackIterator::Create(font_description_, font_fallback_list_,
+  return FontFallbackIterator::Create(*font_description_, font_fallback_list_,
                                       fallback_priority);
 }
 
