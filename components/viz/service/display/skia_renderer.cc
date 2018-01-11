@@ -677,7 +677,35 @@ void SkiaRenderer::DrawUnsupportedQuad(const DrawQuad* quad) {
 void SkiaRenderer::CopyDrawnRenderPass(
     std::unique_ptr<CopyOutputRequest> request) {
   // TODO(weiliangc): Make copy request work. (crbug.com/644851)
-  NOTIMPLEMENTED();
+  TRACE_EVENT0("viz", "SkiaRenderer::CopyDrawnRenderPass");
+
+  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  if (request->has_area())
+    copy_rect.Intersect(request->area());
+
+  if (copy_rect.IsEmpty())
+    return;
+
+  gfx::Rect window_copy_rect = MoveFromDrawToWindowSpace(copy_rect);
+
+  sk_sp<SkImage> copy_image = root_surface_->makeImageSnapshot()->makeSubset(
+      RectToSkIRect(window_copy_rect));
+
+  if (request->result_format() == CopyOutputResult::Format::RGBA_BITMAP) {
+    // Send copy request by copying into a bitmap.
+    SkBitmap bitmap;
+    bitmap.allocPixels(SkImageInfo::MakeN32Premul(window_copy_rect.width(),
+                                                  window_copy_rect.height()));
+    if (!copy_image->makeNonTextureImage()->asLegacyBitmap(
+            &bitmap, SkImage::kRO_LegacyBitmapMode))
+      bitmap.reset();
+
+    request->SendResult(
+        std::make_unique<CopyOutputSkBitmapResult>(copy_rect, bitmap));
+    return;
+  }
+
+  NOTREACHED();
 }
 
 void SkiaRenderer::SetEnableDCLayers(bool enable) {
