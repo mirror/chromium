@@ -15,7 +15,6 @@ import threading
 
 import test_env
 
-
 def _kill(proc, send_signal):
   """Kills |proc| and ignores exceptions thrown for non-existent processes."""
   try:
@@ -43,8 +42,11 @@ def kill(proc, timeout_in_seconds=10):
     print >> sys.stderr, 'Xvfb running after SIGTERM and SIGKILL; good luck!'
 
 
-def run_executable(cmd, env):
+def run_executable(cmd, env, stdoutfile=None):
   """Runs an executable within Xvfb on Linux or normally on other platforms.
+
+  If |stdoutfile| is provided, symbolization via script is disabled and stdout
+  is written to this file as well as to stdout.
 
   Returns the exit code of the specified commandline, or 1 on failure.
   """
@@ -72,7 +74,7 @@ def run_executable(cmd, env):
         xcompmgr_proc = subprocess.Popen('xcompmgr', stdout=subprocess.PIPE,
                                          stderr=subprocess.STDOUT, env=env)
 
-        return test_env.run_executable(cmd, env)
+        return test_env.run_executable(cmd, env, stdoutfile)
       except OSError as e:
         print >> sys.stderr, 'Failed to start Xvfb or Openbox: %s' % str(e)
         return 1
@@ -89,7 +91,7 @@ def run_executable(cmd, env):
                               "+extension RANDR",
                               xvfb_script] + cmd, env=env)
   else:
-    return test_env.run_executable(cmd, env)
+    return test_env.run_executable(cmd, env, stdoutfile)
 
 
 def main():
