@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb91ba0_8591ae2a",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T21:46:22Z",
+      "side": 1,
+      "message": "Same as above, probably not needed anymore.",
+      "revId": "002e18130cb6666bb82268dd46800c4a61dcdd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a49c673_ab862b5a",
+        "filename": "chrome/browser/ui/ash/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T21:46:22Z",
+      "side": 1,
+      "message": "I wonder if this is still needed since the include for hash password manager has been remove.",
+      "revId": "002e18130cb6666bb82268dd46800c4a61dcdd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
