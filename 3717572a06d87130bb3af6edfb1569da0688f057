@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c97571ac_61229cf4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeUnitTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:19:56Z",
+      "side": 1,
+      "message": "It would be good to change \"NotificationPlatformBridge#\" to \"InvalidPrefix#\". I think the origin on line 45 also shouldn\u0027t be there?",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06a94ea_469d584d",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:19:56Z",
+      "side": 1,
+      "message": "What do you think about reverting the changes on lines 27 and 33?\n\nBefore your change, they effectively did a memcpy(), so were super change. Now we create an std::string() for the prefix, which allocates memory on the heap, and then append another string, which allocates memory again. (Total of two.) The checks got significantly more expensive.\n\nJust checking for the single-character prefix still gives us what we want: it\u0027s the difference between \"n\" and \"p\" that matters.",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba66fb5c_3e73445d",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:19:56Z",
+      "side": 1,
+      "message": "Would you mind moving the dependency comment (\"Note...java\") to the class-level comment for NotificationIdGenerator? Then we can avoid duplicating it twice. The format comment is still super useful here.",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898f0793_6f84b189",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:19:56Z",
+      "side": 0,
+      "message": "Would you mind adding a TODO to the origin and tag fields of RegeneratedNotificationInfo saying that we may be able to remove them? Would be a good follow-up patch at some point!",
+      "revId": "781157b04e5a9fe9a940a893c6668cb66b11379a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
