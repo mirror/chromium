@@ -227,7 +227,7 @@ const LayerTreeSettings& LayerTreeHost::GetSettings() const {
 }
 
 void LayerTreeHost::SetFrameSinkId(const viz::FrameSinkId& frame_sink_id) {
-  surface_sequence_generator_.set_frame_sink_id(frame_sink_id);
+  // TODO(kylechar): maybe delete?
 }
 
 void LayerTreeHost::QueueSwapPromise(
@@ -241,10 +241,6 @@ void LayerTreeHost::QueueSwapPromise(
   // EarlyOut_NoUpdates).
   if (!inside_main_frame_)
     SetNeedsAnimate();
-}
-
-viz::SurfaceSequenceGenerator* LayerTreeHost::GetSurfaceSequenceGenerator() {
-  return &surface_sequence_generator_;
 }
 
 void LayerTreeHost::WillBeginMainFrame() {

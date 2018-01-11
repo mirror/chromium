@@ -171,15 +171,8 @@ void WindowPortLocal::OnEventTargetingPolicyChanged() {}
 void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
   DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
   DCHECK_EQ(surface_info.id().local_surface_id(), local_surface_id_);
-  scoped_refptr<viz::SurfaceReferenceFactory> reference_factory =
-      aura::Env::GetInstance()
-          ->context_factory_private()
-          ->GetFrameSinkManager()
-          ->surface_manager()
-          ->reference_factory();
-  window_->layer()->SetShowPrimarySurface(surface_info.id(),
-                                          window_->bounds().size(),
-                                          SK_ColorWHITE, reference_factory);
+  window_->layer()->SetShowPrimarySurface(
+      surface_info.id(), window_->bounds().size(), SK_ColorWHITE);
   window_->layer()->SetFallbackSurfaceId(surface_info.id());
 }
 
