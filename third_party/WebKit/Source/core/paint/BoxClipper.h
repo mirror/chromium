@@ -14,6 +14,7 @@
 namespace blink {
 
 class LayoutBox;
+class NGPaintFragment;
 struct PaintInfo;
 
 enum ContentsClipBehavior { kForceContentsClip, kSkipContentsClipIfPossible };
@@ -23,6 +24,10 @@ class BoxClipper {
 
  public:
   BoxClipper(const LayoutBox&,
+             const PaintInfo&,
+             const LayoutPoint& accumulated_offset,
+             ContentsClipBehavior);
+  BoxClipper(const NGPaintFragment&,
              const PaintInfo&,
              const LayoutPoint& accumulated_offset,
              ContentsClipBehavior);
