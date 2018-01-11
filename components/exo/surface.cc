@@ -552,8 +552,11 @@ void Surface::CommitSurfaceHierarchy(bool synchronized) {
   }
 
   surface_hierarchy_content_bounds_ = gfx::Rect(content_size_);
-  hit_test_region_ = state_.input_region;
-  hit_test_region_.Intersect(surface_hierarchy_content_bounds_);
+  if (state_.input_region) {
+    hit_test_region_ = state_.input_region;
+    hit_test_region_.Intersect(surface_hierarchy_content_bounds_);
+  } else
+    hit_test_region_ = surface_hierarchy_content_bounds_;
 
   int outset = state_.input_outset;
   if (outset > 0) {
@@ -718,7 +721,7 @@ bool Surface::FillsBoundsOpaquely() const {
 ////////////////////////////////////////////////////////////////////////////////
 // Buffer, private:
 
-Surface::State::State() : input_region(SkRegion(SkIRect::MakeLargest())) {}
+Surface::State::State() {}
 
 Surface::State::~State() = default;
 
