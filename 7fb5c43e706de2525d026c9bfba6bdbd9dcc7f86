@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85348cf1_0ca70474",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-11T19:23:14Z",
+      "side": 1,
+      "message": "Yes, fixed.",
+      "parentUuid": "3f9211d6_a3421111",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 24
+      },
+      "revId": "7fb5c43e706de2525d026c9bfba6bdbd9dcc7f86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e6faeb6_0de92503",
         "filename": "skia/BUILD.gn",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T18:33:42Z",
       "side": 1,
       "message": "Maybe move comment here to state that we\u0027re doing this in all the opts because the opts are all part of skia, they just compile with different flags...",
+      "range": {
+        "startLine": 655,
+        "startChar": 2,
+        "endLine": 655,
+        "endChar": 16
+      },
+      "revId": "7fb5c43e706de2525d026c9bfba6bdbd9dcc7f86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf648fc4_a3320f04",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-11T19:23:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6e6faeb6_0de92503",
       "range": {
         "startLine": 655,
         "startChar": 2,
