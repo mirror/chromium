@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03483968_9e228aee",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:43:08Z",
+      "side": 1,
+      "message": "This seems unused",
+      "revId": "571d1ca40dc00a9625f11dc36504ad5f500ae117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1d9dd7_35ad53ee",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:43:08Z",
+      "side": 1,
+      "message": "This extra is unneeded",
+      "revId": "571d1ca40dc00a9625f11dc36504ad5f500ae117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9da03ae_5506ba29",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:43:08Z",
+      "side": 1,
+      "message": "This extra is unneeded",
+      "revId": "571d1ca40dc00a9625f11dc36504ad5f500ae117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

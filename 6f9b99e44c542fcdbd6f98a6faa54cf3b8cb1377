@@ -69,6 +69,24 @@
       "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff334041_1a0b0e71",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:43:08Z",
+      "side": 1,
+      "message": "I see that you used a different method to wait till the activity is launched. I think that using ChromeActivityTestRule#startActivityCompletely() would be better because it does not rely on polling.",
+      "parentUuid": "a437a745_d78b5627",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
