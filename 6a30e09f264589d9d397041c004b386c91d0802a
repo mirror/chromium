@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7eac4d39_7b1758ec",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3850,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "I went with DisplayManager here because the lifetime of the dialog is still managed (implicitly) by PaymentRequestWebContentsManager. I feel like DialogManager would wrongly imply that this object does lifetime management as well. WDYT?",
+      "parentUuid": "79e4fca1_b6e22d80",
+      "range": {
+        "startLine": 3850,
+        "startChar": 26,
+        "endLine": 3850,
+        "endChar": 40
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e38cfff_f8635cbe",
         "filename": "chrome/browser/chrome_content_browser_client.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-09T14:29:39Z",
       "side": 1,
       "message": "nit: Dialog?",
+      "range": {
+        "startLine": 398,
+        "startChar": 25,
+        "endLine": 398,
+        "endChar": 31
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc01575_5692283a",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "I like Window at this layer because this bubbles a PaymentRequestEvent.openWindow call (this is an implementation of an interface in content/). We happen to be opening it inside the dialog but this is an implementation detail that\u0027s resolved down the line (and not the case on Android). WDYT?",
+      "parentUuid": "7e38cfff_f8635cbe",
       "range": {
         "startLine": 398,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "afc4c669_87a55754",
+        "filename": "chrome/browser/payments/chrome_payment_request_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Super good point, done.",
+      "parentUuid": "346249a5_df1e1ddc",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a833969_5aac1d8a",
         "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47685ab9_e4d837ed",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Didn\u0027t realize it was allowed now. Nice!",
+      "parentUuid": "4a833969_5aac1d8a",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4dd8630b_a06e024e",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "It looks like the webview doesn\u0027t size properly with the LayoutManager. I need to take a pass at layout in a future patch anyways to remove the cancel button and clean up the header, so I\u0027m adding a TODO.",
+      "parentUuid": "61f2f901_212b39f6",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2113dc82_6496ec15",
         "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
         "patchSetId": 4
@@ -131,6 +251,24 @@
       "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82449e01_bfff8067",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2113dc82_6496ec15",
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "52c2f18d_cb91782e",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc602283_67404d2e",
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da0c3ed_c3fb100a",
         "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
         "patchSetId": 4
@@ -165,6 +321,24 @@
       "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c018da_13c59fc9",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3da0c3ed_c3fb100a",
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "10d80d5f_74b284ba",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2c2b401_af2cc1b4",
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5001b45_26435bc1",
         "filename": "components/payments/content/content_payment_request_delegate.h",
         "patchSetId": 4
@@ -199,6 +391,24 @@
       "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f3bfe7_bf43e57f",
+        "filename": "components/payments/content/content_payment_request_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5001b45_26435bc1",
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "9407b78b_38f65c76",
+        "filename": "components/payments/content/payment_request_display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ca6498_11d4b01a",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9632092_358ead42",
         "filename": "components/payments/content/payment_request_display_manager.h",
         "patchSetId": 4
@@ -245,6 +479,30 @@
       "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680d234d_cf2f3da1",
+        "filename": "components/payments/content/payment_request_display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-11T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9632092_358ead42",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "6a30e09f264589d9d397041c004b386c91d0802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
