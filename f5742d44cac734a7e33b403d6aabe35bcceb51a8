@@ -46,6 +46,30 @@
       "revId": "f5742d44cac734a7e33b403d6aabe35bcceb51a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e5107d_1469a8d7",
+        "filename": "third_party/WebKit/Source/platform/WebTaskRunner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-11T11:11:17Z",
+      "side": 1,
+      "message": "I disagree -- it\u0027s common practice in Blink to use mutable reference for an argument that\u0027s never null.\n\nSee: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md\n\nPassing const scoped_refptr looks overly complex to me, and it still has the possiblity of being null.",
+      "parentUuid": "bee2abbe_57f9efd3",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "f5742d44cac734a7e33b403d6aabe35bcceb51a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
