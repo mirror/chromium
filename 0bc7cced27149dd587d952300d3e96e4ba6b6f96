@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee01f52a_bff8fa98",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-11T06:09:08Z",
+      "side": 1,
+      "message": "Could this be private?",
+      "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed826ce8_a10449f8",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-11T06:09:08Z",
+      "side": 1,
+      "message": "I see this was preexisting, but could you write the type here instead of \"auto\"? It\u0027s very difficult to understand stuff like \"it.second.second\" without knowing the type of |it|. I also think it\u0027s not really an iterator, so calling it |it| doesn\u0027t make any sense.",
+      "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
