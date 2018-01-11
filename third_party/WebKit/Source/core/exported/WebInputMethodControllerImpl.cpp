@@ -82,6 +82,18 @@ bool WebInputMethodControllerImpl::SetComposition(
   return text.IsEmpty() || GetInputMethodController().HasComposition();
 }
 
+bool WebInputMethodControllerImpl::SetCompositionFromExistingText(
+    const WebVector<WebImeTextSpan>& ime_text_spans,
+    int composition_start,
+    int composition_end) {
+  GetInputMethodController().SetCompositionFromExistingText(
+      ImeTextSpanVectorBuilder::Build(ime_text_spans), composition_start,
+      composition_end);
+
+  return composition_start == composition_end ||
+         GetInputMethodController().HasComposition();
+}
+
 bool WebInputMethodControllerImpl::FinishComposingText(
     ConfirmCompositionBehavior selection_behavior) {
   // TODO(ekaramad): Here and in other IME calls we should expect the

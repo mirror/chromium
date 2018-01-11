@@ -36,6 +36,13 @@ class WebInputMethodController {
                               const WebRange& replacement_range,
                               int selection_start,
                               int selection_end) = 0;
+  // Called to inform the WebInputMethodController to mark composition_start to
+  // composition_end as the active composition range. Returns true if the
+  // composition text was set successfully.
+  virtual bool SetCompositionFromExistingText(
+      const WebVector<WebImeTextSpan>& ime_text_spans,
+      int composition_start,
+      int composition_end) = 0;
 
   // Called to inform the controller to delete the ongoing composition if any,
   // insert |text|, and move the caret according to |relativeCaretPosition|.

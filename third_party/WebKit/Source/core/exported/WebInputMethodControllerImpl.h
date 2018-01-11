@@ -35,6 +35,10 @@ class CORE_EXPORT WebInputMethodControllerImpl
                       const WebRange& replacement_range,
                       int selection_start,
                       int selection_end) override;
+  bool SetCompositionFromExistingText(
+      const WebVector<WebImeTextSpan>& ime_text_spans,
+      int composition_start,
+      int composition_end) override;
   bool CommitText(const WebString& text,
                   const WebVector<WebImeTextSpan>& ime_text_spans,
                   const WebRange& replacement_range,
