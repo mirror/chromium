@@ -176,6 +176,24 @@
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307ba084_ad87f496",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-11T15:30:41Z",
+      "side": 1,
+      "message": "OK, I see what you meant now when you said that it\u0027s the only case when the document is the owner node. I\u0027m still not sure we could return early in StyleSheetContents::ClearRuleSet for that case. Is it possible that one StyleSheetContents object is associated with multiple Document objects (via multiple CSSStyleSheet objects) and so multiple documents need to be marked dirty via that path? Anyway, since I had doubts, I decided to leave it as it is. As you said, it\u0027s not a big deal.\n\nSo now I\u0027ve reverted the other changes and am returning true for the second condition in ClearMediaQueryDependentRuleSets, which should make sure it works for both author and user sheets.",
+      "parentUuid": "31b29cdb_92dc5022",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
