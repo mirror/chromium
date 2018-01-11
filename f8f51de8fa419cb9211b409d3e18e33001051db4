@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0bfc9f_9867c4ac",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-11T06:07:21Z",
+      "side": 1,
+      "message": "I\u0027ve duplicated the method body of PluginUtils::RememberFlashChangedForSite() here, but not sure if it\u0027s better to move that method to somewhere inside components/content_settings so we can re-use it here instead?",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
