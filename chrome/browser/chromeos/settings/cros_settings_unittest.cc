@@ -12,6 +12,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
 #include "chrome/test/base/scoped_testing_local_state.h"
@@ -32,7 +34,7 @@ class CrosSettingsTest : public testing::Test {
  protected:
   CrosSettingsTest()
       : local_state_(TestingBrowserProcess::GetGlobal()),
-        settings_(DeviceSettingsService::Get()),
+        settings_(CrosSettingsTestApi::CreateForTest()),
         weak_factory_(this) {}
 
   ~CrosSettingsTest() override {}
@@ -47,12 +49,11 @@ class CrosSettingsTest : public testing::Test {
       return;
 
     if (CrosSettingsProvider::TRUSTED ==
-            settings_.PrepareTrustedValues(
-                base::Bind(&CrosSettingsTest::FetchPref,
-                           weak_factory_.GetWeakPtr(), pref))) {
+        settings_->PrepareTrustedValues(base::Bind(
+            &CrosSettingsTest::FetchPref, weak_factory_.GetWeakPtr(), pref))) {
       std::unique_ptr<base::Value> expected_value =
           std::move(expected_props_.find(pref)->second);
-      const base::Value* pref_value = settings_.GetPref(pref);
+      const base::Value* pref_value = settings_->GetPref(pref);
       if (expected_value.get()) {
         ASSERT_TRUE(pref_value);
         ASSERT_TRUE(expected_value->Equals(pref_value));
@@ -65,7 +66,7 @@ class CrosSettingsTest : public testing::Test {
 
   void SetPref(const std::string& pref_name, const base::Value* value) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    settings_.Set(pref_name, *value);
+    settings_->Set(pref_name, *value);
   }
 
   void AddExpectation(const std::string& pref_name,
@@ -93,7 +94,7 @@ class CrosSettingsTest : public testing::Test {
 
   ScopedTestingLocalState local_state_;
   ScopedDeviceSettingsTestHelper device_settings_test_helper_;
-  CrosSettings settings_;
+  std::unique_ptr<CrosSettings> settings_;
 
   std::map<std::string, std::unique_ptr<base::Value>> expected_props_;
 
@@ -137,7 +138,7 @@ TEST_F(CrosSettingsTest, SetWhitelistWithListOps) {
                  base::MakeUnique<base::Value>(false));
   AddExpectation(kAccountsPrefUsers, std::move(whitelist));
   // Add some user to the whitelist.
-  settings_.AppendToList(kAccountsPrefUsers, &hacky_user);
+  settings_->AppendToList(kAccountsPrefUsers, &hacky_user);
   FetchPref(kAccountsPrefAllowNewUser);
   FetchPref(kAccountsPrefUsers);
 }
@@ -158,7 +159,7 @@ TEST_F(CrosSettingsTest, SetWhitelistWithListOps2) {
   ASSERT_TRUE(expected_props_.empty());
   // Now try to remove one element from that list.
   AddExpectation(kAccountsPrefUsers, std::move(expected_list));
-  settings_.RemoveFromList(kAccountsPrefUsers, &lamy_user);
+  settings_->RemoveFromList(kAccountsPrefUsers, &lamy_user);
   FetchPref(kAccountsPrefAllowNewUser);
   FetchPref(kAccountsPrefUsers);
 }
@@ -227,7 +228,7 @@ TEST_F(CrosSettingsTest, FindEmailInList) {
   list.AppendString("with.dots@gmail.com");
   list.AppendString("Upper@example.com");
 
-  CrosSettings* cs = &settings_;
+  CrosSettings* cs = settings_.get();
   cs->Set(kAccountsPrefUsers, list);
 
   EXPECT_TRUE(IsWhitelisted(cs, "user@example.com"));
@@ -256,7 +257,7 @@ TEST_F(CrosSettingsTest, FindEmailInListWildcard) {
   list.AppendString("user@example.com");
   list.AppendString("*@example.com");
 
-  CrosSettings* cs = &settings_;
+  CrosSettings* cs = settings_.get();
   cs->Set(kAccountsPrefUsers, list);
 
   bool wildcard_match = false;
