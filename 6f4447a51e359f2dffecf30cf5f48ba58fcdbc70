@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5be896e9_6d6ad55c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-11T22:50:27Z",
+      "side": 1,
+      "message": "Yea, this is a change I recently landed for Browser Actions. But I didn\u0027t synced my local repo and also not tracked that change from this branch. But I just synced my local repo and it should dismiss in the next patch after rebase.",
+      "parentUuid": "f3496b27_ed3c15a6",
+      "range": {
+        "startLine": 287,
+        "startChar": 17,
+        "endLine": 287,
+        "endChar": 44
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a8f1a5b_1f027570",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f46c0f6b_c37feffd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-11T22:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8f1a5b_1f027570",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "763606b3_6255bffa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd784d0_4501a83f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-11T22:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "763606b3_6255bffa",
+      "range": {
+        "startLine": 511,
+        "startChar": 16,
+        "endLine": 511,
+        "endChar": 48
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
