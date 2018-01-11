@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ffc511_bea941b1",
+        "filename": "device/u2f/ec_public_key.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:17:39Z",
+      "side": 1,
+      "message": "nit: COSE here and everywhere else, mostly for consistency.",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680f38f5_83772392",
+        "filename": "device/u2f/public_key.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:17:39Z",
+      "side": 1,
+      "message": "nit: drop the const here as it\u0027s not needed when you take a parameter by value",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6103dc37_44135c9a",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:17:39Z",
+      "side": 1,
+      "message": "drop",
+      "range": {
+        "startLine": 34,
+        "startChar": 71,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685513a8_c12ef36b",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:17:39Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 35,
+        "startChar": 71,
+        "endLine": 35,
+        "endChar": 72
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38a1d5d_caf88dd5",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:17:39Z",
+      "side": 1,
+      "message": "nit: missing commas (hence the compiler errors)",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
