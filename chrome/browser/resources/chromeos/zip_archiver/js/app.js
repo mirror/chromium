@@ -228,6 +228,11 @@ unpacker.app = {
    * @private
    */
   restoreVolumeState_: function(fileSystemId) {
+    if (chrome.extension.inIncognitoContext) {
+      return new Promise(function(fulfill, reject) {
+        reject('In Incognito context');
+      });
+    }
     return new Promise(function(fulfill, reject) {
       chrome.storage.local.get([unpacker.app.STORAGE_KEY], function(result) {
         if (!result[unpacker.app.STORAGE_KEY]) {
