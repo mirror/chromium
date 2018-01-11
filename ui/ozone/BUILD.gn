@@ -177,7 +177,6 @@ jumbo_source_set("test_support_internal") {
   deps = [
     "//mojo/edk/test:run_all_unittests",
     "//mojo/public/cpp/bindings",
-    "//testing/gmock",
     "//testing/gtest",
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
@@ -187,6 +186,7 @@ jumbo_source_set("test_support_internal") {
 
   public_deps = [
     "//base/test:test_support",
+    "//testing/gmock:gmock",
   ]
 }
 
