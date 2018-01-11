@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33a1ce19_e889270a",
+        "filename": "ui/gfx/paint_vector_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-11T18:59:54Z",
+      "side": 1,
+      "message": "Agreed.  CreateTiledImage was exactly what I needed and works great, thanks for the tip!",
+      "parentUuid": "a5692d08_b6550979",
+      "range": {
+        "startLine": 593,
+        "startChar": 27,
+        "endLine": 594,
+        "endChar": 47
+      },
+      "revId": "31340c620477d6682eb6a0ddfd793da1f7903e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26bee2e3_5e3e4fe3",
         "filename": "ui/gfx/paint_vector_icon.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "31340c620477d6682eb6a0ddfd793da1f7903e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c61921_1cb24881",
+        "filename": "ui/gfx/paint_vector_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-11T18:59:54Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "26bee2e3_5e3e4fe3",
+      "range": {
+        "startLine": 599,
+        "startChar": 10,
+        "endLine": 599,
+        "endChar": 77
+      },
+      "revId": "31340c620477d6682eb6a0ddfd793da1f7903e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
