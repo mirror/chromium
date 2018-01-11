@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6955179c_e90d4d3d",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T15:41:39Z",
+      "side": 1,
+      "message": "You could actually move this to onPreExecute() in the task itself, for symmetry with decrementing.",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 29
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00007c12_3a20b3e1",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T15:41:39Z",
+      "side": 1,
+      "message": "JELLY_BEAN_MR2?",
+      "range": {
+        "startLine": 647,
+        "startChar": 60,
+        "endLine": 647,
+        "endChar": 68
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f712f8cb_6c3d06ca",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T15:41:39Z",
+      "side": 1,
+      "message": "Can you catch more specific exceptions here?",
+      "range": {
+        "startLine": 655,
+        "startChar": 17,
+        "endLine": 655,
+        "endChar": 29
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d4064d_301f3405",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T15:41:39Z",
+      "side": 1,
+      "message": "It\u0027s important that we count down the latch here on the background thread and not in onPostExecute(), so that we can block on the UI thread if necessary, right? Can you add a comment to that effect?",
+      "range": {
+        "startLine": 693,
+        "startChar": 12,
+        "endLine": 693,
+        "endChar": 50
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
