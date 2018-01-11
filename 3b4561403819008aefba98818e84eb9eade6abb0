@@ -187,6 +187,30 @@
       "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7514851e_8c683997",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/service-is-removed.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T22:15:26Z",
+      "side": 1,
+      "message": "I read the Bluetooth specification over this, and it says that the Service Changed characteristic is used to indicate to connected devices that services have changed, and this can mean added, removed, or modified. So, I don\u0027t think that I have to create a simulateGATTServiceRemoved function, and the service removed is just an event that should be fired in JavaScript.",
+      "parentUuid": "4b635752_f9a75af6",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
