@@ -206,6 +206,9 @@ class CONTENT_EXPORT StoragePartition {
   // use only.
   virtual void FlushNetworkInterfaceForTesting() = 0;
 
+  // Get number of running deletion tasks. For test use only.
+  virtual int GetDeletionTaskCountForTesting() = 0;
+
  protected:
   virtual ~StoragePartition() {}
 };

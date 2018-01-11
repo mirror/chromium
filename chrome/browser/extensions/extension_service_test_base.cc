@@ -30,6 +30,7 @@
 #include "components/sync_preferences/pref_service_mock_factory.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 
@@ -277,6 +278,15 @@ void ExtensionServiceTestBase::ValidateStringPref(
 
 void ExtensionServiceTestBase::SetUp() {
   LoadErrorReporter::GetInstance()->ClearErrors();
+}
+
+void ExtensionServiceTestBase::TearDown() {
+  if (profile_) {
+    auto* partition =
+        content::BrowserContext::GetDefaultStoragePartition(profile_.get());
+    while (partition && partition->GetDeletionTaskCountForTesting())
+      base::RunLoop().RunUntilIdle();
+  }
 }
 
 void ExtensionServiceTestBase::SetUpTestCase() {
