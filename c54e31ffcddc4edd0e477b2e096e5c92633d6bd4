@@ -88,6 +88,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81edfffe_88343cc3",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-11T22:52:19Z",
+      "side": 1,
+      "message": "I\u0027m trying to get rid of static uninitializers as we speak : https://chromium-review.googlesource.com/c/chromium/src/+/860617. Objections? Thoughts?",
+      "parentUuid": "c0d1ecb9_3ea724cf",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
