@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850b50d5_aa4b36ec",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2018-01-11T15:27:07Z",
+      "side": 1,
+      "message": "Maybe add a comment here saying something along the line of:\n\nThe coordinates given are in PDF page coordinates and we have to transform those back\nto screen coordinates.",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 47
+      },
+      "revId": "6814f612d15dd00989308b10f9dc672c8f7a9fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
