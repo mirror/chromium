@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d6dd07_d9e31923",
+        "filename": "rlz/lib/rlz_lib_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2018-01-11T15:56:30Z",
+      "side": 1,
+      "message": "Nit: Suggest to insert \"protected:\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "5549c012df28796afe5aa74ccbb21d24c0aee7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
