@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69961fdd_22afa341",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-11T02:38:40Z",
+      "side": 1,
+      "message": "Not necessary with new AXUniqueId architecture where the ids are always guaranteed to be valid.",
+      "parentUuid": "cecea7a4_5c271e46",
+      "revId": "1eb91ef7cbdae83006e74f66ce8ca4c3efc0bd89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0450b1e7_3f9d79d3",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 25
