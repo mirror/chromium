@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6acdc3_c304df66",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-11T19:20:36Z",
+      "side": 1,
+      "message": "The comments you\u0027ve added here mostly restate the code (\"should x\" vs. EXPECT_TRUE) without motivating _why_, i.e. what is it about this situation versus the one below that means we should recommend the tab in one case versus the other.",
+      "revId": "e32400f5ed9ba0a361b8e50bdf1f505db634c65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a052c3_83fd25d6",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-11T19:20:36Z",
+      "side": 1,
+      "message": "Adding this to this test is convenient since the test is doing what you want, but it makes the test really be testing two things, only one of which is documented in the comments above the test.\n\nIt\u0027s not clear to me whether the right answer is to document more fully what the test is testing, or to split into two partly-redundant tests.",
+      "revId": "e32400f5ed9ba0a361b8e50bdf1f505db634c65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
