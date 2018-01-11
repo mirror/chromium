@@ -131,6 +131,7 @@
 #include "core/page/PointerLockController.h"
 #include "core/page/SpatialNavigation.h"
 #include "core/page/scrolling/RootScrollerController.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollCustomizationCallbacks.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/page/scrolling/ScrollStateCallback.h"
@@ -613,6 +614,11 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
+  disable_custom_callbacks |=
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !GetScrollCustomizationCallbacks().InScrollPhase(this);
+
   if (!callback || disable_custom_callbacks) {
     NativeDistributeScroll(scroll_state);
     return;
@@ -626,7 +632,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
   if (callback->NativeScrollBehavior() ==
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
-};
+}
 
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
@@ -697,6 +703,10 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        .GetPage()
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
+  disable_custom_callbacks |=
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !GetScrollCustomizationCallbacks().InScrollPhase(this);
 
   if (!callback || disable_custom_callbacks) {
     NativeApplyScroll(scroll_state);
@@ -3266,6 +3276,24 @@ void Element::SetNeedsResizeObserverUpdate() {
     for (auto& observation : data->Values())
       observation->ElementSizeChanged();
   }
+}
+
+void Element::WillBeginCustomizedScrollPhase(
+    ScrollCustomizationEnabledDirection direction) {
+  DCHECK(!GetScrollCustomizationCallbacks().InScrollPhase(this));
+  LayoutBox* box = GetLayoutBox();
+  if (!box)
+    return;
+
+  ScrollCustomizationEnabledDirection scroll_customization =
+      box->Style()->ScrollCustomization();
+
+  GetScrollCustomizationCallbacks().SetInScrollPhase(
+      this, direction & scroll_customization);
+}
+
+void Element::DidEndCustomizedScrollPhase() {
+  GetScrollCustomizationCallbacks().SetInScrollPhase(this, false);
 }
 
 // Step 1 of http://domparsing.spec.whatwg.org/#insertadjacenthtml()

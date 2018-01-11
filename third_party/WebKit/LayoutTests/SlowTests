@@ -461,3 +461,6 @@ crbug.com/779965 external/wpt/beacon/headers/header-content-type.html [ Slow ]
 
 # This page loads slow in real browser, and can timeout in SPv2 layout test.
 crbug.com/779366 fast/shapes/crash-allocating-very-large-raster-shape.html [ Slow ]
+
+# This test has many test cases and each case requires a gesture scroll with pauses in between.
+crbug.com/765326 virtual/scroll_customization/fast/scroll-behavior/scroll-customization/scroll-customization-property.html [ Slow ]
