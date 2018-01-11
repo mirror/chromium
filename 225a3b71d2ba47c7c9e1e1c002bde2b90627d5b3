@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b105d5e1_20689588",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-11T20:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d119c90e_0827233d",
+      "range": {
+        "startLine": 194,
+        "startChar": 6,
+        "endLine": 194,
+        "endChar": 36
+      },
+      "revId": "225a3b71d2ba47c7c9e1e1c002bde2b90627d5b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506206e8_2b99fd92",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "225a3b71d2ba47c7c9e1e1c002bde2b90627d5b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74e5ecc_ac68caea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-11T20:29:20Z",
+      "side": 1,
+      "message": "Changed to mClosedByCloseButton since the only time it\u0027s set to true is in #onCloseButtonClicked.",
+      "parentUuid": "506206e8_2b99fd92",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "225a3b71d2ba47c7c9e1e1c002bde2b90627d5b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
