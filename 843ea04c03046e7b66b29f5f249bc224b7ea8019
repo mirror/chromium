@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f56c3c6d_c7404aff",
+        "filename": "chrome/browser/chromeos/login/startup_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-11T21:42:11Z",
+      "side": 1,
+      "message": "Comment is wrong.\n\nThe check is not needed.\nnot lgtm until initial problem is fully diagnosed.",
+      "revId": "843ea04c03046e7b66b29f5f249bc224b7ea8019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
