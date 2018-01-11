@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784873f8_cb290482",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T15:18:07Z",
+      "side": 1,
+      "message": "just realized, not relevant to this CL, but why isn\u0027t this content_public?",
+      "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f020aa_5c8de220",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T15:18:07Z",
+      "side": 1,
+      "message": "can you separate out moving logic from CVC to this class in one CL, and CVC can just pass through all calls. then do the ownership change in a separate CL\n\nright now it\u0027s hard to keep track of both",
+      "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdee4934_6123ae8d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T15:18:07Z",
+      "side": 1,
+      "message": "having create in each subclass is overkill, just have a single factory method that does these build version checks instead, then you can avoid the switch in fromWebContents",
+      "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
