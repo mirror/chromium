@@ -156,10 +156,16 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
         ClipRect clip_rect;
         layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
             .CalculateBackgroundClipRect(
-                ClipRectsContext(
-                    root_layer_, kAbsoluteClipRectsIgnoringViewportClip,
-                    kIgnorePlatformOverlayScrollbarSize, kIgnoreOverflowClip),
+                ClipRectsContext(root_layer_,
+                                 kAbsoluteClipRectsIgnoringViewportClip,
+                                 kIgnorePlatformOverlayScrollbarSize,
+                                 kIgnoreOverflowClipAndScroll),
                 clip_rect);
+        if (RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
+            root_layer_->ScrollsOverflow()) {
+          clip_rect.Move(
+              LayoutSize(-root_layer_->GetScrollableArea()->GetScrollOffset()));
+        }
         IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
         properties.clipped_absolute_bounding_box =
             properties.unclipped_absolute_bounding_box;
