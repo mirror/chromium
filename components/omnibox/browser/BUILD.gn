@@ -237,6 +237,8 @@ static_library("test_support") {
     "test_omnibox_client.h",
     "test_omnibox_edit_controller.cc",
     "test_omnibox_edit_controller.h",
+    "test_omnibox_edit_model.cc",
+    "test_omnibox_edit_model.h",
     "test_omnibox_view.cc",
     "test_omnibox_view.h",
     "test_scheme_classifier.cc",
