@@ -113,6 +113,23 @@
     },
     {
       "key": {
+        "uuid": "8395a62a_adec3b33",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "We should compare allow_origin_header with the serialized suborigin of |origin|.\n\nHow about adding * to |allow_origin_header| to clarify that we\u0027re comparing not base::Optional?",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1421db2c_1680cfb5",
         "filename": "services/network/public/cpp/cors/cors.cc",
         "patchSetId": 1
@@ -188,6 +205,30 @@
       "writtenOn": "2018-01-10T09:20:18Z",
       "side": 1,
       "message": "should this be case insensitive?\nI could not find relevant spec description, but external preflight check uses EqualIgnoringASCIICase to check \"true\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3f8d23_a2cb659a",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "it\u0027s case sensitive. basically in the spec (most of whatwg ones I know) it\u0027s case sensitive unless otherwise noted.\n\nhttps://fetch.spec.whatwg.org/#cors-check step 7 is comparing the header value with `true`.\n\nThe only valid value for the header is \"true\" (all small) also according to https://fetch.spec.whatwg.org/#http-new-header-syntax",
+      "parentUuid": "ac216f70_7bd7d9aa",
       "range": {
         "startLine": 58,
         "startChar": 37,
@@ -319,6 +360,176 @@
       "writtenOn": "2018-01-11T06:38:51Z",
       "side": 1,
       "message": "matches to -\u003e matches",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f428038a_8f0f19f4",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "we should pass a serialized suborigin here than the physical origin.",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cba5d7a_eefcb530",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "I suggest that we use a literal here than generating it from the same source as |response_url| and depending on .suborigin().",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5428cad_24cbb86b",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Could you please elaborate this comment? I couldn\u0027t get it.",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56306c27_01bbba49",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2651e6d_b9c490a2",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2316827a_6f5c27bb",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19822fa_5d5e2c36",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5e8054_efed3b7d",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fd862c_3a39365c",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29e621f_392d7c47",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T07:08:09Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
       "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
