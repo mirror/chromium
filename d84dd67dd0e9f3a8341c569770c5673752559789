@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfd76e23_7001a05a",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T17:14:27Z",
+      "side": 1,
+      "message": "This ModelObserver is used mainly as a way for AppListSyncableService to get AppListModel update. The updates have two source.\n\nOne is from chrome side:\n- Create an item for the apps;\n- Remove an item when an app is uninstalled;\n- Update an item\u0027s meta data and icon;\n\nSince all AppListModel update should go through AppListModelUpdater. There is no need to observe model to get those. AppListModelUpdater can call AppListSyncableService directly when it needs to update AppListModel.\n\nThe other one is from ui/app_list:\n- Create a folder;\n- Change folder name;\n- Change an item\u0027s position;\n\nAnd we should have another mechanism to handle those. We could temporarily put those two in AppListViewDelegate and move it mojo interface later.",
+      "parentUuid": "7157fdf5_fd039468",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74b69c5f_5a9a0386",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 2
@@ -347,6 +371,24 @@
       "side": 1,
       "message": "|AppListItemList::AddItem| has |EnsureValidItemPosition| which might change the position.\nBut if we can make sure the position is valid, we can get rid of it.",
       "parentUuid": "bc3b9a1e_78fc248f",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63af253_1df7e7a8",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T17:14:27Z",
+      "side": 1,
+      "message": "Instead of doing it here, I think we should capture the AppListItem meta change via the code path when meta data is changed in ui code, e.g. user drag-n-drop to change the item\u0027s position.",
+      "parentUuid": "14fbf2ee_62736af5",
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
