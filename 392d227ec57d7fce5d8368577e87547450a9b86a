@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a1adaa_836bb88d",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-11T22:47:39Z",
+      "side": 1,
+      "message": "Should we consider |recentDestinations| and |state| as owned by the model, similar to |settings|?\n\nIf so, let leave this undefined here like\n\nrecentDestinations_: {\n  type: Array,\n  notify: true,\n}\nand have the value bound to model\u0027s recentDestinations, and move the \"value: []\" in the  model.",
+      "revId": "392d227ec57d7fce5d8368577e87547450a9b86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b05b46_3537a318",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-11T22:47:39Z",
+      "side": 1,
+      "message": "I am wondering if we really want this dependency in model.js. Idea: How about the following\n\n1) Keep saveStickySettings_() contents in app.js,\n2) Rename saveStickSettings_ observer to stickySettingsChanged_.\n3) Fire an event as follows (and from within updateRecentDestinations_)\n\nstickySettingsChanged_: function() {\n  this.fire(\u0027sticky-settings-changed\u0027);\n},\n\n4) Catch that event from app.js and persist the settings.",
+      "range": {
+        "startLine": 206,
+        "startChar": 3,
+        "endLine": 206,
+        "endChar": 21
+      },
+      "revId": "392d227ec57d7fce5d8368577e87547450a9b86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
