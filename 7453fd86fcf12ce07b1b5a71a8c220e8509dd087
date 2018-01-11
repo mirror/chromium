@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c385abf_c94cf808",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Same comments for the CL description as the parent CL.",
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26aea453_250aa26a",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Refer to variable \"foo\" as |foo| in comments.",
+      "range": {
+        "startLine": 975,
+        "startChar": 7,
+        "endLine": 975,
+        "endChar": 23
+      },
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f69d20_7f75a492",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Alphabetical order please.",
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01135fa9_1f8f1a3a",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Convert typedef to using?",
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf79a88_0c24cd3e",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "If you are doing this, then rename |get_storage_info_func_| to |get_storage_info_test_func_| ?",
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b5f51a_e46b0480",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Thi should be \"!\u003d\", otherwise the |it| dereference on the next line doesn\u0027t make sense.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21340f6_10860534",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:57:22Z",
+      "side": 1,
+      "message": "Also no need for return here.",
+      "revId": "7453fd86fcf12ce07b1b5a71a8c220e8509dd087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
