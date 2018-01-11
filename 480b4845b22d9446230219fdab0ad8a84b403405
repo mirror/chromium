@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7d84ff6_413b4251",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "682b7a8e_004e348f",
+      "range": {
+        "startLine": 153,
+        "startChar": 20,
+        "endLine": 153,
+        "endChar": 85
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5225153_c2d1f949",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862425ca_73be1b8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5225153_c2d1f949",
+      "range": {
+        "startLine": 156,
+        "startChar": 40,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e33745b_7812b8ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee0050a_9a432573",
+      "range": {
+        "startLine": 456,
+        "startChar": 16,
+        "endLine": 462,
+        "endChar": 17
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71a73c0a_e378f462",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df5a31_3b92f259",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a73c0a_e378f462",
+      "range": {
+        "startLine": 95,
+        "startChar": 51,
+        "endLine": 95,
+        "endChar": 52
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d18c4a8b_c98d9a96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e1bed0_50ce7625",
+      "range": {
+        "startLine": 181,
+        "startChar": 63,
+        "endLine": 181,
+        "endChar": 64
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04eb4193_7ae71802",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cce2a787_62c15172",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04eb4193_7ae71802",
+      "range": {
+        "startLine": 205,
+        "startChar": 63,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c1f1b8_10382b7b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa308251_dfc3ff0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76c1f1b8_10382b7b",
+      "range": {
+        "startLine": 298,
+        "startChar": 55,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "2813bd06_8fba7d5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a7a0d9_649d921a",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 535,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ce87984_97d5fd05",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 11
@@ -230,6 +422,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c45078f_3c9c7998",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce87984_97d5fd05",
+      "range": {
+        "startLine": 668,
+        "startChar": 12,
+        "endLine": 674,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +517,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0787f7a6_91805d35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd32778_f6506409",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 87
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -399,6 +639,30 @@
     },
     {
       "key": {
+        "uuid": "96841b07_527dcf58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850c169a_5ce01df0",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46732f8c_f127ccce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
         "patchSetId": 11
@@ -419,6 +683,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5e9d4e_4692e0fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46732f8c_f127ccce",
+      "range": {
+        "startLine": 691,
+        "startChar": 12,
+        "endLine": 695,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -445,6 +733,30 @@
     },
     {
       "key": {
+        "uuid": "27da3023_7f34cbd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73bb1f45_8c41efb5",
+      "range": {
+        "startLine": 73,
+        "startChar": 57,
+        "endLine": 73,
+        "endChar": 92
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eaa5e8b_e9f65aeb",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 11
@@ -465,6 +777,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937e03c9_eb7526a3",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-11T21:59:49Z",
+      "side": 1,
+      "message": "Not sure if I\u0027m using the ChromeFeatureList correctly because some of the unit tests (DownloadNotificationService2) are failing. Help would be appreciated :)",
+      "parentUuid": "9eaa5e8b_e9f65aeb",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 1
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
