@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30742dd3_4674b0e5",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "FYI this bug tracks moving P2P IPC to mojo: crbug.com/800212",
+      "range": {
+        "startLine": 326,
+        "startChar": 29,
+        "endLine": 326,
+        "endChar": 62
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1de96c_502a1a4c",
+        "filename": "content/browser/renderer_host/p2p/socket_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "Pass this tag by value? It\u0027s only 4 bytes, so there is no point passing it by reference",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d623c8f_c7af5e95",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "I think this can be replaced with \"\u003d default\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543780dd_eb360b9b",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "Does this need to be \"Mutable\"? Comments for this struct say \"Do not use this unless net-serialization is required.\" and this field is never mutated.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe39018_3b0eb050",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "Do we need traffic annotations for UDP traffic? Looks like we should pass the tag to SendTo(), but I\u0027m not sure it\u0027s supported for UDP sockets.",
+      "range": {
+        "startLine": 352,
+        "startChar": 24,
+        "endLine": 352,
+        "endChar": 31
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f857b3b7_17210e49",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T19:03:20Z",
+      "side": 1,
+      "message": "This argument is never use. I don\u0027t think you need it.",
+      "range": {
+        "startLine": 378,
+        "startChar": 5,
+        "endLine": 378,
+        "endChar": 63
+      },
+      "revId": "a7f70c4a0a9bba8f2f9bb7f47d1dd25dfb9f289b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
