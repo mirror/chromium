@@ -34,7 +34,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
-#include "storage/common/data_element.h"
+#include "services/network/public/cpp/data_element.h"
 
 namespace content {
 
@@ -766,15 +766,15 @@ SimpleURLLoaderImpl::SimpleURLLoaderImpl(
   DETACH_FROM_SEQUENCE(sequence_checker_);
 #if DCHECK_IS_ON()
   if (resource_request_->request_body) {
-    for (const storage::DataElement& element :
+    for (const network::DataElement& element :
          *resource_request_->request_body->elements()) {
       // Files should be attached with AttachFileForUpload, so that (Once
       // supported) they can be opened in the current process.
       //
       // TODO(mmenke): Add a similar method for bytes, to allow streaming of
       // large byte buffers to the network process when uploading.
-      DCHECK(element.type() != storage::DataElement::TYPE_FILE &&
-             element.type() != storage::DataElement::TYPE_BYTES);
+      DCHECK(element.type() != network::DataElement::TYPE_FILE &&
+             element.type() != network::DataElement::TYPE_BYTES);
     }
   }
 #endif  // DCHECK_IS_ON()
