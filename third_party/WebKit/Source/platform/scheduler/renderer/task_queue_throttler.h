@@ -20,6 +20,7 @@
 #include "platform/scheduler/renderer/cpu_time_budget_pool.h"
 #include "platform/scheduler/renderer/wake_up_budget_pool.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
+#include "platform/scheduler/util/tracing_helper.h"
 
 namespace base {
 namespace trace_event {
@@ -94,7 +95,9 @@ class PLATFORM_EXPORT BudgetPoolController {
 class PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
                                            public BudgetPoolController {
  public:
-  explicit TaskQueueThrottler(RendererSchedulerImpl* renderer_scheduler);
+  explicit TaskQueueThrottler(
+      RendererSchedulerImpl* renderer_scheduler,
+      TraceableVariableController* parent_tracing_controller);
 
   ~TaskQueueThrottler() override;
 
@@ -197,6 +200,7 @@ class PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
       forward_immediate_work_callback_;
   scoped_refptr<TaskQueue> control_task_queue_;
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
+  TraceableVariableController* parent_tracing_controller_;  // Not owned.
   base::TickClock* tick_clock_;                // NOT OWNED
   std::unique_ptr<ThrottledTimeDomain> time_domain_;
 

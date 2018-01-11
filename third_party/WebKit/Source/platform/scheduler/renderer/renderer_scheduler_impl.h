@@ -585,6 +585,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
+  TraceableVariableController tracing_controller_;
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
