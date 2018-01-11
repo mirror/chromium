@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2eaf3340_f9ec1737",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T23:03:10Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "c540d64e_a67d72fb",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0503c1e_d0f5265e",
         "filename": "ash/login/login_screen_controller.cc",
         "patchSetId": 8
