@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211f9f79_beaaaab9",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T00:20:50Z",
+      "side": 1,
+      "message": "nit: move this up around L21",
+      "revId": "10f224e2ea89453f0d00e0a32822b46bdd9be911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72082707_1ca508eb",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T00:20:50Z",
+      "side": 1,
+      "message": "This might be flaky. We should probably make the ShowLoginScreen callback to quit the loop explicitly.\n\ne.g.\n\nbase::RunLoop run_loop;\nShell::Get()-\u003elogin_screen_controller()-\u003eShowLoginScreen(base::BindOnce(\n    [](base::Optional\u003cbool\u003e* result, base::RunLoop* run_loop,\n       bool did_show)\n       {\n         *result \u003d did_show;\n         run_loop-\u003eQuit();\n       },\n     \u0026result, \u0026run_loop);\nrun_loop.Run();",
+      "revId": "10f224e2ea89453f0d00e0a32822b46bdd9be911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31657031_bafae953",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T00:20:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "10f224e2ea89453f0d00e0a32822b46bdd9be911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a69c49e_c6d3f07c",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T00:20:50Z",
+      "side": 1,
+      "message": "remove ?",
+      "revId": "10f224e2ea89453f0d00e0a32822b46bdd9be911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
