@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc2c4a5_f4b7dd29",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6690,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T03:30:30Z",
+      "side": 1,
+      "message": "I think this early returns if you didn\u0027t do a Reset() first. So if the test is not failing/flaking, then you likely don\u0027t need this Wait(). (I guess we don\u0027t do any async targeting here?)",
+      "revId": "68dd03b256bd7540693b8e62cf236df30fa39dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
