@@ -271,11 +271,7 @@ void FakeSessionManagerClient::GetServerBackedStateKeys(
 }
 
 void FakeSessionManagerClient::StartArcInstance(
-    ArcStartupMode startup_mode,
-    const cryptohome::Identification& cryptohome_id,
-    bool disable_boot_completed_broadcast,
-    bool enable_vendor_privileged,
-    bool native_bridge_experiment,
+    const login_manager::StartArcInstanceRequest& request,
     StartArcInstanceCallback callback) {
   StartArcInstanceResult result;
   std::string container_instance_id;

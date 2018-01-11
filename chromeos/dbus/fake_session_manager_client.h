@@ -76,11 +76,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
                        const std::vector<std::string>& flags) override;
   void GetServerBackedStateKeys(StateKeysCallback callback) override;
 
-  void StartArcInstance(ArcStartupMode startup_mode,
-                        const cryptohome::Identification& cryptohome_id,
-                        bool disable_boot_completed_broadcast,
-                        bool enable_vendor_privileged,
-                        bool native_bridge_experiment,
+  void StartArcInstance(const login_manager::StartArcInstanceRequest& request,
                         StartArcInstanceCallback callback) override;
   void StopArcInstance(VoidDBusMethodCallback callback) override;
   void SetArcCpuRestriction(
