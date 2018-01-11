@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7fe2d82_c5a07578",
+        "filename": "chrome/browser/chromeos/login/helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T19:27:00Z",
+      "side": 1,
+      "message": "nit: you can do forward declaration in this file and include these 2 in .cc file.\nclass Profile;\nclass UserContext;",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22419f12_ac8c9c46",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T19:27:00Z",
+      "side": 1,
+      "message": "Hi, this feature only cares about the password, but not the pin, correct?",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98617d22_e43cfd31",
+        "filename": "chrome/browser/ui/ash/login_screen_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T19:27:00Z",
+      "side": 1,
+      "message": "Do you need to include this?",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
