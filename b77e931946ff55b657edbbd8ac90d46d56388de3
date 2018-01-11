@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7d7fb4_2361e6a0",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-11T14:19:39Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure why we need this startup_data_ in IsolateHolder? Don\u0027t we just want a flag passed to V8Initializer::Initialize which decides whether g_mapped_v8_context_snapshot or g_mapped_snapshot should be loaded? \n\nActually, thinking about it, I think we should just set g_mapped_snapshot to either be pointing to v8_context_snapshot.bin or snapshot_blob.bin based on whether LoadSnapshotData or LoadV8ContextSnapshotData was called, and then we don\u0027t need to pass anything to V8Initializer::Initialize - it just loads g_mapped_snapshot which is already pointing at the right file. WDYT?",
+      "revId": "b77e931946ff55b657edbbd8ac90d46d56388de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
