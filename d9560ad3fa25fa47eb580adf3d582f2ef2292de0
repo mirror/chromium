@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8fee263c_ef9e9dd7",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Renamed to riffled_palette in the next patchset.",
+      "parentUuid": "84b655f1_99d05440",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5daaa934_fccfd527",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "bec22a4b_679b53b0",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Analysis indicates a small improvement on the big core, basically unchanged performance on the little.",
+      "parentUuid": "dcb4b12c_d2b3c480",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18bd8064_e0a00ffb",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "18bd8064_e0a00ffb",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ee8a588_dc39fb38",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Modified in next patchset.",
+      "parentUuid": "5f6ac9a4_58013501",
       "range": {
         "startLine": 41,
         "startChar": 16,
@@ -214,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "1543b9c7_1ebbadcc",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "No action taken in next patchset.",
+      "parentUuid": "623b573a_021dc628",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad08af6_c2a06f5b",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -267,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "fc7fd645_95242b52",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Implementation and analysis indicates that the performance is basically unchanged (\u003c1^% performance loss on the small core) by switching to the i \u003c num_trans) ? vld1_u8() : dup() version compared to this version. Code is slightly larger, but not significantly (see sheet \u0027Data - Integrated Palette Load\u0027) in the spreadsheet.",
+      "parentUuid": "eda3ca54_835ff8f6",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66fb2e37_0d597285",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -299,6 +413,24 @@
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12bbad6_4d3975a6",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Analysis indicates significant loss of performance benefit on both big (10% loss versus patchset #5 baseline) and little (5% loss) cores when switching to vst4 for unknown reasons.",
+      "parentUuid": "86d53cb0_c63281eb",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "11f53014_a6894f85",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "I double-checked the intrinsics reference [1] and it turns out the vld3q_lane_u8 intrinsic needed to make this work is only available in AArch64. \n\n[1] http://arminfo.emea.arm.com/help/topic/com.arm.doc.ihi0073b/IHI0073B_arm_neon_intrinsics_ref.pdf",
+      "parentUuid": "6a7523a3_12edce48",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7827dfe3_947753f1",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -369,6 +525,30 @@
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42c6ef5_df39dbf1",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7827dfe3_947753f1",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 21
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +605,24 @@
     },
     {
       "key": {
+        "uuid": "015d0db8_c202402d",
+        "filename": "third_party/libpng/patches/0000-plte.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "No action taken in the next patchset.",
+      "parentUuid": "b634e198_ce0f5813",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48fee479_4a2150a6",
         "filename": "third_party/libpng/pngrtran.c",
         "patchSetId": 5
@@ -460,6 +658,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "48fee479_4a2150a6",
+      "range": {
+        "startLine": 4218,
+        "startChar": 15,
+        "endLine": 4218,
+        "endChar": 27
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4e7b926_b7abb7e9",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-11T20:24:09Z",
+      "side": 1,
+      "message": "Reverted in next patchset.",
+      "parentUuid": "042ab0ae_5fe04ff0",
       "range": {
         "startLine": 4218,
         "startChar": 15,
