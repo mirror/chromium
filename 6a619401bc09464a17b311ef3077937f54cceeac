@@ -146,6 +146,30 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c645bf3a_3972041a",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-11T08:40:27Z",
+      "side": 1,
+      "message": "This is my favorite option (upgrade BlockingObserver to a scoped class which sets/resets this state in its scope).",
+      "parentUuid": "67ecb188_61336a76",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 20
+      },
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
