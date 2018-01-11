@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c565145_72bbe9ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_memory_cached.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T21:02:45Z",
+      "side": 1,
+      "message": "But think of all the characters you\u0027d save with a () \u003d\u003e {}!\nOr don\u0027t. Doesn\u0027t matter to me.",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "fb9a02a9cbb22e4fa6a0f0da30b2b5be6d56214b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f28867f_9349456d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resources/empty_script.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T21:02:45Z",
+      "side": 1,
+      "message": "Just curious...\nWhy the ;?",
+      "revId": "fb9a02a9cbb22e4fa6a0f0da30b2b5be6d56214b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
