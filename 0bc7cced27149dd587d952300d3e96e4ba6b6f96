@@ -69,6 +69,24 @@
       "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2ab8ba_4366c8fc",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-11T08:56:52Z",
+      "side": 1,
+      "message": "Wow, that\u0027s a silly type :D. Probably std::pair\u003cAudioDebugRecordingHelper*, base::FilePath::StringType\u003e should be replaced by a struct (it\u0027s not really clear what \"base::FilePath::StringType\" is in this context, if it had a name the code would be easier to follow), but that\u0027s too much work to do in this CL I guess.\n\nI agree using auto looks nicer, but it makes the code tricky to follow unless the reader happens to remember the type of |debug_recording_helpers_|. I saw the style guide (https://google.github.io/styleguide/cppguide.html#auto) recommend aliases for the values in the pair (something like\nint id \u003d it.first;\nAudioDebugRecordingHelper* helper \u003d it.second.first;\nconst base::FilePath::StringType\u0026 extension \u003d it.second.second;\n), I think this is a good idea (it has the added bonus that it documents what the int and the FilePath::StringType actually is, rather than just what type they have). In this case, the auto could stay since the types involved are clear.\n\nAll this is up to you though! :)",
+      "parentUuid": "f46d42b6_924e613b",
+      "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
