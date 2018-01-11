@@ -3129,8 +3129,6 @@ void RenderFrameImpl::CommitNavigation(
       common_params.should_replace_current_entry
           ? blink::WebFrameLoadType::kReplaceCurrentItem
           : blink::WebFrameLoadType::kStandard;
-  blink::WebHistoryLoadType history_load_type =
-      blink::kWebHistoryDifferentDocumentLoad;
   bool should_load_request = false;
   WebHistoryItem item_for_history_navigation;
 
@@ -3221,17 +3219,18 @@ void RenderFrameImpl::CommitNavigation(
 #endif
     if (is_main_frame_ && should_load_data_url) {
       LoadDataURL(common_params, request_params, frame_, load_type,
-                  item_for_history_navigation, history_load_type,
-                  is_client_redirect);
+                  item_for_history_navigation,
+                  blink::kWebHistoryDifferentDocumentLoad, is_client_redirect);
     } else {
       WebURLRequest request = CreateURLRequestForCommit(
           common_params, request_params, std::move(url_loader_client_endpoints),
           head, body_url);
+      bool navigation_started = false;
 
       // Load the request.
-      frame_->Load(request, load_type, item_for_history_navigation,
-                   history_load_type, is_client_redirect,
-                   devtools_navigation_token);
+      navigation_started = frame_->CommitNavigation(
+          request, load_type, item_for_history_navigation, is_client_redirect,
+          devtools_navigation_token);
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this
@@ -3239,6 +3238,9 @@ void RenderFrameImpl::CommitNavigation(
       // otherwise it will result in a use-after-free bug.
       if (!weak_this)
         return;
+
+      if (!navigation_started && frame_ && !frame_->IsLoading())
+        Send(new FrameHostMsg_DidStopLoading(routing_id_));
     }
   } else {
     // The browser expects the frame to be loading this navigation. Inform it
@@ -6540,10 +6542,6 @@ WebURLRequest RenderFrameImpl::CreateURLRequestForCommit(
 #if defined(OS_ANDROID)
   request.SetHasUserGesture(common_params.has_user_gesture);
 #endif
-
-  // Make sure that Blink's loader will not try to use browser side navigation
-  // for this request (since it already went to the browser).
-  request.SetCheckForBrowserSideNavigation(false);
 
   request.SetNavigationStartTime(
       ConvertToBlinkTime(common_params.navigation_start));

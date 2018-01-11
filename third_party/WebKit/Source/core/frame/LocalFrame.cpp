@@ -265,7 +265,7 @@ void LocalFrame::Navigate(Document& origin_document,
 }
 
 void LocalFrame::Navigate(const FrameLoadRequest& request) {
-  loader_.Load(request);
+  loader_.StartNavigation(request);
 }
 
 void LocalFrame::Reload(FrameLoadType load_type,
@@ -279,7 +279,7 @@ void LocalFrame::Reload(FrameLoadType load_type,
         GetDocument(), loader_.ResourceRequestForReload(
                            load_type, NullURL(), client_redirect_policy));
     request.SetClientRedirect(client_redirect_policy);
-    loader_.Load(request, load_type);
+    loader_.StartNavigation(request, load_type);
   } else {
     DCHECK_EQ(kFrameLoadTypeReload, load_type);
     navigation_scheduler_->ScheduleReload();

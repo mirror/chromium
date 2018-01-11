@@ -50,7 +50,7 @@ void WorkerShadowPage::Initialize(const KURL& script_url) {
   CString content("");
   scoped_refptr<SharedBuffer> buffer(
       SharedBuffer::Create(content.data(), content.length()));
-  main_frame_->GetFrame()->Loader().Load(FrameLoadRequest(
+  main_frame_->GetFrame()->Loader().StartNavigation(FrameLoadRequest(
       nullptr, ResourceRequest(script_url), SubstituteData(buffer)));
 }
 
