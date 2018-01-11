@@ -125,6 +125,7 @@ source_set("tests") {
     "//components/ukm:test_support",
     "//mojo/public/cpp/bindings",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
+    "//services/resource_coordinator/public/cpp:struct_traits",
     "//services/resource_coordinator/tracing:lib",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
