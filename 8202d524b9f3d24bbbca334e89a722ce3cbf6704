@@ -16,6 +16,24 @@
       "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e94c5a3_86665dd9",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-11T10:55:31Z",
+      "side": 1,
+      "message": "\u003e Can we take this out of the mojom and only have it in the C++ enum?\nHmm don\u0027t think so. that enum is struc_trait-ed and the corresponding struct is used in base.\n\n\u003e but if there is no mojo value mapped to this C++ enum type, then it\u0027s safe.\nDoes mojo check for unfeasible enum values automatically? Even if they are struct-trait-ed?",
+      "parentUuid": "ade6e439_73cc757d",
+      "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
