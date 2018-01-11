@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb07c46_fa01bbab",
+        "filename": "ash/public/cpp/app_list/app_list_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:59:03Z",
+      "side": 1,
+      "message": "I thought we didn\u0027t want to pass this over IPC? I\u0027m assuming it\u0027s used only as a bounds marker for UMA histograms.\n\nBut it looks like a few things do return INVALID_STATE: how do we guarantee that this will never transit across IPC? Perhaps one thing to do is better document the mojom enum values (i.e. what does an invalid state for the app list look like, if it\u0027s even possible?)",
+      "revId": "343937d5e610b36aac0a19c87782cfe17bfcc3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
