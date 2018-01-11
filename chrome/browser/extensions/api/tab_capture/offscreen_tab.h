@@ -133,6 +133,7 @@ class OffscreenTab : protected content::WebContentsDelegate,
   bool ShouldSuppressDialogs(content::WebContents* source) final;
   bool ShouldFocusLocationBarByDefault(content::WebContents* source) final;
   bool ShouldFocusPageAfterCrash() final;
+  bool HasPresentationReceiverWindow() final;
   void CanDownload(const GURL& url,
                    const std::string& request_method,
                    const base::Callback<void(bool)>& callback) final;
@@ -222,6 +223,9 @@ class OffscreenTab : protected content::WebContentsDelegate,
   // This is false until after the Start() method is called, and capture of the
   // |offscreen_tab_web_contents_| is first detected.
   bool content_capture_was_detected_;
+
+  // This is true when tab is used by the Presentation Web API.
+  bool has_presentation_receiver_window_;
 
   // Object consulted to determine which offscreen tab navigations are allowed.
   std::unique_ptr<media_router::NavigationPolicy> navigation_policy_;
