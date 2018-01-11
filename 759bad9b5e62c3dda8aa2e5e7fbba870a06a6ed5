@@ -46,6 +46,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ab7b35_33a657db",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T22:52:42Z",
+      "side": 0,
+      "message": "\u003e We cannot reach here without a selection because of this check above:\n\u003e \n\u003e   if (GetFrame()\n\u003e           .Selection()\n\u003e           .ComputeVisibleSelectionInDOMTreeDeprecated()\n\u003e           .IsNone())\n\u003e     return;\n\u003e \n\u003e Do you think a DCHECK is necessary even though we have this?\n\nProbably not. I might be paranoid.\n\n\u003e \n\u003e If we reach here with a caret selection, there is no edit to apply (since the text to be inserted is empty).\n\nDo we have a test case to verify the events fired before and after the patch?\n\n\u003e We do have some test cases that go through here and verify that the IME selection offsets are still applied (they actually caught a bug in the first version of the CL).",
+      "parentUuid": "4ec389c1_539d9aa4",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
