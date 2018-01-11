@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "062122b9_06258e8d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-11T23:22:18Z",
+      "side": 1,
+      "message": "Is this intention to split these into two different records? You can attach both pieces of information to the same one so that can be associated.",
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60345e39_308440b2",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-11T23:22:18Z",
+      "side": 1,
+      "message": "I\u0027d be explicit that this is a boolean, here and elsewhere",
+      "range": {
+        "startLine": 2359,
+        "startChar": 16,
+        "endLine": 2359,
+        "endChar": 20
+      },
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9385091f_76936d8b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-11T23:22:18Z",
+      "side": 1,
+      "message": "I\u0027d suggest renaming thse metrics to make it more clear they\u0027re booleans. Maybe also Has*?",
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
