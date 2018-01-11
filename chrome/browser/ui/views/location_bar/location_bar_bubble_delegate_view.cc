@@ -10,10 +10,13 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/grit/generated_resources.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_view_host.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/views/accessibility/view_accessibility.h"
 
 LocationBarBubbleDelegateView::WebContentMouseHandler::WebContentMouseHandler(
     LocationBarBubbleDelegateView* bubble,
@@ -91,7 +94,11 @@ void LocationBarBubbleDelegateView::ShowForReason(DisplayReason reason) {
     GetWidget()->Show();
   } else {
     GetWidget()->ShowInactive();
+    GetWidget()->GetRootView()->GetViewAccessibility().OverrideDescription(
+        l10n_util::GetStringUTF8(IDS_SHOW_BUBBLE_INACTIVE_DESCRIPTION));
   }
+  GetWidget()->GetRootView()->NotifyAccessibilityEvent(ui::AX_EVENT_ALERT,
+                                                       true);
 }
 
 void LocationBarBubbleDelegateView::Observe(
