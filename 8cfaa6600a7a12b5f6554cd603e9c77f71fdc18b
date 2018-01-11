@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20711bc1_159abe48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T18:46:22Z",
+      "side": 1,
+      "message": "WarmupManager.createSpareWebContents() has an early return if the native library isn\u0027t loaded yet. Seeing as that is a weaker condition than native startup being done completely, should it be removed? Or replaced with ChromeBrowserInitializer.hasNativeInitializationCompleted()?",
+      "range": {
+        "startLine": 414,
+        "startChar": 48,
+        "endLine": 414,
+        "endChar": 70
+      },
+      "revId": "8cfaa6600a7a12b5f6554cd603e9c77f71fdc18b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
