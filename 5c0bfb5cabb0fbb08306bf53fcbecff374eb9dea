@@ -22,6 +22,46 @@
       "revId": "5c0bfb5cabb0fbb08306bf53fcbecff374eb9dea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea42b17e_1522ad9a",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2018-01-11T15:16:52Z",
+      "side": 1,
+      "message": "Should this also check \u003d\u003d COMBOBOX?",
+      "range": {
+        "startLine": 3970,
+        "startChar": 12,
+        "endLine": 3970,
+        "endChar": 52
+      },
+      "revId": "5c0bfb5cabb0fbb08306bf53fcbecff374eb9dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7333098_5daca4db",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3975,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2018-01-11T15:16:52Z",
+      "side": 1,
+      "message": "Remove? I believe if we\u0027re handling the error we shouldn\u0027t be dchecking as well.",
+      "revId": "5c0bfb5cabb0fbb08306bf53fcbecff374eb9dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
