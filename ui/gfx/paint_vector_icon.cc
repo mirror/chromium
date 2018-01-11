@@ -501,13 +501,13 @@ class VectorIconCache {
   VectorIconCache() {}
   ~VectorIconCache() {}
 
-  ImageSkia GetOrCreateIcon(const IconDescription& description) {
+  ImageSkia GetOrCreateIcon(const IconDescription& description,
+                            const Size& size) {
     auto iter = images_.find(description);
     if (iter != images_.end())
       return iter->second;
 
-    ImageSkia icon_image(std::make_unique<VectorIconSource>(description),
-                         Size(description.dip_size, description.dip_size));
+    ImageSkia icon_image(std::make_unique<VectorIconSource>(description), size);
     images_.insert(std::make_pair(description, icon_image));
     return icon_image;
   }
@@ -568,10 +568,14 @@ void PaintVectorIcon(Canvas* canvas,
 }
 
 ImageSkia CreateVectorIcon(const IconDescription& params) {
+  return CreateVectorIcon(params, Size(params.dip_size, params.dip_size));
+}
+
+ImageSkia CreateVectorIcon(const IconDescription& params, const Size& size) {
   if (params.icon.is_empty())
     return gfx::ImageSkia();
 
-  return g_icon_cache.Get().GetOrCreateIcon(params);
+  return g_icon_cache.Get().GetOrCreateIcon(params, size);
 }
 
 ImageSkia CreateVectorIcon(const VectorIcon& icon, SkColor color) {
@@ -583,6 +587,18 @@ ImageSkia CreateVectorIcon(const VectorIcon& icon,
                            SkColor color) {
   return CreateVectorIcon(
       IconDescription(icon, dip_size, color, base::TimeDelta(), kNoneIcon));
+}
+
+ImageSkia CreateVectorIcon(const VectorIcon& icon,
+                           int dip_size_width,
+                           int dip_size_height,
+                           SkColor color) {
+  return CreateVectorIcon(
+      IconDescription(
+          icon,
+          dip_size_width > dip_size_height ? dip_size_width : dip_size_height,
+          color, base::TimeDelta(), kNoneIcon),
+      Size(dip_size_width, dip_size_height));
 }
 
 ImageSkia CreateVectorIconWithBadge(const VectorIcon& icon,
