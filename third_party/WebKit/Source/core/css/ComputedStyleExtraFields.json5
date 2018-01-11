@@ -78,7 +78,7 @@
       field_template: "keyword",
       default_value: "not-inside-link",
       keywords: ["not-inside-link", "inside-unvisited-link", "inside-visited-link"],
-      inherited: true,
+      inherited: false,
     },
     // Style can not be shared.
     {

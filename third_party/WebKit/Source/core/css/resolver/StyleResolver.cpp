@@ -1683,15 +1683,10 @@ StyleResolver::CacheSuccess StyleResolver::ApplyMatchedCache(
       INCREMENT_STYLE_STATS_COUNTER(GetDocument().GetStyleEngine(),
                                     matched_property_cache_inherited_hit, 1);
 
-      EInsideLink link_status = state.Style()->InsideLink();
       // If the cache item parent style has identical inherited properties to
       // the current parent style then the resulting style will be identical
       // too. We copy the inherited properties over from the cache and are done.
       state.Style()->InheritFrom(*cached_matched_properties->computed_style);
-
-      // Unfortunately the link status is treated like an inherited property. We
-      // need to explicitly restore it.
-      state.Style()->SetInsideLink(link_status);
 
       UpdateFont(state);
       is_inherited_cache_hit = true;
