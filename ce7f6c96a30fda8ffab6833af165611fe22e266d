@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbf5956_0a235095",
+        "filename": "components/download/downloader/in_progress/proto/download_source.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-11T22:09:18Z",
+      "side": 1,
+      "message": "why is this needed? i think if the download can not fall into any categories, they are marked as unknown, right?",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7280ac_96ae904d",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-11T22:09:18Z",
+      "side": 1,
+      "message": "I think \"UnknownSource\" is better. Otherwise, it is really hard for people to figure out the meaning of \"Download.Counts.Unknown\"",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b60ce24_10349e5d",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-11T22:09:18Z",
+      "side": 1,
+      "message": "if you remove COUNT in the enum definition, you don\u0027t need to handle this case any more",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8822b66_52142161",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-11T22:09:18Z",
+      "side": 1,
+      "message": "why we need to add back value 6?",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
