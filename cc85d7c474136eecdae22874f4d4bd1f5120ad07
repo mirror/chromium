@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11b8d60a_ed10c6c9",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81468a35_023b5995",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aed2bc8_ccd516ad",
         "filename": "ash/public/cpp/ash_switches.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ae3f3b8b_da51e41c",
+        "filename": "ash/public/cpp/ash_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aed2bc8_ccd516ad",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2007817a_fb41b2e0",
         "filename": "ash/system/power/power_button_controller.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-10T01:24:08Z",
       "side": 1,
       "message": "One question, could tablet_controller_ and convertible_controller_ coexisted? What is the expected behavior for detachable device that is attached to keyboard?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55eae9a3_0b52cf0e",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "We do think that they should not be created at the same time for one device based on assuming that detachable device can not be convertible device.\nSo if the keyboard of the detachable device is attached it should perform as the clamshell. I added |is_tablet_| in Line230 to avoid creating |convertible_controller_| for tablet. Then if detachable device is detached it will only have |tablet_controller_| and then when it go back to be attached. In line205 will check the currently mode to make sure it will go into the logic of clamshell power button.",
+      "parentUuid": "2007817a_fb41b2e0",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "510a2e95_d70f060d",
+        "filename": "ash/system/power/power_button_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Moved the |tablet_controller_| into the |send_accelerometer_update| condition above.\nFor |convertible_controller_| I think it only depends on the command flag too (I guess we only set the touchview switch for tablet/convertible devices?), but create |convertibe_controller_| only if received accelerometer data will make sure it will only be created for convertible/tablet. I guess it will be better to create |tablet_controller_| only if we can receive the accelerometer data? Since we only want to create it for tablet and detachable devices?",
+      "parentUuid": "2a44b0b2_1d322806",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e14f32e6_c88ea6b9",
         "filename": "ash/system/power/power_off_menu_item_view.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1c6fe1_bfc112c4",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e14f32e6_c88ea6b9",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "114190d5_76854b00",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04faa4d3_999da39a",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6da6d8_92001a9c",
         "filename": "ash/system/power/power_off_menu_item_view.h",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f8cf5e_1975f34c",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6da6d8_92001a9c",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "76139914_dfed0466",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f04350c2_4974d1e7",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3869d781_189deb13",
         "filename": "ash/system/power/power_off_menu_item_view.h",
         "patchSetId": 2
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8bbacd47_a9060602",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3869d781_189deb13",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a3007f_d5b82816",
         "filename": "ash/system/power/power_off_menu_screen_view.cc",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2018-01-10T01:24:08Z",
       "side": 1,
       "message": "nit: SkColorSetARGBMacro",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b924450e_e79f75c5",
+        "filename": "ash/system/power/power_off_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Why should we use SkColorSetARGBMacro instead here? UX provided only RGB here, can we use SkColorSetRGB with an implied value of 0xFF for alpha (fully opaque)? And then if we need to change the opacity we can change it through SetOpacity.",
+      "parentUuid": "e0a3007f_d5b82816",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "81bd655d_68ff8bb8",
+        "filename": "ash/system/power/power_off_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f521b7a_02c75381",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4125fbb8_14ddb9ee",
         "filename": "ash/system/power/power_off_menu_view.cc",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2018-01-10T01:24:08Z",
       "side": 1,
       "message": "LoginStatus is deprecating. Please use session_manager::SessionState. You could check if SessionState::ACTIVE.",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4022df_b2b2bdfe",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Seems that we don\u0027t have 1:1 mapping of SessionState to LoginStatus currently, it is a TODO issue in SessionController.\nAnd we don\u0027t have the func to get the sign out string according to session state currently (Line76 here to get the sign out string according to the login status).\nCan we just keep using LoginStatus here and may keep it as part of the job in the future about the deprecating of LoginStatus?",
+      "parentUuid": "4125fbb8_14ddb9ee",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "dce55f45_0ad06295",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "I did consider about this, but since the power off menu is shown because of pressing the power button. Maybe we can just keep it as the same reason?",
+      "parentUuid": "88c72fb7_4955d6e4",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87306431_33cc5ec0",
         "filename": "ash/system/power/power_off_menu_view.cc",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2018-01-10T18:41:25Z",
       "side": 1,
       "message": "Do you need to dismiss the menu after the button is pressed?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721fee24_98b51ae0",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Either power off or sign out will leave the current screen, seems that menu is dismissed at the same time.",
+      "parentUuid": "87306431_33cc5ec0",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "9457caa1_d538ca06",
+        "filename": "ash/system/power/power_off_menu_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a9cd9b_11bb2dd5",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "957730f9_66fbb6ce",
         "filename": "ash/system/power/power_off_menu_view.h",
         "patchSetId": 2
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "0316b815_eced079d",
+        "filename": "ash/system/power/power_off_menu_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957730f9_66fbb6ce",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c0733a6_c26dda20",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 2
@@ -285,6 +573,24 @@
       "writtenOn": "2018-01-10T01:24:08Z",
       "side": 1,
       "message": "Is it possible to have menu opened here?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36035130_9783337a",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Removed. Since |power_off_menu_timer_| is still running here should have no menu yet.",
+      "parentUuid": "5c0733a6_c26dda20",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "4cf329c6_7b7d0908",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Still hide the widget when dismiss the menu but check the |fullscreen_widget_| before create it.",
+      "parentUuid": "296af605_96bf16e4",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9fd48d2_2cc33887",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 2
@@ -322,6 +646,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8e0cb7_48971c72",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Based on Daisy\u0027s comment above. Still keep it as returning the widget, since we may don\u0027t need to create the widget when it exists. But we still need to reset its contents view and show it again.",
+      "parentUuid": "e9fd48d2_2cc33887",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "ddab40a6_aafb68db",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Added related observer. if menu is open, screen off and suspend will dismiss the menu.\nWill add tests for the cases.\n|fullscreen_widget_| will be kept when dismiss the menu, only hide. This is better for animation.",
+      "parentUuid": "5c46c902_4a54ac15",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a636d814_64a5f698",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 2
@@ -356,6 +716,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dfce85_db53be95",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-11T02:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a636d814_64a5f698",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
