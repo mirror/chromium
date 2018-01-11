@@ -64,6 +64,17 @@ void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer,
   RestoreToCount(kInitialSaveCount, options, params);
 }
 
+void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer) {
+  // Use half of the max int as the extent for the SkNoDrawCanvas.
+  static const int extent = std::numeric_limits<int>::max() >> 1;
+  // Reset the canvas to the maximum extents of our playback rect, ensuring this
+  // rect will not be clipped.
+  canvas_.resetCanvas(extent, extent);
+  DCHECK(canvas_.getTotalMatrix().isIdentity());
+
+  SerializeBuffer(buffer, nullptr);
+}
+
 void PaintOpBufferSerializer::SerializePreamble(
     const Preamble& preamble,
     const PaintOp::SerializeOptions& options,
@@ -96,6 +107,7 @@ void PaintOpBufferSerializer::SerializePreamble(
 void PaintOpBufferSerializer::SerializeBuffer(
     const PaintOpBuffer* buffer,
     const std::vector<size_t>* offsets) {
+  DCHECK(buffer);
   PaintOp::SerializeOptions options(image_provider_, transfer_cache_, &canvas_,
                                     canvas_.getTotalMatrix());
   PlaybackParams params(image_provider_, canvas_.getTotalMatrix());
