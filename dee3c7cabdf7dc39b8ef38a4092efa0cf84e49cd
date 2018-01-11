@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c055531d_48ea6ff0",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T23:54:31Z",
+      "side": 1,
+      "message": "No else (above too, sorry I missed it in previous CL).",
+      "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9a6924_523923a1",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T23:54:31Z",
+      "side": 1,
+      "message": "Same here: no else (and above too)",
+      "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d30382_0264f5ac",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T23:54:31Z",
+      "side": 1,
+      "message": "Wait, there\u0027s no reason to static_cast\u003c\u003e here (or above).\n\n  if (MouseEvent()) {\n    ... update position\n    ... dispatch\n  } else if (wheel or gesture) {\n    ... dispatch\n  }",
+      "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
