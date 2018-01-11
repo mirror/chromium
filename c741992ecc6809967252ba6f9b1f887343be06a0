@@ -22,6 +22,30 @@
       "revId": "c741992ecc6809967252ba6f9b1f887343be06a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27672207_3bbfcc90",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-01-11T23:53:42Z",
+      "side": 1,
+      "message": "Yes, I could put the call to CloseCurrentBubble by overriding SetVisible() on IntentPickerView, check the new upload o/",
+      "parentUuid": "e4fed597_d5ec855d",
+      "range": {
+        "startLine": 1191,
+        "startChar": 18,
+        "endLine": 1191,
+        "endChar": 36
+      },
+      "revId": "c741992ecc6809967252ba6f9b1f887343be06a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
