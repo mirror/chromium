@@ -429,6 +429,15 @@ void IDBRequest::EnqueueResponse(const Vector<String>& string_list) {
   metrics_.RecordAndReset();
 }
 
+static IDBObjectStoreOrIDBIndex cast(IDBAny* any) {
+  if (any->GetType() == IDBAny::kIDBObjectStoreType)
+    return IDBObjectStoreOrIDBIndex::FromIDBObjectStore(any->IdbObjectStore());
+  if (any->GetType() == IDBAny::kIDBIndexType)
+    return IDBObjectStoreOrIDBIndex::FromIDBIndex(any->IdbIndex());
+
+  return IDBObjectStoreOrIDBIndex();
+}
+
 void IDBRequest::EnqueueResponse(std::unique_ptr<WebIDBCursor> backend,
                                  IDBKey* key,
                                  IDBKey* primary_key,
@@ -445,12 +454,12 @@ void IDBRequest::EnqueueResponse(std::unique_ptr<WebIDBCursor> backend,
   switch (cursor_type_) {
     case IndexedDB::kCursorKeyOnly:
       cursor = IDBCursor::Create(std::move(backend), cursor_direction_, this,
-                                 source_.Get(), transaction_.Get());
+                                 cast(source_.Get()), transaction_.Get());
       break;
     case IndexedDB::kCursorKeyAndValue:
-      cursor =
-          IDBCursorWithValue::Create(std::move(backend), cursor_direction_,
-                                     this, source_.Get(), transaction_.Get());
+      cursor = IDBCursorWithValue::Create(std::move(backend), cursor_direction_,
+                                          this, cast(source_.Get()),
+                                          transaction_.Get());
       break;
     default:
       NOTREACHED();

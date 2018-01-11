@@ -29,6 +29,7 @@
 #include <memory>
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ScriptValue.h"
+#include "bindings/modules/v8/idb_object_store_or_idb_index.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBRequest.h"
 #include "modules/indexeddb/IndexedDB.h"
@@ -40,10 +41,10 @@
 namespace blink {
 
 class ExceptionState;
-class IDBAny;
 class IDBTransaction;
 class IDBValue;
 class ScriptState;
+using IDBCursorSource = IDBObjectStoreOrIDBIndex;
 
 class IDBCursor : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -54,7 +55,7 @@ class IDBCursor : public ScriptWrappable {
   static IDBCursor* Create(std::unique_ptr<WebIDBCursor>,
                            WebIDBCursorDirection,
                            IDBRequest*,
-                           IDBAny* source,
+                           const IDBCursorSource&,
                            IDBTransaction*);
   virtual ~IDBCursor();
   void Trace(blink::Visitor*);
@@ -70,7 +71,7 @@ class IDBCursor : public ScriptWrappable {
   ScriptValue key(ScriptState*);
   ScriptValue primaryKey(ScriptState*);
   ScriptValue value(ScriptState*);
-  ScriptValue source(ScriptState*) const;
+  void source(IDBCursorSource&) const;
 
   IDBRequest* update(ScriptState*, const ScriptValue&, ExceptionState&);
   void advance(unsigned, ExceptionState&);
@@ -101,7 +102,7 @@ class IDBCursor : public ScriptWrappable {
   IDBCursor(std::unique_ptr<WebIDBCursor>,
             WebIDBCursorDirection,
             IDBRequest*,
-            IDBAny* source,
+            const IDBCursorSource&,
             IDBTransaction*);
 
  private:
@@ -110,7 +111,7 @@ class IDBCursor : public ScriptWrappable {
   std::unique_ptr<WebIDBCursor> backend_;
   Member<IDBRequest> request_;
   const WebIDBCursorDirection direction_;
-  Member<IDBAny> source_;
+  IDBCursorSource source_;
   Member<IDBTransaction> transaction_;
   bool got_value_ = false;
   bool key_dirty_ = true;
