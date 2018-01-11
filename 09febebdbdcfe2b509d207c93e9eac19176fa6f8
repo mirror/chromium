@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1a6fc65_87a22d6a",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T01:44:42Z",
+      "side": 1,
+      "message": "The delegate actually calls something when the link is clicked, so you might need a real delegate here.",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 17
+      },
+      "revId": "09febebdbdcfe2b509d207c93e9eac19176fa6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fbff54_4aaadb4e",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T01:44:42Z",
+      "side": 1,
+      "message": "I think this just needs to be |web_contents()|",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 24
+      },
+      "revId": "09febebdbdcfe2b509d207c93e9eac19176fa6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
