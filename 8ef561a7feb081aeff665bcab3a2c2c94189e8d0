@@ -16,6 +16,24 @@
       "revId": "8ef561a7feb081aeff665bcab3a2c2c94189e8d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c109fb3d_c2f2f1a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-11T12:17:57Z",
+      "side": 1,
+      "message": "\u003e this line is still longer than 80c\n\nDone, thanks  :)",
+      "parentUuid": "43d5b837_118d5107",
+      "revId": "8ef561a7feb081aeff665bcab3a2c2c94189e8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
