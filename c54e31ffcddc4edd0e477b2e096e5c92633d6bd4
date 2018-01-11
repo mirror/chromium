@@ -70,6 +70,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d1ecb9_3ea724cf",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T22:30:57Z",
+      "side": 1,
+      "message": "As mentioned on chromium-dev, I\u0027m not sure I\u0027d be comfortable changing this guidance due to destructors: https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/0BEHxQncAKY",
+      "parentUuid": "9efda2ec_7322ecbe",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
