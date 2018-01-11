@@ -496,6 +496,26 @@ TEST_F(MediaControlsImplTest, CastOverlayDisabledMediaControlsDisabled) {
   EXPECT_FALSE(IsElementVisible(*cast_overlay_button));
 }
 
+TEST_F(MediaControlsImplTest, PictureInPictureMediaControlsDisabled) {
+  MediaControls().MediaElement().SetBooleanAttribute(HTMLNames::controlsAttr,
+                                                     false);
+
+  ScopedPictureInPictureForTest pip(true);
+  Element* picture_in_picture_button = GetElementByShadowPseudoId(
+      MediaControls(), "-internal-media-controls-picture-in-picture-button");
+  // ASSERT_NE(nullptr, picture_in_picture_button);
+
+  // EXPECT_FALSE(IsElementVisible(*picture_in_picture_button));
+
+  EXPECT_TRUE(IsElementVisible(*picture_in_picture_button));
+
+  GetDocument().GetSettings()->SetMediaControlsEnabled(false);
+  EXPECT_FALSE(IsElementVisible(*picture_in_picture_button));
+
+  GetDocument().GetSettings()->SetMediaControlsEnabled(true);
+  EXPECT_TRUE(IsElementVisible(*picture_in_picture_button));
+}
+
 TEST_F(MediaControlsImplTest, KeepControlsVisibleIfOverflowListVisible) {
   Element* overflow_list = GetElementByShadowPseudoId(
       MediaControls(), "-internal-media-controls-overflow-menu-list");
