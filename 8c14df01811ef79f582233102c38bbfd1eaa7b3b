@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e33d3a_51709e7e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:54:52Z",
+      "side": 1,
+      "message": "nit: consider inlining this in GetDisplayed()",
+      "revId": "8c14df01811ef79f582233102c38bbfd1eaa7b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c03e856_22960eb3",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:54:52Z",
+      "side": 1,
+      "message": "nit: maybe consider adding the static to the NPBWinImpl class instead of NPBWin? That way it doesn\u0027t have to be exposed in the header file.",
+      "revId": "8c14df01811ef79f582233102c38bbfd1eaa7b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52eb0c6_8047eef1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:54:52Z",
+      "side": 1,
+      "message": "nit: DCHECK(notification_id) since that\u0027s the only non-optional entry.",
+      "revId": "8c14df01811ef79f582233102c38bbfd1eaa7b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672bd666_fa9c23cd",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:54:52Z",
+      "side": 1,
+      "message": "nit: \"Default\" /* profile_id */, false /* is_incognito */\n\nAlso this alignment looks wrong? I thought we always aligned arguments in C++, unlike Java.",
+      "revId": "8c14df01811ef79f582233102c38bbfd1eaa7b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e6e5e2_3f92f812",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 4764,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T17:54:52Z",
+      "side": 1,
+      "message": "Sorry, I have to ask you to move this once more!\n\nIt should be a new block in the test_support target of //chrome/browser/BUILD.gn, e.g. here:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/BUILD.gn?q\u003dchrome/browser/build.gn\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d4742\n\n    if (is_win) {\n      sources +\u003d [ .. ]\n    }",
+      "revId": "8c14df01811ef79f582233102c38bbfd1eaa7b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
