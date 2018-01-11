@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "2876405d_775e269c",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-11T23:14:21Z",
+      "side": 1,
+      "message": "You should mention that this is done through chrome://flags#memlog or command line",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c27d5b_bc890456",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-11T23:14:21Z",
+      "side": 1,
+      "message": "can we link to the script location in the source tree?",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96704e7d_536b6784",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-11T23:14:21Z",
+      "side": 1,
+      "message": "hep -\u003e heap\n\nSame comment about where to find in the source tree unless .md file is in the same dir?",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "045f73e3_543845e4",
         "filename": "docs/memory/tools.md",
         "patchSetId": 1
