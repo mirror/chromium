@@ -40,6 +40,8 @@ class NavigationRequest;
 class NavigationThrottle;
 class RenderFrameHostImpl;
 
+struct ResourceResponse;
+
 class CONTENT_EXPORT RenderFrameDevToolsAgentHost
     : public DevToolsAgentHostImpl,
       private WebContentsObserver {
@@ -60,6 +62,16 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
       bool* report_raw_headers);
 
   static void OnResetNavigationRequest(NavigationRequest* navigation_request);
+
+  static void ApplyOverrides(FrameTreeNode* frame_tree_node,
+                             mojom::BeginNavigationParams* begin_params,
+                             bool* report_raw_headers);
+  static void OnNavigationRequestWillBeSent(
+      const NavigationRequest& navigation_request);
+  static void OnNavigationResponseReceived(const NavigationRequest& nav_request,
+                                           const ResourceResponse& response);
+  static void OnNavigationRequestFailed(const NavigationRequest& nav_request,
+                                        int error_code);
 
   static std::vector<std::unique_ptr<NavigationThrottle>>
   CreateNavigationThrottles(NavigationHandle* navigation_handle);

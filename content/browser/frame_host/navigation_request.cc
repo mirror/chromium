@@ -271,7 +271,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
           GURL() /* client_side_redirect_url */,
-          base::nullopt /* suggested_filename */),
+          base::nullopt /* suggested_filename */,
+          base::nullopt /* devtools_initiator_info */),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;
@@ -425,6 +426,10 @@ NavigationRequest::NavigationRequest(
 
 NavigationRequest::~NavigationRequest() {
   TRACE_EVENT_ASYNC_END0("navigation", "NavigationRequest", this);
+  if (state_ == STARTED) {
+    RenderFrameDevToolsAgentHost::OnNavigationRequestFailed(*this,
+                                                            net::ERR_ABORTED);
+  }
 }
 
 void NavigationRequest::BeginNavigation() {
@@ -652,11 +657,7 @@ void NavigationRequest::OnRequestRedirected(
 
   // For now, DevTools needs the POST data sent to the renderer process even if
   // it is no longer a POST after the redirect.
-  // TODO(caseq): Send the requestWillBeSent from browser and remove the
-  // IsNetworkHandlerEnabled check here.
-  // If the navigation is no longer a POST, the POST data should be reset.
-  if (redirect_info.new_method != "POST" &&
-      !RenderFrameDevToolsAgentHost::IsNetworkHandlerEnabled(frame_tree_node_))
+  if (redirect_info.new_method != "POST")
     common_params_.post_data = nullptr;
 
   // Mark time for the Navigation Timing API.
@@ -847,6 +848,8 @@ void NavigationRequest::OnResponseStarted(
     }
   }
 
+  RenderFrameDevToolsAgentHost::OnNavigationResponseReceived(*this, *response);
+
   // The response code indicates that this is an error page, but we don't
   // know how to display the content.  We follow Firefox here and show our
   // own error page instead of intercepting the request as a stream or a
@@ -872,6 +875,8 @@ void NavigationRequest::OnRequestFailed(
     bool has_stale_copy_in_cache,
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info) {
+  RenderFrameDevToolsAgentHost::OnNavigationRequestFailed(*this, net_error);
+
   NavigationRequest::OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
                                              ssl_info, false);
 }
@@ -1081,8 +1086,9 @@ void NavigationRequest::OnStartChecksComplete(
   // Give DevTools a chance to override begin params (headers, skip SW)
   // before actually loading resource.
   bool report_raw_headers = false;
-  RenderFrameDevToolsAgentHost::OnWillSendNavigationRequest(
+  RenderFrameDevToolsAgentHost::ApplyOverrides(
       frame_tree_node_, begin_params_.get(), &report_raw_headers);
+  RenderFrameDevToolsAgentHost::OnNavigationRequestWillBeSent(*this);
 
   loader_ = NavigationURLLoader::Create(
       browser_context->GetResourceContext(), partition,
@@ -1093,7 +1099,8 @@ void NavigationRequest::OnStartChecksComplete(
           frame_tree_node_->frame_tree_node_id(), is_for_guests_only,
           report_raw_headers,
           navigating_frame_host->GetVisibilityState() ==
-              blink::mojom::PageVisibilityState::kPrerender),
+              blink::mojom::PageVisibilityState::kPrerender,
+          devtools_navigation_token_),
       std::move(navigation_ui_data),
       navigation_handle_->service_worker_handle(),
       navigation_handle_->appcache_handle(), this);
@@ -1127,6 +1134,8 @@ void NavigationRequest::OnRedirectChecksComplete(
     // destroyed the NavigationRequest.
     return;
   }
+
+  RenderFrameDevToolsAgentHost::OnNavigationRequestWillBeSent(*this);
 
   loader_->FollowRedirect();
 }
