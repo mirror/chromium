@@ -270,8 +270,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           blink::WebMixedContentContextType::kBlockable, is_form_submission,
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
-          GURL() /* client_side_redirect_url */,
-          base::nullopt /* suggested_filename */),
+          GURL() /* client_side_redirect_url */, entry.suggested_filename()),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;
