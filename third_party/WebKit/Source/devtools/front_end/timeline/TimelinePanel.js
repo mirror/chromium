@@ -246,9 +246,10 @@ Timeline.TimelinePanel = class extends UI.Panel {
 
     // Settings
     this._panelToolbar.appendSpacer();
+    // FIXME: Toolbar should distinguish dividers from separators when finding duplicates.
     this._panelToolbar.appendText('');
-    this._panelToolbar.appendSeparator();
-    this._panelToolbar.appendToolbarItem(this._showSettingsPaneButton);
+    this._panelToolbar.appendToRightSection(new UI.ToolbarSeparator());
+    this._panelToolbar.appendToRightSection(this._showSettingsPaneButton);
   }
 
   _createSettingsPane() {

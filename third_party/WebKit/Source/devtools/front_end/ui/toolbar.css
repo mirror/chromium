@@ -58,6 +58,14 @@
     flex: none;
 }
 
+.toolbar-right-section {
+    position: sticky;
+    right: 0;
+    flex: none;
+    display: flex;
+    background: white;
+}
+
 /* Toolbar item */
 
 .toolbar-button {

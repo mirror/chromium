@@ -47,6 +47,8 @@ UI.Toolbar = class {
     this._shadowRoot = UI.createShadowRootWithCoreStyles(this.element, 'ui/toolbar.css');
     this._contentElement = this._shadowRoot.createChild('div', 'toolbar-shadow');
     this._insertionPoint = this._contentElement.createChild('content');
+    /** @type {!Element|undefined} */
+    this._rightSectionElement;
   }
 
   /**
@@ -250,6 +252,22 @@ UI.Toolbar = class {
       this._contentElement.insertBefore(item.element, this._insertionPoint.nextSibling);
     else
       this._contentElement.insertBefore(item.element, this._insertionPoint);
+    this._hideSeparatorDupes();
+  }
+
+  /**
+   * @param {!UI.ToolbarItem} item
+   */
+  appendToRightSection(item) {
+    this._items.push(item);
+    item._toolbar = this;
+    if (!this._enabled)
+      item._applyEnabledState(false);
+    if (!this._rightSectionElement) {
+      this._rightSectionElement = createElementWithClass('div', 'toolbar-right-section');
+      this._contentElement.insertBefore(this._rightSectionElement, this._insertionPoint);
+    }
+    this._rightSectionElement.appendChild(item.element);
     this._hideSeparatorDupes();
   }
 

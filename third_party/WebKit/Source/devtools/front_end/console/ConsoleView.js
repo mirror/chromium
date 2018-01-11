@@ -110,9 +110,11 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendToolbarItem(groupSimilarToggle);
     toolbar.appendToolbarItem(this._progressToolbarItem);
     toolbar.appendSpacer();
-    toolbar.appendToolbarItem(this._filterStatusText);
-    toolbar.appendSeparator();
-    toolbar.appendToolbarItem(this._showSettingsPaneButton);
+    // FIXME: Toolbar should distinguish dividers from separators when finding duplicates.
+    toolbar.appendText('');
+    toolbar.appendToRightSection(new UI.ToolbarSeparator());
+    toolbar.appendToRightSection(this._filterStatusText);
+    toolbar.appendToRightSection(this._showSettingsPaneButton);
 
     this._preserveLogCheckbox = new UI.ToolbarSettingCheckbox(
         Common.moduleSetting('preserveConsoleLog'), Common.UIString('Do not clear log on page reload / navigation'),
