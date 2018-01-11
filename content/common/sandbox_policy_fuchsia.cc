@@ -8,22 +8,34 @@
 #include <zircon/processargs.h>
 
 #include "base/command_line.h"
+#include "base/files/file_util.h"
 #include "base/process/launch.h"
+#include "base/process/process.h"
 #include "content/public/common/content_switches.h"
 
 namespace content {
 
 void UpdateLaunchOptionsForSandbox(service_manager::SandboxType type,
                                    base::LaunchOptions* options) {
-  // TODO(750938): Re-enable sandboxed sub-processes once we support things
-  // like resource file fetching by sandboxed processes.
-  // if
-  // (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kNoSandbox))
-  type = service_manager::SANDBOX_TYPE_NO_SANDBOX;
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kNoSandbox)) {
+    type = service_manager::SANDBOX_TYPE_NO_SANDBOX;
+  } else if (type != service_manager::SANDBOX_TYPE_NO_SANDBOX &&
+             !base::IsPackageProcess()) {
+    // TODO(crbug.com/750938): Remove this once package deployments become
+    //                         mandatory.
+    LOG(WARNING) << "Sandboxing was requested but is not available because";
+    LOG(WARNING) << "the parent process is not hosted within a package.";
+    type = service_manager::SANDBOX_TYPE_NO_SANDBOX;
+  }
 
   if (type != service_manager::SANDBOX_TYPE_NO_SANDBOX) {
-    options->clone_flags = LP_CLONE_FDIO_STDIO;
+    // TODO(kmarshall): Build path mappings for each sandbox type.
+    options->paths_to_transfer.insert(base::FilePath(base::kPackageRoot));
+    base::FilePath temp_dir;
+    base::GetTempDir(&temp_dir);
+    options->paths_to_transfer.insert(temp_dir);
     options->clear_environ = true;
+    options->clone_flags = LP_CLONE_FDIO_STDIO;
   } else {
     options->clone_flags =
         LP_CLONE_FDIO_NAMESPACE | LP_CLONE_DEFAULT_JOB | LP_CLONE_FDIO_STDIO;

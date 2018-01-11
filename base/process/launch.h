@@ -9,6 +9,7 @@
 
 #include <stddef.h>
 
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -198,6 +199,13 @@ struct BASE_EXPORT LaunchOptions {
   // from the parent process.
   uint32_t clone_flags =
       LP_CLONE_FDIO_NAMESPACE | LP_CLONE_DEFAULT_JOB | LP_CLONE_FDIO_STDIO;
+
+  // Specifies the namespace paths which are to be cloned in the child process'
+  // namespace. If left unset, the child process will be launched with an empty
+  // namespace.
+  // Cannot be combined with the clone flag LP_CLONE_FDIO_NAMESPACE, which is
+  // equivalent to cloning every path.
+  std::set<base::FilePath> paths_to_transfer;
 #endif  // defined(OS_FUCHSIA)
 
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
