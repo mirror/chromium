@@ -1,0 +1,56 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//testing/test.gni")
+
+source_set("interfaces") {
+  sources = [
+    "udp_transport_interface.h",
+  ]
+
+  deps = [
+    "//mojo/public/cpp/system",
+  ]
+}
+
+source_set("host") {
+  sources = [
+    "udp_transport_host_impl.cc",
+    "udp_transport_host_impl.h",
+  ]
+
+  deps = [
+    ":interfaces",
+    "//base",
+    "//media",
+    "//media/cast:net",
+    "//mojo/public/cpp/system",
+  ]
+}
+
+source_set("mirroring_tests") {
+  testonly = true
+  sources = [
+    "udp_transport_host_impl_unittest.cc",
+  ]
+
+  deps = [
+    ":host",
+    "//base",
+    "//base/test:test_support",
+    "//media:test_support",
+    "//media/cast:net",
+    "//media/cast:test_support",
+    "//net",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
+
+test("mirroring_unittests") {
+  deps = [
+    ":mirroring_tests",
+    "//media/test:run_all_unittests",
+  ]
+}

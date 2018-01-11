@@ -157,6 +157,7 @@ test("media_unittests") {
     "//media/filters:unit_tests",
     "//media/formats:unit_tests",
     "//media/gpu:unit_tests",
+    "//media/mirroring:mirroring_tests",
     "//media/mojo:unit_tests",
     "//media/muxers:unit_tests",
     "//media/renderers:unit_tests",
