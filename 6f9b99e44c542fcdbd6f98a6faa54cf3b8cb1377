@@ -87,6 +87,24 @@
       "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6fa21bb_7ae48355",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-11T21:35:48Z",
+      "side": 1,
+      "message": "startActivityCompletely wait for ChromeActivity, I think it\u0027s better to explicit wait for WebApkActivity.",
+      "parentUuid": "ff334041_1a0b0e71",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
