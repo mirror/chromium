@@ -13,6 +13,7 @@
 #import "components/history/ios/browser/web_state_top_sites_observer.h"
 #include "components/keyed_service/core/service_access_type.h"
 #import "components/language/ios/browser/ios_language_detection_tab_helper.h"
+#import "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h"
 #import "ios/chrome/browser/autofill/autofill_tab_helper.h"
 #import "ios/chrome/browser/autofill/form_input_accessory_view_tab_helper.h"
 #import "ios/chrome/browser/autofill/form_suggestion_tab_helper.h"
@@ -38,7 +39,6 @@
 #import "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/voice/voice_search_navigations_tab_helper.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
-#import "ios/chrome/browser/web/external_app_launcher_tab_helper.h"
 #import "ios/chrome/browser/web/load_timing_tab_helper.h"
 #import "ios/chrome/browser/web/network_activity_indicator_tab_helper.h"
 #import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
@@ -111,7 +111,7 @@ void AttachTabHelpers(web::WebState* web_state, bool for_prerender) {
   ]);
 
   InsecureInputTabHelper::CreateForWebState(web_state);
-  ExternalAppLauncherTabHelper::CreateForWebState(web_state);
+  AppLauncherTabHelper::CreateForWebState(web_state);
 
   // TODO(crbug.com/794115): pre-rendered WebState have lots of unnecessary
   // tab helpers for historical reasons. For the moment, AttachTabHelpers
