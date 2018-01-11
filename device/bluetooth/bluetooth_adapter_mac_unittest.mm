@@ -20,6 +20,7 @@
 #import "device/bluetooth/bluetooth_low_energy_device_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_cbperipheral_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_central_manager_mac.h"
+#include "device/bluetooth/test/mock_bluetooth_preferences_mac.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
@@ -102,6 +103,8 @@ class BluetoothAdapterMacTest : public testing::Test {
     CBCentralManager* centralManager =
         static_cast<CBCentralManager*>(mock_central_manager_.get());
     adapter_mac_->SetCentralManagerForTesting(centralManager);
+    adapter_mac_->SetPreferencesForTesting(
+        std::make_unique<MockBluetoothPreferencesMac>(mock_central_manager_));
     return true;
   }
 
@@ -145,6 +148,36 @@ class BluetoothAdapterMacTest : public testing::Test {
 TEST_F(BluetoothAdapterMacTest, Poll) {
   PollAdapter();
   EXPECT_TRUE(ui_task_runner_->HasPendingTask());
+}
+
+TEST_F(BluetoothAdapterMacTest, IsPowered_On) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOn))
+    return;
+  EXPECT_TRUE(adapter_->IsPowered());
+}
+
+TEST_F(BluetoothAdapterMacTest, IsPowered_Off) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOff))
+    return;
+  EXPECT_FALSE(adapter_->IsPowered());
+}
+
+TEST_F(BluetoothAdapterMacTest, SetPowered_On) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOff))
+    return;
+  EXPECT_FALSE(adapter_->IsPowered());
+  adapter_->SetPowered(true, base::Bind(base::DoNothing),
+                       base::Bind(base::DoNothing));
+  EXPECT_TRUE(adapter_->IsPowered());
+}
+
+TEST_F(BluetoothAdapterMacTest, SetPowered_Off) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOn))
+    return;
+  EXPECT_TRUE(adapter_->IsPowered());
+  adapter_->SetPowered(false, base::Bind(base::DoNothing),
+                       base::Bind(base::DoNothing));
+  EXPECT_FALSE(adapter_->IsPowered());
 }
 
 TEST_F(BluetoothAdapterMacTest, AddDiscoverySessionWithLowEnergyFilter) {
