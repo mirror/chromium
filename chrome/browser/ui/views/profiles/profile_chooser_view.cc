@@ -177,7 +177,8 @@ views::ImageButton* CreateBackButton(views::ButtonListener* listener) {
 
 BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   if (!profile->IsSupervised()) {
-    return signin::IsDiceEnabledForProfile(profile->GetPrefs())
+    return profile->GetProfileType() == Profile::ProfileType::REGULAR_PROFILE &&
+                   signin::IsDiceEnabledForProfile(profile->GetPrefs())
                ? BadgedProfilePhoto::BADGE_TYPE_SYNC_COMPLETE
                : BadgedProfilePhoto::BADGE_TYPE_NONE;
   }
@@ -935,7 +936,7 @@ views::View* ProfileChooserView::CreateDiceSyncErrorView(
 views::View* ProfileChooserView::CreateCurrentProfileView(
     const AvatarMenu::Item& avatar_item,
     bool is_guest) {
-  if (!avatar_item.signed_in &&
+  if (!is_guest && !avatar_item.signed_in &&
       signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs()))
     return CreateDiceSigninView();
 
@@ -959,9 +960,11 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 
   // Show the profile name by itself if not signed in or account consistency is
   // disabled. Otherwise, show the email attached to the profile.
-  bool show_email = avatar_item.signed_in && !account_consistency_enabled;
+  bool show_email =
+      !is_guest && avatar_item.signed_in && !account_consistency_enabled;
   const base::string16 hover_button_title =
-      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())
+      !is_guest &&
+              signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())
           ? l10n_util::GetStringUTF16(IDS_PROFILES_SYNCED_TO_TITLE)
           : profile_name;
   HoverButton* profile_card = new HoverButton(
