@@ -93,6 +93,10 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
   void SetDataList(const std::vector<base::string16>& values,
                    const std::vector<base::string16>& labels) override {}
 
+  void SelectFieldOptionsDidChange(
+      const autofill::FormData& form,
+      const autofill::FormFieldData& field) override {}
+
   // Records whether FocusNoLongerOnForm() get called.
   bool did_unfocus_form_;
   // Records the form data received via WillSubmitForm() call.

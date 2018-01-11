@@ -932,6 +932,13 @@ void HTMLSelectElement::OptionInserted(HTMLOptionElement& option,
   }
   SetNeedsValidityCheck();
   last_on_change_selection_.clear();
+
+  DCHECK(GetDocument().IsActive());
+  if (!GetDocument().IsActive())
+    return;
+
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->GetPage()->GetChromeClient().SelectFieldOptionsChanged(*this);
 }
 
 void HTMLSelectElement::OptionRemoved(HTMLOptionElement& option) {
@@ -954,6 +961,13 @@ void HTMLSelectElement::OptionRemoved(HTMLOptionElement& option) {
     SetAutofilled(false);
   SetNeedsValidityCheck();
   last_on_change_selection_.clear();
+
+  DCHECK(GetDocument().IsActive());
+  if (!GetDocument().IsActive())
+    return;
+
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->GetPage()->GetChromeClient().SelectFieldOptionsChanged(*this);
 }
 
 void HTMLSelectElement::OptGroupInsertedOrRemoved(
