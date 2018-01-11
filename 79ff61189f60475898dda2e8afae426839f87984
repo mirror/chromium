@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "276dac8c_14c111a0",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-01-11T17:11:20Z",
+      "side": 1,
+      "message": "No, I changed to this following John\u0027s comment (https://chromium-review.googlesource.com/c/chromium/src/+/860106/4/build/android/gradle/generate_gradle.py#754). Our coding standard allows the use of \" when doing so avoids the need to escape \u0027 (as in \"project\u0027s\"). See https://google.github.io/styleguide/pyguide.html?showone\u003dStrings#Strings. Using mixed styles for different lines of the same help text would just be confusing.",
+      "parentUuid": "22fea5af_b7fd59f7",
+      "revId": "79ff61189f60475898dda2e8afae426839f87984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6940610b_46c5313b",
         "filename": "build/android/gradle/generate_gradle.py",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T16:48:10Z",
       "side": 1,
       "message": "Should this go outside of the outer if? The docs for it say it can be used as an alternative.",
+      "revId": "79ff61189f60475898dda2e8afae426839f87984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2244969b_5bb7fa2c",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-01-11T17:11:20Z",
+      "side": 1,
+      "message": "The call to add_mutually_exclusive_group()  means that you will get a parser error if you set  both on the command line, so result is the same whichever way round we check these. The reason I do it this way round is that it allows me to group together all the cases where I need to set an sdk_path in the local.properties file.",
+      "parentUuid": "6940610b_46c5313b",
       "revId": "79ff61189f60475898dda2e8afae426839f87984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
