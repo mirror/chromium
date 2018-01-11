@@ -21,7 +21,13 @@ void HeapAllocator::BackingFree(void* address) {
   if (page->IsLargeObjectPage() || page->Arena()->GetThreadState() != state)
     return;
 
+  state->CheckObjectNotInCallbackStacks(address);
+
   HeapObjectHeader* header = HeapObjectHeader::FromPayload(address);
+  // If incremental marking marked this object, it means a trace callback could
+  // be registered so keep.
+  if (header->IsMarked())
+    return;
   NormalPageArena* arena = static_cast<NormalPage*>(page)->ArenaForNormalPage();
   state->Heap().PromptlyFreed(header->GcInfoIndex());
   arena->PromptlyFreeObject(header);
@@ -35,8 +41,9 @@ void HeapAllocator::FreeInlineVectorBacking(void* address) {
   BackingFree(address);
 }
 
-void HeapAllocator::FreeHashTableBacking(void* address) {
-  BackingFree(address);
+void HeapAllocator::FreeHashTableBacking(void* address, bool is_weak_table) {
+  if (!is_weak_table)
+    BackingFree(address);
 }
 
 bool HeapAllocator::BackingExpand(void* address, size_t new_size) {
