@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "ipc/ipc_channel_factory.h"
 #include "ipc/ipc_listener.h"
@@ -483,16 +484,19 @@ void ChannelProxy::Init(std::unique_ptr<ChannelFactory> factory,
 }
 
 void ChannelProxy::Pause() {
+  TRACE_EVENT0("ipc", "ChannelProxy::Pause");
   context_->ipc_task_runner()->PostTask(
       FROM_HERE, base::Bind(&Context::PauseChannel, context_));
 }
 
 void ChannelProxy::Unpause(bool flush) {
+  TRACE_EVENT1("ipc", "ChannelProxy::Unpause", "flush", flush);
   context_->ipc_task_runner()->PostTask(
       FROM_HERE, base::Bind(&Context::UnpauseChannel, context_, flush));
 }
 
 void ChannelProxy::Flush() {
+  TRACE_EVENT0("ipc", "ChannelProxy::Flush");
   context_->ipc_task_runner()->PostTask(
       FROM_HERE, base::Bind(&Context::FlushChannel, context_));
 }
