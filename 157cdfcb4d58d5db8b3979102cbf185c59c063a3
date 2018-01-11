@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42b16797_836866d1",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-11T14:47:31Z",
+      "side": 1,
+      "message": "I am not sure this one is needed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec7fbf9_b27aaece",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-11T14:47:31Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5abd8f8_492e42c2",
+        "filename": "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-11T14:47:31Z",
+      "side": 1,
+      "message": "Unless you plan to remove this protocol, please move it to a specific file. If you want you can move it to the ios/chrome/browser/ui/commands folder.",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
