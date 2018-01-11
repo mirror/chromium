@@ -16,6 +16,24 @@
       "revId": "68a0a5dbacc850e6662f7ea784a83c1634709c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6601051_f650f381",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/XRWebGLDrawingBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-11T00:01:02Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I\u0027ll refactor this and add some tests.",
+      "parentUuid": "580fa67a_351253f5",
+      "revId": "68a0a5dbacc850e6662f7ea784a83c1634709c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "be36780207a0acc87850beac95e60bdfea495518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb37783_d01c743d",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/XRWebGLDrawingBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-11T00:01:02Z",
+      "side": 0,
+      "message": "No, the creation of the framebuffer object itself has just been moved into the XRWebGLLayer because /modules/webgl isn\u0027t accessible from /platform/graphics/gpu. The use of an opaque framebuffer is still our plan of record.",
+      "parentUuid": "ce23c938_29a2fd32",
+      "revId": "be36780207a0acc87850beac95e60bdfea495518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
