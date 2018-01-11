@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510b5e94_36116054",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T16:06:52Z",
+      "side": 1,
+      "message": "public boolean isFrontInfoBar() {\n    return mContainer.getFrontInfoBar() \u003d\u003d this;\n}",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 38
+      },
+      "revId": "628378001284ceb1dc8d17ff3be2c9e388f62cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7ff881_8407c63a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T16:06:52Z",
+      "side": 1,
+      "message": "Remove so this is package protected.",
+      "range": {
+        "startLine": 548,
+        "startChar": 4,
+        "endLine": 548,
+        "endChar": 11
+      },
+      "revId": "628378001284ceb1dc8d17ff3be2c9e388f62cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b875da_dfc7fe65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T16:06:52Z",
+      "side": 1,
+      "message": "Infobar doesn\u0027t override equals so this is equivalent to (this \u003d\u003d getFrontInfoBar()). Also super isn\u0027t necessary.",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 35
+      },
+      "revId": "628378001284ceb1dc8d17ff3be2c9e388f62cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
