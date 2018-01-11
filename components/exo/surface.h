@@ -99,7 +99,7 @@ class Surface final : public ui::PropertyHandler {
 
   // This sets the region of the surface that can receive pointer and touch
   // events. The region is clipped to the surface bounds.
-  void SetInputRegion(const cc::Region& region);
+  void SetInputRegion(const base::Optional<cc::Region>& region);
 
   // This overrides the input region to the surface bounds with an outset.
   // TODO(domlaskowski): Remove this once client-driven resizing is removed.
@@ -256,7 +256,7 @@ class Surface final : public ui::PropertyHandler {
     bool operator!=(const State& other) { return !(*this == other); }
 
     cc::Region opaque_region;
-    cc::Region input_region;
+    base::Optional<cc::Region> input_region;
     int input_outset = 0;
     float buffer_scale = 1.0f;
     Transform buffer_transform = Transform::NORMAL;

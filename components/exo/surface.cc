@@ -258,8 +258,9 @@ void Surface::SetOpaqueRegion(const cc::Region& region) {
   pending_state_.opaque_region = region;
 }
 
-void Surface::SetInputRegion(const cc::Region& region) {
-  TRACE_EVENT1("exo", "Surface::SetInputRegion", "region", region.ToString());
+void Surface::SetInputRegion(const base::Optional<cc::Region>& region) {
+  TRACE_EVENT1("exo", "Surface::SetInputRegion", "region",
+               region.has_value() ? region->ToString() : "null");
 
   pending_state_.input_region = region;
 }
@@ -492,7 +493,7 @@ void Surface::CommitSurfaceHierarchy(bool synchronized) {
     pending_state_.only_visible_on_secure_output = false;
 
     window_->SetEventTargetingPolicy(
-        state_.input_region.IsEmpty()
+        (state_.input_region.has_value() && state_.input_region->IsEmpty())
             ? ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY
             : ui::mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
 
@@ -552,8 +553,11 @@ void Surface::CommitSurfaceHierarchy(bool synchronized) {
   }
 
   surface_hierarchy_content_bounds_ = gfx::Rect(content_size_);
-  hit_test_region_ = state_.input_region;
-  hit_test_region_.Intersect(surface_hierarchy_content_bounds_);
+  if (state_.input_region) {
+    hit_test_region_ = *state_.input_region;
+    hit_test_region_.Intersect(surface_hierarchy_content_bounds_);
+  } else
+    hit_test_region_ = surface_hierarchy_content_bounds_;
 
   int outset = state_.input_outset;
   if (outset > 0) {
@@ -718,14 +722,7 @@ bool Surface::FillsBoundsOpaquely() const {
 ////////////////////////////////////////////////////////////////////////////////
 // Buffer, private:
 
-static SkIRect make_largest_skirect() {
-  // we use half the limit, so that the resulting width/height will not
-  // overflow.
-  const int32_t limit = std::numeric_limits<int32_t>::max() >> 1;
-  return {-limit, -limit, limit, limit};
-}
-
-Surface::State::State() : input_region(SkRegion(make_largest_skirect())) {}
+Surface::State::State() {}
 
 Surface::State::~State() = default;
 
