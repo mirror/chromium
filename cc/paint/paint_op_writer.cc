@@ -216,7 +216,7 @@ void PaintOpWriter::Write(const PaintShader* shader) {
   WriteSimple(shader->start_degrees_);
   WriteSimple(shader->end_degrees_);
   // TODO(vmpstr): Write PaintImage image_. http://crbug.com/737629
-  // TODO(vmpstr): Write sk_sp<PaintRecord> record_. http://crbug.com/737629
+  Write(shader->record_.get(), shader->tile_);
   WriteSimple(shader->colors_.size());
   WriteData(shader->colors_.size() * sizeof(SkColor), shader->colors_.data());
 
@@ -453,7 +453,7 @@ void PaintOpWriter::Write(const ImagePaintFilter& filter) {
 
 void PaintOpWriter::Write(const RecordPaintFilter& filter) {
   WriteSimple(filter.record_bounds());
-  Write(filter.record().get());
+  Write(filter.record().get(), filter.record_bounds());
 }
 
 void PaintOpWriter::Write(const MergePaintFilter& filter) {
@@ -533,7 +533,8 @@ void PaintOpWriter::Write(const LightingSpotPaintFilter& filter) {
   Write(filter.input().get());
 }
 
-void PaintOpWriter::Write(const PaintRecord* record) {
+void PaintOpWriter::Write(const PaintRecord* record,
+                          const SkRect& record_bounds) {
   // We need to record how many bytes we will serialize, but we don't know this
   // information until we do the serialization. So, skip the amount needed
   // before writing.
@@ -553,7 +554,13 @@ void PaintOpWriter::Write(const PaintRecord* record) {
 
   SimpleBufferSerializer serializer(memory_, remaining_bytes_, image_provider_,
                                     transfer_cache_);
-  serializer.Serialize(record, nullptr, PaintOpBufferSerializer::Preamble());
+  PaintOpBufferSerializer::Preamble preamble;
+  preamble.playback_rect = gfx::Rect(static_cast<int>(record_bounds.x()),
+                                     static_cast<int>(record_bounds.y()),
+                                     static_cast<int>(record_bounds.width()),
+                                     static_cast<int>(record_bounds.height()));
+  serializer.Serialize(record, nullptr, preamble,
+                       PaintOpBufferSerializer::kExcludePreamble);
   if (!serializer.valid()) {
     valid_ = false;
     return;
@@ -568,8 +575,8 @@ void PaintOpWriter::Write(const PaintRecord* record) {
   reinterpret_cast<size_t*>(size_memory)[0] = serializer.written();
 
   // The serializer should have failed if it ran out of space. DCHECK to verify
-  // that it wrote fewer bytes than we have.
-  DCHECK_LT(serializer.written(), remaining_bytes_);
+  // that it wrote at most as many bytes as we had left.
+  DCHECK_LE(serializer.written(), remaining_bytes_);
   memory_ += serializer.written();
   remaining_bytes_ -= serializer.written();
 }

@@ -41,7 +41,8 @@ PaintOpBufferSerializer::~PaintOpBufferSerializer() = default;
 
 void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer,
                                         const std::vector<size_t>* offsets,
-                                        const Preamble& preamble) {
+                                        const Preamble& preamble,
+                                        PreambleMode preamble_mode) {
   // Reset the canvas to the maximum extents of our playback rect, ensuring this
   // rect will not be clipped.
   canvas_.resetCanvas(preamble.playback_rect.right(),
@@ -58,10 +59,14 @@ void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer,
                                     canvas_.getTotalMatrix());
   PlaybackParams params(image_provider_, canvas_.getTotalMatrix());
 
-  Save(options, params);
-  SerializePreamble(preamble, options, params);
+  if (preamble_mode == kIncludePreamble) {
+    Save(options, params);
+    SerializePreamble(preamble, options, params);
+  }
   SerializeBuffer(buffer, offsets);
-  RestoreToCount(kInitialSaveCount, options, params);
+
+  if (preamble_mode == kIncludePreamble)
+    RestoreToCount(kInitialSaveCount, options, params);
 }
 
 void PaintOpBufferSerializer::SerializePreamble(

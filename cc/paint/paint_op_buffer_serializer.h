@@ -17,6 +17,8 @@ class CC_PAINT_EXPORT PaintOpBufferSerializer {
   using SerializeCallback =
       base::Callback<size_t(const PaintOp*, const PaintOp::SerializeOptions&)>;
 
+  enum PreambleMode { kIncludePreamble, kExcludePreamble };
+
   PaintOpBufferSerializer(SerializeCallback serialize_cb,
                           ImageProvider* image_provider,
                           TransferCacheSerializeHelper* transfer_cache);
@@ -30,7 +32,8 @@ class CC_PAINT_EXPORT PaintOpBufferSerializer {
   };
   void Serialize(const PaintOpBuffer* buffer,
                  const std::vector<size_t>* offsets,
-                 const Preamble& preamble);
+                 const Preamble& preamble,
+                 PreambleMode mode = kIncludePreamble);
 
   bool valid() const { return valid_; }
 

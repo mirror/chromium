@@ -116,7 +116,7 @@ class CC_PAINT_EXPORT PaintOpWriter {
   void Write(const LightingPointPaintFilter& filter);
   void Write(const LightingSpotPaintFilter& filter);
 
-  void Write(const PaintRecord* record);
+  void Write(const PaintRecord* record, const SkRect& record_bounds);
 
   char* memory_ = nullptr;
   size_t size_ = 0u;

@@ -2224,10 +2224,10 @@ sk_sp<PaintOpBuffer> PaintOpBuffer::MakeFromMemory(
     const volatile void* input,
     size_t input_size,
     const PaintOp::DeserializeOptions& options) {
-  if (input_size == 0)
-    return nullptr;
-
   auto buffer = sk_make_sp<PaintOpBuffer>();
+  if (input_size == 0)
+    return buffer;
+
   size_t total_bytes_read = 0u;
   while (total_bytes_read < input_size) {
     const volatile void* next_op =
@@ -2252,7 +2252,86 @@ sk_sp<PaintOpBuffer> PaintOpBuffer::MakeFromMemory(
       return nullptr;
     }
 
-    buffer->AnalyzeAddedOp(op);
+    switch (static_cast<PaintOpType>(type)) {
+      case PaintOpType::Annotate:
+        buffer->AnalyzeAddedOp(static_cast<const AnnotateOp*>(op));
+        break;
+      case PaintOpType::ClipPath:
+        buffer->AnalyzeAddedOp(static_cast<const ClipPathOp*>(op));
+        break;
+      case PaintOpType::ClipRect:
+        buffer->AnalyzeAddedOp(static_cast<const ClipRectOp*>(op));
+        break;
+      case PaintOpType::ClipRRect:
+        buffer->AnalyzeAddedOp(static_cast<const ClipRRectOp*>(op));
+        break;
+      case PaintOpType::Concat:
+        buffer->AnalyzeAddedOp(static_cast<const ConcatOp*>(op));
+        break;
+      case PaintOpType::DrawColor:
+        buffer->AnalyzeAddedOp(static_cast<const DrawColorOp*>(op));
+        break;
+      case PaintOpType::DrawDRRect:
+        buffer->AnalyzeAddedOp(static_cast<const DrawDRRectOp*>(op));
+        break;
+      case PaintOpType::DrawImage:
+        buffer->AnalyzeAddedOp(static_cast<const DrawImageOp*>(op));
+        break;
+      case PaintOpType::DrawImageRect:
+        buffer->AnalyzeAddedOp(static_cast<const DrawImageRectOp*>(op));
+        break;
+      case PaintOpType::DrawIRect:
+        buffer->AnalyzeAddedOp(static_cast<const DrawIRectOp*>(op));
+        break;
+      case PaintOpType::DrawLine:
+        buffer->AnalyzeAddedOp(static_cast<const DrawLineOp*>(op));
+        break;
+      case PaintOpType::DrawOval:
+        buffer->AnalyzeAddedOp(static_cast<const DrawOvalOp*>(op));
+        break;
+      case PaintOpType::DrawPath:
+        buffer->AnalyzeAddedOp(static_cast<const DrawPathOp*>(op));
+        break;
+      case PaintOpType::DrawRecord:
+        buffer->AnalyzeAddedOp(static_cast<const DrawRecordOp*>(op));
+        break;
+      case PaintOpType::DrawRect:
+        buffer->AnalyzeAddedOp(static_cast<const DrawRectOp*>(op));
+        break;
+      case PaintOpType::DrawRRect:
+        buffer->AnalyzeAddedOp(static_cast<const DrawRRectOp*>(op));
+        break;
+      case PaintOpType::DrawTextBlob:
+        buffer->AnalyzeAddedOp(static_cast<const DrawTextBlobOp*>(op));
+        break;
+      case PaintOpType::Noop:
+        buffer->AnalyzeAddedOp(static_cast<const NoopOp*>(op));
+        break;
+      case PaintOpType::Restore:
+        buffer->AnalyzeAddedOp(static_cast<const RestoreOp*>(op));
+        break;
+      case PaintOpType::Rotate:
+        buffer->AnalyzeAddedOp(static_cast<const RotateOp*>(op));
+        break;
+      case PaintOpType::Save:
+        buffer->AnalyzeAddedOp(static_cast<const SaveOp*>(op));
+        break;
+      case PaintOpType::SaveLayer:
+        buffer->AnalyzeAddedOp(static_cast<const SaveLayerOp*>(op));
+        break;
+      case PaintOpType::SaveLayerAlpha:
+        buffer->AnalyzeAddedOp(static_cast<const SaveLayerAlphaOp*>(op));
+        break;
+      case PaintOpType::Scale:
+        buffer->AnalyzeAddedOp(static_cast<const ScaleOp*>(op));
+        break;
+      case PaintOpType::SetMatrix:
+        buffer->AnalyzeAddedOp(static_cast<const SetMatrixOp*>(op));
+        break;
+      case PaintOpType::Translate:
+        buffer->AnalyzeAddedOp(static_cast<const TranslateOp*>(op));
+        break;
+    }
     total_bytes_read += skip;
   }
 
