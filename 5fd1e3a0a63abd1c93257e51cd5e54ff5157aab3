@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "851630a9_94236765",
+        "filename": "content/renderer/service_worker/service_worker_handle_reference.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-11T06:44:32Z",
+      "side": 1,
+      "message": "Can we remove the flag?",
+      "range": {
+        "startLine": 22,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "5fd1e3a0a63abd1c93257e51cd5e54ff5157aab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95bf65d2_905b95f6",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 2
