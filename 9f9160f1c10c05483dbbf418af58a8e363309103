@@ -16,6 +16,24 @@
       "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e872fab_e002999a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-11T11:37:39Z",
+      "side": 1,
+      "message": "I would prefer to keep this, because:\n1. One is not guaranteed to instantiate via CreateSingletonInstance().\n2. A reader is less likely to miss that this is done, if it\u0027s done here two.\n3. Symmetry with the destructor.",
+      "parentUuid": "4224beae_aa6e7b89",
+      "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
