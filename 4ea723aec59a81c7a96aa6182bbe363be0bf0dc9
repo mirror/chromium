@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b93a78b8_ce502759",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 0,
+      "message": "Should we still capture this comment (and the below TODO) in #onHidden() above so that we remember why we\u0027re calling super directly?",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafdaa41_dca1cd02",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 9614,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 0,
+      "message": "Were these intentionally removed?",
+      "range": {
+        "startLine": 9603,
+        "startChar": 0,
+        "endLine": 9614,
+        "endChar": 12
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

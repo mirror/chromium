@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1aa17a3_3a49d16f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "nit: I\u0027d annotate this method with @Nullable",
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9d894a_17f94c2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "Why don\u0027t we want to record anything if the infobar isn\u0027t the front infobar?",
+      "range": {
+        "startLine": 156,
+        "startChar": 33,
+        "endLine": 156,
+        "endChar": 53
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7d3e35_0f06e193",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "nit: Put this text on the next line. Also, isn\u0027t the enum in enums.xml?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d082fa69_da7b2dce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "USER_SELECTED_FOR_SURVEY  and FORCE_SURVEY_ON_COMMAND_PRESENT aren\u0027t rejections. What about something like FilteringResult for the IntDef name?",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09abcb_484413dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in the if part of the block?",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 89
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3facd5_cbca1f34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "This was done already right, so we just need a rebase?",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 85
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac14302_e5315780",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "What do these other means include?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 37,
+        "endLine": 1296,
+        "endChar": 42
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7cc22b_79558b23",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T22:45:17Z",
+      "side": 1,
+      "message": "Should this, and the other action, be prefixed with Android.ChromeHome.Survey. to match the other survey metrics? e.g. this could be Android.ChromeHome.Survey.InfobarShown and the other one could be Android.ChromeHome.Survey.InfobarIndirectlyClosed",
+      "range": {
+        "startLine": 1401,
+        "startChar": 14,
+        "endLine": 1401,
+        "endChar": 34
+      },
+      "revId": "6ef9202f3f90eea0423117d8ef0a420dd2b2a816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
