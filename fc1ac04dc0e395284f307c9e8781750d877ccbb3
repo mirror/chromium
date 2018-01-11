@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce776d63_874b96b1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5137fac_2f5650d2",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04b807d_8fa21218",
         "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "351d6754_6fc6fbe8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:12:01Z",
+      "side": 1,
+      "message": "This was just for some ad-hoc debugging (testRunner.logToStderr is not used for comparison with test expectations).\n\nI think no assertions are needed - if the test manages to finish without crashing, then everything passes.",
+      "parentUuid": "c04b807d_8fa21218",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc265f0_b01eb0f6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6828c8c1_769a278c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:12:01Z",
+      "side": 1,
+      "message": "Done (using MutationObserver).",
+      "parentUuid": "6bc265f0_b01eb0f6",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

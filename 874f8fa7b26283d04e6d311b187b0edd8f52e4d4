@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23e87f5_2cb76727",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/resources/frame-detached-in-animationstart-event-samesiteframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:12:01Z",
+      "side": 1,
+      "message": "I don\u0027t get any animation events without this mini-animation css.  I don\u0027t know what I was doing when I uploaded the previous patchsets for review (I thought I\u0027ve verified I observed the crash without the css and without the \u003cp\u003e element, but apparently I made a mistake somewhere).",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "874f8fa7b26283d04e6d311b187b0edd8f52e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9e5ebb6_8a9c4cf1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/resources/frame-detached-in-animationstart-event-samesiteframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:12:01Z",
+      "side": 1,
+      "message": "Using \u0027animationiteration\u0027 instead of \u0027animationstart\u0027 helped deflake the test - it now crashes 100% without Ken\u0027s fix.",
+      "range": {
+        "startLine": 17,
+        "startChar": 31,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "874f8fa7b26283d04e6d311b187b0edd8f52e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
