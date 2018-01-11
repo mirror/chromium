@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d62de76_ca563511",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T01:29:38Z",
+      "side": 1,
+      "message": "these thread hops aren\u0027t safe, since ResourceLoader may have gotten deleted.\n\nIt\u0027s easiest to just pass in ResourceContext* to this object\u0027s constructor, as it\u0027s available from ResourceRequestInfoImpl.",
+      "revId": "b54cf26c0afe15a17ff9a7ba6be174d1604cdf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fff8c51_1c325121",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T01:29:38Z",
+      "side": 1,
+      "message": "nit: document",
+      "revId": "b54cf26c0afe15a17ff9a7ba6be174d1604cdf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0b2572_e87f81bb",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T01:29:38Z",
+      "side": 1,
+      "message": "nit: please document",
+      "revId": "b54cf26c0afe15a17ff9a7ba6be174d1604cdf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
