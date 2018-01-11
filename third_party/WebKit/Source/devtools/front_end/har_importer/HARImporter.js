@@ -57,7 +57,9 @@ HARImporter.Importer = class {
   static _fillRequestFromHAREntry(request, entry, pageLoad) {
     // Request data.
     if (entry.request.postData)
-      request.requestFormData = entry.request.postData.text;
+      request.updateRequestFormData(true, entry.request.postData.text);
+    else
+      request.updateRequestFormData(false, null);
     request.connectionId = entry.connection || '';
     request.requestMethod = entry.request.method;
     request.setRequestHeaders(entry.request.headers);
