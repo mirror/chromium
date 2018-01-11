@@ -122,6 +122,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   void Flush() override;
   void ClearBluetoothAllowedDevicesMapForTesting() override;
   void FlushNetworkInterfaceForTesting() override;
+  int GetDeletionTaskCountForTesting() override;
 
   BackgroundFetchContext* GetBackgroundFetchContext();
   BackgroundSyncContext* GetBackgroundSyncContext();
@@ -237,6 +238,8 @@ class CONTENT_EXPORT StoragePartitionImpl
                      const base::Time end,
                      base::OnceClosure callback);
 
+  void DeletionHelperDone();
+
   // Used by StoragePartitionImplMap.
   //
   // TODO(ajwong): These should be taken in the constructor and in Create() but
@@ -321,6 +324,9 @@ class CONTENT_EXPORT StoragePartitionImpl
 
   // See comments for site_for_service_worker().
   GURL site_for_service_worker_;
+
+  // Track number of running deletion. For test use only.
+  int deletion_helpers_running_;
 
   base::WeakPtrFactory<StoragePartitionImpl> weak_factory_;
 
