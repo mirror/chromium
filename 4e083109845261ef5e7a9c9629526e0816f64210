@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e5862ec_8b05ea92",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-11T17:56:02Z",
+      "side": 1,
+      "message": "I think these two lines should be indented two less (or two more...but not right here)",
+      "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
