@@ -70,6 +70,24 @@
       "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c91c114_5d7d7964",
+        "filename": "services/network/public/cpp/data_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-11T20:22:24Z",
+      "side": 1,
+      "message": "Yeah, there would have been less work for you if I had done the blob cleanup already, but were this class exists doesn\u0027t really change anything for the work I still have to do.",
+      "parentUuid": "770f1dc4_9d39ff0d",
+      "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
