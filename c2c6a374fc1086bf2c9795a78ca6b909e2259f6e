@@ -22,6 +22,30 @@
       "revId": "c2c6a374fc1086bf2c9795a78ca6b909e2259f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e739cff_c2226865",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-11T11:50:32Z",
+      "side": 1,
+      "message": "I\u0027m not convinced but perhaps this could be re-ordered for better readability as:\n\n#if !PRIORITY_INHERITANCE_LOCKS_POSSIBLE()\n  return false;\n#elif BUILDFLAG(ENABLE_MUTEX_PRIORITY_INHERITANCE)\n  return true;\n#elif defined(OS_MACOSX)\n  // Add comment why this is okay.\n  return true;\n#else\n  (...)\n#endif",
+      "parentUuid": "a9d6dc1d_ebf610db",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "c2c6a374fc1086bf2c9795a78ca6b909e2259f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
