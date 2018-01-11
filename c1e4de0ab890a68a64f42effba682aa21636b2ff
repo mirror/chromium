@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e155d6_976f8b86",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-11T14:04:08Z",
+      "side": 1,
+      "message": "side note: maybe move build_x11 to a more accessible BUILD.gn (eg out of ui/gl?). I see it being useful in other spots too.",
+      "revId": "c1e4de0ab890a68a64f42effba682aa21636b2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
