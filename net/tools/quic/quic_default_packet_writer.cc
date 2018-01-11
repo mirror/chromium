@@ -18,6 +18,7 @@ WriteResult QuicDefaultPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   DCHECK(!write_blocked_);
   DCHECK(nullptr == options)

@@ -13,6 +13,7 @@
 #include "net/quic/core/quic_connection.h"
 #include "net/quic/core/quic_packet_writer.h"
 #include "net/quic/core/quic_packets.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -32,17 +33,21 @@ class QuicSimpleServerPacketWriter : public QuicPacketWriter {
   ~QuicSimpleServerPacketWriter() override;
 
   // Wraps WritePacket, and ensures that |callback| is run on successful write.
-  WriteResult WritePacketWithCallback(const char* buffer,
-                                      size_t buf_len,
-                                      const QuicIpAddress& self_address,
-                                      const QuicSocketAddress& peer_address,
-                                      PerPacketOptions* options,
-                                      WriteCallback callback);
+  WriteResult WritePacketWithCallback(
+      const char* buffer,
+      size_t buf_len,
+      const QuicIpAddress& self_address,
+      const QuicSocketAddress& peer_address,
+      const NetworkTrafficAnnotationTag& traffic_annotation,
+
+      PerPacketOptions* options,
+      WriteCallback callback);
 
   WriteResult WritePacket(const char* buffer,
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override;
 
   void OnWriteComplete(int rv);

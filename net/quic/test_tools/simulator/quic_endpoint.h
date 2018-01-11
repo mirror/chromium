@@ -14,6 +14,7 @@
 #include "net/quic/test_tools/simulator/link.h"
 #include "net/quic/test_tools/simulator/queue.h"
 #include "net/tools/quic/quic_default_packet_writer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 namespace simulator {
@@ -104,11 +105,13 @@ class QuicEndpoint : public Endpoint,
     explicit Writer(QuicEndpoint* endpoint);
     ~Writer() override;
 
-    WriteResult WritePacket(const char* buffer,
-                            size_t buf_len,
-                            const QuicIpAddress& self_address,
-                            const QuicSocketAddress& peer_address,
-                            PerPacketOptions* options) override;
+    WriteResult WritePacket(
+        const char* buffer,
+        size_t buf_len,
+        const QuicIpAddress& self_address,
+        const QuicSocketAddress& peer_address,
+        const NetworkTrafficAnnotationTag& traffic_annotation,
+        PerPacketOptions* options) override;
     bool IsWriteBlockedDataBuffered() const override;
     bool IsWriteBlocked() const override;
     void SetWritable() override;

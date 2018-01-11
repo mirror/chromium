@@ -12,6 +12,7 @@
 #include "net/quic/quartc/quartc_factory.h"
 #include "net/quic/test_tools/mock_clock.h"
 #include "net/spdy/core/spdy_protocol.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -103,6 +104,7 @@ class DummyPacketWriter : public QuicPacketWriter {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override {
     return WriteResult(WRITE_STATUS_ERROR, 0);
   }

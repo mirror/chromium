@@ -6,6 +6,7 @@
 #define NET_TOOLS_QUIC_TEST_TOOLS_BAD_PACKET_WRITER_H_
 
 #include "net/tools/quic/quic_packet_writer_wrapper.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -22,6 +23,7 @@ class BadPacketWriter : public QuicPacketWriterWrapper {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override;
 
  private:

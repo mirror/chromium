@@ -17,9 +17,10 @@ WriteResult QuicPacketWriterWrapper::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   return writer_->WritePacket(buffer, buf_len, self_address, peer_address,
-                              options);
+                              traffic_annotation, options);
 }
 
 bool QuicPacketWriterWrapper::IsWriteBlockedDataBuffered() const {

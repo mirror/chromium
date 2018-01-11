@@ -38,6 +38,7 @@
 #include "net/quic/test_tools/simple_data_producer.h"
 #include "net/quic/test_tools/simple_quic_framer.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock_mutant.h"
 
 using std::string;
@@ -303,6 +304,7 @@ class TestPacketWriter : public QuicPacketWriter {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override {
     QuicEncryptedPacket packet(buffer, buf_len);
     ++packets_write_attempts_;
