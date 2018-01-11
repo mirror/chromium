@@ -469,8 +469,13 @@ void ZoomBubbleView::UpdateZoomPercent() {
 void ZoomBubbleView::UpdateZoomIconVisibility() {
   // Note that we can't rely on web_contents() here, as it may have been
   // destroyed by the time we get this call.
-  Browser* browser = chrome::FindBrowserWithWindow(
-      platform_util::GetTopLevel(parent_window()));
+  gfx::NativeWindow parent_browser_window =
+      platform_util::GetTopLevel(parent_window());
+  if (!parent_browser_window && GetAnchorView()) {
+    parent_browser_window = GetAnchorView()->GetWidget()->GetNativeWindow();
+    DCHECK(parent_browser_window);
+  }
+  Browser* browser = chrome::FindBrowserWithWindow(parent_browser_window);
   if (browser && browser->window() && browser->window()->GetLocationBar())
     browser->window()->GetLocationBar()->UpdateZoomViewVisibility();
 }
