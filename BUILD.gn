@@ -89,6 +89,10 @@ group("gn_all") {
     ]
   }
 
+  if (!is_win || !is_clang) {
+    deps += [ ":webui_closure_compile" ]
+  }
+
   if (!is_ios && !is_android && !is_chromecast && !is_fuchsia) {
     deps += [
       "//chrome",
@@ -1141,13 +1145,10 @@ template("assert_valid_out_dir") {
       "Do not use a platform name in your output directory (found \"$root_build_dir\"). http://crbug.com/548283")
 }
 
-if (!is_win || !is_clang) {
-  group("webui_closure_compile") {
-    data_deps = []
-    if (is_chromeos) {
-      data_deps +=
-          [ "//chrome/browser/resources/chromeos/login:closure_compile" ]
-    }
+group("webui_closure_compile") {
+  data_deps = []
+  if (is_chromeos) {
+    data_deps += [ "//chrome/browser/resources/chromeos/login:closure_compile" ]
   }
 }
 
