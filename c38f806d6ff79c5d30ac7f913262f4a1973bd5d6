@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "a9d13c61_56b731cf",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-11T17:56:25Z",
+      "side": 1,
+      "message": "I changed the test to accept sync or async success.",
+      "parentUuid": "1539d2fb_de6c7169",
+      "range": {
+        "startLine": 1220,
+        "startChar": 26,
+        "endLine": 1220,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41060bb3_42bce19e",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 12
@@ -508,6 +532,30 @@
       "side": 1,
       "message": "You\u0027re right, I meant different tags, but same params.\n\nYea, I wasn\u0027t sure about that.  That\u0027s fine, as long as we\u0027re fine with that behavior (And I assume we are).\n\n(Hrm...How do you quote someone in gerrit?  I don\u0027t see any option to do that)",
       "parentUuid": "ef8bba7a_fa3ff38d",
+      "range": {
+        "startLine": 1237,
+        "startChar": 6,
+        "endLine": 1237,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afe40325_56ca6e5f",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-11T17:56:25Z",
+      "side": 1,
+      "message": "\u003e (Hrm...How do you quote someone in gerrit?  I don\u0027t see any option to do that)\n\nWhen you start a comment, click the \"QUOTE\" button instead of \"REPLY\".  Note that the \"QUOTE\" button is only present *before* you start a reply.",
+      "parentUuid": "23966fc8_0a7a97b1",
       "range": {
         "startLine": 1237,
         "startChar": 6,
