@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "84c929d4_a888fd26",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T14:42:58Z",
+      "side": 1,
+      "message": "Yes, making |get_storage_info_func_| return MtpStorageInfo* will make the change more clear. The challenging for me is that the fake device information used in the unit test is in storage_monitor::StorageInfo format which is a higher level structure, not the raw MtpStorageInfo. In prod, we get the raw MtpStorageInfo and calculate the needed members to create a storage_monitor::StorageInfo. \n\n@thestig would you please indicate me where can I get fake yet acceptable MtpStorageInfo raw data? I get no ChromeOS here, and didn\u0027t find clue in the unit tests of MTP implementation.",
+      "parentUuid": "00bc4f86_73871dea",
+      "revId": "2113562406ea4226015728d7cf8bd038b6c13817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f1265c_e2b45ba6",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
         "patchSetId": 8
