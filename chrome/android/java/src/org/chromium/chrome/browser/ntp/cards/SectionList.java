@@ -340,6 +340,17 @@ public class SectionList
     }
 
     /**
+     * Forces the header for {@link KnownCategories#ARTICLES} section to be visible. Only intended
+     * for use in a rough contextual suggestions prototype.
+     */
+    public void forceShowArticlesHeader() {
+        SuggestionsSection articlesSection = mSections.get(KnownCategories.ARTICLES);
+        if (articlesSection == null) return;
+
+        articlesSection.setHeaderVisibility(true);
+    }
+
+    /**
      * Checks that the list of categories currently displayed by this list is the same as
      * {@code newCategories}: same categories in the same order.
      */
