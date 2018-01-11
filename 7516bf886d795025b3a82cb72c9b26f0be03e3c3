@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "88383f5f_e791fdae",
+        "filename": "content/common/url_loader_factory_bundle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-11T17:52:04Z",
+      "side": 1,
+      "message": "Talked offline: The preferred solution is to wait for the browser to push |URLLoaderFactoryBundle| updates during connection error, thus we don\u0027t need additional logic on the renderer side.",
+      "parentUuid": "b112b673_4333f7d1",
+      "revId": "7516bf886d795025b3a82cb72c9b26f0be03e3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efe80823_60700e7b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 3
