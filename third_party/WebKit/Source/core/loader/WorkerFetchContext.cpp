@@ -301,7 +301,7 @@ void WorkerFetchContext::DispatchDidReceiveData(unsigned long identifier,
 void WorkerFetchContext::DispatchDidReceiveEncodedData(
     unsigned long identifier,
     int encoded_data_length) {
-  probe::didReceiveEncodedDataLength(global_scope_, identifier,
+  probe::didReceiveEncodedDataLength(global_scope_, identifier, nullptr,
                                      encoded_data_length);
 }
 

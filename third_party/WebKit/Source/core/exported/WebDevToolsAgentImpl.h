@@ -106,6 +106,7 @@ class CORE_EXPORT WebDevToolsAgentImpl final
   void LayerTreeViewChanged(WebLayerTreeView*);
   void RootLayerCleared();
   bool CacheDisabled();
+  String NavigationInitiatorInfo(LocalFrame*);
   String EvaluateInOverlayForTesting(const String& script);
 
  private:
