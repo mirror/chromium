@@ -34,6 +34,11 @@ class SlowConstructor {
     ++constructed;
     some_int_ = 12;
   }
+
+  // Non-default destructor to make the type more "complex" for the is_pod test
+  // below.
+  ~SlowConstructor() { some_int_ = 64; }
+
   int some_int() const { return some_int_; }
 
   static int constructed;
@@ -180,4 +185,18 @@ TEST(LazyInstanceTest, Alignment) {
   EXPECT_ALIGNED(align4.Pointer(), 4);
   EXPECT_ALIGNED(align32.Pointer(), 32);
   EXPECT_ALIGNED(align4096.Pointer(), 4096);
+}
+
+TEST(LazyInstanceTest, ConstExprConstructible) {
+  // Mostly just verifying that this compiles, the runtime test itself won't do
+  // much... Declaring the variable constexpr forces the compiler to verify that
+  // this is possible but renders the LazyInstance unusable as none of its
+  // methods are const.
+  static constexpr base::LazyInstance<SlowConstructor>
+      kTestConstExprConstructible;
+  static constexpr base::LazyInstance<SlowConstructor>
+      kTestConstExprConstructibleWithExplicitInitializer =
+          LAZY_INSTANCE_INITIALIZER;
+  ALLOW_UNUSED_LOCAL(kTestConstExprConstructible);
+  ALLOW_UNUSED_LOCAL(kTestConstExprConstructibleWithExplicitInitializer);
 }
