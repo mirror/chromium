@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c204424_f42bd965",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-11T10:52:58Z",
+      "side": 1,
+      "message": "→ it is",
+      "range": {
+        "startLine": 171,
+        "startChar": 46,
+        "endLine": 171,
+        "endChar": 49
+      },
+      "revId": "3748c843ab4ba0d2d185b29f652523da17700501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4299c837_4c8e2318",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-11T10:52:58Z",
+      "side": 1,
+      "message": "Why not create this array in the initializer? This would avoid having a check every time the value is used.",
+      "revId": "3748c843ab4ba0d2d185b29f652523da17700501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a6164b_cf145a11",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-11T10:52:58Z",
+      "side": 1,
+      "message": "I think you can use \"id\u003cToolbarCommands\u003e\" here since @selector(contractToolbar) is defined in ToolbarCommands AFAICT.",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "3748c843ab4ba0d2d185b29f652523da17700501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75984097_7126d596",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-11T10:52:58Z",
+      "side": 1,
+      "message": "ditto, @selector(triggerToolsMenuButtonAnimation) is defined in ToolbarCommands.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 47
+      },
+      "revId": "3748c843ab4ba0d2d185b29f652523da17700501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5a2a24_d9397f1b",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-11T10:52:58Z",
+      "side": 1,
+      "message": "ditto, @selector(navigateToMemexTabSwitcher) is defined in ToolbarCommands.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 47
+      },
+      "revId": "3748c843ab4ba0d2d185b29f652523da17700501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
