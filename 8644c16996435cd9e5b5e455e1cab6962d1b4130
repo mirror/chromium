@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a37a9b5_f81253b2",
+        "filename": "content/browser/devtools/shared_worker_devtools_agent_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:52:48Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why some calls to this are guarded by EnsureAgent(), i.e. see line 104, while others are not.",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea5440b8_febea0bb",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
         "patchSetId": 6
@@ -49,6 +66,23 @@
       "side": 1,
       "message": "Yeah, I think that\u0027s acceptable.",
       "parentUuid": "83fb6bc3_5a702d13",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3babe221_e5421a92",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:52:48Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this; can we add a comment to document this a bit?",
       "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
