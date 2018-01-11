@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0f70f4_72cdaeb3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-11T19:34:23Z",
+      "side": 1,
+      "message": "perhaps:\n\nThe Chromium implementation is not included in stable Chrome builds due to adding too much to the binary size.  It is run on the Chromium infrastructure when web platform tests are run using the \u0027content_shell\u0027 executable.\n\nIt is possible in the future that Chromium src/device/bluetooth is refactored into a Mojo service.  Then web platform tests could inject an implementation for testing into stable Chrome run on Web Platform Tests infrastructure, similar to WebUSB.\n\nThese bluetooth tests are upstreamed here because other browsers can reuse them by implementing the [Web Bluetooth Testing API], even if only on their internal infrastructure.",
+      "revId": "f26df400912a017a9660c432c54efa0f467893d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
