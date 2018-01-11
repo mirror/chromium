@@ -57,6 +57,7 @@
 #include "core/dom/TreeScope.h"
 #include "core/dom/UserActionElementSet.h"
 #include "core/dom/ViewportDescription.h"
+#include "core/editing/Forward.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/html/custom/V0CustomElement.h"
@@ -277,12 +278,15 @@ class CORE_EXPORT Document : public ContainerNode,
   static Document* CreateForTest() {
     return new Document(DocumentInit::Create());
   }
+
   // Factory for web-exposed Document constructor. The argument document must be
   // a document instance representing window.document, and it works as the
   // source of ExecutionContext and security origin of the new document.
   // https://dom.spec.whatwg.org/#dom-document-document
   static Document* Create(Document&);
   ~Document() override;
+
+  static Range* CreateAdjustedToTreeScope(const TreeScope&, const Position&);
 
   // Support JS introspection of frame policy (e.g. feature policy).
   Policy* policy();
