@@ -110,9 +110,10 @@ mojom("test_export") {
     export_header_blink =
         "mojo/public/cpp/bindings/tests/mojo_test_blink_export.h"
   }
-  visibility = [ ":test_export_component" ]
+
+  # :visibility = [ ":test_export_component" ]
   if (!is_ios) {
-    visibility_blink = [ ":test_export_blink_component" ]
+    # visibility_blink = [ ":test_export_blink_component" ]
   }
 }
 
@@ -125,12 +126,12 @@ mojom("test_exported_import") {
     ":test_export",
   ]
 
-  overridden_deps = [ ":test_export" ]
-  component_deps = [ ":test_export_component" ]
-  if (!is_ios) {
-    overridden_deps_blink = [ ":test_export" ]
-    component_deps_blink = [ ":test_export_blink_component" ]
-  }
+  #  overridden_deps = [ ":test_export" ]
+  #  component_deps = [ ":test_export_component" ]
+  #  if (!is_ios) {
+  #    overridden_deps_blink = [ ":test_export" ]
+  #    component_deps_blink = [ ":test_export_blink_component" ]
+  #  }
 }
 
 # Used to test that it is okay to call mojom::Foo::Serialize()/Deserialize()
