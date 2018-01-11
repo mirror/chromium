@@ -70,6 +70,24 @@
       "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c066e0c3_20b73ac0",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T21:47:46Z",
+      "side": 1,
+      "message": "It depends on how many requests socket_host_tcp makes at once.  If it makes more than 32 total, or more than 6 per host-port-pair, this will significantly affect behavior, since we\u0027re now respecting socket pool limits.  We\u0027d be better off using MAXIMUM_PRIORITY and LOAD_IGNORE_LIMITS than using MEDIUM priority, I think.  I don\u0027t know how many requests this makes, or to how many domains, so have no way of gauging the impact of either option.",
+      "parentUuid": "d0ad749d_8c1fabe6",
+      "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
