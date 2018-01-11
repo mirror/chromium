@@ -2,20 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-cr.exportPath('print_preview_new');
-
-/**
- * Must be kept in sync with the C++ MarginType enum in
- * printing/print_job_constants.h.
- * @enum {number}
- */
-print_preview_new.MarginsTypeValue = {
-  DEFAULT: 0,
-  NO_MARGINS: 1,
-  MINIMUM: 2,
-  CUSTOM: 3
-};
-
 Polymer({
   is: 'print-preview-model',
 
@@ -23,25 +9,7 @@ Polymer({
     /**
      * Object containing current settings of Print Preview, for use by Polymer
      * controls.
-     * @type {{
-     *   pages: !print_preview_new.Setting,
-     *   copies: !print_preview_new.Setting,
-     *   collate: !print_preview_new.Setting,
-     *   layout: !print_preview_new.Setting,
-     *   color: !print_preview_new.Setting,
-     *   mediaSize: !print_preview_new.Setting,
-     *   margins: !print_preview_new.Setting,
-     *   dpi: !print_preview_new.Setting,
-     *   fitToPage: !print_preview_new.Setting,
-     *   scaling: !print_preview_new.Setting,
-     *   duplex: !print_preview_new.Setting,
-     *   cssBackground: !print_preview_new.Setting,
-     *   selectionOnly: !print_preview_new.Setting,
-     *   headerFooter: !print_preview_new.Setting,
-     *   rasterize: !print_preview_new.Setting,
-     *   vendorItems: !print_preview_new.Setting,
-     *   otherOptions: !print_preview_new.Setting,
-     * }}
+     * @type {!print_preview_new.Settings}
      */
     settings: {
       type: Object,
@@ -51,26 +19,31 @@ Polymer({
           value: [1],
           valid: true,
           available: true,
+          key: '',
         },
         copies: {
           value: '1',
           valid: true,
           available: true,
+          key: '',
         },
         collate: {
           value: true,
           valid: true,
           available: true,
+          key: 'isCollateEnabled',
         },
         layout: {
           value: false, /* portrait */
           valid: true,
           available: true,
+          key: 'isLandscapeEnabled',
         },
         color: {
           value: true, /* color */
           valid: true,
           available: true,
+          key: 'isColorEnabled',
         },
         mediaSize: {
           value: {
@@ -79,56 +52,67 @@ Polymer({
           },
           valid: true,
           available: true,
+          key: 'mediaSize',
         },
         margins: {
           value: 0,
           valid: true,
           available: true,
+          key: 'marginsType',
         },
         dpi: {
           value: {},
           valid: true,
           available: true,
+          key: 'dpi',
         },
         fitToPage: {
           value: false,
           valid: true,
           available: true,
+          key: 'isFitToPageEnabled',
         },
         scaling: {
           value: '100',
           valid: true,
           available: true,
+          key: 'scaling',
         },
         duplex: {
           value: true,
           valid: true,
           available: true,
+          key: 'isDuplexEnabled',
         },
         cssBackground: {
           value: false,
           valid: true,
           available: true,
+          key: 'isCssBackgroundEnabled',
         },
         selectionOnly: {
           value: false,
           valid: true,
           available: true,
+          key: '',
         },
         headerFooter: {
           value: true,
           valid: true,
           available: true,
+          key: 'isHeaderFooterEnabled',
         },
         rasterize: {
           value: false,
           valid: true,
           available: true,
+          key: '',
         },
         vendorItems: {
           value: {},
           valid: true,
           available: true,
+          key: '',
         },
         // This does not represent a real setting value, and is used only to
         // expose the availability of the other options settings section.
@@ -136,7 +120,13 @@ Polymer({
           value: null,
           valid: true,
           available: true,
+          key: '',
         },
+        serialization: {
+          version: 2,
+          recentDestinations: [],
+        },
+        initialized: false,
       },
     },
 

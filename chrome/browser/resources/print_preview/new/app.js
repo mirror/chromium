@@ -2,38 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-cr.exportPath('print_preview_new');
-
-/**
- * @typedef {{
- *    version: string,
- *    recentDestinations: (!Array<!print_preview.RecentDestination> |
- *                         undefined),
- *    dpi: ({horizontal_dpi: number,
- *           vertical_dpi: number,
- *           is_default: (boolean | undefined)} | undefined),
- *    mediaSize: ({height_microns: number,
- *                 width_microns: number,
- *                 custom_display_name: (string | undefined),
- *                 is_default: (boolean | undefined)} | undefined),
- *    marginsType: (print_preview_new.MarginsTypeValue | undefined),
- *    customMargins: ({marginTop: number,
- *                     marginBottom: number,
- *                     marginLeft: number,
- *                     marginRight: number} | undefined),
- *    isColorEnabled: (boolean | undefined),
- *    isDuplexEnabled: (boolean | undefined),
- *    isHeaderFooterEnabled: (boolean | undefined),
- *    isLandscapeEnabled: (boolean | undefined),
- *    isCollateEnabled: (boolean | undefined),
- *    isFitToPageEnabled: (boolean | undefined),
- *    isCssBackgroundEnabled: (boolean | undefined),
- *    scaling: (string | undefined),
- *    vendor_options: (Object | undefined)
- * }}
- */
-print_preview_new.SerializedSettings;
-
 Polymer({
   is: 'print-preview-app',
 
@@ -104,9 +72,6 @@ Polymer({
   measurementSystem_: new print_preview.MeasurementSystem(
       ',', '.', print_preview.MeasurementSystemUnitType.IMPERIAL),
 
-  /** @private {!Array<!print_preview.RecentDestination>} */
-  recentDestinations_: [],
-
   /** @override */
   attached: function() {
     this.nativeLayer_ = print_preview.NativeLayer.getInstance(),
@@ -159,7 +124,7 @@ Polymer({
     this.destinationStore_.init(
         settings.isInAppKioskMode, settings.printerName,
         settings.serializedDefaultDestinationSelectionRulesStr,
-        this.recentDestinations_);
+        this.settings.serialization.recentDestinations);
   },
 
   /** @private */
@@ -179,11 +144,12 @@ Polymer({
     if (!this.destination_)
       return;
 
+    const recentDestinations = this.settings.serialization.recentDestinations;
     // Determine if this destination is already in the recent destinations,
     // and where in the array it is located.
     const newDestination =
         print_preview.makeRecentDestination(assert(this.destination_));
-    let indexFound = this.recentDestinations_.findIndex(function(recent) {
+    let indexFound = recentDestinations.findIndex(function(recent) {
       return (
           newDestination.id == recent.id &&
           newDestination.origin == recent.origin);
@@ -191,22 +157,21 @@ Polymer({
 
     // No change
     if (indexFound == 0 &&
-        this.recentDestinations_[0].capabilities ==
-            newDestination.capabilities) {
+        recentDestinations[0].capabilities == newDestination.capabilities) {
       return;
     }
 
     // Shift the array so that the nth most recent destination is located at
     // index n.
     if (indexFound == -1 &&
-        this.recentDestinations_.length == this.NUM_DESTINATIONS_) {
+        recentDestinations.length == this.NUM_DESTINATIONS_) {
       indexFound = this.NUM_DESTINATIONS_ - 1;
     }
     if (indexFound != -1)
-      this.recentDestinations_.splice(indexFound, 1);
+      this.settings.serialization.recentDestinations.splice(indexFound, 1);
 
     // Add the most recent destination
-    this.recentDestinations_.splice(0, 0, newDestination);
+    this.settings.serialization.recentDestinations.splice(0, 0, newDestination);
   },
 
   /**
@@ -214,30 +179,41 @@ Polymer({
    * @private
    */
   updateFromStickySettings_(savedSettingsStr) {
-    if (!savedSettingsStr)
+    if (!savedSettingsStr) {
+      this.settings.serialization.version = 2;
+      this.settings.serialization.recentDestinations = [];
+      this.settings.initialized = true;
       return;
+    }
+
     let savedSettings;
     try {
       savedSettings = /** @type {print_preview_new.SerializedSettings} */ (
           JSON.parse(savedSettingsStr));
     } catch (e) {
       console.error('Unable to parse state ' + e);
+      this.settings.initialized = true;
       return;  // use default values rather than updating.
     }
+    if (savedSettings.version == 2)
+      this.set('settings.serialization', savedSettings);
 
-    this.recentDestinations_ = savedSettings.recentDestinations || [];
-    if (!Array.isArray(this.recentDestinations_))
-      this.recentDestinations_ = [this.recentDestinations_];
+    this.settings.serialization.recentDestinations =
+        this.settings.serialization.recentDestinations || [];
+    if (!Array.isArray(this.settings.serialization.recentDestinations)) {
+      this.settings.serialization.recentDestinations =
+          [this.settings.serialization.recentDestinations];
+    }
 
-    const updateIfDefined = (key1, key2) => {
-      if (savedSettings[key2] != undefined)
-        this.setSetting(key1, savedSettings[key2]);
-    };
-    [['dpi', 'dpi'], ['mediaSize', 'mediaSize'], ['margins', 'marginsType'],
-     ['color', 'isColorEnabled'], ['headerFooter', 'isHeaderFooterEnabled'],
-     ['layout', 'isLandscapeEnabled'], ['collate', 'isCollateEnabled'],
-     ['scaling', 'scaling'], ['fitToPage', 'isFitToPageEnabled'],
-     ['cssBackground', 'isCssBackgroundEnabled'],
-    ].forEach(keys => updateIfDefined(keys[0], keys[1]));
+    ['dpi', 'mediaSize', 'margins', 'color', 'headerFooter', 'layout',
+     'collate', 'scaling', 'fitToPage', 'duplex', 'cssBackground']
+        .forEach(settingName => {
+          const setting = this.getSetting(settingName);
+          if (this.settings.serialization[setting.key] != undefined) {
+            this.setSetting(
+                settingName, this.settings.serialization[setting.key]);
+          }
+        });
+    this.settings.initialized = true;
   },
 });
