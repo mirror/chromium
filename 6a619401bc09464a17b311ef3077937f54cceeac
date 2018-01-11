@@ -170,6 +170,30 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad101021_f9fb5db1",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-11T13:49:09Z",
+      "side": 1,
+      "message": "That would be nice, but it doesn\u0027t work with SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl, which is instantiated on the main thread and registers itself as a BlockingObserver on a worker thread.",
+      "parentUuid": "67ecb188_61336a76",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 20
+      },
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
