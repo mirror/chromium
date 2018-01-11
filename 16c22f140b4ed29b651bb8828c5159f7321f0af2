@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd97494_a089fc52",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "We should check return value of |ReplaceComposition()| to avoid dispatch\n\"compositionend\" when it |ReplaceComposition()| returns false.\n\nCould you create another patch to attach WARN_UNUSED_RESULT to\n|ReplaceComposition()| and fix calls sites which don\u0027t check return value?",
+      "range": {
+        "startLine": 400,
+        "startChar": 6,
+        "endLine": 400,
+        "endChar": 24
+      },
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a41f65_d01d1a2e",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "In another patch, we want to move calling |DispatchCompositionEndEvent()|\nafter selection update to allow JS moves selection by \"compositionend\".",
+      "range": {
+        "startLine": 405,
+        "startChar": 4,
+        "endLine": 405,
+        "endChar": 31
+      },
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e31e92c_e76324cb",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "nit: return IsAvailable()",
+      "range": {
+        "startLine": 482,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 13
+      },
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450e6f7c_7dfccaff",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "|result| is redundant.",
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b345e050_1d0dc5fd",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "We don\u0027t need to have extra block scope.",
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6279c079_782ec30a",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "We don\u0027t need to have extra block scope.",
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa332338_42537b43",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:30:50Z",
+      "side": 1,
+      "message": "We don\u0027t need to have extra block scope here.",
+      "revId": "16c22f140b4ed29b651bb8828c5159f7321f0af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
