@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9d1d9e_5778c2f5",
+        "filename": "content/zygote/zygote_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T22:45:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure I totally follow this comment (the \"escape mechanism\" and \"under the covers\" parts). More simply stated as, \"Sandbox IPC channel for renderers to invoke services from the browser. See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandbox_ipc.md.\" ?",
+      "revId": "5d52e3376c4ba0341a9287993951bb5cf736a1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
