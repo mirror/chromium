@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "586e7195_a8e7046a",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T11:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3168748f_b2814031",
+      "range": {
+        "startLine": 91,
+        "startChar": 58,
+        "endLine": 91,
+        "endChar": 72
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11fde7da_5a6b6e58",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 5
@@ -68,6 +92,30 @@
       "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8042a0eb_39fb95f8",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T11:18:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11fde7da_5a6b6e58",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 1
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c683103d_fc65f31c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T11:18:43Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "3381216f_72de8a05",
+      "range": {
+        "startLine": 145,
+        "startChar": 65,
+        "endLine": 145,
+        "endChar": 79
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c087f45_759dd73f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 5
@@ -114,6 +186,30 @@
       "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afbaba9_5221b449",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T11:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c087f45_759dd73f",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 37
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +256,30 @@
       "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec228c59_1608b127",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T11:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29945e3c_b14a938b",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 50
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
