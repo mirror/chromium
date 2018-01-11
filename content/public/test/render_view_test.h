@@ -94,13 +94,13 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
 
   // Loads |html| into the main frame as a data: URL and blocks until the
   // navigation is committed.
-  void LoadHTML(const char* html);
+  virtual void LoadHTML(const char* html);
 
   // Pretends to load |url| into the main frame, but substitutes |html| for the
   // response body (and does not include any response headers). This can be used
   // instead of LoadHTML for tests that cannot use a data: url (for example if
   // document.location needs to be set to something specific.)
-  void LoadHTMLWithUrlOverride(const char* html, const char* url);
+  virtual void LoadHTMLWithUrlOverride(const char* html, const char* url);
 
   // Returns the current PageState.
   // In OOPIF enabled modes, this returns a PageState object for the main frame.

@@ -59,9 +59,9 @@ PanelTest.prototype = {
   },
 
   linksDoc: function() {/*!
-    <a href="#">apple</a>
-    <a href="#">grape</a>
-    <a href="#">banana</a>
+    <a href="%23">apple</a>
+    <a href="%23">grape</a>
+    <a href="%23">banana</a>
   */}
 };
 

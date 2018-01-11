@@ -396,7 +396,7 @@ TEST_F('CursorsTest', 'MultiLineOffsetSelection', function() {
 TEST_F('CursorsTest', 'InlineElementOffset', function() {
   this.runWithLoadedTree(function() {/*!
     <span>start</span>
-    <p>This<br> is a<a href="#g">test</a>of selection</p>
+    <p>This<br> is a<a href="%23g">test</a>of selection</p>
   */}, function(root) {
     root.addEventListener('textSelectionChanged', this.newCallback(function(evt) {
       // Test setup moves initial focus; ensure we don't test that here.

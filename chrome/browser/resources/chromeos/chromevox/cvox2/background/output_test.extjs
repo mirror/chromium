@@ -705,7 +705,7 @@ TEST_F('OutputE2ETest', 'BraileWhitespace', function() {
 
 TEST_F('OutputE2ETest', 'BrailleAncestry', function() {
   this.runWithLoadedTree(function() {/*!
-    <ul><li><a href="#">test</a></li></ul>
+    <ul><li><a href="%23">test</a></li></ul>
   */},
   function(root) {
     var text = root.find({role: 'inlineTextBox'});
