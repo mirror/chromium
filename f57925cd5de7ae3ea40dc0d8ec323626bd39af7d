@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c6fa1d_f1e975d3",
+        "filename": "base/debug/alias.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:28:26Z",
+      "side": 1,
+      "message": "I hope this is okay and doesn\u0027t lead to circular dependencies in the future.  If this is a concern, then I can replace base::strlcpy with strncpy from the standard library (+ setting the nul char at the end of the string).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "f57925cd5de7ae3ea40dc0d8ec323626bd39af7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8defe9d2_08c68152",
+        "filename": "base/debug/alias.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:28:26Z",
+      "side": 1,
+      "message": "No new unit tests in //base, because I felt that:\n\n- the tests in url/gurl_unittests.cc and url/origin_unittests.cc are sufficient\n\n- adding base/debug/alias_unittests.cc with a single test wasn\u0027t worth the benefits",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "f57925cd5de7ae3ea40dc0d8ec323626bd39af7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aa9e13_de7b01eb",
+        "filename": "url/gurl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T16:28:26Z",
+      "side": 1,
+      "message": "EXPECT_STREQ makes sense in this test on the previous line is a fine test assertion, but this type equality verification feels like possibly borderline overtesting.  I can remove it maybe.  What I really want here is to say \"url_debug_alias\" is a stack-allocated array of chars (without necessarily caring about the size of the array).",
+      "range": {
+        "startLine": 893,
+        "startChar": 21,
+        "endLine": 893,
+        "endChar": 38
+      },
+      "revId": "f57925cd5de7ae3ea40dc0d8ec323626bd39af7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
