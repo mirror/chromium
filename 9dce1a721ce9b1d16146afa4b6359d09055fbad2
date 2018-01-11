@@ -16,6 +16,75 @@
       "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccab4133_63bb1b06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-11T13:30:02Z",
+      "side": 1,
+      "message": "They should. If not, we\u0027ll have to hunt down where the problem is. In fact, I don\u0027t understand why they\u0027re not found already - can you do a console.log(JSON.stringify(stats)) to see if they\u0027re present under some other ID?",
+      "parentUuid": "f33e2289_93e34413",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b462b17_ff0dec06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-11T13:30:02Z",
+      "side": 1,
+      "message": "assert_true(trackStats)? (I think it\u0027s more readable, and the result should never be falsy anyway)",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10c32d4_19e2ec58",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-11T13:30:02Z",
+      "side": 1,
+      "message": "Add check that isDeleted and deleted are both set in the stats. They\u0027re both in the spec at the moment, even though we might delete either or both!",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e667a50_711c3dd5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-11T13:30:02Z",
+      "side": 1,
+      "message": "You could merge these two tests and save on boilerplate code. I\u0027m more worried about maintaining lots of boilerplate than I am about number of failing / passing tests.",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
