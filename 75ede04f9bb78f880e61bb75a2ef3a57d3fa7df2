@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ab2c784_6365565c",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T16:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6955179c_e90d4d3d",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 29
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00007c12_3a20b3e1",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d5bf6c_d237a5b3",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T16:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00007c12_3a20b3e1",
+      "range": {
+        "startLine": 647,
+        "startChar": 60,
+        "endLine": 647,
+        "endChar": 68
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "acc0bcfc_6c1a6db5",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T16:58:56Z",
+      "side": 1,
+      "message": "Done. I\u0027ve introduced IllegalPatternException for this case.",
+      "parentUuid": "f712f8cb_6c3d06ca",
+      "range": {
+        "startLine": 655,
+        "startChar": 17,
+        "endLine": 655,
+        "endChar": 29
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d4064d_301f3405",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71e9e8c_30039e47",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T16:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d4064d_301f3405",
+      "range": {
+        "startLine": 693,
+        "startChar": 12,
+        "endLine": 693,
+        "endChar": 50
+      },
+      "revId": "75ede04f9bb78f880e61bb75a2ef3a57d3fa7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
