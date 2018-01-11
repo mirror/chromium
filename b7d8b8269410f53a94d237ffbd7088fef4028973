@@ -52,6 +52,24 @@
       "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ad749d_8c1fabe6",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T21:42:38Z",
+      "side": 1,
+      "message": "I reverted this change and filed a follow-up bug at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d801321. This is an orthogonal issue that can be addressed separately, right? let me know if you\u0027d like me to do it in this CL.",
+      "parentUuid": "285d8ed7_fc24c731",
+      "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
