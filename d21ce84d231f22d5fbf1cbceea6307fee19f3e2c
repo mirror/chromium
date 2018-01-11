@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa31bee_9fc664b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95ed31b_2b2f9aee",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9807fdb_46063d7d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/get_all_no_arguments_empty_cookie_jar.tentative.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768ecc05_2ef9f364",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/get_all_no_arguments_empty_cookie_jar.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9807fdb_46063d7d",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7956d231_70fbc034",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "unprefixed moved to the end\n\nrenamed tests\n\ni intend to add prefixed cases separately in a follow-up change (some of them fail differently right now)",
+      "parentUuid": "ca10da7f_89661953",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a5d4a9_88d681d3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca781440_ceb123ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a5d4a9_88d681d3",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9d2b77a1_a9e265f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d185463b_07e89a9b",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9064f8_f0ec478b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d9a1c7_b03d2376",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something, the draft cookie RFC does not actually specify UA behavior for this, and leaves it to non-normative notes/guidance for cookie-setting applications (called \"servers\" there, somewhat confusingly):\n\nhttps://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-4.1.2.3\n\n  \"If the server omits the Domain attribute, the user\n   agent will return the cookie only to the origin server.\n\n  \"WARNING: Some existing user agents treat an absent Domain attribute\n   as if the Domain attribute were present and contained the current\n   host name.  For example, if example.com returns a Set-Cookie header\n   without a Domain attribute, these user agents will erroneously send\n   the cookie to www.example.com as well.\"\n\nRemoved reference to browser names, added a meta help link to that.",
+      "parentUuid": "2b9064f8_f0ec478b",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "dcf427c1_1c05a0df",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "cookie names and values have their own traditional conventions - i have tried to follow those.\n\nswitched from implied to implicit to more accurately reflect what\u0027s happening.\n\nleft the suffix in place so that the intent is clearer when attempting to debug a failing test.",
+      "parentUuid": "5355c227_d85e506b",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b91b942d_72c10d56",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc17476_7bcd13b5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "I want to explicitly show that the same name appearing more than once is ordered correctly at each occurrence and that all instances are visible. See the new names and let me know what you think.",
+      "parentUuid": "b91b942d_72c10d56",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "e0521694_66209862",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "We can\u0027t use different names in this test case - the test would not be testing shadowing then. However I no longer use the same cookie names across multiple cases.\n\nTesting shadowing interactions with ordering is exactly the point of this test.",
+      "parentUuid": "a964c4c1_7f33ce8c",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eb4131e_1139bcd1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdec55f7_506fb4d3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-11T23:39:04Z",
+      "side": 1,
+      "message": "Done. Leaving out try/finally caused too many problems when multiple tests run in the same file since cookies are global state and the different tests no longer share cookie names",
+      "parentUuid": "7eb4131e_1139bcd1",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
