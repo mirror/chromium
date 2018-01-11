@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87dfee37_3e079cdd",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-11T15:30:37Z",
+      "side": 1,
+      "message": "Yeah, I just didn\u0027t want to assume sadrul@\u0027s DispatchMouseEvent() fcn would know what to do with a null target (although it might never receive one), so I though I would avoid removing this check altogether for the time being.\n\nsadrul@ ... what do you think?",
+      "parentUuid": "20ca6c98_89a7bd76",
+      "range": {
+        "startLine": 99,
+        "startChar": 22,
+        "endLine": 99,
+        "endChar": 77
+      },
+      "revId": "c3c5366fb419c8baa9a2b7be1934fd0dfbfbb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6121b2d_b612d115",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c3c5366fb419c8baa9a2b7be1934fd0dfbfbb3d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adc0aa6_db8f0c5b",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-11T15:30:37Z",
+      "side": 1,
+      "message": "Yes, thanks for spotting that!",
+      "parentUuid": "c6121b2d_b612d115",
+      "range": {
+        "startLine": 159,
+        "startChar": 48,
+        "endLine": 159,
+        "endChar": 61
+      },
+      "revId": "c3c5366fb419c8baa9a2b7be1934fd0dfbfbb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
