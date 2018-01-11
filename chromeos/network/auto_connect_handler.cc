@@ -46,6 +46,32 @@ void DisconnectErrorCallback(
 
 }  // namespace
 
+// static
+std::string AutoConnectHandler::AutoConnectReasonsToString(
+    int auto_connect_reasons) {
+  if (!auto_connect_reasons)
+    return "[]";
+
+  std::stringstream ss;
+  ss << "[";
+
+  if (auto_connect_reasons & AUTO_CONNECT_REASON_LOGGED_IN)
+    ss << "Logged In,";
+
+  if (auto_connect_reasons & AUTO_CONNECT_REASON_POLICY_APPLIED)
+    ss << "Policy Applied,";
+
+  if (auto_connect_reasons & AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED)
+    ss << "Certificate resolved,";
+
+  // Move backward one character so that the final trailing comma will be
+  // replaced by the ']' character below.
+  ss.seekp(-1, ss.cur);
+  ss << "]";
+
+  return ss.str();
+}
+
 AutoConnectHandler::AutoConnectHandler()
     : client_cert_resolver_(nullptr),
       request_best_connection_pending_(false),
@@ -181,6 +207,9 @@ void AutoConnectHandler::RemoveObserver(Observer* observer) {
 }
 
 void AutoConnectHandler::NotifyAutoConnectInitiated(int auto_connect_reasons) {
+  NET_LOG_DEBUG("NotifyAutoConnectInitiated",
+                AutoConnectReasonsToString(auto_connect_reasons));
+
   for (auto& observer : observer_list_)
     observer.OnAutoConnectedInitiated(auto_connect_reasons);
 }
