@@ -106,6 +106,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a2fc153_1a6361ed",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T00:40:28Z",
+      "side": 1,
+      "message": "* It\u0027s fired automatically when you load a web page that has a fragment\n\nThis will cause all sorts of unexpected behavior.\n\nIt took some amount of fine tuning to get focus recovery to work *after* a load complete and to respect scenarios where users start tabbing before hand. It also took a while to get the startup, alt-tabbing, and back/forward navigation cases to all work. I\u0027m just not convinced throwing in this event will help, just for the sake of the api.\n\nI\u0027ll investigate plumbing hrough a callback for AutomationNode.hitTest instead, since that\u0027s in truth, what we need here.",
+      "parentUuid": "784fd4c6_0d600833",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
