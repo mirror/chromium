@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8b6592e_834993c5",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T21:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f91c1f0d_5b44c21f",
+      "revId": "8a50594b7eca47a5e9e5b70faaef62688ad2e872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7d272b_851d78a5",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8a50594b7eca47a5e9e5b70faaef62688ad2e872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea4608c_d14f6019",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T21:42:35Z",
+      "side": 1,
+      "message": "Great idea, done.",
+      "parentUuid": "3a7d272b_851d78a5",
+      "revId": "8a50594b7eca47a5e9e5b70faaef62688ad2e872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
