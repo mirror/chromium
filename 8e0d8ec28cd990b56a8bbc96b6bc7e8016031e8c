@@ -16,6 +16,24 @@
       "revId": "8e0d8ec28cd990b56a8bbc96b6bc7e8016031e8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71145211_2f2cc11f",
+        "filename": "build/config/allocator.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158814
+      },
+      "writtenOn": "2018-01-11T10:29:17Z",
+      "side": 1,
+      "message": "Usage of tcmalloc in Chromium has not been supported for mipsel and mips64el.\n\nIt might be supported in future with change:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/853695\n\nThus, I don\u0027t think it\u0027s correct to add mipsel and mips64el in the comment about temporary disabling tcmalloc.",
+      "parentUuid": "c099327e_f4b358e1",
+      "revId": "8e0d8ec28cd990b56a8bbc96b6bc7e8016031e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
