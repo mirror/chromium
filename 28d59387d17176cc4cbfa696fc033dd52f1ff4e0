@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03cd2e3b_561b89c3",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-11T23:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75998a00_efeb19c6",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060b0542_93acfe47",
         "filename": "chromecast/browser/extensions/cast_extension_host_delegate.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "302fd9f7_cc6ce58c",
+        "filename": "chromecast/browser/extensions/cast_extension_host_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-11T23:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060b0542_93acfe47",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6b9a8a7_1f355267",
         "filename": "chromecast/browser/extensions/cast_extension_system.cc",
         "patchSetId": 10
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-11T22:04:25Z",
       "side": 1,
       "message": "Having a NOTREACHED() and then doing what looks like real work is weird.",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dae17d_b2a168bb",
+        "filename": "chromecast/browser/extensions/cast_extension_system.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-11T23:41:54Z",
+      "side": 1,
+      "message": "That is true, it is a bit weird. I pulled this file from extensions/shell and that\u0027s what it had in it. This should actually never happen for our usage so I\u0027ll delete the base call",
+      "parentUuid": "c6b9a8a7_1f355267",
       "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "56e876a1_2a04a07d",
+        "filename": "chromecast/browser/extensions/cast_extensions_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-11T23:41:54Z",
+      "side": 1,
+      "message": "There is a concept of channels but we haven\u0027t figured out how that relates to extension APIs yet",
+      "parentUuid": "3575d7e9_23bd4d8f",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a074b5ed_f702fe27",
         "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
         "patchSetId": 10
@@ -87,6 +165,24 @@
       "writtenOn": "2018-01-11T22:04:25Z",
       "side": 1,
       "message": "In extensions/, it looks like system_info and system_storage use StorageMonitor. Do you need those APIs? I wonder if it is possible to exclude APIs to reduce dependencies / build time / binary size.",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae779d85_3aa80590",
+        "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-11T23:41:54Z",
+      "side": 1,
+      "message": "No, we don\u0027t need those APIs. Eventually I hope to remove them (and the associated deps) as we mainly just want guest_view, but I\u0027m not 100% how to do that yet and it\u0027s better to get a patch that pulls in the world sooner so people can get unblocked now",
+      "parentUuid": "a074b5ed_f702fe27",
       "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
