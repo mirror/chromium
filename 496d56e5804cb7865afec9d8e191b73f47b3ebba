@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b061b4c_513145ab",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f681cf_c00b28f0",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdba207_10324ce3",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cedcbd_c7ceed7a",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/preserve-selection-direction.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: Could you use selection_test() instead of |test()| + |assert_selection()|?\n\n|selection_test()| is shorter than them.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fbcf22_0020e118",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/preserve-selection-direction.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need to check |anchofOffset| and |focusOffset|.\nThese checks are done by |assert_selection()| with \"^\" and \"|\".",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406731c4_0aa0c173",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "Note: we may want to change |UpdateStartEnd()| to take |EphemeralRange|...",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 38
+      },
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94f1108_9fc09530",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02a3102_fb2dc095",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:56:32Z",
+      "side": 1,
+      "message": "To utilize |is_direction| cache, it is better to write:\n\n\nconst EphemeralRange range(new_start, new_end);\nSelectionInDOMTree::Builder builder;\nbuilder.SetIsDirectional(EndingSelection().IsDirectional());\nif (was_base_first)\n  builder.SetAsForwardSelection(range);\nelse\n  builder.SetAsBackwardSelection(range);\nconst VisibleSelection\u0026 visible_selection \u003d CreateVisibleSelection(builder.Build());",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
