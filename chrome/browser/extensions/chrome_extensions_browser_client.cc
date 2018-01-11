@@ -267,6 +267,11 @@ bool ChromeExtensionsBrowserClient::IsRunningInForcedAppMode() {
   return chrome::IsRunningInForcedAppMode();
 }
 
+bool ChromeExtensionsBrowserClient::IsAppModeForcedForApp(
+    const ExtensionId& extension_id) {
+  return chrome::IsRunningInForeceAppModeForApp(extension_id);
+}
+
 bool ChromeExtensionsBrowserClient::IsLoggedInAsPublicAccount() {
 #if defined(OS_CHROMEOS)
   return user_manager::UserManager::Get()->IsLoggedInAsPublicAccount();
