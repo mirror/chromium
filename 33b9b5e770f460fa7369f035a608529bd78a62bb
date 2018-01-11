@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68265c16_7dcc5145",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "Also mention the prefix needs to match. i.e.\n\"This and the prefix need to be the same as those specified ...\"",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7ca825_cddeb854",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "s/Prefixes/Prefix\n(now the non-persistent one was removed)",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58970279_8d603fc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "nit: it\u0027s always slightly confusing to have two constants named the same thing with slightly different values when used in the same code (anyone reading this code is going to have to double check whether the separator is included in any _PREFIX constant they read).\n\nConsider renaming one of them to something else, eg this one to NOTIFICATION_TAG_PREFIX_AND_SEPARATOR, or just do the concatenation inline.",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c278e8c6_32e16f1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "Please insert a comment above this line referencing the c++ code we\u0027re reversing here. You could also reference the new bug you made as a TODO, ie:\n\n// This code parses the notification id that was generated in notification_id_generator.cc\n// TODO(https://crbug.com/801164): Extract this to a separate class.",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 85
+      },
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded8e0b3_e6b564d8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeIntentTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "Actually, a more realistic notification id would be something like \"p#https://example.com#0\" wouldn\u0027t it?\n\n(This test wasn\u0027t realistic before your changes, but I think you will need to give it a realistic id to make it pass with your changes now in place)",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3ec4f6_a5f57883",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "Since tag \u003d\u003d j_notification_id , why are we still passing both here?",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 80
+      },
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab0f3f8_adc4ab77",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T21:07:54Z",
+      "side": 1,
+      "message": "nit: For ease of linking, we tend to format TODOs with the short bug url:\n\n // TODO(https://crbug.com/801221): do X because ...\n\nI notice it\u0027s not actually specified in our styleguide[1] though - the google c++ one is vague, and the chrome java styleguide actually says to use TODO(username) which in my experience gets frowned upon more often than not in code reviews! \n\nI\u0027ll start a thread to at least get the java style guide to include my suggested format as an expected one, and preferred to TODO(username).\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
