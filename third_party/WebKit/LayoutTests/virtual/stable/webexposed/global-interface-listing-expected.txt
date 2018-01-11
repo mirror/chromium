@@ -272,6 +272,7 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
+    static getter paintWorklet
     static method escape
     static method supports
     attribute @@toStringTag
