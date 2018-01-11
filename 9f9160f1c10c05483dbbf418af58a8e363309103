@@ -52,6 +52,24 @@
       "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cdb6f17_efe95beb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-11T14:52:59Z",
+      "side": 1,
+      "message": "You mean remove:\n  g_webrtc_event_log_manager \u003d new WebRtcEventLogManager;\n?\n\nBut that would require:\nWebRtcEventLogManager* WebRtcEventLogManager::CreateSingletonInstance() {\n  DCHECK(!g_webrtc_event_log_manager);\n  new WebRtcEventLogManager;\n  return g_webrtc_event_log_manager;\n}\n\nThat makes it look like things are being leaked. Would it not be best to keep it as it currently is?",
+      "parentUuid": "cb8045a3_65ba58b3",
+      "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
