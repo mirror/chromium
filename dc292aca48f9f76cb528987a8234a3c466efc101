@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "814d4540_2053434f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T03:11:03Z",
+      "side": 1,
+      "message": "Well, we are not adding the same character for multiple times.\n\nWith this patch, we treat the ZWS as a generated character, and then treat the leading space in the text node as a normally collapsed character. In this way, we are actually adding two characters.\n\nA new test case in NGOffsetMappingTest is added.",
+      "parentUuid": "e9fc2627_c9f8f0d7",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e78c740_a7599d4d",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 3
