@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5b0bdd_ef25097c",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-11T23:51:17Z",
+      "side": 1,
+      "message": "These are already handled by |ExecuteWindowCommand|.",
+      "range": {
+        "startLine": 997,
+        "startChar": 0,
+        "endLine": 1000,
+        "endChar": 35
+      },
+      "revId": "b206bf73d40aa952382ad28be01ee70750693919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b648729_cdf38b50",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-11T23:51:17Z",
+      "side": 1,
+      "message": "subtype",
+      "range": {
+        "startLine": 1134,
+        "startChar": 44,
+        "endLine": 1134,
+        "endChar": 48
+      },
+      "revId": "b206bf73d40aa952382ad28be01ee70750693919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1891382a_8ed34254",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-11T23:51:17Z",
+      "side": 1,
+      "message": "This will fail on mobile devices",
+      "range": {
+        "startLine": 1168,
+        "startChar": 24,
+        "endLine": 1168,
+        "endChar": 64
+      },
+      "revId": "b206bf73d40aa952382ad28be01ee70750693919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2a8c55_145cc932",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-11T23:51:17Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like the resulting x and y are used.",
+      "range": {
+        "startLine": 1174,
+        "startChar": 17,
+        "endLine": 1174,
+        "endChar": 69
+      },
+      "revId": "b206bf73d40aa952382ad28be01ee70750693919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
