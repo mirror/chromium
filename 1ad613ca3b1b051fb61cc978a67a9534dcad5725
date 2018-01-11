@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0652bbc7_e2597f20",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 1,
+      "message": "I\u0027d prefer renaming this to HeapState and put it in ThreadState (next to GCState).",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3582bbd8_48ea1e82",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 1,
+      "message": "Add a comment and explain each phase.",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a25509f_4f4e5617",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 1,
+      "message": "It looks wrong to set kNoGCScheduled here. It should be set when the last GC finished.",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430150d6_f9a7aded",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 1,
+      "message": "Don\u0027t you need to call SetGCState(kNoGCScheduled)?",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcc5597_0bdbd396",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 1,
+      "message": "AtomicPauseScope",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

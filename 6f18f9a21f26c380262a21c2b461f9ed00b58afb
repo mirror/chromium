@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71055b4f_28ece7cb",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 0,
+      "message": "We should not remove this early return.",
+      "revId": "6f18f9a21f26c380262a21c2b461f9ed00b58afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be05f1db_4ae35998",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "6f18f9a21f26c380262a21c2b461f9ed00b58afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47af44f2_4070b341",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 0,
+      "message": "Don\u0027t we need to add IsInAtomicPauseScope?",
+      "revId": "6f18f9a21f26c380262a21c2b461f9ed00b58afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e49ed9_caef8105",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T08:16:21Z",
+      "side": 0,
+      "message": "Hmm. Honestly speaking I\u0027m not fully convinced that we need to introduce Heap::Phase to remove these 4 states.\n\nWouldn\u0027t it be sufficient to introduce a ThreadState::is_sweeping flag?",
+      "revId": "6f18f9a21f26c380262a21c2b461f9ed00b58afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
