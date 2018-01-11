@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e197d3b_bde1d674",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "Or just {} is considered acceptable now FWIW.",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 32
+      },
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c228595c_4386d2b4",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "Please name this parameter in the header.",
+      "range": {
+        "startLine": 57,
+        "startChar": 31,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9534ca6e_f0edaafb",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t quite parse.",
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c3cd43_ab85e7e1",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "node?",
+      "range": {
+        "startLine": 451,
+        "startChar": 22,
+        "endLine": 451,
+        "endChar": 26
+      },
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf7466d_768abe9d",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "It\u0027s not really clear what this is map of. Can a comment clarify?",
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ea2b7e_ce897176",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:27:32Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what allocator dump names are. What do they represent or map to?",
+      "range": {
+        "startLine": 242,
+        "startChar": 40,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
