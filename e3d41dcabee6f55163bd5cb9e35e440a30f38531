@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5feec8e_20cd389a",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2018-01-11T13:36:48Z",
+      "side": 1,
+      "message": "I think you need\n\n  hit_test_region_ \u003d *state_.input_region;",
+      "revId": "e3d41dcabee6f55163bd5cb9e35e440a30f38531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691a857e_50094be0",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2018-01-11T13:36:48Z",
+      "side": 1,
+      "message": "base::\n\n(prolly also need optional.h)",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 8
+      },
+      "revId": "e3d41dcabee6f55163bd5cb9e35e440a30f38531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
