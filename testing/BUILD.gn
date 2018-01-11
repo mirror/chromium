@@ -11,3 +11,47 @@ source_set("gmock_mutant") {
     "//base",
   ]
 }
+
+# Targets needed for isolate script to execute.
+group("test_scripts_common") {
+  data = [
+    "//testing/scripts/common.py",
+    "//testing/test_env.py",
+    "//testing/xvfb.py",
+  ]
+}
+
+group("run_gtest_perf_test") {
+  data = [
+    "//testing/scripts/run_gtest_perf_test.py",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
+  ]
+
+  data_deps = [
+    ":test_scripts_common",
+  ]
+}
+
+group("run_telemetry_tests") {
+  data = [
+    "//tools/perf/run_telemetry_tests",
+    "//testing/scripts/run_telemetry_as_googletest.py",
+    "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
+    "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+  ]
+
+  data_deps = [
+    ":test_scripts_common",
+  ]
+}
+
+group("run_gpu_integration_tests") {
+  data = [
+    "//content/test/gpu/run_gpu_integration_test.py",
+    "//testing/scripts/run_gpu_integration_test_as_googletest.py",
+  ]
+
+  data_deps = [
+    ":test_scripts_common",
+  ]
+}
