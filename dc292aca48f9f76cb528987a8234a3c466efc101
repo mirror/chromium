@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a155942c_43c64b3a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:03:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we avoid calling this when this function is called from AppendBreakOpportunity with LayoutObject\u003dnullptr?\n\nIf there were no other cases where LayoutObject is nullptr, we can just use it, but I\u0027m not sure about that.",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e78c740_a7599d4d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:03:09Z",
+      "side": 1,
+      "message": "I think we can skip generating NGPhysicalTextFragment if |!item.GetLayoutObject()|. That might fix the 3 crashes. Maybe it\u0027s better to have a flag in NGInlineItem, but I can do that later, just please leave a comment when |!item.GetLayoutObject()|.",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
