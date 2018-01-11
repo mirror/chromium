@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08776ea7_c13cc1b0",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8e4f21_dafb70cf",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 65
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65752fd2_86ffc11b",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 34
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "40671b4e_8050db28",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65752fd2_86ffc11b",
+      "range": {
+        "startLine": 132,
+        "startChar": 27,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e099d39_fcba2847",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 34
@@ -62,6 +110,24 @@
       "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27a42a3_754bcf17",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e099d39_fcba2847",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "cffe8eb6_ee4e9908",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Remove. hm, I thought I removed them, but I probably mixed up with other local changes.",
+      "parentUuid": "c8003d5a_a50ccdf4",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99652dbf_d4337eb4",
         "filename": "components/exo/shell_surface_base.cc",
         "patchSetId": 34
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-10T17:19:16Z",
       "side": 1,
       "message": "I don\u0027t understand the logic behind all this. Can you explain more why it\u0027s needed? Also does it belong here or would it be better to move it to client controlled code somehow?",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4187177c_be0f387a",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "This is similar to what ResizeHandleWindowTargeter does to allow touch to use wider area to start dragging. (and we also need this for mouse which replaces outset logic)\n\nhttps://cs.chromium.org/chromium/src/ash/wm/resize_handle_window_targeter.cc?rcl\u003d05fa4bad26b394bb5f9909fef9550b9b62a317c3\u0026l\u003d50\n\nThis has to be in Targeter because that\u0027s how event system finds the target window, and I\u0027m adding here as exo has its own targeter.",
+      "parentUuid": "99652dbf_d4337eb4",
       "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "868a500e_9cca25ef",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Moved to ClientControlledShellSurface.\n\nThis is a temporary flag to detect which drag mode it should do. I\u0027ll remove this once transition is complete and stable. I tried to move to ctor, but it requires changes to many files. Since this will be removed very soon I prefer to keep it this way. Please let me know if you still prefer that way, and I\u0027ll make that change.",
+      "parentUuid": "0ba8da82_a10f2c27",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a46e794_35a1a53a",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 34
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "f6c7f377_eca164fb",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a46e794_35a1a53a",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1508b893_39e7bbdc",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 34
@@ -147,6 +285,24 @@
       "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53110f5_2243054b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1508b893_39e7bbdc",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +403,30 @@
       "writtenOn": "2018-01-10T17:19:16Z",
       "side": 1,
       "message": "can we align this with xdg shell instead? set_min_size+set_max_size and max and min set to the same size means that the window can\u0027t be resized. is can_resize\u003dfalse and can_maximize\u003dtrue a valid state?",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 715,
+        "endChar": 14
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665edcfe_ec353303",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 34
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T03:26:15Z",
+      "side": 1,
+      "message": "can_resize\u003dfalse and can_maximize\u003dtrue is actually valid state in Android, although I think this isn\u0027t important to propagate to chrome. Done.",
+      "parentUuid": "10b34073_e29e59da",
       "range": {
         "startLine": 707,
         "startChar": 4,
