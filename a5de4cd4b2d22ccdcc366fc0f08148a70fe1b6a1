@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbaad1b_e22a49d8",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T20:56:41Z",
+      "side": 1,
+      "message": "Can we have a more descriptive name for this? It\u0027s not clear whose client this is.",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 9
+      },
+      "revId": "a5de4cd4b2d22ccdcc366fc0f08148a70fe1b6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75daab73_47c8a341",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T20:56:41Z",
+      "side": 1,
+      "message": "I think it\u0027s better to add a comment explaining why we disable temporary reference assignment here and in a few other tests.",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 437,
+        "endChar": 46
+      },
+      "revId": "a5de4cd4b2d22ccdcc366fc0f08148a70fe1b6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
