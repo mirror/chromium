@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc9da6d6_b70e382e",
+        "filename": "third_party/WebKit/Source/platform/heap/Handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T08:45:47Z",
+      "side": 1,
+      "message": "Me neither.  ;)",
+      "parentUuid": "0ad916b8_236081d1",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0bfc76_be2de398",
         "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I\u0027m fine with this.\n\nOr we could move all the definitions to TraceTraits.h.",
       "parentUuid": "ac0bfc76_be2de398",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d20998a_0aa694d2",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T08:45:47Z",
+      "side": 1,
+      "message": "We\u0027re in the middle of transition to Chromium style, so another option could be to use BLINK_PLATFORM_HEAP_TYPE_TRAITS_H_?  Some of generated files have already been using this style.",
+      "parentUuid": "4dcc3b52_4ee4c60f",
       "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,40 @@
     },
     {
       "key": {
+        "uuid": "5eb8d84a_79ed9cb3",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T08:45:47Z",
+      "side": 1,
+      "message": "Can we directly use WTF::IsTraceable without defining NeedsHeapVector?\n\nEven if we need this, the name should be NeedsHeapCollection because HeapHashMap, etc. need the same treat.",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb5f56d_18ededf6",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T08:45:47Z",
+      "side": 1,
+      "message": "Could you update the comment?",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a60d779_720e8323",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 2
@@ -118,6 +188,24 @@
       "side": 1,
       "message": "This makes sense.\n\nI\u0027d add these traits to one file (e.g., heap/TraceTraits.h) though.",
       "parentUuid": "7a60d779_720e8323",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b831f9c1_1e393131",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T08:45:47Z",
+      "side": 1,
+      "message": "tzik@ seems able to fix this issue elegantly.",
+      "parentUuid": "7aa54f33_0a348083",
       "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
