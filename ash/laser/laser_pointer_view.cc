@@ -11,19 +11,22 @@
 #include "ui/aura/window.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/angle_conversions.h"
+#include "ui/gfx/geometry/vector2d_f.h"
+#include "ui/gfx/scoped_canvas.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
 namespace {
 
 // Variables for rendering the laser. Radius in DIP.
-const float kPointInitialRadius = 5.0f;
-const float kPointFinalRadius = 0.25f;
+float kPointInitialRadius = 5.0f;
+float kPointFinalRadius = 0.25f;
 const int kPointInitialOpacity = 200;
 const int kPointFinalOpacity = 10;
 const SkColor kPointColor = SkColorSetRGB(255, 0, 0);
 // Change this when debugging prediction code.
-const SkColor kPredictionPointColor = kPointColor;
+const SkColor kPredictionPointColor = SkColorSetRGB(0, 255, 0);
 
 float DistanceBetweenPoints(const gfx::PointF& point1,
                             const gfx::PointF& point2) {
@@ -34,6 +37,10 @@ float LinearInterpolate(float initial_value,
                         float final_value,
                         float progress) {
   return initial_value + (final_value - initial_value) * progress;
+}
+
+bool IsBig() {
+  return !true;
 }
 
 }  // namespace
@@ -161,8 +168,9 @@ LaserPointerView::LaserPointerView(base::TimeDelta life_duration,
                                    base::TimeDelta stationary_point_delay,
                                    aura::Window* container)
     : FastInkView(container),
-      laser_points_(life_duration),
-      predicted_laser_points_(life_duration),
+      laser_points_(IsBig() ? base::TimeDelta::FromSeconds(3) : life_duration),
+      predicted_laser_points_(IsBig() ? base::TimeDelta::FromSeconds(3)
+                                      : life_duration),
       presentation_delay_(presentation_delay),
       stationary_timer_(
           new base::Timer(FROM_HERE,
@@ -170,7 +178,12 @@ LaserPointerView::LaserPointerView(base::TimeDelta life_duration,
                           base::BindRepeating(&LaserPointerView::UpdateTime,
                                               base::Unretained(this)),
                           /*is_repeating=*/true)),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (IsBig()) {
+    kPointInitialRadius = 10.0f;
+    kPointFinalRadius = 3.25f;
+  }
+}
 
 LaserPointerView::~LaserPointerView() = default;
 
@@ -237,6 +250,12 @@ void LaserPointerView::UpdateBuffer() {
     ScopedPaint paint(gpu_memory_buffer_.get(), screen_to_buffer_transform_,
                       damage_rect);
     Draw(paint.canvas());
+
+    gfx::ScopedCanvas scoped_canvas(&paint.canvas());
+    gfx::Transform transform;
+    transform.Translate(gfx::Vector2dF(400, 0));
+    paint.canvas().Transform(transform);
+    DrawOld(paint.canvas());
   }
 
   UpdateSurface(laser_content_rect_, damage_rect, /*auto_refresh=*/true);
@@ -291,10 +310,98 @@ gfx::Rect LaserPointerView::GetBoundingBox() {
   const int kOutsetForAntialiasing = 1;
   int outset = kPointInitialRadius + kOutsetForAntialiasing;
   bounding_box.Inset(-outset, -outset);
+  return gfx::Rect(0, 0, 1366, 768);
   return bounding_box;
 }
 
 void LaserPointerView::Draw(gfx::Canvas& canvas) {
+  cc::PaintFlags flags;
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setAntiAlias(true);
+
+  int num_points = laser_points_.GetNumberOfPoints() +
+                   predicted_laser_points_.GetNumberOfPoints();
+  if (!num_points)
+    return;
+
+  gfx::PointF previous_point;
+  float previous_radius;
+
+  for (int i = 0; i < num_points; ++i) {
+    gfx::PointF current_point;
+    float fadeout_factor;
+    if (i < laser_points_.GetNumberOfPoints()) {
+      current_point = laser_points_.points()[i].location;
+      fadeout_factor = laser_points_.GetFadeoutFactor(i);
+    } else {
+      int index = i - laser_points_.GetNumberOfPoints();
+      current_point = predicted_laser_points_.points()[index].location;
+      fadeout_factor = predicted_laser_points_.GetFadeoutFactor(index);
+    }
+
+    // Set the radius and opacity based on the age of the point.
+    float current_radius = LinearInterpolate(kPointInitialRadius,
+                                             kPointFinalRadius, fadeout_factor);
+    int current_opacity = static_cast<int>(LinearInterpolate(
+        kPointInitialOpacity, kPointFinalOpacity, fadeout_factor));
+
+    if (i < laser_points_.GetNumberOfPoints())
+      flags.setColor(SkColorSetA(kPointColor, current_opacity));
+    else
+      flags.setColor(SkColorSetA(kPredictionPointColor, current_opacity));
+
+    SkPath path;
+    if (i == num_points - 1) {
+      // Draw the last point as a circle.
+      canvas.DrawCircle(current_point, current_radius, flags);
+    }
+
+    if (i > 0) {
+      gfx::Vector2dF vec = current_point - previous_point;
+      if (i != num_points - 1 &&
+          (vec.Length() < 1 || vec.Length() < current_radius * 2.f)) {
+        continue;
+      }
+      path.moveTo(previous_point.x(), previous_point.y() - previous_radius);
+      path.lineTo(previous_point.x(), previous_point.y() + previous_radius);
+      path.lineTo(previous_point.x() + std::round(vec.Length()),
+                  previous_point.y() + current_radius);
+      path.lineTo(previous_point.x() + std::round(vec.Length()),
+                  previous_point.y() - current_radius);
+      path.lineTo(previous_point.x(), previous_point.y() - previous_radius);
+
+      // Use the formula (a.b = |a||b|cos(theta)) to determine how much the
+      // segment should be rotated.
+      gfx::Vector2dF x_axis_vec(1.f, 0.f);
+      float theta = acos(gfx::DotProduct(x_axis_vec, vec) /
+                         (x_axis_vec.Length() * vec.Length()));
+      // std::acos returns values in the range [0, pi]. Manually add a negative
+      // to vectors in the third and fourth quadrants to expand the range to
+      // [-pi, pi], then convert the range to degrees [-180, 180].
+      if (current_point.y() < previous_point.y())
+        theta = -theta;
+      theta = gfx::RadToDeg(theta);
+
+      // Rotate the segment by |theta| around |previous_point|.
+      {
+        gfx::ScopedCanvas scoped_canvas(&canvas);
+        gfx::Transform transform;
+        transform.Translate(
+            gfx::Vector2dF(previous_point.x(), previous_point.y()));
+        transform.Rotate(theta);
+        transform.Translate(
+            -gfx::Vector2dF(previous_point.x(), previous_point.y()));
+        canvas.Transform(transform);
+        canvas.DrawPath(path, flags);
+      }
+    }
+
+    previous_radius = current_radius;
+    previous_point = current_point;
+  }
+}
+
+void LaserPointerView::DrawOld(gfx::Canvas& canvas) {
   cc::PaintFlags flags;
   flags.setStyle(cc::PaintFlags::kFill_Style);
   flags.setAntiAlias(true);
@@ -327,9 +434,9 @@ void LaserPointerView::Draw(gfx::Canvas& canvas) {
         kPointInitialOpacity, kPointFinalOpacity, fadeout_factor));
 
     if (i < laser_points_.GetNumberOfPoints())
-      flags.setColor(SkColorSetA(kPointColor, current_opacity));
+      flags.setColor(SkColorSetA(SK_ColorBLUE, current_opacity));
     else
-      flags.setColor(SkColorSetA(kPredictionPointColor, current_opacity));
+      flags.setColor(SkColorSetA(SK_ColorCYAN, current_opacity));
 
     if (i != 0) {
       // If we draw laser_points_ that are within a stroke width of each other,

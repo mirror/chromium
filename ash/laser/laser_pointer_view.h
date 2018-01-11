@@ -36,6 +36,7 @@ class LaserPointerView : public FastInkView {
   void UpdateTime();
   gfx::Rect GetBoundingBox();
   void Draw(gfx::Canvas& canvas);
+  void DrawOld(gfx::Canvas& canvas);
 
   FastInkPoints laser_points_;
   FastInkPoints predicted_laser_points_;
