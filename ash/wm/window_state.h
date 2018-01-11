@@ -320,6 +320,10 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // Sets the currently stored restore bounds and clears the restore bounds.
   void SetAndClearRestoreBounds();
 
+  // Notifies that the drag operation has been either completed or reverted.
+  void OnCompleteDrag(const gfx::Point& location);
+  void OnRevertDrag(const gfx::Point& location);
+
   // Returns a pointer to DragDetails during drag operations.
   const DragDetails* drag_details() const { return drag_details_.get(); }
   DragDetails* drag_details() { return drag_details_.get(); }

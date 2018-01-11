@@ -110,6 +110,7 @@ class ShellSurfaceBase : public SurfaceTreeHost,
   void SetSystemModal(bool system_modal);
 
   // Start an interactive move of surface.
+  // TODO(oshima): Move this to ShellSurface.
   void Move();
 
   // Sets the application ID for the window. The application ID identifies the
@@ -266,6 +267,7 @@ class ShellSurfaceBase : public SurfaceTreeHost,
 
   // Attempt to start a drag operation. The type of drag operation to start is
   // determined by |component|.
+  // TODO(oshima): Move this to ShellSurface.
   void AttemptToStartDrag(int component);
 
   // Set the parent window of this surface.
@@ -290,6 +292,11 @@ class ShellSurfaceBase : public SurfaceTreeHost,
   base::string16 title_;
   std::unique_ptr<ui::CompositorLock> configure_compositor_lock_;
   ConfigureCallback configure_callback_;
+  gfx::Size minimum_size_;
+  gfx::Size maximum_size_;
+  // TODO(oshima): Remove this once the transition to new drag/resize
+  // is complete.
+  bool server_side_drag_ = false;
 
  private:
   struct Config;
@@ -337,9 +344,7 @@ class ShellSurfaceBase : public SurfaceTreeHost,
   bool system_modal_ = false;
   bool non_system_modal_window_was_active_ = false;
   gfx::ImageSkia icon_;
-  gfx::Size minimum_size_;
   gfx::Size pending_minimum_size_;
-  gfx::Size maximum_size_;
   gfx::Size pending_maximum_size_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurfaceBase);
