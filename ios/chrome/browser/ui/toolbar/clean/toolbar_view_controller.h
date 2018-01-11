@@ -14,6 +14,7 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @protocol OmniboxFocuser;
+@protocol FakeboxFocuser;
 @class ToolbarButtonFactory;
 @class ToolbarButtonUpdater;
 @class ToolbarToolsMenuButton;

@@ -66,6 +66,7 @@ enum {
 - (instancetype)initWithDispatcher:(id<ApplicationCommands,
                                        BrowserCommands,
                                        OmniboxFocuser,
+                                       FakeboxFocuser,
                                        UrlLoader,
                                        WebToolbarDelegate>)dispatcher {
   self = [super initWithStyle:ToolbarControllerStyleLightMode

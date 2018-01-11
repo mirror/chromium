@@ -28,6 +28,7 @@ class WebState;
 
 // Coordinator to run a toolbar -- a UI element housing controls.
 @interface ToolbarCoordinator : NSObject<OmniboxFocuser,
+                                         FakeboxFocuser,
                                          QRScannerResultLoading,
                                          ToolsMenuPresentationProvider,
                                          VoiceSearchControllerDelegate>
