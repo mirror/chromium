@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3949a86_51a26a85",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T18:45:05Z",
+      "side": 1,
+      "message": "For bonus points, explain how the chunks represent the pattern and how the first and last chunk are special.",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "a31c9b87a86a9f656fd25dcb6a1b7ce92e6f5584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7fbeeb_fa466446",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T18:45:05Z",
+      "side": 1,
+      "message": "Now that you have a List\u003c\u003e, you could iterate over a sublist() of it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 13,
+        "endLine": 79,
+        "endChar": 51
+      },
+      "revId": "a31c9b87a86a9f656fd25dcb6a1b7ce92e6f5584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
