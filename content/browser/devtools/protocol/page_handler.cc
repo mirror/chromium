@@ -295,11 +295,12 @@ Response PageHandler::Reload(Maybe<bool> bypassCache,
   if (web_contents->IsCrashed() ||
       web_contents->GetURL().scheme() == url::kDataScheme ||
       (web_contents->GetController().GetVisibleEntry() &&
-       web_contents->GetController().GetVisibleEntry()->IsViewSourceMode())) {
+       web_contents->GetController().GetVisibleEntry()->IsViewSourceMode()) ||
+      !script_to_evaluate_on_load.isJust()) {
     web_contents->GetController().Reload(bypassCache.fromMaybe(false)
                                              ? ReloadType::BYPASSING_CACHE
                                              : ReloadType::NORMAL,
-                                         false);
+                                         true);
     return Response::OK();
   } else {
     // Handle reload in renderer except for crashed and view source mode.
