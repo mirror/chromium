@@ -34,6 +34,24 @@
       "revId": "3303fd023e6c5db58708458479ce1045982d799e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02641892_21af958c",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-11T21:52:28Z",
+      "side": 1,
+      "message": "Oh I see, the assumption is that all processes have the same bitness. Which is not the case for 64-bit WebViews (where utility/sandboxed processes are still 32-bit). But I don\u0027t actually know whether current heap profiler works in that case either.",
+      "parentUuid": "9c3b91bf_2db2fd50",
+      "revId": "3303fd023e6c5db58708458479ce1045982d799e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
