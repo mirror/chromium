@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e16fbd_1d187e28",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T16:26:48Z",
+      "side": 1,
+      "message": "Are offline pages the only case now where we show a chip text?",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
