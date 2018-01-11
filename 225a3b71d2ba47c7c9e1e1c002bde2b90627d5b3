@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d119c90e_0827233d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T19:53:28Z",
+      "side": 1,
+      "message": "update doc",
+      "range": {
+        "startLine": 194,
+        "startChar": 6,
+        "endLine": 194,
+        "endChar": 36
+      },
+      "revId": "225a3b71d2ba47c7c9e1e1c002bde2b90627d5b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506206e8_2b99fd92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T19:53:28Z",
+      "side": 1,
+      "message": "mClosedByChrome gives a bit more insight about what this is for.",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "225a3b71d2ba47c7c9e1e1c002bde2b90627d5b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
