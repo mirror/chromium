@@ -249,7 +249,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
       check_damage_in_begin_impl_frame_(false),
-      last_frame_had_damage_(false),
+      last_n_frames_had_damage_(0),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -890,15 +890,17 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                                       active_tree_->GetRenderSurfaceList());
 
   bool has_damage = HasDamage();
-  last_frame_had_damage_ = has_damage;
   active_tree_->ResetHandleVisibilityChanged();
 
-  if (!has_damage) {
+  if (has_damage) {
+    last_n_frames_had_damage_++;
+  } else {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
     DCHECK(!resourceless_software_draw_);
     check_damage_in_begin_impl_frame_ = settings_.enable_early_damage_check;
+    last_n_frames_had_damage_ = 0;
     return DRAW_SUCCESS;
   }
 
@@ -2144,14 +2146,15 @@ bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
     DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                         active_tree_->GetRenderSurfaceList());
     bool has_damage = HasDamage();
+
     // This early damage check, which is guarded by
-    // check_damage_in_begin_impl_frame, should stop being performed if two
-    // consecutive frames cause damage.
-    if (has_damage && last_frame_had_damage_)
+    // check_damage_in_begin_impl_frame, should stop being performed if three
+    // consecutive frames (this frame and the two before it) cause damage.
+    if (has_damage && last_n_frames_had_damage_ >= 2)
       check_damage_in_begin_impl_frame_ = false;
 
     if (!has_damage)
-      last_frame_had_damage_ = false;
+      last_n_frames_had_damage_ = 0;
 
     return has_damage;
   }

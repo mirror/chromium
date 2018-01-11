@@ -926,9 +926,10 @@ class CC_EXPORT LayerTreeHostImpl
   // check for damage again during the draw. The check in WillBeginImplFrame is
   // guarded by check_damage_in_begin_impl_frame_, which is set to true if the
   // flag is enabled and the previous frame did not have damage. it is set to
-  // false again if two consecutive frames have damage.
+  // false again if 3 consecutive frames have damage, which we keep track of
+  // with last_n_frames_had_damage_.
   bool check_damage_in_begin_impl_frame_;
-  bool last_frame_had_damage_;
+  int last_n_frames_had_damage_;
 
   std::unique_ptr<Viewport> viewport_;
 
