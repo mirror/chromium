@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5aff090_5bec7818",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-11T21:04:46Z",
+      "side": 1,
+      "message": "Hmm, this only has effect on Windows, right? So on other platforms the structures below are not packed, and will work only until alignof(uint64_t) \u003d\u003d alignof(uint32_t)? For example this CL relies on the fact that sizeof(StringMappingPacket) \u003d\u003d 12.",
+      "revId": "3303fd023e6c5db58708458479ce1045982d799e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
