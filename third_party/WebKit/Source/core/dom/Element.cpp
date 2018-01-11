@@ -2540,10 +2540,9 @@ ShadowRoot* Element::AuthorShadowRoot() const {
 }
 
 ShadowRoot* Element::UserAgentShadowRoot() const {
-  if (ElementShadow* element_shadow = Shadow()) {
-    ShadowRoot& root = element_shadow->GetShadowRoot();
-    DCHECK(root.GetType() == ShadowRootType::kUserAgent);
-    return &root;
+  if (ShadowRoot* root = GetShadowRoot()) {
+    DCHECK(root->GetType() == ShadowRootType::kUserAgent);
+    return root;
   }
   return nullptr;
 }
