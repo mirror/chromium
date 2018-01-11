@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc9835e3_5e35300a",
+        "filename": "ui/message_center/message_center_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-11T01:18:06Z",
+      "side": 0,
+      "message": "Could you keep this flag? I want to prevent someone from modifying notifications while another modification. For example, someone had removed notifications in OnNotificationUpdated observer and it had caused a crash. I want to prohibit such a complex flow.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "5e0104294da000f4edcaf2e894dd6c4152f1e8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
