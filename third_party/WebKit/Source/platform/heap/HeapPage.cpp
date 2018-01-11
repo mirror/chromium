@@ -234,7 +234,7 @@ size_t BaseArena::ObjectPayloadSizeForTesting() {
 }
 
 void BaseArena::PrepareForSweep() {
-  DCHECK(GetThreadState()->IsInGC());
+  DCHECK(GetThreadState()->IsInAtomicPause());
   DCHECK(SweepingCompleted());
 
   // Move all pages to a list of unswept pages.
@@ -254,7 +254,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
   if (SweepingCompleted())
     return nullptr;
 
-  CHECK(GetThreadState()->IsSweepingInProgress());
+  CHECK_EQ(GetThreadState()->Heap().phase(), ThreadHeap::kSweepPhase);
 
   // lazySweepPages() can be called recursively if finalizers invoked in
   // page->sweep() allocate memory and the allocation triggers
@@ -298,7 +298,7 @@ bool BaseArena::LazySweepWithDeadline(double deadline_seconds) {
   // pages.
   static const int kDeadlineCheckInterval = 10;
 
-  CHECK(GetThreadState()->IsSweepingInProgress());
+  CHECK_EQ(GetThreadState()->Heap().phase(), ThreadHeap::kSweepPhase);
   DCHECK(GetThreadState()->SweepForbidden());
   DCHECK(ScriptForbiddenScope::IsScriptForbidden());
 
@@ -331,7 +331,7 @@ bool BaseArena::LazySweepWithDeadline(double deadline_seconds) {
 }
 
 void BaseArena::CompleteSweep() {
-  CHECK(GetThreadState()->IsSweepingInProgress());
+  CHECK_EQ(GetThreadState()->Heap().phase(), ThreadHeap::kSweepPhase);
   DCHECK(GetThreadState()->SweepForbidden());
   DCHECK(ScriptForbiddenScope::IsScriptForbidden());
 
@@ -1914,7 +1914,7 @@ size_t HeapDoesNotContainCache::GetHash(Address address) {
 }
 
 bool HeapDoesNotContainCache::Lookup(Address address) {
-  DCHECK(ThreadState::Current()->IsInGC());
+  DCHECK(ThreadState::Current()->IsInAtomicPause());
 
   size_t index = GetHash(address);
   DCHECK(!(index & 1));
@@ -1927,7 +1927,7 @@ bool HeapDoesNotContainCache::Lookup(Address address) {
 }
 
 void HeapDoesNotContainCache::AddEntry(Address address) {
-  DCHECK(ThreadState::Current()->IsInGC());
+  DCHECK(ThreadState::Current()->IsInAtomicPause());
 
   has_entries_ = true;
   size_t index = GetHash(address);

@@ -223,6 +223,15 @@ class PLATFORM_EXPORT ThreadHeap {
   explicit ThreadHeap(ThreadState*);
   ~ThreadHeap();
 
+  enum Phase {
+    kIdlePhase,
+    kMarkPhase,
+    kSweepPhase,
+  };
+
+  Phase phase() { return phase_; }
+  void SetPhase(Phase);
+
   // Returns true for main thread's heap.
   // TODO(keishi): Per-thread-heap will return false.
   bool IsMainThreadHeap() { return this == ThreadHeap::MainThreadHeap(); }
@@ -293,7 +302,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
       return false;
-    DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
+    DCHECK_EQ(page->Arena()->GetThreadState()->Heap().phase(),
+              ThreadHeap::kSweepPhase);
 
     // If marked and alive, the object hasn't yet been swept..and won't
     // be once its page is processed.
@@ -551,6 +561,7 @@ class PLATFORM_EXPORT ThreadHeap {
   void WriteBarrierInternal(BasePage*, const void* value);
 
   ThreadState* thread_state_;
+  Phase phase_;
   ThreadHeapStats stats_;
   std::unique_ptr<RegionTree> region_tree_;
   std::unique_ptr<HeapDoesNotContainCache> heap_does_not_contain_cache_;
