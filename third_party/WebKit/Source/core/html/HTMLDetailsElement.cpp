@@ -131,12 +131,10 @@ void HTMLDetailsElement::ParseAttribute(
       return;
 
     // Dispatch toggle event asynchronously.
-    pending_event_ =
-        GetDocument()
-            .GetTaskRunner(TaskType::kDOMManipulation)
-            ->PostCancellableTask(
-                FROM_HERE, WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
-                                     WrapPersistent(this)));
+    pending_event_ = PostCancellableTask(
+        *GetDocument().GetTaskRunner(TaskType::kDOMManipulation), FROM_HERE,
+        WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
+                  WrapPersistent(this)));
 
     Element* content = EnsureUserAgentShadowRoot().getElementById(
         ShadowElementNames::DetailsContent());
