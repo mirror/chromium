@@ -40,6 +40,7 @@ namespace ash {
 namespace {
 
 const char kDisplayErrorNotificationId[] = "chrome://settings/display/error";
+const char kNotifierDisplayError[] = "ash.display.error";
 
 // A notification delegate that will start the feedback app when the notication
 // is clicked.
@@ -181,10 +182,11 @@ void ShowDisplayErrorNotification(const base::string16& message,
           GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDisplayError),
+              kNotifierDisplayError),
           data, new DisplayErrorNotificationDelegate,
           kNotificationMonitorWarningIcon,
           message_center::SystemNotificationWarningLevel::WARNING);
+  notification->set_priority(message_center::HIGH_PRIORITY);
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 }

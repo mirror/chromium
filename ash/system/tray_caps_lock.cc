@@ -14,7 +14,6 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/actionable_view.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_popup_item_style.h"
@@ -81,7 +80,7 @@ std::unique_ptr<Notification> CreateNotification() {
       l10n_util::GetStringUTF16(string_id), gfx::Image(),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierCapsLock),
+                                 "ash.caps-lock"),
       message_center::RichNotificationData(), nullptr,
       kNotificationCapslockIcon,
       message_center::SystemNotificationWarningLevel::NORMAL);
