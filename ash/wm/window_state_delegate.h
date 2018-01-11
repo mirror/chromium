@@ -30,6 +30,16 @@ class ASH_EXPORT WindowStateDelegate {
   // and no additional work is needed, false otherwise.
   virtual bool RestoreAlwaysOnTop(WindowState* window_state);
 
+  // Invoked when the user started drag operation. |component| must be
+  // a member of ui::HitTestCompat enum and specifies which part of
+  // the window the pointer device was on when the user started drag
+  // operation.
+  virtual void OnDragStarted(int component) {}
+
+  // Invoked when the user finished drag operation. |cancel| is true
+  // if the drag operation was canceled.
+  virtual void OnDragFinished(bool cancel) {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(WindowStateDelegate);
 };
