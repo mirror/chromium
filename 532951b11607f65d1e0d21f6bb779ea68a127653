@@ -50,6 +50,23 @@
       "revId": "532951b11607f65d1e0d21f6bb779ea68a127653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20916156_dbcd1d8f",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:21:55Z",
+      "side": 1,
+      "message": "If you want to revert this one, it\u0027s definitely safe. Just add a comment instead:\n\nThe Unretained() is safe because ForEachFrame() is synchronous.",
+      "revId": "532951b11607f65d1e0d21f6bb779ea68a127653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
