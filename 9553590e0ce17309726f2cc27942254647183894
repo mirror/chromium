@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a8b5b9_62b8cd9a",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T22:47:39Z",
+      "side": 1,
+      "message": "This is by design. When all displays are disconnected, we keep the current state so that when displays are reconnected on resume, we can keep the state as is.\n\nCan you explain why it fails to tell the right mode?",
+      "revId": "9553590e0ce17309726f2cc27942254647183894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
