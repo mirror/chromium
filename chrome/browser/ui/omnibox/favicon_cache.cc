@@ -66,10 +66,6 @@ gfx::Image FaviconCache::GetFaviconForPageUrl(
 void FaviconCache::OnFaviconFetched(
     const GURL& page_url,
     const favicon_base::FaviconImageResult& result) {
-  // TODO(tommycli): Also cache null image results with a reasonable expiry.
-  if (result.image.IsEmpty())
-    return;
-
   mru_cache_.Put(page_url, result.image);
 
   auto it = pending_requests_.find(page_url);
@@ -78,6 +74,17 @@ void FaviconCache::OnFaviconFetched(
     std::move(callback).Run(result.image);
   }
   pending_requests_.erase(it);
+}
+
+void FaviconCache::OnURLVisited(history::HistoryService* history_service,
+                                ui::PageTransition transition,
+                                const history::URLRow& row,
+                                const history::RedirectList& redirects,
+                                base::Time visit_time) {
+  // Erase any cached null favicon results if we visit a page.
+  auto it = mru_cache_.Peek(row.url());
+  if (it != mru_cache_.end() && it->second.IsEmpty())
+    mru_cache_.Erase(it);
 }
 
 void FaviconCache::OnURLsDeleted(history::HistoryService* history_service,
