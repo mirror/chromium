@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0d454d_bd07ac3d",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T18:58:26Z",
+      "side": 1,
+      "message": "add braces",
+      "range": {
+        "startLine": 387,
+        "startChar": 4,
+        "endLine": 387,
+        "endChar": 11
+      },
+      "revId": "9aa1e0b040576aa6a829b2279d22a0670a75e6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47888db3_89675eb3",
+        "filename": "net/network_error_logging/network_error_logging_feature.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T18:58:26Z",
+      "side": 1,
+      "message": "This feature is no longer implemented in net, so it should probably be in services/network/cpp/public/features.h",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "9aa1e0b040576aa6a829b2279d22a0670a75e6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
