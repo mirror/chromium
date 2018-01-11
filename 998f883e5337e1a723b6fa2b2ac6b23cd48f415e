@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c11f23_0269d9d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-11T21:03:39Z",
+      "side": 1,
+      "message": "nit: of what?",
+      "range": {
+        "startLine": 194,
+        "startChar": 36,
+        "endLine": 194,
+        "endChar": 42
+      },
+      "revId": "998f883e5337e1a723b6fa2b2ac6b23cd48f415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
