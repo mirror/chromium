@@ -22,6 +22,30 @@
       "revId": "ffce62f681e72a5ec20243eb3c1cb798f8c79b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f356c4_9161c561",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T13:59:46Z",
+      "side": 0,
+      "message": "Sorry, should have mentioned.  Ian commented last week that some visibility and hit test unit tests have devolved to \"change detector\" tests, in that they offer no value other than ensuring that initial state of an element is properly set.  We decided that we\u0027d remove such coverage, incrementally, whenever such a test causes friction.  This one was the unlucky victim today.  FTR, Yash also is also \"100%\" in favour of this.",
+      "parentUuid": "7d2188b6_13eced83",
+      "range": {
+        "startLine": 711,
+        "startChar": 15,
+        "endLine": 711,
+        "endChar": 34
+      },
+      "revId": "ffce62f681e72a5ec20243eb3c1cb798f8c79b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
