@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ec8a0b_9c4d8a4e",
+        "filename": "base/base_paths_fuchsia.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:57:42Z",
+      "side": 1,
+      "message": "If we\u0027re going to clear |path| anyway then why bother with the bool return value?",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "7c6bf2e5a330afeaf74ee882587718748af444f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

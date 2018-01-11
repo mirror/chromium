@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "84503782_b644f42a",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:57:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de538fd2_8b2ea537",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "97a0eb1870f212b3ac531e21f4b0719586ab6253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd814ca_8ac0c05b",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 18
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done.\n\nMoved to base_paths_fuchsia.(cc|h)",
       "parentUuid": "d805b5fd_17947793",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "97a0eb1870f212b3ac531e21f4b0719586ab6253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "775cb6cd_253190f9",
+        "filename": "base/process/process.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:57:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ea11623_b6320060",
       "range": {
         "startLine": 215,
         "startChar": 0,
