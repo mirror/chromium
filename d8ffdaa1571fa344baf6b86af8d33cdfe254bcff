@@ -71,6 +71,54 @@
     },
     {
       "key": {
+        "uuid": "a0970ef8_4440dfbe",
+        "filename": "base/process/launch.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fe60f6_4556777a",
+      "range": {
+        "startLine": 208,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 10
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a354e9fa_c5ff8f62",
+        "filename": "base/process/launch.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done.\n\n\u003eDo we need to consider the case of providing paths to the child that differ in their location from the parent\u0027s namespace?\n\nNot at this time, but we can always add that behavior if we need it in the future.",
+      "parentUuid": "c3f0d5bb_2c6741f7",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8af387d_dcd891f0",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 2
@@ -91,6 +139,30 @@
       "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810ad275_4caf1468",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "We still need to copy if it\u0027s a vector of FilePaths; there\u0027s no way to get at their underlying string storage. But I don\u0027t really get much utility from them being FilePaths anyway, so I\u0027ll just make them into strings. ;)",
+      "parentUuid": "c8af387d_dcd891f0",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 56
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "27564108_f3b54426",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ccad67_d4515977",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 64
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e82a6e44_35269d0a",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 2
@@ -137,6 +233,30 @@
       "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20b7f2e_8a16210d",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "I don\u0027t think so. IIRC everything in a package process\u0027 namespace is served from the appmgr VFS.",
+      "parentUuid": "e82a6e44_35269d0a",
+      "range": {
+        "startLine": 160,
+        "startChar": 10,
+        "endLine": 160,
+        "endChar": 36
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "dcba138c_eaa950a7",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "oh yeahhhhh",
+      "parentUuid": "154b70e2_7108bb61",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 7
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebce22eb_058debea",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 2
@@ -183,6 +327,30 @@
       "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d82bdd2_61a8c32d",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebce22eb_058debea",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "4c5b9c2c_bf9375e7",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "UTF8",
+      "parentUuid": "e2893f4b_0caa5d2f",
+      "range": {
+        "startLine": 182,
+        "startChar": 36,
+        "endLine": 182,
+        "endChar": 48
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8859f7b_044f7ffe",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 2
@@ -229,6 +421,30 @@
       "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b77b1ce_5498983c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8859f7b_044f7ffe",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 3
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "d40557b2_75a2f5d5",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ffd6065d_587d8d8c",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f45888f2_24eb4c13",
         "filename": "content/common/sandbox_policy_fuchsia.cc",
         "patchSetId": 2
@@ -275,6 +515,30 @@
       "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695ceb1c_ce0f4252",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-11T23:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f45888f2_24eb4c13",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
