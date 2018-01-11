@@ -158,3 +158,7 @@ TEST_F('PrintPreviewRestoreStateTest', 'RestoreTrueValues', function() {
 TEST_F('PrintPreviewRestoreStateTest', 'RestoreFalseValues', function() {
   this.runMochaTest(restore_state_test.TestNames.RestoreFalseValues);
 });
+
+TEST_F('PrintPreviewRestoreStateTest', 'SaveValues', function() {
+  this.runMochaTest(restore_state_test.TestNames.SaveValues);
+});
