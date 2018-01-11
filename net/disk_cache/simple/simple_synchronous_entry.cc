@@ -128,6 +128,7 @@ const base::Feature kSimpleCachePrefetchExperiment = {
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
 int GetSimpleCachePrefetchSize() {
+  // Maybe I should change this?
   return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
                                                 kSimplePrefetchBytesParam, 0);
 }
