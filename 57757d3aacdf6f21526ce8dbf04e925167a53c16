@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "040b836f_a91df4b8",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-11T19:37:53Z",
+      "side": 1,
+      "message": "Python 3 isn\u0027t used in Chromium AFAIK. There are a number of existing Python classes in Chromium that do this same thing, but I\u0027m not aware of them being somewhere that makes sense to import from for this script.",
+      "parentUuid": "3afcd925_3394e8e8",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0aa3af98_5b6b7a85",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
