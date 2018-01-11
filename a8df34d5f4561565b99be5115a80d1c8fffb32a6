@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b649db1_c237e519",
+        "filename": "skia/ext/skia_utils_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-11T01:35:37Z",
+      "side": 1,
+      "message": "Of note is that this assumes that |color| is already in sRGB. In principle we should use CGColorCreateCopyByMatchingToColorSpace to convert to sRGB, but that\u0027s only available in macOS 10.11.\n\nProbably add a TODO to note this, since it isn\u0027t a regression.",
+      "revId": "a8df34d5f4561565b99be5115a80d1c8fffb32a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
