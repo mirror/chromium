@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a1e30c_d70c5681",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDaydreamApiImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-11T00:30:24Z",
+      "side": 1,
+      "message": "should this set mDaydreamApi to null?",
+      "range": {
+        "startLine": 135,
+        "startChar": 20,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "2917089e862bf82e2ba9a25da050b0632b8db2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
