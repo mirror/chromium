@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "618e2aae_1203864f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-11T13:07:22Z",
+      "side": 1,
+      "message": "I\u0027ve added some mock types that mimic the behavior of unions/dictionaries that should be enough to keep the tests next to this file.",
+      "parentUuid": "d05dc033_924bf16a",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb8d84a_79ed9cb3",
         "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
         "patchSetId": 2
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "d0d1c107_431e38b0",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-11T13:07:22Z",
+      "side": 1,
+      "message": "I originally wanted to keep the struct to make the purpose of the checks more clear, but ultimately I think I agree that it doesn\u0027t have a purpose now.",
+      "parentUuid": "5eb8d84a_79ed9cb3",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb5f56d_18ededf6",
         "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
         "patchSetId": 2
@@ -156,6 +192,24 @@
       "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97410b71_e50d754b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-11T13:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb5f56d_18ededf6",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
