@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ca4039_e9f785d3",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-11T15:54:28Z",
+      "side": 1,
+      "message": "This warrants a comment explaining why we can proceed with a nullptr for gesture and touch targets.",
+      "revId": "8a3e9370482128c5918538c7e0e3fbb68897be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c324666d_831257f5",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-11T15:54:28Z",
+      "side": 1,
+      "message": "FlushEventQueue() can be moved out of the conditional clauses and only have one call site at the end of the function.",
+      "revId": "8a3e9370482128c5918538c7e0e3fbb68897be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
