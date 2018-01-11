@@ -34,6 +34,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf740ce_7f8ec111",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-11T18:01:05Z",
+      "side": 1,
+      "message": "(short disclaimer: I don\u0027t 100% know the answer and I\u0027m technically still away until next Thu so I won\u0027t read up on it. cxx@chromium.org can probably answer your question.)\n\nWhat Bruce says is generally correct. In practice, I\u0027d be surprised if that happened for globals though. On the third hand, the standard doesn\u0027t guarantee it. Maybe you can try a few things locally in a small test program and see if you can find an example where the initializer is emited even though a ctor is constexpr? If so, that\u0027d be an example to disprove our assumption.\n\n(clang usually doesn\u0027t emit a static initializer if it can compile-time-evaluate a ctor even if it\u0027s not marked constexpr.)\n\nAnother thing to possibly look at is how -Wglobal-constructors and constexpr interact. I know that -Wglobal-constructors fires for (non-constexpr) cases where the compiler _might_ emit an initializer but clang\u0027s optimizer removes it, making the warning a bit too strict for us in practice. Maybe it doesn\u0027t fire for constexpr initializers -- that would make constexpr + that warning enabled something that does the right thing at compile time (...but it\u0027d be inconsistent with clang\u0027s policy to emit -Wglobabl-ctors for non-constexpr-but-constant-in-practice things, so I\u0027m not sure how the warning actually behaves).\n\nOur static initializer detection that runs on the binary will save us when we get it wrong.",
+      "parentUuid": "fdda46d8_89f54b3a",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
