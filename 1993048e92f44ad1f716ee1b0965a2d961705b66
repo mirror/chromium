@@ -34,6 +34,24 @@
       "revId": "1993048e92f44ad1f716ee1b0965a2d961705b66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330fb7b9_ee44b37c",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-11T01:05:58Z",
+      "side": 1,
+      "message": "Here is the flag we have been using for controlling background blur, currently only enabled for Eve.\n\nhttps://cs.chromium.org/chromium/src/ui/app_list/app_list_features.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d25\n\nI can\u0027t say if this blur will be an issue without seeing it in action on a device. \n\nHave you tested it on slower devices to see if enabling it causes jank?\n\n+reveman who recently improved blur.",
+      "parentUuid": "d0ab9e67_04572aa4",
+      "revId": "1993048e92f44ad1f716ee1b0965a2d961705b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
