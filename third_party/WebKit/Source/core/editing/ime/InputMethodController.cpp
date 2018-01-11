@@ -30,6 +30,7 @@
 #include "core/dom/Element.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
+#include "core/dom/events/ScopedEventQueue.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/EphemeralRange.h"
@@ -113,7 +114,7 @@ void DispatchBeforeInputFromComposition(EventTarget* target,
 //      inserted text
 //   2. Fire 'compositionupdate' event
 //   3. Fire TextEvent and modify DOM
-//   TODO(chongz): 4. Fire 'input' event
+//   4. Fire 'input' event; dispatched by Editor::AppliedEditing()
 void InsertTextDuringCompositionWithEvents(
     LocalFrame& frame,
     const String& text,
@@ -175,7 +176,6 @@ void InsertTextDuringCompositionWithEvents(
     default:
       NOTREACHED();
   }
-  // TODO(chongz): Fire 'input' event.
 }
 
 AtomicString GetInputModeAttribute(Element* element) {
@@ -398,11 +398,16 @@ bool InputMethodController::FinishComposingText(
     Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
 
     if (is_too_long) {
-      ReplaceComposition(ComposingText());
+      if (ReplaceComposition(ComposingText()))
+        DispatchCompositionEndEvent(GetFrame(), composing);
     } else {
       Clear();
       DispatchCompositionEndEvent(GetFrame(), composing);
     }
+
+    // Event handler might destroy document.
+    if (!IsAvailable())
+      return false;
 
     // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited. see http://crbug.com/590369 for more details.
@@ -476,13 +481,7 @@ bool InputMethodController::ReplaceComposition(const String& text) {
       GetFrame(), text, 0,
       TypingCommand::TextCompositionType::kTextCompositionConfirm);
   // Event handler might destroy document.
-  if (!IsAvailable())
-    return false;
-
-  // No DOM update after 'compositionend'.
-  DispatchCompositionEndEvent(GetFrame(), text);
-
-  return true;
+  return IsAvailable();
 }
 
 // relativeCaretPosition is relative to the end of the text.
@@ -565,18 +564,31 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
     return false;
   int text_start = composition_range.Start();
 
-  if (!ReplaceComposition(text))
-    return false;
+  bool result;
+  {
+    // Suppress input event until after we move the caret to the new position.
+    EventQueueScope scope;
+    if (!ReplaceComposition(text))
+      return false;
 
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited. see http://crbug.com/590369 for more details.
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    // TODO(editing-dev): The use of
+    // updateStyleAndLayoutIgnorePendingStylesheets needs to be audited. see
+    // http://crbug.com/590369 for more details.
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
+    AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
 
-  int absolute_caret_position = ComputeAbsoluteCaretPosition(
-      text_start, text.length(), relative_caret_position);
-  return MoveCaret(absolute_caret_position);
+    int absolute_caret_position = ComputeAbsoluteCaretPosition(
+        text_start, text.length(), relative_caret_position);
+    result = MoveCaret(absolute_caret_position);
+  }
+
+  // Event handler might destroy document.
+  if (!IsAvailable())
+    return result;
+
+  DispatchCompositionEndEvent(GetFrame(), text);
+  return result;
 }
 
 bool InputMethodController::InsertText(const String& text) {
@@ -596,6 +608,8 @@ bool InputMethodController::InsertTextAndMoveCaret(
     return false;
   int text_start = selection_range.Start();
 
+  // Suppress input event until after we move the caret to the new position.
+  EventQueueScope scope;
   if (!InsertText(text))
     return false;
   Element* root_editable_element =
@@ -688,22 +702,35 @@ void InputMethodController::SetComposition(
   //    Send a compositionend event when function deletes the existing
   //    composition node, i.e. !hasComposition() && test.isEmpty().
   if (text.IsEmpty()) {
-    if (HasComposition()) {
-      Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
-      ReplaceComposition(g_empty_string);
-    } else {
-      // It's weird to call |setComposition()| with empty text outside
-      // composition, however some IME (e.g. Japanese IBus-Anthy) did this, so
-      // we simply delete selection without sending extra events.
-      TypingCommand::DeleteSelection(GetDocument(),
-                                     TypingCommand::kPreventSpellChecking);
+    bool had_composition = false;
+    {
+      // Suppress input event until after we move the caret to the new position.
+      EventQueueScope scope;
+      if (HasComposition()) {
+        had_composition = true;
+        Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
+        ReplaceComposition(g_empty_string);
+        // Event handler might destroy document.
+        if (!IsAvailable())
+          return;
+      } else {
+        // It's weird to call |setComposition()| with empty text outside
+        // composition, however some IME (e.g. Japanese IBus-Anthy) did this, so
+        // we simply delete selection without sending extra events.
+        TypingCommand::DeleteSelection(GetDocument(),
+                                       TypingCommand::kPreventSpellChecking);
+      }
+
+      // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
+      // needs to be audited. see http://crbug.com/590369 for more details.
+      GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+      SetEditableSelectionOffsets(selected_range);
     }
 
-    // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
-    // needs to be audited. see http://crbug.com/590369 for more details.
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    if (had_composition)
+      DispatchCompositionEndEvent(GetFrame(), g_empty_string);
 
-    SetEditableSelectionOffsets(selected_range);
     return;
   }
 
@@ -722,6 +749,8 @@ void InputMethodController::SetComposition(
 
   Clear();
 
+  // Suppress input event until after we move the caret to the new position.
+  EventQueueScope scope;
   InsertTextDuringCompositionWithEvents(
       GetFrame(), text,
       TypingCommand::kSelectInsertedText | TypingCommand::kPreventSpellChecking,
