@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa726d88_fbdac6a7",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3454,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-11T19:31:39Z",
+      "side": 1,
+      "message": "I\u0027m curious: what\u0027s the motivation behind this? I suspect the intent w/ this bot is to mirror Linux Tests, so I\u0027m not sure that deviating is a good idea.",
+      "revId": "c1534e4b70593c88547af08f11de046189d1f042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
