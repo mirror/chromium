@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d3e3b184_a6ad2669",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-11T01:19:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89260b37_073d5efb",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b1eb2b5_0cedeaf0",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 8
@@ -104,6 +122,24 @@
       "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f542f35_f6d576ca",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-11T01:19:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63f09ca3_d7e3f1d2",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

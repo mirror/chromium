@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00b538a4_88763d08",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8087,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-11T01:19:26Z",
+      "side": 1,
+      "message": "This is odd.  \"Did not finish\" does not naturally mean the same thing as \"failed\", at least to me.  Can you revise the enum names / labels / comments as appropriate to reflect what it truly means?",
+      "revId": "4098a948cbbc629b66f8dae2a28f01df3bbf5a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f80904e_bfb71961",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 13318,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-11T01:19:26Z",
+      "side": 1,
+      "message": "What does \"processed\" mean in this last sentence?  Is processed \u003d analyzed?  What is the low priority delayed task?  Is that the task that emits to the histogram?  Something else?\n\nThis kind of confusion either indicates that something about what this histogram means / how it is being recorded to be cleaned up or the description should be cleaned up.",
+      "revId": "4098a948cbbc629b66f8dae2a28f01df3bbf5a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
