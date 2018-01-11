@@ -10,19 +10,86 @@
 
 #include "base/logging.h"
 #include "base/timer/timer.h"
+#include "content/browser/bad_message.h"
+#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/sha2.h"
 #include "device/u2f/u2f_hid_discovery.h"
 #include "device/u2f/u2f_register.h"
 #include "device/u2f/u2f_request.h"
 #include "device/u2f/u2f_return_code.h"
+#include "device/u2f/u2f_sign.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
 namespace {
 constexpr int32_t kCoseEs256 = -7;
+
+std::string GetValidEffectiveDomain(RenderFrameHost* render_frame_host,
+                                    url::Origin caller_origin) {
+  GURL url = render_frame_host->GetLastCommittedURL();
+  // Renderer-side logic should prevent any WebAuthN usage for about:blank
+  // frames, unique, and data URLs. If that's not the case, kill the renderer,
+  // as it might be exploited.
+  if (url.is_empty() || url.SchemeIs(url::kAboutScheme) ||
+      url.SchemeIs(url::kDataScheme)) {
+    bad_message::ReceivedBadMessage(
+        render_frame_host->GetProcess(),
+        bad_message::AUTH_INVALID_RELYING_PARTY_OR_ORIGIN);
+    return std::string();
+  }
+  if (caller_origin.unique() &&
+      !net::registry_controlled_domains::HostHasRegistryControlledDomain(
+          caller_origin.host(),
+          net::registry_controlled_domains::EXCLUDE_UNKNOWN_REGISTRIES,
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES)) {
+    bad_message::ReceivedBadMessage(
+        render_frame_host->GetProcess(),
+        bad_message::AUTH_INVALID_RELYING_PARTY_OR_ORIGIN);
+    return std::string();
+  }
+
+  ChildProcessSecurityPolicy* policy =
+      ChildProcessSecurityPolicy::GetInstance();
+  if (!policy->CanAccessDataForOrigin(render_frame_host->GetProcess()->GetID(),
+                                      caller_origin.GetURL())) {
+    bad_message::ReceivedBadMessage(
+        render_frame_host->GetProcess(),
+        bad_message::AUTH_INVALID_RELYING_PARTY_OR_ORIGIN);
+    return std::string();
+  }
+  return caller_origin.host();
+}
+
+std::string GetValidatedRelyingPartyID(
+    const std::string effective_domain,
+    const base::Optional<std::string>& relying_party_id,
+    RenderFrameHost* render_frame_host,
+    url::Origin caller_origin) {
+  DCHECK(!effective_domain.empty());
+  std::string domain;
+  if (relying_party_id) {
+    domain = *relying_party_id;
+    if (net::registry_controlled_domains::GetDomainAndRegistry(
+            caller_origin.GetURL(),
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES) !=
+        net::registry_controlled_domains::GetDomainAndRegistry(
+            *relying_party_id,
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+      bad_message::ReceivedBadMessage(
+          render_frame_host->GetProcess(),
+          bad_message::AUTH_INVALID_RELYING_PARTY_OR_ORIGIN);
+      return std::string();
+    }
+  } else {
+    domain = effective_domain;
+  }
+  return domain;
+}
 
 bool HasValidAlgorithm(
     const std::vector<webauth::mojom::PublicKeyCredentialParametersPtr>&
@@ -85,26 +152,22 @@ void AuthenticatorImpl::MakeCredential(
     return;
   }
 
-  // Steps 6 & 7 of https://w3c.github.io/webauthn/#createCredential
-  // opaque origin
-  url::Origin caller_origin = render_frame_host_->GetLastCommittedOrigin();
-  if (caller_origin.unique()) {
+  caller_origin_ = render_frame_host_->GetLastCommittedOrigin();
+
+  std::string effective_domain =
+      GetValidEffectiveDomain(render_frame_host_, caller_origin_);
+  if (effective_domain.empty()) {
     std::move(callback).Run(
-        webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
+        webauth::mojom::AuthenticatorStatus::INSECURE_ORIGIN, nullptr);
     return;
   }
-
-  std::string relying_party_id;
-  if (options->relying_party->id) {
-    // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
-    // suffix of and equal to effectiveDomain and set relyingPartyId
-    // appropriately.
-    // TODO(kpaulhamus): Add unit tests for domains. http://crbug.com/785950.
-    relying_party_id = *options->relying_party->id;
-  } else {
-    // Use the effective domain of the caller origin.
-    relying_party_id = caller_origin.host();
-    DCHECK(!relying_party_id.empty());
+  std::string relying_party_id =
+      GetValidatedRelyingPartyID(effective_domain, options->relying_party->id,
+                                 render_frame_host_, caller_origin_);
+  if (relying_party_id.empty()) {
+    std::move(callback).Run(webauth::mojom::AuthenticatorStatus::INVALID_DOMAIN,
+                            nullptr);
+    return;
   }
 
   // Check that at least one of the cryptographic parameters is supported.
@@ -115,10 +178,13 @@ void AuthenticatorImpl::MakeCredential(
     return;
   }
 
+  // store it in a const local,
+  // pass that into GetValidateRPID as well as here
+
   DCHECK(make_credential_response_callback_.is_null());
   make_credential_response_callback_ = std::move(callback);
   client_data_ = CollectedClientData::Create(client_data::kCreateType,
-                                             caller_origin.Serialize(),
+                                             caller_origin_.Serialize(),
                                              std::move(options->challenge));
 
   // SHA-256 hash of the JSON data structure

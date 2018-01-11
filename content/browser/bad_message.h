@@ -219,6 +219,7 @@ enum BadMessageReason {
   RDH_NULL_CLIENT = 192,
   RVH_WEB_UI_BINDINGS_MISMATCH = 193,
   WCI_NEW_WIDGET_PROCESS_MISMATCH = 194,
+  AUTH_INVALID_RELYING_PARTY_OR_ORIGIN = 195,
 
   // Please add new elements here. The naming convention is abbreviated class
   // name (e.g. RenderFrameHost becomes RFH) plus a unique description of the
