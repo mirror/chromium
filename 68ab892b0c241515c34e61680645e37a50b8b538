@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0b9fd65_5c9b1ca5",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60aded6d_82eb860a",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c4db90_92a68b7e",
         "filename": "components/spellcheck/common/spellcheck_common.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "770fe52f_7b727556",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c4db90_92a68b7e",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 13
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f26c543f_283f9694",
         "filename": "components/spellcheck/common/spellcheck_common.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-21T01:46:04Z",
       "side": 1,
       "message": "Why if/else here? (Pretty much the same question as with the assignment above)",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f579ab1a_6fa6e2de",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Reverted. I liked the symmetry.",
+      "parentUuid": "f26c543f_283f9694",
       "range": {
         "startLine": 178,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aad81eca_9c57ff4c",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Get rid of \"new\" keywords.",
+      "parentUuid": "e3411555_f62befbd",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cae6171d_115d7e56",
         "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
         "patchSetId": 1
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "23f1b98c_0bfd86ce",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae6171d_115d7e56",
+      "range": {
+        "startLine": 472,
+        "startChar": 38,
+        "endLine": 472,
+        "endChar": 39
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2f5394_ab58f351",
         "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b242a6_b7124ee2",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T19:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2f5394_ab58f351",
+      "range": {
+        "startLine": 1384,
+        "startChar": 29,
+        "endLine": 1384,
+        "endChar": 44
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
