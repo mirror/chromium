@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-border-slice with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-border-slice">
+<meta name="assert" content="mask-border-slice supports the full grammar '<number-percentage>{1,4} fill?'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_valid_value("mask-border-slice", "10%");
+test_valid_value("mask-border-slice", "10% 20");
+test_valid_value("mask-border-slice", "10% 20 -30% fill");
+test_valid_value("mask-border-slice", "10% 20 -30% -40");
+</script>
+</body>
+</html>

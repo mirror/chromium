@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-repeat with invalid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-repeat">
+<meta name="assert" content="mask-repeat supports only the grammar '<repeat-style>#'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_invalid_value("mask-repeat", "repeat-x repeat-y");
+test_invalid_value("mask-repeat", "repeat-y space");
+test_invalid_value("mask-repeat", "repeat space round");
+test_invalid_value("mask-repeat", "no-repeat repeat-x");
+</script>
+</body>
+</html>

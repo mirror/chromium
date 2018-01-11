@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-border with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-border">
+<meta name="assert" content="mask-border supports the full grammar from the spec.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+// <mask-border-source>
+test_valid_value("mask-border", "none");
+
+// <mask-border-slice> [ / <mask-border-width>? [ / <mask-border-outset> ]? ]?
+test_valid_value("mask-border", "10% fill");
+test_valid_value("mask-border", "10% fill /");
+test_valid_value("mask-border", "10% fill / 20%");
+test_valid_value("mask-border", "10% fill / / 30px");
+test_valid_value("mask-border", "10% fill / 20% / 30px");
+
+// <mask-border-repeat>
+test_valid_value("mask-border", "repeat round");
+
+// <mask-border-mode>
+test_valid_value("mask-border", "luminance");
+
+// <mask-border-source> || <mask-border-slice> [ / <mask-border-width>? [ / <mask-border-outset> ]? ]? || <mask-border-repeat> || <mask-border-mode>
+test_valid_value("mask-border", "none 10% fill / 20% repeat round luminance");
+test_valid_value("mask-border", "luminance repeat round 10% fill / 20% none");
+</script>
+</body>
+</html>

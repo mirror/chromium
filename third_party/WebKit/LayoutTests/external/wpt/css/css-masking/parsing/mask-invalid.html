@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask with invalid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask">
+<meta name="assert" content="mask supports only the grammar '<mask-layer>#'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_invalid_value("mask", "left 10% top");
+test_invalid_value("mask", "none / cover");
+test_invalid_value("mask", "border-box border-box border-box");
+test_invalid_value("mask", "no-clip no-clip");
+</script>
+</body>
+</html>

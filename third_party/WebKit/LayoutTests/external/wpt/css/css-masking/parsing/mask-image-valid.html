@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-image with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-image">
+<meta name="assert" content="mask-image supports the full grammar '<mask-reference>#', where <mask-reference> is 'none | <image> | <mask-source>'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_valid_value("mask-image", "none");
+
+test_valid_value("mask-image", "url(https://example.com/)", ["url(https://example.com/)", "url(\"https://example.com/\")"]);
+test_valid_value("mask-image", "url(\"https://example.com/\")", ["url(https://example.com/)", "url(\"https://example.com/\")"]);
+
+test_valid_value("mask-image", "cross-fade(url(https://example.com/), green)");
+test_valid_value("mask-image", "linear-gradient(yellow, blue)");
+
+test_valid_value("mask-image", "none, none");
+test_valid_value("mask-image", "none, linear-gradient(yellow, blue)");
+</script>
+</body>
+</html>

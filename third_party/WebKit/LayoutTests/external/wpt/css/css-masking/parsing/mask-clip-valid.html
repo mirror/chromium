@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-clip with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-clip">
+<meta name="assert" content="mask-clip supports the full grammar '[ <geometry-box> | no-clip ]#'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_valid_value("mask-clip", "no-clip");
+
+// <geomatry-box>
+test_valid_value("mask-clip", "border-box");
+test_valid_value("mask-clip", "padding-box");
+test_valid_value("mask-clip", "content-box");
+test_valid_value("mask-clip", "margin-box");
+test_valid_value("mask-clip", "fill-box");
+test_valid_value("mask-clip", "stroke-box");
+test_valid_value("mask-clip", "view-box");
+
+test_valid_value("mask-clip", "no-clip, border-box, content-box");
+</script>
+</body>
+</html>

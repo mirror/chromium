@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-position with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-position">
+<meta name="assert" content="mask-position supports the full grammar '<position>#'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_valid_value("mask-position", "10% 20%");
+test_valid_value("mask-position", "center left", "0% 50%");
+test_valid_value("mask-position", "10% 20%, 30% 40%, 50% 60%");
+</script>
+</body>
+</html>

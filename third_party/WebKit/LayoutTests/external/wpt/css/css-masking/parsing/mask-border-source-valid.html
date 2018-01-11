@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask-border-source with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask-border-source">
+<meta name="assert" content="mask-border-source supports the full grammar 'none | <image>'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+test_valid_value("mask-border-source", "none");
+
+// <image>
+test_valid_value("mask-border-source", "url(https://example.com/)", ["url(https://example.com/)", "url(\"https://example.com/\")"]);
+test_valid_value("mask-border-source", "url(\"https://example.com/\")", ["url(https://example.com/)", "url(\"https://example.com/\")"]);
+test_valid_value("mask-border-source", "cross-fade(url(https://example.com/), green)");
+test_valid_value("mask-border-source", "linear-gradient(yellow, blue)");
+</script>
+</body>
+</html>

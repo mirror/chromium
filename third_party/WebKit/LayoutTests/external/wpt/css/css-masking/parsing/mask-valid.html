@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Masking Module Level 1: parsing mask with valid values</title>
+<link rel="author" title="Eric Willigers" href="mailto:ericwilligers@chromium.org">
+<link rel="help" href="https://drafts.fxtf.org/css-masking-1/#the-mask">
+<meta name="assert" content="mask supports the full grammar '<mask-layer>#'.">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/parsing-testcommon.js"></script>
+</head>
+<body>
+<script>
+// <mask-reference>
+test_valid_value("mask", "none");
+
+// <position> [ / <bg-size> ]?
+test_valid_value("mask", "10% 20%");
+test_valid_value("mask", "10% 20% / cover");
+
+// <repeat-style>
+test_valid_value("mask", "repeat-x");
+
+// <geometry-box>
+test_valid_value("mask", "border-box");
+
+// [ <geometry-box> | no-clip ]
+///  *** See that we test with two <geometry-box>, and with <geometry-box> before/after no-clip ***
+test_valid_value("mask", "margin-box");
+test_valid_value("mask", "no-clip");
+// border-box | padding-box | content-box margin-box
+
+// <compositing-operator>
+test_valid_value("mask", "intersect");
+
+// <masking-mode>
+test_valid_value("mask", "match-source");
+
+
+// <mask-reference> || <position> [ / <bg-size> ]? ||<repeat-style> || <geometry-box> || [ <geometry-box> | no-clip ] || <compositing-operator> || <masking-mode>
+test_valid_value("mask", "none 10% 20% / cover repeat-x border-box no-clip intersect match-source");
+test_valid_value("mask", "border-box margin-box");
+test_valid_value("mask", "no-clip border-box");
+
+// <mask-layer>#
+test_valid_value("mask", "none, 10% 20% / cover, repeat-x, border-box, no-clip, intersect, match-source");
+</script>
+</body>
+</html>
