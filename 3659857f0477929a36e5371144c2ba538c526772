@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88bfe06f_4d2ee38b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "Update this comment to note that this is not a real NSWindowController now?",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229e77d1_2625dc14",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "The only part I\u0027m not sure about is this category method and the corresponding one on the TWC. Could we just use +browserWindowControllerForWindow instead (and add a similar method to TabWindowController)?",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861a11f5_7b24720e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "Update this comment too?",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4449930e_53054e09",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "nonatomic",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef227776_25ce4717",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "Comment this new property.",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b225598c_0717cdeb",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "retain? strong I don\u0027t think means much in non-ARC.\n\nAlso, nonatomic",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50660d3c_1d9665bd",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "TabWindowControllerProxy ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168e4d5a_7fe11a9c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "Override -dealloc and DCHECK(!tabWindowController_)? It should be an error for the TWC to outlive this.",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bf74ef_45618c29",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T21:31:45Z",
+      "side": 1,
+      "message": "I think this should stay wrapped in the idiomatic if ((self \u003d [self init])) {}",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
