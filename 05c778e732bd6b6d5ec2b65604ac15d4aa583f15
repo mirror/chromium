@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479e3423_d1e41c37",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 37
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T18:03:00Z",
+      "side": 1,
+      "message": "I have to add this to specify in which workspace the task should belong with new bounds. This is used to find to which workspace it should be maximized to.",
+      "revId": "05c778e732bd6b6d5ec2b65604ac15d4aa583f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84758da5_52756abb",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 37
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T18:03:00Z",
+      "side": 1,
+      "message": "I also added this because android uses this information to determine the final bounds \u0026 workspace it is dragged to. Technically, I can use the id passed in bounds_changed, but doing this anyway in case we need this in the future or to fix a bug. Please let me know if you prefer to remove this.",
+      "revId": "05c778e732bd6b6d5ec2b65604ac15d4aa583f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
