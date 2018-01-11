@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6258101_505ec3d3",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2018-01-11T02:49:22Z",
+      "side": 1,
+      "message": "Done.\n\nExample `gn desc --blame` output looks sane to me:\n\n$ gn desc --blame . //v8:v8_base\n\u003csnip\u003e\ninputs\n  From //build/config/compiler:compiler\n       (Added by //build/config/BUILDCONFIG.gn:519)\n    //chrome/android/profiles/chromeos-chrome-3317.prof\n\u003csnip\u003e",
+      "parentUuid": "1d125a0b_63516dee",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cac068b_5682bb67",
         "filename": "tools/gn/command_desc.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9e1c6dc_837390fb",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2018-01-11T02:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cac068b_5682bb67",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452bd875_fa813ea8",
         "filename": "tools/gn/target.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6053b57_fcef6a9e",
+        "filename": "tools/gn/target.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2018-01-11T02:49:22Z",
+      "side": 1,
+      "message": "Yeah, that seems a lot cleaner for binary targets. Done.\n\nIt feels a bit awkward to do actions in this way, since the vibe I got was that config_values are generally only populated for binary targets. That said, doing `if (IsBinary()) { /* iterate through target and its configs */ } else {  /* iterate over target.action_values.inputs() or similar */ }` seems way more bug-prone, and wrapping all of that into some kind of custom TargetInputsIterator feels like a lot.",
+      "parentUuid": "452bd875_fa813ea8",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
