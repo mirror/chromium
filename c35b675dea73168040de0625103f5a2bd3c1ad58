@@ -16,6 +16,24 @@
       "revId": "c35b675dea73168040de0625103f5a2bd3c1ad58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b85d05d_8a4e8455",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2018-01-11T12:10:47Z",
+      "side": 1,
+      "message": "Some mojo targets include the PlatformExport.h file. They cannot depend on the platform target because this would introduce circular dependencies.\nExtracting the file to a separate target avoids the problem.",
+      "parentUuid": "d03d08a1_8b308f1d",
+      "revId": "c35b675dea73168040de0625103f5a2bd3c1ad58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
