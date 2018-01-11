@@ -101,6 +101,12 @@ SDK.NetworkRequest = class extends Common.Object {
 
     /** @type {string} */
     this.connectionId = '0';
+    /** @type {?Promise<?Array.<!SDK.NetworkRequest.NameValue>>} */
+    this._formParametersPromise = null;
+    // Assume no body initially
+    /** @type {?Promise<?string>} */
+    this._requestFormDataPromise = /** @type {?Promise<?string>} */ (Promise.resolve(null));
+    this._originalRequestId = requestId;
   }
 
   /**
@@ -120,13 +126,6 @@ SDK.NetworkRequest = class extends Common.Object {
    */
   requestId() {
     return this._requestId;
-  }
-
-  /**
-   * @param {!Protocol.Network.RequestId} requestId
-   */
-  setRequestId(requestId) {
-    this._requestId = requestId;
   }
 
   /**
@@ -665,18 +664,21 @@ SDK.NetworkRequest = class extends Common.Object {
   }
 
   /**
-   * @return {string|undefined}
+   * @return {!Promise<?string>}
    */
-  get requestFormData() {
-    return this._requestFormData;
+  requestFormData() {
+    if (!this._requestFormDataPromise)
+      this._requestFormDataPromise = SDK.NetworkManager.requestPostData(this);
+    return this._requestFormDataPromise;
   }
 
   /**
-   * @param {string|undefined} x
+   * @param {boolean} hasData
+   * @param {?string} data
    */
-  set requestFormData(x) {
-    this._requestFormData = x;
-    delete this._parsedFormParameters;
+  updateRequestFormData(hasData, data) {
+    this._requestFormDataPromise = (hasData && !data) ? null : Promise.resolve(data);
+    this._formParametersPromise = null;
   }
 
   /**
@@ -825,18 +827,25 @@ SDK.NetworkRequest = class extends Common.Object {
   }
 
   /**
-   * @return {?Array.<!SDK.NetworkRequest.NameValue>}
+   * @return {!Promise<?Array<!SDK.NetworkRequest.NameValue>>}
    */
-  get formParameters() {
-    if (this._parsedFormParameters)
-      return this._parsedFormParameters;
-    if (!this.requestFormData)
-      return null;
+  async _parseFormParameters() {
     var requestContentType = this.requestContentType();
     if (!requestContentType || !requestContentType.match(/^application\/x-www-form-urlencoded\s*(;.*)?$/i))
       return null;
-    this._parsedFormParameters = this._parseParameters(this.requestFormData);
-    return this._parsedFormParameters;
+    var formData = await this.requestFormData();
+    if (formData)
+      return this._parseParameters(formData);
+    return null;
+  }
+
+  /**
+   * @return {!Promise<?Array<!SDK.NetworkRequest.NameValue>>}
+   */
+  formParameters() {
+    if (!this._formParametersPromise)
+      this._formParametersPromise = this._parseFormParameters();
+    return this._formParametersPromise;
   }
 
   /**
@@ -1091,6 +1100,25 @@ SDK.NetworkRequest = class extends Common.Object {
     var message = {time: this.pseudoWallTime(time), eventName: eventName, eventId: eventId, data: data};
     this._eventSourceMessages.push(message);
     this.dispatchEventToListeners(SDK.NetworkRequest.Events.EventSourceMessageAdded, message);
+  }
+
+  /**
+   * @param {number} redirectCount
+   */
+  makeRedirectRequest(redirectCount) {
+    this._requestId = `${this._originalRequestId}:redirected.${redirectCount}`;
+  }
+
+  get originalRequestId() {
+    return this._originalRequestId;
+  }
+
+  /**
+   * @param {string} requestId
+   */
+  setRequestIdForTest(requestId) {
+    this._requestId = requestId;
+    this._originalRequestId = requestId;
   }
 };
 
