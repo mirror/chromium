@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17dae179_8bc7f20c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-11T19:54:29Z",
+      "side": 1,
+      "message": "CDM availability for key system support",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "1fb0656f8bb1f3373574cd1697b1167fe5608738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d3e219_dc06fdd0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34007,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-11T19:54:29Z",
+      "side": 1,
+      "message": "\"Supported\" for availability seems odd.",
+      "range": {
+        "startLine": 34007,
+        "startChar": 10,
+        "endLine": 34007,
+        "endChar": 26
+      },
+      "revId": "1fb0656f8bb1f3373574cd1697b1167fe5608738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
