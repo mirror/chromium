@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c540d64e_a67d72fb",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-11T22:59:29Z",
+      "side": 1,
+      "message": "I have https://crbug.com/796239 for fixing some inconsistencies that we already have for secondary monitor, therefore I would prefer to address it together.\nI added a comment in the bug. Is that ok with you?",
+      "parentUuid": "19fd49af_02f32ac4",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0503c1e_d0f5265e",
         "filename": "ash/login/login_screen_controller.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ed363ad6_7007ea83",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-11T22:59:29Z",
+      "side": 1,
+      "message": "We need more ;)",
+      "parentUuid": "f0503c1e_d0f5265e",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd57bb7d_15868676",
         "filename": "ash/system/status_area_widget.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba59379_978c9333",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-11T22:59:29Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "bd57bb7d_15868676",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
