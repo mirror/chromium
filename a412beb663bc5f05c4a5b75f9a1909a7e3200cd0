@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7060c003_c93fcb39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T21:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e014a4_77e3cede",
+      "revId": "a412beb663bc5f05c4a5b75f9a1909a7e3200cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430842d8_e777efe1",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
         "patchSetId": 2
