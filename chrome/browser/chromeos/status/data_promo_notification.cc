@@ -5,7 +5,6 @@
 #include "chrome/browser/chromeos/status/data_promo_notification.h"
 
 #include "ash/resources/grit/ash_resources.h"
-#include "ash/system/system_notifier.h"
 #include "base/command_line.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -47,7 +46,9 @@ namespace chromeos {
 namespace {
 
 const char kDataPromoNotificationId[] = "chrome://settings/internet/data_promo";
+const char kNotifierDataPromo[] = "ash.data-promo";
 const char kDataSaverNotificationId[] = "chrome://settings/internet/data_saver";
+const char kNotifierDataSaver[] = "ash.data-saver";
 const char kDataSaverExtensionUrl[] =
     "https://chrome.google.com/webstore/detail/"
     "pfmgfdlgomnbgkofeojodiodmgpgmkac?utm_source=chromeos-datasaver-prompt";
@@ -265,8 +266,7 @@ void DataPromoNotification::ShowOptionalMobileDataPromoNotification() {
           l10n_util::GetStringUTF16(IDS_MOBILE_DATA_NOTIFICATION_TITLE),
           message, gfx::Image(), base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              ash::system_notifier::kNotifierNetwork),
+              message_center::NotifierId::SYSTEM_COMPONENT, kNotifierDataPromo),
           message_center::RichNotificationData(),
           new message_center::HandleNotificationClickDelegate(base::Bind(
               &NotificationClicked, default_network->guid(), info_url)),
@@ -310,8 +310,7 @@ bool DataPromoNotification::ShowDataSaverNotification() {
           title, message, gfx::Image(), base::string16() /* display_source */,
           GURL(),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              ash::system_notifier::kNotifierNetwork),
+              message_center::NotifierId::SYSTEM_COMPONENT, kNotifierDataSaver),
           message_center::RichNotificationData(),
           new message_center::HandleNotificationClickDelegate(
               base::Bind(&NotificationClicked, "", kDataSaverExtensionUrl)),
