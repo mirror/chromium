@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508995a3_8784bbf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2018-01-11T22:04:03Z",
+      "side": 1,
+      "message": "nit: add \".\" at the end of the sentence.",
+      "revId": "c1b0afb9dd4c91d553d749cee6494738813997b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
