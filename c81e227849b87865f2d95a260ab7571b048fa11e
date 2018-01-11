@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee2d4d1_87b4d06c",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-11T19:04:35Z",
+      "side": 1,
+      "message": "Was looking at this yesterday, think we need this as well. But this CL improves things... I\u0027ll send a follow up today.",
+      "range": {
+        "startLine": 130,
+        "startChar": 19,
+        "endLine": 130,
+        "endChar": 33
+      },
+      "revId": "c81e227849b87865f2d95a260ab7571b048fa11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
