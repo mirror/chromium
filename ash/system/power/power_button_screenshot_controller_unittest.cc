@@ -12,6 +12,7 @@
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_button_screenshot_controller_test_api.h"
 #include "ash/system/power/power_button_test_base.h"
+#include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/test_screenshot_delegate.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "base/test/simple_test_tick_clock.h"
@@ -407,6 +408,65 @@ TEST_F(ClamshellPowerButtonScreenshotControllerTest,
   EXPECT_TRUE(screenshot_test_api_->ClamshellPowerButtonTimerIsRunning());
   ReleasePowerButton();
   EXPECT_FALSE(screenshot_test_api_->ClamshellPowerButtonTimerIsRunning());
+}
+
+// Same as PowerButtonTestBase excepts that switches::kIsTablet is set.
+class TabletPowerButtonScreenshotControllerTest
+    : public PowerButtonScreenshotControllerTest {
+ public:
+  TabletPowerButtonScreenshotControllerTest() { set_has_tablet_switch(true); }
+  ~TabletPowerButtonScreenshotControllerTest() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TabletPowerButtonScreenshotControllerTest);
+};
+
+// Tests volume key pressed cancels the ongoing tablet power button.
+TEST_F(TabletPowerButtonScreenshotControllerTest,
+       PowerButtonPressedFirst_VolumeKeyCancelTabletPowerButton) {
+  // Tests volume down key can stop tablet power button's power off menu timer.
+  PressPowerButton();
+  EXPECT_TRUE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  PressKey(ui::VKEY_VOLUME_DOWN);
+  EXPECT_FALSE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  ReleasePowerButton();
+  ReleaseKey(ui::VKEY_VOLUME_DOWN);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+
+  // Tests volume up key can stop power off menu timer. Also tests that volume
+  // up key is not consumed.
+  PressPowerButton();
+  EXPECT_TRUE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  PressKey(ui::VKEY_VOLUME_UP);
+  EXPECT_FALSE(LastKeyConsumed());
+  EXPECT_FALSE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  ReleasePowerButton();
+  ReleaseKey(ui::VKEY_VOLUME_UP);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+  EXPECT_FALSE(LastKeyConsumed());
+}
+
+// Tests volume key pressed first invalidates tablet power button behavior.
+TEST_F(TabletPowerButtonScreenshotControllerTest,
+       VolumeKeyPressedFirst_InvalidateTabletPowerButton) {
+  // Tests volume down key invalidates tablet power button behavior.
+  PressKey(ui::VKEY_VOLUME_DOWN);
+  PressPowerButton();
+  EXPECT_FALSE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  ReleasePowerButton();
+  ReleaseKey(ui::VKEY_VOLUME_DOWN);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+
+  // Tests volume up key invalidates tablet power button behavior. Also tests
+  // that volume up key is not consumed.
+  PressKey(ui::VKEY_VOLUME_UP);
+  PressPowerButton();
+  EXPECT_FALSE(LastKeyConsumed());
+  EXPECT_FALSE(tablet_test_api_->PowerOffMenuTimerIsRunning());
+  ReleasePowerButton();
+  ReleaseKey(ui::VKEY_VOLUME_UP);
+  EXPECT_FALSE(power_manager_client_->backlights_forced_off());
+  EXPECT_FALSE(LastKeyConsumed());
 }
 
 }  // namespace ash
