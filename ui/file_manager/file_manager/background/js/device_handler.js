@@ -20,10 +20,13 @@ function DeviceHandler() {
       this.onDeviceChanged_.bind(this));
   chrome.fileManagerPrivate.onMountCompleted.addListener(
       this.onMountCompleted_.bind(this));
-  chrome.notifications.onClicked.addListener(
-      this.onNotificationClicked_.bind(this));
-  chrome.notifications.onButtonClicked.addListener(
-      this.onNotificationClicked_.bind(this));
+  // Avoid opening a window in DialogType.FULL_PAGE in the incognito context.
+  if (!chrome.extension.inIncognitoContext) {
+    chrome.notifications.onClicked.addListener(
+        this.onNotificationClicked_.bind(this));
+    chrome.notifications.onButtonClicked.addListener(
+        this.onNotificationClicked_.bind(this));
+  }
 }
 
 DeviceHandler.prototype = {

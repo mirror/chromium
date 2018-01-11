@@ -40,6 +40,14 @@ unpacker.app = {
   PACKING_NOTIFICATION_CLEAR_DELAY: 1000,
 
   /**
+   * The quota size requested to filesystem for making in-progress files.
+   * This can be an arbitrary number because the current implementation in
+   * WebKit ignores the size value.
+   * @type {number}
+   */
+  REQUEST_FILE_SYSTEM_SIZE: 16 * 1024 * 1024 * 1024,
+
+  /**
    * The default filename for .nmf file.
    * This value must not be constant because it is overwritten in tests.
    * Since .nmf file is not available in .grd, we use .txt instead.
@@ -52,6 +60,13 @@ unpacker.app = {
    * @const {string}
    */
   DEFAULT_MODULE_TYPE: 'application/x-pnacl',
+
+  /**
+   * The temporary work directory to write in-progress zip file in the
+   * extension's local filesystem.
+   * @const {string}
+   */
+  LOCAL_WORK_DIRECTORY_PATH: '/tmp',
 
   /**
    * Multiple volumes can be opened at the same time.
@@ -980,5 +995,47 @@ unpacker.app = {
    */
   onSuspend: function() {
     unpacker.app.saveState_(Object.keys(unpacker.app.volumes));
+  },
+
+  /**
+   * Clean all remporary files inside the work directory.
+   * Those files are usually moved to the destination directory when finished
+   * or removed when any error happened, but might be left there when the
+   * extension was aborted by runtime errors or system shutdown.
+   */
+  cleanWorkDirectory: function() {
+    new Promise(window.webkitRequestFileSystem.bind(null, window.TEMPORARY,
+    unpacker.app.REQUEST_FILE_SYSTEM_SIZE))
+    .then((fs) => {
+      fs.root.getDirectory(
+          unpacker.app.LOCAL_WORK_DIRECTORY_PATH, {create: true},
+          (directoryEntry) => {
+            const directoryReader = directoryEntry.createReader();
+            function scanAndRemoveEntries() {
+              directoryReader.readEntries(
+                  function(results) {
+                    if (results.length) {
+                      results.forEach(function(entry) {
+                        console.warn(
+                            'Found a temporary file. ',
+                            'Perhaps the extension had exited abnormally. ',
+                            entry);
+                        entry.remove(
+                            function() {},
+                            (error) => console.error(
+                                'Failed to remove the file: ', error));
+                      });
+                      scanAndRemoveEntries();
+                    }
+                  },
+                  (error) => console.error(
+                      'Failed to read entries in the work directory: ',
+                      error));
+            }
+            scanAndRemoveEntries();
+          },
+          (error) =>
+              console.error('Failed to read the work directory: ', error));
+    }).catch((domException) => console.error(domException));
   }
 };
