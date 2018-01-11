@@ -182,8 +182,9 @@ class FetcherTestURLRequestContext : public TestURLRequestContext {
  public:
   // All requests for |hanging_domain| will hang on host resolution until the
   // mock_resolver()->ResolveAllPending() is called.
-  FetcherTestURLRequestContext(const std::string& hanging_domain,
-                               std::unique_ptr<ProxyService> proxy_service)
+  FetcherTestURLRequestContext(
+      const std::string& hanging_domain,
+      std::unique_ptr<ProxyResolutionService> proxy_service)
       : TestURLRequestContext(true), mock_resolver_(new MockHostResolver()) {
     mock_resolver_->set_ondemand_mode(true);
     mock_resolver_->rules()->AddRule(hanging_domain, "127.0.0.1");
@@ -302,7 +303,8 @@ class FetcherTestURLRequestContextGetter : public URLRequestContextGetter {
     return context_.get();
   }
 
-  void set_proxy_service(std::unique_ptr<ProxyService> proxy_service) {
+  void set_proxy_service(
+      std::unique_ptr<ProxyResolutionService> proxy_service) {
     DCHECK(proxy_service);
     proxy_service_ = std::move(proxy_service);
   }
@@ -321,7 +323,7 @@ class FetcherTestURLRequestContextGetter : public URLRequestContextGetter {
   const std::string hanging_domain_;
 
   // May be null.
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
 
   std::unique_ptr<FetcherTestURLRequestContext> context_;
   bool shutting_down_;
@@ -510,8 +512,9 @@ TEST_F(URLFetcherTest, FetchedUsingProxy) {
   const net::ProxyServer proxy_server(ProxyServer::SCHEME_HTTP,
                                       test_server_->host_port_pair());
 
-  std::unique_ptr<ProxyService> proxy_service =
-      ProxyService::CreateFixedFromPacResult(proxy_server.ToPacString());
+  std::unique_ptr<ProxyResolutionService> proxy_service =
+      ProxyResolutionService::CreateFixedFromPacResult(
+          proxy_server.ToPacString());
   context_getter->set_proxy_service(std::move(proxy_service));
 
   delegate.CreateFetcher(test_server_->GetURL(kDefaultResponsePath),

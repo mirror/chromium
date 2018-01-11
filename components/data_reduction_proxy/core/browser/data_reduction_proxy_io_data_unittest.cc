@@ -167,7 +167,7 @@ TEST_F(DataReductionProxyIODataTest, TestResetBadProxyListOnDisableDataSaver) {
   std::vector<net::ProxyServer> proxies;
   proxies.push_back(net::ProxyServer::FromURI("http://foo1.com",
                                               net::ProxyServer::SCHEME_HTTP));
-  net::ProxyService* proxy_service =
+  net::ProxyResolutionService* proxy_service =
       io_data->url_request_context_getter_->GetURLRequestContext()
           ->proxy_service();
   net::ProxyInfo proxy_info;

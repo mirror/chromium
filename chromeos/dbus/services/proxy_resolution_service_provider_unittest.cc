@@ -154,7 +154,7 @@ class TestDelegate : public ProxyResolutionServiceProvider::Delegate {
     net::ProxyConfig config;
     config.set_pac_url(GURL("http://www.example.com"));
     config.set_pac_mandatory(true);
-    proxy_service_ = std::make_unique<net::ProxyService>(
+    proxy_service_ = std::make_unique<net::ProxyResolutionService>(
         std::make_unique<net::ProxyConfigServiceFixed>(config),
         std::make_unique<TestProxyResolverFactory>(proxy_resolver_),
         nullptr /* net_log */);
@@ -170,9 +170,9 @@ class TestDelegate : public ProxyResolutionServiceProvider::Delegate {
 
   net::ProxyResolver* proxy_resolver_;  // Not owned.
 
-  // Created, used, and destroyed on the network thread (since net::ProxyService
-  // is thread-affine (uses ThreadChecker)).
-  std::unique_ptr<net::ProxyService> proxy_service_;
+  // Created, used, and destroyed on the network thread (since
+  // net::ProxyResolutionService is thread-affine (uses ThreadChecker)).
+  std::unique_ptr<net::ProxyResolutionService> proxy_service_;
 
   scoped_refptr<net::TestURLRequestContextGetter> context_getter_;
 

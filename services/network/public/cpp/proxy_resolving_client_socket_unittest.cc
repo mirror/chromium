@@ -33,7 +33,7 @@ class TestURLRequestContextWithProxy : public net::TestURLRequestContext {
   TestURLRequestContextWithProxy(const std::string& pac_result)
       : TestURLRequestContext(true) {
     context_storage_.set_proxy_service(
-        net::ProxyService::CreateFixedFromPacResult(pac_result));
+        net::ProxyResolutionService::CreateFixedFromPacResult(pac_result));
     // net::MockHostResolver maps all hosts to localhost.
     auto host_resolver = std::make_unique<net::MockHostResolver>();
     context_storage_.set_host_resolver(std::move(host_resolver));
@@ -450,7 +450,7 @@ TEST_F(ProxyResolvingClientSocketTest, URLSanitized) {
       std::make_unique<net::MockAsyncProxyResolverFactory>(false);
   net::MockAsyncProxyResolverFactory* proxy_resolver_factory_raw =
       proxy_resolver_factory.get();
-  net::ProxyService service(
+  net::ProxyResolutionService service(
       std::make_unique<net::ProxyConfigServiceFixed>(proxy_config),
       std::move(proxy_resolver_factory), nullptr);
   context->set_proxy_service(&service);
@@ -483,8 +483,8 @@ TEST_F(ProxyResolvingClientSocketTest, URLSanitized) {
 TEST_F(ProxyResolvingClientSocketTest, ProxyConfigChanged) {
   auto context = std::make_unique<net::TestURLRequestContext>(true);
   // Use direct connection.
-  std::unique_ptr<net::ProxyService> proxy_service =
-      net::ProxyService::CreateDirect();
+  std::unique_ptr<net::ProxyResolutionService> proxy_service =
+      net::ProxyResolutionService::CreateDirect();
   context->set_proxy_service(proxy_service.get());
   context->Init();
 

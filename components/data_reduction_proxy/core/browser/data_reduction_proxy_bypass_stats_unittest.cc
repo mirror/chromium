@@ -395,7 +395,7 @@ class DataReductionProxyBypassStatsEndToEndTest : public testing::Test {
     return request;
   }
 
-  void set_proxy_service(net::ProxyService* proxy_service) {
+  void set_proxy_service(net::ProxyResolutionService* proxy_service) {
     context_.set_proxy_service(proxy_service);
   }
 
@@ -597,8 +597,8 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, URLRedirectCycle) {
 
 TEST_F(DataReductionProxyBypassStatsEndToEndTest,
        BypassedBytesProxyOverridden) {
-  std::unique_ptr<net::ProxyService> proxy_service(
-      net::ProxyService::CreateFixed("http://test.com:80"));
+  std::unique_ptr<net::ProxyResolutionService> proxy_service(
+      net::ProxyResolutionService::CreateFixed("http://test.com:80"));
   set_proxy_service(proxy_service.get());
   InitializeContext();
 

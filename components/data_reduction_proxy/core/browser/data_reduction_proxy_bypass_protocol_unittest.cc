@@ -60,7 +60,7 @@ using net::HttpResponseHeaders;
 using net::MockRead;
 using net::MockWrite;
 using net::ProxyRetryInfoMap;
-using net::ProxyService;
+using net::ProxyResolutionService;
 using net::StaticSocketDataProvider;
 using net::TestDelegate;
 using net::TestURLRequestContext;
@@ -109,8 +109,10 @@ class DataReductionProxyProtocolEmbeddedServerTest : public testing::Test {
     test_context_->RunUntilIdle();
   }
 
-  // Sets up the |TestURLRequestContext| with the provided |ProxyService|.
-  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service) {
+  // Sets up the |TestURLRequestContext| with the provided
+  // |ProxyResolutionService|.
+  void ConfigureTestDependencies(
+      std::unique_ptr<ProxyResolutionService> proxy_service) {
     // Create a context with delayed initialization.
     context_.reset(new TestURLRequestContext(true));
 
@@ -140,7 +142,7 @@ class DataReductionProxyProtocolEmbeddedServerTest : public testing::Test {
   base::MessageLoopForIO message_loop_;
   net::EmbeddedTestServer embedded_test_server_;
 
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
 
   std::unique_ptr<net::URLRequestInterceptingJobFactory> job_factory_;
@@ -169,7 +171,8 @@ TEST_F(DataReductionProxyProtocolEmbeddedServerTest,
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kDataReductionProxy, proxy_server.host_port_pair().ToString());
   test_context_->config()->ResetParamFlagsForTest();
-  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"));
+  ConfigureTestDependencies(
+      ProxyResolutionService::CreateFixedFromPacResult("DIRECT"));
 
   test_context_->RunUntilIdle();
   base::RunLoop().RunUntilIdle();
@@ -253,11 +256,13 @@ class DataReductionProxyProtocolTest : public testing::Test {
     test_context_->RunUntilIdle();
   }
 
-  // Sets up the |TestURLRequestContext| with the provided |ProxyService|.
-  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service,
-                                 bool use_mock_socket_factory,
-                                 bool use_drp_proxy_delegate,
-                                 bool use_test_network_delegate) {
+  // Sets up the |TestURLRequestContext| with the provided
+  // |ProxyResolutionService|.
+  void ConfigureTestDependencies(
+      std::unique_ptr<ProxyResolutionService> proxy_service,
+      bool use_mock_socket_factory,
+      bool use_drp_proxy_delegate,
+      bool use_test_network_delegate) {
     // Create a context with delayed initialization.
     context_.reset(new TestURLRequestContext(true));
 
@@ -501,7 +506,7 @@ class DataReductionProxyProtocolTest : public testing::Test {
   std::unique_ptr<net::URLRequestInterceptor> simple_interceptor_;
   net::MockClientSocketFactory mock_socket_factory_;
   std::unique_ptr<net::TestNetworkDelegate> network_delegate_;
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
   std::unique_ptr<DataReductionProxyBypassStats> bypass_stats_;
   net::StaticHttpUserAgentSettings http_user_agent_settings_;
@@ -574,7 +579,7 @@ TEST_F(DataReductionProxyProtocolTest, BypassRetryOnPostConnectionErrors) {
     base::HistogramTester histogram_tester;
 
     ConfigureTestDependencies(
-        ProxyService::CreateFixedFromPacResult(
+        ProxyResolutionService::CreateFixedFromPacResult(
             net::ProxyServer::FromURI(primary, net::ProxyServer::SCHEME_HTTP)
                 .ToPacString() +
             "; " +
@@ -1019,7 +1024,7 @@ TEST_F(DataReductionProxyProtocolTest, BypassLogic) {
                              .ToString();
   for (size_t i = 0; i < arraysize(tests); ++i) {
     ConfigureTestDependencies(
-        ProxyService::CreateFixedFromPacResult(
+        ProxyResolutionService::CreateFixedFromPacResult(
             net::ProxyServer::FromURI(primary, net::ProxyServer::SCHEME_HTTP)
                 .ToPacString() +
             "; " +
@@ -1130,7 +1135,7 @@ TEST_F(DataReductionProxyBypassProtocolEndToEndTest,
 
     ResetDependencies();
     storage()->set_proxy_service(
-        ProxyService::CreateFixed(kPrimary + ",direct://"));
+        ProxyResolutionService::CreateFixed(kPrimary + ",direct://"));
     AttachToContextAndInit();
 
     // The proxy is an HTTPS proxy, so set up the fake SSL socket data.
@@ -1200,7 +1205,7 @@ TEST_F(DataReductionProxyBypassProtocolEndToEndTest,
   for (const auto& test : test_cases) {
     ResetDependencies();
     storage()->set_proxy_service(
-        net::ProxyService::CreateFixed(test.proxy_rules));
+        net::ProxyResolutionService::CreateFixed(test.proxy_rules));
     AttachToContextAndInit();
     if (test.enable_data_reduction_proxy) {
       drp_test_context()->DisableWarmupURLFetch();
@@ -1232,10 +1237,10 @@ TEST_F(DataReductionProxyProtocolTest,
        ProxyBypassIgnoredOnDirectConnection) {
   // Verify that a Chrome-Proxy header is ignored when returned from a directly
   // connected origin server.
-  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"),
-                            true /* use_mock_socket_factory */,
-                            false /* use_drp_proxy_delegate */,
-                            true /* use_test_network_delegate */);
+  ConfigureTestDependencies(
+      ProxyResolutionService::CreateFixedFromPacResult("DIRECT"),
+      true /* use_mock_socket_factory */, false /* use_drp_proxy_delegate */,
+      true /* use_test_network_delegate */);
 
   MockRead data_reads[] = {
     MockRead("HTTP/1.1 200 OK\r\n"

@@ -4523,7 +4523,7 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredRetry) {
 TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
   request_.method = "GET";
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyService::CreateFixedFromPacResult("HTTPS myproxy:70"));
+      ProxyResolutionService::CreateFixedFromPacResult("HTTPS myproxy:70"));
   // Do not force SPDY so that second socket can negotiate HTTP/1.1.
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
@@ -4610,7 +4610,7 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
 // Test to make sure we can correctly connect through a proxy.
 TEST_F(SpdyNetworkTransactionTest, ProxyConnect) {
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyService::CreateFixedFromPacResult("PROXY myproxy:70"));
+      ProxyResolutionService::CreateFixedFromPacResult("PROXY myproxy:70"));
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
   helper.RunPreTestSetup();
@@ -4667,7 +4667,8 @@ TEST_F(SpdyNetworkTransactionTest, DirectConnectProxyReconnect) {
   // to simply DIRECT. The reason for appending the second proxy is to verify
   // that the session pool key used does is just "DIRECT".
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyService::CreateFixedFromPacResult("DIRECT; PROXY myproxy:70"));
+      ProxyResolutionService::CreateFixedFromPacResult(
+          "DIRECT; PROXY myproxy:70"));
   // When setting up the first transaction, we store the SpdySessionPool so that
   // we can use the same pool in the second transaction.
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
@@ -4752,7 +4753,7 @@ TEST_F(SpdyNetworkTransactionTest, DirectConnectProxyReconnect) {
   request_.method = "GET";
   request_.url = GURL(GetDefaultUrlWithPath("/foo.dat"));
   auto session_deps_proxy = std::make_unique<SpdySessionDependencies>(
-      ProxyService::CreateFixedFromPacResult("PROXY myproxy:70"));
+      ProxyResolutionService::CreateFixedFromPacResult("PROXY myproxy:70"));
   NormalSpdyTransactionHelper helper_proxy(request_, DEFAULT_PRIORITY, log_,
                                            std::move(session_deps_proxy));
 
@@ -6878,7 +6879,7 @@ TEST_F(SpdyNetworkTransactionTest, InsecureUrlCreatesSecureSpdySession) {
 
   // Need secure proxy so that insecure URL can use HTTP/2.
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyService::CreateFixedFromPacResult("HTTPS myproxy:70"));
+      ProxyResolutionService::CreateFixedFromPacResult("HTTPS myproxy:70"));
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
 
