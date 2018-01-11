@@ -84,10 +84,13 @@ DrmThread::~DrmThread() {
   Stop();
 }
 
-void DrmThread::Start() {
+void DrmThread::Start(base::OnceClosure binding_drainer) {
+  if (binding_drainer)
+    binding_drainer_ = std::move(binding_drainer);
   base::Thread::Options thread_options;
   thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
   thread_options.priority = base::ThreadPriority::DISPLAY;
+
   if (!StartWithOptions(thread_options))
     LOG(FATAL) << "Failed to create DRM thread";
 }
@@ -104,6 +107,14 @@ void DrmThread::Init() {
 
   display_manager_.reset(
       new DrmGpuDisplayManager(screen_manager_.get(), device_manager_.get()));
+
+  DCHECK(this->task_runner())
+      << "DrmThread::Init -- thread doesn't have a task_runner";
+
+  // DRM thread is running now so can safely handle binding requests. So drain
+  // the queue of as-yet unhandled binding requests.
+  if (binding_drainer_)
+    std::move(binding_drainer_).Run();
 }
 
 void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
