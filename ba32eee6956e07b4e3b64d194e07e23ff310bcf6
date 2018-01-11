@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a29c000_57dd3f24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-11T05:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17bc5b3d_e6256a82",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "ba32eee6956e07b4e3b64d194e07e23ff310bcf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c334c91_9b580cbb",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c544f496_870086b5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-11T05:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c334c91_9b580cbb",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "ba32eee6956e07b4e3b64d194e07e23ff310bcf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f1a761_5c5ccc15",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "ba32eee6956e07b4e3b64d194e07e23ff310bcf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd36acb0_08858e80",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-11T05:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f1a761_5c5ccc15",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "ba32eee6956e07b4e3b64d194e07e23ff310bcf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
