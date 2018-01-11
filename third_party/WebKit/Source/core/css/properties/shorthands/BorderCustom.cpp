@@ -7,6 +7,7 @@
 #include "core/css/CSSInitialValue.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSShorthand {
@@ -66,6 +67,30 @@ bool Border::ParseShorthand(
       properties);
 
   return range.AtEnd();
+}
+
+const CSSValue* Border::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  // FIXME(rjwright): This will crash.
+  // GetCSSPropertyBorderTop().CSSValueFromComputedStyle etc are not
+  // implemented.
+  const CSSValue* value = GetCSSPropertyBorderTop().CSSValueFromComputedStyle(
+      style, layout_object, styled_node, allow_visited_style);
+  static const CSSProperty* kProperties[3] = {&GetCSSPropertyBorderRight(),
+                                              &GetCSSPropertyBorderBottom(),
+                                              &GetCSSPropertyBorderLeft()};
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(kProperties); ++i) {
+    const CSSValue* value_for_side = kProperties[i]->CSSValueFromComputedStyle(
+        style, layout_object, styled_node, allow_visited_style);
+    if (!DataEquivalent(value, value_for_side)) {
+      return nullptr;
+    }
+  }
+  return value;
 }
 
 }  // namespace CSSShorthand
