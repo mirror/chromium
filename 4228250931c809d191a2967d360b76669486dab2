@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f59dc2_c789dd95",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T21:42:02Z",
+      "side": 1,
+      "message": "Let\u0027s keep this \u0027ConnectToBestServices [reason]\" since that matches the Shill method name.",
+      "revId": "4228250931c809d191a2967d360b76669486dab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
