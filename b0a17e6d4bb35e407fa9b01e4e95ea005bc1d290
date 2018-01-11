@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7383f2c6_4944ca31",
+        "filename": "ui/base/dragdrop/drop_target_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-11T18:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1876f8f6_d18b47c4",
+      "range": {
+        "startLine": 15,
+        "startChar": 39,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "b0a17e6d4bb35e407fa9b01e4e95ea005bc1d290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8151996_70c07d74",
         "filename": "ui/base/dragdrop/drop_target_win.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "19dcac71_5487d285",
+        "filename": "ui/base/dragdrop/drop_target_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-11T18:04:18Z",
+      "side": 1,
+      "message": "Sure thing.",
+      "parentUuid": "a8151996_70c07d74",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "b0a17e6d4bb35e407fa9b01e4e95ea005bc1d290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b104682_dbde139a",
         "filename": "ui/views/widget/desktop_aura/desktop_drop_target_win.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "b0a17e6d4bb35e407fa9b01e4e95ea005bc1d290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3acce1e_8ece49de",
+        "filename": "ui/views/widget/desktop_aura/desktop_drop_target_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-11T18:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b104682_dbde139a",
+      "range": {
+        "startLine": 51,
+        "startChar": 48,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "b0a17e6d4bb35e407fa9b01e4e95ea005bc1d290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
