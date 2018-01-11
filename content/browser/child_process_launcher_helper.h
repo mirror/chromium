@@ -14,6 +14,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/common/zygote_handle.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
@@ -27,10 +28,6 @@
 #include "sandbox/win/src/sandbox_types.h"
 #else
 #include "content/public/browser/posix_file_descriptor_info.h"
-#endif
-
-#if defined(OS_LINUX)
-#include "content/public/common/zygote_handle.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -76,9 +73,9 @@ class ChildProcessLauncherHelper :
 
     base::Process process;
 
-#if defined(OS_LINUX)
+#if defined(USE_ZYGOTE_HANDLE)
     ZygoteHandle zygote = nullptr;
-#endif
+#endif  // defined(USE_ZYGOTE_HANDLE)
   };
 
   ChildProcessLauncherHelper(
