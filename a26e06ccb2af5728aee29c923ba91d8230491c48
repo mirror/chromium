@@ -34,6 +34,24 @@
       "revId": "a26e06ccb2af5728aee29c923ba91d8230491c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ed21fe_7c813d7b",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-11T21:51:09Z",
+      "side": 1,
+      "message": "I haven\u0027t thought about wraparounds yet. I\u0027ll address in a separate CL.",
+      "parentUuid": "7fcfd047_1f6e91a6",
+      "revId": "a26e06ccb2af5728aee29c923ba91d8230491c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
