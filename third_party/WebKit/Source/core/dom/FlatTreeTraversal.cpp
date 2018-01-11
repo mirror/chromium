@@ -36,12 +36,10 @@ namespace blink {
 
 Node* FlatTreeTraversal::TraverseChild(const Node& node,
                                        TraversalDirection direction) {
-  ElementShadow* shadow = ShadowFor(node);
-  if (shadow) {
-    ShadowRoot& shadow_root = shadow->GetShadowRoot();
+  if (ShadowRoot* shadow_root = node.GetShadowRoot()) {
     return ResolveDistributionStartingAt(direction == kTraversalDirectionForward
-                                             ? shadow_root.firstChild()
-                                             : shadow_root.lastChild(),
+                                             ? shadow_root->firstChild()
+                                             : shadow_root->lastChild(),
                                          direction);
   }
   return ResolveDistributionStartingAt(direction == kTraversalDirectionForward
