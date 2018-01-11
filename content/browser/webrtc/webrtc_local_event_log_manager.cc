@@ -33,7 +33,9 @@ WebRtcLocalEventLogManager::WebRtcLocalEventLogManager(
       clock_for_testing_(nullptr),
       max_log_file_size_bytes_(kDefaultMaxLocalLogFileSizeBytes) {}
 
-WebRtcLocalEventLogManager::~WebRtcLocalEventLogManager() {}
+WebRtcLocalEventLogManager::~WebRtcLocalEventLogManager() {
+  // This should never actually run, except in unit tests.
+}
 
 bool WebRtcLocalEventLogManager::PeerConnectionAdded(int render_process_id,
                                                      int lid) {
@@ -194,7 +196,8 @@ void WebRtcLocalEventLogManager::StartLogFile(int render_process_id, int lid) {
 
   // If the file was successfully created, it's now ready to be written to.
   DCHECK(log_files_.find({render_process_id, lid}) == log_files_.end());
-  log_files_.emplace(key, LogFile(std::move(file), max_log_file_size_bytes_));
+  log_files_.emplace(
+      key, LogFile(file_path, std::move(file), max_log_file_size_bytes_));
 
   // The observer needs to be able to run on any TaskQueue.
   if (observer_) {
