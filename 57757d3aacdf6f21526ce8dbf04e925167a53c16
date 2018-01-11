@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "aae648fb_c8ae92b2",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T20:11:20Z",
+      "side": 1,
+      "message": "Agreed, and, that\u0027s unfortunate.  :)",
+      "parentUuid": "141debf3_833fe878",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aa3af98_5b6b7a85",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
@@ -196,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "fcf9086d_bb62cda4",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T20:11:20Z",
+      "side": 1,
+      "message": "Hmm, sorry, I thought there was an underlying lib that could be employed.  Thanks for checking.",
+      "parentUuid": "835cfd84_856e3264",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab656475_61224509",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
@@ -228,6 +264,24 @@
       "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60da408_d4a2c434",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T20:11:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc41bb65_e1ed98c7",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
