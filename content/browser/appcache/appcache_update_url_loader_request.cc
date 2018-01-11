@@ -142,6 +142,11 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::OnReceiveCachedMetadata(
     const std::vector<uint8_t>& data) {
 }
 
+void AppCacheUpdateJob::UpdateURLLoaderRequest::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  NOTIMPLEMENTED();
+}
+
 void AppCacheUpdateJob::UpdateURLLoaderRequest::OnTransferSizeUpdated(
     int32_t transfer_size_diff) {
   NOTIMPLEMENTED();
