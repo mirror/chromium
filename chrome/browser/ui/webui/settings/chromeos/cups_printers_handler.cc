@@ -34,6 +34,8 @@
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/ppd_provider.h"
+#include "chromeos/printing/printer_configuration.h"
+#include "chromeos/printing/printing_constants.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
@@ -41,33 +43,15 @@
 #include "net/base/filename_util.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "printing/backend/print_backend.h"
-#include "url/third_party/mozilla/url_parse.h"
 
 namespace chromeos {
 namespace settings {
 
 namespace {
 
-constexpr char kIppScheme[] = "ipp";
-constexpr char kIppsScheme[] = "ipps";
-
-constexpr int kIppPort = 631;
-// IPPS commonly uses the HTTPS port despite the spec saying it should use the
-// IPP port.
-constexpr int kIppsPort = 443;
-
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
 enum PpdSourceForHistogram { kUser = 0, kScs = 1, kPpdSourceMax };
-
-// A parsed representation of a printer uri.
-struct PrinterUri {
-  bool encrypted = false;
-  std::string scheme;
-  std::string host;
-  int port = url::SpecialPort::PORT_INVALID;
-  std::string path;
-};
 
 void RecordPpdSource(const PpdSourceForHistogram& source) {
   UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PpdSource", source, kPpdSourceMax);
@@ -81,43 +65,6 @@ void OnRemovedPrinter(const Printer::PrinterProtocol& protocol, bool success) {
 // Log if the IPP attributes request was succesful.
 void RecordIppQuerySuccess(bool success) {
   UMA_HISTOGRAM_BOOLEAN("Printing.CUPS.IppAttributesSuccess", success);
-}
-
-// Parses |printer_uri| into its components and written into |uri|.  Returns
-// true if the uri was parsed successfully, returns false otherwise.  No changes
-// are made to |uri| if this function returns false.
-bool ParseUri(const std::string& printer_uri, PrinterUri* uri) {
-  DCHECK(uri);
-  const char* uri_ptr = printer_uri.c_str();
-  url::Parsed parsed;
-  url::ParseStandardURL(uri_ptr, printer_uri.length(), &parsed);
-  if (!parsed.scheme.is_valid() || !parsed.host.is_valid() ||
-      !parsed.path.is_valid()) {
-    return false;
-  }
-  base::StringPiece scheme(&uri_ptr[parsed.scheme.begin], parsed.scheme.len);
-  base::StringPiece host(&uri_ptr[parsed.host.begin], parsed.host.len);
-  base::StringPiece path(&uri_ptr[parsed.path.begin], parsed.path.len);
-
-  bool encrypted = scheme != kIppScheme;
-  int port = ParsePort(uri_ptr, parsed.port);
-  // Port not specified.
-  if (port == url::SpecialPort::PORT_UNSPECIFIED ||
-      port == url::SpecialPort::PORT_INVALID) {
-    if (scheme == kIppScheme) {
-      port = kIppPort;
-    } else if (scheme == kIppsScheme) {
-      port = kIppsPort;
-    }
-  }
-
-  uri->encrypted = encrypted;
-  uri->scheme = scheme.as_string();
-  uri->host = host.as_string();
-  uri->port = port;
-  uri->path = path.as_string();
-
-  return true;
 }
 
 // Returns true if |printer_uri| is an IPP uri.
@@ -195,7 +142,7 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
   printer_info->SetString("printerMakeAndModel", printer.make_and_model());
 
   PrinterUri uri;
-  if (!ParseUri(printer.uri(), &uri)) {
+  if (!printer.ParseUri(&uri)) {
     // Uri is invalid so we set default values.
     LOG(WARNING) << "Could not parse uri.  Defaulting values";
     printer_info->SetString("printerAddress", "");
@@ -534,7 +481,7 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
 
   std::unique_ptr<Printer> printer = DictToPrinter(*printer_dict);
   PrinterUri uri;
-  if (!printer || !ParseUri(printer->uri(), &uri)) {
+  if (!printer || !printer->ParseUri(&uri)) {
     LOG(ERROR) << "Failed to parse printer";
     OnAddPrinterError(PrinterSetupResult::kFatalError);
     return;
@@ -839,7 +786,7 @@ void CupsPrintersHandler::HandleAddDiscoveredPrinter(
 
   std::unique_ptr<Printer> printer = printers_manager_->GetPrinter(printer_id);
   PrinterUri uri;
-  if (printer == nullptr || !ParseUri(printer->uri(), &uri)) {
+  if (printer == nullptr || !printer->ParseUri(&uri)) {
     // Printer disappeared, so we don't have information about it anymore and
     // can't really do much.  Or the printer uri was not parsed successfully.
     // Fail the add.
