@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b246061_11b99cbc",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "Nit: I think I would probably do this the other way around: Have the syntax description here, and refer to it from the class javadoc comment. (Using @see for easier linkability).",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6813a9_6d7010f9",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "I would maybe make |mChunks| a List\u003cString\u003e, just to avoid this awkwardness.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b667fb_a4c86659",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "Nit: Maybe \"matches\"? Reads a bit more fluently.",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

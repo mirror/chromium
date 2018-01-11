@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "658f91e2_a93f0124",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "You\u0027re also going to have to special-case the first chunk, because it\u0027s anchored unless empty.\n\nTest case: assertFalse(matchPattern(\"ba\", \"a*\"))",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 59
+      },
+      "revId": "c24b560fd25edb16011a496f2d82ca86578ccce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6cb39e_70ee27e7",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "You want straight-up assignment here, right? Because |offset| already is the starting position of the string.\n\nTest case: assertTrue(matchPattern(\"abac\", \"*a*c*\")) (although there might be an even smaller one).",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "c24b560fd25edb16011a496f2d82ca86578ccce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfab4d8e_e2fa4d3a",
+        "filename": "components/signin/core/browser/android/junit/src/org/chromium/components/signin/test/PatternMatcherTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-11T17:31:47Z",
+      "side": 1,
+      "message": "You can use expected \u003d PatternMatcher.IllegalPatternException.class in the @Test annotation.",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "c24b560fd25edb16011a496f2d82ca86578ccce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
