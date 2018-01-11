@@ -13,6 +13,7 @@
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_update_engine_client.h"
@@ -61,7 +62,7 @@ class VersionUpdaterCrosTest : public ::testing::Test {
     EXPECT_CALL(*mock_user_manager_, Shutdown()).Times(AtLeast(0));
 
     DeviceSettingsService::Initialize();
-    CrosSettings::Initialize();
+    CrosSettingsTestApi::InitializeForTest();
 
     NetworkHandler::Initialize();
     base::RunLoop().RunUntilIdle();

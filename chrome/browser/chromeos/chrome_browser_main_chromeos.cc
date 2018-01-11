@@ -396,10 +396,11 @@ class DBusServices {
     // detector starts to monitor changes from the update engine.
     UpgradeDetectorChromeos::GetInstance()->Init();
 
+    // XXX update comment.
     // Initialize the device settings service so that we'll take actions per
     // signals sent from the session manager. This needs to happen before
     // g_browser_process initializes BrowserPolicyConnector.
-    DeviceSettingsService::Initialize();
+    chromeos::DeviceSettingsService::Initialize();
     DeviceSettingsService::Get()->SetSessionManager(
         DBusThreadManager::Get()->GetSessionManagerClient(),
         OwnerSettingsServiceChromeOSFactory::GetInstance()->GetOwnerKeyUtil());
@@ -569,7 +570,7 @@ ChromeBrowserMainPartsChromeos::~ChromeBrowserMainPartsChromeos() {
 
 // content::BrowserMainParts and ChromeBrowserMainExtraParts overrides ---------
 
-void ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
+int ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
   base::CommandLine* singleton_command_line =
       base::CommandLine::ForCurrentProcess();
 
@@ -607,7 +608,7 @@ void ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
     chrome::SetChannel(channel);
 #endif
 
-  ChromeBrowserMainPartsLinux::PreEarlyInitialization();
+  return ChromeBrowserMainPartsLinux::PreEarlyInitialization();
 }
 
 void ChromeBrowserMainPartsChromeos::PreMainMessageLoopStart() {
