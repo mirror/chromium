@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "4f776ff3_33793e08",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-11T14:48:56Z",
+      "side": 1,
+      "message": "Sounds good. Colin, are you such an expert? :)",
+      "parentUuid": "497c3f29_7d050f48",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060cdcd2_3dada5fd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-11T14:48:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this line be removed too?",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a17995d_806e79c6",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 4
@@ -78,6 +119,47 @@
       "side": 1,
       "message": "Sorry I failed to make it lazy-init:(\nScreenOrientationController is in /core/frame, ScreenOrientationControllerImpl is in /modules/, it is not allowed to call the constructor of ScreenOrientationControllerImpl from /core/frame, so I have to move the impl of ScreenOrientationController::From() into ScreenOrientationControllerImpl.cc, but in this way we have to let the libblink_core.so depend on //modules, which is not allowed either.",
       "parentUuid": "2a17995d_806e79c6",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3bacf4_18c6929b",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-11T14:48:56Z",
+      "side": 1,
+      "message": "FWIW, ScreenOrientationController is only used in one place nowadays so you could probably strip down most of it. This said, the idea here is that you wouldn\u0027t need to call ::ProvidoTo() this aggressively and instead, you could do this in `ScreenOrientation::Create()`: you should be able to see comments about the controller and lazy-init. It should be only a few lines but happy for you to tackle it in a follow-up if you prefer.",
+      "parentUuid": "de42e774_66e600a2",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af54e445_ce40854b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-11T14:48:56Z",
+      "side": 1,
+      "message": "Should this be `private`?",
+      "range": {
+        "startLine": 81,
+        "startChar": 67,
+        "endLine": 81,
+        "endChar": 75
+      },
       "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +198,24 @@
       "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60417bdb_46eb0b10",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-11T14:48:56Z",
+      "side": 1,
+      "message": "Okay.",
+      "parentUuid": "4d51a1b4_b5abb0c2",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
