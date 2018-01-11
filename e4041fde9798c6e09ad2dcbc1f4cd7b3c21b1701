@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2511229_b315f4f6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T03:51:22Z",
+      "side": 1,
+      "message": "constants at top of file, styled like this: https://cs.chromium.org/chromium/src/android_webview/browser/browser_view_renderer.cc?rcl\u003decbc5d4ab3b2b3a49d9881e1d9b51b9c75b200fb\u0026l\u003d44\n\nalthough use constexper instead of const now",
+      "range": {
+        "startLine": 2153,
+        "startChar": 51,
+        "endLine": 2153,
+        "endChar": 52
+      },
+      "revId": "e4041fde9798c6e09ad2dcbc1f4cd7b3c21b1701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f2cb65_7d55baf1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T03:51:22Z",
+      "side": 1,
+      "message": "this goes to your second question, it would be much easier to read if we do last_n_frames_had_damage_ \u003e\u003d 3 on line 2144 instead. generally keeping less state is easier to understand",
+      "revId": "e4041fde9798c6e09ad2dcbc1f4cd7b3c21b1701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa27990e_665a77d3",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T03:51:22Z",
+      "side": 1,
+      "message": "consecutive_frame_with_damange_count_ or something?",
+      "revId": "e4041fde9798c6e09ad2dcbc1f4cd7b3c21b1701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
