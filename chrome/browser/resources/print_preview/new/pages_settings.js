@@ -20,6 +20,12 @@ Polymer({
     /** @type {!print_preview.DocumentInfo} */
     documentInfo: Object,
 
+    /** @type {!print_preview_new.State} */
+    state: {
+      type: Object,
+      notify: true,
+    },
+
     /** @private {string} */
     inputString_: {
       type: String,
@@ -67,7 +73,8 @@ Polymer({
 
   observers: [
     'onRangeChange_(errorState_, rangesToPrint_)',
-    'onRadioChange_(allSelected_, customSelected_)'
+    'onRadioChange_(allSelected_, customSelected_)',
+    'updatePageCount_(errorState_, pagesToPrint_)',
   ],
 
   /**
@@ -159,6 +166,12 @@ Polymer({
     }
     ranges.push({from: from, to: to});
     return ranges;
+  },
+
+  /** @private */
+  updatePageCount_: function() {
+    if (this.errorState_ == PagesInputErrorState.NO_ERROR)
+      this.set('state.currentPageCount', this.pagesToPrint_.length);
   },
 
   /**

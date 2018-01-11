@@ -54,6 +54,7 @@
       'target_name': 'pages_settings',
       'dependencies': [
         'settings_behavior',
+        'state',
         '../data/compiled_resources2.gyp:document_info',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
