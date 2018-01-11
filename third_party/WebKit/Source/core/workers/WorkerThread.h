@@ -115,6 +115,11 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // main thread.
   void Terminate();
 
+  // Terminates the worker thread. Subclasses of WorkerThread can override this
+  // for a cleanup. The default behavior is just calling Terminate() and ensure
+  // the script execution has terminated. Called on the main thread.
+  virtual void TerminateForTesting();
+
   // Called on the main thread for the leak detector. Forcibly terminates the
   // script execution and waits by *blocking* the calling thread until the
   // workers are shut down. Please be careful when using this function, because
