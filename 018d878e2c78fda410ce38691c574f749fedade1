@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fc77988_7b4ded77",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-11T02:30:17Z",
+      "side": 1,
+      "message": "It fails on this line https://chromium-review.googlesource.com/c/chromium/src/+/808446/12/third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html#95 (when shadow host\u0027s display is inline) and on the following line (line 96) when shadow\u0027s host display is block or inline-block.\nThe testcase scenario is we\u0027re calling elementFromPoint on document \u0026 shadowroot. The hit-tested text node is a fallback of a slot. Shadow host is \u003ctest-element\u003e and we tried testing 3 different display styles (inline, block, inline-block). All three of them failed.\n\nOn the first case (host display is inline), document.elementFromPoint returns the document element (it should\u0027ve returned the shadow host)\n\nOn the second \u0026 third case (host display is block \u0026 inline-block) shadowRoot.elementFromPoint returns the shadow host/test-element (it should\u0027ve returned the slot parent of the fallback text node)\n\n\nOutput:\nFAIL document.elementFromPoint must return the shadow host and shadowRoot.elementFromPoint must return the slot parent of the fallback text when the hit-tested text node is a fallback content and the host has display: inline assert_equals: expected Element node \u003ctest-element style\u003d\"display: inline;\"\u003e\u003c/test-element\u003e but got Element node \u003chtml\u003e\u003chead\u003e\n    \u003ctitle\u003eShadow DOM and CSSOM View: Docume...\nFAIL document.elementFromPoint must return the shadow host and shadowRoot.elementFromPoint must return the slot parent of the fallback text when the hit-tested text node is a fallback content and the host has display: block assert_equals: expected Element node \u003cslot\u003efallback\u003c/slot\u003e but got Element node \u003ctest-element style\u003d\"display: block;\"\u003e\u003c/test-element\u003e\nFAIL document.elementFromPoint must return the shadow host and shadowRoot.elementFromPoint must return the slot parent of the fallback text when the hit-tested text node is a fallback content and the host has display: inline-block assert_equals: expected Element node \u003cslot\u003efallback\u003c/slot\u003e but got Element node \u003ctest-element style\u003d\"display: inline-block;\"\u003e\u003c/test-element\u003e",
+      "parentUuid": "98e62f3f_c9ac3224",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b45325_31660805",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "76f07ed9_1f976f88",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-11T02:30:17Z",
+      "side": 1,
+      "message": "When a text node is assigned to a slot, it is currently returning the shadow host (https://chromium-review.googlesource.com/c/chromium/src/+/808446/12/third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html#53)\n\nWhat should it return in that case?",
+      "parentUuid": "60b45325_31660805",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee20f5af_d4811c9c",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-10T10:26:42Z",
       "side": 1,
       "message": "I\u0027m afraid that I couldn\u0027t understand what the comment mean clearly.\nCould you explain more details?",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3173095a_4172cc37",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-11T02:30:17Z",
+      "side": 1,
+      "message": "Sorry! So, in some cases when a text node is under a slot, rect_based_node.Get() won\u0027t return the slot even though it should be listed in the elementsFromPoint result. But, we can get the slot from the child text node (but the child text node itself shouldn\u0027t be in the list). The default action is to just skip any non-element nodes but in this case we shouldn\u0027t skip the text node.",
+      "parentUuid": "ee20f5af_d4811c9c",
       "revId": "018d878e2c78fda410ce38691c574f749fedade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
