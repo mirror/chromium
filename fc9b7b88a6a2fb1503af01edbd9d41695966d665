@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fcea8440_f082f1d5",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T14:24:05Z",
+      "side": 1,
+      "message": "Yes, you can use emplace.\nTo use the subscript notation you need to add a default constructor (with no args).",
+      "parentUuid": "d81a2d2d_02cffa9c",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 16
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bdef995_e65992ab",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 7
