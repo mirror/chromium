@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83aaf513_84dae3b4",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2018-01-11T22:26:22Z",
+      "side": 1,
+      "message": "Do we need to check for intractable and sufficientlyVisible, but not for bookmarkButton? If so, is it cleaner to do it in one call with grey_allOf()?",
+      "revId": "bf9ed578115b5fefe6dd3b573b52bbcddbbbe3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340c8074_9d0be286",
+        "filename": "testing/buildbot/manage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2018-01-11T22:26:22Z",
+      "side": 1,
+      "message": "could you alphabetize?",
+      "revId": "bf9ed578115b5fefe6dd3b573b52bbcddbbbe3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
