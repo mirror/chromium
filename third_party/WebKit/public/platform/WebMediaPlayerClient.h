@@ -125,6 +125,9 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
       const WebString& remote_device_friendly_name) = 0;
   virtual void MediaRemotingStopped() = 0;
 
+  virtual void PictureInPictureStarted() = 0;
+  virtual void PictureInPictureStopped() = 0;
+
   // Returns whether the media element has native controls. It does not mean
   // that the controls are currently visible.
   virtual bool HasNativeControls() = 0;
