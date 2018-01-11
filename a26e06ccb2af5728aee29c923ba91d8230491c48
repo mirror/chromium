@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fcfd047_1f6e91a6",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T21:21:07Z",
+      "side": 1,
+      "message": "Not a regression in this CL, but I\u0027m curious how we\u0027re going to deal with wraparounds?",
+      "revId": "a26e06ccb2af5728aee29c923ba91d8230491c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
