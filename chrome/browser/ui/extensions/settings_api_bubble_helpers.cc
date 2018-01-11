@@ -27,11 +27,11 @@ namespace {
 
 // Whether the NTP bubble is enabled. By default, this is limited to Windows and
 // ChromeOS, but can be overridden for testing.
-//#if defined(OS_WIN) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_CHROMEOS)
 bool g_ntp_bubble_enabled = true;
-/*#else
+#else
 bool g_ntp_bubble_enabled = false;
-#endif*/
+#endif
 
 void ShowSettingsApiBubble(SettingsApiOverrideType type,
                            Browser* browser) {

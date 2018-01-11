@@ -2096,10 +2096,11 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
     // Iterate backwards as we may remove items while iterating.
     for (int i = tab_strip_model_->count() - 1; i >= 0; --i) {
       WebContents* web_contents = tab_strip_model_->GetWebContentsAt(i);
-      bool is_extension_content = (extensions::TabHelper::FromWebContents(
-          web_contents)->extension_app() == extension);
+      bool is_extension_content =
+          (extensions::TabHelper::FromWebContents(web_contents)
+               ->extension_app() == extension);
 
-      LOG(INFO) << "FOR: " <<web_contents->GetURL().spec();
+      LOG(INFO) << "FOR: " << web_contents->GetURL().spec();
       LOG(INFO) << "is_extension_content: " << is_extension_content;
 
       // For chrome page overrides, navigate to the default page.
@@ -2112,15 +2113,11 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
 
         if (!new_url.is_empty()) {
           LOG(INFO) << "Heyoo";
-          NavigateParams params(
-              profile_,
-              new_url,
-              ui::PAGE_TRANSITION_LINK);
+          NavigateParams params(profile_, new_url, ui::PAGE_TRANSITION_LINK);
           params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
           Navigate(&params);
           continue;
         } else {
-        
           LOG(INFO) << "Heyoo 2";
         }
       }
@@ -2145,21 +2142,17 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       if ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
            web_contents->GetURL().host_piece() == extension->id()) ||
           (extensions::TabHelper::FromWebContents(web_contents)
-           ->extension_app() == extension)) {
-           if (tab_strip_model_->count() > 1) {
-
-             LOG(INFO) << "\tclosing tab";
-             tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
-           } else {
-             LOG(INFO) << "navigate";
-             NavigateParams params(
-                 this,
-                 GURL(url::kAboutBlankURL),
-                 ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
-             params.source_contents = web_contents;
-             Navigate(&params);
-
-           }
+               ->extension_app() == extension)) {
+        if (tab_strip_model_->count() > 1) {
+          LOG(INFO) << "\tclosing tab";
+          tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
+        } else {
+          LOG(INFO) << "navigate";
+          NavigateParams params(this, GURL(url::kAboutBlankURL),
+                                ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
+          params.source_contents = web_contents;
+          Navigate(&params);
+        }
       } else {
         chrome::UnmuteIfMutedByExtension(web_contents, extension->id());
       }
