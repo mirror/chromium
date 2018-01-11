@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ffc791_4a95c114",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T20:31:32Z",
+      "side": 0,
+      "message": "Doesn\u0027t this kick out perfectly good cache results? Isn\u0027t every suggestion result going to trigger this? Perhaps a separate list of unfilled images would be more appropriate.",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "bf7608b692106452977e638e738711b4a004f243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
