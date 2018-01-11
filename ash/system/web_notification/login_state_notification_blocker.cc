@@ -6,7 +6,6 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "ui/message_center/message_center.h"
 
 using session_manager::SessionState;
@@ -55,8 +54,10 @@ bool LoginStateNotificationBlocker::ShouldShowNotification(
 
 bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
-  if (ash::system_notifier::ShouldAlwaysShowPopups(notification.notifier_id()))
+  if (notification.notifier_id().profile_id.empty() &&
+      notification.priority() >= message_center::SYSTEM_PRIORITY) {
     return true;
+  }
 
   return should_show_popup_;
 }

@@ -5,7 +5,6 @@
 #include "chrome/browser/chromeos/net/network_state_notifier.h"
 
 #include "ash/resources/grit/ash_resources.h"
-#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/strings/string16.h"
@@ -33,6 +32,8 @@ namespace chromeos {
 namespace {
 
 const int kMinTimeBetweenOutOfCreditsNotifySeconds = 10 * 60;
+
+const char kNotifierNetworkError[] = "ash.network.error";
 
 // Ignore in-progress error.
 bool ShillErrorIsIgnored(const std::string& shill_error) {
@@ -77,18 +78,18 @@ void ShowErrorNotification(const std::string& service_path,
                            const base::Closure& callback) {
   NET_LOG(ERROR) << "ShowErrorNotification: " << service_path << ": "
                  << base::UTF16ToUTF8(title);
+  auto notification = message_center::Notification::CreateSystemNotification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id, title, message,
+      gfx::Image(), base::string16() /* display_source */, GURL(),
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kNotifierNetworkError),
+      message_center::RichNotificationData(),
+      new message_center::HandleNotificationClickDelegate(callback),
+      GetErrorNotificationVectorIcon(network_type),
+      message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
+  notification->set_priority(message_center::SYSTEM_PRIORITY);
   NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
-      *message_center::Notification::CreateSystemNotification(
-          message_center::NOTIFICATION_TYPE_SIMPLE, notification_id, title,
-          message, gfx::Image(), base::string16() /* display_source */, GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              ash::system_notifier::kNotifierNetworkError),
-          message_center::RichNotificationData(),
-          new message_center::HandleNotificationClickDelegate(callback),
-          GetErrorNotificationVectorIcon(network_type),
-          message_center::SystemNotificationWarningLevel::CRITICAL_WARNING));
+      NotificationHandler::Type::TRANSIENT, *notification);
 }
 
 bool ShouldConnectFailedNotificationBeShown(const std::string& error_name,
@@ -291,7 +292,7 @@ void NetworkStateNotifier::UpdateCellularActivating(
           l10n_util::GetStringUTF16(IDS_NETWORK_CELLULAR_ACTIVATED_TITLE),
           l10n_util::GetStringFUTF16(IDS_NETWORK_CELLULAR_ACTIVATED,
                                      base::UTF8ToUTF16((cellular->name()))),
-          icon, ash::system_notifier::kNotifierNetwork,
+          icon, "ash.network",
           base::Bind(&NetworkStateNotifier::ShowNetworkSettings,
                      weak_ptr_factory_.GetWeakPtr(), cellular->guid())));
 }
@@ -331,7 +332,7 @@ void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
                                      base::UTF8ToUTF16(cellular->name())),
           ui::ResourceBundle::GetSharedInstance().GetImageNamed(
               IDR_AURA_UBER_TRAY_NETWORK_FAILED_CELLULAR),
-          ash::system_notifier::kNotifierNetworkError,
+          kNotifierNetworkError,
           base::Bind(&NetworkStateNotifier::ShowNetworkSettings,
                      weak_ptr_factory_.GetWeakPtr(), cellular->guid())));
 }
