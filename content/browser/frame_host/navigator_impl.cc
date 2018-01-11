@@ -475,6 +475,9 @@ void NavigatorImpl::DidNavigate(
 
   frame_tree_node->SetInsecureRequestPolicy(params.insecure_request_policy);
 
+  render_frame_host->frame_tree_node()->SetInsecureNavigationsSet(
+      params.insecure_navigations_set);
+
   // Navigating to a new location means a new, fresh set of http headers and/or
   // <meta> elements - we need to reset CSP and Feature Policy.
   if (!is_same_document_navigation) {

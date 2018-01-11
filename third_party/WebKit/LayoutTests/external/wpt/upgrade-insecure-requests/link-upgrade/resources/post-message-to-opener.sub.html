@@ -1,0 +1,8 @@
+<script>
+  var w;
+  if (top != self)
+    w = top.opener;
+  else
+    w = opener;
+  w.postMessage("{{GET[message]}}", "*");
+</script>
