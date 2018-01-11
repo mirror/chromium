@@ -26,6 +26,7 @@
 #include "content/browser/ssl/ssl_client_auth_handler.h"
 #include "content/browser/ssl/ssl_manager.h"
 #include "content/common/loader_util.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_dispatcher_host_login_delegate.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -403,8 +404,15 @@ void ResourceLoader::OnCertificateRequested(
 
   DCHECK(!ssl_client_auth_handler_)
       << "OnCertificateRequested called with ssl_client_auth_handler pending";
+  ResourceRequestInfo::WebContentsGetter web_contents_getter =
+      ResourceRequestInfo::ForRequest(request_.get())
+          ->GetWebContentsGetterForRequest();
+
+  ResourceContext* resource_context = GetRequestInfo()->GetContext();
+  std::unique_ptr<net::ClientCertStore> client_cert_store =
+      GetContentClient()->browser()->CreateClientCertStore(resource_context);
   ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
-      delegate_->CreateClientCertStore(this), request_.get(), cert_info, this));
+      std::move(client_cert_store), web_contents_getter, cert_info, this));
   ssl_client_auth_handler_->SelectCertificate();
 }
 
