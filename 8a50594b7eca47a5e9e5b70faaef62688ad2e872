@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f91c1f0d_5b44c21f",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T16:50:13Z",
+      "side": 1,
+      "message": "Please name the bool here and elsewhere, others will have no idea reading the header what this method does to that bool* :)",
+      "revId": "8a50594b7eca47a5e9e5b70faaef62688ad2e872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7d272b_851d78a5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T16:50:13Z",
+      "side": 1,
+      "message": "What if the bool was just is_ad_resource? Then in the SubresourceFilter we could do this check on our own, it would also help to avoid exposing details of the sub-filter implementation e.g. would_disallow).",
+      "revId": "8a50594b7eca47a5e9e5b70faaef62688ad2e872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
