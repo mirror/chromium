@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b796949d_bdcc982e",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd8f9db_0ac5b00c",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bc224cb_2e46937e",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T23:17:46Z",
       "side": 1,
       "message": "nit: probably don\u0027t need \"static\" since data members declared like this in .cc files are always static, afaik",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2546d0cf_669c7925",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Good point. However this is first time for me to here this. Removed.",
+      "parentUuid": "3bc224cb_2e46937e",
       "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a3878fe1_ec30ca81",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59c8986_1b1d3be1",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d8174c_e8307a40",
         "filename": "components/arc/arc_session_impl.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6db8a1_028962f3",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d8174c_e8307a40",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "80d87e60_bbca9706",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "100fa74c_9304475a",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a58592_db67e14c",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "32b04892_554dceb7",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a58592_db67e14c",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1cc56b_30030739",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1870ca6f_928f01c7",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T23:32:28Z",
+      "side": 1,
+      "message": "That complains:\n../../components/arc/arc_session_impl_unittest.cc:696:1: error: pasting formed \u0027gtest_\"\"\u0027, an invalid preprocessing token",
+      "parentUuid": "7e1cc56b_30030739",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
