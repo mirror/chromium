@@ -2,197 +2,274 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/renderer/manifest/manifest_manager.h"
+#include "modules/manifest/ManifestManager.h"
 
 #include <utility>
 
-#include "base/bind.h"
-#include "base/strings/nullable_string16.h"
-#include "content/public/renderer/render_frame.h"
-#include "content/renderer/fetchers/manifest_fetcher.h"
-#include "content/renderer/manifest/manifest_parser.h"
-#include "content/renderer/manifest/manifest_uma_util.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
-#include "third_party/WebKit/public/platform/WebURLResponse.h"
-#include "third_party/WebKit/public/web/WebConsoleMessage.h"
-#include "third_party/WebKit/public/web/WebDocument.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "bindings/core/v8/SourceLocation.h"
+#include "core/css/parser/CSSParser.h"
+#include "core/frame/FrameConsole.h"
+#include "core/frame/LocalFrameClient.h"
+#include "core/html/HTMLLinkElement.h"
+#include "core/inspector/ConsoleMessage.h"
+#include "core/loader/DocumentThreadableLoader.h"
+#include "core/loader/DocumentThreadableLoaderClient.h"
+#include "core/loader/ThreadableLoadingContext.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/manifest/ManifestParser.h"
+#include "platform/manifest/ManifestUmaUtil.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
-namespace content {
+namespace blink {
 
-ManifestManager::ManifestManager(RenderFrame* render_frame)
-    : RenderFrameObserver(render_frame),
-      may_have_manifest_(false),
-      manifest_dirty_(true) {}
+class ManifestManager::Fetcher : public GarbageCollectedFinalized<Fetcher>,
+                                 public ThreadableLoaderClient {
+  WTF_MAKE_NONCOPYABLE(Fetcher);
+  EAGERLY_FINALIZE();
 
-ManifestManager::~ManifestManager() {
-  if (fetcher_)
-    fetcher_->Cancel();
+ public:
+  Fetcher(ManifestManager* owner)
+      : owner_(owner), buffer_(SharedBuffer::Create()) {}
 
-  // Consumers in the browser process will not receive this message but they
-  // will be aware of the RenderFrame dying and should act on that. Consumers
-  // in the renderer process should be correctly notified.
-  ResolveCallbacks(ResolveStateFailure);
+  ~Fetcher() override {
+    if (loader_)
+      Cancel();
+  }
+
+  void Start(const KURL& url, bool use_credentials) {
+    ThreadableLoaderOptions options;
+    ResourceLoaderOptions resource_loader_options;
+    resource_loader_options.data_buffering_policy = kDoNotBufferData;
+    loader_ = DocumentThreadableLoader::Create(
+        *ThreadableLoadingContext::Create(owner_->GetDocument()), this, options,
+        resource_loader_options);
+    ResourceRequest request(url);
+    // See https://w3c.github.io/manifest/. Use "include" when use_credentials
+    // is true, and "omit" otherwise.
+    request.SetFetchCredentialsMode(
+        use_credentials ? network::mojom::FetchCredentialsMode::kInclude
+                        : network::mojom::FetchCredentialsMode::kOmit);
+    request.SetFetchRequestMode(network::mojom::FetchRequestMode::kCORS);
+    request.SetRequestContext(WebURLRequest::kRequestContextManifest);
+    request.SetFrameType(network::mojom::RequestContextFrameType::kNone);
+    request.SetSiteForCookies(owner_->GetDocument().SiteForCookies());
+    loader_->Start(request);
+  }
+
+  void Cancel() {
+    owner_ = nullptr;
+    DCHECK(loader_);
+    loader_->Cancel();
+    loader_ = nullptr;
+  }
+
+  void Trace(Visitor* visitor) {
+    visitor->Trace(owner_);
+    visitor->Trace(loader_);
+  }
+
+ private:
+  // ThreadableLoaderClient:
+  void DidReceiveResponse(unsigned long /*identifier*/,
+                          const ResourceResponse& response,
+                          std::unique_ptr<WebDataConsumerHandle>) override {
+    manifest_url_ = response.Url();
+  }
+
+  void DidReceiveData(const char* data, unsigned length) override {
+    buffer_->Append(data, length);
+  }
+
+  void DidFinishLoading(unsigned long /*identifier*/,
+                        double /*finishTime*/) override {
+    if (!owner_)
+      return;
+
+    auto contiguous_buffer = buffer_->Copy();
+    owner_->OnManifestFetchComplete(
+        manifest_url_,
+        String::FromUTF8(contiguous_buffer.data(), contiguous_buffer.size()));
+  }
+
+  void DidFail(const ResourceError&) override {
+    if (!owner_)
+      return;
+
+    owner_->OnManifestFetchComplete(manifest_url_, String());
+  }
+
+  WeakMember<ManifestManager> owner_;
+  KURL manifest_url_;
+  scoped_refptr<SharedBuffer> buffer_;
+  Member<DocumentThreadableLoader> loader_;
+};
+
+ManifestManager::ManifestManager(Document& document)
+    : Supplement<Document>(document) {}
+
+ManifestManager::~ManifestManager() = default;
+
+void ManifestManager::Trace(Visitor* visitor) {
+  Supplement<Document>::Trace(visitor);
+  visitor->Trace(fetcher_);
+}
+
+// static
+const char* ManifestManager::SupplementName() {
+  return "ManifestManager";
+}
+
+// static
+ManifestManager* ManifestManager::From(Document* document) {
+  return static_cast<ManifestManager*>(
+      Supplement<Document>::From(document, SupplementName()));
+}
+
+// static
+void ManifestManager::ProvideTo(Document& document) {
+  Supplement<Document>::ProvideTo(document, SupplementName(),
+                                  new ManifestManager(document));
+}
+
+// static
+void ManifestManager::BindMojoRequest(
+    LocalFrame* frame,
+    mojom::blink::ManifestManagerRequest request) {
+  if (!frame->GetDocument())
+    return;
+
+  From(frame->GetDocument())->BindToRequest(std::move(request));
 }
 
 void ManifestManager::RequestManifest(RequestManifestCallback callback) {
-  RequestManifestImpl(base::BindOnce(
-      [](RequestManifestCallback callback, const GURL& manifest_url,
-         const Manifest& manifest,
-         const blink::mojom::ManifestDebugInfo* debug_info) {
-        std::move(callback).Run(manifest_url, manifest);
+  RequestManifestImpl(WTF::Bind(
+      [](RequestManifestCallback callback, const KURL& manifest_url,
+         const mojom::blink::Manifest* manifest,
+         const mojom::blink::ManifestDebugInfo* debug_info) {
+        std::move(callback).Run(manifest_url,
+                                manifest ? manifest->Clone() : nullptr);
       },
-      std::move(callback)));
+      WTF::Passed(std::move(callback))));
 }
 
 void ManifestManager::RequestManifestDebugInfo(
     RequestManifestDebugInfoCallback callback) {
-  RequestManifestImpl(base::BindOnce(
-      [](RequestManifestDebugInfoCallback callback, const GURL& manifest_url,
-         const Manifest& manifest,
-         const blink::mojom::ManifestDebugInfo* debug_info) {
+  RequestManifestImpl(WTF::Bind(
+      [](RequestManifestDebugInfoCallback callback, const KURL& manifest_url,
+         const mojom::blink::Manifest* manifest,
+         const mojom::blink::ManifestDebugInfo* debug_info) {
         std::move(callback).Run(manifest_url,
                                 debug_info ? debug_info->Clone() : nullptr);
       },
-      std::move(callback)));
+      WTF::Passed(std::move(callback))));
 }
 
 void ManifestManager::RequestManifestImpl(
     InternalRequestManifestCallback callback) {
-  if (!may_have_manifest_) {
-    std::move(callback).Run(GURL(), Manifest(), nullptr);
+  CheckForManifestChange();
+  if (fetcher_) {
+    pending_callbacks_.push_back(std::move(callback));
     return;
   }
-
-  if (!manifest_dirty_) {
-    std::move(callback).Run(manifest_url_, manifest_,
-                            manifest_debug_info_.get());
-    return;
-  }
-
-  pending_callbacks_.push_back(std::move(callback));
-
-  // Just wait for the running call to be done if there are other callbacks.
-  if (pending_callbacks_.size() > 1)
-    return;
-
-  FetchManifest();
-}
-
-void ManifestManager::DidChangeManifest() {
-  may_have_manifest_ = true;
-  manifest_dirty_ = true;
-  manifest_url_ = GURL();
-  manifest_debug_info_ = nullptr;
-}
-
-void ManifestManager::DidCommitProvisionalLoad(
-    bool is_new_navigation,
-    bool is_same_document_navigation) {
-  if (is_same_document_navigation)
-    return;
-
-  may_have_manifest_ = false;
-  manifest_dirty_ = true;
-  manifest_url_ = GURL();
+  std::move(callback).Run(manifest_url_, manifest_.get(),
+                          manifest_debug_info_.get());
 }
 
 void ManifestManager::FetchManifest() {
-  manifest_url_ = render_frame()->GetWebFrame()->GetDocument().ManifestURL();
-
-  if (manifest_url_.is_empty()) {
+  // If a fetch was already in progress, cancel it.
+  if (fetcher_) {
+    fetcher_->Cancel();
+    fetcher_ = nullptr;
+  }
+  if (document_manifest_url_.IsEmpty()) {
     ManifestUmaUtil::FetchFailed(ManifestUmaUtil::FETCH_EMPTY_URL);
-    ResolveCallbacks(ResolveStateFailure);
+    ResolveCallbacks();
     return;
   }
-
-  fetcher_.reset(new ManifestFetcher(manifest_url_));
-  fetcher_->Start(
-      render_frame()->GetWebFrame(),
-      render_frame()->GetWebFrame()->GetDocument().ManifestUseCredentials(),
-      base::Bind(&ManifestManager::OnManifestFetchComplete,
-                 base::Unretained(this),
-                 render_frame()->GetWebFrame()->GetDocument().Url()));
+  fetcher_ = new Fetcher(this);
+  fetcher_->Start(document_manifest_url_, UseCredentials());
 }
 
-static const std::string& GetMessagePrefix() {
-  CR_DEFINE_STATIC_LOCAL(std::string, message_prefix, ("Manifest: "));
-  return message_prefix;
-}
+void ManifestManager::OnManifestFetchComplete(const KURL& manifest_url,
+                                              const String& data) {
+  if (CheckForManifestChange())
+    return;
 
-void ManifestManager::OnManifestFetchComplete(
-    const GURL& document_url,
-    const blink::WebURLResponse& response,
-    const std::string& data) {
-  fetcher_.reset();
-  if (response.IsNull() && data.empty()) {
-    manifest_debug_info_ = nullptr;
+  manifest_url_ = manifest_url.IsNull() ? document_manifest_url_ : manifest_url;
+  if (data.IsEmpty()) {
     ManifestUmaUtil::FetchFailed(ManifestUmaUtil::FETCH_UNSPECIFIED_REASON);
-    ResolveCallbacks(ResolveStateFailure);
+    ResolveCallbacks();
     return;
   }
 
   ManifestUmaUtil::FetchSucceeded();
-  GURL response_url = response.Url();
-  base::StringPiece data_piece(data);
-  ManifestParser parser(data_piece, response_url, document_url);
+  ManifestParser parser(data, manifest_url, GetDocument().Url(),
+                        WTF::BindRepeating(&CSSParser::ParseColor));
   parser.Parse();
 
-  manifest_debug_info_ = blink::mojom::ManifestDebugInfo::New();
+  manifest_debug_info_ = mojom::blink::ManifestDebugInfo::New();
   manifest_debug_info_->raw_manifest = data;
-  parser.TakeErrors(&manifest_debug_info_->errors);
+  manifest_debug_info_->errors = parser.TakeErrors();
 
   for (const auto& error : manifest_debug_info_->errors) {
-    blink::WebConsoleMessage message;
-    message.level = error->critical ? blink::WebConsoleMessage::kLevelError
-                                    : blink::WebConsoleMessage::kLevelWarning;
-    message.text =
-        blink::WebString::FromUTF8(GetMessagePrefix() + error->message);
-    message.url =
-        render_frame()->GetWebFrame()->GetDocument().ManifestURL().GetString();
-    message.line_number = error->line;
-    message.column_number = error->column;
-    render_frame()->GetWebFrame()->AddMessageToConsole(message);
+    GetDocument().GetFrame()->Console().AddMessage(ConsoleMessage::Create(
+        kOtherMessageSource,
+        error->critical ? kErrorMessageLevel : kWarningMessageLevel,
+        "Manifest: " + error->message,
+        SourceLocation::Create(manifest_url_.GetString(), 0, 0, nullptr)));
   }
-
-  // Having errors while parsing the manifest doesn't mean the manifest parsing
-  // failed. Some properties might have been ignored but some others kept.
-  if (parser.failed()) {
-    ResolveCallbacks(ResolveStateFailure);
-    return;
-  }
-
-  manifest_url_ = response.Url();
-  manifest_ = parser.manifest();
-  ResolveCallbacks(ResolveStateSuccess);
+  manifest_ = parser.Manifest();
+  ResolveCallbacks();
 }
 
-void ManifestManager::ResolveCallbacks(ResolveState state) {
-  // Do not reset |manifest_url_| on failure here. If manifest_url_ is
-  // non-empty, that means the link 404s, we failed to fetch it, or it was
-  // unparseable. However, the site still tried to specify a manifest, so
-  // preserve that information in the URL for the callbacks.
-  // |manifest_url| will be reset on navigation or if we receive a didchange
-  // event.
-  if (state == ResolveStateFailure)
-    manifest_ = Manifest();
+void ManifestManager::ResolveCallbacks() {
+  if (fetcher_) {
+    fetcher_->Cancel();
+    fetcher_ = nullptr;
+  }
 
-  manifest_dirty_ = state != ResolveStateSuccess;
-
-  std::vector<InternalRequestManifestCallback> callbacks;
-  swap(callbacks, pending_callbacks_);
-
-  for (auto& callback : callbacks) {
-    std::move(callback).Run(manifest_url_, manifest_,
+  for (auto& callback : pending_callbacks_) {
+    std::move(callback).Run(manifest_url_, manifest_.get(),
                             manifest_debug_info_.get());
   }
+  pending_callbacks_.clear();
 }
 
 void ManifestManager::BindToRequest(
-    blink::mojom::ManifestManagerRequest request) {
+    mojom::blink::ManifestManagerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void ManifestManager::OnDestruct() {}
+bool ManifestManager::CheckForManifestChange() {
+  KURL current_manifest_url = GetManifestUrl();
+  if (current_manifest_url == document_manifest_url_)
+    return false;
 
-}  // namespace content
+  document_manifest_url_ = current_manifest_url;
+  manifest_url_ = KURL();
+  manifest_ = nullptr;
+  manifest_debug_info_ = nullptr;
+  if (document_manifest_url_.IsNull())
+    ResolveCallbacks();
+  else
+    FetchManifest();
+  return true;
+}
+
+KURL ManifestManager::GetManifestUrl() {
+  HTMLLinkElement* link_element = GetManifestLink();
+  if (link_element)
+    return link_element->Href();
+  return KURL();
+}
+
+bool ManifestManager::UseCredentials() {
+  HTMLLinkElement* link_element = GetManifestLink();
+  DCHECK(link_element);
+  return EqualIgnoringASCIICase(
+      link_element->FastGetAttribute(HTMLNames::crossoriginAttr),
+      "use-credentials");
+}
+
+}  // namespace blink
