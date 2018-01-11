@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "659d7dc7_46d823c1",
+        "filename": "chrome/browser/ui/cocoa/profiles/user_manager_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-11T20:59:06Z",
+      "side": 1,
+      "message": "repeated nit: \"The error occurred\", remove \"is\" to be more grammatically correct.",
+      "revId": "6c9b3fc5956dd5c7c5cc82541e3b04c58b5d91d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43dbcc8_46e95ae0",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-11T20:59:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6c9b3fc5956dd5c7c5cc82541e3b04c58b5d91d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
