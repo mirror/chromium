@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c114475d_3bd27abc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a86f823e_503c7709",
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b6ff54_23e8e514",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4cea6e_3129639d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b6ff54_23e8e514",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4d0b7dff_bb5563e5",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1914667_47a0df31",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186321cf_55e1445d",
         "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "04353776_36393bbb",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "186321cf_55e1445d",
+      "range": {
+        "startLine": 72,
+        "startChar": 27,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2b16cd_269535c1",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0658ac_d03f12b2",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e2b16cd_269535c1",
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c1a0e3_522ef46a",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-11T07:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5717269d_d0ab8c25",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
