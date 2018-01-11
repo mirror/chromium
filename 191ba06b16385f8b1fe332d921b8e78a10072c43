@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "e3f29b4b_2c9e3fa4",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T15:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c4137a_a5b7b25f",
+      "range": {
+        "startLine": 399,
+        "startChar": 44,
+        "endLine": 399,
+        "endChar": 55
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0f123d5_aba3ec9c",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T15:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6a551a_d2c53d30",
+      "range": {
+        "startLine": 399,
+        "startChar": 56,
+        "endLine": 399,
+        "endChar": 68
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5921c3a_569a24fb",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2af5ad7_2ba2cfbc",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T15:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5921c3a_569a24fb",
+      "range": {
+        "startLine": 400,
+        "startChar": 42,
+        "endLine": 400,
+        "endChar": 45
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5a84b103_06cc5733",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T15:40:28Z",
+      "side": 1,
+      "message": "Reworded (\"may or may not\" seems redundant) but done.",
+      "parentUuid": "bedeba8d_b97f2fa0",
+      "range": {
+        "startLine": 405,
+        "startChar": 9,
+        "endLine": 405,
+        "endChar": 50
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdc97e81_80ae7b02",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d70ba9_b6e75196",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T15:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc97e81_80ae7b02",
+      "range": {
+        "startLine": 406,
+        "startChar": 34,
+        "endLine": 406,
+        "endChar": 0
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
