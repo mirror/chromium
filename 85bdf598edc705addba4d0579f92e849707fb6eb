@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e164d84_28be95d1",
+        "filename": "chrome/browser/autofill/autofill_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-11T19:47:36Z",
+      "side": 1,
+      "message": "plz update comment.",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c95a10_a882ce35",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-11T19:47:36Z",
+      "side": 1,
+      "message": "I see tests for XHR_SUCCEEDED and FORM_SUBMISSION, but not the other sources. Should tests be added for more coverage?",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817b1b0c_531e67a8",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-11T19:47:36Z",
+      "side": 1,
+      "message": "You\u0027re doing the set lookup twice. Instead, simplify this method to.\n\n  if (!submitted_forms_.insert(form_data).second)\n    return;  // The submission event has already been fired.\n  GetAutofillDriver()-\u003eFormSubmitted(...);",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f848e4_e5ab94fe",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-11T19:47:36Z",
+      "side": 1,
+      "message": "add TODO(crbug.com/nnnnnn)?\n\nIt\u0027s not clear to me why we\u0027re not ready to handle PROBABLY_FORM_SUBMITTED here.",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
