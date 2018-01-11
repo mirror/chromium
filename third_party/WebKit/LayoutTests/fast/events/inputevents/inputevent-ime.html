@@ -59,6 +59,7 @@
     resetEventLog();
     textInputController.setComposition('');
     assert_array_equals(eventLog, [
+      'beforeinput: isComposing=false, data=""',
       'input: isComposing=false, data="null", inputType=deleteContentBackward',
     ]);
   }, 'setComposition with no composition open, empty text replacing selection');
