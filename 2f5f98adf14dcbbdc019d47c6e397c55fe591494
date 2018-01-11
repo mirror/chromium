@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c45ba6e0_0132b579",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-11T17:48:02Z",
+      "side": 1,
+      "message": "I\u0027m not a content/ OWNER, but I might name this IsPresentationReceiver() to be consistent with IsPopupOrPanel above.",
+      "revId": "2f5f98adf14dcbbdc019d47c6e397c55fe591494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
