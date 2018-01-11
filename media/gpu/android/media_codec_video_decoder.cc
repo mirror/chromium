@@ -119,6 +119,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       weak_factory_(this),
       codec_allocator_weak_factory_(this) {
   DVLOG(2) << __func__;
+  DLOG(ERROR) << "kForceVideoOverlays : MediaCodecVideoDecoder()";
   surface_chooser_helper_.chooser()->SetClientCallbacks(
       base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
                  weak_factory_.GetWeakPtr()),
