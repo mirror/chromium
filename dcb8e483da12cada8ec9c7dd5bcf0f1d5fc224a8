@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c8720da_b8f93998",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-11T22:43:51Z",
+      "side": 1,
+      "message": "Good reminder. I know that both ContentView/ContentViewCore still stay here - meant to move them to content_public but haven\u0027t got around to doing it yet. Intentionally left it out from https://crrev.com/c/776405 since it would have to touch awful lots of classes. Will do that soon.",
+      "parentUuid": "784873f8_cb290482",
+      "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f020aa_5c8de220",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T15:18:07Z",
       "side": 1,
       "message": "can you separate out moving logic from CVC to this class in one CL, and CVC can just pass through all calls. then do the ownership change in a separate CL\n\nright now it\u0027s hard to keep track of both",
+      "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b17745_96dcf8d8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-11T22:43:51Z",
+      "side": 1,
+      "message": "Will do the first part in a separate CL, while keeping this for the 2nd installment.",
+      "parentUuid": "c3f020aa_5c8de220",
       "revId": "dcb8e483da12cada8ec9c7dd5bcf0f1d5fc224a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
