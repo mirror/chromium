@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbef0ab7_0be86c10",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-11T01:06:57Z",
+      "side": 1,
+      "message": "With AR_ENABLED \u003d 0x0, I think both here and in the example the if-condition should be\n(auto_rotation_state \u003d\u003d AR_ENABLED).\n\n(auto_rotation_state \u0026 AR_ENABLED) \u003d\u003d AR_ENABLED is true for any value of |auto_rotation_state|.\n\n(auto_rotation_state \u0026 AR_ENABLED) is 0 (false) for any value of |auto_rotation_state|",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d811d6_7a5608d0",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-11T01:06:57Z",
+      "side": 1,
+      "message": "Please add unit tests.\n\nMy recommendation for doing this would be as follows:\n* Put the methods declared in this file into a class\n* Have the constructor get passed an interface that abstracts out all the necessary Windows API calls.\n* In the unit tests, pass it a mock implementation and simulate all interesting cases.\n* In production, pass it an implementation that calls the actual Windows APIs.",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

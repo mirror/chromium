@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8f5e18c8_5c0de798",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-11T01:06:57Z",
+      "side": 1,
+      "message": "Sorry for not being very explicit about my request here. By raising these questions I meant to suggest that the code comment and or method name itself should be updated such that it contains the answers to these questions. Otherwise, everyone who will read this comment in the future is likely going to face the same questions and will have to read the implementation and dig up context from elsewhere to get the answers.",
+      "parentUuid": "93a09475_7dd23181",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d172295_6c7e15f5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ee7cb513_d53096f4",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-11T01:06:57Z",
+      "side": 1,
+      "message": "With there being a \"GetCameraRotation()\" just above this, as a reader of this method and description it is not clear to me that this is about display and not camera. My suggestion:\n\n// Returns true if the display orientation is set to follow the device orientation \n// for devices with built-in displays, e.g. phones, tablets, 2-in-1 laptops.\nbool IsDisplayFollowsDeviceRotationEnabled();",
+      "parentUuid": "7f606663_005c87a4",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b20b1a_e3262cf5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Done\nOnly the active internal panel is concerned.\n|internal_display_device| contains the device info of the active internal device. Then we\u0027ll only check its setting, for not to mess up with external monitors.",
       "parentUuid": "12b20b1a_e3262cf5",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74dc21ce_bc8fb3f1",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-11T01:06:57Z",
+      "side": 1,
+      "message": "As a reader, I am happy with the info provided by lines 24-26 in Patchset 5. Lines 27-29 confuse me, though. They don\u0027t describe what this method is doing. Instead, it seems to talk about a circumstance where an internal camera gets treated as external. This information seems important, but I suppose should be moved somewhere else?",
+      "parentUuid": "740211a3_978f001f",
       "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
