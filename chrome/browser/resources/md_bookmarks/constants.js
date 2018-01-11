@@ -50,6 +50,8 @@ const Command = {
 };
 
 /**
+ * Where the menu was opened from. This enum is also used for metrics and should
+ * be kept in sync with BookmarkManagerMenuSource in enums.xml.
  * @enum {number}
  * @const
  */
@@ -59,6 +61,9 @@ const MenuSource = {
   TREE: 2,
   TOOLBAR: 3,
   LIST: 4,
+
+  // Append new values to the end of the enum.
+  MAX_VALUE: 5,
 };
 
 /**
