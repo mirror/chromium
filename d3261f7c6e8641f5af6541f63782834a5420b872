@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcfc09ee_ce733483",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-01-11T09:33:03Z",
+      "side": 1,
+      "message": "Can you clarify, in the CL description, what happened to params.url and why it\u0027s no longer needed?",
+      "range": {
+        "startLine": 200,
+        "startChar": 28,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "d3261f7c6e8641f5af6541f63782834a5420b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3945dfaa_ad5532aa",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-01-11T09:33:03Z",
+      "side": 1,
+      "message": "Should this be an \u0027or\u0027?",
+      "range": {
+        "startLine": 206,
+        "startChar": 45,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "d3261f7c6e8641f5af6541f63782834a5420b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
