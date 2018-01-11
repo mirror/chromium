@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74712e8f_ea950d70",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-11T18:24:29Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct. The overflow rect can have an origin that\u0027s to the topleft of the frame rect, no? So this means your code will:\n- Ignore overflow to the topleft\n- Have too big a rect on the bottom right\n\nWhy can\u0027t you use the visual overflow rect as is? Or, I guess, a union of the two?",
+      "revId": "c9b30d4f9c8441137b8b88a1dbf3935993f00e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
