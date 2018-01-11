@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd2124a_67ef381b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-har-conversion.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-11T17:30:07Z",
+      "side": 1,
+      "message": "Not sure why this is affected.",
+      "revId": "495a3fe83b436f3baf0446d1ad60be141e34bbbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
