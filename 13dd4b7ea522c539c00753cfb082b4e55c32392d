@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d500701_278c9d6a",
+        "filename": "third_party/WebKit/LayoutTests/xr/xrWebGLLayer_constructor.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-11T23:17:05Z",
+      "side": 1,
+      "message": "Nit: Shouldn\u0027t you be able to register the webglcontextrestored callback before this and just call restoreContext() directly?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5fe9d6_746c7c63",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 6
