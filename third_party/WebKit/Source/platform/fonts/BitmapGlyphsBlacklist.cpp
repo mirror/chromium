@@ -11,12 +11,14 @@ namespace blink {
 
 namespace {
 
-// Calibri is the only font we encountered which has embeded bitmaps and
+// These are the only fonts we encountered which have embeded bitmaps and
 // vector outlines for Latin glyphs. We avoid using the bitmap glyphs
 // because they cause issues with uneven spacing when combined with
 // subpixel positioning, see
 // https://bugs.chromium.org/p/chromium/issues/detail?id=707713#c5
-constexpr const char* kBitmapGlyphsBlacklist[] = {"Calibri", "Courier New"};
+constexpr const char* kBitmapGlyphsBlacklist[] = {
+    "Calibri", "Cambria", "Courier New"
+};
 
 }  // namespace
 

@@ -77,7 +77,8 @@ void FontPlatformData::SetupPaintFont(PaintFont* font,
 
   font->SetFlags(flags);
 
-  font->SetEmbeddedBitmapText(!avoid_embedded_bitmaps_);
+  if (avoid_embedded_bitmaps_)
+    font->SetEmbeddedBitmapText(false);
 }
 
 static bool IsWebFont(const String& family_name) {

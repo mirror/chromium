@@ -46,7 +46,8 @@ void FontPlatformData::SetupPaintFont(PaintFont* font,
   font->SetFakeBoldText(synthetic_bold_);
   font->SetTextSkewX(synthetic_italic_ ? -SK_Scalar1 / 4 : 0);
 
-  font->SetEmbeddedBitmapText(!avoid_embedded_bitmaps_);
+  if (avoid_embedded_bitmaps_)
+    font->SetEmbeddedBitmapText(false);
 }
 
 }  // namespace blink
