@@ -4036,6 +4036,7 @@ test("unit_tests") {
       "urlmon.lib",
       "winmm.lib",
     ]
+
     if (!is_chrome_branded) {
       sources -= [ "../browser/google/google_update_win_unittest.cc" ]
     }
@@ -4759,6 +4760,8 @@ if (is_android) {
     if (is_win) {
       sources += [
         "../browser/downgrade/user_data_downgrade_browsertest.cc",
+        "../browser/notifications/mock_itoastnotification.cc",
+        "../browser/notifications/mock_itoastnotification.h",
         "../browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
         "../browser/ui/views/touch_events_interactive_uitest_win.cc",
         "//ui/resources/cursors/aliasb.cur",

@@ -104,6 +104,13 @@ TEST_F(NotificationPlatformBridgeWinTest, EncodeDecode) {
   EXPECT_EQ(decoded_incognito, incognito);
   EXPECT_EQ(decoded_origin_url, origin_url);
 
+  // Actual data, but only notification_id is requested.
+  EXPECT_TRUE(notification_platform_bridge_win_->DecodeTemplateId(
+      encoded, nullptr /* notification_type */, &decoded_notification_id,
+      nullptr /* profile_id */, nullptr /* incognito */,
+      nullptr /* origin_url */));
+  EXPECT_EQ(decoded_notification_id, notification_id);
+
   // Throw in a few extra separators (becomes part of the notification id).
   std::string extra = "|Extra|Data|";
   encoded += extra;
@@ -138,9 +145,10 @@ TEST_F(NotificationPlatformBridgeWinTest, GroupAndTag) {
   HSTRING hstring_group;
   ASSERT_HRESULT_SUCCEEDED(toast2->get_Group(&hstring_group));
   base::win::ScopedHString group(hstring_group);
-  GURL origin(kOrigin);
-  ASSERT_STREQ(base::UintToString16(base::Hash(origin.spec())).c_str(),
-               group.Get().as_string().c_str());
+  // NOTE: If you find yourself needing to change this value, make sure that
+  // NotificationPlatformBridgeWinImpl::Close supports specifying the right
+  // group value for RemoveGroupedTagWithId.
+  ASSERT_STREQ(L"Chrome Notifications", group.Get().as_string().c_str());
 
   HSTRING hstring_tag;
   ASSERT_HRESULT_SUCCEEDED(toast2->get_Tag(&hstring_tag));
