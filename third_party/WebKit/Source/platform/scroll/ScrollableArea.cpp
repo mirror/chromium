@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2010, Google Inc. All rights reserved.
  * Copyright (C) 2008, 2011 Apple Inc. All Rights Reserved.
@@ -270,11 +271,7 @@ void ScrollableArea::UserScrollHelper(const ScrollOffset& offset,
 }
 
 LayoutRect ScrollableArea::ScrollIntoView(const LayoutRect& rect_in_content,
-                                          const ScrollAlignment& align_x,
-                                          const ScrollAlignment& align_y,
-                                          bool is_smooth,
-                                          ScrollType,
-                                          bool is_for_scroll_sequence) {
+                                          const ScrollIntoViewParams& params) {
   // TODO(bokan): This should really be implemented here but ScrollAlignment is
   // in Core which is a dependency violation.
   NOTREACHED();

@@ -49,11 +49,11 @@ class LayoutObject;
 class PaintLayer;
 class PlatformChromeClient;
 class ProgrammaticScrollAnimator;
-struct ScrollAlignment;
 class ScrollAnchor;
 class ScrollAnimatorBase;
 class SmoothScrollSequencer;
 class CompositorAnimationTimeline;
+struct ScrollIntoViewParams;
 
 enum IncludeScrollbarsInRect {
   kExcludeScrollbars,
@@ -100,11 +100,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   // will always be the input rect since scrolling it can't change the location
   // of content relative to the document, unlike an overflowing element.
   virtual LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
-                                    const ScrollAlignment& align_x,
-                                    const ScrollAlignment& align_y,
-                                    bool is_smooth,
-                                    ScrollType = kProgrammaticScroll,
-                                    bool is_for_scroll_sequence = false);
+                                    const ScrollIntoViewParams& params);
 
   static bool ScrollBehaviorFromString(const String&, ScrollBehavior&);
 
