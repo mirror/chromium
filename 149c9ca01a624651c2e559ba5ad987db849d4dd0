@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b6621c2e_80a866e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T17:08:32Z",
+      "side": 1,
+      "message": "Ah, my bad! Done for real now :)",
+      "parentUuid": "e54033c8_3342e02c",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d02fc03_911b97fe",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
