@@ -130,8 +130,9 @@ class ContentSuggestionsProvider {
   // Called when the sign in state has changed. Should be used instead of
   // directly registering with the SignInManager so that the
   // ContentSuggestionService can control the order of the updates between
-  // the providers and the observers.
-  virtual void OnSignInStateChanged() {}
+  // the providers and the observers. |is_signed_in| is true if the user is now
+  // signed in and false otherwise.
+  virtual void OnSignInStateChanged(bool is_signed_in) {}
 
   // Used only for debugging purposes. Retrieves suggestions for the given
   // |category| that have previously been dismissed and are still stored in the
