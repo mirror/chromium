@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "453be282_68061d22",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-11T09:52:43Z",
+      "side": 1,
+      "message": "This needs to be plumbed all the way to RenderWidgetHostView* which is the source of LocalSurfaceIds.\n\nSo on Aura platforms, the aura::Window generates the LocalSurfaceIds so the new LocalSurfaceId needs to be plumbed there.",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc2ead2a_4e89b7fa",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 2
@@ -42,6 +59,41 @@
     },
     {
       "key": {
+        "uuid": "f70d98aa_5b3a7ac3",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-11T09:52:43Z",
+      "side": 1,
+      "message": "Yes, hence why the \"received_local_surface_id_\" needs to be plumbed all the way to the same place.",
+      "parentUuid": "bc2ead2a_4e89b7fa",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0c57ce_05813eef",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-11T09:52:43Z",
+      "side": 1,
+      "message": "I\u0027d make this a base::Optional\u003cviz::LocalSurfaceId\u003e.",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbc1d266_d26d95dd",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 2
@@ -53,6 +105,24 @@
       "writtenOn": "2018-01-11T09:26:01Z",
       "side": 1,
       "message": "At some point, the parent-generated LocalSurfaceId would have been passed to the renderer. I assume this is it, right?",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96da444_5657fe77",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-11T09:52:43Z",
+      "side": 1,
+      "message": "No this isn\u0027t quite right. Do this here:\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?q\u003dRenderWidget::Resize\u0026sq\u003dpackage:chromium\u0026l\u003d1321\n\nand/or here\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?q\u003dRenderWidget::Resize\u0026sq\u003dpackage:chromium\u0026l\u003d617\n\nIn either case, you can have a conflict and you might need to reject the new LocalSurfaceId from the parent.",
+      "parentUuid": "bbc1d266_d26d95dd",
       "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
