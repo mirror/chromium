@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e9c596_d7c09db6",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-11T18:51:33Z",
+      "side": 1,
+      "message": "This should probably be UriForCups to be consistent with the other methods",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "e662d92e53f68fd3edefb1ecc86805812c32ed04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d1253a_bea72d4b",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-11T18:51:33Z",
+      "side": 1,
+      "message": "This name is a little weird now that it doesn\u0027t transform an input string.  Is \u0027UriAsPrinterUri\u0027 too weird?",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "e662d92e53f68fd3edefb1ecc86805812c32ed04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
