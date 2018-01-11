@@ -629,7 +629,9 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
 }
 
 void SimpleEntryImpl::MakeUninitialized() {
-  state_ = STATE_UNINITIALIZED;
+  // If we're doomed, we can't really do anything else with the entry, since
+  // we no longer own the name and are disconnected from the active entry table.
+  state_ = doomed_ ? STATE_FAILURE : STATE_UNINITIALIZED;
   std::memset(crc32s_end_offset_, 0, sizeof(crc32s_end_offset_));
   std::memset(crc32s_, 0, sizeof(crc32s_));
   std::memset(have_written_, 0, sizeof(have_written_));
@@ -747,6 +749,7 @@ void SimpleEntryImpl::OpenEntryInternal(bool have_index,
                       CreateNetLogSimpleEntryCreationCallback(this, net::OK));
     return;
   }
+
   if (state_ == STATE_FAILURE) {
     PostClientCallback(callback, net::ERR_FAILED);
     net_log_.AddEvent(
@@ -780,7 +783,7 @@ void SimpleEntryImpl::CreateEntryInternal(bool have_index,
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_CREATE_BEGIN);
 
   if (state_ != STATE_UNINITIALIZED) {
-    // There is already an active normal entry.
+    // There is already an active normal entry, or this entry is not definitive.
     net_log_.AddEvent(
         net::NetLogEventType::SIMPLE_CACHE_ENTRY_CREATE_END,
         CreateNetLogSimpleEntryCreationCallback(this, net::ERR_FAILED));

@@ -399,8 +399,10 @@ bool SimpleIndex::UpdateEntrySize(uint64_t entry_hash,
                                   base::StrictNumeric<uint32_t> entry_size) {
   DCHECK(io_thread_checker_.CalledOnValidThread());
   EntrySet::iterator it = entries_set_.find(entry_hash);
-  if (it == entries_set_.end())
+  if (it == entries_set_.end()) {
+    LOG(ERROR) << "not in index...";
     return false;
+  }
 
   UpdateEntryIteratorSize(&it, entry_size);
   PostponeWritingToDisk();
