@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b11f866f_ca7dd621",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-11T03:39:14Z",
+      "side": 1,
+      "message": "I got it. Thanks. That sounds reasonable because incremental shadow dom doesn\u0027t support layout well yet.\n\nYour explanation would be helpful when I start to support layout in incremental shadow dom. Thanks!",
+      "parentUuid": "9fc77988_7b4ded77",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b45325_31660805",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 12
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0c3c8732_5f9fed58",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-11T03:39:14Z",
+      "side": 1,
+      "message": "It should return a parent element in a flat tree. e.g. assigned slot (or its ancestor) in the shadow tree.\n\nI think this issue doesn\u0027t have to be addressed in this CL. You might ignore this issue for now.",
+      "parentUuid": "76f07ed9_1f976f88",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee20f5af_d4811c9c",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 12
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Sorry! So, in some cases when a text node is under a slot, rect_based_node.Get() won\u0027t return the slot even though it should be listed in the elementsFromPoint result. But, we can get the slot from the child text node (but the child text node itself shouldn\u0027t be in the list). The default action is to just skip any non-element nodes but in this case we shouldn\u0027t skip the text node.",
       "parentUuid": "ee20f5af_d4811c9c",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184bdc4c_8f353c00",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-11T03:39:14Z",
+      "side": 1,
+      "message": "Ack. Thanks. Maybe I have to think this more deeply when I try to add slot in a flat tree.\nFor now, this CL\u0027s approach could be enough.",
+      "parentUuid": "3173095a_4172cc37",
       "revId": "018d878e2c78fda410ce38691c574f749fedade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
