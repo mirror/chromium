@@ -12,17 +12,6 @@
 namespace content {
 
 std::unique_ptr<ServiceWorkerHandleReference>
-ServiceWorkerHandleReference::Create(
-    blink::mojom::ServiceWorkerObjectInfoPtr info,
-    scoped_refptr<ThreadSafeSender> sender) {
-  DCHECK(sender);
-  if (info->handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
-    return nullptr;
-  return base::WrapUnique(new ServiceWorkerHandleReference(
-      std::move(info), std::move(sender), true));
-}
-
-std::unique_ptr<ServiceWorkerHandleReference>
 ServiceWorkerHandleReference::Adopt(
     blink::mojom::ServiceWorkerObjectInfoPtr info,
     scoped_refptr<ThreadSafeSender> sender) {
@@ -49,11 +38,6 @@ ServiceWorkerHandleReference::~ServiceWorkerHandleReference() {
   DCHECK_NE(info_->handle_id, blink::mojom::kInvalidServiceWorkerHandleId);
   sender_->Send(new ServiceWorkerHostMsg_DecrementServiceWorkerRefCount(
       info_->handle_id));
-}
-
-blink::mojom::ServiceWorkerObjectInfoPtr ServiceWorkerHandleReference::GetInfo()
-    const {
-  return info_->Clone();
 }
 
 }  // namespace content

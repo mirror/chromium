@@ -89,12 +89,8 @@ struct ServiceWorkerProviderContext::ProviderStateForClient {
 struct ServiceWorkerProviderContext::ProviderStateForServiceWorker {
   ProviderStateForServiceWorker() = default;
   ~ProviderStateForServiceWorker() = default;
-  // |registration->host_ptr_info| will be taken by
   // ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope()
-  // means after that |registration| will be in a half-way taken state.
-  // TODO(leonhsl): To avoid the half-way taken state mentioned above, make
-  // ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope()
-  // take/reset all information of |registration|, |installing|, |waiting| and
+  // takes all information of |registration|, |installing|, |waiting| and
   // |active| all at once.
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration;
   std::unique_ptr<ServiceWorkerHandleReference> installing;
@@ -157,43 +153,19 @@ ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
   DCHECK_NE(state->registration->registration_id,
             blink::mojom::kInvalidServiceWorkerRegistrationId);
 
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info =
-      std::move(state->registration);
-  if (state->installing)
-    info->installing = state->installing->GetInfo();
-  else
-    info->installing = blink::mojom::ServiceWorkerObjectInfo::New();
-  if (state->waiting)
-    info->waiting = state->waiting->GetInfo();
-  else
-    info->waiting = blink::mojom::ServiceWorkerObjectInfo::New();
-  if (state->active)
-    info->active = state->active->GetInfo();
-  else
-    info->active = blink::mojom::ServiceWorkerObjectInfo::New();
-
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
-  std::unique_ptr<ServiceWorkerHandleReference> installing =
-      ServiceWorkerHandleReference::Create(std::move(info->installing),
-                                           dispatcher->thread_safe_sender());
-  std::unique_ptr<ServiceWorkerHandleReference> waiting =
-      ServiceWorkerHandleReference::Create(std::move(info->waiting),
-                                           dispatcher->thread_safe_sender());
-  std::unique_ptr<ServiceWorkerHandleReference> active =
-      ServiceWorkerHandleReference::Create(std::move(info->active),
-                                           dispatcher->thread_safe_sender());
-  DCHECK(info->request.is_pending());
+  DCHECK(state->registration->request.is_pending());
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
       WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
-          std::move(info), std::move(io_task_runner));
+          std::move(state->registration), std::move(io_task_runner));
   registration->SetInstalling(
-      dispatcher->GetOrCreateServiceWorker(std::move(installing)));
+      dispatcher->GetOrCreateServiceWorker(std::move(state->installing)));
   registration->SetWaiting(
-      dispatcher->GetOrCreateServiceWorker(std::move(waiting)));
+      dispatcher->GetOrCreateServiceWorker(std::move(state->waiting)));
   registration->SetActive(
-      dispatcher->GetOrCreateServiceWorker(std::move(active)));
+      dispatcher->GetOrCreateServiceWorker(std::move(state->active)));
 
   return registration;
 }
