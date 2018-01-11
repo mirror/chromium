@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5ab97c1_0bd9a84d",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-11T06:30:02Z",
+      "side": 1,
+      "message": "We must adopt |source| here, otherwise we\u0027ll miss sending the DecreRef IPC for the \u0027else\u0027 path of line360. #Although my next CL will eliminate ServiceWorkerHandleReference class soon.",
+      "range": {
+        "startLine": 352,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 76
+      },
+      "revId": "5fd1e3a0a63abd1c93257e51cd5e54ff5157aab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
