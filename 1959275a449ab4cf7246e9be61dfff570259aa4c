@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f87262b_366da159",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "I couldn\u0027t figure out what this sentence meant until I read the bug. Maybe \"Add flag to enable Search+S to read selected text\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c28a76_c096ad34",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "no comma here, and maybe make it a standalone sentence: \"Or highlight...\"",
+      "range": {
+        "startLine": 288,
+        "startChar": 91,
+        "endLine": 288,
+        "endChar": 92
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7672f8a4_39d1e2e3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "nit: text?",
+      "range": {
+        "startLine": 288,
+        "startChar": 80,
+        "endLine": 288,
+        "endChar": 87
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ffb47a_e0bba0a3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "comma here",
+      "range": {
+        "startLine": 288,
+        "startChar": 50,
+        "endLine": 288,
+        "endChar": 51
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fda867f_a22eb241",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "TODO(katie) or TODO(crbug.com/713303)",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 9
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ce89ac_a00f96ee",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "nit: prefer a lambda, which binds |this| lexically.",
+      "range": {
+        "startLine": 403,
+        "startChar": 52,
+        "endLine": 405,
+        "endChar": 20
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dca9ae0_f49e62f5",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "Add the same TODO here, if you don\u0027t mind.",
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbeb3256_412a63c4",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-11T03:10:23Z",
+      "side": 1,
+      "message": "blank line above",
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
