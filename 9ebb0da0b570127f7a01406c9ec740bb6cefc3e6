@@ -34,6 +34,24 @@
       "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f203d95_709034f2",
+        "filename": "services/network/public/cpp/data_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-11T19:06:25Z",
+      "side": 1,
+      "message": "\"Today\" might be tricky. But the vast majority of storage usage will go away when I start removing the old IPC code paths for blobs. I originally was planning to start doing so after mojo blobs ship to stable in M64 (so in a few weeks), but I\u0027m beginning to wonder if I\u0027m not being too cautious and maybe should just start ripping things out today. For what then remains on the blob side it should be fairly simple to merge whatever parts of DataElement are actually used by the blob system into BlobDataItem directly. At which point you can do whatever you want with DataElement since storage code won\u0027t be using it anymore.",
+      "parentUuid": "ab801ef4_b0ce8794",
+      "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
