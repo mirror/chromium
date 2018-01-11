@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f45f608e_bad3362c",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:13:17Z",
+      "side": 1,
+      "message": "nit: leave a blank line after, just like line 108 before the end of the namespace.",
+      "revId": "532951b11607f65d1e0d21f6bb779ea68a127653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fee0bc4_8b5f54f7",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:13:17Z",
+      "side": 1,
+      "message": "Can this happen?",
+      "revId": "532951b11607f65d1e0d21f6bb779ea68a127653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6151a093_5a1a9fa0",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:13:17Z",
+      "side": 1,
+      "message": "I would liberally sprinkle in DCHECK_CURRENTLY_ON() all over. e.g. in UpdatePrintingEnabled().",
+      "revId": "532951b11607f65d1e0d21f6bb779ea68a127653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
