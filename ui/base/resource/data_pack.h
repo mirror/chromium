@@ -60,6 +60,7 @@ class UI_DATA_PACK_EXPORT DataPack : public ResourceHandle {
 
   // ResourceHandle implementation:
   bool HasResource(uint16_t resource_id) const override;
+  bool IsGzipped(uint16_t resource_id, bool* is_gzipped) const override;
   bool GetStringPiece(uint16_t resource_id,
                       base::StringPiece* data) const override;
   base::RefCountedStaticMemory* GetStaticMemory(
@@ -99,6 +100,7 @@ class UI_DATA_PACK_EXPORT DataPack : public ResourceHandle {
   size_t resource_count_;
   const Alias* alias_table_;
   size_t alias_count_;
+  const uint8_t* gzip_table_;
 
   // Type of encoding for text resources.
   TextEncodingType text_encoding_type_;

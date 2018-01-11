@@ -9,6 +9,7 @@ files.
 
 import collections
 import exceptions
+import math
 import os
 import struct
 import sys
@@ -21,7 +22,7 @@ from grit.node import message
 from grit.node import structure
 
 
-PACK_FILE_VERSION = 5
+PACK_FILE_VERSION = 6
 BINARY, UTF8, UTF16 = range(3)
 
 
@@ -34,10 +35,11 @@ class CorruptDataPack(Exception):
 
 
 class DataPackSizes(object):
-  def __init__(self, header, id_table, alias_table, data):
+  def __init__(self, header, id_table, alias_table, gzip_table, data):
     self.header = header
     self.id_table = id_table
     self.alias_table = alias_table
+    self.gzip_table = gzip_table
     self.data = data
 
   @property
@@ -48,6 +50,7 @@ class DataPackSizes(object):
     yield ('header', self.header)
     yield ('id_table', self.id_table)
     yield ('alias_table', self.alias_table)
+    yield ('gzip_table', self.gzip_table)
     yield ('data', self.data)
 
   def __eq__(self, other):
@@ -58,7 +61,7 @@ class DataPackSizes(object):
 
 
 class DataPackContents(object):
-  def __init__(self, resources, encoding, version, aliases, sizes):
+  def __init__(self, resources, encoding, version, aliases, gzip_table, sizes):
     # Map of resource_id -> str.
     self.resources = resources
     # Encoding (int).
@@ -67,14 +70,30 @@ class DataPackContents(object):
     self.version = version
     # Map of resource_id->canonical_resource_id
     self.aliases = aliases
+    # bytearray() of booleans indicating whether each resource ID is gzipped.
+    self.gzip_table = gzip_table
     # DataPackSizes instance.
     self.sizes = sizes
+
+  @property
+  def gzipped_ids(self):
+    gzipped = set()
+    all_resource_ids = set(self.resources.keys())
+    alias_ids = set(self.aliases.keys())
+    for i, resource_id in enumerate(sorted(all_resource_ids - alias_ids)):
+      gzip_byte = int(math.floor(i / 8.0))
+      if self.gzip_table[gzip_byte] & (1 << (i % 8)):
+        gzipped.add(resource_id)
+    # TODO(dbeam): is adding aliases necessary/helpful?
+    # gzipped |= set([a for a in alias_ids if self.aliases[a] in gzipped])
+    return gzipped
 
 
 def Format(root, lang='en', output_dir='.'):
   """Writes out the data pack file format (platform agnostic resource file)."""
   id_map = root.GetIdMap()
   data = {}
+  gzipped_ids = set()
   root.info = []
   for node in root.ActiveDescendants():
     with node:
@@ -84,9 +103,11 @@ def Format(root, lang='en', output_dir='.'):
         if value is not None:
           resource_id = id_map[node.GetTextualIds()[0]]
           data[resource_id] = value
+          if node.attrs.get('compress') == 'gzip':
+            gzipped_ids.add(resource_id)
           root.info.append('{},{},{}'.format(
               node.attrs.get('name'), resource_id, node.source))
-  return WriteDataPackToString(data, UTF8)
+  return WriteDataPackToString(data, gzipped_ids, UTF8)
 
 
 def ReadDataPack(input_file):
@@ -101,7 +122,7 @@ def ReadDataPackFromString(data):
     resource_count, encoding = struct.unpack('<IB', data[4:9])
     alias_count = 0
     header_size = 9
-  elif version == 5:
+  elif version == 5 or version == 6:
     encoding, resource_count, alias_count = struct.unpack('<BxxxHH', data[4:12])
     header_size = 12
   else:
@@ -118,8 +139,8 @@ def ReadDataPackFromString(data):
     resource_id, offset = entry_at_index(i)
     resources[prev_resource_id] = data[prev_offset:offset]
     prev_resource_id, prev_offset = resource_id, offset
-
   id_table_size = (resource_count + 1) * kIndexEntrySize
+
   # Read the alias table.
   kAliasEntrySize = 2 + 2  # uint16, uint16
   def alias_at_index(idx):
@@ -132,17 +153,27 @@ def ReadDataPackFromString(data):
     aliased_id = entry_at_index(index)[0]
     aliases[resource_id] = aliased_id
     resources[resource_id] = resources[aliased_id]
-
   alias_table_size = kAliasEntrySize * alias_count
+
+  gzip_table_size = int(math.ceil(resource_count / 8.0)) if version == 6 else 0
+  if version == 6 and resource_count > 0:
+    assert gzip_table_size > 0
+  gzip_table = bytearray()
+  if gzip_table_size > 0:
+    gzip_table_start = header_size + id_table_size + alias_table_size
+    gzip_table.extend(struct.unpack('<%dB' % gzip_table_size,
+        data[gzip_table_start:gzip_table_start + gzip_table_size]))
+
   sizes = DataPackSizes(
-      header_size, id_table_size, alias_table_size,
-      len(data) - header_size - id_table_size - alias_table_size)
+      header_size, id_table_size, alias_table_size, gzip_table_size,
+      len(data) - header_size - id_table_size - alias_table_size - gzip_table_size)
   assert sizes.total == len(data), 'original={} computed={}'.format(
       len(data), sizes.total)
-  return DataPackContents(resources, encoding, version, aliases, sizes)
+
+  return DataPackContents(resources, encoding, version, aliases, gzip_table, sizes)
 
 
-def WriteDataPackToString(resources, encoding):
+def WriteDataPackToString(resources, gzipped_ids, encoding):
   """Returns a string with a map of id=>data in the data pack format."""
   ret = []
 
@@ -160,10 +191,11 @@ def WriteDataPackToString(resources, encoding):
   ret.append(struct.pack('<IBxxxHH', PACK_FILE_VERSION, encoding,
                          resource_count, len(alias_map)))
   HEADER_LENGTH = 4 + 4 + 2 + 2
+  gzip_table_size = int(math.ceil(resource_count / 8.0))
 
   # Each main table entry is: uint16 + uint32 (and an extra entry at the end).
   # Each alias table entry is: uint16 + uint16.
-  data_offset = HEADER_LENGTH + (resource_count + 1) * 6 + len(alias_map) * 4
+  data_offset = HEADER_LENGTH + (resource_count + 1) * 6 + len(alias_map) * 4 + gzip_table_size
 
   # Write main table.
   index_by_id = {}
@@ -188,14 +220,22 @@ def WriteDataPackToString(resources, encoding):
     index = index_by_id[alias_map[resource_id]]
     ret.append(struct.pack('<HH', resource_id, index))
 
+  # Write gzip table.
+  gzip_table = bytearray(gzip_table_size)
+  for i, resource_id in enumerate(resource_ids):
+    if resource_id in gzipped_ids:
+      gzip_byte = int(math.floor(i / 8.0))
+      gzip_table[gzip_byte] = gzip_table[gzip_byte] | (1 << (i % 8))
+  ret.append(struct.pack('<%dB' % gzip_table_size, *gzip_table))
+
   # Write data.
   ret.extend(deduped_data)
   return ''.join(ret)
 
 
-def WriteDataPack(resources, output_file, encoding):
+def WriteDataPack(resources, gzipped_ids, output_file, encoding):
   """Writes a map of id=>data into output_file as a data pack."""
-  content = WriteDataPackToString(resources, encoding)
+  content = WriteDataPackToString(resources, gzipped_ids, encoding)
   with open(output_file, 'wb') as file:
     file.write(content)
 
@@ -224,9 +264,10 @@ def RePack(output_file, input_files, whitelist_file=None,
     whitelist = util.ReadFile(whitelist_file, util.RAW_TEXT).strip().split('\n')
     whitelist = set(map(int, whitelist))
   inputs = [(p.resources, p.encoding) for p in input_data_packs]
+  gzipped_ids = set([g for g in p.gzipped_ids for p in input_data_packs])
   resources, encoding = RePackFromDataPackStrings(
       inputs, whitelist, suppress_removed_key_output)
-  WriteDataPack(resources, output_file, encoding)
+  WriteDataPack(resources, gzipped_ids, output_file, encoding)
   with open(output_file + '.info', 'w') as output_info_file:
     for filename in input_info_files:
       with open(filename, 'r') as info_file:
@@ -287,9 +328,9 @@ def RePackFromDataPackStrings(inputs, whitelist,
 def main():
   # Write a simple file.
   data = {1: '', 4: 'this is id 4', 6: 'this is id 6', 10: ''}
-  WriteDataPack(data, 'datapack1.pak', UTF8)
+  WriteDataPack(data, set(), 'datapack1.pak', UTF8)
   data2 = {1000: 'test', 5: 'five'}
-  WriteDataPack(data2, 'datapack2.pak', UTF8)
+  WriteDataPack(data2, set(), 'datapack2.pak', UTF8)
   print 'wrote datapack1 and datapack2 to current directory.'
 
 

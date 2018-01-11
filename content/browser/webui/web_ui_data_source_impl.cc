@@ -18,6 +18,7 @@
 #include "content/grit/content_resources.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/base/template_expressions.h"
 #include "ui/base/webui/jstemplate_builder.h"
 #include "ui/base/webui/web_ui_util.h"
@@ -42,6 +43,15 @@ void WebUIDataSource::Update(BrowserContext* browser_context,
   URLDataManager::UpdateWebUIDataSource(browser_context, source_name,
                                         std::move(update));
 }
+
+namespace {
+
+std::string CleanUpPath(const std::string& path) {
+  // Remove the query string for named resource lookups.
+  return path.substr(0, path.find_first_of('?'));
+}
+
+}  // namespace
 
 // Internal class to hide the fact that WebUIDataSourceImpl implements
 // URLDataSource.
@@ -88,8 +98,7 @@ class WebUIDataSourceImpl::InternalDataSource : public URLDataSource {
     return parent_->deny_xframe_options_;
   }
   bool IsGzipped(const std::string& path) const override {
-    return parent_->use_gzip_ &&
-        parent_->excluded_paths_.find(path) == parent_->excluded_paths_.end();
+    return parent_->IsGzipped(path);
   }
 
  private:
@@ -106,8 +115,7 @@ WebUIDataSourceImpl::WebUIDataSourceImpl(const std::string& source_name)
       frame_src_set_(false),
       deny_xframe_options_(true),
       add_load_time_data_defaults_(true),
-      replace_existing_source_(true),
-      use_gzip_(false) {}
+      replace_existing_source_(true) {}
 
 WebUIDataSourceImpl::~WebUIDataSourceImpl() {
 }
@@ -161,7 +169,7 @@ void WebUIDataSourceImpl::SetJsonPath(const std::string& path) {
   excluded_paths_.insert(json_path_);
 }
 
-void WebUIDataSourceImpl::AddResourcePath(const std::string &path,
+void WebUIDataSourceImpl::AddResourcePath(const std::string& path,
                                           int resource_id) {
   path_to_idr_map_[path] = resource_id;
 }
@@ -211,7 +219,6 @@ void WebUIDataSourceImpl::DisableDenyXFrameOptions() {
 
 void WebUIDataSourceImpl::UseGzip(
     const std::vector<std::string>& excluded_paths) {
-  use_gzip_ = true;
   for (const auto& path : excluded_paths)
     excluded_paths_.insert(path);
 }
@@ -273,17 +280,32 @@ void WebUIDataSourceImpl::StartDataRequest(
     return;
   }
 
-  int resource_id = default_resource_;
-  std::map<std::string, int>::iterator result;
-  // Remove the query string for named resource lookups.
-  std::string file_path = path.substr(0, path.find_first_of('?'));
-  result = path_to_idr_map_.find(file_path);
-  if (result != path_to_idr_map_.end())
-    resource_id = result->second;
+  int resource_id = PathToIdrOrDefault(CleanUpPath(path));
   DCHECK_NE(resource_id, -1);
+
   scoped_refptr<base::RefCountedMemory> response(
       GetContentClient()->GetDataResourceBytes(resource_id));
   callback.Run(response.get());
+}
+
+bool WebUIDataSourceImpl::IsGzipped(const std::string& path) const {
+  // TODO(dbeam): split the request filter mechanism into 2 parts: whether a
+  // URL should be handled (so this method can use that to determine these
+  // paths are dynamic) and the actual handling of that path (i.e. getting and
+  // responding with bytes).
+  std::string file_path = CleanUpPath(path);
+  if (excluded_paths_.count(file_path) == 1)
+    return false;
+  bool is_gzipped;
+  int idr = PathToIdrOrDefault(file_path);
+  CHECK(ui::ResourceBundle::GetSharedInstance().IsGzipped(idr, &is_gzipped));
+  LOG(ERROR) << "path: " << path << ", idr: " << idr << ", is_gzipped? " << is_gzipped;
+  return is_gzipped;
+}
+
+int WebUIDataSourceImpl::PathToIdrOrDefault(const std::string& path) const {
+  auto it = path_to_idr_map_.find(path);
+  return it == path_to_idr_map_.end() ? default_resource_ : it->second;
 }
 
 void WebUIDataSourceImpl::SendLocalizedStringsAsJSON(

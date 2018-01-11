@@ -6,6 +6,8 @@
 
 #include <errno.h>
 #include <algorithm>
+#include <cmath>
+#include <limits>
 #include <set>
 #include <utility>
 
@@ -30,6 +32,7 @@ namespace {
 
 static const uint32_t kFileFormatV4 = 4;
 static const uint32_t kFileFormatV5 = 5;
+static const size_t kFileFormatV6 = 6;
 // uint32(version), uint32(resource_count), uint8(encoding)
 static const size_t kHeaderLengthV4 = 2 * sizeof(uint32_t) + sizeof(uint8_t);
 // uint32(version), uint8(encoding), 3 bytes padding,
@@ -155,6 +158,18 @@ class ScopedFileWriter {
   DISALLOW_COPY_AND_ASSIGN(ScopedFileWriter);
 };
 
+uint32_t ByteIndexOfBit(uint32_t bit_index) {
+  float byte_index = std::floor(bit_index / 8.0f);
+  DCHECK_LE(byte_index, std::numeric_limits<uint32_t>::max());
+  return static_cast<uint32_t>(byte_index);
+}
+
+uint32_t BytesRequiredToStoreBits(size_t num_bools_to_store) {
+  float bytes = std::ceil(num_bools_to_store / 8.0f);
+  DCHECK_LE(bytes, std::numeric_limits<uint32_t>::max());
+  return static_cast<uint32_t>(bytes);
+}
+
 }  // namespace
 
 namespace ui {
@@ -234,6 +249,7 @@ DataPack::DataPack(ui::ScaleFactor scale_factor)
       resource_count_(0),
       alias_table_(nullptr),
       alias_count_(0),
+      gzip_table_(nullptr),
       text_encoding_type_(BINARY),
       scale_factor_(scale_factor) {
   // Static assert must be within a DataPack member to appease visiblity rules.
@@ -288,6 +304,7 @@ bool DataPack::LoadImpl(std::unique_ptr<DataPack::DataSource> data_source) {
     version = reinterpret_cast<const uint32_t*>(data)[0];
   size_t header_length =
       version == kFileFormatV4 ? kHeaderLengthV4 : kHeaderLengthV5;
+
   if (version == 0 || data_length < header_length) {
     DLOG(ERROR) << "Data pack file corruption: incomplete file header.";
     LogDataPackError(HEADER_TRUNCATED);
@@ -299,7 +316,7 @@ bool DataPack::LoadImpl(std::unique_ptr<DataPack::DataSource> data_source) {
     resource_count_ = reinterpret_cast<const uint32_t*>(data)[1];
     alias_count_ = 0;
     text_encoding_type_ = static_cast<TextEncodingType>(data[8]);
-  } else if (version == kFileFormatV5) {
+  } else if (version == kFileFormatV5 || version == kFileFormatV6) {
     // Version 5 added the alias table and changed the header format.
     text_encoding_type_ = static_cast<TextEncodingType>(data[4]);
     resource_count_ = reinterpret_cast<const uint16_t*>(data)[4];
@@ -324,7 +341,12 @@ bool DataPack::LoadImpl(std::unique_ptr<DataPack::DataSource> data_source) {
   // which gives the length of the last item.
   size_t resource_table_size = (resource_count_ + 1) * sizeof(Entry);
   size_t alias_table_size = alias_count_ * sizeof(Alias);
-  if (header_length + resource_table_size + alias_table_size > data_length) {
+  // Version 6 added an array of booleans corresponding to whether a resource
+  // is gzipped or not. This array lives after the alias table.
+  const uint32_t gzip_table_size = version < kFileFormatV6 ? 0u :
+      BytesRequiredToStoreBits(resource_count_);
+  if (header_length + resource_table_size + alias_table_size + gzip_table_size >
+      data_length) {
     LOG(ERROR) << "Data pack file corruption: "
                << "too short for number of entries.";
     LogDataPackError(INDEX_TRUNCATED);
@@ -334,6 +356,11 @@ bool DataPack::LoadImpl(std::unique_ptr<DataPack::DataSource> data_source) {
   resource_table_ = reinterpret_cast<const Entry*>(&data[header_length]);
   alias_table_ = reinterpret_cast<const Alias*>(
       &data[header_length + resource_table_size]);
+
+  if (version == kFileFormatV6) {
+    gzip_table_ = reinterpret_cast<const uint8_t*>(
+        &data[header_length + resource_table_size + alias_table_size]);
+  }
 
   // 2) Verify the entries are within the appropriate bounds. There's an extra
   // entry after the last item which gives us the length of the last item.
@@ -379,6 +406,16 @@ const DataPack::Entry* DataPack::LookupEntryById(uint16_t resource_id) const {
 
 bool DataPack::HasResource(uint16_t resource_id) const {
   return !!LookupEntryById(resource_id);
+}
+
+bool DataPack::IsGzipped(uint16_t resource_id, bool* is_gzipped) const {
+  DCHECK(is_gzipped);
+  const Entry* entry = LookupEntryById(resource_id);
+  if (!entry || !gzip_table_)
+    return false;
+  uint32_t bit_index = (entry - resource_table_) / sizeof(Entry);
+  *is_gzipped = gzip_table_[ByteIndexOfBit(bit_index)] & (1 << (bit_index % 8));
+  return true;
 }
 
 bool DataPack::GetStringPiece(uint16_t resource_id,
@@ -506,7 +543,7 @@ bool DataPack::WritePack(const base::FilePath& path,
   DCHECK_EQ(static_cast<size_t>(entry_count) + static_cast<size_t>(alias_count),
             resources_count);
 
-  file.Write(&kFileFormatV5, sizeof(kFileFormatV5));
+  file.Write(&kFileFormatV6, sizeof(kFileFormatV6));
   file.Write(&encoding, sizeof(uint32_t));
   file.Write(&entry_count, sizeof(entry_count));
   file.Write(&alias_count, sizeof(alias_count));
@@ -515,7 +552,9 @@ bool DataPack::WritePack(const base::FilePath& path,
   // last item so we can compute the size of the list item.
   const uint32_t index_length = (entry_count + 1) * sizeof(Entry);
   const uint32_t alias_table_length = alias_count * sizeof(Alias);
-  uint32_t data_offset = kHeaderLengthV5 + index_length + alias_table_length;
+  const uint32_t gzip_table_length = BytesRequiredToStoreBits(resources_count);
+  uint32_t data_offset = kHeaderLengthV5 + index_length + alias_table_length +
+      gzip_table_length;
   for (const uint16_t resource_id : resource_ids) {
     file.Write(&resource_id, sizeof(resource_id));
     file.Write(&data_offset, sizeof(data_offset));
@@ -533,6 +572,10 @@ bool DataPack::WritePack(const base::FilePath& path,
   for (const std::pair<uint16_t, uint16_t>& alias : aliases) {
     file.Write(&alias, sizeof(alias));
   }
+
+  uint8_t gzip_table[gzip_table_length];
+  memset(gzip_table, 0, gzip_table_length);
+  file.Write(gzip_table, gzip_table_length);
 
   for (const auto& resource_id : resource_ids) {
     const base::StringPiece data = resources.find(resource_id)->second;

@@ -80,6 +80,10 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
       const ResourceRequestInfo::WebContentsGetter& wc_getter,
       const URLDataSource::GotDataCallback& callback);
 
+  bool IsGzipped(const std::string& path) const;
+
+  int PathToIdrOrDefault(const std::string& path) const;
+
   // Note: this must be called before StartDataRequest() to have an effect.
   void disable_load_time_data_defaults_for_testing() {
     add_load_time_data_defaults_ = false;
@@ -112,7 +116,6 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   bool deny_xframe_options_;
   bool add_load_time_data_defaults_;
   bool replace_existing_source_;
-  bool use_gzip_;
 
   DISALLOW_COPY_AND_ASSIGN(WebUIDataSourceImpl);
 };

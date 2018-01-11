@@ -79,7 +79,7 @@ ResourceBundle* g_shared_instance_ = NULL;
 // Note that it does NOT rely on the list of supported scale factors.
 // Finding the closest match is inefficient and shouldn't be done frequently.
 ScaleFactor FindClosestScaleFactorUnsafe(float scale) {
-  float smallest_diff =  std::numeric_limits<float>::max();
+  float smallest_diff = std::numeric_limits<float>::max();
   ScaleFactor closest_match = SCALE_FACTOR_100P;
   for (int i = SCALE_FACTOR_100P; i < NUM_SCALE_FACTORS; ++i) {
     const ScaleFactor scale_factor = static_cast<ScaleFactor>(i);
@@ -564,6 +564,14 @@ base::StringPiece ResourceBundle::GetRawDataResourceForScale(
   }
 
   return base::StringPiece();
+}
+
+bool ResourceBundle::IsGzipped(int resource_id, bool* is_gzipped) const {
+  for (const auto& pack : data_packs_) {
+    if (pack->IsGzipped(resource_id, is_gzipped))
+      return true;
+  }
+  return false;
 }
 
 base::string16 ResourceBundle::GetLocalizedString(int message_id) {
