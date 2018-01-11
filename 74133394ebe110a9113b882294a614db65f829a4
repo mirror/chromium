@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b623d1f6_6c349a36",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T00:34:44Z",
+      "side": 1,
+      "message": "Not sure how these are used in this CL?",
+      "revId": "74133394ebe110a9113b882294a614db65f829a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bda7a68_2188b88a",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T00:34:44Z",
+      "side": 1,
+      "message": "Since this is the only place this is used, how about just defining this as a string constant to avoid constructing a temporary here?",
+      "range": {
+        "startLine": 225,
+        "startChar": 37,
+        "endLine": 225,
+        "endChar": 71
+      },
+      "revId": "74133394ebe110a9113b882294a614db65f829a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
