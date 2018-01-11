@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eeb85188_ab8a3aaf",
+        "filename": "content/renderer/service_worker/service_worker_handle_reference.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-11T06:54:27Z",
+      "side": 1,
+      "message": "Done. Nice catch~",
+      "parentUuid": "851630a9_94236765",
+      "range": {
+        "startLine": 22,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "5fd1e3a0a63abd1c93257e51cd5e54ff5157aab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95bf65d2_905b95f6",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-11T06:39:40Z",
       "side": 1,
       "message": "This comment makes less sense without the historical context. I think we can just say:\n\n// These are valid until TakeRegistrationForServiceWorkerGlobalScope() is called.",
+      "revId": "5fd1e3a0a63abd1c93257e51cd5e54ff5157aab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8d3f33_dc8a2fe1",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-11T06:54:27Z",
+      "side": 1,
+      "message": "Clear! Done.",
+      "parentUuid": "95bf65d2_905b95f6",
       "revId": "5fd1e3a0a63abd1c93257e51cd5e54ff5157aab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
