@@ -46,6 +46,30 @@
       "revId": "9fc9bd0a46cdaf404da5f6a6bf7818721c554e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7baf0d7f_0ca94ec6",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-11T07:44:52Z",
+      "side": 0,
+      "message": "I found it because the CopyValuesToVector test that I wrote failed although I thought I made all adjustments necessary to pass it. What helps is that all the test scenarios are exact, i.e., they fail whenever not all, or too many objects made it to the marking stack.\n\nWhen I looked closer, I saw that the test pushed 2 objects on the marking stack (key, value) and from there on I just hooked into gdb.",
+      "parentUuid": "dc138009_38eea1d4",
+      "range": {
+        "startLine": 698,
+        "startChar": 36,
+        "endLine": 698,
+        "endChar": 42
+      },
+      "revId": "9fc9bd0a46cdaf404da5f6a6bf7818721c554e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
