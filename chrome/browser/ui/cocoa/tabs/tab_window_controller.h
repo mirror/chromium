@@ -23,7 +23,7 @@
 @class TabStripView;
 @class TabView;
 
-@interface TabWindowController : NSWindowController<NSWindowDelegate> {
+@interface TabWindowController : NSObject<NSWindowDelegate> {
  @private
   // Wrapper view around web content, and the developer tools view.
   base::scoped_nsobject<FastResizeView> tabContentArea_;
@@ -54,6 +54,8 @@
   BOOL closeDeferred_;  // If YES, call performClose: in removeOverlay:.
 }
 
+@property(readonly) NSWindowController* nsWindowController;
+@property(strong) NSWindow* window;
 @property(readonly, nonatomic) API_AVAILABLE(macos(10.10))
     NSVisualEffectView* visualEffectView;
 @property(readonly, nonatomic) NSView* tabStripBackgroundView;
@@ -192,6 +194,10 @@
 // Called when the size of the window content area has changed. Override to
 // position specific views. Base class implementation does nothing.
 - (void)layoutSubviews;
+@end
+
+@interface NSWindow (TabWindowController)
+@property(readonly) TabWindowController* tabWindowController;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_TABS_TAB_WINDOW_CONTROLLER_H_

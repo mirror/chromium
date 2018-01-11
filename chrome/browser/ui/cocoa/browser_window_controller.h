@@ -638,5 +638,8 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 @end  // @interface BrowserWindowController (TestingAPI)
 
+@interface NSWindow (BrowserWindowController)
+@property(readonly) BrowserWindowController* browserWindowController;
+@end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_CONTROLLER_H_
