@@ -66,13 +66,21 @@ class PLATFORM_EXPORT LinearHistogram : public CustomCountHistogram {
 class PLATFORM_EXPORT ScopedUsHistogramTimer {
  public:
   explicit ScopedUsHistogramTimer(CustomCountHistogram& counter)
-      : start_time_(CurrentTimeTicks()), counter_(counter) {}
+      : recorded_(false), start_time_(CurrentTimeTicks()), counter_(counter) {}
 
-  ~ScopedUsHistogramTimer() {
-    counter_.Count((CurrentTimeTicks() - start_time_).InMicroseconds());
+  ~ScopedUsHistogramTimer() { Record(); }
+
+  int64_t Record() {
+    if (recorded_)
+      return 0;
+    recorded_ = true;
+    int64_t elapsed = (CurrentTimeTicks() - start_time_).InMicroseconds();
+    counter_.Count(elapsed);
+    return elapsed;
   }
 
  private:
+  bool recorded_;
   TimeTicks start_time_;
   CustomCountHistogram& counter_;
 };

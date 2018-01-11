@@ -1169,6 +1169,7 @@ class CORE_EXPORT LocalFrameView final
   PaintController* GetPaintController() { return paint_controller_.get(); }
 
   void LayoutFromRootObject(LayoutObject& root);
+  void RecordUkmPerformanceMetric(const char* metric, int64_t value);
 
   LayoutSize size_;
 
