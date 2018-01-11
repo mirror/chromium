@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3496b27_ed3c15a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-11T19:56:48Z",
+      "side": 1,
+      "message": "this looks unrelated.",
+      "range": {
+        "startLine": 287,
+        "startChar": 17,
+        "endLine": 287,
+        "endChar": 44
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8f1a5b_1f027570",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-11T19:56:48Z",
+      "side": 1,
+      "message": "we should avoid duplicating this.  I think it should all reference the one in the base CommandLineUtil",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763606b3_6255bffa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-11T19:56:48Z",
+      "side": 1,
+      "message": "I would actually add the set pref function in CommandLineUtil.  I think it would be good to have it unified.",
+      "range": {
+        "startLine": 511,
+        "startChar": 16,
+        "endLine": 511,
+        "endChar": 48
+      },
+      "revId": "6f4447a51e359f2dffecf30cf5f48ba58fcdbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
