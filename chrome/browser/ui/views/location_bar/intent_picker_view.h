@@ -21,6 +21,7 @@ class IntentPickerView : public BubbleIconView {
  public:
   explicit IntentPickerView(Browser* browser);
   ~IntentPickerView() override;
+  void SetVisible(bool visible) override;
 
  protected:
   // BubbleIconView:

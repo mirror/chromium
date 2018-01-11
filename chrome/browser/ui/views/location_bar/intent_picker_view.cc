@@ -22,6 +22,15 @@ IntentPickerView::IntentPickerView(Browser* browser)
 
 IntentPickerView::~IntentPickerView() = default;
 
+void IntentPickerView::SetVisible(bool visible) {
+  // Besides changing visibility, make sure that we don't let an opened bubble
+  // when transitioning to !visible.
+  if (!visible)
+    IntentPickerBubbleView::CloseCurrentBubble();
+
+  views::View::SetVisible(visible);
+}
+
 void IntentPickerView::OnExecuting(
     BubbleIconView::ExecuteSource execute_source) {
   if (browser_ && !browser_->profile()->IsGuestSession() &&
