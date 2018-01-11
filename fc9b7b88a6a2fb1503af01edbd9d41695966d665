@@ -22,6 +22,30 @@
       "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c405e5d0_26aab3db",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T13:33:06Z",
+      "side": 0,
+      "message": "The permission check is necessary and must be performed on each notification because permissions can change over time. Will comment further on the other CL.",
+      "parentUuid": "b247c65c_ec3b83f7",
+      "range": {
+        "startLine": 333,
+        "startChar": 73,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
