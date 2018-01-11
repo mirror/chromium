@@ -46,6 +46,30 @@
       "revId": "fa0132a33af0251e6aeeab4c4acc64d968f54dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf8d9e3_def3c7f2",
+        "filename": "chrome/browser/browsing_data/browsing_data_counter_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-11T22:47:03Z",
+      "side": 1,
+      "message": "Yep, but there are instances a few lines lower in this function with no braces. So... consistency :)",
+      "parentUuid": "3995577d_c6eb1e21",
+      "range": {
+        "startLine": 72,
+        "startChar": 57,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "fa0132a33af0251e6aeeab4c4acc64d968f54dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
