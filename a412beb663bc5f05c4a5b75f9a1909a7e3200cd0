@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e014a4_77e3cede",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T21:06:59Z",
+      "side": 1,
+      "message": "Can you explain why the test succeeded before?",
+      "revId": "a412beb663bc5f05c4a5b75f9a1909a7e3200cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430842d8_e777efe1",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-11T21:06:59Z",
+      "side": 1,
+      "message": "Slightly prefer:\nEXPECT_EQ(GURL(link_value), web_contents()-\u003eGetLastCommittedURL());",
+      "revId": "a412beb663bc5f05c4a5b75f9a1909a7e3200cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
