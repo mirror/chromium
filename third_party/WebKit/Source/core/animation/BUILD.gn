@@ -99,8 +99,6 @@ blink_core_sources("animation") {
     "CompositorAnimations.cpp",
     "CompositorAnimations.h",
     "CompositorAnimator.h",
-    "CompositorMutatorImpl.cpp",
-    "CompositorMutatorImpl.h",
     "DocumentAnimation.h",
     "DocumentAnimations.cpp",
     "DocumentAnimations.h",
