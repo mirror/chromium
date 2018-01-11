@@ -164,6 +164,8 @@
 #import "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.h"
 #import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_presenter.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_tab_helper.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_coordinator.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/page_info/page_info_legacy_coordinator.h"
@@ -417,6 +419,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     MFMailComposeViewControllerDelegate,
                                     NetExportTabHelperDelegate,
                                     NewTabPageControllerObserver,
+                                    NewTabPagePresenter,
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
@@ -2884,6 +2887,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   NetExportTabHelper::CreateForWebState(tab.webState, self);
   CaptivePortalDetectorTabHelper::CreateForWebState(tab.webState, self);
   PassKitTabHelper::CreateForWebState(tab.webState, _passKitCoordinator);
+  NewTabPageTabHelper::CreateForWebState(tab.webState, self);
 
   // The language detection helper accepts a callback from the translate
   // client, so must be created after it.
@@ -5504,6 +5508,20 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)printWebState:(web::WebState*)webState {
   if (webState == [_model currentTab].webState)
     [self.dispatcher printTab];
+}
+
+#pragma mark - NewTabPagePresenter
+
+- (void)showNTP:(web::WebState*)webState {
+//  [self.contentSuggestionsViewController willMoveToParentViewController:self];
+//  [self addChildViewController:self.contentSuggestionsViewController];
+//  [self.contentSuggestionsViewController didMoveToParentViewController:self];
+}
+
+- (void)hideNTP:(web::WebState*)webState {
+//  [self.contentSuggestionsViewController willMoveToParentViewController:nil];
+//  [self.contentSuggestionsViewController.view removeFromSuperview];
+//  [self.contentSuggestionsViewController removeFromParentViewController];
 }
 
 #pragma mark - RepostFormTabHelperDelegate
