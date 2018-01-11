@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ee99c5d_4f8bf127",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T19:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b246061_11b99cbc",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6813a9_6d7010f9",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6f192001_0b8d4214",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T19:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6813a9_6d7010f9",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b667fb_a4c86659",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bc8b54_c720d176",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/util/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-11T19:45:39Z",
+      "side": 1,
+      "message": "Done. With \"isMatch\" I\u0027ve been trying to express that the string matches the pattern, not the other way around. I\u0027m not sure about the proper usage here, though.",
+      "parentUuid": "79b667fb_a4c86659",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "4cd075eda38cd41ee196f5908747ef9126913157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
