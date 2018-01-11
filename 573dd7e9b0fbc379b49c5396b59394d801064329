@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "34367002_0c5ac358",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Nit: it would be nice to mention the motivation for this work as well (I lack imagination)",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece15714_70c1b72c",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 13
@@ -30,6 +47,274 @@
       "writtenOn": "2018-01-10T23:57:51Z",
       "side": 1,
       "message": "Blank line above here please.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708be547_21c1f6f1",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "These aren\u0027t really const. static const char* const kFoo, or better, static const char kFoo[].\n\nAlso, static isn\u0027t needed here.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd30a98_b0813531",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Nit: can this (and below) be const?",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddb2919_c632d9fe",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "These should be LazyInstances.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63c0525_68b1cb03",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Nit: static",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e41cb4d_59442a88",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Nit: this is redundant (and won\u0027t be allowed once it\u0027s const)",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b999685b_c1707ead",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "This makes me nervous. Would it be terrible to pass in the buffer size as well and do a basic sanity check?",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 43
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab5336f_8761389f",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "It\u0027d probably be useful to document why we have a custom stream format rather than something more standard.",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f616c2_7b28fd5b",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Is there some scheme to these magic numbers?",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564a421b_efeff0dd",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Nit: const for consistency.\n\nThough note that this is still trivially overridable with something like:\n\nStringMappingPacket s \u003d {1, 2, 3};",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825c2cfc_2902f7f5",
+        "filename": "chrome/profiling/allocation_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "I don\u0027t see much advantage to pass by move here. It doesn\u0027t appear that we actually need to take ownership here (test code does, but who cares about test code), and passing by value has a small but measurable binary size cost due to having to emit an extra ctor / dtor.\n\n(sorry albert \u003dP)",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11042cfa_0b0f70de",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "This move no longer moves, so remove it (or restore pass by value if it\u0027s useful to move here)",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 52
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7fbcbc_7d6e07bb",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "This seems a bit sketchy. C++11 changed it so data() always returns a null terminated string.\n\nThis means, like it or not, resize() must allocate room for the terminating null anyway--it just doesn\u0027t let you touch (legally) it. For example, I believe the relevant line in libc++ is here: https://github.com/llvm-mirror/libcxx/blob/master/include/string#L1989\n\nI guess we do save a wire byte though. I think it\u0027s probably better to just not mention this at all and treat the wire bytes as some opaque blob with a size. Though explicitly throwing away something with embedded nulls might not be a bad idea...",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac0306a_9077f2d2",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "This is not really const \u003d)",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1aeda69_9d06eef0",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:49:16Z",
+      "side": 1,
+      "message": "Or just strlen? The origin of 255 (as the protocol limit) is not obvious here, and it\u0027s clearly under the limit anyway.\n\nOr even:\n\nconst char kDummyText[] \u003d \"kDummyText\";\n\n// ...\np.string_len \u003d sizeof(kDummyText);\n\nOr given that we compare this below, even:\n\nconst std::string kDummyText \u003d \"kDummyText\";\n\n// ...\n\nEXPECT_EQ(kDummyText, receiver.last_raw_string());",
+      "range": {
+        "startLine": 259,
+        "startChar": 18,
+        "endLine": 259,
+        "endChar": 25
+      },
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
