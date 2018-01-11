@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c25de7_bb1741c5",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/offscreencanvas-text/text/2d.text.align.default.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-11T21:28:21Z",
+      "side": 1,
+      "message": "I think this is a lie, no?",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "234159c61492c73c6de9a54f1cc1eda0dd40ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
