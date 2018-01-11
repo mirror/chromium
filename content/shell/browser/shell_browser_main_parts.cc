@@ -127,7 +127,7 @@ void ShellBrowserMainParts::PostMainMessageLoopStart() {
 #endif
 }
 
-void ShellBrowserMainParts::PreEarlyInitialization() {
+int ShellBrowserMainParts::PreEarlyInitialization() {
 #if defined(USE_X11)
   ui::SetDefaultX11ErrorHandlers();
 #endif
@@ -138,6 +138,7 @@ void ShellBrowserMainParts::PreEarlyInitialization() {
   net::NetworkChangeNotifier::SetFactory(
       new net::NetworkChangeNotifierFactoryAndroid());
 #endif
+  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void ShellBrowserMainParts::InitializeBrowserContexts() {

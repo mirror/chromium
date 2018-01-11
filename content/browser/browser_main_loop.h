@@ -132,7 +132,9 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   void Init();
 
-  void EarlyInitialization();
+  // A return value other than RESULT_CODE_NORMAL_EXIT indicates error and is
+  // used as the exist status.
+  int EarlyInitialization();
 
   // Initializes the toolkit. Returns whether the toolkit initialization was
   // successful or not.

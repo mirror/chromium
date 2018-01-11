@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <chrome/browser/prefs/chrome_command_line_pref_store.h>
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 
 #include <stddef.h>
@@ -23,6 +22,8 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
+#include "chrome/browser/prefs/chrome_command_line_pref_store.h"
 #include "chrome/browser/prefs/chrome_pref_model_associator_client.h"
 #include "chrome/browser/prefs/profile_pref_store_manager.h"
 #include "chrome/browser/profiles/profile.h"
@@ -35,7 +36,6 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/component_updater/pref_names.h"
-#include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/default_pref_store.h"
@@ -371,9 +371,8 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
                     SupervisedUserSettingsService* supervised_user_settings,
                     scoped_refptr<PersistentPrefStore> user_pref_store,
                     const scoped_refptr<PrefStore>& extension_prefs,
-                    bool async) {
-  policy::BrowserPolicyConnector* policy_connector =
-      g_browser_process->browser_policy_connector();
+                    bool async,
+                    policy::BrowserPolicyConnector* policy_connector) {
   factory->SetManagedPolicies(policy_service, policy_connector);
   factory->SetRecommendedPolicies(policy_service, policy_connector);
 
@@ -443,6 +442,7 @@ std::unique_ptr<PrefService> CreateLocalState(
     policy::PolicyService* policy_service,
     const scoped_refptr<PrefRegistry>& pref_registry,
     bool async,
+    policy::BrowserPolicyConnector* browser_policy_connector,
     std::unique_ptr<PrefValueStore::Delegate> delegate) {
   sync_preferences::PrefServiceSyncableFactory factory;
   PrepareFactory(&factory, pref_filename, policy_service,
@@ -450,7 +450,7 @@ std::unique_ptr<PrefService> CreateLocalState(
                  new JsonPrefStore(pref_filename, pref_io_task_runner,
                                    std::unique_ptr<PrefFilter>()),
                  NULL,  // extension_prefs
-                 async);
+                 async, browser_policy_connector);
   return factory.Create(pref_registry.get(), std::move(delegate));
 }
 
@@ -480,7 +480,7 @@ std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
               std::move(validation_delegate)));
   PrepareFactory(&factory, profile_path, policy_service,
                  supervised_user_settings, user_pref_store, extension_prefs,
-                 async);
+                 async, g_browser_process->browser_policy_connector());
   std::unique_ptr<sync_preferences::PrefServiceSyncable> pref_service =
       factory.CreateSyncable(pref_registry.get(), std::move(delegate));
 

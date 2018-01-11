@@ -92,14 +92,16 @@ bool IsClientEligibleForSampling() {
 }
 
 #if defined(OS_CHROMEOS)
+/*
 // Callback to update the metrics reporting state when the Chrome OS metrics
 // reporting setting changes.
-void OnCrosMetricsReportingSettingChange() {
+void OnCrosMetricsReportingSettingChange(PrefService* local_state) {
   bool enable_metrics = false;
   chromeos::CrosSettings::Get()->GetBoolean(chromeos::kStatsReportingPref,
                                             &enable_metrics);
-  ChangeMetricsReportingState(enable_metrics);
+  ChangeMetricsReportingState(local_state, enable_metrics);
 }
+*/
 #endif
 
 // Returns the name of a key under HKEY_CURRENT_USER that can be used to store
@@ -118,11 +120,13 @@ base::string16 GetRegistryBackupKey() {
 class ChromeMetricsServicesManagerClient::ChromeEnabledStateProvider
     : public metrics::EnabledStateProvider {
  public:
-  ChromeEnabledStateProvider() {}
+  explicit ChromeEnabledStateProvider(PrefService* local_state)
+      : local_state_(local_state) {}
   ~ChromeEnabledStateProvider() override {}
 
   bool IsConsentGiven() const override {
-    return ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
+    return ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+        local_state_);
   }
 
   bool IsReportingEnabled() const override {
@@ -130,22 +134,28 @@ class ChromeMetricsServicesManagerClient::ChromeEnabledStateProvider
            ChromeMetricsServicesManagerClient::IsClientInSample();
   }
 
+  PrefService* local_state_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeEnabledStateProvider);
 };
 
 ChromeMetricsServicesManagerClient::ChromeMetricsServicesManagerClient(
     PrefService* local_state)
-    : enabled_state_provider_(new ChromeEnabledStateProvider()),
+    : enabled_state_provider_(new ChromeEnabledStateProvider(local_state)),
       local_state_(local_state) {
   DCHECK(local_state);
 
+  // XXX add a call from ChromeBrowserMainParts::PreCreateThreads (or
+  // maybe ChromeBrowserMainPartsChromeos) to here to signal this add.
+  /*
 #if defined(OS_CHROMEOS)
   cros_settings_observer_ = chromeos::CrosSettings::Get()->AddSettingsObserver(
       chromeos::kStatsReportingPref,
-      base::Bind(&OnCrosMetricsReportingSettingChange));
+      base::Bind(&OnCrosMetricsReportingSettingChange, local_state));
   // Invoke the callback once initially to set the metrics reporting state.
-  OnCrosMetricsReportingSettingChange();
+  OnCrosMetricsReportingSettingChange(local_state);
 #endif
+  */
 }
 
 ChromeMetricsServicesManagerClient::~ChromeMetricsServicesManagerClient() {}
