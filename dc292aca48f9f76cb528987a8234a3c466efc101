@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0429e763_a9b2c05b",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:04:21Z",
+      "side": 1,
+      "message": "Can you also add a test for \u003cwbr\u003e, so that we don\u0027t blindly remove all ZWS?",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a155942c_43c64b3a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
         "patchSetId": 3
