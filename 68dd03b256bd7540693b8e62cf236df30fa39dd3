@@ -34,6 +34,24 @@
       "revId": "68dd03b256bd7540693b8e62cf236df30fa39dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b32ee55_864fa0d7",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6690,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-11T16:46:23Z",
+      "side": 1,
+      "message": "As discussed offline, since wheel scroll latching is enabled by default, we always do\nsync targeting so InputEventAckWaiter is not needed here; added TestInputEventObserver to verify that the second event is indeed received.",
+      "parentUuid": "485a06e9_26bef455",
+      "revId": "68dd03b256bd7540693b8e62cf236df30fa39dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
