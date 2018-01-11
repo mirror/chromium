@@ -16,6 +16,24 @@
       "revId": "1b05bd073e87f8b8b0f5be131c29da116636622f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8725c162_700f207e",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 0,
+      "message": "I agree that I missed this detail, but do you have an idea why this const_cast was needed here, but not everywhere else? For example, L189 in the base code is \n\"OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial(client()-\u003eGetPrefs());\" and there was no issue with that.",
+      "parentUuid": "57ce7a63_e07c8095",
+      "revId": "1b05bd073e87f8b8b0f5be131c29da116636622f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

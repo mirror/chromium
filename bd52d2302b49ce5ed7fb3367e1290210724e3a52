@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "319148f5_8ef3cda5",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "572691b3_1c1b3681",
+      "range": {
+        "startLine": 90,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f3b899_40973c1c",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-05T20:42:55Z",
       "side": 1,
       "message": "I know the original code was like this.  Nonetheless, I\u0027d like to know: should this be true?  (Better to have some suggestions than none at all.)  Or is there worries about disrupting the user experience by being inconsistent (no suggestions -\u003e personalized is better than most visited -\u003e personalized)?\n\nPlease revise and/or comment.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b43ac6_cd085edf",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "I am not very familiar cases where template_url_service \u003d\u003d nullptr, that\u0027s why in the original code I was conservative and wanted to make sure that there is clear evidence that Google is not the default engine before we apply the fallback. The check for nullptr was really there to avoid segfaults in case template_url_service is nullptr.\n\nIf you have a more clear idea of when template_url_service can be nullptr and think it would be good to apply the fallback, I can change the code/comment accordingly.",
+      "parentUuid": "f8f3b899_40973c1c",
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "50087f37_e72c46c2",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "52917056_d8bb3524",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0189c36_add3f46b",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7a9b56d2_6439ad9b",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "You are right.waiting_for_most_visited_urls_ \u003d\u003d true is equivalent to \n\nservice_running_ \u003d\u003d ZeroSuggestProvider::MOST_VISITED, and in the function Stop() we set service_running_ \u003d\u003d ZeroSuggestProvider::NONE.",
+      "parentUuid": "f0189c36_add3f46b",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c38830_7260d433",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bbf8c0_83e5e5f6",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Note that results_updated \u003d\u003d false only if \n\n1. the json_data was invalid, or\n2. the service was using non-empty cached and json_data contained a non-empty set of results.\n\nIn either of these cases, results_ either stays empty (so  is unnecessary) or results_ was already converted, so calling ConvertResultsToAutocompleteMatches a second time is not necessary.\n\n\nSince you brought this up, I think ConvertResultsToAutocompleteMatches should only be called once results_ are updated, so I moved it closer to the call. In a subsequent CL, I might remove |results_| altogether, as I am convinced that there is no reason to have them as global variables. |matches_| is enough.",
+      "parentUuid": "01c38830_7260d433",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "d1d3bc35_260f1faa",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9655c21_559e6cd1",
+      "range": {
+        "startLine": 341,
+        "startChar": 5,
+        "endLine": 341,
+        "endChar": 13
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf06dcec_c0d0e6d1",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -130,6 +250,24 @@
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724e04c4_63e3d9a3",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Thanks for the catch. Added the condition.",
+      "parentUuid": "cf06dcec_c0d0e6d1",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "c14f1a9c_deaab885",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Note that the current URL is only added once ConvertResultsToAutocompleteMatches is called. \n\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/zero_suggest_provider.cc?q\u003dzero_suggest\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d480\n\nSee the change made below: ConvertResultsToAutocompleteMatches is added closer to the call to ParseSuggestResult.",
+      "parentUuid": "02f3a7d3_07cfaaa5",
+      "range": {
+        "startLine": 353,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4787d6a9_0b2c4e9f",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "c5191ca4_a3afa0cf",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "The function is using CanSendURL() and AllowZeroSuggestSuggestions() so I would have to either call the functions before and pass these as bools as a param, or pass this as a param. I don\u0027t think it would help much with readability.",
+      "parentUuid": "4787d6a9_0b2c4e9f",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3203522e_40ec2ccf",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 3
@@ -184,6 +364,30 @@
       "writtenOn": "2018-01-05T20:42:55Z",
       "side": 1,
       "message": "Please comment.  Even I offhand don\u0027t recall what this is and how it\u0027s different than the DEFAULT_SRP ones.\n\n(At first glance, I think it should be the same as DEFAULT_SERP_WITHOUT_URL...)\n\nUpon later reading of the code, is the difference from DEFAULT_SERP_WITHOUT_URL simply the caching of suggestions?\n\nMaybe we should consider combining them?  I\u0027m not sure.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed92e21c_b1f55784",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Now that you pointed this out, I agree that the naming for this enum should be fixed. PTAL at the new elements in the enum.\n\nWRT to combining them, I agree that they are all using the same \"service\". Based on your comments a bit lower, a \"result type being processed\" would be more appropriate for this enum.",
+      "parentUuid": "3203522e_40ec2ccf",
       "range": {
         "startLine": 85,
         "startChar": 4,
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "ebb47ed4_6b37bedb",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Rephrased the comment.",
+      "parentUuid": "50b98b89_f1d92415",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2db6722_8ccbd314",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 3
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "c330dc5e_6680e669",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2db6722_8ccbd314",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b0dc58_a2049ba0",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 3
@@ -250,6 +496,24 @@
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd56e8c1_cc764419",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-11T17:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97b0dc58_a2049ba0",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
