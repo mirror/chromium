@@ -35,7 +35,7 @@ scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
 scoped_refptr<LocalStorageCachedArea>
 LocalStorageCachedAreas::GetSessionStorageArea(int64_t namespace_id,
                                                const url::Origin& origin) {
-  DCHECK_NE(kLocalStorageNamespaceId, kInvalidSessionStorageNamespaceId);
+  DCHECK_NE(kLocalStorageNamespaceId, namespace_id);
   return GetCachedArea(namespace_id, origin, renderer_scheduler_);
 }
 

@@ -61,6 +61,11 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
     // stored in the database.
     virtual std::vector<Change> FixUpData(const ValueMap& data);
     virtual void OnMapLoaded(leveldb::mojom::DatabaseError error);
+
+    // Returns changes to be applied post-fork (and included in write batch of
+    // the fork operation).
+    virtual std::vector<leveldb::mojom::BatchedOperationPtr> OnFork(
+        const std::vector<uint8_t>& new_prefix);
   };
 
   enum class CacheMode {
@@ -75,6 +80,9 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
 
   // Options provided to constructor.
   struct Options {
+    Options();
+    ~Options();
+
     CacheMode cache_mode = CacheMode::KEYS_AND_VALUES;
 
     // Max bytes of storage that can be used by key value pairs.
@@ -93,6 +101,12 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
                      const std::string& prefix,
                      Delegate* delegate,
                      const Options& options);
+  // Saves a copy of |prefix|.
+  LevelDBWrapperImpl(leveldb::mojom::LevelDBDatabase* database,
+                     std::vector<uint8_t> prefix,
+                     Delegate* delegate,
+                     const Options& options);
+
   ~LevelDBWrapperImpl() override;
 
   void Bind(mojom::LevelDBWrapperRequest request);
@@ -104,6 +118,12 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
       const std::string& new_prefix,
       Delegate* delegate,
       const Options& options);
+  // Saves a copy of |prefix|.
+  std::unique_ptr<LevelDBWrapperImpl> ForkToNewPrefix(
+      std::vector<uint8_t> new_prefix,
+      Delegate* delegate,
+      const Options& options);
+
 
   // Cancels all pending load tasks. Useful for emergency destructions. If the
   // wrapper is unloaded (initialized() returns false), this will DROP all
@@ -155,6 +175,10 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   // Sets cache mode to either store only keys or keys and values. See
   // SetCacheMode().
   void SetCacheModeForTesting(CacheMode cache_mode);
+
+  mojo::PtrId AddObserver(mojom::LevelDBObserverAssociatedPtr observer);
+  bool HasObserver(mojo::PtrId id);
+  mojom::LevelDBObserverAssociatedPtr RemoveObserver(mojo::PtrId id);
 
   // LevelDBWrapper:
   void AddObserver(mojom::LevelDBObserverAssociatedPtrInfo observer) override;

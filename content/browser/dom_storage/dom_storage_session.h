@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -14,28 +15,40 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 
+namespace base {
+class SequencedTaskRunner;
+}
+
 namespace content {
 
 class DOMStorageContextImpl;
-class SessionStorageContextMojo;
+class DOMStorageContextWrapper;
 
 // This refcounted class determines the lifetime of a session
 // storage namespace and provides an interface to Clone() an
 // existing session storage namespace. It may be used on any thread.
 // See class comments for DOMStorageContextImpl for a larger overview.
-class CONTENT_EXPORT DOMStorageSession
-    : public base::RefCountedThreadSafe<DOMStorageSession> {
+class CONTENT_EXPORT DOMStorageSession {
  public:
   // Constructs a |DOMStorageSession| and allocates new IDs for it.
-  explicit DOMStorageSession(
-      DOMStorageContextImpl* context,
-      base::WeakPtr<SessionStorageContextMojo> mojo_context);
+  explicit DOMStorageSession(scoped_refptr<DOMStorageContextImpl> context);
+
+  // Constructs a |DOMStorageSession| for the mojo version of session storage
+  // and allocates new IDs for it.
+  explicit DOMStorageSession(scoped_refptr<DOMStorageContextWrapper> context);
 
   // Constructs a |DOMStorageSession| and assigns |persistent_namespace_id|
   // to it. Allocates a new non-persistent ID.
-  DOMStorageSession(DOMStorageContextImpl* context,
-                    base::WeakPtr<SessionStorageContextMojo> mojo_context,
+  DOMStorageSession(scoped_refptr<DOMStorageContextImpl> context,
                     const std::string& persistent_namespace_id);
+
+  // Constructs a |DOMStorageSession| for the mojo version of session storage
+  // and assigns |persistent_namespace_id| to it. Allocates a new
+  // non-persistent ID.
+  DOMStorageSession(scoped_refptr<DOMStorageContextWrapper> context,
+                    const std::string& persistent_namespace_id);
+
+  ~DOMStorageSession();
 
   int64_t namespace_id() const { return namespace_id_; }
   const std::string& persistent_namespace_id() const {
@@ -44,29 +57,41 @@ class CONTENT_EXPORT DOMStorageSession
   void SetShouldPersist(bool should_persist);
   bool should_persist() const;
   bool IsFromContext(DOMStorageContextImpl* context);
-  DOMStorageSession* Clone();
+
+  std::unique_ptr<DOMStorageSession> Clone();
 
   // Constructs a |DOMStorageSession| by cloning
   // |namespace_id_to_clone|. Allocates new IDs for it.
-  static DOMStorageSession* CloneFrom(
-      DOMStorageContextImpl* context,
-      base::WeakPtr<SessionStorageContextMojo> mojo_context,
+  static std::unique_ptr<DOMStorageSession> CloneFrom(
+      scoped_refptr<DOMStorageContextImpl>,
+      int64_t namepace_id_to_clone);
+
+  // Constructs a |DOMStorageSession| backed by mojo by cloning
+  // |namespace_id_to_clone|. Allocates new IDs for it.
+  static std::unique_ptr<DOMStorageSession> CloneFrom(
+      scoped_refptr<DOMStorageContextWrapper>,
       int64_t namepace_id_to_clone);
 
  private:
-  friend class base::RefCountedThreadSafe<DOMStorageSession>;
+  class SequenceHelper;
 
-  DOMStorageSession(DOMStorageContextImpl* context,
-                    base::WeakPtr<SessionStorageContextMojo> mojo_context,
+  DOMStorageSession(scoped_refptr<DOMStorageContextImpl> context,
                     int64_t namespace_id,
                     const std::string& persistent_namespace_id);
-  ~DOMStorageSession();
+  DOMStorageSession(scoped_refptr<DOMStorageContextWrapper> context,
+                    int64_t namespace_id,
+                    const std::string& persistent_namespace_id);
 
   scoped_refptr<DOMStorageContextImpl> context_;
-  base::WeakPtr<SessionStorageContextMojo> mojo_context_;
+  scoped_refptr<DOMStorageContextWrapper> mojo_context_;
+  scoped_refptr<base::SequencedTaskRunner> mojo_task_runner_;
   int64_t namespace_id_;
   std::string persistent_namespace_id_;
   bool should_persist_;
+
+  // Contructed on constructing thread of DOMStorageSession, used and destroyed
+  // on |mojo_task_runner_|.
+  std::unique_ptr<SequenceHelper> sequence_helper_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(DOMStorageSession);
 };

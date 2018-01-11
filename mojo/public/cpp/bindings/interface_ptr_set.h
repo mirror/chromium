@@ -5,8 +5,8 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_INTERFACE_PTR_SET_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_INTERFACE_PTR_SET_H_
 
+#include <map>
 #include <utility>
-#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -14,6 +14,9 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 
 namespace mojo {
+
+using PtrId = size_t;
+
 namespace internal {
 
 // TODO(blundell): This class should be rewritten to be structured
@@ -26,30 +29,45 @@ class PtrSet {
   PtrSet() {}
   ~PtrSet() { CloseAll(); }
 
-  void AddPtr(Ptr<Interface> ptr) {
+  PtrId AddPtr(Ptr<Interface> ptr) {
+    PtrId id = next_ptr_id_++;
     auto weak_interface_ptr = new Element(std::move(ptr));
-    ptrs_.push_back(weak_interface_ptr->GetWeakPtr());
+    ptrs_.insert(std::make_pair(id, weak_interface_ptr->GetWeakPtr()));
     ClearNullPtrs();
+    return id;
   }
 
   template <typename FunctionType>
   void ForAllPtrs(FunctionType function) {
     for (const auto& it : ptrs_) {
-      if (it)
-        function(it->get());
+      if (it.second)
+        function(it.second->get());
     }
     ClearNullPtrs();
   }
 
   void CloseAll() {
     for (const auto& it : ptrs_) {
-      if (it)
-        it->Close();
+      if (it.second)
+        it.second->Close();
     }
     ptrs_.clear();
   }
 
   bool empty() const { return ptrs_.empty(); }
+
+  bool HasPtr(PtrId id) { return ptrs_.find(id) != ptrs_.end(); }
+
+  Ptr<Interface> RemovePtr(PtrId id) {
+    auto it = ptrs_.find(id);
+    if (it == ptrs_.end())
+      return Ptr<Interface>();
+    Ptr<Interface> ptr;
+    if (it->second)
+      ptr = std::move(it->second->Take());
+    ptrs_.erase(it);
+    return ptr;
+  }
 
  private:
   class Element {
@@ -71,6 +89,8 @@ class PtrSet {
 
     Interface* get() { return ptr_.get(); }
 
+    Ptr<Interface> Take() { return std::move(ptr_); }
+
     base::WeakPtr<Element> GetWeakPtr() {
       return weak_ptr_factory_.GetWeakPtr();
     }
@@ -85,14 +105,16 @@ class PtrSet {
   };
 
   void ClearNullPtrs() {
-    ptrs_.erase(std::remove_if(ptrs_.begin(), ptrs_.end(),
-                               [](const base::WeakPtr<Element>& p) {
-                                 return p.get() == nullptr;
-                               }),
-                ptrs_.end());
+    for (auto it = ptrs_.begin(); it != ptrs_.end();) {
+      if (!it->second)
+        it = ptrs_.erase(it);
+      else
+        ++it;
+    }
   }
 
-  std::vector<base::WeakPtr<Element>> ptrs_;
+  PtrId next_ptr_id_ = 0;
+  std::map<PtrId, base::WeakPtr<Element>> ptrs_;
 };
 
 }  // namespace internal

@@ -4,6 +4,8 @@
 
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 
+#include <utility>
+
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/dom_storage_session.h"
 #include "content/browser/dom_storage/session_storage_context_mojo.h"
@@ -11,24 +13,28 @@
 namespace content {
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
-    DOMStorageContextWrapper* context)
-    : session_(new DOMStorageSession(context->context(),
-                                     context->GetMojoSessionStateWeakPtr())) {}
+    scoped_refptr<DOMStorageContextWrapper> context)
+    : session_(!!context->mojo_session_state()
+                   ? std::make_unique<DOMStorageSession>(std::move(context))
+                   : std::make_unique<DOMStorageSession>(context->context())) {}
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
-    DOMStorageContextWrapper* context,
+    scoped_refptr<DOMStorageContextWrapper> context,
     int64_t namepace_id_to_clone)
-    : session_(
-          DOMStorageSession::CloneFrom(context->context(),
-                                       context->GetMojoSessionStateWeakPtr(),
-                                       namepace_id_to_clone)) {}
+    : session_(!!context->mojo_session_state()
+                   ? DOMStorageSession::CloneFrom(std::move(context),
+                                                  namepace_id_to_clone)
+                   : DOMStorageSession::CloneFrom(context->context(),
+                                                  namepace_id_to_clone)) {}
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
-    DOMStorageContextWrapper* context,
+    scoped_refptr<DOMStorageContextWrapper> context,
     const std::string& persistent_id)
-    : session_(new DOMStorageSession(context->context(),
-                                     context->GetMojoSessionStateWeakPtr(),
-                                     persistent_id)) {}
+    : session_(!!context->mojo_session_state()
+                   ? std::make_unique<DOMStorageSession>(std::move(context),
+                                                         persistent_id)
+                   : std::make_unique<DOMStorageSession>(context->context(),
+                                                         persistent_id)) {}
 
 int64_t SessionStorageNamespaceImpl::id() const {
   return session_->namespace_id();
@@ -56,9 +62,8 @@ bool SessionStorageNamespaceImpl::IsFromContext(
 }
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
-    DOMStorageSession* clone)
-    : session_(clone) {
-}
+    std::unique_ptr<DOMStorageSession> clone)
+    : session_(std::move(clone)) {}
 
 SessionStorageNamespaceImpl::~SessionStorageNamespaceImpl() {
 }

@@ -4,6 +4,8 @@
 
 #include "content/browser/leveldb_wrapper_impl.h"
 
+#include <algorithm>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/memory/ptr_util.h"
@@ -35,6 +37,14 @@ std::vector<LevelDBWrapperImpl::Change> LevelDBWrapperImpl::Delegate::FixUpData(
 
 void LevelDBWrapperImpl::Delegate::OnMapLoaded(DatabaseError) {}
 
+std::vector<BatchedOperationPtr> LevelDBWrapperImpl::Delegate::OnFork(
+    const std::vector<uint8_t>& new_prefix) {
+  return std::vector<BatchedOperationPtr>();
+}
+
+LevelDBWrapperImpl::Options::Options() {}
+LevelDBWrapperImpl::Options::~Options() {}
+
 bool LevelDBWrapperImpl::s_aggressive_flushing_enabled_ = false;
 
 LevelDBWrapperImpl::RateLimiter::RateLimiter(size_t desired_rate,
@@ -63,7 +73,17 @@ LevelDBWrapperImpl::LevelDBWrapperImpl(
     const std::string& prefix,
     Delegate* delegate,
     const Options& options)
-    : prefix_(leveldb::StdStringToUint8Vector(prefix)),
+    : LevelDBWrapperImpl(database,
+                         leveldb::StdStringToUint8Vector(prefix),
+                         delegate,
+                         options) {}
+
+LevelDBWrapperImpl::LevelDBWrapperImpl(
+    leveldb::mojom::LevelDBDatabase* database,
+    std::vector<uint8_t> prefix,
+    Delegate* delegate,
+    const Options& options)
+    : prefix_(std::move(prefix)),
       delegate_(delegate),
       database_(database),
       cache_mode_(database ? options.cache_mode : CacheMode::KEYS_AND_VALUES),
@@ -105,8 +125,16 @@ std::unique_ptr<LevelDBWrapperImpl> LevelDBWrapperImpl::ForkToNewPrefix(
     const std::string& new_prefix,
     Delegate* delegate,
     const Options& options) {
+  return ForkToNewPrefix(leveldb::StdStringToUint8Vector(new_prefix), delegate,
+                         options);
+}
+
+std::unique_ptr<LevelDBWrapperImpl> LevelDBWrapperImpl::ForkToNewPrefix(
+    std::vector<uint8_t> new_prefix,
+    Delegate* delegate,
+    const Options& options) {
   auto forked_wrapper = std::make_unique<LevelDBWrapperImpl>(
-      database_, new_prefix, delegate, options);
+      database_, std::move(new_prefix), delegate, options);
 
   forked_wrapper->map_state_ = MapState::LOADING_FROM_FORK;
 
@@ -196,13 +224,27 @@ void LevelDBWrapperImpl::SetCacheModeForTesting(CacheMode cache_mode) {
   SetCacheMode(cache_mode);
 }
 
+mojo::PtrId LevelDBWrapperImpl::AddObserver(
+    mojom::LevelDBObserverAssociatedPtr observer) {
+  return observers_.AddPtr(std::move(observer));
+}
+
+bool LevelDBWrapperImpl::HasObserver(mojo::PtrId id) {
+  return observers_.HasPtr(id);
+}
+
+mojom::LevelDBObserverAssociatedPtr LevelDBWrapperImpl::RemoveObserver(
+    mojo::PtrId id) {
+  return observers_.RemovePtr(id);
+}
+
 void LevelDBWrapperImpl::AddObserver(
     mojom::LevelDBObserverAssociatedPtrInfo observer) {
   mojom::LevelDBObserverAssociatedPtr observer_ptr;
   observer_ptr.Bind(std::move(observer));
   if (cache_mode_ == CacheMode::KEYS_AND_VALUES)
     observer_ptr->ShouldSendOldValueOnMutations(false);
-  observers_.AddPtr(std::move(observer_ptr));
+  AddObserver(std::move(observer_ptr));
 }
 
 void LevelDBWrapperImpl::Put(
@@ -719,10 +761,6 @@ void LevelDBWrapperImpl::CommitChanges() {
 
   // Commit all our changes in a single batch.
   std::vector<BatchedOperationPtr> operations = delegate_->PrepareToCommit();
-  bool has_changes = !operations.empty() ||
-                     !commit_batch_->changed_values.empty() ||
-                     !commit_batch_->changed_keys.empty();
-
   if (commit_batch_->clear_all_first) {
     BatchedOperationPtr item = BatchedOperation::New();
     item->type = leveldb::mojom::BatchOperationType::DELETE_PREFIXED_KEY;
@@ -774,13 +812,19 @@ void LevelDBWrapperImpl::CommitChanges() {
   // Schedule the copy, and ignore if |clear_all_first| is specified and there
   // are no changing keys.
   if (commit_batch_->copy_to_prefix) {
-    DCHECK(!has_changes);
     DCHECK(!commit_batch_->clear_all_first);
+    std::vector<BatchedOperationPtr> post_fork_parent_changes =
+        delegate_->OnFork(commit_batch_->copy_to_prefix.value());
     BatchedOperationPtr item = BatchedOperation::New();
     item->type = leveldb::mojom::BatchOperationType::COPY_PREFIXED_KEY;
     item->key = prefix_;
     item->value = std::move(commit_batch_->copy_to_prefix.value());
     operations.push_back(std::move(item));
+    if (!post_fork_parent_changes.empty()) {
+      operations.reserve(operations.size() + post_fork_parent_changes.size());
+      std::move(post_fork_parent_changes.begin(),
+                post_fork_parent_changes.end(), std::back_inserter(operations));
+    }
   }
   commit_batch_.reset();
 
