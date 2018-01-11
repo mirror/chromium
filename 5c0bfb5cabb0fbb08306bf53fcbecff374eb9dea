@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c309f24_ade8c75b",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:41:31Z",
+      "side": 1,
+      "message": "parens not needed.",
+      "range": {
+        "startLine": 3970,
+        "startChar": 11,
+        "endLine": 3970,
+        "endChar": 12
+      },
+      "revId": "5c0bfb5cabb0fbb08306bf53fcbecff374eb9dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
