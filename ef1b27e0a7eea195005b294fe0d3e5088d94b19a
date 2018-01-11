@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "592e959a_87c2f3fe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:42:06Z",
+      "side": 1,
+      "message": "For my own education, why is this a RepeatingCallback?",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b2aa7a_da5390ee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:42:06Z",
+      "side": 1,
+      "message": "My guess is that this is a much fancier (more expensive) random number than we need. Looks like it reads from /dev/urandom on posix at least.\n\nCan we do something cheaper? Even just recording 1 in every n tasks is probably fine.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94468e73_85f4ec68",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:42:06Z",
+      "side": 1,
+      "message": "In some places this is added after task start and end times, and in other places it\u0027s added before.\n\nI think I\u0027d prefer being consistent about adding it after.",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 78
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02913121_30d21b56",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:42:06Z",
+      "side": 1,
+      "message": "My intuition is that cpu_time would actually be fine in the crazy-long-task case.\nMight be worth verifying?",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
