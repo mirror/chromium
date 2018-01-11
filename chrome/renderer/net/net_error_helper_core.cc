@@ -622,12 +622,10 @@ void NetErrorHelperCore::OnCommitLoad(FrameType frame_type, const GURL& url) {
 void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
   if (frame_type != MAIN_FRAME)
     return;
-
   if (!committed_error_page_info_) {
     auto_reload_count_ = 0;
     return;
   }
-
   committed_error_page_info_->is_finished_loading = true;
 
   RecordEvent(error_page::NETWORK_ERROR_PAGE_SHOWN);
@@ -651,7 +649,8 @@ void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
   delegate_->SetIsShowingDownloadButton(
       committed_error_page_info_->download_button_in_page);
 
-  delegate_->EnablePageHelperFunctions();
+  delegate_->EnablePageHelperFunctions(
+      (net::Error)committed_error_page_info_->error.reason());
 
   if (committed_error_page_info_->needs_load_navigation_corrections) {
     // If there is another pending error page load, |fix_url| should have been
