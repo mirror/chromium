@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0e5ec7_6537a658",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T14:02:29Z",
+      "side": 1,
+      "message": "this doesn\u0027t really explain why this code is needed here. this should explain why the check is here even though it\u0027s not needed for any upstream code",
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fe2f63_86be9934",
+        "filename": "android_webview/browser/test/aw_content_browser_client_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T14:02:29Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
