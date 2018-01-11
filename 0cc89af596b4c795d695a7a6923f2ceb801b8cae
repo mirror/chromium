@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c6148a_461102bf",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T19:22:53Z",
+      "side": 1,
+      "message": "This is just my opinion, but I think \u0027const history::URLRow\u0026\u0027 helps readability here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "0cc89af596b4c795d695a7a6923f2ceb801b8cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937062d6_feae9bb4",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T19:22:53Z",
+      "side": 1,
+      "message": "Just a heads up: This doesn\u0027t test the new code in chrome_omnibox_client.cc",
+      "range": {
+        "startLine": 181,
+        "startChar": 9,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "0cc89af596b4c795d695a7a6923f2ceb801b8cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
