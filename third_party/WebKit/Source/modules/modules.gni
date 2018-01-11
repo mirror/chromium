@@ -64,8 +64,6 @@ set_defaults("blink_modules_sources") {
   # is the list normally applied to static libraries and source sets.
   configs = default_compiler_configs
   configs += [
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
     "//third_party/WebKit/Source:config",
     "//third_party/WebKit/Source/modules:modules_implementation",
     "//third_party/WebKit/Source:non_test_config",

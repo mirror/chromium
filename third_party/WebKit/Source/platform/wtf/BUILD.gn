@@ -259,9 +259,6 @@ jumbo_component("wtf") {
 
   public_configs = [
     ":wtf_config",
-
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
     "//third_party/WebKit/Source:features",
   ]
 
@@ -367,9 +364,6 @@ jumbo_source_set("wtf_unittests_sources") {
     "text/WTFStringTest.cpp",
     "typed_arrays/ArrayBufferBuilderTest.cpp",
   ]
-
-  # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-  configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   if (is_win) {
     cflags = [ "/wd4068" ]  # Unknown pragma.
