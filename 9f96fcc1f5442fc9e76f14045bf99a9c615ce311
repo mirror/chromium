@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7047c0ea_2d7a47c1",
+        "filename": "device/u2f/public_key.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:54:25Z",
+      "side": 1,
+      "message": "Are you sure? ;)",
+      "parentUuid": "55aff206_a37e33f6",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "9f96fcc1f5442fc9e76f14045bf99a9c615ce311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6103dc37_44135c9a",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 2
