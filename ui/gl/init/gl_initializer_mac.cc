@@ -23,6 +23,15 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gpu_switching_manager.h"
 
+extern "C" {
+void CGSSetDenyWindowServerConnections(bool);
+void CGSShutdownServerConnections();
+OSStatus SetApplicationIsDaemon(Boolean isDaemon);
+void _LSSetApplicationLaunchServicesServerConnectionStatus(
+    uint64_t flags,
+    bool (^connection_allowed)(CFDictionaryRef));
+};
+
 namespace gl {
 namespace init {
 
@@ -31,10 +40,30 @@ namespace {
 const char kOpenGLFrameworkPath[] =
     "/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL";
 
+// This disconnects from the window server, and then indicates that Chrome
+// should continue execution without access to launchservicesd.
+void DisconnectWindowServer() {
+  // Now disconnect from WindowServer, after all objects have been warmed up.
+  // Shutting down the connection requires connecting to WindowServer,
+  // so do this before actually engaging the sandbox. This may cause two log
+  // messages to be printed to the system logger on certain OS versions.
+  CGSSetDenyWindowServerConnections(true);
+  CGSShutdownServerConnections();
+  // Allow the process to continue without a LaunchServices ASN. The
+  // INIT_Process function in HIServices will abort if it cannot connect to
+  // launchservicesd to get an ASN. By setting this flag, HIServices skips
+  // that.
+  SetApplicationIsDaemon(true);
+  // Tell LaunchServices to continue without a connection to the daemon.
+  _LSSetApplicationLaunchServicesServerConnectionStatus(0, nullptr);
+}
+
 bool InitializeOneOffForSandbox() {
   static bool initialized = false;
   if (initialized)
     return true;
+
+  DisconnectWindowServer();
 
   // This is called from the sandbox warmup code on Mac OS X.
   // GPU-related stuff is very slow without this, probably because
