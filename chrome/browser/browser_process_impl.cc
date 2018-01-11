@@ -55,7 +55,6 @@
 #include "chrome/browser/lifetime/switch_utils.h"
 #include "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
-#include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
 #include "chrome/browser/metrics/thread_watcher.h"
 #include "chrome/browser/net/chrome_net_log_helper.h"
 #include "chrome/browser/net/system_network_context_manager.h"
@@ -63,8 +62,7 @@
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_finder.h"
-#include "chrome/browser/prefs/browser_prefs.h"
-#include "chrome/browser/prefs/chrome_pref_service_factory.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/printing/background_printing_manager.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/printing/print_preview_dialog_controller.h"
@@ -95,7 +93,6 @@
 #include "components/network_time/network_time_tracker.h"
 #include "components/optimization_guide/optimization_guide_service.h"
 #include "components/physical_web/data_source/physical_web_data_source.h"
-#include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -211,23 +208,19 @@ rappor::RapporService* GetBrowserRapporService() {
 }
 
 BrowserProcessImpl::BrowserProcessImpl(
-    base::SequencedTaskRunner* local_state_task_runner)
-    : created_watchdog_thread_(false),
-      created_browser_policy_connector_(false),
-      created_profile_manager_(false),
-      created_icon_manager_(false),
-      created_notification_ui_manager_(false),
-      created_notification_bridge_(false),
-      created_safe_browsing_service_(false),
-      created_subresource_filter_ruleset_service_(false),
-      created_optimization_guide_service_(false),
-      shutting_down_(false),
-      tearing_down_(false),
-      download_status_updater_(base::MakeUnique<DownloadStatusUpdater>()),
+    std::unique_ptr<metrics_services_manager::MetricsServicesManager>
+        metrics_services_manager,
+    std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+        browser_policy_connector,
+    std::unique_ptr<PrefService> local_state,
+    scoped_refptr<base::SequencedTaskRunner> local_state_task_runner,
+    std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory)
+    : metrics_services_manager_(std::move(metrics_services_manager)),
+      browser_policy_connector_(std::move(browser_policy_connector)),
+      local_state_(std::move(local_state)),
+      download_status_updater_(std::make_unique<DownloadStatusUpdater>()),
       local_state_task_runner_(local_state_task_runner),
-      cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT),
-      pref_service_factory_(
-          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
+      pref_service_factory_(std::move(pref_service_factory)) {
   g_browser_process = this;
   rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
   platform_part_ = base::MakeUnique<BrowserProcessPlatformPart>();
@@ -271,6 +264,30 @@ BrowserProcessImpl::BrowserProcessImpl(
   KeepAliveRegistry::GetInstance()->SetIsShuttingDown(false);
   KeepAliveRegistry::GetInstance()->AddObserver(this);
 #endif  // !defined(OS_ANDROID)
+
+  pref_change_registrar_.Init(local_state_.get());
+
+  // Initialize the notification for the default browser setting policy.
+  pref_change_registrar_.Add(
+      prefs::kDefaultBrowserSettingEnabled,
+      base::Bind(&BrowserProcessImpl::ApplyDefaultBrowserPolicy,
+                 base::Unretained(this)));
+
+// This preference must be kept in sync with external values; update them
+// whenever the preference or its controlling policy changes.
+#if !defined(OS_ANDROID)
+  pref_change_registrar_.Add(
+      metrics::prefs::kMetricsReportingEnabled,
+      base::Bind(&BrowserProcessImpl::ApplyMetricsReportingPolicy,
+                 base::Unretained(this)));
+#endif
+
+  int max_per_proxy = local_state_->GetInteger(prefs::kMaxConnectionsPerProxy);
+  net::ClientSocketPoolManager::set_max_sockets_per_proxy_server(
+      net::HttpNetworkSession::NORMAL_SOCKET_POOL,
+      std::max(std::min(max_per_proxy, 99),
+               net::ClientSocketPoolManager::max_sockets_per_group(
+                   net::HttpNetworkSession::NORMAL_SOCKET_POOL)));
 }
 
 BrowserProcessImpl::~BrowserProcessImpl() {
@@ -537,13 +554,6 @@ void BrowserProcessImpl::EndSession() {
 metrics_services_manager::MetricsServicesManager*
 BrowserProcessImpl::GetMetricsServicesManager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!metrics_services_manager_) {
-    auto client =
-        base::MakeUnique<ChromeMetricsServicesManagerClient>(local_state());
-    metrics_services_manager_ =
-        base::MakeUnique<metrics_services_manager::MetricsServicesManager>(
-            std::move(client));
-  }
   return metrics_services_manager_.get();
 }
 
@@ -599,8 +609,6 @@ ProfileManager* BrowserProcessImpl::profile_manager() {
 
 PrefService* BrowserProcessImpl::local_state() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!local_state_)
-    CreateLocalState();
   return local_state_.get();
 }
 
@@ -655,13 +663,9 @@ message_center::MessageCenter* BrowserProcessImpl::message_center() {
   return message_center::MessageCenter::Get();
 }
 
-policy::BrowserPolicyConnector* BrowserProcessImpl::browser_policy_connector() {
+policy::ChromeBrowserPolicyConnector*
+BrowserProcessImpl::browser_policy_connector() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!created_browser_policy_connector_) {
-    DCHECK(!browser_policy_connector_);
-    browser_policy_connector_ = platform_part_->CreateBrowserPolicyConnector();
-    created_browser_policy_connector_ = true;
-  }
   return browser_policy_connector_.get();
 }
 
@@ -1038,48 +1042,6 @@ void BrowserProcessImpl::CreateProfileManager() {
   profile_manager_ = base::MakeUnique<ProfileManager>(user_data_dir);
 }
 
-void BrowserProcessImpl::CreateLocalState() {
-  DCHECK(!local_state_);
-
-  base::FilePath local_state_path;
-  CHECK(PathService::Get(chrome::FILE_LOCAL_STATE, &local_state_path));
-  auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-
-  // Register local state preferences.
-  RegisterLocalState(pref_registry.get());
-
-  auto delegate = pref_service_factory_->CreateDelegate();
-  delegate->InitPrefRegistry(pref_registry.get());
-  local_state_ = chrome_prefs::CreateLocalState(
-      local_state_path, local_state_task_runner_.get(), policy_service(),
-      pref_registry, false, std::move(delegate));
-  DCHECK(local_state_);
-
-  pref_change_registrar_.Init(local_state_.get());
-
-  // Initialize the notification for the default browser setting policy.
-  pref_change_registrar_.Add(
-      prefs::kDefaultBrowserSettingEnabled,
-      base::Bind(&BrowserProcessImpl::ApplyDefaultBrowserPolicy,
-                 base::Unretained(this)));
-
-  // This preference must be kept in sync with external values; update them
-  // whenever the preference or its controlling policy changes.
-#if !defined(OS_ANDROID)
-  pref_change_registrar_.Add(
-      metrics::prefs::kMetricsReportingEnabled,
-      base::Bind(&BrowserProcessImpl::ApplyMetricsReportingPolicy,
-                 base::Unretained(this)));
-#endif
-
-  int max_per_proxy = local_state_->GetInteger(prefs::kMaxConnectionsPerProxy);
-  net::ClientSocketPoolManager::set_max_sockets_per_proxy_server(
-      net::HttpNetworkSession::NORMAL_SOCKET_POOL,
-      std::max(std::min(max_per_proxy, 99),
-               net::ClientSocketPoolManager::max_sockets_per_group(
-                   net::HttpNetworkSession::NORMAL_SOCKET_POOL)));
-}
-
 void BrowserProcessImpl::PreCreateThreads(
     const base::CommandLine& command_line) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -1347,7 +1309,8 @@ void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
       FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+              local_state())));
 }
 #endif
 

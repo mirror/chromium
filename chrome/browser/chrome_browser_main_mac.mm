@@ -74,8 +74,8 @@ ChromeBrowserMainPartsMac::ChromeBrowserMainPartsMac(
 ChromeBrowserMainPartsMac::~ChromeBrowserMainPartsMac() {
 }
 
-void ChromeBrowserMainPartsMac::PreEarlyInitialization() {
-  ChromeBrowserMainPartsPosix::PreEarlyInitialization();
+int ChromeBrowserMainPartsMac::PreEarlyInitialization() {
+  const int result = ChromeBrowserMainPartsPosix::PreEarlyInitialization();
 
   if (base::mac::WasLaunchedAsLoginItemRestoreState()) {
     base::CommandLine* singleton_command_line =
@@ -86,6 +86,8 @@ void ChromeBrowserMainPartsMac::PreEarlyInitialization() {
         base::CommandLine::ForCurrentProcess();
     singleton_command_line->AppendSwitch(switches::kNoStartupWindow);
   }
+
+  return result;
 }
 
 void ChromeBrowserMainPartsMac::PreMainMessageLoopStart() {
