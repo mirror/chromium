@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "796a7ea3_750b268f",
+        "filename": "tools/gn/config_values_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-11T19:23:43Z",
+      "side": 1,
+      "message": "Use the constant variables::kInputs instead of the string.",
+      "range": {
+        "startLine": 85,
+        "startChar": 48,
+        "endLine": 85,
+        "endChar": 54
+      },
+      "revId": "bef071c5f684ee734ec63ec63503b2110c31d259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

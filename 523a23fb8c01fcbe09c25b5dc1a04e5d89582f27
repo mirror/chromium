@@ -104,6 +104,24 @@
       "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eeb5c20_69f7bf76",
+        "filename": "tools/gn/target.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-11T19:23:43Z",
+      "side": 1,
+      "message": "I agree, I think your new way is the best.",
+      "parentUuid": "d6053b57_fcef6a9e",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
