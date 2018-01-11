@@ -8,8 +8,8 @@
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/dom/Document.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
+#include "core/dom/ShadowRoot.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLHtmlElement.h"
@@ -245,8 +245,7 @@ TEST(SelectorQueryTest, FastPathScoped) {
   // C++.
   Element* scope = document->getElementById("first");
   ASSERT_NE(nullptr, scope);
-  ShadowRoot& shadowRoot =
-      scope->EnsureShadow().AddShadowRoot(*scope, ShadowRootType::kOpen);
+  ShadowRoot& shadowRoot = scope->AddShadowRoot(ShadowRootType::kOpen);
   // Make the inside the shadow root be identical to that of the outer document.
   shadowRoot.appendChild(
       document->documentElement()->CloneElementWithChildren());
@@ -359,8 +358,7 @@ TEST(SelectorQueryTest, DisconnectedTreeScope) {
   // TODO(esprehn): Element::attachShadow() should not require a ScriptState,
   // it should handle the use counting in the bindings layer instead of in the
   // C++.
-  ShadowRoot& shadowRoot =
-      host->EnsureShadow().AddShadowRoot(*host, ShadowRootType::kOpen);
+  ShadowRoot& shadowRoot = host->AddShadowRoot(ShadowRootType::kOpen);
   shadowRoot.SetInnerHTMLFromString(R"HTML(
     <section>
       <span id=first>

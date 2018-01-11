@@ -27,7 +27,6 @@
 #include "core/dom/ng/flat_tree_traversal_ng.h"
 
 #include "core/dom/Element.h"
-#include "core/dom/ElementShadow.h"
 #include "core/html/HTMLShadowElement.h"
 #include "core/html/HTMLSlotElement.h"
 

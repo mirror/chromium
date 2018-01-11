@@ -42,7 +42,6 @@
 #include "core/dom/DocumentType.h"
 #include "core/dom/Element.h"
 #include "core/dom/ElementRareData.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/FlatTreeTraversal.h"
@@ -765,7 +764,7 @@ void Node::RecalcDistribution() {
   DCHECK(ChildNeedsDistributionRecalc());
 
   if (IsElementNode()) {
-    if (ElementShadow* shadow = ToElement(this)->Shadow())
+    if (ShadowRoot* shadow = ToElement(this)->GetShadowRoot())
       shadow->DistributeIfNeeded();
   }
 
@@ -983,7 +982,7 @@ bool Node::IsShadowIncludingInclusiveAncestorOf(const Node* node) const {
     return false;
 
   bool has_children = IsContainerNode() && ToContainerNode(this)->HasChildren();
-  bool has_shadow = IsElementNode() && ToElement(this)->Shadow();
+  bool has_shadow = IsElementNode() && ToElement(this)->GetShadowRoot();
   if (!has_children && !has_shadow)
     return false;
 
@@ -1169,18 +1168,18 @@ bool Node::IsInV0ShadowTree() const {
   return shadow_root && !shadow_root->IsV1();
 }
 
-ElementShadow* Node::ParentElementShadow() const {
+ShadowRoot* Node::ParentElementShadowRoot() const {
   Element* parent = parentElement();
-  return parent ? parent->Shadow() : nullptr;
+  return parent ? parent->GetShadowRoot() : nullptr;
 }
 
 bool Node::IsChildOfV1ShadowHost() const {
-  ElementShadow* parent_shadow = ParentElementShadow();
+  ShadowRoot* parent_shadow = ParentElementShadowRoot();
   return parent_shadow && parent_shadow->IsV1();
 }
 
 bool Node::IsChildOfV0ShadowHost() const {
-  ElementShadow* parent_shadow = ParentElementShadow();
+  ShadowRoot* parent_shadow = ParentElementShadowRoot();
   return parent_shadow && !parent_shadow->IsV1();
 }
 

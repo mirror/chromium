@@ -27,7 +27,6 @@
 #include "core/dom/FlatTreeTraversal.h"
 
 #include "core/dom/Element.h"
-#include "core/dom/ElementShadow.h"
 #include "core/html/HTMLShadowElement.h"
 #include "core/html/HTMLSlotElement.h"
 

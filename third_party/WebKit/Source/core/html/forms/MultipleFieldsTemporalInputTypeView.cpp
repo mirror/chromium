@@ -355,7 +355,7 @@ MultipleFieldsTemporalInputTypeView::CustomStyleForLayoutObject(
 }
 
 void MultipleFieldsTemporalInputTypeView::CreateShadowSubtree() {
-  DCHECK(GetElement().Shadow());
+  DCHECK(GetElement().GetShadowRoot());
 
   // Element must not have a layoutObject here, because if it did
   // DateTimeEditElement::customStyleForLayoutObject() is called in

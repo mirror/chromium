@@ -40,7 +40,7 @@ class CORE_EXPORT ElementShadowV0 final
     : public GarbageCollectedFinalized<ElementShadowV0>,
       public TraceWrapperBase {
  public:
-  static ElementShadowV0* Create(ElementShadow&);
+  static ElementShadowV0* Create(ShadowRoot&);
   ~ElementShadowV0();
 
   void WillAffectSelector();
@@ -58,7 +58,7 @@ class CORE_EXPORT ElementShadowV0 final
   void TraceWrappers(const ScriptWrappableVisitor*) const;
 
  private:
-  explicit ElementShadowV0(ElementShadow&);
+  explicit ElementShadowV0(ShadowRoot&);
 
   ShadowRoot& GetShadowRoot() const;
 
@@ -68,7 +68,7 @@ class CORE_EXPORT ElementShadowV0 final
   bool NeedsSelectFeatureSet() const { return needs_select_feature_set_; }
   void SetNeedsSelectFeatureSet() { needs_select_feature_set_ = true; }
 
-  Member<ElementShadow> element_shadow_;
+  Member<ShadowRoot> shadow_root_;
   using NodeToDestinationInsertionPoints =
       HeapHashMap<Member<const Node>, Member<DestinationInsertionPoints>>;
   NodeToDestinationInsertionPoints node_to_insertion_points_;
