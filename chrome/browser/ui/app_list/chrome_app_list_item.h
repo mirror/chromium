@@ -11,6 +11,7 @@
 
 #include "ash/app_list/model/app_list_item.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 class AppListControllerDelegate;
@@ -48,7 +49,9 @@ class ChromeAppListItem : public app_list::AppListItem {
     ChromeAppListItem* item_;
   };
 
-  ChromeAppListItem(Profile* profile, const std::string& app_id);
+  ChromeAppListItem(Profile* profile,
+                    AppListModelUpdater* model_updater,
+                    const std::string& app_id);
   ~ChromeAppListItem() override;
 
   // AppListControllerDelegate is not properly implemented in tests. Use mock
@@ -84,6 +87,8 @@ class ChromeAppListItem : public app_list::AppListItem {
 
   AppListControllerDelegate* GetController();
 
+  AppListModelUpdater* GetModelUpdater();
+
   // Updates item position and name from |sync_item|. |sync_item| must be valid.
   void UpdateFromSync(
       const app_list::AppListSyncableService::SyncItem* sync_item);
@@ -93,6 +98,7 @@ class ChromeAppListItem : public app_list::AppListItem {
 
  private:
   Profile* profile_;
+  AppListModelUpdater* model_updater_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListItem);
 };

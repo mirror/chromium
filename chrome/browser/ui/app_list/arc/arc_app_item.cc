@@ -19,10 +19,11 @@ const char ArcAppItem::kItemType[] = "ArcAppItem";
 
 ArcAppItem::ArcAppItem(
     Profile* profile,
+    AppListModelUpdater* model_updater,
     const app_list::AppListSyncableService::SyncItem* sync_item,
     const std::string& id,
     const std::string& name)
-    : ChromeAppListItem(profile, id) {
+    : ChromeAppListItem(profile, model_updater, id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   arc_app_icon_.reset(new ArcAppIcon(profile,

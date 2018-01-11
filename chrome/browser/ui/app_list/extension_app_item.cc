@@ -40,12 +40,13 @@ using extensions::Extension;
 
 ExtensionAppItem::ExtensionAppItem(
     Profile* profile,
+    AppListModelUpdater* model_updater,
     const app_list::AppListSyncableService::SyncItem* sync_item,
     const std::string& extension_id,
     const std::string& extension_name,
     const gfx::ImageSkia& installing_icon,
     bool is_platform_app)
-    : ChromeAppListItem(profile, extension_id),
+    : ChromeAppListItem(profile, model_updater, extension_id),
       extension_enable_flow_controller_(NULL),
       extension_name_(extension_name),
       installing_icon_(CreateDisabledIcon(installing_icon)),
