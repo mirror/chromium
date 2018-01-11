@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "aa5ef373_c3953b0f",
+        "filename": "ash/system/power/power_button_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T18:24:47Z",
+      "side": 1,
+      "message": "sounds good; i\u0027m fine with matching the existing logic here and cleaning it all up later",
+      "parentUuid": "a68cfaea_c6494932",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e14f32e6_c88ea6b9",
         "filename": "ash/system/power/power_off_menu_item_view.cc",
         "patchSetId": 2
