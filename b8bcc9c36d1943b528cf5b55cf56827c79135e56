@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc551ce_55aaa46a",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileSystemCallbacks.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T11:12:47Z",
+      "side": 1,
+      "message": "Can we move this trait to Persistent.h (next to WrapPersistent)?\n\n(I\u0027d slightly prefer WrapPersistentIfNeeded.)",
+      "revId": "b8bcc9c36d1943b528cf5b55cf56827c79135e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
