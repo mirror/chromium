@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbd8f9db_0ac5b00c",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: make the return value be a const reference",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc224cb_2e46937e",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: probably don\u0027t need \"static\" since data members declared like this in .cc files are always static, afaik",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59c8986_1b1d3be1",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: delete blank line since this block of code belongs together?",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d8174c_e8307a40",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: please add a comment documenting what these are, e.g.\n\n  // Possible values for chromeos::switches::kArcPackagesCacheMode.",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100fa74c_9304475a",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: can you leave these out (if you also drop the DISALLOW_COPY_AND_ASSIGN)?",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a58592_db67e14c",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "nit: put the explicit type here instead of \u0027auto\u0027 since the type is non-obvious from the context",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1cc56b_30030739",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:17:46Z",
+      "side": 1,
+      "message": "from https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md, i think that the first arg to this macro is a prefix, right? can you pass \"\" here instead of leaving it out to make this a bit easier to read?",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
