@@ -254,9 +254,9 @@ void PrintViewManagerBase::StartLocalPrintJob(
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 void PrintViewManagerBase::UpdatePrintingEnabled() {
-  web_contents()->ForEachFrame(
-      base::Bind(&PrintViewManagerBase::SendPrintingEnabled,
-                 base::Unretained(this), printing_enabled_.GetValue()));
+  web_contents()->ForEachFrame(base::BindRepeating(
+      &PrintViewManagerBase::SendPrintingEnabled, base::Unretained(this),
+      printing_enabled_.GetValue()));
 }
 
 void PrintViewManagerBase::NavigationStopped() {
