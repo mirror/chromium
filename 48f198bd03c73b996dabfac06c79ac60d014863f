@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd996c2_7a63dcd3",
+        "filename": "net/der/parser_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-11T11:10:15Z",
+      "side": 1,
+      "message": "This is a primitive context-specific tag, so you need:\n\nEXPECT_EQ(kTagContextSpecific | 31u, tag);",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "48f198bd03c73b996dabfac06c79ac60d014863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
