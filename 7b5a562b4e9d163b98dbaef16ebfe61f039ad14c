@@ -269,6 +269,30 @@
       "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db3b6d5e_d19b1d97",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2018-01-11T11:24:40Z",
+      "side": 1,
+      "message": "I changed it the test to use pass \"--webrtc-max-cpu-consumption-percentage\" instead of switches::kWebRtcMaxCpuConsumptionPercentage to avoid CONTENT_EXPORT. I saw that some other unit tests set the raw value so it seems ok to do it, let me know if not, thx.",
+      "parentUuid": "1f59268c_4053f5f1",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
