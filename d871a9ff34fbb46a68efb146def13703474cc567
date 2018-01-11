@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "0e5f487d_e7e6cef0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-11T18:43:36Z",
+      "side": 1,
+      "message": "We\u0027ll have to do something java only.  We can\u0027t guarantee that we have native initialized at this point, so you wouldn\u0027t want to add any native dependencies here.\n\nThis is likely a question for dtrainor@, but we should also add similar restrictions in CustomTabActivity to ensure we don\u0027t load web pages when it is a media intent.  I wonder what happens if you rename index.html -\u003e index.jpg.  Does Chrome realize it\u0027s a page and still attempt to render it or would it correctly reject that?  I guess once we start supporting content URIs the mime type could be wrong and it could be a good avenue for bypassing any checks (in particular, we don\u0027t show the URL in that mode, so we really don\u0027t want that to be publicly exposed).\n\nHonestly, this is likely something we\u0027ll want security to take a look at once we all get agreement on.",
+      "parentUuid": "0a4f0565_600f6257",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75bdb35c_9b173114",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
         "patchSetId": 1
@@ -367,6 +391,30 @@
       "side": 1,
       "message": "That\u0027s the way DownloadUtils is firing the MediaViewerUtils.getMediaViewerIntent Intent, so I was assuming we\u0027d want the same here. This actually fires the CustomTabActivity Intent through the LaunchIntentDispatcher and not directly. If it needs to change here, I\u0027d assume it needs to change inside DownloadUtils as well. WDYT?",
       "parentUuid": "75bdb35c_9b173114",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb4aa57_6707f130",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-11T18:43:36Z",
+      "side": 1,
+      "message": "I\u0027ll let dtrainor@ answer this.  I\u0027d like to know why it\u0027s needed.\n\nLooks like CustomTabIntentDataProvider only sets mEnableEmbeddedMediaExperience to true if it\u0027s a trusted activity.  Since this UI hides the security state indicators, we only use this from content with Chrome.  I think we\u0027ll need some sign off that it is ok to show this for external content as well.  Let\u0027s add rsesek@ to this once we get the pieces in place.",
+      "parentUuid": "849d5068_7d0e7041",
       "range": {
         "startLine": 32,
         "startChar": 22,
