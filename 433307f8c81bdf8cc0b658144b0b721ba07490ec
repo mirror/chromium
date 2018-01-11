@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0c205ba_5e804b02",
+        "filename": "components/payments/content/payment_request_display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-11T20:58:24Z",
+      "side": 1,
+      "message": "FYI, https://w3c.github.io/payment-handler/#dfn-open-window-algorithm",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "433307f8c81bdf8cc0b658144b0b721ba07490ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
