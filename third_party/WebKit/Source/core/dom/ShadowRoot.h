@@ -199,13 +199,6 @@ inline Element* ShadowRoot::ActiveElement() const {
   return AdjustedFocusedElement();
 }
 
-inline ShadowRoot* Element::ShadowRootIfV1() const {
-  ShadowRoot* root = GetShadowRoot();
-  if (root && root->IsV1())
-    return root;
-  return nullptr;
-}
-
 DEFINE_NODE_TYPE_CASTS(ShadowRoot, IsShadowRoot());
 DEFINE_TYPE_CASTS(ShadowRoot,
                   TreeScope,
