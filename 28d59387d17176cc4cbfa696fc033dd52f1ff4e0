@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75998a00_efeb19c6",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T22:04:25Z",
+      "side": 1,
+      "message": "If you can make an effort for no new \"new\" keywords in 2018, that would be great. Though I know in some cases, there exists APIs that takes ownership of / requires returning raw pointers. Feel free to skip those for now.\n\nstd::make_unique and base::MakeRefCounted are your friends.",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060b0542_93acfe47",
+        "filename": "chromecast/browser/extensions/cast_extension_host_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T22:04:25Z",
+      "side": 1,
+      "message": "nullptr everywhere?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b9a8a7_1f355267",
+        "filename": "chromecast/browser/extensions/cast_extension_system.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T22:04:25Z",
+      "side": 1,
+      "message": "Having a NOTREACHED() and then doing what looks like real work is weird.",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3575d7e9_23bd4d8f",
+        "filename": "chromecast/browser/extensions/cast_extensions_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T22:04:25Z",
+      "side": 1,
+      "message": "Is this code going to be shipped with some products, or is this just a test program? If it is shipped, do the product(s) have a concept of channels where they would want STABLE/BETA/DEV here?",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a074b5ed_f702fe27",
+        "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T22:04:25Z",
+      "side": 1,
+      "message": "In extensions/, it looks like system_info and system_storage use StorageMonitor. Do you need those APIs? I wonder if it is possible to exclude APIs to reduce dependencies / build time / binary size.",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
