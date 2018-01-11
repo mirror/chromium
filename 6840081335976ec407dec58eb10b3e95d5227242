@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31acb73a_48d6dc79",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-11T09:20:58Z",
+      "side": 1,
+      "message": "can be:\nreturn IsHTMLDetailsElement(node.parentElement())) \u0026\u0026 HTMLDetailsElement::IsFirstSummary(node);",
+      "revId": "6840081335976ec407dec58eb10b3e95d5227242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
