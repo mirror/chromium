@@ -54,6 +54,11 @@ cr.define('extensions', function() {
         value: () => loadTimeData.getBoolean('inDevMode'),
       },
 
+      devModeDisabled: {
+        type: Boolean,
+        value: false,
+      },
+
       filter: {
         type: String,
         value: '',
@@ -153,6 +158,7 @@ cr.define('extensions', function() {
       let service = extensions.Service.getInstance();
 
       let onProfileStateChanged = profileInfo => {
+        this.devModeDisabled = profileInfo.isDeveloperModeControlledByPolicy;
         this.inDevMode = profileInfo.inDeveloperMode;
       };
       service.getProfileStateChangedTarget().addListener(onProfileStateChanged);

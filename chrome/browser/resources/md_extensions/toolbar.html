@@ -91,6 +91,7 @@
       <div class="more-actions" hidden$="[[isGuest]]">
         <span id="devModeLabel">$i18n{toolbarDevMode}</span>
         <cr-toggle id="dev-mode" on-change="onDevModeToggleChange_"
+            disabled="[[devModeDisabled]]"
             checked="[[inDevMode]]" aria-labelledby="devModeLabel">
         </cr-toggle>
       </div>
