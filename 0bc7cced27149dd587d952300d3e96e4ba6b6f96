@@ -87,6 +87,24 @@
       "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70a65cca_5c7e42a2",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T09:10:45Z",
+      "side": 1,
+      "message": "That sounds good, done.",
+      "parentUuid": "9b2ab8ba_4366c8fc",
+      "revId": "0bc7cced27149dd587d952300d3e96e4ba6b6f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
