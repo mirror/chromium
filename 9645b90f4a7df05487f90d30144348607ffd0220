@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88b6350f_f3d6da4a",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3427,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-11T17:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57951d2c_f7cdf9e4",
+      "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bddab01_9f802720",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I don\u0027t think there is one.\n\nThis master appears to exist solely for LUCI conversions.",
       "parentUuid": "6bddab01_9f802720",
+      "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ec2c915_947f3b1a",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3456,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-11T17:48:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08ab783b_ba941566",
       "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
