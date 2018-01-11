@@ -63,7 +63,6 @@ web_idl_scripts = get_path_info([
                                   "web_idl/attribute.py",
                                   "web_idl/callback_function.py",
                                   "web_idl/collection.py",
-                                  "web_idl/collector.py",
                                   "web_idl/constant.py",
                                   "web_idl/dictionary.py",
                                   "web_idl/ecma_script_types.py",
@@ -77,7 +76,8 @@ web_idl_scripts = get_path_info([
                                   "web_idl/operation.py",
                                   "web_idl/typedef.py",
                                   "web_idl/utilities.py",
-                                  "web_idl/idl_definition_builder.py",
+                                  "web_idl_collector.py",
+                                  "web_idl_builder.py",
                                 ],
                                 "abspath")
 

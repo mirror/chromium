@@ -5,8 +5,8 @@
 import os
 import sys
 
-from .idl_definition_builder import IdlDefinitionBuilder
-from .collection import Collection
+from web_idl_builder import WebIdlBuilder
+from web_idl.collection import Collection
 
 
 # TODO(peria): Merge bindings/scripts/blink_idl_parser.py with tools/idl_parser,
@@ -17,7 +17,7 @@ sys.path.append(_SCRIPTS_PATH)
 import blink_idl_parser
 
 
-class Collector(object):
+class WebIdlCollector(object):
 
     def __init__(self, component, parser=blink_idl_parser.BlinkIDLParser()):
         self._component = component
@@ -39,7 +39,7 @@ class Collector(object):
         self.collect_from_ast(ast)
 
     def collect_from_ast(self, node):
-        for definition, filepath in IdlDefinitionBuilder.idl_definitions(node):
+        for definition, filepath in WebIdlBuilder.idl_definitions(node):
             self._collection.register_definition(definition, filepath)
 
     def get_collection(self):

@@ -12,7 +12,7 @@ some referred definitions can be in other components.
 import blink_idl_parser
 import optparse
 import utilities
-from web_idl.collector import Collector
+from web_idl_collector import WebIdlCollector
 
 
 def parse_options():
@@ -35,7 +35,7 @@ def main():
     idl_file_names = utilities.read_idl_files_list_from_file(options.idl_list_file, False)
 
     parser = blink_idl_parser.BlinkIDLParser()
-    collector = Collector(component=options.component, parser=parser)
+    collector = WebIdlCollector(component=options.component, parser=parser)
     collection = collector.collect_from_idl_files(idl_file_names)
     utilities.write_pickle_file(options.output, collection)
 

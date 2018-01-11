@@ -2,44 +2,44 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-from . import literal_token
-from .argument import Argument
-from .attribute import Attribute
-from .callback_function import CallbackFunction
-from .callback_interface import CallbackInterface
-from .constant import Constant
-from .dictionary import Dictionary
-from .dictionary import DictionaryMember
-from .ecma_script_types import EcmaScriptType
-from .enumeration import Enumeration
-from .extended_attribute import Constructor
-from .extended_attribute import Exposure
-from .extended_attribute import ExtendedAttributeList
-from .extended_attribute import NamedConstructor
-from .idl_types import AnyType
-from .idl_types import FrozenArrayType
-from .idl_types import ObjectType
-from .idl_types import PrimitiveType
-from .idl_types import PromiseType
-from .idl_types import RecordType
-from .idl_types import SequenceType
-from .idl_types import StringType
-from .idl_types import TypePlaceHolder
-from .idl_types import UnionType
-from .idl_types import VoidType
-from .implements import Implements
-from .interface import Interface
-from .interface import Iterable
-from .interface import Maplike
-from .interface import Serializer
-from .interface import Setlike
-from .literal_token import LiteralToken
-from .namespace import Namespace
-from .operation import Operation
-from .typedef import Typedef
+from web_idl import literal_token
+from web_idl.argument import Argument
+from web_idl.attribute import Attribute
+from web_idl.callback_function import CallbackFunction
+from web_idl.callback_interface import CallbackInterface
+from web_idl.constant import Constant
+from web_idl.dictionary import Dictionary
+from web_idl.dictionary import DictionaryMember
+from web_idl.ecma_script_types import EcmaScriptType
+from web_idl.enumeration import Enumeration
+from web_idl.extended_attribute import Constructor
+from web_idl.extended_attribute import Exposure
+from web_idl.extended_attribute import ExtendedAttributeList
+from web_idl.extended_attribute import NamedConstructor
+from web_idl.idl_types import AnyType
+from web_idl.idl_types import FrozenArrayType
+from web_idl.idl_types import ObjectType
+from web_idl.idl_types import PrimitiveType
+from web_idl.idl_types import PromiseType
+from web_idl.idl_types import RecordType
+from web_idl.idl_types import SequenceType
+from web_idl.idl_types import StringType
+from web_idl.idl_types import TypePlaceHolder
+from web_idl.idl_types import UnionType
+from web_idl.idl_types import VoidType
+from web_idl.implements import Implements
+from web_idl.interface import Interface
+from web_idl.interface import Iterable
+from web_idl.interface import Maplike
+from web_idl.interface import Serializer
+from web_idl.interface import Setlike
+from web_idl.literal_token import LiteralToken
+from web_idl.namespace import Namespace
+from web_idl.operation import Operation
+from web_idl.typedef import Typedef
 
 
-class IdlDefinitionBuilder(object):
+class WebIdlBuilder(object):
 
     @staticmethod
     def idl_definitions(node):
@@ -58,27 +58,27 @@ class IdlDefinitionBuilder(object):
             child_class = child.GetClass()
             if child_class == 'Interface':
                 # interface, partial interface, callback interface
-                interface = IdlDefinitionBuilder.create_interface(child)
+                interface = WebIdlBuilder.create_interface(child)
                 yield interface, filepath
             elif child_class == 'Namespace':
                 # namespace, partial namespace
-                namespace = IdlDefinitionBuilder.create_namespace(child)
+                namespace = WebIdlBuilder.create_namespace(child)
                 yield namespace, filepath
             elif child_class == 'Dictionary':
                 # dictionary, partial dictionary
-                dictionary = IdlDefinitionBuilder.create_dictionary(child)
+                dictionary = WebIdlBuilder.create_dictionary(child)
                 yield dictionary, filepath
             elif child_class == 'Enum':
-                enumeration = IdlDefinitionBuilder.create_enumeration(child)
+                enumeration = WebIdlBuilder.create_enumeration(child)
                 yield enumeration, filepath
             elif child_class == 'Typedef':
-                typedef = IdlDefinitionBuilder.create_typedef(child)
+                typedef = WebIdlBuilder.create_typedef(child)
                 yield typedef, filepath
             elif child_class == 'Callback':
-                callback_function = IdlDefinitionBuilder.create_callback_function(child)
+                callback_function = WebIdlBuilder.create_callback_function(child)
                 yield callback_function, filepath
             elif child_class == 'Implements':
-                implements = IdlDefinitionBuilder.create_implements(child)
+                implements = WebIdlBuilder.create_implements(child)
                 yield implements, filepath
             else:
                 raise ValueError('Unrecognized class definition: %s' % child_class)
@@ -105,13 +105,13 @@ class IdlDefinitionBuilder(object):
             if child_class == 'Inherit':
                 inherited_interface_name = child.GetName()
             elif child_class == 'Attribute':
-                attributes.append(IdlDefinitionBuilder.create_attribute(child))
+                attributes.append(WebIdlBuilder.create_attribute(child))
             elif child_class == 'Operation':
-                operations.append(IdlDefinitionBuilder.create_operation(child))
+                operations.append(WebIdlBuilder.create_operation(child))
             elif child_class == 'Const':
-                constants.append(IdlDefinitionBuilder.create_constant(child))
+                constants.append(WebIdlBuilder.create_constant(child))
             elif child_class == 'Stringifier':
-                stringifier = IdlDefinitionBuilder.create_stringifier(child)
+                stringifier = WebIdlBuilder.create_stringifier(child)
                 # Stringifier is either of Attribute or Operation.
                 if type(stringifier) == Operation:
                     operations.append(stringifier)
@@ -120,15 +120,15 @@ class IdlDefinitionBuilder(object):
                 else:
                     assert False, 'Stringifer must be an attribute or an operation.'
             elif child_class == 'Iterable':
-                iterable = IdlDefinitionBuilder.create_iterable(child)
+                iterable = WebIdlBuilder.create_iterable(child)
             elif child_class == 'Maplike':
-                maplike = IdlDefinitionBuilder.create_maplike(child)
+                maplike = WebIdlBuilder.create_maplike(child)
             elif child_class == 'Setlike':
-                setlike = IdlDefinitionBuilder.create_setlike(child)
+                setlike = WebIdlBuilder.create_setlike(child)
             elif child_class == 'Serializer':
-                serializer = IdlDefinitionBuilder.create_serializer(child)
+                serializer = WebIdlBuilder.create_serializer(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
 
@@ -153,7 +153,7 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             elif child_class == 'Type':
                 type_nodes.append(child)
             else:
@@ -161,10 +161,10 @@ class IdlDefinitionBuilder(object):
         assert len(type_nodes) in [1, 2], 'iterable<> expects 1 or 2 type parameters, but got %d.' % len(type_nodes)
 
         if len(type_nodes) == 1:
-            value_type = IdlDefinitionBuilder.create_type(type_nodes[0])
+            value_type = WebIdlBuilder.create_type(type_nodes[0])
         elif len(type_nodes) == 2:
-            key_type = IdlDefinitionBuilder.create_type(type_nodes[0])
-            value_type = IdlDefinitionBuilder.create_type(type_nodes[1])
+            key_type = WebIdlBuilder.create_type(type_nodes[0])
+            value_type = WebIdlBuilder.create_type(type_nodes[1])
 
         return Iterable(key_type=key_type, value_type=value_type, extended_attribute_list=extended_attribute_list)
 
@@ -181,8 +181,8 @@ class IdlDefinitionBuilder(object):
                 raise ValueError('Unrecognized node class: %s' % child.GetClass())
 
         assert len(types) == 2, 'maplike<K, V> requires two type parameters, but got %d.' % len(types)
-        key_type = IdlDefinitionBuilder.create_type(types[0])
-        value_type = IdlDefinitionBuilder.create_type(types[1])
+        key_type = WebIdlBuilder.create_type(types[0])
+        value_type = WebIdlBuilder.create_type(types[1])
         return Maplike(key_type=key_type, value_type=value_type, is_readonly=is_readonly)
 
     @staticmethod
@@ -192,7 +192,7 @@ class IdlDefinitionBuilder(object):
         is_readonly = bool(node.GetProperty('READONLY'))
         children = node.GetChildren()
         assert len(children) == 1, 'setlike<T> requires one type parameter, but got %d' % len(children)
-        value_type = IdlDefinitionBuilder.create_type(children[0])
+        value_type = WebIdlBuilder.create_type(children[0])
         return Setlike(value_type=value_type, is_readonly=is_readonly)
 
     # BUG(736332): Remove support of legacy serializer.
@@ -228,11 +228,11 @@ class IdlDefinitionBuilder(object):
         for child in children:
             child_class = child.GetClass()
             if child_class == 'Attribute':
-                attributes.append(IdlDefinitionBuilder.create_attribute(child))
+                attributes.append(WebIdlBuilder.create_attribute(child))
             elif child_class == 'Operation':
-                operations.append(IdlDefinitionBuilder.create_operation(child))
+                operations.append(WebIdlBuilder.create_operation(child))
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
 
@@ -250,7 +250,7 @@ class IdlDefinitionBuilder(object):
 
         children = node.GetChildren()
         assert len(children) in [2, 3], 'Expected 2 or 3 children for Constant, got %s' % len(children)
-        idl_type = IdlDefinitionBuilder.create_base_type(children[0])
+        idl_type = WebIdlBuilder.create_base_type(children[0])
 
         value_node = children[1]
         assert value_node.GetClass() == 'Value', 'Expected Value node, got %s' % value_node.GetClass()
@@ -258,7 +258,7 @@ class IdlDefinitionBuilder(object):
         value = value_node.GetProperty('VALUE')
 
         if len(children) == 3:
-            extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(children[2])
+            extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(children[2])
 
         return Constant(identifier=identifier, type=idl_type, value=value, extended_attribute_list=extended_attribute_list)
 
@@ -274,9 +274,9 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'Type':
-                idl_type = IdlDefinitionBuilder.create_type(child)
+                idl_type = WebIdlBuilder.create_type(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child, extended_attribute_list)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child, extended_attribute_list)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
 
@@ -303,11 +303,11 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'Arguments':
-                arguments = IdlDefinitionBuilder.create_arguments(child)
+                arguments = WebIdlBuilder.create_arguments(child)
             elif child_class == 'Type':
-                return_type = IdlDefinitionBuilder.create_type(child)
+                return_type = WebIdlBuilder.create_type(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child, extended_attribute_list)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child, extended_attribute_list)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
 
@@ -328,13 +328,13 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'ExtAttributes':
-                ext_attributes = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                ext_attributes = WebIdlBuilder.create_extended_attribute_list(child)
             elif child_class == 'Attribute':
                 assert stringifier is None
-                stringifier = IdlDefinitionBuilder.create_attribute(child, ext_attributes)
+                stringifier = WebIdlBuilder.create_attribute(child, ext_attributes)
             elif child_class == 'Operation':
                 assert stringifier is None
-                stringifier = IdlDefinitionBuilder.create_operation(child, ext_attributes)
+                stringifier = WebIdlBuilder.create_operation(child, ext_attributes)
 
         if stringifier is None:
             # The stringifer keyword is declared in a shorthand style.
@@ -358,14 +358,14 @@ class IdlDefinitionBuilder(object):
             if child_class == 'Inherit':
                 inherited_dictionary_name = child.GetName()
             elif child_class == 'Key':
-                member = IdlDefinitionBuilder.create_dictionary_member(child)
+                member = WebIdlBuilder.create_dictionary_member(child)
                 # No duplicates are allowed through inheritances.
                 assert member.identifier not in members, 'Duplicated dictionary members: %s' % member.identifier
                 members[member.identifier] = member
             elif child.GetClass() == 'ExtAttributes':
                 # Extended attributes are not applicable to Dictionary in spec, but Blink defines an extended attribute which
                 # is applicable to Dictionary.
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
 
@@ -384,11 +384,11 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'Type':
-                idl_type = IdlDefinitionBuilder.create_type(child)
+                idl_type = WebIdlBuilder.create_type(child)
             elif child_class == 'Default':
-                default_value = IdlDefinitionBuilder.create_literal_token(child)
+                default_value = WebIdlBuilder.create_literal_token(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
         return DictionaryMember(identifier=identifier, type=idl_type, default_value=default_value,
@@ -403,7 +403,7 @@ class IdlDefinitionBuilder(object):
 
         for child in node.GetChildren():
             if child.GetClass() == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 values.append(child.GetName())
         return Enumeration(identifier=identifier, values=values, extended_attribute_list=extended_attribute_list)
@@ -421,11 +421,11 @@ class IdlDefinitionBuilder(object):
         for child in children:
             child_class = child.GetClass()
             if child_class == 'Type':
-                return_type = IdlDefinitionBuilder.create_type(child)
+                return_type = WebIdlBuilder.create_type(child)
             elif child_class == 'Arguments':
-                arguments = IdlDefinitionBuilder.create_arguments(child)
+                arguments = WebIdlBuilder.create_arguments(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             else:
                 assert False, 'Unknown node: %s' % child_class
         return CallbackFunction(identifier=identifier, return_type=return_type, arguments=arguments,
@@ -437,7 +437,7 @@ class IdlDefinitionBuilder(object):
         identifier = node.GetName()
         children = node.GetChildren()
         assert len(children) == 1, 'Typedef requires 1 child node, but got %d.' % len(children)
-        actual_type = IdlDefinitionBuilder.create_type(children[0])
+        actual_type = WebIdlBuilder.create_type(children[0])
 
         return Typedef(identifier=identifier, type=actual_type)
 
@@ -459,31 +459,31 @@ class IdlDefinitionBuilder(object):
         is_nullable = bool(node.GetProperty('NULLABLE'))
         extended_attribute_list = None
         if len(children) == 2:
-            extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(children[1])
+            extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(children[1])
 
-        return IdlDefinitionBuilder.create_base_type(children[0], is_nullable, extended_attribute_list)
+        return WebIdlBuilder.create_base_type(children[0], is_nullable, extended_attribute_list)
 
     @staticmethod
     def create_base_type(node, is_nullable=False, extended_attribute_list=None):
         node_class = node.GetClass()
         if node_class == 'Typeref':
-            return IdlDefinitionBuilder.create_type_place_holder(node, is_nullable)
+            return WebIdlBuilder.create_type_place_holder(node, is_nullable)
         if node_class == 'PrimitiveType':
-            return IdlDefinitionBuilder.create_primitive(node, is_nullable, extended_attribute_list)
+            return WebIdlBuilder.create_primitive(node, is_nullable, extended_attribute_list)
         if node_class == 'StringType':
-            return IdlDefinitionBuilder.create_string(node, is_nullable, extended_attribute_list)
+            return WebIdlBuilder.create_string(node, is_nullable, extended_attribute_list)
         if node_class == 'Any':
-            return IdlDefinitionBuilder.create_any()
+            return WebIdlBuilder.create_any()
         if node_class == 'UnionType':
-            return IdlDefinitionBuilder.create_union(node, is_nullable)
+            return WebIdlBuilder.create_union(node, is_nullable)
         if node_class == 'Promise':
-            return IdlDefinitionBuilder.create_promise(node)
+            return WebIdlBuilder.create_promise(node)
         if node_class == 'Record':
-            return IdlDefinitionBuilder.create_record(node, is_nullable)
+            return WebIdlBuilder.create_record(node, is_nullable)
         if node_class == 'Sequence':
-            return IdlDefinitionBuilder.create_sequence(node, is_nullable)
+            return WebIdlBuilder.create_sequence(node, is_nullable)
         if node_class == 'FrozenArray':
-            return IdlDefinitionBuilder.create_frozen_array(node, is_nullable)
+            return WebIdlBuilder.create_frozen_array(node, is_nullable)
         assert False, 'Unrecognized node class: %s' % node_class
 
     @staticmethod
@@ -531,7 +531,7 @@ class IdlDefinitionBuilder(object):
     def create_union(node, is_nullable=False):
         assert node.GetClass() == 'UnionType', 'Unknown node class: %s' % node.GetClass()
 
-        member_types = [IdlDefinitionBuilder.create_type(child) for child in node.GetChildren()]
+        member_types = [WebIdlBuilder.create_type(child) for child in node.GetChildren()]
         return UnionType(member_types=member_types, is_nullable=is_nullable)
 
     @staticmethod
@@ -540,7 +540,7 @@ class IdlDefinitionBuilder(object):
 
         children = node.GetChildren()
         assert len(children) == 1, 'Promise<T> node expects 1 child, got %d' % len(children)
-        result_type = IdlDefinitionBuilder.create_type(children[0])
+        result_type = WebIdlBuilder.create_type(children[0])
         return PromiseType(result_type=result_type)
 
     @staticmethod
@@ -552,11 +552,11 @@ class IdlDefinitionBuilder(object):
 
         key_node = children[0]
         assert key_node.GetClass() == 'StringType', 'Key in record<K,V> node must be a string type, got %s.' % key_node.GetClass()
-        key_type = IdlDefinitionBuilder.create_string(key_node, False, key_node.GetProperty('ExtAttributes'))
+        key_type = WebIdlBuilder.create_string(key_node, False, key_node.GetProperty('ExtAttributes'))
 
         value_node = children[1]
         assert value_node.GetClass() == 'Type', 'Unrecognized node class for record<K,V> value: %s' % value_node.GetClass()
-        value_type = IdlDefinitionBuilder.create_type(value_node)
+        value_type = WebIdlBuilder.create_type(value_node)
 
         return RecordType(key_type=key_type, value_type=value_type, is_nullable=is_nullable)
 
@@ -567,7 +567,7 @@ class IdlDefinitionBuilder(object):
         children = node.GetChildren()
         assert len(children) == 1, 'sequence<T> node expects exactly 1 child, got %d' % len(children)
 
-        element_type = IdlDefinitionBuilder.create_type(children[0])
+        element_type = WebIdlBuilder.create_type(children[0])
         return SequenceType(element_type=element_type, is_nullable=is_nullable)
 
     @staticmethod
@@ -577,7 +577,7 @@ class IdlDefinitionBuilder(object):
         children = node.GetChildren()
         assert len(children) == 1, 'FrozenArray<T> node expects exactly 1 child, got %d' % len(children)
 
-        element_type = IdlDefinitionBuilder.create_type(children[0])
+        element_type = WebIdlBuilder.create_type(children[0])
         return FrozenArrayType(element_type=element_type, is_nullable=is_nullable)
 
     @staticmethod
@@ -593,15 +593,15 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             child_class = child.GetClass()
             if child_class == 'Type':
-                idl_type = IdlDefinitionBuilder.create_type(child)
+                idl_type = WebIdlBuilder.create_type(child)
             elif child_class == 'ExtAttributes':
-                extended_attribute_list = IdlDefinitionBuilder.create_extended_attribute_list(child)
+                extended_attribute_list = WebIdlBuilder.create_extended_attribute_list(child)
             elif child_class == 'Argument':
                 child_name = child.GetName()
                 assert child_name == '...', 'Unrecognized Argument node; expected "...", got "%s"' % child_name
                 is_variadic = bool(child.GetProperty('ELLIPSIS'))
             elif child_class == 'Default':
-                default_value = IdlDefinitionBuilder.create_literal_token(child)
+                default_value = WebIdlBuilder.create_literal_token(child)
             else:
                 assert False, 'Unrecognized node class: %s' % child_class
         return Argument(identifier=identifier, type=idl_type, is_optional=is_optional, is_variadic=is_variadic,
@@ -610,7 +610,7 @@ class IdlDefinitionBuilder(object):
     @staticmethod
     def create_arguments(node):
         assert node.GetClass() == 'Arguments', 'Unknown node class: %s' % node.GetClass()
-        return [IdlDefinitionBuilder.create_argument(child) for child in node.GetChildren()]
+        return [WebIdlBuilder.create_argument(child) for child in node.GetChildren()]
 
     @staticmethod
     def create_extended_attribute_list(node, existing_list=None):
@@ -627,9 +627,9 @@ class IdlDefinitionBuilder(object):
         for child in node.GetChildren():
             name = child.GetName()
             if name in ('Constructor', 'CustomConstructor', 'NamedConstructor'):
-                constructors.append(IdlDefinitionBuilder.create_constructor(child))
+                constructors.append(WebIdlBuilder.create_constructor(child))
             elif name == 'Exposed':
-                exposures.extend(IdlDefinitionBuilder.create_exposures(child))
+                exposures.extend(WebIdlBuilder.create_exposures(child))
             else:
                 value = child.GetProperty('VALUE')
                 extended_attributes[name] = value
@@ -653,9 +653,9 @@ class IdlDefinitionBuilder(object):
         if len(children) > 0:
             child = children[0]
             if child.GetClass() == 'Arguments':
-                arguments = IdlDefinitionBuilder.create_arguments(child)
+                arguments = WebIdlBuilder.create_arguments(child)
             elif child.GetClass() == 'Call':
-                arguments = IdlDefinitionBuilder.create_arguments(child.GetChildren()[0])
+                arguments = WebIdlBuilder.create_arguments(child.GetChildren()[0])
                 identifier = child.GetName()
             else:
                 assert False, 'Unexpected class: %s' % child.GetClass()
@@ -679,7 +679,7 @@ class IdlDefinitionBuilder(object):
                 return [Exposure(global_interface=v) for v in value]
             else:
                 return [Exposure(global_interface=value)]
-        arguments = IdlDefinitionBuilder.create_arguments(node.GetChildren()[0])
+        arguments = WebIdlBuilder.create_arguments(node.GetChildren()[0])
         exposures = []
         for arg in arguments:
             idl_type = arg.type

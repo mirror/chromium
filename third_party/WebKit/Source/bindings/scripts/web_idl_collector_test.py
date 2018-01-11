@@ -5,13 +5,13 @@
 
 import unittest
 
-from .collector import Collector
+from web_idl_collector import WebIdlCollector
 
 
-class CollectorTest(unittest.TestCase):
+class WebIdlCollectorTest(unittest.TestCase):
 
     def setUp(self):
-        self._collector = Collector(component='test')
+        self._collector = WebIdlCollector(component='test')
 
     def collect_from_idl_text(self, idl_text):
         self._collector.collect_from_idl_text(idl_text)
