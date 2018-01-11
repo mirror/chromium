@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99498638_c132aaf1",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-11T18:43:54Z",
+      "side": 1,
+      "message": "I would appreciate some documentation for each of these intents. Who sends/receives them? My mental model of these includes two actors, the \"mediashell\" and the \"assistant\", where:\n\nINTENT_SHOW_WEB_CONTENT: mediashell (Component) -\u003e assistant\nINTENT_STOP_WEB_CONTENT_INTERNAL: mediashell (browser) -\u003e mediashell (Fragment)\nINTENT_STOP_WEB_CONTENT: mediashell (fragment) -\u003e assistant\nINTENT_WEB_CONTENT_STOPPED: mediashell (fragment) -\u003e assistant\n\nso three of these are communication with the external assistant, and one is for internal communication between different parts of mediashell (CastWebContentsComponent and CastWebContentsFragment).\n\nIt\u0027s also unclear by eyeballing the code that these intents are only used when displaying in a Fragment, since e.g. only CastWebContentsComponent.FragmentDelegate uses INTENT_STOP_WEB_CONTENT_INTERNAL. The ActivityDelegate, for the same purpose, uses CastIntents.ACTION_STOP_ACTIVITY.\n\nFor consistency, maybe consider moving these constants to CastIntents and refactoring (reorganizing/deduplicating if possible) and adding comments as appropriate.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8be3ddd_6c2b8c7b",
+        "filename": "chromecast/browser/android/cast_web_contents_surface_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-11T18:43:54Z",
+      "side": 1,
+      "message": "Chromium style is to use unix_hacker_case for variable names. Use a j_ prefix to disambiguate between the Java object and the native pointer that you instantiate below.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e46417_c382f268",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-11T18:43:54Z",
+      "side": 1,
+      "message": "We might want to combine this variable with display_web_contents_in_service, as they both pertain to the strategy for displaying web contents and if one of the variables is true, the other must be false.\n\nYou can leave it as a TODO for me or thoren@ for this CL.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551673fd_65067835",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-11T18:43:54Z",
+      "side": 1,
+      "message": "What is this for?",
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
