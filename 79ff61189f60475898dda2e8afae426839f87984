@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fea5af_b7fd59f7",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-11T16:48:10Z",
+      "side": 1,
+      "message": "nit: \" -\u003e \u0027 (here and below)",
+      "revId": "79ff61189f60475898dda2e8afae426839f87984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6940610b_46c5313b",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-11T16:48:10Z",
+      "side": 1,
+      "message": "Should this go outside of the outer if? The docs for it say it can be used as an alternative.",
+      "revId": "79ff61189f60475898dda2e8afae426839f87984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
