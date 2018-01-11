@@ -1297,6 +1297,10 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
     tree_impl->set_hud_layer(nullptr);
   }
 
+  if (needs_hide_overlay_scrollbars_)
+    tree_impl->set_needs_hide_overlay_scrollbars();
+  needs_hide_overlay_scrollbars_ = false;
+
   tree_impl->set_background_color(background_color_);
   tree_impl->set_have_scroll_event_handlers(have_scroll_event_handlers_);
   tree_impl->set_event_listener_properties(

@@ -1063,6 +1063,8 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   layer_tree_host_->QueueSwapPromise(
       delegate_->RequestCopyOfOutputForLayoutTest(std::move(request)));
 
+  layer_tree_host_->set_needs_hide_overlay_scrollbars();
+
   // Force a commit to happen. The temporary copy output request will
   // be installed after layout which will happen as a part of the commit, for
   // widgets that delay the creation of their output surface.
