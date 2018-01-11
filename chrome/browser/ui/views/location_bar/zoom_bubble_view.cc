@@ -174,9 +174,9 @@ void ZoomBubbleView::ShowBubble(content::WebContents* web_contents,
   }
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
-  // If we do not have an anchor view, parent the bubble to the content area.
-  if (!anchor_view)
-    zoom_bubble_->set_parent_window(web_contents->GetNativeView());
+  // Always set the parent window here. This ensures ZoomBubbleView can find the
+  // location bar update even when the web contents is destroyed.
+  zoom_bubble_->set_parent_window(web_contents->GetNativeView());
 
   views::Widget* zoom_bubble_widget =
       views::BubbleDialogDelegateView::CreateBubble(zoom_bubble_);
