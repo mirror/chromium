@@ -1221,6 +1221,7 @@ void ExtensionService::OnAllExternalProvidersReady() {
 
 void ExtensionService::UnloadExtension(const std::string& extension_id,
                                        UnloadedExtensionReason reason) {
+  LOG(INFO) << "UnloadExtension";
   UpdateForUnloadingExtension(extension_id);
   extension_registrar_.RemoveExtension(extension_id, reason);
 }

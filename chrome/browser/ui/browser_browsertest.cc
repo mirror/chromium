@@ -106,6 +106,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -1116,6 +1117,40 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_TabClosingWhenRemovingExtension) {
 
   // There should only be one tab now.
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
+}
+
+// Tests that when an extension is unloaded, if only one tab is opened
+// containing extenions related content, then the tab is kept opened and is
+// directed to the default NTP page.
+IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+
+  const Extension* extension = LoadExtension(test_data_dir_.AppendASCII("options_page/"));
+  ASSERT_TRUE(extension);
+   LOG(INFO) << extension->id();
+
+  std::string url_string = std::string(extensions::kExtensionScheme) + "://" + extension->id() + "/" + "options.html";
+  LOG(INFO) << url_string;
+  GURL url(url_string);
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  ASSERT_EQ(1, tab_strip_model->count());
+  EXPECT_EQ(url_string, tab_strip_model->GetActiveWebContents()->GetURL().spec());
+
+  // Uninstall the extension and make sure TabClosing is sent.
+  ExtensionService* service = extensions::ExtensionSystem::Get(
+      browser()->profile())->extension_service();
+    extensions::ExtensionRegistry* registry =
+              extensions::ExtensionRegistry::Get(browser()->profile());
+  extensions::TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(),
+                              extensions::UnloadedExtensionReason::UNINSTALL);
+  registry_observer.WaitForExtensionUnloaded();
+
+  // There should only be one tab now.
+  ASSERT_EQ(1, tab_strip_model->count());
+  EXPECT_EQ(url::kAboutBlankURL, tab_strip_model->GetActiveWebContents()->GetURL().spec());
 }
 
 // Open with --app-id=<id>, and see that an application tab opens by default.

@@ -69,6 +69,7 @@ void ExtensionRegistrar::AddExtension(
 
 void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
                                          UnloadedExtensionReason reason) {
+  LOG(INFO) << "RemoveExtensions";
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   int include_mask =
@@ -91,6 +92,7 @@ void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
     extension_system_->UnregisterExtensionWithRequestContexts(extension_id,
                                                               reason);
   } else {
+    LOG(INFO) << "about to deactivate";
     // TODO(michaelpg): The extension may be blocked or blacklisted, in which
     // case it shouldn't need to be "deactivated". Determine whether the removal
     // notifications are necessary (crbug.com/708230).
