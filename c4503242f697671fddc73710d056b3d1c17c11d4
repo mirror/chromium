@@ -88,6 +88,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784fd4c6_0d600833",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T00:24:54Z",
+      "side": 1,
+      "message": "I\u0027m still not understanding why you want to conflate those events.\n\nScrolled to anchor has specific behaviors from Blink. I see no reason to conflate those with ChromeVox\u0027s purposes.\n\nchromeVox already follows  in page link targets for anchors, so observing this event would actually cause duplicate output (and that\u0027s why we\u0027re not currently observing it).",
+      "parentUuid": "fe7200c7_46ce6fe1",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
