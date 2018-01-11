@@ -8,6 +8,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -650,11 +651,17 @@ IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest, SingletonCorrectWindow) {
   params2.window_action = NavigateParams::SHOW_WINDOW;
   Navigate(&params2);
 
+  ChromeAutocompleteProviderClient client(browser()->profile());
+  // The provider client should recommend our target tab.
+  EXPECT_TRUE(client.IsTabOpenWithURL(params1.url));
+
   // Navigate to the singleton again.
   params1.disposition = WindowOpenDisposition::SINGLETON_TAB;
   Navigate(&params1);
 
   EXPECT_EQ(save_browser, browser());
+  // The provider client shouldn't recommend this tab any more.
+  EXPECT_FALSE(client.IsTabOpenWithURL(params1.url));
 }
 
 // This test verifies that navigation to a singleton prefers the latest
