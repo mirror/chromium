@@ -389,6 +389,15 @@ void ClientControlledShellSurface::OnBoundsChangeEvent(
             << ", callback=" << !bounds_changed_callback_.is_null()
             << ", resizer_ = " << resizer_.get();
   }
+
+  // The bounds change event might come from a wm snap event, in this case we
+  // should update |pending_show_state_| otherwise we may have inconsistence
+  // between |pending_show_state| and |kShowStateKey| window property.
+  if (current_state == ash::mojom::WindowStateType::LEFT_SNAPPED ||
+      current_state == ash::mojom::WindowStateType::RIGHT_SNAPPED) {
+    pending_show_state_ = ash::ToWindowShowState(current_state);
+  }
+
   if (!bounds.IsEmpty() && !bounds_changed_callback_.is_null())
     bounds_changed_callback_.Run(current_state, display_id, bounds,
                                  bounds_change);
