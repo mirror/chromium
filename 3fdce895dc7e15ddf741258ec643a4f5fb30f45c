@@ -244,6 +244,24 @@
       "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6bee848_6f7d53f3",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T23:53:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1870ca6f_928f01c7",
+      "revId": "3fdce895dc7e15ddf741258ec643a4f5fb30f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
