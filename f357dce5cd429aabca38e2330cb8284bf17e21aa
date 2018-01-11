@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80154733_bdd00743",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "nit: method? I think of Mojo interfaces having methods and legacy IPC system as having IPC messages.",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8e9de6_91a24ce3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13105,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "nit: Instead of using observer1/observer2, local scope can be used to enclose each navigation step.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd33ad78_703a71d9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13113,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "Why not just change the fragment? It seems it is also same-document navigation and less of a edge case. The same URL could also be thought as a reload, so it is a bit more confusing.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870973d1_ad4bab9f",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "nit: \"same-document navigation should be committed\".",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6625eb_cce27acc",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3147,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "This is not changed anywhere in this method, maybe remove it and just use the constant in its place?",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c1553a_59f66762",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "What happened to the RELOAD_* cases? Are they not valid anymore?",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4820416d_5a25d466",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3433,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "Why set this again when it is done on line 3418?",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce9d8b8_f4451c08",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "In the previous version of this code, we would still proceed with a load in this case, but it would use blink::kWebHistoryDifferentDocumentLoad. With this code we will drop the navigation. This is a change in behavior and I don\u0027t understand why it is ok to drop the navigation.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed8340e_e385b511",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "Do we really need to clear the find state? We will stay in the same document, so preserving the find state seems reasonable to me and likely better UX.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6856c420_99696ce8",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "nit: Drop the \"same_document_\" prefix, as this is the only type of navigation this method deals with. Reading later in the method \"if (!same_document_history_navigation)\" can be interpreted as non-same-document navigation, which is not possible.",
+      "range": {
+        "startLine": 972,
+        "startChar": 7,
+        "endLine": 972,
+        "endChar": 39
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46c056e_b24b047b",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-11T19:10:40Z",
+      "side": 1,
+      "message": "This sentence doesn\u0027t seem complete. Does it mean to say that WebHistoryItem and WebHistoryLoadType are required for history navigations?",
+      "range": {
+        "startLine": 199,
+        "startChar": 54,
+        "endLine": 200,
+        "endChar": 60
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
