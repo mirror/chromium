@@ -157,10 +157,10 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest,
   SubresourceFilterBubbleController* filterController =
       base::mac::ObjCCast<SubresourceFilterBubbleController>(controller);
 
-  EXPECT_TRUE([filterController messageLabel]);
+  EXPECT_TRUE([filterController titleLabel]);
   NSString* label = base::SysUTF16ToNSString(
       l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_EXPLANATION));
-  EXPECT_NSEQ([[filterController messageLabel] stringValue], label);
+  EXPECT_NSEQ([[filterController titleLabel] stringValue], label);
 
   NSString* link =
       base::SysUTF16ToNSString(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
