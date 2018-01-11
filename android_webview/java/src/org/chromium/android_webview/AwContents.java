@@ -1121,10 +1121,7 @@ public class AwContents implements SmartClipProvider {
             setNewAwContentsPreO(newAwContentsPtr);
         } else {
             // Move the TextClassifier to the new WebContents.
-            SelectionPopupController oldController =
-                    SelectionPopupController.fromWebContents(mWebContents);
-
-            TextClassifier textClassifier = oldController.getCustomTextClassifier();
+            TextClassifier textClassifier = mWebContents != null ? getTextClassifier() : null;
             setNewAwContentsPreO(newAwContentsPtr);
             if (textClassifier != null) {
                 SelectionPopupController.fromWebContents(mWebContents)
