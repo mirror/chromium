@@ -16,6 +16,24 @@
       "revId": "202876ff99c1dd15f7d85e54b2117c3e82ba072a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356da5ba_d8865636",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-11T05:50:08Z",
+      "side": 1,
+      "message": "They are arbitrary values, just used to check the logged metrics are consistent with the values in the features.",
+      "parentUuid": "adbc649c_197b4faf",
+      "revId": "202876ff99c1dd15f7d85e54b2117c3e82ba072a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
