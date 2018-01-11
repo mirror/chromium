@@ -19,17 +19,18 @@
 
 @implementation KeyCommandsProvider
 
-- (NSArray*)
-keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
-    baseViewController:(UIViewController*)baseViewController
-            dispatcher:
-                (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)
-                    dispatcher
-           editingText:(BOOL)editingText {
+- (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
+                baseViewController:(UIViewController*)baseViewController
+                        dispatcher:(id<ApplicationCommands,
+                                       BrowserCommands,
+                                       OmniboxFocuser,
+                                       FakeboxFocuser>)dispatcher
+                       editingText:(BOOL)editingText {
   __weak id<KeyCommandsPlumbing> weakConsumer = consumer;
   __weak UIViewController* weakBaseViewController = baseViewController;
-  __weak id<ApplicationCommands, BrowserCommands, OmniboxFocuser>
-      weakDispatcher = dispatcher;
+  __weak
+      id<ApplicationCommands, BrowserCommands, OmniboxFocuser, FakeboxFocuser>
+          weakDispatcher = dispatcher;
 
   // Block to have the tab model open the tab at |index|, if there is one.
   void (^focusTab)(NSUInteger) = ^(NSUInteger index) {

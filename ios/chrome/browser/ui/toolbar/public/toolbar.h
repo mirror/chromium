@@ -16,6 +16,7 @@
 
 @protocol Toolbar<AbstractWebToolbar,
                   OmniboxFocuser,
+                  FakeboxFocuser,
                   VoiceSearchControllerDelegate,
                   ActivityServicePositioner,
                   QRScannerResultLoading,

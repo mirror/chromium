@@ -17,7 +17,9 @@
 
 // Protocol defining a primary toolbar, in a paradigm where the toolbar can be
 // split between primary and secondary.
-@protocol PrimaryToolbarCoordinator<OmniboxFocuser, SideSwipeToolbarInteracting>
+@protocol PrimaryToolbarCoordinator<OmniboxFocuser,
+                                    FakeboxFocuser,
+                                    SideSwipeToolbarInteracting>
 
 // The toolbar ViewController.
 @property(nonatomic, strong) UIViewController* toolbarViewController;

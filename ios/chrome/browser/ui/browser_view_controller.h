@@ -23,6 +23,7 @@
 @class BrowserViewControllerDependencyFactory;
 class GURL;
 @protocol OmniboxFocuser;
+@protocol FakeboxFocuser;
 @protocol SnackbarCommands;
 @class Tab;
 @class TabModel;
@@ -59,6 +60,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 @property(nonatomic, readonly) id<ApplicationCommands,
                                   BrowserCommands,
                                   OmniboxFocuser,
+                                  FakeboxFocuser,
                                   SnackbarCommands,
                                   UrlLoader,
                                   WebToolbarDelegate>

@@ -47,13 +47,13 @@
 // BrowserViewController.
 @interface KeyCommandsProvider : NSObject
 
-- (NSArray*)
-keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
-    baseViewController:(UIViewController*)baseViewController
-            dispatcher:
-                (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)
-                    dispatcher
-           editingText:(BOOL)editingText;
+- (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
+                baseViewController:(UIViewController*)baseViewController
+                        dispatcher:(id<ApplicationCommands,
+                                       BrowserCommands,
+                                       OmniboxFocuser,
+                                       FakeboxFocuser>)dispatcher
+                       editingText:(BOOL)editingText;
 
 @end
 

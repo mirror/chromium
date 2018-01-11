@@ -30,6 +30,7 @@ class ChromeBrowserState;
 @interface WebToolbarController
     : ToolbarController<AbstractWebToolbar,
                         OmniboxFocuser,
+                        FakeboxFocuser,
                         QRScannerResultLoading,
                         VoiceSearchControllerDelegate>
 
