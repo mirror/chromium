@@ -22,8 +22,8 @@
 #include "base/sequence_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "content/browser/byte_stream.h"
 #include "content/browser/download/base_file.h"
+#include "content/browser/download/download_source_stream.h"
 #include "content/browser/download/rate_estimator.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_save_info.h"
@@ -32,7 +32,6 @@
 #include "mojo/public/cpp/system/simple_watcher.h"
 
 namespace content {
-class ByteStreamReader;
 class DownloadDestinationObserver;
 
 class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
@@ -79,113 +78,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void Resume() override;
 
  protected:
-  // Wrapper of a ByteStreamReader or ScopedDataPipeConsumerHandle, and the meta
-  // data needed to write to a slice of the target file.
-  //
-  // Does not require the stream reader or the consumer handle to be ready when
-  // constructor is called. They can be added later when the network response
-  // is handled.
-  //
-  // Multiple SourceStreams can concurrently write to the same file sink.
-  class CONTENT_EXPORT SourceStream : public mojom::DownloadStreamClient {
-   public:
-    SourceStream(int64_t offset,
-                 int64_t length,
-                 std::unique_ptr<DownloadManager::InputStream> stream);
-    ~SourceStream() override;
-
-    void Initialize();
-
-    // mojom::DownloadStreamClient
-    void OnStreamCompleted(mojom::NetworkRequestStatus status) override;
-
-    // Called when response is completed.
-    void OnResponseCompleted(DownloadInterruptReason reason);
-
-    // Called after successfully writing a buffer to disk.
-    void OnWriteBytesToDisk(int64_t bytes_write);
-
-    // Given a data block that is already written, truncate the length of this
-    // object to avoid overwriting that block.
-    void TruncateLengthWithWrittenDataBlock(int64_t offset,
-                                            int64_t bytes_written);
-
-    // Registers the callback that will be called when data is ready.
-    void RegisterDataReadyCallback(
-        const mojo::SimpleWatcher::ReadyCallback& callback);
-    // Clears the callback that is registed when data is ready.
-    void ClearDataReadyCallback();
-
-    // Gets the status of the input stream when the stream completes.
-    // TODO(qinmin): for data pipe, it currently doesn't support sending an
-    // abort status at the end. The best way to do this is to add a separate
-    // mojo interface for control messages when creating this object. See
-    // http://crbug.com/748240. An alternative strategy is to let the
-    // DownloadManager pass the status code to DownloadItem or DownloadFile.
-    // However, a DownloadFile can have multiple SourceStreams, so we have to
-    // maintain a map between data pipe and DownloadItem/DownloadFile somewhere.
-    DownloadInterruptReason GetCompletionStatus();
-
-    using CompletionCallback = base::OnceCallback<void(SourceStream*)>;
-    // Register an callback to be called when download completes.
-    void RegisterCompletionCallback(CompletionCallback callback);
-
-    // Results for reading the SourceStream.
-    enum StreamState {
-      EMPTY = 0,
-      HAS_DATA,
-      WAIT_FOR_COMPLETION,
-      COMPLETE,
-    };
-    StreamState Read(scoped_refptr<net::IOBuffer>* data, size_t* length);
-
-    int64_t offset() const { return offset_; }
-    int64_t length() const { return length_; }
-    int64_t bytes_written() const { return bytes_written_; }
-    bool is_finished() const { return finished_; }
-    void set_finished(bool finish) { finished_ = finish; }
-    size_t index() { return index_; }
-    void set_index(size_t index) { index_ = index; }
-
-   private:
-    // Starting position for the stream to write to disk.
-    int64_t offset_;
-
-    // The maximum length to write to the disk. If set to 0, keep writing until
-    // the stream depletes.
-    int64_t length_;
-
-    // Number of bytes written to disk from the stream.
-    // Next write position is (|offset_| + |bytes_written_|).
-    int64_t bytes_written_;
-
-    // If all the data read from the stream has been successfully written to
-    // disk.
-    bool finished_;
-
-    // The slice index in the |received_slices_| vector. A slice was created
-    // once the stream started writing data to the target file.
-    size_t index_;
-
-    // The stream through which data comes.
-    std::unique_ptr<ByteStreamReader> stream_reader_;
-
-    // Status when the response completes, used by data pipe.
-    DownloadInterruptReason completion_status_;
-
-    // Whether the producer has completed handling the response.
-    bool is_response_completed_;
-
-    CompletionCallback completion_callback_;
-
-    // Objects for consuming a mojo data pipe.
-    mojom::DownloadStreamHandlePtr stream_handle_;
-    std::unique_ptr<mojo::SimpleWatcher> handle_watcher_;
-    std::unique_ptr<mojo::Binding<mojom::DownloadStreamClient>> binding_;
-
-    DISALLOW_COPY_AND_ASSIGN(SourceStream);
-  };
-
   // For test class overrides.
   // Write data from the offset to the file.
   // On OS level, it will seek to the |offset| and write from there.
@@ -198,7 +90,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   virtual bool ShouldRetryFailedRename(DownloadInterruptReason reason);
 
   virtual DownloadInterruptReason HandleStreamCompletionStatus(
-      SourceStream* source_stream);
+      DownloadSourceStream* source_stream);
 
  private:
   friend class DownloadFileTest;
@@ -246,33 +138,33 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // Called before the data is written to disk.
   void WillWriteToDisk(size_t data_len);
 
-  // For a given SourceStream object and the bytes available to write, determine
-  // the actual number of bytes it can write to the disk. For parallel
+  // For a given DownloadSourceStream object and the bytes available to write,
+  // determine the actual number of bytes it can write to the disk. For parallel
   // downloading, if the first disk IO writes to a location that is already
   // written by another stream, the current stream should stop writing. Returns
   // true if the stream can write no more data and should be finished, returns
   // false otherwise.
-  bool CalculateBytesToWrite(SourceStream* source_stream,
+  bool CalculateBytesToWrite(DownloadSourceStream* source_stream,
                              size_t bytes_available_to_write,
                              size_t* bytes_to_write);
 
-  // Called when a new SourceStream object is added.
-  void OnSourceStreamAdded(SourceStream* source_stream);
+  // Called when a new DownloadSourceStream object is added.
+  void OnSourceStreamAdded(DownloadSourceStream* source_stream);
 
   // Called when there's some activity on the input data that needs to be
   // handled.
-  void StreamActive(SourceStream* source_stream, MojoResult result);
+  void StreamActive(DownloadSourceStream* source_stream, MojoResult result);
 
   // Register callback and start to read data from the stream.
-  void RegisterAndActivateStream(SourceStream* source_stream);
+  void RegisterAndActivateStream(DownloadSourceStream* source_stream);
 
   // Called when a stream completes.
-  void OnStreamCompleted(SourceStream* source_stream);
+  void OnStreamCompleted(DownloadSourceStream* source_stream);
 
   // Notify |observer_| about the download status.
-  void NotifyObserver(SourceStream* source_stream,
+  void NotifyObserver(DownloadSourceStream* source_stream,
                       DownloadInterruptReason reason,
-                      SourceStream::StreamState stream_state,
+                      DownloadSourceStream::StreamState stream_state,
                       bool should_terminate);
 
   // Adds a new slice to |received_slices_| and update the existing entries in
@@ -289,15 +181,16 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   int64_t TotalBytesReceived() const;
 
   // Helper method to handle stream error
-  void HandleStreamError(SourceStream* source_stream,
+  void HandleStreamError(DownloadSourceStream* source_stream,
                          DownloadInterruptReason reason);
 
   // Check whether this file is potentially sparse.
   bool IsSparseFile() const;
 
-  // Given a SourceStream object, returns its neighbor that preceds it if
-  // SourceStreams are ordered by their offsets
-  SourceStream* FindPrecedingNeighbor(SourceStream* source_stream);
+  // Given a DownloadSourceStream object, returns its neighbor that preceds it
+  // if SourceStreams are ordered by their offsets
+  DownloadSourceStream* FindPrecedingNeighbor(
+      DownloadSourceStream* source_stream);
 
   // See |cancel_request_callback_|.
   void CancelRequest(int64_t offset);
@@ -318,12 +211,12 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
   // Map of the offset and the source stream that represents the slice
   // starting from offset.
-  typedef std::unordered_map<int64_t, std::unique_ptr<SourceStream>>
+  typedef std::unordered_map<int64_t, std::unique_ptr<DownloadSourceStream>>
       SourceStreams;
   SourceStreams source_streams_;
 
-  // Used to cancel the request on UI thread, since the ByteStreamReader can't
-  // close the underlying resource writing to the pipe.
+  // Used to cancel the request on UI thread, since the DownloadSourceStream
+  //  can't close the underlying resource writing to the pipe.
   CancelRequestCallback cancel_request_callback_;
 
   // Used to trigger progress updates.
