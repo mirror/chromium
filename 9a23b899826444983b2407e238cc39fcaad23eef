@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4dcc3b52_4ee4c60f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T07:16:52Z",
+      "side": 1,
+      "message": "I\u0027m fine with this.\n\nOr we could move all the definitions to TraceTraits.h.",
+      "parentUuid": "ac0bfc76_be2de398",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "190b0f3d_7a3c0da7",
         "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d05dc033_924bf16a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T07:16:52Z",
+      "side": 1,
+      "message": "Yeah, we\u0027ll need to put the tests in core/ or bindings/.",
+      "parentUuid": "190b0f3d_7a3c0da7",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a60d779_720e8323",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-10T16:09:47Z",
       "side": 1,
       "message": "Not sure if I need to add all template arguments that Vector (and the other containers) uses.",
+      "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa54f33_0a348083",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T07:16:52Z",
+      "side": 1,
+      "message": "This makes sense.\n\nI\u0027d add these traits to one file (e.g., heap/TraceTraits.h) though.",
+      "parentUuid": "7a60d779_720e8323",
       "revId": "9a23b899826444983b2407e238cc39fcaad23eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
