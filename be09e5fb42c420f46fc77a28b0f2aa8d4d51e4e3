@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8213b9_6153bedc",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-11T16:10:44Z",
+      "side": 1,
+      "message": "(just highlighting this for removal.)",
+      "revId": "be09e5fb42c420f46fc77a28b0f2aa8d4d51e4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e8be2a_cbc323fd",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-11T16:10:44Z",
+      "side": 1,
+      "message": "(ditto about removing.)",
+      "revId": "be09e5fb42c420f46fc77a28b0f2aa8d4d51e4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
