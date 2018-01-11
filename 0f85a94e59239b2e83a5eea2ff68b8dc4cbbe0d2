@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b5431f_271834a7",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T01:50:27Z",
+      "side": 1,
+      "message": "What about two functions, one that takes a preamble and one that takes nothing? It is weird to have exclude preamble use members on the preamble.",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247532ce_cf45971b",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T01:50:27Z",
+      "side": 1,
+      "message": "This is a lot to send to get one bool which is \"please do not quickReject my images\".  Do you think we could just get away with some max size canvas for this case and not send a playback rect at all?",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069a2da4_28c998f1",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T01:50:27Z",
+      "side": 1,
+      "message": "What about...!record_ \u003d\u003d !other.record_?",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
