@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5815b3fc_a6853354",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:11:33Z",
+      "side": 1,
+      "message": "I\u0027ve never seen includes done inside a function, as opposed to at the top of the file.  Is this conventional?",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e46863_5bf32e53",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:11:33Z",
+      "side": 1,
+      "message": "version",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7be7bcb_15f38595",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:11:33Z",
+      "side": 1,
+      "message": "Isn\u0027t there already a Python class for this?  tempfile.TemporaryDirectory() is the high-level context manager-type interface for this, and would presumably mean you don\u0027t have to roll your own class.  Does it not work for some reason?",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa3af98_5b6b7a85",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:11:33Z",
+      "side": 1,
+      "message": "Can you import and use the gsutil package instead?  It\u0027s generally preferred to not shell out unless totally necessary.",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab656475_61224509",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:11:33Z",
+      "side": 1,
+      "message": "- Why is the N capital?\n- Don\u0027t really need \u0027shall\u0027 intermediate var.",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
