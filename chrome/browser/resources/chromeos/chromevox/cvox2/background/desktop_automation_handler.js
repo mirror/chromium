@@ -238,7 +238,10 @@ DesktopAutomationHandler.prototype = {
     var node = evt.target;
     var range = cursors.Range.fromNode(node);
 
-    new Output().withSpeechAndBraille(range, null, evt.type).go();
+    new Output()
+        .withSpeechAndBraille(range, null, evt.type)
+        .withSpeechCategory(cvox.TtsCategory.LIVE)
+        .go();
   },
 
   onBlur: function(evt) {
@@ -332,7 +335,7 @@ DesktopAutomationHandler.prototype = {
 
       if (focusIsAncestor) {
         focus = evt.target;
-        Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+        Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
       }
 
       // Create text edit handler, if needed, now in order not to miss initial
@@ -430,7 +433,7 @@ DesktopAutomationHandler.prototype = {
 
       if (fromDesktop &&
           (!this.lastValueTarget_ || this.lastValueTarget_ !== t)) {
-        output.withQueueMode(cvox.QueueMode.FLUSH);
+        output.withQueueMode(cvox.QueueMode.CATEGORY_FLUSH);
         var range = cursors.Range.fromNode(t);
         output.withRichSpeechAndBraille(
             range, range, Output.EventType.NAVIGATE);
@@ -475,7 +478,7 @@ DesktopAutomationHandler.prototype = {
       var override = evt.target.role == RoleType.MENU_ITEM ||
           (evt.target.root == focus.root &&
            focus.root.role == RoleType.DESKTOP);
-      Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+      Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
       if (override || AutomationUtil.isDescendantOf(evt.target, focus))
         this.onEventDefault(evt);
     }.bind(this));
@@ -592,7 +595,7 @@ DesktopAutomationHandler.prototype = {
 
     ChromeVoxState.instance.setCurrentRange(cursors.Range.fromNode(focus));
 
-    Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+    Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
     o.withRichSpeechAndBraille(
          ChromeVoxState.instance.currentRange, null, evt.type)
         .go();

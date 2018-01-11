@@ -84,6 +84,7 @@ DialogClientView::DialogClientView(Widget* owner, View* contents_view)
   // Doing this now ensures this accelerator will have lower priority than
   // one set by the contents view.
   AddAccelerator(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
   button_row_container_ = new ButtonRowContainer(this);
   AddChildView(button_row_container_);
 }
