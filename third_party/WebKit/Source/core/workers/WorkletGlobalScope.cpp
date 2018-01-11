@@ -9,6 +9,7 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/script/Modulator.h"
 #include "core/workers/GlobalScopeCreationParams.h"
@@ -48,6 +49,9 @@ WorkletGlobalScope::WorkletGlobalScope(
   // workletGlobalScope."
   ApplyContentSecurityPolicyFromVector(
       *creation_params->content_security_policy_parsed_headers);
+
+  OriginTrialContext::AddTokens(this,
+                                creation_params->origin_trial_tokens.get());
 }
 
 WorkletGlobalScope::~WorkletGlobalScope() = default;
@@ -57,13 +61,7 @@ ExecutionContext* WorkletGlobalScope::GetExecutionContext() const {
 }
 
 bool WorkletGlobalScope::IsSecureContext(String& error_message) const {
-  // Until there are APIs that are available in worklets and that
-  // require a privileged context test that checks ancestors, just do
-  // a simple check here.
-  if (GetSecurityOrigin()->IsPotentiallyTrustworthy())
-    return true;
-  error_message = GetSecurityOrigin()->IsPotentiallyTrustworthyErrorMessage();
-  return false;
+  return IsSecureContextImpl(GetSecurityOrigin(), error_message);
 }
 
 // Implementation of the first half of the "fetch and invoke a worklet script"
@@ -131,6 +129,23 @@ void WorkletGlobalScope::Trace(blink::Visitor* visitor) {
 void WorkletGlobalScope::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   WorkerOrWorkletGlobalScope::TraceWrappers(visitor);
+}
+
+bool WorkletGlobalScope::IsSecureContextForOriginTrials() const {
+  String error_message;
+  return IsSecureContextImpl(SecurityOriginForOriginTrials(), error_message);
+}
+
+bool WorkletGlobalScope::IsSecureContextImpl(
+    const SecurityOrigin* security_origin,
+    String& error_message) const {
+  // Until there are APIs that are available in worklets and that
+  // require a privileged context test that checks ancestors, just do
+  // a simple check here.
+  if (security_origin->IsPotentiallyTrustworthy())
+    return true;
+  error_message = security_origin->IsPotentiallyTrustworthyErrorMessage();
+  return false;
 }
 
 }  // namespace blink

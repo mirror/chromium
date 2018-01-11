@@ -76,6 +76,18 @@ class CORE_EXPORT WorkletGlobalScope
     return document_security_origin_.get();
   }
 
+  // Customize the security context used for origin trials.
+  // Origin trials are only enabled in secure contexts, but WorkletGlobalScopes
+  // are defined to have a unique, opaque origin, so are not secure:
+  // https://drafts.css-houdini.org/worklets/#script-settings-for-worklets
+  // For origin trials, instead consider the context of the document which
+  // created the worklet, since the origin trial tokens are inherited from the
+  // document.
+  const SecurityOrigin* SecurityOriginForOriginTrials() const {
+    return DocumentSecurityOrigin();
+  }
+  bool IsSecureContextForOriginTrials() const;
+
   void Trace(blink::Visitor*) override;
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
 
@@ -89,6 +101,8 @@ class CORE_EXPORT WorkletGlobalScope
 
  private:
   EventTarget* ErrorEventTarget() final { return nullptr; }
+
+  bool IsSecureContextImpl(const SecurityOrigin*, String& error_message) const;
 
   // The |url_| and |user_agent_| are inherited from the parent Document.
   const KURL url_;
