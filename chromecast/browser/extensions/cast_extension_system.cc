@@ -1,8 +1,8 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/shell/browser/shell_extension_system.h"
+#include "chromecast/browser/extensions/cast_extension_system.h"
 
 #include <string>
 
@@ -34,17 +34,16 @@ using content::BrowserThread;
 
 namespace extensions {
 
-ShellExtensionSystem::ShellExtensionSystem(BrowserContext* browser_context)
+CastExtensionSystem::CastExtensionSystem(BrowserContext* browser_context)
     : browser_context_(browser_context),
       store_factory_(new ValueStoreFactoryImpl(browser_context->GetPath())),
       weak_factory_(this) {}
 
-ShellExtensionSystem::~ShellExtensionSystem() {
-}
+CastExtensionSystem::~CastExtensionSystem() {}
 
-const Extension* ShellExtensionSystem::LoadExtension(
+const Extension* CastExtensionSystem::LoadExtension(
     const base::FilePath& extension_dir) {
-  // app_shell only supports unpacked extensions.
+  // cast_shell only supports unpacked extensions.
   // NOTE: If you add packed extension support consider removing the flag
   // FOLLOW_SYMLINKS_ANYWHERE below. Packed extensions should not have symlinks.
   CHECK(base::DirectoryExists(extension_dir)) << extension_dir.AsUTF8Unsafe();
@@ -66,7 +65,7 @@ const Extension* ShellExtensionSystem::LoadExtension(
       LOG(WARNING) << warning.message;
   }
 
-  // TODO(jamescook): We may want to do some of these things here:
+  // TODO(b/70902491): We may want to do some of these things here:
   // * Create a PermissionsUpdater.
   // * Call PermissionsUpdater::GrantActivePermissions().
   // * Call ExtensionService::SatisfyImports().
@@ -77,9 +76,8 @@ const Extension* ShellExtensionSystem::LoadExtension(
 
   RegisterExtensionWithRequestContexts(
       extension.get(),
-      base::Bind(
-          &ShellExtensionSystem::OnExtensionRegisteredWithRequestContexts,
-          weak_factory_.GetWeakPtr(), extension));
+      base::Bind(&CastExtensionSystem::OnExtensionRegisteredWithRequestContexts,
+                 weak_factory_.GetWeakPtr(), extension));
 
   RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
       ->OnExtensionLoaded(*extension);
@@ -89,11 +87,11 @@ const Extension* ShellExtensionSystem::LoadExtension(
   return extension.get();
 }
 
-const Extension* ShellExtensionSystem::LoadApp(const base::FilePath& app_dir) {
+const Extension* CastExtensionSystem::LoadApp(const base::FilePath& app_dir) {
   return LoadExtension(app_dir);
 }
 
-void ShellExtensionSystem::FinishInitialization() {
+void CastExtensionSystem::Init() {
   // Inform the rest of the extensions system to start.
   ready_.Signal();
   content::NotificationService::current()->Notify(
@@ -102,7 +100,7 @@ void ShellExtensionSystem::FinishInitialization() {
       content::NotificationService::NoDetails());
 }
 
-void ShellExtensionSystem::LaunchApp(const ExtensionId& extension_id) {
+void CastExtensionSystem::LaunchApp(const ExtensionId& extension_id) {
   // Send the onLaunched event.
   DCHECK(ExtensionRegistry::Get(browser_context_)
              ->enabled_extensions()
@@ -114,69 +112,69 @@ void ShellExtensionSystem::LaunchApp(const ExtensionId& extension_id) {
                                                  SOURCE_UNTRACKED, nullptr);
 }
 
-void ShellExtensionSystem::Shutdown() {
+void CastExtensionSystem::Shutdown() {}
+
+void CastExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
+  service_worker_manager_.reset(new ServiceWorkerManager(browser_context_));
+  runtime_data_.reset(
+      new RuntimeData(ExtensionRegistry::Get(browser_context_)));
+  quota_service_.reset(new QuotaService);
+  app_sorting_.reset(new NullAppSorting);
+
+  RendererStartupHelperFactory::GetForBrowserContext(browser_context_);
 }
 
-void ShellExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
-  service_worker_manager_ =
-      std::make_unique<ServiceWorkerManager>(browser_context_);
-  runtime_data_ =
-      std::make_unique<RuntimeData>(ExtensionRegistry::Get(browser_context_));
-  quota_service_ = std::make_unique<QuotaService>();
-  app_sorting_ = std::make_unique<NullAppSorting>();
-}
-
-void ShellExtensionSystem::InitForIncognitoProfile() {
+void CastExtensionSystem::InitForIncognitoProfile() {
   NOTREACHED();
 }
 
-ExtensionService* ShellExtensionSystem::extension_service() {
+ExtensionService* CastExtensionSystem::extension_service() {
   return nullptr;
 }
 
-RuntimeData* ShellExtensionSystem::runtime_data() {
+RuntimeData* CastExtensionSystem::runtime_data() {
   return runtime_data_.get();
 }
 
-ManagementPolicy* ShellExtensionSystem::management_policy() {
+ManagementPolicy* CastExtensionSystem::management_policy() {
   return nullptr;
 }
 
-ServiceWorkerManager* ShellExtensionSystem::service_worker_manager() {
+ServiceWorkerManager* CastExtensionSystem::service_worker_manager() {
   return service_worker_manager_.get();
 }
 
-SharedUserScriptMaster* ShellExtensionSystem::shared_user_script_master() {
+SharedUserScriptMaster* CastExtensionSystem::shared_user_script_master() {
   return nullptr;
 }
 
-StateStore* ShellExtensionSystem::state_store() {
+StateStore* CastExtensionSystem::state_store() {
   return nullptr;
 }
 
-StateStore* ShellExtensionSystem::rules_store() {
+StateStore* CastExtensionSystem::rules_store() {
   return nullptr;
 }
 
-scoped_refptr<ValueStoreFactory> ShellExtensionSystem::store_factory() {
+scoped_refptr<ValueStoreFactory> CastExtensionSystem::store_factory() {
   return store_factory_;
 }
 
-InfoMap* ShellExtensionSystem::info_map() {
+InfoMap* CastExtensionSystem::info_map() {
   if (!info_map_.get())
-    info_map_ = base::MakeRefCounted<InfoMap>();
+    info_map_ = new InfoMap;
   return info_map_.get();
 }
 
-QuotaService* ShellExtensionSystem::quota_service() {
+QuotaService* CastExtensionSystem::quota_service() {
   return quota_service_.get();
 }
 
-AppSorting* ShellExtensionSystem::app_sorting() {
+AppSorting* CastExtensionSystem::app_sorting() {
   return app_sorting_.get();
 }
 
-void ShellExtensionSystem::RegisterExtensionWithRequestContexts(
+void CastExtensionSystem::RegisterExtensionWithRequestContexts(
     const Extension* extension,
     const base::Closure& callback) {
   BrowserThread::PostTaskAndReply(
@@ -186,32 +184,33 @@ void ShellExtensionSystem::RegisterExtensionWithRequestContexts(
       callback);
 }
 
-void ShellExtensionSystem::UnregisterExtensionWithRequestContexts(
+void CastExtensionSystem::UnregisterExtensionWithRequestContexts(
     const std::string& extension_id,
     const UnloadedExtensionReason reason) {}
 
-const OneShotEvent& ShellExtensionSystem::ready() const {
+const OneShotEvent& CastExtensionSystem::ready() const {
   return ready_;
 }
 
-ContentVerifier* ShellExtensionSystem::content_verifier() {
+ContentVerifier* CastExtensionSystem::content_verifier() {
   return nullptr;
 }
 
-std::unique_ptr<ExtensionSet> ShellExtensionSystem::GetDependentExtensions(
+std::unique_ptr<ExtensionSet> CastExtensionSystem::GetDependentExtensions(
     const Extension* extension) {
   return std::make_unique<ExtensionSet>();
 }
 
-void ShellExtensionSystem::InstallUpdate(
+void CastExtensionSystem::InstallUpdate(
     const std::string& extension_id,
     const std::string& public_key,
-    const base::FilePath& temp_dir,
+    const base::FilePath& unpacked_dir,
     InstallUpdateCallback install_update_callback) {
   NOTREACHED();
+  base::DeleteFile(unpacked_dir, true /* recursive */);
 }
 
-void ShellExtensionSystem::OnExtensionRegisteredWithRequestContexts(
+void CastExtensionSystem::OnExtensionRegisteredWithRequestContexts(
     scoped_refptr<Extension> extension) {
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser_context_);
   registry->AddReady(extension);
