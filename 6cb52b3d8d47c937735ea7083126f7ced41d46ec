@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b329ee24_3740dc25",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ChromeHomeDownloadManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T00:06:53Z",
+      "side": 1,
+      "message": "Yes. Some tests in this suite were failing because the sheet state was still \"scrolling\".",
+      "parentUuid": "f2cacf44_c32d79b7",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 83
+      },
+      "revId": "6cb52b3d8d47c937735ea7083126f7ced41d46ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15322a5e_7dc9a3fd",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentControllerTest.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "340b4167_38dbe7fb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T00:06:53Z",
+      "side": 1,
+      "message": "This test isn\u0027t for these two features per se. It\u0027s testing that the sheet enters the expected states and the right content gets selected when selecting something other than the \"Home\" tab. This fails with the new fieldtrial_testing_config, so I explicitly set the home sheet destruction that\u0027s need for this test to pass. I added the new test below to get coverage on the other home content destruction approach.",
+      "parentUuid": "15322a5e_7dc9a3fd",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 91
+      },
+      "revId": "6cb52b3d8d47c937735ea7083126f7ced41d46ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ecc742a_1ba645f2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentControllerTest.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "6cb52b3d8d47c937735ea7083126f7ced41d46ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c1b688_ee0846fe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T00:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ecc742a_1ba645f2",
+      "range": {
+        "startLine": 94,
+        "startChar": 34,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "6cb52b3d8d47c937735ea7083126f7ced41d46ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
