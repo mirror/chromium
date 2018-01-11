@@ -8,6 +8,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "ui/base/platform_window_defaults.h"
+#include "ui/base/x/x11_util.h"
 #include "ui/base/x/x11_window_event_manager.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
@@ -21,6 +22,10 @@
 namespace ui {
 
 namespace {
+
+// Constants that are part of EWMH.
+constexpr int k_NET_WM_STATE_ADD = 1;
+constexpr int k_NET_WM_STATE_REMOVE = 0;
 
 XID FindXEventTarget(const XEvent& xev) {
   XID target = xev.xany.window;
@@ -221,13 +226,32 @@ void X11WindowBase::SetCapture() {}
 
 void X11WindowBase::ReleaseCapture() {}
 
-void X11WindowBase::ToggleFullscreen() {}
+void X11WindowBase::ToggleFullscreen() {
+  SetWMSpecState(!IsFullscreen(), gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"),
+                 x11::None);
+}
 
-void X11WindowBase::Maximize() {}
+void X11WindowBase::Maximize() {
+  if (IsFullscreen())
+    ToggleFullscreen();
 
-void X11WindowBase::Minimize() {}
+  SetWMSpecState(true, gfx::GetAtom("_NET_WM_STATE_MAXIMIZED_VERT"),
+                 gfx::GetAtom("_NET_WM_STATE_MAXIMIZED_HORZ"));
+}
 
-void X11WindowBase::Restore() {}
+void X11WindowBase::Minimize() {
+  XIconifyWindow(xdisplay_, xwindow_, 0);
+}
+
+void X11WindowBase::Restore() {
+  if (IsFullscreen())
+    ToggleFullscreen();
+
+  if (IsMaximized()) {
+    SetWMSpecState(false, gfx::GetAtom("_NET_WM_STATE_MAXIMIZED_VERT"),
+                   gfx::GetAtom("_NET_WM_STATE_MAXIMIZED_HORZ"));
+  }
+}
 
 void X11WindowBase::MoveCursorTo(const gfx::Point& location) {
   XWarpPointer(xdisplay_, x11::None, xroot_window_, 0, 0, 0, 0,
@@ -296,7 +320,77 @@ void X11WindowBase::ProcessXWindowEvent(XEvent* xev) {
       }
       break;
     }
+    case PropertyNotify: {
+      ::Atom changed_atom = xev->xproperty.atom;
+      if (changed_atom == gfx::GetAtom("_NET_WM_STATE"))
+        OnWMStateUpdated();
+      break;
+    }
   }
+}
+
+void X11WindowBase::SetWMSpecState(bool enabled, ::Atom state1, ::Atom state2) {
+  XEvent xclient;
+  memset(&xclient, 0, sizeof(xclient));
+  xclient.type = ClientMessage;
+  xclient.xclient.window = xwindow_;
+  xclient.xclient.message_type = gfx::GetAtom("_NET_WM_STATE");
+  // The data should be viewed as a list of longs, because ::Atom is a typedef
+  // of long.
+  xclient.xclient.format = 32;
+  xclient.xclient.data.l[0] =
+      enabled ? k_NET_WM_STATE_ADD : k_NET_WM_STATE_REMOVE;
+  xclient.xclient.data.l[1] = state1;
+  xclient.xclient.data.l[2] = state2;
+  xclient.xclient.data.l[3] = 1;
+  xclient.xclient.data.l[4] = 0;
+  XSendEvent(xdisplay_, xroot_window_, x11::False,
+             SubstructureRedirectMask | SubstructureNotifyMask, &xclient);
+}
+
+void X11WindowBase::OnWMStateUpdated() {
+  std::vector<::Atom> atom_list;
+  // Ignore the return value of ui::GetAtomArrayProperty(). Fluxbox removes the
+  // _NET_WM_STATE property when no _NET_WM_STATE atoms are set.
+  ui::GetAtomArrayProperty(xwindow_, "_NET_WM_STATE", &atom_list);
+
+  bool was_minimized = IsMinimized();
+
+  window_properties_.clear();
+  std::copy(atom_list.begin(), atom_list.end(),
+            inserter(window_properties_, window_properties_.begin()));
+
+  // Propagate the window minimization information to the client.
+  ui::PlatformWindowState state =
+      ui::PlatformWindowState::PLATFORM_WINDOW_STATE_NORMAL;
+  if (IsMaximized())
+    state = ui::PlatformWindowState::PLATFORM_WINDOW_STATE_MAXIMIZED;
+  else if (IsFullscreen())
+    state = ui::PlatformWindowState::PLATFORM_WINDOW_STATE_FULLSCREEN;
+  else if (IsMinimized())
+    state = ui::PlatformWindowState::PLATFORM_WINDOW_STATE_MINIMIZED;
+
+  // Do not flood the WindowServer unless the previous state was minimized.
+  if (was_minimized)
+    delegate_->OnWindowStateChanged(state);
+}
+
+bool X11WindowBase::HasWMSpecProperty(const char* property) const {
+  return window_properties_.find(gfx::GetAtom(property)) !=
+         window_properties_.end();
+}
+
+bool X11WindowBase::IsMinimized() const {
+  return HasWMSpecProperty("_NET_WM_STATE_HIDDEN");
+}
+
+bool X11WindowBase::IsMaximized() const {
+  return (HasWMSpecProperty("_NET_WM_STATE_MAXIMIZED_VERT") &&
+          HasWMSpecProperty("_NET_WM_STATE_MAXIMIZED_HORZ"));
+}
+
+bool X11WindowBase::IsFullscreen() const {
+  return HasWMSpecProperty("_NET_WM_STATE_FULLSCREEN");
 }
 
 }  // namespace ui
