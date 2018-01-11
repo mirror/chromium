@@ -204,6 +204,8 @@ void PdfPrinterHandler::StartPrint(
                         : nullptr;
   const GURL& initiator_url =
       initiator ? initiator->GetLastCommittedURL() : GURL::EmptyGURL();
+
+  // PdfPrinterHandlerTest.GetFileName replicates this logic.
   bool title_is_url = url_formatter::FormatUrl(initiator_url) == job_title;
   base::FilePath path = title_is_url ? GetFileNameForURL(initiator_url)
                                      : GetFileNameForPrintJobTitle(job_title);
