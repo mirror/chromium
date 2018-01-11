@@ -33,7 +33,9 @@ WebRtcLocalEventLogManager::WebRtcLocalEventLogManager(
       clock_for_testing_(nullptr),
       max_log_file_size_bytes_(kDefaultMaxLocalLogFileSizeBytes) {}
 
-WebRtcLocalEventLogManager::~WebRtcLocalEventLogManager() {}
+WebRtcLocalEventLogManager::~WebRtcLocalEventLogManager() {
+  // This should never actually run, except in unit tests.
+}
 
 bool WebRtcLocalEventLogManager::PeerConnectionAdded(int render_process_id,
                                                      int lid) {
