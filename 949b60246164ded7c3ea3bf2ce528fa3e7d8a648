@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a130ac_fcc14a33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "nit: Using -\u003e Use",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e99c36_93112d69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "nit: aligned... -\u003e aligns better with the spec",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3bf73d_b04c9598",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "note: CLA check completed",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d80671d3_e29dc14a",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBCursor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "How about moving the \"using\" inside IDBCursor, so it\u0027d be IDBCursor::Source?",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b346349_c2e02e43",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "cast -\u003e ToIDBObjectStoreOrIDBIndex (at the very least it should be Cast, but the latter is more idiomatic)\n\nOr, even better, include IDBCursor.h and use IDBCursorSource",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b314c9_dd3ef655",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T12:42:58Z",
+      "side": 1,
+      "message": "Does this ever happen? Should there be a NOTREACHED() before the return?",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
