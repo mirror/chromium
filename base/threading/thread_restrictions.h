@@ -70,6 +70,9 @@ class LevelDBMojoProxy;
 namespace media {
 class BlockingUrlProtocol;
 }
+namespace midi {
+class TaskService;
+}
 namespace mojo {
 class SyncCallRestrictions;
 namespace edk {
@@ -290,6 +293,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitivesOutsideBlockingScope {
       ThreadRestrictionsTest,
       ScopedAllowBaseSyncPrimitivesOutsideBlockingScopeResetsState);
   friend class ::KeyStorageLinux;
+  friend class midi::TaskService;
 
   ScopedAllowBaseSyncPrimitivesOutsideBlockingScope()
       EMPTY_BODY_IF_DCHECK_IS_OFF;
