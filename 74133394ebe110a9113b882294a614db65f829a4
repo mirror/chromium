@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49eddf30_2d0b2b56",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-11T19:14:38Z",
+      "side": 1,
+      "message": "These are being used to parse the values passed in the manifest as \"x-cdm-codecs\". Line 229+ below. These were in the widevine_cdm_common as the manifest value was also passed through additional_parms and needed to be parsed in chrome_key_systems.cc.\n\nHowever, did remove the comment for |kCdmCodecsListName| above as it is no longer passed on.",
+      "parentUuid": "b623d1f6_6c349a36",
+      "revId": "74133394ebe110a9113b882294a614db65f829a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bda7a68_2188b88a",
         "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "74133394ebe110a9113b882294a614db65f829a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfac8033_41c1db6e",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-11T19:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bda7a68_2188b88a",
+      "range": {
+        "startLine": 225,
+        "startChar": 37,
+        "endLine": 225,
+        "endChar": 71
+      },
+      "revId": "74133394ebe110a9113b882294a614db65f829a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
