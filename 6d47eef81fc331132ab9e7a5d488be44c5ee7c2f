@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e19d906_91c38763",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "I like changing it to int type. But first to understand your suggestion properly, the \"type_name\" should become uint8_t and then keep these values as constants as:\n\nnamespace cc {\nconst uint8_t kScrollCustomizationEnabledDirectionNone \u003d 0;\n...\n}\n\nor maybe in its own namespace or a struct?",
+      "parentUuid": "37e65d66_e5fc4734",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f253459f_5c0ac2a3",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 44
@@ -45,6 +69,30 @@
       "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a287ec89_4f805a60",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f253459f_5c0ac2a3",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ad1b37cf_d096e0ea",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion.",
+      "parentUuid": "97d1205d_5a55aff9",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 99
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce2c8bf0_94014f4f",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 44
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0522c01a_b8a00f9b",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Changed. Thanks! Also, I am now using eventSender. gpuBenchmarking seems to have issues with ScrollCustomization (crbug.com/799973).",
+      "parentUuid": "ce2c8bf0_94014f4f",
+      "range": {
+        "startLine": 180,
+        "startChar": 42,
+        "endLine": 180,
+        "endChar": 71
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76675bc3_eb4737a8",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 44
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-15T17:08:13Z",
       "side": 1,
       "message": "shouldn\u0027t this be `element.style.scrollCustomization`?",
+      "range": {
+        "startLine": 191,
+        "startChar": 6,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14671f64_db2e4166",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Yes. This is wrong...and yet it passed because they never made it to the asserts. I should have put in some promise/async tests instead...which I am dong now :P.\n(the changes in made to scrollstate-distribute-...html were incorrect as well).\n\nIn the newest patch all the tests are promise_test and I can guarantee that they really run this time :).",
+      "parentUuid": "76675bc3_eb4737a8",
       "range": {
         "startLine": 191,
         "startChar": 6,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1fe58514_a1b7d6a9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "677eeed8_e549e856",
+      "range": {
+        "startLine": 196,
+        "startChar": 13,
+        "endLine": 196,
+        "endChar": 105
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a606c23_ffffb334",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 44
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-15T17:08:13Z",
       "side": 1,
       "message": "This \"in scroll phase\" state is new. What is the consequence of not having it? It seems that we flip this bit on everything in the scroll chain at scroll begin - how can we get here if we\u0027re not in the scroll chain and thus have the bit flipped?",
+      "range": {
+        "startLine": 620,
+        "startChar": 6,
+        "endLine": 620,
+        "endChar": 61
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb8aa1c_f479a74a",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "\u003e This \"in scroll phase\" state is new. \n\nYes. We now decide whether a scroll direction matches the property during GestureScrollBegin. If so |InScrollPhase(this)| returns true. This is also done for each scroll phase and for all the elements inside the scroll chain. The InScrollPhase() will return false after GestureScrollEnd.\n\n\u003e What is the consequence of not having it?\n\nThe callbacks will not get invoked.\n\n\u003e It seems that we flip this bit on everything in the scroll chain at scroll begin\n\nYes. The bit is flipped for all elements inside the chain whose customization matches the scrollBegin\u0027s direction.\n\n\u003e how can we get here if we\u0027re not in the scroll chain and thus have the bit flipped?\n\nI don\u0027t think we get here if not on scroll chain already.",
+      "parentUuid": "3a606c23_ffffb334",
       "range": {
         "startLine": 620,
         "startChar": 6,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "08f8e721_ce34122e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 3255,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "\u003e You shouldn\u0027t need to separate the None case explicitly here - it\u0027ll be handled correctly by the bitfield check.\n\nYes agreed. I ended up simplifying this whole method quite a bit; starting with the fact that we do not actually need |scroll_state|. I am passing the direction now. This would save computing it every time for each node on the scroll chain.\n\n\u003e Auto would as well except for the case where deltaX and deltaY are both \u003c the epsilon. Do we really want to start a scroll phase if the delta hint has no direction?\n\nThis was intentional originally. Please look at scroll_customization.cc and the new definition of GetScrollCustomizationForDirection().\n\nEssentially, there is a bunch of places where delta hints are 0 -- most important of all is \u0027touch-scroll-customization.html\u0027 which uses eventSender.gestureScrollBegin (it does not take deltas).\n\nAt first I tried changing eventSender so that delta hints could be passed as arguments. This revealed another problem however: in ScrollManager::CanScroll we currently return true \u0027true\u0027 when hints are zero. Because of that, all the \u003cdiv\u003e\u0027s in touch-scroll-customization.html end up on the scroll chain automatically (while they shouldn\u0027t have normally since their scrollTop and scrollLeft are not properly setup for the purpose). I talked to sahel@ about this and apparently this problem exists in some \"20 or so layout tests\". So removal of the early return code in CanScroll() should perhaps be done in another CL. Also, to modify \u0027touch-scroll-customization.html\u0027 such that it won\u0027t rely on deltas \u003d 0 proved to be problematic as the tests in the file might need to be adjusted accordingly -- perhaps even moved to using gpuBenchmarking.pointerActionSequence might lead to a re-write of most of the tests.\n\nTo conclude the story, I now duplicated the hack (:P) in scroll_customization.cc where we decide the direction is kAuto when deltas are zero. I am happy to followup on this matter in an upcoming patch and revise touch-scroll-customization.html for that matter.",
+      "parentUuid": "0e8a7320_8c88307f",
+      "range": {
+        "startLine": 3254,
+        "startChar": 6,
+        "endLine": 3255,
+        "endChar": 75
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ac63ce1_6af488a0",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 44
@@ -206,6 +398,30 @@
       "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d20c6e2_326c1402",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "6ac63ce1_6af488a0",
+      "range": {
+        "startLine": 724,
+        "startChar": 25,
+        "endLine": 724,
+        "endChar": 46
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

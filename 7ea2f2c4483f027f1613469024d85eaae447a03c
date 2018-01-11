@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "5fae3ae2_730d3fd1",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "\u003e But it fails without the flag? If that\u0027s the case the tests should live in LayoutTests/virtual/scroll_customization so they only run with the flag. Could you find out why these are all here and if the reason is just because of the flag behavior we can move them in a separate patch. Otherwise, please add a comment above explaining why all scroll-customization tests are allowed to be flaky.\n\nFrom what I am understanding in the document the way things are is apparently how virtual tests are added:\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/testing/layout_tests.\n\nSo basically if we do not expect the \"virtual\" test to pass without the feature we should mark it so here.\n\nI also do not find any actual tests in LayoutTests/virtual? I am not sure if we should move the test there. When we run run-webkit-tests virtual/scroll_customization/fast/scroll-behavior the script runs all the tests in LayoutTests/fast/scroll-behavior with the flag passed.",
+      "parentUuid": "372e521c_7d95671f",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20841c89_dc345a7d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -400,6 +424,30 @@
       "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d609140_a467ef89",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7cb7c883_b03f42ef",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

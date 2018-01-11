@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d704c177_ee4deea4",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "This is my way of making sure the \u003cdiv\u003e can actually scroll in all 4 directions (by scrolling p1 into view). Open to any suggestions for a nicer way of achieving this.",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119048ba_28bbc767",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "Due to the pauses here, the tests takes abive 10 second. Hence, I added this as a SlowTest,",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d9d1ed_4f050bb6",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-11T17:07:58Z",
+      "side": 1,
+      "message": "I am basically making sure the test runs after window.onload event. So I broke it up like this. The logic is intact.",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
