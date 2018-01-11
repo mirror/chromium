@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6462ed_60a05aac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/autocapitalize.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-11T09:14:22Z",
+      "side": 1,
+      "message": ":%s/avaible/available/",
+      "range": {
+        "startLine": 11,
+        "startChar": 36,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "04850b5509f766504f422e65993f7e317d64b1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
