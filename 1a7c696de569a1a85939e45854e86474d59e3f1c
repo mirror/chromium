@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1184b2b3_96a0089c",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T21:36:04Z",
+      "side": 1,
+      "message": "RTCVideoDecoder::CreateSHM() can use this const directly. It doesn\u0027t need to be passed as an argument.",
+      "range": {
+        "startLine": 818,
+        "startChar": 21,
+        "endLine": 818,
+        "endChar": 64
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a60d41_df183123",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T21:36:04Z",
+      "side": 1,
+      "message": "Maybe nest these constants in the RTCVideoDecoder class?",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd18d690_c742d257",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T21:36:04Z",
+      "side": 1,
+      "message": "It seems to strange to have this constant here given that nothing in the public part of RTCVideoDecoder has to do with shared memory. See my comment in the unittests with suggestion on how this can be improved.",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bcdd53_f7fc8675",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T21:36:04Z",
+      "side": 1,
+      "message": "decoder_",
+      "range": {
+        "startLine": 359,
+        "startChar": 28,
+        "endLine": 359,
+        "endChar": 35
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea5efa4_99be3fa1",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-11T21:36:04Z",
+      "side": 1,
+      "message": "suggest adding a comment explaining that Decode() is called as many times as necessary to exhaust all buffers and then expects the following Decode() to fail increasing error counter.\n\nI think this test makes a lot of assumptions about internal behavior of the class that\u0027s being tested, which is not great. Is it possible to avoid these assumptions here? E.g. maybe replace kMaxNumOfPendingBuffers and kNumSharedMemorySegments with a single kMaxParallelDecodeRequests?",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 379,
+        "endChar": 13
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
