@@ -4705,9 +4705,11 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="ChromeDownloadSource">
   <int value="0" label="Initiated by Navigation"/>
   <int value="1" label="Initiated by Context Menu"/>
-  <int value="2" label="Initiated by WebStore Installer"/>
-  <int value="3" label="Initiated by ImageBurner"/>
-  <int value="4" label="Initiated by Plugin Installer"/>
+  <int value="2" label="Initiated by WebStore Installer (Obsolete)"/>
+  <int value="3" label="Initiated by ImageBurner (Obsolete)"/>
+  <int value="4" label="Initiated by Plugin Installer (Obsolete)"/>
+  <int value="5" label="Initiated by PDF plugin"/>
+  <int value="6" label="Initiated by extension (Obsolete)"/>
 </enum>
 
 <enum name="ChromeHomeOpenReason">
@@ -9474,6 +9476,9 @@ Called by update_net_error_codes.py.-->
   <int value="24" label="No bytes received after content length mismatch"/>
   <int value="25" label="Target determination requeted"/>
   <int value="26" label="Target determination completed"/>
+  <int value="27" label="Download attemps before sending the request"/>
+  <int value="28" label="Download attempts for manual download resumption."/>
+  <int value="29" label="Download attempts for auto download resumption."/>
 </enum>
 
 <enum name="DownloadDatabaseRecordDroppedType">
@@ -9938,9 +9943,13 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="Finished"/>
   <int value="3" label="Write to already completed file"/>
   <int value="4" label="Write to already failed file"/>
+  <int value="5" label="Use download API for non HTML files"/>
 </enum>
 
 <enum name="DownloadSource">
+  <obsolete>
+    Deprecated 1/2018.
+  </obsolete>
   <int value="0" label="Initiated by Save Package on Non-HTML content"/>
   <int value="1" label="Initiated by Drag-and-drop"/>
   <int value="2" label="Initiated by RPC from Renderer"/>
