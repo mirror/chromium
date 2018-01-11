@@ -4049,6 +4049,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
     InsertError(GL_INVALID_OPERATION, "Failed to create begin trace");
     return error::kNoError;
   }
+  debug_marker_manager_.PushGroup(trace_name);
   return error::kNoError;
 }
 
@@ -4057,6 +4058,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
     InsertError(GL_INVALID_OPERATION, "No trace to end");
     return error::kNoError;
   }
+  debug_marker_manager_.PopGroup();
   return error::kNoError;
 }
 
