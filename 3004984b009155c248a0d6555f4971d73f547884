@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7c6331_4169b1f1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-11T12:13:53Z",
+      "side": 1,
+      "message": "It\u0027d be much clearer if the caller just set the correct effective_type rather than have the setter change it from unknown to something based on the rtt.",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
