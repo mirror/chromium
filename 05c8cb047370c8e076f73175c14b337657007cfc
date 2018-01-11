@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa3a54d_1cd09fbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-11T20:13:01Z",
+      "side": 1,
+      "message": "nit: there is no such thing as MessageChannel.postMessage. MessageChannel is just a pair of MessagePort instances, and MessagePort.postMessage is probably what you\u0027re talking about? (Although referring to the channel itself as MessageChannel seems fine, it just doesn\u0027t have any methods).",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "05c8cb047370c8e076f73175c14b337657007cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2b160a_86a1d04f",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-11T20:13:01Z",
+      "side": 1,
+      "message": "nit: add some comment explaining what this is (probably similar to the comment in the mojom file referring to V8StackTraceId)",
+      "revId": "05c8cb047370c8e076f73175c14b337657007cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
