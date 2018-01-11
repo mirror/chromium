@@ -40,8 +40,7 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
  public:
   static GpuDataManagerImplPrivate* Create(GpuDataManagerImpl* owner);
 
-  void InitializeForTesting(const gpu::GpuControlListData& gpu_blacklist_data,
-                            const gpu::GPUInfo& gpu_info);
+  void BlacklistWebGLForTesting();
   gpu::GPUInfo GetGPUInfo() const;
   bool GpuAccessAllowed(std::string* reason) const;
   void RequestCompleteGpuInfoIfNeeded();

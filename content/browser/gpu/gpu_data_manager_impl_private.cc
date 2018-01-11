@@ -319,24 +319,25 @@ void UpdateGpuInfoOnIO(const gpu::GPUInfo& gpu_info) {
 
 }  // namespace anonymous
 
-void GpuDataManagerImplPrivate::InitializeForTesting(
-    const gpu::GpuControlListData& gpu_blacklist_data,
-    const gpu::GPUInfo& gpu_info) {
+void GpuDataManagerImplPrivate::BlacklistWebGLForTesting() {
   // This function is for testing only, so disable histograms.
   update_histograms_ = false;
-
   // Prevent all further initialization.
   finalized_ = true;
+  is_initialized_ = true;
 
-  InitializeImpl(gpu_blacklist_data, gpu_info);
-
-  // TODO(zmo): Find a better mechanism to blacklist features for testing.
-  base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
-  if (gpu_feature_info_
-          .status_values[gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL] ==
-      gpu::kGpuFeatureStatusBlacklisted) {
-    cmd_line->AppendSwitch(switches::kDisableWebGL);
+  gpu::GpuFeatureInfo gpu_feature_info;
+  for (int ii = 0; ii < gpu::NUMBER_OF_GPU_FEATURE_TYPES; ++ii) {
+    if (ii == static_cast<int>(gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL))
+      gpu_feature_info.status_values[ii] = gpu::kGpuFeatureStatusBlacklisted;
+    else
+      gpu_feature_info.status_values[ii] = gpu::kGpuFeatureStatusEnabled;
   }
+  UpdateGpuFeatureInfo(gpu_feature_info);
+  gpu::GPUInfo gpu_info;
+  // This is critical to trigger WebStore side callback and let them know
+  // WebGL is blacklisted, so tests can complete.
+  UpdateGpuInfo(gpu_info);
 }
 
 gpu::GPUInfo GpuDataManagerImplPrivate::GetGPUInfo() const {
