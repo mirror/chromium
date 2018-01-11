@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044fb053_0dfdf79c",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-11T06:52:14Z",
+      "side": 1,
+      "message": "Maybe move the callsite of this into PermissionRequestManager too.",
+      "revId": "c15554492a867e52656bd3b8f1dd9600ef5b40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
