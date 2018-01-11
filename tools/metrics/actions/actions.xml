@@ -19153,6 +19153,13 @@ should be able to be added at any place in this file.
   <description>The user (or site) has stopped WebVR presentation.</description>
 </action>
 
+<action name="VR.WebVR.preserveDrawingBufferUsed">
+  <owner>offenwanger@chromium.org</owner>
+  <description>
+    The user has initiated WebVR presentation with  preserveDrawingBuffer=true.
+  </description>
+</action>
+
 <action name="VR.WebVR.requestPresent">
   <owner>billorr@chromium.org</owner>
   <description>The user has initiated WebVR presentation.</description>

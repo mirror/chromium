@@ -467,6 +467,12 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
     options->preserve_drawing_buffer =
         rendering_context_->CreationAttributes().preserveDrawingBuffer();
 
+    if (options->preserve_drawing_buffer) {
+      // Record uses of when preserveDrawingBuffer=true
+      Platform::Current()->RecordAction(
+          UserMetricsAction("VR.WebVR.preserveDrawingBufferUsed"));
+    }
+
     display_->RequestPresent(
         frame_transport_->GetSubmitFrameClient(),
         mojo::MakeRequest(&vr_presentation_provider_), std::move(options),
