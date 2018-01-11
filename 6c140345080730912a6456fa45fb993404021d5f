@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877002ef_eee0465a",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "prerender_dispatcher",
+      "range": {
+        "startLine": 358,
+        "startChar": 21,
+        "endLine": 358,
+        "endChar": 54
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7747064c_439e4006",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "prerender_dispatcher",
+      "range": {
+        "startLine": 480,
+        "startChar": 21,
+        "endLine": 480,
+        "endChar": 54
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77419aab_972c0734",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "nit:  Replace client with \"prerender_dispatcher\".",
+      "range": {
+        "startLine": 542,
+        "startChar": 21,
+        "endLine": 542,
+        "endChar": 54
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6472f89_2597d87c",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "Should make a utility method in an anonymous namespace that takes in a LinkPrerender, and returns a (possibly invalid) chrome::mojom::PrerenderDispatcherAssociatedPtr.\n\nThen just call that, check if the return value is valid, and if so, call the relevant message on that.",
+      "range": {
+        "startLine": 546,
+        "startChar": 3,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaecedd_9d391f0a",
+        "filename": "chrome/common/prerender.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6323f2_bf971729",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "nit:  Blank line between C++ and C headers.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a7956a_d7d779d4",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T16:11:56Z",
+      "side": 1,
+      "message": "Order in the cc file should match order in the header.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "6c140345080730912a6456fa45fb993404021d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
