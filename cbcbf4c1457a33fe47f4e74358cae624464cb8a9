@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0feebc62_b9822275",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "nit: Comment does not add any clarification (and is a bit confusing using \u0027states\u0027 instead of \u0027status\u0027).",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d658b5_a0148cc5",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "nit: NOT_STARTED",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5f5fb8_c34f2a14",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "FAILED_WRITE_FAILED\n(\u0027cannot export\u0027 suggests it is not possible, which may or may not be the case, unless we know that is the case in which case the comment is wrong).",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de20184_d76c521d",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "$ref(ExportProgressStatus.FAILED_WRITE_FAILED)\ns/folder we are writing to/name of the selected folder to export to/\n\nWe should also request a security review of the API proposal. Since the user selected the folder name, passing this back in a private extension API seems OK to me, but I am not a security expert.",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a45e9e_61308e48",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "|callback| will be called when the request is started or rejected. If rejected \u003ccode\u003echrome.runtime.lastError\u003c/code\u003e will be set to \u0027in-progress\u0027.\n\n(If that comment is untrue we should fix the code so that it is; the completion callback should always be called).",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ab1ef2_1a0605ef",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "nit: Requests",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4227623d_157ecb54",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:28:16Z",
+      "side": 1,
+      "message": "nit: requestExportProgressStatus",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
