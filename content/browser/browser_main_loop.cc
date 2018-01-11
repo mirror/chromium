@@ -601,7 +601,9 @@ BrowserMainLoop::BrowserMainLoop(const MainFunctionParams& parameters)
 
   // Use an empty string as TaskScheduler name to match the suffix of browser
   // process TaskScheduler histograms.
-  base::TaskScheduler::Create("");
+  if (GetContentClient()->browser()->ShouldCreateTaskScheduler()) {
+    base::TaskScheduler::Create("");
+  }
 }
 
 BrowserMainLoop::~BrowserMainLoop() {
