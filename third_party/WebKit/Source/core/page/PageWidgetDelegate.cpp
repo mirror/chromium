@@ -285,7 +285,7 @@ WebInputEventResult PageWidgetEventHandler::HandlePointerEvent(
       transformed_event,
       TransformWebPointerEventVector(main_frame.View(), coalesced_events));
 }
-
+/*
 WebInputEventResult PageWidgetEventHandler::HandleInputEventIncludingTouch(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
@@ -314,5 +314,5 @@ WebInputEventResult PageWidgetEventHandler::HandleInputEventIncludingTouch(
   }
   return HandleInputEventInternal(coalesced_event);
 }
-
+*/
 }  // namespace blink
