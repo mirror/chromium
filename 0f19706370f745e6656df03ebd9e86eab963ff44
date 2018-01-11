@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dd5e09e_ee3ea279",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363e5726_7183eb55",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a43e4cca_d77f0b9b",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15060460_e32d8529",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a43e4cca_d77f0b9b",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "056fb56d_cda1f7d8",
+        "filename": "content/browser/push_messaging/push_messaging_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Thanks! What I meant to do here was to check that the worker is running.\nHowever, section 4.2 of the spec says that \"A push message is de​livered to the active worker ...\", so maybe we should add both DCHECKs because it\u0027s a bug if one of them fails?\n\nDCHECK_EQ(EmbeddedWorkerStatus::RUNNING, service_worker-\u003erunning_status());\nDCHECK(ServiceWorkerVersion::ACTIVATING \u003d\u003d service_worker-\u003estatus() ||\n       ServiceWorkerVersion::ACTIVATED \u003d\u003d service_worker-\u003estatus());",
+      "parentUuid": "f055a65d_b210c07b",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fba95d3_cd6d7045",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2597a72c_eae576d5",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fba95d3_cd6d7045",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "8594ce8c_0897fe41",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502e7ec7_e61bb19d",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30640ae0_cb166295",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 4
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "9d4e95a4_049fd62b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30640ae0_cb166295",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e61adfb9_1f8876d8",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 4
@@ -136,6 +244,24 @@
       "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0509196_a7e58cbc",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2018-01-11T15:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e61adfb9_1f8876d8",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
