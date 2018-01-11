@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f0d5bb_2c6741f7",
+        "filename": "base/process/launch.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "Why is this |...to_transfer|? We\u0027re not transferring anything, as-per the comment, but cloning them into the child namespace.\n\nDo we need to consider the case of providing paths to the child that differ in their location from the parent\u0027s namespace? Would |paths_to_map| be more appropriate?",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fe60f6_4556777a",
+        "filename": "base/process/launch.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "Let\u0027s make this a vector\u003c\u003e rather than set\u003c\u003e?",
+      "range": {
+        "startLine": 208,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 10
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8af387d_dcd891f0",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "If we use a vector\u003c\u003e in LaunchOptions in the first place then we don\u0027t need a copy here. :)",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 56
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ccad67_d4515977",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "You should be able to fdio_transfer_fd() here, since you are just going to close the original handle when ScopedPlatformFile goes out of scope; you just need to remember to release() the ScopedPlatformFile if fdio_transfer_fd() succeeds.\n\nWe already do this dance in //mojo, so we could pull that implementation into //base/fuchsia so we can use it here - WDYT?",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 64
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82a6e44_35269d0a",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "Is it actually possible for something to be mapped into our namespace that is _not_ a PA_FDIO_REMOTE?",
+      "range": {
+        "startLine": 160,
+        "startChar": 10,
+        "endLine": 160,
+        "endChar": 36
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154b70e2_7108bb61",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "nit: Just move this before the |types[0]| check and you\u0027d only have to zx_handle_close(handles[0]) in the if.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 7
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebce22eb_058debea",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "This comment refers to |handle_idx| before |handle_idx| has been declared, and then doesn\u0027t explain what |handle_idx| means, or why it needs to be set to |paths_str.size()|.\n\nYou probably want to explain that the |index| of each PA_NS_DIR handle needs to match the index of the path-name in the nametable call below, so that it can be matched-up correctly by the child process.",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2893f4b_0caa5d2f",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "Are paths defined to be ASCII, or UTF8?",
+      "range": {
+        "startLine": 182,
+        "startChar": 36,
+        "endLine": 182,
+        "endChar": 48
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8859f7b_044f7ffe",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "This huge block is basically just reading paths from the parent namespace to get file descriptors, constructing a new namespace, and then adding it to the launchpad structure - we should be able to move it out into a static helper function, I think?",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 3
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd6065d_587d8d8c",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "nit: Move this inside the !- NO_SANDBOX block below, rather than having NO_SANDBOX \u0026\u0026 !IsPackageProcess here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45888f2_24eb4c13",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-11T01:38:58Z",
+      "side": 1,
+      "message": "nit: Consider adding brief comments to explain what we\u0027re doing with each of these steps.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "d8ffdaa1571fa344baf6b86af8d33cdfe254bcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
