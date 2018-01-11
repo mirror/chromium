@@ -921,14 +921,12 @@ class CC_EXPORT LayerTreeHostImpl
   bool has_valid_layer_tree_frame_sink_;
 
   // If the check-damage-early flag is set, we can check damage in
-  // WillBeginImplFrame and abort early if there is no damage. Checking damage
-  // is expensive, and if there is damage in WillBeginImplFrame we have to
-  // check for damage again during the draw. The check in WillBeginImplFrame is
-  // guarded by check_damage_in_begin_impl_frame_, which is set to true if the
-  // flag is enabled and the previous frame did not have damage. it is set to
-  // false again if two consecutive frames have damage.
-  bool check_damage_in_begin_impl_frame_;
-  bool last_frame_had_damage_;
+  // WillBeginImplFrame and abort early if there is no damage. We only check
+  // damage in WillBeginImplFrame if any of the previous three frames had
+  // damage (the limit is hardcoded in kDamagedFrameLimit). We keep track of
+  // this with consecutive_frame_with_damage_count_, which is initialized to
+  // kDamagedFrameLimit.
+  int consecutive_frame_with_damage_count_;
 
   std::unique_ptr<Viewport> viewport_;
 
