@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64936727_b4de6e8b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T01:48:15Z",
+      "side": 1,
+      "message": "Yes, this function should return Vector\u003cconst NGPaintFragment*\u003e",
+      "parentUuid": "9e630610_76e070e0",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31ebc536_11017d2f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -98,6 +116,24 @@
       "writtenOn": "2018-01-10T10:11:43Z",
       "side": 1,
       "message": "Wouldn\u0027t it be better to detect this situation further up on the call stack before entering the LayoutText child, and call InvalidateNGPaintFragments() there, rather than calling EnclosingNGBlockFlow() for every LayoutText object? A DCHECK should probably be kept here, though.",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad728bf_a65d9316",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T01:48:15Z",
+      "side": 1,
+      "message": "Interesting idea!\n\nWe have four implementations in following classes:\n1. LayoutObject (default)\n2. LayoutBlockFlow; BlockFlowPaintInvalidator does invalidation.\n3. LayoutInline; scans InlineFlowBox\n4. LayoutText; scans InlnlineTextBox\n\nCan we utilize PaintInvalidatorContext or FragmentData to pass NG block flow\nto InvalidateDisplayItemClients()?\n\nWe may want to change BlockFlowPaintInvalidator to invalidate whole\nfragment tree rather than calling LayoyutObject::InvalidateDIC() as\noptimization.",
+      "parentUuid": "dfa8c3f2_82c6e333",
       "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
