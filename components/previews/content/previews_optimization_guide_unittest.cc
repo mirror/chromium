@@ -6,6 +6,9 @@
 
 #include <memory>
 
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/gtest_util.h"
@@ -47,6 +50,7 @@ class PreviewsOptimizationGuideTest : public testing::Test {
   ~PreviewsOptimizationGuideTest() override {}
 
   void SetUp() override {
+    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     optimization_guide_service_ =
         std::make_unique<TestOptimizationGuideService>(
             scoped_task_environment_.GetMainThreadTaskRunner());
@@ -64,8 +68,9 @@ class PreviewsOptimizationGuideTest : public testing::Test {
     return optimization_guide_service_.get();
   }
 
-  void ProcessHints(const optimization_guide::proto::Configuration& config) {
-    guide_->OnHintsProcessed(config);
+  void ProcessHints(const optimization_guide::proto::Configuration& config,
+                    optimization_guide::ComponentInfo& info) {
+    guide_->OnHintsProcessed(config, info);
   }
 
   std::unique_ptr<net::URLRequest> CreateRequestWithURL(const GURL& url) const {
@@ -78,6 +83,8 @@ class PreviewsOptimizationGuideTest : public testing::Test {
     RunUntilIdle();
   }
 
+  base::FilePath temp_dir() const { return temp_dir_.GetPath(); }
+
  protected:
   void RunUntilIdle() {
     scoped_task_environment_.RunUntilIdle();
@@ -86,6 +93,7 @@ class PreviewsOptimizationGuideTest : public testing::Test {
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::ScopedTempDir temp_dir_;
 
   std::unique_ptr<PreviewsOptimizationGuide> guide_;
   std::unique_ptr<TestOptimizationGuideService> optimization_guide_service_;
@@ -123,7 +131,10 @@ TEST_F(PreviewsOptimizationGuideTest,
   optimization_guide::proto::Optimization* optimization3 =
       hint2->add_whitelisted_optimizations();
   optimization3->set_optimization_type(optimization_guide::proto::NOSCRIPT);
-  ProcessHints(config);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+  ProcessHints(config, info);
 
   RunUntilIdle();
 
@@ -148,7 +159,10 @@ TEST_F(PreviewsOptimizationGuideTest, ProcessHintsUnsupportedKeyRepIsIgnored) {
   optimization_guide::proto::Optimization* optimization =
       hint->add_whitelisted_optimizations();
   optimization->set_optimization_type(optimization_guide::proto::NOSCRIPT);
-  ProcessHints(config);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+  ProcessHints(config, info);
 
   RunUntilIdle();
 
@@ -167,13 +181,54 @@ TEST_F(PreviewsOptimizationGuideTest,
       hint->add_whitelisted_optimizations();
   optimization->set_optimization_type(
       optimization_guide::proto::TYPE_UNSPECIFIED);
-  ProcessHints(config);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+  ProcessHints(config, info);
 
   RunUntilIdle();
 
   std::unique_ptr<net::URLRequest> request =
       CreateRequestWithURL(GURL("https://m.facebook.com"));
   EXPECT_FALSE(guide()->IsWhitelisted(*request, PreviewsType::NOSCRIPT));
+}
+
+TEST_F(PreviewsOptimizationGuideTest, ProcessHintsWithExistingSentinel) {
+  // Create valid config.
+  optimization_guide::proto::Configuration config;
+  optimization_guide::proto::Hint* hint1 = config.add_hints();
+  hint1->set_key("facebook.com");
+  hint1->set_key_representation(optimization_guide::proto::HOST_SUFFIX);
+  optimization_guide::proto::Optimization* optimization1 =
+      hint1->add_whitelisted_optimizations();
+  optimization1->set_optimization_type(optimization_guide::proto::NOSCRIPT);
+
+  // Create sentinel file for version 2.0.0.
+  const base::FilePath sentinel_path =
+      temp_dir().Append(FILE_PATH_LITERAL("previews_config_sentinel.txt"));
+  base::WriteFile(sentinel_path, "2.0.0", 5);
+
+  // Verify config not processed for version 2.0.0 (same as sentinel).
+  optimization_guide::ComponentInfo info_v2(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+  ProcessHints(config, info_v2);
+  RunUntilIdle();
+  EXPECT_FALSE(guide()->IsWhitelisted(
+      *CreateRequestWithURL(GURL("https://m.facebook.com")),
+      PreviewsType::NOSCRIPT));
+  EXPECT_TRUE(base::PathExists(sentinel_path));
+
+  // Now verify config is process for different version and sentinel cleared.
+  optimization_guide::ComponentInfo info_v3(
+      base::Version("3.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+  ProcessHints(config, info_v3);
+  RunUntilIdle();
+  EXPECT_TRUE(guide()->IsWhitelisted(
+      *CreateRequestWithURL(GURL("https://m.facebook.com")),
+      PreviewsType::NOSCRIPT));
+  EXPECT_FALSE(base::PathExists(sentinel_path));
 }
 
 TEST_F(PreviewsOptimizationGuideTest, ProcessHintConfigWithNoKeyFailsDcheck) {
@@ -183,9 +238,12 @@ TEST_F(PreviewsOptimizationGuideTest, ProcessHintConfigWithNoKeyFailsDcheck) {
   optimization_guide::proto::Optimization* optimization =
       hint->add_whitelisted_optimizations();
   optimization->set_optimization_type(optimization_guide::proto::NOSCRIPT);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
 
   EXPECT_DCHECK_DEATH({
-    ProcessHints(config);
+    ProcessHints(config, info);
     RunUntilIdle();
   });
 }
@@ -205,9 +263,12 @@ TEST_F(PreviewsOptimizationGuideTest,
   optimization_guide::proto::Optimization* optimization2 =
       hint2->add_whitelisted_optimizations();
   optimization2->set_optimization_type(optimization_guide::proto::NOSCRIPT);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
 
   EXPECT_DCHECK_DEATH({
-    ProcessHints(config);
+    ProcessHints(config, info);
     RunUntilIdle();
   });
 }
@@ -241,7 +302,11 @@ TEST_F(PreviewsOptimizationGuideTest, IsWhitelistedWithMultipleHintMatches) {
   hint4->set_key("mail.yahoo.com");
   hint4->set_key_representation(optimization_guide::proto::HOST_SUFFIX);
 
-  ProcessHints(config);
+  optimization_guide::ComponentInfo info(
+      base::Version("2.0.0"),
+      temp_dir().Append(FILE_PATH_LITERAL("somefile.pb")));
+
+  ProcessHints(config, info);
   RunUntilIdle();
 
   std::unique_ptr<net::URLRequest> request1 =
