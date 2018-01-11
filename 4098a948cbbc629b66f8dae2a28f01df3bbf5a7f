@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b756cc1_60409268",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8087,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-11T18:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b538a4_88763d08",
+      "revId": "4098a948cbbc629b66f8dae2a28f01df3bbf5a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f80904e_bfb71961",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "4098a948cbbc629b66f8dae2a28f01df3bbf5a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2458473e_596b3f74",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 13318,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-11T18:40:07Z",
+      "side": 1,
+      "message": "Talked offline with tbansal and decided this histogram is not needed. Thanks for the critical look at it!",
+      "parentUuid": "1f80904e_bfb71961",
+      "revId": "4098a948cbbc629b66f8dae2a28f01df3bbf5a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
