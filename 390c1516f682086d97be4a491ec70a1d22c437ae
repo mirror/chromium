@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f50ebb1_6af6b96b",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T18:48:34Z",
+      "side": 1,
+      "message": "invoke?  Or maybe just \"start\"?",
+      "range": {
+        "startLine": 338,
+        "startChar": 12,
+        "endLine": 338,
+        "endChar": 18
+      },
+      "revId": "390c1516f682086d97be4a491ec70a1d22c437ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5a925b_3260ee7e",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T18:48:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is good advice... uninstalling the extension gets rid of all the associated data, and reinstalling is a pain.  And most extensions are small.  I\u0027d just take this out and leave it with the \"This will invoke checks for all installed extensions.\"  Anyone really worried can adjust their workflow accordingly.",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 340,
+        "endChar": 36
+      },
+      "revId": "390c1516f682086d97be4a491ec70a1d22c437ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
