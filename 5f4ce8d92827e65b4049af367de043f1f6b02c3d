@@ -16,6 +16,24 @@
       "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f427f1_5e20e417",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-11T19:24:33Z",
+      "side": 0,
+      "message": "There\u0027s no need to test within vaapi_wrapper for these flags.  That\u0027s another advantage of removing this code letting it be done only when va-api is actually exercised. gpu_video_*_accelerator_host will use these flags and a vda/vea will be created only when the flags allow it.",
+      "parentUuid": "4b9ad008_d76949a2",
+      "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

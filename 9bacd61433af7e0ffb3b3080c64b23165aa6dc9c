@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee982d89_67d463db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-11T19:24:33Z",
+      "side": 1,
+      "message": "Sure, testing has been performed \"as usual\" which means: subjective testing and all autotest which cover unittests. unittests are not sandboxed but applications can handle it, another usual test is vainfo.",
+      "parentUuid": "ddb45f85_d85f4b8e",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ec5ae4f_30263f98",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "206da4cd_d894d1b8",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-11T19:24:33Z",
+      "side": 1,
+      "message": "I agree, I\u0027ll remove it and resubmit, thanks for catching this and stating the facts.",
+      "parentUuid": "5ec5ae4f_30263f98",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42cc34c3_b1b36ec5",
         "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-11T07:04:02Z",
       "side": 1,
       "message": "Looks like this is unnecessary?",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13de984c_b01ede68",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-11T19:24:33Z",
+      "side": 1,
+      "message": "Yes, I followed the new instructions on chromium.org where git upload_cl is not used anymore for browser code.  My local patch doesn\u0027t have it.  \n\nI\u0027ll seek guidance in the cros-dev mailing list.",
+      "parentUuid": "42cc34c3_b1b36ec5",
       "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
