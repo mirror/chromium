@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e81dbd4_ecf4a301",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-11T21:09:35Z",
+      "side": 1,
+      "message": "One nice thing for a followup patch would be to add a GURL::GetContentPiece() function that returns a StringPiece (there are already lots of piece functions on GURL). The parsing code below already deals with string pieces, so this whole function can do less allocations (especially since data URLs tend to be large).",
+      "revId": "3ee8f60293da99c040584a658de0f9f707dbc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
