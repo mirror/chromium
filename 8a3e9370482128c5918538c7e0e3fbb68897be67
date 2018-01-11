@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6de289cb_9de88910",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-11T16:29:57Z",
+      "side": 1,
+      "message": "Done\n\nOnce this CL lands, I\u0027ll put a CL so that DispatchMouseEvent acks to the root view when it sees a null target, and this can be removed.",
+      "parentUuid": "47ca4039_e9f785d3",
+      "revId": "8a3e9370482128c5918538c7e0e3fbb68897be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c324666d_831257f5",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8a3e9370482128c5918538c7e0e3fbb68897be67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ced4d8_e566025a",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-11T16:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c324666d_831257f5",
+      "revId": "8a3e9370482128c5918538c7e0e3fbb68897be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
