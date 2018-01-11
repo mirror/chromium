@@ -16,6 +16,24 @@
       "revId": "a9bad9527648bc2cffc2e91fa13e516fd358fe39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6d849d_04c869e4",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-11T03:06:23Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "357745a1_f539843a",
+      "revId": "a9bad9527648bc2cffc2e91fa13e516fd358fe39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
