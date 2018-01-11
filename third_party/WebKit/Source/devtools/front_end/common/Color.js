@@ -175,15 +175,12 @@ Common.Color = class {
 
   /**
    * @param {string} value
-   * @param {boolean} onlyInteger
    * return {number}
    */
-  static _parsePercentOrNumber(value, onlyInteger) {
+  static _parsePercentOrNumber(value) {
     if (isNaN(value.replace('%', '')))
       return null;
     var parsed = parseFloat(value);
-    if (onlyInteger && (value.indexOf('.') !== -1 || !Number.isInteger(parsed)))
-      return null;
 
     if (value.indexOf('%') !== -1) {
       if (value.indexOf('%') !== value.length - 1)
@@ -199,7 +196,7 @@ Common.Color = class {
    */
   static _parseRgbNumeric(value) {
     // Only integers are accepted for channels currently.
-    var parsed = Common.Color._parsePercentOrNumber(value, true);
+    var parsed = Common.Color._parsePercentOrNumber(value);
     if (parsed === null)
       return null;
 
@@ -243,7 +240,7 @@ Common.Color = class {
    * return {number}
    */
   static _parseAlphaNumeric(value) {
-    return Common.Color._parsePercentOrNumber(value, false);
+    return Common.Color._parsePercentOrNumber(value);
   }
 
   /**
