@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f2a05a6_aaa45b2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61009b2_3ff72648",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d02fc03_911b97fe",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd2f7fc_c63c0771",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d02fc03_911b97fe",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "4ec06700_f358863a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296c5bb4_89f93884",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 95
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b21bf33_6ebe044d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 6
@@ -96,6 +162,24 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787000e2_45fb3225",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b21bf33_6ebe044d",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "b94df9c2_1dd0d5a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "We can create a class called NotificationId, and define getOrigin() and getDeveloperTag() functions on it.\nCan improve this in a separate CL. For now, I\u0027ve added comments on both producer and consumer methods explaining the connection, format etc. I\u0027ve filed Issue 801164 for this.",
+      "parentUuid": "e82e0877_9bb95a1e",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 85
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd7b55d8_66e5a60b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 6
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "123814ba_a3bb0f54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7b55d8_66e5a60b",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "946fde3e_3e91bf60",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 6
@@ -153,6 +279,24 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538ddf5b_7af4cf0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946fde3e_3e91bf60",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "ddae7b39_d6b38e36",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82055163_766ff616",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 65
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e82cfcbe_d6347d0c",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 6
@@ -193,6 +361,24 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68f3228_b588077c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82cfcbe_d6347d0c",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -216,6 +402,30 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0aebe8_017eb113",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194cdf94_549409ee",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
