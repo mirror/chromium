@@ -328,10 +328,18 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // This must be called when the worker is running.
-  // Returns the 'controller' interface of this worker.
+  // S13nServiceWorker:
+  // Returns the 'controller' interface ptr of this worker. It is expected
+  // that the worker is already starting or running, or is going to be started
+  // soon.
+  // TODO(kinuko): Relying on the callsites to start the worker when it's
+  // not running is a bit sketchy, maybe this should queue a task to check
+  // if the pending request is pending too long? https://crbug.com/797222
   mojom::ControllerServiceWorker* controller() {
-    DCHECK(controller_ptr_.is_bound());
+    if (!controller_ptr_.is_bound()) {
+      DCHECK(!pending_controller_request_.is_pending());
+      pending_controller_request_ = mojo::MakeRequest(&controller_ptr_);
+    }
     return controller_ptr_.get();
   }
 
@@ -779,7 +787,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
+
+  // S13nServiceWorker: connected to the controller service worker.
+  // |pending_controller_request_| is non-null if the worker is not started
+  // but the |controller_ptr_| is requested.
   mojom::ControllerServiceWorkerPtr controller_ptr_;
+  mojom::ControllerServiceWorkerRequest pending_controller_request_;
 
   std::unique_ptr<ServiceWorkerInstalledScriptsSender>
       installed_scripts_sender_;
