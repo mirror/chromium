@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb96f6e1_c24b99c8",
+        "filename": "content/public/common/zygote_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T19:53:00Z",
+      "side": 1,
+      "message": "Would this be better as a BUILDFLAG ? That would also allow the variable to be used in GN files to add files to sources lists.\n\nhttps://cs.chromium.org/chromium/src/build/buildflag_header.gni?sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "revId": "3e3f92485a0ec483e0475c0290e21ae3563f4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
