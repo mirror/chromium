@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e137d821_be031a92",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55eae9a3_0b52cf0e",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a44b0b2_1d322806",
         "filename": "ash/system/power/power_button_test_base.cc",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Moved the |tablet_controller_| into the |send_accelerometer_update| condition above.\nFor |convertible_controller_| I think it only depends on the command flag too (I guess we only set the touchview switch for tablet/convertible devices?), but create |convertibe_controller_| only if received accelerometer data will make sure it will only be created for convertible/tablet. I guess it will be better to create |tablet_controller_| only if we can receive the accelerometer data? Since we only want to create it for tablet and detachable devices?",
       "parentUuid": "2a44b0b2_1d322806",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68cfaea_c6494932",
+        "filename": "ash/system/power/power_button_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "Not for |convertible_controller_| currently, there could be |enable_tablet_mode_| flag set but no accelerometer data: b/38153788. However, derat@ filed a bug that we would deprecate OnAccelerometerUpdated for initialization by querying tablet mode switch: crbug.com/798646.\n\nThink it twice, I am fine with both initialization there, since it is planned to move them out.",
+      "parentUuid": "510a2e95_d70f060d",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -282,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "a777374c_9e38d30b",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "const base::string16\u0026 to avoid copy",
+      "parentUuid": "76139914_dfed0466",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3869d781_189deb13",
         "filename": "ash/system/power/power_off_menu_item_view.h",
         "patchSetId": 2
@@ -317,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "b6803305_67cbb064",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "Owned by views hierarchy",
+      "parentUuid": "8bbacd47_a9060602",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a3007f_d5b82816",
         "filename": "ash/system/power/power_off_menu_screen_view.cc",
         "patchSetId": 2
@@ -346,6 +418,24 @@
       "side": 1,
       "message": "Why should we use SkColorSetARGBMacro instead here? UX provided only RGB here, can we use SkColorSetRGB with an implied value of 0xFF for alpha (fully opaque)? And then if we need to change the opacity we can change it through SetOpacity.",
       "parentUuid": "e0a3007f_d5b82816",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7234517d_621ee725",
+        "filename": "ash/system/power/power_off_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "SkColorSetARGBMacro is preferred. For inline function SkColorSetARGB, compiler may not do things correctly. See an example build break here: https://codereview.chromium.org/2949733002/",
+      "parentUuid": "b924450e_e79f75c5",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -419,6 +509,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81691a24_f16ca38e",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce4022df_b2b2bdfe",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -699,6 +807,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e7b274_b276e30f",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-11T15:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddab40a6_aafb68db",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
