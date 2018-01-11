@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade6e439_73cc757d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T10:34:28Z",
+      "side": 1,
+      "message": "Consider invoking mojo::ReportBadMessage on the binding here.\n\nIt would be even better if we had a design that didn\u0027t expose this though. Can we take this out of the mojom and only have it in the C++ enum? We\u0027d still want to DCHECK() that we don\u0027t get it here, but if there is no mojo value mapped to this C++ enum type, then it\u0027s safe.\n\nDitto above.",
+      "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
