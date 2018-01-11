@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25cfb70e_9e00e78b",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T22:55:43Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "45b6751c_47f5f135",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6a4e3d8_d14a28a4",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-11T21:46:48Z",
       "side": 1,
       "message": "nit: since i think you only use most of these once, consider just inlining them into the calls to initialize the request:\n\n  login_manager::StartArcInstanceRequest request;\n  request.set_native_bridge_experiment(...);\n\n  user_manager...\n  DCHECK(...);\n  request.set_account_id(cryptohome::Identification(...).id());\n\n  request.set_skip_boot_completed_broadcast(\n      !base::FeatureList::...);\n\n  // We only enable ...\n  request.set_scan_vendor_priv_app(chromeos::switches::...);\n\nthe code seems a bit easier to read to me this way, since the logic to determine the values of these fields is right next to the statements that set the fields.",
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292eebc3_c366911b",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T22:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a4e3d8_d14a28a4",
       "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6677740e_93eafe7d",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T22:55:43Z",
+      "side": 1,
+      "message": "Done, thanks for pinging about tests.",
+      "parentUuid": "fe7566cf_a87b6767",
+      "revId": "fcf93c6fc431ccfecf0696822c199d315094232f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
