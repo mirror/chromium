@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f2296a_3b6fce1b",
+        "filename": "chrome/browser/android/favicon_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-11T17:17:01Z",
+      "side": 1,
+      "message": "Much easier to follow. Thanks!",
+      "range": {
+        "startLine": 122,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 37
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8489cbac_a54695ae",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-11T17:17:01Z",
+      "side": 1,
+      "message": "How about a slight name change to make this better indicate it isn\u0027t an exact match. Perhaps FindFirstPageURLForHost?",
+      "range": {
+        "startLine": 787,
+        "startChar": 40,
+        "endLine": 787,
+        "endChar": 58
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d9ea69_8bca4364",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-11T17:17:01Z",
+      "side": 1,
+      "message": "Would it make sense to add \"and favicon.icon_type in (X)\" where X is built from required_icon_types?",
+      "range": {
+        "startLine": 797,
+        "startChar": 30,
+        "endLine": 797,
+        "endChar": 63
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd01d96_fbafbdd0",
+        "filename": "components/history/core/browser/thumbnail_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-11T17:17:01Z",
+      "side": 1,
+      "message": "Can you make this take the GURL instead?",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 29
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
