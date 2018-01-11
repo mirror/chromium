@@ -33,6 +33,24 @@
       "revId": "a412beb663bc5f05c4a5b75f9a1909a7e3200cd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31868a26_1d6d0c32",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T21:09:13Z",
+      "side": 1,
+      "message": "Keeping it as string compare so as to avoid the issue that was there in the last CL where both URLs matched were empty.",
+      "parentUuid": "430842d8_e777efe1",
+      "revId": "a412beb663bc5f05c4a5b75f9a1909a7e3200cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
