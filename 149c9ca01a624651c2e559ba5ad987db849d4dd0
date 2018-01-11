@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61009b2_3ff72648",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "It\u0027s best practice to put the area of Chrome you\u0027re working on at the start of the commit title, e.g.:\n\n  [Android Notifications] Use notificationId as platform tag\n\nThis allows sheriffs to quickly tell if your commit may be related to some failure / flake they\u0027re investigating when scanning blamelists.",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d02fc03_911b97fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "This description is good but feels like it\u0027s missing a conclusion.. how about something like:\n\n\"Notification Id contains origin and developer tag info already, so it is sufficient to use the notificationId on its own as the platform tag.\"\n\nYou might also want to explain that \u0027platform tag\u0027 means the notification tag we provide to Android in NotificationManager.notify().",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c80160_0c7e6e11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "This should at least have a comment saying it needs to be the same as the one specified in notification_id_generator.cc . Ideally it would only be defined once though. (I *think* it\u0027s possible to define a constant in c++ and export it to java via jni - I\u0027ve certainly done it for enums..)",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296c5bb4_89f93884",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "optional: not your change but would you mind moving this comment to line 386 and turning it into /* javadoc */ please? (it\u0027s bugging me!)",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 95
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b21bf33_6ebe044d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we still check for the new prefix here? (Assuming the check was necessary before, why remove it now?)",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82e0877_9bb95a1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "This code is reliant on a format which is determined in a completely different place in code. This is non ideal. \n\nAt the very least there should be a comment stating which piece of code determines the format. Ideally we would avoid such an obscure dependency though. Not sure how off the top of my head, but I\u0027d be happy to brainstorm with you to see if we can find a better way..",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 85
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7b55d8_66e5a60b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "javadoc for @param origin needs removing here",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946fde3e_3e91bf60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "same for @param tag",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82055163_766ff616",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "This is now unused.",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 65
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82cfcbe_d6347d0c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "same with this one",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194cdf94_549409ee",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "optional: Not your doing but I find the re-inclusion of the separator within the prefix to be inelegant (eg it meant you had to change 3 places when you changed the separator).. want to fix this?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34fdec5_7e7ffa47",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 1,
+      "message": "C++ comments are always \u0027//\u0027 style in Chromium.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

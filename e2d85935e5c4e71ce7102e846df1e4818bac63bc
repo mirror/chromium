@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c23a00a_67449ae3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T11:18:19Z",
+      "side": 0,
+      "message": "@peter what is profile_id and do you know why miguel wanted to do that?",
+      "revId": "e2d85935e5c4e71ce7102e846df1e4818bac63bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
