@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4786bf0f_1a4b654c",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T00:16:57Z",
+      "side": 1,
+      "message": "The existing code is confusing. |is_in_drag| arg passed in here means the AppListView itself is dragged (e.g. dragging up to go from PEEK to FULL), not dragging an app. So this might not EndDrag correctly.\n\nIt looks like the main AppsGridView is a child of AppsContainerView, which is added as launcher page for STATE_START and STATE_APPS [1]. Currently, when contents switch launcher page, ContentsView::ActivePageChanged only notifies new page that is going to be shown [2]. Maybe we should add a OnWillBeHidden for the visible page and use that as a signal to EndDrag.\n\n[1] https://cs.chromium.org/chromium/src/ui/app_list/views/contents_view.cc?rcl\u003d3975aa9d24cdf777a63596c4e4e31fd1b3803fc2\u0026l\u003d71,101\n[2] https://cs.chromium.org/chromium/src/ui/app_list/views/contents_view.cc?rcl\u003d3975aa9d24cdf777a63596c4e4e31fd1b3803fc2\u0026l\u003d212",
+      "range": {
+        "startLine": 999,
+        "startChar": 7,
+        "endLine": 999,
+        "endChar": 30
+      },
+      "revId": "2f9e3ad8b174dd571ccbd8555f6b66c51b035774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
