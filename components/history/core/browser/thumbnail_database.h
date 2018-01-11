@@ -10,6 +10,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "components/history/core/browser/history_types.h"
 #include "sql/connection.h"
 #include "sql/init_status.h"
@@ -196,6 +197,16 @@ class ThumbnailDatabase {
   // mapping_data is not NULL.
   bool GetIconMappingsForPageURL(const GURL& page_url,
                                  std::vector<IconMapping>* mapping_data);
+
+  // Given |host|, returns the |page_url| page mapped to an icon with
+  // |required_icon_types|, where |page_url| has host=|host|. This allows for
+  // icons to be retrieved when a full URL is not available. For example,
+  // |query_url| = http://www.google.com would match
+  // |page_url| = https://www.google.com/search.
+  // The returned optional will be empty if no such |page_url| exists.
+  base::Optional<GURL> FindPageURLForHost(
+      const std::string& host,
+      const favicon_base::IconTypeSet& required_icon_types);
 
   // Adds a mapping between the given page_url and icon_id.
   // Returns the new mapping id if the adding succeeds, otherwise 0 is returned.

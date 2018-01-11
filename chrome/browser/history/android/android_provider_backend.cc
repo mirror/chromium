@@ -1167,8 +1167,8 @@ bool AndroidProviderBackend::DeleteHistoryInternal(
     if (!deleted_rows)
       deleted_rows.reset(new URLRows);
     deleted_rows->push_back(url_row);
-    if (thumbnail_db_ &&
-        thumbnail_db_->GetIconMappingsForPageURL(url_row.url(), NULL)) {
+    if (thumbnail_db_ && thumbnail_db_->GetIconMappingsForPageURL(
+                             url_row.url(), false, nullptr)) {
       if (!favicons)
         favicons.reset(new std::set<GURL>);
       favicons->insert(url_row.url());

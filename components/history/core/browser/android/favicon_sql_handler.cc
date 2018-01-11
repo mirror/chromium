@@ -51,7 +51,7 @@ bool FaviconSQLHandler::Update(const HistoryAndBookmarkRow& row,
     // Remove all icon mappings to favicons of type kFavicon.
     std::vector<IconMapping> icon_mappings;
     thumbnail_db_->GetIconMappingsForPageURL(
-        i->url, {favicon_base::IconType::kFavicon}, &icon_mappings);
+        i->url, {favicon_base::IconType::kFavicon}, false, &icon_mappings);
     for (std::vector<IconMapping>::const_iterator m = icon_mappings.begin();
          m != icon_mappings.end(); ++m) {
       if (!thumbnail_db_->DeleteIconMapping(m->mapping_id))
@@ -77,7 +77,7 @@ bool FaviconSQLHandler::Delete(const TableIDRows& ids_set) {
        i != ids_set.end(); ++i) {
     // Since the URL was deleted, we delete all types of icon mappings.
     std::vector<IconMapping> icon_mappings;
-    thumbnail_db_->GetIconMappingsForPageURL(i->url, &icon_mappings);
+    thumbnail_db_->GetIconMappingsForPageURL(i->url, false, &icon_mappings);
     for (std::vector<IconMapping>::const_iterator m = icon_mappings.begin();
          m != icon_mappings.end(); ++m) {
       favicon_ids.push_back(m->icon_id);

@@ -785,6 +785,56 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLWithIconTypes) {
   EXPECT_EQ(kIconUrl2, icon_mappings[2].icon_url);
 }
 
+TEST_F(ThumbnailDatabaseTest, FindPageURLForHost) {
+  ThumbnailDatabase db(nullptr);
+  ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
+  db.BeginTransaction();
+
+  const GURL kPageUrl("https://www.google.com");
+  const GURL kPageUrlSamePrefix("https://www.google.com.au");
+  const GURL kPageUrlSameSuffix("https://m.www.google.com");
+  const GURL kPageUrlInPath("https://www.example.com/www.google.com");
+
+  EXPECT_FALSE(db.FindPageURLForHost(
+      "www.google.com",
+      {favicon_base::IconType::kFavicon, favicon_base::IconType::kTouchIcon}));
+
+  AddAndMapFaviconSimple(&db, kPageUrlSamePrefix, kIconUrl1,
+                         favicon_base::IconType::kFavicon);
+  AddAndMapFaviconSimple(&db, kPageUrlSameSuffix, kIconUrl2,
+                         favicon_base::IconType::kFavicon);
+  AddAndMapFaviconSimple(&db, kPageUrlInPath, kIconUrl3,
+                         favicon_base::IconType::kTouchIcon);
+
+  // There should be no matching host for www.google.com when no matching host
+  // exists with the required icon types.
+  EXPECT_FALSE(db.FindPageURLForHost("www.google.com",
+                                     {favicon_base::IconType::kFavicon}));
+
+  AddAndMapFaviconSimple(&db, kPageUrl, kIconUrl5,
+                         favicon_base::IconType::kTouchIcon);
+
+  EXPECT_FALSE(db.FindPageURLForHost("www.google.com",
+                                     {favicon_base::IconType::kFavicon}));
+
+  // Expect a match when we search for a TouchIcon.
+  base::Optional<GURL> result = db.FindPageURLForHost(
+      "www.google.com",
+      {favicon_base::IconType::kFavicon, favicon_base::IconType::kTouchIcon});
+
+  EXPECT_EQ(kPageUrl, result.value());
+
+  // Expect that when we query for icon mappings with the result, we retrieve
+  // the correct icon URL.
+  std::vector<IconMapping> icon_mappings;
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(
+      result.value(),
+      {favicon_base::IconType::kFavicon, favicon_base::IconType::kTouchIcon},
+      &icon_mappings));
+  ASSERT_EQ(1u, icon_mappings.size());
+  EXPECT_EQ(kIconUrl5, icon_mappings[0].icon_url);
+}
+
 TEST_F(ThumbnailDatabaseTest, HasMappingFor) {
   ThumbnailDatabase db(nullptr);
   ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
