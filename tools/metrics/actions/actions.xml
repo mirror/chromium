@@ -1290,6 +1290,13 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Android.ChromeHome.IndirectlyClosedSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>
+    The survey infobar was closed by means other than tapping the close button.
+  </description>
+</action>
+
 <action name="Android.ChromeHome.NativeNTPShown">
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
@@ -1389,6 +1396,11 @@ should be able to be added at any place in this file.
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <description>User showed the suggestions bottom sheet content.</description>
+</action>
+
+<action name="Android.ChromeHome.ShowSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>The survey infobar was displayed.</description>
 </action>
 
 <action name="Android.ContentDetectorActivated">

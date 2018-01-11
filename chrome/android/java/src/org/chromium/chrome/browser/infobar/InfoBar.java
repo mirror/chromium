@@ -191,6 +191,13 @@ public abstract class InfoBar implements InfoBarView {
     }
 
     /**
+     * @return The infobar in front.
+     */
+    public InfoBar getFrontInfoBar() {
+        return mContainer.getFrontInfoBar();
+    }
+
+    /**
      * Called just before the Java infobar has begun hiding.  Give the chance to clean up any child
      * UI that may remain open.
      */

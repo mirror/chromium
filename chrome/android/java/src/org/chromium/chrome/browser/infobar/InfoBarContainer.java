@@ -542,6 +542,14 @@ public class InfoBarContainer extends SwipableOverlayView {
         mScrollDirectionChangeAnimation.start();
     }
 
+    /**
+     * @return The infobar in front.
+     */
+    public InfoBar getFrontInfoBar() {
+        if (mInfoBars.isEmpty()) return null;
+        return mInfoBars.get(0);
+    }
+
     private native long nativeInit();
     private native void nativeSetWebContents(
             long nativeInfoBarContainerAndroid, WebContents webContents);
