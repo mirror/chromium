@@ -3307,7 +3307,7 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     root->test_properties()->AddChild(std::move(scrollbar));
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
     host_impl_->active_tree()->DidBecomeActive();
-    host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
+    host_impl_->active_tree()->HandleScrollbarVisibilityRequestsFromMain();
     DrawFrame();
 
     // SetScrollElementId will initialize the scrollbar which will cause it to
@@ -3946,7 +3946,7 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   child_ptr->SetBounds(gfx::Size(200, 200));
   child_ptr->set_needs_show_scrollbars(true);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
+  host_impl_->active_tree()->HandleScrollbarVisibilityRequestsFromMain();
   EXPECT_FALSE(animation_task_.Equals(base::Closure()));
   animation_task_ = base::Closure();
 

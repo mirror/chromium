@@ -83,6 +83,7 @@ class CC_EXPORT ScrollbarAnimationController {
   // Called when Blink wants to show the scrollbars (via
   // ScrollableArea::showOverlayScrollbars).
   void DidRequestShowFromMainThread();
+  void DidRequestHideFromMainThread();
 
   // These methods are public for testing.
   bool MouseIsOverScrollbarThumb(ScrollbarOrientation orientation) const;
