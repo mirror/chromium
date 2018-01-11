@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44911c15_0272c5d5",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-11T19:22:45Z",
+      "side": 1,
+      "message": "nit: |result_bounds| is only calculated above and assigned to |result_rect|. Can we remove |result_bounds| and directly calculate |result_rect| in Ln 82?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 40
+      },
+      "revId": "4822806885ec28dbe8bf2fdbe3b7b95bdef06a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
