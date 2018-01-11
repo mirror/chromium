@@ -629,4 +629,8 @@ void ContentBrowserClient::CreateUsbChooserService(
     RenderFrameHost* render_frame_host,
     device::mojom::UsbChooserServiceRequest request) {}
 
+bool ContentBrowserClient::ShouldCreateTaskScheduler() {
+  return true;
+}
+
 }  // namespace content
