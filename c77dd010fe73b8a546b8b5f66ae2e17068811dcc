@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104ba574_ef68bc7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T07:11:58Z",
+      "side": 1,
+      "message": "nit: stop -\u003e bypass?",
+      "revId": "c77dd010fe73b8a546b8b5f66ae2e17068811dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c51d926_70b372b0",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T07:11:58Z",
+      "side": 1,
+      "message": "1) I don\u0027t think this invokes the constructor you want. Options:\n\nstd::atomic_int g_num_files_openned_past_handle_limit(0);\nstd::atomic_int g_num_files_openned_past_handle_limit \u003d ATOMIC_VAR_INIT(0);\n\nThe two are equivalent. ATOMIC_VAR_INIT is actually for compatibility with C, but in this case it might make it easier for a reader to see that the initialization is constant and doesn\u0027t cause any code generation.\n\n2) nit: openned -\u003e opened?\n3) Does the trace API use int? If not, how about atomic_uint64_t, or whatever type is used by the trace API?",
+      "revId": "c77dd010fe73b8a546b8b5f66ae2e17068811dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24258bf3_761bcd94",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T07:11:58Z",
+      "side": 1,
+      "message": "1) I think you need to add 1 to the result, because fetch_add returns the previous value. Alternatively, initialize g_num_files_opened_past_handle_limit with 1 instead of 0.\n\n2) This value never goes down. How about decrementing in the destructor, so it indicates the number of file descriptors that are being paged in / out at a given time?",
+      "revId": "c77dd010fe73b8a546b8b5f66ae2e17068811dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010fcf9d_34ca408d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T07:11:58Z",
+      "side": 1,
+      "message": "I think it\u0027d be simpler to reason about code paths if you keep the semaphore in all the time, but initialize it with either MaxOpenFiles() or std::numeric_limits\u003cintptr_t\u003e::max().",
+      "revId": "c77dd010fe73b8a546b8b5f66ae2e17068811dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
