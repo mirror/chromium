@@ -14,11 +14,16 @@
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "chrome/browser/local_state_loader.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/webui/ntp/ntp_resource_cache_factory.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/metrics_services_manager/metrics_services_manager.h"
+#include "components/prefs/pref_service.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_service_manager_context.h"
+#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
@@ -32,12 +37,20 @@ class BrowserProcessImplTest : public ::testing::Test {
         loop_(base::MessageLoop::TYPE_UI),
         ui_thread_(content::BrowserThread::UI, &loop_),
         io_thread_(new content::TestBrowserThread(content::BrowserThread::IO)),
-        command_line_(base::CommandLine::NO_PROGRAM),
-        browser_process_impl_(std::make_unique<BrowserProcessImpl>(
-            base::ThreadTaskRunnerHandle::Get().get())) {
-    // Create() and StartWithDefaultParams() TaskScheduler in seperate steps to
-    // properly simulate the browser process' lifecycle.
+        command_line_(base::CommandLine::NO_PROGRAM) {
+    // BrowserMainLoop is created before |local_state| and before
+    // BrowserProcessImpl, which sets a TaskScheduler.
     base::TaskScheduler::Create("BrowserProcessImplTest");
+    std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory;
+    std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+        browser_policy_connector;
+    std::unique_ptr<PrefService> local_state;
+    local_state_loader::internal::CreateLocalState(
+        base::ThreadTaskRunnerHandle::Get(), &pref_service_factory,
+        &browser_policy_connector, &local_state);
+    browser_process_impl_ = std::make_unique<BrowserProcessImpl>(
+        nullptr, std::move(browser_policy_connector), std::move(local_state),
+        base::ThreadTaskRunnerHandle::Get(), std::move(pref_service_factory));
     base::SetRecordActionTaskRunner(loop_.task_runner());
     browser_process_impl_->SetApplicationLocale("en");
   }

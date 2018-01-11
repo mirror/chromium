@@ -77,25 +77,28 @@ void SetMetricsReporting(bool to_update_pref,
 
 }  // namespace
 
-void ChangeMetricsReportingState(bool enabled) {
-  ChangeMetricsReportingStateWithReply(enabled,
+void ChangeMetricsReportingState(PrefService* local_state, bool enabled) {
+  ChangeMetricsReportingStateWithReply(local_state, enabled,
                                        OnMetricsReportingCallbackType());
 }
 
 // TODO(gayane): Instead of checking policy before setting the metrics pref set
 // the pref and register for notifications for the rest of the changes.
 void ChangeMetricsReportingStateWithReply(
+    PrefService* local_state,
     bool enabled,
     const OnMetricsReportingCallbackType& callback_fn) {
 #if !defined(OS_ANDROID)
-  if (IsMetricsReportingPolicyManaged()) {
+  if (IsMetricsReportingPolicyManaged(local_state)) {
     if (!callback_fn.is_null()) {
       callback_fn.Run(
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled());
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+              local_state));
     }
     return;
   }
 #endif
+  // XXX
   base::PostTaskAndReplyWithResult(
       GoogleUpdateSettings::CollectStatsConsentTaskRunner(), FROM_HERE,
       base::Bind(&SetGoogleUpdateSettings, enabled),
@@ -120,9 +123,8 @@ void UpdateMetricsPrefsOnPermissionChange(bool metrics_enabled) {
   }
 }
 
-bool IsMetricsReportingPolicyManaged() {
-  const PrefService* pref_service = g_browser_process->local_state();
+bool IsMetricsReportingPolicyManaged(PrefService* local_state) {
   const PrefService::Preference* pref =
-      pref_service->FindPreference(metrics::prefs::kMetricsReportingEnabled);
+      local_state->FindPreference(metrics::prefs::kMetricsReportingEnabled);
   return pref && pref->IsManaged();
 }
