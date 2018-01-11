@@ -543,9 +543,15 @@ void DisplayConfigurator::SetDelegateForTesting(
 
 void DisplayConfigurator::SetInitialDisplayPower(
     chromeos::DisplayPowerState power_state) {
-  DCHECK_EQ(current_display_state_, MULTIPLE_DISPLAY_STATE_INVALID);
-  requested_power_state_ = current_power_state_ = power_state;
-  NotifyPowerStateObservers();
+  if (current_display_state_ == MULTIPLE_DISPLAY_STATE_INVALID) {
+    requested_power_state_ = current_power_state_ = power_state;
+    NotifyPowerStateObservers();
+    return;
+  }
+  // In mus/mash SetInitialDisplayPower is called asynchronously so may occur
+  // after current_display_state_ has been set. In that case just call
+  // SetDisplayPower(). TODO(mash): Fix this properly. http://crbug.com/800925.
+  SetDisplayPower(power_state, kSetDisplayPowerNoFlags, base::Bind(&DoNothing));
 }
 
 void DisplayConfigurator::Init(
