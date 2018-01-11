@@ -34,6 +34,24 @@
       "revId": "3e3f92485a0ec483e0475c0290e21ae3563f4ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0f828_06200b7d",
+        "filename": "content/public/common/zygote_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-11T20:19:29Z",
+      "side": 1,
+      "message": "Would you prefer HAS_ZYGOTE_HANDLE or some such to avoid confusion with other uses of USE_ ?",
+      "parentUuid": "aa560fa7_5a8287e6",
+      "revId": "3e3f92485a0ec483e0475c0290e21ae3563f4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
