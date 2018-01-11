@@ -15,7 +15,6 @@
 #include "cc/trees/swap_promise.h"
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/task_runner_provider.h"
-#include "components/viz/common/surfaces/surface_sequence_generator.h"
 
 namespace cc {
 
@@ -51,14 +50,11 @@ class SatisfySwapPromise : public SwapPromise {
   DISALLOW_COPY_AND_ASSIGN(SatisfySwapPromise);
 };
 
-scoped_refptr<SurfaceLayer> SurfaceLayer::Create(
-    scoped_refptr<viz::SurfaceReferenceFactory> ref_factory) {
-  return base::WrapRefCounted(new SurfaceLayer(std::move(ref_factory)));
+scoped_refptr<SurfaceLayer> SurfaceLayer::Create() {
+  return base::WrapRefCounted(new SurfaceLayer());
 }
 
-SurfaceLayer::SurfaceLayer(
-    scoped_refptr<viz::SurfaceReferenceFactory> ref_factory)
-    : ref_factory_(std::move(ref_factory)) {}
+SurfaceLayer::SurfaceLayer() = default;
 
 SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
@@ -76,15 +72,12 @@ void SurfaceLayer::SetFallbackSurfaceId(const viz::SurfaceId& surface_id) {
   if (fallback_surface_id_ == surface_id)
     return;
 
-  RemoveReference(std::move(fallback_reference_returner_));
   if (layer_tree_host())
     layer_tree_host()->RemoveSurfaceLayerId(fallback_surface_id_);
 
   fallback_surface_id_ = surface_id;
 
   if (layer_tree_host() && fallback_surface_id_.is_valid()) {
-    fallback_reference_returner_ =
-        ref_factory_->CreateReference(layer_tree_host(), fallback_surface_id_);
     layer_tree_host()->AddSurfaceLayerId(fallback_surface_id_);
   }
   SetNeedsCommit();
@@ -115,12 +108,9 @@ void SurfaceLayer::SetLayerTreeHost(LayerTreeHost* host) {
   if (layer_tree_host() && fallback_surface_id_.is_valid())
     layer_tree_host()->RemoveSurfaceLayerId(fallback_surface_id_);
 
-  RemoveReference(std::move(fallback_reference_returner_));
   Layer::SetLayerTreeHost(host);
 
   if (layer_tree_host() && fallback_surface_id_.is_valid()) {
-    fallback_reference_returner_ =
-        ref_factory_->CreateReference(layer_tree_host(), fallback_surface_id_);
     layer_tree_host()->AddSurfaceLayerId(fallback_surface_id_);
   }
 }
@@ -132,16 +122,6 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   layer_impl->SetPrimarySurfaceId(primary_surface_id_);
   layer_impl->SetFallbackSurfaceId(fallback_surface_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
-}
-
-void SurfaceLayer::RemoveReference(base::Closure reference_returner) {
-  if (!reference_returner)
-    return;
-  auto swap_promise = std::make_unique<SatisfySwapPromise>(
-      std::move(reference_returner),
-      layer_tree_host()->GetTaskRunnerProvider()->MainThreadTaskRunner());
-  layer_tree_host()->GetSwapPromiseManager()->QueueSwapPromise(
-      std::move(swap_promise));
 }
 
 }  // namespace cc

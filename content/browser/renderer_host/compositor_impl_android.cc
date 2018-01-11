@@ -97,17 +97,9 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 
 struct CompositorDependencies {
   CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    // TODO(crbug.com/676384): Remove flag along with surface sequences.
-    auto surface_lifetime_type =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableSurfaceReferences)
-            ? viz::SurfaceManager::LifetimeType::SEQUENCES
-            : viz::SurfaceManager::LifetimeType::REFERENCES;
-
     // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
     // Gpu process, instead get the mojo pointer from the Gpu process.
-    frame_sink_manager_impl =
-        std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+    frame_sink_manager_impl = std::make_unique<viz::FrameSinkManagerImpl>();
     surface_utils::ConnectWithLocalFrameSinkManager(
         &host_frame_sink_manager, frame_sink_manager_impl.get());
   }

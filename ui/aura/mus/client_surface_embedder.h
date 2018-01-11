@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
 #include "ui/gfx/geometry/insets.h"
 
 namespace gfx {
@@ -69,8 +68,6 @@ class ClientSurfaceEmbedder {
 
   bool inject_gutter_;
   gfx::Insets client_area_insets_;
-
-  scoped_refptr<viz::SurfaceReferenceFactory> ref_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientSurfaceEmbedder);
 };

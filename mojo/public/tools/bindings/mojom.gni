@@ -103,6 +103,7 @@ if (enable_mojom_typemapping) {
   }
   _bindings_configurations = []
   foreach(config_file, _bindings_configuration_files) {
+    print(config_file)
     _bindings_configurations += [ read_file(config_file, "scope") ]
   }
   foreach(configuration, _bindings_configurations) {
