@@ -146,7 +146,7 @@ TEST_F('LiveRegionsTest', 'LiveRegionChangeImageAlt', function() {
   this.runWithLoadedTree(
     function() {/*!
       <div id="live" aria-live="polite">
-        <img id="img" src="#" alt="Before">
+        <img id="img" src="%23" alt="Before">
       </div>
       <button id="go">Go</button>
       <script>
