@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e54033c8_3342e02c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T16:34:16Z",
+      "side": 1,
+      "message": "Still needs fixing :P",
+      "parentUuid": "0f2a05a6_aaa45b2d",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d02fc03_911b97fe",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -101,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "49ebb24c_acf10cdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T16:34:16Z",
+      "side": 1,
+      "message": "(done)",
+      "parentUuid": "62c80160_0c7e6e11",
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296c5bb4_89f93884",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 6
@@ -136,6 +172,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "296c5bb4_89f93884",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 95
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f014587_50ead9fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T16:34:16Z",
+      "side": 1,
+      "message": "thanks! and thanks for improving the comment too, much better :)",
+      "parentUuid": "4ec06700_f358863a",
       "range": {
         "startLine": 390,
         "startChar": 0,
@@ -449,6 +509,30 @@
       "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf979959_cd4696ed",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-11T16:34:16Z",
+      "side": 1,
+      "message": "(done)",
+      "parentUuid": "b34fdec5_7e7ffa47",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "149c9ca01a624651c2e559ba5ad987db849d4dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
