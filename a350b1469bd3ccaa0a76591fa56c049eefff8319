@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d43e5dbc_190571ff",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edc32d3_82cf905e",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2966c1_76ba26af",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T11:33:09Z",
       "side": 1,
       "message": "FLAG_CREATE_ALWAYS",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b68cc7_86950ff4",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Why FLAG_CREATE_ALWAYS? The file is created already with CreateTemporaryFile, we want to open the file. I have renamed CreateFile function to OpenFile to reflect that, and used FLAG_OPEN.",
+      "parentUuid": "5e2966c1_76ba26af",
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6b163bdf_f96f577e",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5059ee7f_3f8e4acb",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b4ed90_4f3e8653",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198fbec2_f187a5d7",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done, I renamed it to StartWithInvalidFile, to reflect the action, and added a comment to reflect the expectation.",
+      "parentUuid": "f8b4ed90_4f3e8653",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5b63d691_88a30329",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4e65c0_cd977c41",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e56bdc0_cef00bed",
         "filename": "media/audio/audio_debug_recording_helper.h",
         "patchSetId": 23
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-11T11:33:09Z",
       "side": 1,
       "message": "Actually, reading the code, it should be called \"StartDebugRecordingToFile\"\nAnd the comment \"Called back by |create_file_callback_|, starts recording to the file it created.\"?\n(Prefer to use member names instead of their type names, what you actually meant members.)",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c517f07_347bbed0",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Actually I would leave it EnableDebugRecordingToFile, because in this function we set recording_enabled_. OnData doesn\u0027t write until this flag is set.",
+      "parentUuid": "3e56bdc0_cef00bed",
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6ae461ab_99ebe981",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8049e402_c9fc7cdb",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7af5f06_47ce2d77",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 23
@@ -135,6 +261,24 @@
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fee8f23_4088730d",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7af5f06_47ce2d77",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "88e5afd2_dceb2065",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edb5aecb_9b06921f",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5231e555_65bf6bc1",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 23
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "4cad9d97_f03f2384",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5231e555_65bf6bc1",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de2e84aa_c1a1a661",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 23
@@ -186,6 +366,24 @@
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3939800f_667c97d1",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:54:19Z",
+      "side": 1,
+      "message": "This callback is run by AudioDebugRecordingHelper::EnableDebugRecording, but in these tests AudioDebugRecordingHelper::EnableDebugRecording is mocked, so this callback doesn\u0027t get to be run.",
+      "parentUuid": "de2e84aa_c1a1a661",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
