@@ -194,6 +194,7 @@ public class FeatureUtilities {
     public static void cacheNativeFlags() {
         cacheHerbFlavor();
         cacheChromeHomeEnabled();
+        cacheCommandLineOnNonRootedEnabled();
         FirstRunUtils.cacheFirstRunPrefs();
 
         // Propagate DONT_PREFETCH_LIBRARIES feature value to LibraryLoader. This can't
@@ -296,6 +297,16 @@ public class FeatureUtilities {
 
         UmaSessionStats.registerSyntheticFieldTrial(SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME,
                 isChromeHomeEnabled() ? ENABLED_EXPERIMENT_GROUP : DISABLED_EXPERIMENT_GROUP);
+    }
+
+    /**
+     * Cache whether or not command line is enabled on non-rooted devices.
+     */
+    public static void cacheCommandLineOnNonRootedEnabled() {
+        boolean isCommandLineOnNonRootedEnabled =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.COMMAND_LINE_ON_NON_ROOTED);
+        ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
+        manager.setCommandLineOnNonRootedEnabled(isCommandLineOnNonRootedEnabled);
     }
 
     private static boolean areChromeHomePersonalizedOmniboxSuggestionsEnabled() {

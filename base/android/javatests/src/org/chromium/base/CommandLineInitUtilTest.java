@@ -4,6 +4,7 @@
 
 package org.chromium.base;
 
+import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -39,5 +40,16 @@ public class CommandLineInitUtilTest {
 
         final CommandLine commandLine = CommandLine.getInstance();
         Assert.assertTrue(commandLine.hasSwitch("enable-test-intents"));
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"CommandLine"})
+    public void testCommandLineEnabledOnNonRootedWithFlag() {
+        SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(CommandLineInitUtil.COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, true);
+        editor.apply();
+        Assert.assertTrue(CommandLineInitUtil.allowAlternativeCommandLineFile());
     }
 }

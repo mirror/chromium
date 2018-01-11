@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 
+import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.crash.MinidumpUploadService.ProcessType;
@@ -499,6 +500,22 @@ public class ChromePreferenceManager {
      */
     public void clearChromeHomeMenuItemClickCount() {
         mSharedPreferences.edit().remove(CHROME_HOME_MENU_ITEM_CLICK_COUNT_KEY).apply();
+    }
+
+    /**
+     * Set whether or not command line on non-rooted devices is enabled.
+     * @param isEnabled If command line on non-rooted devices is enabled.
+     */
+    public void setCommandLineOnNonRootedEnabled(boolean isEnabled) {
+        writeBoolean(CommandLineInitUtil.COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, isEnabled);
+    }
+
+    /**
+     * @return Whether the command line on non-rooted devices is enabled.
+     */
+    public boolean getCommandLineOnNonRootedEnabled() {
+        return mSharedPreferences.getBoolean(
+                CommandLineInitUtil.COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, false);
     }
 
     /** Marks that the content suggestions surface has been shown. */
