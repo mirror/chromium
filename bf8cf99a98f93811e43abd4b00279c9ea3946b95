@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e45c6e_b386cbd5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T21:32:19Z",
+      "side": 1,
+      "message": "When do images not serialize?",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16218eab_14f3abb6",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T21:32:19Z",
+      "side": 1,
+      "message": "Do you think it\u0027d be worth doing the same g_analyze_funcs pattern that we do for all the other \"\"\"virtual\"\"\" functions?",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca418ec_dfb5e6ce",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T21:32:19Z",
+      "side": 1,
+      "message": "ensuring this rect will not reject images, maybe?",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427ae0a1_032df429",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2878,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-11T21:32:19Z",
+      "side": 1,
+      "message": "Can you fix this typo while you\u0027re here?",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
