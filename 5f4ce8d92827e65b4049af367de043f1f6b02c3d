@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b9ad008_d76949a2",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-11T07:04:02Z",
+      "side": 0,
+      "message": "This condition is not tested anymore in the new code, meaning vaapi support will be enabled regardless of the values of options.accelerated_video_encode_enabled and options.accelerated_video_decode_enabled. Previously the fact that the libraries have not been dlopened would make libva and vaapi_wrapper fail at init time. Now this is not the case anymore. Could you find a way to properly handle these flags again?",
+      "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

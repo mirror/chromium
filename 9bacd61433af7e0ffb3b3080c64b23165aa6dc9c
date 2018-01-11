@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb45f85_d85f4b8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-11T07:04:02Z",
+      "side": 1,
+      "message": "The \"should\" wording does not convey the impression that tests have actually been performed :)\n\nAlso, since unit tests are not sandboxes and changes to the sandboxing code can be tricky, could you also test on an actual, running Chrome instance?",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec5ae4f_30263f98",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-11T07:04:02Z",
+      "side": 1,
+      "message": "This function is now executed pre-sandbox (VADisplayState::PreSandboxInitialization() -\u003e VASupportedProfiles::Get() -\u003e ASupportedProfiles::VASupportedProfiles() -\u003e VADisplayState::Initialize() -\u003e PostSandboxInitialization()). Its name should be changed, or maybe we should move its body to PreSandBoxInitialization() and delete it altogether if that still results in a valid code flow? At first sight it would, and the fact that PostSandBoxInitialization() is currently called from a static context further reinforces the feeling that this is the correct thing to do.",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cc34c3_b1b36ec5",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-11T07:04:02Z",
+      "side": 1,
+      "message": "Looks like this is unnecessary?",
+      "revId": "9bacd61433af7e0ffb3b3080c64b23165aa6dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
