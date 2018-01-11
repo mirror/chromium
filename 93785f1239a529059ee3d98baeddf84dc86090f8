@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2b84db_bf02f454",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "To be more precise: \"hashes of hosts for insecure request upgrades\"?",
+      "range": {
+        "startLine": 159,
+        "startChar": 37,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d80d24_a49f5ca4",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "\"hashes of hosts\"?",
+      "range": {
+        "startLine": 249,
+        "startChar": 42,
+        "endLine": 249,
+        "endChar": 55
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004c2f97_c44f02cd",
+        "filename": "content/common/frame_replication_state.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "I\u0027d also explain what each entry in the set represents (i.e., hash of a host to be upgraded?), here and in the frame_messages.h comments",
+      "range": {
+        "startLine": 121,
+        "startChar": 15,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bbe014_ad21fb1e",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "nit: sets",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b99990a_5574cca5",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "redundant line?",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b776a4_a8ab75f9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "Why did this become needed?  Were we not getting to FrameLoader::ModifyRequestForCSP as part of FrameLoader::Load later?\n\nSimilarly, what bug gets fixed by calling this in RemoteFrame::Navigate?",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 24
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1433198_f2d0ebe0",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "Why does this need to take in a set, if we only end up passing one hash into it?  When would a SecurityContext\u0027s set have more than one entry in it?",
+      "range": {
+        "startLine": 213,
+        "startChar": 18,
+        "endLine": 213,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f0df38_419d5003",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "Sanity check: this doesn\u0027t need to walk up the ancestor frame chain and combine all the sets, does it?  I.e., if we\u0027ve got A(B(C)), where B and C are OOPIFs, C will reference B\u0027s set - does it need to also reference A\u0027s set, or will B automatically inherit A\u0027s set?",
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb765444_0bd7071c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "Is this line needed? (We\u0027re already in this function)",
+      "range": {
+        "startLine": 1721,
+        "startChar": 0,
+        "endLine": 1721,
+        "endChar": 53
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d3a8a2_85588f76",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "what does originDocument refer to?",
+      "range": {
+        "startLine": 1725,
+        "startChar": 45,
+        "endLine": 1725,
+        "endChar": 61
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1205e4_e9b9aca3",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "Same for this one.",
+      "range": {
+        "startLine": 1727,
+        "startChar": 0,
+        "endLine": 1727,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a62bb6_1d081f8d",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "4.2 is almost the same as 4.1 - maybe merge them?",
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

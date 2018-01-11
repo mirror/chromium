@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d8da4d60_6d9c8014",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-11T01:18:48Z",
+      "side": 1,
+      "message": "I guess we could still unconditionally call GetSecurityContext().AddInsecureNavigationUpgrade(hash), but then explicitly invoke the replication logic (DidEnforceInsecureNavigationsSet) here directly, if document is valid?  Then again, this way mirrors what we do for sandbox flags and insecure request policy just above, so I guess I\u0027m fine with it.",
+      "parentUuid": "92a6e044_7b788ffc",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38035c73_a03fb34b",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 1
