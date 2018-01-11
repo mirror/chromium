@@ -970,7 +970,13 @@ void PaintController::GenerateIncrementalRasterInvalidation(
   DCHECK(&old_item.Client() == &new_item.Client());
   FloatRect old_visual_rect(old_item.VisualRect());
   FloatRect new_visual_rect(new_item.VisualRect());
-  DCHECK(old_visual_rect.Location() == new_visual_rect.Location());
+  if (old_visual_rect.Location() != new_visual_rect.Location()) {
+    // Incremental invalidation is not applicable when location changed.
+    new_item.Client().SetDisplayItemsUncached(
+        PaintInvalidationReason::kGeometry);
+    GenerateFullRasterInvalidation(chunk, old_item, new_item);
+    return;
+  }
 
   FloatRect right_delta =
       ComputeRightDelta(new_visual_rect.Location(), old_visual_rect.Size(),
