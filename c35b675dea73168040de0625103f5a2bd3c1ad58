@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d03d08a1_8b308f1d",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-11T11:49:55Z",
+      "side": 1,
+      "message": "can you explain why this is needed?",
+      "revId": "c35b675dea73168040de0625103f5a2bd3c1ad58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
