@@ -22,6 +22,30 @@
       "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1457a77b_3c496e32",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T18:37:10Z",
+      "side": 1,
+      "message": "Yes, has been basically since this code was added.  Originally we were planing to show \"Secure\", but there\u0027s so little space on the URL bar, we left that disabled.",
+      "parentUuid": "b5e16fbd_1d187e28",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
