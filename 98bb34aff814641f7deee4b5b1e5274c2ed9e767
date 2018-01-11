@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7131d7f_20b21863",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2018-01-11T20:34:42Z",
+      "side": 1,
+      "message": "This can be increased since we no longer overflow.",
+      "range": {
+        "startLine": 223,
+        "startChar": 96,
+        "endLine": 223,
+        "endChar": 98
+      },
+      "revId": "98bb34aff814641f7deee4b5b1e5274c2ed9e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28a93b9_d0d5271f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2018-01-11T20:34:42Z",
+      "side": 1,
+      "message": "It doesn\u0027t hurt to use seconds. 1/3 falls in the first bucket according to https://uma.googleplex.com/p/chrome/histograms/?endDate\u003dlatest\u0026dayCount\u003d1\u0026histograms\u003dWebApk.LaunchInterval\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Ceq%2CA%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial\n\nIf we don\u0027t care about the distribution within one hour, then using hours is easier to read.",
+      "range": {
+        "startLine": 223,
+        "startChar": 44,
+        "endLine": 223,
+        "endChar": 51
+      },
+      "revId": "98bb34aff814641f7deee4b5b1e5274c2ed9e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
