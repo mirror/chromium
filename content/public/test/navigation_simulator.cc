@@ -806,7 +806,7 @@ bool NavigationSimulator::SimulateBrowserInitiatedStart() {
       // renderer process aborting it.
       web_contents_->GetMainFrame()->OnMessageReceived(
           FrameHostMsg_DidStopLoading(
-              web_contents_->GetMainFrame()->GetRoutingID()));
+              web_contents_->GetMainFrame()->GetRoutingID(), true));
       state_ = FAILED;
       return false;
     }
