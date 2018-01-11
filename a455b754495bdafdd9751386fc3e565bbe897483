@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86f823e_503c7709",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "This is just a really fancy way of repeating the subject line. I would just drop this sentence.",
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b6ff54_23e8e514",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1914667_47a0df31",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "I like to use \"FunctionName()\" for functions. Otherwise they are not obviously distinguishable from ClassName.",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186321cf_55e1445d",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "This should be const-ref.",
+      "range": {
+        "startLine": 72,
+        "startChar": 27,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2b16cd_269535c1",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "You don\u0027t need the return statement anymore.",
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5717269d_d0ab8c25",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T01:49:38Z",
+      "side": 1,
+      "message": "Remove \"first\" since there is only 1 argument?",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "a455b754495bdafdd9751386fc3e565bbe897483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
