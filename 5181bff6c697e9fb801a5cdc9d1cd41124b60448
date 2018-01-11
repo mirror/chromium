@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9bdc0d7_d692167b",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:27:09Z",
+      "side": 0,
+      "message": "This DCHECK is kinda nice.  Maybe we can preserve it just as:\nDCHECK(gin::PerContextData::From(context)) \u003c\u003c\n    \"Trying to invalidate an already-invalid context.\";",
+      "revId": "5181bff6c697e9fb801a5cdc9d1cd41124b60448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

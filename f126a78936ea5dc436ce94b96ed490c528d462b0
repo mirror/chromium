@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "345fc92b_10636a8c",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:27:09Z",
+      "side": 1,
+      "message": "Oh, hmm.  Okay, this is fine then. :)  I\u0027m not keen on adding a GetFrom() method to each of these structs, and agree that passing in the key to each call of the method is very noisy.",
+      "parentUuid": "03403740_b74e88a2",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e66377_5f345e74",
         "filename": "extensions/renderer/bindings/api_event_handler.cc",
         "patchSetId": 3
