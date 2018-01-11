@@ -41,6 +41,10 @@ public class SurveyInfoBar extends InfoBar {
     // Boolean to track if the infobar was clicked to prevent double triggering of the survey.
     private boolean mClicked;
 
+    // Boolean to track if the infobar was closed to prevent onStartHiding() from being called after
+    // onCloseButtonClicked().
+    private boolean mClosed;
+
     /**
      * Create and show the {@link SurveyInfoBar}.
      * @param webContents The webcontents to create the {@link InfoBar} around.
@@ -85,8 +89,8 @@ public class SurveyInfoBar extends InfoBar {
             @Override
             public void onHidden(Tab tab) {
                 mDelegate.onSurveyInfoBarTabHidden();
-                closeInfoBar();
                 tab.removeObserver(this);
+                SurveyInfoBar.super.onCloseButtonClicked();
             }
 
             @Override
@@ -117,19 +121,11 @@ public class SurveyInfoBar extends InfoBar {
         layout.addContent(prompt, 1f);
     }
 
-    /**
-     * Closes the infobar without calling the {@link SurveyInfoBarDelegate}'s
-     * onSurveyInfoBarCloseButtonClicked.
-     */
-    private void closeInfoBar() {
-        // TODO(mdjones): add a proper close method to programatically close the infobar.
-        super.onCloseButtonClicked();
-    }
-
     @Override
     public void onCloseButtonClicked() {
-        mDelegate.onSurveyInfoBarCloseButtonClicked();
         super.onCloseButtonClicked();
+        mDelegate.onSurveyInfoBarClosed(true);
+        mClosed = true;
     }
 
     @CalledByNative
@@ -154,6 +150,14 @@ public class SurveyInfoBar extends InfoBar {
         });
     }
 
+    @Override
+    protected void onStartedHiding() {
+        super.onStartedHiding();
+        if (mClosed || !this.equals(super.getFrontInfoBar())) return;
+
+        mDelegate.onSurveyInfoBarClosed(false);
+    }
+
     /**
      * Shows the survey and closes the infobar.
      * @param tab The tab on which to show the survey.
@@ -164,7 +168,7 @@ public class SurveyInfoBar extends InfoBar {
 
         SurveyController.getInstance().showSurveyIfAvailable(
                 tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
-        closeInfoBar();
+        super.onCloseButtonClicked();
     }
 
     private static native void nativeCreate(WebContents webContents, String siteId,
