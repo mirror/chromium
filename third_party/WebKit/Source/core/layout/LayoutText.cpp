@@ -1845,6 +1845,8 @@ LayoutRect LayoutText::VisualOverflowRect() const {
   if (!FirstTextBox())
     return LayoutRect();
 
+  DCHECK(CanUseInlineBox(*this));
+
   // Return the width of the minimal left side and the maximal right side.
   LayoutUnit logical_left_side = LayoutUnit::Max();
   LayoutUnit logical_right_side = LayoutUnit::Min();
