@@ -15,6 +15,7 @@
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/ukm/test_ukm_recorder.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/base/page_transition_types.h"
 
 using UkmMetricMap = std::map<const char*, int64_t>;
 using SourceUkmMetricMap =
@@ -29,12 +30,18 @@ class TabActivityTestBase : public ChromeRenderViewHostTestHarness {
   TabActivityTestBase();
   ~TabActivityTestBase() override;
 
+  // Simulates a navigation to |url| using the given transition type.
+  void Navigate(content::WebContents* web_contents,
+                const GURL& url,
+                ui::PageTransition page_transition);
+
   // Creates a new WebContents suitable for testing, adds it to the tab strip
   // and commits a navigation to |initial_url|. The WebContents is owned by the
   // TabStripModel, so its tab must be closed later, e.g. via CloseAllTabs().
   content::WebContents* AddWebContentsAndNavigate(
       TabStripModel* tab_strip_model,
-      const GURL& initial_url);
+      const GURL& initial_url,
+      ui::PageTransition page_transition = ui::PAGE_TRANSITION_LINK);
 
   // Sets |new_index| as the active tab in its tab strip, hiding the previously
   // active tab.
