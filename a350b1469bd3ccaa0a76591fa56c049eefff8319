@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c84087b3_04606f5c",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T13:34:06Z",
+      "side": 1,
+      "message": "Hmm CreateAndOpenTemporaryFile returns a FILE*, and base::File doesn\u0027t have a constructor taking a FILE*. Leave it as is with OpenFile()? :)",
+      "parentUuid": "5a24596e_ba7ca722",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5059ee7f_3f8e4acb",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
@@ -245,6 +263,24 @@
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a77924_09b89e6e",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T13:34:06Z",
+      "side": 1,
+      "message": "Ok, done.",
+      "parentUuid": "e943a82c_4bbcc726",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
