@@ -3043,6 +3043,8 @@ test("unit_tests") {
 
     if (is_win) {
       sources += [
+        "../browser/notifications/mock_itoastnotification.cc",
+        "../browser/notifications/mock_itoastnotification.h",
         "../browser/notifications/notification_platform_bridge_win_unittest.cc",
       ]
     }
@@ -4035,7 +4037,9 @@ test("unit_tests") {
       "rpcrt4.lib",
       "urlmon.lib",
       "winmm.lib",
+      "runtimeobject.lib",
     ]
+
     if (!is_chrome_branded) {
       sources -= [ "../browser/google/google_update_win_unittest.cc" ]
     }

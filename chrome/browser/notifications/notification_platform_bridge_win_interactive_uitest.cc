@@ -11,6 +11,7 @@
 #include "base/win/scoped_hstring.h"
 #include "base/win/windows_version.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/notifications/mock_itoastnotification.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/notifications/notification_platform_bridge_win.h"
 #include "chrome/browser/ui/browser.h"
@@ -78,103 +79,6 @@ class NotificationPlatformBridgeWinUITest : public InProcessBrowserTest {
   base::Optional<bool> last_by_user_;
 
   bool delegate_called_ = false;
-};
-
-class MockIToastNotification : public winui::Notifications::IToastNotification {
- public:
-  explicit MockIToastNotification(const base::string16& xml) : xml_(xml) {}
-  ~MockIToastNotification() = default;
-
-  HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid,
-                                           void** ppvObject) override {
-    return E_NOTIMPL;
-  }
-  ULONG STDMETHODCALLTYPE AddRef() override { return 1; }
-  ULONG STDMETHODCALLTYPE Release() override { return 0; }
-  HRESULT STDMETHODCALLTYPE GetIids(ULONG* iidCount, IID** iids) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE GetRuntimeClassName(HSTRING* className) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE GetTrustLevel(TrustLevel* trustLevel) override {
-    return E_NOTIMPL;
-  }
-
-  HRESULT STDMETHODCALLTYPE
-  get_Content(winxml::Dom::IXmlDocument** value) override {
-    mswr::ComPtr<ABI::Windows::Data::Xml::Dom::IXmlDocumentIO> xml_document_io;
-    base::win::ScopedHString id = base::win::ScopedHString::Create(
-        RuntimeClass_Windows_Data_Xml_Dom_XmlDocument);
-    HRESULT hr = Windows::Foundation::ActivateInstance(
-        id.get(), xml_document_io.GetAddressOf());
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Unable to instantiate XMLDocumentIO " << hr;
-      return hr;
-    }
-
-    base::win::ScopedHString xml = base::win::ScopedHString::Create(xml_);
-    hr = xml_document_io->LoadXml(xml.get());
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Unable to load XML " << hr;
-      return hr;
-    }
-
-    Microsoft::WRL::ComPtr<ABI::Windows::Data::Xml::Dom::IXmlDocument>
-        xml_document;
-    hr = xml_document_io.CopyTo(xml_document.GetAddressOf());
-    if (FAILED(hr)) {
-      LOG(ERROR) << "Unable to copy to XMLDoc " << hr;
-      return hr;
-    }
-
-    *value = xml_document.Detach();
-    return S_OK;
-  }
-
-  HRESULT STDMETHODCALLTYPE put_ExpirationTime(
-      __FIReference_1_Windows__CFoundation__CDateTime* value) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE get_ExpirationTime(
-      __FIReference_1_Windows__CFoundation__CDateTime** value) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE add_Dismissed(
-      __FITypedEventHandler_2_Windows__CUI__CNotifications__CToastNotification_Windows__CUI__CNotifications__CToastDismissedEventArgs*
-          handler,
-      EventRegistrationToken* cookie) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE
-  remove_Dismissed(EventRegistrationToken cookie) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE add_Activated(
-      __FITypedEventHandler_2_Windows__CUI__CNotifications__CToastNotification_IInspectable*
-          handler,
-      EventRegistrationToken* cookie) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE
-  remove_Activated(EventRegistrationToken cookie) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE add_Failed(
-      __FITypedEventHandler_2_Windows__CUI__CNotifications__CToastNotification_Windows__CUI__CNotifications__CToastFailedEventArgs*
-          handler,
-      EventRegistrationToken* token) override {
-    return E_NOTIMPL;
-  }
-  HRESULT STDMETHODCALLTYPE
-  remove_Failed(EventRegistrationToken token) override {
-    return E_NOTIMPL;
-  }
-
- private:
-  base::string16 xml_;
-
-  DISALLOW_COPY_AND_ASSIGN(MockIToastNotification);
 };
 
 class MockIToastActivatedEventArgs
