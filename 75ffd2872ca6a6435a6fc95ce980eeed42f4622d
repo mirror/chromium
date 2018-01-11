@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "189ac97a_72062ef3",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:11:30Z",
+      "side": 1,
+      "message": "This can be simplified using NET_LOG(DEBUG) instead of the deprecated NET_LOG_DEBUG:\n\nstd::string result;\nif (flag \u0026 FOO) {\n  if (!result.empty()) result +\u003d \", \";\n  result plus \u003d \"Foo\";\n}\n\nThen below use:\nNET_LOG(DEBUG) \u003c\u003c \"NotifyAutoConnectInitiated [\" \u003c\u003c AutoConnectReasonsToString(flags) \u003c\u003c \"]\";\n\nAlso, see comment below.",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce7b63f_05d5903d",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:11:30Z",
+      "side": 1,
+      "message": "I didn\u0027t realize we had these. Since debug is hidden by default, I suggest that we remove these and add the change proposed below.",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d164956c_5cc84773",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:11:30Z",
+      "side": 1,
+      "message": "This is the log we should be modifying instead of adding a new one:\n\nNET_LOG(EVENT) \u003c\u003c  \"ConnectToBestServices [\" \u003c\u003c AutoConnectReasonsToString(auto_connect_reasons_) \u003c\u003c \"]\";",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6588ad6_ccaea1e6",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:11:30Z",
+      "side": 1,
+      "message": "Just make this file local, i.e. in an anunymous namespace.",
+      "revId": "75ffd2872ca6a6435a6fc95ce980eeed42f4622d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
