@@ -22,6 +22,30 @@
       "revId": "2c32e91f673393a995c6caded17c275fd1fb913a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c0cdbc_82b6ef7e",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T02:20:07Z",
+      "side": 1,
+      "message": "Sure, done. I\u0027m a bit surprised I couldn\u0027t find a \"string to FilePath\" utility function.",
+      "parentUuid": "52808725_e8a9f060",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 3
+      },
+      "revId": "2c32e91f673393a995c6caded17c275fd1fb913a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
