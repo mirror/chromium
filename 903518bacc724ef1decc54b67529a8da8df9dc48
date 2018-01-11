@@ -283,6 +283,30 @@
       "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37344635_65cb0aa4",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-11T17:53:03Z",
+      "side": 1,
+      "message": "I believe once per source means once per source id \u0026 session.  Meaning that if you go to youtube twice it will be measured twice because there are different source ids.\n\nrkaplow@, please confirm.",
+      "parentUuid": "f0e98a78_fa3e5fdc",
+      "range": {
+        "startLine": 2362,
+        "startChar": 16,
+        "endLine": 2362,
+        "endChar": 33
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
