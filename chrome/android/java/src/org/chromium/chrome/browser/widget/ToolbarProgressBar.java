@@ -115,10 +115,14 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
     /** Whether or not the progress bar is attached to the window. */
     private boolean mIsAttachedToWindow;
 
+    /** Whether the smooth animation has been triggered. */
+    private boolean mSmoothAnimationTriggered;
+
     private final Runnable mStartSmoothIndeterminate = new Runnable() {
         @Override
         public void run() {
             if (!mIsStarted) return;
+            mSmoothAnimationTriggered = true;
             mAnimationLogic.reset(getProgress());
             mSmoothProgressAnimator.start();
 
@@ -137,7 +141,10 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
             @Override
             public void onTimeUpdate(TimeAnimator animation, long totalTimeMs, long deltaTimeMs) {
                 // If we are at the target progress already, do nothing.
-                if (MathUtils.areFloatsEqual(getProgress(), mTargetProgress)) return;
+                if (MathUtils.areFloatsEqual(getProgress(), mTargetProgress)) {
+                    animation.cancel();
+                    return;
+                }
 
                 // Cap progress bar animation frame time so that it doesn't jump too much even when
                 // the animation is janky.
@@ -356,6 +363,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         mIsStarted = false;
         mTargetProgress = 0;
 
+        mSmoothAnimationTriggered = false;
         removeCallbacks(mStartSmoothIndeterminate);
         if (mAnimatingView != null) mAnimatingView.cancelAnimation();
         if (mProgressThrottle != null) mProgressThrottle.cancel();
@@ -453,6 +461,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
     private void setProgressInternal(float progress) {
         if (!mIsStarted || MathUtils.areFloatsEqual(mTargetProgress, progress)) return;
         mTargetProgress = progress;
+        if (mSmoothAnimationTriggered) mSmoothProgressAnimator.start();
 
         // If the progress bar was updated, reset the callback that triggers the
         // smooth-indeterminate animation.
