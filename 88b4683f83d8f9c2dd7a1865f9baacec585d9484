@@ -16,6 +16,24 @@
       "revId": "88b4683f83d8f9c2dd7a1865f9baacec585d9484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94591292_9d685f00",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-11T02:15:26Z",
+      "side": 1,
+      "message": "Removed in patchset 4.",
+      "parentUuid": "684a66c3_a8ca4830",
+      "revId": "88b4683f83d8f9c2dd7a1865f9baacec585d9484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
