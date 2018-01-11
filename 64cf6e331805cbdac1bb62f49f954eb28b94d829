@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f050daf8_1471fd02",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:39:53Z",
+      "side": 1,
+      "message": "\u003cstring\u003e should be included in this header instead of the .cc file.",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07dac901_4db76ec8",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:39:53Z",
+      "side": 1,
+      "message": "return user_local.empty() ? kDefaultProfileLocale : user_local;",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd944169_31826c64",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:39:53Z",
+      "side": 1,
+      "message": "(nullptr /* name of the nullptr arg */)",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbd4be7_517912a8",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:39:53Z",
+      "side": 1,
+      "message": "This is a pretty generic name for a top class in src/chrome, maybe rename it CrosDictation or something?",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
