@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1674ebea_668728e7",
+        "filename": "ios/web_view/internal/cwv_scroll_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-11T21:46:53Z",
+      "side": 1,
+      "message": "Can you remove this method (and the updateContentOffset method) if you change |updateContentOffset| to self.contentOffset \u003d _proxy.contentOffset?",
+      "range": {
+        "startLine": 183,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 26
+      },
+      "revId": "127493cf59024e75bcd66ee6df2f56723333f934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
