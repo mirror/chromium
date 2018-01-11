@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bced9751_c9183d0d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-11T19:37:06Z",
+      "side": 1,
+      "message": "There\u0027s no performance impact for preserveDrawingBuffer\u003dtrue in magic window mode, this only matters while presenting and when using the planned new render path where there\u0027s a per-frame destination buffer.\n\nI think collecting this data for any WebVR-capable canvas would also be a valid approach, though it might skew statistics if there\u0027s a site such as Sketchfab where maybe only a small fraction of users end up using WebVR presentation. I don\u0027t have a strong opinion either way. I expect usage to be low, and wouldn\u0027t be surprised if existing uses are unintentional.\n\nIf I read the code right, we\u0027re currently only recording actions for requestPresent, not for associating a canvas with WebVR for magic window mode. Since it\u0027s recording an action only when preserveDrawingBuffer\u003dtrue, we wouldn\u0027t be able to calculate a percentage of sites unless we record \u003dfalse also or record a separate action to use for the baseline number.",
+      "parentUuid": "1fa9c1ed_5e3cbb6e",
+      "revId": "effdf26833d9f79135dfac818e8bc14dc90a0a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "815e4c7e_637b440e",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 1
