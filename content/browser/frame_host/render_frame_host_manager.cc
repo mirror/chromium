@@ -937,6 +937,7 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
     SiteInstance* dest_instance,
     SiteInstance* candidate_instance,
     ui::PageTransition transition,
+    bool is_failure,
     bool dest_is_restore,
     bool dest_is_view_source_mode,
     bool was_server_redirect) {
@@ -993,10 +994,10 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
       dest_is_view_source_mode);
   SiteInstanceDescriptor new_instance_descriptor =
       SiteInstanceDescriptor(current_instance);
-  if (ShouldTransitionCrossSite() || force_swap) {
+  if (ShouldTransitionCrossSite() || force_swap || is_failure) {
     new_instance_descriptor = DetermineSiteInstanceForURL(
         dest_url, source_instance, current_instance, dest_instance, transition,
-        dest_is_restore, dest_is_view_source_mode, force_swap,
+        is_failure, dest_is_restore, dest_is_view_source_mode, force_swap,
         was_server_redirect);
   }
 
@@ -1071,6 +1072,7 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     SiteInstance* current_instance,
     SiteInstance* dest_instance,
     ui::PageTransition transition,
+    bool is_failure,
     bool dest_is_restore,
     bool dest_is_view_source_mode,
     bool force_browsing_instance_swap,
@@ -1096,6 +1098,11 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   if (force_browsing_instance_swap)
     return SiteInstanceDescriptor(browser_context, dest_url,
                                   SiteInstanceRelation::UNRELATED);
+
+  if (is_failure) {
+    return SiteInstanceDescriptor(browser_context, GURL(kUnreachableWebDataURL),
+                                  SiteInstanceRelation::RELATED);
+  }
 
   // (UGLY) HEURISTIC, process-per-site only:
   //
@@ -1806,11 +1813,11 @@ RenderFrameHostManager::GetSiteInstanceForNavigationRequest(
     // mode, it is possible for renderer-intiated navigations to be allowed to
     // go cross-process. Check it first.
     bool can_renderer_initiate_transfer =
-        render_frame_host_->IsRenderFrameLive() &&
-        IsURLHandledByNetworkStack(request.common_params().url) &&
-        IsRendererTransferNeededForNavigation(render_frame_host_.get(),
-                                              request.common_params().url);
-
+        request.state() == NavigationRequest::FAILED ||
+        (render_frame_host_->IsRenderFrameLive() &&
+         IsURLHandledByNetworkStack(request.common_params().url) &&
+         IsRendererTransferNeededForNavigation(render_frame_host_.get(),
+                                               request.common_params().url));
     no_renderer_swap_allowed |=
         request.from_begin_navigation() && !can_renderer_initiate_transfer;
   } else {
@@ -1837,6 +1844,7 @@ RenderFrameHostManager::GetSiteInstanceForNavigationRequest(
       request.common_params().url, request.source_site_instance(),
       request.dest_site_instance(), candidate_site_instance,
       request.common_params().transition,
+      request.state() == NavigationRequest::FAILED,
       request.restore_type() != RestoreType::NONE, request.is_view_source(),
       was_server_redirect);
 

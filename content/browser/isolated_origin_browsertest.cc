@@ -18,6 +18,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -1077,74 +1078,51 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginFieldTrialTest, Test) {
       policy->IsIsolatedOrigin(url::Origin::Create(GURL("https://bar.com/"))));
 }
 
-// This is a regresion test for https://crbug.com/793350 - the long list of
-// origins to isolate used to be unnecessarily propagated to the renderer
-// process, trigerring a crash due to exceeding kZygoteMaxMessageLength.
-class IsolatedOriginLongListTest : public ContentBrowserTest {
- public:
-  IsolatedOriginLongListTest() {}
-  ~IsolatedOriginLongListTest() override {}
+// Check that navigating a subframe to an isolated origin error page puts the
+// subframe into an OOPIF and its own SiteInstance.  Also check that a
+// non-isolated error page in a subfram ends up in the parent SiteInstance.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, SubframeErrorPages) {
+  GURL top_url(
+      embedded_test_server()->GetURL("/frame_tree/page_with_two_frames.html"));
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/close-socket"));
+  GURL regular_url(embedded_test_server()->GetURL("a.com", "/close-socket"));
 
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
+  EXPECT_TRUE(NavigateToURL(shell(), top_url));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  EXPECT_EQ(2u, root->child_count());
 
-    std::ostringstream origin_list;
-    origin_list
-        << embedded_test_server()->GetURL("isolated.foo.com", "/").spec();
-    for (int i = 0; i < 1000; i++) {
-      std::ostringstream hostname;
-      hostname << "foo" << i << ".com";
+  FrameTreeNode* child1 = root->child_at(0);
+  FrameTreeNode* child2 = root->child_at(1);
 
-      origin_list << ","
-                  << embedded_test_server()->GetURL(hostname.str(), "/").spec();
-    }
-    command_line->AppendSwitchASCII(switches::kIsolateOrigins,
-                                    origin_list.str());
+  {
+    TestFrameNavigationObserver observer(child1);
+    NavigationHandleObserver handle_observer(web_contents(), isolated_url);
+    EXPECT_TRUE(ExecuteScript(
+        child1, "location.href = '" + isolated_url.spec() + "';"));
+    observer.Wait();
+    EXPECT_EQ(child1->current_url(), isolated_url);
+    EXPECT_TRUE(handle_observer.is_error());
+
+    EXPECT_NE(root->current_frame_host()->GetSiteInstance(),
+              child1->current_frame_host()->GetSiteInstance());
+    EXPECT_EQ(GURL(kUnreachableWebDataURL),
+              child1->current_frame_host()->GetSiteInstance()->GetSiteURL());
   }
 
-  void SetUpOnMainThread() override {
-    host_resolver()->AddRule("*", "127.0.0.1");
-    embedded_test_server()->StartAcceptingConnections();
+  {
+    TestFrameNavigationObserver observer(child2);
+    NavigationHandleObserver handle_observer(web_contents(), regular_url);
+    EXPECT_TRUE(
+        ExecuteScript(child2, "location.href = '" + regular_url.spec() + "';"));
+    observer.Wait();
+    EXPECT_EQ(child2->current_url(), regular_url);
+    EXPECT_TRUE(handle_observer.is_error());
+    EXPECT_EQ(root->current_frame_host()->GetSiteInstance(),
+              child2->current_frame_host()->GetSiteInstance());
+    EXPECT_NE(GURL(kUnreachableWebDataURL),
+              child2->current_frame_host()->GetSiteInstance()->GetSiteURL());
   }
-};
-
-IN_PROC_BROWSER_TEST_F(IsolatedOriginLongListTest, Test) {
-  GURL test_url(embedded_test_server()->GetURL(
-      "bar1.com",
-      "/cross_site_iframe_factory.html?"
-      "bar1.com(isolated.foo.com,foo999.com,bar2.com)"));
-  EXPECT_TRUE(NavigateToURL(shell(), test_url));
-
-  EXPECT_EQ(4u, shell()->web_contents()->GetAllFrames().size());
-  RenderFrameHost* main_frame = shell()->web_contents()->GetMainFrame();
-  RenderFrameHost* subframe1 = shell()->web_contents()->GetAllFrames()[1];
-  RenderFrameHost* subframe2 = shell()->web_contents()->GetAllFrames()[2];
-  RenderFrameHost* subframe3 = shell()->web_contents()->GetAllFrames()[3];
-  EXPECT_EQ("bar1.com", main_frame->GetLastCommittedOrigin().GetURL().host());
-  EXPECT_EQ("isolated.foo.com",
-            subframe1->GetLastCommittedOrigin().GetURL().host());
-  EXPECT_EQ("foo999.com", subframe2->GetLastCommittedOrigin().GetURL().host());
-  EXPECT_EQ("bar2.com", subframe3->GetLastCommittedOrigin().GetURL().host());
-
-  // bar1.com and bar2.com are not on the list of origins to isolate - they
-  // should stay in the same process, unless --site-per-process has also been
-  // specified.
-  if (!AreAllSitesIsolatedForTesting()) {
-    EXPECT_EQ(main_frame->GetProcess()->GetID(),
-              subframe3->GetProcess()->GetID());
-    EXPECT_EQ(main_frame->GetSiteInstance(), subframe3->GetSiteInstance());
-  }
-
-  // isolated.foo.com and foo999.com are on the list of origins to isolate -
-  // they should be isolated from everything else.
-  EXPECT_NE(main_frame->GetProcess()->GetID(),
-            subframe1->GetProcess()->GetID());
-  EXPECT_NE(main_frame->GetSiteInstance(), subframe1->GetSiteInstance());
-  EXPECT_NE(main_frame->GetProcess()->GetID(),
-            subframe2->GetProcess()->GetID());
-  EXPECT_NE(main_frame->GetSiteInstance(), subframe2->GetSiteInstance());
-  EXPECT_NE(subframe1->GetProcess()->GetID(), subframe2->GetProcess()->GetID());
-  EXPECT_NE(subframe1->GetSiteInstance(), subframe2->GetSiteInstance());
 }
 
 }  // namespace content
