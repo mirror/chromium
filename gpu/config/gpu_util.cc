@@ -357,6 +357,7 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
       list->EnableControlListLogging("gpu_blacklist");
     blacklisted_features =
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
+    gpu_feature_info.applied_gpu_blacklist_entries = list->GetActiveEntries();
   }
 
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
