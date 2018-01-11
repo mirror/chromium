@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "277da31a_bdb5002d",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:14:42Z",
+      "side": 1,
+      "message": "Bleh, actually, it\u0027s not on workstations by default it looks like.  That\u0027s no good.  Is gsutil present by default?  If so, probably easier to stick with what you\u0027ve got.  If gsutil required a separate installation, then I think it\u0027d be better to require the python package instead.",
+      "parentUuid": "0aa3af98_5b6b7a85",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab656475_61224509",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
