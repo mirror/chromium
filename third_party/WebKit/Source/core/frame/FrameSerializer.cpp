@@ -484,8 +484,9 @@ void FrameSerializer::SerializeCSSRule(CSSRule* rule) {
     }
 
     case CSSRule::kFontFaceRule:
-      RetrieveResourcesForProperties(
-          &ToCSSFontFaceRule(rule)->StyleRule()->Properties(), document);
+      // TODO(meade): Implement
+      // RetrieveResourcesForProperties(
+      //    &ToCSSFontFaceRule(rule)->StyleRule()->Properties(), document);
       break;
 
     // Rules in which no external resources can be referenced
