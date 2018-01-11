@@ -34,6 +34,24 @@
       "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c20a81a_290b4e2e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-11T10:58:22Z",
+      "side": 1,
+      "message": "Sadly we cannot prevent it from being exposed because the same LevelOfDetail enum is used to communicate with client processes to request their process dumps. Removing VM_REGIONS would break that.\n\nDone the mojo::ReportBadMessage tho.",
+      "parentUuid": "ade6e439_73cc757d",
+      "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
