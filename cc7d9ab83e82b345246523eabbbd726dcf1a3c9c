@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c427db77_75499119",
+        "filename": "chrome/browser/extensions/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "Why not instead just use content/public/test/web_contents_tester.h?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8697da01_409930f9",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "declare this where it\u0027s used.",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9334558b_8d4e7a3f",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "why do we need client rather than just using client_?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768da59e_c28c0bb9",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused - we create this, and then immediately reset it in OnFileWritten(). What does this do?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2d0940_bfc54765",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "why mutable?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f528a89a_c1ed31be",
+        "filename": "extensions/browser/extension_protocols.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T02:25:20Z",
+      "side": 1,
+      "message": "This is a bit awkward.  I think it\u0027d be cleaner to instead just unconditionally pass in an InfoMap to use.",
+      "range": {
+        "startLine": 60,
+        "startChar": 51,
+        "endLine": 62,
+        "endChar": 67
+      },
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
