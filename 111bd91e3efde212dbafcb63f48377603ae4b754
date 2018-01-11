@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19b00962_f34e2fb2",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-11T23:36:19Z",
+      "side": 1,
+      "message": "I think you can use the flavor that doesn\u0027t take a size",
+      "range": {
+        "startLine": 232,
+        "startChar": 50,
+        "endLine": 232,
+        "endChar": 69
+      },
+      "revId": "111bd91e3efde212dbafcb63f48377603ae4b754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
