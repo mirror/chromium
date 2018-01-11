@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0503c1e_d0f5265e",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-11T19:16:57Z",
+      "side": 1,
+      "message": "Yay! I\u0027m very happy this happens as part of ShowLockScreen/ShowLoginScreen as not as a separate mojo call that chrome controls :)",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
