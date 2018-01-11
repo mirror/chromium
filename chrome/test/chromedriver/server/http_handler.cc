@@ -217,9 +217,9 @@ HttpHandler::HttpHandler(
       CommandMapping(
           kDelete, "session/:sessionId/cookie/:name",
           WrapToCommand("DeleteCookie", base::Bind(&ExecuteDeleteCookie))),
-      CommandMapping(kPost, "session/:sessionId/actions",
-                     WrapToCommand("PerformActions",
-                                   base::Bind(&ExecuteUnimplementedCommand))),
+      CommandMapping(
+          kPost, "session/:sessionId/actions",
+          WrapToCommand("PerformActions", base::Bind(&ExecutePerformActions))),
       CommandMapping(kDelete, "session/:sessionId/actions",
                      WrapToCommand("DeleteActions",
                                    base::Bind(&ExecuteUnimplementedCommand))),
@@ -468,7 +468,6 @@ HttpHandler::HttpHandler(
       CommandMapping(kGet, "session/:sessionId/log/types",
                      WrapToCommand("GetLogTypes",
                                    base::Bind(&ExecuteGetAvailableLogTypes))),
-
       // chromedriver only
       CommandMapping(kPost, "session/:sessionId/chromium/launch_app",
                      WrapToCommand("LaunchApp", base::Bind(&ExecuteLaunchApp))),
