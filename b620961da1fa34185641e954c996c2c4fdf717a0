@@ -22,6 +22,30 @@
       "revId": "b620961da1fa34185641e954c996c2c4fdf717a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5785b853_c4801917",
+        "filename": "chrome/browser/chromeos/login/enrollment/auto_enrollment_check_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-11T14:16:33Z",
+      "side": 1,
+      "message": "I don\u0027t really see an easy way to show a different UI here. Feels like many changes to create a separate screen and I don\u0027t see it helping much. There\u0027s nothing actionable for the user in this case.",
+      "parentUuid": "adc75d28_6334252c",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 32
+      },
+      "revId": "b620961da1fa34185641e954c996c2c4fdf717a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
