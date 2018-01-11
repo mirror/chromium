@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb21696e_196e1931",
+        "filename": "chrome/test/data/webui/settings/quick_unlock_authenticate_browsertest_chromeos.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T23:51:49Z",
+      "side": 1,
+      "message": "You probably need to add a Polymer.dom.flush() here to propagate the \u0027disabled\u0027 state to the element. Alternatively it would be just as effective to test hasInput_() instead.\n\nWe should also test a positive case as well.",
+      "revId": "3a1f3b1c9244dcce3a8d1ec06aa6814d67d73933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
