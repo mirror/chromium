@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbfd8414_409f207b",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:31:23Z",
+      "side": 1,
+      "message": "I need to do it that way since __file__ is not defined and I need some reference point. Here they import inside a function too (https://cs.chromium.org/chromium/src/PRESUBMIT.py?rcl\u003da3360971dab6da9c2a28f9362dee531c1a1e2ffe\u0026l\u003d1425).",
+      "parentUuid": "5815b3fc_a6853354",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36e46863_5bf32e53",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-11T19:11:33Z",
       "side": 1,
       "message": "Isn\u0027t there already a Python class for this?  tempfile.TemporaryDirectory() is the high-level context manager-type interface for this, and would presumably mean you don\u0027t have to roll your own class.  Does it not work for some reason?",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afcd925_3394e8e8",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:31:23Z",
+      "side": 1,
+      "message": "tempfile.TemporaryDirectory() seems to be a Python 3 thing. Python 3 is not the default. At least not on my workstation.",
+      "parentUuid": "d7be7bcb_15f38595",
       "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "835cfd84_856e3264",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:31:23Z",
+      "side": 1,
+      "message": "Do you mean this guy? https://pypi.python.org/pypi/gsutil/4.28. That seems to be designed as a command line application and is part of depot_tools (https://cs.chromium.org/chromium/tools/depot_tools/gsutil.py). On my workstation only \u0027gsutil.py\u0027 worked by default as opposed to just \u0027gsutil\u0027. I can change it that way.",
+      "parentUuid": "277da31a_bdb5002d",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab656475_61224509",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
@@ -99,6 +153,24 @@
       "writtenOn": "2018-01-11T19:11:33Z",
       "side": 1,
       "message": "- Why is the N capital?\n- Don\u0027t really need \u0027shall\u0027 intermediate var.",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc41bb65_e1ed98c7",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:31:23Z",
+      "side": 1,
+      "message": "- Lower case y and upper case N seems to be common practice: https://cs.chromium.org/search/?q\u003dfile:%5C.py+%22y/N%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs.\n- Done.",
+      "parentUuid": "ab656475_61224509",
       "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
