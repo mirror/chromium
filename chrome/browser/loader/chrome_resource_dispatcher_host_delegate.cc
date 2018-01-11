@@ -804,7 +804,8 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
                                                     "no-transform")) {
       previews::PreviewsUserData* previews_user_data =
           previews::PreviewsUserData::GetData(*request);
-      previews_user_data->SetCacheControlNoTransformDirective();
+      if (previews_user_data)
+        previews_user_data->SetCacheControlNoTransformDirective();
     }
 
     // Determine effective PreviewsState for this committed main frame response.
@@ -830,7 +831,8 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     if (committed_type != previews::PreviewsType::NONE) {
       previews::PreviewsUserData* previews_user_data =
           previews::PreviewsUserData::GetData(*request);
-      previews_user_data->SetCommittedPreviewsType(committed_type);
+      if (previews_user_data)
+        previews_user_data->SetCommittedPreviewsType(committed_type);
     }
   }
 
