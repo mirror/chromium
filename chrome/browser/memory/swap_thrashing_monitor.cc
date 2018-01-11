@@ -8,6 +8,8 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/time/time.h"
 
 #if defined(OS_WIN)
@@ -95,8 +97,6 @@ SwapThrashingLevel SwapThrashingMonitor::GetCurrentSwapThrashingLevel() {
 }
 
 void SwapThrashingMonitor::CheckSwapThrashingPressureAndRecordStatistics() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
   SwapThrashingLevel swap_thrashing_level =
       delegate_->SampleAndCalculateSwapThrashingLevel();
 
@@ -148,6 +148,10 @@ void SwapThrashingMonitor::StartObserving() {
   // it isn't as there won't be any swap-paging to observe (on-disk swap could
   // later become available if the user turn it on but this case is rare that
   // it's safe to ignore it). See crbug.com/779309.
+
+  check_timer_.SetTaskRunner(base::CreateSequencedTaskRunnerWithTraits(
+      {base::TaskPriority::BACKGROUND}));
+
   check_timer_.Start(
       FROM_HERE, kSamplingInterval,
       base::Bind(
