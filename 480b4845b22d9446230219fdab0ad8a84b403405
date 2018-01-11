@@ -801,6 +801,30 @@
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "870e41c3_6620b510",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-11T22:19:11Z",
+      "side": 1,
+      "message": "Hmm not sure!  I can see two ways we seem to do this in tests:\n\nFeatures.getInstance().enable(ChromeFeatureList.AWESOME_FEATURE_XYZ);\n\nor:\n\n@CommandLineFlags.Add(\"enable-features\u003d\" + ChromeFeatureList.AWESOME_FEATURE_XYZ);\n\nLet me know if those don\u0027t work!",
+      "parentUuid": "937e03c9_eb7526a3",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 1
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
