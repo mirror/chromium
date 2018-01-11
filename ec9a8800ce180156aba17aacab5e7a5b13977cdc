@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531e5f3f_fe2bba43",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:31:41Z",
+      "side": 1,
+      "message": "How about making PrepareToExtendSelection() as non-static member of\nSelectionModifier to avoid passing |current_selection_| and\n|is_directional_|?\n\nAlso, Once we host |selection_is_directional| usage in |IsBaseStart()|\nhere, we don\u0027t avoid bool parameter.",
+      "range": {
+        "startLine": 158,
+        "startChar": 26,
+        "endLine": 158,
+        "endChar": 50
+      },
+      "revId": "ec9a8800ce180156aba17aacab5e7a5b13977cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
