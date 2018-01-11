@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9774db45_f56984a6",
+        "filename": "content/browser/devtools/shared_worker_devtools_agent_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-11T18:07:23Z",
+      "side": 1,
+      "message": "We retrieve agent into agent_ptr_ before passing it to session (that\u0027s needed in Attach and Reattach calls). That happens when new session is created (attach case) or when the worker is switched under the hood (reattach case).\n\nAll other calls assume that session is already talking to an agent.",
+      "parentUuid": "9a37a9b5_f81253b2",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea5440b8_febea0bb",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
         "patchSetId": 6
@@ -83,6 +101,24 @@
       "writtenOn": "2018-01-11T10:52:48Z",
       "side": 1,
       "message": "I don\u0027t quite understand this; can we add a comment to document this a bit?",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bdc6ee_71cdff78",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-11T18:07:23Z",
+      "side": 1,
+      "message": "This means we do not send the message using IPC, and WebDevToolsAgentImpl should instead use the mojo interface. This is temporary until service workers are migrated as well.\n\nI can add a comment, although I am removing this method completely in the next patch (https://chromium-review.googlesource.com/c/chromium/src/+/858258).",
+      "parentUuid": "3babe221_e5421a92",
       "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
