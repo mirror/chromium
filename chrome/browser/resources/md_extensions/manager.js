@@ -33,6 +33,11 @@ cr.define('extensions', function() {
     is: 'extensions-manager',
 
     properties: {
+      canLoadUnpacked: {
+        type: Boolean,
+        value: false,
+      },
+
       // This is not typed because it implements multiple interfaces, and is
       // passed to different elements as different types.
       delegate: {
@@ -154,6 +159,7 @@ cr.define('extensions', function() {
 
       let onProfileStateChanged = profileInfo => {
         this.inDevMode = profileInfo.inDeveloperMode;
+        this.canLoadUnpacked = profileInfo.canLoadUnpacked;
       };
       service.getProfileStateChangedTarget().addListener(onProfileStateChanged);
       service.getProfileConfiguration().then(onProfileStateChanged);

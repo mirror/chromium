@@ -41,6 +41,14 @@ cr.define('extension_toolbar_tests', function() {
       testVisible('#load-unpacked', true);
       testVisible('#pack-extensions', true);
       testVisible('#update-now', true);
+
+      toolbar.set('canLoadUnpacked', false);
+      Polymer.dom.flush();
+
+      testVisible('#dev-mode', true);
+      testVisible('#load-unpacked', false);
+      testVisible('#pack-extensions', true);
+      testVisible('#update-now', true);
     });
 
     test(assert(TestNames.ClickHandlers), function() {
