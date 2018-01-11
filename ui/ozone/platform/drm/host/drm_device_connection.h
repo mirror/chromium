@@ -16,7 +16,10 @@ class Connector;
 namespace ui {
 class HostDrmDevice;
 
-// DrmDeviceConnector sets up mojo pipes connecting the Viz host to the DRM service. It operates in two modes: running on the I/O thread when invoked from content and running on the VizHost main thread when operating with a service_manager. 
+// DrmDeviceConnector sets up mojo pipes connecting the Viz host to the DRM
+// service. It operates in two modes: running on the I/O thread when invoked
+// from content and running on the VizHost main thread when operating with a
+// service_manager.
 class DrmDeviceConnector : public GpuPlatformSupportHost {
  public:
   DrmDeviceConnector(service_manager::Connector* connector,

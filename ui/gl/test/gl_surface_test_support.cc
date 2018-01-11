@@ -37,7 +37,7 @@ void InitializeOneOffHelper(bool init_extensions) {
   ui::OzonePlatform::InitParams params;
   params.single_process = true;
   ui::OzonePlatform::InitializeForGPU(params);
-ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
 #endif
 
   ui::test::EnableTestConfigForPlatformWindows();

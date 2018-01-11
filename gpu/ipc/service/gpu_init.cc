@@ -296,7 +296,7 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
   init_successful_ = true;
 #if defined(USE_OZONE)
   ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
- #endif
+#endif
   return true;
 }
 

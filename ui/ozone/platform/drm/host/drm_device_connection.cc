@@ -58,9 +58,7 @@ void DrmDeviceConnector::OnGpuServiceLaunched(
     scoped_refptr<base::SingleThreadTaskRunner> ui_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_runner,
     GpuHostBindInterfaceCallback binder) {
-
-LOG(ERROR) << "\n@@@@@@@@@@@@@@ Running the OnGpuServiceLaunched mojo path\n"; 
-
+  LOG(ERROR) << "\n@@@@@@@@@@@@@@ Running the OnGpuServiceLaunched mojo path\n";
 
   // We need to preserve |binder| to let us bind interfaces later.
   binder_callback_ = std::move(binder);

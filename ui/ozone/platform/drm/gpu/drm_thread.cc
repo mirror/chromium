@@ -85,7 +85,7 @@ DrmThread::~DrmThread() {
 }
 
 void DrmThread::Start(base::OnceClosure binding_drainer) {
-    if (binding_drainer)
+  if (binding_drainer)
     binding_drainer_ = std::move(binding_drainer);
   base::Thread::Options thread_options;
   thread_options.message_loop_type = base::MessageLoop::TYPE_IO;

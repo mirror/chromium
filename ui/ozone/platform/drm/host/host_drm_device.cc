@@ -103,7 +103,8 @@ void HostDrmDevice::RunObservers() {
     observer.OnGpuThreadReady();
   }
 
-  DCHECK(cursor_proxy_) << "We should have already created a cursor proxy previously";
+  DCHECK(cursor_proxy_)
+      << "We should have already created a cursor proxy previously";
   cursor_->SetDrmCursorProxy(std::move(cursor_proxy_));
 
   // TODO(rjkroege): Call ResetDrmCursorProxy when the mojo connection to the

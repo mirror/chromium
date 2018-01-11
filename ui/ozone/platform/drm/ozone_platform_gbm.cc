@@ -37,6 +37,7 @@
 #include "ui/ozone/platform/drm/gpu/scanout_buffer.h"
 #include "ui/ozone/platform/drm/gpu/screen_manager.h"
 #include "ui/ozone/platform/drm/host/drm_cursor.h"
+#include "ui/ozone/platform/drm/host/drm_device_connection.h"
 #include "ui/ozone/platform/drm/host/drm_display_host_manager.h"
 #include "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.h"
 #include "ui/ozone/platform/drm/host/drm_native_display_delegate.h"
@@ -48,7 +49,6 @@
 #include "ui/ozone/public/gpu_platform_support_host.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/ozone_switches.h"
-#include "ui/ozone/platform/drm/host/drm_device_connection.h"
 
 #if BUILDFLAG(USE_XKBCOMMON)
 #include "ui/events/ozone/layout/xkb/xkb_evdev_codes.h"
@@ -205,15 +205,19 @@ class OzonePlatformGbm : public OzonePlatform {
     //   1. legacy mode where host and viz components communicate
     //      via param traits IPC.
     //   2. single-process mode where host and viz components
-    //      communicate via in-process mojo. Single-process mode can be single or multi-threaded.
+    //      communicate via in-process mojo. Single-process mode can be single
+    //      or multi-threaded.
     //   3. multi-process mode where host and viz components communicate
     //      via mojo IPC.
-    // 
-    // and 2 connection modes
-    //   a. Viz is launched via content::GpuProcessHost and it notifies the ozone host when Viz becomes available.
-    //   b. The ozone host uses a service manager to launch and connect to Viz.
     //
-    // Combinations 1a, 2b, and 3a, and 3b are supported and expected to work. Combination 1a will hopefully be deprecated and replaced with 3a. Combination 2b adds undesirable code-debt and the intent is to remove it.
+    // and 2 connection modes
+    //   a. Viz is launched via content::GpuProcessHost and it notifies the
+    //   ozone host when Viz becomes available. b. The ozone host uses a service
+    //   manager to launch and connect to Viz.
+    //
+    // Combinations 1a, 2b, and 3a, and 3b are supported and expected to work.
+    // Combination 1a will hopefully be deprecated and replaced with 3a.
+    // Combination 2b adds undesirable code-debt and the intent is to remove it.
 
     single_process_ = args.single_process;
     using_mojo_ = args.using_mojo || args.connector != nullptr;
@@ -261,7 +265,7 @@ class OzonePlatformGbm : public OzonePlatform {
       host_drm_device_->ProvideManagers(display_manager_.get(),
                                         overlay_manager_.get());
       host_drm_device_->AsyncStartDrmDevice(*drm_device_connector_);
-  }
+    }
   }
 
   void InitializeGPU(const InitParams& args) override {
@@ -302,9 +306,9 @@ class OzonePlatformGbm : public OzonePlatform {
       // Wait here if host and gpu are one and the same thread.
       if (host_thread_ == base::PlatformThread::CurrentRef()) {
         // One-thread exection does not permit use of the sandbox.
-        AfterSandboxEntry() ;
+        AfterSandboxEntry();
         host_drm_device_->BlockingStartDrmDevice();
-    }
+      }
     }
   }
 

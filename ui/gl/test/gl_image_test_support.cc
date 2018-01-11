@@ -25,7 +25,7 @@ void GLImageTestSupport::InitializeGL(
   params.single_process = true;
   params.using_mojo = true;
   ui::OzonePlatform::InitializeForGPU(params);
-   // AfterSandboxEntry is implicit when running in single-thread mode.
+// AfterSandboxEntry is implicit when running in single-thread mode.
 #endif
 
   std::vector<GLImplementation> allowed_impls =

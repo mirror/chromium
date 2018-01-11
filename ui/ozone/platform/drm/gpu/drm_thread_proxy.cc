@@ -38,7 +38,8 @@ scoped_refptr<GbmBuffer> DrmThreadProxy::CreateBuffer(
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage) {
-  DCHECK(drm_thread_.task_runner()) << "no task runner! in DrmThreadProxy::CreateBuffer";
+  DCHECK(drm_thread_.task_runner())
+      << "no task runner! in DrmThreadProxy::CreateBuffer";
   scoped_refptr<GbmBuffer> buffer;
 
   PostSyncTask(
