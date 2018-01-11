@@ -70,6 +70,30 @@
       "revId": "2f855a14c4cf574b157226834447b9b259316942",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b45d0e_4b87c4a1",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2018-01-11T12:45:21Z",
+      "side": 1,
+      "message": "Doh -- except that it didn\u0027t build. I don\u0027t normally compile for cros ... ugh",
+      "parentUuid": "d7dc4480_cd810ff5",
+      "range": {
+        "startLine": 728,
+        "startChar": 26,
+        "endLine": 728,
+        "endChar": 38
+      },
+      "revId": "2f855a14c4cf574b157226834447b9b259316942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
