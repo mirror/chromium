@@ -11,6 +11,11 @@
   await TestRunner.showPanel('resources');
   await TestRunner.addStylesheetTag('resources/styles-initial.css');
 
+  // Ensure styles-initial.css will show up in resource tree.
+  await TestRunner.evaluateInPageAnonymously(`
+    window.getComputedStyle(document.body).color;
+  `);
+
   TestRunner.addResult('Before addition');
   TestRunner.addResult('====================================');
   ApplicationTestRunner.dumpResourceTreeEverything();
