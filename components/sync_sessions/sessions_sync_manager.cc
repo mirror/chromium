@@ -320,8 +320,41 @@ void SessionsSyncManager::AssociateWindows(
     }
   }
 
-  // TODO(skym): Scan for duplicate sync ids and remove,
-  // https://crbug.com/639009.
+  // Each sync id should only ever be used once. Previously there existed a race
+  // condition which could cause them to be duplicated, see
+  // https://crbug.com/639009 for more information. This counts the number of
+  // times each id is used so that when the second window/tab loop can act on
+  // every tab using duplicate ids. Lastly, it is important to note that this
+  // duplication scan us only checking the native model. If we have no tabbed
+  // window, we may also have sync data with conflicting sync ids, but to keep
+  // this logic simple and less error prone, we do not attempt to do anything
+  // clever.
+  std::map<int, int> sync_id_count;
+  int duplicate_count = 0;
+  for (auto& window_iter_pair : windows) {
+    const SyncedWindowDelegate* window_delegate = window_iter_pair.second;
+    if (window_delegate->ShouldSync() && window_delegate->GetTabCount() &&
+        window_delegate->HasWindow()) {
+      for (int j = 0; j < window_delegate->GetTabCount(); ++j) {
+        SyncedTabDelegate* synced_tab = window_delegate->GetTabAt(j);
+        if (synced_tab) {
+          auto iter = sync_id_count.find(synced_tab->GetSyncId());
+          if (iter == sync_id_count.end()) {
+            sync_id_count.insert(iter,
+                                 std::make_pair(synced_tab->GetSyncId(), 1));
+          } else {
+            // If an id is used more than twice, this count will be a bit odd,
+            // but for our purposes, it will be sufficient.
+            duplicate_count++;
+            iter->second++;
+          }
+        }
+      }
+    }
+  }
+  if (duplicate_count > 0) {
+    UMA_HISTOGRAM_COUNTS_100("Sync.SesssionsDuplicateSyncId", duplicate_count);
+  }
 
   for (auto& window_iter_pair : windows) {
     const SyncedWindowDelegate* window_delegate = window_iter_pair.second;
@@ -350,6 +383,17 @@ void SessionsSyncManager::AssociateWindows(
         // if for some reason the tab id is invalid, skip it.
         if (!synced_tab || !ShouldSyncTabId(tab_id))
           continue;
+
+        auto duplicate_iter = sync_id_count.find(synced_tab->GetSyncId());
+        DCHECK(duplicate_iter != sync_id_count.end());
+        if (duplicate_iter->second > 1) {
+          // Strip the id before processing it. This is going to mean it'll be
+          // treated the same as a new tab. If it's also a placeholder, we'll
+          // have no data about it, sync it cannot be synced until it is loaded.
+          // It is too difficult to try to guess which of the multiple tabs
+          // using the same id actually corresponds to the existing sync data.
+          synced_tab->SetSyncId(TabNodePool::kInvalidTabNodeID);
+        }
 
         // Placeholder tabs are those without WebContents, either because they
         // were never loaded into memory or they were evicted from memory
