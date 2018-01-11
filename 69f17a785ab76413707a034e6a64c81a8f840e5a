@@ -16,6 +16,24 @@
       "revId": "69f17a785ab76413707a034e6a64c81a8f840e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a004e317_96c94513",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-11T08:35:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7e53e6_a5c85abb",
+      "revId": "69f17a785ab76413707a034e6a64c81a8f840e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
