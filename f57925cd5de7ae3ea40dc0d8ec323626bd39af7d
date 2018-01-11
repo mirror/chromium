@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ec7e43e_08b1bc1b",
+        "filename": "base/debug/alias.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T18:33:13Z",
+      "side": 1,
+      "message": "This is probably fine. If it breaks something, we can always revisit then. Worst-case scenario, we redirect through a helper.",
+      "parentUuid": "a9c6fa1d_f1e975d3",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "f57925cd5de7ae3ea40dc0d8ec323626bd39af7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8defe9d2_08c68152",
         "filename": "base/debug/alias.h",
         "patchSetId": 8
@@ -59,6 +83,30 @@
       "writtenOn": "2018-01-11T16:28:26Z",
       "side": 1,
       "message": "EXPECT_STREQ makes sense in this test on the previous line is a fine test assertion, but this type equality verification feels like possibly borderline overtesting.  I can remove it maybe.  What I really want here is to say \"url_debug_alias\" is a stack-allocated array of chars (without necessarily caring about the size of the array).",
+      "range": {
+        "startLine": 893,
+        "startChar": 21,
+        "endLine": 893,
+        "endChar": 38
+      },
+      "revId": "f57925cd5de7ae3ea40dc0d8ec323626bd39af7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488431ca_9d242f43",
+        "filename": "url/gurl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T18:33:13Z",
+      "side": 1,
+      "message": "I\u0027d say this is a reason to put this in a small unit test, since testing this sort of thing here feels awkward. Probably you could just do a static_assert on sizeof() in the //base test.",
+      "parentUuid": "53aa9e13_de7b01eb",
       "range": {
         "startLine": 893,
         "startChar": 21,
