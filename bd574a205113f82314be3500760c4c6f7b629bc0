@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7c5ec7_a78d46f7",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T19:23:12Z",
+      "side": 1,
+      "message": "nit: Log the feature state here.",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 53
+      },
+      "revId": "bd574a205113f82314be3500760c4c6f7b629bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046f4de7_8d0e47b2",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T19:23:12Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to do any of the was_tether_component_active stuff. You should be just be able to EXPECT_TRUE(shutdown_reason_verified_) in the if() statement above.",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 76
+      },
+      "revId": "bd574a205113f82314be3500760c4c6f7b629bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
