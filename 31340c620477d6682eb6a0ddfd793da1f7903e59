@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5692d08_b6550979",
+        "filename": "ui/gfx/paint_vector_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-11T18:04:25Z",
+      "side": 1,
+      "message": "I think the ideal way to handle this would be to modify the set of commands (extend or augment CANVAS_DIMENSIONS with more parameters or another command for height), because the image itself ought to know its width and height, or at least the ratio of width and height. I don\u0027t think it\u0027s worth all that effort until there are more images that want different sizes though. Since you\u0027re already hardcoding the size in SaveCardBubbleViews, I\u0027d prefer it if you left this file alone and just cropped the 49x49 image that\u0027s returned (looks like CreateTiledImage will do the trick).",
+      "range": {
+        "startLine": 593,
+        "startChar": 27,
+        "endLine": 594,
+        "endChar": 47
+      },
+      "revId": "31340c620477d6682eb6a0ddfd793da1f7903e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bee2e3_5e3e4fe3",
+        "filename": "ui/gfx/paint_vector_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-11T18:04:25Z",
+      "side": 1,
+      "message": "std::max ?",
+      "range": {
+        "startLine": 599,
+        "startChar": 10,
+        "endLine": 599,
+        "endChar": 77
+      },
+      "revId": "31340c620477d6682eb6a0ddfd793da1f7903e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
