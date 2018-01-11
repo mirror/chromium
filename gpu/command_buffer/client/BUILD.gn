@@ -67,10 +67,6 @@ source_set("client_sources") {
     "//ui/gfx:memory_buffer",
     "//ui/gfx/geometry",
   ]
-
-  if (!is_nacl) {
-    deps += [ "//cc/paint" ]
-  }
 }
 
 source_set("gles2_cmd_helper_sources") {
@@ -210,7 +206,6 @@ component("gles2_implementation_no_check") {
 
   if (!is_nacl) {
     deps += [
-      "//cc/paint",
       "//ui/gfx:color_space",
       "//ui/gfx/ipc/color",
     ]
