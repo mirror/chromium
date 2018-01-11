@@ -1048,14 +1048,6 @@ ResourceFetcher::DetermineRevalidationPolicyInternal(
   if (IsImageResourceDisallowedToBeReused(existing_resource))
     return kReload;
 
-  // If the existing resource is loading and the associated fetcher is not equal
-  // to |this|, we must not use the resource. Otherwise, CSP violation may
-  // happen in redirect handling.
-  if (existing_resource.Loader() &&
-      existing_resource.Loader()->Fetcher() != this) {
-    return kReload;
-  }
-
   // It's hard to share a not-yet-referenced preloads via MemoryCache correctly.
   // A not-yet-matched preloads made by a foreign ResourceFetcher and stored in
   // the memory cache could be used without this block.
