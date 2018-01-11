@@ -39,6 +39,10 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
     virtual void OnAutoConnectedInitiated(int auto_connect_reasons) = 0;
   };
 
+  // Note: |auto_connect_reasons| is expected to be the bitwise OR of one or
+  // more AutoConnectReasons.
+  static std::string AutoConnectReasonsToString(int auto_connect_reasons);
+
   ~AutoConnectHandler() override;
 
   // LoginState::Observer
