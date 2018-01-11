@@ -61,13 +61,23 @@ GFX_EXPORT void PaintVectorIcon(
 // CreateVectorIcon()s.
 GFX_EXPORT ImageSkia CreateVectorIcon(const IconDescription& params);
 
+// Creates an ImageSkia which will render the icon on demand at the given size.
+GFX_EXPORT ImageSkia CreateVectorIcon(const IconDescription& params,
+                                      const Size& size);
+
 // Creates an ImageSkia which will render the icon on demand. The size will come
 // from the .icon file (the 1x version, if multiple versions exist).
 GFX_EXPORT ImageSkia CreateVectorIcon(const VectorIcon& icon, SkColor color);
 
-// As above, but creates the image at the given size.
+// As above, but creates the image at the given size (assumes width == height).
 GFX_EXPORT ImageSkia CreateVectorIcon(const VectorIcon& icon,
                                       int dip_size,
+                                      SkColor color);
+
+// As above, but creates the image at the given width and height.
+GFX_EXPORT ImageSkia CreateVectorIcon(const VectorIcon& icon,
+                                      int dip_size_width,
+                                      int dip_size_height,
                                       SkColor color);
 
 // As above, but also paints a badge defined by |badge_id| on top of the icon.
