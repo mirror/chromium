@@ -280,7 +280,7 @@ class FrameSerializer {
     size_t required_capacity = backtrace.frame_count * sizeof(uint64_t);
     CHECK_LE(required_capacity, remaining_buffer_size_);
     remaining_buffer_size_ -= required_capacity;
-    for (size_t i = 0; i < backtrace.frame_count; ++i) {
+    for (int i = static_cast<int>(backtrace.frame_count) - 1; i >= 0; --i) {
       AddFrame(backtrace.frames[i]);
     }
   }
