@@ -1,0 +1,8 @@
+per-file *.mojom=set noparent
+per-file *.mojom=file://ipc/SECURITY_OWNERS
+per-file *.typemap=set noparent
+per-file *.typemap=file://ipc/SECURITY_OWNERS
+
+for files:
+  components/password_manager/public/interfaces/sync_password_data.mojom
+  components/password_manager/public/interfaces/sync_password_data.typemap
