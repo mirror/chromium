@@ -550,9 +550,6 @@ SDK.ChildTargetManager = class {
         debuggerModel.pause();
     }
     target.runtimeAgent().runIfWaitingForDebugger();
-
-    if (Runtime.queryParam('nodeFrontend'))
-      InspectorFrontendHost.bringToFront();
   }
 
   /**
