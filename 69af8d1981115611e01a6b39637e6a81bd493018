@@ -39,6 +39,24 @@
       "revId": "69af8d1981115611e01a6b39637e6a81bd493018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0338f6_ff06cd1e",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-11T21:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730c361a_9eddee02",
+      "revId": "69af8d1981115611e01a6b39637e6a81bd493018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
