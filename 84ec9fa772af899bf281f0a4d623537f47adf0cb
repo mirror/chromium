@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7721073b_6d6fccf3",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-11T04:08:55Z",
+      "side": 1,
+      "message": "Given your nice new name of ShouldUseImmersiveMode I think this comment is redundant, and leaks information from the implemention of ShoulduseImmersiveMode.",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91439b2_1807be07",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-11T04:08:55Z",
+      "side": 1,
+      "message": "Is the CanResize check necessary? Put another way, is there any other way non-fullscreen apps can become immersive?",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd2ff28_4a560101",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-11T04:08:55Z",
+      "side": 1,
+      "message": "I think you\u0027re saying here that minimized windows should never be in immersive mode, as they will be displayed incorrectly in the overview grid. If that\u0027s the case, should OnTabletModeToggled put minimzed apps into immersive mode? It looks like it would.\n\nMaybe instead ShouldUseImmersiveMode should checked minimized, and this function becomes immersive_fullscreen_controller-\u003eSetEnabled(...., ShouldUseImmersiveMode).",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c4e8b7_030595e0",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-11T04:08:55Z",
+      "side": 1,
+      "message": "I still don\u0027t understand *why* this is tied to resizability. I guess it is because entering immersive mode effectively resizes the window? Whatever the reason it would be good to explain why.",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
