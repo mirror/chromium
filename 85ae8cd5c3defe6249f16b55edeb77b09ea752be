@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462af923_cb82bc47",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "\"so that the\"?",
+      "range": {
+        "startLine": 326,
+        "startChar": 27,
+        "endLine": 326,
+        "endChar": 43
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409495d5_94bf64fb",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "nit: native model is a term I\u0027m not sure we\u0027ve used anywhere else. Perhaps say \"in-memory Android tab state\" or something like that?",
+      "range": {
+        "startLine": 328,
+        "startChar": 43,
+        "endLine": 328,
+        "endChar": 55
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b7ee51_930fa362",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 328,
+        "startChar": 22,
+        "endLine": 328,
+        "endChar": 24
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdff0a7_fcbeb0b0",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "nit: have the second int be a size_t (for clarity)?",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 19
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2745f4a2_04e40036",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "seems like this conditional can be its own helper method since its reused elsewhere?",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 337,
+        "endChar": 36
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0413420b_f93a98e9",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "do you need to handle invalid synd ids?",
+      "range": {
+        "startLine": 345,
+        "startChar": 12,
+        "endLine": 345,
+        "endChar": 16
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd98c49_7180de81",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-11T21:38:16Z",
+      "side": 1,
+      "message": "DCHECK_NE?",
+      "range": {
+        "startLine": 388,
+        "startChar": 8,
+        "endLine": 388,
+        "endChar": 14
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
