@@ -1211,7 +1211,7 @@ Status ExecuteGetStorageKeys(const char* storage,
                              Timeout* timeout) {
   const char script[] =
       "var keys = [];"
-      "var storage = %s;"
+      "var storage = %s""
       "for (var i = 0; i < storage.length; i++) {"
       "  keys.push(storage.key(i));"
       "}"
