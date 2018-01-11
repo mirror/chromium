@@ -825,14 +825,7 @@ void GetFormAndField(autofill::FormData* form,
 }
 
 - (BOOL)isAutofillEnabled {
-  if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled))
-    return NO;
-
-  web::URLVerificationTrustLevel trustLevel;
-  const GURL pageURL(webState_->GetCurrentURL(&trustLevel));
-
-  // Only web URLs are supported by Autofill.
-  return web::UrlHasWebScheme(pageURL) && webState_->ContentIsHTML();
+  return YES;
 }
 
 #pragma mark -

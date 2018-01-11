@@ -17,15 +17,15 @@ UNKNOWN_TYPE | ShippingAddressType | Address Type | H | ShippingFirstName_1-defa
 ADDRESS_HOME_CITY | city | City | Cupertino | ShippingFirstName_1-default
 ADDRESS_HOME_STATE | state | State | CA | ShippingFirstName_1-default
 ADDRESS_HOME_ZIP | zip | Zip | 95014 | ShippingFirstName_1-default
-UNKNOWN_TYPE | product6496917 | Black-plated Tungsten Carbide Comfort Fit Band (8 mm) Options: 10 1 | GROUND6496917 | ShippingFirstName_1-default
+UNKNOWN_TYPE | product6496917 | Black-plated Tungsten Carbide Comfort Fit Band (8 mm) Options: 10 1 $59.99 | GROUND6496917 | ShippingFirstName_1-default
 UNKNOWN_TYPE | CC | CreditCardValue | CreditCardValue | ShippingFirstName_1-default
 CREDIT_CARD_NUMBER | CC_number | Credit Card #: |  | credit-card-cc
 CREDIT_CARD_EXP_MONTH | exp_month | Expiration Date: | 0 | credit-card-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR | exp_year | Expiration Date: |  | credit-card-cc
 UNKNOWN_TYPE | CC | PayPal | PayPal | ShippingFirstName_1-default
-UNKNOWN_TYPE | CC | bml | bml | ShippingFirstName_1-default
+UNKNOWN_TYPE | CC | The safer, easier way to pay. | bml | ShippingFirstName_1-default
 UNKNOWN_TYPE | UsePromoCode | Use Promo Code | on | ShippingFirstName_1-default
-UNKNOWN_TYPE | PromoCode | See Terms |  | ShippingFirstName_1-default
+UNKNOWN_TYPE | PromoCode | Use Promo Code |  | ShippingFirstName_1-default
 UNKNOWN_TYPE | UseGiftCards | Use Gift Card | on | ShippingFirstName_1-default
 UNKNOWN_TYPE | GiftCardNumber0 | Gift Card 1: |  | ShippingFirstName_1-default
 UNKNOWN_TYPE | PINNumber0 | PIN: |  | ShippingFirstName_1-default

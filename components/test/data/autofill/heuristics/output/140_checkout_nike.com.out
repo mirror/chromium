@@ -10,7 +10,7 @@ ADDRESS_HOME_ZIP | postalCodeField | ZIP Code * |  | selectAddressType_1-default
 NAME_FIRST | fname | First Name * |  | selectAddressType_1-default
 NAME_LAST | lname | Last Name * |  | selectAddressType_1-default
 ADDRESS_HOME_LINE1 | address1Field | Address * |  | selectAddressType_1-default
-ADDRESS_HOME_LINE2 | address2Field | Enter the military command or organization name if applicable |  | selectAddressType_1-default
+ADDRESS_HOME_LINE2 | address2Field | For Army, Navy, and Marines, enter your unit # and box # For ships, enter the ship name and hull # For Air Force, enter the PSC # and box # |  | selectAddressType_1-default
 ADDRESS_HOME_CITY | apoCity | APO/FPO * | APO | selectAddressType_1-default
 ADDRESS_HOME_STATE | apoState | Region * | AA | selectAddressType_1-default
 ADDRESS_HOME_ZIP | postalCodeField | ZIP Code * |  | selectAddressType_1-default

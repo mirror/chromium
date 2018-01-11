@@ -1,4 +1,4 @@
-CREDIT_CARD_TYPE | cardTypeSelect |  | Visa | credit-card-cc
+CREDIT_CARD_TYPE | cardTypeSelect | Card Type * | Visa | credit-card-cc
 CREDIT_CARD_NUMBER | creditCardNumber | Card Number * |  | credit-card-cc
 CREDIT_CARD_EXP_MONTH | expirationMonth | Expiry Date * |  | credit-card-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR | expirationYear | Expiry Date * |  | credit-card-cc

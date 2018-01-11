@@ -5,8 +5,8 @@ COMPANY_NAME | company | Company |  | f1_1-default
 ADDRESS_HOME_LINE1 | dadd1 | Address 1 * |  | f1_1-default
 ADDRESS_HOME_LINE2 | dadd2 | Address 2 |  | f1_1-default
 ADDRESS_HOME_CITY | dcity | City / State / Zip * |  | f1_1-default
-ADDRESS_HOME_STATE | dstate | Name * | AL | f1_1-default
-ADDRESS_HOME_ZIP | dzip | Name * |  | f1_1-default
+ADDRESS_HOME_STATE | dstate | Name * Company Address 1 * | AL | f1_1-default
+ADDRESS_HOME_ZIP | dzip | Name * Company Address 1 * |  | f1_1-default
 ADDRESS_HOME_COUNTRY | CC_COUNTRY | Country | United States | f1_1-default
 PHONE_HOME_WHOLE_NUMBER | dphone | Telephone |  | f1_1-default
 EMAIL_ADDRESS | demail | Email * |  | f1_1-default
@@ -16,7 +16,7 @@ UNKNOWN_TYPE | DonationType | This is a one time donation | OneTime | f1_1-defau
 UNKNOWN_TYPE | DonationType | I would like to make this a recurring donation deducted | Recurs | f1_1-default
 UNKNOWN_TYPE | ccrecurring | I would like to make this a recurring donation deducted | Monthly | f1_1-default
 UNKNOWN_TYPE | remLen | ( You may enter up to 500 characters. ) | 500 | f1_1-default
-UNKNOWN_TYPE | Comments | ( You may enter up to 500 characters. ) |  | f1_1-default
+UNKNOWN_TYPE | Comments | ( You may enter up to 500 characters. ) characters left |  | f1_1-default
 UNKNOWN_TYPE | tribute | In Honor Of | IHO | f1_1-default
 UNKNOWN_TYPE | tribute | In Memory Of | IMO | f1_1-default
 NAME_FULL | Tribute_Name | Name: |  | f1_1-default
@@ -40,5 +40,5 @@ UNKNOWN_TYPE | SameAddress | Same As Contact Address | checkbox | f1_1-default
 ADDRESS_HOME_LINE1 | CC_Addr | Address 1 * |  | CC_Addr_1-default
 ADDRESS_HOME_LINE2 | CC_Addr2 | Address 2 |  | CC_Addr_1-default
 ADDRESS_HOME_CITY | CC_City | City / State / Zip * |  | CC_Addr_1-default
-ADDRESS_HOME_STATE | CC_State | Credit Card Information |  | CC_Addr_1-default
-ADDRESS_HOME_ZIP | CC_Zip | Credit Card Information |  | CC_Addr_1-default
+ADDRESS_HOME_STATE | CC_State | Credit Card Information Credit Card Type * Credit Card Number |  | CC_Addr_1-default
+ADDRESS_HOME_ZIP | CC_Zip | Credit Card Information Credit Card Type * Credit Card Number |  | CC_Addr_1-default
