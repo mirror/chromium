@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa02288f_49e1c019",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:57:24Z",
+      "side": 0,
+      "message": "Could you keep \"4 First \u0027input\u0027 event\" and |Editor::AppliedEditing()| dispatches it?",
+      "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e0c9b8_2b601a26",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T04:57:24Z",
+      "side": 0,
+      "message": "Could you add |DCHECK(ScopedEventQueue::Instance()-\u003eShouldQueueEvents())|\nto make sure we are calling |InsertTextDuringCompositionWithEvents()| in\n|ScopedEventQueue| and postpone dispatching \"input\" event?",
+      "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
