@@ -1,0 +1,37 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+interface PeerConnectionTrackerHost {
+  // This interface connects PeerConnectionTracker from render process to
+  // PeerConnectionTrackerHost on browser process to send PeerConnection events
+  // using mojom interface methods.
+  // PeerConnectionTrackerHost forwards these events to WebRTCInternals.
+  // TODO(vm.arjun): Migrate rest of the messages,
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=792801
+
+  // Remove Peer Connection for renderer local id.
+  RemovePeerConnection(int32 lid);
+
+  // This method is called to update PeerConnection.
+  // |lid| is the renderer local id,
+  // |type| is the update type
+  // |value| is the detail of the update
+  UpdatePeerConnection(int32 lid, string type, string value);
+
+  // Initiates GetUserMedia
+  // |origin| is the security origin of getusermedia call
+  // |audio| is true if audio stream is requested
+  // |video| is true if video stream is requested
+  // |audio_constraints| is constraints for audio like audio source device id
+  // |video_constraints| is constraints for video like audio source device id
+  // The constraint strings are for display only and should not be parsed
+  // by the browser for security reason.
+  GetUserMedia(string origin, bool audio, bool video, string
+               audio_constraints, string video_constraints);
+
+  // Logs WebRtc log for the connection id
+  WebRtcEventLogWrite(int32 lid, string output);
+};
