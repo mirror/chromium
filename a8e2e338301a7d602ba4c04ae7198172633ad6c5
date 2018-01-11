@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "045f73e3_543845e4",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T23:10:22Z",
+      "side": 1,
+      "message": "also just mmaped files, or mmap(ANON) regions.",
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
