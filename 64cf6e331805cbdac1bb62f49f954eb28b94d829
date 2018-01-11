@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5bd1a08d_f7d4bebf",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T23:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f050daf8_1471fd02",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07dac901_4db76ec8",
         "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bb5b3d_2de7618d",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T23:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07dac901_4db76ec8",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41f8505d_32059d94",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T23:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd944169_31826c64",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dbd4be7_517912a8",
         "filename": "chrome/browser/chromeos/accessibility/dictation.h",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-11T18:39:53Z",
       "side": 1,
       "message": "This is a pretty generic name for a top class in src/chrome, maybe rename it CrosDictation or something?",
+      "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4263f9_01a02102",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T23:02:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6dbd4be7_517912a8",
       "revId": "64cf6e331805cbdac1bb62f49f954eb28b94d829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
