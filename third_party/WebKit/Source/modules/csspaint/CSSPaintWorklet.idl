@@ -6,7 +6,6 @@
 
 [
     ImplementedAs=CSSPaintWorklet,
-    RuntimeEnabled=CSSPaintAPI,
     MeasureAs=PaintWorklet,
     SecureContext
 ] partial interface CSS {
