@@ -1723,8 +1723,12 @@ TEST_F(RenderWidgetHostTest, MultipleInputEvents) {
 // Test that the rendering timeout for newly loaded content fires
 // when enough time passes without receiving a new compositor frame.
 TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
-  const viz::LocalSurfaceId local_surface_id(1,
-                                             base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id1(1,
+                                              base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id2(1,
+                                              base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id3(1,
+                                              base::UnguessableToken::Create());
 
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(10));
@@ -1736,7 +1740,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
                    .AddDefaultRenderPass()
                    .SetContentSourceId(5)
                    .Build();
-  host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
+  host_->SubmitCompositorFrame(local_surface_id1, std::move(frame), nullptr, 0);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1752,7 +1756,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
               .AddDefaultRenderPass()
               .SetContentSourceId(9)
               .Build();
-  host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
+  host_->SubmitCompositorFrame(local_surface_id2, std::move(frame), nullptr, 0);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1767,7 +1771,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
               .AddDefaultRenderPass()
               .SetContentSourceId(7)
               .Build();
-  host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
+  host_->SubmitCompositorFrame(local_surface_id3, std::move(frame), nullptr, 0);
   host_->StartNewContentRenderingTimeout(7);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
@@ -1790,8 +1794,12 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 // This tests that a compositor frame received with a stale content source ID
 // in its metadata is properly discarded.
 TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
-  const viz::LocalSurfaceId local_surface_id(1,
-                                             base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id1(1,
+                                              base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id2(2,
+                                              base::UnguessableToken::Create());
+  const viz::LocalSurfaceId local_surface_id3(3,
+                                              base::UnguessableToken::Create());
 
   host_->StartNewContentRenderingTimeout(100);
   host_->set_new_content_rendering_delay_for_testing(
@@ -1804,7 +1812,7 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .SetBeginFrameAck(viz::BeginFrameAck(0, 1, true))
                      .SetContentSourceId(99)
                      .Build();
-    host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
+    host_->SubmitCompositorFrame(local_surface_id1, std::move(frame), nullptr,
                                  0);
     EXPECT_FALSE(
         static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
@@ -1820,7 +1828,7 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .AddDefaultRenderPass()
                      .SetContentSourceId(100)
                      .Build();
-    host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
+    host_->SubmitCompositorFrame(local_surface_id2, std::move(frame), nullptr,
                                  0);
     EXPECT_TRUE(
         static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
@@ -1835,7 +1843,7 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .AddDefaultRenderPass()
                      .SetContentSourceId(101)
                      .Build();
-    host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
+    host_->SubmitCompositorFrame(local_surface_id3, std::move(frame), nullptr,
                                  0);
     EXPECT_TRUE(
         static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
