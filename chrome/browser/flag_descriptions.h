@@ -527,9 +527,6 @@ extern const char kMaterialDesignIncognitoNTPDescription[];
 extern const char kMediaRemotingName[];
 extern const char kMediaRemotingDescription[];
 
-extern const char kMemoryAblationName[];
-extern const char kMemoryAblationDescription[];
-
 extern const char kMemoryCoordinatorName[];
 extern const char kMemoryCoordinatorDescription[];
 

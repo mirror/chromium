@@ -22,15 +22,36 @@
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/run_loop.h"
+#include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "components/prefs/pref_service.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "testing/gtest/include/gtest/gtest.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/gfx/image/image_unittest_util.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notifier_id.h"
 
 namespace ash {
 namespace {
 
 Shelf* GetShelfForDisplay(int64_t display_id) {
   return Shell::GetRootWindowControllerWithDisplayId(display_id)->shelf();
+}
+
+void BuildAndSendNotification(message_center::MessageCenter* message_center,
+                              const std::string& app_id,
+                              const std::string& notification_id) {
+  const message_center::NotifierId notifier_id(
+      message_center::NotifierId::APPLICATION, app_id);
+  std::unique_ptr<message_center::Notification> notification;
+  notification.reset(new message_center::Notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
+      base::ASCIIToUTF16("Test Web Notification"),
+      base::ASCIIToUTF16("Notification message body."), gfx::Image(),
+      base::ASCIIToUTF16("www.test.org"), GURL(), notifier_id,
+      message_center::RichNotificationData(), NULL /* delegate */));
+  message_center->AddNotification(std::move(notification));
 }
 
 // A test implementation of the ShelfObserver mojo interface.
@@ -62,7 +83,33 @@ class TestShelfObserver : public mojom::ShelfObserver {
   DISALLOW_COPY_AND_ASSIGN(TestShelfObserver);
 };
 
-using ShelfControllerTest = AshTestBase;
+class ShelfControllerTest : public AshTestBase,
+                            public testing::WithParamInterface<bool> {
+ public:
+  ShelfControllerTest() = default;
+  ~ShelfControllerTest() override = default;
+
+  void SetUp() override {
+    if (testing::UnitTest::GetInstance()->current_test_info()->value_param()) {
+      is_touchable_app_context_menu_enabled_ = GetParam();
+      if (is_touchable_app_context_menu_enabled_)
+        scoped_feature_list_.InitAndEnableFeature(
+            app_list::features::kEnableTouchableAppContextMenu);
+    }
+    AshTestBase::SetUp();
+  }
+
+  bool is_touchable_app_context_menu_enabled_ = false;
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(ShelfControllerTest);
+};
+
+// Instantiate the Boolean which is used to toggle touchable app context menus
+// in the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, ShelfControllerTest, testing::Bool());
 
 TEST_F(ShelfControllerTest, InitializesBackButtonAndAppListItemDelegate) {
   ShelfModel* model = Shell::Get()->shelf_controller()->model();
@@ -217,6 +264,76 @@ TEST_F(ShelfControllerTest, ShelfItemImageSync) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(item.image.isNull());
   EXPECT_FALSE(controller->model()->items()[index].image.isNull());
+}
+
+// Tests that the ShelfController keeps the ShelfModel updated on new
+// notifications.
+TEST_P(ShelfControllerTest,
+       AppIconHasActiveIndicatorAfterNotificationIsRecieved) {
+  if (!is_touchable_app_context_menu_enabled_)
+    return;
+
+  ShelfController* controller = Shell::Get()->shelf_controller();
+  const std::string app_id("app_id");
+  ShelfItem item;
+  item.type = TYPE_APP;
+  item.id = ShelfID(app_id);
+  const int index = controller->model()->Add(item);
+  EXPECT_FALSE(controller->model()->items()[index].has_notification);
+
+  // Add a notification for |item|.
+
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+  const std::string notification_id("notification_id");
+  BuildAndSendNotification(message_center, app_id, notification_id);
+
+  EXPECT_TRUE(controller->model()->items()[index].has_notification);
+
+  // Remove the app and pin it, the notification should persist.
+  controller->model()->RemoveItemAt(index);
+  controller->model()->PinAppWithID(app_id);
+
+  EXPECT_TRUE(controller->model()->items()[index].has_notification);
+
+  message_center->RemoveNotification(notification_id, true);
+
+  EXPECT_FALSE(controller->model()->items()[index].has_notification);
+}
+
+// Tests that the ShelfItem.has_notification is set to false only when there are
+// 0 active notifications.
+TEST_F(ShelfControllerTest,
+       HasNotificationsFalseOnlyWhenNoNotificationsArePresent) {
+  if (!is_touchable_app_context_menu_enabled_)
+    return;
+
+  ShelfController* controller = Shell::Get()->shelf_controller();
+  const std::string app_id("app_id");
+  ShelfItem item;
+  item.type = TYPE_APP;
+  item.id = ShelfID(app_id);
+  const int index = controller->model()->Add(item);
+  EXPECT_FALSE(controller->model()->items()[index].has_notification);
+
+  // Send two notifications to |item|.
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+  const std::string notification_id_0("notification_id_0");
+  BuildAndSendNotification(message_center, app_id, notification_id_0);
+  const std::string notification_id_1("notification_id_1");
+  BuildAndSendNotification(message_center, app_id, notification_id_1);
+  EXPECT_TRUE(controller->model()->items()[index].has_notification);
+
+  // Remove one notification.
+  message_center->RemoveNotification(notification_id_0, true);
+
+  EXPECT_TRUE(controller->model()->items()[index].has_notification);
+
+  // Remove the last notification.
+  message_center->RemoveNotification(notification_id_1, true);
+
+  EXPECT_FALSE(controller->model()->items()[index].has_notification);
 }
 
 class ShelfControllerPrefsTest : public AshTestBase {
