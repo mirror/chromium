@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b7e2c2_e6d60f78",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-11T13:34:50Z",
+      "side": 1,
+      "message": "Consider merging these too.",
+      "revId": "a2350e694f24900efbc2e5f93b7c04a65ce6f74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
