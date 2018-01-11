@@ -2574,6 +2574,11 @@ double HTMLMediaElement::EffectiveMediaVolume() const {
   return volume_;
 }
 
+void HTMLMediaElement::pictureInPicture() {
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->PictureInPicture();
+}
+
 // The spec says to fire periodic timeupdate events (those sent while playing)
 // every "15 to 250ms", we choose the slowest frequency
 static const TimeDelta kMaxTimeupdateEventFrequency =
@@ -3614,16 +3619,19 @@ void HTMLMediaElement::AssertShadowRootChildren(ShadowRoot& shadow_root) {
   if (number_of_children == 1) {
     DCHECK(first_child->IsTextTrackContainer() ||
            first_child->IsMediaControls() ||
-           first_child->IsMediaRemotingInterstitial());
+           first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
   } else if (number_of_children == 2) {
     DCHECK(first_child->IsTextTrackContainer() ||
-           first_child->IsMediaRemotingInterstitial());
+           first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
     DCHECK(last_child->IsTextTrackContainer() || last_child->IsMediaControls());
     if (first_child->IsTextTrackContainer())
       DCHECK(last_child->IsMediaControls());
   } else if (number_of_children == 3) {
     Node* second_child = first_child->nextSibling();
-    DCHECK(first_child->IsMediaRemotingInterstitial());
+    DCHECK(first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
     DCHECK(second_child->IsTextTrackContainer());
     DCHECK(last_child->IsMediaControls());
   }
