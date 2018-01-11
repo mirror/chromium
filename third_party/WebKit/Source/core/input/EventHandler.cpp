@@ -100,6 +100,7 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebMouseWheelEvent.h"
+#include "base/debug/stack_trace.h"
 
 namespace blink {
 
@@ -562,6 +563,7 @@ WebInputEventResult EventHandler::HandlePointerEvent(
 WebInputEventResult EventHandler::HandleMousePressEvent(
     const WebMouseEvent& mouse_event) {
   TRACE_EVENT0("blink", "EventHandler::handleMousePressEvent");
+  LOG(ERROR) << "MOUSE PRESS";
 
   // For 4th/5th button in the mouse since Chrome does not yet send
   // button value to Blink but in some cases it does send the event.
@@ -729,6 +731,7 @@ WebInputEventResult EventHandler::HandleMouseMoveEvent(
     const WebMouseEvent& event,
     const Vector<WebMouseEvent>& coalesced_events) {
   TRACE_EVENT0("blink", "EventHandler::handleMouseMoveEvent");
+  LOG(ERROR) << "MOUSE MOVE";
   HitTestResult hovered_node = HitTestResult();
   WebInputEventResult result =
       HandleMouseMoveOrLeaveEvent(event, coalesced_events, &hovered_node);
@@ -755,6 +758,7 @@ WebInputEventResult EventHandler::HandleMouseMoveEvent(
 
 void EventHandler::HandleMouseLeaveEvent(const WebMouseEvent& event) {
   TRACE_EVENT0("blink", "EventHandler::handleMouseLeaveEvent");
+  LOG(ERROR) << "MOUSE LEAVE";
 
   Page* page = frame_->GetPage();
   if (page)
@@ -928,6 +932,7 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
 WebInputEventResult EventHandler::HandleMouseReleaseEvent(
     const WebMouseEvent& mouse_event) {
   TRACE_EVENT0("blink", "EventHandler::handleMouseReleaseEvent");
+  LOG(ERROR) << "MOUSE RELEASE!!!!";
 
   // For 4th/5th button in the mouse since Chrome does not yet send
   // button value to Blink but in some cases it does send the event.

@@ -8,6 +8,8 @@
 #include "ui/base/x/x11_util.h"
 #include "ui/events/devices/x11/device_data_manager_x11.h"
 #include "ui/gfx/x/x11.h"
+#include "base/debug/stack_trace.h"
+#include "base/debug/stack_trace.h"
 
 namespace ui {
 
@@ -24,6 +26,7 @@ bool g_owner_events = false;
 int GrabPointer(XID window, bool owner_events, ::Cursor cursor) {
   int result = GrabInvalidTime;
   if (ui::IsXInput2Available()) {
+    LOG(ERROR) << "XInput2 Pointer Grab";
     // Do an XInput2 pointer grab. If there is an active XInput2 pointer grab
     // as a result of normal button press, XGrabPointer() will fail.
     unsigned char mask[XIMaskLen(XI_LASTEVENT)];
@@ -42,9 +45,10 @@ int GrabPointer(XID window, bool owner_events, ::Cursor cursor) {
         ui::DeviceDataManagerX11::GetInstance()->master_pointers();
     for (int master_pointer : master_pointers) {
       evmask.deviceid = master_pointer;
-      result = XIGrabDevice(gfx::GetXDisplay(), master_pointer, window,
-                            x11::CurrentTime, cursor, GrabModeAsync,
-                            GrabModeAsync, owner_events, &evmask);
+      LOG(ERROR) << "\tGrabDebive: " << master_pointer;
+      //result = XIGrabDevice(gfx::GetXDisplay(), master_pointer, window,
+      //                      x11::CurrentTime, cursor, GrabModeAsync,
+      //                      GrabModeAsync, owner_events, &evmask);
       // Assume that the grab will succeed on either all or none of the master
       // pointers.
       if (result != GrabSuccess) {
@@ -55,10 +59,11 @@ int GrabPointer(XID window, bool owner_events, ::Cursor cursor) {
   }
 
   if (result != GrabSuccess) {
-    int event_mask = PointerMotionMask | ButtonReleaseMask | ButtonPressMask;
-    result = XGrabPointer(gfx::GetXDisplay(), window, owner_events, event_mask,
-                          GrabModeAsync, GrabModeAsync, x11::None, cursor,
-                          x11::CurrentTime);
+    //int event_mask = PointerMotionMask | ButtonReleaseMask | ButtonPressMask;
+    //LOG(ERROR) << "XI1 Pointer Grab";
+    //result = XGrabPointer(gfx::GetXDisplay(), window, owner_events, event_mask,
+    //                      GrabModeAsync, GrabModeAsync, x11::None, cursor,
+    //                      x11::CurrentTime);
   }
 
   if (result == GrabSuccess) {

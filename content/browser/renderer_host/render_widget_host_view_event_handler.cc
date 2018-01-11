@@ -294,6 +294,7 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 
 void RenderWidgetHostViewEventHandler::OnMouseEvent(ui::MouseEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnMouseEvent");
+  return;
 
   // CrOS will send a mouse exit event to update hover state when mouse is
   // hidden which we want to filter out in renderer. crbug.com/723535.

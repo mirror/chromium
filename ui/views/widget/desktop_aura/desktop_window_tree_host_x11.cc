@@ -60,6 +60,7 @@
 #include "ui/views/window/native_frame_view.h"
 #include "ui/wm/core/compound_event_filter.h"
 #include "ui/wm/core/window_util.h"
+#include "base/debug/stack_trace.h"
 
 DEFINE_UI_CLASS_PROPERTY_TYPE(views::DesktopWindowTreeHostX11*);
 
@@ -243,10 +244,28 @@ void DesktopWindowTreeHostX11::OnCrossingEvent(bool enter,
                                                bool focus_in_window_or_ancestor,
                                                int mode,
                                                int detail) {
+  LOG(ERROR) << "On Crossing Event================";
+  std::string d;
+  switch(detail) {
+    case XINotifyAncestor: d = "NotifyAncestor"; break;
+    case XINotifyVirtual: d = "NotifyVirtual"; break;
+    case XINotifyInferior: d = "NotifyInferior"; break;
+    case XINotifyNonlinear: d = "NotifyNonlinear"; break;
+    case XINotifyNonlinearVirtual: d = "NotifyNonlinearVirtual"; break;
+    case XINotifyPointer: d = "NotifyPointer"; break;
+    case XINotifyPointerRoot: d = "NotifyPointerRoot"; break;
+    case XINotifyDetailNone: d = "NotifyDetailNone"; break;
+  }
+  std::string name;
+  if (enter)
+    name = "Enter";
+  else
+    name = "Exit";
   // NotifyInferior on a crossing event means the pointer moved into or out of a
   // child window, but the pointer is still within |xwindow_|.
-  if (detail == NotifyInferior)
+  if (detail == NotifyInferior) {
     return;
+  }
 
   BeforeActivationStateChanged();
 
@@ -1267,6 +1286,7 @@ void DesktopWindowTreeHostX11::SetCapture() {
 
   // If the pointer is already in |xwindow_|, we will not get a crossing event
   // with a mode of NotifyGrab, so we must record the grab state manually.
+  LOG(ERROR) << "SET CAPTURE";
   has_pointer_grab_ |= !ui::GrabPointer(xwindow_, true, x11::None);
 }
 
@@ -1355,11 +1375,13 @@ void DesktopWindowTreeHostX11::InitX11Window(
       break;
   }
   // An in-activatable window should not interact with the system wm.
-  if (!activatable_)
+  if (!activatable_) {
     swa.override_redirect = x11::True;
+  }
 
-  if (swa.override_redirect)
+  if (swa.override_redirect) {
     attribute_mask |= CWOverrideRedirect;
+  }
 
   bool enable_transparent_visuals;
   switch (params.opacity) {
@@ -1966,6 +1988,11 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
   switch (xev->type) {
     case EnterNotify:
     case LeaveNotify: {
+      if (xev->type == EnterNotify)
+        LOG(ERROR) << "EnterNotify";
+      else
+        LOG(ERROR) << "LeaveNotify";
+
       OnCrossingEvent(xev->type == EnterNotify, xev->xcrossing.focus,
                       xev->xcrossing.mode, xev->xcrossing.detail);
 
@@ -1978,6 +2005,7 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
       break;
     }
     case Expose: {
+      LOG(ERROR) << "Expose";
       gfx::Rect damage_rect_in_pixels(xev->xexpose.x, xev->xexpose.y,
                                       xev->xexpose.width, xev->xexpose.height);
       compositor()->ScheduleRedrawRect(damage_rect_in_pixels);
@@ -2009,8 +2037,8 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
         }
         case ui::ET_MOUSE_PRESSED:
         case ui::ET_MOUSE_RELEASED: {
-          ui::MouseEvent mouseev(xev);
-          DispatchMouseEvent(&mouseev);
+          //ui::MouseEvent mouseev(xev);
+          //DispatchMouseEvent(&mouseev);
           break;
         }
         case ui::ET_UNKNOWN:
@@ -2023,6 +2051,7 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
     }
     case FocusIn:
     case FocusOut:
+      LOG(ERROR) << "FOCUS IN OR OUT";
       OnFocusEvent(xev->type == FocusIn, event->xfocus.mode,
                    event->xfocus.detail);
       break;
@@ -2057,22 +2086,54 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
     }
     case GenericEvent: {
       ui::TouchFactory* factory = ui::TouchFactory::GetInstance();
-      if (!factory->ShouldProcessXI2Event(xev))
+      if (!factory->ShouldProcessXI2Event(xev)) {
         break;
+      }
 
       XIEnterEvent* enter_event = static_cast<XIEnterEvent*>(xev->xcookie.data);
       switch (static_cast<XIEvent*>(xev->xcookie.data)->evtype) {
         case XI_Enter:
         case XI_Leave:
+        {
+          std::string mode_str="";
+          switch(enter_event->mode)
+          {
+            case XINotifyNormal: mode_str = "NotifyNormal"; break;
+            case XINotifyGrab: mode_str = "NotifyGrab"; break;
+            case XINotifyUngrab: mode_str = "NotifyUngrab"; break;
+            case XINotifyWhileGrabbed: mode_str = "NotifyWhileGrabbed"; break;
+            default: mode_str = "??";
+          }
+
+          if (static_cast<XIEvent*>(xev->xcookie.data)->evtype == XI_Enter)
+            LOG(ERROR) << "XI_ENTER: Window[" << xev->xany.window << "] " << mode_str;
+          else if (static_cast<XIEvent*>(xev->xcookie.data)->evtype == XI_Leave)
+            LOG(ERROR) << "XI_LEAVE: Window[" << xev->xany.window << "] " << mode_str;
+          else
+            LOG(ERROR) << "???";
+
+          LOG(ERROR) << "\twindow_: " << xwindow_ << " " << enter_event->event;
+          LOG(ERROR) << "\tDevice: " << enter_event->deviceid;
+          LOG(ERROR) << "\tSource: " << enter_event->sourceid;
+
           OnCrossingEvent(enter_event->evtype == XI_Enter, enter_event->focus,
                           XI2ModeToXMode(enter_event->mode),
                           enter_event->detail);
+          //}
           return ui::POST_DISPATCH_STOP_PROPAGATION;
+        }
         case XI_FocusIn:
         case XI_FocusOut:
+          LOG(ERROR) << "FOCUS EVENT";
           OnFocusEvent(enter_event->evtype == XI_FocusIn,
                        XI2ModeToXMode(enter_event->mode), enter_event->detail);
           return ui::POST_DISPATCH_STOP_PROPAGATION;
+        case XI_ButtonPress:
+          LOG(ERROR) << "BUTTON PRESS";
+          break;
+        case XI_ButtonRelease:
+          LOG(ERROR) << "BUTTON RELEASE";
+          break;
         default:
           break;
       }
@@ -2093,12 +2154,13 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
           DispatchTouchEvent(&touchev);
           break;
         }
+        case ui::ET_MOUSE_RELEASED:
         case ui::ET_MOUSE_MOVED:
         case ui::ET_MOUSE_DRAGGED:
         case ui::ET_MOUSE_PRESSED:
-        case ui::ET_MOUSE_RELEASED:
         case ui::ET_MOUSE_ENTERED:
         case ui::ET_MOUSE_EXITED: {
+          LOG(ERROR) << "MOUSE";
           if (type == ui::ET_MOUSE_MOVED || type == ui::ET_MOUSE_DRAGGED) {
             // If this is a motion event, we want to coalesce all pending motion
             // events that are at the top of the queue.
@@ -2106,8 +2168,8 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
             if (num_coalesced > 0)
               xev = &last_event;
           }
-          ui::MouseEvent mouseev(xev);
-          DispatchMouseEvent(&mouseev);
+          //ui::MouseEvent mouseev(xev);
+          //DispatchMouseEvent(&mouseev);
           break;
         }
         case ui::ET_MOUSEWHEEL: {

@@ -34,6 +34,7 @@ DefaultCaptureClient::~DefaultCaptureClient() {
 void DefaultCaptureClient::SetCapture(Window* window) {
   if (capture_window_ == window)
     return;
+  LOG(ERROR) << "SET CAPTURE: " << window;
   if (window)
     ui::GestureRecognizer::Get()->CancelActiveTouchesExcept(window);
 

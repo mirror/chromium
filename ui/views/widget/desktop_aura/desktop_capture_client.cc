@@ -9,6 +9,7 @@
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/aura/window_tree_host.h"
+#include "base/debug/stack_trace.h"
 
 namespace views {
 
@@ -42,6 +43,10 @@ void DesktopCaptureClient::SetCapture(aura::Window* new_capture_window) {
   if (capture_window_ == new_capture_window)
     return;
 
+  LOG(ERROR) << "SET CAPTURE: " << new_capture_window;
+  if (!new_capture_window) {
+    //base::debug::StackTrace st; st.Print();
+  }
   // We should only ever be told to capture a child of |root_|. Otherwise
   // things are going to be really confused.
   DCHECK(!new_capture_window ||

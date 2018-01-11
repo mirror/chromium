@@ -45,13 +45,15 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
         target = targeter->FindTargetForEvent(root, event_to_dispatch);
       } else {
         targeter = GetDefaultEventTargeter();
-        if (event_to_dispatch->target())
+        if (event_to_dispatch->target()) {
           target = root;
-        else
+        } else {
           target = targeter->FindTargetForEvent(root, event_to_dispatch);
+        }
       }
       DCHECK(targeter);
     }
+
 
     while (target) {
       details = DispatchEvent(target, event_to_dispatch);
