@@ -135,6 +135,15 @@ std::ostream& operator<<(std::ostream& os, TimeDelta time_delta) {
 // Time -----------------------------------------------------------------------
 
 // static
+Time Time::FromMicrosecondsSinceWindowsEpoch(int64_t us) {
+  return Time(us);
+}
+
+int64_t Time::ToMicrosecondsSinceWindowsEpoch() const {
+  return us_;
+}
+
+// static
 Time Time::FromTimeT(time_t tt) {
   if (tt == 0)
     return Time();  // Preserve 0 so we can tell it doesn't exist.
