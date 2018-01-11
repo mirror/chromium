@@ -79,7 +79,9 @@ class CompositedScrollingBrowserTest : public ContentBrowserTest {
 
  protected:
   void LoadURL() {
-    const GURL data_url(kCompositedScrollingDataURL);
+    std::string data_url_string(kCompositedScrollingDataURL);
+    base::ReplaceChars(data_url_string, "#", "%23", &data_url_string);
+    const GURL data_url(data_url_string);
     NavigateToURL(shell(), data_url);
 
     RenderWidgetHostImpl* host = GetWidgetHost();

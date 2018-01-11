@@ -590,7 +590,9 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
 
   GURL TestUrl() override { return GURL(test_url_); }
 
-  void SetTestUrl(const std::string& url) { test_url_ = url; }
+  void SetTestDataUrl(const std::string& url) {
+    base::ReplaceChars(url, "#", "%23", &test_url_);
+  }
 
   // Loads a page two boxes side-by-side, each half the width of
   // |html_rect_size|, and with different background colors. The test then
@@ -604,7 +606,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
                                      bool video_frame) {
     const gfx::Size box_size(html_rect_size.width() / 2,
                              html_rect_size.height());
-    SetTestUrl(base::StringPrintf(
+    SetTestDataUrl(base::StringPrintf(
         "data:text/html,<!doctype html>"
         "<div class='left'>"
         "  <div class='right'></div>"
@@ -1007,7 +1009,9 @@ class CompositingRenderWidgetHostViewBrowserTestHiDPI
 
   GURL TestUrl() override { return GURL(test_url_); }
 
-  void SetTestUrl(const std::string& url) { test_url_ = url; }
+  void SetTestDataUrl(const std::string& url) {
+    base::ReplaceChars(url, "#", "%23", &test_url_);
+  }
 
   bool ShouldContinueAfterTestURLLoad() {
     // Short-circuit a pass for platforms where setting up high-DPI fails.
@@ -1043,7 +1047,7 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTestHiDPI,
   const int kContentHeight = 2000;
   const int kScrollAmount = 100;
 
-  SetTestUrl(
+  SetTestDataUrl(
       base::StringPrintf("data:text/html,<!doctype html>"
                          "<div class='box'></div>"
                          "<style>"
