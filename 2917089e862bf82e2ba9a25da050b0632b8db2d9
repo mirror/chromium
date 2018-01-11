@@ -22,6 +22,30 @@
       "revId": "2917089e862bf82e2ba9a25da050b0632b8db2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc1824c_3e1594e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDaydreamApiImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-11T00:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a1e30c_d70c5681",
+      "range": {
+        "startLine": 135,
+        "startChar": 20,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "2917089e862bf82e2ba9a25da050b0632b8db2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
