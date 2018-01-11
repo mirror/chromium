@@ -133,6 +133,11 @@ class DataReductionProxyMetricsObserver
   // The total network bytes used.
   int64_t network_bytes_;
 
+  // A unique identifier to the child process of the render frame, stored in
+  // case of a renderer crash.
+  // Set at navigation commit time.
+  int render_process_host_id_;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(DataReductionProxyMetricsObserver);
