@@ -22,6 +22,30 @@
       "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab3f102_202a018f",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-11T13:50:09Z",
+      "side": 1,
+      "message": "Yes, it didn\u0027t. I got compilation errors.",
+      "parentUuid": "c4a72f56_4dd001f1",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 16
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
