@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a007777a_a22165c7",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_url_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-11T19:32:17Z",
+      "side": 1,
+      "message": "I think something\u0027s accidentally deleted after \"Describes\"?",
+      "revId": "75753e9744b88b16557421d00b653c16b0e677bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d80d59_c4ead487",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_url_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-11T19:32:17Z",
+      "side": 1,
+      "message": "I believe @enum actually registers a custom type, so you can use @private {UrlInputError} here.",
+      "revId": "75753e9744b88b16557421d00b653c16b0e677bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b054ac4c_e80c89f2",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_url_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-11T19:32:17Z",
+      "side": 1,
+      "message": "I think it\u0027s slightly confusing that a string-getter method also has the side-effect of programmatically altering something in the UI.\n\nCan you just do invalid\u003d\"[[error_]]\" in the template, and depend on the fact that 0 \u003d false?",
+      "revId": "75753e9744b88b16557421d00b653c16b0e677bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
