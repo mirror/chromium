@@ -45,11 +45,17 @@ class FaviconCache : public history::HistoryServiceObserver {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(FaviconCacheTest, ClearIconsWithHistoryDeletions);
+  FRIEND_TEST_ALL_PREFIXES(FaviconCacheTest, ExpireNullFavicons);
 
   void OnFaviconFetched(const GURL& page_url,
                         const favicon_base::FaviconImageResult& result);
 
   // history::HistoryServiceObserver:
+  void OnURLVisited(history::HistoryService* history_service,
+                    ui::PageTransition transition,
+                    const history::URLRow& row,
+                    const history::RedirectList& redirects,
+                    base::Time visit_time) override;
   void OnURLsDeleted(history::HistoryService* history_service,
                      bool all_history,
                      bool expired,
