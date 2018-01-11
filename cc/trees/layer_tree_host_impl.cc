@@ -248,6 +248,8 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       requires_high_res_to_draw_(false),
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
+      check_damage_in_begin_impl_frame_(false),
+      last_frame_had_damage_(false),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -888,6 +890,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                                       active_tree_->GetRenderSurfaceList());
 
   bool has_damage = HasDamage();
+  last_frame_had_damage_ = has_damage;
   active_tree_->ResetHandleVisibilityChanged();
 
   if (!has_damage) {
@@ -895,6 +898,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
     DCHECK(!resourceless_software_draw_);
+    check_damage_in_begin_impl_frame_ = settings_.enable_early_damage_check;
     return DRAW_SUCCESS;
   }
 
@@ -2135,11 +2139,19 @@ bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
 
   // We can only check damage if we can draw. Otherwise, the default behavior
   // is to assume there is damage.
-  if (settings_.check_damage_early && CanDraw()) {
+  if (check_damage_in_begin_impl_frame_ && CanDraw()) {
     active_tree()->UpdateDrawProperties();
     DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                         active_tree_->GetRenderSurfaceList());
-    return HasDamage();
+    bool has_damage = HasDamage();
+    // This early damage check, which is guarded by
+    // check_damage_in_begin_impl_frame, should stop being performed if two
+    // consecutive frames cause damage.
+    if (has_damage && last_frame_had_damage_)
+      check_damage_in_begin_impl_frame_ = false;
+
+    last_frame_had_damage_ = has_damage;
+    return has_damage;
   }
   // Assume there is damage if we cannot check for damage.
   return true;
