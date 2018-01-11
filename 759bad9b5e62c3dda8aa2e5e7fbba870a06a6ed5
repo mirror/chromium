@@ -22,6 +22,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec389c1_539d9aa4",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-11T22:46:41Z",
+      "side": 0,
+      "message": "We cannot reach here without a selection because of this check above:\n\n  if (GetFrame()\n          .Selection()\n          .ComputeVisibleSelectionInDOMTreeDeprecated()\n          .IsNone())\n    return;\n\nDo you think a DCHECK is necessary even though we have this?\n\nIf we reach here with a caret selection, there is no edit to apply (since the text to be inserted is empty). We do have some test cases that go through here and verify that the IME selection offsets are still applied (they actually caught a bug in the first version of the CL).",
+      "parentUuid": "48379ca3_db6f7d72",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
