@@ -46,6 +46,30 @@
       "revId": "ffce62f681e72a5ec20243eb3c1cb798f8c79b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3021c953_7003a0cf",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T14:54:42Z",
+      "side": 0,
+      "message": "Sounds good to me, too.",
+      "parentUuid": "68f356c4_9161c561",
+      "range": {
+        "startLine": 711,
+        "startChar": 15,
+        "endLine": 711,
+        "endChar": 34
+      },
+      "revId": "ffce62f681e72a5ec20243eb3c1cb798f8c79b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
