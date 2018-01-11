@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "ad96b5ad_eae855c9",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "sounds good",
+      "parentUuid": "fc0eb9e5_a3112d42",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407f8cc3_31718a25",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "As we discussed offline, I agree that expanding the header data like this makes sense.",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f7ab9e_52f2f218",
         "filename": "services/network/public/cpp/cors/cors.cc",
         "patchSetId": 1
@@ -48,6 +89,47 @@
     },
     {
       "key": {
+        "uuid": "9ad174c9_3d9d2433",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "I think no. |response_url| never holds a serialization of a suborigin as it\u0027s not input from the origin-related headers.\n\nWe should leave some note here to refer to crbug.com/315152 so that we can easily understand for what this line is. Looks this is hacky and should be ideally aligned with how the spec handles non-HTTP(S) URLs.",
+      "parentUuid": "62f7ab9e_52f2f218",
+      "range": {
+        "startLine": 40,
+        "startChar": 59,
+        "endLine": 40,
+        "endChar": 76
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1421db2c_1680cfb5",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "https://www.w3.org/TR/cors/ is obsolete. We shouldn\u0027t refer to it. Having the link to the Fetch Standard is enough.",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df2a135_ffade33f",
         "filename": "services/network/public/cpp/cors/cors.cc",
         "patchSetId": 1
@@ -59,6 +141,30 @@
       "writtenOn": "2018-01-10T06:35:23Z",
       "side": 1,
       "message": "original version checks more characters behind the IsASCIISpace(), but just checking 0x20 and comma is enough? This will be the implementation of \u0027SP\u0027 that RFC (https://tools.ietf.org/html/rfc6454#section-7.1) says, and \u0027SP\u0027 is defined as 0x20 in https://tools.ietf.org/html/rfc5234#appendix-B.1.\n\nI guess we additionally check \u0027,\u0027 as well-known errors of the separator.",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b2cfe5_69103aca",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "ideally we should have a comma-separated-value parser here.\n\nI think we\u0027re using a rough multi-value detector here since this is just to generate a message helpful for developers to realize that something is wrong at the server. As far as I understand, the signal kMultipleAllowOriginValues is used only for message generation and except for that point it\u0027s equivalent to the other error codes.\n\nSo, here what we should do is to catch intention of use of multi-valued header value to some extent. I think limiting the characters to look for to SP and a comma is fine. Invalid values would anyway fail to match later. The only difference would be whether to show a more detailed error message to the developer or not.",
+      "parentUuid": "2df2a135_ffade33f",
       "range": {
         "startLine": 48,
         "startChar": 44,
@@ -94,6 +200,40 @@
     },
     {
       "key": {
+        "uuid": "644996d7_cd78b2de",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "remove \";\"?",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb7799a_6c295931",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "Detectes -\u003e Detects",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0166e68d_6c797bf9",
         "filename": "services/network/public/cpp/cors/cors_unittest.cc",
         "patchSetId": 1
@@ -111,6 +251,74 @@
         "endLine": 29,
         "endChar": 53
       },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f475587_d6917fec",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "As we discussed offline yesterday, we don\u0027t need to test a response_url argument with suborigin serialized in it.\n\nWhat we need to test is making the origin argument hold a suborigin. It\u0027s done below.",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b49a6e8_bab2a6ab",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "matches to -\u003e matches",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3788c7_bc39906e",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "matches to -\u003e matches",
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a22b511_33e0e630",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-11T06:38:51Z",
+      "side": 1,
+      "message": "matches to -\u003e matches",
       "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
