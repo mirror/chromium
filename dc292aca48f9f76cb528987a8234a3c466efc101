@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f36f262e_a7bb4190",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:40:59Z",
+      "side": 1,
+      "message": "Oh, so it\u0027s skipped at node level, great, thank you!",
+      "parentUuid": "e7012df1_3f88c8b1",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a155942c_43c64b3a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e9fc2627_c9f8f0d7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:40:59Z",
+      "side": 1,
+      "message": "Ok, so it\u0027s expected to add mapping multiple times for a source character. That I didn\u0027t know.\n\nCan you add a test for this? I can\u0027t understand what the expected result is on this case.",
+      "parentUuid": "cc61422c_8e88a480",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e78c740_a7599d4d",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Do we have any test case verifying soft wrap at WBR?",
       "parentUuid": "9e78c740_a7599d4d",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7770136_07ba0ee8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-11T02:40:59Z",
+      "side": 1,
+      "message": "Yes, LayoutTests cover \u003cwbr\u003e. Some tests turned to pass when I implemented \u003cwbr\u003e, so they should fail if we break wbr.",
+      "parentUuid": "36e3aba8_a84abb39",
       "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
