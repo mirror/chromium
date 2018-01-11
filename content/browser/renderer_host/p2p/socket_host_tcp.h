@@ -18,6 +18,7 @@
 #include "content/common/p2p_socket_type.h"
 #include "net/base/completion_callback.h"
 #include "net/base/ip_endpoint.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class DrainableIOBuffer;
@@ -44,10 +45,12 @@ class CONTENT_EXPORT P2PSocketHostTcpBase : public P2PSocketHost {
             uint16_t min_port,
             uint16_t max_port,
             const P2PHostAndIPEndPoint& remote_address) override;
-  void Send(const net::IPEndPoint& to,
-            const std::vector<char>& data,
-            const rtc::PacketOptions& options,
-            uint64_t packet_id) override;
+  void Send(
+      const net::IPEndPoint& to,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      uint64_t packet_id,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   std::unique_ptr<P2PSocketHost> AcceptIncomingTcpConnection(
       const net::IPEndPoint& remote_address,
       int id) override;
@@ -56,19 +59,24 @@ class CONTENT_EXPORT P2PSocketHostTcpBase : public P2PSocketHost {
  protected:
   struct SendBuffer {
     SendBuffer();
-    SendBuffer(int32_t packet_id, scoped_refptr<net::DrainableIOBuffer> buffer);
+    SendBuffer(int32_t packet_id,
+               scoped_refptr<net::DrainableIOBuffer> buffer,
+               const net::NetworkTrafficAnnotationTag& traffic_annotation);
     SendBuffer(const SendBuffer& rhs);
     ~SendBuffer();
 
     int32_t rtc_packet_id;
     scoped_refptr<net::DrainableIOBuffer> buffer;
+    net::MutableNetworkTrafficAnnotationTag traffic_annotation;
   };
 
   // Derived classes will provide the implementation.
   virtual int ProcessInput(char* input, int input_len) = 0;
-  virtual void DoSend(const net::IPEndPoint& to,
-                      const std::vector<char>& data,
-                      const rtc::PacketOptions& options) = 0;
+  virtual void DoSend(
+      const net::IPEndPoint& to,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   void WriteOrQueue(SendBuffer& send_buffer);
   void OnPacket(const std::vector<char>& data);
@@ -123,9 +131,11 @@ class CONTENT_EXPORT P2PSocketHostTcp : public P2PSocketHostTcpBase {
 
  protected:
   int ProcessInput(char* input, int input_len) override;
-  void DoSend(const net::IPEndPoint& to,
-              const std::vector<char>& data,
-              const rtc::PacketOptions& options) override;
+  void DoSend(
+      const net::IPEndPoint& to,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(P2PSocketHostTcp);
@@ -146,9 +156,11 @@ class CONTENT_EXPORT P2PSocketHostStunTcp : public P2PSocketHostTcpBase {
 
  protected:
   int ProcessInput(char* input, int input_len) override;
-  void DoSend(const net::IPEndPoint& to,
-              const std::vector<char>& data,
-              const rtc::PacketOptions& options) override;
+  void DoSend(
+      const net::IPEndPoint& to,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
 
  private:
   int GetExpectedPacketSize(const char* data, int len, int* pad_bytes);
