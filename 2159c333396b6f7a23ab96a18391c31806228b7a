@@ -22,6 +22,30 @@
       "revId": "2159c333396b6f7a23ab96a18391c31806228b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60a6700_1bcdb491",
+        "filename": "third_party/protobuf/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-11T02:35:35Z",
+      "side": 1,
+      "message": "You are correct -- the tests aren\u0027t compiled. I removed the third_party/protobuf changes from this CL, and compilation completed on all the trybots. Thank you for the explanation!\n\nSorry, I was confused by a build error early on, and just assumed I should fix all the macro occurrences in the repo.\n\nI\u0027m moving you from reviewers to cc, since this CL doesn\u0027t have protobuf changes anymore.",
+      "parentUuid": "b4a86e19_1ab1a248",
+      "range": {
+        "startLine": 114,
+        "startChar": 40,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "2159c333396b6f7a23ab96a18391c31806228b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
