@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "502e9ae3_c1db7be9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-11T12:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f0b4d0_77d71c74",
+      "revId": "4a8d0ced23d1c42837a8a79a81baad5935edc0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b283891f_e762f72f",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4a8d0ced23d1c42837a8a79a81baad5935edc0c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fb4c83_b0191f2a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-11T12:09:26Z",
+      "side": 1,
+      "message": "\u003e why are you changing this? Is this a request from UX?\n\nYes, it is a request from UX. We missed the change for Mac in https://chromium-review.googlesource.com/c/chromium/src/+/768710.",
+      "parentUuid": "b283891f_e762f72f",
+      "revId": "4a8d0ced23d1c42837a8a79a81baad5935edc0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
