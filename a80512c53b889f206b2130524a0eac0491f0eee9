@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3866d00e_d8fc9fa1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-tree/resource-tree-frame-add.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2018-01-11T19:11:25Z",
+      "side": 1,
+      "message": "My guess is there\u0027s some other race condition this somehow satisfies because I don\u0027t see how recalc is related to resource tree, but this is no worse than before and cleans up addStylesheetTag\u0027s behavior for all the other tests.",
+      "revId": "a80512c53b889f206b2130524a0eac0491f0eee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
