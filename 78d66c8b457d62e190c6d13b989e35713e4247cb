@@ -16,6 +16,24 @@
       "revId": "78d66c8b457d62e190c6d13b989e35713e4247cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9084a8d1_3a07803b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-11T04:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245e19b1_309a9393",
+      "revId": "78d66c8b457d62e190c6d13b989e35713e4247cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
