@@ -22,6 +22,30 @@
       "revId": "b43eab31e8fc90627ccb1f577ea5f61a7d9ee529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0c6238_acb712ed",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T20:50:16Z",
+      "side": 1,
+      "message": "Thanks for this. It had not occurred to me that I could also migrate this test, and using the links you provided, I was able to do so without problems.",
+      "parentUuid": "27b31b4e_018aff1e",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "b43eab31e8fc90627ccb1f577ea5f61a7d9ee529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
