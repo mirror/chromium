@@ -815,13 +815,14 @@ class ResourceDispatcherHostTest : public testing::Test {
               false /* is_form_submission */, GURL() /* searchable_form_url */,
               std::string() /* searchable_form_encoding */,
               url::Origin::Create(url), GURL() /* client_side_redirect_url */,
-              base::nullopt /* suggested_filename */);
+              base::nullopt /* suggested_filename */,
+              base::nullopt /* devtools_initiator_info */);
       CommonNavigationParams common_params;
       common_params.url = url;
       std::unique_ptr<NavigationRequestInfo> request_info(
           new NavigationRequestInfo(common_params, std::move(begin_params), url,
-                                    true, false, false, -1, false, false,
-                                    false));
+                                    true, false, false, -1, false, false, false,
+                                    base::UnguessableToken::Create()));
       std::unique_ptr<NavigationURLLoader> test_loader =
           NavigationURLLoader::Create(
               browser_context_->GetResourceContext(),

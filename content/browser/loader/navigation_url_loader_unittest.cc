@@ -154,14 +154,16 @@ class NavigationURLLoaderTest : public testing::Test {
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */,
             url::Origin::Create(url), GURL() /* client_side_redirect_url */,
-            base::nullopt /* suggested_filename */);
+            base::nullopt /* suggested_filename */,
+            base::nullopt /* devtools_initiator_info */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.allow_download = allow_download;
 
     std::unique_ptr<NavigationRequestInfo> request_info(
         new NavigationRequestInfo(common_params, std::move(begin_params), url,
-                                  true, false, false, -1, false, false, false));
+                                  true, false, false, -1, false, false, false,
+                                  base::UnguessableToken::Create()));
     return NavigationURLLoader::Create(
         browser_context_->GetResourceContext(),
         BrowserContext::GetDefaultStoragePartition(browser_context_.get()),
