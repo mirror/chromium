@@ -275,6 +275,7 @@ class PLATFORM_EXPORT ThreadState {
   void IncrementalMarkingStart();
   void IncrementalMarkingStep();
   void IncrementalMarkingFinalize();
+  void IncrementalMarkingAbort();
 
   bool IsIncrementalMarkingInProgress() const {
     return GcState() == kIncrementalMarkingStartScheduled ||

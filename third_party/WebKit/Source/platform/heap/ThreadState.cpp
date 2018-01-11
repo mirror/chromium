@@ -1173,6 +1173,15 @@ void ThreadState::IncrementalMarkingStart() {
   VLOG(2) << "[state:" << this << "] "
           << "IncrementalMarking: Start";
   IsInAtomicPauseScope is_in_atomic_pause_scope(this);
+  CompleteSweep();
+  GCForbiddenScope gc_forbidden_scope(this);
+  MarkPhasePrologue(BlinkGC::kNoHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+                    BlinkGC::kIdleGC);
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+        ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
   Heap().EnableIncrementalMarkingBarrier();
   ScheduleIncrementalMarkingStep();
 }
@@ -1181,15 +1190,41 @@ void ThreadState::IncrementalMarkingStep() {
   VLOG(2) << "[state:" << this << "] "
           << "IncrementalMarking: Step";
   IsInAtomicPauseScope is_in_atomic_pause_scope(this);
-  ScheduleIncrementalMarkingFinalize();
+  GCForbiddenScope gc_forbidden_scope(this);
+  bool complete = MarkPhaseAdvanceMarking(CurrentTimeTicksInSeconds() + 0.001);
+  if (complete)
+    IncrementalMarkingFinalize();
+  else
+    ScheduleIncrementalMarkingFinalize();
 }
 
 void ThreadState::IncrementalMarkingFinalize() {
   VLOG(2) << "[state:" << this << "] "
           << "IncrementalMarking: Finalize";
   IsInAtomicPauseScope is_in_atomic_pause_scope(this);
+  {
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+        ProcessHeap::GetCrossThreadPersistentRegion());
+    MarkPhaseVisitRoots();
+  }
+  bool complete =
+      MarkPhaseAdvanceMarking(std::numeric_limits<double>::infinity());
+  CHECK(complete);
   Heap().DisableIncrementalMarkingBarrier();
-  SetGCState(kNoGCScheduled);
+  MarkPhaseEpilogue();
+  PreSweep(BlinkGC::kGCWithoutSweep);
+}
+
+void ThreadState::IncrementalMarkingAbort() {
+  VLOG(2) << "[state:" << this << "] "
+          << "IncrementalMarking: Abort";
+  Heap().PrepareForSweep();
+  Heap().MakeConsistentForMutator();
+  Heap().InvokeEphemeronDoneCallback(current_gc_data_.visitor.get());
+  Heap().DecommitCallbackStacks();
+  current_gc_data_.visitor.reset();
+  Heap().DisableIncrementalMarkingBarrier();
+  gc_state_ = kNoGCScheduled;
 }
 
 void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
@@ -1198,6 +1233,7 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
   IsInAtomicPauseScope is_in_atomic_pause_scope(this);
   // Nested garbage collection invocations are not supported.
   CHECK(!IsGCForbidden());
+
   // Garbage collection during sweeping is not supported. This can happen when
   // finalizers trigger garbage collections.
   if (SweepForbidden())
@@ -1205,6 +1241,10 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
 
   double start_total_collect_garbage_time =
       WTF::CurrentTimeTicksInMilliseconds();
+
+  if (Heap().phase() == ThreadHeap::kMarkPhase) {
+    IncrementalMarkingAbort();
+  }
 
   CompleteSweep();
 
