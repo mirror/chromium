@@ -580,6 +580,10 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
 }
 
 bool InputMethodController::InsertText(const String& text) {
+  // Don't fire events for a no-op operation.
+  if (text.IsEmpty())
+    return true;
+
   if (DispatchBeforeInputInsertText(GetDocument().FocusedElement(), text) !=
       DispatchEventResult::kNotCanceled)
     return false;
