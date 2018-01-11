@@ -34,6 +34,24 @@
       "revId": "202876ff99c1dd15f7d85e54b2117c3e82ba072a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d92124_35748ba7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-11T05:57:24Z",
+      "side": 1,
+      "message": "can you add a comment at the top of the c\u0027tor body pointing that out? e.g.\n\n  // These values are arbitrary but must correspond with the values\n  // in |user_activity_values_|.\n\nand then a similar comment above user_activity_values_.\n\n(http://go/tott-503 is relevant here, i think)",
+      "parentUuid": "356da5ba_d8865636",
+      "revId": "202876ff99c1dd15f7d85e54b2117c3e82ba072a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
