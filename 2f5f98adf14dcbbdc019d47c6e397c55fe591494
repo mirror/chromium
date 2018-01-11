@@ -16,6 +16,24 @@
       "revId": "2f5f98adf14dcbbdc019d47c6e397c55fe591494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16ade0d_4c8a8aee",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-11T20:53:17Z",
+      "side": 1,
+      "message": "+1 on this suggestion. \"Window\" suggests that there\u0027s a visible browser window, which is not the case with 1UA/offscreen presentations.",
+      "parentUuid": "c45ba6e0_0132b579",
+      "revId": "2f5f98adf14dcbbdc019d47c6e397c55fe591494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
