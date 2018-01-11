@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef9bbdce_d362a25f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34367002_0c5ac358",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ece15714_70c1b72c",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a75f2a_0171dbf7",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece15714_70c1b72c",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cce85a32_3fe4e5ee",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d850ed_0cef5ea8",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "708be547_21c1f6f1",
         "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60874935_905fd020",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708be547_21c1f6f1",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "1b078069_03668210",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd30a98_b0813531",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cddb2919_c632d9fe",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 13
@@ -107,6 +203,24 @@
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88eae795_8eb4b320",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cddb2919_c632d9fe",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "de443439_68da8601",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63c0525_68b1cb03",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e41cb4d_59442a88",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 13
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "a4a57017_a8aa8786",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e41cb4d_59442a88",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b999685b_c1707ead",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 13
@@ -155,6 +305,30 @@
       "writtenOn": "2018-01-11T11:49:16Z",
       "side": 1,
       "message": "This makes me nervous. Would it be terrible to pass in the buffer size as well and do a basic sanity check?",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 43
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a40a02_6d8bc37c",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "comment was out of date - we do have runtime CHECKs now.",
+      "parentUuid": "b999685b_c1707ead",
       "range": {
         "startLine": 337,
         "startChar": 0,
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "dbb8159d_eb309c76",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab5336f_8761389f",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6f616c2_7b28fd5b",
         "filename": "chrome/common/profiling/memlog_stream.h",
         "patchSetId": 13
@@ -195,6 +387,24 @@
       "writtenOn": "2018-01-11T11:49:16Z",
       "side": 1,
       "message": "Is there some scheme to these magic numbers?",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f513898_fa8c916a",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "no. Albert wanted them to not look like debug fills. I want them to not be super arbitrary.",
+      "parentUuid": "e6f616c2_7b28fd5b",
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "c5f1f9a8_a92924fc",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564a421b_efeff0dd",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "825c2cfc_2902f7f5",
         "filename": "chrome/profiling/allocation_tracker.cc",
         "patchSetId": 13
@@ -232,6 +460,24 @@
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd1b551_997a49eb",
+        "filename": "chrome/profiling/allocation_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "825c2cfc_2902f7f5",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +504,30 @@
     },
     {
       "key": {
+        "uuid": "26c5ab7e_922fc89a",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11042cfa_0b0f70de",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 52
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7fbcbc_7d6e07bb",
         "filename": "chrome/profiling/memlog_stream_parser.cc",
         "patchSetId": 13
@@ -269,6 +539,30 @@
       "writtenOn": "2018-01-11T11:49:16Z",
       "side": 1,
       "message": "This seems a bit sketchy. C++11 changed it so data() always returns a null terminated string.\n\nThis means, like it or not, resize() must allocate room for the terminating null anyway--it just doesn\u0027t let you touch (legally) it. For example, I believe the relevant line in libc++ is here: https://github.com/llvm-mirror/libcxx/blob/master/include/string#L1989\n\nI guess we do save a wire byte though. I think it\u0027s probably better to just not mention this at all and treat the wire bytes as some opaque blob with a size. Though explicitly throwing away something with embedded nulls might not be a bad idea...",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660bba98_143c8de0",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "I updated the comment, but kept the code the same",
+      "parentUuid": "6d7fbcbc_7d6e07bb",
       "range": {
         "startLine": 230,
         "startChar": 0,
@@ -298,6 +592,24 @@
     },
     {
       "key": {
+        "uuid": "e04a2983_91b127d1",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac0306a_9077f2d2",
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1aeda69_9d06eef0",
         "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
         "patchSetId": 13
@@ -318,6 +630,30 @@
       "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8837b41e_0c0bc35e",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T15:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1aeda69_9d06eef0",
+      "range": {
+        "startLine": 259,
+        "startChar": 18,
+        "endLine": 259,
+        "endChar": 25
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
