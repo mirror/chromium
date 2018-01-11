@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9865e424_1427f91d",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-11T20:55:53Z",
+      "side": 1,
+      "message": "Why isn\u0027t the FastInkView integrated into the display compositor?",
+      "revId": "dd4172cc2d8d41406302265be90ed92de8565018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813216ff_e0fa2aad",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-11T20:55:53Z",
+      "side": 1,
+      "message": "Why do you need an extra thread? You said in a comment that you\u0027d removed?",
+      "revId": "dd4172cc2d8d41406302265be90ed92de8565018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

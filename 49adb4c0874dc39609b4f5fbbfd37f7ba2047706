@@ -104,6 +104,24 @@
       "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b1206c_50fda513",
+        "filename": "ash/cursor/cursor_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-11T20:55:53Z",
+      "side": 1,
+      "message": "My point was that the cursor implementation shouldn\u0027t be tied to the WM right?\n\nMy understanding is that the servicification has the goal of separating the Ash UI, systray from WS/Viz code. In particular: WS/Viz should be enough to support Exo and Ash should be replaceable in a similar fashion as an X11 window manager.\n\nGiven this, it seems to me that both this code and FastInkView are not in the right place? \n\nAlso: why does FastInkView need to use the ui::Compositor? Why can\u0027t it use the display compositor directly?",
+      "parentUuid": "dfa88b65_f48c4f40",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
