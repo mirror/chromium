@@ -79,8 +79,6 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   // Returns the current visible top level window in the container.
   aura::Window* GetTopmostWindowWithBackdrop();
 
-  bool WindowShouldHaveBackdrop(aura::Window* window);
-
   // Show the backdrop window.
   void Show();
 
