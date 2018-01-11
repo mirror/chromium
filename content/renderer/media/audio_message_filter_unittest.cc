@@ -15,7 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace {
+namespace audio_message_filter_unittest {
 
 const int kRenderFrameId = 2;
 const char kEmptyMatchedDeviceId[] = "";
@@ -97,8 +97,6 @@ media::AudioParameters MockOutputParams() {
                                 media::AudioParameters::kAudioCDSampleRate, 16,
                                 100);
 }
-
-}  // namespace
 
 TEST(AudioMessageFilterTest, Basic) {
   base::MessageLoopForIO message_loop;
@@ -191,4 +189,5 @@ TEST(AudioMessageFilterTest, Delegates) {
             filter->delegates_.Lookup(kStreamId2));
 }
 
+}  // namespace audio_message_filter_unittest
 }  // namespace content

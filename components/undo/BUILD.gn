@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("undo") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("undo") {
   sources = [
     "bookmark_undo_service.cc",
     "bookmark_undo_service.h",

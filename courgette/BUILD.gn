@@ -2,9 +2,10 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 
-static_library("courgette_lib") {
+jumbo_static_library("courgette_lib") {
   sources = [
     "adjustment_method.cc",
     "adjustment_method.h",
@@ -72,6 +73,11 @@ static_library("courgette_lib") {
     "third_party/divsufsort/trsort.cc",
     "types_elf.h",
     "types_win_pe.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols (lg_table)
+    "third_party/divsufsort/trsort.cc",
   ]
 
   deps = [

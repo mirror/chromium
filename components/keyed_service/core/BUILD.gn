@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("core") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("core") {
   output_name = "keyed_service_core"
   sources = [
     "dependency_graph.cc",

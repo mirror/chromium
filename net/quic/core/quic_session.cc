@@ -1092,4 +1092,6 @@ void QuicSession::NeuterUnencryptedData() {
   connection_->NeuterUnencryptedPackets();
 }
 
+#undef ENDPOINT
+
 }  // namespace net

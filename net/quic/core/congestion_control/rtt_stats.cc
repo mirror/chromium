@@ -16,8 +16,8 @@ namespace {
 const int kInitialRttMs = 100;
 const float kAlpha = 0.125f;
 const float kOneMinusAlpha = (1 - kAlpha);
-const float kBeta = 0.25f;
-const float kOneMinusBeta = (1 - kBeta);
+const float kBeta2 = 0.25f;
+const float kOneMinusBeta = (1 - kBeta2);
 
 }  // namespace
 
@@ -74,7 +74,7 @@ void RttStats::UpdateRtt(QuicTime::Delta send_delta,
   } else {
     mean_deviation_ = QuicTime::Delta::FromMicroseconds(static_cast<int64_t>(
         kOneMinusBeta * mean_deviation_.ToMicroseconds() +
-        kBeta * std::abs((smoothed_rtt_ - rtt_sample).ToMicroseconds())));
+        kBeta2 * std::abs((smoothed_rtt_ - rtt_sample).ToMicroseconds())));
     smoothed_rtt_ = kOneMinusAlpha * smoothed_rtt_ + kAlpha * rtt_sample;
     QUIC_DVLOG(1) << " smoothed_rtt(us):" << smoothed_rtt_.ToMicroseconds()
                   << " mean_deviation(us):" << mean_deviation_.ToMicroseconds();

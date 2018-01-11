@@ -6,7 +6,9 @@
 # user's account. This component both sends data about the current device and
 # requets data about associated devices.
 
-static_library("cryptauth") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("cryptauth") {
   sources = [
     "authenticator.cc",
     "authenticator.h",
@@ -82,6 +84,12 @@ static_library("cryptauth") {
     "sync_scheduler_impl.h",
     "wire_message.cc",
     "wire_message.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "cryptauth_enrollment_manager.cc",
+    "device_to_device_initiator_helper.cc",
   ]
 
   deps = [

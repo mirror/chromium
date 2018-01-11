@@ -1799,7 +1799,7 @@ static_library("base_static") {
   }
 }
 
-component("i18n") {
+jumbo_component("i18n") {
   output_name = "base_i18n"
   sources = [
     "i18n/base_i18n_export.h",

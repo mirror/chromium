@@ -90,6 +90,9 @@ void MediaDrmCredentialManager::OnResetCredentialsCompleted(
 void MediaDrmCredentialManager::ResetCredentialsInternal(
     SecurityLevel security_level) {
   // Create provision fetcher for the default browser http request context.
+  // FIXME: Passing an argument of the wrong type below. Noticed only
+  // with proper includes so that Bind knows that one of the arguments
+  // is ref counted.
   media::CreateFetcherCB create_fetcher_cb =
       base::Bind(&content::CreateProvisionFetcher,
                  g_browser_process->system_request_context());

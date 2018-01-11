@@ -3,8 +3,9 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 
-static_library("sync_bookmarks") {
+jumbo_static_library("sync_bookmarks") {
   sources = [
     "bookmark_change_processor.cc",
     "bookmark_change_processor.h",
@@ -16,6 +17,11 @@ static_library("sync_bookmarks") {
     "bookmark_model_type_controller.h",
     "bookmark_model_type_processor.cc",
     "bookmark_model_type_processor.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols kMobileBookmarksTag
+    "bookmark_model_associator.cc",
   ]
 
   deps = [

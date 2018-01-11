@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 _inspector_protocol = "//third_party/inspector_protocol"
 import("$_inspector_protocol/inspector_protocol.gni")
 
@@ -54,7 +56,7 @@ inspector_protocol_generate("protocol_generated_sources") {
   outputs = _protocol_generated
 }
 
-component("ui_devtools") {
+jumbo_component("ui_devtools") {
   sources = rebase_path(_protocol_generated, ".", target_gen_dir)
   sources += [
     "devtools_base_agent.h",

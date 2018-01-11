@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("browser") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("browser") {
   sources = [
     "activation_state_computing_navigation_throttle.cc",
     "activation_state_computing_navigation_throttle.h",
@@ -32,6 +34,10 @@ static_library("browser") {
     "subresource_filter_safe_browsing_client_request.h",
     "verified_ruleset_dealer.cc",
     "verified_ruleset_dealer.h",
+  ]
+  jumbo_excluded_sources = [
+    # IPC
+    "content_subresource_filter_throttle_manager.cc",
   ]
   deps = [
     "//base",

@@ -2,9 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 assert(!is_ios)
 
-component("content") {
+jumbo_component("content") {
   output_name = "keyed_service_content"
   sources = [
     "browser_context_dependency_manager.cc",

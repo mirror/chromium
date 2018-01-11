@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/allocator.gni")
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 import("//v8/gni/v8.gni")
 
@@ -14,7 +15,9 @@ buildflag_header("features") {
   flags = [ "USE_PARTITION_ALLOC=$use_partition_alloc" ]
 }
 
-component("gin") {
+jumbo_component("gin") {
+  never_build_jumbo = true
+
   sources = [
     "arguments.cc",
     "arguments.h",
@@ -76,6 +79,14 @@ component("gin") {
     "wrappable.h",
     "wrapper_info.cc",
   ]
+
+  jumbo_excluded_sources = [
+    # Templates something
+    "converter.cc",
+
+    # Namespaces
+    "per_isolate_data.cc",
+ ]
 
   if (v8_use_external_startup_data) {
     data = [

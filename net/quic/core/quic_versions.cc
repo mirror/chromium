@@ -233,6 +233,8 @@ string QuicVersionToString(QuicTransportVersion transport_version) {
   }
 }
 
+#undef RETURN_STRING_LITERAL
+
 string ParsedQuicVersionToString(ParsedQuicVersion version) {
   return QuicVersionLabelToString(CreateQuicVersionLabel(version));
 }

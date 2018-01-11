@@ -26,6 +26,11 @@
 
 namespace content {
 
+namespace base_file_unittest {
+class BaseFileTest;
+FORWARD_DECLARE_TEST(BaseFileTest, IsEmptyHash);
+}  // namespace base_file_unittest
+
 // File being downloaded and saved to disk. This is a base class
 // for DownloadFile and SaveFile, which keep more state information. BaseFile
 // considers itself the owner of the physical file and will delete it when the
@@ -163,8 +168,8 @@ class CONTENT_EXPORT BaseFile {
   std::string DebugString() const;
 
  private:
-  friend class BaseFileTest;
-  FRIEND_TEST_ALL_PREFIXES(BaseFileTest, IsEmptyHash);
+  friend class base_file_unittest::BaseFileTest;
+  FRIEND_TEST_ALL_PREFIXES(base_file_unittest::BaseFileTest, IsEmptyHash);
 
   // Creates and opens the file_ if it is invalid.
   //

@@ -3,12 +3,13 @@
 # found in the LICENSE file.
 
 import("//testing/test.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
 }
 
-component("service") {
+jumbo_component("service") {
   output_name = "gpu_ipc_service"
   sources = [
     "command_buffer_stub.cc",
@@ -43,6 +44,11 @@ component("service") {
     "switches.h",
   ]
   defines = [ "GPU_IPC_SERVICE_IMPLEMENTATION" ]
+
+  jumbo_excluded_sources = [
+    "gpu_memory_manager.cc",
+  ]
+
   public_deps = [
     "//base",
     "//ipc",
@@ -114,6 +120,9 @@ component("service") {
       "stream_texture_android.cc",
       "stream_texture_android.h",
     ]
+    jumbo_excluded_sources += [
+      "image_transport_surface_android.cc",
+    ]
     libs += [ "android" ]
   }
   if (is_linux) {
@@ -126,6 +135,10 @@ component("service") {
   if (use_x11) {
     sources += [ "x_util.h" ]
     libs += [ "X11" ]
+    jumbo_excluded_sources += [
+      # X11
+      "gpu_watchdog_thread.cc",
+    ]
   }
   if (use_ozone) {
     deps += [ "//ui/ozone" ]

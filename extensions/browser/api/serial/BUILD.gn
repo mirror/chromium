@@ -2,12 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 
 assert(enable_extensions,
        "Cannot depend on extensions because enable_extensions=false.")
 
-source_set("serial") {
+jumbo_source_set("serial") {
   sources = [
     "serial_api.cc",
     "serial_api.h",

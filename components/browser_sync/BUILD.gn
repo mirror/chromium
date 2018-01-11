@@ -3,8 +3,9 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 
-static_library("browser_sync") {
+jumbo_static_library("browser_sync") {
   sources = [
     "browser_sync_switches.cc",
     "browser_sync_switches.h",

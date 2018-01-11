@@ -5,6 +5,7 @@
 import("//build/config/chrome_build.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
@@ -70,7 +71,7 @@ if (enable_vr) {
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-split_static_library("browser") {
+jumbo_split_static_library("browser") {
   # Split into multiple static libraries on Windows builds. We have hit size
   # limits on Windows official builds and on goma builds when symbol_level = 2
   # is selected. Always splitting on Windows builds is simpler than trying to
@@ -1553,6 +1554,39 @@ split_static_library("browser") {
     ]
   }
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "browsing_data/browsing_data_service_worker_helper.cc",
+    "media/media_engagement_score.cc",  # GetScoreForDictForSettings (121)
+    "media/webrtc/native_desktop_media_list.cc",  # kDefaultUpdatePeriod
+    "page_load_metrics/observers/tab_restore_page_load_metrics_observer.cc",
+    "permissions/permission_decision_auto_blocker.cc",  # GetOriginDict (9999)
+    "profiles/profile_info_cache.cc",
+    "ssl/captive_portal_blocking_page.cc",
+    "ssl/chrome_expect_ct_reporter.cc",  # TimeToISO8601 (9999)
+    "ssl/mitm_software_blocking_page.cc",
+    "supervised_user/child_accounts/family_info_fetcher.cc",
+    "supervised_user/child_accounts/permission_request_creator_apiary.cc",
+    "supervised_user/supervised_user_service.cc",
+    "supervised_user/supervised_user_whitelist_service.cc",
+    "tracing/navigation_tracing.cc",
+
+    # Using
+    "browser_shutdown.cc",  # using base::Time in global scope
+    "profiles/profile_impl.cc",  # using base::Time in global scope
+    "usb/usb_chooser_context.cc",  # "using device::UsbDevice" vs UsbDevice
+    "net/url_info.cc",  # using base::Time in global scope
+
+    # IPC/Traits
+    "content_settings/tab_specific_content_settings.cc",
+    "media/webrtc/webrtc_text_log_handler.cc",
+    "net/net_error_tab_helper.cc",
+    "prerender/prerender_link_manager.cc",
+    "prerender/prerender_message_filter.cc",
+    "renderer_host/chrome_render_message_filter.cc",
+    "speech/tts_message_filter.cc",
+  ]
+
   configs += [
     "//build/config/compiler:wexit_time_destructors",
     "//build/config:precompiled_headers",
@@ -2297,6 +2331,15 @@ split_static_library("browser") {
       "sync/profile_sync_service_android.h",
       "sync/sessions/sync_sessions_metrics_android.cc",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "android/download/intercept_oma_download_navigation_throttle.cc",  # kOMADrmMessageMimeType
+      "android/ntp/suggestions_event_reporter_bridge.cc", # GetRemoteSuggestionsScheduler
+      "password_manager/account_chooser_dialog_android.cc",  # PhoneNumber
+      "download/download_resource_throttle.cc",  # OnAcquireFileAccessPermissionDone
+      # Bad use of arguments in Bind. See comment in code.
+      "media/android/cdm/media_drm_credential_manager.cc",
+    ]
     deps += [
       ":client_discourse_context_proto",
       ":delta_file_proto",
@@ -2763,6 +2806,19 @@ split_static_library("browser") {
       "usb/web_usb_detector.cc",
       "usb/web_usb_detector.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "media_galleries/media_file_system_registry.cc",
+      "metrics/tab_stats_tracker.cc",
+      "usb/usb_chooser_controller.cc",
+      "usb/web_usb_detector.cc",  # "Using device::UsbDevice" colliding with class UsbDevice (287)
+
+      # using
+      "media_galleries/media_galleries_preferences.cc", # DictionaryValue
+
+      # Namespaces
+      "metrics/tab_stats_data_store.cc",
+    ]
     deps += [
       ":theme_properties",
       "//chrome/app/vector_icons",
@@ -3012,6 +3068,10 @@ split_static_library("browser") {
         "notifications/notification_platform_bridge_linux.cc",
         "notifications/notification_platform_bridge_linux.h",
       ]
+      jumbo_excluded_sources += [
+        # Symbols/Bind.
+        "notifications/notification_platform_bridge_linux.cc",  # ProfileLoadedCallback (146)
+      ]
     }
 
     if (use_x11) {
@@ -3072,6 +3132,10 @@ split_static_library("browser") {
       "webshare/share_service_impl.cc",
       "webshare/share_service_impl.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols "using base::DictionaryValue" in media_galleries_preferences.cc
+      "webshare/share_service_impl.cc",
+    ]
   }
 
   if (is_chromeos && use_cras) {
@@ -3123,6 +3187,11 @@ split_static_library("browser") {
       "signin/signin_global_error_factory.h",
       "upgrade_detector_impl.cc",
       "upgrade_detector_impl.h",
+    ]
+    jumbo_excluded_sources += [
+      "metrics/desktop_session_duration/chrome_visibility_observer.cc",
+      "policy/cloud/user_policy_signin_service.cc",
+      "profiles/profile_statistics_aggregator.cc",
     ]
   } else {
     sources += [
@@ -3248,6 +3317,10 @@ split_static_library("browser") {
       "background/background_contents_service_factory.cc",
       "background/background_contents_service_factory.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "background/background_contents_service.cc",  # kNotificationPrefix (200)
+    ]
   }
 
   if (enable_basic_printing || enable_print_preview) {
@@ -3275,6 +3348,10 @@ split_static_library("browser") {
       "printing/printing_init.h",
       "printing/printing_message_filter.cc",
       "printing/printing_message_filter.h",
+    ]
+    jumbo_excluded_sources += [
+      # IPC/Trait
+      "printing/printing_message_filter.cc",
     ]
     deps += [
       "//components/printing/browser",
@@ -3327,6 +3404,12 @@ split_static_library("browser") {
           "service_process/service_process_control.h",
           "service_process/service_process_control_mac.mm",
         ]
+      jumbo_excluded_sources += [
+        # IPC/Traits
+        "printing/print_preview_message_handler.cc",
+        "printing/print_view_manager.cc",
+        "printing/pwg_raster_converter.cc",
+      ]
         public_deps += [ "//chrome/common:service_process_mojom" ]
       }
     } else {
@@ -3375,6 +3458,11 @@ split_static_library("browser") {
       "feature_engagement/new_tab/new_tab_tracker_factory.h",
       "feature_engagement/session_duration_updater.cc",
       "feature_engagement/session_duration_updater.h",
+    ]
+
+    jumbo_excluded_sources += [
+      "feature_engagement/bookmark/bookmark_tracker.cc",
+      "feature_engagement/new_tab/new_tab_tracker.cc",
     ]
   }
 
@@ -3588,6 +3676,13 @@ split_static_library("browser") {
       "//chrome/browser/apps",
       "//chrome/browser/extensions",
     ]
+    jumbo_excluded_sources += [
+      # IPC/Traits
+      "renderer_host/chrome_extension_message_filter.cc",
+
+      # Symbols
+      "signin/easy_unlock_service.cc",  # GetLocalState (558)
+    ]
     allow_circular_includes_from += [
       "//chrome/browser/apps",
       "//chrome/browser/extensions",
@@ -3711,6 +3806,13 @@ split_static_library("browser") {
       "offline_pages/request_coordinator_factory.h",
       "offline_pages/resource_loading_observer.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "offline_pages/prefetch/prefetch_importer_impl.cc",
+
+      # Weird
+      "offline_pages/recent_tab_helper.cc",
+    ]
     if (is_android) {
       sources += [
         "offline_pages/android/background_scheduler_bridge.cc",
@@ -3739,6 +3841,10 @@ split_static_library("browser") {
         "offline_pages/android/prefetch_background_task_scheduler_android.cc",
         "offline_pages/android/prefetched_pages_notifier_android.cc",
         "offline_pages/android/request_coordinator_factory.cc",
+      ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "offline_pages/android/offline_page_bridge.cc",  # SavePageLaterCallback
       ]
     }
     deps += [
@@ -3846,6 +3952,22 @@ split_static_library("browser") {
       "renderer_host/pepper/pepper_platform_verification_message_filter.cc",
       "renderer_host/pepper/pepper_platform_verification_message_filter.h",
     ]
+    jumbo_excluded_sources += [
+      # IPC/Traits
+      "plugins/plugin_observer.cc",
+      "renderer_host/pepper/pepper_broker_message_filter.cc",
+      "renderer_host/pepper/pepper_flash_browser_host.cc",  # BindConnectorRequest(237)
+      "renderer_host/pepper/pepper_flash_clipboard_message_filter.cc",
+      "renderer_host/pepper/pepper_isolated_file_system_message_filter.cc",
+      "renderer_host/pepper/pepper_output_protection_message_filter.cc",
+      "renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+
+      # Symbols
+      "plugins/plugin_info_host_impl.cc",  # ShutdownNotifierFactory (558)
+
+      # Using
+      "plugins/plugin_finder.cc",  # using base::DictionaryValue
+    ]
     deps += [
       "//components/pdf/browser",
       "//media:media_features",
@@ -3930,6 +4052,10 @@ split_static_library("browser") {
       "sessions/tab_loader.h",
       "sessions/tab_loader_delegate.cc",
       "sessions/tab_loader_delegate.h",
+    ]
+    jumbo_excluded_sources += [
+      # Using
+      "sessions/session_service.cc",  # Using base::Time in global scope
     ]
   }
 
@@ -4023,6 +4149,16 @@ split_static_library("browser") {
       "supervised_user/supervised_user_whitelist_service.h",
       "supervised_user/supervised_users.h",
     ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "supervised_user/child_accounts/child_account_service.cc",  # kBackoffPolicy
+      "supervised_user/experimental/safe_search_url_reporter.cc",  # kNumRetries (9999)
+
+      # Using
+      "supervised_user/supervised_user_navigation_observer.cc",  # using base::Time in global scope
+      "supervised_user/supervised_user_settings_service.cc",  # "using base::DictionaryValue" vs class DictionaryValue
+    ]
   }
   if (enable_supervised_users && !is_android) {
     sources += [
@@ -4057,6 +4193,15 @@ split_static_library("browser") {
       "supervised_user/legacy/supervised_user_sync_service_observer.h",
       "supervised_user/supervised_user_theme.cc",
       "supervised_user/supervised_user_theme.h",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "supervised_user/legacy/supervised_user_refresh_token_fetcher.cc",  # using base::Time and other things
+
+      # Using
+      "supervised_user/legacy/supervised_user_registration_utility.cc",  # DictionaryValue
+      "supervised_user/legacy/supervised_user_shared_settings_service.cc",  # DictionaryValue
+      "supervised_user/legacy/supervised_user_sync_service.cc",  # DictionaryValue
     ]
   }
   if (enable_supervised_users && !is_android && !is_chromeos) {
@@ -4114,6 +4259,10 @@ split_static_library("browser") {
       "media/webrtc/webrtc_text_log_handler.cc",
       "media/webrtc/webrtc_text_log_handler.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "media/webrtc/webrtc_log_uploader.cc",  # kUploadContentType, kMultipartBoundary, kHttpResponseOk (558)
+    ]
     deps += [
       "//third_party/webrtc/modules/desktop_capture",
       "//third_party/webrtc_overrides",
@@ -4136,6 +4285,10 @@ split_static_library("browser") {
     sources += [
       "password_manager/native_backend_gnome_x.cc",
       "password_manager/native_backend_gnome_x.h",
+    ]
+    jumbo_excluded_sources += [
+      # Using namespace
+      "password_manager/native_backend_gnome_x.cc",
     ]
     configs += [ "//components/os_crypt:gnome_keyring" ]
   }

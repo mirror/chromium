@@ -3,10 +3,11 @@
 # found in the LICENSE file.
 
 import("//chrome/common/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-source_set("exo") {
+jumbo_source_set("exo") {
   sources = [
     "buffer.cc",
     "buffer.h",

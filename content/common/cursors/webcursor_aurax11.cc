@@ -4,7 +4,6 @@
 
 #include "content/common/cursors/webcursor.h"
 
-
 #include "base/logging.h"
 #include "third_party/WebKit/public/platform/WebCursorInfo.h"
 #include "ui/base/cursor/cursor.h"

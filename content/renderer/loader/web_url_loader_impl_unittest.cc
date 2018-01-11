@@ -47,7 +47,7 @@
 #include "url/origin.h"
 
 namespace content {
-namespace {
+namespace web_url_loader_impl_unittest {
 
 const char kTestURL[] = "http://foo";
 const char kTestHTTPSURL[] = "https://foo";
@@ -784,5 +784,5 @@ TEST_F(WebURLLoaderImplTest, SyncLengths) {
   EXPECT_EQ(kEncodedDataLength, encoded_data_length);
 }
 
-}  // namespace
+}  // namespace web_url_loader_impl_unittest
 }  // namespace content

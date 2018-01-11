@@ -40,6 +40,7 @@ using ::testing::TestWithParam;
 using ::testing::ValuesIn;
 
 namespace content {
+namespace video_track_recorder_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -368,4 +369,5 @@ INSTANTIATE_TEST_CASE_P(,
                                            ValuesIn(kTrackRecorderTestSize),
                                            ::testing::Bool()));
 
+}  // namespace video_track_recorder_unittest
 }  // namespace content

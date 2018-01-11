@@ -21,13 +21,10 @@
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 #include "third_party/WebKit/public/platform/scheduler/test/renderer_scheduler_test_support.h"
 
-namespace {
+namespace content {
+namespace device_orientation_event_pump_unittest {
 
 constexpr double kEpsilon = 1e-8;
-
-}  // namespace
-
-namespace content {
 
 class MockDeviceOrientationListener
     : public blink::WebDeviceOrientationListener {
@@ -953,4 +950,5 @@ TEST_F(DeviceAbsoluteOrientationEventPumpTest,
       DeviceOrientationEventPump::SensorState::SUSPENDED);
 }
 
+}  // namespace device_orientation_event_pump_unittest
 }  // namespace content
