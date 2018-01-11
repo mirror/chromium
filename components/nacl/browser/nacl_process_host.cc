@@ -55,6 +55,7 @@
 #include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
+#include "content/public/common/zygote_handle.h"
 #include "ipc/ipc_channel.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "net/socket/socket_descriptor.h"
@@ -71,7 +72,6 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#include "content/public/browser/zygote_handle_linux.h"
 #elif defined(OS_WIN)
 #include <windows.h>
 #include <winsock2.h>
@@ -178,11 +178,14 @@ class NaClSandboxedProcessLauncherDelegate
       DLOG(WARNING) << "Failed to reserve address space for Native Client";
     }
   }
-#elif defined(OS_POSIX) && !defined(OS_MACOSX)
+#endif  // OS_WIN
+
+#if defined(USE_ZYGOTE_HANDLE)
   content::ZygoteHandle GetZygote() override {
     return content::GetGenericZygote();
   }
-#endif  // OS_WIN
+#endif  // defined(USE_ZYGOTE_HANDLE)
+
   service_manager::SandboxType GetSandboxType() override {
     return service_manager::SANDBOX_TYPE_PPAPI;
   }
