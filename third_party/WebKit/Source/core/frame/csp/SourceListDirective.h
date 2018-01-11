@@ -71,6 +71,11 @@ class CORE_EXPORT SourceListDirective final : public CSPDirective {
   FRIEND_TEST_ALL_PREFIXES(CSPDirectiveListTest, GetSourceVector);
   FRIEND_TEST_ALL_PREFIXES(CSPDirectiveListTest, OperativeDirectiveGivenType);
 
+  struct SupportedPrefixesStruct {
+    const char* prefix;
+    ContentSecurityPolicyHashAlgorithm type;
+  };
+
   bool ParseSource(const UChar* begin,
                    const UChar* end,
                    String& scheme,
