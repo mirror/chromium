@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afa49f96_54f32be1",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-11T13:51:19Z",
+      "side": 1,
+      "message": "nit: add \"Reset at commit and not persisted.\" at the end of the comment.",
+      "revId": "e62fbbbbea24d93beb0f2004b48a46551d5a8c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66331fe9_d38d8626",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-11T13:51:19Z",
+      "side": 1,
+      "message": "nit: since we are now also setting this member from a browser-initiated path, this should move to CommonNavigationParams. A TODO to do it is fine :).",
+      "revId": "e62fbbbbea24d93beb0f2004b48a46551d5a8c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
