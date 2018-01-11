@@ -294,6 +294,9 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
       gles2::PassthroughCommandDecoderSupported();
 
   init_successful_ = true;
+#if defined(USE_OZONE)
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
+#endif
   return true;
 }
 
@@ -307,6 +310,7 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
   ui::OzonePlatform::InitParams params;
   params.single_process = true;
   ui::OzonePlatform::InitializeForGPU(params);
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
 #endif
 
   if (gpu_info && gpu_feature_info) {

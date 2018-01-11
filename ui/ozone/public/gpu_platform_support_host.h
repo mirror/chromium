@@ -5,10 +5,13 @@
 #ifndef UI_OZONE_PUBLIC_GPU_PLATFORM_SUPPORT_HOST_H_
 #define UI_OZONE_PUBLIC_GPU_PLATFORM_SUPPORT_HOST_H_
 
+#include <string>
+
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/ozone/ozone_base_export.h"
 
 namespace ui {
@@ -24,6 +27,10 @@ namespace ui {
 // to support additional messages needed by specific platforms.
 class OZONE_BASE_EXPORT GpuPlatformSupportHost : public IPC::Listener {
  public:
+  using GpuHostBindInterfaceCallback =
+      base::RepeatingCallback<void(const std::string&,
+                                   mojo::ScopedMessagePipeHandle)>;
+
   GpuPlatformSupportHost();
   ~GpuPlatformSupportHost() override;
 
@@ -38,6 +45,13 @@ class OZONE_BASE_EXPORT GpuPlatformSupportHost : public IPC::Listener {
   // Called when the GPU process is destroyed.
   // This is called from browser UI thread.
   virtual void OnChannelDestroyed(int host_id) = 0;
+
+  // Called when the GPU service is launched.
+  // Called from the browser IO thread.
+  virtual void OnGpuServiceLaunched(
+      scoped_refptr<base::SingleThreadTaskRunner> host_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+      GpuHostBindInterfaceCallback binder) = 0;
 };
 
 // create a stub implementation.
