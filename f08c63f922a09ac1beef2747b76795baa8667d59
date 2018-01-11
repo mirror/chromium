@@ -330,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "3bca9676_6411db9d",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T13:57:36Z",
+      "side": 1,
+      "message": "This still needs to be done.",
+      "parentUuid": "47e9c57f_fb13b16f",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d1e4906_da2bc3f3",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 9
@@ -341,6 +365,30 @@
       "writtenOn": "2018-01-09T10:09:38Z",
       "side": 1,
       "message": "This should be account_info_.account_id",
+      "range": {
+        "startLine": 142,
+        "startChar": 12,
+        "endLine": 142,
+        "endChar": 40
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a315166f_fb8729bb",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T13:57:36Z",
+      "side": 1,
+      "message": "This still needs to be done.",
+      "parentUuid": "1d1e4906_da2bc3f3",
       "range": {
         "startLine": 142,
         "startChar": 12,

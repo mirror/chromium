@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0913c4_cb44e216",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T13:57:36Z",
+      "side": 1,
+      "message": "Just to make I understand correctly: I supposed you gave to use a profile manager to create a new profile. Is that correct?",
+      "range": {
+        "startLine": 169,
+        "startChar": 25,
+        "endLine": 169,
+        "endChar": 26
+      },
+      "revId": "fad2ed19b8d87ed469298c3bec425d6c8fc25a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a07c18_895c9eb7",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T13:57:36Z",
+      "side": 1,
+      "message": "We have done a lot of back and forth on this, but I think that we can do one more clean-up here now that the account is always present Chrome when we create a DiceTurnSyncOnHelper object. Let\u0027s remove the gaia_id_ and email_ and store AccountInfo. We can get email, gaia id and account id from AccountInfo object at any moment.",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "fad2ed19b8d87ed469298c3bec425d6c8fc25a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7511159f_e5ef1073",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T13:57:36Z",
+      "side": 1,
+      "message": "This should be account_info_.account_id",
+      "range": {
+        "startLine": 142,
+        "startChar": 12,
+        "endLine": 142,
+        "endChar": 40
+      },
+      "revId": "fad2ed19b8d87ed469298c3bec425d6c8fc25a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
