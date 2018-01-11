@@ -134,15 +134,19 @@ const size_t SwapThrashingMonitorDelegateWin::HardFaultDeltasWindow::
     kHardFaultDeltasWindowSize = 12;
 
 SwapThrashingMonitorDelegateWin::SwapThrashingMonitorDelegateWin()
-    : hard_fault_deltas_window_(base::MakeUnique<HardFaultDeltasWindow>()) {}
+    : hard_fault_deltas_window_(base::MakeUnique<HardFaultDeltasWindow>()) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 SwapThrashingMonitorDelegateWin::~SwapThrashingMonitorDelegateWin() {}
 
 SwapThrashingMonitorDelegateWin::HardFaultDeltasWindow::HardFaultDeltasWindow()
-    : latest_hard_fault_count_(), observation_above_threshold_count_(0U) {}
+    : latest_hard_fault_count_(), observation_above_threshold_count_(0U) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 SwapThrashingMonitorDelegateWin::HardFaultDeltasWindow::
-    ~HardFaultDeltasWindow() {}
+    ~HardFaultDeltasWindow() = default;
 
 void SwapThrashingMonitorDelegateWin::HardFaultDeltasWindow::OnObservation(
     uint64_t hard_fault_count) {
