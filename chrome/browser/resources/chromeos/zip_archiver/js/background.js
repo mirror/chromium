@@ -30,3 +30,5 @@ unpacker.app.loadNaclModule('module.nmf', 'application/x-pnacl');
 
 // Load translations
 unpacker.app.loadStringData();
+
+unpacker.app.cleanWorkDirectory();
