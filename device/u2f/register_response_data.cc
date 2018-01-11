@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/optional.h"
 #include "device/u2f/attestation_object.h"
 #include "device/u2f/attested_credential_data.h"
 #include "device/u2f/authenticator_data.h"
@@ -17,12 +16,17 @@
 namespace device {
 
 // static
-RegisterResponseData RegisterResponseData::CreateFromU2fRegisterResponse(
+base::Optional<RegisterResponseData>
+RegisterResponseData::CreateFromU2fRegisterResponse(
     std::string relying_party_id,
     const std::vector<uint8_t>& u2f_data) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(u2f_parsing_utils::kEs256,
                                                       u2f_data);
+
+  if (!public_key) {
+    return base::nullopt;
+  }
 
   // Construct the attestation data.
   // AAGUID is zeroed out for U2F responses.
@@ -32,8 +36,13 @@ RegisterResponseData RegisterResponseData::CreateFromU2fRegisterResponse(
       AttestedCredentialData::CreateFromU2fRegisterResponse(
           u2f_data, std::move(aaguid), std::move(public_key));
 
+  if (!attested_credential_data) {
+    return base::nullopt;
+  }
+
   // Extract the credential_id for packing into the reponse data.
-  std::vector<uint8_t> credential_id = attested_credential_data.credential_id();
+  std::vector<uint8_t> credential_id =
+      attested_credential_data->credential_id();
 
   // Construct the authenticator data.
   // The counter is zeroed out for Register requests.
@@ -49,6 +58,10 @@ RegisterResponseData RegisterResponseData::CreateFromU2fRegisterResponse(
   // Construct the attestation statement.
   auto fido_attestation_statement =
       FidoAttestationStatement::CreateFromU2fRegisterResponse(u2f_data);
+
+  if (!fido_attestation_statement) {
+    return base::nullopt;
+  }
 
   // Construct the attestation object.
   auto attestation_object = std::make_unique<AttestationObject>(

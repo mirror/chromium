@@ -664,13 +664,13 @@ TEST_F(U2fRegisterTest, TestAttestedCredentialData) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           u2f_parsing_utils::kEs256, GetTestRegisterResponse());
-  AttestedCredentialData attested_data =
+  base::Optional<AttestedCredentialData> attested_data =
       AttestedCredentialData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16) /* aaguid */,
           std::move(public_key));
 
   EXPECT_EQ(GetTestAttestedCredentialDataBytes(),
-            attested_data.SerializeAsBytes());
+            attested_data->SerializeAsBytes());
 }
 
 // Tests that well-formed authenticator data serializes properly.
@@ -678,7 +678,7 @@ TEST_F(U2fRegisterTest, TestAuthenticatorData) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           u2f_parsing_utils::kEs256, GetTestRegisterResponse());
-  AttestedCredentialData attested_data =
+  base::Optional<AttestedCredentialData> attested_data =
       AttestedCredentialData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16) /* aaguid */,
           std::move(public_key));
@@ -700,7 +700,7 @@ TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
   std::unique_ptr<ECPublicKey> public_key =
       ECPublicKey::ExtractFromU2fRegistrationResponse(
           u2f_parsing_utils::kEs256, GetTestRegisterResponse());
-  AttestedCredentialData attested_data =
+  base::Optional<AttestedCredentialData> attested_data =
       AttestedCredentialData::CreateFromU2fRegisterResponse(
           GetTestRegisterResponse(), std::vector<uint8_t>(16) /* aaguid */,
           std::move(public_key));
@@ -727,12 +727,12 @@ TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
 
 // Test that a U2F register response is properly parsed.
 TEST_F(U2fRegisterTest, TestRegisterResponseData) {
-  RegisterResponseData response =
+  base::Optional<RegisterResponseData> response =
       RegisterResponseData::CreateFromU2fRegisterResponse(
           kTestRelyingPartyId, GetTestRegisterResponse());
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), response.raw_id());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), response->raw_id());
   EXPECT_EQ(GetTestAttestationObjectBytes(),
-            response.GetCBOREncodedAttestationObject());
+            response->GetCBOREncodedAttestationObject());
 }
 
 }  // namespace device

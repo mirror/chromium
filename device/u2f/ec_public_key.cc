@@ -30,6 +30,11 @@ std::unique_ptr<ECPublicKey> ECPublicKey::ExtractFromU2fRegistrationResponse(
       u2f_parsing_utils::Extract(u2f_data, kHeaderLength, kKeyLength);
   std::vector<uint8_t> y = u2f_parsing_utils::Extract(
       u2f_data, kHeaderLength + kKeyLength, kKeyLength);
+
+  if (x.empty() || y.empty()) {
+    return nullptr;
+  }
+
   return std::make_unique<ECPublicKey>(std::move(algorithm), std::move(x),
                                        std::move(y));
 }

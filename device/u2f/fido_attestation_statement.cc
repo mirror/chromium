@@ -32,7 +32,7 @@ FidoAttestationStatement::CreateFromU2fRegisterResponse(
       !CBS_skip(&response, credential_length) ||
       !CBS_get_asn1_element(&response, &cert, CBS_ASN1_SEQUENCE)) {
     // TODO(https://crbug.com/796581): Handle errors in a more civilized way.
-    CHECK(false) << "Invalid U2F response";
+    return nullptr;
   }
 
   std::vector<std::vector<uint8_t>> x509_certificates;

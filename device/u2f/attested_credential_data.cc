@@ -13,7 +13,8 @@
 namespace device {
 
 // static
-AttestedCredentialData AttestedCredentialData::CreateFromU2fRegisterResponse(
+base::Optional<AttestedCredentialData>
+AttestedCredentialData::CreateFromU2fRegisterResponse(
     base::span<const uint8_t> u2f_data,
     std::vector<uint8_t> aaguid,
     std::unique_ptr<PublicKey> public_key) {
@@ -24,6 +25,10 @@ AttestedCredentialData AttestedCredentialData::CreateFromU2fRegisterResponse(
   std::vector<uint8_t> extracted_length = u2f_parsing_utils::Extract(
       u2f_data, u2f_parsing_utils::kU2fResponseKeyHandleLengthPos, 1);
 
+  if (extracted_length.empty()) {
+    return base::nullopt;
+  }
+
   // Note that U2F responses only use one byte for length.
   credential_id_length[1] = extracted_length[0];
 
@@ -31,6 +36,10 @@ AttestedCredentialData AttestedCredentialData::CreateFromU2fRegisterResponse(
   std::vector<uint8_t> credential_id = u2f_parsing_utils::Extract(
       u2f_data, u2f_parsing_utils::kU2fResponseKeyHandleStartPos,
       base::strict_cast<size_t>(credential_id_length[1]));
+
+  if (credential_id.empty()) {
+    return base::nullopt;
+  }
 
   return AttestedCredentialData(
       std::move(aaguid), std::move(credential_id_length),
