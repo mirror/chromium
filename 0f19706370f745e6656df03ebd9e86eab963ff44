@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a43e4cca_d77f0b9b",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T07:08:01Z",
+      "side": 1,
+      "message": "|start_worker_status| maybe? (here and also in some other similar code)",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f055a65d_b210c07b",
         "filename": "content/browser/push_messaging/push_messaging_router.cc",
         "patchSetId": 4
@@ -70,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "502e7ec7_e61bb19d",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T07:08:01Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "58e30343_fc50c6ae",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30640ae0_cb166295",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 4
@@ -81,6 +116,23 @@
       "writtenOn": "2018-01-10T06:36:40Z",
       "side": 1,
       "message": "Just a note: as the style guide forbids handling NOTREACHED conditions, this function should really just be\n\nDCHECK(status !\u003d SERVICE_WORKER_OK || version-\u003erunning_status() \u003d\u003d EmbeddedWorkerStatus::RUNNING);\nstd::move(callback).Run(status);\n\nBut as the original code is doing this, and it\u0027s conceivable this code is hiding a bug, we shouldn\u0027t change it in this patch.",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61adfb9_1f8876d8",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T07:08:01Z",
+      "side": 1,
+      "message": "Let\u0027s document what status code it returns more clearly; e.g. SERVICE_WORKER_OK if the worker is already running or is starting up successfully, or error code if the worker startup has failed.",
       "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
