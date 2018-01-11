@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a51c99c5_7a6623d8",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-11T11:13:05Z",
+      "side": 1,
+      "message": "What if the sdk path for android studio is different? I don\u0027t think it\u0027s hardcoded and mine for sure is different. ANDROID_SDK_ROOT in shell environment is not used by chrome AFAIK, so maybe we could request it to be set and pointing to the sdk to use?",
+      "range": {
+        "startLine": 852,
+        "startChar": 34,
+        "endLine": 852,
+        "endChar": 49
+      },
+      "revId": "8cd22f380a03b76f7d926227c64ce6b8cc036c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
