@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaab4e39_d88f88bb",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2258,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "See other comment in the code, but the new connection may not be managed.",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de354d47_a23f4f54",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "s/is switching/has switched/\n\nAlso, I would consult with UX (sgabriel@) about whether to use the network name instead of \"a more secure network\".",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc51dc4_6d7dfe31",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "auto_connect_notifier_ \u003d std::make_unique\u003cAutoConnectNotifier\u003e(...)",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165debb4_71c43eb8",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "This should be in ChromeBrowserExtraPartsAsh(). |profile| can come from ProfileManager::GetActiveUserProfile().",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe2300e_a198f4ec",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "\u0027Without...\u0027 is not necessary or helpful here.",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7c1886_cf78dc8c",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "We should clear has_user_explicitly_requested_connection_ here.",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cc45b3_51ba34b3",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED might occur for unmanaged networks (i.e. a user can install a certificate dependent network themselves). I think we should still show the notification, but we should change the comment and the messaging.",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bd9d9a_3bcdb616",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "We should probably restart the timer in this case.",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee29a78_f37a592a",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "Since this is purely UI code it belongs in c/b/ui/ash",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e582a7_f8fb2862",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:01:22Z",
+      "side": 1,
+      "message": "We don\u0027t need the justification comment (\u0027Without...\u0027) in the code, just the bug reference.\n\nAlso, presubmit should complain about no http:// before crbug.com?",
+      "revId": "59492b27f977f7d60efe89951cad95a30ed9b6a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
