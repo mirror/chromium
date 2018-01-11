@@ -16,6 +16,24 @@
       "revId": "5181bff6c697e9fb801a5cdc9d1cd41124b60448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb502be1_498315b7",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2018-01-11T14:28:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c9bdc0d7_d692167b",
+      "revId": "5181bff6c697e9fb801a5cdc9d1cd41124b60448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
