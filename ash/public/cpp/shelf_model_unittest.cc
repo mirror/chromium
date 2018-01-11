@@ -432,4 +432,82 @@ TEST_F(ShelfModelTest, RunningAppPinning) {
   EXPECT_EQ(item.id, model_->items()[index].id);
 }
 
+// Tests that apps are updated properly when notifications are added or removed.
+TEST_F(ShelfModelTest, AddRemoveNotification) {
+  const std::string app_id("app_id");
+  const std::string notification_id("notification_id");
+
+  // Add an example running app.
+  ShelfItem item;
+  item.type = TYPE_APP;
+  item.status = STATUS_RUNNING;
+  item.id = ShelfID(app_id);
+  model_->Add(item);
+
+  EXPECT_FALSE(model_->items()[2].has_notification);
+
+  // Add a notification for the app.
+  model_->AddNotificationRecord(app_id, notification_id);
+
+  EXPECT_TRUE(model_->items()[2].has_notification);
+
+  // Remove the notification.
+  model_->RemoveNotificationRecord(notification_id);
+
+  EXPECT_FALSE(model_->items()[2].has_notification);
+}
+
+// Tests that apps pick up their notifications when they are added.
+TEST_F(ShelfModelTest, AddAppAfterNotification) {
+  const std::string app_id("app_id");
+  const std::string notification_id("notification_id");
+
+  ShelfItem item;
+  item.type = TYPE_APP;
+  item.status = STATUS_RUNNING;
+  item.id = ShelfID(app_id);
+
+  // Add a notification for the app.
+  model_->AddNotificationRecord(app_id, notification_id);
+
+  // Add an app with a matching app id.
+  const int index = model_->Add(item);
+
+  EXPECT_TRUE(model_->items()[2].has_notification);
+
+  // Remove and re-add the app.
+  model_->RemoveItemAt(index);
+  model_->Add(item);
+
+  // Test that the notification persists.
+  EXPECT_TRUE(model_->items()[2].has_notification);
+}
+
+// Tests that pinned apps pick up their notifications if they were recieved
+// before the app existed on the shelf.
+TEST_F(ShelfModelTest, PinAppAfterNotification) {
+  const std::string app_id("app_id");
+  const std::string notification_id("notification_id");
+
+  // Add an example app, but don't pin it.
+  ShelfItem item;
+  item.type = TYPE_APP;
+  item.status = STATUS_RUNNING;
+  item.id = ShelfID(app_id);
+
+  // Add a notification for the app.
+  model_->AddNotificationRecord(app_id, notification_id);
+
+  // Pin the app after the notification posts.
+  model_->PinAppWithID(app_id);
+  EXPECT_TRUE(model_->items()[2].has_notification);
+
+  // Un-pin and re-pin the app.
+  model_->UnpinAppWithID(app_id);
+  model_->PinAppWithID(app_id);
+
+  // Test that the notification persists.
+  EXPECT_TRUE(model_->items()[2].has_notification);
+}
+
 }  // namespace ash

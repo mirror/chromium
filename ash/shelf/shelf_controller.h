@@ -16,6 +16,7 @@
 #include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
+#include "ui/message_center/message_center_observer.h"
 
 class PrefChangeRegistrar;
 class PrefRegistrySimple;
@@ -24,11 +25,13 @@ namespace ash {
 
 // Ash's ShelfController owns the ShelfModel and implements interface functions
 // that allow Chrome to modify and observe the Shelf and ShelfModel state.
-class ASH_EXPORT ShelfController : public mojom::ShelfController,
-                                   public ShelfModelObserver,
-                                   public SessionObserver,
-                                   public TabletModeObserver,
-                                   public WindowTreeHostManager::Observer {
+class ASH_EXPORT ShelfController
+    : public mojom::ShelfController,
+      public ShelfModelObserver,
+      public SessionObserver,
+      public TabletModeObserver,
+      public WindowTreeHostManager::Observer,
+      public message_center::MessageCenterObserver {
  public:
   ShelfController();
   ~ShelfController() override;
@@ -62,17 +65,22 @@ class ASH_EXPORT ShelfController : public mojom::ShelfController,
                                 ShelfItemDelegate* old_delegate,
                                 ShelfItemDelegate* delegate) override;
 
+  // Overridden from MessageCenterObserver:
+  void OnNotificationAdded(const std::string& notification_id) override;
+  void OnNotificationRemoved(const std::string& notification_id,
+                             bool by_user) override;
+
   void FlushForTesting();
 
  private:
-  // SessionObserver:
+  // Overridden from SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
-  // TabletModeObserver:
+  // Overridden from TabletModeObserver:
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 
-  // WindowTreeHostManager::Observer:
+  // Overridden from WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
   void OnWindowTreeHostReusedForDisplay(
       AshWindowTreeHost* window_tree_host,

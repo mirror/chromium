@@ -2133,6 +2133,51 @@ TEST_F(ShelfViewTest, MouseWheelScrollOnAppIconTransitionsAppList) {
   ASSERT_EQ(1u, test_app_list_presenter.process_mouse_wheel_offset_count());
 }
 
+// Tests that an item has a notification indicator when it recieves a
+// notification.
+TEST_F(ShelfViewTest, AddedItemHasNotificationIndicator) {
+  const ShelfID id_0 = AddApp();
+  const std::string notification_id_0("notification_id_0");
+  const ShelfButton* button_0 = GetButtonByID(id_0);
+
+  EXPECT_FALSE(GetItemByID(id_0).has_notification);
+  EXPECT_FALSE(button_0->state() & ShelfButton::STATE_NOTIFICATION);
+  EXPECT_FALSE(button_0->IsNotificationIndicatorActiveForTest());
+
+  // Post a test notification after the item was added.
+  model_->AddNotificationRecord(id_0.app_id, notification_id_0);
+
+  EXPECT_TRUE(GetItemByID(id_0).has_notification);
+  EXPECT_TRUE(button_0->state() & ShelfButton::STATE_NOTIFICATION);
+  EXPECT_TRUE(button_0->IsNotificationIndicatorActiveForTest());
+
+  // Post another notification for a non existing item.
+  const std::string next_app_id("13");
+  const std::string notification_id_1("notification_id_1");
+  model_->AddNotificationRecord(next_app_id, notification_id_1);
+
+  // Add an item with matching app id.
+  const ShelfID id_1 = AddApp();
+
+  // Ensure that the app id assigned to |id_1| is the same as |next_app_id|.
+  EXPECT_EQ(next_app_id, id_1.app_id);
+  const ShelfButton* button_1 = GetButtonByID(id_1);
+  EXPECT_TRUE(GetItemByID(id_1).has_notification);
+  EXPECT_TRUE(button_1->state() & ShelfButton::STATE_NOTIFICATION);
+  EXPECT_TRUE(button_1->IsNotificationIndicatorActiveForTest());
+
+  // Remove all notifications.
+  model_->RemoveNotificationRecord(notification_id_0);
+  model_->RemoveNotificationRecord(notification_id_1);
+
+  EXPECT_FALSE(GetItemByID(id_0).has_notification);
+  EXPECT_FALSE(button_0->state() & ShelfButton::STATE_NOTIFICATION);
+  EXPECT_FALSE(button_0->IsNotificationIndicatorActiveForTest());
+  EXPECT_FALSE(GetItemByID(id_1).has_notification);
+  EXPECT_FALSE(button_1->state() & ShelfButton::STATE_NOTIFICATION);
+  EXPECT_FALSE(button_1->IsNotificationIndicatorActiveForTest());
+}
+
 class ShelfViewVisibleBoundsTest : public ShelfViewTest,
                                    public testing::WithParamInterface<bool> {
  public:
