@@ -16,6 +16,24 @@
       "revId": "617948bc26a18262ca50efaea8d3d785e6db92d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118871c0_bf30bec1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-11T17:55:38Z",
+      "side": 1,
+      "message": "HTMLEmbedElement should be treated the same as HTMLObjectElement in this regard, and this is their common ancestor (and no other element\u0027s derive from it.)",
+      "parentUuid": "c3924481_5b6d6220",
+      "revId": "617948bc26a18262ca50efaea8d3d785e6db92d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
