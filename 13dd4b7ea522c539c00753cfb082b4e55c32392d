@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5fe9d6_746c7c63",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 6305,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-11T22:49:49Z",
+      "side": 1,
+      "message": "Optional: mention which code it\u0027s recreated by?",
+      "range": {
+        "startLine": 6305,
+        "startChar": 5,
+        "endLine": 6305,
+        "endChar": 14
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574b16b7_f94d1678",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7515,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-11T22:49:49Z",
+      "side": 1,
+      "message": "typo: already",
+      "range": {
+        "startLine": 7515,
+        "startChar": 32,
+        "endLine": 7515,
+        "endChar": 39
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d452bdcc_44a47429",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7516,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-11T22:49:49Z",
+      "side": 1,
+      "message": "typo: its",
+      "range": {
+        "startLine": 7516,
+        "startChar": 12,
+        "endLine": 7516,
+        "endChar": 16
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
