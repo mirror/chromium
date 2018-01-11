@@ -8,14 +8,24 @@ var tests = [
    */
   function testParamsParser() {
     var paramsParser = new OpenPDFParamsParser(function(name) {
-      if (name == 'RU')
-        paramsParser.onNamedDestinationReceived(26);
-      else if (name == 'US')
-        paramsParser.onNamedDestinationReceived(0);
-      else if (name == 'UY')
-        paramsParser.onNamedDestinationReceived(22);
-      else
-        paramsParser.onNamedDestinationReceived(-1);
+      if (name == 'RU') {
+        paramsParser.onNamedDestinationReceived({pageNumber: 26});
+      } else if (name == 'US') {
+        paramsParser.onNamedDestinationReceived({pageNumber: 0});
+      } else if (name == 'UY') {
+        paramsParser.onNamedDestinationReceived({pageNumber: 22});
+      } else if (name == 'DestWithFit') {
+        paramsParser.onNamedDestinationReceived(
+            {pageNumber: 10, viewType: 'Fit'});
+      } else if (name == 'DestWithFitH') {
+        paramsParser.onNamedDestinationReceived(
+            {pageNumber: 10, viewType: 'FitH,700'});
+      } else if (name == 'DestWithXYZ') {
+        paramsParser.onNamedDestinationReceived(
+            {pageNumber: 10, viewType: 'XYZ,111,222,333'});
+      } else {
+        paramsParser.onNamedDestinationReceived({pageNumber: -1});
+      }
     });
 
     var url = "http://xyz.pdf";
@@ -71,6 +81,31 @@ var tests = [
           chrome.test.assertEq(1.5, params.zoom);
           chrome.test.assertEq(100, params.position.x);
           chrome.test.assertEq(200, params.position.y);
+        });
+
+    // Checking #nameddest=name with a nameddest that specifies the "view".
+    paramsParser.getViewportFromUrlParams(
+        `${url}#nameddest=DestWithFit`, function(params) {
+          chrome.test.assertEq(10, params.page);
+          chrome.test.assertEq(FittingType.FIT_TO_PAGE, params.view);
+        });
+
+    // Checking #nameddest=name with a nameddest that specifies the "view" with
+    // a parameter.
+    paramsParser.getViewportFromUrlParams(
+        `${url}#nameddest=DestWithFitH`, function(params) {
+          chrome.test.assertEq(10, params.page);
+          chrome.test.assertEq(FittingType.FIT_TO_WIDTH, params.view);
+          chrome.test.assertEq(700, params.viewPosition);
+        });
+
+    // Checking #nameddest=name with a nameddest that specifies the "view" with
+    // multiple parameters.
+    paramsParser.getViewportFromUrlParams(
+        `${url}#nameddest=DestWithXYZ`, function(params) {
+          chrome.test.assertEq(10, params.page);
+          // TODO(hnakashima): Implement XYZ and update this.
+          chrome.test.assertEq(undefined, params.view);
         });
 
     // Checking #page=pagenum and zoom=scale,left,top.
