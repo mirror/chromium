@@ -79,9 +79,12 @@ public class NotificationConstants {
 
     /**
      * Separator used to separate the notification origin from additional data such as the
-     * developer specified tag.
+     * developer specified tag. This needs to be the same as the one specified in
+     * notification_id_generator.cc.
      */
-    static final String NOTIFICATION_TAG_SEPARATOR = ";";
+    static final String NOTIFICATION_TAG_SEPARATOR = "#";
+    static final String PERSISTENT_NOTIFICATION_TAG_PREFIX = "p";
+    static final String NONPERSISTENT_NOTIFICATION_TAG_PREFIX = "n";
 
     /**
      * Key for retrieving the results of user input from notification text action intents.
