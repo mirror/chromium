@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd700224_3b8bd145",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-11T22:27:53Z",
+      "side": 1,
+      "message": "Well, the WV CDM is always registered (if available). I don\u0027t think the WV part buys us anything, so I\u0027ll just remove it.",
+      "parentUuid": "862bcd02_d2046cb6",
+      "range": {
+        "startLine": 879,
+        "startChar": 23,
+        "endLine": 879,
+        "endChar": 47
+      },
+      "revId": "7fb875ee1c9b2024e3ef86f1a90ed1efd856347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cb9525b_5789930e",
         "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T21:59:38Z",
       "side": 1,
       "message": "Missing part of the comment?",
+      "range": {
+        "startLine": 885,
+        "startChar": 16,
+        "endLine": 885,
+        "endChar": 19
+      },
+      "revId": "7fb875ee1c9b2024e3ef86f1a90ed1efd856347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9ffefc_ab4a99dc",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-11T22:27:53Z",
+      "side": 1,
+      "message": "Removed as a whole.",
+      "parentUuid": "1cb9525b_5789930e",
       "range": {
         "startLine": 885,
         "startChar": 16,
