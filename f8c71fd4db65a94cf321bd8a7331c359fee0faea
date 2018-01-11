@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "5967fe3f_d09b6f39",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:22:12Z",
+      "side": 1,
+      "message": "Sorry, correction again.\nIt should be |SelectionIsDirectional()|, PS#28 has already fixed this.",
+      "parentUuid": "b977b7b7_967eeb41",
+      "range": {
+        "startLine": 814,
+        "startChar": 39,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d9780f_c267bf9f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 27
