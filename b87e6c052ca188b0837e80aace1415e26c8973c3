@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c92545_9b803c7c",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T22:04:57Z",
+      "side": 1,
+      "message": "Please update this comment to mention that we always do this to ensure a minimally readable backtrace (but keep the windows bits in here in case this changes again at some point in the future)",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "b87e6c052ca188b0837e80aace1415e26c8973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
