@@ -16,6 +16,24 @@
       "revId": "a2350e694f24900efbc2e5f93b7c04a65ce6f74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cc41fc_d8ca7195",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-11T16:59:53Z",
+      "side": 1,
+      "message": "I think it\u0027s useful to have them in separate tests because I want each test to test a specific behavior. I don\u0027t want to test all possible outcomes of an operation in a single test. In this case, I would consider the caller and callee two be two different contexts even.\n\nI can look at minimizing boilerplate in the follow-up CL.",
+      "parentUuid": "95b7e2c2_e6d60f78",
+      "revId": "a2350e694f24900efbc2e5f93b7c04a65ce6f74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
