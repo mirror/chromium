@@ -23,7 +23,7 @@
 #define DRM_FORMAT_ABGR8888 FOURCC('A', 'B', '2', '4')
 #define DRM_FORMAT_XRGB8888 FOURCC('X', 'R', '2', '4')
 #define DRM_FORMAT_XBGR8888 FOURCC('X', 'B', '2', '4')
-#define DRM_FORMAT_XRGB2101010 FOURCC('X', 'R', '3', '0')
+#define DRM_FORMAT_ARGB2101010 FOURCC('A', 'R', '3', '0')
 #define DRM_FORMAT_YVU420 FOURCC('Y', 'V', '1', '2')
 #define DRM_FORMAT_NV12 FOURCC('N', 'V', '1', '2')
 
@@ -35,14 +35,14 @@ bool ValidInternalFormat(unsigned internalformat, gfx::BufferFormat format) {
     case GL_RGB:
       return format == gfx::BufferFormat::BGR_565 ||
              format == gfx::BufferFormat::RGBX_8888 ||
-             format == gfx::BufferFormat::BGRX_8888 ||
-             format == gfx::BufferFormat::BGRX_1010102;
+             format == gfx::BufferFormat::BGRX_8888;
     case GL_RGB_YCRCB_420_CHROMIUM:
       return format == gfx::BufferFormat::YVU_420;
     case GL_RGB_YCBCR_420V_CHROMIUM:
       return format == gfx::BufferFormat::YUV_420_BIPLANAR;
     case GL_RGBA:
-      return format == gfx::BufferFormat::RGBA_8888;
+      return format == gfx::BufferFormat::RGBA_8888 ||
+             format == gfx::BufferFormat::BGRA_1010102;
     case GL_BGRA_EXT:
       return format == gfx::BufferFormat::BGRA_8888;
     case GL_RED_EXT:
@@ -66,7 +66,7 @@ bool ValidFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
-    case gfx::BufferFormat::BGRX_1010102:
+    case gfx::BufferFormat::BGRA_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
       return true;
@@ -103,8 +103,8 @@ EGLint FourCC(gfx::BufferFormat format) {
       return DRM_FORMAT_ARGB8888;
     case gfx::BufferFormat::BGRX_8888:
       return DRM_FORMAT_XRGB8888;
-    case gfx::BufferFormat::BGRX_1010102:
-      return DRM_FORMAT_XRGB2101010;
+    case gfx::BufferFormat::BGRA_1010102:
+      return DRM_FORMAT_ARGB2101010;
     case gfx::BufferFormat::YVU_420:
       return DRM_FORMAT_YVU420;
     case gfx::BufferFormat::YUV_420_BIPLANAR:
@@ -139,8 +139,8 @@ gfx::BufferFormat GetBufferFormatFromFourCCFormat(int format) {
       return gfx::BufferFormat::BGRA_8888;
     case DRM_FORMAT_XRGB8888:
       return gfx::BufferFormat::BGRX_8888;
-    case DRM_FORMAT_XRGB2101010:
-      return gfx::BufferFormat::BGRX_1010102;
+    case DRM_FORMAT_ARGB2101010:
+      return gfx::BufferFormat::BGRA_1010102;
     case DRM_FORMAT_RGB565:
       return gfx::BufferFormat::BGR_565;
     case DRM_FORMAT_NV12:
@@ -415,9 +415,9 @@ unsigned GLImageNativePixmap::GetInternalFormatForTesting(
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::BGRX_8888:
-    case gfx::BufferFormat::BGRX_1010102:
       return GL_RGB;
     case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::BGRA_1010102:
       return GL_RGBA;
     case gfx::BufferFormat::BGRA_8888:
       return GL_BGRA_EXT;
