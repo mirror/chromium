@@ -41,6 +41,7 @@ using content::BrowserThread;
 namespace {
 
 const int kPartnerBookmarksMinimumFaviconSizePx = 16;
+const int kPartnerBookmarksDesiredFaviconSizePx = 32;
 
 void SetFaviconTask(Profile* profile,
                     const GURL& page_url, const GURL& icon_url,
@@ -251,7 +252,8 @@ void PartnerBookmarksReader::GetFaviconFromCacheOrServer(
     bool from_server,
     FaviconFetchedCallback callback) {
   GetLargeIconService()->GetLargeIconOrFallbackStyle(
-      page_url, kPartnerBookmarksMinimumFaviconSizePx, 0,
+      page_url, kPartnerBookmarksMinimumFaviconSizePx,
+      kPartnerBookmarksDesiredFaviconSizePx,
       base::Bind(&PartnerBookmarksReader::OnGetFaviconFromCacheFinished,
                  base::Unretained(this), page_url,
                  base::Passed(std::move(callback)), fallback_to_server,
@@ -306,7 +308,8 @@ void PartnerBookmarksReader::OnGetFaviconFromCacheFinished(
         })");
   GetLargeIconService()
       ->GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
-          page_url, kPartnerBookmarksMinimumFaviconSizePx, 0,
+          page_url, kPartnerBookmarksMinimumFaviconSizePx,
+          kPartnerBookmarksDesiredFaviconSizePx,
           false /* may_page_url_be_private */, traffic_annotation,
           base::Bind(&PartnerBookmarksReader::OnGetFaviconFromServerFinished,
                      base::Unretained(this), page_url,
