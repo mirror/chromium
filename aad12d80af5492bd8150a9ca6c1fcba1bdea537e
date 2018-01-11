@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4549f28a_f8e3e2e1",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-11T17:52:50Z",
+      "side": 1,
+      "message": "The name is too generic in the constructor. But I think you can move the following logic to a standalone function to avoid naming conflict later.",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "aad12d80af5492bd8150a9ca6c1fcba1bdea537e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8588d20c_167542c3",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-11T17:52:50Z",
+      "side": 1,
+      "message": "One space.",
+      "range": {
+        "startLine": 202,
+        "startChar": 74,
+        "endLine": 202,
+        "endChar": 76
+      },
+      "revId": "aad12d80af5492bd8150a9ca6c1fcba1bdea537e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f36c38c_94a0318c",
+        "filename": "content/browser/media/capture/desktop_capture_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-11T17:52:50Z",
+      "side": 1,
+      "message": "It can be a TimeDelta. Constructors of TimeDelta are declared as constexpr.",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "aad12d80af5492bd8150a9ca6c1fcba1bdea537e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ee0d6d_e2c3f344",
+        "filename": "content/browser/media/capture/desktop_capture_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-11T17:52:50Z",
+      "side": 1,
+      "message": "WillOnce?",
+      "range": {
+        "startLine": 598,
+        "startChar": 0,
+        "endLine": 598,
+        "endChar": 23
+      },
+      "revId": "aad12d80af5492bd8150a9ca6c1fcba1bdea537e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e8a65a_a2040fbb",
+        "filename": "content/browser/media/capture/desktop_capture_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-11T17:52:50Z",
+      "side": 1,
+      "message": "This format is a little bit strange, shouldn\u0027t it\n            WithArg\u003c5\u003e(Invoke([\u0026done_event, \u0026nb_frames, \u0026task_runner]\n                              (base::TimeDelta timestamp) {",
+      "range": {
+        "startLine": 611,
+        "startChar": 0,
+        "endLine": 612,
+        "endChar": 73
+      },
+      "revId": "aad12d80af5492bd8150a9ca6c1fcba1bdea537e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
