@@ -170,8 +170,12 @@ void ChromeRenderViewTest::InitChromeContentRendererClient(
       base::MakeUnique<extensions::Dispatcher>(
           std::make_unique<ChromeExtensionsDispatcherDelegate>()));
 #endif
+
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  client->SetSpellcheck(new SpellCheck(nullptr));
+  LOG(ERROR) << "+++++ CRVT::InitChromeContentRendererClient, pre InitSpellCheck";
+  // client->InitSpellCheck();
+  client->SetSpellcheck(new SpellCheck(nullptr, nullptr));
+  LOG(ERROR) << "+++++ CRVT::InitChromeContentRendererClient, post InitSpellCheck";
 #endif
 }
 
