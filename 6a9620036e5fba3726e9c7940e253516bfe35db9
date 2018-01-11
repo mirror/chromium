@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc891e8_53e4a7b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T15:44:46Z",
+      "side": 1,
+      "message": "Does this mean that if accessibility is enabled users will be unable to re-order their language preferences? If so, is lack of accessibility support inherent in the Android widgets we\u0027re using or is there something we can do to add accessibility support?",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "6a9620036e5fba3726e9c7940e253516bfe35db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
