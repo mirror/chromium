@@ -22,6 +22,30 @@
       "revId": "01328ec1a62c24ac5d33197bbd9437a9fe77ad87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4ec9c9_9729a1d9",
+        "filename": "chrome/browser/chrome_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T00:02:39Z",
+      "side": 1,
+      "message": "To stop getting presubmit warnings (crbug.com/714018).\n\nI\u0027ll change it back if you prefer not having a non-renaming change in this renaming patch.",
+      "parentUuid": "5a53b0a2_5a611fd3",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "01328ec1a62c24ac5d33197bbd9437a9fe77ad87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
