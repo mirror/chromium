@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e69a976_856fb471",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T23:54:34Z",
+      "side": 1,
+      "message": "IIRC, this is called only once for (re)start. Shouldn\u0027t param be always empty?",
+      "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05895c21_eadf305b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T23:54:34Z",
+      "side": 1,
+      "message": "DCHECK_EQ(mixed_params, nullopt);",
+      "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
