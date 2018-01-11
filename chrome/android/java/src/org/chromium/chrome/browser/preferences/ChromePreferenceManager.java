@@ -70,6 +70,9 @@ public class ChromePreferenceManager {
     private static final String CHROME_HOME_MENU_ITEM_CLICK_COUNT_KEY =
             "chrome_home_menu_item_click_count";
 
+    public static final String COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY =
+            "command_line_on_non_rooted_enabled";
+
     private static class LazyHolder {
         static final ChromePreferenceManager INSTANCE = new ChromePreferenceManager();
     }
@@ -499,6 +502,14 @@ public class ChromePreferenceManager {
      */
     public void clearChromeHomeMenuItemClickCount() {
         mSharedPreferences.edit().remove(CHROME_HOME_MENU_ITEM_CLICK_COUNT_KEY).apply();
+    }
+
+    /**
+     * Set whether or not command line on non-rooted devices is enabled.
+     * @param isEnabled If command line on non-rooted devices is enabled.
+     */
+    public void setCommandLineOnNonRootedEnabled(boolean isEnabled) {
+        writeBoolean(COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, isEnabled);
     }
 
     /** Marks that the content suggestions surface has been shown. */

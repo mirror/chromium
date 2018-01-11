@@ -6,6 +6,7 @@ package org.chromium.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.provider.Settings;
 
@@ -30,9 +31,12 @@ public final class CommandLineInitUtil {
      * 1) The "debug app" is set to the application calling this.
      * and
      * 2) ADB is enabled.
-     *
+     * 3) "Enable command line on non-rooted devices" flag is enable.
      */
     private static final String COMMAND_LINE_FILE_PATH_DEBUG_APP = "/data/local/tmp";
+
+    public static final String COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY =
+            "command_line_on_non_rooted_enabled";
 
     private CommandLineInitUtil() {
     }
@@ -62,14 +66,15 @@ public final class CommandLineInitUtil {
     /**
      * Use an alternative path if:
      * - The current build is "eng" or "userdebug", OR
-     * - adb is enabled and this is the debug app.
+     * - adb is enabled and this is the debug app, OR
+     * - "Enable command line on non-rooted devices" flag is enable.
      */
     private static File getAlternativeCommandLinePath(Context context, String fileName) {
         File alternativeCommandLineFile =
                 new File(COMMAND_LINE_FILE_PATH_DEBUG_APP, fileName);
         if (!alternativeCommandLineFile.exists()) return null;
         try {
-            if (BuildInfo.isDebugAndroid()) {
+            if (allowAlternativeCommandLineFile()) {
                 return alternativeCommandLineFile;
             }
 
@@ -86,6 +91,13 @@ public final class CommandLineInitUtil {
         }
 
         return null;
+    }
+
+    @VisibleForTesting
+    static boolean allowAlternativeCommandLineFile() {
+        SharedPreferences pref = ContextUtils.getAppSharedPreferences();
+        return BuildInfo.isDebugAndroid()
+                || pref.getBoolean(COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, false);
     }
 
     @SuppressLint("NewApi")
