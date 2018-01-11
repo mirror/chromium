@@ -159,7 +159,7 @@ const char kSigninFormHTML[] =
     "</FORM>";
 
 const char kAccountCreationFormHTML[] =
-    "<FORM name = 'blah' action = 'http://www.random.com/pa/th?q=1&p=3#first'> "
+    "<FORM name = 'blah' action = 'http://www.random.com/pa/th?q=1&p=3%23first'> "
     "  <INPUT type = 'text' id = 'username'/> "
     "  <INPUT type = 'password' id = 'first_password' size = 5/>"
     "  <INPUT type = 'password' id = 'second_password' size = 5/> "
@@ -275,7 +275,7 @@ const char kPasswordChangeFormHTML[] =
     "</FORM>";
 
 const char kPasswordFormAndSpanHTML[] =
-    "<FORM name = 'blah' action = 'http://www.random.com/pa/th?q=1&p=3#first'>"
+    "<FORM name = 'blah' action = 'http://www.random.com/pa/th?q=1&p=3%23first'>"
     "  <INPUT type = 'text' id = 'username'/> "
     "  <INPUT type = 'password' id = 'password'/> "
     "  <INPUT type = 'button' id = 'dummy'/> "

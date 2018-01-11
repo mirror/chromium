@@ -109,7 +109,9 @@ class TouchInputBrowserTest : public ContentBrowserTest {
     event->ResetPoints();
   }
   void LoadURL() {
-    const GURL data_url(kTouchEventDataURL);
+    std::string data_url_string(kTouchEventDataURL);
+    base::ReplaceChars(data_url_string, "#", "%23", &data_url_string);
+    const GURL data_url(data_url_string);
     NavigateToURL(shell(), data_url);
 
     RenderWidgetHostImpl* host = GetWidgetHost();
