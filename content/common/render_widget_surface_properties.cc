@@ -13,6 +13,7 @@ RenderWidgetSurfaceProperties::FromCompositorFrame(
   RenderWidgetSurfaceProperties properties;
   properties.size = frame.size_in_pixels();
   properties.device_scale_factor = frame.device_scale_factor();
+  properties.content_source_id = frame.metadata.content_source_id;
 #ifdef OS_ANDROID
   properties.top_controls_height = frame.metadata.top_controls_height;
   properties.top_controls_shown_ratio = frame.metadata.top_controls_shown_ratio;
@@ -39,6 +40,7 @@ RenderWidgetSurfaceProperties& RenderWidgetSurfaceProperties::operator=(
 bool RenderWidgetSurfaceProperties::operator==(
     const RenderWidgetSurfaceProperties& other) const {
   return other.device_scale_factor == device_scale_factor &&
+         other.content_source_id == content_source_id &&
 #ifdef OS_ANDROID
          other.top_controls_height == top_controls_height &&
          other.top_controls_shown_ratio == top_controls_shown_ratio &&
@@ -74,6 +76,14 @@ std::string RenderWidgetSurfaceProperties::ToDiffString(
       stream << ", ";
     stream << "device_scale_factor(this: " << device_scale_factor
            << ", other: " << other.device_scale_factor << ")";
+    ++changed_properties;
+  }
+
+  if (content_source_id != other.content_source_id) {
+    if (changed_properties > 0)
+      stream << ", ";
+    stream << "content_source_id(this: " << content_source_id
+           << ", other: " << other.content_source_id << ")";
     ++changed_properties;
   }
 

@@ -30,6 +30,7 @@ struct CONTENT_EXPORT RenderWidgetSurfaceProperties {
 
   gfx::Size size;
   float device_scale_factor = 0;
+  uint32_t content_source_id = 0;
 #ifdef OS_ANDROID
   float top_controls_height = 0;
   float top_controls_shown_ratio = 0;
