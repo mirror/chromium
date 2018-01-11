@@ -34,6 +34,24 @@
       "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9725ffc7_c37c8c9b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SplitWidget.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-11T17:14:54Z",
+      "side": 1,
+      "message": "Thanks for explanation!\n\nShould we fix the _applyConstraints method first to account for shown/hidden parts? I hope it will make fixing this issue more straightforward. The fix you are suggesting requires explanation, which means it is tricky and fragile.",
+      "parentUuid": "486810f3_5774d14a",
+      "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
