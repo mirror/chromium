@@ -194,6 +194,10 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
   }
+  if (item.has_notification)
+    button->AddState(ShelfButton::STATE_NOTIFICATION);
+  else
+    button->ClearState(ShelfButton::STATE_NOTIFICATION);
 }
 
 // Returns the id of the display on which |view| is shown.

@@ -129,6 +129,7 @@ int ShelfModel::AddAt(int index, const ShelfItem& item) {
   DCHECK_EQ(ItemIndexByID(item.id), -1) << " The id is not unique: " << item.id;
   index = ValidateInsertionIndex(item.type, index);
   items_.insert(items_.begin() + index, item);
+  UpdateItemNotificationByIndex(index);
   for (auto& observer : observers_)
     observer.ShelfItemAdded(index);
   return index;
@@ -185,6 +186,20 @@ void ShelfModel::Set(int index, const ShelfItem& item) {
   }
 }
 
+void ShelfModel::RemoveNotificationRecord(const std::string& notification_id) {
+  std::string app_id;
+  RemoveFromNotificationMaps(notification_id, app_id);
+  if (app_id == std::string())
+    return;
+  UpdateItemAndNotifyObservers(app_id);
+}
+
+void ShelfModel::AddNotificationRecord(const std::string& app_id,
+                                       const std::string& notification_id) {
+  AddToNotificationMaps(app_id, notification_id);
+  UpdateItemAndNotifyObservers(app_id);
+}
+
 int ShelfModel::ItemIndexByID(const ShelfID& shelf_id) const {
   ShelfItems::const_iterator i = ItemByID(shelf_id);
   return i == items_.end() ? -1 : static_cast<int>(i - items_.begin());
@@ -204,6 +219,14 @@ ShelfItems::const_iterator ShelfModel::ItemByID(const ShelfID& shelf_id) const {
       return i;
   }
   return items_.end();
+}
+
+int ShelfModel::ItemIndexByAppID(const std::string& app_id) {
+  for (size_t i = 0; i < items_.size(); ++i) {
+    if (!app_id.compare(items_[i].id.app_id))
+      return i;
+  }
+  return -1;
 }
 
 int ShelfModel::FirstRunningAppIndex() const {
@@ -273,6 +296,70 @@ int ShelfModel::ValidateInsertionIndex(ShelfItemType type, int index) const {
                    static_cast<ShelfItems::difference_type>(index));
 
   return index;
+}
+
+void ShelfModel::UpdateItemAndNotifyObservers(const std::string& app_id) {
+  int index = ItemIndexByAppID(app_id);
+  // If the item is not pinned or active on the shelf.
+  if (index == -1)
+    return;
+
+  UpdateItemNotificationByIndex(index);
+
+  for (auto& observer : observers_)
+    observer.ShelfItemChanged(index, items_[index]);
+}
+
+void ShelfModel::UpdateItemNotificationByIndex(const int index) {
+  DCHECK(index >= 0 && index < item_count());
+  ShelfItem& item = items_[index];
+
+  auto it = app_id_to_notification_id_.find(item.id.app_id);
+
+  item.has_notification = it != app_id_to_notification_id_.end();
+}
+
+void ShelfModel::AddToNotificationMaps(const std::string& app_id,
+                                       const std::string& notification_id) {
+  auto it = app_id_to_notification_id_.find(app_id);
+  if (it != app_id_to_notification_id_.end()) {
+    // The app_id exists in the map, modify the set.
+    it->second.insert(notification_id);
+  } else {
+    // The app_id hasn't been recorded yet, create a set.
+    app_id_to_notification_id_.insert(
+        std::pair<std::string, std::set<std::string>>(app_id,
+                                                      {notification_id}));
+  }
+
+  notification_id_to_app_id_.insert(
+      std::pair<std::string, std::string>(notification_id, app_id));
+}
+
+void ShelfModel::RemoveFromNotificationMaps(const std::string& notification_id,
+                                            std::string& app_id) {
+  auto notification_id_it = notification_id_to_app_id_.find(notification_id);
+
+  // Two maps are required here because when this notification has been
+  // delivered, the MessageCenter has already deleted the notification, so we
+  // can't fetch the corresponding App Id.
+  // If we have a record of this notification, erase it from both maps.
+  if (notification_id_it != notification_id_to_app_id_.end()) {
+    // Save the AppId so the app can be updated.
+    app_id = notification_id_it->second;
+
+    auto app_id_it = app_id_to_notification_id_.find(app_id);
+
+    // Remove the un-posted notification.
+    app_id_it->second.erase(notification_id);
+
+    // If the set is empty erase the pair.
+    if (app_id_it->second.empty())
+      app_id_to_notification_id_.erase(app_id_it);
+
+    // Erase the pair in the NotificationId -> AppId map.
+    notification_id_to_app_id_.erase(notification_id_it);
+  }
 }
 
 }  // namespace ash
