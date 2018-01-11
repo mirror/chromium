@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "871faa9f_a917def6",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T02:52:01Z",
+      "side": 1,
+      "message": "I think anon-namespace usually goes at the top (so somewhere up after lines ~19).",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3228b62_ca3bd9ea",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T02:52:01Z",
+      "side": 1,
+      "message": "ClientLayerTreeFrameSink is used in non-viz too, right? If that\u0027s the case, then this should return null for non-viz, right? (there\u0027s no point walking the quads every frame for every client if the data we generate go unused)",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e18933_8794f450",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T02:52:01Z",
+      "side": 1,
+      "message": "Maybe explain briefly here that this is the first step, and this is going to evolve over time to not always-ask any time there\u0027s an oopif in the page.",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24406812_7829cb07",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T02:52:01Z",
+      "side": 1,
+      "message": "In aura, it looks like |bounds| is in DIP [1]. This is in pixels. We probably want to convert back to DIP? (but maybe only if UseZoomForDSFEnabled()?)\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/hit_test_data_provider_aura.cc?l\u003d61",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
