@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "074fa6f8_a05ab014",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: Add trailing period. Personally I\u0027d remove this comment as the code is self-evident to me. But I don\u0027t feel strongly about this.",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 44
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250be68c_29281576",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: client_data_hash.data()",
+      "range": {
+        "startLine": 301,
+        "startChar": 27,
+        "endLine": 301,
+        "endChar": 52
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bd7d60_cf4991ef",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: remove the if and just say\n\n  std::vector\u003cstd::vector\u003cuint8_t\u003e\u003e handles \u003d FilterCredentialList(options-\u003eallow_credentials);\n\nas the outcome is equivalent and FilterCredentialList should return immediately if allow_credentials is empty.",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0b024c_1e5405b8",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: comment could be removed, as it doesn\u0027t add much info",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 21
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291ccca9_cecf9ea2",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: braces can be removed",
+      "range": {
+        "startLine": 322,
+        "startChar": 18,
+        "endLine": 324,
+        "endChar": 3
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab66758_39c9c091",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: BindOnce.\n\nAlso I\u0027d inline the callback",
+      "range": {
+        "startLine": 329,
+        "startChar": 66,
+        "endLine": 329,
+        "endChar": 70
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c55b44_0a4a2fe2",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: can these references be const? Also applies above and below",
+      "range": {
+        "startLine": 385,
+        "startChar": 3,
+        "endLine": 385,
+        "endChar": 13
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677a59f6_b7e32af4",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: could you simply return; in the if block? then you don\u0027t need this else block and can reduce the nesting.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca1ca58_b51f0a0c",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: I\u0027d rewrite this to check for the error condition first. Admittedly this is a bit subjective, but I\u0027m used to handle errors first and have success as the final condition. Also this then would match the order of state handling in AuthenticatorImpl::OnSignResponse.",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11607dcc_e9f64c1c",
+        "filename": "device/u2f/u2f_sign.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: could you reorder the params so that the params for U2fRequest come first?\n\nE.g.:\n\n  U2fSign(std::string relying_party_id,\n          std::vector\u003cU2fDiscovery*\u003e discoveries,\n          const std::vector\u003cstd::vector\u003cuint8_t\u003e\u003e\u0026 registered_keys,\n          const std::vector\u003cuint8_t\u003e\u0026 challenge_hash,\n          const std::vector\u003cuint8_t\u003e\u0026 app_param,\n          SignResponseCallback completion_callback);\n\nthe reason being that you refer to those first in the initializer list of the constructor.",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 52
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b24e4d_01dca284",
+        "filename": "device/u2f/u2f_sign.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "if you update the constructor also update the order here to match",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcaa13f8_0ee48d47",
+        "filename": "device/u2f/u2f_sign.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:07:06Z",
+      "side": 1,
+      "message": "nit: move after app_param_ to match the order of the constructor",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "9ae69136ce65b5992cf79c8655b54b34e2dc78f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
