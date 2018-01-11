@@ -512,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "d7cdcd6a_a72dedad",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-11T12:58:55Z",
+      "side": 1,
+      "message": "Yes, I removed the comment from helper header after removing unretained.",
+      "parentUuid": "9f804cd6_1b64a5ec",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c384fc89_222e94c8",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 17
