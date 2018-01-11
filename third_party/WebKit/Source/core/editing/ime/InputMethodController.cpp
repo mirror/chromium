@@ -692,6 +692,18 @@ void InputMethodController::SetComposition(
       Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
       ReplaceComposition(g_empty_string);
     } else {
+      // Nothing to delete in this case.
+      if (!GetFrame().Selection().ComputeVisibleSelectionInDOMTree().IsRange())
+        return;
+
+      if (DispatchBeforeInputInsertText(GetDocument().FocusedElement(), "") !=
+          DispatchEventResult::kNotCanceled)
+        return;
+
+      // 'beforeinput' event handler may destroy document.
+      if (!IsAvailable())
+        return;
+
       // It's weird to call |setComposition()| with empty text outside
       // composition, however some IME (e.g. Japanese IBus-Anthy) did this, so
       // we simply delete selection without sending extra events.
