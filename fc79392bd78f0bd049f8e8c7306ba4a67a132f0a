@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0985a26_7fe86837",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-11T08:24:21Z",
+      "side": 1,
+      "message": "Note: as yhirano@-san and I discussed, the current intention of this function is to run the task on the task runner\u0027s thread, i.e. the main thread here. Thus, passing |loading_task_runner| is wrong here.",
+      "revId": "fc79392bd78f0bd049f8e8c7306ba4a67a132f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
