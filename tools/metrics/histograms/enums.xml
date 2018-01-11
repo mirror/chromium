@@ -17375,6 +17375,7 @@ Called by update_net_error_codes.py.-->
   <int value="2323" label="V8RTCRtpSender_ReplaceTrack_Method"/>
   <int value="2324" label="InputTypeFileSecureOriginOpenChooser"/>
   <int value="2325" label="InputTypeFileInsecureOriginOpenChooser"/>
+  <int value="2326" label="VRDisplayGetFrameData"/>
 </enum>
 
 <enum name="FeedbackSource">
