@@ -338,6 +338,7 @@ class BLINK_EXPORT WebFrameClient {
     WebFormElement form;
     bool is_cache_disabled;
     WebSourceLocation source_location;
+    WebString devtools_initiator_info;
     WebContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy;
 
