@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6712f575_93d8dff5",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-11T19:32:15Z",
+      "side": 1,
+      "message": "Note that clang-format auto-adjusted the line break style here.",
+      "revId": "6515dd19f62ba882e28b6e874cc921624158d200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
