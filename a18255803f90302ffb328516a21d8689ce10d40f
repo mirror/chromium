@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "28ab69c9_bf84df63",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "initial_socket_tag?  It\u0027s no longer accurate after the socket has been re-tagged.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e1ed6a3_056282f3",
         "filename": "net/http/http_stream_factory_impl_job.cc",
         "patchSetId": 17
@@ -18,6 +41,328 @@
         "startChar": 13,
         "endLine": 953,
         "endChar": 32
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bce8a5_7180425f",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "And also DCHECK in the constructor in this case?",
+      "range": {
+        "startLine": 953,
+        "startChar": 6,
+        "endLine": 953,
+        "endChar": 13
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4574edf_73894a07",
+        "filename": "net/socket/client_socket_pool_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Mention / explain socket_tag?",
+      "range": {
+        "startLine": 633,
+        "startChar": 15,
+        "endLine": 633,
+        "endChar": 21
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c986d01_001c57da",
+        "filename": "net/socket/socket_test_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "This should appear in the same order it is declared in the header.",
+      "range": {
+        "startLine": 1963,
+        "startChar": 0,
+        "endLine": 1963,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b3befd_157e8556",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Should we expose some way to determine if this was the tag when connect was called?  i.e., in some of the tests using this, it would be a bug if the tag were only applied after Connect() was called.",
+      "range": {
+        "startLine": 1108,
+        "startChar": 27,
+        "endLine": 1108,
+        "endChar": 31
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b7ebf9_89e46af7",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "While you\u0027re here, DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 1111,
+        "startChar": 17,
+        "endLine": 1111,
+        "endChar": 0
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac204ac_3c2bc08b",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Mention that the underlying socket must still exist, or it will return a pointer to oblivion?",
+      "range": {
+        "startLine": 1124,
+        "startChar": 26,
+        "endLine": 1124,
+        "endChar": 27
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15af3443_0a2bec1b",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 1127,
+        "startChar": 2,
+        "endLine": 1127,
+        "endChar": 25
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8962e45_4690a5f8",
+        "filename": "net/socket/socks_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Think we should move sync-case-specific values to below the \"Test socket is tagged when created synchronously\" comment, so it\u0027s easier to compare to the async case.",
+      "range": {
+        "startLine": 365,
+        "startChar": 17,
+        "endLine": 365,
+        "endChar": 26
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62dc68e_83685786",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Can\u0027t we just use EmbeddedTestServer\u0027s host_port_pair method instead?  Or is there a reason we need to use a numeric IP address instead of localhost?",
+      "range": {
+        "startLine": 983,
+        "startChar": 18,
+        "endLine": 983,
+        "endChar": 19
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb263c2_23b01cd6",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "nit:  Use EmbeddedTestServer\u0027s host_port_pair() method instead",
+      "range": {
+        "startLine": 988,
+        "startChar": 31,
+        "endLine": 988,
+        "endChar": 37
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae593ca5_32a83bed",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Mind putting adding a kGroupName variable in this test?  I think it makes it easier to read.",
+      "range": {
+        "startLine": 990,
+        "startChar": 24,
+        "endLine": 990,
+        "endChar": 25
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da43c75_4ff47945",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "For readability, please start a new test here, though it does mean we need to copy a fair bit of boilerplate.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 5,
+        "endLine": 1030,
+        "endChar": 9
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c182578_785f62ff",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Are we guaranteed that the second socket is connected by this point?  Regardless, think it\u0027s best to end the test after this is tested, and start a new one.  Also makes tests a bit more readable, I think.\n\nAdditionally, could preconnect instead for the first socket.  IF you feel this gives us better test coverage, though, I\u0027m fine with a standard connect.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 23,
+        "endLine": 1059,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eeec731_131c0584",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Question:\n\nSuppose a request r1 comes in with tag t1 and HIGH priority.  We start a connect job c1\u0027 with tag t1, and then we\u0027re at our socket pool\u0027s limit.  A new request r2 comes in with tag t2 and LOW priority.  We don\u0027t create a connect job, since we\u0027re at the socket pool limit.  Then a connection is closed and we create a new connection attempt.  That connect attempt will have a tag of t1, I believe (If not, switch their priorities, and it will - I think we always use the highest priority\u0027s params when creating a new connect job, but I suppose we may use the first request without a corresponding connect job).  Is this a problem?",
+      "range": {
+        "startLine": 1158,
+        "startChar": 7,
+        "endLine": 1158,
+        "endChar": 36
       },
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -156,6 +501,52 @@
         "startChar": 24,
         "endLine": 1281,
         "endChar": 33
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b2c947_8f80ef91",
+        "filename": "net/socket/websocket_transport_client_socket_pool.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "Suggest a DCHECK instead.",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab943a77_6520d3b1",
+        "filename": "net/spdy/chromium/spdy_test_util_common.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T17:44:58Z",
+      "side": 1,
+      "message": "I don\u0027t think changing this to be a tag-specific class is a good idea.  What if we want a MockClientSocketFactory that supports tracking some other specific feature?  Can we just have tests overwrite this with their own MockTaggingClientSocketFactory before creating the session from the deps (Which is why it\u0027s a member of this class in the first place, I assume)?",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 17
       },
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
