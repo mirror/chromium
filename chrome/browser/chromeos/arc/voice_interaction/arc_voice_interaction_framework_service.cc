@@ -179,9 +179,6 @@ void EncodeAndReturnImage(
       std::move(callback));
 }
 
-template <typename T>
-void DoNothing(T value) {}
-
 // Singleton factory for ArcVoiceInteractionFrameworkService.
 class ArcVoiceInteractionFrameworkServiceFactory
     : public internal::ArcBrowserContextKeyedServiceFactoryBase<
@@ -321,7 +318,7 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
         value_prop_accepted &&
         prefs->GetBoolean(prefs::kVoiceInteractionEnabled);
     SetVoiceInteractionEnabled(enable_voice_interaction,
-                               base::BindOnce(&DoNothing<bool>));
+                               base::BindOnce(&base::DoNothingWithParam<bool>));
 
     SetVoiceInteractionContextEnabled(
         enable_voice_interaction &&
@@ -353,7 +350,8 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
     return;
 
   SetVoiceInteractionSetupCompletedInternal(false);
-  SetVoiceInteractionEnabled(false, base::BindOnce(&DoNothing<bool>));
+  SetVoiceInteractionEnabled(false,
+                             base::BindOnce(&base::DoNothingWithParam<bool>));
   SetVoiceInteractionContextEnabled(false);
 }
 
@@ -454,7 +452,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionSetupCompleted() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   SetVoiceInteractionSetupCompletedInternal(true);
-  SetVoiceInteractionEnabled(true, base::BindOnce(&DoNothing<bool>));
+  SetVoiceInteractionEnabled(true,
+                             base::BindOnce(&base::DoNothingWithParam<bool>));
   SetVoiceInteractionContextEnabled(true);
 }
 

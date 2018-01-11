@@ -23,12 +23,6 @@ using storage_monitor::StorageMonitor;
 
 namespace {
 
-// Does nothing.
-// This method is used to handle the results of
-// MediaTransferProtocolManager::CloseStorage method call.
-void DoNothing(bool error) {
-}
-
 device::MediaTransferProtocolManager* GetMediaTransferProtocolManager() {
   return StorageMonitor::GetInstance()->media_transfer_protocol_manager();
 }
@@ -205,8 +199,9 @@ void MTPDeviceTaskHelper::CloseStorage() const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (device_handle_.empty())
     return;
-  GetMediaTransferProtocolManager()->CloseStorage(device_handle_,
-                                                  base::Bind(&DoNothing));
+
+  GetMediaTransferProtocolManager()->CloseStorage(
+      device_handle_, base::Bind(&base::DoNothingWithParam<bool>));
 }
 
 void MTPDeviceTaskHelper::OnDidOpenStorage(

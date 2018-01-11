@@ -28,24 +28,18 @@ using base::android::AttachCurrentThread;
 using content::BrowserThread;
 using media::MediaPlayerAndroid;
 
-namespace {
-/*
- * Dummy function for RequestMediaResources callback. The callback is never
- * actually called by MediaPlayerAndroid or RemoteMediaPlayer but is needed
- * to compile the constructor call.
- */
-void DoNothing(int /*i*/) {}
-}
-
 namespace remote_media {
 
+// The DoNothingWithParam callback for MediaPlayerAndroid is never actually
+// called by MediaPlayerAndroid or RemoteMediaPlayer but is needed to compile
+// the constructor call.
 RemoteMediaPlayerBridge::RemoteMediaPlayerBridge(
     int player_id,
     const std::string& user_agent,
     RemoteMediaPlayerManager* manager)
     : MediaPlayerAndroid(player_id,
                          manager,
-                         base::Bind(&DoNothing),
+                         base::Bind(&base::DoNothingWithParam<int>),
                          manager->GetLocalPlayer(player_id)->frame_url()),
       width_(0),
       height_(0),

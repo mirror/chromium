@@ -152,8 +152,6 @@ const char* kMigratedExtensionIds[] = {
     "dliochdbjfkdbacpmhlcpmleaejidimm"   // Google Cast (Beta)
 };
 
-void DoNothingWithExtensionHost(extensions::ExtensionHost* host) {}
-
 }  // namespace
 
 // ExtensionService.
@@ -2364,8 +2362,9 @@ void ExtensionService::MaybeSpinUpLazyBackgroundPage(
   // Wake up the event page by posting a dummy task.
   extensions::LazyBackgroundTaskQueue* queue =
       extensions::LazyBackgroundTaskQueue::Get(profile_);
-  queue->AddPendingTask(profile_, extension->id(),
-                        base::BindOnce(&DoNothingWithExtensionHost));
+  queue->AddPendingTask(
+      profile_, extension->id(),
+      base::BindOnce(&base::DoNothingWithParam<extensions::ExtensionHost*>));
 }
 
 void ExtensionService::UninstallMigratedExtensions() {

@@ -102,9 +102,6 @@ const char kJsApiUserManagerAreAllProfilesLocked[] =
 const size_t kAvatarIconSize = 180;
 const int kMaxOAuthRetries = 3;
 
-void HandleAndDoNothing(const base::ListValue* args) {
-}
-
 std::string GetAvatarImage(const ProfileAttributesEntry* entry) {
   bool is_gaia_picture = entry->IsUsingGAIAPicture() &&
                          entry->GetGAIAPicture() != nullptr;
@@ -722,7 +719,7 @@ void UserManagerScreenHandler::RegisterMessages() {
                  base::Unretained(this)));
 
   const content::WebUI::MessageCallback& kDoNothingCallback =
-      base::Bind(&HandleAndDoNothing);
+      base::Bind(&base::DoNothingWithParam<const base::ListValue*>);
 
   // Unused callbacks from screen_account_picker.js
   web_ui()->RegisterMessageCallback("accountPickerReady", kDoNothingCallback);

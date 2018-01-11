@@ -59,8 +59,6 @@ namespace {
 // registration is expected to succeed.
 std::string* const kExpectSuccess = nullptr;
 
-void DoNothingWithBool(bool b) {}
-
 // Returns the newly added WebContents.
 content::WebContents* AddTab(Browser* browser, const GURL& url) {
   int starting_tab_count = browser->tab_strip_model()->count();
@@ -491,7 +489,7 @@ IN_PROC_BROWSER_TEST_P(ServiceWorkerTest, SWServedBackgroundPageReceivesEvent) {
   BackgroundPageWatcher(process_manager(), extension).WaitForClose();
   background_page = nullptr;
   process_manager()->WakeEventPage(extension->id(),
-                                   base::Bind(&DoNothingWithBool));
+                                   base::Bind(&base::DoNothingWithParam<bool>));
   BackgroundPageWatcher(process_manager(), extension).WaitForOpen();
 
   // Since the SW is now controlling the extension, the SW serves the background
@@ -526,7 +524,7 @@ IN_PROC_BROWSER_TEST_P(ServiceWorkerTest,
 
   // Start it again.
   process_manager()->WakeEventPage(extension->id(),
-                                   base::Bind(&DoNothingWithBool));
+                                   base::Bind(&base::DoNothingWithParam<bool>));
   BackgroundPageWatcher(process_manager(), extension).WaitForOpen();
 
   // Content should not have been affected by the fetch, which would otherwise
