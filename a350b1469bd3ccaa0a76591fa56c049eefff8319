@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "6d3d48ac_3f455068",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T13:53:59Z",
+      "side": 1,
+      "message": "\u003e\u003eWhy FLAG_CREATE_ALWAYS? The file is created already with CreateTemporaryFile, we want to open the file. I have renamed CreateFile function to OpenFile to reflect that, and used FLAG_OPEN.\n\nHow CreateTemporaryFile behaves if the file with a specified name already exists?\n\nFLAG_CREATE_ALWAYS guarantees that such a file will be overwritten (as opposite to appending which happens in case of FLAG_OPEN). When the test fails the file is kept, not deleted, right? So the second time the test runs the recording will be appended, and second run will be misleading.",
+      "parentUuid": "c84087b3_04606f5c",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5059ee7f_3f8e4acb",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
