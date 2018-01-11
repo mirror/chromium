@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621f1130_35b68d19",
+        "filename": "content/common/shared_worker/shared_worker_factory.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2018-01-11T18:28:58Z",
+      "side": 0,
+      "message": "woohoo!!",
+      "revId": "58d68fdf783d7edde1c82a642e037464861f2787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
