@@ -105,6 +105,9 @@ component("ipc") {
   if (enable_ipc_fuzzer) {
     public_configs = [ "//tools/ipc_fuzzer:ipc_fuzzer_config" ]
   }
+  print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  print("my public deps are")
+  print(public_deps)
 }
 
 component("message_support") {
@@ -182,7 +185,10 @@ mojom_component("mojom") {
   ]
   public_deps = [
     "//mojo/common:read_only_buffer",
+    "//mojo/public/interfaces/bindings:bindings",
   ]
+  overridden_deps = [ "//mojo/public/interfaces/bindings:bindings" ]
+  component_deps = []
 
   # Don't generate a variant sources since we depend on generated internal
   # bindings types and we don't generate or build variants of those.
