@@ -8,5 +8,6 @@ the API to be loaded as needed.
 
 The Chromium implementation is provided by
 `../resources/chromium/web-bluetooth-test.js`.
+The Chromium implementation requires Mojo in order to work correctly.
 
 [Web Bluetooth Testing API]: https://docs.google.com/document/d/1Nhv_oVDCodd1pEH_jj9k8gF4rPGb_84VYaZ9IG8M_WY/
