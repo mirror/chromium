@@ -349,6 +349,9 @@ class WebURLRequest {
   // is the value provided there.
   BLINK_PLATFORM_EXPORT base::Optional<WebString> GetSuggestedFilename() const;
 
+  // If this request was identified as an advertisement resource.
+  BLINK_PLATFORM_EXPORT bool IsAdResource() const;
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();
   BLINK_PLATFORM_EXPORT const ResourceRequest& ToResourceRequest() const;

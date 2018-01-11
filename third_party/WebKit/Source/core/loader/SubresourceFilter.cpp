@@ -52,7 +52,8 @@ SubresourceFilter::~SubresourceFilter() {}
 bool SubresourceFilter::AllowLoad(
     const KURL& resource_url,
     WebURLRequest::RequestContext request_context,
-    SecurityViolationReportingPolicy reporting_policy) {
+    SecurityViolationReportingPolicy reporting_policy,
+    bool* would_disallow) {
   // TODO(csharrison): Implement a caching layer here which is a HashMap of
   // Pair<url string, context> -> LoadPolicy.
   WebDocumentSubresourceFilter::LoadPolicy load_policy =
@@ -60,6 +61,8 @@ bool SubresourceFilter::AllowLoad(
 
   if (reporting_policy == SecurityViolationReportingPolicy::kReport)
     ReportLoad(resource_url, load_policy);
+
+  *would_disallow = load_policy == WebDocumentSubresourceFilter::kWouldDisallow;
   return load_policy != WebDocumentSubresourceFilter::kDisallow;
 }
 

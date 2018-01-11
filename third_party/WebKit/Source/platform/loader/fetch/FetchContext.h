@@ -177,7 +177,8 @@ class PLATFORM_EXPORT FetchContext
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const {
+      ResourceRequest::RedirectStatus,
+      bool* would_disallow) const {
     return ResourceRequestBlockedReason::kOther;
   }
   virtual ResourceRequestBlockedReason CheckCSPForRequest(
