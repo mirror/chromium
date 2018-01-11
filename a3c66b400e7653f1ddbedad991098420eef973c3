@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df4e341e_b0defbc7",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33893e50_94d9c1ed",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "200e77c1_801bcb35",
         "filename": "content/renderer/device_sensors/device_motion_event_pump_unittest.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6025daba_97d28e89",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200e77c1_801bcb35",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "013efcea_e964dfd0",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8014bc30_b18e1ee4",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ae0ab7_d5deb30a",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump_unittest.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1b8806_cb9d16b3",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ae0ab7_d5deb30a",
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "57367461_e10c0c4b",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61fd2e35_d510369d",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4aa8ea_a36f0364",
         "filename": "content/renderer/device_sensors/fake_sensor_and_provider.h",
         "patchSetId": 15
@@ -113,6 +209,30 @@
       "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d065a403_c9f78929",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-11T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4aa8ea_a36f0364",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a3c66b400e7653f1ddbedad991098420eef973c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
