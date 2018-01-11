@@ -629,9 +629,7 @@ BrowserProcessImpl::extension_event_router_forwarder() {
 
 NotificationUIManager* BrowserProcessImpl::notification_ui_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-// TODO(miguelg) return NULL for MAC as well once native notifications
-// are enabled by default.
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
   return nullptr;
 #else
   if (!created_notification_ui_manager_)
@@ -1186,9 +1184,9 @@ void BrowserProcessImpl::CreateNotificationPlatformBridge() {
 }
 
 void BrowserProcessImpl::CreateNotificationUIManager() {
-// Android does not use the NotificationUIManager anymore
+// Android and Mac do not use the NotificationUIManager anymore
 // All notification traffic is routed through NotificationPlatformBridge.
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_MACOSX)
   DCHECK(!notification_ui_manager_);
   notification_ui_manager_.reset(NotificationUIManager::Create());
   created_notification_ui_manager_ = true;
