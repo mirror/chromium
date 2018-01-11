@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f78c106_57be9520",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-11T19:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e9c596_d7c09db6",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "e662d92e53f68fd3edefb1ecc86805812c32ed04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83d1253a_bea72d4b",
         "filename": "chromeos/printing/printer_configuration.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e662d92e53f68fd3edefb1ecc86805812c32ed04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c78b89_ef7e6c79",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-11T19:21:14Z",
+      "side": 1,
+      "message": "I think the name of the struct \"PrinterUri\" makes things confusing. I\u0027ve renamed it to \"UriComponents\" which should be less confusing and more descriptive about what the struct contains.\n\nI\u0027ve renamed this function to \"GetUriComponents\" if you have a suggestion for a better name let me know",
+      "parentUuid": "83d1253a_bea72d4b",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "e662d92e53f68fd3edefb1ecc86805812c32ed04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
