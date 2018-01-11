@@ -433,6 +433,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::RequestNavigationParams)
 #if defined(OS_ANDROID)
   IPC_STRUCT_TRAITS_MEMBER(data_url_as_string)
 #endif
+  IPC_STRUCT_TRAITS_MEMBER(navigation_id)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(blink::ParsedFeaturePolicyDeclaration)
@@ -1120,7 +1121,9 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStartLoading,
                     bool /* to_different_document */)
 
 // Sent when the renderer is done loading a page.
-IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
+IPC_MESSAGE_ROUTED2(FrameHostMsg_DidStopLoading,
+                    base::Optional<int64_t> /* last_commit_navigation_id */,
+                    bool /* browser_side_navigation_pending */)
 
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)
