@@ -14,25 +14,33 @@
 namespace content {
 namespace {
 
-const char kPersistentNotificationPrefix[] = "p:";
-const char kNonPersistentNotificationPrefix[] = "n:";
-
-const char kSeparator = '#';
+const char kNotificationTagSeparator[] = "#";
+const char kPersistentNotificationPrefix[] = "p";
+const char kNonPersistentNotificationPrefix[] = "n";
 
 }  // namespace
 
 // static
 bool NotificationIdGenerator::IsPersistentNotification(
     const base::StringPiece& notification_id) {
-  return notification_id.starts_with(kPersistentNotificationPrefix);
+  return notification_id.starts_with(
+      std::string(kPersistentNotificationPrefix) + kNotificationTagSeparator);
 }
 
 // static
 bool NotificationIdGenerator::IsNonPersistentNotification(
     const base::StringPiece& notification_id) {
-  return notification_id.starts_with(kNonPersistentNotificationPrefix);
+  return notification_id.starts_with(
+      std::string(kNonPersistentNotificationPrefix) +
+      kNotificationTagSeparator);
 }
 
+// Notification Id is of the following format:
+// p#<origin>#[1|0][<developer_tag>|persistent_notification_id]
+// Note: Several functions NotificationPlatformBridge class
+// rely on the format of the notification generated here.
+// Code: chrome/android/java/src/org/chromium/chrome/browser/notifications/
+// NotificationPlatformBridge.java
 std::string NotificationIdGenerator::GenerateForPersistentNotification(
     const GURL& origin,
     const std::string& tag,
@@ -42,8 +50,9 @@ std::string NotificationIdGenerator::GenerateForPersistentNotification(
 
   std::stringstream stream;
 
-  stream << kPersistentNotificationPrefix;
+  stream << kPersistentNotificationPrefix << kNotificationTagSeparator;
   stream << origin;
+  stream << kNotificationTagSeparator;
 
   stream << base::IntToString(!tag.empty());
   if (tag.size())
@@ -54,6 +63,12 @@ std::string NotificationIdGenerator::GenerateForPersistentNotification(
   return stream.str();
 }
 
+// Notification Id is of the following format:
+// n#<origin>#[1<developer_tag>|0<render_process_id>#<request_id>]
+// Note: Several functions NotificationPlatformBridge class
+// rely on the format of the notification generated here.
+// Code: chrome/android/java/src/org/chromium/chrome/browser/notifications/
+// NotificationPlatformBridge.java
 std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
     const GURL& origin,
     const std::string& tag,
@@ -64,13 +79,14 @@ std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
 
   std::stringstream stream;
 
-  stream << kNonPersistentNotificationPrefix;
+  stream << kNonPersistentNotificationPrefix << kNotificationTagSeparator;
   stream << origin;
+  stream << kNotificationTagSeparator;
 
   stream << base::IntToString(!tag.empty());
   if (tag.empty()) {
     stream << base::IntToString(render_process_id);
-    stream << kSeparator;
+    stream << kNotificationTagSeparator;
 
     stream << base::IntToString(request_id);
   } else {
