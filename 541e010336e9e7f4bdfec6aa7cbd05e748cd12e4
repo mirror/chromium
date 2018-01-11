@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb9d23d_aee3964b",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T19:34:32Z",
+      "side": 1,
+      "message": "Super minor nit: I would just calculate the end of the buffer when constructing it. Then here, we can CHECK_LE(stack_ + required_capacity, end_), and there won\u0027t be a need to manually update remaining_buffer_size_ here.",
+      "revId": "541e010336e9e7f4bdfec6aa7cbd05e748cd12e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
