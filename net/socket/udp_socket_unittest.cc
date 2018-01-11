@@ -372,14 +372,14 @@ class TestPrng {
   DISALLOW_COPY_AND_ASSIGN(TestPrng);
 };
 
-TEST_F(UDPSocketTest, ConnectRandomBind) {
-  std::vector<std::unique_ptr<UDPClientSocket>> sockets;
+TEST_F(UDPSocketTest, BindThenConnect) {
+  std::vector<std::unique_ptr<UDPSocket>> sockets;
   IPEndPoint peer_address(IPAddress::IPv4Localhost(), 53);
 
   // Create and connect sockets and save port numbers.
   base::circular_deque<int> used_ports;
   for (int i = 0; i < kBindRetries; ++i) {
-    UDPClientSocket* socket = new UDPClientSocket(
+    UDPSocket* socket = new UDPSocket(
         DatagramSocket::DEFAULT_BIND, RandIntCallback(), NULL, NetLogSource());
     sockets.push_back(base::WrapUnique(socket));
     EXPECT_THAT(socket->Connect(peer_address), IsOk());
@@ -397,8 +397,10 @@ TEST_F(UDPSocketTest, ConnectRandomBind) {
       base::Bind(&TestPrng::GetNext, base::Unretained(&test_prng));
 
   // Create a socket with random binding policy and connect.
-  std::unique_ptr<UDPClientSocket> test_socket(new UDPClientSocket(
+  std::unique_ptr<UDPSocket> test_socket(new UDPSocket(
       DatagramSocket::RANDOM_BIND, rand_int_cb, NULL, NetLogSource()));
+  IPEndPoint bind_address(IPAddress::IPv4Localhost(), 0);
+  EXPECT_THAT(test_socket->Bind(bind_address), IsOk());
   EXPECT_THAT(test_socket->Connect(peer_address), IsOk());
 
   // Make sure that the last port number in the |used_ports| was used.
