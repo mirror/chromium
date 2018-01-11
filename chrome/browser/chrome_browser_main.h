@@ -12,7 +12,6 @@
 #include "base/metrics/field_trial.h"
 #include "base/profiler/stack_sampling_profiler.h"
 #include "build/build_config.h"
-#include "chrome/browser/chrome_browser_field_trials.h"
 #include "chrome/browser/chrome_process_singleton.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/process_singleton.h"
@@ -23,6 +22,7 @@
 #include "content/public/common/main_function_params.h"
 
 class BrowserProcessImpl;
+class ChromeBrowserFieldTrials;
 class ChromeBrowserMainExtraParts;
 class FieldTrialSynchronizer;
 class PrefService;
@@ -44,6 +44,10 @@ extern const char kMissingLocaleDataMessage[];
 #endif
 }
 
+namespace local_state_loader {
+struct LocalState;
+}
+
 class ChromeBrowserMainParts : public content::BrowserMainParts {
  public:
   ~ChromeBrowserMainParts() override;
@@ -52,6 +56,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   virtual void AddParts(ChromeBrowserMainExtraParts* parts);
 
  protected:
+  class InitialTaskRunner;
+
   explicit ChromeBrowserMainParts(
       const content::MainFunctionParams& parameters);
 
@@ -59,7 +65,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // These are called in-order by content::BrowserMainLoop.
   // Each stage calls the same stages in any ChromeBrowserMainExtraParts added
   // with AddParts() from ChromeContentBrowserClient::CreateBrowserMainParts.
-  void PreEarlyInitialization() override;
+  int PreEarlyInitialization() override;
   void PostEarlyInitialization() override;
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
@@ -110,9 +116,9 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Record time from process startup to present time in an UMA histogram.
   void RecordBrowserStartupTime();
 
-  // Reads origin trial policy data from local state and configures command line
-  // for child processes.
-  void SetupOriginTrialsCommandLine(PrefService* local_state);
+  // Calling during PreEarlyInitialization() to load local state. Result is
+  // error code.
+  int LoadLocalState();
 
   // Methods for Main Message Loop -------------------------------------------
 
@@ -122,6 +128,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Members initialized on construction ---------------------------------------
 
   const content::MainFunctionParams parameters_;
+  // TODO: remove this. This class (and related calls), may mutate the
+  // CommandLine, so it is misleading keeping a const ref here.
   const base::CommandLine& parsed_command_line_;
   int result_code_;
 
@@ -137,7 +145,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // |SetupFieldTrials()| is called.
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
-  ChromeBrowserFieldTrials browser_field_trials_;
+  std::unique_ptr<ChromeBrowserFieldTrials> browser_field_trials_;
 
 #if !defined(OS_ANDROID)
   std::unique_ptr<WebUsbDetector> web_usb_detector_;
@@ -177,10 +185,17 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   bool run_message_loop_;
   std::unique_ptr<ThreeDAPIObserver> three_d_observer_;
 
-  // Initialized in |SetupFieldTrials()|.
   scoped_refptr<FieldTrialSynchronizer> field_trial_synchronizer_;
 
+  // Initialized in PreMainMessageLoopRun, needed in
+  // PreMainMessageLoopRunThreadsCreated.
   base::FilePath user_data_dir_;
+
+  // Created in LoadLocalState() to hold data supplied to creation of
+  // BrowserProcessImpl.
+  std::unique_ptr<local_state_loader::LocalState> local_state_data_;
+
+  scoped_refptr<InitialTaskRunner> initial_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);
 };
