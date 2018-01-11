@@ -16,6 +16,7 @@ source_set("lib") {
   ]
   deps = [
     "//base",
+    "//base/test:test_support",
     "//services/catalog:constants",
     "//services/catalog:lib",
     "//services/service_manager",
