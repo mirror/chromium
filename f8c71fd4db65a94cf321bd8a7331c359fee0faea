@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b977b7b7_967eeb41",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-11T03:19:37Z",
+      "side": 1,
+      "message": "Sorry my previous comment is unclear.\nWe should use |EndingSelection().IsDirectional()| instead of \n|frame-\u003eSelection().IsDirectional()| here.",
+      "parentUuid": "12d30b7f_f4fcfa3e",
+      "range": {
+        "startLine": 814,
+        "startChar": 39,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d9780f_c267bf9f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 27
