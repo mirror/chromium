@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e4aee9_1dc8e7ed",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T00:13:33Z",
+      "side": 1,
+      "message": "Might be worth adding a comment explaining why we do this?\n\n// While extensions are blocked, we won\u0027t display any external install\n// warnings. Now that they are unblocked, we should update the error.",
+      "revId": "9dbe8c07909fd78412bab222b9794a527c14b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4a2b2b_7912d3e2",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6337,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-11T00:13:33Z",
+      "side": 1,
+      "message": "Is there a crbug we can link here?",
+      "revId": "9dbe8c07909fd78412bab222b9794a527c14b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
