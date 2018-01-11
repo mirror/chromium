@@ -539,22 +539,35 @@ static void InitializeV8Common(v8::Isolate* isolate) {
 
 namespace {
 
+// Segregate array buffers by SecurityOrigin. Use a pointer to a SecurityOrigin
+// as an opaque key to tell ArrayBufferContents which partition to use.
+void* GetSecurityOrigin() {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  return reinterpret_cast<void*>(
+      const_cast<SecurityOrigin*>(CurrentDOMWindow(isolate)
+                                      ->GetFrame()
+                                      ->GetSecurityContext()
+                                      ->GetSecurityOrigin()));
+}
+
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // Allocate() methods return null to signal allocation failure to V8, which
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+    void* data = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        GetSecurityOrigin(), size, WTF::ArrayBufferContents::kZeroInitialize);
+    return data;
   }
 
   void* AllocateUninitialized(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+    void* data = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        GetSecurityOrigin(), size, WTF::ArrayBufferContents::kDontInitialize);
+    return data;
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    WTF::ArrayBufferContents::FreeMemoryInKeyedPartition(data);
   }
 
   void* Reserve(size_t length) override {
