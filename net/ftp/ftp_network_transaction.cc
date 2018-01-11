@@ -26,6 +26,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/url_constants.h"
 
 namespace net {
@@ -35,6 +36,24 @@ namespace {
 const char kCRLF[] = "\r\n";
 
 const int kCtrlBufLen = 1024;
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("ftp_network_transaction_socket", R"(
+        semantics {
+          sender: "FTP Network Transaction"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "This feature cannot be disabled in settings, however the request "
+            "is not made if user does not initiate an FTP request."
+          policy_exception_justification:
+            "Not implemented."
+        })");
 
 // Returns true if |input| can be safely used as a part of an FTP command.
 bool IsValidFTPCommandSubstring(const std::string& input) {
@@ -736,8 +755,8 @@ int FtpNetworkTransaction::DoCtrlReadComplete(int result) {
 int FtpNetworkTransaction::DoCtrlWrite() {
   next_state_ = STATE_CTRL_WRITE_COMPLETE;
 
-  return ctrl_socket_->Write(
-      write_buf_.get(), write_buf_->BytesRemaining(), io_callback_);
+  return ctrl_socket_->Write(write_buf_.get(), write_buf_->BytesRemaining(),
+                             io_callback_, kTrafficAnnotation);
 }
 
 int FtpNetworkTransaction::DoCtrlWriteComplete(int result) {
