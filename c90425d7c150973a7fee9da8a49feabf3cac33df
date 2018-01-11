@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c997f168_aa46d879",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T23:14:46Z",
+      "side": 1,
+      "message": "It looks like this function does a DCHECK that the indices are in range, but I don\u0027t think that\u0027s OK (isn\u0027t this going GPU -\u003e browser)?\n\nIdeally we should ReportBadMessage for an out-of-range index.",
+      "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
