@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e1d6f10_001723a8",
+        "filename": "content/browser/gpu/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-11T18:54:57Z",
+      "side": 1,
+      "message": "FYI, the reason in_process_gpu_thread* is in content/gpu is because of the split DLL on Windows, it can\u0027t be part of content/browser.",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d59ef12_4dd93481",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-11T18:54:57Z",
+      "side": 1,
+      "message": "I think you need to call Stop() here, to make sure we synchronize with the GPU thread. Otherwise Init() could be running at the same time we destroy |this|, causing undefined behavior.",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61dceae_e9f8d722",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-11T18:54:57Z",
+      "side": 1,
+      "message": "nit: unpause_ (unpause_event_ maybe? resume_event_ even?)\n\nAlso, the event could be a direct member (not a pointer, removing new and delete). After adding the Stop() in the destructor, you\u0027re guaranteed Init() is done accessing the event before it\u0027s destructed.",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
