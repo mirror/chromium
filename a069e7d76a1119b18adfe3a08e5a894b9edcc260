@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6963c2_5f28e9e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-11T03:25:09Z",
+      "side": 0,
+      "message": "how about these?",
+      "range": {
+        "startLine": 328,
+        "startChar": 16,
+        "endLine": 328,
+        "endChar": 35
+      },
+      "revId": "a069e7d76a1119b18adfe3a08e5a894b9edcc260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c56f12_d240c29b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabFromChromeExternalNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-11T03:25:09Z",
+      "side": 0,
+      "message": "Is this really Herb related?",
+      "range": {
+        "startLine": 121,
+        "startChar": 16,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "a069e7d76a1119b18adfe3a08e5a894b9edcc260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
