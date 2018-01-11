@@ -255,7 +255,7 @@ void EnsureCryptohomeMigratedToGaiaId(
     const std::string cryptohome_id_to =
         attempt->user_context.GetAccountId().GetAccountIdKey();
 
-    cryptohome::HomedirMethods::GetInstance()->RenameCryptohome(
+    DBusThreadManager::Get()->GetCryptohomeClient()->RenameCryptohome(
         cryptohome::Identification::FromString(cryptohome_id_from),
         cryptohome::Identification::FromString(cryptohome_id_to),
         base::Bind(&OnCryptohomeRenamed, attempt, resolver, ephemeral,
