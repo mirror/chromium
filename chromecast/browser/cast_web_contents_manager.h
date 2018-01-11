@@ -23,6 +23,10 @@ class BrowserContext;
 class WebContents;
 }  // namespace content
 
+namespace extensions {
+class Extension;
+}
+
 namespace chromecast {
 
 // This class dispenses CastWebView objects which are used to wrap WebContents
@@ -36,6 +40,16 @@ class CastWebContentsManager {
   ~CastWebContentsManager();
 
   std::unique_ptr<CastWebView> CreateWebView(
+      CastWebView::Delegate* delegate,
+      scoped_refptr<content::SiteInstance> site_instance,
+      bool transparent,
+      bool allow_media_access,
+      bool is_headless,
+      bool enable_touch_input);
+
+  std::unique_ptr<CastWebView> CreateWebView(
+      const extensions::Extension* extension,
+      const GURL& initial_url,
       CastWebView::Delegate* delegate,
       scoped_refptr<content::SiteInstance> site_instance,
       bool transparent,
