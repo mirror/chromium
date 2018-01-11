@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6669cb71_a5f9f5bd",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T01:54:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5286f776_1b71e225",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "890c11da_23e22745",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T17:31:55Z",
       "side": 1,
       "message": "Move this to ChromeBrowserMainExtraPartsAsh, see other comment.",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2148d75e_d9c63d5a",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T01:54:35Z",
+      "side": 1,
+      "message": "I was unable to perform the move because ChromeBrowserMainExtraPartsAsh does not provide a profile() function (that class derives from ChromeBrowserMainExtraParts, the empty virtual class).\n\nIt seems that this is the correct location for now, but please let me know if there\u0027s another way to refactor this to your liking.",
+      "parentUuid": "890c11da_23e22745",
       "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ad798396_43334923",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T01:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dfecc4d_979094e7",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9ef5487_978d4ecf",
         "filename": "chrome/browser/chromeos/net/auto_connect_notifier.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b3360c_47576b7a",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-11T01:54:35Z",
+      "side": 1,
+      "message": "See comment above - I couldn\u0027t perform this move.",
+      "parentUuid": "c9ef5487_978d4ecf",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
