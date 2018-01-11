@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f07f307_a74b2640",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T18:18:07Z",
+      "side": 1,
+      "message": "nit: refcount_",
+      "revId": "dfceb9f404fa2951f245bc72b34f022850785de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af22cd2_ff5ed670",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-11T18:18:07Z",
+      "side": 1,
+      "message": "nit: remove the reference to Web Notifications -- this layer doesn\u0027t care. \"uniqueness is guaranteed through features providing a sufficiently distinct notification.id()\" or something?",
+      "revId": "dfceb9f404fa2951f245bc72b34f022850785de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
