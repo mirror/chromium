@@ -16,6 +16,24 @@
       "revId": "6515dd19f62ba882e28b6e874cc921624158d200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4554add_042b6535",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-11T19:33:43Z",
+      "side": 1,
+      "message": "It\u0027s all good. Whatever clang wants. :)",
+      "parentUuid": "6712f575_93d8dff5",
+      "revId": "6515dd19f62ba882e28b6e874cc921624158d200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
