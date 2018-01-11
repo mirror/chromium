@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ac7e911_894281ed",
+        "filename": "docs/chromeos_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:31:54Z",
+      "side": 0,
+      "message": "I think we should keep the above, maybe with a better note? Some features that I have worked on only exist in official builds.",
+      "revId": "eb7d66a601adf707ca092d7ac2fe79851833457c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

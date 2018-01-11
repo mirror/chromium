@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a2d449_5037692f",
+        "filename": "docs/chromeos_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:31:54Z",
+      "side": 1,
+      "message": "I would also suggest also adding \u0027-l 20\u0027 which will prevent -j 1000 from bringing a machine to its knees if goma is not running.",
+      "revId": "c136b30a7d92978583a2efa6b6e04fa02ca4f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5401a046_4755a636",
+        "filename": "docs/chromeos_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T18:31:54Z",
+      "side": 1,
+      "message": "This line is unhelpful :) let\u0027s remove it.",
+      "revId": "c136b30a7d92978583a2efa6b6e04fa02ca4f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
