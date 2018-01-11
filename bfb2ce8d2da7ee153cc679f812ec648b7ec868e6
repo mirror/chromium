@@ -16,6 +16,24 @@
       "revId": "bfb2ce8d2da7ee153cc679f812ec648b7ec868e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4932955_6f125279",
+        "filename": "apps/saved_files_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-11T17:38:20Z",
+      "side": 1,
+      "message": "Done\n\nYeah, running apps in guest sessions is still not generally supported, but we do have few whitelisted (component) apps that run in guest sessions and use this API (e.g. ZipArchiver)",
+      "parentUuid": "4aa5937a_1a94e84d",
+      "revId": "bfb2ce8d2da7ee153cc679f812ec648b7ec868e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
