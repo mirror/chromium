@@ -55,6 +55,10 @@ declare_args() {
   # background.
   enable_background_activities = false
 
+  # Set to true to use CastWebContentsFragment instead of CastWebContentsActivity
+  # to run cast receiver app.
+  enable_cast_fragment = false
+
   # Set the number of lines for LogcatExtractor to send.
   logcat_extractor_size = 512
 }
