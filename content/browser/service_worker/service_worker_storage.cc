@@ -156,7 +156,7 @@ void ServiceWorkerStorage::FindRegistrationForDocument(
           weak_factory_.GetWeakPtr(), document_url, std::move(callback)));
       TRACE_EVENT_INSTANT1(
           "ServiceWorker",
-          "ServiceWorkerStorage::FindRegistrationForDocument:LazyInitialize",
+          "ServiceWorkerStorage::FindRegistrationForDocument:Initialize",
           TRACE_EVENT_SCOPE_THREAD, "URL", document_url.spec());
       return;
     case INITIALIZED:
