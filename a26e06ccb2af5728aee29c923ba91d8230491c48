@@ -16,6 +16,24 @@
       "revId": "a26e06ccb2af5728aee29c923ba91d8230491c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c912d424_0a3fef11",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T21:31:51Z",
+      "side": 1,
+      "message": "If we know a \u003c\u003d c, it is possible to check a \u003c\u003d b \u003c\u003d c even if our variables wrap around (See my content_source_id CL). So maybe instead of checking a \u003c\u003d b we should check a \u003c\u003d b \u003c\u003d a+2e9. This can definitely be a separate CL.",
+      "parentUuid": "7fcfd047_1f6e91a6",
+      "revId": "a26e06ccb2af5728aee29c923ba91d8230491c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
