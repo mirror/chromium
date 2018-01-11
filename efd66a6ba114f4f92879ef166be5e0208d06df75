@@ -22,6 +22,98 @@
       "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2372854_e0928459",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T18:35:45Z",
+      "side": 1,
+      "message": "If 1) everyone agrees that it is sufficient to handle no-redirect cases in the renderer, and 2) if the future resolution of https://crbug.com/663512 is that \"form-action should NOT be enforced for intermediate and/or final redirect hops\", then 3) we can delete FormSubmissionThrottle altogether (i.e. we can stop enforcing form-action CSP directive on the browser-side).\n\nWould you agree with the statement above?  If yes, then it might be worth it to add a TODO to form_submission_throttle.h saying something like: TODO(arthursonzogni): https://crbug.com/663512: Depending on spec clarification, we might be able to delete FormSubmissionThrottle altogether (if the final spec clarifies that form-action should NOT be enforced for intermediate and/or final redirect hops).",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5607be9_feb83d90",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T18:35:45Z",
+      "side": 1,
+      "message": "Would it be correct (and useful) to say also have another comment/statement here that more-or-less says:\n\n    In absence of redirects, the target URL is sufficiently verified against\n    the form-action CSP by the frame that hosts the form element + initiates\n    form submission + declares the form-action CSP (i.e. the same frame does\n    all those 4 things).  Because in this scenario there are no frame or\n    renderer boundaries crossed, we don\u0027t have to worry about one\n    (potentially compromised) renderer being responsible for enforcing the\n    CSP of another (victim) renderer.  Therefore it is okay to return early\n    and do no further browser-side checks.\n\nI hope this would address Alex\u0027s concerns about enforcing some checks in the renderer process, rather than in the browser process (note that *some* CSP directives are inherently only enforceable inside the renderer process [like nonce/sha256 verification of script-tag contents];  OTOH, I understand that it is more secure to enforce *some* CSP policies in the browser process [e.g frame-ancestors and/or child-src I think]).",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5098cc_e734db8d",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T18:35:45Z",
+      "side": 1,
+      "message": "This is not directly related to this CL, but - do we roughly know what is the path forward if redirects turn out to be important (which I strongly disagree with, but let\u0027s see how https://crbug.com/663512 plays out)?  I assume that fixing https://crbug.com/700964 is blocked on first storing/exposing the navigation-initiator from the NavigationHandle - can we mark the bug as blocked on the bug tracking the navigation-initiator work (I am assuming there is such a bug, but I am a bit out of the loop / I don\u0027t really know).",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e1c264_cc11c783",
+        "filename": "content/browser/frame_host/form_submission_throttle_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T18:35:45Z",
+      "side": 1,
+      "message": "Please associate this TODO with bug(s) and/or give hints to future readers when this TODO will become actionable.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 58
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

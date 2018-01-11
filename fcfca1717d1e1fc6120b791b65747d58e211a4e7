@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeed5165_24436044",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/form-action-resubmission-iframe-reload-from-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-11T18:35:45Z",
+      "side": 0,
+      "message": "I am not sure I understand why this test is being deleted - the test is still valid after your CL (except that test expectations change - the new expectations are: if the original form submission worked, then don\u0027t bother trying to enforce CSP on reloads [reloads of the frame that was the target of frame submission] - such reloads should be allowed / not blocked).\n\nSimilar question for other deleted tests.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "fcfca1717d1e1fc6120b791b65747d58e211a4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
