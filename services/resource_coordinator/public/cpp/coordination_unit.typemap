@@ -11,7 +11,9 @@ public_headers = [
 ]
 traits_headers = [ "//services/resource_coordinator/public/cpp/coordination_unit_struct_traits.h" ]
 
-deps = []
+public_deps = [
+  "//services/resource_coordinator/public/cpp:resource_coordinator_cpp_base",
+]
 
 type_mappings = [
   "resource_coordinator.mojom.CoordinationUnitType=::resource_coordinator::CoordinationUnitType",
