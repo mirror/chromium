@@ -52,6 +52,24 @@
       "revId": "617948bc26a18262ca50efaea8d3d785e6db92d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41335cf3_48bff580",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-11T19:02:25Z",
+      "side": 1,
+      "message": "Yes you can, it\u0027s works the same as \u003cobject\u003e (data \u003d\u003e src et.c of course.) (Not a whole lot of layout tests for that though it seems.)",
+      "parentUuid": "e2afc80f_d6998496",
+      "revId": "617948bc26a18262ca50efaea8d3d785e6db92d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
