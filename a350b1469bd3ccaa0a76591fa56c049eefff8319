@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0edc32d3_82cf905e",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "nit: empty line before.\nAlso, could you make it private static, or better just a helper in an unnamed namespace?",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2966c1_76ba26af",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "FLAG_CREATE_ALWAYS",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5059ee7f_3f8e4acb",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Optional nit: switch to ASSERT_TRUE for lines like this?\nsee https://cs.chromium.org/chromium/src/third_party/googletest/src/googletest/include/gtest/gtest.h?type\u003dcs\u0026l\u003d1784",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b4ed90_4f3e8653",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Ideally, test name need should reflect what is verified, or it should have a comment explaining that.\nSomething like \"InvalidFileDoesNotCrashRecroding\" would work here (yes, test case names can be that long - it\u0027s fine!).",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4e65c0_cd977c41",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "|create_file_callback_|",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e56bdc0_cef00bed",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Actually, reading the code, it should be called \"StartDebugRecordingToFile\"\nAnd the comment \"Called back by |create_file_callback_|, starts recording to the file it created.\"?\n(Prefer to use member names instead of their type names, what you actually meant members.)",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8049e402_c9fc7cdb",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Drop the second sentence? It\u0027s duplication of EnableDebugRecordingToFile() comment.",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7af5f06_47ce2d77",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Drop the comment? It\u0027s clear without it.",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb5aecb_9b06921f",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "You could drop CreateFileOnBackgroudThread altogether and use lambda instead. But up to you.",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5231e555_65bf6bc1",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "We usually don\u0027t name a function \"callback\" (and don\u0027t refer to it as a \"callback\" in documentation): callback usually refers to base::Callback.",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2e84aa_c1a1a661",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "Could you bind to a mock method instead and set expectations for it in the tests?",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

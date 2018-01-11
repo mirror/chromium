@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "09994cac_c017a8e3",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "See [1]: We need FLAG_CREATE_ALWAYS here.\n[1] https://cs.chromium.org/chromium/src/base/files/file.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d58",
+      "parentUuid": "bcfb8284_749670c2",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35331bc_3cdb29bb",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 17
@@ -470,6 +488,24 @@
       "side": 1,
       "message": "Good point, I documented this in helper at callback declaration.",
       "parentUuid": "5b7f6a72_9d37420c",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f804cd6_1b64a5ec",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T11:33:09Z",
+      "side": 1,
+      "message": "This is not relevant any more. Don\u0027t see the comment - have you removed it?",
+      "parentUuid": "8c4d7dbe_57c9adf4",
       "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
