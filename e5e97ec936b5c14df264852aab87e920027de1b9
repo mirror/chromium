@@ -94,6 +94,30 @@
       "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e731e295_e21e70ff",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:09:55Z",
+      "side": 1,
+      "message": "I see. Makes sense.",
+      "parentUuid": "5861e128_cfe62650",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "e5e97ec936b5c14df264852aab87e920027de1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
