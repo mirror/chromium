@@ -10,6 +10,10 @@ ChromeKioskDelegate::ChromeKioskDelegate() {}
 
 ChromeKioskDelegate::~ChromeKioskDelegate() {}
 
+bool ChromeKioskDelegate::IsPrimaryKioskApp(const ExtensionId& id) const {
+  return false;
+}
+
 bool ChromeKioskDelegate::IsAutoLaunchedKioskApp(const ExtensionId& id) const {
   return false;
 }

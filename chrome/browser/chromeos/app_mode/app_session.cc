@@ -106,7 +106,7 @@ class AppSession::AppWindowHandler : public AppWindowRegistry::Observer {
       : app_session_(app_session) {}
   ~AppWindowHandler() override {}
 
-  void Init(Profile* profile, const std::string& app_id) {
+  void Init(Profile* profile, const extensions::ExtensionId& app_id) {
     DCHECK(!window_registry_);
     window_registry_ = AppWindowRegistry::Get(profile);
     if (window_registry_)
@@ -146,7 +146,7 @@ class AppSession::AppWindowHandler : public AppWindowRegistry::Observer {
 
   AppSession* const app_session_;
   AppWindowRegistry* window_registry_ = nullptr;
-  std::string app_id_;
+  extensions::ExtensionId app_id_;
   bool app_window_created_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppWindowHandler);
@@ -186,7 +186,10 @@ class AppSession::BrowserWindowHandler : public BrowserListObserver {
 AppSession::AppSession() {}
 AppSession::~AppSession() {}
 
-void AppSession::Init(Profile* profile, const std::string& app_id) {
+void AppSession::Init(Profile* profile, const extensions::ExtensionId& app_id) {
+  DCHECK(app_id_.empty());
+  app_id_ = app_id;
+
   app_window_handler_.reset(new AppWindowHandler(this));
   app_window_handler_->Init(profile, app_id);
 

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/extensions/chrome_kiosk_delegate.h"
 
+#include "chrome/browser/chromeos/app_mode/app_session.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 
 namespace extensions {
@@ -11,6 +12,12 @@ namespace extensions {
 ChromeKioskDelegate::ChromeKioskDelegate() {}
 
 ChromeKioskDelegate::~ChromeKioskDelegate() {}
+
+bool ChromeKioskDelegate::IsPrimaryKioskApp(const ExtensionId& id) const {
+  chromeos::AppSession* session =
+      chromeos::KioskAppManager::Get()->app_session();
+  return session && session->app_id() == id;
+}
 
 bool ChromeKioskDelegate::IsAutoLaunchedKioskApp(const ExtensionId& id) const {
   chromeos::KioskAppManager::App app_info;

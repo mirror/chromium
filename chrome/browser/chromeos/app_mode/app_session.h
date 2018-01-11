@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_session_plugin_handler_delegate.h"
+#include "extensions/common/extension_id.h"
 
 class Profile;
 
@@ -32,10 +33,12 @@ class AppSession : public KioskSessionPluginHandlerDelegate {
   ~AppSession() override;
 
   // Initializes an app session.
-  void Init(Profile* profile, const std::string& app_id);
+  void Init(Profile* profile, const extensions::ExtensionId& app_id);
 
   // Invoked when GuestViewManager adds a guest web contents.
   void OnGuestAdded(content::WebContents* guest_web_contents);
+
+  const extensions::ExtensionId& app_id() const { return app_id_; }
 
  private:
   // AppWindowHandler watches for app window and exits the session when the
@@ -56,6 +59,8 @@ class AppSession : public KioskSessionPluginHandlerDelegate {
   void OnPluginHung(const std::set<int>& hung_plugins) override;
 
   bool is_shutting_down_ = false;
+
+  extensions::ExtensionId app_id_;
 
   std::unique_ptr<AppWindowHandler> app_window_handler_;
   std::unique_ptr<BrowserWindowHandler> browser_window_handler_;

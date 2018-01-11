@@ -20,6 +20,7 @@ class KioskDelegate {
   KioskDelegate();
   virtual ~KioskDelegate();
 
+  virtual bool IsPrimaryKioskApp(const ExtensionId& id) const = 0;
   virtual bool IsAutoLaunchedKioskApp(const ExtensionId& id) const = 0;
 };
 

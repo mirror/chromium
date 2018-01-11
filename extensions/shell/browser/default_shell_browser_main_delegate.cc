@@ -11,7 +11,9 @@
 #include "base/path_service.h"
 #include "base/strings/string_tokenizer.h"
 #include "build/build_config.h"
+#include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/switches.h"
+#include "extensions/shell/browser/delegates/shell_kiosk_delegate.h"
 #include "extensions/shell/browser/shell_extension_system.h"
 
 #if defined(USE_AURA)
@@ -43,13 +45,14 @@ void LoadExtensionsFromCommandLine(ShellExtensionSystem* extension_system) {
   }
 }
 
-void LoadAppsFromCommandLine(ShellExtensionSystem* extension_system,
-                             content::BrowserContext* browser_context) {
+const Extension* LoadAppsFromCommandLine(
+    ShellExtensionSystem* extension_system,
+    content::BrowserContext* browser_context) {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(switches::kLoadApps)) {
     LOG(ERROR) << "No app specified. Use --" << switches::kLoadApps
                << " to load and launch an app.";
-    return;
+    return nullptr;
   }
 
   base::CommandLine::StringType path_list =
@@ -78,6 +81,7 @@ void LoadAppsFromCommandLine(ShellExtensionSystem* extension_system,
   } else {
     LOG(ERROR) << "Could not load any apps.";
   }
+  return launch_app;
 }
 
 }  // namespace
@@ -95,7 +99,13 @@ void DefaultShellBrowserMainDelegate::Start(
   extension_system->FinishInitialization();
 
   LoadExtensionsFromCommandLine(extension_system);
-  LoadAppsFromCommandLine(extension_system, browser_context);
+  const Extension* launched_app =
+      LoadAppsFromCommandLine(extension_system, browser_context);
+  if (launched_app) {
+    ShellKioskDelegate* kiosk_delegate = static_cast<ShellKioskDelegate*>(
+        ExtensionsBrowserClient::Get()->GetKioskDelegate());
+    kiosk_delegate->set_primary_app_id(launched_app->id());
+  }
 }
 
 void DefaultShellBrowserMainDelegate::Shutdown() {

@@ -10,6 +10,10 @@ ShellKioskDelegate::ShellKioskDelegate() {}
 
 ShellKioskDelegate::~ShellKioskDelegate() {}
 
+bool ShellKioskDelegate::IsPrimaryKioskApp(const ExtensionId& id) const {
+  return id == primary_app_id_;
+}
+
 bool ShellKioskDelegate::IsAutoLaunchedKioskApp(const ExtensionId& id) const {
   // Every app in AppShell is auto-launched and AppShell only runs in
   // kiosk mode.

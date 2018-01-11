@@ -18,7 +18,15 @@ class ShellKioskDelegate : public KioskDelegate {
   ~ShellKioskDelegate() override;
 
   // KioskDelegate overrides:
+  bool IsPrimaryKioskApp(const ExtensionId& id) const override;
   bool IsAutoLaunchedKioskApp(const ExtensionId& id) const override;
+
+  void set_primary_app_id(const extensions::ExtensionId& id) {
+    primary_app_id_ = id;
+  }
+
+ private:
+  ExtensionId primary_app_id_;
 };
 
 }  // namespace extensions

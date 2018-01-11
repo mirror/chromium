@@ -18,6 +18,7 @@ class ChromeKioskDelegate : public KioskDelegate {
   ~ChromeKioskDelegate() override;
 
   // KioskDelegate overrides:
+  bool IsPrimaryKioskApp(const ExtensionId& id) const override;
   bool IsAutoLaunchedKioskApp(const ExtensionId& id) const override;
 };
 
