@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ab4ee1b1_15816be4",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T15:00:01Z",
+      "side": 1,
+      "message": "TransitionSource? Values could be\n- From 2D\n- From other VR browsing page\n- From WebVR (Not sure if we want that. Do we track URLs for WebVR?)",
+      "parentUuid": "1e6a2e69_94d9b937",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752f2154_4a11bdfb",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -187,6 +211,30 @@
       "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e98a78_fa3e5fdc",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T15:00:01Z",
+      "side": 1,
+      "message": "In the XML description for singular\u003dTrue it says \"event will only occur once per source\". Does that mean there will overall be only one record for youtube.com?",
+      "parentUuid": "a83b4e03_22b45e5b",
+      "range": {
+        "startLine": 2362,
+        "startChar": 16,
+        "endLine": 2362,
+        "endChar": 33
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
