@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71079b26_91d70af5",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGRoot.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-11T14:57:12Z",
+      "side": 1,
+      "message": "(This condition will need fixing for OOPIFs to work, I didn\u0027t spot any existing metadata so we\u0027ll probably need to pass and store an additional bit of information to know the embedding context [\u003cobject\u003e or \u003cembed\u003e].)",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 71
+      },
+      "revId": "a71ca531fbb0c6aa88acac1ae7740e53285decca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
