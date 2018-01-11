@@ -566,6 +566,7 @@ void FrameFetchContext::DispatchDidReceiveEncodedData(unsigned long identifier,
   if (IsDetached())
     return;
   probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
+                                     MasterDocumentLoader(),
                                      encoded_data_length);
 }
 
@@ -579,6 +580,7 @@ void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
   probe::didReceiveData(GetFrame()->GetDocument(), identifier,
                         MasterDocumentLoader(), nullptr, data_length);
   probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
+                                     MasterDocumentLoader(),
                                      encoded_data_length);
 }
 

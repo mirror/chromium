@@ -41,10 +41,8 @@
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
-#include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/NetworkResourcesData.h"
@@ -81,6 +79,7 @@
 #include "public/platform/WebMixedContentContextType.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLRequest.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
 
 namespace blink {
 
@@ -326,7 +325,6 @@ String GetReferrerPolicy(ReferrerPolicy policy) {
   return protocol::Network::Request::ReferrerPolicyEnum::
       NoReferrerWhenDowngrade;
 }
-
 }  // namespace
 
 void InspectorNetworkAgent::Restore() {
@@ -625,13 +623,28 @@ void InspectorNetworkAgent::WillSendRequestInternal(
     const ResourceResponse& redirect_response,
     const FetchInitiatorInfo& initiator_info,
     InspectorPageAgent::ResourceType type) {
-  String request_id = IdentifiersFactory::RequestId(identifier);
+  // IsBrowserSideNavigation() doesn't work in WillSendRequest because
+  // DocumentLoader's resource in not yet set.
+  bool browser_side_navigation = false;
+  if (request.GetFrameType() !=
+          network::mojom::RequestContextFrameType::kNone &&
+      loader) {
+    LocalFrame* frame = loader->GetFrame();
+    browser_side_navigation =
+        frame && frame->GetSettings()->GetBrowserSideNavigationEnabled();
+  }
   String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
+  String request_id = browser_side_navigation
+                          ? loader_id
+                          : IdentifiersFactory::RequestId(identifier);
   resources_data_->ResourceCreated(request_id, loader_id, request.Url());
   if (initiator_info.name == FetchInitiatorTypeNames::xmlhttprequest)
     type = InspectorPageAgent::kXHRResource;
 
   resources_data_->SetResourceType(request_id, type);
+
+  if (browser_side_navigation)
+    return;
 
   String frame_id = loader && loader->GetFrame()
                         ? IdentifiersFactory::FrameId(loader->GetFrame())
@@ -641,12 +654,6 @@ void InspectorNetworkAgent::WillSendRequestInternal(
                                ? loader->GetFrame()->GetDocument()
                                : nullptr,
                            initiator_info);
-  if (initiator_info.name == FetchInitiatorTypeNames::document) {
-    FrameNavigationInitiatorMap::iterator it =
-        frame_navigation_initiator_map_.find(frame_id);
-    if (it != frame_navigation_initiator_map_.end())
-      initiator_object = it->value->clone();
-  }
 
   std::unique_ptr<protocol::Network::Request> request_info(
       BuildObjectForResourceRequest(request));
@@ -752,7 +759,11 @@ void InspectorNetworkAgent::DidReceiveResourceResponse(
     DocumentLoader* loader,
     const ResourceResponse& response,
     Resource* cached_resource) {
-  String request_id = IdentifiersFactory::RequestId(identifier);
+  bool browser_side_navigation = IsBrowserSideNavigation(loader, identifier);
+  String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
+  String request_id = browser_side_navigation
+                          ? loader_id
+                          : IdentifiersFactory::RequestId(identifier);
   bool is_not_modified = response.HttpStatusCode() == 304;
 
   bool resource_is_empty = true;
@@ -787,7 +798,6 @@ void InspectorNetworkAgent::DidReceiveResourceResponse(
   String frame_id = loader && loader->GetFrame()
                         ? IdentifiersFactory::FrameId(loader->GetFrame())
                         : "";
-  String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
   resources_data_->ResponseReceived(request_id, frame_id, response);
   resources_data_->SetResourceType(request_id, type);
 
@@ -800,6 +810,8 @@ void InspectorNetworkAgent::DidReceiveResourceResponse(
                                     response_security_details->certificate);
   }
 
+  if (browser_side_navigation)
+    return;
   if (resource_response && !resource_is_empty) {
     Maybe<String> maybe_frame_id;
     if (!frame_id.IsEmpty())
@@ -824,7 +836,11 @@ void InspectorNetworkAgent::DidReceiveData(unsigned long identifier,
                                            DocumentLoader* loader,
                                            const char* data,
                                            int data_length) {
-  String request_id = IdentifiersFactory::RequestId(identifier);
+  bool browser_side_navigation = IsBrowserSideNavigation(loader, identifier);
+  String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
+  String request_id = browser_side_navigation
+                          ? loader_id
+                          : IdentifiersFactory::RequestId(identifier);
 
   if (data) {
     NetworkResourcesData::ResourceData const* resource_data =
@@ -844,18 +860,27 @@ void InspectorNetworkAgent::DidReceiveData(unsigned long identifier,
 
 void InspectorNetworkAgent::DidReceiveEncodedDataLength(
     unsigned long identifier,
+    DocumentLoader* loader,
     int encoded_data_length) {
-  String request_id = IdentifiersFactory::RequestId(identifier);
+  bool browser_side_navigation = IsBrowserSideNavigation(loader, identifier);
+  String request_id = browser_side_navigation
+                          ? IdentifiersFactory::LoaderId(loader)
+                          : IdentifiersFactory::RequestId(identifier);
   resources_data_->AddPendingEncodedDataLength(request_id, encoded_data_length);
 }
 
 void InspectorNetworkAgent::DidFinishLoading(unsigned long identifier,
-                                             DocumentLoader*,
+                                             DocumentLoader* loader,
                                              double monotonic_finish_time,
                                              int64_t encoded_data_length,
                                              int64_t decoded_body_length,
                                              bool blocked_cross_site_document) {
-  String request_id = IdentifiersFactory::RequestId(identifier);
+  bool browser_side_navigation = IsBrowserSideNavigation(loader, identifier);
+  String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
+  String request_id = browser_side_navigation
+                          ? loader_id
+                          : IdentifiersFactory::RequestId(identifier);
+
   NetworkResourcesData::ResourceData const* resource_data =
       resources_data_->Data(request_id);
 
@@ -921,6 +946,15 @@ void InspectorNetworkAgent::ClearPendingRequestData() {
   if (pending_request_type_ == InspectorPageAgent::kXHRResource)
     pending_xhr_replay_data_.Clear();
   pending_request_ = nullptr;
+}
+
+// static
+bool InspectorNetworkAgent::IsBrowserSideNavigation(DocumentLoader* loader,
+                                                    unsigned long identifier) {
+  Frame* frame = loader ? loader->GetFrame() : nullptr;
+  if (!frame || !frame->GetSettings()->GetBrowserSideNavigationEnabled())
+    return false;
+  return loader->MainResourceIdentifier() == identifier;
 }
 
 void InspectorNetworkAgent::DocumentThreadableLoaderStartedLoadingForClient(
@@ -1605,6 +1639,15 @@ bool InspectorNetworkAgent::CacheDisabled() {
   return state_->booleanProperty(NetworkAgentState::kNetworkAgentEnabled,
                                  false) &&
          state_->booleanProperty(NetworkAgentState::kCacheDisabled, false);
+}
+
+String InspectorNetworkAgent::NavigationInitiatorInfo(LocalFrame* frame) {
+  FrameNavigationInitiatorMap::iterator it =
+      frame_navigation_initiator_map_.find(IdentifiersFactory::FrameId(frame));
+  if (it != frame_navigation_initiator_map_.end())
+    return it->value->serialize();
+  return BuildInitiatorObject(frame->GetDocument(), FetchInitiatorInfo())
+      ->serialize();
 }
 
 void InspectorNetworkAgent::RemoveFinishedReplayXHRFired(TimerBase*) {
