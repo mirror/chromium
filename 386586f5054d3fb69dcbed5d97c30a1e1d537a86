@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fab9688_6e45d3dc",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-11T22:15:57Z",
+      "side": 1,
+      "message": "If you\u0027re not using the event, maybe pass EventType.NONE?\n\nI was imagining that we\u0027d have two APIs - one for an event,\none for a callback. One API is fine but I wouldn\u0027t call it with\nan event if you don\u0027t want one.",
+      "revId": "386586f5054d3fb69dcbed5d97c30a1e1d537a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8ada63_3689809e",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-11T22:15:57Z",
+      "side": 1,
+      "message": "I think it\u0027d be cleaner if there were two APIs. If you want a\ncallback, you don\u0027t need to specify eventToFire, it could be\npopulated with hitTestResult automatically.",
+      "revId": "386586f5054d3fb69dcbed5d97c30a1e1d537a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0212472a_a6d86c24",
+        "filename": "chrome/common/extensions/api/automation_internal.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-11T22:15:57Z",
+      "side": 1,
+      "message": "nit: remove extra blank line",
+      "revId": "386586f5054d3fb69dcbed5d97c30a1e1d537a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
