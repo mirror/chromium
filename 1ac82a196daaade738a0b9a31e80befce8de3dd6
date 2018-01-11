@@ -16,6 +16,23 @@
       "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd57bb7d_15868676",
+        "filename": "ash/system/status_area_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:32:13Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing to me that we call both SetOpacity() and Show()/Hide(), maybe add a comment?",
+      "revId": "1ac82a196daaade738a0b9a31e80befce8de3dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

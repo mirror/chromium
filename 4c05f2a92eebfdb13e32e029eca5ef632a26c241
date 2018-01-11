@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfb38cf_ec43d820",
+        "filename": "ash/system/tray/system_tray_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T19:32:13Z",
+      "side": 0,
+      "message": "I see now that the logic was just moved. I\u0027m still curious why we do both.",
+      "revId": "4c05f2a92eebfdb13e32e029eca5ef632a26c241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
