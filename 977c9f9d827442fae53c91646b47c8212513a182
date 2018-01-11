@@ -267,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "a1c52a81_787225c7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-11T02:53:31Z",
+      "side": 1,
+      "message": "I see, we can change the code in the future when it becomes relevant, but for now we can do\nwith the simplest implementation.",
+      "parentUuid": "67618af3_5d892be8",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cfc33fb_9a768feb",
         "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
         "patchSetId": 24
