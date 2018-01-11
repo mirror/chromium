@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7566913e_d435bd87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-11T13:54:32Z",
+      "side": 1,
+      "message": "Commit message should be update since there is only one function now.",
+      "revId": "743341815b1aab436c5e73171a547667559b56d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081e8f9f_3b74c92e",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-11T13:54:32Z",
+      "side": 1,
+      "message": "nit: That comment should now read something like -\nUpdates the internal state following a navigation commit. This should be called before notifying...",
+      "revId": "743341815b1aab436c5e73171a547667559b56d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
