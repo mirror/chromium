@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cbd22a8_b5cd9ec1",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Added a line to persist the setting (function moved to model.js)",
+      "parentUuid": "9395e265_c44c1a3b",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 80
+      },
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a03c4a52_a06f4f36",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edc5aeb5_5cb6a91c",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a03c4a52_a06f4f36",
+      "range": {
+        "startLine": 183,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 58
+      },
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da8a450_4a29bf7b",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-11T18:53:28Z",
       "side": 1,
       "message": "Would it make sense to put the serialized settings as a separate Polymer property, instead of placing it within |settings|? It\u0027s a bit odd at first glance that |settings| holds both.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 21
+      },
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee90647_8050aa57",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Per offline discussion, removed this cache of settings entirely, and added an observer in model.js that pulls all settings whenever there is a need to save sticky settings.",
+      "parentUuid": "3da8a450_4a29bf7b",
       "range": {
         "startLine": 125,
         "startChar": 8,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "60b87ad2_42038b9a",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce30c7f5_0428da57",
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439229c3_ffe3b6ff",
         "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
         "patchSetId": 3
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "3ed19e24_eb707ab6",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "439229c3_ffe3b6ff",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 16
+      },
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71a65389_deda9f9e",
         "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
         "patchSetId": 3
@@ -125,6 +239,24 @@
       "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bdafd7_39789d7b",
+        "filename": "chrome/browser/resources/print_preview/new/settings_behavior.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T22:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a65389_deda9f9e",
+      "revId": "9f84cce5b59d4556cdb476ca3a2c109654d8395b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
