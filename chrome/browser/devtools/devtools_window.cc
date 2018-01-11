@@ -40,6 +40,7 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/url_formatter/url_fixer.h"
 #include "components/zoom/page_zoom.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/browser_thread.h"
@@ -1284,6 +1285,14 @@ void DevToolsWindow::SetIsDocked(bool dock_requested) {
 }
 
 void DevToolsWindow::OpenInNewTab(const std::string& url) {
+  GURL fixed_url(url_formatter::FixupURL(GURL(url).possibly_invalid_spec(),
+                                         std::string()));
+  for (size_t i = 0; i < chrome::kNumberOfChromeDebugURLs; ++i) {
+    if (fixed_url == chrome::kChromeDebugURLs[i]) {
+      return;
+    }
+  }
+
   content::OpenURLParams params(GURL(url), content::Referrer(),
                                 WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                 ui::PAGE_TRANSITION_LINK, false);
