@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb02031c_68cfbcc7",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T21:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de2d21c_0e9f7a81",
+      "range": {
+        "startLine": 166,
+        "startChar": 52,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f8ed4f_18abd29f",
         "filename": "device/bluetooth/test/fake_central.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962a8968_f111fe5c",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T21:45:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f8ed4f_18abd29f",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 32
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "61b2a073_5bd322b8",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T21:45:21Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c001b575_7e3b8c0d",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a039c745_c0e50b77",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/service-is-removed.js",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-10T21:45:24Z",
       "side": 1,
       "message": "Should this step be implicit in calling fake_service.remove()?",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "3b4561403819008aefba98818e84eb9eade6abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b635752_f9a75af6",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/service-is-removed.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T21:45:21Z",
+      "side": 1,
+      "message": "I looked around to find out if this should be implicit or not, and I found that this isn\u0027t the event that should be fired. It should be the serviceremoved event shown here: https://webbluetoothcg.github.io/web-bluetooth/#event-types. Also, the wording on the serviceremoved event description suggests that it should be implicit. So I will create a simulateGATTServiceRemoved() function similar to this one.",
+      "parentUuid": "a039c745_c0e50b77",
       "range": {
         "startLine": 9,
         "startChar": 16,
