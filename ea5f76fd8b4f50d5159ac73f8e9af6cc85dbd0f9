@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a39674_27714073",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T09:08:29Z",
+      "side": 1,
+      "message": "s/called/defined/?\n\nAnyway, let\u0027s update the comment.",
+      "revId": "ea5f76fd8b4f50d5159ac73f8e9af6cc85dbd0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
