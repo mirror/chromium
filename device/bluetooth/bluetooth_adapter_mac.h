@@ -9,9 +9,11 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/containers/queue.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -38,6 +40,8 @@ class SequencedTaskRunner;
 @class BluetoothLowEnergyCentralManagerDelegate;
 
 namespace device {
+
+class BluetoothPreferencesMac;
 
 // The 10.13 SDK deprecates the CBCentralManagerState enum, but marks the
 // replacement enum with limited availability, making it unusable. API methods
@@ -131,6 +135,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
       device::BluetoothDevice::PairingDelegate* pairing_delegate) override;
 
  private:
+  using CallbackQueue =
+      base::queue<std::tuple<bool, base::Closure, ErrorCallback>>;
+
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should
   // be called only when |IsLowEnergyAvailable()|.
@@ -138,6 +145,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
 
   // Returns the CBCentralManager instance.
   CBCentralManager* GetCentralManager();
+
+  void SetPreferencesForTesting(
+      std::unique_ptr<BluetoothPreferencesMac> preferences);
 
   // The length of time that must elapse since the last Inquiry response (on
   // Classic devices) or call to BluetoothLowEnergyDevice::Update() (on Low
@@ -207,6 +217,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   bool classic_powered_;
   int num_discovery_sessions_;
 
+  CallbackQueue pending_powered_callbacks_;
+
   // Cached name. Updated in GetName if should_update_name_ is true.
   //
   // For performance reasons, cache the adapter's name. It's not uncommon for
@@ -226,6 +238,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // Discovery manager for Bluetooth Low Energy.
   std::unique_ptr<BluetoothLowEnergyDiscoveryManagerMac>
       low_energy_discovery_manager_;
+
+  std::unique_ptr<BluetoothPreferencesMac> preferences_;
 
   // Underlying CoreBluetooth CBCentralManager and its delegate.
   base::scoped_nsobject<CBCentralManager> low_energy_central_manager_;

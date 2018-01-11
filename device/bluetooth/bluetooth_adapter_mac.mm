@@ -29,6 +29,7 @@
 #include "device/bluetooth/bluetooth_discovery_session.h"
 #include "device/bluetooth/bluetooth_discovery_session_outcome.h"
 #include "device/bluetooth/bluetooth_low_energy_central_manager_delegate.h"
+#include "device/bluetooth/bluetooth_preferences_mac.h"
 #include "device/bluetooth/bluetooth_socket_mac.h"
 
 namespace {
@@ -103,6 +104,7 @@ BluetoothAdapterMac::BluetoothAdapterMac()
       should_update_name_(true),
       classic_discovery_manager_(
           BluetoothDiscoveryManagerMac::CreateClassic(this)),
+      preferences_(std::make_unique<BluetoothPreferencesMac>()),
       weak_ptr_factory_(this) {
   if (IsLowEnergyAvailable()) {
     low_energy_discovery_manager_.reset(
@@ -186,7 +188,13 @@ bool BluetoothAdapterMac::IsPowered() const {
 void BluetoothAdapterMac::SetPowered(bool powered,
                                      const base::Closure& callback,
                                      const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
+  if (powered == IsPowered()) {
+    callback.Run();
+    return;
+  }
+
+  preferences_->SetControllerPowerState(powered);
+  pending_powered_callbacks_.emplace(powered, callback, error_callback);
 }
 
 // TODO(krstnmnlsn): If this information is retrievable form IOBluetooth we
@@ -312,6 +320,11 @@ void BluetoothAdapterMac::SetCentralManagerForTesting(
 
 CBCentralManager* BluetoothAdapterMac::GetCentralManager() {
   return low_energy_central_manager_;
+}
+
+void BluetoothAdapterMac::SetPreferencesForTesting(
+    std::unique_ptr<BluetoothPreferencesMac> preferences) {
+  preferences_ = std::move(preferences);
 }
 
 void BluetoothAdapterMac::AddDiscoverySession(
@@ -451,6 +464,23 @@ void BluetoothAdapterMac::PollAdapter() {
     address = BluetoothDevice::CanonicalizeAddress(
         base::SysNSStringToUTF8([controller addressAsString]));
     classic_powered = ([controller powerState] == kBluetoothHCIPowerStateON);
+
+    // Empty the pending powered queue. Running the callbacks could destroy
+    // |this|, so we need to take extra care.
+    auto weak_ptr = weak_ptr_factory_.GetWeakPtr();
+    while (weak_ptr && !pending_powered_callbacks_.empty()) {
+      auto front = std::move(pending_powered_callbacks_.front());
+      pending_powered_callbacks_.pop();
+
+      if (std::get<0>(front) == classic_powered) {
+        std::get<1>(front).Run();
+      } else {
+        std::get<2>(front).Run();
+      }
+    }
+
+    if (!weak_ptr)
+      return;
 
     if (address != address_)
       should_update_name_ = true;
