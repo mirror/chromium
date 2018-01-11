@@ -629,7 +629,9 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
 }
 
 void SimpleEntryImpl::MakeUninitialized() {
-  state_ = STATE_UNINITIALIZED;
+  // If we're doomed, we can't really do anything else with the entry, since
+  // we no longer own the name and are disconnected from the active entry table.
+  state_ = doomed_ ? STATE_FAILURE : STATE_UNINITIALIZED;
   std::memset(crc32s_end_offset_, 0, sizeof(crc32s_end_offset_));
   std::memset(crc32s_, 0, sizeof(crc32s_));
   std::memset(have_written_, 0, sizeof(have_written_));
