@@ -8,11 +8,11 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
-#include "chrome/browser/ui/omnibox/test_omnibox_client.h"
 #include "components/omnibox/browser/autocomplete_controller.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/omnibox_client.h"
 #include "components/omnibox/browser/omnibox_controller.h"
+#include "components/omnibox/browser/test_omnibox_client.h"
 #include "components/sessions/core/session_id.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -62,6 +62,7 @@ void OmniboxControllerTest::AssertProviders(int expected_providers) {
   for (size_t i = 0; i < providers.size(); ++i) {
     // Ensure this is a provider we wanted.
     int type = providers[i]->type();
+    printf("%zu %d\n", i, type);
     ASSERT_TRUE(expected_providers & type);
 
     // Remove it from expectations so we fail if it's there twice.
