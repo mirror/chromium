@@ -10,8 +10,12 @@
 #include <vector>
 
 #include "chrome/installer/zucchini/image_utils.h"
+#include "chrome/installer/zucchini/patch_reader.h"
 
 namespace zucchini {
+
+class OffsetMapper;
+class TargetSource;
 
 // Ordered container of distinct targets that have the same semantics, along
 // with a list of associated reference types, only used during patch generation.
@@ -22,14 +26,18 @@ class TargetPool {
   TargetPool();
   // Initializes the object with given sorted and unique |targets|.
   explicit TargetPool(std::vector<offset_t>&& targets);
-  TargetPool(const TargetPool&) = delete;
   TargetPool(TargetPool&&);
+  TargetPool(const TargetPool&);
   ~TargetPool();
 
   // The following functions insert each new target from |references|. This
   // invalidates all previous key lookups.
   void InsertTargets(const std::vector<Reference>& references);
   void InsertTargets(ReferenceReader&& references);
+  // The following functions insert each new |targets|. This invalidates all
+  // previous key lookups.
+  void InsertTargets(TargetSource* targets);
+  void InsertTargets(const std::vector<offset_t>& targets);
 
   // Adds |type| as a reference type associated with the pool of targets.
   void AddType(TypeTag type) { types_.push_back(type); }
@@ -37,9 +45,15 @@ class TargetPool {
   // Returns a canonical key associated with |offset|.
   key_t KeyForOffset(offset_t offset) const;
 
+  // Returns a canonical key associated with the lower bound of |offset|. Note
+  // that this may return the invalid |size()| key.
+  key_t KeyForLowerBoundOffset(offset_t offset) const;
+
   // Returns the target for a |key|, which is assumed to be valid and held by
   // this class.
   offset_t OffsetForKey(key_t key) const { return targets_[key]; }
+
+  void Project(const OffsetMapper& offset_mapper);
 
   // Accessors for testing.
   const std::vector<offset_t>& targets() const { return targets_; }
@@ -47,8 +61,8 @@ class TargetPool {
 
   // Returns the number of targets.
   size_t size() const { return targets_.size(); }
-  const_iterator begin() const;
-  const_iterator end() const;
+  const_iterator begin() const { return targets_.begin(); }
+  const_iterator end() const { return targets_.end(); }
 
  private:
   std::vector<TypeTag> types_;     // Enumerates type_tag for this pool.
