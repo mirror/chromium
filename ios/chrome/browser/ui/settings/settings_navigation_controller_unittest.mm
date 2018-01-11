@@ -31,6 +31,16 @@
 #error "This file requires ARC support."
 #endif
 
+// OCMock can only generate nice mocks from a single protocol, but
+// SettingsNavigationController typically uses two separate protocols.
+// CombinedSettingsProtocol combines and names a protocol inheriting
+// the two separate protocols, so that OCMock may generate a delegate
+// that represents an object that SettingsNavigationController may be
+// provided at runtime.
+@protocol CombinedSettingsProtocol<SettingsBrowserStateProvider,
+                                   SettingsNavigationControllerDelegate>
+@end
+
 namespace {
 
 NSString* const kSpdyProxyEnabled = @"SpdyProxyEnabled";
@@ -51,8 +61,10 @@ class SettingsNavigationControllerTest : public PlatformTest {
         ios::TemplateURLServiceFactory::GetDefaultFactory());
     chrome_browser_state_ = test_cbs_builder.Build();
 
-    mockDelegate_ = [OCMockObject
-        niceMockForProtocol:@protocol(SettingsNavigationControllerDelegate)];
+    settingsDelegate =
+        [OCMockObject niceMockForProtocol:@protocol(CombinedSettingsProtocol)];
+    OCMStub([settingsDelegate browserStateForSettings])
+        .andReturn((ios::ChromeBrowserState*)chrome_browser_state_.get());
 
     TemplateURLService* template_url_service =
         ios::TemplateURLServiceFactory::GetForBrowserState(
@@ -79,7 +91,7 @@ class SettingsNavigationControllerTest : public PlatformTest {
   web::TestWebThreadBundle thread_bundle_;
   IOSChromeScopedTestingChromeBrowserStateManager scoped_browser_state_manager_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
-  id mockDelegate_;
+  id settingsDelegate;
   NSString* initialValueForSpdyProxyEnabled_;
 };
 
@@ -89,9 +101,8 @@ TEST_F(SettingsNavigationControllerTest, PopController) {
   @autoreleasepool {
     SettingsNavigationController* settingsController =
         [SettingsNavigationController
-            newSettingsMainControllerWithBrowserState:chrome_browser_state_
-                                                          .get()
-                                             delegate:nil];
+            newSettingsMainControllerWithDelegate:settingsDelegate];
+
     UIViewController* viewController =
         [[UIViewController alloc] initWithNibName:nil bundle:nil];
     [settingsController pushViewController:viewController animated:NO];
@@ -111,9 +122,7 @@ TEST_F(SettingsNavigationControllerTest, DontPopRootController) {
   @autoreleasepool {
     SettingsNavigationController* settingsController =
         [SettingsNavigationController
-            newSettingsMainControllerWithBrowserState:chrome_browser_state_
-                                                          .get()
-                                             delegate:nil];
+            newSettingsMainControllerWithDelegate:settingsDelegate];
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
 
     EXPECT_FALSE([settingsController popViewControllerAnimated:NO]);
@@ -129,17 +138,15 @@ TEST_F(SettingsNavigationControllerTest,
   @autoreleasepool {
     SettingsNavigationController* settingsController =
         [SettingsNavigationController
-            newSettingsMainControllerWithBrowserState:chrome_browser_state_
-                                                          .get()
-                                             delegate:mockDelegate_];
+            newSettingsMainControllerWithDelegate:settingsDelegate];
     UIViewController* viewController =
         [[UIViewController alloc] initWithNibName:nil bundle:nil];
     [settingsController pushViewController:viewController animated:NO];
     EXPECT_EQ(2U, [[settingsController viewControllers] count]);
-    [[mockDelegate_ reject] closeSettings];
+    [[settingsDelegate reject] closeSettings];
     [settingsController popViewControllerOrCloseSettingsAnimated:NO];
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
-    EXPECT_OCMOCK_VERIFY(mockDelegate_);
+    EXPECT_OCMOCK_VERIFY(settingsDelegate);
     [settingsController settingsWillBeDismissed];
   }
 }
@@ -152,13 +159,11 @@ TEST_F(SettingsNavigationControllerTest,
   @autoreleasepool {
     SettingsNavigationController* settingsController =
         [SettingsNavigationController
-            newSettingsMainControllerWithBrowserState:chrome_browser_state_
-                                                          .get()
-                                             delegate:mockDelegate_];
+            newSettingsMainControllerWithDelegate:settingsDelegate];
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
-    [[mockDelegate_ expect] closeSettings];
+    [[settingsDelegate expect] closeSettings];
     [settingsController popViewControllerOrCloseSettingsAnimated:NO];
-    EXPECT_OCMOCK_VERIFY(mockDelegate_);
+    EXPECT_OCMOCK_VERIFY(settingsDelegate);
     [settingsController settingsWillBeDismissed];
   }
 }
