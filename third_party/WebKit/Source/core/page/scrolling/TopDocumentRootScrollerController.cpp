@@ -151,6 +151,7 @@ void TopDocumentRootScrollerController::RecomputeGlobalRootScroller() {
       RootScrollerUtil::ScrollableAreaForRootScroller(global_root_scroller_);
 
   global_root_scroller_ = target;
+  LOG(ERROR) << "New Global: " << target;
 
   // Ideally, scroll customization would pass the current element to scroll to
   // the apply scroll callback but this doesn't happen today so we set it
