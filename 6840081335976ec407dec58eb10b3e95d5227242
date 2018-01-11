@@ -16,6 +16,24 @@
       "revId": "6840081335976ec407dec58eb10b3e95d5227242",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c428b13_5125d671",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-11T10:06:02Z",
+      "side": 1,
+      "message": "Yes, but soon we have to add more cases for \u003cselect\u003e and \u003coptgroup\u003e.",
+      "parentUuid": "31acb73a_48d6dc79",
+      "revId": "6840081335976ec407dec58eb10b3e95d5227242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
