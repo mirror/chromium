@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "87de6008_8c40283b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/generate.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-11T22:10:07Z",
+      "side": 1,
+      "message": "empty comment line before paragraph to make this visually stand out from copyright. (multiple files need this)",
+      "revId": "8c31b845ae018b991f7c29f7763c71e2794fa50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e15c57df_5dc98c69",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/generate.py",
         "patchSetId": 14
@@ -13,6 +30,23 @@
       "writtenOn": "2018-01-11T17:50:08Z",
       "side": 1,
       "message": "s/exist/exists/",
+      "revId": "8c31b845ae018b991f7c29f7763c71e2794fa50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a311a01d_0d6fda7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/getDescriptor/gen-descriptor-get-same-object.https.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-11T22:10:07Z",
+      "side": 1,
+      "message": "4 space indent for consistency, multiple files in this patch need this.",
       "revId": "8c31b845ae018b991f7c29f7763c71e2794fa50d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
