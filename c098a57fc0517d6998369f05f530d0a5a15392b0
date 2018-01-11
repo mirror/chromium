@@ -22,6 +22,30 @@
       "revId": "c098a57fc0517d6998369f05f530d0a5a15392b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c58682c_8f522f0a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-11T21:34:01Z",
+      "side": 1,
+      "message": "We need this because each call to OnInterval reset the interval, and the interaction bit gets cleared. Added a comment about this.",
+      "parentUuid": "ef766169_6cd94457",
+      "range": {
+        "startLine": 395,
+        "startChar": 1,
+        "endLine": 396,
+        "endChar": 64
+      },
+      "revId": "c098a57fc0517d6998369f05f530d0a5a15392b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
