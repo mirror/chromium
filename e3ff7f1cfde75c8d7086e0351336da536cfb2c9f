@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "184d2ce0_f13cf8a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-11T13:58:33Z",
+      "side": 1,
+      "message": "I didn\u0027t want to keep ChromeAlertDialog/DialogRenderer alive for a long time. The plan was to remove these classes and move permissions to use ModalDialogViews once we landed this CL. We have two options:\n1- Follow the plan that you mentioned.\n2- * Land this CL.\n   * Introducing new ModalDialogManager.Presenter for VR.\n   * Move permissions to use ModalDialogs. Remove the unused code (which should be ChromeAlertDialog + some code from VrAlertDialog).\n\nBoth options look good to me. But, I understand that option 1 breaks this patch to smaller ones, and most probably makes life easier for everyone. \nI\u0027ll work on JS dialogs and will upload a CL soon.",
+      "parentUuid": "ba9bd811_19affd0b",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbb8efbd_de64bdec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 12
