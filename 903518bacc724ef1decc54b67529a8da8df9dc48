@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "610df340_98d171d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-11T01:03:11Z",
+      "side": 1,
+      "message": "No we do not, and we figured it would be simpler to keep them together as we want them all through commit queue by Friday.",
+      "parentUuid": "d2b2c998_df129808",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c79dd24_262b2a72",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "64cc57a7_88adc696",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-11T01:03:11Z",
+      "side": 1,
+      "message": "Thanks for catching that, I always miss at least one.",
+      "parentUuid": "7c79dd24_262b2a72",
+      "range": {
+        "startLine": 322,
+        "startChar": 12,
+        "endLine": 322,
+        "endChar": 13
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23d917de_d287a76e",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-11T00:38:47Z",
       "side": 1,
       "message": "This and NavigatedToPage seem to be mutually exclusive. Can we merge them to one metric?",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6a2e69_94d9b937",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-11T01:03:11Z",
+      "side": 1,
+      "message": "I agree, but I wouldn\u0027t know what the call the metric to make it clear that\u0027s what happening. Any ideas?",
+      "parentUuid": "23d917de_d287a76e",
       "range": {
         "startLine": 2357,
         "startChar": 16,
@@ -91,6 +163,30 @@
       "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83b4e03_22b45e5b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-11T01:03:11Z",
+      "side": 1,
+      "message": "From what I understand, yes, it gets merged server-side by the singular\u003d\"True\"",
+      "parentUuid": "752f2154_4a11bdfb",
+      "range": {
+        "startLine": 2362,
+        "startChar": 16,
+        "endLine": 2362,
+        "endChar": 33
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
