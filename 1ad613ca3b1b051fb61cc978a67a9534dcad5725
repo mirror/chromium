@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "11e518ae_eb5c0eb9",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-11T12:21:44Z",
+      "side": 1,
+      "message": "nit (feel free to ignore): Maybe GCPhase as it is also about a phase a GC is in.",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 12
+      },
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34c5553_de749d76",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-11T12:21:44Z",
+      "side": 1,
+      "message": "nit: maybe enum class if it doesn\u0027t introduce too much noise.",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 6
+      },
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3582bbd8_48ea1e82",
         "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
         "patchSetId": 4
@@ -30,6 +76,24 @@
       "writtenOn": "2018-01-11T08:16:21Z",
       "side": 1,
       "message": "Add a comment and explain each phase.",
+      "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa75cf9_58d3f5d5",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-11T12:21:44Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "3582bbd8_48ea1e82",
       "revId": "1ad613ca3b1b051fb61cc978a67a9534dcad5725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

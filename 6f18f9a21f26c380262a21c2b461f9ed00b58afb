@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29ae0a10_0b9e5c91",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-11T12:21:44Z",
+      "side": 0,
+      "message": "Is it possible to avoid the semantic changes and just do the refactoring of state and scopes here? I agree that this should probably stay for now.",
+      "parentUuid": "71055b4f_28ece7cb",
+      "revId": "6f18f9a21f26c380262a21c2b461f9ed00b58afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be05f1db_4ae35998",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
