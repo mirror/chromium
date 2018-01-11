@@ -25,7 +25,6 @@ namespace media_router {
 
 namespace {
 
-const char kProviderExtensionIdForTesting[] = "test_id";
 const char kUserEmailForTesting[] = "nobody@example.com";
 const char kUserDomainForTesting[] = "example.com";
 
@@ -93,7 +92,6 @@ class MockMediaRouterUI : public MediaRouterUI {
   MOCK_CONST_METHOD0(UserSelectedTabMirroringForCurrentOrigin, bool());
   MOCK_METHOD1(RecordCastModeSelection, void(MediaCastMode cast_mode));
   MOCK_CONST_METHOD0(cast_modes, const std::set<MediaCastMode>&());
-  MOCK_CONST_METHOD0(GetRouteProviderExtensionId, const std::string&());
   MOCK_METHOD1(OnMediaControllerUIAvailable,
                void(const MediaRoute::Id& route_id));
   MOCK_METHOD0(OnMediaControllerUIClosed, void());
@@ -138,8 +136,7 @@ class TestMediaRouterWebUIMessageHandler
 class MediaRouterWebUIMessageHandlerTest : public MediaRouterWebUITest {
  public:
   MediaRouterWebUIMessageHandlerTest()
-      : web_ui_(base::MakeUnique<content::TestWebUI>()),
-        provider_extension_id_(kProviderExtensionIdForTesting) {}
+      : web_ui_(base::MakeUnique<content::TestWebUI>()) {}
   ~MediaRouterWebUIMessageHandlerTest() override {}
 
   // BrowserWithTestWindowTest:
@@ -340,8 +337,6 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateRoutes) {
   current_cast_modes.insert(
       std::make_pair(route.media_route_id(), MediaCastMode::PRESENTATION));
 
-  EXPECT_CALL(*mock_media_router_ui_, GetRouteProviderExtensionId()).WillOnce(
-      ReturnRef(provider_extension_id()));
   handler_->UpdateRoutes({route}, joinable_route_ids, current_cast_modes);
   const base::DictionaryValue* route_value =
       ExtractDictFromListFromCallArg("media_router.ui.setRouteList");
@@ -359,8 +354,6 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateRoutesIncognito) {
   handler_->set_incognito_for_test(true);
   const MediaRoute route = CreateRoute();
 
-  EXPECT_CALL(*mock_media_router_ui_, GetRouteProviderExtensionId())
-      .WillOnce(ReturnRef(provider_extension_id()));
   handler_->UpdateRoutes({route}, std::vector<MediaRoute::Id>(),
                          std::unordered_map<MediaRoute::Id, MediaCastMode>());
   const base::DictionaryValue* route_value =
@@ -456,8 +449,6 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnCreateRouteResponseReceived) {
   bool incognito = false;
   route.set_incognito(incognito);
 
-  EXPECT_CALL(*mock_media_router_ui_, GetRouteProviderExtensionId())
-      .WillOnce(ReturnRef(provider_extension_id()));
   handler_->OnCreateRouteResponseReceived(route.media_sink_id(), &route);
 
   const content::TestWebUI::CallData& call_data = *web_ui_->call_data()[0];
@@ -486,8 +477,6 @@ TEST_F(MediaRouterWebUIMessageHandlerTest,
   bool incognito = true;
   route.set_incognito(incognito);
 
-  EXPECT_CALL(*mock_media_router_ui_, GetRouteProviderExtensionId()).WillOnce(
-      ReturnRef(provider_extension_id()));
   handler_->OnCreateRouteResponseReceived(route.media_sink_id(), &route);
 
   const content::TestWebUI::CallData& call_data = *web_ui_->call_data()[0];
@@ -562,8 +551,6 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, RecordCastModeSelection) {
 TEST_F(MediaRouterWebUIMessageHandlerTest, RetrieveCastModeSelection) {
   base::ListValue args;
   std::set<MediaCastMode> cast_modes = {MediaCastMode::TAB_MIRROR};
-  EXPECT_CALL(*mock_media_router_ui_, GetRouteProviderExtensionId())
-      .WillRepeatedly(ReturnRef(provider_extension_id()));
   EXPECT_CALL(*mock_media_router_ui_, cast_modes())
       .WillRepeatedly(ReturnRef(cast_modes));
 

@@ -39,6 +39,7 @@ const char kCastLearnMorePageUrl[] =
     "https://www.google.com/chrome/devices/chromecast/learn.html";
 const char kHelpPageUrlPrefix[] =
     "https://support.google.com/chromecast/answer/%d";
+const char kExtensionId[] = "test_id";
 
 // Message names.
 const char kRequestInitialData[] = "requestInitialData";
@@ -290,8 +291,7 @@ void MediaRouterWebUIMessageHandler::OnCreateRouteResponseReceived(
     int current_cast_mode = CurrentCastModeForRouteId(
         route->media_route_id(), media_router_ui_->routes_and_cast_modes());
     std::unique_ptr<base::DictionaryValue> route_value(RouteToValue(
-        *route, false, media_router_ui_->GetRouteProviderExtensionId(),
-        incognito_, current_cast_mode));
+        *route, false, kExtensionId, incognito_, current_cast_mode));
     web_ui()->CallJavascriptFunctionUnsafe(kOnCreateRouteResponseReceived,
                                            base::Value(sink_id), *route_value,
                                            base::Value(route->for_display()));
@@ -1110,8 +1110,6 @@ std::unique_ptr<base::ListValue> MediaRouterWebUIMessageHandler::RoutesToValue(
     const std::unordered_map<MediaRoute::Id, MediaCastMode>& current_cast_modes)
     const {
   auto value = base::MakeUnique<base::ListValue>();
-  const std::string& extension_id =
-      media_router_ui_->GetRouteProviderExtensionId();
 
   for (const MediaRoute& route : routes) {
     bool can_join =
@@ -1119,7 +1117,7 @@ std::unique_ptr<base::ListValue> MediaRouterWebUIMessageHandler::RoutesToValue(
     int current_cast_mode =
         CurrentCastModeForRouteId(route.media_route_id(), current_cast_modes);
     std::unique_ptr<base::DictionaryValue> route_val(RouteToValue(
-        route, can_join, extension_id, incognito_, current_cast_mode));
+        route, can_join, kExtensionId, incognito_, current_cast_mode));
     value->Append(std::move(route_val));
   }
 
