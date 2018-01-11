@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3776c349_2735a328",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T16:26:38Z",
+      "side": 1,
+      "message": "When can this happen? CoalescePendingMotionEvents() should not discard the move event that happened. Once we call EventTypeFromNative() above (line 2074), the rest of the code assumes that that remains the case. So if it becomes UNKNOWN for some reason, it would be useful to understand why/how that happens.",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ac0d37_155021c4",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T16:26:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
