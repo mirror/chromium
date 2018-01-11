@@ -352,6 +352,30 @@
       "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb14b939_f6512273",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T22:46:12Z",
+      "side": 1,
+      "message": "Sorry, now I re-read Matt\u0027s comment (https://chromium-review.googlesource.com/c/chromium/src/+/796933/15/services/network/udp_socket_test_util.cc#44. 0-byte payloads are not graceful close. I mis-read. Sorry about that.\n\nI will change this comment from \"which indicates a graceful close\" to \"which indicates a zero-byte payload\"",
+      "parentUuid": "fc77f8a0_00eab527",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 29
+      },
+      "revId": "811a3193790e910b1a146ef6f14c219489550aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
