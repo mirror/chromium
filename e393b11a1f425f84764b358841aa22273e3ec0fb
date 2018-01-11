@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd93f374_e6f22e1c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-11T23:30:19Z",
+      "side": 1,
+      "message": "Doing .release() here would seem more \"transfer\"y. Can you do that instead of .get() followed by .release() below?",
+      "range": {
+        "startLine": 85,
+        "startChar": 30,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55318d2a_fb9954bd",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-11T23:30:19Z",
+      "side": 1,
+      "message": "I realize this isn\u0027t new to this CL, but it seems like the early returns don\u0027t really match the API style of launchpad. Do we need to get to a launchpad_go() or a launchpad_abort()? Otherwise what happens to e.g. the handles that have been duplicated, but never finalized either way.",
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678e29f2_36c9ff4e",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-11T23:30:19Z",
+      "side": 1,
+      "message": "// OS_FUCHSIA",
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
