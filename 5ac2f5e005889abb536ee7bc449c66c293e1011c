@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b55c6c37_a8eea9d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T21:54:48Z",
+      "side": 1,
+      "message": "nit: can you do a wrap at 80 column?",
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf0e5ec7_6537a658",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 9
@@ -36,6 +53,57 @@
         "endLine": 1,
         "endChar": 17
       },
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dcb724_8a1945bc",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T21:54:48Z",
+      "side": 1,
+      "message": "nit: This comment should be moved inside of the if-conditional, as it refers to the string and not the conditional.",
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63519573_2b251003",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T21:54:48Z",
+      "side": 1,
+      "message": "nit: there is a typo in TaskScheduler.\n\nSuggest rephrasing slightly to make it clearer.\n\n// Returns whether a base::TaskScheduler should be created when BrowserMainLoop starts.\n// If false, a task scheduler has been created by the embedder, and browser main loop\n// should skip creating a second one.",
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036c99b2_bfacd33c",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-11T21:54:48Z",
+      "side": 1,
+      "message": "minor nit: \"Returns current factory\" sounds like the factory can be changed. However, the code only allows setting factory once.\n\nSuggest changing it to:\n// Returns the factory or nullptr if it is not set.",
       "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
