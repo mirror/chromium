@@ -210,8 +210,11 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL) {
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
   TestFetchDataURL(client);
 
-  EXPECT_TRUE(client->WasNotifyFinished())
-      << "ModuleScriptLoader should finish synchronously.";
+  EXPECT_FALSE(client->WasNotifyFinished())
+      << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
+
+  EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_FALSE(client->GetModuleScript()->HasEmptyRecord());
   EXPECT_FALSE(client->GetModuleScript()->HasParseError());
@@ -262,8 +265,11 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier) {
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
   TestInvalidSpecifier(client);
 
-  EXPECT_TRUE(client->WasNotifyFinished())
-      << "ModuleScriptLoader should finish synchronously.";
+  EXPECT_FALSE(client->WasNotifyFinished())
+      << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
+
+  EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_TRUE(client->GetModuleScript()->HasEmptyRecord());
   EXPECT_TRUE(client->GetModuleScript()->HasParseError());
