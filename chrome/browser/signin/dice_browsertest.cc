@@ -32,6 +32,7 @@
 #include "chrome/browser/ui/profile_chooser_constants.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
+#include "chrome/browser/ui/webui/signin/login_ui_test_utils.h"
 #include "chrome/common/webui_url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -625,10 +626,10 @@ class DicePrepareMigrationBrowserTest : public DiceBrowserTestBase {
       : DiceBrowserTestBase(AccountConsistencyMethod::kDicePrepareMigration) {}
 };
 
-class DicePrepareMigrationChromeSynEndpointBrowserTest
+class DicePrepareMigrationChromeSyncEndpointBrowserTest
     : public DiceBrowserTestBase {
  public:
-  DicePrepareMigrationChromeSynEndpointBrowserTest()
+  DicePrepareMigrationChromeSyncEndpointBrowserTest()
       : DiceBrowserTestBase(
             AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint) {
   }
@@ -940,7 +941,7 @@ IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, Signout) {
 
 // Tests that Sync is enabled if the ENABLE_SYNC response is received after the
 // refresh token.
-IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
+IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSyncEndpointBrowserTest,
                        EnableSyncAfterToken) {
   EXPECT_EQ(0, reconcilor_started_count_);
 
@@ -978,14 +979,14 @@ IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
       GURL(chrome::kChromeUINewTabURL),
       content::NotificationService::AllSources());
 
-  // Dismiss the OneClickSigninSyncStarter.
-  LoginUIServiceFactory::GetForProfile(browser()->profile())
-      ->SyncConfirmationUIClosed(LoginUIService::SYNC_WITH_DEFAULT_SETTINGS);
+  // Dismiss the Sync confirmation UI.
+  EXPECT_TRUE(login_ui_test_utils::DismissSyncConfirmationDialog(
+      browser(), base::TimeDelta::FromSeconds(30)));
 }
 
 // Tests that Sync is enabled if the ENABLE_SYNC response is received before the
 // refresh token.
-IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
+IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSyncEndpointBrowserTest,
                        EnableSyncBeforeToken) {
   EXPECT_EQ(0, reconcilor_started_count_);
 
@@ -1027,7 +1028,7 @@ IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
       GURL(chrome::kChromeUINewTabURL),
       content::NotificationService::AllSources());
 
-  // Dismiss the OneClickSigninSyncStarter.
-  LoginUIServiceFactory::GetForProfile(browser()->profile())
-      ->SyncConfirmationUIClosed(LoginUIService::SYNC_WITH_DEFAULT_SETTINGS);
+  // Dismiss the Sync confirmation UI.
+  EXPECT_TRUE(login_ui_test_utils::DismissSyncConfirmationDialog(
+      browser(), base::TimeDelta::FromSeconds(30)));
 }
