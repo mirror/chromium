@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "107911e3_3469125a",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T03:27:21Z",
+      "side": 1,
+      "message": "Yep looks like it works.",
+      "parentUuid": "0dceafec_3a2c384e",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9687fc2e_2b4c7dc8",
         "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
         "patchSetId": 21

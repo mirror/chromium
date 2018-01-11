@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7cb8d8e_a5fe6784",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T03:27:21Z",
+      "side": 1,
+      "message": "I\u0027ve changed the part to return a valid ptr (and keeping pending request ptr around) in SWVersion if it\u0027s not started yet. I could separate the part of change out of this CL (this change\u0027s getting larger)",
+      "parentUuid": "6e802ab9_ba40ae3c",
+      "revId": "3e779e219f04c9bf9fed8c253d3089f5c921c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf0647a9_e36eb12b",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 23
@@ -39,6 +57,30 @@
       "revId": "3e779e219f04c9bf9fed8c253d3089f5c921c37d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0a7d7f_9d2e90fa",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T03:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0647a9_e36eb12b",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 13
+      },
+      "revId": "3e779e219f04c9bf9fed8c253d3089f5c921c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
