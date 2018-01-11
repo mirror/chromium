@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25e2b1c4_7a9edafc",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-11T22:34:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb91ba0_8591ae2a",
+      "revId": "002e18130cb6666bb82268dd46800c4a61dcdd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a49c673_ab862b5a",
         "filename": "chrome/browser/ui/ash/DEPS",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "002e18130cb6666bb82268dd46800c4a61dcdd26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6504dff4_6b0c1b79",
+        "filename": "chrome/browser/ui/ash/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-11T22:34:17Z",
+      "side": 1,
+      "message": "You\u0027re right. This can be removed. Thanks for the thorough review. \nDone.",
+      "parentUuid": "2a49c673_ab862b5a",
+      "revId": "002e18130cb6666bb82268dd46800c4a61dcdd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
