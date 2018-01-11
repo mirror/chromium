@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "5711ba55_f26572ad",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T22:29:03Z",
+      "side": 1,
+      "message": "My understanding is each instance of PdfCompositorImpl should be used for one print job, right? So when we create it, we already know the root frame to print. We can pass that information down preemptively. This simplifies the interface, because we won\u0027t need to pass down the root frame_guid in IsReadyToComposite or CompositeToPdf.\n\nHere\u0027s what I envision the flow would look like:\n\n1. Create a mojom::PdfCompositor in the utility process.\n\n2. Browser registers the root frame, so mojom::PdfCompositor knows it\u0027s pending.\n\n3. Browser *also* registers all local roots with mojom::PdfCompositor. Presumably we could do this in the same Mojo call as step 2. Now mojom::PdfCompositor knows all frames it needs to wait for before the result can be composited.\n\nNote: to make things simpler, the list of local roots should probably be topologically sorted. Probably we could just pass the list of local roots in post-order traversal order.\n\n4. As each local root in the renderer generates a result, it calls PdfCompositor::AddSubframeContent(). It passes the frame token, the content associated with the frame token, as well as the subframe dependency info (I think this would be a map of content IDs to frame tokens).\n\n5. In the utility process, AddSubframeContent() will:\n  - decrement the count of pending frames\n  - record the dependent content IDs\n  - accumulate the map of content IDs to frame tokens in a member map\n\n6. Once the pending frame count hits 0 (or the timeout elapses), PdfCompositor automatically tries to generate the output with CompositeToPdf. It goes through the list of frame outputs (which is already in post-order traversal order), builds a SkMemoryStream for frames with a composite result, and replays it into a SkPicture. Each iteration will build a map of content IDs to SkPicture of dependent contents (using the map of content IDs to frame tokens).\n\n7. Return the PDF to the browser.",
+      "parentUuid": "afac85a6_d4b90b65",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69f4169d_45e5277f",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 33

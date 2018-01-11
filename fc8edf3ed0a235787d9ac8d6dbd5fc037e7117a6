@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "611f3580_f22abce0",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 40
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T22:29:03Z",
+      "side": 1,
+      "message": "I mentioned in the other CL, but I think we shouldn\u0027t need this.\n\nWhen Skia serializes the picture, it will serialize the picture IDs directly, but record a picture ID -\u003e proxy routing ID mapping. This will get sent from the renderer to the browser.\n\nThe browser will know which renderer the message came from. At that time, it can use that information to turn it into rfh-\u003eGetProcess()-\u003eGetID() + rfh-\u003eGetRoutingID().\n\nAddSubframe()\u0027s arguments will then be:\n\nAddSubframeContent(FrameId frame_id, handle\u003cshared_buffer\u003e serialized_picture,\n                   map\u003cuint32, FrameId\u003e subframe_dependencies);\n\nWhich I think might simplify things a bit?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "fc8edf3ed0a235787d9ac8d6dbd5fc037e7117a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5a1426_c5f9bfcb",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 40
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T22:29:03Z",
+      "side": 1,
+      "message": "It\u0027s not super clear to me what the difference between these two functions are. Why would someone want to call the latter?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "fc8edf3ed0a235787d9ac8d6dbd5fc037e7117a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
