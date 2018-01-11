@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe8f4274_5ffb9d94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-11T01:43:29Z",
+      "side": 1,
+      "message": "That makes more sense. \nDone.",
+      "parentUuid": "8b67bf86_8a7ad520",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "84ccc11dea7a6cbb5e3d87dd3e12a4f3ceb8e1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "730eca0e_5b1ea71b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "84ccc11dea7a6cbb5e3d87dd3e12a4f3ceb8e1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bedaa13_855597e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-11T01:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730eca0e_5b1ea71b",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "84ccc11dea7a6cbb5e3d87dd3e12a4f3ceb8e1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
