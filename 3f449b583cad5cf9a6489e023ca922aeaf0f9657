@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a6a6b3_6af1d2d3",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T00:29:43Z",
+      "side": 1,
+      "message": "this is shared code across a lot of platforms, so don\u0027t mention webview-specific things. Just say the justification that additional damage check is expensive, so this is to avoid doing two damage checks per frame",
+      "revId": "3f449b583cad5cf9a6489e023ca922aeaf0f9657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4544dfda_ce86c59d",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-11T00:29:43Z",
+      "side": 1,
+      "message": "this too",
+      "range": {
+        "startLine": 929,
+        "startChar": 12,
+        "endLine": 929,
+        "endChar": 17
+      },
+      "revId": "3f449b583cad5cf9a6489e023ca922aeaf0f9657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
