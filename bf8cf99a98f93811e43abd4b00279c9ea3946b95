@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3425a0ff_5ec21fd1",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T22:31:09Z",
+      "side": 1,
+      "message": "It seems that the only case where this doesn\u0027t serialize is when we can\u0027t decode the image, so I removed the comment since it\u0027s expected for us to check if we actually have an image (otherwise this would crash).",
+      "parentUuid": "00e45c6e_b386cbd5",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16218eab_14f3abb6",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8600ee99_fe5367b1",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T22:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16218eab_14f3abb6",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b01fea2b_0b8c30ab",
+        "filename": "cc/paint/paint_op_buffer_serializer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T22:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca418ec_dfb5e6ce",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427ae0a1_032df429",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27af32e_af72d1e6",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2878,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T22:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427ae0a1_032df429",
+      "revId": "bf8cf99a98f93811e43abd4b00279c9ea3946b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
