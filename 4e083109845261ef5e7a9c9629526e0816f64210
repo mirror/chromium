@@ -16,6 +16,24 @@
       "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afa039a_3ce24bf3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T22:52:12Z",
+      "side": 1,
+      "message": "How I\u0027ve started processing the indentations (after looking at the style guide) is like this:\nbluetooth_test(() \u003d\u003e\n    getConnectedHealthThermometerDevice({  // +4 spaces because it\u0027s a continuation of \n                                           // bluetooth_test\n        filters: ... // +4 more spaces because it\u0027s a continuation of getConnected.. parameters\n    })               // -4 spaces because it ends the arguments of getConnected..\n        .then(...)   // +4 more spaces because of continuation of getConnected..\n\nSo the end result would be this:\nbluetooth_test(() \u003d\u003e getConnected..({\n        filters: ... // +8 spaces\n    })               // +4 spaces\n        .then(...)   // +8 spaces\n\nBut all of the files indent .then with 4 spaces, so it would be even with the }).\n\nOr should I do:\nbluetooth_test(() \u003d\u003e getConnected..({\n      filters: ...  // +6 spaces (+4 continuation of getConnected.. and +2 block indent of {\n    })\n    .then(...)\n\nThese are sections I used to try to figure it out:\nhttps://google.github.io/styleguide/jsguide.html#formatting-braces\nhttps://google.github.io/styleguide/jsguide.html#formatting-indent\nhttps://google.github.io/styleguide/jsguide.html#formatting-function-arguments\n\nLet me know what the definite way to format this specific block so that I can correct it in my other changes. Thanks!",
+      "parentUuid": "6e5862ec_8b05ea92",
+      "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
