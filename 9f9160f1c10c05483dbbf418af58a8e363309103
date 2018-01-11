@@ -34,6 +34,24 @@
       "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb8045a3_65ba58b3",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T14:46:13Z",
+      "side": 1,
+      "message": "sg, but then we can remove the other one on line 21?",
+      "parentUuid": "3e872fab_e002999a",
+      "revId": "9f9160f1c10c05483dbbf418af58a8e363309103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
