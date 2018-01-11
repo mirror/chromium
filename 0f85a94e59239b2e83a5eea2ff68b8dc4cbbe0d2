@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a05db9ac_a0b36aa5",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T18:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b5431f_271834a7",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247532ce_cf45971b",
         "filename": "cc/paint/paint_op_writer.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d28466d_fefc923d",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T18:30:37Z",
+      "side": 1,
+      "message": "We aren\u0027t technically sending this since we\u0027re excluding the preamble, but your suggestion sgtm. Done.",
+      "parentUuid": "247532ce_cf45971b",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069a2da4_28c998f1",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f72b56_f5683c2d",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-11T18:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069a2da4_28c998f1",
+      "revId": "0f85a94e59239b2e83a5eea2ff68b8dc4cbbe0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
