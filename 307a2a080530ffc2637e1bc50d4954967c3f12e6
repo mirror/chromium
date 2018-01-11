@@ -163,6 +163,24 @@
       "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d25d9fe4_31fd4d6b",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T22:59:41Z",
+      "side": 1,
+      "message": "I\u0027m surprised that it can go away without closing the dialog, but the comments in BubbleDialogDelegateView seem to back that up. However, you should be able to get the reference back via GetAnchorView, so use that instead.",
+      "parentUuid": "495d35a7_32406281",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
