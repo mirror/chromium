@@ -18,6 +18,8 @@ static_library("cpp") {
     "network_param_ipc_traits.h",
     "proxy_resolving_client_socket.cc",
     "proxy_resolving_client_socket.h",
+    "proxy_resolving_client_socket_factory.cc",
+    "proxy_resolving_client_socket_factory.h",
     "url_loader_completion_status.cc",
     "url_loader_completion_status.h",
   ]
