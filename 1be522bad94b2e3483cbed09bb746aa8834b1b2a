@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f65ce37_00392404",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T16:43:31Z",
+      "side": 1,
+      "message": "That\u0027s a weird naming scheme. I see that we do this in desktop_window_tree_host_x11.cc too ... but yeah, would be nice to clean up. (kNetWmStateAdd or something like that)",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8a9902_8c5c44c0",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T16:43:31Z",
+      "side": 1,
+      "message": "Why would we not always notify if |state| is different from the current state?",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1175b504_be1b55a0",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-11T16:43:31Z",
+      "side": 1,
+      "message": "This is already a lot of duplication. We need to consolidate with DesktopWindowTreeHostX11 before we add any more code in here.",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
