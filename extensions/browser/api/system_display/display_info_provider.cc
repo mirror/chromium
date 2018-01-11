@@ -5,7 +5,6 @@
 #include "extensions/browser/api/system_display/display_info_provider.h"
 
 #include "base/strings/string_number_conversions.h"
-#include "extensions/common/api/system_display.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 
@@ -154,6 +153,13 @@ bool DisplayInfoProvider::ClearTouchCalibration(const std::string& id,
 }
 
 bool DisplayInfoProvider::IsNativeTouchCalibrationActive(std::string* error) {
+  NOTREACHED();  // Implemented on Chrome OS only in override.
+  return true;
+}
+
+bool DisplayInfoProvider::SetMirrorMode(
+    const api::system_display::MirrorModeInfo& info,
+    std::string* out_error) {
   NOTREACHED();  // Implemented on Chrome OS only in override.
   return true;
 }
