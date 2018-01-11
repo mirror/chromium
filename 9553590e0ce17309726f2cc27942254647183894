@@ -16,6 +16,24 @@
       "revId": "9553590e0ce17309726f2cc27942254647183894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8108b36_3e296020",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-11T23:07:57Z",
+      "side": 1,
+      "message": "ShouldSetMirrorMode() will be called when new configuration comes to decide whether to restore mirror mode. |num_connected_displays_| is checked there. If current display number is larger than one, the current mode should persist. Otherwise, we should look at whether one of the displays was mirrored before.\nAfter suspend, |num_connected_displays_| is 2 instead of 0, and mirror mode is disabled. After resume, current mode persists. Thus, all displays are extended.",
+      "parentUuid": "d6a8b5b9_62b8cd9a",
+      "revId": "9553590e0ce17309726f2cc27942254647183894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
