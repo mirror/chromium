@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0854fec8_88de70fe",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-11T22:43:30Z",
+      "side": 1,
+      "message": "I suspect you don\u0027t need this function and anything related to this function any more with this CL in place.",
+      "revId": "b74cc864368e77a8f023b0c457b267f48f19988e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ca4679_bee5213c",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 4
