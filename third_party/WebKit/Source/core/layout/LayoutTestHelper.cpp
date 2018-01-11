@@ -5,6 +5,7 @@
 #include "core/layout/LayoutTestHelper.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "core/dom/Document.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/page/Page.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
@@ -48,6 +49,9 @@ void RenderingTest::SetUp() {
   SetupPageWithClients(&page_clients, local_frame_client_, SettingOverrider());
   EXPECT_TRUE(
       GetDocument().GetPage()->GetScrollbarTheme().UsesOverlayScrollbars());
+
+  // Use no-quirks (ake "strict") mode by default.
+  GetDocument().SetCompatibilityMode(Document::kNoQuirksMode);
 
   // This ensures that the minimal DOM tree gets attached
   // correctly for tests that don't call setBodyInnerHTML.
