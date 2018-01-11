@@ -118,6 +118,30 @@
       "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b07da2_38d2516c",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-11T08:50:55Z",
+      "side": 1,
+      "message": "@bruce: I thought the main requirement was that the args themselves be constexpr (which they always are for the default constructor :))?\n\nI\u0027m thinking of adding a CONSTEXPR_INITIALIZED macro that verifies the constexpr default constructor is available for a type just to guard against types that were constexpr-default-constructible and then would change to no longer be...",
+      "parentUuid": "606b8069_ce5952c0",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
