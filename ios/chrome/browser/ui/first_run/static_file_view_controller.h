@@ -20,6 +20,9 @@ class ChromeBrowserState;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                                  URL:(NSURL*)URL;
 
+// Set to YES if there were any load failures.
+@property(nonatomic, assign) BOOL loadFailed;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_FIRST_RUN_STATIC_FILE_VIEW_CONTROLLER_H_

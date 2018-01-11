@@ -49,7 +49,8 @@ const CGFloat kFadeOutAnimationDuration = 0.16f;
 const BOOL kDefaultStatsCheckboxValue = YES;
 }
 
-@interface WelcomeToChromeViewController ()<WelcomeToChromeViewDelegate> {
+@interface WelcomeToChromeViewController ()<WelcomeToChromeViewDelegate,
+                                            UINavigationControllerDelegate> {
   ios::ChromeBrowserState* browserState_;  // weak
   __weak TabModel* tabModel_;
 }
@@ -62,6 +63,9 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 
 // The privacy link was tapped.
 @property(nonatomic, assign) BOOL didTapPrivacyLink;
+
+// The privacy link did not load correctly.
+@property(nonatomic, assign) BOOL privacyLinkDidFail;
 
 // Presenter for showing sync-related UI.
 @property(nonatomic, readonly, weak) id<SyncPresenter> presenter;
@@ -77,6 +81,7 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 @synthesize ranLaunchAnimation = _ranLaunchAnimation;
 @synthesize presenter = _presenter;
 @synthesize dispatcher = _dispatcher;
+@synthesize privacyLinkDidFail = _privacyLinkDidFail;
 
 + (BOOL)defaultStatsCheckboxValue {
   // Record metrics reporting as opt-in/opt-out only once.
@@ -181,6 +186,7 @@ const BOOL kDefaultStatsCheckboxValue = YES;
   NSURL* privacyUrl = net::NSURLWithGURL(
       GURL("https://www.google.com/chrome/browser/privacy/"));
   [self openStaticFileWithURL:privacyUrl title:title];
+  [self.navigationController setDelegate:self];
 }
 
 - (void)welcomeToChromeViewDidTapOKButton:(WelcomeToChromeView*)view {
@@ -188,8 +194,13 @@ const BOOL kDefaultStatsCheckboxValue = YES;
       metrics::prefs::kMetricsReportingEnabled, view.checkBoxSelected);
 
   if (view.checkBoxSelected) {
-    if (self.didTapPrivacyLink)
+    if (self.didTapPrivacyLink) {
       base::RecordAction(base::UserMetricsAction("MobileFrePrivacyLinkTapped"));
+      if (self.privacyLinkDidFail) {
+        base::RecordAction(
+            base::UserMetricsAction("MobileFrePrivacyLinkFailed"));
+      }
+    }
     if (self.didTapTOSLink)
       base::RecordAction(base::UserMetricsAction("MobileFreTOSLinkTapped"));
   }
@@ -216,4 +227,19 @@ const BOOL kDefaultStatsCheckboxValue = YES;
   [self.navigationController pushViewController:signInController animated:NO];
 }
 
+#pragma mark - UINavigationControllerDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)
+           navigationController:(UINavigationController*)navigationController
+animationControllerForOperation:(UINavigationControllerOperation)operation
+             fromViewController:(UIViewController*)fromVC
+               toViewController:(UIViewController*)toVC {
+  if ([fromVC isKindOfClass:[StaticFileViewController class]]) {
+    StaticFileViewController* staticViewController =
+        static_cast<StaticFileViewController*>(fromVC);
+    self.privacyLinkDidFail = staticViewController.loadFailed;
+  }
+  [self.navigationController setDelegate:nil];
+  return nil;
+}
 @end
