@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7e8abd_b0df85e2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-11T22:13:26Z",
+      "side": 1,
+      "message": "Probably not needed.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "ecf35284a9be5690ddd7864845eac89c56d8e579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082679dc_84dd989f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-11T22:13:26Z",
+      "side": 1,
+      "message": "Is it safe to get security origin this way, or do I need to check for nulls?",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 551,
+        "endChar": 62
+      },
+      "revId": "ecf35284a9be5690ddd7864845eac89c56d8e579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b139907_441f85ab",
+        "filename": "third_party/WebKit/Source/platform/bindings/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-11T22:13:26Z",
+      "side": 1,
+      "message": "Probably not needed.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 42
+      },
+      "revId": "ecf35284a9be5690ddd7864845eac89c56d8e579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
