@@ -20,12 +20,12 @@ suite('SiteDetailsPermission', function() {
   setup(function() {
     prefs = {
       defaults: {
-        camera: {
+        [settings.ContentSettingsTypes.CAMERA]: {
           setting: settings.ContentSetting.ALLOW,
         }
       },
       exceptions: {
-        camera: [
+        [settings.ContentSettingsTypes.CAMERA]: [
           {
             embeddingOrigin: '',
             origin: 'https://www.example.com',
@@ -119,7 +119,7 @@ suite('SiteDetailsPermission', function() {
               'Default setting string should match prefs');
           browserProxy.resetResolver('getDefaultValueForContentType');
           const defaultPrefs = {
-            camera: {
+            [settings.ContentSettingsTypes.CAMERA]: {
               setting: settings.ContentSetting.BLOCK,
             }
           };
@@ -133,7 +133,7 @@ suite('SiteDetailsPermission', function() {
               'Default setting string should match prefs');
           browserProxy.resetResolver('getDefaultValueForContentType');
           const defaultPrefs = {
-            camera: {
+            [settings.ContentSettingsTypes.CAMERA]: {
               setting: settings.ContentSetting.ASK,
             }
           };

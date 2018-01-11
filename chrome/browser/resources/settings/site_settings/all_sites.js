@@ -76,7 +76,9 @@ Polymer({
 
   /** @private */
   populateList_: function() {
-    this.getAllSitesList_().then(this.processExceptions_.bind(this));
+    this.getAllSitesList_().then((promiseList) => {
+      this.processExceptions_(promiseList);
+    });
   },
 
   /**
