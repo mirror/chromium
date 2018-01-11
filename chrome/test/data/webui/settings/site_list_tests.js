@@ -10,331 +10,286 @@
  * all types, even though some might be blank.
  * @type {SiteSettingsPref}
  */
-const prefsGeolocation = {
-  exceptions: {
-    ads: [],
-    auto_downloads: [],
-    background_sync: [],
-    camera: [],
-    cookies: [],
-    geolocation: [
-      {
-        embeddingOrigin: 'https://bar-allow.com:443',
-        origin: 'https://bar-allow.com:443',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: 'https://foo-allow.com:443',
-        origin: 'https://foo-allow.com:443',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: 'https://bar-block.com:443',
-        origin: 'https://bar-block.com:443',
-        setting: 'block',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: 'https://foo-block.com:443',
-        origin: 'https://foo-block.com:443',
-        setting: 'block',
-        source: 'preference',
-      },
-    ],
-    images: [],
-    javascript: [],
-    mic: [],
-    midi_devices: [],
-    notifications: [],
-    plugins: [],
-    protectedContent: [],
-    popups: [],
-    sound: [],
-    unsandboxed_plugins: [],
-    clipboard: [],
-  }
-};
+let prefsGeolocation;
 
 /**
  * An example of prefs controlledBy policy.
  * @type {SiteSettingsPref}
  */
-const prefsControlled = {
-  exceptions: {
-    plugins: [
-      {
-        embeddingOrigin: '',
-        origin: 'http://foo-block.com',
-        setting: 'block',
-        source: 'policy',
-      },
-    ]
-  }
-};
+let prefsControlled;
 
 /**
  * An example pref with mixed schemes (present and absent).
  * @type {SiteSettingsPref}
  */
-const prefsMixedSchemes = {
-  exceptions: {
-    geolocation: [
-      {
-        embeddingOrigin: 'https://foo-allow.com',
-        origin: 'https://foo-allow.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: 'bar-allow.com',
-        origin: 'bar-allow.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-    ]
-  }
-};
-
+let prefsMixedSchemes;
 
 /**
  * An example pref with exceptions with origins and patterns from
  * different providers.
  * @type {SiteSettingsPref}
  */
-const prefsMixedProvider = {
-  exceptions: {
-    geolocation: [
-      {
-        embeddingOrigin: 'https://[*.]foo.com',
-        origin: 'https://[*.]foo.com',
-        setting: 'block',
-        source: 'policy',
-      },
-      {
-        embeddingOrigin: 'https://bar.foo.com',
-        origin: 'https://bar.foo.com',
-        setting: 'block',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: 'https://[*.]foo.com',
-        origin: 'https://[*.]foo.com',
-        setting: 'block',
-        source: 'preference',
-      },
-    ]
-  }
-};
+let prefsMixedProvider;
 
 /**
  * An example pref with with and without embeddingOrigin.
  * @type {SiteSettingsPref}
  */
-const prefsMixedEmbeddingOrigin = {
-  exceptions: {
-    images: [
-      {
-        origin: 'https://foo.com',
-        embeddingOrigin: 'https://example.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        origin: 'https://bar.com',
-        embeddingOrigin: '',
-        setting: 'allow',
-        source: 'preference',
-      },
-    ],
-  }
-};
+let prefsMixedEmbeddingOrigin;
 
 /**
  * An example pref with multiple categories and multiple allow/block
  * state.
  * @type {SiteSettingsPref}
  */
-const prefsVarious = {
-  exceptions: {
-    ads: [],
-    auto_downloads: [],
-    background_sync: [],
-    camera: [],
-    cookies: [],
-    geolocation: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://foo.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://bar.com',
-        setting: 'block',
-        source: 'preference',
-      },
-    ],
-    images: [],
-    javascript: [],
-    mic: [],
-    midi_devices: [],
-    notifications: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://google.com',
-        setting: 'block',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://bar.com',
-        setting: 'block',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://foo.com',
-        setting: 'block',
-        source: 'preference',
-      },
-    ],
-    plugins: [],
-    protectedContent: [],
-    popups: [],
-    unsandboxed_plugins: [],
-  }
-};
+let prefsVarious;
 
 /**
  * An example pref with 1 allowed location item.
  * @type {SiteSettingsPref}
  */
-const prefsOneEnabled = {
-  exceptions: {
-    geolocation: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://foo-allow.com:443',
-        setting: 'allow',
-        source: 'preference',
-      },
-    ]
-  }
-};
+let prefsOneEnabled;
 
 /**
  * An example pref with 1 blocked location item.
  * @type {SiteSettingsPref}
  */
-const prefsOneDisabled = {
-  exceptions: {
-    geolocation: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'https://foo-block.com:443',
-        setting: 'block',
-        source: 'preference',
-      },
-    ]
-  }
-};
+let prefsOneDisabled;
 
 /**
  * An example Cookies pref with 1 in each of the three categories.
  * @type {SiteSettingsPref}
  */
-const prefsSessionOnly = {
-  exceptions: {
-    cookies: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'http://foo-block.com',
-        setting: 'block',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'http://foo-allow.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'http://foo-session.com',
-        setting: 'session_only',
-        source: 'preference',
-      },
-    ]
-  }
-};
+let prefsSessionOnly;
 
 /**
  * An example Cookies pref with mixed incognito and regular settings.
  * @type {SiteSettingsPref}
  */
-const prefsIncognito = {
-  exceptions: {
-    cookies: [
-      // foo.com is blocked for regular sessions.
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'http://foo.com',
-        setting: 'block',
-        source: 'preference',
-      },
-      // bar.com is an allowed incognito item.
-      {
-        embeddingOrigin: '',
-        incognito: true,
-        origin: 'http://bar.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-      // foo.com is allowed in incognito (overridden).
-      {
-        embeddingOrigin: '',
-        incognito: true,
-        origin: 'http://foo.com',
-        setting: 'allow',
-        source: 'preference',
-      },
-
-    ]
-  }
-};
+let prefsIncognito;
 
 /**
  * An example Javascript pref with a chrome-extension:// scheme.
  * @type {SiteSettingsPref}
  */
-const prefsChromeExtension = {
-  exceptions: {
-    javascript: [
-      {
-        embeddingOrigin: '',
-        incognito: false,
-        origin: 'chrome-extension://cfhgfbfpcbnnbibfphagcjmgjfjmojfa/',
-        setting: 'block',
-        source: 'preference',
-      },
-    ]
-  }
-};
+let prefsChromeExtension;
 
+// Helper to create a mock permission preference.
+function createExceptionForTest(origin, override) {
+  const exception = {
+    embeddingOrigin: 'https://foo.com:443',
+    origin: 'https://foo.com:443',
+    setting: settings.ContentSetting.BLOCK,
+    source: settings.SiteSettingSource.PREFERENCE,
+  };
+
+  if (origin) {
+    exception.origin = origin;
+    exception.embeddingOrigin = origin;
+  }
+  return Object.assign(exception, override);
+}
+
+function populateTestExceptions() {
+  prefsGeolocation = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest('https://bar-allow.com:443', {
+          setting: settings.ContentSetting.ALLOW,
+        }),
+        createExceptionForTest('https://foo-allow.com:443', {
+          setting: settings.ContentSetting.ALLOW,
+        }),
+        createExceptionForTest('https://bar-block.com:443', {}),
+        createExceptionForTest('https://foo-block.com:443', {}),
+      ],
+    }
+  };
+
+  prefsControlled = {
+    exceptions: {
+      [settings.ContentSettingsTypes.PLUGINS]: [
+        createExceptionForTest(null, {
+          embeddingOrigin: '',
+          origin: 'http://foo-block.com',
+          source: settings.SiteSettingSource.POLICY,
+        }),
+      ]
+    }
+  };
+
+  prefsMixedSchemes = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest('https://foo-allow.com', {
+          setting: settings.ContentSetting.ALLOW,
+          source: settings.SiteSettingSource.POLICY,
+        }),
+        createExceptionForTest('bar-allow.com', {
+          setting: settings.ContentSetting.ALLOW,
+        }),
+      ]
+    }
+  };
+
+  prefsMixedProvider = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest('https://[*.]foo.com', {
+          source: settings.SiteSettingSource.POLICY,
+        }),
+        createExceptionForTest('https://bar.foo.com', {}),
+        createExceptionForTest('https://[*.]foo.com', {}),
+      ]
+    }
+  };
+
+  prefsMixedEmbeddingOrigin = {
+    exceptions: {
+      [settings.ContentSettingsTypes.IMAGES]: [
+        createExceptionForTest(null, {
+          origin: 'https://foo.com',
+          embeddingOrigin: 'https://example.com',
+          setting: settings.ContentSetting.ALLOW,
+        }),
+        createExceptionForTest(null, {
+          origin: 'https://bar.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+        }),
+      ],
+    }
+  };
+
+  prefsVarious = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest(null, {
+          origin: 'https://foo.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+          incognito: false,
+        }),
+        createExceptionForTest(null, {
+          origin: 'https://bar.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+      ],
+      [settings.ContentSettingsTypes.NOTIFICATIONS]: [
+        createExceptionForTest(null, {
+          origin: 'https://google.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+        createExceptionForTest(null, {
+          origin: 'https://bar.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+        createExceptionForTest(null, {
+          origin: 'https://foo.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+      ],
+    }
+  };
+
+  prefsOneEnabled = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest(null, {
+          origin: 'https://foo-allow.com:443',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+          incognito: false,
+        }),
+      ]
+    }
+  };
+
+  prefsOneDisabled = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [
+        createExceptionForTest(null, {
+          origin: 'https://foo-block.com:443',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+      ]
+    }
+  };
+
+  prefsSessionOnly = {
+    exceptions: {
+      [settings.ContentSettingsTypes.COOKIES]: [
+        createExceptionForTest(null, {
+          origin: 'http://foo-block.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+        createExceptionForTest(null, {
+          origin: 'http://foo-allow.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+          incognito: false,
+        }),
+        createExceptionForTest(null, {
+          origin: 'http://foo-session.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.SESSION_ONLY,
+          incognito: false,
+        }),
+      ]
+    }
+  };
+
+  prefsIncognito = {
+    exceptions: {
+      [settings.ContentSettingsTypes.COOKIES]: [
+        // foo.com is blocked for regular sessions.
+        createExceptionForTest(null, {
+          origin: 'http://foo.com',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+        // bar.com is an allowed incognito item.
+        createExceptionForTest(null, {
+          origin: 'http://bar.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+          incognito: true,
+        }),
+        // foo.com is allowed in incognito (overridden).
+        createExceptionForTest(null, {
+          origin: 'http://foo.com',
+          embeddingOrigin: '',
+          setting: settings.ContentSetting.ALLOW,
+          incognito: true,
+        }),
+      ]
+    }
+  };
+
+  prefsChromeExtension = {
+    exceptions: {
+      [settings.ContentSettingsTypes.JAVASCRIPT]: [
+        createExceptionForTest(null, {
+          origin: 'chrome-extension://cfhgfbfpcbnnbibfphagcjmgjfjmojfa/',
+          embeddingOrigin: '',
+          incognito: false,
+        }),
+      ]
+    }
+  };
+
+  prefsGeolocationEmpty = {
+    exceptions: {
+      [settings.ContentSettingsTypes.GEOLOCATION]: [],
+    }
+  };
+}
 
 suite('SiteList', function() {
   /**
@@ -360,6 +315,8 @@ suite('SiteList', function() {
 
   // Initialize a site-list before each test.
   setup(function() {
+    populateTestExceptions();
+
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();
@@ -460,7 +417,7 @@ suite('SiteList', function() {
   test('getExceptionList API used', function() {
     setUpCategory(
         settings.ContentSettingsTypes.GEOLOCATION,
-        settings.ContentSetting.ALLOW, prefsEmpty);
+        settings.ContentSetting.ALLOW, prefsGeolocationEmpty);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
           assertEquals(settings.ContentSettingsTypes.GEOLOCATION, contentType);
@@ -470,7 +427,7 @@ suite('SiteList', function() {
   test('Empty list', function() {
     setUpCategory(
         settings.ContentSettingsTypes.GEOLOCATION,
-        settings.ContentSetting.ALLOW, prefsEmpty);
+        settings.ContentSetting.ALLOW, prefsGeolocationEmpty);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
           assertEquals(settings.ContentSettingsTypes.GEOLOCATION, contentType);
@@ -494,10 +451,10 @@ suite('SiteList', function() {
 
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefsGeolocation.exceptions[contentType][0].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[1].origin,
+              prefsGeolocation.exceptions[contentType][1].origin,
               testElement.sites[1].origin);
           assertEquals(
               settings.ContentSetting.ALLOW, testElement.categorySubtype);
@@ -543,10 +500,11 @@ suite('SiteList', function() {
           assertEquals(3, testElement.sites.length);
           for (let i = 0; i < testElement.sites.length; ++i) {
             assertEquals(
-                prefsMixedProvider.exceptions.geolocation[i].origin,
+                prefsMixedProvider.exceptions[contentType][i].origin,
                 testElement.sites[i].origin);
             assertEquals(
-                kControlledByLookup[prefsMixedProvider.exceptions.geolocation[i]
+                kControlledByLookup[prefsMixedProvider
+                                        .exceptions[contentType][i]
                                         .source] ||
                     chrome.settingsPrivate.ControlledBy.PRIMARY_USER,
                 testElement.sites[i].controlledBy);
@@ -565,10 +523,10 @@ suite('SiteList', function() {
 
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[2].origin,
+              prefsGeolocation.exceptions[contentType][2].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[3].origin,
+              prefsGeolocation.exceptions[contentType][3].origin,
               testElement.sites[1].origin);
           Polymer.dom.flush();  // Populates action menu.
           openActionMenu(0);
@@ -589,7 +547,7 @@ suite('SiteList', function() {
 
           assertEquals(1, testElement.sites.length);
           assertEquals(
-              prefsSessionOnly.exceptions.cookies[2].origin,
+              prefsSessionOnly.exceptions[contentType][2].origin,
               testElement.sites[0].origin);
 
           Polymer.dom.flush();  // Populates action menu.
@@ -648,7 +606,7 @@ suite('SiteList', function() {
 
           assertEquals(1, testElement.sites.length);
           assertEquals(
-              prefsIncognito.exceptions.cookies[0].origin,
+              prefsIncognito.exceptions[contentType][0].origin,
               testElement.sites[0].origin);
 
           Polymer.dom.flush();  // Populates action menu.
@@ -681,10 +639,10 @@ suite('SiteList', function() {
 
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsIncognito.exceptions.cookies[1].origin,
+              prefsIncognito.exceptions[contentType][1].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsIncognito.exceptions.cookies[2].origin,
+              prefsIncognito.exceptions[contentType][2].origin,
               testElement.sites[1].origin);
 
           Polymer.dom.flush();  // Populates action menu.
@@ -722,7 +680,7 @@ suite('SiteList', function() {
 
           assertEquals(1, testElement.sites.length);
           assertEquals(
-              prefsOneEnabled.exceptions.geolocation[0].origin,
+              prefsOneEnabled.exceptions[contentType][0].origin,
               testElement.sites[0].origin);
 
           Polymer.dom.flush();
@@ -784,10 +742,10 @@ suite('SiteList', function() {
           // Validate that the sites gets populated from pre-canned prefs.
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefsGeolocation.exceptions[contentType][0].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[1].origin,
+              prefsGeolocation.exceptions[contentType][1].origin,
               testElement.sites[1].origin);
           assertFalse(!!testElement.selectedOrigin);
 
@@ -797,7 +755,7 @@ suite('SiteList', function() {
           assertTrue(!!clickable);
           MockInteractions.tap(clickable);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefsGeolocation.exceptions[contentType][0].origin,
               settings.getQueryParameters().get('site'));
         });
   });
@@ -944,7 +902,7 @@ suite('SiteList', function() {
               'chrome-extension://cfhgfbfpcbnnbibfphagcjmgjfjmojfa/', args[0]);
           assertEquals('', args[1]);
           assertEquals(settings.ContentSettingsTypes.JAVASCRIPT, args[2]);
-          assertEquals('allow', args[3]);
+          assertEquals(settings.ContentSetting.ALLOW, args[3]);
         });
   });
 });
@@ -954,20 +912,20 @@ suite('EditExceptionDialog', function() {
 
   /**
    * The dialog tests don't call |getExceptionList| so the exception needs to
-   * be processes as a |SiteSettingsPref|.
+   * be processed as a |SiteSettingsPref|.
    * @type {SiteSettingsPref}
    */
-  const cookieException = {
-    category: 'cookies',
-    embeddingOrigin: 'http://foo.com',
-    incognito: false,
-    origin: 'http://foo.com',
-    setting: 'block',
-    enforcement: '',
-    controlledBy: 'USER_POLICY',
-  };
+  let cookieException;
 
   setup(function() {
+    cookieException = createExceptionForTest('http://foo.com', {
+      category: settings.ContentSettingsTypes.COOKIES,
+      setting: settings.ContentSetting.ALLOW,
+      incognito: false,
+      enforcement: '',
+      controlledBy: 'USER_POLICY',
+    });
+
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();
@@ -1046,6 +1004,8 @@ suite('AddExceptionDialog', function() {
   /** @type {AddSiteDialogElement} */ let dialog;
 
   setup(function() {
+    populateTestExceptions();
+
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();

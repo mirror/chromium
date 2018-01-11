@@ -31,83 +31,38 @@ suite('SiteDetails', function() {
   // Initialize a site-details before each test.
   setup(function() {
     prefs = {
-      defaults: {
-        ads: {
-          setting: settings.ContentSetting.BLOCK,
-        },
-        auto_downloads: {
-          setting: settings.ContentSetting.ASK,
-        },
-        background_sync: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        camera: {
-          setting: settings.ContentSetting.ASK,
-        },
-        geolocation: {
-          setting: settings.ContentSetting.ASK,
-        },
-        images: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        javascript: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        mic: {
-          setting: settings.ContentSetting.ASK,
-        },
-        midi_devices: {
-          setting: settings.ContentSetting.ASK,
-        },
-        notifications: {
-          setting: settings.ContentSetting.ASK,
-        },
-        plugins: {
-          setting: settings.ContentSetting.ASK,
-        },
-        popups: {
-          setting: settings.ContentSetting.BLOCK,
-        },
-        sound: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        unsandboxed_plugins: {
-          setting: settings.ContentSetting.ASK,
-        },
-        protectedContent: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        clipboard: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-      },
       exceptions: {
-        ads: [createExceptionForTest()],
-        auto_downloads: [createExceptionForTest()],
-        background_sync: [createExceptionForTest()],
-        camera: [createExceptionForTest()],
-        geolocation: [createExceptionForTest()],
-        images: [createExceptionForTest({
+        [settings.ContentSettingsTypes.IMAGES]: [createExceptionForTest({
           source: settings.SiteSettingSource.DEFAULT,
         })],
-        javascript: [createExceptionForTest()],
-        mic: [createExceptionForTest()],
-        midi_devices: [createExceptionForTest()],
-        notifications: [createExceptionForTest({
+        [settings.ContentSettingsTypes.JAVASCRIPT]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.SOUND]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.PLUGINS]: [createExceptionForTest({
+          source: settings.SiteSettingSource.EXTENSION,
+        })],
+        [settings.ContentSettingsTypes.POPUPS]: [createExceptionForTest({
+          setting: settings.ContentSetting.BLOCK,
+          source: settings.SiteSettingSource.DEFAULT,
+        })],
+        [settings.ContentSettingsTypes.GEOLOCATION]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.NOTIFICATIONS]: [createExceptionForTest({
           setting: settings.ContentSetting.ASK,
           source: settings.SiteSettingSource.POLICY,
         })],
-        plugins: [createExceptionForTest({
-          source: settings.SiteSettingSource.EXTENSION,
-        })],
-        popups: [createExceptionForTest({
-          setting: settings.ContentSetting.BLOCK,
-          source: settings.SiteSettingSource.DEFAULT,
-        })],
-        sound: [createExceptionForTest()],
-        unsandboxed_plugins: [createExceptionForTest()],
-        protectedContent: [createExceptionForTest()],
-        clipboard: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.MIC]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.CAMERA]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.UNSANDBOXED_PLUGINS]:
+            [createExceptionForTest()],
+        [settings.ContentSettingsTypes.AUTOMATIC_DOWNLOADS]:
+            [createExceptionForTest()],
+        [settings.ContentSettingsTypes.BACKGROUND_SYNC]:
+            [createExceptionForTest()],
+        [settings.ContentSettingsTypes.MIDI_DEVICES]:
+            [createExceptionForTest()],
+        [settings.ContentSettingsTypes.PROTECTED_CONTENT]:
+            [createExceptionForTest()],
+        [settings.ContentSettingsTypes.ADS]: [createExceptionForTest()],
+        [settings.ContentSettingsTypes.CLIPBOARD]: [createExceptionForTest()],
       }
     };
 
@@ -364,46 +319,4 @@ suite('SiteDetails', function() {
         });
   });
 
-  test('resetting permissions will set ads back to default', function() {
-    browserProxy.setPrefs(prefs);
-    loadTimeData.overrideValues({enableSafeBrowsingSubresourceFilter: true});
-    testElement = createSiteDetails('https://foo.com:443');
-
-    const siteDetailsPermission = testElement.root.querySelector('#ads');
-
-    return browserProxy.whenCalled('isOriginValid')
-        .then(() => {
-          return browserProxy.whenCalled('getOriginPermissions');
-        })
-        .then(() => {
-          browserProxy.resetResolver('getOriginPermissions');
-          // Sanity check prefs are correct and that Ads was set to 'Allow'.
-          assertEquals(
-              settings.ContentSetting.ALLOW,
-              siteDetailsPermission.$.permission.value);
-
-          // Since the ads permission will only show 'Allow' and 'Block',
-          // check the user can still clear this setting by resetting all
-          // permissions.
-          MockInteractions.tap(testElement.$.clearAndReset);
-          assertTrue(testElement.$.confirmDeleteDialog.open);
-          const actionButtonList =
-              testElement.$.confirmDeleteDialog.getElementsByClassName(
-                  'action-button');
-          assertEquals(1, actionButtonList.length);
-          MockInteractions.tap(actionButtonList[0]);
-
-          return browserProxy.whenCalled('setOriginPermissions');
-        })
-        .then(() => {
-          return browserProxy.whenCalled('getOriginPermissions');
-        })
-        .then((args) => {
-          assertTrue(args[1].includes(settings.ContentSettingsTypes.ADS));
-          // Check the ads permission is set to default.
-          assertEquals(
-              settings.ContentSetting.DEFAULT,
-              siteDetailsPermission.$.permission.value);
-        });
-  });
 });
