@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896dfb04_4619cf5e",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCursor.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-11T00:51:25Z",
+      "side": 1,
+      "message": "typo: appication",
+      "revId": "3a61c45a311b06cdbba1b7bab652270f6084e569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfe3694_764a584a",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCursor.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-11T00:51:25Z",
+      "side": 1,
+      "message": "nit: remove one of these lines",
+      "revId": "3a61c45a311b06cdbba1b7bab652270f6084e569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
