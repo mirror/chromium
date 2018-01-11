@@ -44,7 +44,6 @@ import org.chromium.base.BaseSwitches;
 import org.chromium.base.Callback;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
-import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.SysUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -267,8 +266,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private int mDensityDpi;
     private int mScreenWidthDp;
     private Runnable mRecordMultiWindowModeScreenWidthRunnable;
-
-    private final DiscardableReferencePool mReferencePool = new DiscardableReferencePool();
 
     private AssistStatusHandler mAssistStatusHandler;
 
@@ -1786,7 +1783,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // to the API in the future.
         if ((level >= TRIM_MEMORY_RUNNING_LOW && level < TRIM_MEMORY_UI_HIDDEN)
                 || level >= TRIM_MEMORY_MODERATE) {
-            mReferencePool.drain();
             clearToolbarResourceCache();
         }
     }
@@ -2225,16 +2221,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public boolean supportsFullscreenActivity() {
         return false;
-    }
-
-    /**
-     * @return the reference pool for this activity.
-     * @deprecated Use {@link ChromeApplication#getReferencePool} instead.
-     */
-    // TODO(bauerb): Migrate clients to ChromeApplication#getReferencePool.
-    @Deprecated
-    public DiscardableReferencePool getReferencePool() {
-        return mReferencePool;
     }
 
     private void clearToolbarResourceCache() {

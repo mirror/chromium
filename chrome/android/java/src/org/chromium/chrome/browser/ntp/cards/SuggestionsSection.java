@@ -4,13 +4,13 @@
 
 package org.chromium.chrome.browser.ntp.cards;
 
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
+import org.chromium.chrome.browser.model.ListObservable;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
@@ -69,6 +69,11 @@ public class SuggestionsSection extends InnerNode {
     private boolean mHasInsertedContent;
 
     /**
+     * XXX
+     */
+    private boolean mIsDestroyed;
+
+    /**
      * Delegate interface that allows dismissing this section without introducing
      * a circular dependency.
      */
@@ -117,6 +122,8 @@ public class SuggestionsSection extends InnerNode {
         private final SuggestionsSource mSuggestionsSource;
         private final SuggestionsRanker mSuggestionsRanker;
         private final SuggestionsCategoryInfo mCategoryInfo;
+
+        private boolean mIsDestroyed;
 
         public SuggestionsList(SuggestionsSource suggestionsSource, SuggestionsRanker ranker,
                 SuggestionsCategoryInfo categoryInfo) {
@@ -203,7 +210,7 @@ public class SuggestionsSection extends InnerNode {
         @Override
         public void dismissItem(int position, Callback<String> itemRemovedCallback) {
             checkIndex(position);
-            if (!isAttached()) {
+            if (mIsDestroyed) {
                 // It is possible for this method to be called after the NewTabPage has had
                 // destroy() called. This can happen when
                 // NewTabPageRecyclerView.dismissWithAnimation() is called and the animation ends
@@ -230,13 +237,18 @@ public class SuggestionsSection extends InnerNode {
             if ((oldId == null) == (newId == null)) return;
             notifyItemChanged(index, SnippetArticleViewHolder::refreshOfflineBadgeVisibility);
         }
+
+        public void destroy() {
+            assert !mIsDestroyed;
+            mIsDestroyed = true;
+        }
     }
 
-    @Override
-    @CallSuper
-    public void detach() {
+    public void destroy() {
+        assert !mIsDestroyed;
         mOfflineModelObserver.onDestroy();
-        super.detach();
+        mSuggestionsList.destroy();
+        mIsDestroyed = true;
     }
 
     private void onSuggestionsListCountChanged(int oldSuggestionsCount) {
@@ -275,13 +287,13 @@ public class SuggestionsSection extends InnerNode {
     }
 
     @Override
-    public void onItemRangeRemoved(TreeNode child, int index, int count) {
+    public void onItemRangeRemoved(ListObservable child, int index, int count) {
         super.onItemRangeRemoved(child, index, count);
         if (child == mSuggestionsList) onSuggestionsListCountChanged(getSuggestionsCount() + count);
     }
 
     @Override
-    public void onItemRangeInserted(TreeNode child, int index, int count) {
+    public void onItemRangeInserted(ListObservable child, int index, int count) {
         super.onItemRangeInserted(child, index, count);
         if (child == mSuggestionsList) {
             mHasInsertedContent = true;
@@ -521,7 +533,7 @@ public class SuggestionsSection extends InnerNode {
         mSuggestionsSource.fetchSuggestions(mCategoryInfo.getCategory(),
                 getDisplayedSuggestionIds(),
                 suggestions -> {  /* successCallback */
-                    if (!isAttached()) return; // The section has been dismissed.
+                    if (mIsDestroyed) return; // The section has been dismissed.
 
                     mMoreButton.updateState(ActionItem.State.BUTTON);
 
@@ -532,7 +544,7 @@ public class SuggestionsSection extends InnerNode {
                     }
                 },
                 () -> {  /* failureRunnable */
-                    if (!isAttached()) return; // The section has been dismissed.
+                    if (mIsDestroyed) return; // The section has been dismissed.
 
                     mMoreButton.updateState(ActionItem.State.BUTTON);
                     if (onFailure != null) onFailure.run();

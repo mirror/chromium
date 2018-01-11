@@ -184,9 +184,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         mTileGroupDelegate =
                 new TileGroupDelegateImpl(mActivity, profile, navigationDelegate, snackbarManager);
-        mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
-                depsFactory.createSuggestionSource(profile), depsFactory.createEventReporter(),
-                navigationDelegate, profile, mSheet, mActivity.getReferencePool(), snackbarManager);
+        mSuggestionsUiDelegate =
+                new SuggestionsUiDelegateImpl(depsFactory.createSuggestionSource(profile),
+                        depsFactory.createEventReporter(), navigationDelegate, profile, mSheet,
+                        mActivity.getChromeApplication().getReferencePool(), snackbarManager);
 
         TouchEnabledDelegate touchEnabledDelegate = mActivity.getBottomSheet()::setTouchEnabled;
         mContextMenuManager = new ContextMenuManager(

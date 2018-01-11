@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.model.ListObservable;
+import org.chromium.chrome.browser.model.ListObserver;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.LogoView;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
@@ -44,7 +46,7 @@ import java.util.Set;
  * the above-the-fold view (containing the logo, search box, and most visited tiles) and subsequent
  * elements will be the cards shown to the user
  */
-public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements NodeParent {
+public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements ListObserver {
     private final SuggestionsUiDelegate mUiDelegate;
     private final ContextMenuManager mContextMenuManager;
     private final OfflinePageBridge mOfflinePageBridge;
@@ -103,20 +105,20 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mAboveTheFold = null;
         } else {
             mAboveTheFold = new AboveTheFoldItem();
-            mRoot.addChild(mAboveTheFold);
+            mRoot.addChildren(mAboveTheFold);
         }
 
         if (mLogoView == null) {
             mLogo = null;
         } else {
             mLogo = new LogoItem();
-            mRoot.addChild(mLogo);
+            mRoot.addChildren(mLogo);
         }
 
         mSuggestionsCarousel = suggestionsCarousel;
         if (suggestionsCarousel != null) {
             assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
-            mRoot.addChild(mSuggestionsCarousel);
+            mRoot.addChildren(mSuggestionsCarousel);
         }
 
         if (tileGroupDelegate == null) {
@@ -124,27 +126,27 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         } else {
             mSiteSection = new SiteSection(uiDelegate, mContextMenuManager, tileGroupDelegate,
                     offlinePageBridge, uiConfig);
-            mRoot.addChild(mSiteSection);
+            mRoot.addChildren(mSiteSection);
         }
 
         if (FeatureUtilities.isChromeHomeEnabled()) {
-            if (mSigninPromo != null) mRoot.addChild(mSigninPromo);
+            if (mSigninPromo != null) mRoot.addChildren(mSigninPromo);
             mRoot.addChildren(mAllDismissed, mSections);
         } else {
-            mRoot.addChild(mSections);
-            if (mSigninPromo != null) mRoot.addChild(mSigninPromo);
-            mRoot.addChild(mAllDismissed);
+            mRoot.addChildren(mSections);
+            if (mSigninPromo != null) mRoot.addChildren(mSigninPromo);
+            mRoot.addChildren(mAllDismissed);
         }
 
         mFooter = new Footer();
-        mRoot.addChild(mFooter);
+        mRoot.addChildren(mFooter);
 
         if (mAboveTheFoldView == null
                 || ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)) {
             mBottomSpacer = null;
         } else {
             mBottomSpacer = new SpacingItem();
-            mRoot.addChild(mBottomSpacer);
+            mRoot.addChildren(mBottomSpacer);
         }
 
         mOfflinePageBridge = offlinePageBridge;
@@ -153,7 +155,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         mUiDelegate.addDestructionObserver(suggestionsObserver);
 
         updateAllDismissedVisibility();
-        mRoot.setParent(this);
+        mRoot.addObserver(this);
     }
 
     @Override
@@ -303,14 +305,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     }
 
     @Override
-    public void onItemRangeChanged(TreeNode child, int itemPosition, int itemCount,
-            @Nullable PartialBindCallback callback) {
+    public void onItemRangeChanged(
+            ListObservable child, int itemPosition, int itemCount, @Nullable Object payload) {
         assert child == mRoot;
-        notifyItemRangeChanged(itemPosition, itemCount, callback);
+        notifyItemRangeChanged(itemPosition, itemCount, payload);
     }
 
     @Override
-    public void onItemRangeInserted(TreeNode child, int itemPosition, int itemCount) {
+    public void onItemRangeInserted(ListObservable child, int itemPosition, int itemCount) {
         assert child == mRoot;
         notifyItemRangeInserted(itemPosition, itemCount);
         if (mBottomSpacer != null) mBottomSpacer.refresh();
@@ -323,7 +325,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     }
 
     @Override
-    public void onItemRangeRemoved(TreeNode child, int itemPosition, int itemCount) {
+    public void onItemRangeRemoved(ListObservable child, int itemPosition, int itemCount) {
         assert child == mRoot;
         notifyItemRangeRemoved(itemPosition, itemCount);
         if (mBottomSpacer != null) mBottomSpacer.refresh();
@@ -409,7 +411,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         return suggestions == null || !suggestions.hasCards();
     }
 
-    private int getChildPositionOffset(TreeNode child) {
+    private int getChildPositionOffset(ChildNode child) {
         return mRoot.getStartingOffsetForChild(child);
     }
 

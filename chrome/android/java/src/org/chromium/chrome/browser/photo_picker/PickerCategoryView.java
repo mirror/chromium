@@ -294,16 +294,16 @@ public class PickerCategoryView extends RelativeLayout
 
     public LruCache<String, Bitmap> getLowResBitmaps() {
         if (mLowResBitmaps == null || mLowResBitmaps.get() == null) {
-            mLowResBitmaps =
-                    mActivity.getReferencePool().put(new LruCache<String, Bitmap>(mCacheSizeSmall));
+            mLowResBitmaps = mActivity.getChromeApplication().getReferencePool().put(
+                    new LruCache<String, Bitmap>(mCacheSizeSmall));
         }
         return mLowResBitmaps.get();
     }
 
     public LruCache<String, Bitmap> getHighResBitmaps() {
         if (mHighResBitmaps == null || mHighResBitmaps.get() == null) {
-            mHighResBitmaps =
-                    mActivity.getReferencePool().put(new LruCache<String, Bitmap>(mCacheSizeLarge));
+            mHighResBitmaps = mActivity.getChromeApplication().getReferencePool().put(
+                    new LruCache<String, Bitmap>(mCacheSizeLarge));
         }
         return mHighResBitmaps.get();
     }

@@ -46,6 +46,8 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.DisableHistogramsRule;
+import org.chromium.chrome.browser.model.ListObservable;
+import org.chromium.chrome.browser.model.ListObserver;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
@@ -98,7 +100,7 @@ public class SuggestionsSectionTest {
     @Mock
     private SuggestionsSection.Delegate mDelegate;
     @Mock
-    private NodeParent mParent;
+    private ListObserver mObserver;
     @Mock
     private SuggestionsUiDelegate mUiDelegate;
 
@@ -210,15 +212,15 @@ public class SuggestionsSectionTest {
         // Simulate initialisation by the adapter. Here we don't care about the notifications, since
         // the RecyclerView will be updated through notifyDataSetChanged.
         section.setStatus(CategoryStatus.AVAILABLE);
-        reset(mParent);
+        reset(mObserver);
 
         assertEquals(2, section.getItemCount()); // When empty, we have the header and status card.
         assertEquals(ItemViewType.STATUS, section.getItemViewType(1));
 
         section.appendSuggestions(snippets, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        verify(mParent).onItemRangeInserted(section, 1, suggestionCount);
-        verify(mParent).onItemRangeRemoved(section, 1 + suggestionCount, 1);
+        verify(mObserver).onItemRangeInserted(section, 1, suggestionCount);
+        verify(mObserver).onItemRangeRemoved(section, 1 + suggestionCount, 1);
     }
 
     @Test
@@ -235,23 +237,23 @@ public class SuggestionsSectionTest {
         section.setStatus(CategoryStatus.AVAILABLE);
         section.appendSuggestions(snippets, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        reset(mParent);
+        reset(mObserver);
 
         // We don't clear suggestions when the status is AVAILABLE.
         section.setStatus(CategoryStatus.AVAILABLE);
-        verifyNoMoreInteractions(mParent);
+        verifyNoMoreInteractions(mObserver);
 
         // We clear existing suggestions when the status is not AVAILABLE, and show the status card.
         section.setStatus(CategoryStatus.CATEGORY_EXPLICITLY_DISABLED);
-        verify(mParent).onItemRangeRemoved(section, 1, suggestionCount);
-        verify(mParent).onItemRangeInserted(section, 1, 1);
+        verify(mObserver).onItemRangeRemoved(section, 1, suggestionCount);
+        verify(mObserver).onItemRangeInserted(section, 1, 1);
 
         // A loading state item triggers showing the loading item.
         section.setStatus(CategoryStatus.AVAILABLE_LOADING);
-        verify(mParent).onItemRangeInserted(section, 2, 1);
+        verify(mObserver).onItemRangeInserted(section, 2, 1);
 
         section.setStatus(CategoryStatus.AVAILABLE);
-        verify(mParent).onItemRangeRemoved(section, 2, 1);
+        verify(mObserver).onItemRangeRemoved(section, 2, 1);
     }
 
     @Test
@@ -272,17 +274,17 @@ public class SuggestionsSectionTest {
 
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.setStatus(CategoryStatus.AVAILABLE);
-        reset(mParent);
+        reset(mObserver);
 
         section.appendSuggestions(snippets, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
 
         section.removeSuggestionById(snippets.get(1).mIdWithinCategory);
-        verify(mParent).onItemRangeRemoved(section, 2, 1);
+        verify(mObserver).onItemRangeRemoved(section, 2, 1);
 
         section.removeSuggestionById(snippets.get(0).mIdWithinCategory);
-        verify(mParent).onItemRangeRemoved(section, 1, 1);
-        verify(mParent).onItemRangeInserted(section, 1, 1);
+        verify(mObserver).onItemRangeRemoved(section, 1, 1);
+        verify(mObserver).onItemRangeInserted(section, 1, 1);
 
         assertEquals(2, section.getItemCount());
         assertEquals(ItemViewType.STATUS, section.getItemViewType(1));
@@ -302,7 +304,7 @@ public class SuggestionsSectionTest {
                                                .build();
         SuggestionsSection section = createSection(info);
         section.setStatus(CategoryStatus.AVAILABLE);
-        reset(mParent);
+        reset(mObserver);
         assertEquals(3, section.getItemCount()); // We have the header and status card and a button.
 
         section.appendSuggestions(snippets, /* keepSectionSize = */ true,
@@ -310,11 +312,11 @@ public class SuggestionsSectionTest {
         assertEquals(4, section.getItemCount());
 
         section.removeSuggestionById(snippets.get(0).mIdWithinCategory);
-        verify(mParent).onItemRangeRemoved(section, 1, 1);
+        verify(mObserver).onItemRangeRemoved(section, 1, 1);
 
         section.removeSuggestionById(snippets.get(1).mIdWithinCategory);
-        verify(mParent, times(2)).onItemRangeRemoved(section, 1, 1);
-        verify(mParent).onItemRangeInserted(section, 1, 1); // Only the status card is added.
+        verify(mObserver, times(2)).onItemRangeRemoved(section, 1, 1);
+        verify(mObserver).onItemRangeInserted(section, 1, 1); // Only the status card is added.
         assertEquals(3, section.getItemCount());
         assertEquals(ItemViewType.STATUS, section.getItemViewType(1));
         assertEquals(ItemViewType.ACTION, section.getItemViewType(2));
@@ -326,7 +328,7 @@ public class SuggestionsSectionTest {
     public void testDismissSection() {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.setStatus(CategoryStatus.AVAILABLE);
-        reset(mParent);
+        reset(mObserver);
         assertEquals(2, section.getItemCount());
 
         @SuppressWarnings("unchecked")
@@ -375,7 +377,7 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    public void testOfflineStatusIgnoredIfDetached() {
+    public void testOfflineStatusIgnoredIfDestroyed() {
         final int suggestionCount = 2;
         final List<SnippetArticle> suggestions =
                 mSuggestionsSource.createAndSetSuggestions(suggestionCount, TEST_CATEGORY_ID);
@@ -392,7 +394,7 @@ public class SuggestionsSectionTest {
         assertEquals(Long.valueOf(0L), suggestions.get(0).getOfflinePageOfflineId());
         assertNull(suggestions.get(1).getOfflinePageOfflineId());
 
-        section.detach();
+        section.destroy();
 
         final OfflinePageItem item1 = createOfflinePageItem(suggestions.get(1).mUrl, 1L);
         mBridge.setItems(Arrays.asList(item0, item1));
@@ -609,8 +611,8 @@ public class SuggestionsSectionTest {
 
         mSuggestionsSource.createAndSetSuggestions(3, TEST_CATEGORY_ID);
         section.updateSuggestions();
-        verify(mParent).onItemRangeRemoved(section, 1, 4);
-        verify(mParent).onItemRangeInserted(section, 1, 3);
+        verify(mObserver).onItemRangeRemoved(section, 1, 4);
+        verify(mObserver).onItemRangeInserted(section, 1, 3);
         assertEquals(3, section.getSuggestionsCount());
 
         assertFalse(section.isDataStale());
@@ -633,8 +635,10 @@ public class SuggestionsSectionTest {
 
         mSuggestionsSource.createAndSetSuggestions(3, TEST_CATEGORY_ID);
         section.updateSuggestions();
-        verify(mParent, never()).onItemRangeRemoved(any(TreeNode.class), anyInt(), anyInt());
-        verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
+        verify(mObserver, never())
+                .onItemRangeRemoved(any(ListObservable.class), anyInt(), anyInt());
+        verify(mObserver, never())
+                .onItemRangeInserted(any(ListObservable.class), anyInt(), anyInt());
         assertEquals(4, section.getSuggestionsCount());
 
         assertTrue(section.isDataStale());
@@ -658,8 +662,8 @@ public class SuggestionsSectionTest {
         List<SnippetArticle> newSnippets =
                 mSuggestionsSource.createAndSetSuggestions(3, TEST_CATEGORY_ID, "new");
         section.updateSuggestions();
-        verify(mParent).onItemRangeRemoved(section, 2, 3);
-        verify(mParent).onItemRangeInserted(section, 2, 2);
+        verify(mObserver).onItemRangeRemoved(section, 2, 3);
+        verify(mObserver).onItemRangeInserted(section, 2, 2);
         assertEquals(3, section.getSuggestionsCount());
         List<SnippetArticle> sectionSuggestions = getSuggestions(section);
         assertEquals(snippets.get(0), sectionSuggestions.get(0));
@@ -691,8 +695,8 @@ public class SuggestionsSectionTest {
         List<SnippetArticle> newSnippets =
                 mSuggestionsSource.createAndSetSuggestions(3, TEST_CATEGORY_ID, "new");
         section.updateSuggestions();
-        verify(mParent).onItemRangeRemoved(section, 3, 2);
-        verify(mParent).onItemRangeInserted(section, 3, 1);
+        verify(mObserver).onItemRangeRemoved(section, 3, 2);
+        verify(mObserver).onItemRangeInserted(section, 3, 1);
         assertEquals(3, section.getSuggestionsCount());
         List<SnippetArticle> sectionSuggestions = getSuggestions(section);
         assertEquals(snippets.get(0), sectionSuggestions.get(0));
@@ -724,8 +728,9 @@ public class SuggestionsSectionTest {
         section.updateSuggestions();
         // Even though the new list has just one suggestion, we need to keep the two seen ones
         // around.
-        verify(mParent).onItemRangeRemoved(section, 3, 2);
-        verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
+        verify(mObserver).onItemRangeRemoved(section, 3, 2);
+        verify(mObserver, never())
+                .onItemRangeInserted(any(ListObservable.class), anyInt(), anyInt());
         assertEquals(2, section.getSuggestionsCount());
         List<SnippetArticle> sectionSuggestions = getSuggestions(section);
         assertEquals(snippets.get(0), sectionSuggestions.get(0));
@@ -756,7 +761,7 @@ public class SuggestionsSectionTest {
         // Two suggestions left, one seen, one unseen.
         assertEquals(2, section.getSuggestionsCount());
 
-        reset(mParent);
+        reset(mObserver);
 
         mSuggestionsSource.setSuggestionsForCategory(
                 TEST_CATEGORY_ID, createDummySuggestions(4, TEST_CATEGORY_ID));
@@ -791,8 +796,10 @@ public class SuggestionsSectionTest {
         mSuggestionsSource.setSuggestionsForCategory(
                 TEST_CATEGORY_ID, createDummySuggestions(3, TEST_CATEGORY_ID));
         section.updateSuggestions();
-        verify(mParent, never()).onItemRangeRemoved(any(TreeNode.class), anyInt(), anyInt());
-        verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
+        verify(mObserver, never())
+                .onItemRangeRemoved(any(ListObservable.class), anyInt(), anyInt());
+        verify(mObserver, never())
+                .onItemRangeInserted(any(ListObservable.class), anyInt(), anyInt());
 
         // All old snippets should be in place.
         assertEquals(snippets, getSuggestions(section));
@@ -837,11 +844,11 @@ public class SuggestionsSectionTest {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.appendSuggestions(suggestions, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        reset(mParent);
+        reset(mObserver);
 
         // Remove the first card. The second one should get the update.
         section.removeSuggestionById(suggestions.get(0).mIdWithinCategory);
-        verify(mParent).onItemRangeChanged(
+        verify(mObserver).onItemRangeChanged(
                 same(section), eq(1), eq(1), any(PartialBindCallback.class));
     }
 
@@ -852,11 +859,11 @@ public class SuggestionsSectionTest {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.appendSuggestions(suggestions, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        reset(mParent);
+        reset(mObserver);
 
         // Remove the last card. The penultimate one should get the update.
         section.removeSuggestionById(suggestions.get(4).mIdWithinCategory);
-        verify(mParent).onItemRangeChanged(
+        verify(mObserver).onItemRangeChanged(
                 same(section), eq(4), eq(1), any(PartialBindCallback.class));
     }
 
@@ -867,11 +874,11 @@ public class SuggestionsSectionTest {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.appendSuggestions(suggestions, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        reset(mParent);
+        reset(mObserver);
 
         // Remove the last card. The penultimate one should get the update.
         section.removeSuggestionById(suggestions.get(1).mIdWithinCategory);
-        verify(mParent).onItemRangeChanged(
+        verify(mObserver).onItemRangeChanged(
                 same(section), eq(1), eq(1), any(PartialBindCallback.class));
     }
 
@@ -913,11 +920,11 @@ public class SuggestionsSectionTest {
 
         section.appendSuggestions(suggestions, /* keepSectionSize = */ true,
                 /* reportPrefetchedSuggestionsCount = */ false);
-        reset(mParent);
+        reset(mObserver);
 
         section.appendSuggestions(createDummySuggestions(2, /* categoryId = */ 42, "new"),
                 /* keepSectionSize = */ false, /* reportPrefetchedSuggestionsCount = */ false);
-        verify(mParent).onItemRangeChanged(
+        verify(mObserver).onItemRangeChanged(
                 same(section), eq(5), eq(1), any(PartialBindCallback.class));
     }
 
@@ -929,7 +936,7 @@ public class SuggestionsSectionTest {
 
         // Reset any notification invocations on the parent from setting the initial list
         // of suggestions.
-        reset(mParent);
+        reset(mObserver);
         return section;
     }
 
@@ -960,7 +967,7 @@ public class SuggestionsSectionTest {
     private SuggestionsSection createSection(SuggestionsCategoryInfo info) {
         SuggestionsSection section = new SuggestionsSection(
                 mDelegate, mUiDelegate, mock(SuggestionsRanker.class), mBridge, info);
-        section.setParent(mParent);
+        section.addObserver(mObserver);
         return section;
     }
 
