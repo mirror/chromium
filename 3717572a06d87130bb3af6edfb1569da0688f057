@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b620a47a_dd8c01c3",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeUnitTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T18:02:56Z",
+      "side": 1,
+      "message": "Done. Origin on 45 was being accepted as a \"message\" to show if/when this assert would fail. I\u0027ve removed it now.",
+      "parentUuid": "c97571ac_61229cf4",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06a94ea_469d584d",
         "filename": "content/browser/notifications/notification_id_generator.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a38f2ac9_f245a64b",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T18:02:56Z",
+      "side": 1,
+      "message": "I was under the impression that we also check for whether the notification has a valid prefix by checking for the separator character. Per offline chat with Peter, we silently error out if we later find out a notification is not valid, and that check is not necessary here. With that background, your suggestion makes sense, and I\u0027ve removed the expensive check for separator char.",
+      "parentUuid": "f06a94ea_469d584d",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba66fb5c_3e73445d",
         "filename": "content/browser/notifications/notification_id_generator.cc",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07358adc_97f86b4a",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-11T18:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba66fb5c_3e73445d",
+      "revId": "3717572a06d87130bb3af6edfb1569da0688f057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
