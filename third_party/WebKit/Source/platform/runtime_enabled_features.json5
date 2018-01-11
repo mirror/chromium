@@ -758,7 +758,7 @@
     },
     {
       name: "PageLifecycle",
-      status: "test",
+      status: "stable",
     },
     {
       name: "PagePopup",
