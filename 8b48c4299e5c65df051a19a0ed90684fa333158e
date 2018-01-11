@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d40548_e2f247bc",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-11T17:36:29Z",
+      "side": 1,
+      "message": "This doesn\u0027t necessarily be an r-value reference. You could remove the \u0026\u0026 but just do std::move in the appropriate spots that probably matches current design patterns. Not sure which is best; will let third_party/WebKit/public/OWNER decide.",
+      "revId": "8b48c4299e5c65df051a19a0ed90684fa333158e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
