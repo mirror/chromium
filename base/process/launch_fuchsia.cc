@@ -4,6 +4,9 @@
 
 #include "base/process/launch.h"
 
+#include <fdio/limits.h>
+#include <fdio/namespace.h>
+#include <fdio/util.h>
 #include <launchpad/launchpad.h>
 #include <stdint.h>
 #include <unistd.h>
@@ -14,6 +17,7 @@
 #include "base/files/file_util.h"
 #include "base/fuchsia/default_job.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 
 namespace base {
 
@@ -54,6 +58,72 @@ bool GetAppOutputInternal(const CommandLine& cmd_line,
   close(pipe_fd[0]);
 
   return process.WaitForExit(exit_code);
+}
+
+bool MapPathsToLaunchpad(const std::vector<std::string> paths_to_map,
+                         launchpad_t* lp) {
+  zx_status_t status;
+
+  // Build a array of null terminated strings, which which will be used as an
+  // argument for launchpad_set_nametable().
+  std::vector<const char*> paths_c_str;
+  paths_c_str.reserve(paths_to_map.size());
+
+  for (size_t path_idx = 0; path_idx < paths_to_map.size(); ++path_idx) {
+    const std::string& next_path_str = paths_to_map[path_idx];
+    base::FilePath next_path(next_path_str);
+    if (!DirectoryExists(next_path)) {
+      LOG(ERROR) << "Directory does not exist: " << next_path;
+      return false;
+    }
+
+    // Get a Zircon handle to the directory |next_path|.
+    base::File dir(next_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+    base::ScopedPlatformFile scoped_fd(dir.TakePlatformFile());
+    zx_handle_t handles[FDIO_MAX_HANDLES] = {0, 0, 0};
+    uint32_t types[FDIO_MAX_HANDLES];
+    status = fdio_transfer_fd(scoped_fd.get(), 0, handles, types);
+    if (status == ZX_OK) {
+      LOG(ERROR) << "fdio_clone_fd failed: " << zx_status_get_string(status);
+      return false;
+    }
+    ignore_result(scoped_fd.release());
+
+    // Close the handles that we won't use.
+    for (int i = 1; i < FDIO_MAX_HANDLES; ++i) {
+      zx_handle_close(handles[i]);
+    }
+
+    if (types[0] != PA_FDIO_REMOTE) {
+      LOG(ERROR) << "Handle type for " << next_path.AsUTF8Unsafe()
+                 << " is not PA_FDIO_REMOTE: " << types[0];
+      zx_handle_close(handles[0]);
+      return false;
+    }
+
+    // Add the handle to the child's nametable.
+    // We use the macro PA_HND(..., <index>) to relate the handle to its
+    // position in the nametable, which is stored as an array of path strings
+    // |paths_c_str|.
+    status = launchpad_add_handle(lp, handles[0], PA_HND(PA_NS_DIR, path_idx));
+    if (status != ZX_OK) {
+      LOG(ERROR) << "launchpad_add_handle failed: "
+                 << zx_status_get_string(status);
+      return false;
+    }
+    paths_c_str.push_back(next_path_str.c_str());
+  }
+
+  if (!paths_c_str.empty()) {
+    status = launchpad_set_nametable(lp, paths_c_str.size(), &paths_c_str[0]);
+    if (status != ZX_OK) {
+      LOG(ERROR) << "launchpad_set_nametable failed: "
+                 << zx_status_get_string(status);
+      return false;
+    }
+  }
+
+  return true;
 }
 
 }  // namespace
@@ -126,6 +196,14 @@ Process LaunchProcess(const std::vector<std::string>& argv,
     launchpad_set_environ(lp, new_environ.get());
   else
     to_clone |= LP_CLONE_ENVIRON;
+
+  if (!options.paths_to_map.empty()) {
+    DCHECK(!(to_clone & LP_CLONE_FDIO_NAMESPACE));
+    if (!MapPathsToLaunchpad(options.paths_to_map, lp)) {
+      return Process();
+    }
+  }
+
   launchpad_clone(lp, to_clone);
 
   // Clone the mapped file-descriptors, plus any of the stdio descriptors
