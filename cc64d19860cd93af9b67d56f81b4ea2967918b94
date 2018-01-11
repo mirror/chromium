@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e672f64_0707ea92",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-11T13:58:46Z",
+      "side": 1,
+      "message": "nit: here too.",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "cc64d19860cd93af9b67d56f81b4ea2967918b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e60074b_753ee2ae",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-11T13:58:46Z",
+      "side": 1,
+      "message": "nit: drop parent_.",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 74
+      },
+      "revId": "cc64d19860cd93af9b67d56f81b4ea2967918b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ef6593_39fe30da",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-11T13:58:46Z",
+      "side": 1,
+      "message": "Please add a comment explaining what this does and why it should be the first member.",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 49
+      },
+      "revId": "cc64d19860cd93af9b67d56f81b4ea2967918b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21672724_f7b7b5dc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-11T13:58:46Z",
+      "side": 1,
+      "message": "Explicit is not needed anymore.\n\nAlso please a comment that we can use tracing_controller because TaskQueueThrottler is a member of TaskQueueThrottler and has the same lifetime.",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 10
+      },
+      "revId": "cc64d19860cd93af9b67d56f81b4ea2967918b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4a7dbd_e562be76",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-11T13:58:46Z",
+      "side": 1,
+      "message": "ultranit: keep the style the same as adjacent comments.",
+      "range": {
+        "startLine": 203,
+        "startChar": 63,
+        "endLine": 203,
+        "endChar": 10
+      },
+      "revId": "cc64d19860cd93af9b67d56f81b4ea2967918b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
