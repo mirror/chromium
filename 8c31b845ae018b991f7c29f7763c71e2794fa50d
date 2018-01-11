@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e15c57df_5dc98c69",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/generate.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-11T17:50:08Z",
+      "side": 1,
+      "message": "s/exist/exists/",
+      "revId": "8c31b845ae018b991f7c29f7763c71e2794fa50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
