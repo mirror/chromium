@@ -44,7 +44,8 @@ void GlobalShortcutListenerOzone::StopListening() {
 }
 
 bool GlobalShortcutListenerOzone::RegisterAcceleratorImpl(
-    const ui::Accelerator& accelerator) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope) {
   NOTIMPLEMENTED();
   // To implement:
   // 1) Convert modifiers to platform specific modifiers.

@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/base/accelerators/accelerator.h"
 
 using content::BrowserThread;
 
@@ -23,18 +22,20 @@ GlobalShortcutListener::~GlobalShortcutListener() {
 }
 
 bool GlobalShortcutListener::RegisterAccelerator(
-    const ui::Accelerator& accelerator, Observer* observer) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope,
+    Observer* observer) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   if (IsShortcutHandlingSuspended())
     return false;
 
   AcceleratorMap::const_iterator it = accelerator_map_.find(accelerator);
-  if (it != accelerator_map_.end()) {
+  if (it != accelerator_map_.end() && it->second.scope == scope) {
     // The accelerator has been registered.
     return false;
   }
 
-  if (!RegisterAcceleratorImpl(accelerator)) {
+  if (!RegisterAcceleratorImpl(accelerator, scope)) {
     // If the platform-specific registration fails, mostly likely the shortcut
     // has been registered by other native applications.
     return false;
@@ -43,7 +44,8 @@ bool GlobalShortcutListener::RegisterAccelerator(
   if (accelerator_map_.empty())
     StartListening();
 
-  accelerator_map_[accelerator] = observer;
+  const AcceleratorData accelerator_data = {observer, scope};
+  accelerator_map_[accelerator] = accelerator_data;
   return true;
 }
 
@@ -57,7 +59,7 @@ void GlobalShortcutListener::UnregisterAccelerator(
   // We should never get asked to unregister something that we didn't register.
   DCHECK(it != accelerator_map_.end());
   // The caller should call this function with the right observer.
-  DCHECK(it->second == observer);
+  DCHECK(it->second.observer == observer);
 
   UnregisterAcceleratorImpl(accelerator);
   accelerator_map_.erase(it);
@@ -72,7 +74,7 @@ void GlobalShortcutListener::UnregisterAccelerators(Observer* observer) {
 
   AcceleratorMap::iterator it = accelerator_map_.begin();
   while (it != accelerator_map_.end()) {
-    if (it->second == observer) {
+    if (it->second.observer == observer) {
       AcceleratorMap::iterator to_remove = it++;
       UnregisterAccelerator(to_remove->first, observer);
     } else {
@@ -98,7 +100,7 @@ void GlobalShortcutListener::SetShortcutHandlingSuspended(bool suspended) {
     if (shortcut_handling_suspended_)
       UnregisterAcceleratorImpl(it->first);
     else
-      RegisterAcceleratorImpl(it->first);
+      RegisterAcceleratorImpl(it->first, it->second.scope);
   }
 }
 
@@ -116,7 +118,7 @@ void GlobalShortcutListener::NotifyKeyPressed(
     return;  // No-one is listening to this key.
   }
 
-  iter->second->OnKeyPressed(accelerator);
+  iter->second.observer->OnKeyPressed(accelerator);
 }
 
 }  // namespace extensions

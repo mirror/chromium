@@ -33,7 +33,11 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
 
  private:
   typedef int KeyId;
-  typedef std::map<ui::Accelerator, KeyId> AcceleratorIdMap;
+  struct KeyInfo {
+    KeyId key_id;
+    AcceleratorScope scope;
+  };
+  typedef std::map<ui::Accelerator, KeyInfo> AcceleratorIdMap;
   typedef std::map<KeyId, ui::Accelerator> IdAcceleratorMap;
   typedef std::map<KeyId, EventHotKeyRef> IdHotKeyRefMap;
 
@@ -44,7 +48,8 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
   // GlobalShortcutListener implementation.
   void StartListening() override;
   void StopListening() override;
-  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
+  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator,
+                               AcceleratorScope scope) override;
   void UnregisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
 
   // Mac-specific functions for registering hot keys with modifiers.
