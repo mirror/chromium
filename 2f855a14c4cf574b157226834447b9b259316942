@@ -22,6 +22,30 @@
       "revId": "2f855a14c4cf574b157226834447b9b259316942",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff1acc0_bf97f08f",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2018-01-11T11:03:11Z",
+      "side": 1,
+      "message": "I think my CL may fix problems in our roll. Can I try making your Optional change as a follow-up CL? Looking at 495, it just seems that input_region is used in several places, and I\u0027d rather experiment with that sort of change after this fix.",
+      "parentUuid": "a7ed943c_b1441449",
+      "range": {
+        "startLine": 728,
+        "startChar": 26,
+        "endLine": 728,
+        "endChar": 38
+      },
+      "revId": "2f855a14c4cf574b157226834447b9b259316942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
