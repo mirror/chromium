@@ -2099,6 +2099,9 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       bool is_extension_content = (extensions::TabHelper::FromWebContents(
           web_contents)->extension_app() == extension);
 
+      LOG(INFO) << "FOR: " <<web_contents->GetURL().spec();
+      LOG(INFO) << "is_extension_content: " << is_extension_content;
+
       // For chrome page overrides, navigate to the default page.
       if (is_extension_content) {
         GURL new_url;
@@ -2108,6 +2111,7 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
           new_url = GURL(url::kAboutBlankURL);
 
         if (!new_url.is_empty()) {
+          LOG(INFO) << "Heyoo";
           NavigateParams params(
               profile_,
               new_url,
@@ -2115,6 +2119,9 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
           params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
           Navigate(&params);
           continue;
+        } else {
+        
+          LOG(INFO) << "Heyoo 2";
         }
       }
 
@@ -2125,11 +2132,34 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       // - The extension_app check is for apps, which can have non-extension
       // schemes, e.g. https://mail.google.com if you have the Gmail app
       // installed.
-      if (tab_strip_model_->count() > 1 &&
+      /*if (tab_strip_model_->count() > 1 &&
           ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
            web_contents->GetURL().host_piece() == extension->id()) ||
            is_extension_content)) {
+        LOG(INFO) << "\tclosing tab";
         tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
+      } else {
+        //chrome::UnmuteIfMutedByExtension(web_contents, extension->id());
+        LOG(INFO) << "\tunmute tab";
+      }*/
+      if ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
+           web_contents->GetURL().host_piece() == extension->id()) ||
+          (extensions::TabHelper::FromWebContents(web_contents)
+           ->extension_app() == extension)) {
+           if (tab_strip_model_->count() > 1) {
+
+             LOG(INFO) << "\tclosing tab";
+             tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
+           } else {
+             LOG(INFO) << "navigate";
+             NavigateParams params(
+                 this,
+                 GURL(url::kAboutBlankURL),
+                 ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
+             params.source_contents = web_contents;
+             Navigate(&params);
+
+           }
       } else {
         chrome::UnmuteIfMutedByExtension(web_contents, extension->id());
       }
