@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "155a5206_d0cb9d45",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2018-01-11T09:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a264cf_f47aa86c",
+      "revId": "b845616dcf96abbc8fa211d1331c02bf85030455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939d29d7_fadd0520",
         "filename": "third_party/WebKit/Source/platform/BUILD.gn",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T23:53:49Z",
       "side": 1,
       "message": "remove this line?",
+      "revId": "b845616dcf96abbc8fa211d1331c02bf85030455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d13aad_3140e69f",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2018-01-11T09:18:11Z",
+      "side": 1,
+      "message": "It is necessary to reassign the list in the next line. I will add a comment.",
+      "parentUuid": "939d29d7_fadd0520",
       "revId": "b845616dcf96abbc8fa211d1331c02bf85030455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
