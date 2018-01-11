@@ -403,7 +403,7 @@ int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   const CompletionCallback& callback) {
   DCHECK(socket_handle);
   HttpRequestHeaders request_extra_headers;
-  int request_load_flags = 0;
+  int request_load_flags = LOAD_IGNORE_LIMITS;
   RequestPriority request_priority = MEDIUM;
   return InitSocketPoolHelper(
       ClientSocketPoolManager::NORMAL_GROUP, host_port_pair,
