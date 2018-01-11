@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39caf430_27fdd03a",
+        "filename": "chrome/browser/chromeos/login/helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-11T21:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7fe2d82_c5a07578",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22419f12_ac8c9c46",
         "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "97b49be3_14e81b6b",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-11T21:29:53Z",
+      "side": 1,
+      "message": "exactly.",
+      "parentUuid": "22419f12_ac8c9c46",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98617d22_e43cfd31",
         "filename": "chrome/browser/ui/ash/login_screen_client.h",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "5119d0f36037557eba6197245493ed41cf26f216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e682ecb_ae7e8228",
+        "filename": "chrome/browser/ui/ash/login_screen_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-11T21:29:53Z",
+      "side": 1,
+      "message": "Include removed.",
+      "parentUuid": "98617d22_e43cfd31",
+      "revId": "5119d0f36037557eba6197245493ed41cf26f216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
