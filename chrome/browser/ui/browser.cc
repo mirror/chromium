@@ -120,7 +120,6 @@
 #include "chrome/browser/ui/find_bar/find_bar.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
-#include "chrome/browser/ui/first_run_bubble_presenter.h"
 #include "chrome/browser/ui/global_error/global_error.h"
 #include "chrome/browser/ui/global_error/global_error_service.h"
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
@@ -1431,10 +1430,6 @@ void Browser::OnWindowDidShow() {
   GlobalError* error = service->GetFirstGlobalErrorWithBubbleView();
   if (error)
     error->ShowBubbleView(this);
-}
-
-void Browser::ShowFirstRunBubble() {
-  FirstRunBubblePresenter::PresentWhenReady(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
