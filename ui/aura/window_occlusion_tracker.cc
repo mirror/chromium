@@ -116,18 +116,25 @@ WindowOcclusionTracker::~WindowOcclusionTracker() = default;
 void WindowOcclusionTracker::MaybeRecomputeOcclusion() {
   if (g_num_pause_occlusion_tracking)
     return;
+
   for (auto& root_window_pair : root_windows_) {
     RootWindowState& root_window_state = root_window_pair.second;
-    if (root_window_state.dirty == true) {
+
+    constexpr int kMaxIterations = 2;
+    for (int iteration = 0;
+         iteration < kMaxIterations && root_window_state.dirty; ++iteration) {
       ScopedPauseOcclusionTracking scoped_pause_occlusion_tracking;
       root_window_state.dirty = false;
       SkRegion occluded_region;
       RecomputeOcclusionImpl(root_window_pair.first, gfx::Transform(), nullptr,
                              &occluded_region);
-      // WindowDelegate::OnWindowOcclusionChanged() impls must not change any
-      // Window.
-      DCHECK(!root_window_state.dirty);
     }
+
+    // After |kMaxIterations| iterations, recomputing occlusion should not cause
+    // window events that can affect occlusion anymore.
+    // TODO(fdoray): Change this CHECK to DCHECK once we have validated that
+    // |kMaxIterations| works well in production. https://crbug.com/668690
+    CHECK(!root_window_state.dirty);
   }
 }
 
