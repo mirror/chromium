@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec660c6_4519f60f",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-11T09:26:01Z",
+      "side": 1,
+      "message": "Where this gets used currently we wouldn\u0027t have received the first parent-generated LocalSurfaceId.\n\nI would have preferred to not be able to construct this class without providing it. (I prefer avoiding invalid states.) There are ways but they seemed non-ideal.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2ead2a_4e89b7fa",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-11T09:26:01Z",
+      "side": 1,
+      "message": "Check me here:\n\nIt seems like this is where the browser-generated LocalSurfaceId would have normally been generated, right?",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc1d266_d26d95dd",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-11T09:26:01Z",
+      "side": 1,
+      "message": "At some point, the parent-generated LocalSurfaceId would have been passed to the renderer. I assume this is it, right?",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
