@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d609583f_903a5b6d",
+        "filename": "courgette/courgette_tool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-11T19:56:31Z",
+      "side": 1,
+      "message": "Bundle this with \"else\" case; {} {} for \"if\" and \"else\".",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 57
+      },
+      "revId": "769743c4f2c19425540cce4ad94bc645947e2ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
