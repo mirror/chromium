@@ -73,6 +73,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
+#include "chrome/browser/chromeos/net/auto_connect_notifier.h"
 #include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
 #include "chrome/browser/chromeos/net/network_pref_state_observer.h"
@@ -997,6 +998,14 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
   if (!user_manager::UserManager::Get()->IsLoggedInAsGuest())
     low_disk_notification_ = base::MakeUnique<LowDiskNotification>();
 
+  if (NetworkHandler::IsInitialized() &&
+      NetworkHandler::Get()->auto_connect_handler()) {
+    auto_connect_notifier_.reset(new AutoConnectNotifier(
+        profile(), NetworkHandler::Get()->network_connection_handler(),
+        NetworkHandler::Get()->network_state_handler(),
+        NetworkHandler::Get()->auto_connect_handler()));
+  }
+
   ChromeBrowserMainPartsLinux::PostProfileInit();
 }
 
@@ -1104,6 +1113,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // We should remove observers attached to D-Bus clients before
   // DBusThreadManager is shut down.
   network_pref_state_observer_.reset();
+  auto_connect_notifier_.reset();
   extension_volume_observer_.reset();
   power_prefs_.reset();
   power_metrics_reporter_.reset();
