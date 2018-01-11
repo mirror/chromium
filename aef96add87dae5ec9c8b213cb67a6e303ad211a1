@@ -16,6 +16,24 @@
       "revId": "aef96add87dae5ec9c8b213cb67a6e303ad211a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559238c7_6f64af87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-11T19:34:36Z",
+      "side": 1,
+      "message": "updateLogoTransition() are called a lot in onLayoutChange() and onScrolled(). But we can definitely add one here just to be safe. Also reorganize these a bit to make them less indented.",
+      "parentUuid": "647f3624_45c5a8a9",
+      "revId": "aef96add87dae5ec9c8b213cb67a6e303ad211a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
