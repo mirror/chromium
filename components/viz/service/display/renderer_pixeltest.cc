@@ -36,6 +36,7 @@
 
 using cc::RendererPixelTest;
 using cc::GLRendererPixelTest;
+using cc::SkiaRendererPixelTest;
 using gpu::gles2::GLES2Interface;
 
 namespace viz {
@@ -732,6 +733,7 @@ void CreateTestY16TextureDrawQuad_TwoColor(
 using RendererTypes =
     ::testing::Types<GLRenderer,
                      SoftwareRenderer,
+                     SkiaRenderer,
                      cc::GLRendererWithExpandedViewport,
                      cc::SoftwareRendererWithExpandedViewport>;
 TYPED_TEST_CASE(RendererPixelTest, RendererTypes);
