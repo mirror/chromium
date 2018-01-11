@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1a3b7ac_bc033732",
+        "filename": "chrome/browser/ui/cocoa/profiles/user_manager_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-11T20:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d132fcc9_d10ebeb9",
+      "revId": "93a15dbe920d11506a522153281eb001e1cd5c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e987de6_ad160c07",
         "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "93a15dbe920d11506a522153281eb001e1cd5c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecd3b91_7aca14f8",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2018-01-11T20:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e987de6_ad160c07",
+      "revId": "93a15dbe920d11506a522153281eb001e1cd5c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
