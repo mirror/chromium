@@ -11,7 +11,6 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/power/power_status.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray_controller.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -147,8 +146,7 @@ std::unique_ptr<Notification> DualRoleNotification::CreateNotification() {
           l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DUAL_ROLE_MESSAGE),
           gfx::Image(), base::string16(), GURL(),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDualRole),
+              message_center::NotifierId::SYSTEM_COMPONENT, "ash.dual-role"),
           message_center::RichNotificationData(),
           new DualRoleNotificationDelegate, kNotificationChargingUsbCIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

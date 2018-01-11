@@ -14,7 +14,6 @@
 #include "ash/system/date/date_view.h"
 #include "ash/system/power/battery_notification.h"
 #include "ash/system/power/dual_role_notification.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_item_view.h"
 #include "ash/system/tray/tray_utils.h"
@@ -230,14 +229,14 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
                 IDS_ASH_STATUS_TRAY_LOW_POWER_CHARGER_MESSAGE_SHORT),
             gfx::Image(), base::string16(), GURL(),
             message_center::NotifierId(
-                message_center::NotifierId::SYSTEM_COMPONENT,
-                system_notifier::kNotifierPower),
+                message_center::NotifierId::SYSTEM_COMPONENT, "ash.power"),
             message_center::RichNotificationData(),
             new UsbNotificationDelegate(this), kNotificationLowPowerBatteryIcon,
             message_center::SystemNotificationWarningLevel::WARNING);
     // TODO(tetsui): Workaround of https://crbug.com/757724. Remove after the
     // bug is fixed.
     notification->set_vector_small_image(gfx::kNoneIcon);
+    notification->set_priority(message_center::SYSTEM_PRIORITY);
     message_center_->AddNotification(std::move(notification));
     return true;
   } else if (!usb_charger_is_connected && usb_charger_was_connected_) {

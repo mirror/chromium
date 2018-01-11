@@ -6,7 +6,6 @@
 
 #include <stdint.h>
 
-#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -100,8 +99,7 @@ LowDiskNotification::CreateNotification(Severity severity) {
   optional_fields.buttons.push_back(storage_settings);
 
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierDisk);
+      message_center::NotifierId::SYSTEM_COMPONENT, "ash.disk");
 
   auto on_click = base::BindRepeating([](base::Optional<int> button_index) {
     if (button_index) {

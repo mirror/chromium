@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -602,8 +601,7 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
           l10n_util::GetStringUTF16(IDS_SCREENSHOT_NOTIFICATION_NOTIFIER_NAME),
           GURL(kNotificationOriginUrl),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              ash::system_notifier::kNotifierScreenshot),
+              message_center::NotifierId::SYSTEM_COMPONENT, "ash.screenshot"),
           optional_field,
           new ScreenshotGrabberNotificationDelegate(success, GetProfile(),
                                                     screenshot_path),
