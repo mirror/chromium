@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa06706c_970bf4e7",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-11T18:56:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::UI);",
+      "revId": "cb3b0607b48c37ed8d02a335207a5355c1415807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
