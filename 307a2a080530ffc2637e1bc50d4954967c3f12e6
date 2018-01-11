@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "994ac25f_252a9f28",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-11T04:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec00e9a0_70176fd0",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2126edcf_1dccbd06",
         "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c9943e_8f7cc194",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-11T04:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2126edcf_1dccbd06",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ea663169_bc68aeb2",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-11T04:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d472e4_a98444e2",
+      "range": {
+        "startLine": 207,
+        "startChar": 5,
+        "endLine": 207,
+        "endChar": 10
+      },
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e442fdc_6b701b90",
         "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495d35a7_32406281",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-11T04:37:10Z",
+      "side": 1,
+      "message": "If the anchor_view gets removed as by uninstalling this is a use after free. I\u0027ve updated the comment.",
+      "parentUuid": "7e442fdc_6b701b90",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
