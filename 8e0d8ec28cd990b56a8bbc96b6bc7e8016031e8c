@@ -34,6 +34,24 @@
       "revId": "8e0d8ec28cd990b56a8bbc96b6bc7e8016031e8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e72db4_b57db479",
+        "filename": "build/config/allocator.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158814
+      },
+      "writtenOn": "2018-01-11T10:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "71145211_2f2cc11f",
+      "revId": "8e0d8ec28cd990b56a8bbc96b6bc7e8016031e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
