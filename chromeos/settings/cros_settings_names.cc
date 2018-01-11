@@ -306,4 +306,7 @@ const char kUnaffiliatedArcAllowed[] = "cros.device.unaffiliated_arc_allowed";
 // as per RFC 1035, then no hostname will be used.
 const char kDeviceHostnameTemplate[] = "cros.network.hostname_template";
 
+// Boolean indicating whether the user is allowed to enable APK sideloading.
+const char kARCSideloadingAllowed[] = "cros.device.arc.sideloading_allowed";
+
 }  // namespace chromeos

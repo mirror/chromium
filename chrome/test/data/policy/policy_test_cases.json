@@ -3006,6 +3006,12 @@
     "test_policy": { "DisplayRotationDefault": 1 }
   },
 
+  "ARCSideloadingAllowed": {
+    "os": ["chromeos"],
+    "can_be_recommended": false,
+    "test_policy": { "ARCSideloadingAllowed": false }
+  },
+
   "ChromeOsReleaseChannel": {
   },
 

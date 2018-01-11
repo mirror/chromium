@@ -993,6 +993,16 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
         base::MakeUnique<base::Value>(container.unaffiliated_arc_allowed()),
         nullptr);
   }
+
+  if (policy.has_arc_sideloading()) {
+    const em::ARCSideloadingProto& container(policy.arc_sideloading());
+    if (container.has_allow_arc_sideloading())
+      policies->Set(
+          key::kARCSideloadingAllowed, POLICY_LEVEL_MANDATORY,
+          POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+          base::MakeUnique<base::Value>(container.allow_arc_sideloading()),
+          nullptr);
+  }
 }
 }  // namespace
 

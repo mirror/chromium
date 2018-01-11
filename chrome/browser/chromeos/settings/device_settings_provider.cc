@@ -61,6 +61,7 @@ const char* const kKnownSettings[] = {
     kAllowBluetooth,
     kAllowedConnectionTypesForUpdate,
     kAllowRedeemChromeOsRegistrationOffers,
+    kARCSideloadingAllowed,
     kAttestationForContentProtectionEnabled,
     kCastReceiverName,
     kDeviceAttestationEnabled,
@@ -623,6 +624,15 @@ void DecodeGenericPolicies(
         !container.device_hostname_template().empty()) {
       new_values_cache->SetString(kDeviceHostnameTemplate,
                                   container.device_hostname_template());
+    }
+  }
+
+  if (policy.has_arc_sideloading()) {
+    const em::ARCSideloadingProto& container(policy.arc_sideloading());
+    if (container.has_allow_arc_sideloading()) {
+      new_values_cache->SetValue(
+          kARCSideloadingAllowed,
+          base::MakeUnique<base::Value>(container.allow_arc_sideloading()));
     }
   }
 }

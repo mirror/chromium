@@ -965,6 +965,12 @@ message UnaffiliatedArcAllowedProto {
   optional bool unaffiliated_arc_allowed = 1;
 }
 
+// Settings to control APK Sideloading in ARC.
+message ARCSideloadingProto {
+  // Whether the user can enable APK sideloading on the device.
+  optional bool allow_arc_sideloading = 1 [default = false];
+}
+
 message ChromeDeviceSettingsProto {
   optional DevicePolicyRefreshRateProto device_policy_refresh_rate = 1;
   optional UserWhitelistProto user_whitelist = 2;
@@ -1043,4 +1049,5 @@ message ChromeDeviceSettingsProto {
       device_login_screen_auto_select_certificate_for_urls = 62;
   optional UnaffiliatedArcAllowedProto unaffiliated_arc_allowed = 63;
   optional NetworkHostnameProto network_hostname = 64;
+  optional ARCSideloadingProto arc_sideloading = 65;
 }
