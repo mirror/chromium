@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4651c54b_e0b80cd9",
+        "filename": "media/filters/source_buffer_range_by_dts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2018-01-11T19:40:11Z",
+      "side": 1,
+      "message": "Looks the same as std::lower_bound, with negated values (so \u0027not less than\u0027 becomes \u0027not greater than\u0027). Would probably be a lot shorter using that with a lambda comparator.",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 7
+      },
+      "revId": "28546622c2ffce6dd5d6cf00d757a645a3e97819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
