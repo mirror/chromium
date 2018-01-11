@@ -29,6 +29,7 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.lang.reflect.Method;
@@ -75,8 +76,10 @@ public class WebContentsAccessibilityTest {
 
         // Get the AccessibilityNodeProvider.
         ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
-        AccessibilityNodeProvider provider = contentViewCore.getAccessibilityNodeProvider();
+        WebContentsAccessibility wcax =
+                WebContentsAccessibility.fromWebContents(mActivityTestRule.getWebContents());
+        wcax.setState(true);
+        AccessibilityNodeProvider provider = wcax.getAccessibilityNodeProvider();
 
         // Wait until we find a node in the accessibility tree with the text "Text".
         // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until

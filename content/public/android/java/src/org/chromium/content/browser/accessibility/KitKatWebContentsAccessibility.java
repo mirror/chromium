@@ -6,13 +6,13 @@ package org.chromium.content.browser.accessibility;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
+import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -20,12 +20,25 @@ import org.chromium.content_public.browser.WebContents;
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
+public class KitKatWebContentsAccessibility extends WebContentsAccessibilityImpl {
     private String mSupportedHtmlElementTypes;
 
-    KitKatWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, shouldFocusOnPageLoad);
+    private static final class UserDataFactoryLazyHolder {
+        private static final UserDataFactory<KitKatWebContentsAccessibility> INSTANCE =
+                KitKatWebContentsAccessibility::new;
+    }
+
+    static KitKatWebContentsAccessibility create(WebContents webContents) {
+        return WebContentsUserData.fromWebContents(webContents,
+                KitKatWebContentsAccessibility.class, UserDataFactoryLazyHolder.INSTANCE);
+    }
+
+    KitKatWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
+    }
+
+    @Override
+    protected void onNativeInit() {
         mSupportedHtmlElementTypes = nativeGetSupportedHtmlElementTypes(mNativeObj);
     }
 

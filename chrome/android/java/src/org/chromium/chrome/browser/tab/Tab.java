@@ -115,6 +115,7 @@ import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.content_public.common.Referrer;
 import org.chromium.content_public.common.ResourceRequestBody;
@@ -1820,9 +1821,12 @@ public class Tab
             mNativePage = null;
             destroyNativePageInternal(previousNativePage);
 
-            if (mContentViewCore != null) {
-                mContentViewCore.setObscuredByAnotherView(false);
-                mContentViewCore.getWebContents().setImportance(ChildProcessImportance.NORMAL);
+            WebContents oldWebContents = getWebContents();
+            if (oldWebContents != null) {
+                WebContentsAccessibility wcax =
+                        WebContentsAccessibility.fromWebContents(oldWebContents);
+                wcax.setObscuredByAnotherView(false);
+                oldWebContents.setImportance(ChildProcessImportance.NORMAL);
             }
 
             mContentViewCore = cvc;
@@ -1865,10 +1869,12 @@ public class Tab
             updateThemeColorIfNeeded(false);
             notifyContentChanged();
 
+            WebContentsAccessibility wcax =
+                    WebContentsAccessibility.fromWebContents(getWebContents());
             // For browser tabs, we want to set accessibility focus to the page
             // when it loads. This is not the default behavior for embedded
             // web views.
-            mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
+            wcax.setShouldFocusOnPageLoad(true);
 
             mContentViewCore.addImeEventObserver(new ImeEventObserver() {
                 @Override
@@ -3167,11 +3173,12 @@ public class Tab
             }
         }
 
-        ContentViewCore cvc = getContentViewCore();
-        if (cvc != null) {
+        WebContents webContents = getWebContents();
+        if (webContents != null) {
+            WebContentsAccessibility wcax = WebContentsAccessibility.fromWebContents(webContents);
             boolean isWebContentObscured = isObscuredByAnotherViewForAccessibility()
                     || isShowingSadTab();
-            cvc.setObscuredByAnotherView(isWebContentObscured);
+            wcax.setObscuredByAnotherView(isWebContentObscured);
         }
     }
 
