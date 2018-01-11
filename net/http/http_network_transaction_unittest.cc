@@ -4484,6 +4484,195 @@ TEST_F(HttpNetworkTransactionTest, NonPermanentGenerateAuthTokenError) {
   session->CloseAllConnections();
 }
 
+class MockProxyResolver : public ProxyResolver {
+ public:
+  MockProxyResolver() {}
+  ~MockProxyResolver() override {}
+
+  // ProxyResolver implementation.
+  int GetProxyForURL(const GURL& url,
+                     ProxyInfo* results,
+                     const CompletionCallback& callback,
+                     std::unique_ptr<Request>* request,
+                     const NetLogWithSource& /*net_log*/) override {
+    *results = ProxyInfo();
+    const std::string kProxyHostPortPair = "proxy.test:10000";
+    if (url.path() == "/socks") {
+      results->UsePacString("SOCKS " + kProxyHostPortPair);
+      return OK;
+    }
+    if (url.path() == "/http") {
+      results->UsePacString("PROXY " + kProxyHostPortPair);
+      return OK;
+    }
+    if (url.path() == "/https") {
+      results->UsePacString("HTTPS " + kProxyHostPortPair);
+      return OK;
+    }
+    NOTREACHED();
+    return ERR_NOT_IMPLEMENTED;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockProxyResolver);
+};
+
+class MockProxyResolverFactory : public ProxyResolverFactory {
+ public:
+  MockProxyResolverFactory() : ProxyResolverFactory(false) {}
+
+  int CreateProxyResolver(
+      const scoped_refptr<ProxyResolverScriptData>& pac_script,
+      std::unique_ptr<ProxyResolver>* resolver,
+      const CompletionCallback& callback,
+      std::unique_ptr<Request>* request) override {
+    *resolver = std::make_unique<MockProxyResolver>();
+    return OK;
+  }
+
+  MockAsyncProxyResolver* resolver() { return resolver_; }
+
+ private:
+  MockAsyncProxyResolver* resolver_;
+};
+
+TEST_F(HttpNetworkTransactionTest, SameDestinationForDifferentProxyTypes) {
+  session_deps_.proxy_service = std::make_unique<ProxyService>(
+      // Need a proxy config service that incidates to use a PAC script, to make
+      // sure a ProxyResolver is created and used.
+      std::make_unique<ProxyConfigServiceFixed>(
+          ProxyConfig::CreateFromCustomPacURL(GURL("http://not-used"))),
+      std::make_unique<MockProxyResolverFactory>(), nullptr);
+
+  std::unique_ptr<HttpNetworkSession> session = CreateSession(&session_deps_);
+
+  const char kSOCKSOkRequest[] = {0x04, 0x01, 0x00, 0x50, 127, 0, 0, 1, 0};
+  const char kSOCKSOkReply[] = {0x00, 0x5A, 0x00, 0x00, 0, 0, 0, 0};
+
+  MockWrite socks_writes[] = {
+      MockWrite(SYNCHRONOUS, kSOCKSOkRequest, sizeof(kSOCKSOkRequest)),
+      MockWrite(SYNCHRONOUS,
+                "GET /socks HTTP/1.1\r\n"
+                "Host: test\r\n"
+                "Connection: keep-alive\r\n\r\n"),
+  };
+  MockRead socks_reads[] = {
+      MockRead(SYNCHRONOUS, kSOCKSOkReply, sizeof(kSOCKSOkReply)),
+      MockRead("HTTP/1.0 200 OK\r\n"
+               "Connection: keep-alive\r\n"
+               "Content-Length: 5\r\n\r\n"
+               "SOCKS"),
+  };
+  StaticSocketDataProvider socks_data(socks_reads, arraysize(socks_reads),
+                                      socks_writes, arraysize(socks_writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&socks_data);
+
+  MockWrite http_writes[] = {
+      MockWrite(SYNCHRONOUS,
+                "GET http://test/http HTTP/1.1\r\n"
+                "Host: test\r\n"
+                "Proxy-Connection: keep-alive\r\n\r\n"),
+  };
+  MockRead http_reads[] = {
+      MockRead("HTTP/1.1 200 OK\r\n"
+               "Proxy-Connection: keep-alive\r\n"
+               "Content-Length: 4\r\n\r\n"
+               "HTTP"),
+  };
+  StaticSocketDataProvider http_data(http_reads, arraysize(http_reads),
+                                     http_writes, arraysize(http_writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&http_data);
+
+  MockWrite https_writes[] = {
+      MockWrite(SYNCHRONOUS,
+                "CONNECT proxy.test:10000 HTTP/1.1\r\n"
+                "Host: test:80\r\n\r\n"),
+      MockWrite(SYNCHRONOUS,
+                "GET http HTTP/1.1\r\n"
+                "Host: test\r\n"
+                "Connection: keep-alive\r\n\r\n"),
+  };
+  MockRead https_reads[] = {
+      MockRead("HTTP/1.1 200 Connection Established\r\n\r\n"),
+      MockRead("HTTP/1.1 200 OK\r\n"
+               "Connection: keep-alive\r\n"
+               "Content-Length: 5\r\n\r\n"
+               "HTTPS"),
+  };
+  StaticSocketDataProvider https_data(https_reads, arraysize(https_reads),
+                                      https_writes, arraysize(https_writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&https_data);
+  SSLSocketDataProvider ssl(SYNCHRONOUS, OK);
+  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
+
+  // SOCKS proxy
+
+  HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("http://test/socks");
+  std::unique_ptr<HttpNetworkTransaction> socks_trans =
+      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
+  TestCompletionCallback callback;
+  int rv =
+      socks_trans->Start(&request, callback.callback(), NetLogWithSource());
+  EXPECT_THAT(callback.GetResult(rv), IsOk());
+
+  const HttpResponseInfo* response = socks_trans->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ(200, response->headers->response_code());
+  std::string response_data;
+  EXPECT_THAT(ReadTransaction(socks_trans.get(), &response_data), IsOk());
+  EXPECT_EQ("SOCKS", response_data);
+
+  // Return the socket to the socket pool, so can make sure it's not used for
+  // the next requests.
+  socks_trans.reset();
+  base::RunLoop().RunUntilIdle();
+
+  // HTTP proxy
+
+  request.url = GURL("http://test/http");
+  std::unique_ptr<HttpNetworkTransaction> http_trans =
+      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
+  rv = http_trans->Start(&request, callback.callback(), NetLogWithSource());
+  EXPECT_THAT(callback.GetResult(rv), IsOk());
+
+  response = http_trans->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ(200, response->headers->response_code());
+  response_data = "";
+  EXPECT_THAT(ReadTransaction(http_trans.get(), &response_data), IsOk());
+  EXPECT_EQ("HTTP", response_data);
+
+  // Return the socket to the socket pool, so can make sure it's not used for
+  // the next request.
+  http_trans.reset();
+  base::RunLoop().RunUntilIdle();
+
+  // HTTPS proxy
+
+  request.url = GURL("http://test/https");
+  std::unique_ptr<HttpNetworkTransaction> https_trans =
+      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
+  rv = https_trans->Start(&request, callback.callback(), NetLogWithSource());
+  EXPECT_THAT(callback.GetResult(rv), IsOk());
+
+  response = https_trans->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ(200, response->headers->response_code());
+  response_data = "";
+  EXPECT_THAT(ReadTransaction(https_trans.get(), &response_data), IsOk());
+  EXPECT_EQ("HTTPS", response_data);
+
+  // Return the socket to the socket pool, so can make sure it's not used for
+  // the next request.
+  http_trans.reset();
+  base::RunLoop().RunUntilIdle();
+}
+
 // Test the load timing for HTTPS requests with an HTTP proxy.
 TEST_F(HttpNetworkTransactionTest, HttpProxyLoadTimingNoPacTwoRequests) {
   HttpRequestInfo request1;
