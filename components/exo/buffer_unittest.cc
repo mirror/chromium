@@ -228,7 +228,8 @@ TEST_F(BufferTest, SurfaceTreeHostLastFrame) {
     frame.metadata.begin_frame_ack.has_damage = true;
     frame.metadata.device_scale_factor = 1;
     std::unique_ptr<viz::RenderPass> pass = viz::RenderPass::Create();
-    pass->SetNew(1, gfx::Rect(buffer_size), gfx::Rect(), gfx::Transform());
+    pass->SetNew(1, gfx::Rect(buffer_size), gfx::Rect(buffer_size),
+                 gfx::Transform());
     frame.render_pass_list.push_back(std::move(pass));
     frame.resource_list.push_back(resource);
     frame_sink_holder->SubmitCompositorFrame(std::move(frame));
@@ -259,7 +260,8 @@ TEST_F(BufferTest, SurfaceTreeHostLastFrame) {
     frame.metadata.begin_frame_ack.has_damage = true;
     frame.metadata.device_scale_factor = 1;
     std::unique_ptr<viz::RenderPass> pass = viz::RenderPass::Create();
-    pass->SetNew(1, gfx::Rect(buffer_size), gfx::Rect(), gfx::Transform());
+    pass->SetNew(1, gfx::Rect(buffer_size), gfx::Rect(buffer_size),
+                 gfx::Transform());
     frame.render_pass_list.push_back(std::move(pass));
     frame_sink_holder->SubmitCompositorFrame(std::move(frame));
   }
