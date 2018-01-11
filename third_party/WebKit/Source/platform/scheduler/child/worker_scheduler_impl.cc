@@ -136,11 +136,14 @@ void WorkerSchedulerImpl::Init() {
   idle_helper_.EnableLongIdlePeriod();
 }
 
-void WorkerSchedulerImpl::OnTaskCompleted(WorkerTaskQueue* worker_task_queue,
-                                          const TaskQueue::Task& task,
-                                          base::TimeTicks start,
-                                          base::TimeTicks end) {
-  worker_metrics_helper_.RecordTaskMetrics(worker_task_queue, task, start, end);
+void WorkerSchedulerImpl::OnTaskCompleted(
+    WorkerTaskQueue* worker_task_queue,
+    const TaskQueue::Task& task,
+    base::TimeTicks start,
+    base::TimeTicks end,
+    base::Optional<base::TimeDelta> cpu_time) {
+  worker_metrics_helper_.RecordTaskMetrics(worker_task_queue, task, start, end,
+                                           cpu_time);
 }
 
 SchedulerHelper* WorkerSchedulerImpl::GetSchedulerHelperForTesting() {

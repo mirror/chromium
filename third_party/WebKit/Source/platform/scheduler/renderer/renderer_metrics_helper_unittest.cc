@@ -57,7 +57,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration);
+                                       start + duration, base::nullopt);
   }
 
   void RunTask(WebFrameScheduler* scheduler,
@@ -72,7 +72,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration);
+                                       start + duration, base::nullopt);
   }
 
   base::TimeTicks Milliseconds(int milliseconds) {

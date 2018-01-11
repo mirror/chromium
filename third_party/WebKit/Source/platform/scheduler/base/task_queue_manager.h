@@ -336,6 +336,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   void NotifyDidProcessTaskObservers(const internal::TaskQueueImpl::Task& task,
                                      internal::TaskQueueImpl* queue,
+                                     base::Optional<base::TimeDelta> cpu_time,
                                      base::TimeTicks task_start_time,
                                      base::TimeTicks* time_after_task);
 

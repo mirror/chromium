@@ -570,7 +570,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
     scheduler_->OnTaskStarted(fake_queue_.get(), fake_task_, start);
     clock_.Advance(base::TimeDelta::FromSecondsD(duration));
     base::TimeTicks end = clock_.NowTicks();
-    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end);
+    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end,
+                                base::nullopt);
   }
 
   void GetQueueingTimeEstimatorLock() {

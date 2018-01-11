@@ -31,16 +31,24 @@ class PLATFORM_EXPORT MetricsHelper {
   ~MetricsHelper();
 
  protected:
+  bool ShouldDiscardTask(TaskQueue* queue,
+                         const TaskQueue::Task& task,
+                         base::TimeTicks start_time,
+                         base::TimeTicks end_time,
+                         base::Optional<base::TimeDelta> cpu_time);
+
   // Record task metrics which are shared between threads.
   void RecordCommonTaskMetrics(TaskQueue* queue,
                                const TaskQueue::Task& task,
                                base::TimeTicks start_time,
-                               base::TimeTicks end_time);
+                               base::TimeTicks end_time,
+                               base::Optional<base::TimeDelta> cpu_time);
 
  private:
   ThreadType thread_type_;
 
   TaskDurationMetricReporter<ThreadType> thread_task_duration_reporter_;
+  TaskDurationMetricReporter<ThreadType> thread_task_cpu_duration_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(MetricsHelper);
 };

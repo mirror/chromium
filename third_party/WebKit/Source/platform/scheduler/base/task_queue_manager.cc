@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/bind.h"
+#include "base/rand_util.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/trace_event/trace_event.h"
@@ -27,6 +28,7 @@ namespace scheduler {
 namespace {
 
 const double kLongTaskTraceEventThreshold = 0.05;
+const double kSamplingRateForRecordingCPUTime = 0.01;
 
 double MonotonicTimeInSeconds(base::TimeTicks time_ticks) {
   return (time_ticks - base::TimeTicks()).InSecondsF();
@@ -39,6 +41,10 @@ void SweepCanceledDelayedTasksInQueue(
   if (time_domain_now->find(time_domain) == time_domain_now->end())
     time_domain_now->insert(std::make_pair(time_domain, time_domain->Now()));
   queue->SweepCanceledDelayedTasks(time_domain_now->at(time_domain));
+}
+
+bool ShouldRecordCPUTimeForTask() {
+  return base::RandDouble() < kSamplingRateForRecordingCPUTime;
 }
 
 }  // namespace
@@ -474,6 +480,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   base::WeakPtr<TaskQueueManager> protect = GetWeakPtr();
   internal::TaskQueueImpl::Task pending_task =
       work_queue->TakeTaskFromWorkQueue();
+  bool should_record_cpu_time = ShouldRecordCPUTimeForTask();
 
   // It's possible the task was canceled, if so bail out.
   // The task should be non-null, but it seems to be possible to due
@@ -507,6 +514,10 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   NotifyWillProcessTaskObservers(pending_task, queue, time_before_task,
                                  &task_start_time);
 
+  base::ThreadTicks task_start_cpu_time;
+  if (should_record_cpu_time)
+    task_start_cpu_time = base::ThreadTicks::Now();
+
   {
     TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
                  queue->GetName());
@@ -525,8 +536,16 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     currently_executing_task_queue_ = prev_executing_task_queue;
   }
 
-  NotifyDidProcessTaskObservers(pending_task, queue, task_start_time,
-                                time_after_task);
+  base::ThreadTicks task_end_cpu_time;
+  if (should_record_cpu_time)
+    task_end_cpu_time = base::ThreadTicks::Now();
+
+  NotifyDidProcessTaskObservers(
+      pending_task, queue,
+      should_record_cpu_time ? base::Optional<base::TimeDelta>(
+                                   task_end_cpu_time - task_start_cpu_time)
+                             : base::nullopt,
+      task_start_time, time_after_task);
 
   return ProcessTaskResult::kExecuted;
 }
@@ -579,6 +598,7 @@ void TaskQueueManager::NotifyWillProcessTaskObservers(
 void TaskQueueManager::NotifyDidProcessTaskObservers(
     const internal::TaskQueueImpl::Task& pending_task,
     internal::TaskQueueImpl* queue,
+    base::Optional<base::TimeDelta> cpu_time,
     base::TimeTicks task_start_time,
     base::TimeTicks* time_after_task) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
@@ -617,7 +637,8 @@ void TaskQueueManager::NotifyDidProcessTaskObservers(
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "TaskQueueManager.QueueOnTaskCompleted");
     if (task_start_time_sec && task_end_time_sec)
-      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task);
+      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task,
+                             cpu_time);
   }
 
   if (task_start_time_sec && task_end_time_sec &&
