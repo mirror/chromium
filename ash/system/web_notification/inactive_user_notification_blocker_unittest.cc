@@ -8,7 +8,6 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
-#include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -106,13 +105,14 @@ class InactiveUserNotificationBlockerTest
 TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   message_center::NotifierId notifier_id(
       message_center::NotifierId::APPLICATION, "test-app");
-  // Only allowed the system notifier.
+  // High priority system notifiers should always show regardless of fullscreen
+  // or lock state.
   message_center::NotifierId ash_system_notifier(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      system_notifier::kNotifierDisplay);
+      message_center::NotifierId::SYSTEM_COMPONENT, "ash.some-component");
+  ash_system_notifier.priority = HIGH_PRIORITY;
   // Other system notifiers should be treated as same as a normal notifier.
   message_center::NotifierId random_system_notifier(
-      message_center::NotifierId::SYSTEM_COMPONENT, "random_system_component");
+      message_center::NotifierId::SYSTEM_COMPONENT, "ash.some-other-component");
 
   // Notifications are not blocked before login.
   const std::string kEmptyUserId;
@@ -135,14 +135,14 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   EXPECT_EQ(0, GetStateChangedCountAndReset());
   const std::string kInvalidUserId("invalid");
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShowAsPopup(notifier_id, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, "user1@tray"));
   EXPECT_TRUE(ShouldShowAsPopup(random_system_notifier, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, "user1@tray"));
   EXPECT_FALSE(ShouldShow(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShow(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShow(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShow(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShow(notifier_id, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShow(notifier_id, "user1@tray"));
@@ -153,14 +153,14 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   // notifications are now hidden.
   SwitchActiveUser("user1@tray");
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, kInvalidUserId));
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, GetDefaultUserId()));
   EXPECT_TRUE(ShouldShowAsPopup(notifier_id, "user1@tray"));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, GetDefaultUserId()));
   EXPECT_TRUE(ShouldShowAsPopup(random_system_notifier, "user1@tray"));
   EXPECT_FALSE(ShouldShow(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShow(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShow(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShow(random_system_notifier, kInvalidUserId));
   EXPECT_FALSE(ShouldShow(notifier_id, GetDefaultUserId()));
   EXPECT_TRUE(ShouldShow(notifier_id, "user1@tray"));
@@ -171,14 +171,14 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   // shown.
   SwitchActiveUser(GetDefaultUserId());
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShowAsPopup(notifier_id, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, "user1@tray"));
   EXPECT_TRUE(ShouldShowAsPopup(random_system_notifier, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, "user1@tray"));
   EXPECT_FALSE(ShouldShow(notifier_id, kInvalidUserId));
-  EXPECT_TRUE(ShouldShow(ash_system_notifier, kInvalidUserId));
+  EXPECT_TRUE(ShouldShow(ash_system_notifier, kEmptyUserId));
   EXPECT_FALSE(ShouldShow(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShow(notifier_id, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShow(notifier_id, "user1@tray"));

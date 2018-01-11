@@ -4,7 +4,6 @@
 
 #include <memory>
 
-#include "ash/system/system_notifier.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -191,11 +190,11 @@ IN_PROC_BROWSER_TEST_F(LoginStateNotificationBlockerChromeOSBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(LoginStateNotificationBlockerChromeOSBrowserTest,
                        AlwaysAllowedNotifier) {
-  // NOTIFIER_DISPLAY is allowed to shown in the login screen.
+  // High priority system notifications (no associated user email) are shown on
+  // the lock screen..
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierDisplay);
-  notifier_id.profile_id = test_users_[0].GetUserEmail();
+      message_center::NotifierId::SYSTEM_COMPONENT, "ash.important_component");
+  notifier_id.priority = message_center::HIGH_PRIORITY;
 
   // Logged in as a normal user.
   LoginUser(test_users_[0]);

@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "ash/session/test_session_controller_client.h"
-#include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
 #include "base/command_line.h"
 #include "base/macros.h"
@@ -105,10 +104,10 @@ TEST_F(LoginStateNotificationBlockerTest, BaseTest) {
 }
 
 TEST_F(LoginStateNotificationBlockerTest, AlwaysAllowedNotifier) {
-  // NOTIFIER_DISPLAY is allowed to shown in the login screen.
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      system_notifier::kNotifierDisplay);
+      "ash.shown-over-lockscreen-component");
+  notifier_id.priority = message_center::HIGH_PRIORITY;
 
   // Default status: OOBE.
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));

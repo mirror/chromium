@@ -10,7 +10,6 @@
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/strings/string16.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -23,8 +22,6 @@ using message_center::Notification;
 
 namespace ash {
 namespace {
-
-const char kLocaleChangeNotificationId[] = "chrome://settings/locale";
 
 class LocaleNotificationDelegate : public message_center::NotificationDelegate {
  public:
@@ -106,14 +103,13 @@ void LocaleNotificationController::OnLocaleChanged(
 
   std::unique_ptr<Notification> notification =
       Notification::CreateSystemNotification(
-          message_center::NOTIFICATION_TYPE_SIMPLE, kLocaleChangeNotificationId,
+          message_center::NOTIFICATION_TYPE_SIMPLE, "chrome://settings/locale",
           l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_LOCALE_CHANGE_TITLE),
           l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_LOCALE_CHANGE_MESSAGE,
                                      from, to),
           gfx::Image(), base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierLocale),
+              message_center::NotifierId::SYSTEM_COMPONENT, "ash.locale"),
           optional, new LocaleNotificationDelegate(std::move(callback)),
           kNotificationSettingsIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
