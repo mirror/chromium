@@ -135,6 +135,8 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
       const blink::WebString& remote_device_friendly_name) override {}
   void MediaRemotingStopped(
       blink::WebLocalizedString::Name error_msg) override {}
+  void PictureInPictureStarted() override {}
+  void PictureInPictureStopped() override {}
 
   void set_is_autoplaying_muted(bool value) { is_autoplaying_muted_ = value; }
 
