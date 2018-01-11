@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "961f9362_1bd38d36",
+        "filename": "chrome/browser/android/favicon_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T04:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6c72c2_f6ca699a",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 47
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4e6686_e25877fb",
         "filename": "chrome/browser/ui/webui/favicon_source.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dd44c5_93e6a59f",
+        "filename": "chrome/browser/ui/webui/favicon_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T04:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4e6686_e25877fb",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e51ac137_74a2ed52",
+        "filename": "components/favicon/core/favicon_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T04:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28d902c_440dc4f4",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 67
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7508076_0844cf65",
         "filename": "components/history/core/browser/history_service.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533ba9fb_ca39ea34",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T04:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7508076_0844cf65",
+      "range": {
+        "startLine": 668,
+        "startChar": 28,
+        "endLine": 670,
+        "endChar": 21
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
