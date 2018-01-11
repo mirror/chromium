@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "857112bc_1d397abe",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-11T22:33:29Z",
+      "side": 1,
+      "message": "Do we need to reference the parameter at all? Can we simply refer to this.state_.cancelled directly?",
+      "revId": "433f64c6d3dd7cadf6f242eab592a8638cd96519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721f645a_6a8bbece",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-11T22:33:29Z",
+      "side": 1,
+      "message": "This method (and updateFromStickySettings_ above), use the ES6 syntax for method declaration, even though they are not within an ES6 class. Perhaps this is mostly working, but I suggest avoiding this syntax outside of ES6 classes.\n\nonPreviewCancelled_: function(cancelled) {...}",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 21
+      },
+      "revId": "433f64c6d3dd7cadf6f242eab592a8638cd96519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
