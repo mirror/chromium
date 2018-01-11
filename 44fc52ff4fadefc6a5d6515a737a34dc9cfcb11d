@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c86a953_af88c7bd",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "How is this different from the GpuInit::InitializeInProcess() case?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b427da6e_3820afee",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "Can this be null? I may have missed a call site, but seemed like there would always be a callback.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6159a0_87e69307",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: Perhaps drop \"this-\u003e\"?",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 15
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8377803f_782f9f80",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: There are now 3 fields all with generic names (binding_drainer_, bindings_ and binding_) Could these be renamed to something more explicit?",
+      "range": {
+        "startLine": 153,
+        "startChar": 20,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7bfe93_c6f95995",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: Remove \"\\n\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 71,
+        "endLine": 86,
+        "endChar": 73
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc20995_c354db7d",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: Remove message. NOTREACHED() already prints something similar.",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e40a050_7ebcade7",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: Remove message.",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c545d6d7_7cfc98e3",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "nit: Remove debug message.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6036da1f_3cfac3af",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(DrmDeviceConnector);",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a1cd0b_e4c1317a",
+        "filename": "ui/ozone/public/ozone_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-11T19:36:04Z",
+      "side": 1,
+      "message": "Is this used anywhere? I couldn\u0027t find a use case.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "44fc52ff4fadefc6a5d6515a737a34dc9cfcb11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
