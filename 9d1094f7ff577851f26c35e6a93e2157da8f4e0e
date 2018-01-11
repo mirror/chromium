@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6a4153c_8b462930",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-11T07:08:27Z",
+      "side": 1,
+      "message": "You\u0027re right about what each pending means.  I\u0027m not super sure about which\u0027d be less confusing, but dropped \u0027pending_\u0027 but added more comment at the definition in .h.",
+      "parentUuid": "eae73192_c5c3a404",
+      "revId": "9d1094f7ff577851f26c35e6a93e2157da8f4e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5250065_ff7da568",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 24
