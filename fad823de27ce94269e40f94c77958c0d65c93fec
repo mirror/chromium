@@ -16,6 +16,24 @@
       "revId": "fad823de27ce94269e40f94c77958c0d65c93fec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b556ce49_6efd2cac",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-11T22:48:55Z",
+      "side": 1,
+      "message": "...and then you\u0027d need to make this a do-while loop.\n\nNevermind. but you can do a checked_cast\u003c\u003e",
+      "parentUuid": "f234d847_5ff4224e",
+      "revId": "fad823de27ce94269e40f94c77958c0d65c93fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
