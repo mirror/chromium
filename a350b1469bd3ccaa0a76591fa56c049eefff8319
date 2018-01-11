@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5a24596e_ba7ca722",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T13:09:13Z",
+      "side": 1,
+      "message": "Switch to CreateAndOpenTemporaryFile()?",
+      "parentUuid": "87b68cc7_86950ff4",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5059ee7f_3f8e4acb",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Actually I would leave it EnableDebugRecordingToFile, because in this function we set recording_enabled_. OnData doesn\u0027t write until this flag is set.",
       "parentUuid": "3e56bdc0_cef00bed",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e943a82c_4bbcc726",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T13:09:13Z",
+      "side": 1,
+      "message": "A pair of \"Enable\" and \"EnableToFile\" looks much more confusing to me than \"Enable\" and \"Start\": Start() naturally follows Enable(). Up to you, but please fix the comment: method is not a callback in our terminology, and it is passed to |create_file_callback_| object.",
+      "parentUuid": "5c517f07_347bbed0",
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -381,6 +417,24 @@
       "side": 1,
       "message": "This callback is run by AudioDebugRecordingHelper::EnableDebugRecording, but in these tests AudioDebugRecordingHelper::EnableDebugRecording is mocked, so this callback doesn\u0027t get to be run.",
       "parentUuid": "de2e84aa_c1a1a661",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f2ab253_cc97c4de",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T13:09:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3939800f_667c97d1",
       "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
