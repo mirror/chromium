@@ -15,6 +15,7 @@
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/paint/AdjustPaintOffsetScope.h"
 #include "core/paint/BackgroundImageGeometry.h"
+#include "core/paint/BoxClipper.h"
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
@@ -113,6 +114,8 @@ void NGBoxFragmentPainter::PaintWithAdjustedOffset(
     // TODO(layout-dev): Clip using BoxClipper.
     // BoxClipper box_clipper(layout_block_, info, paint_offset,
     //                       contents_clip_behavior);
+    BoxClipper box_clipper(box_fragment_, info, paint_offset,
+                           kForceContentsClip);
     PaintObject(info, paint_offset);
   }
 

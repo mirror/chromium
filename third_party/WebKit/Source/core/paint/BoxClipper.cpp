@@ -9,6 +9,7 @@
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/ClipDisplayItem.h"
 #include "platform/graphics/paint/PaintController.h"
@@ -97,6 +98,16 @@ BoxClipper::BoxClipper(const LayoutBox& box,
         box_, clip_type_, PixelSnappedIntRect(clip_rect), rounded_rects);
   }
 }
+
+DISABLE_CFI_PERF
+BoxClipper::BoxClipper(const NGPaintFragment& box,
+                       const PaintInfo& paint_info,
+                       const LayoutPoint& accumulated_offset,
+                       ContentsClipBehavior contents_clip_behavior)
+    : BoxClipper(*ToLayoutBox(box.GetLayoutObject()),
+                 paint_info,
+                 accumulated_offset,
+                 contents_clip_behavior) {}
 
 BoxClipper::~BoxClipper() {
   if (clip_type_ == DisplayItem::kUninitializedType)
