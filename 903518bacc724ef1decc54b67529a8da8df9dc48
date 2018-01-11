@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "207008ef_188bca55",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-11T17:03:55Z",
+      "side": 1,
+      "message": "Is this \"the user used vr browsing on this page\" or \"the way the user got to this page in vr browsing was through entering vr on this page\"?\n\nWhy this matters?  In addition to entering vr, or navigating, there are other ways to get to a page in vr - tab switching eventually, exiting webvr, potentially starting the browser or switching to the browser while in vr.  Additionally, the current metric misses if we enter vr while fullscreen (I think that doesn\u0027t work, but this code shouldn\u0027t depend on that not working).\n\nWe want to be sure to trigger the event for all of these cases, so we aren\u0027t missing vr browsing usage.\n\n-------\n\nIf this is just how the user got to this page, implementation-wise it may be easier to have multiple disparate fields so we don\u0027t have to do extra plumbing and state tracking to trigger the event from only one place.\n\nI\u0027m not sure whether the two states are actually mutually exclusive though.  If you navigate to a page in VR, then exit VR, then enter VR again on that page, both booleans would be true for this event.  If we want these to be two separate event instances, we may not be able to be singular (or we may need to create a new source id?).",
+      "parentUuid": "ab4ee1b1_15816be4",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 31
+      },
+      "revId": "903518bacc724ef1decc54b67529a8da8df9dc48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752f2154_4a11bdfb",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 1
