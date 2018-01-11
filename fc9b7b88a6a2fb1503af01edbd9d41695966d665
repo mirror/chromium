@@ -46,6 +46,29 @@
       "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdef995_e65992ab",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T14:01:48Z",
+      "side": 1,
+      "message": "After looking at the other CL, I realized that before notifying the subscribers, you must perform the work MDDH does in MDDH::NotifyDeviceChangeOnUIThread().\n\nThis work consists on checking permission and translating the snapshot. For this you need the render_process_id and the render_frame_id, which you should add to the SubscriptionRequest struct so that the checks can be performed.",
+      "range": {
+        "startLine": 547,
+        "startChar": 1,
+        "endLine": 547,
+        "endChar": 2
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
