@@ -141,6 +141,30 @@
       "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a31adad_144c4757",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T14:37:03Z",
+      "side": 1,
+      "message": "\u003e \u003e After looking at the other CL, I realized that before notifying the subscribers, you must perform the work MDDH does in MDDH::NotifyDeviceChangeOnUIThread().\n\u003e \n\u003e Right. I was aware of this but didn\u0027t consider it in this CL as snapshot was never sent to MediaDevices. Please see https://cs.chromium.org/chromium/src/content/renderer/media/user_media_client_impl.cc?type\u003dcs\u0026q\u003duser_media_client_impl.cc\u0026l\u003d289.\n\u003e So, should we take up the below in this CL or the other CL?\n\u003e \n\nYou can do it in this one or in the other CL.\nIf you prefer to do it in the next CL, you should send an empty snapshot in this one (and add a TODO). The browser should never send an untranslated snapshot to the renderer, even if the renderer is supposedly not going to use it.\n\n\u003e \u003e This work consists on checking permission and translating the snapshot. For this you need the render_process_id and the render_frame_id, which you should add to the SubscriptionRequest struct so that the checks can be performed.\n\u003e \n\u003e This check has to be performed through MediaDevicesPermissionChecker, right? In that case, MDPC has to be moved to MDD? Currently, it resides in MDDH.\n\nYou need to have a MDPC in MDD to perform the check, but you can remove it from MDDH only if it is not used for anything else.",
+      "parentUuid": "50f1f797_bd336f15",
+      "range": {
+        "startLine": 547,
+        "startChar": 1,
+        "endLine": 547,
+        "endChar": 2
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
