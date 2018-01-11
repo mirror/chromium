@@ -341,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "b5b61b5d_ca252e6c",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T17:31:52Z",
+      "side": 1,
+      "message": "Yeah, but it\u0027s not really a check that the pointer we\u0027re writing to is contained in the region; it\u0027s strictly a count check, and depends on certain other assumptions to ensure that the write is actually in bounds.\n\nI\u0027d feel more comfortable if we just tracked the length of the region and CHECKed in one place--AddInstructionPointer--that the current offset is less than the size of the region.",
+      "parentUuid": "94a40a02_6d8bc37c",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 43
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ab5336f_8761389f",
         "filename": "chrome/common/profiling/memlog_stream.h",
         "patchSetId": 13
