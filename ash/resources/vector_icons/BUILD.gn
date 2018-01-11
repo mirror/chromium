@@ -249,6 +249,8 @@ aggregate_vector_icons("ash_vector_icons") {
     "system_menu_volume_high.icon",
     "system_menu_volume_low.1x.icon",
     "system_menu_volume_low.icon",
+    "system_power_off_menu_power_off.icon",
+    "system_power_off_menu_sign_out.icon",
     "system_menu_volume_medium.1x.icon",
     "system_menu_volume_medium.icon",
     "system_menu_volume_mute.1x.icon",
