@@ -91,7 +91,7 @@ void GridPainter::PaintChildren(const PaintInfo& paint_info,
   }
 
   for (auto* item : layout_grid_.ItemsOverflowingGridArea()) {
-    if (item->FrameRect().Intersects(local_visual_rect))
+    if (item->VisualOverflowRect().Intersects(local_visual_rect))
       grid_items_to_be_painted.push_back(
           std::make_pair(item, layout_grid_.PaintIndexForGridItem(item)));
   }

@@ -1237,7 +1237,7 @@ void LayoutGrid::LayoutGridItems() {
     LayoutRect grid_area_rect(
         GridAreaLogicalPosition(area),
         LayoutSize(child_grid_area_width, child_grid_area_height));
-    if (!grid_area_rect.Contains(child->FrameRect()))
+    if (!grid_area_rect.Contains(child->VisualOverflowRect()))
       grid_items_overflowing_grid_area_.push_back(child);
   }
 }
