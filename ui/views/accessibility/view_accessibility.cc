@@ -57,6 +57,11 @@ void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
     data->role = custom_data_.role;
   if (custom_data_.HasStringAttribute(ui::AX_ATTR_NAME))
     data->SetName(custom_data_.GetStringAttribute(ui::AX_ATTR_NAME));
+  if (custom_data_.HasStringAttribute(ui::AX_ATTR_DESCRIPTION)) {
+    data->AddStringAttribute(
+        ui::AX_ATTR_DESCRIPTION,
+        custom_data_.GetStringAttribute(ui::AX_ATTR_DESCRIPTION));
+  }
 
   data->location = gfx::RectF(owner_view_->GetBoundsInScreen());
   if (!data->HasStringAttribute(ui::AX_ATTR_DESCRIPTION)) {
@@ -89,6 +94,11 @@ void ViewAccessibility::OverrideRole(ui::AXRole role) {
 
 void ViewAccessibility::OverrideName(const std::string& name) {
   custom_data_.SetName(name);
+}
+
+void ViewAccessibility::OverrideDescription(const std::string& description) {
+  CHECK(!custom_data_.HasStringAttribute(ui::AX_ATTR_DESCRIPTION));
+  custom_data_.AddStringAttribute(ui::AX_ATTR_DESCRIPTION, description);
 }
 
 gfx::NativeViewAccessible ViewAccessibility::GetNativeObject() {
