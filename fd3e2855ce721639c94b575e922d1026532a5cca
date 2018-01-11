@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0350330c_fd01077e",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-11T15:49:17Z",
+      "side": 1,
+      "message": "Is this function only called from tests? If so, I suggest removing it and making the only test that uses it just use AllStatesToString().",
+      "range": {
+        "startLine": 459,
+        "startChar": 75,
+        "endLine": 459,
+        "endChar": 0
+      },
+      "revId": "fd3e2855ce721639c94b575e922d1026532a5cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
