@@ -122,6 +122,24 @@
       "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b0acc1_0a5c0533",
+        "filename": "ash/cursor/cursor_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-11T21:42:15Z",
+      "side": 1,
+      "message": "It\u0027s possible that having the cursor tied to the WM will make it possible to implement features that we otherwise couldn\u0027t do. However, I don\u0027t think that\u0027s the case today. We just need to be able to magnify it, invert its colors and a few other things today.\n\nThe shell part of Exo (XDG-shell, aura-shell, etc.) should probably be tied to Ash or the alternative. The rest of Exo should ideally work without dependencies on Ash.\n\nBest way to think of FastInk code is as small client apps. They happen to be fullscreen today but that\u0027s not a requirement. Avoiding unnecessary dependencies on the shell makes sense though.\n\nFastInk submits frames directly to the display compositor, just like Exo. View/Widget framework is used to control how/where within Ash the output should be displayed. The code here is using ui::Compositor for vsync parameters but frames are still submitted directly to the display compositor. And in the case of HW overlays, we even bypass the display compositor, which is how we get extremely smooth output with minimal latency.",
+      "parentUuid": "f8b1206c_50fda513",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97f61085_d607bcd7",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-11T21:42:15Z",
+      "side": 1,
+      "message": "What do you mean by \"integrated into the display compositor\"? FastInkView submits frames directly to the display compositor. The display compositor already provides what is needed for fast ink. FastInkView is really about tying it up to the View hierarchy. It might be possible to extract some of this logic into non-View specific code but I\u0027m not it\u0027s worthwhile until we have a non-View use-case for it.",
+      "parentUuid": "9865e424_1427f91d",
+      "revId": "dd4172cc2d8d41406302265be90ed92de8565018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "813216ff_e0fa2aad",
         "filename": "ash/cursor/cursor_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T20:55:53Z",
       "side": 1,
       "message": "Why do you need an extra thread? You said in a comment that you\u0027d removed?",
+      "revId": "dd4172cc2d8d41406302265be90ed92de8565018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68dc765_d64b4a1b",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-11T21:42:15Z",
+      "side": 1,
+      "message": "I removed the addition of another thread in favor of just using a thread provided by the task scheduler. We still have a paint thread though (the timers used rely on single thread task runner behavior). We\u0027re just not spinning up a new thread for each CursorView instance anymore.",
+      "parentUuid": "813216ff_e0fa2aad",
       "revId": "dd4172cc2d8d41406302265be90ed92de8565018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
