@@ -52,6 +52,24 @@
       "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770f1dc4_9d39ff0d",
+        "filename": "services/network/public/cpp/data_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T20:13:28Z",
+      "side": 1,
+      "message": "It sounds like this means removing a bunch of stuff from this class. It seems it shouldn\u0027t matter whether this class is in services/network at that point?",
+      "parentUuid": "5f203d95_709034f2",
+      "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
