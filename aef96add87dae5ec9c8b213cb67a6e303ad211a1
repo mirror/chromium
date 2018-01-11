@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647f3624_45c5a8a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T19:15:51Z",
+      "side": 1,
+      "message": "Do we need to explicitly call #updateLogoTransition() or does it already get called somewhere?",
+      "revId": "aef96add87dae5ec9c8b213cb67a6e303ad211a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
