@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa9c1ed_5e3cbb6e",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-11T01:42:05Z",
+      "side": 1,
+      "message": "Why do we only care about this when presentation is requested? If the goal is to understand use by content authors, we probably want to know this as soon as the context is associated with WebVR.",
+      "revId": "effdf26833d9f79135dfac818e8bc14dc90a0a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815e4c7e_637b440e",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19159,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-11T01:42:05Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 19159,
+        "startChar": 51,
+        "endLine": 19159,
+        "endChar": 52
+      },
+      "revId": "effdf26833d9f79135dfac818e8bc14dc90a0a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1df1c7_7834425d",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19159,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-11T01:42:05Z",
+      "side": 1,
+      "message": "nit: The user didn\u0027t really initiated it with pDB. We could use passive voice or add \"on a session that uses\" before \"with\". This might be moot if we move the logging - see above.",
+      "range": {
+        "startLine": 19159,
+        "startChar": 4,
+        "endLine": 19159,
+        "endChar": 12
+      },
+      "revId": "effdf26833d9f79135dfac818e8bc14dc90a0a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
