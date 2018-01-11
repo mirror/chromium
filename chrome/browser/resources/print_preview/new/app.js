@@ -71,12 +71,14 @@ Polymer({
         cloudPrintError: '',
         privetExtensionError: '',
         invalidSettings: false,
+        cancelled: false,
       },
     },
   },
 
   observers: [
     'updateRecentDestinations_(destination_, destination_.capabilities)',
+    'onPreviewCancelled_(state_.cancelled)',
   ],
 
   /**
@@ -239,5 +241,16 @@ Polymer({
      ['scaling', 'scaling'], ['fitToPage', 'isFitToPageEnabled'],
      ['cssBackground', 'isCssBackgroundEnabled'],
     ].forEach(keys => updateIfDefined(keys[0], keys[1]));
+  },
+
+  /**
+   * @param {boolean} cancelled Whether the preview has been cancelled.
+   * @private
+   */
+  onPreviewCancelled_(cancelled) {
+    if (!cancelled)
+      return;
+    this.detached();
+    this.nativeLayer_.dialogClose(true);
   },
 });
