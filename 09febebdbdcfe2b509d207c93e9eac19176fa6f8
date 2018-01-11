@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23d34fe7_e17f8bbb",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T13:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a6fc65_87a22d6a",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 17
+      },
+      "revId": "09febebdbdcfe2b509d207c93e9eac19176fa6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46fbff54_4aaadb4e",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "09febebdbdcfe2b509d207c93e9eac19176fa6f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc7b70d_0b99a6f8",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-11T13:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46fbff54_4aaadb4e",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 24
+      },
+      "revId": "09febebdbdcfe2b509d207c93e9eac19176fa6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
