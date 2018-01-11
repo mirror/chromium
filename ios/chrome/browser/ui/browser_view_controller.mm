@@ -1929,7 +1929,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
 
-  if (base::FeatureList::IsEnabled(kAdaptiveToolbar)) {
+  if (IsAdaptiveToolbarEnabled()) {
     PrimaryToolbarCoordinator* topToolbarCoordinator =
         [[PrimaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
     self.primaryToolbarCoordinator = topToolbarCoordinator;
