@@ -107,8 +107,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHost* GetRenderWidgetHost() const final;
   void SetBackgroundColorToDefault() final;
   ui::TextInputClient* GetTextInputClient() override;
-  void WasUnOccluded() override {}
-  void WasOccluded() override {}
+  void SetParentIsHidden(bool parent_is_hidden) final;
   void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
@@ -409,6 +408,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // helps to position the full screen widget on the correct monitor.
   virtual void InitAsFullscreen(RenderWidgetHostView* reference_host_view) = 0;
 
+  // Invoked when the view is shown/hidden. This can happen when Show(), Hide()
+  // or SetParentIsHidden() is called.
+  virtual void WasShown() = 0;
+  virtual void WasHidden() = 0;
+
   // Sets the cursor for this view to the one associated with the specified
   // cursor_type.
   virtual void UpdateCursor(const WebCursor& cursor) = 0;
@@ -489,6 +493,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // |text_input_manager_|.
   TextInputManager* GetTextInputManager();
 
+  bool parent_is_hidden() const { return parent_is_hidden_; }
+
   bool is_fullscreen() { return is_fullscreen_; }
 
   bool wheel_scroll_latching_enabled() {
@@ -509,7 +515,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
  protected:
   // Interface class only, do not construct.
-  RenderWidgetHostViewBase();
+  RenderWidgetHostViewBase(bool parent_is_hidden);
 
   void NotifyObserversAboutShutdown();
 
@@ -520,6 +526,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   ui::mojom::WindowTreeClientPtr GetWindowTreeClientFromRenderer();
 #endif
+
+  // Whether the parent of this view is visible.
+  bool parent_is_hidden_;
 
   // Is this a fullscreen view?
   bool is_fullscreen_;

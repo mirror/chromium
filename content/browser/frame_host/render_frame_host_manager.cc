@@ -2002,10 +2002,8 @@ void RenderFrameHostManager::CommitPending() {
 
   // Show the new view (or a sad tab) if necessary.
   bool new_rfh_has_view = !!render_frame_host_->GetView();
-  if (!delegate_->IsHidden() && new_rfh_has_view) {
-    // In most cases, we need to show the new view.
+  if (new_rfh_has_view)
     render_frame_host_->GetView()->Show();
-  }
   // The process will no longer try to exit, so we can decrement the count.
   render_frame_host_->GetProcess()->RemovePendingView();
 
@@ -2391,13 +2389,9 @@ bool RenderFrameHostManager::CanSubframeSwapProcess(
 
 void RenderFrameHostManager::EnsureRenderFrameHostVisibilityConsistent() {
   RenderWidgetHostView* view = GetRenderWidgetHostView();
-  if (view && static_cast<RenderWidgetHostImpl*>(view->GetRenderWidgetHost())
-                      ->is_hidden() != delegate_->IsHidden()) {
-    if (delegate_->IsHidden()) {
-      view->Hide();
-    } else {
-      view->Show();
-    }
+  if (view) {
+    view->SetParentIsHidden(delegate_->IsHidden());
+    view->Show();
   }
 }
 

@@ -79,8 +79,6 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   void Show() override;
   void Hide() override;
   bool IsShowing() override;
-  void WasUnOccluded() override;
-  void WasOccluded() override;
   gfx::Rect GetViewBounds() const override;
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
@@ -121,8 +119,10 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   viz::FrameSinkId GetFrameSinkId() override;
   viz::SurfaceId GetCurrentSurfaceId() const override;
 
-  bool is_showing() const { return is_showing_; }
-  bool is_occluded() const { return is_occluded_; }
+  // Returns true if WasShown() was called since the last call to WasHidden(),
+  // or since construction if WasHidden() was never called.
+  bool was_shown() const { return was_shown_; }
+
   bool did_swap_compositor_frame() const { return did_swap_compositor_frame_; }
   void reset_did_swap_compositor_frame() { did_swap_compositor_frame_ = false; }
   bool did_change_compositor_frame_sink() {
@@ -145,8 +145,12 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   viz::FrameSinkId frame_sink_id_;
 
  private:
-  bool is_showing_;
-  bool is_occluded_;
+  // RenderWidgetHostViewBase:
+  void WasShown() override;
+  void WasHidden() override;
+
+  bool is_visible_in_parent_ = true;
+  bool was_shown_ = false;
   bool did_swap_compositor_frame_;
   bool did_change_compositor_frame_sink_ = false;
   SkColor background_color_;

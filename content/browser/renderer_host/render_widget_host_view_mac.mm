@@ -431,7 +431,8 @@ void RenderWidgetHostViewMac::AcceleratedWidgetSwapCompleted() {
 
 RenderWidgetHostViewMac::RenderWidgetHostViewMac(RenderWidgetHost* widget,
                                                  bool is_guest_view_hack)
-    : render_widget_host_(RenderWidgetHostImpl::From(widget)),
+    : RenderWidgetHostViewBase(RenderWidgetHostImpl::From(widget)->is_hidden()),
+      render_widget_host_(RenderWidgetHostImpl::From(widget)),
       page_at_minimum_scale_(true),
       mouse_wheel_phase_handler_(RenderWidgetHostImpl::From(widget), this),
       is_loading_(false),
@@ -735,7 +736,17 @@ void RenderWidgetHostViewMac::UpdateBackingStoreProperties() {
 void RenderWidgetHostViewMac::Show() {
   ScopedCAActionDisabler disabler;
   [cocoa_view_ setHidden:NO];
+  if (IsShowing())
+    WasShown();
+}
 
+void RenderWidgetHostViewMac::Hide() {
+  ScopedCAActionDisabler disabler;
+  [cocoa_view_ setHidden:YES];
+  WasHidden();
+}
+
+void RenderWidgetHostViewMac::WasShown() {
   browser_compositor_->SetRenderWidgetHostIsHidden(false);
 
   ui::LatencyInfo renderer_latency_info;
@@ -749,20 +760,7 @@ void RenderWidgetHostViewMac::Show() {
   PauseForPendingResizeOrRepaintsAndDraw();
 }
 
-void RenderWidgetHostViewMac::Hide() {
-  ScopedCAActionDisabler disabler;
-  [cocoa_view_ setHidden:YES];
-
-  render_widget_host_->WasHidden();
-  browser_compositor_->SetRenderWidgetHostIsHidden(true);
-}
-
-void RenderWidgetHostViewMac::WasUnOccluded() {
-  browser_compositor_->SetRenderWidgetHostIsHidden(false);
-  render_widget_host_->WasShown(ui::LatencyInfo());
-}
-
-void RenderWidgetHostViewMac::WasOccluded() {
+void RenderWidgetHostViewMac::WasHidden() {
   render_widget_host_->WasHidden();
   browser_compositor_->SetRenderWidgetHostIsHidden(true);
 }

@@ -53,6 +53,7 @@
 #include "content/browser/renderer_host/render_view_host_factory.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base_unittest.h"
 #include "content/browser/renderer_host/render_widget_host_view_event_handler.h"
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/browser/renderer_host/text_input_manager.h"
@@ -1600,41 +1601,9 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
             GetMessageNames(GetAndResetDispatchedMessages()));
 }
 
-// Checks that WasOcculded/WasUnOccluded notifies RenderWidgetHostImpl.
-TEST_F(RenderWidgetHostViewAuraTest, WasOccluded) {
+TEST_F(RenderWidgetHostViewAuraTest, ShowHideSetParentIsHidden) {
   view_->InitAsChild(nullptr);
-  view_->Show();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and WasUnOccluded
-  // resets the state.
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
-  view_->WasUnOccluded();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and Show resets
-  // the state.
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
-  view_->Show();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  // WasOccluded and WasUnOccluded are not in pairs. The last one dictates
-  // the final state.
-  for (int i = 0; i < 2; ++i) {
-    view_->WasOccluded();
-    EXPECT_TRUE(widget_host_->is_hidden());
-  }
-  view_->WasUnOccluded();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  for (int i = 0; i < 4; ++i) {
-    view_->WasUnOccluded();
-    EXPECT_FALSE(widget_host_->is_hidden());
-  }
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
+  RenderWidgetHostViewBase_ShowHideSetParentIsHiddenTest(view_);
 }
 
 // Checks that touch-event state is maintained correctly.
