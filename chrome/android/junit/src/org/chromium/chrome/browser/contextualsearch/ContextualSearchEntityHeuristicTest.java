@@ -25,7 +25,7 @@ public class ContextualSearchEntityHeuristicTest {
             "Now Barack Obama, Michelle are not the best examples.  And Clinton is ambiguous.";
     private static final String UTF_8 = "UTF-8";
 
-    private ContextualSearchContext mContext;
+    private ContextualSearchContextForTest mContext;
     private ContextualSearchEntityHeuristic mEntityHeuristic;
 
     @Before
@@ -35,7 +35,8 @@ public class ContextualSearchEntityHeuristicTest {
 
     private void setupInstanceToTest(Locale locale, int tapOffset) {
         mContext.setSurroundingText(UTF_8, SAMPLE_TEXT, tapOffset, tapOffset);
-        mContext.setResolveProperties(locale.getCountry().toString(), true);
+        //      mContext.setResolveProperties(locale.getCountry().toString(), true);
+        mContext.setLanguageToDetect(locale.getLanguage());
         mEntityHeuristic = ContextualSearchEntityHeuristic.testInstance(mContext, true);
     }
 
@@ -60,34 +61,57 @@ public class ContextualSearchEntityHeuristicTest {
     @Feature({"ContextualSearch", "TapProperNounSuppression"})
     public void testTapInProperNounRecognized() {
         setupTapInObama(Locale.US);
-        assertTrue(mEntityHeuristic.isProbablyEnglishProperNoun());
+        assertTrue(mEntityHeuristic.isProbablyEntityBasedOnCase());
     }
 
     @Test
     @Feature({"ContextualSearch", "TapProperNounSuppression"})
     public void testTapInProperNounNotEnglishNotRecognized() {
         setupTapInObama(Locale.GERMANY);
-        assertFalse(mEntityHeuristic.isProbablyEnglishProperNoun());
+        assertFalse(mEntityHeuristic.isProbablyEntityBasedOnCase());
     }
 
     @Test
     @Feature({"ContextualSearch", "TapProperNounSuppression"})
     public void testTapInProperNounAfterPeriodNotRecognized() {
         setupTapInEnglishClinton();
-        assertFalse(mEntityHeuristic.isProbablyEnglishProperNoun());
+        assertFalse(mEntityHeuristic.isProbablyEntityBasedOnCase());
     }
 
     @Test
     @Feature({"ContextualSearch", "TapProperNounSuppression"})
     public void testTapInStartOfTextBufferNotRecognized() {
         setupTapInEnglishStartOfBuffer();
-        assertFalse(mEntityHeuristic.isProbablyEnglishProperNoun());
+        assertFalse(mEntityHeuristic.isProbablyEntityBasedOnCase());
     }
 
     @Test
     @Feature({"ContextualSearch", "TapProperNounSuppression"})
     public void testTapInSingleWordAfterCommaNotRecognized() {
         setupTapInWordAfterComma();
-        assertFalse(mEntityHeuristic.isProbablyEnglishProperNoun());
+        assertFalse(mEntityHeuristic.isProbablyEntityBasedOnCase());
+    }
+
+    @Test
+    @Feature({"ContextualSearch", "TapProperNounSuppression"})
+    public void testTapInItalianRecognized() {
+        mContext.setLanguageToDetect("es");
+        String italianWithBillGates = "Mr Amazon ha scavalcato Bill Gates, fermo a 93,3 miliardi.";
+        int tapOffset = "Mr Amazon ha scavalcato Bill".length();
+        mContext.setSurroundingText(UTF_8, italianWithBillGates, tapOffset, tapOffset);
+        mEntityHeuristic = ContextualSearchEntityHeuristic.testInstance(mContext, true);
+        assertTrue(mEntityHeuristic.isProbablyEntityBasedOnCase());
+    }
+
+    @Test
+    @Feature({"ContextualSearch", "TapProperNounSuppression"})
+    public void testTapInItalianNotProperNotRecognized() {
+        mContext.setLanguageToDetect("es");
+        String italianWithBillGates = "Mr Amazon ha scavalcato Bill Gates, fermo a 93,3 miliardi.";
+        // offset in a word that's not a proper noun.
+        int tapOffset = "Mr Amazon ha scav".length();
+        mContext.setSurroundingText(UTF_8, italianWithBillGates, tapOffset, tapOffset);
+        mEntityHeuristic = ContextualSearchEntityHeuristic.testInstance(mContext, true);
+        assertFalse(mEntityHeuristic.isProbablyEntityBasedOnCase());
     }
 }

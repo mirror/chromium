@@ -81,6 +81,10 @@ struct ContextualSearchContext {
   // characters).
   int GetEndOffset() const;
 
+  base::android::ScopedJavaLocalRef<jstring> DetectLanguage(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+
   // Gets a WeakPtr to this instance.
   base::WeakPtr<ContextualSearchContext> GetWeakPtr();
 
