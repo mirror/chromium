@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c26a6e_d7296ee9",
+        "filename": "ash/app_list/model/app_list_model_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T17:26:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this interface is necessary. See my comments in \"refactor ChromeAppListItem\" CL. Sorry for the late reply.",
+      "revId": "e84b42baf2ba8f28c3740cf9fa89f2a7861c01a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121aff12_606c09e6",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T17:26:50Z",
+      "side": 1,
+      "message": "nit: \u003d std::make_unique\u003c...\u003e(this);",
+      "revId": "e84b42baf2ba8f28c3740cf9fa89f2a7861c01a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0070de77_92bf58a9",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T17:26:50Z",
+      "side": 1,
+      "message": "nit: Forward declare this",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "e84b42baf2ba8f28c3740cf9fa89f2a7861c01a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
