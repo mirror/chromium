@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae86945_0290a115",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-11T19:28:43Z",
+      "side": 1,
+      "message": "we should still call View::OnPaint() here I think so the background \u0026 border (if any) get drawn. That is needed for MdTab to get its border drawn.",
+      "range": {
+        "startLine": 239,
+        "startChar": 10,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad36b82_6f7578d7",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-11T19:28:43Z",
+      "side": 1,
+      "message": "how does this play with the MdTab overrides and the MD look for TabbedPane? (ie, with --enable-features\u003dSecondaryUiMd)?",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 21
+      },
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
