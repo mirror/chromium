@@ -279,11 +279,6 @@ group("telemetry_gpu_integration_test") {
   ]
 
   data = [
-    # For isolate contract.
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_gpu_integration_test_as_googletest.py",
-
     "//content/test/gpu/",
     "//content/test/data/gpu/",
 
@@ -302,11 +297,13 @@ group("telemetry_gpu_integration_test") {
 
     # For webgl_conformance
     "//third_party/webgl/",
-    "//content/test/gpu/run_gpu_integration_test.py",
 
     # For pixel_test
     "//media/test/data/bear.mp4",
     "//media/test/data/bear-vp9.webm",
+  ]
+  data_deps = [
+    "//testing:run_gpu_integration_tests",
   ]
 }
 
@@ -2029,24 +2026,13 @@ group("telemetry_perf_unittests") {
     "//tools/perf:perf",
   ]
 
-  data = [
-    # For isolate contract.
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_telemetry_as_googletest.py",
-
-    # For smoke testing run_telemetry_benchmark_as_googletest
-    "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
-
-    # For smoke testing run_multiple_telemetry_benchmarks_as_googletest
-    "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
+  data_deps = [
+    "//testing:run_telemetry_tests",
   ]
 
   if (enable_mus) {
     deps += [ "//chrome:chrome_test" ]
-    data_deps = [
-      "//chrome:chrome_test",
-    ]
+    data_deps += [ "//chrome:chrome_test" ]
   }
 }
 
@@ -2056,11 +2042,8 @@ group("telemetry_perf_tests") {
     "//tools/perf/:perf",
   ]
 
-  data = [
-    # Needed for isolate script to execute.
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
+  data_deps = [
+    "//testing:run_telemetry_tests",
   ]
 }
 
@@ -2082,28 +2065,16 @@ group("telemetry_perf_tests_new") {
   deps = [
     "//chrome/test:telemetry_perf_tests",
   ]
-
-  data = [
-    # Needed for isolate script to execute.
-    "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
-  ]
 }
 
 group("angle_perftests") {
   testonly = true
   if (is_win || is_linux || is_android) {
     data_deps = [
+      "//testing:run_gtest_perf_test",
       "//third_party/angle/src/tests:angle_perftests",
     ]
   }
-
-  data = [
-    # Needed for isolate script to execute.
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_gtest_perf_test.py",
-    "//tools/perf/generate_legacy_perf_dashboard_json.py",
-  ]
 }
 
 if (is_mac) {
@@ -4923,12 +4894,10 @@ if (!is_android && !is_chromecast) {
 
     data = [
       "//chrome/test/data/extensions/api_test/",
+    ]
 
-      # Needed for isolate script to execute.
-      "//testing/scripts/common.py",
-      "//testing/xvfb.py",
-      "//testing/scripts/run_gtest_perf_test.py",
-      "//tools/perf/generate_legacy_perf_dashboard_json.py",
+    data_deps = [
+      "//testing:run_gtest_perf_test",
     ]
 
     if (is_win) {
@@ -5321,21 +5290,17 @@ if (!is_android && !is_fuchsia) {
       "//third_party/widevine/cdm:headers",
     ]
 
+    data_deps = [
+      "//testing:run_gtest_perf_test",
+    ]
+
     if (enable_library_cdms) {
       deps += [ "//media/cdm:cdm_paths" ]
-      data_deps = [
+      data_deps += [
         "//media/cdm/ppapi:clearkeycdmadapter",
         "//third_party/widevine/cdm:widevinecdmadapter",
       ]
     }
-
-    data = [
-      # Needed for isolate script to execute.
-      "//testing/scripts/common.py",
-      "//testing/xvfb.py",
-      "//testing/scripts/run_gtest_perf_test.py",
-      "//tools/perf/generate_legacy_perf_dashboard_json.py",
-    ]
 
     # This target should not require the Chrome executable to run.
     assert_no_deps = [ "//chrome" ]
@@ -5347,20 +5312,13 @@ if (!is_android && !is_fuchsia) {
       "//tools/perf/chrome_telemetry_build:telemetry_chrome_test",
     ]
 
-    data = [
-      "//tools/perf/run_telemetry_tests",
-
-      # For isolate contract.
-      "//testing/scripts/common.py",
-      "//testing/xvfb.py",
-      "//testing/scripts/run_telemetry_as_googletest.py",
+    data_deps = [
+      "//testing:run_telemetry_tests",
     ]
 
     if (enable_mus) {
       deps += [ "//chrome:chrome_test" ]
-      data_deps = [
-        "//chrome:chrome_test",
-      ]
+      data_deps += [ "//chrome:chrome_test" ]
     }
   }
 
@@ -5393,9 +5351,9 @@ if (!is_android && !is_fuchsia) {
       # From telemetry_gpu_unittests.isolate
       "//third_party/pylint/",
       "//third_party/logilab/",
-      "//testing/scripts/common.py",
-      "//testing/xvfb.py",
-      "//testing/scripts/run_telemetry_as_googletest.py",
+    ]
+    data_deps = [
+      "//testing:run_telemetry_tests",
     ]
   }
 }
