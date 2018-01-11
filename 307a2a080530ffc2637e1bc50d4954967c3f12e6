@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec00e9a0_70176fd0",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T00:43:37Z",
+      "side": 1,
+      "message": "\"return reference_view \u0026\u0026 reference_view-\u003evisible() ? reference_view : nullptr;\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2126edcf_1dccbd06",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T00:43:37Z",
+      "side": 1,
+      "message": "Add a comment that this is intentional, like \"Never anchor when using cocoa.\"",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d472e4_a98444e2",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T00:43:37Z",
+      "side": 1,
+      "message": "\"Add margins for the icon plus the icon-title padding so that the dialog contents align with the title text.\"",
+      "range": {
+        "startLine": 207,
+        "startChar": 5,
+        "endLine": 207,
+        "endChar": 10
+      },
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e442fdc_6b701b90",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-11T00:43:37Z",
+      "side": 1,
+      "message": "Why can\u0027t you store the ctor parameter anchor_view instead?",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
