@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_runner_util.h"
 
 namespace media {
 
@@ -33,6 +34,21 @@ base::FilePath GetDebugRecordingFileNameWithExtensions(
       .AddExtension(IntToStringType(id));
 }
 
+void CreateFile(const base::FilePath& file_name,
+                base::OnceCallback<void(base::File)> reply_callback) {
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(
+          [](const base::FilePath& file_name) {
+            return base::File(file_name, base::File::FLAG_CREATE_ALWAYS |
+                                             base::File::FLAG_WRITE);
+          },
+          file_name),
+      std::move(reply_callback));
+}
+
 }  // namespace
 
 AudioDebugRecordingManager::AudioDebugRecordingManager(
@@ -46,18 +62,23 @@ void AudioDebugRecordingManager::EnableDebugRecording(
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!base_file_name.empty());
 
-  for (const auto& it : debug_recording_helpers_) {
-    it.second.first->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(base_file_name,
-                                                it.second.second, it.first));
-  }
   debug_recording_base_file_name_ = base_file_name;
+  for (const auto& it : debug_recording_helpers_) {
+    int id = it.first;
+    AudioDebugRecordingHelper* recording_helper = it.second.first;
+    const base::FilePath::StringType& file_name_extension = it.second.second;
+    recording_helper->EnableDebugRecording(
+        GetDebugRecordingFileNameWithExtensions(debug_recording_base_file_name_,
+                                                file_name_extension, id));
+  }
 }
 
 void AudioDebugRecordingManager::DisableDebugRecording() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  for (const auto& it : debug_recording_helpers_)
-    it.second.first->DisableDebugRecording();
+  for (const auto& it : debug_recording_helpers_) {
+    AudioDebugRecordingHelper* recording_helper = it.second.first;
+    recording_helper->DisableDebugRecording();
+  }
   debug_recording_base_file_name_.clear();
 }
 
@@ -103,7 +124,8 @@ AudioDebugRecordingManager::CreateAudioDebugRecordingHelper(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     base::OnceClosure on_destruction_closure) {
   return base::MakeUnique<AudioDebugRecordingHelper>(
-      params, task_runner, std::move(on_destruction_closure));
+      params, task_runner, base::BindRepeating(&CreateFile),
+      std::move(on_destruction_closure));
 }
 
 bool AudioDebugRecordingManager::IsDebugRecordingEnabled() {
