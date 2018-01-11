@@ -124,6 +124,7 @@
 
     <!-- VR constants -->
     <item type="id" name="vr_overlay_view" />
+    <item type="id" name="vr_view_container" />
 
     <!-- Tags -->
     <item type="id" name="highlight_state" />
