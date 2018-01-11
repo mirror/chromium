@@ -113,30 +113,41 @@ base::ScopedCFTypeRef<CFMutableDictionaryRef> BuildImageConfig(
 }
 
 // Create a VTDecompressionSession using the provided |pps| and |sps|. If
-// |require_hardware| is true, the session must uses real hardware decoding
+// |require_hardware| is true, the session must use real hardware decoding
 // (as opposed to software decoding inside of VideoToolbox) to be considered
 // successful.
-//
-// TODO(sandersd): Merge with ConfigureDecoder(), as the code is very similar.
-bool CreateVideoToolboxSession(const uint8_t* sps,
-                               size_t sps_size,
-                               const uint8_t* pps,
-                               size_t pps_size,
-                               bool require_hardware) {
+bool CreateVideoToolboxSession(
+    const uint8_t* sps,
+    size_t sps_size,
+    const uint8_t* pps,
+    size_t pps_size,
+    bool require_hardware,
+    bool enable_hardware = false,
+    CGRect* visible_rect_out = nullptr,
+    VTDecompressionOutputCallbackRecord* callback = nullptr,
+    CMFormatDescriptionRef* format = nullptr,
+    VTDecompressionSessionRef* session = nullptr,
+    base::OnceCallback<bool(void)> pre_session_create_callback =
+        base::OnceCallback<bool(void)>(),
+    base::OnceClosure platform_error_callback = base::OnceClosure(),
+    base::OnceClosure parameters_error_callback = base::OnceClosure()) {
   const uint8_t* data_ptrs[] = {sps, pps};
   const size_t data_sizes[] = {sps_size, pps_size};
 
-  base::ScopedCFTypeRef<CMFormatDescriptionRef> format;
+  base::ScopedCFTypeRef<CMFormatDescriptionRef> temp_format;
+  if (!format)
+    format = temp_format.InitializeInto();
   OSStatus status = CMVideoFormatDescriptionCreateFromH264ParameterSets(
       kCFAllocatorDefault,
       2,                  // parameter_set_count
       data_ptrs,          // &parameter_set_pointers
       data_sizes,         // &parameter_set_sizes
       kNALUHeaderLength,  // nal_unit_header_length
-      format.InitializeInto());
+      format);
   if (status) {
-    OSSTATUS_DLOG(WARNING, status)
-        << "Failed to create CMVideoFormatDescription";
+    OSSTATUS_DLOG(ERROR, status) << "Failed to create CMVideoFormatDescription";
+    if (platform_error_callback)
+      std::move(platform_error_callback).Run();
     return false;
   }
 
@@ -145,8 +156,11 @@ bool CreateVideoToolboxSession(const uint8_t* sps,
                                 1,  // capacity
                                 &kCFTypeDictionaryKeyCallBacks,
                                 &kCFTypeDictionaryValueCallBacks));
-  if (!decoder_config.get())
+  if (!decoder_config.get()) {
+    if (platform_error_callback)
+      std::move(platform_error_callback).Run();
     return false;
+  }
 
   if (require_hardware) {
     CFDictionarySetValue(
@@ -154,30 +168,49 @@ bool CreateVideoToolboxSession(const uint8_t* sps,
         // kVTVideoDecoderSpecification_RequireHardwareAcceleratedVideoDecoder
         CFSTR("RequireHardwareAcceleratedVideoDecoder"), kCFBooleanTrue);
   }
+  if (enable_hardware) {
+    CFDictionarySetValue(
+        decoder_config,
+        // kVTVideoDecoderSpecification_EnableHardwareAcceleratedVideoDecoder
+        CFSTR("EnableHardwareAcceleratedVideoDecoder"), kCFBooleanTrue);
+  }
 
-  CGRect visible_rect = CMVideoFormatDescriptionGetCleanAperture(format, true);
+  CGRect visible_rect = CMVideoFormatDescriptionGetCleanAperture(*format, true);
   CMVideoDimensions visible_dimensions = {visible_rect.size.width,
                                           visible_rect.size.height};
   base::ScopedCFTypeRef<CFMutableDictionaryRef> image_config(
       BuildImageConfig(visible_dimensions));
-  if (!image_config.get())
-    return false;
-
-  VTDecompressionOutputCallbackRecord callback = {0};
-
-  base::ScopedCFTypeRef<VTDecompressionSessionRef> session;
-  status = VTDecompressionSessionCreate(
-      kCFAllocatorDefault,
-      format,          // video_format_description
-      decoder_config,  // video_decoder_specification
-      image_config,    // destination_image_buffer_attributes
-      &callback,       // output_callback
-      session.InitializeInto());
-  if (status) {
-    OSSTATUS_DLOG(WARNING, status) << "Failed to create VTDecompressionSession";
+  if (!image_config.get()) {
+    if (platform_error_callback)
+      std::move(platform_error_callback).Run();
     return false;
   }
 
+  if (visible_rect_out) {
+    visible_rect_out->origin = visible_rect.origin;
+    visible_rect_out->size = visible_rect.size;
+  }
+
+  if (!pre_session_create_callback.is_null()) {
+    if (!std::move(pre_session_create_callback).Run())
+      return false;
+  }
+
+  VTDecompressionOutputCallbackRecord null_callback = {0};
+  base::ScopedCFTypeRef<VTDecompressionSessionRef> null_session;
+  status = VTDecompressionSessionCreate(
+      kCFAllocatorDefault,
+      *format,         // video_format_description
+      decoder_config,  // video_decoder_specification
+      image_config,    // destination_image_buffer_attributes
+      callback ? callback : &null_callback,  // output_callback
+      session ? session : null_session.InitializeInto());
+  if (status) {
+    OSSTATUS_DLOG(WARNING, status) << "Failed to create VTDecompressionSession";
+    if (parameters_error_callback)
+      std::move(parameters_error_callback).Run();
+    return false;
+  }
   return true;
 }
 
@@ -509,6 +542,7 @@ bool VTVideoDecodeAccelerator::FinishDelayedFrames() {
   DVLOG(3) << __func__;
   DCHECK(decoder_thread_.task_runner()->BelongsToCurrentThread());
   if (session_) {
+    DVLOG(3) << __func__;
     OSStatus status = VTDecompressionSessionWaitForAsynchronousFrames(session_);
     if (status) {
       NOTIFY_STATUS("VTDecompressionSessionWaitForAsynchronousFrames()", status,
@@ -520,89 +554,33 @@ bool VTVideoDecodeAccelerator::FinishDelayedFrames() {
 }
 
 bool VTVideoDecodeAccelerator::ConfigureDecoder() {
-  DVLOG(2) << __func__;
   DCHECK(decoder_thread_.task_runner()->BelongsToCurrentThread());
   DCHECK(!active_sps_.empty());
   DCHECK(!active_pps_.empty());
 
-  // Build the configuration records.
-  std::vector<const uint8_t*> nalu_data_ptrs;
-  std::vector<size_t> nalu_data_sizes;
-  nalu_data_ptrs.reserve(3);
-  nalu_data_sizes.reserve(3);
-  nalu_data_ptrs.push_back(&active_sps_.front());
-  nalu_data_sizes.push_back(active_sps_.size());
-  if (!last_spsext_.empty()) {
-    nalu_data_ptrs.push_back(&active_spsext_.front());
-    nalu_data_sizes.push_back(active_spsext_.size());
-  }
-  nalu_data_ptrs.push_back(&active_pps_.front());
-  nalu_data_sizes.push_back(active_pps_.size());
-
-  // Construct a new format description from the parameter sets.
+  std::vector<uint8_t> extended_sps(active_sps_);
+  extended_sps.insert(extended_sps.begin(), active_spsext_.begin(),
+                      active_spsext_.end());
+  CGRect visible_rect;
   format_.reset();
-  OSStatus status = CMVideoFormatDescriptionCreateFromH264ParameterSets(
-      kCFAllocatorDefault,
-      nalu_data_ptrs.size(),     // parameter_set_count
-      &nalu_data_ptrs.front(),   // &parameter_set_pointers
-      &nalu_data_sizes.front(),  // &parameter_set_sizes
-      kNALUHeaderLength,         // nal_unit_header_length
-      format_.InitializeInto());
-  if (status) {
-    NOTIFY_STATUS("CMVideoFormatDescriptionCreateFromH264ParameterSets()",
-                  status, SFT_PLATFORM_ERROR);
-    return false;
-  }
-
-  // Prepare VideoToolbox configuration dictionaries.
-  base::ScopedCFTypeRef<CFMutableDictionaryRef> decoder_config(
-      CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                1,  // capacity
-                                &kCFTypeDictionaryKeyCallBacks,
-                                &kCFTypeDictionaryValueCallBacks));
-  if (!decoder_config.get()) {
-    DLOG(ERROR) << "Failed to create CFMutableDictionary";
-    NotifyError(PLATFORM_FAILURE, SFT_PLATFORM_ERROR);
-    return false;
-  }
-
-  CFDictionarySetValue(
-      decoder_config,
-      // kVTVideoDecoderSpecification_EnableHardwareAcceleratedVideoDecoder
-      CFSTR("EnableHardwareAcceleratedVideoDecoder"), kCFBooleanTrue);
-
-  // VideoToolbox scales the visible rect to the output size, so we set the
-  // output size for a 1:1 ratio. (Note though that VideoToolbox does not handle
-  // top or left crops correctly.) We expect the visible rect to be integral.
-  CGRect visible_rect = CMVideoFormatDescriptionGetCleanAperture(format_, true);
-  CMVideoDimensions visible_dimensions = {visible_rect.size.width,
-                                          visible_rect.size.height};
-  base::ScopedCFTypeRef<CFMutableDictionaryRef> image_config(
-      BuildImageConfig(visible_dimensions));
-  if (!image_config.get()) {
-    DLOG(ERROR) << "Failed to create decoder image configuration";
-    NotifyError(PLATFORM_FAILURE, SFT_PLATFORM_ERROR);
-    return false;
-  }
-
-  // Ensure that the old decoder emits all frames before the new decoder can
-  // emit any.
-  if (!FinishDelayedFrames())
-    return false;
-
   session_.reset();
-  status = VTDecompressionSessionCreate(
-      kCFAllocatorDefault,
-      format_,         // video_format_description
-      decoder_config,  // video_decoder_specification
-      image_config,    // destination_image_buffer_attributes
-      &callback_,      // output_callback
-      session_.InitializeInto());
-  if (status) {
-    NOTIFY_STATUS("VTDecompressionSessionCreate()", status,
-                  SFT_UNSUPPORTED_STREAM_PARAMETERS);
-    return false;
-  }
+  auto pre_session_create_callback = base::BindOnce(
+      &VTVideoDecodeAccelerator::FinishDelayedFrames, base::Unretained(this));
+  auto platform_error_callback = base::BindOnce(
+      &VTVideoDecodeAccelerator::NotifyError, base::Unretained(this),
+      PLATFORM_FAILURE, SFT_PLATFORM_ERROR);
+  auto parameters_error_callback = base::BindOnce(
+      &VTVideoDecodeAccelerator::NotifyError, base::Unretained(this),
+      PLATFORM_FAILURE, SFT_UNSUPPORTED_STREAM_PARAMETERS);
+
+  const bool success = CreateVideoToolboxSession(
+      extended_sps.data(), extended_sps.size(), active_pps_.data(),
+      active_pps_.size(), false /* require_hardware */,
+      true /* enable_hardware */, &visible_rect, &callback_,
+      format_.InitializeInto(), session_.InitializeInto(),
+      std::move(pre_session_create_callback),
+      std::move(platform_error_callback), std::move(parameters_error_callback));
+  DCHECK(success);
 
   // Report whether hardware decode is being used.
   bool using_hardware = false;
