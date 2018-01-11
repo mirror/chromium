@@ -159,7 +159,8 @@ class CONTENT_EXPORT ResourceDispatcher {
                        const GURL& request_url,
                        const std::string& method,
                        const GURL& referrer,
-                       bool download_to_file);
+                       bool download_to_file,
+                       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
     ~PendingRequestInfo();
 
@@ -184,6 +185,7 @@ class CONTENT_EXPORT ResourceDispatcher {
     linked_ptr<base::SharedMemory> buffer;
     std::unique_ptr<SiteIsolationResponseMetaData> site_isolation_metadata;
     int buffer_size;
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner;
 
     // For mojo loading.
     std::unique_ptr<ThrottlingURLLoader> url_loader;
