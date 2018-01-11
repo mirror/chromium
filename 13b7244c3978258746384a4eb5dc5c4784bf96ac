@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d40ee9b_8888df98",
+        "filename": "net/http/http_basic_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "This is not used in this CL, are we going to use this in subsequent CLs?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625477d1_d8a4a985",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "nit: how about can_send_early_data_?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431c1d6e_2805a5db",
+        "filename": "net/quic/chromium/quic_http_stream_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "This test doesn\u0027t have request_ method initialized. I guess either set the can_send_early to false or true is fine. How about use \"true\" here as this request is definitely not a POST?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d97d93_b2bf361b",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "Should we set can_send_early based on kMethod?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d289c6_9025086b",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "Why this is set to false? This is not a POST right? I thought the default is that we can send data early as long as it\u0027s not a POST method, but I might be missing some pieces.\n\nSame for the following changes.",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6e2d31_420bccfc",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "nit: do we need to cache this value to can_send_early_? |can_send_early| is only usable in QUIC, should be just ignore this bit in SPDY?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5045b4_eacf73d7",
+        "filename": "net/websockets/websocket_handshake_stream_create_helper_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-11T20:25:24Z",
+      "side": 1,
+      "message": "I suspect this should be true?",
+      "revId": "13b7244c3978258746384a4eb5dc5c4784bf96ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
