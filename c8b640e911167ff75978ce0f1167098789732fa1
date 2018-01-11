@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58446b06_9cb9c6c0",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2822f605_0cacf517",
+      "range": {
+        "startLine": 90,
+        "startChar": 58,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba86043_4d8c4c6a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b3d9a09b_b35a97f4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba86043_4d8c4c6a",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d00ef88d_2309660d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6f8d26_9d49b63e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d00ef88d_2309660d",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "636456fd_8b7f604b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12462e1_7aca80c9",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 31
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cdacbb9_672bf555",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 6
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "2c7e7358_7f608f3e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cdacbb9_672bf555",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db7b5bb_56c1dcbf",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403277d4_9ded40be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db7b5bb_56c1dcbf",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "e58631fe_14a1a83c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7923ebe_eba13be5",
+      "range": {
+        "startLine": 147,
+        "startChar": 48,
+        "endLine": 147,
+        "endChar": 49
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952ebcd9_2fc26c63",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 6
@@ -150,6 +294,24 @@
       "writtenOn": "2018-01-11T13:24:39Z",
       "side": 1,
       "message": "nit: Consider throwing TimeoutError here.",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc5bc44_1abf7f9e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "The internal error is a timeout error, but the spec requires the promise to reject with notallowederror.",
+      "parentUuid": "952ebcd9_2fc26c63",
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "05dce133_8dc65833",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c686f3d_a15a83f4",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e9dc856_c26f2044",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/credential-helpers.js",
         "patchSetId": 6
@@ -187,6 +367,24 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe8a262_8431814f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/credential-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "No, there isn\u0027t :(",
+      "parentUuid": "7e9dc856_c26f2044",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "c94a5afe_4f200f19",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd4158af_37d81cce",
+      "range": {
+        "startLine": 343,
+        "startChar": 32,
+        "endLine": 343,
+        "endChar": 33
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1571167b_ece0e640",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 6
@@ -227,6 +449,24 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d70d7bc_fc2625cc",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1571167b_ece0e640",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "ea527fee_ef2477e5",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4006ab1a_b1df0a87",
+      "range": {
+        "startLine": 103,
+        "startChar": 73,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a484ca11_952b804c",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 6
@@ -267,6 +531,24 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a0fd6e_4ee7988d",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a484ca11_952b804c",
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -290,6 +572,30 @@
       "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3abadf_91943805",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-11T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d11b979_9252f4dd",
+      "range": {
+        "startLine": 180,
+        "startChar": 33,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "c8b640e911167ff75978ce0f1167098789732fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
