@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b15a78f_243a826a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/resources/parsing-testcommon.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "perhaps a comment here to explain that serializedValue as Array indicates multiple valid options for serialization",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62054a19_0c3fb203",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/resources/parsing-testcommon.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be testing round-trip, it seems to be testing that is serializes to an expected value, if so maybe change the wording of this error?",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfbfc5a_21996475",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-image-threshold-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "maybe check a negative value too?",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84007fc0_0a9e6f3f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-invalid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "also could test: ellipse(3%) (no position)",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912541f2_851441aa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "also could test: ellipse(3%, 2%) (no position)",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b0f136_9ee889f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "is this valid? the spec seems to say that 2 shape-radius values are required",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8bb51e_cd56b706",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2018-01-11T23:02:40Z",
+      "side": 1,
+      "message": "Are these both valid according to spec?",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
