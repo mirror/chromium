@@ -5,6 +5,7 @@
 #include "core/css/properties/longhands/FontFeatureSettings.h"
 
 #include "core/css/properties/CSSParsingUtils.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -14,6 +15,26 @@ const CSSValue* FontFeatureSettings::ParseSingleValue(
     const CSSParserContext&,
     const CSSParserLocalContext&) const {
   return CSSParsingUtils::ConsumeFontFeatureSettings(range);
+}
+
+const CSSValue* FontFeatureSettings::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  const FontFeatureSettings* feature_settings =
+      style.GetFontDescription().FeatureSettings();
+  if (!feature_settings || !feature_settings->size())
+    return CSSIdentifierValue::Create(CSSValueNormal);
+  CSSValueList* list = CSSValueList::CreateCommaSeparated();
+  for (unsigned i = 0; i < feature_settings->size(); ++i) {
+    const FontFeature& feature = feature_settings->at(i);
+    cssvalue::CSSFontFeatureValue* feature_value =
+        cssvalue::CSSFontFeatureValue::Create(feature.Tag(), feature.Value());
+    list->Append(*feature_value);
+  }
+  return list;
 }
 
 }  // namespace CSSLonghand
