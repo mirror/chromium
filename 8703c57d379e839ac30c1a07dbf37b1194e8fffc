@@ -16,6 +16,24 @@
       "revId": "8703c57d379e839ac30c1a07dbf37b1194e8fffc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85995741_444719a1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/connect/get-same-gatt-server.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-11T15:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61819e7d_c3f0b082",
+      "revId": "8703c57d379e839ac30c1a07dbf37b1194e8fffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
