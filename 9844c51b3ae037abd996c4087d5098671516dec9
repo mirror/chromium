@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22df003d_b8a6b74a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
+        "patchSetId": 3
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T15:28:27Z",
+      "side": 1,
+      "message": "Cool; thanks! Great it works for this NodeList object. Aside: nice destructuring also works for objects too by using const declarations.",
+      "parentUuid": "67de9a75_d4f04992",
+      "revId": "9844c51b3ae037abd996c4087d5098671516dec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189c551a_590760b3",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9844c51b3ae037abd996c4087d5098671516dec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc96e524_99b009e9",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T15:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189c551a_590760b3",
+      "revId": "9844c51b3ae037abd996c4087d5098671516dec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
