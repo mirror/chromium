@@ -46,6 +46,30 @@
       "revId": "c2c6a374fc1086bf2c9795a78ca6b909e2259f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf96b3a_50b3c5c8",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-11T18:29:10Z",
+      "side": 1,
+      "message": "I was thinking more of\n#if BUILDFLAG(ENABLE_MUTEX_PRIORITY_INHERITANCE)\n  return true;\n#else\n  // Future runtime checks go here.\n  return false;\n#endif\n\nOS_MACOSX -\u003e Set ENABLE_MUTEX_PRIORITY_INHERITANCE to true in the OS X build file.\nOS_NACL and OS_ANDROID set ENABLE_MUTEX_PRIORITIY_INHERITANCE to false in the NaCl and Android build files.\n\nPRIORITY_INHERITANCE_LOCKS_POSSIBLE() becomes BUILDFLAG(ENABLE_MUTEX_PRIORITY_INHERITANCE)",
+      "parentUuid": "2e739cff_c2226865",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "c2c6a374fc1086bf2c9795a78ca6b909e2259f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
