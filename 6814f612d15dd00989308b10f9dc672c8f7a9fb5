@@ -22,6 +22,30 @@
       "revId": "6814f612d15dd00989308b10f9dc672c8f7a9fb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950aa0d2_c15479f0",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-11T17:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850b50d5_aa4b36ec",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 47
+      },
+      "revId": "6814f612d15dd00989308b10f9dc672c8f7a9fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
