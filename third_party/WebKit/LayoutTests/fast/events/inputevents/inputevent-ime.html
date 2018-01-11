@@ -83,6 +83,20 @@
     document.body.appendChild(input);
 
     input.focus();
+    input.setSelectionRange(0, 0);
+
+    resetEventLog();
+    textInputController.setComposition('');
+    assert_array_equals(eventLog, []);
+  }, 'setComposition with no composition open, empty text, collapsed selection');
+
+  test(() => {
+    checkTextInputController();
+
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
 
     resetEventLog();
     textInputController.setComposition('hello');
