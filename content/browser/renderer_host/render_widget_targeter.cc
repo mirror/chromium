@@ -114,6 +114,14 @@ void RenderWidgetTargeter::QueryClient(
                        target->GetWeakPtr(),
                        static_cast<const blink::WebMouseWheelEvent&>(event),
                        latency, target_location));
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(target_location.value()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebGestureEvent&>(event),
+                       latency, target_location));
   } else {
     // TODO(crbug.com/796656): Handle other types of events.
     NOTREACHED();
@@ -183,6 +191,10 @@ void RenderWidgetTargeter::FoundTarget(
   } else if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
     delegate_->DispatchEventToTarget(
         root_view, target, static_cast<const blink::WebMouseWheelEvent&>(event),
+        latency);
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    delegate_->DispatchEventToTarget(
+        root_view, target, static_cast<const blink::WebGestureEvent&>(event),
         latency);
   } else {
     // TODO(crbug.com/796656): Handle other types of events.

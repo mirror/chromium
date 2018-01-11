@@ -7037,15 +7037,23 @@ void SendTouchpadPinchSequenceWithExpectedTarget(
   pinch_begin_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
   ui::GestureEvent pinch_begin(gesture_point.x(), gesture_point.y(), 0,
                                ui::EventTimeForNow(), pinch_begin_details);
+  InputEventAckWaiter waiter(expected_target->GetRenderWidgetHost(),
+                             blink::WebInputEvent::kGesturePinchBegin);
   root_view_aura->OnGestureEvent(&pinch_begin);
+  waiter.Wait();
   EXPECT_EQ(expected_target, router_touchpad_gesture_target);
 
+  TestInputEventObserver target_monitor(expected_target->GetRenderWidgetHost());
   ui::GestureEventDetails pinch_update_details(ui::ET_GESTURE_PINCH_UPDATE);
   pinch_update_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
   ui::GestureEvent pinch_update(gesture_point.x(), gesture_point.y(), 0,
                                 ui::EventTimeForNow(), pinch_update_details);
   root_view_aura->OnGestureEvent(&pinch_update);
   EXPECT_EQ(expected_target, router_touchpad_gesture_target);
+  EXPECT_TRUE(target_monitor.EventWasReceived());
+  EXPECT_EQ(target_monitor.EventType(),
+            blink::WebInputEvent::kGesturePinchUpdate);
+  target_monitor.ResetEventsReceived();
 
   ui::GestureEventDetails pinch_end_details(ui::ET_GESTURE_PINCH_END);
   pinch_end_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
@@ -7053,6 +7061,8 @@ void SendTouchpadPinchSequenceWithExpectedTarget(
                              ui::EventTimeForNow(), pinch_end_details);
   root_view_aura->OnGestureEvent(&pinch_end);
   EXPECT_EQ(expected_target, router_touchpad_gesture_target);
+  EXPECT_TRUE(target_monitor.EventWasReceived());
+  EXPECT_EQ(target_monitor.EventType(), blink::WebInputEvent::kGesturePinchEnd);
 }
 
 #if !defined(OS_WIN)
@@ -7080,13 +7090,20 @@ void SendTouchpadFlingSequenceWithExpectedTarget(
 
   ui::ScrollEvent fling_start(ui::ET_SCROLL_FLING_START, gesture_point,
                               ui::EventTimeForNow(), 0, 1, 0, 1, 0, 1);
+  InputEventAckWaiter waiter(expected_target->GetRenderWidgetHost(),
+                             blink::WebInputEvent::kGestureFlingStart);
   root_view_aura->OnScrollEvent(&fling_start);
+  waiter.Wait();
   EXPECT_EQ(expected_target, router_touchpad_gesture_target);
 
+  TestInputEventObserver target_monitor(expected_target->GetRenderWidgetHost());
   ui::ScrollEvent fling_cancel(ui::ET_SCROLL_FLING_CANCEL, gesture_point,
                                ui::EventTimeForNow(), 0, 1, 0, 1, 0, 1);
   root_view_aura->OnScrollEvent(&fling_cancel);
   EXPECT_EQ(expected_target, router_touchpad_gesture_target);
+  EXPECT_TRUE(target_monitor.EventWasReceived());
+  EXPECT_EQ(target_monitor.EventType(),
+            blink::WebInputEvent::kGestureFlingCancel);
 
   if (root_view_aura->wheel_scroll_latching_enabled()) {
     blink::WebGestureEvent gesture_event(
