@@ -22,6 +22,30 @@
       "revId": "8cd22f380a03b76f7d926227c64ce6b8cc036c79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528a147d_5b19ab79",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-01-11T16:15:07Z",
+      "side": 1,
+      "message": "Current Android documentation doesn\u0027t seem to mention ANDROID_SDK_ROOT, although it does mention ANDROID_SDK_HOME. As discussed offline I have now created four options for setting the SDK root to the Studio default, Chrome default, current Studio setting, or an explicit path.",
+      "parentUuid": "a51c99c5_7a6623d8",
+      "range": {
+        "startLine": 852,
+        "startChar": 34,
+        "endLine": 852,
+        "endChar": 49
+      },
+      "revId": "8cd22f380a03b76f7d926227c64ce6b8cc036c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "1b05fcf3_bd63a1b6",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2018-01-11T16:15:07Z",
+      "side": 1,
+      "message": "The problem is that one not just has to delete it in the project, but also somewhere in the user\u0027s configuration for Android Studio. If it is not set in the project then Android Studio will pick up whatever the last project used. If the last project was a previous version of Chromium then this will be the Chromium SDK.\n\nTo remove the setting completely I think one would have to change this path in the AndroidStudio configuration files. I am not sure where this is stored (possibly, from grepping, in \u0027~/.AndroidStudioPreview3.1/config/options/jdk.table.xml\u0027 but this is certainly not documented), and even if we knew we might still need to find an alternative valid path. I don\u0027t know what effect simply clearing this option would have.\n\nMy next upload will give a few more options, including specifying an explicit path, but I am still not sure if I have got it right.",
+      "parentUuid": "c267ab52_dd97e80b",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1548bd09_dea91de9",
         "filename": "docs/android_test_instructions.md",
         "patchSetId": 4
