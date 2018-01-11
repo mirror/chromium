@@ -14,6 +14,7 @@
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
@@ -56,6 +57,10 @@
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#endif
+
 namespace {
 
 class MockNetworkConnectionTracker : public content::NetworkConnectionTracker {
@@ -72,6 +77,15 @@ class MockNetworkConnectionTracker : public content::NetworkConnectionTracker {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockNetworkConnectionTracker);
 };
+
+std::unique_ptr<policy::ChromeBrowserPolicyConnector>
+CreateBrowserPolicyConnector() {
+#if defined(OS_CHROMEOS)
+  return std::make_unique<policy::BrowserPolicyConnectorChromeOS>();
+#else
+  return std::make_unique<policy::ChromeBrowserPolicyConnector>();
+#endif
+}
 
 }  // namespace
 
@@ -199,8 +213,8 @@ variations::VariationsService* TestingBrowserProcess::variations_service() {
   return nullptr;
 }
 
-policy::BrowserPolicyConnector*
-    TestingBrowserProcess::browser_policy_connector() {
+policy::ChromeBrowserPolicyConnector*
+TestingBrowserProcess::browser_policy_connector() {
   if (!browser_policy_connector_) {
     EXPECT_FALSE(created_browser_policy_connector_);
     created_browser_policy_connector_ = true;
@@ -217,7 +231,7 @@ policy::BrowserPolicyConnector*
         chrome::DIR_POLICY_FILES, local_policy_path, true, false));
 #endif
 
-    browser_policy_connector_ = platform_part_->CreateBrowserPolicyConnector();
+    browser_policy_connector_ = CreateBrowserPolicyConnector();
 
     // Note: creating the ChromeBrowserPolicyConnector invokes BrowserThread::
     // GetTaskRunnerForThread(), which initializes a base::LazyInstance of

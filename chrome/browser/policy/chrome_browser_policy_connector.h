@@ -41,6 +41,12 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
 
+  // Called from ChromeBrowserMainParts::PreCreateThreads(). This is intended
+  // to completely initialization that can't be done before then.
+  // NOTE: this is called before BrowserPolicyConnector::Init(). This
+  // implementation does nothing and is provided for subclasses.
+  virtual void OnPreCreateThreads();
+
  private:
   std::unique_ptr<ConfigurationPolicyProvider> CreatePlatformProvider();
 

@@ -19,6 +19,7 @@
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/debugger.h"
+#include "base/deferred_sequenced_task_runner.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -53,6 +54,7 @@
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/chrome_browser_field_trials.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
 #include "chrome/browser/component_updater/crl_set_component_installer.h"
 #include "chrome/browser/component_updater/downloadable_strings_component_installer.h"
@@ -71,6 +73,7 @@
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/gpu/three_d_api_observer.h"
+#include "chrome/browser/local_state_loader.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/expired_histograms_array.h"
@@ -80,6 +83,7 @@
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/performance_monitor/performance_monitor.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
@@ -133,7 +137,6 @@
 #include "components/language_usage_metrics/language_usage_metrics.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/metrics/expired_histograms_checker.h"
-#include "components/metrics/metrics_reporting_default_state.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
 #include "components/nacl/browser/nacl_browser.h"
@@ -150,7 +153,6 @@
 #include "components/tracing/common/tracing_switches.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/variations/field_trial_config/field_trial_util.h"
-#include "components/variations/pref_names.h"
 #include "components/variations/service/variations_service.h"
 #include "components/variations/synthetic_trials_active_group_id_provider.h"
 #include "components/variations/variations_associated_data.h"
@@ -180,6 +182,7 @@
 #include "net/url_request/url_request.h"
 #include "printing/features/features.h"
 #include "rlz/features/features.h"
+#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -200,6 +203,7 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/settings/cros_settings_names.h"
@@ -325,89 +329,6 @@ void AddFirstRunNewTabs(StartupBrowserCreator* browser_creator,
   }
 }
 #endif  // !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-
-// Returns the new local state object, guaranteed non-NULL.
-// |local_state_task_runner| must be a shutdown-blocking task runner.
-PrefService* InitializeLocalState(
-    base::SequencedTaskRunner* local_state_task_runner,
-    const base::CommandLine& parsed_command_line) {
-  TRACE_EVENT0("startup", "ChromeBrowserMainParts::InitializeLocalState")
-
-  // Load local state.  This includes the application locale so we know which
-  // locale dll to load.  This also causes local state prefs to be registered.
-  PrefService* local_state = g_browser_process->local_state();
-  DCHECK(local_state);
-
-#if defined(OS_WIN)
-  if (first_run::IsChromeFirstRun()) {
-    // During first run we read the google_update registry key to find what
-    // language the user selected when downloading the installer. This
-    // becomes our default language in the prefs.
-    // Other platforms obey the system locale.
-    base::string16 install_lang;
-    if (GoogleUpdateSettings::GetLanguage(&install_lang)) {
-      local_state->SetString(prefs::kApplicationLocale,
-                             base::UTF16ToASCII(install_lang));
-    }
-    bool stats_default;
-    if (GoogleUpdateSettings::GetCollectStatsConsentDefault(&stats_default)) {
-      // |stats_default| == true means that the default state of consent for the
-      // product at the time of install was to report usage statistics, meaning
-      // "opt-out".
-      metrics::RecordMetricsReportingDefaultState(
-          local_state, stats_default ? metrics::EnableMetricsDefault::OPT_OUT
-                                     : metrics::EnableMetricsDefault::OPT_IN);
-    }
-  }
-#endif  // defined(OS_WIN)
-
-  // If the local state file for the current profile doesn't exist and the
-  // parent profile command line flag is present, then we should inherit some
-  // local state from the parent profile.
-  // Checking that the local state file for the current profile doesn't exist
-  // is the most robust way to determine whether we need to inherit or not
-  // since the parent profile command line flag can be present even when the
-  // current profile is not a new one, and in that case we do not want to
-  // inherit and reset the user's setting.
-  //
-  // TODO(mnissler): We should probably just instantiate a
-  // JSONPrefStore here instead of an entire PrefService. Once this is
-  // addressed, the call to browser_prefs::RegisterLocalState can move
-  // to chrome_prefs::CreateLocalState.
-  if (parsed_command_line.HasSwitch(switches::kParentProfile)) {
-    base::FilePath local_state_path;
-    PathService::Get(chrome::FILE_LOCAL_STATE, &local_state_path);
-    bool local_state_file_exists = base::PathExists(local_state_path);
-    if (!local_state_file_exists) {
-      base::FilePath parent_profile =
-          parsed_command_line.GetSwitchValuePath(switches::kParentProfile);
-      scoped_refptr<PrefRegistrySimple> registry = new PrefRegistrySimple();
-      std::unique_ptr<PrefService> parent_local_state(
-          chrome_prefs::CreateLocalState(
-              parent_profile, local_state_task_runner,
-              g_browser_process->policy_service(), registry, false, nullptr));
-      registry->RegisterStringPref(prefs::kApplicationLocale, std::string());
-      // Right now, we only inherit the locale setting from the parent profile.
-      local_state->SetString(
-          prefs::kApplicationLocale,
-          parent_local_state->GetString(prefs::kApplicationLocale));
-    }
-  }
-
-#if defined(OS_CHROMEOS)
-  if (parsed_command_line.HasSwitch(chromeos::switches::kLoginManager)) {
-    std::string owner_locale = local_state->GetString(prefs::kOwnerLocale);
-    // Ensure that we start with owner's locale.
-    if (!owner_locale.empty() &&
-        local_state->GetString(prefs::kApplicationLocale) != owner_locale &&
-        !local_state->IsManagedPreference(prefs::kApplicationLocale)) {
-      local_state->SetString(prefs::kApplicationLocale, owner_locale);
-    }
-  }
-#endif  // defined(OS_CHROMEOS)
-
-  return local_state;
-}
 
 // Initializes the primary profile, possibly doing some user prompting to pick
 // a fallback profile. Returns the newly created profile, or NULL if startup
@@ -640,6 +561,95 @@ const char kMissingLocaleDataMessage[] =
 
 }  // namespace chrome_browser
 
+class ChromeBrowserMainParts::InitialTaskRunner
+    : public base::SingleThreadTaskRunner {
+ public:
+  InitialTaskRunner() {
+    // scoped_refptr<base::SingleThreadTaskRunner> task_runner(this);
+    thread_task_runner_handle_ =
+        std::make_unique<base::ThreadTaskRunnerHandle>(this);
+    const bool does_target_task_runner_run_tasks_in_sequence = true;
+    deferred_runner_ = new base::DeferredSequencedTaskRunner(
+        does_target_task_runner_run_tasks_in_sequence);
+  }
+
+  void AdvanceToNextState() {
+    base::AutoLock lock(lock_);
+    switch (state_) {
+      case State::kInstalled:
+        state_ = State::kWaitingForMainToStart;
+        thread_task_runner_handle_.reset();
+        break;
+
+      case State::kWaitingForMainToStart:
+        state_ = State::kMessageLoopRunning;
+        DCHECK_EQ(
+            base::ThreadTaskRunnerHandle::Get()->RunsTasksInCurrentSequence(),
+            deferred_runner_->RunsTasksInCurrentSequence());
+        deferred_runner_->Start(base::ThreadTaskRunnerHandle::Get());
+        deferred_runner_ = nullptr;
+        main_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+        break;
+
+      case State::kMessageLoopRunning:
+        NOTREACHED();
+    }
+  }
+
+  // base::SequencedTaskRunner:
+  bool PostDelayedTask(const base::Location& from_here,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    base::AutoLock lock(lock_);
+    switch (state_) {
+      case State::kInstalled:
+      case State::kWaitingForMainToStart:
+        return deferred_runner_->PostDelayedTask(from_here, std::move(task),
+                                                 delay);
+        break;
+
+      case State::kMessageLoopRunning:
+        return main_thread_task_runner_->PostDelayedTask(
+            from_here, std::move(task), delay);
+    }
+    return false;
+  }
+  bool RunsTasksInCurrentSequence() const override { return true; }
+  bool PostNonNestableDelayedTask(const base::Location& from_here,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    base::AutoLock lock(lock_);
+    switch (state_) {
+      case State::kInstalled:
+      case State::kWaitingForMainToStart:
+        return deferred_runner_->PostNonNestableDelayedTask(
+            from_here, std::move(task), delay);
+        break;
+
+      case State::kMessageLoopRunning:
+        return main_thread_task_runner_->PostNonNestableDelayedTask(
+            from_here, std::move(task), delay);
+    }
+    return false;
+  }
+
+ private:
+  ~InitialTaskRunner() override = default;
+  enum class State {
+    kInstalled,
+    kWaitingForMainToStart,
+    kMessageLoopRunning,
+  };
+
+  base::Lock lock_;
+  scoped_refptr<base::DeferredSequencedTaskRunner> deferred_runner_;
+  scoped_refptr<SingleThreadTaskRunner> main_thread_task_runner_;
+  std::unique_ptr<base::ThreadTaskRunnerHandle> thread_task_runner_handle_;
+  State state_ = State::kInstalled;
+
+  DISALLOW_COPY_AND_ASSIGN(InitialTaskRunner);
+};
+
 // BrowserMainParts ------------------------------------------------------------
 
 ChromeBrowserMainParts::ChromeBrowserMainParts(
@@ -672,62 +682,17 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       std::make_unique<metrics::ExpiredHistogramsChecker>(
           chrome_metrics::kExpiredHistogramsHashes,
           chrome_metrics::kNumExpiredHistograms));
+
+  // This needs to be created in the constructor as Chrome OS now creates some
+  // classes that depend upon a ThreadTaskRunnerHandle in
+  // PreEarlyInitialization().
+  initial_task_runner_ = new InitialTaskRunner;
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
   for (int i = static_cast<int>(chrome_extra_parts_.size())-1; i >= 0; --i)
     delete chrome_extra_parts_[i];
   chrome_extra_parts_.clear();
-}
-
-// This will be called after the command-line has been mutated by about:flags
-void ChromeBrowserMainParts::SetupFieldTrials() {
-  // Initialize FieldTrialList to support FieldTrials that use one-time
-  // randomization.
-  DCHECK(!field_trial_list_);
-  field_trial_list_.reset(new base::FieldTrialList(
-      browser_process_->GetMetricsServicesManager()->CreateEntropyProvider()));
-
-  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-
-  // Associate parameters chosen in about:flags and create trial/group for them.
-  flags_ui::PrefServiceFlagsStorage flags_storage(
-      g_browser_process->local_state());
-  std::vector<std::string> variation_ids =
-      about_flags::RegisterAllFeatureVariationParameters(
-          &flags_storage, feature_list.get());
-
-  std::set<std::string> unforceable_field_trials;
-#if defined(OFFICIAL_BUILD)
-  unforceable_field_trials.insert("SettingsEnforcement");
-#endif  // defined(OFFICIAL_BUILD)
-
-  variations::VariationsService* variations_service =
-      browser_process_->variations_service();
-  variations_service->SetupFieldTrials(
-      cc::switches::kEnableGpuBenchmarking, switches::kEnableFeatures,
-      switches::kDisableFeatures, unforceable_field_trials,
-      std::move(feature_list), &variation_ids, &browser_field_trials_);
-
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  // Enable Navigation Tracing only if a trace upload url is specified.
-  if (command_line->HasSwitch(switches::kEnableNavigationTracing) &&
-      command_line->HasSwitch(switches::kTraceUploadURL)) {
-    tracing::SetupNavigationTracing();
-  }
-
-  // Initialize FieldTrialSynchronizer system. This is a singleton and is used
-  // for posting tasks via base::Bind. Its deleted when it goes out of scope.
-  // Even though base::Bind does AddRef and Release, the object will not be
-  // deleted after the Task is executed.
-  field_trial_synchronizer_ = new FieldTrialSynchronizer();
-
-#if defined(OS_WIN) || defined(OS_MACOSX) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
-  metrics::DesktopSessionDurationTracker::Initialize();
-#endif
-  metrics::RendererUptimeTracker::Initialize();
 }
 
 void ChromeBrowserMainParts::SetupMetrics() {
@@ -777,58 +742,6 @@ void ChromeBrowserMainParts::RecordBrowserStartupTime() {
       base::TimeTicks::Now(), is_first_run, g_browser_process->local_state());
 }
 
-void ChromeBrowserMainParts::SetupOriginTrialsCommandLine(
-    PrefService* local_state) {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(switches::kOriginTrialPublicKey)) {
-    std::string new_public_key =
-        local_state->GetString(prefs::kOriginTrialPublicKey);
-    if (!new_public_key.empty()) {
-      command_line->AppendSwitchASCII(
-          switches::kOriginTrialPublicKey,
-          local_state->GetString(prefs::kOriginTrialPublicKey));
-    }
-  }
-  if (!command_line->HasSwitch(switches::kOriginTrialDisabledFeatures)) {
-    const base::ListValue* override_disabled_feature_list =
-        local_state->GetList(prefs::kOriginTrialDisabledFeatures);
-    if (override_disabled_feature_list) {
-      std::vector<base::StringPiece> disabled_features;
-      base::StringPiece disabled_feature;
-      for (const auto& item : *override_disabled_feature_list) {
-        if (item.GetAsString(&disabled_feature)) {
-          disabled_features.push_back(disabled_feature);
-        }
-      }
-      if (!disabled_features.empty()) {
-        const std::string override_disabled_features =
-            base::JoinString(disabled_features, "|");
-        command_line->AppendSwitchASCII(switches::kOriginTrialDisabledFeatures,
-                                        override_disabled_features);
-      }
-    }
-  }
-  if (!command_line->HasSwitch(switches::kOriginTrialDisabledTokens)) {
-    const base::ListValue* disabled_token_list =
-        local_state->GetList(prefs::kOriginTrialDisabledTokens);
-    if (disabled_token_list) {
-      std::vector<base::StringPiece> disabled_tokens;
-      base::StringPiece disabled_token;
-      for (const auto& item : *disabled_token_list) {
-        if (item.GetAsString(&disabled_token)) {
-          disabled_tokens.push_back(disabled_token);
-        }
-      }
-      if (!disabled_tokens.empty()) {
-        const std::string disabled_token_switch =
-            base::JoinString(disabled_tokens, "|");
-        command_line->AppendSwitchASCII(switches::kOriginTrialDisabledTokens,
-                                        disabled_token_switch);
-      }
-    }
-  }
-}
-
 // -----------------------------------------------------------------------------
 // TODO(viettrungluu): move more/rest of BrowserMain() into BrowserMainParts.
 
@@ -851,10 +764,12 @@ DLLEXPORT void __cdecl RelaunchChromeBrowserWithNewCommandLineIfNeeded() {
 
 // content::BrowserMainParts implementation ------------------------------------
 
-void ChromeBrowserMainParts::PreEarlyInitialization() {
+int ChromeBrowserMainParts::PreEarlyInitialization() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreEarlyInitialization");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PreEarlyInitialization();
+
+  return LoadLocalState();
 }
 
 void ChromeBrowserMainParts::PostEarlyInitialization() {
@@ -870,6 +785,9 @@ void ChromeBrowserMainParts::ToolkitInitialized() {
 }
 
 void ChromeBrowserMainParts::PreMainMessageLoopStart() {
+  if (initial_task_runner_)
+    initial_task_runner_->AdvanceToNextState();
+
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreMainMessageLoopStart");
 
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
@@ -926,6 +844,23 @@ int ChromeBrowserMainParts::PreCreateThreads() {
   return result_code_;
 }
 
+int ChromeBrowserMainParts::LoadLocalState() {
+  local_state_data_ = std::make_unique<local_state_loader::LocalState>();
+  const int local_state_loader_error_code =
+      local_state_loader::LoadLocalState(local_state_data_.get());
+  if (local_state_loader_error_code != content::RESULT_CODE_NORMAL_EXIT)
+    return local_state_loader_error_code;
+
+  field_trial_synchronizer_ =
+      std::move(local_state_data_->field_trial_synchronizer);
+  field_trial_list_ = std::move(local_state_data_->field_trial_list);
+  browser_field_trials_ = std::move(local_state_data_->browser_field_trials);
+#if !defined(OS_ANDROID)
+  master_prefs_ = std::move(local_state_data_->master_prefs);
+#endif
+  return content::RESULT_CODE_NORMAL_EXIT;
+}
+
 int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreCreateThreadsImpl")
   run_message_loop_ = false;
@@ -947,54 +882,39 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   first_run::IsChromeFirstRun();
 #endif  // !defined(OS_ANDROID)
 
-  // The initial read is done synchronously, the TaskPriority is thus only used
-  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of
-  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on
-  // shutdown. However, some shutdown use cases happen without
-  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and
-  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this
-  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping
-  // priority of a sequence on demand.
-  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  initial_task_runner_->AdvanceToNextState();
+  initial_task_runner_ = nullptr;
+
+  PrefService* local_state = local_state_data_->local_state.get();
+
+#if defined(OS_CHROMEOS)
+  chromeos::CrosSettings::Initialize(
+      local_state, static_cast<policy::BrowserPolicyConnectorChromeOS*>(
+                       local_state_data_->browser_policy_connector.get()));
+#endif  // defined(OS_CHROMEOS)
 
   {
     TRACE_EVENT0("startup",
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitBrowswerProcessImpl");
-    browser_process_ =
-        std::make_unique<BrowserProcessImpl>(local_state_task_runner.get());
+    browser_process_ = std::make_unique<BrowserProcessImpl>(
+        std::move(local_state_data_->metrics_services_manager),
+        std::move(local_state_data_->browser_policy_connector),
+        std::move(local_state_data_->local_state),
+        local_state_data_->local_state_task_runner,
+        std::move(local_state_data_->pref_service_factory));
+    local_state_data_.reset();
   }
 
-  PrefService* local_state = InitializeLocalState(local_state_task_runner.get(),
-                                                  parsed_command_line());
+  browser_process_->browser_policy_connector()->OnPreCreateThreads();
 
 #if !defined(OS_ANDROID)
   // These members must be initialized before returning from this function.
-  master_prefs_.reset(new first_run::MasterPrefs);
   // Android doesn't use StartupBrowserCreator.
   browser_creator_.reset(new StartupBrowserCreator);
   // TODO(yfriedman): Refactor Android to re-use UMABrowsingActivityObserver
   chrome::UMABrowsingActivityObserver::Init();
 #endif  // !defined(OS_ANDROID)
 
-#if !defined(OS_CHROMEOS)
-  // Convert active labs into switches. This needs to be done before
-  // ui::ResourceBundle::InitSharedInstanceWithLocale as some loaded resources
-  // are affected by experiment flags (--touch-optimized-ui in particular). On
-  // ChromeOS system level flags are applied from the device settings from the
-  // session manager.
-  {
-    TRACE_EVENT0("startup",
-        "ChromeBrowserMainParts::PreCreateThreadsImpl:ConvertFlags");
-    flags_ui::PrefServiceFlagsStorage flags_storage(
-        g_browser_process->local_state());
-    about_flags::ConvertFlagsToSwitches(&flags_storage,
-                                        base::CommandLine::ForCurrentProcess(),
-                                        flags_ui::kAddSentinels);
-  }
-#endif  // !defined(OS_CHROMEOS)
   // The MaterialDesignController needs to look at command line flags, which
   // are not available until this point. Now that they are, proceed with
   // initializing the MaterialDesignController.
@@ -1008,10 +928,12 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // affects tracing the browser startup. Also, this is only relevant for the
   // browser process, as other processes will get all the flags on their command
   // line regardless of the origin (command line or about:flags).
+  // XXX understand this comment!
   if (parsed_command_line().HasSwitch(switches::kTraceExportEventsToETW))
     base::trace_event::TraceEventETWExport::EnableETWExport();
 #endif  // OS_WIN
 
+  // XXX not sure if this needs to move.
   local_state->UpdateCommandLinePrefStore(
       new ChromeCommandLinePrefStore(base::CommandLine::ForCurrentProcess()));
 
@@ -1037,7 +959,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitResourceBundle");
   const std::string loaded_locale =
       ui::ResourceBundle::InitSharedInstanceWithLocale(
-          locale, NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+          locale, nullptr, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
   TRACE_EVENT_END0("startup",
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitResourceBundle");
 
@@ -1063,46 +985,12 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   }
 #endif  // defined(OS_MACOSX)
 
-// Android does first run in Java instead of native.
-// Chrome OS has its own out-of-box-experience code.
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-  // On first run, we need to process the predictor preferences before the
-  // browser's profile_manager object is created, but after ResourceBundle
-  // is initialized.
   if (first_run::IsChromeFirstRun()) {
-    first_run::ProcessMasterPreferencesResult pmp_result =
-        first_run::ProcessMasterPreferences(user_data_dir_,
-                                            master_prefs_.get());
-    if (pmp_result == first_run::EULA_EXIT_NOW)
-      return chrome::RESULT_CODE_EULA_REFUSED;
-
     if (!parsed_command_line().HasSwitch(switches::kApp) &&
         !parsed_command_line().HasSwitch(switches::kAppId) &&
         !parsed_command_line().HasSwitch(switches::kShowAppList)) {
       AddFirstRunNewTabs(browser_creator_.get(), master_prefs_->new_tabs);
-    }
-
-    // TODO(macourteau): refactor preferences that are copied from
-    // master_preferences into local_state, as a "local_state" section in
-    // master preferences. If possible, a generic solution would be preferred
-    // over a copy one-by-one of specific preferences. Also see related TODO
-    // in first_run.h.
-
-    // Store the initial VariationsService seed in local state, if it exists
-    // in master prefs.
-    if (!master_prefs_->compressed_variations_seed.empty()) {
-      local_state->SetString(variations::prefs::kVariationsCompressedSeed,
-                             master_prefs_->compressed_variations_seed);
-      if (!master_prefs_->variations_seed_signature.empty()) {
-        local_state->SetString(variations::prefs::kVariationsSeedSignature,
-                               master_prefs_->variations_seed_signature);
-      }
-      // Set the variation seed date to the current system time. If the user's
-      // clock is incorrect, this may cause some field trial expiry checks to
-      // not do the right thing until the next seed update from the server,
-      // when this value will be updated.
-      local_state->SetInt64(variations::prefs::kVariationsSeedDate,
-                            base::Time::Now().ToInternalValue());
     }
 
 #if defined(OS_MACOSX) || defined(OS_LINUX)
@@ -1115,19 +1003,8 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
     if (!base::PathExists(user_native_messaging_dir))
       base::CreateDirectory(user_native_messaging_dir);
 #endif  // defined(OS_MACOSX) || defined(OS_LINUX)
-
-    if (!master_prefs_->suppress_default_browser_prompt_for_version.empty()) {
-      local_state->SetString(
-          prefs::kBrowserSuppressDefaultBrowserPrompt,
-          master_prefs_->suppress_default_browser_prompt_for_version);
-    }
-
-#if defined(OS_WIN)
-    if (!master_prefs_->welcome_page_on_os_upgrade_enabled)
-      local_state->SetBoolean(prefs::kWelcomePageOnOSUpgradeEnabled, false);
-#endif
   }
-#endif  // !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+#endif
 
 #if defined(OS_LINUX) || defined(OS_OPENBSD)
   // Set the product channel for crash reports.
@@ -1144,25 +1021,22 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   SecKeychainAddCallback(&KeychainCallback, 0, NULL);
 #endif  // defined(OS_MACOSX)
 
-#if defined(OS_CHROMEOS)
-  // Must be done after g_browser_process is constructed, before
-  // SetupFieldTrials() and SetupMetrics().
-  chromeos::CrosSettings::Initialize();
-#endif  // defined(OS_CHROMEOS)
-
-  SetupOriginTrialsCommandLine(local_state);
-
 #if BUILDFLAG(ENABLE_VR)
   content::WebvrServiceProvider::SetWebvrServiceCallback(
       base::Bind(&vr::VRServiceImpl::Create));
 #endif
 
-  // Now that the command line has been mutated based on about:flags, we can
-  // initialize field trials. The field trials are needed by IOThread's
-  // initialization which happens in BrowserProcess:PreCreateThreads. Metrics
-  // initialization is handled in PreMainMessageLoopRunImpl since it posts
-  // tasks.
-  SetupFieldTrials();
+  // Enable Navigation Tracing only if a trace upload url is specified.
+  if (parsed_command_line_.HasSwitch(switches::kEnableNavigationTracing) &&
+      parsed_command_line_.HasSwitch(switches::kTraceUploadURL)) {
+    tracing::SetupNavigationTracing();
+  }
+
+#if defined(OS_WIN) || defined(OS_MACOSX) || \
+    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+  metrics::DesktopSessionDurationTracker::Initialize();
+#endif
+  metrics::RendererUptimeTracker::Initialize();
 
   // Add Site Isolation switches as dictated by policy.
   auto* command_line = base::CommandLine::ForCurrentProcess();
