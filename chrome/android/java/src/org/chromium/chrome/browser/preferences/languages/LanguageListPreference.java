@@ -17,6 +17,7 @@ import android.widget.Button;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
+import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.widget.ListMenuButton;
 import org.chromium.chrome.browser.widget.ListMenuButton.Item;
 import org.chromium.chrome.browser.widget.TintedDrawable;
@@ -39,7 +40,7 @@ public class LanguageListPreference extends Preference {
                 LanguageListBaseAdapter.LanguageRowViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
 
-            holder.setStartIcon(R.drawable.ic_drag_handle_grey600_24dp);
+            showDragIndicatorInRow(holder, R.drawable.ic_drag_handle_grey600_24dp);
 
             final LanguageItem info = getItemByPosition(position);
             holder.setMenuButtonDelegate(new ListMenuButton.Delegate() {
@@ -129,7 +130,7 @@ public class LanguageListPreference extends Preference {
 
         // Due to a known native bug (crbug/640763), the list order written into Preference Service
         // might be different from the order shown after it's adjusted by dragging.
-        mAdapter.enableDrag(mRecyclerView);
+        if (!AccessibilityUtil.isAccessibilityEnabled()) mAdapter.enableDrag(mRecyclerView);
 
         return mView;
     }

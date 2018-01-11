@@ -143,15 +143,6 @@ public class LanguageListBaseAdapter
     @Override
     public void onBindViewHolder(LanguageRowViewHolder holder, int position) {
         holder.updateLanguageInfo(mLanguageList.get(position));
-        if (mDragEnabled && getItemCount() > 1) {
-            assert mItemTouchHelper != null;
-            holder.mStartIcon.setOnTouchListener((v, event) -> {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    mItemTouchHelper.startDrag(holder);
-                }
-                return false;
-            });
-        }
     }
 
     @Override
@@ -167,6 +158,26 @@ public class LanguageListBaseAdapter
         mLanguageList.clear();
         mLanguageList.addAll(languageList);
         notifyDataSetChanged();
+    }
+
+    /**
+     * Show a drag indicator at the start of the row if applicable.
+     *
+     * @param holder The LanguageRowViewHolder of the row.
+     * @param indicatorResId The identifier of the drawable resource for the indicator.
+     */
+    void showDragIndicatorInRow(LanguageRowViewHolder holder, @DrawableRes int indicatorResId) {
+        // Quit if it's not applicable.
+        if (getItemCount() <= 1 || !mDragEnabled) return;
+
+        assert mItemTouchHelper != null;
+        holder.setStartIcon(indicatorResId);
+        holder.mStartIcon.setOnTouchListener((v, event) -> {
+            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                mItemTouchHelper.startDrag(holder);
+            }
+            return false;
+        });
     }
 
     /**
