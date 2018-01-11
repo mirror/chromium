@@ -80,6 +80,7 @@ blink_platform_sources("heap") {
 test("blink_heap_unittests") {
   deps = [
     ":blink_heap_unittests_sources",
+    "//tools/v8_context_snapshot",
   ]
   if (is_android) {
     deps += [

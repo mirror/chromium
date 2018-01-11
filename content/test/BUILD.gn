@@ -288,7 +288,6 @@ static_library("test_support") {
     "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
-    "//tools/v8_context_snapshot",
   ]
   deps = [
     ":content_test_mojo_bindings",
@@ -335,7 +334,6 @@ static_library("test_support") {
     "//storage/common",
     "//testing/gmock",
     "//testing/gtest",
-    "//tools/v8_context_snapshot:v8_context_snapshot",
     "//ui/accessibility:ax_gen",
     "//ui/base",
     "//ui/base:test_support",
@@ -360,6 +358,7 @@ static_library("test_support") {
 
   data_deps = [
     "//content/shell:pak",
+    "//tools/v8_context_snapshot",
   ]
 
   if (is_android) {
