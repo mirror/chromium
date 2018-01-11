@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f09e7b31_3d505933",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-11T15:13:41Z",
+      "side": 1,
+      "message": "I think having this as an opt-in will allow us to test the waters a bit in terms of what issues may come up.\n\nIf all goes well, I think we should switch the flag so that it\u0027s opt-out rather than opt-in.",
+      "parentUuid": "ef1b064f_fcc2522f",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a207667_1660972c",
         "filename": "build/android/gradle/generate_gradle.py",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "If one does nothing here, and Android Studio has previously been used with Chromium without this option, then Android Studio will continue to use Chromium\u0027s SDK, and will set the project\u0027s SDK to Chromium\u0027s SDK.",
       "parentUuid": "8b0fdb07_d8cc8841",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c267ab52_dd97e80b",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-11T15:13:41Z",
+      "side": 1,
+      "message": "How about deleting any existing file?\n\nSetting it to a path that doesn\u0027t exist isn\u0027t the best (at least for me, that path doesn\u0027t exist)",
+      "parentUuid": "8f32b290_442bf6a9",
       "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
