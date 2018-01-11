@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7aeca89_5a911516",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f87262b_366da159",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c28a76_c096ad34",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 3
@@ -94,6 +118,78 @@
     },
     {
       "key": {
+        "uuid": "f3e9edea_8b294b5f",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ffb47a_e0bba0a3",
+      "range": {
+        "startLine": 288,
+        "startChar": 50,
+        "endLine": 288,
+        "endChar": 51
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4e96f23_118d7f46",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "It can actually read content descriptions of images too. I think content is more accurate. The previous description (line 284) uses \"content\" and was UX approved.",
+      "parentUuid": "7672f8a4_39d1e2e3",
+      "range": {
+        "startLine": 288,
+        "startChar": 80,
+        "endLine": 288,
+        "endChar": 87
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bd34c0d_a2ecf060",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c28a76_c096ad34",
+      "range": {
+        "startLine": 288,
+        "startChar": 91,
+        "endLine": 288,
+        "endChar": 92
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fda867f_a22eb241",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36158697_adee118f",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fda867f_a22eb241",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 9
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e10315d3_d3692df8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ce89ac_a00f96ee",
+      "range": {
+        "startLine": 403,
+        "startChar": 52,
+        "endLine": 405,
+        "endChar": 20
+      },
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dca9ae0_f49e62f5",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 3
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "6f99c622_0bb99ccf",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dca9ae0_f49e62f5",
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbeb3256_412a63c4",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 3
@@ -171,6 +333,24 @@
       "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe29df5_7814a31f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-11T18:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbeb3256_412a63c4",
+      "revId": "1959275a449ab4cf7246e9be61dfff570259aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
