@@ -590,11 +590,6 @@ std::vector<std::string> GpuControlList::GetDisabledExtensions() {
 }
 
 void GpuControlList::GetReasons(base::ListValue* problem_list,
-                                const std::string& tag) const {
-  GetReasons(problem_list, tag, active_entries_);
-}
-
-void GpuControlList::GetReasons(base::ListValue* problem_list,
                                 const std::string& tag,
                                 const std::vector<uint32_t>& entries) const {
   DCHECK(problem_list);
