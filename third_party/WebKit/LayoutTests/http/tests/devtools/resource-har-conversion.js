@@ -8,7 +8,7 @@
   await TestRunner.loadModule('application_test_runner');
 
   await TestRunner.NetworkAgent.setCacheDisabled(true);
-  await TestRunner.reloadPagePromise();
+  await new Promise(resolve => TestRunner.hardReloadPage(resolve));
   await TestRunner.evaluateInPagePromise(`
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "${TestRunner.url('resources/post-target.cgi')}", false);

@@ -84,8 +84,9 @@ class PageHandler : public DevToolsDomainHandler,
   Response Enable() override;
   Response Disable() override;
 
-  Response Reload(Maybe<bool> bypassCache,
-                  Maybe<std::string> script_to_evaluate_on_load) override;
+  void Reload(Maybe<bool> bypassCache,
+              Maybe<std::string> script_to_evaluate_on_load,
+              std::unique_ptr<ReloadCallback>) override;
   void Navigate(const std::string& url,
                 Maybe<std::string> referrer,
                 Maybe<std::string> transition_type,
@@ -194,6 +195,7 @@ class PageHandler : public DevToolsDomainHandler,
   JavaScriptDialogCallback pending_dialog_;
   scoped_refptr<DevToolsDownloadManagerDelegate> download_manager_delegate_;
   std::unique_ptr<NavigateCallback> navigate_callback_;
+  std::unique_ptr<ReloadCallback> reload_callback_;
   base::WeakPtrFactory<PageHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PageHandler);
