@@ -39,6 +39,7 @@
 #include "chrome/browser/permissions/permission_result.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
+#include "chrome/browser/plugins/plugin_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
@@ -182,9 +183,13 @@ bool ShouldShowPermission(
   if (info.type == CONTENT_SETTINGS_TYPE_GEOLOCATION)
     return true;
 #else
-  // Flash will always be shown. See https://crbug.com/791142.
-  if (info.type == CONTENT_SETTINGS_TYPE_PLUGINS)
+  // Flash is shown if the user has ever changed its setting for |site_url|.
+  if (info.type == CONTENT_SETTINGS_TYPE_PLUGINS &&
+      content_settings->GetWebsiteSetting(site_url, site_url,
+                                          CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                          std::string(), nullptr) != nullptr) {
     return true;
+  }
 #endif
 
 #if !defined(OS_ANDROID)
@@ -467,6 +472,13 @@ void PageInfo::OnSitePermissionChanged(ContentSettingsType type,
   }
   content_settings_->SetNarrowestContentSetting(site_url_, site_url_, type,
                                                 setting);
+
+#if !defined(OS_ANDROID)
+  if (type == CONTENT_SETTINGS_TYPE_PLUGINS) {
+    PluginUtils::RememberFlashChangedForSite(content_settings_, site_url_,
+                                             site_url_);
+  }
+#endif
 
   // When the sound setting is changed, no reload is necessary.
   if (type != CONTENT_SETTINGS_TYPE_SOUND)

@@ -41,6 +41,12 @@ class PluginUtils {
       const GURL& plugin_url,
       bool* is_managed);
 
+  // Remember that a user has changed Flash for the given site.
+  static void RememberFlashChangedForSite(
+      HostContentSettingsMap* host_content_settings_map,
+      const GURL& requesting_url,
+      const GURL& top_level_url);
+
   // Returns true if HTML content should be prefered, by hiding Flash from the
   // plugin list. Use this instead of
   // base::FeatureList::IsEnabled(features::kPreferHtmlOverPlugins).

@@ -23,6 +23,7 @@
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
+#include "chrome/browser/plugins/plugin_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -158,6 +159,9 @@ void SiteSettingsHandler::RegisterMessages() {
       "setOriginPermissions",
       base::Bind(&SiteSettingsHandler::HandleSetOriginPermissions,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "clearFlashPref", base::Bind(&SiteSettingsHandler::HandleClearFlashPref,
+                                   base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "resetCategoryPermissionForPattern",
       base::Bind(&SiteSettingsHandler::HandleResetCategoryPermissionForPattern,
@@ -601,6 +605,8 @@ void SiteSettingsHandler::HandleSetOriginPermissions(
         base::RecordAction(base::UserMetricsAction(
             "SoundContentSetting.UnmuteBy.SiteSettings"));
       }
+    } else if (content_type == CONTENT_SETTINGS_TYPE_PLUGINS) {
+      PluginUtils::RememberFlashChangedForSite(map, origin, origin);
     }
     WebSiteSettingsUmaUtil::LogPermissionChange(content_type, setting);
   }
@@ -619,6 +625,19 @@ void SiteSettingsHandler::HandleSetOriginPermissions(
       }
     }
   }
+}
+
+void SiteSettingsHandler::HandleClearFlashPref(const base::ListValue* args) {
+  CHECK_EQ(1U, args->GetSize());
+  std::string origin_string;
+  CHECK(args->GetString(0, &origin_string));
+
+  HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(profile_);
+  const GURL origin(origin_string);
+  map->SetWebsiteSettingDefaultScope(origin, origin,
+                                     CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                     std::string(), nullptr);
 }
 
 void SiteSettingsHandler::HandleResetCategoryPermissionForPattern(

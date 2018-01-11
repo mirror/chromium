@@ -110,6 +110,10 @@ class SiteSettingsHandler : public SettingsPageUIHandler,
   void HandleGetOriginPermissions(const base::ListValue* args);
   void HandleSetOriginPermissions(const base::ListValue* args);
 
+  // Clears the Flash data setting used to remember if Flash has been changed
+  // for an origin.
+  void HandleClearFlashPref(const base::ListValue* args);
+
   // Handles setting and resetting an origin permission.
   void HandleResetCategoryPermissionForPattern(const base::ListValue* args);
   void HandleSetCategoryPermissionForPattern(const base::ListValue* args);

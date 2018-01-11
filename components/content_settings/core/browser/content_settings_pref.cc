@@ -52,8 +52,11 @@ bool IsValueAllowedForType(const base::Value* value, ContentSettingsType type) {
     return info->IsSettingValid(IntToContentSetting(setting));
   }
 
-  // TODO(raymes): We should permit different types of base::Value for
-  // website settings.
+  // TODO(raymes): We should permit different types of base::Value for other
+  // website settings as well.
+  if (type == CONTENT_SETTINGS_TYPE_PLUGINS_DATA)
+    return value->type() == base::Value::Type::BOOLEAN;
+
   return value->type() == base::Value::Type::DICTIONARY;
 }
 

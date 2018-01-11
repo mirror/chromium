@@ -7,6 +7,7 @@
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/hover_button.h"
@@ -15,6 +16,7 @@
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -221,9 +223,8 @@ TEST_F(PageInfoBubbleViewTest, SetPermissionInfo) {
   list.back().is_incognito = false;
   list.back().setting = CONTENT_SETTING_BLOCK;
 
-  // Initially, no permissions are shown because they are all set to default,
-  // except for Flash.
-  int num_expected_children = 3;
+  // Initially, no permissions are shown because they are all set to default.
+  int num_expected_children = 0;
   EXPECT_EQ(num_expected_children, api_->permissions_view()->child_count());
 
   num_expected_children += kViewsPerPermissionRow * list.size();
@@ -280,8 +281,7 @@ TEST_F(PageInfoBubbleViewTest, SetPermissionInfo) {
 
 // Test UI construction and reconstruction with USB devices.
 TEST_F(PageInfoBubbleViewTest, SetPermissionInfoWithUsbDevice) {
-  // One permission row is always shown here (Flash). https://crbug.com/791142
-  const int kExpectedChildren = kViewsPerPermissionRow;
+  const int kExpectedChildren = 0;
   EXPECT_EQ(kExpectedChildren, api_->permissions_view()->child_count());
 
   const GURL origin = GURL(kUrl).GetOrigin();
@@ -348,4 +348,48 @@ TEST_F(PageInfoBubbleViewTest, UpdatingSiteDataRetainsLayout) {
       first_party_cookies.allowed + third_party_cookies.allowed);
   size_t index = api_->GetCookiesLinkText().find(expected);
   EXPECT_NE(std::string::npos, index);
+}
+
+TEST_F(PageInfoBubbleViewTest, ChangingFlashSettingForSiteIsRemembered) {
+  const GURL url(kUrl);
+  HostContentSettingsMap* map = HostContentSettingsMapFactory::GetForProfile(
+      web_contents_helper_.profile());
+  // Make sure the site being tested doesn't already have this marker set.
+  EXPECT_EQ(nullptr,
+            map->GetWebsiteSetting(url, url, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                   std::string(), nullptr));
+
+  // Simulate changing the Flash setting.
+  PermissionInfoList list;
+  PageInfoBubbleView::PermissionInfo flash_info;
+  flash_info.type = CONTENT_SETTINGS_TYPE_PLUGINS;
+  flash_info.setting = CONTENT_SETTING_ALLOW;
+  list.push_back(flash_info);
+  api_->SetPermissionInfo(list);
+  EXPECT_EQ(kViewsPerPermissionRow, api_->permissions_view()->child_count());
+
+  // Check that this site has now been marked for displaying Flash always.
+  EXPECT_NE(nullptr,
+            map->GetWebsiteSetting(url, url, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                   std::string(), nullptr));
+
+  // Check the Flash permission is now showing since it's non-default.
+  const int kPermissionLabelIndex = 1;
+  views::Label* label = static_cast<views::Label*>(
+      api_->permissions_view()->child_at(kPermissionLabelIndex));
+  EXPECT_EQ(base::ASCIIToUTF16("Flash"), label->text());
+
+  // Simulate changing the Flash setting back to the default.
+  list.clear();
+  flash_info.setting = CONTENT_SETTING_DEFAULT;
+  list.push_back(flash_info);
+  api_->SetPermissionInfo(list);
+  EXPECT_EQ(CONTENT_SETTING_DEFAULT, list[0].setting);
+  EXPECT_EQ(kViewsPerPermissionRow, api_->permissions_view()->child_count());
+
+  // Check the Flash permission is still showing since the user changed it
+  // previously.
+  label = static_cast<views::Label*>(
+      api_->permissions_view()->child_at(kPermissionLabelIndex));
+  EXPECT_EQ(base::ASCIIToUTF16("Flash"), label->text());
 }
