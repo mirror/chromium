@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d640f28d_45c23611",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "you can drop the const here, right? decoded_response is owned by this function",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e5fbb3_43318c8e",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "the repeated find calls here and below are not necessary, |it| already points to the desired element",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb304f53_de878576",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "Clone() should not be necessary once you drop the const above, you can simply std::move() the values. also applies below",
+      "range": {
+        "startLine": 54,
+        "startChar": 64,
+        "endLine": 54,
+        "endChar": 71
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e124ae6_c956707f",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "std::move(*attestation_object)",
+      "range": {
+        "startLine": 74,
+        "startChar": 45,
+        "endLine": 74,
+        "endChar": 64
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebb5537_faa0a7e0",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "inline this",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 46
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d110cab8_9c163346",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "remove std::move here, it has no effect",
+      "range": {
+        "startLine": 158,
+        "startChar": 40,
+        "endLine": 158,
+        "endChar": 49
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700478e8_bc38c232",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "inline",
+      "range": {
+        "startLine": 165,
+        "startChar": 3,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5604fd6_e67b12ae",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "remove std::move",
+      "range": {
+        "startLine": 171,
+        "startChar": 27,
+        "endLine": 171,
+        "endChar": 36
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7eab94_817b592f",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "inline",
+      "range": {
+        "startLine": 246,
+        "startChar": 3,
+        "endLine": 246,
+        "endChar": 49
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11131ae6_076df0f2",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "remove std::move",
+      "range": {
+        "startLine": 251,
+        "startChar": 39,
+        "endLine": 251,
+        "endChar": 49
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b90763_33513ab3",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "do we really need a nested namespace for this? They tend to add a lot of clutter and hinder usability a bit. I think your function names are specific enough that we don\u0027t run into name collisions within the device namespace.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "fb548b3d9bcca1cf47649ec1ca6793d6273ff770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

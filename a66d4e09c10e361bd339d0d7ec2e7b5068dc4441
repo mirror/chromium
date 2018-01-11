@@ -452,6 +452,30 @@
       "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfcfc82_12a32e51",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-11T14:51:12Z",
+      "side": 1,
+      "message": "+1 to using base::span\u003cconst uint8_t\u003e here and also updating cbor::CBORReader",
+      "parentUuid": "55a5436e_299f12a6",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
