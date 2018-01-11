@@ -52,6 +52,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efda2ec_7322ecbe",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-11T18:56:28Z",
+      "side": 1,
+      "message": "The other risk with changing to globals is destructors - maybe add a warning about those? Or maybe it\u0027s good enough as is.",
+      "parentUuid": "faf740ce_7f8ec111",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
