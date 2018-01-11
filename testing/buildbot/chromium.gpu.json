@@ -2929,6 +2929,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -2954,6 +2961,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -2979,6 +2993,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3004,6 +3025,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3033,6 +3061,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3065,6 +3100,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3105,6 +3147,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3131,6 +3180,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3156,6 +3212,13 @@
               "pool": "Chrome-GPU"
             }
           ]
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       },
       {
@@ -3182,6 +3245,13 @@
             }
           ],
           "shards": 2
+        },
+        "trigger_script": {
+          "args": [
+            "--gpu-trigger-configs",
+            "[{\"gpu\": \"10de:1cb3-23.21.13.8792\", \"os\": \"Windows-2008ServerR2-SP1\", \"pool\": \"Chrome-GPU\"}]"
+          ],
+          "script": "//content/test/gpu/trigger_gpu_test.py"
         }
       }
     ]
