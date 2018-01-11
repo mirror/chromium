@@ -13063,7 +13063,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   params->transition = ui::PAGE_TRANSITION_LINK;
   params->should_update_history = false;
   params->gesture = NavigationGestureAuto;
-  params->was_within_same_document = false;
   params->method = "GET";
   params->page_state = PageState::CreateFromURL(another_url);
   // Use an origin mismatched with the origin lock.
