@@ -69,6 +69,24 @@
       "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1e9bae_95f3e107",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-11T19:33:01Z",
+      "side": 0,
+      "message": "I don\u0027t think we want to do this because we don\u0027t use an EventQueueScope for FinishComposingText():\n\n[1:1:0111/112933.340893:FATAL:InputMethodController.cpp(127)] Check failed: ScopedEventQueue::Instance()-\u003eShouldQueueEvents(). \n#0 0x7f7bf7731acd base::debug::StackTrace::StackTrace()\n#1 0x7f7bf772ff0c base::debug::StackTrace::StackTrace()\n#2 0x7f7bf77b768a logging::LogMessage::~LogMessage()\n#3 0x7f7bef38da24 blink::(anonymous namespace)::InsertTextDuringCompositionWithEvents()\n#4 0x7f7bef38cf55 blink::InputMethodController::ReplaceComposition()\n#5 0x7f7bef38ca5d blink::InputMethodController::FinishComposingText()\n#6 0x7f7bef476bc7 blink::WebInputMethodControllerImpl::FinishComposingText()",
+      "parentUuid": "18e0c9b8_2b601a26",
+      "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
