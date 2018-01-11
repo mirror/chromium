@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0c4789_df0e31b4",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-11T15:34:24Z",
+      "side": 1,
+      "message": "I think in general we use the IsIncognito and IsGuestSession and IsSystemProfile. In our case, the profile choose bubble should never be presented on incognito and system profile.\n\nSo simply change this check to: !profile-\u003eIsGuestSession()",
+      "range": {
+        "startLine": 180,
+        "startChar": 20,
+        "endLine": 180,
+        "endChar": 34
+      },
+      "revId": "0a8a6d12d5c800401fe112035c195789b1ddb35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
