@@ -16,6 +16,23 @@
       "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a95a26_904ad469",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-11T16:08:38Z",
+      "side": 1,
+      "message": "I think at this point you can remove the ifdef (and the todo) and just return capabilities.image_ycbcr_420v.",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
