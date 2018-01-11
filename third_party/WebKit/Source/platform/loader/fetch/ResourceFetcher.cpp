@@ -600,11 +600,16 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   network_instrumentation::ResourcePrioritySet(identifier,
                                                resource_request.Priority());
 
+  bool subresource_filter_would_disallow = false;
   blocked_reason = Context().CanRequest(
       resource_type, resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
       reporting_policy, params.GetOriginRestriction(),
-      resource_request.GetRedirectStatus());
+      resource_request.GetRedirectStatus(), &subresource_filter_would_disallow);
+  if (blocked_reason == ResourceRequestBlockedReason::kSubresourceFilter ||
+      subresource_filter_would_disallow) {
+    resource_request.SetIsAdResource(true);
+  }
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return kBlock;
 
@@ -1764,11 +1769,13 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
   ResourceLoaderOptions options = resource->Options();
   options.initiator_info.name = initiator_name;
   FetchParameters params(resource_request, options);
+  bool subresource_filter_would_disallow = false;
   Context().CanRequest(resource->GetType(), resource->LastResourceRequest(),
                        resource->LastResourceRequest().Url(), params.Options(),
                        SecurityViolationReportingPolicy::kReport,
                        params.GetOriginRestriction(),
-                       resource->LastResourceRequest().GetRedirectStatus());
+                       resource->LastResourceRequest().GetRedirectStatus(),
+                       &subresource_filter_would_disallow);
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
 }
 

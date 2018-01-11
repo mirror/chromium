@@ -277,10 +277,12 @@ bool ResourceLoader::WillFollowRedirect(
         request_context, new_url, options, reporting_policy,
         ResourceRequest::RedirectStatus::kFollowedRedirect);
 
+    bool subresource_filter_would_disallow = false;
     ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
         resource_type, *new_request, new_url, options, reporting_policy,
         FetchParameters::kUseDefaultOriginRestrictionForType,
-        ResourceRequest::RedirectStatus::kFollowedRedirect);
+        ResourceRequest::RedirectStatus::kFollowedRedirect,
+        &subresource_filter_would_disallow);
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
       CancelForRedirectAccessCheckError(new_url, blocked_reason);
       return false;
@@ -560,11 +562,13 @@ void ResourceLoader::DidReceiveResponse(
           SecurityViolationReportingPolicy::kReport,
           ResourceRequest::RedirectStatus::kFollowedRedirect);
 
+      bool subresource_filter_would_disallow = false;
       ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
           resource_type, initial_request, original_url, options,
           SecurityViolationReportingPolicy::kReport,
           FetchParameters::kUseDefaultOriginRestrictionForType,
-          ResourceRequest::RedirectStatus::kFollowedRedirect);
+          ResourceRequest::RedirectStatus::kFollowedRedirect,
+          &subresource_filter_would_disallow);
       if (blocked_reason != ResourceRequestBlockedReason::kNone) {
         HandleError(ResourceError::CancelledDueToAccessCheckError(
             original_url, blocked_reason));
