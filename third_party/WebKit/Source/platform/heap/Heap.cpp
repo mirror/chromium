@@ -154,6 +154,7 @@ double ThreadHeapStats::LiveObjectRateSinceLastGC() const {
 
 ThreadHeap::ThreadHeap(ThreadState* thread_state)
     : thread_state_(thread_state),
+      phase_(kIdlePhase),
       region_tree_(std::make_unique<RegionTree>()),
       heap_does_not_contain_cache_(
           WTF::WrapUnique(new HeapDoesNotContainCache)),
@@ -185,8 +186,23 @@ ThreadHeap::~ThreadHeap() {
     delete arenas_[i];
 }
 
+void ThreadHeap::SetPhase(Phase phase) {
+  switch (phase) {
+    case kIdlePhase:
+      DCHECK_EQ(phase_, kSweepPhase);
+      break;
+    case kMarkPhase:
+      DCHECK_EQ(phase_, kIdlePhase);
+      break;
+    case kSweepPhase:
+      DCHECK_EQ(phase_, kMarkPhase);
+      break;
+  }
+  phase_ = phase;
+}
+
 Address ThreadHeap::CheckAndMarkPointer(Visitor* visitor, Address address) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
 #if !DCHECK_IS_ON()
   if (heap_does_not_contain_cache_->Lookup(address))
@@ -220,7 +236,7 @@ Address ThreadHeap::CheckAndMarkPointer(
     Visitor* visitor,
     Address address,
     MarkedPointerCallbackForTesting callback) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   if (BasePage* page = LookupPageForAddress(address)) {
     DCHECK(page->Contains(address));
@@ -236,7 +252,8 @@ Address ThreadHeap::CheckAndMarkPointer(
 #endif
 
 void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
-  DCHECK(thread_state_->IsInGC() || thread_state_->IsIncrementalMarking());
+  DCHECK(thread_state_->IsInAtomicPause() ||
+         thread_state_->IsIncrementalMarking());
 
   CallbackStack::Item* slot = marking_stack_->AllocateEntry();
   *slot = CallbackStack::Item(object, callback);
@@ -251,7 +268,7 @@ bool ThreadHeap::PopAndInvokeTraceCallback(Visitor* visitor) {
 }
 
 void ThreadHeap::PushPostMarkingCallback(void* object, TraceCallback callback) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   CallbackStack::Item* slot = post_marking_callback_stack_->AllocateEntry();
   *slot = CallbackStack::Item(object, callback);
@@ -272,7 +289,7 @@ void ThreadHeap::InvokeEphemeronIterationDoneCallbacks(Visitor* visitor) {
 }
 
 void ThreadHeap::PushWeakCallback(void* closure, WeakCallback callback) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   CallbackStack::Item* slot = weak_callback_stack_->AllocateEntry();
   *slot = CallbackStack::Item(closure, callback);
@@ -289,7 +306,7 @@ bool ThreadHeap::PopAndInvokeWeakCallback(Visitor* visitor) {
 void ThreadHeap::RegisterWeakTable(void* table,
                                    EphemeronCallback iteration_callback,
                                    EphemeronCallback iteration_done_callback) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   CallbackStack::Item* slot = ephemeron_stack_->AllocateEntry();
   *slot = CallbackStack::Item(table, iteration_callback);
@@ -511,13 +528,15 @@ void ThreadHeap::ReportMemoryUsageForTracing() {
 }
 
 size_t ThreadHeap::ObjectPayloadSizeForTesting() {
+  ThreadState::IsInAtomicPauseScope is_in_atomic_pause_scope(thread_state_);
   size_t object_payload_size = 0;
-  thread_state_->SetGCState(ThreadState::kGCRunning);
+  CHECK_EQ(thread_state_->Heap().phase(), ThreadHeap::kIdlePhase);
+  thread_state_->Heap().SetPhase(ThreadHeap::kMarkPhase);
   thread_state_->Heap().MakeConsistentForGC();
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     object_payload_size += arenas_[i]->ObjectPayloadSizeForTesting();
-  thread_state_->SetGCState(ThreadState::kSweeping);
-  thread_state_->SetGCState(ThreadState::kNoGCScheduled);
+  thread_state_->Heap().SetPhase(ThreadHeap::kSweepPhase);
+  thread_state_->Heap().SetPhase(ThreadHeap::kIdlePhase);
   return object_payload_size;
 }
 
@@ -542,7 +561,7 @@ bool ThreadHeap::IsAddressInHeapDoesNotContainCache(Address address) {
 }
 
 void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitPersistentRoots");
   ProcessHeap::GetCrossThreadPersistentRegion().TracePersistentNodes(visitor);
 
@@ -550,13 +569,13 @@ void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
 }
 
 void ThreadHeap::VisitStackRoots(Visitor* visitor) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitStackRoots");
   thread_state_->VisitStack(visitor);
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   if (PageMemoryRegion* region = region_tree_->Lookup(address)) {
     return region->PageFromAddress(address);
   }
@@ -564,7 +583,7 @@ BasePage* ThreadHeap::LookupPageForAddress(Address address) {
 }
 
 void ThreadHeap::ResetHeapCounters() {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   ThreadHeap::ReportMemoryUsageForTracing();
 
@@ -575,14 +594,14 @@ void ThreadHeap::ResetHeapCounters() {
 }
 
 void ThreadHeap::MakeConsistentForGC() {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   TRACE_EVENT0("blink_gc", "ThreadHeap::MakeConsistentForGC");
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->MakeConsistentForGC();
 }
 
 void ThreadHeap::MakeConsistentForMutator() {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->MakeConsistentForMutator();
 }
@@ -612,7 +631,7 @@ void ThreadHeap::Compact() {
 }
 
 void ThreadHeap::PrepareForSweep() {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
   DCHECK(thread_state_->CheckThread());
   for (int i = 0; i < BlinkGC::kNumberOfArenas; i++)
     arenas_[i]->PrepareForSweep();
@@ -716,7 +735,7 @@ BasePage* ThreadHeap::FindPageFromAddress(Address address) {
 #endif
 
 void ThreadHeap::TakeSnapshot(SnapshotType type) {
-  DCHECK(thread_state_->IsInGC());
+  DCHECK(thread_state_->IsInAtomicPause());
 
   // 0 is used as index for freelist entries. Objects are indexed 1 to
   // gcInfoIndex.

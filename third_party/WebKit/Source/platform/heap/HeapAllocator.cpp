@@ -13,7 +13,7 @@ void HeapAllocator::BackingFree(void* address) {
   ThreadState* state = ThreadState::Current();
   if (state->SweepForbidden())
     return;
-  DCHECK(!state->IsInGC());
+  DCHECK(!state->IsInAtomicPause());
 
   // Don't promptly free large objects because their page is never reused.
   // Don't free backings allocated on other threads.
@@ -46,7 +46,7 @@ bool HeapAllocator::BackingExpand(void* address, size_t new_size) {
   ThreadState* state = ThreadState::Current();
   if (state->SweepForbidden())
     return false;
-  DCHECK(!state->IsInGC());
+  DCHECK(!state->IsInAtomicPause());
   DCHECK(state->IsAllocationAllowed());
   DCHECK_EQ(&state->Heap(), &ThreadState::FromObject(address)->Heap());
 
@@ -87,7 +87,7 @@ bool HeapAllocator::BackingShrink(void* address,
   ThreadState* state = ThreadState::Current();
   if (state->SweepForbidden())
     return false;
-  DCHECK(!state->IsInGC());
+  DCHECK(!state->IsInAtomicPause());
   DCHECK(state->IsAllocationAllowed());
   DCHECK_EQ(&state->Heap(), &ThreadState::FromObject(address)->Heap());
 
