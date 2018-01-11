@@ -24,6 +24,7 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.suggestions.ContextualSuggestionsSection;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.LogoItem;
 import org.chromium.chrome.browser.suggestions.SiteSection;
@@ -65,6 +66,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     private final AllDismissedItem mAllDismissed;
     private final Footer mFooter;
     private final SpacingItem mBottomSpacer;
+    private final ContextualSuggestionsSection mSuggestionsSection;
 
     /**
      * Creates the adapter that will manage all the cards to display on the NTP.
@@ -86,6 +88,33 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             @Nullable LogoView logoView, UiConfig uiConfig, OfflinePageBridge offlinePageBridge,
             ContextMenuManager contextMenuManager, @Nullable TileGroup.Delegate tileGroupDelegate,
             @Nullable SuggestionsCarousel suggestionsCarousel) {
+        this(uiDelegate, aboveTheFoldView, logoView, uiConfig, offlinePageBridge,
+                contextMenuManager, tileGroupDelegate, suggestionsCarousel, null);
+    }
+
+    /**
+     * Creates the adapter that will manage all the cards to display on the NTP.
+     * @param uiDelegate used to interact with the rest of the system.
+     * @param aboveTheFoldView the layout encapsulating all the above-the-fold elements
+     *         (logo, search box, most visited tiles), or null if only suggestions should
+     *         be displayed.
+     * @param logoView the view for the logo, which may be provided when {@code aboveTheFoldView} is
+     *         null. They are not expected to be both non-null as that would lead to showing the
+     *         logo twice.
+     * @param uiConfig the NTP UI configuration, to be passed to created views.
+     * @param offlinePageBridge used to determine if articles are available.
+     * @param contextMenuManager used to build context menus.
+     * @param tileGroupDelegate if not null this is used to build a {@link SiteSection}.
+     * @param suggestionsCarousel if not null this is used to build a carousel showing contextual
+     *         suggestions.
+     * @param suggestionsSection if not null this is used to build a section showing contextual
+     *         suggestions.
+     */
+    public NewTabPageAdapter(SuggestionsUiDelegate uiDelegate, @Nullable View aboveTheFoldView,
+            @Nullable LogoView logoView, UiConfig uiConfig, OfflinePageBridge offlinePageBridge,
+            ContextMenuManager contextMenuManager, @Nullable TileGroup.Delegate tileGroupDelegate,
+            @Nullable SuggestionsCarousel suggestionsCarousel,
+            @Nullable ContextualSuggestionsSection suggestionsSection) {
         assert !(aboveTheFoldView != null && logoView != null);
 
         mUiDelegate = uiDelegate;
@@ -113,13 +142,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mRoot.addChild(mLogo);
         }
 
+        mSuggestionsSection = suggestionsSection;
         mSuggestionsCarousel = suggestionsCarousel;
         if (suggestionsCarousel != null) {
             assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
             mRoot.addChild(mSuggestionsCarousel);
         }
 
-        if (tileGroupDelegate == null) {
+        if (tileGroupDelegate == null || mSuggestionsSection != null) {
             mSiteSection = null;
         } else {
             mSiteSection = new SiteSection(uiDelegate, mContextMenuManager, tileGroupDelegate,
@@ -129,7 +159,15 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
 
         if (FeatureUtilities.isChromeHomeEnabled()) {
             if (mSigninPromo != null) mRoot.addChild(mSigninPromo);
-            mRoot.addChildren(mAllDismissed, mSections);
+            mRoot.addChildren(mAllDismissed);
+
+            if (mSuggestionsSection != null) {
+                assert ChromeFeatureList.isEnabled(
+                        ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_ABOVE_ARTICLES);
+                mRoot.addChildren(mSuggestionsSection);
+            }
+
+            mRoot.addChildren(mSections);
         } else {
             mRoot.addChild(mSections);
             if (mSigninPromo != null) mRoot.addChild(mSigninPromo);
@@ -397,6 +435,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
      */
     public void dropAllButFirstNArticleThumbnails(int n) {
         mSections.dropAllButFirstNArticleThumbnails(n);
+    }
+
+    /**
+     * Forces the header for {@link KnownCategories#ARTICLES} section to be visible. Only intended
+     * for use in a rough contextual suggestions prototype.
+     */
+    public void forceShowArticlesHeader() {
+        mSections.forceShowArticlesHeader();
     }
 
     private boolean hasAllBeenDismissed() {
