@@ -13,9 +13,16 @@ def CustomizeBrowserOptionsForGpuRasterization(options):
   options.AppendExtraBrowserArgs('--force-gpu-rasterization')
 
 
+def CustomizeBrowserOptionsForOopRasterization(options):
+  """Enables flags needed for out of process rasterization."""
+  options.AppendExtraBrowserArgs('--force-gpu-rasterization')
+  options.AppendExtraBrowserArgs('--enable-oop-rasterization')
+
+
 def CustomizeBrowserOptionsForSyncScrolling(options):
   """Enables flags needed for synchronous (main thread) scrolling."""
   options.AppendExtraBrowserArgs('--disable-threaded-scrolling')
+
 
 def CustomizeBrowserOptionsForThreadTimes(options):
   """Disables options known to cause noise in thread times"""
