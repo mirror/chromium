@@ -22,6 +22,30 @@
       "revId": "a5c0da20a00e2f1f2d4483e00e76ba6d6c3ee24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4543a81f_65a630ed",
+        "filename": "ui/aura/window_event_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2922,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2018-01-11T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8327d758_dc16d0d3",
+      "range": {
+        "startLine": 2922,
+        "startChar": 37,
+        "endLine": 2922,
+        "endChar": 67
+      },
+      "revId": "a5c0da20a00e2f1f2d4483e00e76ba6d6c3ee24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
