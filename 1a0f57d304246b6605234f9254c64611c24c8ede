@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe2a101_438ef756",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T17:43:38Z",
+      "side": 1,
+      "message": "nit: use under_score names in C++ functions/methods (i.e. filter_controller)",
+      "revId": "1a0f57d304246b6605234f9254c64611c24c8ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3801a6d8_23926b94",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T17:43:38Z",
+      "side": 1,
+      "message": "nit: same (learn_more_link)",
+      "range": {
+        "startLine": 225,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 25
+      },
+      "revId": "1a0f57d304246b6605234f9254c64611c24c8ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
