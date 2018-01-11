@@ -45,7 +45,7 @@ void DrmDeviceConnector::OnGpuProcessLaunched(
     int host_id,
     scoped_refptr<base::SingleThreadTaskRunner> ui_runner,
     scoped_refptr<base::SingleThreadTaskRunner> send_runner,
-    const base::Callback<void(IPC::Message*)>& send_callback) {
+    const base::RepeatingCallback<void(IPC::Message*)>& send_callback) {
   NOTREACHED() << "shouldn't get here";
 }
 

@@ -22,10 +22,6 @@ namespace display {
 class DisplaySnapshot;
 }
 
-namespace service_manager {
-class Connector;
-}
-
 namespace ui {
 class DrmDisplayHostManager;
 class DrmOverlayManager;

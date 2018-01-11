@@ -9,10 +9,6 @@
 #include "ui/ozone/platform/drm/host/drm_cursor.h"
 #include "ui/ozone/public/interfaces/device_cursor.mojom.h"
 
-namespace service_manager {
-class Connector;
-}
-
 namespace ui {
 
 // Ozone requires a IPC from the browser (or mus-ws) process to the gpu (or
