@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2a4713d9_d8c8a35b",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-11T15:22:29Z",
+      "side": 1,
+      "message": "Replaced with emplace.",
+      "parentUuid": "fcea8440_f082f1d5",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 16
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bdef995_e65992ab",
         "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
         "patchSetId": 7
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "MDPC seems to be used for EnumerateDevices as well. May be we can make MDDH access MDPC from MDD through a getter? This will also result in only one MDPC in browser instead of one for every frame. WDYT?",
       "parentUuid": "6a31adad_144c4757",
+      "range": {
+        "startLine": 547,
+        "startChar": 1,
+        "endLine": 547,
+        "endChar": 2
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481e4442_d2849c1d",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-11T15:22:29Z",
+      "side": 1,
+      "message": "Added a TODO and an empty snapshot. Shall take up this work in the other CL.",
+      "parentUuid": "875d949e_cb47addc",
       "range": {
         "startLine": 547,
         "startChar": 1,
