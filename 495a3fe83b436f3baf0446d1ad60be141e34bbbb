@@ -16,6 +16,24 @@
       "revId": "495a3fe83b436f3baf0446d1ad60be141e34bbbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fde163a_a3d357f2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resource-har-conversion.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-11T20:20:51Z",
+      "side": 1,
+      "message": "Resources were not served from a cache (even though that reload call was prompting cached resources)",
+      "parentUuid": "ecd2124a_67ef381b",
+      "revId": "495a3fe83b436f3baf0446d1ad60be141e34bbbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
