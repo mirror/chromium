@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3097bd69_d3266b96",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T18:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7721073b_6d6fccf3",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f91439b2_1807be07",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98045e1c_a79c4465",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T18:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f91439b2_1807be07",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "93515a24_1aa73994",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T18:48:18Z",
+      "side": 1,
+      "message": "Your right it would, but there just was not any visual indication unless in overview. Done.",
+      "parentUuid": "fdd2ff28_4a560101",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4c4e8b7_030595e0",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59f6d16_8246f162",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T18:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c4e8b7_030595e0",
+      "revId": "84ec9fa772af899bf281f0a4d623537f47adf0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
