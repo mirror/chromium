@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc853fe1_53035332",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T03:23:56Z",
+      "side": 0,
+      "message": "We should also close \u0026 reopen bidi here, so that \u0027\\n\u0027s in \u0027white-space:pre*\u0027 get handled.\n\nThis was found when I was trying to add a test case with \u003cpre\u003e but failed",
+      "range": {
+        "startLine": 254,
+        "startChar": 1,
+        "endLine": 254,
+        "endChar": 62
+      },
+      "revId": "62a5de4bc81283b79edcd9e6d8edffd925f44f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
