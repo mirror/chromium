@@ -125,6 +125,30 @@
       "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead4eea4_6350413e",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-11T10:57:54Z",
+      "side": 1,
+      "message": "Yeah I think an example would help in the comment.\nEssentially this is a way to avoid returning (hence ser/deser) all the graph via mojo if the client wants just few keys.\n\nSo the client can say, give me just \"malloc/\" and \"blink/partition_x\" and it won\u0027t bother returning all the rest (e.g. (v8/isolatex/codespacey, skia/....))",
+      "parentUuid": "a7ea2b7e_ce897176",
+      "range": {
+        "startLine": 242,
+        "startChar": 40,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "17e41ba470bc3a5c26fba21d1980b9a101176cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
