@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f62811a_e56d2d2a",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T01:54:01Z",
+      "side": 1,
+      "message": "What happens if someone hits high contrast then immediately hits a deprecated accelerator? Will they get 2 notifications or 1?\n\nJust curious if they need separate ids.",
+      "revId": "2f714d0826fd8af8ec8e862d63cb138b355cc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb8c429_d737d643",
+        "filename": "ash/display/display_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T01:54:01Z",
+      "side": 1,
+      "message": "nit: Sometimes you put these in constants and sometimes you inline them. Can you make them more consistent, esp. when the string isn\u0027t being used more than once?",
+      "revId": "2f714d0826fd8af8ec8e862d63cb138b355cc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4655461e_9ce5b9f1",
+        "filename": "ash/display/resolution_notification_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T01:54:01Z",
+      "side": 1,
+      "message": "nit: Sometimes you inline these strings and sometimes you put them in constants. I prefer constants always, especially if some of them have to be constants for in-file reuse.",
+      "revId": "2f714d0826fd8af8ec8e862d63cb138b355cc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ad489e_d58bbab6",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T01:54:01Z",
+      "side": 1,
+      "message": "Q: Any particular reason these aren\u0027t \"ash.data-saver\" and \"ash.data-promo\"?",
+      "revId": "2f714d0826fd8af8ec8e862d63cb138b355cc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab7320a_dd0d3bc9",
+        "filename": "chrome/browser/notifications/login_state_notification_blocker_chromeos_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T01:54:01Z",
+      "side": 1,
+      "message": "Not for this CL: I think this file / class should be renamed to SessionStateNotificationBlockerBrowserTest, since I presume it\u0027s doing integration tests of ash::SessionStateNotificationBlocker.",
+      "revId": "2f714d0826fd8af8ec8e862d63cb138b355cc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
