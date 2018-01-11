@@ -16,6 +16,24 @@
       "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab801ef4_b0ce8794",
+        "filename": "services/network/public/cpp/data_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-11T14:51:15Z",
+      "side": 1,
+      "message": "Since the struct is sent over mojo, it seemed to me that we need the entire definition in one place as the old path still writes all these fields? I was hoping that eventually this would be just string/datapipe/file, and then the \"legacy\" parts would go away.\n\nIf you have a way for splitting this up today, please expand and sure I\u0027m happy to do it.",
+      "parentUuid": "891eb6d0_2509bd6e",
+      "revId": "9ebb0da0b570127f7a01406c9ec740bb6cefc3e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
