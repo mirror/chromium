@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f743ca_216d67a0",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-11T17:23:06Z",
+      "side": 1,
+      "message": "nit: why not |int| (it\u0027s |int| in Enable)?",
+      "range": {
+        "startLine": 303,
+        "startChar": 9,
+        "endLine": 303,
+        "endChar": 28
+      },
+      "revId": "580f4ddfa24989312993edb4c9b17c9b6076b3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
