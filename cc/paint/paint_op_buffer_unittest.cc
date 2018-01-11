@@ -1869,7 +1869,19 @@ TEST_P(PaintOpSerializationTest, DeserializationFailures) {
         // If a subsequent op was corrupted or no ops could be serialized, we
         // have an invalid buffer.
         EXPECT_EQ(nullptr, written);
-        EXPECT_EQ(nullptr, deserialized_buffer);
+        // If the buffer is exactly 0 bytes, then MakeFromMemory treats it as a
+        // valid empty buffer.
+        if (deserialized_buffer) {
+          EXPECT_EQ(0u, read_size);
+          EXPECT_EQ(0u, deserialized_buffer->size());
+          // Verify that we can create an iterator from this buffer, but it's
+          // empty.
+          PaintOpBuffer::Iterator it(deserialized_buffer.get());
+          EXPECT_FALSE(it);
+        } else {
+          EXPECT_NE(0u, read_size);
+          EXPECT_EQ(nullptr, deserialized_buffer.get());
+        }
       }
 
       if (written)
@@ -1937,17 +1949,17 @@ TEST(PaintOpSerializationTest, CompleteBufferSerialization) {
   std::unique_ptr<char, base::AlignedFreeDeleter> memory(
       static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
                                             PaintOpBuffer::PaintOpAlign)));
-  TestOptionsProvider options_proivder;
+  TestOptionsProvider options_provider;
   SimpleBufferSerializer serializer(memory.get(),
                                     PaintOpBuffer::kInitialBufferSize,
-                                    options_proivder.image_provider(),
-                                    options_proivder.transfer_cache_helper());
+                                    options_provider.image_provider(),
+                                    options_provider.transfer_cache_helper());
   serializer.Serialize(&buffer, nullptr, preamble);
   ASSERT_NE(serializer.written(), 0u);
 
   auto deserialized_buffer =
       PaintOpBuffer::MakeFromMemory(memory.get(), serializer.written(),
-                                    options_proivder.deserialize_options());
+                                    options_provider.deserialize_options());
   ASSERT_TRUE(deserialized_buffer);
 
   // The deserialized buffer has an extra pair of save/restores, for the
@@ -2863,8 +2875,7 @@ TEST(PaintOpBufferTest, FilterSerialization) {
   std::unique_ptr<char, base::AlignedFreeDeleter> memory(
       static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
                                             PaintOpBuffer::PaintOpAlign)));
-  TestOptionsProvider options_proivder;
-  PaintOpBufferSerializer::Preamble preamble;
+  TestOptionsProvider options_provider;
   for (size_t i = 0; i < filters.size(); ++i) {
     SCOPED_TRACE(i);
     auto& filter = filters[i];
@@ -2876,30 +2887,64 @@ TEST(PaintOpBufferTest, FilterSerialization) {
 
     SimpleBufferSerializer serializer(memory.get(),
                                       PaintOpBuffer::kInitialBufferSize,
-                                      options_proivder.image_provider(),
-                                      options_proivder.transfer_cache_helper());
-    serializer.Serialize(&buffer, nullptr, preamble);
+                                      options_provider.image_provider(),
+                                      options_provider.transfer_cache_helper());
+    serializer.Serialize(&buffer);
     ASSERT_TRUE(serializer.valid());
     ASSERT_GT(serializer.written(), 0u);
 
     auto deserialized_buffer =
         PaintOpBuffer::MakeFromMemory(memory.get(), serializer.written(),
-                                      options_proivder.deserialize_options());
+                                      options_provider.deserialize_options());
+    ASSERT_TRUE(deserialized_buffer);
     PaintOpBuffer::Iterator it(deserialized_buffer.get());
-    bool rect_op_found = false;
-    for (auto* op : it) {
-      // There may be various ops serialized as a part of the preamble, but
-      // we're only really looking for the draw rect op.
-      if (op->GetType() != PaintOpType::DrawRect)
-        continue;
-      EXPECT_FALSE(rect_op_found);
-      rect_op_found = true;
-      auto* rect_op = static_cast<DrawRectOp*>(op);
-      EXPECT_FLOAT_RECT_EQ(rect_op->rect, SkRect::MakeXYWH(1, 2, 3, 4));
-      EXPECT_TRUE(*filter == *rect_op->flags.getImageFilter());
-    }
-    EXPECT_TRUE(rect_op_found);
+    ASSERT_TRUE(it);
+    auto* op = *it;
+    ASSERT_TRUE(op->GetType() == PaintOpType::DrawRect);
+    auto* rect_op = static_cast<DrawRectOp*>(op);
+    EXPECT_FLOAT_RECT_EQ(rect_op->rect, SkRect::MakeXYWH(1, 2, 3, 4));
+    EXPECT_TRUE(*filter == *rect_op->flags.getImageFilter());
+    ++it;
+    EXPECT_FALSE(it);
   }
+}
+
+TEST(PaintOpBufferTest, PaintRecordShaderSerialization) {
+  std::unique_ptr<char, base::AlignedFreeDeleter> memory(
+      static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
+                                            PaintOpBuffer::PaintOpAlign)));
+  sk_sp<PaintOpBuffer> record_buffer(new PaintOpBuffer);
+  record_buffer->push<DrawRectOp>(SkRect::MakeXYWH(0, 0, 1, 1), PaintFlags());
+
+  TestOptionsProvider options_provider;
+  PaintFlags flags;
+  flags.setShader(PaintShader::MakePaintRecord(
+      record_buffer, SkRect::MakeWH(10, 10), SkShader::kClamp_TileMode,
+      SkShader::kRepeat_TileMode, nullptr));
+  PaintOpBuffer buffer;
+  buffer.push<DrawRectOp>(SkRect::MakeXYWH(1, 2, 3, 4), flags);
+
+  SimpleBufferSerializer serializer(memory.get(),
+                                    PaintOpBuffer::kInitialBufferSize,
+                                    options_provider.image_provider(),
+                                    options_provider.transfer_cache_helper());
+  serializer.Serialize(&buffer);
+  ASSERT_TRUE(serializer.valid());
+  ASSERT_GT(serializer.written(), 0u);
+
+  auto deserialized_buffer =
+      PaintOpBuffer::MakeFromMemory(memory.get(), serializer.written(),
+                                    options_provider.deserialize_options());
+  ASSERT_TRUE(deserialized_buffer);
+  PaintOpBuffer::Iterator it(deserialized_buffer.get());
+  ASSERT_TRUE(it);
+  auto* op = *it;
+  ASSERT_TRUE(op->GetType() == PaintOpType::DrawRect);
+  auto* rect_op = static_cast<DrawRectOp*>(op);
+  EXPECT_FLOAT_RECT_EQ(rect_op->rect, SkRect::MakeXYWH(1, 2, 3, 4));
+  EXPECT_TRUE(rect_op->flags == flags);
+  EXPECT_TRUE(*rect_op->flags.getShader() == *flags.getShader());
+  EXPECT_TRUE(!!rect_op->flags.getShader()->GetSkShader());
 }
 
 }  // namespace cc
