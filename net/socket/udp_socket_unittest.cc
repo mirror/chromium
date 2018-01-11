@@ -4,6 +4,7 @@
 
 #include "net/socket/udp_socket.h"
 
+#include "base/rand_util.h"
 #include "base/bind.h"
 #include "base/containers/circular_deque.h"
 #include "base/location.h"
@@ -371,6 +372,23 @@ class TestPrng {
 
   DISALLOW_COPY_AND_ASSIGN(TestPrng);
 };
+
+TEST_F(UDPSocketTest, BindThenConnect) {
+  IPEndPoint bind_address(IPAddress::IPv4Localhost(), 0);
+  UDPServerSocket server(NULL, NetLogSource());
+  int rv = server.Listen(bind_address);
+  EXPECT_THAT(rv, IsOk());
+  IPEndPoint peer_address;
+  rv = server.GetPeerAddress(&peer_address);
+
+  std::unique_ptr<UDPSocket> test_socket(
+      new UDPSocket(DatagramSocket::RANDOM_BIND,
+                    base::BindRepeating(&base::RandInt), NULL, NetLogSource()));
+  EXPECT_THAT(test_socket->Open(bind_address.GetFamily()), IsOk());
+  EXPECT_THAT(test_socket->Bind(bind_address), IsOk());
+  // DCHECK(!is_connected()) fails here.
+  EXPECT_THAT(test_socket->Connect(peer_address), IsOk());
+}
 
 TEST_F(UDPSocketTest, ConnectRandomBind) {
   std::vector<std::unique_ptr<UDPClientSocket>> sockets;
