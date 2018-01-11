@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4167d00_490dd1ed",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T00:02:07Z",
+      "side": 1,
+      "message": "I change the comment to make it a bit more clear. Basically upon entering tablet mode, apps will have their title bar hidden in ash, so we turn on immersive so we have access to the controls. And then we turn it off when exiting tablet mode.",
+      "parentUuid": "fabf9e14_fcd7138e",
+      "revId": "0b835eba029c316fa12c6a227bfd15d491b561bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84f6e81b_73ad3dfe",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36919d51_7897126f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T00:02:07Z",
+      "side": 1,
+      "message": "added a comment, hope it is clear and the right way",
+      "parentUuid": "84f6e81b_73ad3dfe",
+      "revId": "0b835eba029c316fa12c6a227bfd15d491b561bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27ab5030_7f32b66c",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-10T22:44:48Z",
       "side": 1,
       "message": "Is it possible to define WindowState::ShouldAutoHideFrameInTabletMode() and use it where needed?\n\nnit: Maybe we should call it \"ShouldUseImmersiveFrame/Mode/(or something)\"?",
+      "revId": "0b835eba029c316fa12c6a227bfd15d491b561bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff419536_fb25be1e",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T00:02:07Z",
+      "side": 1,
+      "message": "I think its possible, but may not be trivial because one of the callers of ShouldUseImmersiveMode is CreateNonClientFrameView which is called before many of the WindowState stuff is ready. I think for now at least for this CL CanResize should be good enough. Added a comment and changed function name.",
+      "parentUuid": "27ab5030_7f32b66c",
       "revId": "0b835eba029c316fa12c6a227bfd15d491b561bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
