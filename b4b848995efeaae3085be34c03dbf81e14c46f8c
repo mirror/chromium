@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "104887e1_b2f9205f",
+        "filename": "chrome/browser/android/favicon_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T23:49:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4f2296a_3b6fce1b",
+      "range": {
+        "startLine": 122,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 37
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8489cbac_a54695ae",
         "filename": "components/history/core/browser/thumbnail_database.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a649a353_369bc1aa",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8489cbac_a54695ae",
+      "range": {
+        "startLine": 787,
+        "startChar": 40,
+        "endLine": 787,
+        "endChar": 58
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d9ea69_8bca4364",
         "filename": "components/history/core/browser/thumbnail_database.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-11T17:17:01Z",
       "side": 1,
       "message": "Would it make sense to add \"and favicon.icon_type in (X)\" where X is built from required_icon_types?",
+      "range": {
+        "startLine": 797,
+        "startChar": 30,
+        "endLine": 797,
+        "endChar": 63
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02292d2_7a88cb36",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T23:49:34Z",
+      "side": 1,
+      "message": "This is a little trickier than it seems because IconType is an enum class. I\u0027d need to add a mapping of enum value -\u003e string (minimally a operator\u003c\u003c method if I use std::stringstream to build X) in favicon_types.h to do this (an anonymous utility function in this class seems prone to error when additions or removals from IconType happen).\n\nAdditionally, this is the same way used by GetIconMappingsForPageURL.\n\nWhich do you think is best?",
+      "parentUuid": "91d9ea69_8bca4364",
       "range": {
         "startLine": 797,
         "startChar": 30,
@@ -91,6 +163,30 @@
       "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfe25d0_6ee57fc2",
+        "filename": "components/history/core/browser/thumbnail_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-11T23:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd01d96_fbafbdd0",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 29
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
