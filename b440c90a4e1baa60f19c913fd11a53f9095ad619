@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376528da_7ce960a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/performanceobservers.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:52:04Z",
+      "side": 1,
+      "message": "entries",
+      "range": {
+        "startLine": 1,
+        "startChar": 26,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "b440c90a4e1baa60f19c913fd11a53f9095ad619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f61515_ead0256a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/performanceobservers.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:52:04Z",
+      "side": 1,
+      "message": "list of",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "b440c90a4e1baa60f19c913fd11a53f9095ad619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6ab232_9134453b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/performanceobservers.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-11T18:52:04Z",
+      "side": 1,
+      "message": "Why pe1 vs pe?",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "b440c90a4e1baa60f19c913fd11a53f9095ad619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
