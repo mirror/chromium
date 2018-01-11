@@ -211,10 +211,9 @@ void AbstractPropertySetCSSStyleDeclaration::SetPropertyInternal(
     return;
 
   Element* parent = ParentElement();
-  if (parent) {
+  if (parent)
     parent->GetDocument().GetStyleEngine().AttributeChangedForElement(
         HTMLNames::styleAttr, *parent);
-  }
   mutation_scope.EnqueueMutationRecord();
 }
 
