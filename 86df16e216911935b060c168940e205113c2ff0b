@@ -124,6 +124,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d407af_8493a666",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-11T14:20:55Z",
+      "side": 0,
+      "message": "Well, I\u0027m confused now. I\u0027ve moved the test support to ui/platform_window and used gmock there.\nGn didn\u0027t complain about that. So, question - why do you say it\u0027s impossible to use gmock in ui/platform_window?",
+      "parentUuid": "5b218ef2_f055bb59",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
