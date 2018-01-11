@@ -168,5 +168,4 @@ void BrowserPolicyConnector::RegisterPrefs(PrefRegistrySimple* registry) {
       CloudPolicyRefreshScheduler::kDefaultRefreshDelayMs);
 }
 
-
 }  // namespace policy

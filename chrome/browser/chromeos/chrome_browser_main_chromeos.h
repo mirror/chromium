@@ -68,7 +68,7 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   ~ChromeBrowserMainPartsChromeos() override;
 
   // ChromeBrowserMainParts overrides.
-  void PreEarlyInitialization() override;
+  int PreEarlyInitialization() override;
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   void ServiceManagerConnectionStarted(

@@ -975,7 +975,8 @@ void FileManagerPrivateSearchFilesByHashesFunction::OnSearchByHashes(
 ExtensionFunction::ResponseAction
 FileManagerPrivateIsUMAEnabledFunction::Run() {
   return RespondNow(OneArgument(base::MakeUnique<base::Value>(
-      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled())));
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state()))));
 }
 
 FileManagerPrivateInternalSetEntryTagFunction::

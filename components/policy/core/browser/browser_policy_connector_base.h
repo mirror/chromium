@@ -17,6 +17,7 @@ namespace policy {
 
 class ConfigurationPolicyProvider;
 class PolicyService;
+class PolicyServiceImpl;
 
 // The BrowserPolicyConnectorBase keeps and initializes some core elements of
 // the policy component, mainly the PolicyProviders and the PolicyService.
@@ -105,7 +106,7 @@ class POLICY_EXPORT BrowserPolicyConnectorBase {
   ConfigurationPolicyProvider* platform_policy_provider_;
 
   // Must be deleted before all the policy providers.
-  std::unique_ptr<PolicyService> policy_service_;
+  std::unique_ptr<PolicyServiceImpl> policy_service_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserPolicyConnectorBase);
 };

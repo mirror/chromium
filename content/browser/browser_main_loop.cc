@@ -619,7 +619,7 @@ void BrowserMainLoop::Init() {
 
 // BrowserMainLoop stages ==================================================
 
-void BrowserMainLoop::EarlyInitialization() {
+int BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
@@ -654,8 +654,11 @@ void BrowserMainLoop::EarlyInitialization() {
   SetUpGLibLogHandler();
 #endif  // defined(USE_GLIB)
 
-  if (parts_)
-    parts_->PreEarlyInitialization();
+  if (parts_) {
+    const int pre_early_init_error_code = parts_->PreEarlyInitialization();
+    if (pre_early_init_error_code != content::RESULT_CODE_NORMAL_EXIT)
+      return pre_early_init_error_code;
+  }
 
 #if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_CHROMEOS)
   // We use quite a few file descriptors for our IPC as well as disk the disk
@@ -692,6 +695,8 @@ void BrowserMainLoop::EarlyInitialization() {
 
   if (parts_)
     parts_->PostEarlyInitialization();
+
+  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void BrowserMainLoop::PreMainMessageLoopStart() {

@@ -137,6 +137,7 @@ PrefValueMap* ConfigurationPolicyPrefStore::CreatePreferencesFromPolicies() {
 
   // Retrieve and log the errors once the UI loop is ready. This is only an
   // issue during startup.
+  // XXX
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&LogErrors, base::Owned(errors.release())));
 
