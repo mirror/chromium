@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "793d0b38_a03e7007",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystemBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T09:46:13Z",
+      "side": 1,
+      "message": "I guess that the original author\u0027s intention was to make a split between public/ and implementation.  WebFileSystem is under public/ while others are not.\n\nI mildly support the intention.",
+      "parentUuid": "95e6915d_d6d1dd74",
+      "revId": "5bada144bfd141529d7eae28c318518dd3e67491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79a39ff9_a8570d8e",
         "filename": "third_party/WebKit/Source/modules/filesystem/FileSystemCallbacks.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T06:54:17Z",
       "side": 1,
       "message": "no one uses this?",
+      "revId": "5bada144bfd141529d7eae28c318518dd3e67491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e7fc9a_a3e44c13",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileSystemCallbacks.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-11T09:46:13Z",
+      "side": 1,
+      "message": "WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemURL is using this one.",
+      "parentUuid": "79a39ff9_a8570d8e",
       "revId": "5bada144bfd141529d7eae28c318518dd3e67491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
