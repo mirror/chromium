@@ -44,6 +44,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/gpu_utils.h"
+#include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
@@ -151,6 +152,7 @@ static const char* const kSwitchNames[] = {
     switches::kShowMacOverlayBorders,
 #endif
 #if defined(USE_OZONE)
+    switches::kEnableDrmMojo,
     switches::kOzonePlatform,
     switches::kOzoneDumpFile,
 #endif
@@ -636,39 +638,82 @@ bool GpuProcessHost::Init() {
   // possible to ensure the latter always has a valid device. crbug.com/608839
   // When running with mus, the OzonePlatform may not have been created yet. So
   // defer the callback until OzonePlatform instance is created.
-  auto send_callback = base::BindRepeating(&SendGpuProcessMessage,
-                                           weak_ptr_factory_.GetWeakPtr());
-  // Create the callback that should run on the current thread (i.e. IO thread).
-  auto io_callback = base::BindOnce(
-      [](int host_id,
-         const base::RepeatingCallback<void(IPC::Message*)>& send_callback,
-         ui::OzonePlatform* platform) {
-        DCHECK_CURRENTLY_ON(BrowserThread::IO);
-        platform->GetGpuPlatformSupportHost()->OnGpuProcessLaunched(
-            host_id, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-            BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-            send_callback);
-      },
-      host_id_, send_callback);
-  // The callback registered in ozone can be called in any thread. So use an
-  // intermediary callback that bounces to the IO thread if needed, before
-  // running the callback.
-  auto bounce_callback = base::BindOnce(
-      [](base::TaskRunner* task_runner,
-         base::OnceCallback<void(ui::OzonePlatform*)> callback,
-         ui::OzonePlatform* platform) {
-        if (task_runner->RunsTasksInCurrentSequence()) {
-          std::move(callback).Run(platform);
-        } else {
-          task_runner->PostTask(FROM_HERE,
-                                base::BindOnce(std::move(callback), platform));
-        }
-      },
-      base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-      base::Passed(&io_callback));
-  ui::OzonePlatform::RegisterStartupCallback(std::move(bounce_callback));
-#endif  // defined(USE_OZONE)
+  base::CommandLine* browser_command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (browser_command_line->HasSwitch(switches::kEnableDrmMojo)) {
+    // TODO(rjkroege): Remove the legacy IPC code paths when no longer
+    // necessary.
+    auto interface_binder = base::BindRepeating(&GpuProcessHost::BindInterface,
+                                                weak_ptr_factory_.GetWeakPtr());
 
+    auto io_callback = base::BindOnce(
+        [](const base::RepeatingCallback<void(const std::string&,
+                                              mojo::ScopedMessagePipeHandle)>&
+               interface_binder,
+           ui::OzonePlatform* platform) {
+          DCHECK_CURRENTLY_ON(BrowserThread::IO);
+          platform->GetGpuPlatformSupportHost()->OnGpuServiceLaunched(
+              BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+              BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+              interface_binder);
+        },
+        interface_binder);
+
+    // The callback registered in ozone can be called in any thread. So use an
+    // intermediary callback that bounces to the IO thread if needed, before
+    // running the callback.
+    auto bounce_callback = base::BindOnce(
+        [](base::TaskRunner* task_runner,
+           base::OnceCallback<void(ui::OzonePlatform*)> callback,
+           ui::OzonePlatform* platform) {
+          if (task_runner->RunsTasksInCurrentSequence()) {
+            std::move(callback).Run(platform);
+          } else {
+            task_runner->PostTask(
+                FROM_HERE, base::BindOnce(std::move(callback), platform));
+          }
+        },
+        base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
+        base::Passed(&io_callback));
+    ui::OzonePlatform::RegisterStartupCallback(std::move(bounce_callback));
+
+  } else {
+    auto send_callback = base::BindRepeating(&SendGpuProcessMessage,
+                                             weak_ptr_factory_.GetWeakPtr());
+    // Create the callback that should run on the current thread (i.e. IO
+    // thread).
+    auto io_callback = base::BindOnce(
+        [](int host_id,
+           const base::RepeatingCallback<void(IPC::Message*)>& send_callback,
+           ui::OzonePlatform* platform) {
+          DCHECK_CURRENTLY_ON(BrowserThread::IO);
+          platform->GetGpuPlatformSupportHost()->OnGpuProcessLaunched(
+              host_id, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+              BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+              send_callback);
+        },
+        host_id_, send_callback);
+    // The callback registered in ozone can be called in any thread. So use an
+    // intermediary callback that bounces to the IO thread if needed, before
+    // running the callback.
+    auto bounce_callback = base::BindOnce(
+        [](base::TaskRunner* task_runner,
+           base::OnceCallback<void(ui::OzonePlatform*)> callback,
+           ui::OzonePlatform* platform) {
+          if (task_runner->RunsTasksInCurrentSequence()) {
+            std::move(callback).Run(platform);
+          } else {
+            task_runner->PostTask(
+                FROM_HERE, base::BindOnce(std::move(callback), platform));
+          }
+        },
+        base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
+        base::Passed(&io_callback));
+
+    ui::OzonePlatform::RegisterStartupCallback(std::move(bounce_callback));
+  }
+
+#endif  // defined(USE_OZONE)
   return true;
 }
 

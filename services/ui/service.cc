@@ -60,6 +60,7 @@
 #include "ui/events/ozone/layout/keyboard_layout_engine.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 #include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -243,8 +244,8 @@ void Service::OnStart() {
     // If mus is hosting viz, then it needs to set up ozone so that it can
     // connect to the gpu service through the connector.
     params.connector = context()->connector();
-    // TODO(crbug.com/620927): This should be false once ozone-mojo is done.
-    params.single_process = true;
+    params.using_mojo = base::CommandLine::ForCurrentProcess()->HasSwitch(
+        ::switches::kEnableDrmMojo);
   }
   ui::OzonePlatform::InitializeForUI(params);
 
