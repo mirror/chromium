@@ -149,6 +149,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/views/intent_picker_bubble_view.h"
 #include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
 #else
 #include "chrome/browser/ui/signin_view_controller.h"
@@ -1182,6 +1183,11 @@ void BrowserView::SetIntentPickerViewVisibility(bool visible) {
     return;
 
   if (location_bar->intent_picker_view()->visible() != visible) {
+    // Besides changing visibility, make sure that we don't let an opened bubble
+    // when transitioning to !visible.
+    if (!visible)
+      IntentPickerBubbleView::CloseCurrentBubble();
+
     location_bar->intent_picker_view()->SetVisible(visible);
     location_bar->Layout();
   }
