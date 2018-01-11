@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3c37809_6437fb37",
+        "filename": "content/common/input/synthetic_web_input_event_builders.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-11T01:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b34cd6a_66098c3d",
+      "range": {
+        "startLine": 202,
+        "startChar": 36,
+        "endLine": 202,
+        "endChar": 38
+      },
+      "revId": "99c351e411748f8d2082ca1b11057ac2e8bb4444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5ca146_33ee03e2",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 25
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2b8f7b48_f9a25418",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-11T01:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5ca146_33ee03e2",
+      "range": {
+        "startLine": 1379,
+        "startChar": 19,
+        "endLine": 1379,
+        "endChar": 51
+      },
+      "revId": "99c351e411748f8d2082ca1b11057ac2e8bb4444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "743d947f_af420ad2",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 25
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-10T17:08:17Z",
       "side": 1,
       "message": "Since we are planning to do hittest to detect target changes in a later CL, do we still care about distances?",
+      "range": {
+        "startLine": 1749,
+        "startChar": 58,
+        "endLine": 1749,
+        "endChar": 72
+      },
+      "revId": "99c351e411748f8d2082ca1b11057ac2e8bb4444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8b7cfe_bacb4006",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-11T01:50:14Z",
+      "side": 1,
+      "message": "I think we can record the distance to see if we are using the appropriate maximum adjust distance. So I prefer to keep this one.",
+      "parentUuid": "743d947f_af420ad2",
       "range": {
         "startLine": 1749,
         "startChar": 58,
