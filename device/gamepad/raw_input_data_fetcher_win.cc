@@ -38,9 +38,12 @@ const uint32_t kVendorBlue = 0xb58e;
 
 }  // namespace
 
-RawGamepadInfo::RawGamepadInfo() {}
+RawGamepadInfo::RawGamepadInfo() = default;
 
-RawGamepadInfo::~RawGamepadInfo() {}
+RawGamepadInfo::~RawGamepadInfo() {
+  if (dualshock4_)
+    dualshock4_->Shutdown();
+}
 
 RawInputDataFetcher::RawInputDataFetcher()
     : rawinput_available_(false),
@@ -204,10 +207,20 @@ void RawInputDataFetcher::EnumerateDevices() {
         if (!state)
           continue;  // No slot available for this gamepad.
 
+        // Initialize Dualshock4-specific functionality.
+        if (Dualshock4ControllerWin::IsDualshock4(gamepad->vendor_id,
+                                                  gamepad->product_id)) {
+          gamepad->dualshock4_ =
+              std::make_unique<Dualshock4ControllerWin>(gamepad->handle);
+        }
+
         controllers_[device_handle] = gamepad;
 
         Gamepad& pad = state->data;
         pad.connected = true;
+
+        pad.vibration_actuator.type = GamepadHapticActuatorType::kDualRumble;
+        pad.vibration_actuator.not_null = SupportsVibration(gamepad);
 
         std::string vendor = base::StringPrintf("%04x", gamepad->vendor_id);
         std::string product = base::StringPrintf("%04x", gamepad->product_id);
@@ -505,6 +518,62 @@ void RawInputDataFetcher::UpdateGamepad(RAWINPUT* input,
       }
     }
   }
+}
+
+bool RawInputDataFetcher::SupportsVibration(RawGamepadInfo* pad_info) {
+  DCHECK(pad_info);
+  return pad_info->dualshock4_ != nullptr;
+}
+
+RawGamepadInfo* RawInputDataFetcher::GamepadInfoFromSourceId(int source_id) {
+  for (const auto& entry : controllers_) {
+    if (entry.second->source_id == source_id)
+      return entry.second;
+  }
+  return nullptr;
+}
+
+void RawInputDataFetcher::PlayEffect(
+    int pad_id,
+    mojom::GamepadHapticEffectType type,
+    mojom::GamepadEffectParametersPtr params,
+    mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback callback) {
+  RawGamepadInfo* pad_info = GamepadInfoFromSourceId(pad_id);
+  if (pad_info == nullptr) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  if (pad_info->dualshock4_ != nullptr) {
+    pad_info->dualshock4_->PlayEffect(type, std::move(params),
+                                      std::move(callback));
+    return;
+  }
+
+  // Vibration is not supported for unrecognized raw input gamepads.
+  std::move(callback).Run(
+      mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+}
+
+void RawInputDataFetcher::ResetVibration(
+    int pad_id,
+    mojom::GamepadHapticsManager::ResetVibrationActuatorCallback callback) {
+  RawGamepadInfo* pad_info = GamepadInfoFromSourceId(pad_id);
+  if (pad_info == nullptr) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  if (pad_info->dualshock4_ != nullptr) {
+    pad_info->dualshock4_->ResetVibration(std::move(callback));
+    return;
+  }
+
+  // Vibration is not supported for unrecognized raw input gamepads.
+  std::move(callback).Run(
+      mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
 }
 
 LRESULT RawInputDataFetcher::OnInput(HRAWINPUT input_handle) {
