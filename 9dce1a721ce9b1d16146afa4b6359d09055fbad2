@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "52a29f0a_60b56942",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-11T19:30:37Z",
+      "side": 1,
+      "message": "Oh! I was accidentally getting the stats of the callee instead of the caller in both tests.\nNow we PASS,FAIL instead of FAIL,PASS. That is what I expected.\n\nAwesome that means we\u0027re ready to ship replaceTrack() unless https://crbug.com/webrtc/8734 is a blocking concern.\n\nThe fact that the second test fails is because we don\u0027t keep old stats around, which is an old bug not specific to replaceTrack().",
+      "parentUuid": "ccab4133_63bb1b06",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b462b17_ff0dec06",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b679fd82_57bb6d60",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-11T19:30:37Z",
+      "side": 1,
+      "message": "assert_true() does not work with implicit conversion to true, I get\n  expected true got object \"[object Object]\"\nif I do that.",
+      "parentUuid": "9b462b17_ff0dec06",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "947c5b39_abdfc181",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-11T19:30:37Z",
+      "side": 1,
+      "message": "Actually, part of jan-ivars sender/receiver PR removed \"detached\", so all we have is \"objectDeleted\". Checking it is true.\n\nI think \"isDeleted\" would make more sense here, because it is the \"attachment\" that has been removed, not the \"object\" that is the track, but that is a separate discussion.\nI think this will be true in other cases too (app may always have references to objects and they are not truly deleted until all references are gone and GC has run).\n\nFiled https://github.com/w3c/webrtc-stats/issues/296",
+      "parentUuid": "e10c32d4_19e2ec58",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e667a50_711c3dd5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6407ba7_bca4299c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-11T19:30:37Z",
+      "side": 1,
+      "message": "I disagree with you about merging these tests for the sake of testing specific behaviors rather than all-or-nothing tests. Especially in WPT, but I think in general this is good practise too.\n\nThe reason we fail a lot of WPT tests and one of the reasons why I\u0027ve had to write so many new ones is each test tests more than it needs. (For example, a test testing the behavior that a track event fires with a track also tested that the track event contains everything in the spec, including transceivers - we fail all tests of operations instead of partially passing, seeing that we support the most meaty parts of the operations.)\n\nWhen we fail a test it aborts, robbing us of the test coverage of any other behaviors it might test. This does not protect us against regressions or help us show our progress towards 1.0. Best to have two tests, in this case we PASS one (needed for shipping) and FAIL the other (not needed for shipping).\n\nWhen every test tests a lot of things, changing a single behavior can lead to having to update a lot of tests too, instead of just updating the test for that particular behavior. Not as relevant here but I noticed this with some of the browser_tests I had written that were based on testing \"operations\" rather than \"behaviors\".\n\nHowever, to reduce some boilerplate I can use helper function performOffer() instead of repeating the \"perform an O/A\" bits.",
+      "parentUuid": "9e667a50_711c3dd5",
+      "revId": "9dce1a721ce9b1d16146afa4b6359d09055fbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
