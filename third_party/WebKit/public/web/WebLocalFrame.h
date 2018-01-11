@@ -188,11 +188,22 @@ class WebLocalFrame : public WebFrame {
 
   // Load the given URL. For history navigations, a valid WebHistoryItem
   // should be given, as well as a WebHistoryLoadType.
+  // TODO(clamy): Remove this method once all its callers have been updated.
   virtual void Load(
       const WebURLRequest&,
       WebFrameLoadType,
       const WebHistoryItem&,
       WebHistoryLoadType,
+      bool is_client_redirect,
+      const base::UnguessableToken& devtools_navigation_token) = 0;
+
+  // Commits a cross-document navigation in the frame. For history navigations,
+  // a valid WebHistoryItem should be provided. Returns true if the load
+  // started, false otherwise.
+  virtual bool CommitNavigation(
+      const WebURLRequest&,
+      WebFrameLoadType,
+      const WebHistoryItem&,
       bool is_client_redirect,
       const base::UnguessableToken& devtools_navigation_token) = 0;
 
