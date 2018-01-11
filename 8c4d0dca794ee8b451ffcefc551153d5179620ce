@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bdfce56_1ad2e6bd",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T16:29:10Z",
+      "side": 1,
+      "message": "Since you\u0027re here; would you mind revising this to say ...\"since Search with any combination of modifiers gets used ... by the a11y\"",
+      "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5927cd5a_d403a068",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T16:29:10Z",
+      "side": 1,
+      "message": "How can this occur? I see that previously, we return early if there was no profile in AccessibilityManager. Should this at least cause some logging, if not a CHECK?",
+      "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de0f7325_ad68a046",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-11T16:29:10Z",
+      "side": 1,
+      "message": "nit: no need to remove line below",
+      "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
