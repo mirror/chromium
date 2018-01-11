@@ -2096,32 +2096,6 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
     // Iterate backwards as we may remove items while iterating.
     for (int i = tab_strip_model_->count() - 1; i >= 0; --i) {
       WebContents* web_contents = tab_strip_model_->GetWebContentsAt(i);
-      bool is_extension_content =
-          (extensions::TabHelper::FromWebContents(web_contents)
-               ->extension_app() == extension);
-
-      LOG(INFO) << "FOR: " << web_contents->GetURL().spec();
-      LOG(INFO) << "is_extension_content: " << is_extension_content;
-
-      // For chrome page overrides, navigate to the default page.
-      if (is_extension_content) {
-        GURL new_url;
-        if (web_contents->GetURL().SchemeIs(content::kChromeUIScheme))
-          new_url = web_contents->GetURL().GetWithEmptyPath();
-        else if (web_contents->GetURL().IsAboutBlank())
-          new_url = GURL(url::kAboutBlankURL);
-
-        if (!new_url.is_empty()) {
-          LOG(INFO) << "Heyoo";
-          NavigateParams params(profile_, new_url, ui::PAGE_TRANSITION_LINK);
-          params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
-          Navigate(&params);
-          continue;
-        } else {
-          LOG(INFO) << "Heyoo 2";
-        }
-      }
-
       // Two cases are handled here:
 
       // - The scheme check is for when an extension page is loaded in a
@@ -2129,25 +2103,17 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       // - The extension_app check is for apps, which can have non-extension
       // schemes, e.g. https://mail.google.com if you have the Gmail app
       // installed.
-      /*if (tab_strip_model_->count() > 1 &&
-          ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
-           web_contents->GetURL().host_piece() == extension->id()) ||
-           is_extension_content)) {
-        LOG(INFO) << "\tclosing tab";
-        tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
-      } else {
-        //chrome::UnmuteIfMutedByExtension(web_contents, extension->id());
-        LOG(INFO) << "\tunmute tab";
-      }*/
       if ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
            web_contents->GetURL().host_piece() == extension->id()) ||
           (extensions::TabHelper::FromWebContents(web_contents)
                ->extension_app() == extension)) {
         if (tab_strip_model_->count() > 1) {
-          LOG(INFO) << "\tclosing tab";
           tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
         } else {
-          LOG(INFO) << "navigate";
+          // If there is only 1 tab remaining, do not close it and instead
+          // navigate to the default NTP page. Note that if there is an
+          // installed extension that overrides the NTP page, that extensions
+          // content will override the NTP contents.
           NavigateParams params(this, GURL(url::kAboutBlankURL),
                                 ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
           params.source_contents = web_contents;
