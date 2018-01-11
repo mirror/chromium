@@ -17,7 +17,8 @@ AutoAdvancingVirtualTimeDomain::AutoAdvancingVirtualTimeDomain(
       max_task_starvation_count_(0),
       can_advance_virtual_time_(true),
       observer_(nullptr),
-      helper_(helper) {
+      helper_(helper),
+      initial_time_(initial_time) {
   helper_->AddTaskObserver(this);
 }
 
@@ -30,6 +31,11 @@ AutoAdvancingVirtualTimeDomain::DelayTillNextTask(LazyNow* lazy_now) {
   base::TimeTicks run_time;
   if (!can_advance_virtual_time_ || !NextScheduledRunTime(&run_time))
     return base::nullopt;
+
+  // If set, don't advance past the end of |virtual_time_fence_|.
+  if (!virtual_time_fence_.is_null() && run_time > virtual_time_fence_) {
+    run_time = virtual_time_fence_;
+  }
 
   task_starvation_count_ = 0;
   AdvanceTo(run_time);
@@ -68,6 +74,29 @@ void AutoAdvancingVirtualTimeDomain::SetMaxVirtualTimeTaskStarvationCount(
     task_starvation_count_ = 0;
 }
 
+void AutoAdvancingVirtualTimeDomain::SetVirtualTimeFence(
+    base::TimeTicks virtual_time_fence) {
+  DCHECK_GE(virtual_time_fence, virtual_time_fence);
+  virtual_time_fence_ = virtual_time_fence;
+}
+
+void AutoAdvancingVirtualTimeDomain::MaybeAdvanceVirtualTime(
+    base::TimeTicks new_virtual_time) {
+  // If set, don't advance past the end of |virtual_time_fence_|.
+  if (!virtual_time_fence_.is_null() &&
+      new_virtual_time > virtual_time_fence_) {
+    new_virtual_time = virtual_time_fence_;
+  }
+
+  if (new_virtual_time <= Now())
+    return;
+
+  AdvanceTo(new_virtual_time);
+
+  if (observer_)
+    observer_->OnVirtualTimeAdvanced();
+}
+
 const char* AutoAdvancingVirtualTimeDomain::GetName() const {
   return "AutoAdvancingVirtualTimeDomain";
 }
@@ -86,8 +115,16 @@ void AutoAdvancingVirtualTimeDomain::DidProcessTask(
   // advance.
   base::TimeTicks run_time;
   if (NextScheduledRunTime(&run_time)) {
+    // If set, don't advance past the end of |virtual_time_fence_|.
+    if (!virtual_time_fence_.is_null() && run_time > virtual_time_fence_) {
+      run_time = virtual_time_fence_;
+    }
+
     AdvanceTo(run_time);
     task_starvation_count_ = 0;
+
+    if (observer_)
+      observer_->OnVirtualTimeAdvanced();
   }
 }
 
