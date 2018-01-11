@@ -52,6 +52,24 @@
       "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bb81dfb_bd0f6459",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-11T11:56:10Z",
+      "side": 1,
+      "message": "Mojo validates enum values always, even if type mapped.\n\nThat\u0027s unfortunate about ClientProcess; we may want to consider if we can change things later to make illegal combinations of arguments impossible...",
+      "parentUuid": "6c20a81a_290b4e2e",
+      "revId": "8202d524b9f3d24bbbca334e89a722ce3cbf6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
