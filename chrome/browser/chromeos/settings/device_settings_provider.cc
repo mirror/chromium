@@ -17,7 +17,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -115,6 +114,7 @@ const char* const kKnownSettings[] = {
 };
 
 void DecodeLoginPolicies(
+    policy::BrowserPolicyConnectorChromeOS* policy_connector,
     const em::ChromeDeviceSettingsProto& policy,
     PrefValueMap* new_values_cache) {
   // For all our boolean settings the following is applicable:
@@ -153,10 +153,8 @@ void DecodeLoginPolicies(
       !policy.guest_mode_enabled().has_guest_mode_enabled() ||
       policy.guest_mode_enabled().guest_mode_enabled());
 
-  policy::BrowserPolicyConnectorChromeOS* connector =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos();
   bool supervised_users_enabled = false;
-  if (connector->IsEnterpriseManaged()) {
+  if (policy_connector->IsEnterpriseManaged()) {
     supervised_users_enabled =
         policy.has_supervised_users_settings() &&
         policy.supervised_users_settings().has_supervised_users_enabled() &&
@@ -467,6 +465,7 @@ void DecodeHeartbeatPolicies(
 }
 
 void DecodeGenericPolicies(
+    policy::BrowserPolicyConnectorChromeOS* policy_connector,
     const em::ChromeDeviceSettingsProto& policy,
     PrefValueMap* new_values_cache) {
   if (policy.has_metrics_enabled() &&
@@ -476,9 +475,7 @@ void DecodeGenericPolicies(
   } else {
     // If the policy is missing, default to reporting enabled on enterprise-
     // enrolled devices, c.f. crbug/456186.
-    policy::BrowserPolicyConnectorChromeOS* connector =
-        g_browser_process->platform_part()->browser_policy_connector_chromeos();
-    bool is_enterprise_managed = connector->IsEnterpriseManaged();
+    bool is_enterprise_managed = policy_connector->IsEnterpriseManaged();
     new_values_cache->SetBoolean(kStatsReportingPref, is_enterprise_managed);
   }
 
@@ -659,9 +656,13 @@ void DecodeDeviceState(const em::PolicyData& policy_data,
 }  // namespace
 
 DeviceSettingsProvider::DeviceSettingsProvider(
+    PrefService* local_state,
+    policy::BrowserPolicyConnectorChromeOS* policy_connector,
     const NotifyObserversCallback& notify_cb,
     DeviceSettingsService* device_settings_service)
     : CrosSettingsProvider(notify_cb),
+      local_state_(local_state),
+      policy_connector_(policy_connector),
       device_settings_service_(device_settings_service),
       trusted_status_(TEMPORARILY_UNTRUSTED),
       ownership_status_(device_settings_service_->GetOwnershipStatus()),
@@ -724,7 +725,7 @@ void DeviceSettingsProvider::DoSet(const std::string& path,
     // Set the cache to the updated value.
     UpdateValuesCache(data, device_settings_, TEMPORARILY_UNTRUSTED);
 
-    if (!device_settings_cache::Store(data, g_browser_process->local_state())) {
+    if (!device_settings_cache::Store(data, local_state_)) {
       LOG(ERROR) << "Couldn't store to the temp storage.";
       NotifyObservers(path);
       return;
@@ -790,8 +791,7 @@ void DeviceSettingsProvider::OnTentativeChangesInPolicy(
 
 void DeviceSettingsProvider::RetrieveCachedData() {
   em::PolicyData policy_data;
-  if (!device_settings_cache::Retrieve(&policy_data,
-                                       g_browser_process->local_state()) ||
+  if (!device_settings_cache::Retrieve(&policy_data, local_state_) ||
       !device_settings_.ParseFromString(policy_data.policy_value())) {
     VLOG(1) << "Can't retrieve temp store, possibly not created yet.";
   }
@@ -824,12 +824,12 @@ void DeviceSettingsProvider::UpdateValuesCache(
                                policy_data.service_account_identity());
   }
 
-  DecodeLoginPolicies(settings, &new_values_cache);
+  DecodeLoginPolicies(policy_connector_, settings, &new_values_cache);
   DecodeNetworkPolicies(settings, &new_values_cache);
   DecodeAutoUpdatePolicies(settings, &new_values_cache);
   DecodeReportingPolicies(settings, &new_values_cache);
   DecodeHeartbeatPolicies(settings, &new_values_cache);
-  DecodeGenericPolicies(settings, &new_values_cache);
+  DecodeGenericPolicies(policy_connector_, settings, &new_values_cache);
   DecodeLogUploadPolicies(settings, &new_values_cache);
   DecodeDeviceState(policy_data, &new_values_cache);
 
@@ -861,9 +861,7 @@ void DeviceSettingsProvider::UpdateValuesCache(
 bool DeviceSettingsProvider::MitigateMissingPolicy() {
   // First check if the device has been owned already and if not exit
   // immediately.
-  policy::BrowserPolicyConnectorChromeOS* connector =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  if (connector->GetDeviceMode() != policy::DEVICE_MODE_CONSUMER)
+  if (policy_connector_->GetDeviceMode() != policy::DEVICE_MODE_CONSUMER)
     return false;
 
   // If we are here the policy file were corrupted or missing. This can happen
@@ -931,8 +929,7 @@ bool DeviceSettingsProvider::UpdateFromService() {
       const em::ChromeDeviceSettingsProto* device_settings =
           device_settings_service_->device_settings();
       if (policy_data && device_settings) {
-        if (!device_settings_cache::Store(*policy_data,
-                                          g_browser_process->local_state())) {
+        if (!device_settings_cache::Store(*policy_data, local_state_)) {
           LOG(ERROR) << "Couldn't update the local state cache.";
         }
         UpdateValuesCache(*policy_data, *device_settings, TRUSTED);

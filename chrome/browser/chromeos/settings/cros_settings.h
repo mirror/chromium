@@ -17,10 +17,16 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/settings/cros_settings_provider.h"
 
+class PrefService;
+
 namespace base {
 class DictionaryValue;
 class ListValue;
 class Value;
+}
+
+namespace policy {
+class BrowserPolicyConnectorChromeOS;
 }
 
 namespace chromeos {
@@ -31,7 +37,9 @@ class DeviceSettingsService;
 class CrosSettings {
  public:
   // Manage singleton instance.
-  static void Initialize();
+  static void Initialize(
+      PrefService* local_state,
+      policy::BrowserPolicyConnectorChromeOS* policy_connector);
   static bool IsInitialized();
   static void Shutdown();
   static CrosSettings* Get();
@@ -43,7 +51,10 @@ class CrosSettings {
 
   // Creates a device settings service instance. This is meant for unit tests,
   // production code uses the singleton returned by Get() above.
-  explicit CrosSettings(DeviceSettingsService* device_settings_service);
+  explicit CrosSettings(
+      PrefService* local_state,
+      policy::BrowserPolicyConnectorChromeOS* policy_connector,
+      DeviceSettingsService* device_settings_service);
   virtual ~CrosSettings();
 
   // Helper function to test if the given |path| is a valid cros setting.

@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/settings/device_settings_provider.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/stub_cros_settings_provider.h"
@@ -25,9 +26,12 @@ namespace chromeos {
 static CrosSettings* g_cros_settings = nullptr;
 
 // static
-void CrosSettings::Initialize() {
+void CrosSettings::Initialize(
+    PrefService* local_state,
+    policy::BrowserPolicyConnectorChromeOS* policy_connector) {
   CHECK(!g_cros_settings);
-  g_cros_settings = new CrosSettings(DeviceSettingsService::Get());
+  g_cros_settings = new CrosSettings(local_state, policy_connector,
+                                     DeviceSettingsService::Get());
 }
 
 // static
@@ -66,7 +70,10 @@ bool CrosSettings::IsWhitelisted(const std::string& username,
                                         wildcard_match);
 }
 
-CrosSettings::CrosSettings(DeviceSettingsService* device_settings_service) {
+CrosSettings::CrosSettings(
+    PrefService* local_state,
+    policy::BrowserPolicyConnectorChromeOS* policy_connector,
+    DeviceSettingsService* device_settings_service) {
   CrosSettingsProvider::NotifyObserversCallback notify_cb(
       base::Bind(&CrosSettings::FireObservers,
                  // This is safe since |this| is never deleted.
@@ -76,7 +83,7 @@ CrosSettings::CrosSettings(DeviceSettingsService* device_settings_service) {
     AddSettingsProvider(base::MakeUnique<StubCrosSettingsProvider>(notify_cb));
   } else {
     AddSettingsProvider(base::MakeUnique<DeviceSettingsProvider>(
-        notify_cb, device_settings_service));
+        local_state, policy_connector, notify_cb, device_settings_service));
   }
   // System settings are not mocked currently.
   AddSettingsProvider(base::MakeUnique<SystemSettingsProvider>(notify_cb));
@@ -348,7 +355,9 @@ void CrosSettings::FireObservers(const std::string& path) {
 }
 
 ScopedTestCrosSettings::ScopedTestCrosSettings() {
-  CrosSettings::Initialize();
+  CrosSettings::Initialize(
+      g_browser_process->local_state(),
+      g_browser_process->platform_part()->browser_policy_connector_chromeos());
 }
 
 ScopedTestCrosSettings::~ScopedTestCrosSettings() {

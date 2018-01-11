@@ -111,8 +111,8 @@ ChromeBrowserMainPartsPosix::ChromeBrowserMainPartsPosix(
     : ChromeBrowserMainParts(parameters) {
 }
 
-void ChromeBrowserMainPartsPosix::PreEarlyInitialization() {
-  ChromeBrowserMainParts::PreEarlyInitialization();
+int ChromeBrowserMainPartsPosix::PreEarlyInitialization() {
+  const int result = ChromeBrowserMainParts::PreEarlyInitialization();
 
   // We need to accept SIGCHLD, even though our handler is a no-op because
   // otherwise we cannot wait on children. (According to POSIX 2001.)
@@ -120,6 +120,8 @@ void ChromeBrowserMainPartsPosix::PreEarlyInitialization() {
   memset(&action, 0, sizeof(action));
   action.sa_handler = SIGCHLDHandler;
   CHECK(sigaction(SIGCHLD, &action, NULL) == 0);
+
+  return result;
 }
 
 void ChromeBrowserMainPartsPosix::PostMainMessageLoopStart() {

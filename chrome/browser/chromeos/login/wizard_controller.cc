@@ -761,7 +761,7 @@ void WizardController::OnEulaAccepted() {
   time_eula_accepted_ = base::Time::Now();
   StartupUtils::MarkEulaAccepted();
   ChangeMetricsReportingStateWithReply(
-      usage_statistics_reporting_,
+      g_browser_process->local_state(), usage_statistics_reporting_,
       base::Bind(&WizardController::OnChangedMetricsReportingState,
                  weak_factory_.GetWeakPtr()));
   PerformPostEulaActions();
