@@ -69,6 +69,9 @@ class ScreenOrientationBrowserTest : public ContentBrowserTest  {
     params.top_controls_height = 0.f;
     params.browser_controls_shrink_blink_size = false;
     params.is_fullscreen_granted = false;
+    params.content_source_id =
+        static_cast<RenderWidgetHostImpl*>(main_frame_rwh)
+            ->current_content_source_id();
 
     std::set<RenderWidgetHost*> rwhs;
     for (RenderFrameHost* rfh : web_contents()->GetAllFrames()) {
