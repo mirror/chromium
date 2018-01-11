@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c099327e_f4b358e1",
+        "filename": "build/config/allocator.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-11T02:03:24Z",
+      "side": 1,
+      "message": "Update comment. Does the temporary-ness, for some value of temporary, apply to MIPS as well?",
+      "revId": "8e0d8ec28cd990b56a8bbc96b6bc7e8016031e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
