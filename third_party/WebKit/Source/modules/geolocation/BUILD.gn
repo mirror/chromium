@@ -21,6 +21,6 @@ blink_modules_sources("geolocation") {
     "PositionError.h",
   ]
   deps = [
-    "//device/geolocation/public/interfaces:interfaces_blink",
+    "//services/device/public/interfaces:interfaces_blink",
   ]
 }
