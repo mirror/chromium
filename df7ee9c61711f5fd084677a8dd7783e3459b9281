@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0a029d63_5495ba54",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-11T12:01:20Z",
+      "side": 1,
+      "message": "It seems logical that the owners dependency should not be from components/ to chrome/, as for the code. The other way around doesn\u0027t quite make sense though as Michael points out. I suggest just add the owners here directly. As Sergey suggests, I can be an owner, and I\u0027d say tommi@ as well.",
+      "parentUuid": "c81783a9_da74271e",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a351f1_47b51d02",
         "filename": "components/webrtc_logging/OWNERS",
         "patchSetId": 6
@@ -148,6 +172,24 @@
       "side": 1,
       "message": "Yes, this file just copies all the functions from webrtc_log_util.cc except for DeleteOldWebRtcLogFilesForAllProfiles() which remains in the old file.",
       "parentUuid": "b75ee40a_08ca4470",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3186b3f_83e188f2",
+        "filename": "components/webrtc_logging/browser/log_cleanup.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-11T12:01:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08b0abf2_a4372b4b",
       "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
