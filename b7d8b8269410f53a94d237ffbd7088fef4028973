@@ -16,6 +16,24 @@
       "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a551ddc_b177c7e4",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-11T19:17:32Z",
+      "side": 1,
+      "message": "That\u0027s a problem.  We\u0027re going to need to figure out what to do here.  The problem is we don\u0027t want consumers to be subject to socket pool limits, and that\u0027s the only way to avoid them.  But we presumably don\u0027t want to co-opt the shared HostResolver, which respects priorities.  Not currently sure what to do here.",
+      "parentUuid": "ebac23b5_63b48724",
+      "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
