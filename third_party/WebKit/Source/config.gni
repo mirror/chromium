@@ -64,13 +64,14 @@ if (use_default_render_theme) {
 }
 
 if (remove_webcore_debug_symbols) {
-  if (is_win && symbol_level != 0) {
+  if (symbol_level != 0) {
+    # We want to keep minimal debug symbols if symbol_level is not zero, so
+    # that we can get proper call stacks.
     # If we use no_symbols on Windows when symbol_level is not zero then no
     # PDB will be generated but ninja will be expecting one. This would mean
     # that the build would always be dirty. Using minimal_symbols in this
     # situation keeps the build times fast (roughly identical to no_symbols)
-    # while still generating a PDB to keep ninja happy (and it gives us proper
-    # call stacks).
+    # while still generating a PDB to keep ninja happy.
     remove_webcore_symbols_config =
         [ "//build/config/compiler:minimal_symbols" ]
   } else {
