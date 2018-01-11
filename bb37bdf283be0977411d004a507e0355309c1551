@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e62b9e00_5780a234",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-11T21:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "454355b6_5624534e",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf878d91_38701dac",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "bb37bdf283be0977411d004a507e0355309c1551",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d65341_7a4b7d34",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-11T21:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf878d91_38701dac",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "25eac52e_54340de8",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-11T21:01:37Z",
+      "side": 1,
+      "message": "OnBufferingStateChange fires repeatedly for underflow.",
+      "parentUuid": "305a5bd4_d1231c5e",
+      "range": {
+        "startLine": 1603,
+        "startChar": 9,
+        "endLine": 1603,
+        "endChar": 42
+      },
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53be72a4_e663b623",
         "filename": "media/mojo/services/media_metrics_provider.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-18T17:11:56Z",
       "side": 1,
       "message": "Here and below, I believe that it should be `DCHECK_EQ(kNoTimestamp, ...);`",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51e9464_02e46ceb",
+        "filename": "media/mojo/services/media_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-11T21:01:37Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a preferred style for DCHECK; just EXPECT and ASSERT since they actually print text indicating which value is expected vs actual. Do you have a style guide link?",
+      "parentUuid": "53be72a4_e663b623",
       "revId": "bb37bdf283be0977411d004a507e0355309c1551",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
