@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ad444717_cb5a3f4b",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-11T21:50:20Z",
+      "side": 1,
+      "message": "Read again the Comments section of C++ Style Guidance. And tried to redo all the function comments by focusing on what the functions do, without adding too many details which are moved to function declarations.\n\nBTW: people should have basic idea about screen orientation development.",
+      "parentUuid": "8f5e18c8_5c0de798",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d172295_6c7e15f5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "8f60d6e0_5ce0c38e",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-11T21:50:20Z",
+      "side": 1,
+      "message": "Disagree with you here. :)\n\nThe display/device/camera rotation MUST be trinity, otherwise we can\u0027t set the capture frames with correct orientation. That\u0027s the basic of all the stuffs here at present.",
+      "parentUuid": "ee7cb513_d53096f4",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b20b1a_e3262cf5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "As a reader, I am happy with the info provided by lines 24-26 in Patchset 5. Lines 27-29 confuse me, though. They don\u0027t describe what this method is doing. Instead, it seems to talk about a circumstance where an internal camera gets treated as external. This information seems important, but I suppose should be moved somewhere else?",
       "parentUuid": "740211a3_978f001f",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cd7931a_7bccacb1",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-11T21:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dc21ce_bc8fb3f1",
       "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5a0d489_bc2736a8",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-11T21:50:20Z",
+      "side": 1,
+      "message": "Done\n\nDamn it. So messed up by MSDN. I did (auto_rotation_state \u003d\u003d AR_ENABLED) in the beginning. Then I thought it\u0027s better to use bitwise format in case MS changes anything in the future. Bang...",
+      "parentUuid": "bbef0ab7_0be86c10",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d811d6_7a5608d0",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T01:06:57Z",
       "side": 1,
       "message": "Please add unit tests.\n\nMy recommendation for doing this would be as follows:\n* Put the methods declared in this file into a class\n* Have the constructor get passed an interface that abstracts out all the necessary Windows API calls.\n* In the unit tests, pass it a mock implementation and simulate all interesting cases.\n* In production, pass it an implementation that calls the actual Windows APIs.",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf7b96a_8178dc31",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-11T21:50:20Z",
+      "side": 1,
+      "message": "At this stage, I thought about it and don\u0027t see any advantage and necessity to have a class. (only for unittests? Not worthy I suppose.) \nAs to unittest, it\u0027s not so necessary so far. The logic itself is simple. The result is depend on the system API returns and can be only verified by visual check. Mocking won\u0027t help as I can imagine.",
+      "parentUuid": "06d811d6_7a5608d0",
       "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
