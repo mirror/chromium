@@ -45,6 +45,54 @@
       "revId": "98bb34aff814641f7deee4b5b1e5274c2ed9e767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5e97a8_48245990",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:54:06Z",
+      "side": 1,
+      "message": "Increased the max to 90 days. Realistically, it is super duper hard to measure changes in engagement for users who use WebAPKs less than once a month. (Land CL + 2 months to propagate CL  to stable + 3 months...)",
+      "parentUuid": "a7131d7f_20b21863",
+      "range": {
+        "startLine": 223,
+        "startChar": 96,
+        "endLine": 223,
+        "endChar": 98
+      },
+      "revId": "98bb34aff814641f7deee4b5b1e5274c2ed9e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9889273f_116fbe89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-11T20:54:06Z",
+      "side": 1,
+      "message": "We don\u0027t care about the distribution within one hour",
+      "parentUuid": "a28a93b9_d0d5271f",
+      "range": {
+        "startLine": 223,
+        "startChar": 44,
+        "endLine": 223,
+        "endChar": 51
+      },
+      "revId": "98bb34aff814641f7deee4b5b1e5274c2ed9e767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
