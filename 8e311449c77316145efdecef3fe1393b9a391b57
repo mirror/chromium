@@ -34,6 +34,24 @@
       "revId": "8e311449c77316145efdecef3fe1393b9a391b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b598bda8_a8da3882",
+        "filename": "chrome/browser/extensions/global_shortcut_listener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-11T05:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9de184b_25f7ccfd",
+      "revId": "8e311449c77316145efdecef3fe1393b9a391b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
