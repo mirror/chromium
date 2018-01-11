@@ -16,6 +16,24 @@
       "revId": "3303fd023e6c5db58708458479ce1045982d799e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3b91bf_2db2fd50",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T21:38:43Z",
+      "side": 1,
+      "message": "thanks for pointing this out. packing is only relevant for efficiency - there should be no correctness issues.",
+      "parentUuid": "a5aff090_5bec7818",
+      "revId": "3303fd023e6c5db58708458479ce1045982d799e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
