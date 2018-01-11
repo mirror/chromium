@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67de9a75_d4f04992",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
+        "patchSetId": 3
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-11T06:56:59Z",
+      "side": 1,
+      "message": "ES6 lets you write [input, div] \u003d document.querySelectorAll(\u0027div\u0027) and it actually works, if you want.",
+      "revId": "9844c51b3ae037abd996c4087d5098671516dec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189c551a_590760b3",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-11T06:56:59Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "9844c51b3ae037abd996c4087d5098671516dec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
