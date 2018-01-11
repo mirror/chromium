@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7012df1_3f88c8b1",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T02:29:05Z",
+      "side": 1,
+      "message": "I just found that TextIterator skips WBR... So there\u0027s no need to worry about it.",
+      "parentUuid": "0429e763_a9b2c05b",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a155942c_43c64b3a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cc61422c_8e88a480",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T02:29:05Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t we avoid calling this when this function is called from AppendBreakOpportunity with LayoutObject\u003dnullptr?\n\nWe should keep this. Offset mapping is defined as a mapping\n\nfrom source string: concatenation of all DOM text nodes and generated text\n\nto target string: |text_content_|\n\nSince we treat ZWS as a generated character (instead of part of a text node), we should notify |mapping_builder_| by calling AppendIdentityMapping(1).\n\nBtw we are already doing the same for all generated BiDi control characters.\n\n\u003e \n\u003e If there were no other cases where LayoutObject is nullptr, we can just use it, but I\u0027m not sure about that.\n\nI haven\u0027t found any other case where |type| is kText or kControl but layout_object is null.",
+      "parentUuid": "a155942c_43c64b3a",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e78c740_a7599d4d",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-11T02:03:09Z",
       "side": 1,
       "message": "I think we can skip generating NGPhysicalTextFragment if |!item.GetLayoutObject()|. That might fix the 3 crashes. Maybe it\u0027s better to have a flag in NGInlineItem, but I can do that later, just please leave a comment when |!item.GetLayoutObject()|.",
+      "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e3aba8_a84abb39",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-11T02:29:05Z",
+      "side": 1,
+      "message": "Do we have any test case verifying soft wrap at WBR?",
+      "parentUuid": "9e78c740_a7599d4d",
       "revId": "dc292aca48f9f76cb528987a8234a3c466efc101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
