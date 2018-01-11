@@ -2025,6 +2025,7 @@ void RenderWidgetHostImpl::OnResizeOrRepaintACK(
 
   // Update our knowledge of the RenderWidget's size.
   current_size_ = params.view_size;
+  received_local_surface_id_ = params.local_surface_id;
 
   bool is_resize_ack =
       ViewHostMsg_ResizeOrRepaint_ACK_Flags::is_resize_ack(params.flags);
@@ -2472,7 +2473,12 @@ void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
   if (!view_ || last_auto_resize_request_number_ != sequence_number)
     return;
 
-  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  viz::LocalSurfaceId local_surface_id;
+  if (received_local_surface_id_.is_valid()) {
+    local_surface_id = received_local_surface_id_;
+  } else {
+    local_surface_id = view_->GetLocalSurfaceId();
+  }
   if (local_surface_id.is_valid()) {
     ScreenInfo screen_info;
     GetScreenInfo(&screen_info);

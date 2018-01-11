@@ -2235,7 +2235,8 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       window_screen_rect_ = new_pos;
     }
 
-    AutoResizeCompositor(viz::LocalSurfaceId());
+    child_local_surface_id_allocator_.SetParent(local_surface_id_);
+    AutoResizeCompositor(child_local_surface_id_allocator_.GenerateId());
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_resize_ack_for_auto_resize_ = true;
@@ -2570,6 +2571,7 @@ void RenderWidget::DidResizeOrRepaintAck() {
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
+  params.local_surface_id = local_surface_id_;
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
