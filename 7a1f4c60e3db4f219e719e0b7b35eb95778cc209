@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef9ce6a9_fda5459d",
+        "filename": "components/previews/content/previews_optimization_guide_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2018-01-11T23:49:18Z",
+      "side": 1,
+      "message": "don\u0027t know if you maybe want to put this as a variable in the test class since you create this same component info every test case?",
+      "range": {
+        "startLine": 134,
+        "startChar": 36,
+        "endLine": 134,
+        "endChar": 40
+      },
+      "revId": "7a1f4c60e3db4f219e719e0b7b35eb95778cc209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8322ae8_3aec4384",
+        "filename": "components/previews/content/previews_optimization_guide_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2018-01-11T23:49:18Z",
+      "side": 1,
+      "message": "process-\u003eprocessed",
+      "range": {
+        "startLine": 222,
+        "startChar": 26,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "7a1f4c60e3db4f219e719e0b7b35eb95778cc209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
