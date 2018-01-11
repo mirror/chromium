@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20d0b37_bfc56c46",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Should this also set null params, and/or log an error?",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc998ae_89afb355",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "set null or error?",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93262a3_c95941eb",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7a8ff6_304f3b18",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "ditto. Maybe have this function return true/false and call set_mixed_mirror_mode_params(base::nullopt) from the calling funtion on false?",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a781da_39f3b6d5",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Is this valid? It seems like this should either DCHECK or store an empty value.",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874d0fe9_fb13500c",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "s/should/must/ throughout",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c09643e_4059734f",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "s/bad/incorrect/",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabd8648_6d2f9acb",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "s/turned on/enabled/\n\u0027a single display\u0027",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141cd13f_e9c0e0a1",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Display ids must not be duplicated",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c924520_57619a31",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "if mode !\u003d OFF set *out_error",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752e0e7d_829faf53",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "These comments are unnecessary with the enums",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb1a11a_bb5f3630",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Forward declare MirrorModeInfo in api::system_display instead.",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2668924a_613272d4",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 17
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Document the modes in this enum:\n\nenum MirrorMode {\n  // Use the default mode (extended or unified desktop).\n  off,\n\n  // The default source display will be mirrored to all other displays.\n  normal,\n\n  // The specified source display will be mirrored to the provided\n  // destination displays. All other connected displays will be extended.\n  mixed\n};",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933bced1_c5173e41",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 17
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Document that this is only valud for \u0027mixed\u0027, same below.",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa563369_455afbf9",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 17
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Elim in favor of MirrorModeInfo docs.",
+      "range": {
+        "startLine": 372,
+        "startChar": 58,
+        "endLine": 374,
+        "endChar": 53
+      },
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637209fb_72efc837",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 17
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-11T20:56:52Z",
+      "side": 1,
+      "message": "Most or all of the documentation can be removed in favor of the enum documentation.",
+      "revId": "f1faa01dd546a58c977c16f1d5b639d4f100951d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
