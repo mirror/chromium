@@ -71,6 +71,7 @@ Polymer({
         cloudPrintError: '',
         privetExtensionError: '',
         invalidSettings: false,
+        currentPageCount: 0,
       },
     },
   },
