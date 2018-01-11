@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "fce7be48_52798266",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-11T15:26:49Z",
+      "side": 1,
+      "message": "Basing on our offline discussion and Marina\u0027s sample code results, my vague memories of the issue with using OPEN vs CREATE are not confirmed :)",
+      "parentUuid": "2afd78b5_ecdec6d8",
+      "revId": "a350b1469bd3ccaa0a76591fa56c049eefff8319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5059ee7f_3f8e4acb",
         "filename": "media/audio/audio_debug_file_writer_unittest.cc",
         "patchSetId": 23
