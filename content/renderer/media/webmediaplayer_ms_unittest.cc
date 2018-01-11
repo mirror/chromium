@@ -212,6 +212,7 @@ class MockMediaStreamAudioRenderer : public MediaStreamAudioRenderer {
   void Play() override {}
   void Pause() override {}
   void SetVolume(float volume) override {}
+  void PictureInPicture() override {}
   media::OutputDeviceInfo GetOutputDeviceInfo() override {
     return media::OutputDeviceInfo();
   }
