@@ -16,6 +16,24 @@
       "revId": "b74cc864368e77a8f023b0c457b267f48f19988e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391f0b6d_9b9edfa4",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-11T21:43:06Z",
+      "side": 1,
+      "message": "kViewTopInset is still 0 as expected, though we would still require to do something OnActivationChanged in custom_frame_view_ash to update layout. The top is still missing though. I didn\u0027t investigate any further because i think disabling immersive on minimize makes sense to me, and doesn\u0027t have any side effects. What do you think?",
+      "parentUuid": "71ca4679_bee5213c",
+      "revId": "b74cc864368e77a8f023b0c457b267f48f19988e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
