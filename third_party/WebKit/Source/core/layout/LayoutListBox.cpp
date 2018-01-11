@@ -36,6 +36,9 @@
 #include "core/html/forms/HTMLOptionElement.h"
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/paint/PaintLayer.h"
+#include "platform/scroll/ScrollAlignment.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
+#include "platform/scroll/ScrollTypes.h"
 
 namespace blink {
 
@@ -131,9 +134,10 @@ void LayoutListBox::ScrollToRect(const LayoutRect& rect) {
   if (HasOverflowClip()) {
     DCHECK(Layer());
     DCHECK(Layer()->GetScrollableArea());
-    Layer()->GetScrollableArea()->ScrollIntoView(
-        rect, ScrollAlignment::kAlignToEdgeIfNeeded,
-        ScrollAlignment::kAlignToEdgeIfNeeded, false);
+    ScrollIntoViewParams params = {ScrollAlignment::kAlignToEdgeIfNeeded,
+                                   ScrollAlignment::kAlignToEdgeIfNeeded};
+    params.scroll_behavior = kScrollBehaviorInstant;
+    Layer()->GetScrollableArea()->ScrollIntoView(rect, params);
   }
 }
 

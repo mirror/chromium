@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WebRemoteScrollProperties_h
-#define WebRemoteScrollProperties_h
+#ifndef WebScrollIntoViewParams_h
+#define WebScrollIntoViewParams_h
 
 #include "public/platform/WebCommon.h"
 
 #if INSIDE_BLINK
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/scroll/ScrollTypes.h"
 #endif
 
 namespace blink {
-
 // This struct contains the required information for propagating some stages
 // of scrolling process to cross process frames. Specifically for various types
 // of programmatic scrolling such as scrolling an element into view, recursive
 // scrolling across multiple processes is accommodated through passing the state
 // using this struct to the browser and then to the target (parent) process.
-struct WebRemoteScrollProperties {
+struct WebScrollIntoViewParams {
   // Scroll alignment behavior which determines how the scrolling happens with
   // respect to a certain direction.
   enum Alignment {
@@ -56,22 +56,16 @@ struct WebRemoteScrollProperties {
   Type type = kProgrammatic;
   bool make_visible_in_visual_viewport = false;
   Behavior behavior = kAuto;
-  bool is_for_scroll_sequence;
+  bool is_for_scroll_sequence = false;
 
-  WebRemoteScrollProperties() = default;
+  WebScrollIntoViewParams() = default;
 #if INSIDE_BLINK
-  BLINK_PLATFORM_EXPORT WebRemoteScrollProperties(Alignment,
-                                                  Alignment,
-                                                  ScrollType,
-                                                  bool,
-                                                  ScrollBehavior,
-                                                  bool);
+  BLINK_PLATFORM_EXPORT WebScrollIntoViewParams(const ScrollIntoViewParams&);
 
-  BLINK_PLATFORM_EXPORT ScrollType GetScrollType() const;
-  BLINK_PLATFORM_EXPORT ScrollBehavior GetScrollBehavior() const;
+  BLINK_PLATFORM_EXPORT operator ScrollIntoViewParams() const;
 #endif
 };
 
 }  // namespace blink
 
-#endif  // WebRemoteScrollProperties_h
+#endif  // WebScrollIntoViewParams_h
