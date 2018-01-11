@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b247c65c_ec3b83f7",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-11T10:11:06Z",
+      "side": 0,
+      "message": "After recent changes in https://crrev.com/c/790119/844303/, MDM handles |listener| subscriptions directly and no longer notifies MDDH of device changes. So, how do we handle this permission check for the device type now?\nCan we perform this check at the time of subscription itself in MDDH::AddMediaDevicesListener?",
+      "range": {
+        "startLine": 333,
+        "startChar": 73,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "fc9b7b88a6a2fb1503af01edbd9d41695966d665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
