@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7cc0b5c_1c861d01",
+        "filename": "ui/message_center/notification_list_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-11T17:33:29Z",
+      "side": 1,
+      "message": "nit: replace |true| with |quiet_mode| and remove conditional branches",
+      "range": {
+        "startLine": 214,
+        "startChar": 16,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "16647a812ae10891c71ee918f81053504e706f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
