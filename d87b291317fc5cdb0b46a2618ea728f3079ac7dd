@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd13ead_ff711d03",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T15:10:22Z",
+      "side": 1,
+      "message": "Since this interface is called PeerConnectionTrackerHost, the comment looks like \"this interface connects PeerConectionTracker to this interface\", which is not very informative.\nI think it\u0027s OK to document it in terms of what the implementation of PeerConnectionTrackerHost does. Something like:\n\"This interface allows forwarding PeerConnection events to WebRTCInternals in the browser process\".\n\nAlso, You should write the comment before the \"interface PeerConnectionTrackerHost\" line, not after it.",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657fbab4_1a46a535",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T15:10:22Z",
+      "side": 1,
+      "message": "This does not really initiate a getUserMedia call. It is used to let the PeerConnectionTrackerHost implementation know that a getUserMedia() call has been made.",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4688a3f_6a2fcf2f",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T15:10:22Z",
+      "side": 1,
+      "message": "nit: reason -\u003e reasons",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f094ed_25993e13",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T15:10:22Z",
+      "side": 1,
+      "message": "Remove commented-out line.",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 5
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a108438_8e2b06c7",
+        "filename": "content/renderer/media/peer_connection_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-11T15:10:22Z",
+      "side": 1,
+      "message": "Should the name of this class be MockPeerConecctionTrackerHost?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
