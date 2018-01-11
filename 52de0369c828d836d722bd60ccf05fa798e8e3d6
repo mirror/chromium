@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9315d2a5_067c59ac",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T00:34:42Z",
+      "side": 1,
+      "message": "(2) is not a stupid question at all. It\u0027s hard to figure out. I just verified that window property changes (e.g. show state) are sent browser -\u003e ws -\u003e ash, then ash acks the change to ws, then ws acks the change to browser. So if we wait for all changes to get acked then we know ash saw the change. But I didn\u0027t figure that out until just now. :-)\n\nFor (1) I added helper methods, and that allowed me to enable some more tests.",
+      "parentUuid": "66f8063f_8de537ca",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4093a768_ef6fe448",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T23:46:50Z",
       "side": 1,
       "message": "SelectItem already calls this, is another call really necessary? Maybe comment explaining why?",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f8858d_58f6ecfe",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T00:34:42Z",
+      "side": 1,
+      "message": "That was a mistake. Removed the call.",
+      "parentUuid": "4093a768_ef6fe448",
       "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6723a1e2_45cf0fc5",
+        "filename": "testing/buildbot/filters/mojo.fyi.mash.browser_tests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T00:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3532f0e1_2e061a69",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
