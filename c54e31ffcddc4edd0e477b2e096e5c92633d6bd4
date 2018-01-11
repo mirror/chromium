@@ -16,6 +16,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdda46d8_89f54b3a",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-11T16:58:12Z",
+      "side": 1,
+      "message": "+thakis: do you know if clang guarantees that it will use the constexpr path to construction if available? Or does the variable actually have to be marked constexpr (which doesn\u0027t work for globals as constexpr implies const :(...)? I\u0027m having a hard time figuring out whether the spec provides this.",
+      "parentUuid": "61c0e8c7_05dbda73",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
