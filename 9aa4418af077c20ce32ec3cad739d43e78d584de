@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9df0e48_4d30b96a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-11T18:16:26Z",
+      "side": 1,
+      "message": "nit: Wrap long lines like code, i.e. at 80 chars\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "9aa4418af077c20ce32ec3cad739d43e78d584de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
