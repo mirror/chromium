@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3366dfcd_71c5f3bd",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-11T04:04:21Z",
+      "side": 1,
+      "message": "Then, at the very least you should use an Internal task runner (because the task in question is not a speced task).\n\nWhat we\u0027re doing now is to annotate Internal tasks so that we can understand what task types consume a lot of time. From that perspective I think it\u0027s reasonable to use kInternalWebCrypto, though we should have a better comment here.",
+      "parentUuid": "75e296cb_c052c1d8",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "087550fc_e169c4ce",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 4
