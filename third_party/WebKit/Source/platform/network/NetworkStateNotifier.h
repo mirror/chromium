@@ -214,12 +214,12 @@ class PLATFORM_EXPORT NetworkStateNotifier {
   //
   // Since this class is a singleton, tests must clear override when completed
   // to avoid indeterminate state across the test harness.
-  void SetNetworkConnectionInfoOverride(bool on_line,
-                                        WebConnectionType,
-                                        double max_bandwidth_mbps);
-  void SetNetworkQualityInfoOverride(WebEffectiveConnectionType effective_type,
-                                     unsigned long transport_rtt_msec,
-                                     double downlink_throughput_mbps);
+  void SetNetworkConnectionInfoOverride(
+      bool on_line,
+      WebConnectionType,
+      WebEffectiveConnectionType effective_type,
+      unsigned long http_rtt_msec,
+      double max_bandwidth_mbps);
   void SetSaveDataEnabledOverride(bool enabled);
   void ClearOverride();
 
