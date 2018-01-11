@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fbabc96_8c177e58",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-11T15:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa49f96_54f32be1",
+      "revId": "e62fbbbbea24d93beb0f2004b48a46551d5a8c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66331fe9_d38d8626",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e62fbbbbea24d93beb0f2004b48a46551d5a8c68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152dfd34_9947617e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-11T15:40:42Z",
+      "side": 1,
+      "message": "will send a follow-up CL (and added the TODO)",
+      "parentUuid": "66331fe9_d38d8626",
+      "revId": "e62fbbbbea24d93beb0f2004b48a46551d5a8c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
