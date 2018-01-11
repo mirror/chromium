@@ -221,6 +221,8 @@ class MediaRouterUI
   FRIEND_TEST_ALL_PREFIXES(MediaRouterUITest, SendInitialMediaStatusUpdate);
 
   class UIIssuesObserver;
+  class DialogWindowObserver;
+  class DialogHostObserver;
 
   class UIMediaRoutesObserver : public MediaRoutesObserver {
    public:
@@ -283,6 +285,8 @@ class MediaRouterUI
   // Ignored if the UI is not yet initialized.
   void SetIssue(const Issue& issue);
   void ClearIssue();
+
+  void Focus();
 
   // Called by |routes_observer_| when the set of active routes has changed.
   void OnRoutesUpdated(const std::vector<MediaRoute>& routes,
@@ -377,6 +381,9 @@ class MediaRouterUI
   // Returns the IssueManager associated with |router_|.
   IssueManager* GetIssueManager();
 
+  std::vector<MediaSinkWithCastModes> GetEnabledSinks(
+      const std::vector<MediaSinkWithCastModes>& sinks) const;
+
   // Owned by the |web_ui| passed in the ctor, and guaranteed to be deleted
   // only after it has deleted |this|.
   MediaRouterWebUIMessageHandler* handler_ = nullptr;
@@ -447,6 +454,11 @@ class MediaRouterUI
 
   // If set, a cast mode that is required to be shown first.
   base::Optional<MediaCastMode> forced_cast_mode_;
+
+  std::unique_ptr<DialogWindowObserver> window_observer_;
+  std::unique_ptr<DialogHostObserver> host_observer_;
+  // The display that the Media Router dialog UI is on.
+  display::Display display_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   // Therefore |weak_factory_| must be placed at the end.
