@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4897a40_4d4237d9",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-11T23:53:22Z",
+      "side": 1,
+      "message": "I think these ipc_traits sources should also be in the typemap_dependencies target.",
+      "revId": "4f09fde47690d88d46988f515b4b02a9c57d804d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a3e4a9_4a6514ef",
+        "filename": "services/network/public/cpp/network_types.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-11T23:53:22Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary to hack into the typemap file. The ipc_traits.h file belongs to some target. That target should express public_deps on url_ipc.\n\nBased on my other inline comment I think that means you should add url_ipc to the public_deps of \"typemap_dependencies\" after moving the traits cc and h to its sources.",
+      "revId": "4f09fde47690d88d46988f515b4b02a9c57d804d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
