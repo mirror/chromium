@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fced373_9d01960d",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-11T00:15:23Z",
+      "side": 1,
+      "message": "I think this is a somewhat misleading comment change. Yes, CloneableMessage is in some manner used for MessageChannel, but only because TransferableMessage (the struct type actually being used for MessagePort/MessageChannel) happens to include it. As explained by both the comment above and the comment regarding TransferableMessage.\n\nThe comment was trying to make it clear that BroadcastChannel in a way is special for using CloneableMessage directly instead of TransferableMessage.",
+      "revId": "5de9db789fb715a9545a86d9924a72936c1a5b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
