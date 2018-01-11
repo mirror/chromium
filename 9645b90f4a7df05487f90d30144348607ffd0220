@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "57951d2c_f7cdf9e4",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3427,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-11T16:43:26Z",
+      "side": 1,
+      "message": "Linux Tests (dbg)(1) is already here.",
+      "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bddab01_9f802720",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 1
@@ -16,6 +33,24 @@
       "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ab783b_ba941566",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3456,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-11T16:43:26Z",
+      "side": 1,
+      "message": "I don\u0027t think there is one.\n\nThis master appears to exist solely for LUCI conversions.",
+      "parentUuid": "6bddab01_9f802720",
+      "revId": "9645b90f4a7df05487f90d30144348607ffd0220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
