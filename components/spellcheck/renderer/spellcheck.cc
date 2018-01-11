@@ -30,7 +30,6 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_visitor.h"
 #include "content/public/renderer/render_thread.h"
-#include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -171,22 +170,18 @@ class SpellCheck::SpellcheckRequest {
 // values.
 // TODO(groby): Simplify this.
 SpellCheck::SpellCheck(
+    service_manager::BinderRegistry* registry,
     service_manager::LocalInterfaceProvider* embedder_provider)
-    : embedder_provider_(embedder_provider), spellcheck_enabled_(true) {
-  if (!content::ChildThread::Get())
+    : embedder_provider_(embedder_provider),
+      spellcheck_enabled_(true),
+      weak_factory_(this) {
+  if (!registry)
     return;  // Can be NULL in tests.
-
-  auto* service_manager_connection =
-      content::ChildThread::Get()->GetServiceManagerConnection();
-  DCHECK(service_manager_connection);
-
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+  LOG(ERROR) << "++++++++++ HELLO1";
   registry->AddInterface(base::BindRepeating(&SpellCheck::SpellCheckerRequest,
-                                             base::Unretained(this)),
+                                             weak_factory_.GetWeakPtr()),
                          base::ThreadTaskRunnerHandle::Get());
-
-  service_manager_connection->AddConnectionFilter(
-      base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
+  LOG(ERROR) << "++++++++++ HELLO2";
 }
 
 SpellCheck::~SpellCheck() {
@@ -223,13 +218,16 @@ void SpellCheck::FillSuggestions(
 
 void SpellCheck::SpellCheckerRequest(
     spellcheck::mojom::SpellCheckerRequest request) {
+  LOG(ERROR) << "+++++++++ HELLO3";
   bindings_.AddBinding(this, std::move(request));
+  LOG(ERROR) << "+++++++++ HELLO4";
 }
 
 void SpellCheck::Initialize(
     std::vector<spellcheck::mojom::SpellCheckBDictLanguagePtr> dictionaries,
     const std::vector<std::string>& custom_words,
     bool enable) {
+  LOG(ERROR) << "+++++++++ HELLO5";
   languages_.clear();
 
   for (const auto& dictionary : dictionaries)
@@ -244,6 +242,7 @@ void SpellCheck::Initialize(
   spellcheck_enabled_ = enable;
   UpdateSpellcheckEnabled updater(enable);
   content::RenderFrame::ForEach(&updater);
+  LOG(ERROR) << "+++++++++ HELLO6";
 }
 
 void SpellCheck::CustomDictionaryChanged(
