@@ -22,6 +22,30 @@
       "revId": "6a9620036e5fba3726e9c7940e253516bfe35db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed782ac0_a2efd238",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-11T15:53:44Z",
+      "side": 1,
+      "message": "Also, accessibility mode can be toggled on and off while a UI is showing so if you need to do something special when in accessibility you may want to consider adding an #onAccessibilityModeChanged() listener somewhere.",
+      "parentUuid": "6fc891e8_53e4a7b1",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "6a9620036e5fba3726e9c7940e253516bfe35db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
