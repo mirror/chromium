@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0b2d2c6_2ca7c355",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T20:03:32Z",
+      "side": 1,
+      "message": "I added more description of the behavior that we\u0027re trying to test.",
+      "parentUuid": "8e6acdc3_c304df66",
+      "revId": "e32400f5ed9ba0a361b8e50bdf1f505db634c65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a052c3_83fd25d6",
         "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e32400f5ed9ba0a361b8e50bdf1f505db634c65e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19918bf4_ae193886",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-11T20:03:32Z",
+      "side": 1,
+      "message": "I updated the comments. Verifying correct browser and tab choice seem related to me.",
+      "parentUuid": "08a052c3_83fd25d6",
+      "revId": "e32400f5ed9ba0a361b8e50bdf1f505db634c65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
