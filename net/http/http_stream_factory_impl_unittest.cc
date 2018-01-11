@@ -603,7 +603,7 @@ TEST_F(HttpStreamFactoryTest, PreconnectDirectWithExistingSpdySession) {
     // Put a SpdySession in the pool.
     HostPortPair host_port_pair("www.google.com", 443);
     SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, SocketTag());
     ignore_result(CreateFakeSpdySession(session->spdy_session_pool(), key));
 
     CapturePreconnectsTransportSocketPool* transport_conn_pool =
@@ -1372,7 +1372,7 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeDisablesChannelId) {
   // Set an existing SpdySession in the pool.
   HostPortPair host_port_pair("www.google.com", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_ENABLED);
+                     PRIVACY_MODE_ENABLED, SocketTag());
 
   HttpRequestInfo request_info;
   request_info.method = "GET";
