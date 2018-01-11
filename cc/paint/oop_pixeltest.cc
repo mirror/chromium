@@ -15,6 +15,7 @@
 #include "cc/test/test_in_process_context_provider.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/config/gpu_switches.h"
@@ -80,6 +81,10 @@ class OopPixelTest : public testing::Test {
 
     ASSERT_EQ(result, gpu::ContextResult::kSuccess);
     ASSERT_TRUE(context_->GetCapabilities().supports_oop_raster);
+    raster_implementation_ =
+        std::make_unique<gpu::raster::RasterImplementationGLES>(
+            context_->GetImplementation(), context_->GetImplementation(),
+            context_->GetCapabilities());
   }
 
   void TearDown() override { context_.reset(); }
@@ -107,47 +112,61 @@ class OopPixelTest : public testing::Test {
   SkBitmap Raster(scoped_refptr<DisplayItemList> display_item_list,
                   const RasterOptions& options) {
     gpu::gles2::GLES2Interface* gl = context_->GetImplementation();
-    GLuint texture_id;
-    GLuint fbo_id;
     int width = options.bitmap_rect.width();
     int height = options.bitmap_rect.height();
 
-    // Create and allocate a texture.
-    gl->GenTextures(1, &texture_id);
-    gl->BindTexture(GL_TEXTURE_2D, texture_id);
-    gl->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-                   GL_UNSIGNED_BYTE, nullptr);
-    gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // Create and allocate a texture on the raster interface.
+    GLuint raster_texture_id;
+    raster_implementation_->GenTextures(1, &raster_texture_id);
+    raster_implementation_->BindTexture(GL_TEXTURE_2D, raster_texture_id);
+    raster_implementation_->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
+                                       0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    raster_implementation_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                                          GL_LINEAR);
 
-    // Create an fbo and bind the texture to it.
+    EXPECT_EQ(raster_implementation_->GetError(),
+              static_cast<unsigned>(GL_NO_ERROR));
+
+    // "Out of process" raster! \o/
+    raster_implementation_->BeginRasterCHROMIUM(
+        raster_texture_id, options.background_color, options.msaa_sample_count,
+        options.use_lcd_text, options.use_distance_field_text,
+        options.pixel_config);
+    raster_implementation_->RasterCHROMIUM(
+        display_item_list.get(), &image_provider_,
+        options.bitmap_rect.OffsetFromOrigin(), options.playback_rect,
+        options.post_translate, options.post_scale);
+    raster_implementation_->EndRasterCHROMIUM();
+
+    // Produce a mailbox and insert an ordering barrier (assumes the raster
+    // interface and gl are on the same scheduling group).
+    gpu::Mailbox mailbox;
+    raster_implementation_->GenMailboxCHROMIUM(mailbox.name);
+    raster_implementation_->ProduceTextureDirectCHROMIUM(raster_texture_id,
+                                                         mailbox.name);
+    raster_implementation_->OrderingBarrierCHROMIUM();
+
+    EXPECT_EQ(raster_implementation_->GetError(),
+              static_cast<unsigned>(GL_NO_ERROR));
+
+    // Import the texture in gl, create an fbo and bind the texture to it.
+    GLuint gl_texture_id = gl->CreateAndConsumeTextureCHROMIUM(mailbox.name);
+    GLuint fbo_id;
     gl->GenFramebuffers(1, &fbo_id);
     gl->BindFramebuffer(GL_FRAMEBUFFER, fbo_id);
     gl->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                             GL_TEXTURE_2D, texture_id, 0);
-
-    EXPECT_EQ(gl->GetError(), static_cast<unsigned>(GL_NO_ERROR));
-
-    // "Out of process" raster! \o/
-    gl->BeginRasterCHROMIUM(texture_id, options.background_color,
-                            options.msaa_sample_count, options.use_lcd_text,
-                            options.use_distance_field_text,
-                            options.pixel_config);
-    gl->RasterCHROMIUM(display_item_list.get(), &image_provider_,
-                       options.bitmap_rect.OffsetFromOrigin(),
-                       options.playback_rect, options.post_translate,
-                       options.post_scale);
-    gl->EndRasterCHROMIUM();
-    gl->Flush();
-
-    EXPECT_EQ(gl->GetError(), static_cast<unsigned>(GL_NO_ERROR));
+                             GL_TEXTURE_2D, gl_texture_id, 0);
 
     // Read the data back.
     std::unique_ptr<unsigned char[]> data(
         new unsigned char[width * height * 4]);
     gl->ReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data.get());
 
-    gl->DeleteTextures(1, &texture_id);
+    gl->DeleteTextures(1, &gl_texture_id);
     gl->DeleteFramebuffers(1, &fbo_id);
+
+    gl->OrderingBarrierCHROMIUM();
+    raster_implementation_->DeleteTextures(1, &raster_texture_id);
 
     // Swizzle rgba->bgra if needed.
     std::vector<SkPMColor> colors;
@@ -261,6 +280,7 @@ class OopPixelTest : public testing::Test {
   viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   TestImageFactory image_factory_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
+  std::unique_ptr<gpu::raster::RasterImplementationGLES> raster_implementation_;
   gl::DisableNullDrawGLBindings enable_pixel_output_;
   NoOpImageProvider image_provider_;
 };
