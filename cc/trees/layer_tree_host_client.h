@@ -62,7 +62,11 @@ class LayerTreeHostClient {
   // state. (The "compositing state" will result in a mutated layer tree on the
   // LayerTreeHost via additional interface indirections which lead back to
   // mutations on the LayerTreeHost.)
-  virtual void UpdateLayerTreeHost() = 0;
+  //
+  // If |requested_update| is kLayout, the client should apply layout updates
+  // and their side effects, but can skip painting and compositing updates.
+  enum class VisualStateUpdate { kLayout, kAll };
+  virtual void UpdateLayerTreeHost(VisualStateUpdate requested_update) = 0;
 
   virtual void ApplyViewportDeltas(
       const gfx::Vector2dF& inner_delta,
