@@ -70,6 +70,24 @@
       "revId": "3e3f92485a0ec483e0475c0290e21ae3563f4ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057674cc_2ee6d163",
+        "filename": "content/public/common/zygote_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-11T20:57:17Z",
+      "side": 1,
+      "message": "A BUILDFLAG doesn\u0027t have to be settable through `gn args`. The GN variable could be declared outside of a declare_args block just as |use_zygote_handle \u003d is_posix \u0026\u0026 !(is_anedroid || is_mac || is_fuchsia)|. I don\u0027t feel strongly, though, since this isn\u0027t a global compilation define that pollutes all the compiler invocations.\n\nThe USE_ name LGTM.",
+      "parentUuid": "b9b422af_ae417c1a",
+      "revId": "3e3f92485a0ec483e0475c0290e21ae3563f4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
