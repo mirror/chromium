@@ -365,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "1a55fb0c_cf95d6ec",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-11T18:41:32Z",
+      "side": 1,
+      "message": "I added another round fo static_asserts - see line 494 in ps#17 to validate the assumption [that assuming there are fewer than kMaxStackEntries frames, there will be enough space in teh buffer].\n\nI\u0027d like to avoid having a conditional run on every frame on the backtrace for every allocation.",
+      "parentUuid": "b5b61b5d_ca252e6c",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 43
+      },
+      "revId": "573dd7e9b0fbc379b49c5396b59394d801064329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ab5336f_8761389f",
         "filename": "chrome/common/profiling/memlog_stream.h",
         "patchSetId": 13
