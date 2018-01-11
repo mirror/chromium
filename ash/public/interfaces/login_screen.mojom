@@ -5,6 +5,7 @@
 module ash.mojom;
 
 import "ash/public/interfaces/login_user_info.mojom";
+import "components/password_manager/public/interfaces/sync_password_data.mojom";
 import "components/proximity_auth/public/interfaces/auth_type.mojom";
 import "components/signin/public/interfaces/account_id.mojom";
 import "mojo/common/string16.mojom";
@@ -98,6 +99,7 @@ interface LoginScreenClient {
   // The result will be set to true if auth was successful, false if not.
   AuthenticateUser(signin.mojom.AccountId account_id,
                    string hashed_password,
+                   password_manager.mojom.SyncPasswordData sync_password_data,
                    bool authenticated_by_pin) => (bool auth_success);
 
   // Request to attempt easy unlock in chrome.
