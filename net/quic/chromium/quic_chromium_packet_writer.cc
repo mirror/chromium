@@ -44,12 +44,15 @@ QuicChromiumPacketWriter::ReusableIOBuffer::ReusableIOBuffer(size_t capacity)
 
 QuicChromiumPacketWriter::ReusableIOBuffer::~ReusableIOBuffer() {}
 
-void QuicChromiumPacketWriter::ReusableIOBuffer::Set(const char* buffer,
-                                                     size_t buf_len) {
+void QuicChromiumPacketWriter::ReusableIOBuffer::Set(
+    const char* buffer,
+    size_t buf_len,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   CHECK_LE(buf_len, capacity_);
   CHECK(HasOneRef());
   size_ = buf_len;
   std::memcpy(data(), buffer, buf_len);
+  traffic_annotation_ = MutableNetworkTrafficAnnotationTag(traffic_annotation);
 }
 
 QuicChromiumPacketWriter::QuicChromiumPacketWriter() : weak_factory_(this) {}
@@ -70,7 +73,10 @@ QuicChromiumPacketWriter::QuicChromiumPacketWriter(
 
 QuicChromiumPacketWriter::~QuicChromiumPacketWriter() {}
 
-void QuicChromiumPacketWriter::SetPacket(const char* buffer, size_t buf_len) {
+void QuicChromiumPacketWriter::SetPacket(
+    const char* buffer,
+    size_t buf_len,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   if (UNLIKELY(!packet_)) {
     packet_ = new ReusableIOBuffer(
         std::max(buf_len, static_cast<size_t>(kMaxPacketSize)));
@@ -85,7 +91,7 @@ void QuicChromiumPacketWriter::SetPacket(const char* buffer, size_t buf_len) {
         std::max(buf_len, static_cast<size_t>(kMaxPacketSize)));
     RecordNotReusableReason(NOT_REUSABLE_REF_COUNT);
   }
-  packet_->Set(buffer, buf_len);
+  packet_->Set(buffer, buf_len, traffic_annotation);
 }
 
 WriteResult QuicChromiumPacketWriter::WritePacket(
@@ -93,9 +99,10 @@ WriteResult QuicChromiumPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* /*options*/) {
   DCHECK(!IsWriteBlocked());
-  SetPacket(buffer, buf_len);
+  SetPacket(buffer, buf_len, traffic_annotation);
   return WritePacketToSocketImpl();
 }
 
@@ -107,7 +114,8 @@ WriteResult QuicChromiumPacketWriter::WritePacketToSocket(
 
 WriteResult QuicChromiumPacketWriter::WritePacketToSocketImpl() {
   base::TimeTicks now = base::TimeTicks::Now();
-  int rv = socket_->Write(packet_.get(), packet_->size(), write_callback_);
+  int rv = socket_->Write(packet_.get(), packet_->size(), write_callback_,
+                          packet_->traffic_annotation());
 
   if (MaybeRetryAfterWriteError(rv))
     return WriteResult(WRITE_STATUS_BLOCKED, ERR_IO_PENDING);

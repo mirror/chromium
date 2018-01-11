@@ -16,18 +16,20 @@ WriteResult PacketReorderingWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   if (!delay_next_) {
     VLOG(2) << "Writing a non-delayed packet";
     WriteResult wr = QuicPacketWriterWrapper::WritePacket(
-        buffer, buf_len, self_address, peer_address, options);
+        buffer, buf_len, self_address, peer_address, traffic_annotation,
+        options);
     --num_packets_to_wait_;
     if (num_packets_to_wait_ == 0) {
       VLOG(2) << "Writing a delayed packet";
       // It's time to write the delayed packet.
       QuicPacketWriterWrapper::WritePacket(
           delayed_data_.data(), delayed_data_.length(), delayed_self_address_,
-          delayed_peer_address_, delayed_options_.get());
+          delayed_peer_address_, traffic_annotation, delayed_options_.get());
     }
     return wr;
   }

@@ -14,17 +14,20 @@ BadPacketWriter::BadPacketWriter(size_t packet_causing_write_error,
 
 BadPacketWriter::~BadPacketWriter() {}
 
-WriteResult BadPacketWriter::WritePacket(const char* buffer,
-                                         size_t buf_len,
-                                         const QuicIpAddress& self_address,
-                                         const QuicSocketAddress& peer_address,
-                                         PerPacketOptions* options) {
+WriteResult BadPacketWriter::WritePacket(
+    const char* buffer,
+    size_t buf_len,
+    const QuicIpAddress& self_address,
+    const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    PerPacketOptions* options) {
   if (error_code_ == 0 || packet_causing_write_error_ > 0) {
     if (packet_causing_write_error_ > 0) {
       --packet_causing_write_error_;
     }
     return QuicPacketWriterWrapper::WritePacket(buffer, buf_len, self_address,
-                                                peer_address, options);
+                                                peer_address,
+                                                traffic_annotation, options);
   }
   // It's time to cause write error.
   int error_code = error_code_;

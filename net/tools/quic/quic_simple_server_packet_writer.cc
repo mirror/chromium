@@ -30,12 +30,13 @@ WriteResult QuicSimpleServerPacketWriter::WritePacketWithCallback(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options,
     WriteCallback callback) {
   DCHECK(callback_.is_null());
   callback_ = callback;
-  WriteResult result =
-      WritePacket(buffer, buf_len, self_address, peer_address, options);
+  WriteResult result = WritePacket(buffer, buf_len, self_address, peer_address,
+                                   traffic_annotation, options);
   if (result.status != WRITE_STATUS_BLOCKED) {
     callback_.Reset();
   }
@@ -70,6 +71,7 @@ WriteResult QuicSimpleServerPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   scoped_refptr<StringIOBuffer> buf(
       new StringIOBuffer(std::string(buffer, buf_len)));

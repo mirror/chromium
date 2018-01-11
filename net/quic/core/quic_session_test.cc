@@ -567,7 +567,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteBundlesStreams) {
   MockPacketWriter* writer = static_cast<MockPacketWriter*>(
       QuicConnectionPeer::GetWriter(session_.connection()));
   if (GetQuicReloadableFlag(quic_send_max_header_list_size)) {
-    EXPECT_CALL(*writer, WritePacket(_, _, _, _, _))
+    EXPECT_CALL(*writer, WritePacket(_, _, _, _, _, _))
         .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
   }
   session_.GetMutableCryptoStream()->OnHandshakeMessage(msg);
@@ -603,7 +603,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteBundlesStreams) {
 
   // Expect that we only send one packet, the writes from different streams
   // should be bundled together.
-  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _))
+  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _, _))
       .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
   EXPECT_CALL(*send_algorithm, OnPacketSent(_, _, _, _, _));
   EXPECT_CALL(*send_algorithm, OnApplicationLimited(_));
@@ -674,7 +674,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteWriterBlocks) {
   EXPECT_CALL(*writer, IsWriteBlocked()).WillRepeatedly(Return(true));
   EXPECT_CALL(*writer, IsWriteBlockedDataBuffered())
       .WillRepeatedly(Return(true));
-  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _)).Times(0);
+  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _, _)).Times(0);
 
   TestStream* stream2 = session_.CreateOutgoingDynamicStream();
 
@@ -808,7 +808,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteLimitsNumWritesIfFlowControlBlocked) {
 TEST_P(QuicSessionTestServer, SendGoAway) {
   MockPacketWriter* writer = static_cast<MockPacketWriter*>(
       QuicConnectionPeer::GetWriter(session_.connection()));
-  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _))
+  EXPECT_CALL(*writer, WritePacket(_, _, _, _, _, _))
       .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
   EXPECT_CALL(*connection_, SendGoAway(_, _, _))
       .WillOnce(Invoke(connection_, &MockQuicConnection::ReallySendGoAway));
@@ -844,7 +844,7 @@ TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbe) {
   if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     MockPacketWriter* writer = static_cast<MockPacketWriter*>(
         QuicConnectionPeer::GetWriter(session_.connection()));
-    EXPECT_CALL(*writer, WritePacket(_, _, _, new_peer_address, _))
+    EXPECT_CALL(*writer, WritePacket(_, _, _, new_peer_address, _, _))
         .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
     EXPECT_CALL(*connection_,
                 SendConnectivityProbingPacket(nullptr, new_peer_address))

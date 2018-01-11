@@ -34,6 +34,7 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
 #include "net/quic/platform/api/quic_text_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
@@ -1167,9 +1168,11 @@ void QuicConnection::SendVersionNegotiationPacket() {
   std::unique_ptr<QuicEncryptedPacket> version_packet(
       packet_generator_.SerializeVersionNegotiationPacket(
           framer_.supported_versions()));
+
+  // TODO(crbug.com/656607): Add annotation.
   WriteResult result = writer_->WritePacket(
       version_packet->data(), version_packet->length(), self_address().host(),
-      peer_address(), per_packet_options_);
+      peer_address(), NO_TRAFFIC_ANNOTATION_BUG_656607, per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
     OnWriteError(result.error_code);
@@ -1697,9 +1700,11 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
   // min_rtt_, especially in cases where the thread blocks or gets swapped out
   // during the WritePacket below.
   QuicTime packet_send_time = clock_->Now();
+
+  // TODO(crbug.com/656607): Add annotation.
   WriteResult result = writer_->WritePacket(
       packet->encrypted_buffer, encrypted_length, self_address().host(),
-      peer_address(), per_packet_options_);
+      peer_address(), NO_TRAFFIC_ANNOTATION_BUG_656607, per_packet_options_);
   if (result.error_code == ERR_IO_PENDING) {
     DCHECK_EQ(WRITE_STATUS_BLOCKED, result.status);
   }
@@ -2523,9 +2528,10 @@ bool QuicConnection::SendConnectivityProbingPacket(
   std::unique_ptr<QuicEncryptedPacket> probing_packet(
       packet_generator_.SerializeConnectivityProbingPacket());
 
+  // TODO(crbug.com/656607): Add annotation.
   WriteResult result = probing_writer->WritePacket(
       probing_packet->data(), probing_packet->length(), self_address().host(),
-      peer_address, per_packet_options_);
+      peer_address, NO_TRAFFIC_ANNOTATION_BUG_656607, per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
     QUIC_DLOG(INFO) << "Write probing packet not finished with error = "

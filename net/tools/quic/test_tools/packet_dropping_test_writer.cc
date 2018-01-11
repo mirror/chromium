@@ -81,6 +81,7 @@ WriteResult PacketDroppingTestWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   ++num_calls_to_write_;
   ReleaseOldPackets();
@@ -145,8 +146,8 @@ WriteResult PacketDroppingTestWriter::WritePacket(
     return WriteResult(WRITE_STATUS_OK, buf_len);
   }
 
-  return QuicPacketWriterWrapper::WritePacket(buffer, buf_len, self_address,
-                                              peer_address, options);
+  return QuicPacketWriterWrapper::WritePacket(
+      buffer, buf_len, self_address, peer_address, traffic_annotation, options);
 }
 
 bool PacketDroppingTestWriter::IsWriteBlocked() const {
@@ -183,10 +184,12 @@ QuicTime PacketDroppingTestWriter::ReleaseNextPacket() {
 
   QUIC_DVLOG(1) << "Releasing packet.  " << (delayed_packets_.size() - 1)
                 << " remaining.";
+  // TODO(crbug.com/656607): Add annotation.
   // Grab the next one off the queue and send it.
   QuicPacketWriterWrapper::WritePacket(
       iter->buffer.data(), iter->buffer.length(), iter->self_address,
-      iter->peer_address, iter->options.get());
+      iter->peer_address, NO_TRAFFIC_ANNOTATION_BUG_656607,
+      iter->options.get());
   DCHECK_GE(cur_buffer_size_, iter->buffer.length());
   cur_buffer_size_ -= iter->buffer.length();
   delayed_packets_.erase(iter);

@@ -31,6 +31,7 @@
 #include "net/test/gtest_util.h"
 #include "net/tools/quic/quic_per_connection_packet_writer.h"
 #include "net/tools/quic/test_tools/mock_quic_session_visitor.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 // EXPECT_QUIC_BUG is like EXPECT_DFATAL, except it ensures that no DFATAL
@@ -735,12 +736,14 @@ class MockPacketWriter : public QuicPacketWriter {
   MockPacketWriter();
   ~MockPacketWriter() override;
 
-  MOCK_METHOD5(WritePacket,
-               WriteResult(const char* buffer,
-                           size_t buf_len,
-                           const QuicIpAddress& self_address,
-                           const QuicSocketAddress& peer_address,
-                           PerPacketOptions* options));
+  MOCK_METHOD6(
+      WritePacket,
+      WriteResult(const char* buffer,
+                  size_t buf_len,
+                  const QuicIpAddress& self_address,
+                  const QuicSocketAddress& peer_address,
+                  const NetworkTrafficAnnotationTag& traffic_annotation,
+                  PerPacketOptions* options));
   MOCK_CONST_METHOD0(IsWriteBlockedDataBuffered, bool());
   MOCK_CONST_METHOD0(IsWriteBlocked, bool());
   MOCK_METHOD0(SetWritable, void());

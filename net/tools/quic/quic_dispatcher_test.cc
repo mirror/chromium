@@ -37,6 +37,7 @@
 #include "net/tools/quic/stateless_rejector.h"
 #include "net/tools/quic/test_tools/mock_quic_time_wait_list_manager.h"
 #include "net/tools/quic/test_tools/quic_dispatcher_peer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gmock_mutant.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -982,6 +983,8 @@ class BlockingWriter : public QuicPacketWriterWrapper {
                           size_t buf_len,
                           const QuicIpAddress& self_client_address,
                           const QuicSocketAddress& peer_client_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
+
                           PerPacketOptions* options) override {
     // It would be quite possible to actually implement this method here with
     // the fake blocked status, but it would be significantly more work in

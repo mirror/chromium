@@ -65,6 +65,7 @@
 #include "net/tools/quic/test_tools/quic_test_client.h"
 #include "net/tools/quic/test_tools/quic_test_server.h"
 #include "net/tools/quic/test_tools/server_thread.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::IntToString;
@@ -1953,7 +1954,8 @@ TEST_P(EndToEndTest, ServerSendPublicReset) {
   server_thread_->Pause();
   server_writer_->WritePacket(
       packet->data(), packet->length(), server_address_.host(),
-      client_->client()->network_helper()->GetLatestClientAddress(), nullptr);
+      client_->client()->network_helper()->GetLatestClientAddress(),
+      TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   server_thread_->Resume();
 
   // The request should fail.
@@ -1988,7 +1990,8 @@ TEST_P(EndToEndTest, ServerSendPublicResetWithDifferentConnectionId) {
   server_thread_->Pause();
   server_writer_->WritePacket(
       packet->data(), packet->length(), server_address_.host(),
-      client_->client()->network_helper()->GetLatestClientAddress(), nullptr);
+      client_->client()->network_helper()->GetLatestClientAddress(),
+      TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   server_thread_->Resume();
 
   // The connection should be unaffected.
@@ -2015,7 +2018,7 @@ TEST_P(EndToEndTest, ClientSendPublicResetWithDifferentConnectionId) {
   client_writer_->WritePacket(
       packet->data(), packet->length(),
       client_->client()->network_helper()->GetLatestClientAddress().host(),
-      server_address_, nullptr);
+      server_address_, TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
 
   // The connection should be unaffected.
   EXPECT_EQ(kFooResponseBody, client_->SendSynchronousRequest("/foo"));
@@ -2045,7 +2048,8 @@ TEST_P(EndToEndTest, ServerSendVersionNegotiationWithDifferentConnectionId) {
   server_thread_->Pause();
   server_writer_->WritePacket(
       packet->data(), packet->length(), server_address_.host(),
-      client_->client()->network_helper()->GetLatestClientAddress(), nullptr);
+      client_->client()->network_helper()->GetLatestClientAddress(),
+      TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   server_thread_->Resume();
 
   // The connection should be unaffected.
@@ -2072,7 +2076,7 @@ TEST_P(EndToEndTest, BadPacketHeaderTruncated) {
   client_writer_->WritePacket(
       &packet[0], sizeof(packet),
       client_->client()->network_helper()->GetLatestClientAddress().host(),
-      server_address_, nullptr);
+      server_address_, TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   // Give the server time to process the packet.
   base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
   // Pause the server so we can access the server's internals without races.
@@ -2123,7 +2127,7 @@ TEST_P(EndToEndTest, BadPacketHeaderFlags) {
   client_writer_->WritePacket(
       &packet[0], sizeof(packet),
       client_->client()->network_helper()->GetLatestClientAddress().host(),
-      server_address_, nullptr);
+      server_address_, TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   // Give the server time to process the packet.
   base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
   // Pause the server so we can access the server's internals without races.
@@ -2159,7 +2163,7 @@ TEST_P(EndToEndTest, BadEncryptedData) {
   client_writer_->WritePacket(
       damaged_packet.data(), damaged_packet.length(),
       client_->client()->network_helper()->GetLatestClientAddress().host(),
-      server_address_, nullptr);
+      server_address_, TRAFFIC_ANNOTATION_FOR_TESTS, nullptr);
   // Give the server time to process the packet.
   base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
   // This error is sent to the connection's OnError (which ignores it), so the

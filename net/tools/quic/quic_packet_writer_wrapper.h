@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "net/quic/core/quic_packet_writer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -28,6 +29,7 @@ class QuicPacketWriterWrapper : public QuicPacketWriter {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override;
   bool IsWriteBlockedDataBuffered() const override;
   bool IsWriteBlocked() const override;

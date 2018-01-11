@@ -21,6 +21,7 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_socket_address.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -231,10 +232,12 @@ bool QuicTimeWaitListManager::WriteToWire(QueuedPacket* queued_packet) {
     visitor_->OnWriteBlocked(this);
     return false;
   }
+
+  // TODO(crbug.com/656607): Add annotation.
   WriteResult result = writer_->WritePacket(
       queued_packet->packet()->data(), queued_packet->packet()->length(),
       queued_packet->server_address().host(), queued_packet->client_address(),
-      nullptr);
+      NO_TRAFFIC_ANNOTATION_BUG_656607, nullptr);
   if (result.status == WRITE_STATUS_BLOCKED) {
     // If blocked and unbuffered, return false to retry sending.
     DCHECK(writer_->IsWriteBlocked());

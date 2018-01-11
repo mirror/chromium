@@ -16,7 +16,10 @@ WriteResult QuartcPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
+
   DCHECK(packet_transport_);
   int bytes_written = packet_transport_->Write(buffer, buf_len);
   if (bytes_written <= 0) {

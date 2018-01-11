@@ -27,9 +27,10 @@ WriteResult QuicSimplePerConnectionPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   return shared_writer_->WritePacketWithCallback(
-      buffer, buf_len, self_address, peer_address, options,
+      buffer, buf_len, self_address, peer_address, traffic_annotation, options,
       base::Bind(&QuicSimplePerConnectionPacketWriter::OnWriteComplete,
                  weak_factory_.GetWeakPtr()));
 }

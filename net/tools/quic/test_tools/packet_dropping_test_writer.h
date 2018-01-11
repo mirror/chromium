@@ -21,6 +21,7 @@
 #include "net/tools/quic/platform/impl/quic_epoll_clock.h"
 #include "net/tools/quic/quic_packet_writer_wrapper.h"
 #include "net/tools/quic/test_tools/quic_test_client.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 namespace test {
@@ -53,6 +54,7 @@ class PacketDroppingTestWriter : public QuicPacketWriterWrapper {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override;
 
   bool IsWriteBlocked() const override;
