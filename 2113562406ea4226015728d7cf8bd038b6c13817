@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1b6d85e_e66202e5",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-11T09:34:16Z",
+      "side": 1,
+      "message": "Can you move this function above OnRemovableStorageDetached()? I think that that should greatly reduce the diff that shows up in this patch, making it much easier to review.",
+      "revId": "2113562406ea4226015728d7cf8bd038b6c13817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bc4f86_73871dea",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-11T09:34:16Z",
+      "side": 1,
+      "message": "The diff in this file is challenging to review. I think that we can make it simpler via a two-step process:\n\n1. Do a preparatory CL that changes |get_storage_info_func_| to just be a callback that returns an MtpStorageInfo* from a storage name. In prod, this will be bound to mtp_manager_-\u003eGetStorageInfo(); in the test, it will return an MtpStorageInfo* with the desired values.\n2. In this CL, keep |get_storage_info_func_| and just change the test function as you\u0027re changing the prod function, i.e., taking in a callback that it runs with the MtpStorageInfo*.\n\nIn that way I think that the changes to this file in this CL will become a straightforward pulling out of the second half of StorageChanged() into the DoAttachStorage() callback that will get passed to |get_storage_info_func_| when it is invoked by StorageChanged().\n\nDoes that make sense?",
+      "revId": "2113562406ea4226015728d7cf8bd038b6c13817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f1265c_e2b45ba6",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-11T09:34:16Z",
+      "side": 1,
+      "message": "nit: I would reverse this condition as I think it reads better to have the exceptional case inside the if rather than the normal case.",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 12
+      },
+      "revId": "2113562406ea4226015728d7cf8bd038b6c13817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f8e92d_0c0de5ac",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-11T09:34:16Z",
+      "side": 1,
+      "message": "nit: I think you can eliminate this line.",
+      "revId": "2113562406ea4226015728d7cf8bd038b6c13817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
