@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "254ebca0_22dbbe07",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 0,
+      "message": "Then can we rename CrossSiteOrCSPViolationOccured?",
+      "parentUuid": "22b903ca_1e545feb",
+      "revId": "ecea539bf5a74ba88ee08319e3e594a174878b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7544d56d_2d9d4d64",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
         "patchSetId": 4

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f25e555_0fa5cd9b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to insert the client before calling RawResource::Fetch? Otherwise the client persists indefinitely in error cases.",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d391f8c_f71e5947",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "Can you tell me why you removed the PlzNavigate condition? If it\u0027s just because it\u0027s shipped, please adjust the comment as well.",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b4a3b4_a54a86ff",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "This can be simplified.",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1acb09_b95ebe0f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "Can you add some comments here?",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

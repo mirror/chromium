@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30dfe23b_2e818328",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "How about having a return statement in MemoryCache::Remove?",
+      "parentUuid": "4f7f021d_7bc99d5b",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "450f9411_48403e01",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -30,6 +48,23 @@
       "writtenOn": "2018-01-10T21:28:51Z",
       "side": 1,
       "message": "This causes the change to mhtml/resource_not_found_in_archive-expected.html, which shows a broken image instead of nothing at all. That seems ok to me.",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280c6722_b4cc1813",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-11T09:15:58Z",
+      "side": 1,
+      "message": "With removing the return statement, I think \n\nif (ResourceNeedsLoad(...)) {\n  if (StartLoad(...)) {\n    ...\n  } else {\n    ...\n  }\n} else if (policy !\u003d kUse) {\n  ...\n}\n\nwould be easier to read.",
       "revId": "d123131499bb0e760991340e61599294cf65f1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
