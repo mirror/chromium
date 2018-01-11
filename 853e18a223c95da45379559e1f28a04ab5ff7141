@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d926a0_c6e6eeed",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-11T17:25:23Z",
+      "side": 1,
+      "message": "can you check if it\u0027s mus/mash? then lgtm",
+      "revId": "853e18a223c95da45379559e1f28a04ab5ff7141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
