@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fb8314_9c81b63b",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-11T18:11:55Z",
+      "side": 1,
+      "message": "I\u0027ll remove this LOG in the next patch.",
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
