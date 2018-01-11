@@ -613,6 +613,11 @@ void TraceLog::SetEnabled(const TraceConfig& trace_config,
     observer_list = enabled_state_observer_list_;
     observer_map = async_observers_;
   }
+
+#if defined(OS_ANDROID)
+  AddClockSyncMetadataEvent();
+#endif
+
   // Notify observers outside the lock in case they trigger trace events.
   for (EnabledStateObserver* observer : observer_list)
     observer->OnTraceLogEnabled();

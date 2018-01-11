@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/sys_byteorder.h"
 #include "base/threading/scoped_blocking_call.h"
+#include "base/trace_event/trace_event.h"
 #include "net/base/address_list.h"
 #include "net/base/net_errors.h"
 #include "net/base/sys_addrinfo.h"
@@ -120,7 +121,7 @@ HostResolverProc* HostResolverProc::GetDefault() {
   return default_proc_;
 }
 
-int SystemHostResolverCall(const std::string& host,
+int DoSystemHostResolverCall(const std::string& host,
                            AddressFamily address_family,
                            HostResolverFlags host_resolver_flags,
                            AddressList* addrlist,
@@ -257,6 +258,20 @@ int SystemHostResolverCall(const std::string& host,
   freeaddrinfo(ai);
   return OK;
 }
+
+int SystemHostResolverCall(const std::string& host,
+                           AddressFamily address_family,
+                           HostResolverFlags host_resolver_flags,
+                           AddressList* addrlist,
+                           int* os_error) {
+  TRACE_EVENT_BEGIN0("net", "SystemHostResolverCall");
+  int result = DoSystemHostResolverCall(
+      host, address_family, host_resolver_flags, addrlist, os_error);
+  TRACE_EVENT_END2("net", "SystemHostResolverCall",
+                   "host", host, "result", ErrorToString(result));
+  return result;
+}
+
 
 SystemHostResolverProc::SystemHostResolverProc() : HostResolverProc(NULL) {}
 
