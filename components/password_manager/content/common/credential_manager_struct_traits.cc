@@ -87,9 +87,11 @@ bool EnumTraits<password_manager::mojom::CredentialManagerError,
           password_manager::CredentialManagerError::PASSWORDSTOREUNAVAILABLE;
       return true;
     case password_manager::mojom::CredentialManagerError::NOT_ALLOWED:
+    case password_manager::mojom::CredentialManagerError::TIMED_OUT:
     case password_manager::mojom::CredentialManagerError::NOT_SUPPORTED:
     case password_manager::mojom::CredentialManagerError::INSECURE_ORIGIN:
     case password_manager::mojom::CredentialManagerError::INVALID_DOMAIN:
+    case password_manager::mojom::CredentialManagerError::NOT_IMPLEMENTED:
     case password_manager::mojom::CredentialManagerError::UNKNOWN:
       *output = password_manager::CredentialManagerError::UNKNOWN;
       return true;
