@@ -16,6 +16,24 @@
       "revId": "c1534e4b70593c88547af08f11de046189d1f042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec418c9a_e50ae521",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3454,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-11T19:37:47Z",
+      "side": 1,
+      "message": "The idea is to stabilize telemetry_perf_unittest suite everywhere. After I disable the parallelization here and have no problem in few days, I will also disable parallelization in Linux Tests",
+      "parentUuid": "fa726d88_fbdac6a7",
+      "revId": "c1534e4b70593c88547af08f11de046189d1f042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
