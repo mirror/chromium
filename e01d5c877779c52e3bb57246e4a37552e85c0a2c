@@ -22,6 +22,30 @@
       "revId": "e01d5c877779c52e3bb57246e4a37552e85c0a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0962ea_090cb585",
+        "filename": "components/nacl/loader/nacl_loader_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-11T17:02:09Z",
+      "side": 1,
+      "message": "Actually this made me realize that the comment below is incorrect. The loader does use the relevant content/chrome child code and therefore does provide the interfaces below, as well as ResourceUsageReporter.\n\nI\u0027ve removed the comment as I don\u0027t think there\u0027s much value in explaining that stuff in this manifest.",
+      "parentUuid": "0562f70c_158de478",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "e01d5c877779c52e3bb57246e4a37552e85c0a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
