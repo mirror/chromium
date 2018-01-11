@@ -955,6 +955,15 @@ int SSLClientSocketImpl::Init() {
       break;
   }
 
+  const std::string dummy_pq_padding_len_str =
+      base::FieldTrialList::FindFullName("PostQuantumPaddingLength");
+  int dummy_pq_padding_len;
+  if (!dummy_pq_padding_len_str.empty() &&
+      base::StringToInt(dummy_pq_padding_len_str, &dummy_pq_padding_len) &&
+      dummy_pq_padding_len >= 0 && dummy_pq_padding_len < 15000) {
+    SSL_set_dummy_pq_padding_size(ssl_.get(), dummy_pq_padding_len);
+  }
+
   // OpenSSL defaults some options to on, others to off. To avoid ambiguity,
   // set everything we care about to an absolute value.
   SslSetClearMask options;
