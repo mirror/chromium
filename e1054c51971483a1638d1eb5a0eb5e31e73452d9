@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abe1b7ab_ee598686",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-11T03:21:47Z",
+      "side": 1,
+      "message": "can be const SWPH*?",
+      "revId": "e1054c51971483a1638d1eb5a0eb5e31e73452d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
