@@ -1117,16 +1117,25 @@ IntSize LayoutBox::CalculateAutoscrollDirection(
   if (!frame_view)
     return IntSize();
 
-  LayoutRect box(AbsoluteBoundingBoxRect());
-  // TODO(bokan): This is wrong. Subtracting the scroll offset would get you to
-  // frame coordinates (pre-RLS) but *adding* the scroll offset to an absolute
-  // location never makes sense (and we assume below it's in content
-  // coordinates).
-  box.Move(View()->GetFrameView()->ScrollOffsetInt());
+  LayoutRect absolute_scrolling_box;
 
-  // Exclude scrollbars so the border belt (activation area) starts from the
-  // scrollbar-content edge rather than the window edge.
-  ExcludeScrollbars(box, kExcludeOverlayScrollbarSizeForHitTesting);
+  // The AbsoluteBoundingBoxRect for the LayoutView, pre-RLS, is not the
+  // scrolling box, it's the entire document rect. When RLS is turned on
+  // AbsoluteBoundingBox works the same way for the LayoutView as for other
+  // LayoutBoxes.
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() && IsLayoutView()) {
+    absolute_scrolling_box = frame_view->VisibleContentRect(kExcludeScrollbars);
+  } else {
+    absolute_scrolling_box = AbsoluteBoundingBoxRect();
+
+    // Exclude scrollbars so the border belt (activation area) starts from the
+    // scrollbar-content edge rather than the window edge.
+    ExcludeScrollbars(absolute_scrolling_box,
+        kExcludeOverlayScrollbarSizeForHitTesting);
+  }
+
+  IntRect window_box =
+      View()->GetFrameView()->AbsoluteToRootFrame(absolute_scrolling_box);
 
   IntRect window_box =
       View()->GetFrameView()->ContentsToRootFrame(PixelSnappedIntRect(box));
