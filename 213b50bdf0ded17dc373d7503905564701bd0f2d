@@ -22,6 +22,30 @@
       "revId": "213b50bdf0ded17dc373d7503905564701bd0f2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d990f252_590f3c0a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42987,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-11T17:08:40Z",
+      "side": 1,
+      "message": "In most places in code just ARC(Arc) is used instead of ARC++.\nIncluding other enums in this file.",
+      "parentUuid": "f405eda9_f0d403c0",
+      "range": {
+        "startLine": 42987,
+        "startChar": 27,
+        "endLine": 42987,
+        "endChar": 28
+      },
+      "revId": "213b50bdf0ded17dc373d7503905564701bd0f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
