@@ -1191,4 +1191,16 @@ test("views_perftests") {
     "//testing/perf",
     "//ui/resources:ui_test_pak",
   ]
+
+  data_deps = [
+    "//ui/resources:ui_test_pak_data",
+  ]
+
+  data = [
+    # Needed for isolate script to execute.
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/scripts/run_gtest_perf_test.py",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
+  ]
 }

@@ -1151,6 +1151,15 @@
     "label": "//ui/views/mus:views_mus_unittests",
     "type": "windowed_test_launcher",
   },
+  "views_perftests": {
+    "label": "//ui/views:views_perftests",
+    "type": "script",
+    "script": "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
+    "args": [
+      "views_perftests",
+      "--xvfb",
+    ],
+  },
   "views_unittests": {
     "label": "//ui/views:views_unittests",
     "type": "windowed_test_launcher",
