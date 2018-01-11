@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "87fac987_f4eed87f",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-11T23:46:04Z",
+      "side": 1,
+      "message": "FYI, in current CL, we don\u0027t need to pass down the root frame in particular. That info is implied in   CompositePageToPdf or CompositeDocumentToPdf.\n\n1. This CL did this;\n2. As I said, there is no need to have a separate request for this. \n3/4. Since 3) and 4) are related, let me explain together. It is fine to pass entire tree to compositor all at once. As I mentioned before, the entire tree or part of it might not be needed. We may be wasting a IPC call here. The current CL only sends out the map as whatever is needed, which is handled by current AddSubframeMap calls. \n5. That is basically what the CL does now, except the last one due to the same reason as above.\n6/7. The current CL did this.",
+      "parentUuid": "5711ba55_f26572ad",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69f4169d_45e5277f",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 33

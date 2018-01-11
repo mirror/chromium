@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0705a4e4_9536bcb5",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 40
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-11T23:46:04Z",
+      "side": 1,
+      "message": "Even with picture id -\u003e proxy id mapping, we still need one more mapping to find the actual subframe it maps to. Since we need to send request to print that subframe, there is no extra overhead to handle the mapping along with that requests. And It doesn\u0027t block painting.",
+      "parentUuid": "611f3580_f22abce0",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "fc8edf3ed0a235787d9ac8d6dbd5fc037e7117a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd5a1426_c5f9bfcb",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 40
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T22:29:03Z",
       "side": 1,
       "message": "It\u0027s not super clear to me what the difference between these two functions are. Why would someone want to call the latter?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "fc8edf3ed0a235787d9ac8d6dbd5fc037e7117a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9873a601_45c5b5bf",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 40
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-11T23:46:04Z",
+      "side": 1,
+      "message": "When we need to print the entire document, which is not a single page with a page num, we need the latter call.",
+      "parentUuid": "cd5a1426_c5f9bfcb",
       "range": {
         "startLine": 36,
         "startChar": 0,
