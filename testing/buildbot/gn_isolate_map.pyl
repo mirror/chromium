@@ -603,6 +603,13 @@
       "--enable-features=WebPayments",
     ],
   },
+  "ios_chrome_adaptive_toolbar_egtests": {
+    "label": "//ios/chrome/test/earl_grey:ios_chrome_adaptive_toolbar_egtests",
+    "type": "raw",
+    "args": [
+      "--enable-features=AdaptiveToolbar",
+    ],
+  },
   "ios_chrome_reading_list_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_reading_list_egtests",
     "type": "raw",

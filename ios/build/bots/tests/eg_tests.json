@@ -8,6 +8,13 @@
       "xctest": true
     },
     {
+      "app": "ios_chrome_adaptive_toolbar_egtests",
+      "test args": [
+        "--enable-features=AdaptiveToolbar"
+      ],
+      "xctest": true
+    },
+    {
       "app": "ios_chrome_bookmarks_egtests",
       "xctest": true
     },
