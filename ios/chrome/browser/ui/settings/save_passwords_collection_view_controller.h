@@ -29,7 +29,6 @@ class ChromeBrowserState;
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
-
 @end
 
 @interface SavePasswordsCollectionViewController (

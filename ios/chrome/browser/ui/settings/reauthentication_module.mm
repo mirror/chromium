@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
+
 @implementation ReauthenticationModule {
   // Authentication context on which the authentication policy is evaluated.
   LAContext* _context;

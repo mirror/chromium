@@ -43,6 +43,8 @@ source_set("settings") {
     "password_details_collection_view_controller.h",
     "password_details_collection_view_controller.mm",
     "password_details_collection_view_controller_delegate.h",
+    "password_exporter.h",
+    "password_exporter.mm",
     "privacy_collection_view_controller.h",
     "privacy_collection_view_controller.mm",
     "reauthentication_module.h",
