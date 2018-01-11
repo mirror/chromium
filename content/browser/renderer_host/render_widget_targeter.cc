@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_host/render_widget_targeter.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -90,6 +91,7 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
     request.root_view = root_view->GetWeakPtr();
     request.event = ui::WebInputEventTraits::Clone(event);
     request.latency = latency;
+    request.timestamp = base::TimeTicks::Now();
     requests_.push(std::move(request));
     return;
   }
@@ -133,7 +135,7 @@ void RenderWidgetTargeter::QueryClient(
                      weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
                      target->GetWeakPtr(),
                      static_cast<const blink::WebMouseEvent&>(event), latency,
-                     target_location));
+                     target_location, base::TimeTicks::Now()));
 }
 
 void RenderWidgetTargeter::FlushEventQueue() {
@@ -145,6 +147,8 @@ void RenderWidgetTargeter::FlushEventQueue() {
     if (!request.root_view) {
       continue;
     }
+    UMA_HISTOGRAM_TIMES("Event.AsyncTargeting.TimeInQueue",
+                        base::TimeTicks::Now() - request.timestamp);
     FindTargetAndDispatch(request.root_view.get(), *request.event,
                           request.latency);
   }
@@ -156,7 +160,10 @@ void RenderWidgetTargeter::FoundFrameSinkId(
     const blink::WebInputEvent& event,
     const ui::LatencyInfo& latency,
     const base::Optional<gfx::PointF>& target_location,
+    base::TimeTicks query_timestamp,
     const viz::FrameSinkId& frame_sink_id) {
+  UMA_HISTOGRAM_TIMES("Event.AsyncTargeting.ResponseTime",
+                      base::TimeTicks::Now() - query_timestamp);
   request_in_flight_ = false;
   auto* view = delegate_->FindViewFromFrameSinkId(frame_sink_id);
   if (!view)

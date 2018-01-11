@@ -91,6 +91,7 @@ class RenderWidgetTargeter {
                         const blink::WebInputEvent& event,
                         const ui::LatencyInfo& latency,
                         const base::Optional<gfx::PointF>& target_location,
+                        base::TimeTicks query_timestamp,
                         const viz::FrameSinkId& frame_sink_id);
 
   // |event| is in the coordinate space of |root_view|. |target_location|, if
@@ -110,6 +111,7 @@ class RenderWidgetTargeter {
     base::WeakPtr<RenderWidgetHostViewBase> root_view;
     ui::WebScopedInputEvent event;
     ui::LatencyInfo latency;
+    base::TimeTicks timestamp;
   };
 
   bool request_in_flight_ = false;
