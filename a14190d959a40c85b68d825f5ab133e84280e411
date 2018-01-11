@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635381ac_50f42475",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-11T18:40:37Z",
+      "side": 1,
+      "message": "Would it be worth creating PdfPrinterHandler::GetFileName(initiator_url, job_title) to prevent duplication? I think this is fine too but it might make things easier if you do change anything in future to not have to update both places.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "a14190d959a40c85b68d825f5ab133e84280e411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
