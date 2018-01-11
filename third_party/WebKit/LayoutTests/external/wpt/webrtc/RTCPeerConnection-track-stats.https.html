@@ -246,6 +246,95 @@
     }));
   }, 'O/A exchange yields inbound RTP stream stats for receiving track');
 
+  async_test(t => {
+    const caller = new RTCPeerConnection();
+    const callee = new RTCPeerConnection();
+    let sendingTrack1;
+    let sendingTrack2;
+    let sender;
+    return getUserMediaTracksAndStreams(2)
+    .then(t.step_func(([tracks, streams]) => {
+      sendingTrack1 = tracks[0];
+      sendingTrack2 = tracks[1];
+      sender = caller.addTrack(sendingTrack1);
+      return caller.createOffer();
+    }))
+    .then(t.step_func(offer => {
+      return Promise.all([ caller.setLocalDescription(offer),
+                           callee.setRemoteDescription(offer) ]);
+    }))
+    .then(t.step_func(() => {
+      return callee.createAnswer();
+    }))
+    .then(t.step_func(answer => {
+      return Promise.all([ callee.setLocalDescription(answer),
+                           caller.setRemoteDescription(answer) ]);
+    }))
+    .then(t.step_func(() => {
+      return sender.replaceTrack(sendingTrack2);
+    }))
+    .then(t.step_func(() => {
+      return caller.getStats();
+    }))
+    .then(t.step_func(report => {
+      let trackStats = findStatsByTypeAndId(report, 'track', sendingTrack2.id);
+      assert_true(trackStats != null, 'Has stats for replaced track');
+      let outboundStats = findStatsByTypeAndMember(report, 'outbound-rtp',
+                                                   'trackId', trackStats.id);
+      assert_true(outboundStats != null, 'Has stats for outbound RTP stream');
+      t.done();
+    }))
+    .catch(t.step_func(reason => {
+      assert_unreached(reason);
+    }));
+  }, 'replaceTrack(): new track attachment stats present after replacing');
+
+  async_test(t => {
+    const caller = new RTCPeerConnection();
+    const callee = new RTCPeerConnection();
+    let sendingTrack1;
+    let sendingTrack2;
+    let sender;
+    return getUserMediaTracksAndStreams(2)
+    .then(t.step_func(([tracks, streams]) => {
+      sendingTrack1 = tracks[0];
+      sendingTrack2 = tracks[1];
+      sender = caller.addTrack(sendingTrack1);
+      return caller.createOffer();
+    }))
+    .then(t.step_func(offer => {
+      return Promise.all([ caller.setLocalDescription(offer),
+                           callee.setRemoteDescription(offer) ]);
+    }))
+    .then(t.step_func(() => {
+      return callee.createAnswer();
+    }))
+    .then(t.step_func(answer => {
+      return Promise.all([ callee.setLocalDescription(answer),
+                           caller.setRemoteDescription(answer) ]);
+    }))
+    .then(t.step_func(() => {
+      return sender.replaceTrack(sendingTrack2);
+    }))
+    .then(t.step_func(() => {
+      return caller.getStats();
+    }))
+    .then(t.step_func(report => {
+      let trackStats = findStatsByTypeAndId(report, 'track', sendingTrack1.id);
+      assert_true(trackStats != null, 'Has stats for original track');
+      assert_true(trackStats.objectDeleted);
+      let outboundStats = findStatsByTypeAndMember(report, 'outbound-rtp',
+                                                   'trackId', trackStats.id);
+      assert_true(outboundStats == null,
+                  'The outbound RTP stream should no longer reference the ' +
+                  'original attachment');
+      t.done();
+    }))
+    .catch(t.step_func(reason => {
+      assert_unreached(reason);
+    }));
+  }, 'replaceTrack(): original track attachment stats present after replacing');
+
   // Helpers.
 
   function findStatsByTypeAndId(report, type, identifier) {
