@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357745a1_f539843a",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-11T02:08:22Z",
+      "side": 1,
+      "message": "nit: I would call widget_.reset() above this line, which will close the widget/window. I think AshTestBase::TearDown() closes all windows, but you might get into trouble when the unique_ptr\u003c\u003e goes out of scope later.",
+      "revId": "a9bad9527648bc2cffc2e91fa13e516fd358fe39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
