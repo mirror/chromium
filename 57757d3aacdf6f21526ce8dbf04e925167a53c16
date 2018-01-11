@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4465a4fc_da448d9d",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e46863_5bf32e53",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7be7bcb_15f38595",
         "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
         "patchSetId": 6
@@ -104,6 +122,24 @@
       "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141debf3_833fe878",
+        "filename": "chrome/browser/resources/vr/assets/push_assets_component.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-11T19:42:07Z",
+      "side": 1,
+      "message": "Cool, thanks for clarifying.",
+      "parentUuid": "040b836f_a91df4b8",
+      "revId": "57757d3aacdf6f21526ce8dbf04e925167a53c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
