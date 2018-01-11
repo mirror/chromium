@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85feb1f5_235fd701",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T16:54:55Z",
+      "side": 1,
+      "message": "I think MockAggregatedDamageCallback could be a better name, because this is sort of mocking AggregatedDamageCallback?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "baa6016f6a151759e9a39c671bcbced55faa76ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0058f5_55df53b6",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T16:54:55Z",
+      "side": 1,
+      "message": "These are not used anymore?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 73
+      },
+      "revId": "baa6016f6a151759e9a39c671bcbced55faa76ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de880c6f_5dd99452",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-11T16:54:55Z",
+      "side": 1,
+      "message": "These are not used anymore?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "baa6016f6a151759e9a39c671bcbced55faa76ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
