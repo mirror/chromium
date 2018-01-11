@@ -16,6 +16,24 @@
       "revId": "a1e89b35543f35867fb91e62e70c90c37b47b575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9705b3e8_0000e596",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-11T21:42:09Z",
+      "side": 1,
+      "message": "They happen to be guids, but the spec (https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-id) only requires that they are \"opaque strings\". Guids are an implementation detail; it seems wrong to me to enforce that at the mojo layer.\n\nBut adding a TODO since whatever we do should be the same in both places!",
+      "parentUuid": "09044875_bffdc8b2",
+      "revId": "a1e89b35543f35867fb91e62e70c90c37b47b575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
