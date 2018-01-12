@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4c87ea_2c25cab8",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "Thanks. It\u0027s not essential but I prefer making this look like a sub resource, e.g. http://example.com/data.",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a29de3d_436be144",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b626424_e54bc810",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "I suggest that you use something else as the origin is typically different from the response\u0027s origin, where CORS is needed.",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd2cd4e_a9648341",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6457905_646289a3",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90b3acf_d1605755",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "origin -\u003e origins",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04543768_89620cd7",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "origin -\u003e origins",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb1602b_255ccb85",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25dbd8a_66d6cc5a",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054887e4_c7f9a892",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-12T08:42:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77f4bcc9d941980981a34ae6e5d0303846ef4242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
