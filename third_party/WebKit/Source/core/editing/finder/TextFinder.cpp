@@ -53,6 +53,7 @@
 #include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebFloatRect.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/WebVector.h"
 #include "public/web/WebFindOptions.h"
 #include "public/web/WebFrameClient.h"
@@ -749,8 +750,8 @@ int TextFinder::SelectFindMatch(unsigned index, WebRect* selection_rect) {
         active_match_->FirstNode()->GetLayoutObject()) {
       active_match_->FirstNode()->GetLayoutObject()->ScrollRectToVisible(
           LayoutRect(active_match_bounding_box),
-          ScrollAlignment::kAlignCenterIfNeeded,
-          ScrollAlignment::kAlignCenterIfNeeded, kUserScroll);
+          {ScrollAlignment::kAlignCenterIfNeeded,
+           ScrollAlignment::kAlignCenterIfNeeded, kUserScroll});
     }
 
     // Zoom to the active match.
