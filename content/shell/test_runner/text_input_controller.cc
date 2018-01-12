@@ -49,6 +49,7 @@ class TextInputControllerBindings
   void UnmarkAndUnselectText();
   void DoCommand(const std::string& text);
   void SetMarkedText(const std::string& text, int start, int length);
+  void SetMarkedTextFromExistingText(int start, int length);
   bool HasMarkedText();
   std::vector<int> MarkedRange();
   std::vector<int> SelectedRange();
@@ -101,6 +102,8 @@ TextInputControllerBindings::GetObjectTemplateBuilder(v8::Isolate* isolate) {
                  &TextInputControllerBindings::UnmarkAndUnselectText)
       .SetMethod("doCommand", &TextInputControllerBindings::DoCommand)
       .SetMethod("setMarkedText", &TextInputControllerBindings::SetMarkedText)
+      .SetMethod("setMarkedTextFromExistingText",
+                 &TextInputControllerBindings::SetMarkedTextFromExistingText)
       .SetMethod("hasMarkedText", &TextInputControllerBindings::HasMarkedText)
       .SetMethod("markedRange", &TextInputControllerBindings::MarkedRange)
       .SetMethod("selectedRange", &TextInputControllerBindings::SelectedRange)
@@ -136,6 +139,12 @@ void TextInputControllerBindings::SetMarkedText(const std::string& text,
                                                 int length) {
   if (controller_)
     controller_->SetMarkedText(text, start, length);
+}
+
+void TextInputControllerBindings::SetMarkedTextFromExistingText(int start,
+                                                                int end) {
+  if (controller_)
+    controller_->SetMarkedTextFromExistingText(start, end);
 }
 
 bool TextInputControllerBindings::HasMarkedText() {
@@ -240,6 +249,19 @@ void TextInputController::SetMarkedText(const std::string& text,
     controller->SetComposition(web_text, ime_text_spans, blink::WebRange(),
                                start, start + length);
   }
+}
+
+void TextInputController::SetMarkedTextFromExistingText(int start, int end) {
+  if (!view()->MainFrame())
+    return;
+
+  if (!view()->MainFrame()->ToWebLocalFrame()) {
+    CHECK(false) << "This function cannot be called if the main frame is not"
+                    "a local frame.";
+  }
+
+  view()->MainFrame()->ToWebLocalFrame()->SetCompositionFromExistingText(
+      start, end, std::vector<blink::WebImeTextSpan>());
 }
 
 bool TextInputController::HasMarkedText() {
