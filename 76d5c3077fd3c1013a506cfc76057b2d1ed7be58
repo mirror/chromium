@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "db3ed663_6be6ef3e",
+        "filename": "chrome/browser/ui/ash/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7a5c9d_5b12e1f8",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f53ef1_410d487a",
         "filename": "chrome/browser/ui/ash/ksv/DEPS",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0b7344_c5902b2c",
+        "filename": "chrome/browser/ui/ash/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01f53ef1_410d487a",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "7e4461a2_06863b2c",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9075b78_a74df9c9",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6189d2f_c88e7035",
         "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2018-01-12T04:37:09Z",
       "side": 1,
       "message": "nit: for (const Foo\u0026 foo : ash::kAcceleratorData)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eaaad0_90ba962f",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "cannot use incomplete type \u0027const ash::AcceleratorData []\u0027 as a range.\nI might do some thing wrong?",
+      "parentUuid": "c6189d2f_c88e7035",
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "de27f163_f10db4f1",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Added comment on top. Such as new window/tab, they are in both accelerator_tables.",
+      "parentUuid": "4a76852d_3a93807e",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da00bf8_29c048c3",
         "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 1
@@ -118,6 +208,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164924bb_aa09d827",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da00bf8_29c048c3",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "b8f2f859_10ac1908",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72247065_eaf6d385",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a3296e_ab54acdc",
         "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.h",
         "patchSetId": 1
@@ -152,6 +278,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705ddd9a_1946a18f",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "I was following ash_util example. Will change the name to keyboard_shortcut_viewer_util.",
+      "parentUuid": "92a3296e_ab54acdc",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "9513b9b8_485aca6a",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3593f005_5e59323a",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfda95b7_ad1757ef",
         "filename": "ui/chromeos/ksv/BUILD.gn",
         "patchSetId": 1
@@ -186,6 +348,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6482a84e_3f5af6e8",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfda95b7_ad1757ef",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "0060916a_d0c521e0",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d0e7fd_fbb135d8",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa38c56_5b2415a8",
         "filename": "ui/chromeos/ksv/BUILD.gn",
         "patchSetId": 1
@@ -220,6 +418,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e18f6bd_f3e2de02",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "It was planned to put ksv_model.cc and model_observer for views. But it is not necessary. Will remove.",
+      "parentUuid": "9fa38c56_5b2415a8",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "757ee7c6_468819e5",
+        "filename": "ui/chromeos/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e1832c_f105277c",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f22ee1_6fed3379",
         "filename": "ui/chromeos/ksv/OWNERS",
         "patchSetId": 1
@@ -254,6 +488,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296df303_196e9ffc",
+        "filename": "ui/chromeos/ksv/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f22ee1_6fed3379",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "4ee51c40_4a5ce11f",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e262a9a9_a4406a9a",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8046c37_a98bd031",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 1
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "131ed97c_48d23856",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8046c37_a98bd031",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7190d523_d41bd2f9",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 1
@@ -302,6 +590,24 @@
       "writtenOn": "2018-01-12T04:37:09Z",
       "side": 1,
       "message": "nit: I find this data table hard to read. The structures are complex, so the nested {{}}} initializers are tricky, and you have to have comments explaining the sections.\n\nAlternate ideas:\n* Have two data tables, one just a list of KeyboardShortcutItems, the other a list of |shortcut_id| (or |description_id|) to the list of |accelerator_ids|.\n* Provide a constructor for KeyboardShortcutItem that doesn\u0027t take |replacement_codes| so you can get rid of the lines that are always blank. Switch to enum class for the category. Then you might be able to eliminate some of the comments and make this table more dense.\n\nIt\u0027s hard for me to really understand |replacement_codes| without an example where it won\u0027t be automatically generated (your test implies that sometimes it\u0027s not automatic?)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0964c8_33dfa887",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "For |replacement_codes|, please see the other comments, the case 3,\u0026 4 will not auto generate it.\n\nTwo lists would work. But consider now we put accelerator_ids into KeyboardShortcutItems and there will be about 120 entries (ksv items), it would be convenient to maintain just one list and have no one more duplicate of the description_string_id as the key of the second list? In addition, it is super easy to load just one list.\nI can put accelerator_ids before replacement_codes (most of the accelerator_ids are not empty), so the empty {} will be the last in the list so that it looks a little better?",
+      "parentUuid": "7190d523_d41bd2f9",
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "bbd186a7_aee2467b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done: to avoid",
+      "parentUuid": "7dd00875_acf073fc",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5410af03_ccf776fa",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
         "patchSetId": 1
@@ -339,6 +663,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ceeedd_46144364",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Super correct. I will use it to auto populate the replacement_codes to avoid duplicates (otherwise I need to copy\u0026paste it again in the |replacement_codes|. Correct the comment.",
+      "parentUuid": "5410af03_ccf776fa",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "40480196_da81dd9e",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Used for std::Set in the test.",
+      "parentUuid": "324b4eab_d28f4782",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3794f85_de85d125",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
         "patchSetId": 1
@@ -373,6 +733,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48040cae_f93662c9",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3794f85_de85d125",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +771,24 @@
     },
     {
       "key": {
+        "uuid": "0f69aec2_1780c083",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "sg. I will remove this struct.",
+      "parentUuid": "8f7e2096_4dd7e83e",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30b7d183_d5935189",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
         "patchSetId": 1
@@ -407,6 +803,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4a6770_9a9ab64a",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b7d183_d5935189",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +841,24 @@
     },
     {
       "key": {
+        "uuid": "45174b65_8cfe8958",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe1667a_0fec3bad",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0de3415e_4ba8e8c6",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
         "patchSetId": 1
@@ -441,6 +873,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d5dc8a_674ec21b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de3415e_4ba8e8c6",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -461,6 +911,24 @@
     },
     {
       "key": {
+        "uuid": "d752fe43_c2d55d44",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Seems only the categories and check replacement_codes and accelerator_ids cannot be both empty.",
+      "parentUuid": "0cb7fddd_a9fafb43",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c87af89_9ba246e8",
         "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
         "patchSetId": 1
@@ -475,6 +943,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404f13e8_c1a7de20",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c87af89_9ba246e8",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +981,24 @@
     },
     {
       "key": {
+        "uuid": "8a72226c_24423da3",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad5514f_de362d32",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e59ff74_628ccd4c",
         "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
         "patchSetId": 1
@@ -509,6 +1013,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff406cf2_bc889c82",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Use symbols to avoid confusion of key icon.",
+      "parentUuid": "9e59ff74_628ccd4c",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -529,6 +1051,24 @@
     },
     {
       "key": {
+        "uuid": "a900e16f_4c1fd7ad",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a4ad642_ef5893a4",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee1d1f9_3a71f867",
         "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
         "patchSetId": 1
@@ -543,6 +1083,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00ac97e_20d10621",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Renamed to description_string_id and shortcut_string_id",
+      "parentUuid": "2ee1d1f9_3a71f867",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -563,6 +1121,24 @@
     },
     {
       "key": {
+        "uuid": "40f0b58f_27f77eb6",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done. It is confusing when to use const or not for integer. Seems some folders, e.g. exo does not use const int etc.",
+      "parentUuid": "ff17d5b5_5e38833b",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b50e4a_a75a604c",
         "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
         "patchSetId": 1
@@ -577,6 +1153,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e90082_f3de898c",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b50e4a_a75a604c",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -597,6 +1191,24 @@
     },
     {
       "key": {
+        "uuid": "88f12cfb_d9219448",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "Yes, the replacement_codes in this case will be {ui::VKEY_ALTGR (no VKEY_ALT??), ui::VKEY_LEFT}.\nNote that modifier is converted to VKEY so that here we only have one enum type to deal with.\nUpdated the comment.",
+      "parentUuid": "88d3af1d_5877278f",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebd2809e_a8874746",
         "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
         "patchSetId": 1
@@ -611,6 +1223,24 @@
       "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddfbec1_3cb59f62",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-12T10:24:47Z",
+      "side": 1,
+      "message": "SG to put std::vector\u003cAcceleratorIds\u003e to KSVItem so that to remove the other KSVItemToAcceleratorIds struct.\n\nCurrently in my mind, accelerator_ids can generate replacement_codes, not the other way.\nThere are Four rules I can see now:\n1. For regular accelerators, we show all modifiers and key in order, then we can auto-generate it by accelerator_ids (actually only one accelerator_id in this case).\n2. For grouped accelerator_ids with same modifiers, we can auto-generate the modifiers. We will not show the key, e.g. Hold \"CTRL\" + 1 through 8. \"+ 1 through 8\" will be provided in the shortcut_string, so only {CTRL} for the replacement_codes.\n3. For grouped accelerator_ids with different modifiers, e.g. SHOW_KEYBOARD_OVERLAY, we can not auto generate it and we will provide the replacement_codes.\n4. For ksv_item not in the two accelerator_tables, we will provide the replacement_codes.",
+      "parentUuid": "ebd2809e_a8874746",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
