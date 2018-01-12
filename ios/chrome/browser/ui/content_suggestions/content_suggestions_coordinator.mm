@@ -311,4 +311,28 @@
   return collectionOffset;
 }
 
+#pragma mark - LogoAnimationControllerOwnerOwner
+
+- (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
+  return [self.headerController logoAnimationControllerOwner];
+}
+
+#pragma mark -
+#pragma mark ToolbarOwner
+
+- (CGRect)toolbarFrame {
+  return [self.headerController toolbarFrame];
+}
+
+- (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
+  return self.headerController.toolbarSnapshotProvider;
+}
+
+- (CGFloat)toolbarHeight {
+  // If the google landing controller is nil, there is no toolbar visible in the
+  // native content view, finally there is no toolbar on iPad.
+  return self.headerController && !IsIPadIdiom() ? ntp_header::kToolbarHeight
+                                                 : 0.0;
+}
+
 @end

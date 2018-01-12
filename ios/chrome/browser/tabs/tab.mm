@@ -203,6 +203,7 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
 @synthesize tabHeadersDelegate = tabHeadersDelegate_;
 @synthesize legacyFullscreenControllerDelegate =
     legacyFullscreenControllerDelegate_;
+@synthesize nativeController = nativeController_;
 
 - (instancetype)initWithWebState:(web::WebState*)webState {
   DCHECK(webState);
@@ -276,6 +277,8 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
 
 - (NSString*)title {
   base::string16 title = self.webState->GetTitle();
+  if (self.nativeController)
+    title = base::SysNSStringToUTF16(self.nativeController.title);
   if (title.empty())
     title = l10n_util::GetStringUTF16(IDS_DEFAULT_TAB_TITLE);
   return base::SysUTF16ToNSString(title);
@@ -316,6 +319,8 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
   if (!self.webState->IsCrashed()) {
     self.webState->GetNavigationManager()->LoadIfNecessary();
   }
+  if (self.nativeController)
+    return self.nativeController.view;
   return self.webState->GetView();
 }
 
