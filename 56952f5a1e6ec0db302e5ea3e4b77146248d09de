@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c225d27_0390b738",
+        "filename": "chrome/browser/content_settings/mixed_content_settings_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T22:38:40Z",
+      "side": 1,
+      "message": "No. This will get called only when a new RenderFrame object in a renderer process is created. It is not related to page load in general.\nAlso, adding this fixes another bug with mixed content - if you go to a page with mixed content, then allow it, but the main process crashes, subsequent reload doesn\u0027t allow the mixed content in subframes to run.",
+      "parentUuid": "d13f06f8_d9c1b8d6",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435d0ec9_95354a93",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e586950_88a6ef4b",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T22:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435d0ec9_95354a93",
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d161e6_09f5912b",
+        "filename": "chrome/test/data/content_setting_bubble/mixed_script_in_cross_site_iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T22:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8287a14b_023b0b1e",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 47
+      },
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
