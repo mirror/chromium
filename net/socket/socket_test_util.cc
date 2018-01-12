@@ -1888,6 +1888,14 @@ void MockTaggingStreamSocket::ApplySocketTag(const SocketTag& tag) {
   transport_->ApplySocketTag(tag);
 }
 
+const char kSOCKS4OkRequestLocalHostPort80[] = {0x04, 0x01, 0x00, 0x50, 127,
+                                                0,    0,    1,    0};
+extern const int kSOCKS4OkRequestLocalHostPort80Length =
+    arraysize(kSOCKS4OkRequestLocalHostPort80);
+
+const char kSOCKS4OkReply[] = {0x00, 0x5A, 0x00, 0x00, 0, 0, 0, 0};
+extern const int kSOCKS4OkReplyLength = arraysize(kSOCKS4OkReply);
+
 const char kSOCKS5GreetRequest[] = { 0x05, 0x01, 0x00 };
 const int kSOCKS5GreetRequestLength = arraysize(kSOCKS5GreetRequest);
 
