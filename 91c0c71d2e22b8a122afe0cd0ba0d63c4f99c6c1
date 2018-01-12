@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f2e9c91_5ac948d6",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "I believe that\u0027s correct.",
+      "parentUuid": "b838042a_eba4d0a5",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a74a0bc_6fffc699",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T02:09:39Z",
       "side": 1,
       "message": "Why we can skip GetResource()-\u003eErrorOccured() case in the new code?",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bb2655_fb1ddff6",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "I uploaded this version to see if dropping the entire ErrorOccurred() block would work, and it appears it doesn\u0027t break anything. I think it\u0027s vestigial.",
+      "parentUuid": "6a74a0bc_6fffc699",
       "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de681f35_7a599ce6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b51d323c_c4720bb1",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

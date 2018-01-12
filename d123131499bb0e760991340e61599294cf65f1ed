@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "26d3c196_9bce69ad",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30dfe23b_2e818328",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "450f9411_48403e01",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2018-01-11T09:15:58Z",
       "side": 1,
       "message": "With removing the return statement, I think \n\nif (ResourceNeedsLoad(...)) {\n  if (StartLoad(...)) {\n    ...\n  } else {\n    ...\n  }\n} else if (policy !\u003d kUse) {\n  ...\n}\n\nwould be easier to read.",
+      "revId": "d123131499bb0e760991340e61599294cf65f1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85121a82_9302ed42",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "Actually, InsertAsPreloadIfNecessary will early-exit in the error case, so we can just pull the \"if (policy !\u003d kUse)\" block into a separate statement.",
+      "parentUuid": "280c6722_b4cc1813",
       "revId": "d123131499bb0e760991340e61599294cf65f1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

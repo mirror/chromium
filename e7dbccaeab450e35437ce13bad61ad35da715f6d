@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbacce51_c39619c5",
+        "filename": "third_party/WebKit/LayoutTests/mhtml/resource_not_found_in_archive-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "Returning the error instead of nullptr for the resource-not-in-archive case in RequestResource() causes us to display a broken image instead of no image. This changes the expected result to ensure a broken image to compare against.",
+      "parentUuid": "9bccdf05_a942de47",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f25e555_0fa5cd9b",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T09:15:58Z",
       "side": 1,
       "message": "Isn\u0027t it better to insert the client before calling RawResource::Fetch? Otherwise the client persists indefinitely in error cases.",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4d359f_eeccbab0",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "RawResourceClients should always call NotifyFinished() asynchronously. Fetch() will register resource_client, but notify it async, even in the error case.",
+      "parentUuid": "6f25e555_0fa5cd9b",
       "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f8e99cbc_36a62309",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "I can\u0027t actually find any evidence that this clause is still needed. Deleted entirely.",
+      "parentUuid": "1d391f8c_f71e5947",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b4a3b4_a54a86ff",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "26dda2bb_3a1a53a3",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "I don\u0027t think it can? resource can still be nullptr when it comes from MemoryCache::ResourceForURL() (since that\u0027s checking whether the resource is present in the cache).",
+      "parentUuid": "f1b4a3b4_a54a86ff",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d1acb09_b95ebe0f",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-11T09:15:58Z",
       "side": 1,
       "message": "Can you add some comments here?",
+      "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025ce25d_43160490",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T18:45:45Z",
+      "side": 1,
+      "message": "Renamed this helper to RequestResourceInternal, added comments to the public RequestResource().",
+      "parentUuid": "8d1acb09_b95ebe0f",
       "revId": "e7dbccaeab450e35437ce13bad61ad35da715f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
