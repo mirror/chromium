@@ -16,6 +16,24 @@
       "revId": "e3e3cd347915c0895079894191086db3cda1dccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb648e4b_169c3c30",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T18:46:12Z",
+      "side": 1,
+      "message": "This change will be very helpful for developers using the Presentation API. If adding things to WebContentsDelegate a problem, is there an alternative approach you could recommend?",
+      "parentUuid": "6a38928c_8558415d",
+      "revId": "e3e3cd347915c0895079894191086db3cda1dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
