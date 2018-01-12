@@ -11,6 +11,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/bind_test_util.h"
 #include "dbus/object_path.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
@@ -1069,6 +1070,32 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
   EXPECT_EQ(2, error_callback_count_);
   EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
 
+  // Test a write request issued from the success callback of another write
+  // request.
+  characteristic->WriteRemoteCharacteristic(
+      write_value, base::BindLambdaForTesting([&] {
+        SuccessCallback();
+        EXPECT_TRUE(observer.last_gatt_characteristic_id().empty());
+        EXPECT_FALSE(observer.last_gatt_characteristic_uuid().IsValid());
+        EXPECT_EQ(2, success_callback_count_);
+        EXPECT_EQ(2, error_callback_count_);
+        EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
+
+        characteristic->WriteRemoteCharacteristic(
+            write_value,
+            base::Bind(&BluetoothGattBlueZTest::SuccessCallback,
+                       base::Unretained(this)),
+            base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
+                       base::Unretained(this)));
+      }),
+      base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
+                 base::Unretained(this)));
+  EXPECT_TRUE(observer.last_gatt_characteristic_id().empty());
+  EXPECT_FALSE(observer.last_gatt_characteristic_uuid().IsValid());
+  EXPECT_EQ(3, success_callback_count_);
+  EXPECT_EQ(2, error_callback_count_);
+  EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
+
   // Issue some invalid write requests to the characteristic.
   // The value should still not change.
 
@@ -1080,7 +1107,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
                                        base::Unretained(this)),
       base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
                  base::Unretained(this)));
-  EXPECT_EQ(1, success_callback_count_);
+  EXPECT_EQ(3, success_callback_count_);
   EXPECT_EQ(3, error_callback_count_);
   EXPECT_EQ(BluetoothRemoteGattService::GATT_ERROR_INVALID_LENGTH,
             last_service_error_);
@@ -1093,7 +1120,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
                                       base::Unretained(this)),
       base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
                  base::Unretained(this)));
-  EXPECT_EQ(1, success_callback_count_);
+  EXPECT_EQ(3, success_callback_count_);
   EXPECT_EQ(4, error_callback_count_);
   EXPECT_EQ(BluetoothRemoteGattService::GATT_ERROR_FAILED, last_service_error_);
   EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
@@ -1113,10 +1140,32 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
                  base::Unretained(this)),
       base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
                  base::Unretained(this)));
-  EXPECT_EQ(2, success_callback_count_);
+  EXPECT_EQ(4, success_callback_count_);
   EXPECT_EQ(4, error_callback_count_);
   EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
   EXPECT_TRUE(ValuesEqual(characteristic->GetValue(), last_read_value_));
+
+  // Test a read request issued from the success callback of another read
+  // request.
+  characteristic->ReadRemoteCharacteristic(
+      base::BindLambdaForTesting([&](const std::vector<uint8_t>& data) {
+        ValueCallback(data);
+        EXPECT_EQ(5, success_callback_count_);
+        EXPECT_EQ(4, error_callback_count_);
+        EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
+        EXPECT_EQ(characteristic->GetValue(), last_read_value_);
+
+        characteristic->ReadRemoteCharacteristic(
+            base::Bind(&BluetoothGattBlueZTest::ValueCallback,
+                       base::Unretained(this)),
+            base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
+                       base::Unretained(this)));
+      }),
+      base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
+                 base::Unretained(this)));
+  EXPECT_EQ(6, success_callback_count_);
+  EXPECT_EQ(4, error_callback_count_);
+  EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
 
   // Test long-running actions.
   fake_bluetooth_gatt_characteristic_client_->SetExtraProcessing(1);
@@ -1137,7 +1186,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
 
   // Callback counts shouldn't change, this one will be delayed until after
   // tne next one.
-  EXPECT_EQ(2, success_callback_count_);
+  EXPECT_EQ(6, success_callback_count_);
   EXPECT_EQ(4, error_callback_count_);
   EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
 
@@ -1152,7 +1201,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
             last_service_error_);
 
   // But previous call finished.
-  EXPECT_EQ(3, success_callback_count_);
+  EXPECT_EQ(7, success_callback_count_);
   EXPECT_EQ(0, observer.gatt_characteristic_value_changed_count());
   EXPECT_TRUE(ValuesEqual(characteristic->GetValue(), last_read_value_));
   fake_bluetooth_gatt_characteristic_client_->SetExtraProcessing(0);
@@ -1164,7 +1213,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
                  base::Unretained(this)),
       base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
                  base::Unretained(this)));
-  EXPECT_EQ(3, success_callback_count_);
+  EXPECT_EQ(7, success_callback_count_);
   EXPECT_EQ(6, error_callback_count_);
   EXPECT_EQ(BluetoothRemoteGattService::GATT_ERROR_NOT_AUTHORIZED,
             last_service_error_);
@@ -1178,7 +1227,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicValue) {
                  base::Unretained(this)),
       base::Bind(&BluetoothGattBlueZTest::ServiceErrorCallback,
                  base::Unretained(this)));
-  EXPECT_EQ(3, success_callback_count_);
+  EXPECT_EQ(7, success_callback_count_);
   EXPECT_EQ(7, error_callback_count_);
   EXPECT_EQ(BluetoothRemoteGattService::GATT_ERROR_NOT_PAIRED,
             last_service_error_);
