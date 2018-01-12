@@ -22,6 +22,30 @@
       "revId": "395a3b027b2ff592c558ee43e56521ffdf9702d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e134132_63327c6d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-12T17:44:58Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t realize this existed! Thanks for the pointer. I\u0027ve added @UsedByReflection(\"SafeBrowsingApiBridge.java\").",
+      "parentUuid": "d8ac7e8c_c914c10b",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "395a3b027b2ff592c558ee43e56521ffdf9702d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
