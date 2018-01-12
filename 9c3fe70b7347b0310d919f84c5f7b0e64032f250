@@ -140,6 +140,30 @@
       "revId": "9c3fe70b7347b0310d919f84c5f7b0e64032f250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c017f38c_7021a928",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2018-01-12T00:48:52Z",
+      "side": 1,
+      "message": "Will revert back to base::Unretained",
+      "parentUuid": "f53898f9_eb8f19a6",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "9c3fe70b7347b0310d919f84c5f7b0e64032f250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
