@@ -16,6 +16,24 @@
       "revId": "ffd22f3b7e570ef21f604c1c10c94fa3a6eea3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c90927_40c22590",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T09:01:37Z",
+      "side": 1,
+      "message": "We cannot pass the profile object as the code signin::IsDiceEnabledForProfile lives in //components and Profile is defined in //chrome.\n\nDICE is never enabled for guest, so I agree with Trent;s assessment that signin::IsDiceEnabledForProfile should return false for guest profiles.\n\nDavid: Could we change the signin::IsDiceEnabledForProfile to return false if the profile is incognito, guest or system profile?",
+      "parentUuid": "c041e73f_760ba0e3",
+      "revId": "ffd22f3b7e570ef21f604c1c10c94fa3a6eea3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
