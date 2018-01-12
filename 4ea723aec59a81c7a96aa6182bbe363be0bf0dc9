@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e66760_5ac2c9eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuViewPager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T01:27:21Z",
+      "side": 0,
+      "message": "In the bug report, the user is going from  LINK -\u003e IMAGE -\u003e IMAGE. In this scenario, I believe mOldHeight would be the LINK tab\u0027s height, which explains why the menu would be too short after the final transition.\n\nThis if block seems like it was probably meant to handle the case where the user goes from IMAGE -\u003e LINK -\u003e IMAGE without the pager ever fully reach LINK. In this scenario mOldHeight should be the IMAGE height, right? In which case, we probably do want to execute this block.\n\nAn interesting test would be to use the repro steps in the bug report, but tap on IMAGE instead in step 3, e.g.\n\n1. Launch chrome.\n2. Google search \u0027cars\u0027 or \u0027Bike\u0027\u003e  Long tap on any image results present on top of the webpage.\n3. Tap on \u0027LINK\u0027 option from top of the context menu. \n4. While sliding right (from \u0027LINK\u0027 section to \u0027Image\u0027 section), Tap on \u0027LINK\u0027 section of context menu.\n\nOr,\n1. Launch chrome.\n2. Google search \u0027cars\u0027 or \u0027Bike\u0027\u003e  Long tap on any image results present on top of the webpage.\n4. While sliding left (from \u0027Image\u0027 section to \u0027Link\u0027 section), Tap on \u0027IMAGE\u0027 section of context menu.",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 64
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
