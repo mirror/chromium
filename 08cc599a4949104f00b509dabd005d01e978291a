@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c367a2f_5eca715a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-12T11:33:07Z",
+      "side": 1,
+      "message": "It seems like this would not work in the specific case where the portrait and landscape x/y are identical. Admittedly that\u0027s a rare case, but it suggests that this isn\u0027t the right fix. It also adds a lot of extra work to every setOrigin(), duplicating work that will be done in doInvalidate() to correct a case that happens rarely.\n\nIs there a different way to fix this?",
+      "range": {
+        "startLine": 585,
+        "startChar": 8,
+        "endLine": 585,
+        "endChar": 24
+      },
+      "revId": "08cc599a4949104f00b509dabd005d01e978291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
