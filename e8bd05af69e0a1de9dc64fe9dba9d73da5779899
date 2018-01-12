@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48f26bc9_4e59cb29",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T16:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45708e44_6fbc2a07",
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6373bc_b6081145",
         "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "755132e8_6821248f",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T16:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6373bc_b6081145",
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ced2f8_203693ad",
         "filename": "third_party/WebKit/Source/core/frame/PausableTask.cpp",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a3dd58_ddd48765",
+        "filename": "third_party/WebKit/Source/core/frame/PausableTask.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T16:52:29Z",
+      "side": 1,
+      "message": "Oh, okay.  I thought Dispose() would immediately delete |this|.  If that\u0027s not the case, no need for the move.  Removed.",
+      "parentUuid": "92ced2f8_203693ad",
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +150,54 @@
       "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ebfa03_94de471d",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T16:52:29Z",
+      "side": 1,
+      "message": "It can, but it\u0027s more work.  There are a couple of places in extensions code that would need to monitor this, and it makes for a much cleaner interface to have only one callback with a value rather than a callback and watching for WillReleaseScriptContext + invalidating the context.  Given the cost is very low, I\u0027d like to keep it (but if you object strongly, let me know - you\u0027re the OWNER! :)).",
+      "parentUuid": "ba21ece8_2943a4fe",
+      "range": {
+        "startLine": 438,
+        "startChar": 41,
+        "endLine": 439,
+        "endChar": 14
+      },
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4c4c952_0d42de2b",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T16:52:29Z",
+      "side": 1,
+      "message": "Added some more detail; lemme know what you think.",
+      "parentUuid": "f189c59a_b66919eb",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 15
+      },
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
