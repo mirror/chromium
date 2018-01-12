@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7261f8f7_78bf2574",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 0,
+      "message": "nit: It looks like ExtractCurrentEntryIntoDirectory() is no longer used anywhere in the codebaes (assuming my CodeSearch query was accurate).  Let\u0027s remove that from the API?  Also, please double-check whether there\u0027s other code that\u0027s now unreachable.",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 50
+      },
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61bc3b8_f5824c58",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 0,
+      "message": "nit: Was this deletion intentional?",
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

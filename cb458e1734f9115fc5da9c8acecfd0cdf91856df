@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a44f2ac_c9adbfd7",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: Mebbe name this consistently with the similar param in CreateFilePathWriterDelegate()?  (Either name is fine, I just think it would be clearer to the reader if they matched, since they represent the same concept.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ee985b_cdac7553",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: Please provide a brief docstring for this function.",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91eaa766_5578849e",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: Ditto",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 60
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b214bb14_c4b4ac20",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: Maybe order this so that it is adjacent to CreateDirectory?",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 1
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72aa9bbe_4f980027",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit of a bummer to lose the extra info of which file failed to be opened.  Is it infeasible/too annoying to get a path from the |src_file| param?",
+      "range": {
+        "startLine": 195,
+        "startChar": 37,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df04007_99ffbb19",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "This code is getting rather heavily nested, which makes it harder to follow IMO.  WDYT of extracting this portion out into a helper function?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 5
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0127cbb_52c57976",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "Why does this compare against the Unix epoch specifically?  Is that documented in the ZIP file standard somewhere?\n\nI\u0027m a little unsure of what this is doing in general – why would we want to set non-current timestamps on the extracted files?  I think this is probably just a detail of how ZIP files work that I\u0027m not familiar with, so apologies for the ignorance!",
+      "range": {
+        "startLine": 292,
+        "startChar": 59,
+        "endLine": 292,
+        "endChar": 68
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb81b18_f79ec1ec",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: CodeSearch suggests that this code is unused...",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a93e770_b0ff927e",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d omit this newline.",
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3e659a_285fe414",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-12T21:58:26Z",
+      "side": 1,
+      "message": "nit: Mebbe document how these two member vars are used / how they differ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
