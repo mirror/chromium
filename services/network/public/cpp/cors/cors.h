@@ -20,6 +20,14 @@ namespace network {
 
 namespace cors {
 
+namespace header_names {
+
+extern const char kAccessControlAllowCredentials[];
+extern const char kAccessControlAllowOrigin[];
+extern const char kAccessControlAllowSuborigin[];
+
+}  // namespace header_names
+
 // Perform a CORS access check on the response parameters.
 //
 // Use |GetErrorString()| to construct a user-friendly error message.
@@ -32,6 +40,8 @@ base::Optional<mojom::CORSError> CheckAccess(
     const base::Optional<std::string>& allow_credentials_header,
     network::mojom::FetchCredentialsMode credentials_mode,
     const url::Origin& origin);
+
+bool IsCORSEnabledRequestMode(mojom::FetchRequestMode mode);
 
 }  // namespace cors
 
