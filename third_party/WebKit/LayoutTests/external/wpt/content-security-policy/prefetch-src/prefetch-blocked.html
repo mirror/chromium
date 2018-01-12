@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="prefetch-src 'none';">
+  <script src='/resources/testharness.js'></script>
+  <script src='/resources/testharnessreport.js'></script>
+  <script>
+    var t = async_test("Blocked prefetches generate reports.");
+    window.addEventListener('securitypolicyviolation', t.step_func(e => {
+      assert_equals(e.blockedURI, window.origin + "/content-security-policy/support/fail.png");
+      t.done();
+    }));
+  </script>
+  <link rel="prefetch" href="/content-security-policy/support/fail.png"></link>
+</head>
+<body>
+</body>
+</html>
