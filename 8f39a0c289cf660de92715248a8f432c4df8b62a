@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e65c8077_c3ee9d18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b9b6639_e94ed3c6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b753200_ca52ad4d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6836a9ee_c1f7faf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b753200_ca52ad4d",
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ce3cad41_bc9ac537",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ffc4efa_eb4a6d17",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1fde210_0c445218",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/SavedPasswordEntry.java",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-05T22:47:20Z",
       "side": 1,
       "message": "How are saved passwords and payments related?",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cc4b6a_6d0f8495",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SavedPasswordEntry.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "They not, but this is how editing UI works. I guess it was developed under the assumption that only payments related stuff needs editing. Should I rename PAymentOption to something more generic, like EditableOption?",
+      "parentUuid": "c1fde210_0c445218",
       "range": {
         "startLine": 18,
         "startChar": 46,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8c9fefe7_71e7ed89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "is there a tool for moving and updating imports. I thin ./tools/git/move_source_file.py doesn\u0027t work for Java.",
+      "parentUuid": "35a285da_59aa5ed1",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d8a0395_a18c9b1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
         "patchSetId": 8
@@ -131,6 +245,30 @@
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433104fd_3fe2230e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d8a0395_a18c9b1b",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "471d55d1_09dbf0ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d4f4de_3af47f33",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e04def_240533d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
         "patchSetId": 8
@@ -177,6 +339,30 @@
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dab422a_2f1fe247",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e04def_240533d9",
+      "range": {
+        "startLine": 39,
+        "startChar": 75,
+        "endLine": 39,
+        "endChar": 84
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "9906c9f8_4d96bd77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a0ceb29_1f8e68f4",
+      "range": {
+        "startLine": 53,
+        "startChar": 44,
+        "endLine": 53,
+        "endChar": 86
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ce25e1_260cff89",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
         "patchSetId": 8
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "64a558e7_6ce22abe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8ce25e1_260cff89",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4608a9a0_534383aa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
         "patchSetId": 8
@@ -246,6 +480,30 @@
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77655c23_ff6d8668",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4608a9a0_534383aa",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +541,30 @@
       "writtenOn": "2018-01-05T22:47:20Z",
       "side": 1,
       "message": "What\u0027s causing the disk write?",
+      "range": {
+        "startLine": 406,
+        "startChar": 58,
+        "endLine": 406,
+        "endChar": 73
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0283ccf9_332d8bb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "saving credentials entered by user",
+      "parentUuid": "74e7a887_ec686f73",
       "range": {
         "startLine": 406,
         "startChar": 58,
@@ -364,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "b923d9c4_224d01d5",
+        "filename": "chrome/browser/android/password_ui_view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "It isn\u0027t named anywhere throught this file. Should I add name also in other methods?",
+      "parentUuid": "d49b5744_b439ed1a",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 50
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8b7991_ccc5b8e9",
         "filename": "components/password_manager/core/common/password_manager_features.cc",
         "patchSetId": 8
@@ -384,6 +690,30 @@
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f95f07_30ec3d2d",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2018-01-12T16:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8b7991_ccc5b8e9",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
