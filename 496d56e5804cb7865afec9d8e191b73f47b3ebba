@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "90f6a79f_7c8617ef",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T19:14:59Z",
+      "side": 1,
+      "message": "OK, I can take that.",
+      "parentUuid": "d846aae0_c922e877",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b061b4c_513145ab",
         "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
         "patchSetId": 6
