@@ -1167,6 +1167,9 @@ int BrowserMainLoop::CreateThreads() {
     }
 
     TRACE_EVENT_END0("startup", "BrowserMainLoop::CreateThreads:start");
+
+    if (parts_)
+      parts_->PostThreadCreate(id);
   }
   created_threads_ = true;
   return result_code_;
@@ -1325,6 +1328,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
       //   process launcher thread.
       //
       // - (Not sure why DB stops last.)
+      if (parts_)
+        parts_->PreThreadDestroy(static_cast<BrowserThread::ID>(thread_id));
+
       switch (thread_id) {
         case BrowserThread::DB: {
           TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:DBThread");

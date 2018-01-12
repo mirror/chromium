@@ -20,6 +20,7 @@
 #include "chrome/common/stack_sampling_configuration.h"
 #include "components/metrics/call_stack_profile_params.h"
 #include "content/public/browser/browser_main_parts.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/common/main_function_params.h"
 
 class BrowserProcessImpl;
@@ -65,6 +66,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void PostThreadCreate(content::BrowserThread::ID browser_thread_id) override;
+  void PreThreadDestroy(content::BrowserThread::ID browser_thread_id) override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
   void PreMainMessageLoopRun() override;
@@ -114,12 +117,18 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // for child processes.
   void SetupOriginTrialsCommandLine(PrefService* local_state);
 
+  // Methods for handling IO thread profiling --------------------------------
+
+  void StartProfilingIOThread();
+  void EndProfilingIOThread();
+
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
   int PreMainMessageLoopRunImpl();
 
-  // Members initialized on construction ---------------------------------------
+  // Members initialized on construction
+  // ---------------------------------------
 
   const content::MainFunctionParams parameters_;
   const base::CommandLine& parsed_command_line_;
@@ -147,9 +156,9 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Parts are deleted in the inverse order they are added.
   std::vector<ChromeBrowserMainExtraParts*> chrome_extra_parts_;
 
-  // A profiler that periodically samples stack traces. Used to sample startup
-  // behavior.
-  base::StackSamplingProfiler sampling_profiler_;
+  // A profiler that periodically samples stack traces on the UI thread. Used to
+  // sample startup behavior.
+  base::StackSamplingProfiler ui_thread_sampling_profiler_;
 
   // Members initialized after / released before main_message_loop_ ------------
 
