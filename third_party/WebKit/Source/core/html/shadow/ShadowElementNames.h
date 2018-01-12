@@ -42,6 +42,7 @@ const AtomicString& DetailsContent();
 const AtomicString& DetailsSummary();
 const AtomicString& DetailsMarker();
 const AtomicString& DateTimeEdit();
+const AtomicString& AssistButton();
 CORE_EXPORT const AtomicString& SpinButton();
 const AtomicString& ClearButton();
 const AtomicString& EditingViewPort();

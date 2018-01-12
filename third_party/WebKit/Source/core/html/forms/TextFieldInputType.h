@@ -34,6 +34,7 @@
 #include "core/html/forms/InputType.h"
 #include "core/html/forms/InputTypeView.h"
 #include "core/html/forms/SpinButtonElement.h"
+#include "core/html/forms/TextControlInnerElements.h"
 
 namespace blink {
 
@@ -41,7 +42,8 @@ namespace blink {
 // It supports not only the types for BaseTextInputType but also type=number.
 class TextFieldInputType : public InputType,
                            public InputTypeView,
-                           protected SpinButtonElement::SpinButtonOwner {
+                           protected SpinButtonElement::SpinButtonOwner,
+                           protected AssistButtonElement::AssistButtonOwner {
   USING_GARBAGE_COLLECTED_MIXIN(TextFieldInputType);
 
  public:
@@ -74,6 +76,7 @@ class TextFieldInputType : public InputType,
   virtual void DidSetValueByUserEdit();
 
   void HandleKeydownEventForSpinButton(KeyboardEvent*);
+  bool ShouldHaveAssistButton() const;
   bool ShouldHaveSpinButton() const;
   Element* ContainerElement() const;
 
@@ -91,6 +94,7 @@ class TextFieldInputType : public InputType,
   void UpdatePlaceholderText() final;
   void AppendToFormData(FormData&) const override;
   void SubtreeHasChanged() final;
+  void AssistConfigurationChanged() final;
 
   // SpinButtonElement::SpinButtonOwner functions.
   void FocusAndSelectSpinButtonOwner() final;
@@ -101,6 +105,9 @@ class TextFieldInputType : public InputType,
   void SpinButtonDidReleaseMouseCapture(SpinButtonElement::EventDispatch) final;
 
   SpinButtonElement* GetSpinButtonElement() const;
+
+  // AssistButtonElement::AssistButtonOwner functions.
+  void AssistButtonPressed() final;
 };
 
 }  // namespace blink
