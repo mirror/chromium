@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf391df_a5cfb252",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:30:08Z",
+      "side": 1,
+      "message": "nit: Move this before if-statement at L214 to reduce extent of |caret_top|.",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "a12aa020383f97a88f2edd69cc2e6eb62faa376a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afb9651_4f641d68",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:30:08Z",
+      "side": 1,
+      "message": "Could you declare this variable in each case clause to limit extent of\nlocal variable? In this way, we can use const variable.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "a12aa020383f97a88f2edd69cc2e6eb62faa376a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c389642c_75776925",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:30:08Z",
+      "side": 1,
+      "message": "nit: s/Optional\u003cunsigned\u003e/const Optional\u003cunsigned\u003e/",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 20
+      },
+      "revId": "a12aa020383f97a88f2edd69cc2e6eb62faa376a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
