@@ -30,9 +30,6 @@
 // scrolling to top when the status bar is tapped.
 - (void)setScrollsToTop:(BOOL)scrollsToTop;
 
-// Called when the receiver should change itself to editing mode.
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_BOOKMARK_HOME_PRIMARY_VIEW_H_
