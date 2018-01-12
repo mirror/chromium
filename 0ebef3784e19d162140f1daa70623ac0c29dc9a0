@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a75b81_f5cea2ed",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T22:28:46Z",
+      "side": 1,
+      "message": "This second one is a views::View override. Please group it accordingly.",
+      "revId": "0ebef3784e19d162140f1daa70623ac0c29dc9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e2ea20_c6fbcb8e",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T22:28:46Z",
+      "side": 1,
+      "message": "Looks like these can still be private in latest patch.",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 26
+      },
+      "revId": "0ebef3784e19d162140f1daa70623ac0c29dc9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

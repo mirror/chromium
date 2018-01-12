@@ -200,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "e0fd8ffa_4736bf19",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T22:28:46Z",
+      "side": 1,
+      "message": "We don\u0027t have to honor it in the XDG case as the spec makes it clear that it\u0027s just a suggestion and the client can\u0027t assume that the compositor will respect it. However, we should do the best we can in the context of chrome. If \u0027minimum_size_ \u003d\u003d maximum_size_\u0027 then we probably shouldn\u0027t allow maximize but maybe otherwise we should. I\u0027m worried that a client will set this to something very large and then that will accidentally disable maximize functionality. Maybe just add a comment to ShellSurfaceBase::GetMaximumSize for now to make it clear that non-empty size makes the window non-maximizable, as that\u0027s not clear.",
+      "parentUuid": "9b9efda5_f201315b",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7e0e8e6_fb574dc8",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 41
