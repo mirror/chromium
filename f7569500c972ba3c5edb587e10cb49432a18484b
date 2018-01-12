@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8431ce5f_a99de5e7",
+        "filename": "build/android/pylib/output/remote_output_manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2018-01-12T00:58:23Z",
+      "side": 1,
+      "message": "Without specifying content_type, \u0027text/html\u0027 will be considered as gs_args.\n\nDetails here:\nhttps://codesearch.chromium.org/chromium/src/build/android/pylib/utils/google_storage_helper.py?q\u003dgoogle_storage_helper\u0026sq\u003dpackage:chromium\u0026l\u003d32",
+      "revId": "f7569500c972ba3c5edb587e10cb49432a18484b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
