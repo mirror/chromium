@@ -54,9 +54,6 @@
 // animation.
 @property(nonatomic, assign, readonly) BOOL showingMenu;
 
-// This method is used to enable or disable swiping in the menu from the left.
-- (void)enableSideSwiping:(BOOL)enable;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_BOOKMARK_PANEL_VIEW_H_

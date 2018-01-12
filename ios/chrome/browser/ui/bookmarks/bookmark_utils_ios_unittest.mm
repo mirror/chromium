@@ -35,13 +35,9 @@ class BookmarkIOSUtilsUnitTest : public BookmarkIOSUnitTest {
 
   void SetUp() override {
     BookmarkIOSUnitTest::SetUp();
-    // TODO(crbug.com/753599): Remove following line when cleanup old bookmarks.
-    bookmark_utils_ios::ClearPositionCache();
   }
 
   void TearDown() override {
-    // TODO(crbug.com/753599): Remove following line when cleanup old bookmarks.
-    bookmark_utils_ios::ClearPositionCache();
     BookmarkIOSUnitTest::TearDown();
   }
 };
@@ -184,26 +180,6 @@ TEST_F(BookmarkIOSUtilsUnitTest, TestDefaultMoveFolder) {
   EXPECT_EQ(folder, f2);
 }
 
-// TODO(crbug.com/753599): Remove this test when cleanup old bookmarks.
-TEST_F(BookmarkIOSUtilsUnitTest, TestPositionCache) {
-  // Try to store and retrieve a cache for the folderMenuItem.
-  const BookmarkNode* mobileNode = _bookmarkModel->mobile_node();
-  const BookmarkNode* f1 = AddFolder(mobileNode, @"f1");
-  BookmarkMenuItem* item =
-      [BookmarkMenuItem folderMenuItemForNode:f1 rootAncestor:NULL];
-  CGFloat position = 23;
-  bookmark_utils_ios::CachePosition(position, item);
-  BookmarkMenuItem* outItem = nil;
-  CGFloat outPosition;
-  BOOL result = bookmark_utils_ios::GetPositionCache(_bookmarkModel, &outItem,
-                                                     &outPosition);
-  ASSERT_TRUE(result);
-  EXPECT_NSEQ(item, outItem);
-  EXPECT_NEAR(position, outPosition, 0.01);
-  EXPECT_EQ(f1, outItem.folder);
-  EXPECT_EQ(bookmarks::MenuItemFolder, outItem.type);
-}
-
 TEST_F(BookmarkIOSUtilsUnitTest, TestCreateBookmarkPath) {
   const BookmarkNode* mobileNode = _bookmarkModel->mobile_node();
   const BookmarkNode* f1 = AddFolder(mobileNode, @"f1");
@@ -219,26 +195,6 @@ TEST_F(BookmarkIOSUtilsUnitTest, TestCreateBookmarkPath) {
 TEST_F(BookmarkIOSUtilsUnitTest, TestCreateNilBookmarkPath) {
   NSArray* path = bookmark_utils_ios::CreateBookmarkPath(_bookmarkModel, 999);
   EXPECT_TRUE(path == nil);
-}
-
-// TODO(crbug.com/753599): Remove this test when cleanup old bookmarks.
-TEST_F(BookmarkIOSUtilsUnitTest, TestBookmarkModelChangesPositionCache) {
-  // Try to store and retrieve a cache for the folderMenuItem
-  const BookmarkNode* mobileNode = _bookmarkModel->mobile_node();
-  const BookmarkNode* f1 = AddFolder(mobileNode, @"f1");
-  BookmarkMenuItem* item =
-      [BookmarkMenuItem folderMenuItemForNode:f1 rootAncestor:NULL];
-  CGFloat position = 23;
-  bookmark_utils_ios::CachePosition(position, item);
-
-  // Delete the folder.
-  _bookmarkModel->Remove(f1);
-
-  CGFloat outPosition;
-  BookmarkMenuItem* outItem;
-  BOOL result = bookmark_utils_ios::GetPositionCache(_bookmarkModel, &outItem,
-                                                     &outPosition);
-  ASSERT_FALSE(result);
 }
 
 TEST_F(BookmarkIOSUtilsUnitTest, TestVisibleNonDescendantNodes) {
