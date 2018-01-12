@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be0b30cd_f73ef541",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T15:37:55Z",
+      "side": 1,
+      "message": "optional: Maybe it would be a bit shorter to create a new member\nbool dice_enabled_;\ninstead of calling this long function everywhere.",
+      "range": {
+        "startLine": 375,
+        "startChar": 18,
+        "endLine": 375,
+        "endChar": 72
+      },
+      "revId": "835695648279cfaf6bae9d47740229c38b92d510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2884fd18_88138d14",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T15:37:55Z",
+      "side": 1,
+      "message": "nit, optional: not sure we need the extra bracket.",
+      "range": {
+        "startLine": 796,
+        "startChar": 7,
+        "endLine": 796,
+        "endChar": 8
+      },
+      "revId": "835695648279cfaf6bae9d47740229c38b92d510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
