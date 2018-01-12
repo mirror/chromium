@@ -22,7 +22,6 @@
 #include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_pending_view.h"
-#include "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_update_pending_view.h"
 #include "chrome/grit/generated_resources.h"
@@ -325,8 +324,6 @@ void ManagePasswordsBubbleView::CreateChild() {
   } else if (model()->state() ==
              password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
     AddChildView(new ManagePasswordUpdatePendingView(this));
-  } else if (model()->state() == password_manager::ui::CONFIRMATION_STATE) {
-    AddChildView(new ManagePasswordSaveConfirmationView(this));
   } else if (model()->state() == password_manager::ui::AUTO_SIGNIN_STATE) {
     AddChildView(new ManagePasswordAutoSignInView(this));
   } else if (model()->state() ==

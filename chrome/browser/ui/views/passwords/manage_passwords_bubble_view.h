@@ -42,7 +42,6 @@ class ManagePasswordsBubbleView : public ManagePasswordsBubbleDelegateViewBase,
   // this should go away on its own.
   friend class ManagePasswordAutoSignInView;
   friend class ManagePasswordPendingView;
-  friend class ManagePasswordSaveConfirmationView;
   friend class ManagePasswordSignInPromoView;
   friend class ManagePasswordUpdatePendingView;
 

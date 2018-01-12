@@ -42,7 +42,7 @@
    clickedOnLink:(id)link
          atIndex:(NSUInteger)charIndex {
   if (self.model)
-    self.model->OnNavigateToPasswordManagerAccountDashboardLinkClicked();
+    self.model->OnNavigateToPasswordManagerAccountDashboardClicked();
   [self.delegate viewShouldDismiss];
   return YES;
 }

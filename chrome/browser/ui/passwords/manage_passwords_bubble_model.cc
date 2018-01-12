@@ -314,6 +314,9 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     manage_link_ = l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_BUBBLE_LINK);
   }
 
+  // TODO(pbos): Remove (along with related getters and resource strings) when
+  // the cocoa dialog is removed. A new label is used directly in the
+  // views-dialog equivalent.
   if (state_ == password_manager::ui::CONFIRMATION_STATE) {
     base::string16 save_confirmation_link = base::UTF8ToUTF16(
         GURL(base::ASCIIToUTF16(
@@ -321,9 +324,9 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
             .host());
 
     size_t offset;
-    save_confirmation_text_ =
-        l10n_util::GetStringFUTF16(IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT,
-                                   save_confirmation_link, &offset);
+    save_confirmation_text_ = l10n_util::GetStringFUTF16(
+        IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT_DEPRECATED,
+        save_confirmation_link, &offset);
     save_confirmation_link_range_ =
         gfx::Range(offset, offset + save_confirmation_link.length());
   }
@@ -460,7 +463,7 @@ void ManagePasswordsBubbleModel::OnManageClicked() {
 }
 
 void ManagePasswordsBubbleModel::
-    OnNavigateToPasswordManagerAccountDashboardLinkClicked() {
+    OnNavigateToPasswordManagerAccountDashboardClicked() {
   interaction_keeper_->set_dismissal_reason(
       metrics_util::CLICKED_PASSWORDS_DASHBOARD);
   if (delegate_)

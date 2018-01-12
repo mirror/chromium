@@ -70,9 +70,9 @@ class ManagePasswordsBubbleModel {
   // Called by the view code when the manage button is clicked by the user.
   void OnManageClicked();
 
-  // Called by the view code when the navigate to passwords.google.com link is
-  // clicked by the user.
-  void OnNavigateToPasswordManagerAccountDashboardLinkClicked();
+  // Called by the view code when the navigate to passwords.google.com link or
+  // button is clicked by the user.
+  void OnNavigateToPasswordManagerAccountDashboardClicked();
 
   // Called by the view code when the brand name link is clicked by the user.
   void OnBrandLinkClicked();
