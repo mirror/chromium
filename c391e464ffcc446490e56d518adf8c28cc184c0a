@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01cb76ed_89000020",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T13:54:57Z",
+      "side": 1,
+      "message": "As a followup, would it be possible to move ivars declaration to the implementation file?",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc19931_642ccee8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T13:54:57Z",
+      "side": 1,
+      "message": "style: C-style cast are forbidden, I think static_cast\u003cdouble\u003e() would work.",
+      "range": {
+        "startLine": 195,
+        "startChar": 45,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4231b07_d880e670",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T13:54:57Z",
+      "side": 1,
+      "message": "nit: remove override.",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0b57c7_707757d1",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T13:54:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2e642aa_ddc2e270",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_navigation_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T13:54:57Z",
+      "side": 0,
+      "message": "Shouldn\u0027t this file be deleted? Or was the TODO wrong?",
+      "revId": "ae42d324d6e2f1921b70c9f0a26f124d0207b198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1a7089c_e9350dca",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
         "patchSetId": 13
