@@ -70,6 +70,30 @@
       "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de7008c_4ffe661f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-12T21:51:14Z",
+      "side": 1,
+      "message": "Thanks for the suggestions. Now the profiler is created on the IO thread in the async manner, and is stored in a SequenceLocalStorageSlot. For the profiler to start on the IO thread, we need to allow waiting on a //base sync primitive temporarily per the current implementation of the profiler. Is this okay?",
+      "parentUuid": "4f578eee_57676d0f",
+      "range": {
+        "startLine": 1144,
+        "startChar": 29,
+        "endLine": 1144,
+        "endChar": 54
+      },
+      "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
