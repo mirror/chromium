@@ -142,6 +142,7 @@ WATERFALL = {
       'build_config': 'Release',
       'swarming': True,
       'os_type': 'win',
+      'use_gpu_trigger_script': True,
     },
     'Win7 Debug (NVIDIA)': {
       'swarming_dimensions': [
@@ -2661,6 +2662,14 @@ def generate_isolated_test(waterfall, tester_name, tester_config, test,
     result['non_precommit_args'] = test_config['non_precommit_args']
   if 'precommit_args' in test_config:
     result['precommit_args'] = test_config['precommit_args']
+  if tester_config.get('use_gpu_trigger_script'):
+    result['trigger_script'] = {
+      'script': '//content/test/gpu/trigger_gpu_test.py',
+      'args': [
+        '--gpu-trigger-configs',
+        json.dumps(tester_config['swarming_dimensions'])
+      ],
+    }
   return result
 
 def generate_telemetry_test(waterfall, tester_name, tester_config,
