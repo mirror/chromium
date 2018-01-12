@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "53527963_bbff6727",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:53:50Z",
+      "side": 1,
+      "message": "FYI: I removed these when I rebased my CL against the previous CL.",
+      "parentUuid": "b10b63a8_76ea1f07",
+      "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9a6924_523923a1",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Right, done",
       "parentUuid": "57d30382_0264f5ac",
+      "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "574026ab_cbce12ff",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:53:50Z",
+      "side": 1,
+      "message": "Ahh, ok ... I thought this was being done to avoid slicing, but I guess the event is being passed const\u0026 so it\u0027s not needed.",
+      "parentUuid": "7dff6feb_ab701206",
       "revId": "dee3c7cabdf7dc39b8ef38a4092efa0cf84e49cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
