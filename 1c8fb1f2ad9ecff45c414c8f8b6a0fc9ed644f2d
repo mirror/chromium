@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03a40abc_b97cfaab",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:27:51Z",
+      "side": 1,
+      "message": "Expanded",
+      "parentUuid": "f8734ac2_4676d8c9",
+      "revId": "1c8fb1f2ad9ecff45c414c8f8b6a0fc9ed644f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cad20c2_177c61f8",
         "filename": "content/browser/service_worker/service_worker_request_handler.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T02:30:56Z",
       "side": 1,
       "message": "NOTREACHED() ? (here and below)",
+      "revId": "1c8fb1f2ad9ecff45c414c8f8b6a0fc9ed644f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c77fa1_b07fae01",
+        "filename": "content/browser/service_worker/service_worker_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:27:51Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it as self-documentation about why these are here and that they can be removed (and it shows up in searches for IsBrowserSideNavigationEnabled).",
+      "parentUuid": "2cad20c2_177c61f8",
       "revId": "1c8fb1f2ad9ecff45c414c8f8b6a0fc9ed644f2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
