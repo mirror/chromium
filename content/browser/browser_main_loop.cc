@@ -826,7 +826,7 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
       sql::SqlMemoryDumpProvider::GetInstance(), "Sql", nullptr);
 }
 
-int BrowserMainLoop::PreCreateThreads() {
+int BrowserMainLoop::PreCreateThreads(std::unique_ptr<BrowserProcessSubThread> io_thread) {
   // SequencedWorkerPool shouldn't be enabled yet. It should be enabled below by
   // either |parts_|->PreCreateThreads() or
   // base::SequencedWorkerPool::EnableForProcess().
@@ -840,6 +840,7 @@ int BrowserMainLoop::PreCreateThreads() {
     result_code_ = parts_->PreCreateThreads();
   }
 
+  io_thread_ = std::move(io_thread);
   // Enable SequencedWorkerPool if |parts_|->PreCreateThreads() hasn't enabled
   // it.
   // TODO(fdoray): Remove this once the SequencedWorkerPool to TaskScheduler
@@ -931,10 +932,11 @@ void BrowserMainLoop::PreShutdown() {
   ui::Clipboard::OnPreShutdownForCurrentThread();
 }
 
-void BrowserMainLoop::CreateStartupTasks() {
+void BrowserMainLoop::CreateStartupTasks(std::unique_ptr<BrowserProcessSubThread> io_thread) {
   TRACE_EVENT0("startup", "BrowserMainLoop::CreateStartupTasks");
 
   DCHECK(!startup_task_runner_);
+
 #if defined(OS_ANDROID)
   startup_task_runner_ = std::make_unique<StartupTaskRunner>(
       base::Bind(&BrowserStartupComplete), base::ThreadTaskRunnerHandle::Get());
@@ -943,7 +945,8 @@ void BrowserMainLoop::CreateStartupTasks() {
       base::Callback<void(int)>(), base::ThreadTaskRunnerHandle::Get());
 #endif
   StartupTask pre_create_threads =
-      base::Bind(&BrowserMainLoop::PreCreateThreads, base::Unretained(this));
+      base::Bind(&BrowserMainLoop::PreCreateThreads, base::Unretained(this),
+                 base::Passed(&io_thread));
   startup_task_runner_->AddTask(pre_create_threads);
 
   StartupTask create_threads =
@@ -968,6 +971,8 @@ void BrowserMainLoop::CreateStartupTasks() {
 #else
   startup_task_runner_->RunAllTasksNow();
 #endif
+  LOG(ERROR) << "ABCD, " << __PRETTY_FUNCTION__;
+  base::debug::StackTrace().Print();
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -1116,17 +1121,17 @@ int BrowserMainLoop::CreateThreads() {
 #endif  // OS_WIN
         break;
       case BrowserThread::IO:
-        TRACE_EVENT_BEGIN1("startup",
-            "BrowserMainLoop::CreateThreads:start",
-            "Thread", "BrowserThread::IO");
-        thread_to_start = &io_thread_;
-        options = io_message_loop_options;
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-        // Up the priority of the |io_thread_| as some of its IPCs relate to
-        // display tasks.
-        options.priority = base::ThreadPriority::DISPLAY;
-#endif
-        break;
+//        TRACE_EVENT_BEGIN1("startup",
+//            "BrowserMainLoop::CreateThreads:start",
+//            "Thread", "BrowserThread::IO");
+//        thread_to_start = &io_thread_;
+//        options = io_message_loop_options;
+//#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+//        // Up the priority of the |io_thread_| as some of its IPCs relate to
+//        // display tasks.
+//        options.priority = base::ThreadPriority::DISPLAY;
+//#endif
+//        break;
       case BrowserThread::UI:        // Falls through.
       case BrowserThread::ID_COUNT:  // Falls through.
         NOTREACHED();
@@ -1443,6 +1448,11 @@ void BrowserMainLoop::GetCompositingModeReporter(
 
 void BrowserMainLoop::StopStartupTracingTimer() {
   startup_trace_timer_.Stop();
+}
+
+void BrowserMainLoop::SetIOThread(
+    std::unique_ptr<BrowserProcessSubThread> io_thread) {
+  io_thread_ = std::move(io_thread);
 }
 
 void BrowserMainLoop::InitializeMainThread() {

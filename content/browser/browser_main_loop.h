@@ -147,7 +147,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   // this can be called more than once (currently only on Android) if we get a
   // request for synchronous startup while the tasks created by asynchronous
   // startup are still running.
-  void CreateStartupTasks();
+  void CreateStartupTasks(std::unique_ptr<BrowserProcessSubThread> io_thread);
 
   // Perform the default message loop run logic.
   void RunMainMessageLoopParts();
@@ -219,6 +219,7 @@ class CONTENT_EXPORT BrowserMainLoop {
     return device_monitor_mac_.get();
   }
 #endif
+ void SetIOThread(std::unique_ptr<BrowserProcessSubThread> io_thread);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(BrowserMainLoopTest, CreateThreadsInSingleProcess);
@@ -226,7 +227,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   void InitializeMainThread();
 
   // Called just before creating the threads
-  int PreCreateThreads();
+  int PreCreateThreads(std::unique_ptr<BrowserProcessSubThread> io_thread);
 
   // Create all secondary threads.
   int CreateThreads();
@@ -348,6 +349,9 @@ class CONTENT_EXPORT BrowserMainLoop {
   // Members initialized in |BrowserThreadsStarted()| --------------------------
   std::unique_ptr<ServiceManagerContext> service_manager_context_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> mojo_ipc_support_;
+  void SetServiceManagerContext(std::unique_ptr<ServiceManagerContext> context);
+  void SetMojoIpcSupport(std::unique_ptr<mojo::edk::ScopedIPCSupport>
+                         nojo_ipc_suppor);
 
   // |user_input_monitor_| has to outlive |audio_manager_|, so declared first.
   std::unique_ptr<media::UserInputMonitor> user_input_monitor_;

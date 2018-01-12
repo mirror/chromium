@@ -114,7 +114,8 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
                           base::TimeTicks::Now() - start_time_step1);
     }
     const base::TimeTicks start_time_step2 = base::TimeTicks::Now();
-    main_loop_->CreateStartupTasks();
+    io_thread_ = initializeIOThread();
+    main_loop_->CreateStartupTasks(std::move(io_thread_));
     int result_code = main_loop_->GetResultCode();
     if (result_code > 0)
       return result_code;
@@ -131,6 +132,24 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
     main_loop_->SynchronouslyFlushStartupTasks();
   }
 #endif
+
+  std::unique_ptr<BrowserProcessSubThread> initializeIOThread() {
+        TRACE_EVENT_BEGIN1("startup",
+            "BrowserMainLoop::CreateThreads:start",
+            "Thread", "BrowserThread::IO");
+        std::unique_ptr<BrowserProcessSubThread> io_thread =
+            base::MakeUnique<BrowserProcessSubThread>(
+                content::BrowserThread::IO);
+        base::Thread::Options options;
+        options.message_loop_type = base::MessageLoop::TYPE_IO;
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+        // Up the priority of the |io_thread_| as some of its IPCs relate to
+        // display tasks.
+        options.priority = base::ThreadPriority::DISPLAY;
+#endif
+        io_thread->StartWithOptions(options);
+        return io_thread;
+  }
 
   int Run() override {
     DCHECK(initialization_started_);
@@ -225,6 +244,7 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
 
   std::unique_ptr<NotificationServiceImpl> notification_service_;
   std::unique_ptr<BrowserMainLoop> main_loop_;
+  std::unique_ptr<BrowserProcessSubThread> io_thread_;
 #if defined(OS_WIN)
   std::unique_ptr<ui::ScopedOleInitializer> ole_initializer_;
 #endif

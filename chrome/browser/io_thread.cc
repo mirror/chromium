@@ -429,6 +429,9 @@ net::URLRequestContextGetter* IOThread::system_url_request_context_getter() {
 void IOThread::Init() {
   TRACE_EVENT0("startup", "IOThread::InitAsync");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+ 
+  LOG(ERROR) << "ABCD, " << __PRETTY_FUNCTION__;
+  base::debug::StackTrace().Print();
 
 #if defined(USE_NSS_CERTS)
   net::SetMessageLoopForNSSHttpIO();
