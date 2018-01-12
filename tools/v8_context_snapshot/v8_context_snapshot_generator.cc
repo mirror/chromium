@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
   base::AtExitManager at_exit;
   base::CommandLine::Init(argc, argv);
 #ifdef V8_USE_EXTERNAL_STARTUP_DATA
-  gin::V8Initializer::LoadV8Snapshot();
+  gin::V8Initializer::LoadV8Snapshot(true);
   gin::V8Initializer::LoadV8Natives();
 #endif
 
