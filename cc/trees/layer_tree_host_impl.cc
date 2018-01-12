@@ -16,17 +16,20 @@
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/containers/flat_map.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
+#include "cc/base/switches.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/input/browser_controls_offset_manager.h"
@@ -255,6 +258,12 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       impl_thread_phase_(ImplThreadPhase::IDLE) {
   DCHECK(mutator_host_);
   mutator_host_->SetMutatorHostClient(this);
+
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  std::string string_value =
+      cl->GetSwitchValueASCII(switches::kSendEmptyFrameCounter);
+  if (string_value != "")
+    base::StringToInt(string_value, &send_empty_frame_counter_);
 
   DCHECK(task_runner_provider_->IsImplThread());
   DidVisibilityChange(this, visible_);
@@ -963,75 +972,96 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
       active_tree()->property_trees()->effect_tree.HasCopyRequests();
   bool have_missing_animated_tiles = false;
 
-  for (EffectTreeLayerListIterator it(active_tree());
-       it.state() != EffectTreeLayerListIterator::State::END; ++it) {
-    auto target_render_pass_id = it.target_render_surface()->id();
-    viz::RenderPass* target_render_pass =
-        FindRenderPassById(frame->render_passes, target_render_pass_id);
-
-    AppendQuadsData append_quads_data;
-
-    if (it.state() == EffectTreeLayerListIterator::State::TARGET_SURFACE) {
-      RenderSurfaceImpl* render_surface = it.target_render_surface();
-      if (render_surface->HasCopyRequest()) {
-        active_tree()
-            ->property_trees()
-            ->effect_tree.TakeCopyRequestsAndTransformToSurface(
-                render_surface->EffectTreeIndex(),
-                &target_render_pass->copy_requests);
-      }
-    } else if (it.state() ==
-               EffectTreeLayerListIterator::State::CONTRIBUTING_SURFACE) {
-      RenderSurfaceImpl* render_surface = it.current_render_surface();
-      if (render_surface->contributes_to_drawn_surface()) {
-        render_surface->AppendQuads(draw_mode, target_render_pass,
-                                    &append_quads_data);
-      }
-    } else if (it.state() == EffectTreeLayerListIterator::State::LAYER &&
-               !it.current_layer()->visible_layer_rect().IsEmpty()) {
-      LayerImpl* layer = it.current_layer();
-      bool occluded =
-          layer->draw_properties().occlusion_in_content_space.IsOccluded(
-              layer->visible_layer_rect());
-      if (!occluded && layer->WillDraw(draw_mode, resource_provider_.get())) {
-        DCHECK_EQ(active_tree_.get(), layer->layer_tree_impl());
-
-        frame->will_draw_layers.push_back(layer);
-        if (layer->may_contain_video())
-          frame->may_contain_video = true;
-
-        layer->AppendQuads(target_render_pass, &append_quads_data);
-      }
-
-      ++layers_drawn;
-
-      rendering_stats_instrumentation_->AddVisibleContentArea(
-          append_quads_data.visible_layer_area);
-      rendering_stats_instrumentation_->AddApproximatedVisibleContentArea(
-          append_quads_data.approximated_visible_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedVisibleContentArea(
-          append_quads_data.checkerboarded_visible_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedNoRecordingContentArea(
-          append_quads_data.checkerboarded_no_recording_content_area);
-      rendering_stats_instrumentation_->AddCheckerboardedNeedsRasterContentArea(
-          append_quads_data.checkerboarded_needs_raster_content_area);
-
-      num_missing_tiles += append_quads_data.num_missing_tiles;
-      num_incomplete_tiles += append_quads_data.num_incomplete_tiles;
-      checkerboarded_no_recording_content_area +=
-          append_quads_data.checkerboarded_no_recording_content_area;
-      checkerboarded_needs_raster_content_area +=
-          append_quads_data.checkerboarded_needs_raster_content_area;
-      total_visible_area += append_quads_data.visible_layer_area;
-      if (append_quads_data.num_missing_tiles > 0) {
-        have_missing_animated_tiles |=
-            layer->screen_space_transform_is_animating();
+  // DCHECK(! settings_.single_thread_proxy_scheduler);
+  if (!settings_.single_thread_proxy_scheduler && !send_empty_frame_) {
+    if (send_empty_frame_counter_) {
+      send_empty_frame_counter_ -= 1;
+      LOG(ERROR) << "Sending empty frames in " << send_empty_frame_counter_;
+      if (!send_empty_frame_counter_) {
+        send_empty_frame_ = true;
+        LOG(ERROR) << "Sending empty frames";
       }
     }
-    frame->activation_dependencies.insert(
-        frame->activation_dependencies.end(),
-        append_quads_data.activation_dependencies.begin(),
-        append_quads_data.activation_dependencies.end());
+  }
+
+  Region full_region(frame->render_passes.back()->output_rect);
+  const Region& xx_unoccluded_screen_space_region =
+      send_empty_frame_ ? full_region : unoccluded_screen_space_region;
+  if (1 || !send_empty_frame_) {
+    for (EffectTreeLayerListIterator it(active_tree());
+         it.state() != EffectTreeLayerListIterator::State::END; ++it) {
+      auto target_render_pass_id = it.target_render_surface()->id();
+      viz::RenderPass* target_render_pass =
+          FindRenderPassById(frame->render_passes, target_render_pass_id);
+
+      AppendQuadsData append_quads_data;
+
+      if (it.state() == EffectTreeLayerListIterator::State::TARGET_SURFACE) {
+        RenderSurfaceImpl* render_surface = it.target_render_surface();
+        if (render_surface->HasCopyRequest()) {
+          active_tree()
+              ->property_trees()
+              ->effect_tree.TakeCopyRequestsAndTransformToSurface(
+                  render_surface->EffectTreeIndex(),
+                  &target_render_pass->copy_requests);
+        }
+      } else if (it.state() ==
+                 EffectTreeLayerListIterator::State::CONTRIBUTING_SURFACE) {
+        RenderSurfaceImpl* render_surface = it.current_render_surface();
+        if (!send_empty_frame_ &&
+            render_surface->contributes_to_drawn_surface()) {
+          render_surface->AppendQuads(draw_mode, target_render_pass,
+                                      &append_quads_data);
+        }
+      } else if (it.state() == EffectTreeLayerListIterator::State::LAYER &&
+                 !it.current_layer()->visible_layer_rect().IsEmpty()) {
+        LayerImpl* layer = it.current_layer();
+        bool occluded =
+            layer->draw_properties().occlusion_in_content_space.IsOccluded(
+                layer->visible_layer_rect());
+        if (!occluded && layer->WillDraw(draw_mode, resource_provider_.get())) {
+          DCHECK_EQ(active_tree_.get(), layer->layer_tree_impl());
+
+          frame->will_draw_layers.push_back(layer);
+          if (layer->may_contain_video())
+            frame->may_contain_video = true;
+
+          if (!send_empty_frame_)
+            layer->AppendQuads(target_render_pass, &append_quads_data);
+        }
+
+        ++layers_drawn;
+
+        rendering_stats_instrumentation_->AddVisibleContentArea(
+            append_quads_data.visible_layer_area);
+        rendering_stats_instrumentation_->AddApproximatedVisibleContentArea(
+            append_quads_data.approximated_visible_content_area);
+        rendering_stats_instrumentation_->AddCheckerboardedVisibleContentArea(
+            append_quads_data.checkerboarded_visible_content_area);
+        rendering_stats_instrumentation_
+            ->AddCheckerboardedNoRecordingContentArea(
+                append_quads_data.checkerboarded_no_recording_content_area);
+        rendering_stats_instrumentation_
+            ->AddCheckerboardedNeedsRasterContentArea(
+                append_quads_data.checkerboarded_needs_raster_content_area);
+
+        num_missing_tiles += append_quads_data.num_missing_tiles;
+        num_incomplete_tiles += append_quads_data.num_incomplete_tiles;
+        checkerboarded_no_recording_content_area +=
+            append_quads_data.checkerboarded_no_recording_content_area;
+        checkerboarded_needs_raster_content_area +=
+            append_quads_data.checkerboarded_needs_raster_content_area;
+        total_visible_area += append_quads_data.visible_layer_area;
+        if (append_quads_data.num_missing_tiles > 0) {
+          have_missing_animated_tiles |=
+              layer->screen_space_transform_is_animating();
+        }
+      }
+      frame->activation_dependencies.insert(
+          frame->activation_dependencies.end(),
+          append_quads_data.activation_dependencies.begin(),
+          append_quads_data.activation_dependencies.end());
+    }
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
@@ -1068,10 +1098,11 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
       active_tree_->background_color() == SK_ColorTRANSPARENT;
   if (!has_transparent_background) {
     frame->render_passes.back()->has_transparent_background = false;
-    AppendQuadsToFillScreen(
-        active_tree_->RootScrollLayerDeviceViewportBounds(),
-        frame->render_passes.back().get(), active_tree_->RootRenderSurface(),
-        active_tree_->background_color(), unoccluded_screen_space_region);
+    AppendQuadsToFillScreen(active_tree_->RootScrollLayerDeviceViewportBounds(),
+                            frame->render_passes.back().get(),
+                            active_tree_->RootRenderSurface(),
+                            0xFF00FFFF /*active_tree_->background_color()*/,
+                            xx_unoccluded_screen_space_region);
   }
 
   RemoveRenderPasses(frame);

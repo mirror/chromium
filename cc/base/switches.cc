@@ -99,5 +99,7 @@ const char kCCLayerTreeTestLongTimeout[] = "cc-layer-tree-test-long-timeout";
 // Makes pixel tests write their output instead of read it.
 const char kCCRebaselinePixeltests[] = "cc-rebaseline-pixeltests";
 
+const char kSendEmptyFrameCounter[] = "send-empty-frame-counter";
+
 }  // namespace switches
 }  // namespace cc

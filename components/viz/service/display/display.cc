@@ -6,8 +6,10 @@
 
 #include <stddef.h>
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
@@ -18,6 +20,7 @@
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/switches.h"
 #include "components/viz/service/display/direct_renderer.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -54,6 +57,14 @@ Display::Display(
       current_task_runner_(std::move(current_task_runner)) {
   DCHECK(output_surface_);
   DCHECK(frame_sink_id_.is_valid());
+
+  base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
+  std::string string_value =
+      cl->GetSwitchValueASCII(switches::kReuseAggregateResultCounter);
+  if (string_value != "")
+    base::StringToInt(string_value, &reuse_aggregate_result_counter_);
+  aggregate_when_reusing_ = cl->HasSwitch(switches::kAggregateWhenReusing);
+
   if (scheduler_)
     scheduler_->SetClient(this);
 }
@@ -274,10 +285,32 @@ bool Display::DrawAndSwap() {
     return false;
   }
 
-  base::ElapsedTimer aggregate_timer;
-  CompositorFrame frame = aggregator_->Aggregate(current_surface_id_);
-  UMA_HISTOGRAM_COUNTS_1M("Compositing.SurfaceAggregator.AggregateUs",
-                          aggregate_timer.Elapsed().InMicroseconds());
+  if (!aggregator_->recycling_frames_) {
+    if (reuse_aggregate_result_counter_) {
+      reuse_aggregate_result_counter_ -= 1;
+      LOG(ERROR) << "Reusing old aggregate result in "
+                 << reuse_aggregate_result_counter_;
+      if (!reuse_aggregate_result_counter_) {
+        aggregator_->recycling_frames_ = true;
+        LOG(ERROR) << "Reusing old aggregate result, aggregate="
+                   << aggregate_when_reusing_;
+      }
+    }
+  }
+
+  CompositorFrame frame;
+  aggregator_->about_to_recycle_frames_ = reuse_aggregate_result_counter_ > 0 &&
+                                          reuse_aggregate_result_counter_ <= 2;
+  if (aggregate_when_reusing_ || !aggregator_->recycling_frames_) {
+    base::ElapsedTimer aggregate_timer;
+    frame = aggregator_->Aggregate(current_surface_id_);
+    UMA_HISTOGRAM_COUNTS_1M("Compositing.SurfaceAggregator.AggregateUs",
+                            aggregate_timer.Elapsed().InMicroseconds());
+  }
+  if (aggregator_->recycling_frames_) {
+    std::swap(frame, old_frames_.front());
+    old_frames_.pop_front();
+  }
 
   if (frame.render_pass_list.empty()) {
     TRACE_EVENT_INSTANT0("viz", "Empty aggregated frame.",
@@ -435,6 +468,15 @@ bool Display::DrawAndSwap() {
   // stalling the critical path for compositing.
   surface_manager_->GarbageCollectSurfaces();
 
+  if (aggregator_->about_to_recycle_frames_) {
+    LOG(ERROR) << "Saving frame to reuse: renderpasses="
+               << frame.render_pass_list.size() << ", root_quads="
+               << frame.render_pass_list.back()->quad_list.size() << " layers="
+               << frame.render_pass_list.back()->shared_quad_state_list.size();
+  }
+  if (aggregator_->recycling_frames_ || aggregator_->about_to_recycle_frames_)
+    old_frames_.push_back(std::move(frame));
+
   return true;
 }
 
@@ -507,7 +549,8 @@ bool Display::SurfaceDamaged(const SurfaceId& surface_id,
       Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
       if (surface) {
         DCHECK(surface->HasActiveFrame());
-        if (surface->GetActiveFrame().resource_list.empty())
+        if (!aggregator_->recycling_frames_ &&
+            surface->GetActiveFrame().resource_list.empty())
           aggregator_->ReleaseResources(surface_id);
       }
       display_damaged = true;
