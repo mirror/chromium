@@ -7,12 +7,12 @@
 import sys
 
 from webkitpy.common import host
-from webkitpy.layout_tests import update_flaky_expectations
+from webkitpy.layout_tests import update_expectations
 from webkitpy.layout_tests.layout_package.bot_test_expectations import BotTestExpectationsFactory
 
 
 if __name__ == "__main__":
     host = host.Host()
-    return_code = update_flaky_expectations.main(
+    return_code = update_expectations.main(
         host, BotTestExpectationsFactory(host.builders), sys.argv[1:])
     sys.exit(return_code)

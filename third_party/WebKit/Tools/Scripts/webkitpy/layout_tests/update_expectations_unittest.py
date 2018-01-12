@@ -12,8 +12,8 @@ from webkitpy.common.system.log_testing import LoggingTestCase
 from webkitpy.layout_tests.builder_list import BuilderList
 from webkitpy.layout_tests.port.factory import PortFactory
 from webkitpy.layout_tests.port.test import LAYOUT_TEST_DIR
-from webkitpy.layout_tests.update_flaky_expectations import main
-from webkitpy.layout_tests.update_flaky_expectations import RemoveFlakesOMatic
+from webkitpy.layout_tests.update_expectations import main
+from webkitpy.layout_tests.update_expectations import RemoveFlakesAndFailsOMatic
 from webkitpy.tool.commands.flaky_tests import FlakyTests
 
 
@@ -94,10 +94,10 @@ class UpdateTestExpectationsTest(LoggingTestCase):
         self._host = MockHost()
         self._port = self._host.port_factory.get('test', None)
         self._expectation_factory = FakeBotTestExpectationsFactory()
-        self._flake_remover = RemoveFlakesOMatic(self._host,
-                                                 self._port,
-                                                 self._expectation_factory,
-                                                 self._mock_web_browser)
+        self._flake_remover = RemoveFlakesAndFailsOMatic(self._host,
+                                                         self._port,
+                                                         self._expectation_factory,
+                                                         self._mock_web_browser)
         self._port.configuration_specifier_macros_dict = {
             'mac': ['mac10.10'],
             'win': ['win7'],
