@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4ad8e685_fd935b53",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-12T19:18:05Z",
+      "side": 1,
+      "message": "Mmm, I don\u0027t know why. Let me check further then.\n\nSure, I will remove the check from the touch events.. I thought it could be a problem here as well, but it doesn\u0027t look like it is.",
+      "parentUuid": "e2427946_e42bdb12",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ac0d37_155021c4",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
         "patchSetId": 4
