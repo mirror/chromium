@@ -11,11 +11,15 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/gfx/text_utils.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/label.h"
+#include "ui/views/focus/focus_manager.h"
 #include "ui/views/test/test_views_delegate.h"
 #include "ui/views/test/views_test_base.h"
+#include "ui/views/test/widget_test.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/widget.h"
 
 namespace {
 
@@ -41,6 +45,15 @@ constexpr TitleSubtitlePair kTitleSubtitlePairs[] = {
      "If you're happy and you know it, clap your hands!", true},
 };
 
+class BubbleWithButton : public views::BubbleDialogDelegateView {
+ public:
+  BubbleWithButton(HoverButton* button, views::View* anchor)
+      : BubbleDialogDelegateView(anchor, views::BubbleBorder::NONE) {
+    set_close_on_deactivate(false);
+    this->AddChildView(button);
+  }
+};
+
 class HoverButtonTest : public views::ViewsTestBase {
  public:
   HoverButtonTest() {}
@@ -62,6 +75,28 @@ class HoverButtonTest : public views::ViewsTestBase {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HoverButtonTest);
+};
+
+class HoverButtonWidgetTest : public views::test::WidgetTest {
+ public:
+  HoverButtonWidgetTest() {}
+
+  void SetUp() override {
+    WidgetTest::SetUp();
+    desktop_widget_ = CreateTopLevelPlatformWidget();
+    test_views_delegate()->set_layout_provider(
+        ChromeLayoutProvider::CreateLayoutProvider());
+  }
+
+  void TearDown() override {
+    desktop_widget_->CloseNow();
+    WidgetTest::TearDown();
+  }
+
+ private:
+  views::Widget* desktop_widget_;
+
+  DISALLOW_COPY_AND_ASSIGN(HoverButtonWidgetTest);
 };
 
 }  // namespace
@@ -150,4 +185,43 @@ TEST_F(HoverButtonTest, CustomTooltip) {
         base::ASCIIToUTF16("\n"));
     EXPECT_EQ(expected, base::UTF8ToUTF16(accessible_name));
   }
+}
+
+// TODO comment
+TEST_F(HoverButtonWidgetTest, CorrectFocusState) {
+  HoverButton* button1 =
+      new HoverButton(nullptr, base::ASCIIToUTF16("Button 1"));
+  HoverButton* button2 =
+      new HoverButton(nullptr, base::ASCIIToUTF16("Button 2"));
+
+  views::Widget* anchor = CreateTopLevelPlatformWidget();
+  views::Widget* bubble1 = BubbleWithButton::CreateBubble(
+      new BubbleWithButton(button1, anchor->GetContentsView()));
+  bubble1->Show();
+  views::Widget* bubble2 = BubbleWithButton::CreateBubble(
+      new BubbleWithButton(button2, anchor->GetContentsView()));
+  bubble2->Show();
+
+  EXPECT_EQ(bubble1, button1->GetWidget());
+  EXPECT_EQ(bubble2, button2->GetWidget());
+
+  views::FocusManager* manager1 = button1->GetFocusManager();
+  views::FocusManager* manager2 = button2->GetFocusManager();
+
+  EXPECT_NE(manager1, manager2);
+
+  // |button1| is
+  button1->SetState(views::Button::ButtonState::STATE_HOVERED);
+  EXPECT_NE(manager1->GetFocusedView(), button1);
+  EXPECT_NE(manager2->GetFocusedView(), button2);
+  button2->SetState(views::Button::ButtonState::STATE_HOVERED);
+  EXPECT_EQ(manager2->GetFocusedView(), button2);
+
+  // button2->SetState(views::Button::ButtonState::STATE_HOVERED);
+  // EXPECT_EQ(manager2->GetFocusedView(), button2);
+
+  // Close all showing widgets.
+  bubble1->Close();
+  bubble2->Close();
+  anchor->Close();
 }
