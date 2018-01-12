@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7551d19c_0ac50137",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T04:57:49Z",
+      "side": 0,
+      "message": "Reducing canonicalization is always welcome but\nI don\u0027t want the function bodies be longer.\nHow about \n|selection_ \u003d PrepareToModifySelection();| by unifying\nPrepareToModifySelection and PrepareToExtendSelection?",
+      "revId": "d0a0808d9a486e845179ff6930e628629a911e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
