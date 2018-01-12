@@ -24,8 +24,22 @@ namespace {
 
 // Policies are loaded early on startup, before PolicyErrorMaps are ready to
 // be retrieved. This function is posted to UI to log any errors found on
-// Refresh below.
-void LogErrors(PolicyErrorMap* errors) {
+// Refresh below. |attempt_count| is the number of times this function has
+// been delayed. Clank doesn't synchronously process startup tasks, so it's
+// possible |errors| isn't ready yet. If |errors| isn't ready, this increments
+// |attempt_count| and posts the task again until a max is hit.
+void LogErrors(std::unique_ptr<PolicyErrorMap> errors,
+               std::unique_ptr<int> attempt_count) {
+  if ((*attempt_count)++ > 10) {
+    DLOG(WARNING) << "Failed to log errors in a reasonable amount of time";
+    return;
+  }
+  if (!errors->IsReady()) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&LogErrors, std::move(errors),
+                                  std::move(attempt_count)));
+    return;
+  }
   PolicyErrorMap::const_iterator iter;
   for (iter = errors->begin(); iter != errors->end(); ++iter) {
     base::string16 policy = base::ASCIIToUTF16(iter->first);
@@ -137,8 +151,10 @@ PrefValueMap* ConfigurationPolicyPrefStore::CreatePreferencesFromPolicies() {
 
   // Retrieve and log the errors once the UI loop is ready. This is only an
   // issue during startup.
+  std::unique_ptr<int> attempt_count = std::make_unique<int>(0);
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&LogErrors, base::Owned(errors.release())));
+      FROM_HERE,
+      base::BindOnce(&LogErrors, std::move(errors), std::move(attempt_count)));
 
   return prefs.release();
 }
