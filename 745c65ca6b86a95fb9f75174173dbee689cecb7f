@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "ea27929b_f23c8c74",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T23:07:16Z",
+      "side": 1,
+      "message": "Fine by me. If a function returns a bool in the forest and nobody checks it...",
+      "parentUuid": "70c51d46_5b2ccb28",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e643207_b9576625",
         "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
         "patchSetId": 3
@@ -189,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "1a37f63a_121b8ac9",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T23:07:16Z",
+      "side": 1,
+      "message": "Drop the DISALLOW_COPY_AND_ASSIGN, and use it in the concrete classes instead. See the end of content/public/browser/web_contents.h as an example. No DISALLOW_COPY_AND_ASSIGN there.",
+      "parentUuid": "4e5358f8_1c26794f",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7585c7d9_933f5eb1",
         "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
         "patchSetId": 3
@@ -224,6 +260,30 @@
       "side": 1,
       "message": "Not sure if I\u0027m misunderstanding this, but the idea behind having it as a WeakPtr is so it can be invalidated by changing it to a nullptr once a navigation away from the interstitial happens.",
       "parentUuid": "7585c7d9_933f5eb1",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70bdedb_dce1696c",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T23:07:16Z",
+      "side": 1,
+      "message": "const base::WeakPtr\u003cDelegate\u003e delegate_;\n\nvs.\n\nbase::WeakPtr\u003cDelegate\u003e const delegate_;\n\nI think you are talking about the former, whereas the latter just means |delegate_| can\u0027t be re-assigned.",
+      "parentUuid": "3ad2602d_8a2ef822",
       "range": {
         "startLine": 64,
         "startChar": 26,
