@@ -5,6 +5,8 @@
 #ifndef BASE_CALLBACK_H_
 #define BASE_CALLBACK_H_
 
+#include <utility>
+
 #include "base/callback_forward.h"
 #include "base/callback_internal.h"
 
@@ -28,8 +30,8 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
 
   OnceCallback() : internal::CallbackBase(nullptr) {}
 
-  explicit OnceCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBase(bind_state) {}
+  explicit OnceCallback(scoped_refptr<internal::BindStateBase> bind_state)
+      : internal::CallbackBase(std::move(bind_state)) {}
 
   OnceCallback(const OnceCallback&) = delete;
   OnceCallback& operator=(const OnceCallback&) = delete;
@@ -75,8 +77,8 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
 
   RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
 
-  explicit RepeatingCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBaseCopyable(bind_state) {}
+  explicit RepeatingCallback(scoped_refptr<internal::BindStateBase> bind_state)
+      : internal::CallbackBaseCopyable(std::move(bind_state)) {}
 
   // Copyable and movabl.
   RepeatingCallback(const RepeatingCallback&) = default;
