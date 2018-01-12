@@ -180,7 +180,7 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::
       IsCollapsibleSpace(string[start]) && style->AutoWrap()) {
     typename OffsetMappingBuilder::SourceNodeScope scope(&mapping_builder_,
                                                          nullptr);
-    AppendBreakOpportunity(style, nullptr);
+    AppendBreakOpportunity(style, layout_object);
     last_collapsible_space_ = CollapsibleSpace::kSpace;
   }
 
