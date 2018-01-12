@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c5d471b_305f4672",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "nit: s/we are going append/we are going to append/",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3b1cb4_65406f4b",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "Is this comment now out of date?",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe473901_6fdde1be",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "It seems like if !SafeBrowsing..., the Proto version sends less information. Is that intentional?",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0d4c77_12f516a7",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "The last 15 lines or so are all common with the JSON method. Can you extract that out?",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9fc27c_9c435f94",
+        "filename": "chrome/browser/extensions/webstore_standalone_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "Is there any need to check for null content?",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c555013a_80e0fee7",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-12T04:13:32Z",
+      "side": 1,
+      "message": "nit: s/contains URLs transitions/contain URL transitions/",
+      "range": {
+        "startLine": 1152,
+        "startChar": 42,
+        "endLine": 1152,
+        "endChar": 47
+      },
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
