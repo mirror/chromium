@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae53d53c_72508961",
+        "filename": "chrome/browser/resources/print_preview/new/app.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6f1004_a0174445",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4715753a_19147b61",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5bc1d4_65d14ee6",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4715753a_19147b61",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9b46f97e_7dbad91b",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5797d842_d99e8043",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 34
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba49e6d4_070dad8e",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76998358_3e00670b",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba49e6d4_070dad8e",
+      "range": {
+        "startLine": 152,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 19
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f5fec30c_b08d581b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0554a3ec_0f1fd241",
+      "range": {
+        "startLine": 166,
+        "startChar": 22,
+        "endLine": 166,
+        "endChar": 53
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a357c7_a31d9ac4",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629a386d_686d65fb",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a357c7_a31d9ac4",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +324,48 @@
     },
     {
       "key": {
+        "uuid": "dff62841_843be832",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "If I understand correctly, I think we still need initialized_ \u003d false before all the settings get set, so that we do not trigger the stickySettingsChanged_ observer prematurely. Changed to set initialized_ \u003d true at the top but then reset it just before setting the settings. To prevent the changes to initialized_ from triggering stickySettingsChanged_, I made initialized_ a member variable instead of a property. Let me know if I am misunderstanding something.",
+      "parentUuid": "29fdc50d_effcd41a",
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8f261e_b6da86f2",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055fa66e_08a1ebd6",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 44
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1827cf_16db1859",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 8
@@ -194,6 +380,24 @@
       "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da91a3b0_edc9c6c1",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1827cf_16db1859",
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "ea48d277_38ee779b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a9de40_cccbb1e2",
+      "range": {
+        "startLine": 414,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 57
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc0027c_b6793dc7",
         "filename": "chrome/test/data/webui/print_preview/restore_state_test.js",
         "patchSetId": 8
@@ -231,6 +459,30 @@
       "writtenOn": "2018-01-12T18:12:40Z",
       "side": 1,
       "message": "Are we just ensuring that saveAppState is called once at the end? Or is this supposed to check that it is called every time? If you intend to test the former, it is a bit tricky (need more code to trigger N asynchronous functions in a serial manner, example https://github.com/google/lovefield/blob/741cef2e35ccdaa0b27b03edfed883e7e78c0f18/tools/promise_util.js#L35).\n\nHaving said that, I think this is more of and end-to-end test, instead of a unit test. Here is an alternate proposal.\n\n1) Create a dedicated unit test just for print-preview-model.\n2) In that test, change all the sticky settings one-by-one and ensure that the event is fired N times, and with the expected payload each time.\n3) In app.js test, simply test that upon receiving such an event nativeLayer is called with the correct parameters.\n\nEssentially this is breaking an end-to-end test with two smaller unit tests.",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 58
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12900198_2ab1e270",
+        "filename": "chrome/test/data/webui/print_preview/restore_state_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-12T20:02:43Z",
+      "side": 1,
+      "message": "The intent was just to catch the last call, and verify all the settings were updated (this is what the existing app state tests do in print_preview_tests.js). Added a comment.\n\nWorking on adding unit tests.",
+      "parentUuid": "8fc0027c_b6793dc7",
       "range": {
         "startLine": 235,
         "startChar": 12,
