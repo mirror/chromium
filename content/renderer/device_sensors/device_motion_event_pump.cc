@@ -77,11 +77,11 @@ void DeviceMotionEventPump::FireEvent() {
 
 void DeviceMotionEventPump::SendStartMessageImpl() {
   if (!sensor_provider_) {
-    RenderFrame* const render_frame = GetRenderFrame();
-    if (!render_frame)
+    InitRenderFrame();
+    if (!render_frame_)
       return;
 
-    render_frame->GetRemoteInterfaces()->GetInterface(
+    render_frame_->GetRemoteInterfaces()->GetInterface(
         mojo::MakeRequest(&sensor_provider_));
     sensor_provider_.set_connection_error_handler(
         base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,

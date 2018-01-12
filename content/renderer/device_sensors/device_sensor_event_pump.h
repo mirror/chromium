@@ -27,7 +27,10 @@
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
+#include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+
+using device::mojom::SensorCreationError;
 
 namespace content {
 
@@ -137,7 +140,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
     }
 
     // Mojo callback for SensorProvider::GetSensor().
-    void OnSensorCreated(device::mojom::SensorInitParamsPtr params) {
+    void OnSensorCreated(device::mojom::SensorInitParamsPtr params,
+                         device::mojom::SensorCreationError error) {
       // |sensor_state| can be SensorState::SHOULD_SUSPEND if Stop() is called
       // before OnSensorCreated() is called.
       DCHECK(sensor_state == SensorState::INITIALIZING ||
@@ -145,7 +149,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
       if (!params) {
         HandleSensorError();
-        event_pump->DidStartIfPossible();
+        event_pump->DidStartIfPossible(error);
         return;
       }
 
@@ -284,8 +288,25 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
   friend struct SensorEntry;
 
-  virtual void DidStartIfPossible() {
+  virtual void DidStartIfPossible(
+      SensorCreationError error =
+          device::mojom::SensorCreationError::NO_ERROR) {
     DVLOG(2) << "did start sensor event pump";
+
+    if (error != SensorCreationError::NO_ERROR &&
+        last_error_ == SensorCreationError::NO_ERROR) {
+      last_error_ = error;
+      if (render_frame_) {
+        if (last_error_ == SensorCreationError::NOT_ALLOWED_FP_ERROR) {
+          render_frame_->AddMessageToConsole(
+              ConsoleMessageLevel::CONSOLE_MESSAGE_LEVEL_WARNING,
+              "Access to the Device Motion API is blocked by feature policy. "
+              "See "
+              "https://github.com/WICG/feature-policy/blob/gh-pages/"
+              "features.md#sensor-features");
+        }
+      }
+    }
 
     if (state_ != PumpState::PENDING_START)
       return;
@@ -302,14 +323,16 @@ class CONTENT_EXPORT DeviceSensorEventPump
     state_ = PumpState::RUNNING;
   }
 
-  static RenderFrame* GetRenderFrame() {
+  void InitRenderFrame() {
     blink::WebLocalFrame* const web_frame =
         blink::WebLocalFrame::FrameForCurrentContext();
-
-    return RenderFrame::FromWebFrame(web_frame);
+    render_frame_ = RenderFrame::FromWebFrame(web_frame);
   }
 
   device::mojom::SensorProviderPtr sensor_provider_;
+  RenderFrame* render_frame_ = nullptr;
+  device::mojom::SensorCreationError last_error_ =
+      device::mojom::SensorCreationError::NO_ERROR;
 
  private:
   virtual bool SensorsReadyOrErrored() const = 0;

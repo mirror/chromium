@@ -119,7 +119,8 @@ void DeviceOrientationEventPump::FireEvent() {
   }
 }
 
-void DeviceOrientationEventPump::DidStartIfPossible() {
+void DeviceOrientationEventPump::DidStartIfPossible(
+    device::mojom::SensorCreationError error) {
   if (!absolute_ && !relative_orientation_sensor_.sensor &&
       fall_back_to_absolute_orientation_sensor_ && sensor_provider_) {
     // When relative orientation sensor is not available fall back to using
@@ -134,16 +135,16 @@ void DeviceOrientationEventPump::DidStartIfPossible() {
     }
     return;
   }
-  DeviceSensorEventPump::DidStartIfPossible();
+  DeviceSensorEventPump::DidStartIfPossible(error);
 }
 
 void DeviceOrientationEventPump::SendStartMessageImpl() {
   if (!sensor_provider_) {
-    RenderFrame* const render_frame = GetRenderFrame();
-    if (!render_frame)
+    InitRenderFrame();
+    if (!render_frame_)
       return;
 
-    render_frame->GetRemoteInterfaces()->GetInterface(
+    render_frame_->GetRemoteInterfaces()->GetInterface(
         mojo::MakeRequest(&sensor_provider_));
     sensor_provider_.set_connection_error_handler(
         base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
