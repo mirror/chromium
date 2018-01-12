@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf3ededa_91736e38",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2539,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:03:24Z",
+      "side": 1,
+      "message": "nit: return Vector\u003cNGPaintFragment*\u003e();",
+      "range": {
+        "startLine": 2538,
+        "startChar": 0,
+        "endLine": 2539,
+        "endChar": 25
+      },
+      "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14ce20c_3300dce1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:03:24Z",
+      "side": 1,
+      "message": "Can we pass nullptr? If not, it should be |const LayoutObject\u0026|.",
+      "range": {
+        "startLine": 465,
+        "startChar": 53,
+        "endLine": 465,
+        "endChar": 72
+      },
+      "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c06c33a_f68447dd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_mixin.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:03:24Z",
+      "side": 1,
+      "message": "How about returning Vector\u003cNGPaintFragment*\u003e?\n\nVector\u003cNGPaintFragment*\u003e GetNGFragmentInternal(\n  NGPaintFragment* paint,\n  const LayoutObject* layout_object) {\n  if (!paint)\n   return Vector\u003cNGPaintFragment*\u003e();\n  Vector\u003cNGPaintFragment*\u003e results;\n  if (paint-\u003eGetLayoutObject() \u003d\u003d layout_object)\n    results.push_back(paint);\n  for (const auto\u0026 child : paint-\u003eChildren()) {\n    const auto\u0026 child_results \u003d GetNGPaintFragmentsIntranl(child.get(), layout_object);\n    results.insert(results.end(), child_results.begin(), child_results.end());\n  }\n  return results;\n}\n\nVector::insert() may be cheaper than push_back() regarding elements move\ntime at growing capacity.",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 11
+      },
+      "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
