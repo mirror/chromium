@@ -31,6 +31,17 @@ class WiredDisplayPresentationReceiverFactory {
           base::RepeatingCallback<void(const std::string&)>
               title_change_callback)>;
 
+  // This constant, which is platform and build-configuration dependent,
+  // indicates whether Create() can be called to generate a
+  // WiredDisplayPresentationReceiver.  It exists because the window is
+  // currently only implemented with Views and so it only works on Mac when
+  // mac_views_browser=1; this is not the default.  Cocoa is expected to be
+  // removed from Chromium soon enough that there is no plan to implement the
+  // window with Cocoa.  Create() may be called regardless of this flag's value
+  // when |create_receiver_for_testing_| is set.
+  // TODO(btolsch): When mac_views_browser=1 by default, this can be removed.
+  static const bool kWiredDisplayPresentationReceiverAvailable;
+
   static std::unique_ptr<WiredDisplayPresentationReceiver> Create(
       Profile* profile,
       const gfx::Rect& bounds,
