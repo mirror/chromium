@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cddfd184_1df84838",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T21:57:35Z",
+      "side": 1,
+      "message": "Oops sorry my mitsake. Fixed",
+      "parentUuid": "0242a6d3_1332e43a",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d9735b2_c1b21563",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 41
@@ -82,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "133ec5f3_ec04cbdc",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T21:57:35Z",
+      "side": 1,
+      "message": "Thank you for the catch. This was from an attemp to use the same code path for client vs server side drag. Removed.",
+      "parentUuid": "c19ef8ca_92a43d0b",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6af0be71_3be43392",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 41
@@ -105,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "7dfb8f70_3d2df286",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T21:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af0be71_3be43392",
+      "range": {
+        "startLine": 501,
+        "startChar": 19,
+        "endLine": 501,
+        "endChar": 23
+      },
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f65011e7_6071f7cf",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 41
@@ -116,6 +176,24 @@
       "writtenOn": "2018-01-12T20:56:54Z",
       "side": 1,
       "message": "doesn\u0027t this fix belong in base class?",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9efda5_f201315b",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T21:57:35Z",
+      "side": 1,
+      "message": "It depends on the xdg sematics. I assume we need to honor the max size if xdg app requests it, and the window becomes non maximizable?\n\nOn Android, non resizable but maximizable state is possible. (Pre-N apps that\ndoes not support free-resize, but can be maximized with users consent), and we\u0027re using maximum size just to tell if it\u0027s resizable.",
+      "parentUuid": "f65011e7_6071f7cf",
       "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
