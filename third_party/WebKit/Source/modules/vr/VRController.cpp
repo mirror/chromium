@@ -11,6 +11,7 @@
 #include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRGetDevicesCallback.h"
 #include "platform/wtf/Assertions.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
@@ -69,6 +70,19 @@ void VRController::OnDisplayConnected(
   vr_display->OnConnected();
   vr_display->FocusChanged();
   displays_.push_back(vr_display);
+
+  Document* doc = navigator_vr_->GetDocument();
+  if (doc && doc->IsInMainFrame()) {
+    ukm::UkmRecorder* ukm_recorder = doc->UkmRecorder();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::XR_Devices_Api ukm_builder(doc->UkmSourceID());
+    ukm_builder.SetHasDevice(1);
+    if (display_info->capabilities->canPresent) {
+      ukm_builder.SetHasPresentationCapableDevice(1);
+    }
+    ukm_builder.Record(ukm_recorder);
+  }
 }
 
 void VRController::FocusChanged() {
