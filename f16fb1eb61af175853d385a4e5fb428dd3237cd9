@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc451fa3_e51890a3",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-12T21:41:48Z",
+      "side": 1,
+      "message": "I am worried about the silent failure in this case. How will PairInt deal with the -1 value? How can we check that that the output is indeed a valid value?\n\nI believe this should never happen. So, we should keep NOTREACHED() so that we crash in debug mode. In non-debug, maybe we could have a more explicitly invalid output (e.g. type \u003d FEATURE_TYPE_NOT_SET)\nhttps://sites.google.com/a/google.com/protocol-buffers/user-docs/miscellaneous-howtos/oneof",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ef9417_d08226bc",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-12T21:41:48Z",
+      "side": 1,
+      "message": "DVLOG(3), for consistency with other logs.",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e25d589_740c9d86",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-12T21:41:48Z",
+      "side": 1,
+      "message": "and float as well",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
