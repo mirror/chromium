@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1999f24_b8918bb7",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T02:19:34Z",
+      "side": 1,
+      "message": "DCHECK if mixed_mirror_mode_param in DisplayManager is nullopt here.",
+      "revId": "d00db7ca68f2730d6fc74b69163ca1d8e82cda1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f828d0a4_1adc1f96",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T02:19:34Z",
+      "side": 1,
+      "message": "remove this.",
+      "revId": "d00db7ca68f2730d6fc74b69163ca1d8e82cda1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6fcde4_a526db5c",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T02:19:34Z",
+      "side": 1,
+      "message": "persistent data can be broken, and also the code has to be backward compatible, so you have to handle these cases.",
+      "revId": "d00db7ca68f2730d6fc74b69163ca1d8e82cda1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
