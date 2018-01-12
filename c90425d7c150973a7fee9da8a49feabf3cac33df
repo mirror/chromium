@@ -34,6 +34,24 @@
       "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1659895_d83a8228",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:41:13Z",
+      "side": 1,
+      "message": "Since the check for validity is a static check, can we do it in StructTraits\u003c...\u003e::Read() directly then? Then we won\u0027t ever invoke non-serialization code with invalid objects.",
+      "parentUuid": "c7fdb563_96ebbbe3",
+      "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
