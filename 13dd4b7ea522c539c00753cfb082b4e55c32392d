@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f994ea5_482f4950",
+        "filename": "third_party/WebKit/LayoutTests/xr/xrWebGLLayer_constructor.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "I tried that initially, but you need to allow control to return to the browser first so that the .preventDefault() call is recognized, which sets the context as restorable.",
+      "parentUuid": "7d500701_278c9d6a",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397efe4f_1ca44208",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ed8cf036_a34262cd",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 6304,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "397efe4f_1ca44208",
+      "range": {
+        "startLine": 6304,
+        "startChar": 53,
+        "endLine": 6304,
+        "endChar": 54
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b5fe9d6_746c7c63",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cc56bc_e838f43b",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 6305,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b5fe9d6_746c7c63",
+      "range": {
+        "startLine": 6305,
+        "startChar": 5,
+        "endLine": 6305,
+        "endChar": 14
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +180,48 @@
       "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578af911_1869ae45",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7515,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "574b16b7_f94d1678",
+      "range": {
+        "startLine": 7515,
+        "startChar": 32,
+        "endLine": 7515,
+        "endChar": 39
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f87f3efe_4a9fa9db",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7515,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25efcea8_17fba5bf",
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +268,54 @@
       "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d014e76_a0722b00",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7516,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d452bdcc_44a47429",
+      "range": {
+        "startLine": 7516,
+        "startChar": 12,
+        "endLine": 7516,
+        "endChar": 16
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a12ee2c3_1987cc59",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7516,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-12T19:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c0fdfa0_5e1a1e13",
+      "range": {
+        "startLine": 7516,
+        "startChar": 14,
+        "endLine": 7516,
+        "endChar": 15
+      },
+      "revId": "13dd4b7ea522c539c00753cfb082b4e55c32392d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
