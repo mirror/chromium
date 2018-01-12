@@ -46,6 +46,30 @@
       "revId": "6a9620036e5fba3726e9c7940e253516bfe35db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f3d920_e3ec9d5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-12T03:31:14Z",
+      "side": 1,
+      "message": "I am afraid so. Because the drag\u0026drop behavior is not supported in accessibility mode at all. I have talked with the Yana, we decided to disable it in accessibility mode.\nMaybe we can provide more options in the menu to allow reorder languages (move up/down) in next release.   \n\nI also checked the Android system language settings, they just simply disable drag\u0026drop in accessibly mode there.\n\nWill try the onAccessibilityModeChanged, thanks",
+      "parentUuid": "ed782ac0_a2efd238",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "6a9620036e5fba3726e9c7940e253516bfe35db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
