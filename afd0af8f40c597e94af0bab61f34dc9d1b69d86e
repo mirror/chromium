@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4c8a3b86_0e24563f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T20:13:28Z",
+      "side": 1,
+      "message": "\u003e Nothing changed with encode. PostMessage already always was run fully on the UI thread.\n\u003e Regarding decode, I don\u0027t think that\u0027s terribly expensive, but if you\u0027re concerned it wouldn\u0027t be hard to move that to the handler thread instead. It\u0027s only the creation of AppWebMessagePort instances for received ports that has to happen on the UI thread, the decoding of the message itself could be done anywhere.\n\nyeah let\u0027s move decode to handler thread just to be safe",
+      "parentUuid": "fd00a9dd_b4fa626f",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92090132_86b90d90",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 6
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "953f3cc5_be9c2eec",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T20:13:28Z",
+      "side": 1,
+      "message": "\u003e I can\u0027t import both this and org.chromium.mojo.bindings.Message (afaik), so the question is which one would you prefer for me to import?\n\noh, heh\n\ncurrent state is probably the less confusing choice then..",
+      "parentUuid": "41f48178_00a4c883",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a773ab_72504594",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 6
@@ -172,6 +220,24 @@
       "side": 1,
       "message": "It happens when setMessageCallback is called with a null callback, exactly like in the old code. I now changed it to just set the connectors incomingMessageReceiver to null instead, dropping messages that way. Although that loses the ability to log when messages are received. So if we want to keep that option I guess I could indeed have a special MessageReceiver implementation that just logs + drops all messages (open question would be if it should try to deserialize/decode messages before logging?).",
       "parentUuid": "40a773ab_72504594",
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80232a60_d360ef41",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T20:13:28Z",
+      "side": 1,
+      "message": "\u003e It happens when setMessageCallback is called with a null callback, exactly like in the old code. I now changed it to just set the connectors incomingMessageReceiver to null instead, dropping messages that way. Although that loses the ability to log when messages are received. So if we want to keep that option I guess I could indeed have a special MessageReceiver implementation that just logs + drops all messages (open question would be if it should try to deserialize/decode messages before logging?).\n\nI doubt log is very important",
+      "parentUuid": "940a1261_adc5887f",
       "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
