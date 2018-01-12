@@ -391,7 +391,11 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 }
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
-  ClearClipRects();
+  // The root PaintLayer (i.e. the LayoutView) is special, in that scroll offset
+  // is not included in clip rects. Therefore, we do not need to clear them
+  // when that PaintLayer is scrolled.
+  if (!IsRootLayer())
+    ClearClipRects();
   if (!IsRootLayer())
     UpdateLayerPositionRecursive();
 }
