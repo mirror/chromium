@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f0dd0e_d503cdd7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-12T08:54:24Z",
+      "side": 1,
+      "message": "Your old code did a full offer/answer cycle, while performOffer only does half. Didn\u0027t it matter?\nYou might want to call doSignalingHandshake instead.",
+      "revId": "5a01ad815325388d289b662511b83e4d881522aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e2fe20_3b7250f7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-12T08:54:24Z",
+      "side": 1,
+      "message": "Here we actually want 3 different tests (or a parameterized test):\n- replaceTrack before sending the offer\n- replaceTrack after sending offer but before getting answer\n- replaceTrack after full O/A",
+      "revId": "5a01ad815325388d289b662511b83e4d881522aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ce99be_dc1ecd54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-12T08:54:24Z",
+      "side": 1,
+      "message": "Since you\u0027re specifically looking at stats, do you want to call validateStatsReport() from RTCStats-helper.js to verify that the stats are consistent with the spec too?",
+      "revId": "5a01ad815325388d289b662511b83e4d881522aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
