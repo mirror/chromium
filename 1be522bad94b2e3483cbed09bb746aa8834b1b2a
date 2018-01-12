@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b5c96db_a3dffbae",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-12T12:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f65ce37_00392404",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d8a9902_8c5c44c0",
         "filename": "ui/platform_window/x11/x11_window_base.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T16:43:31Z",
       "side": 1,
       "message": "Why would we not always notify if |state| is different from the current state?",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600d5603_bd1e6461",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-12T12:53:44Z",
+      "side": 1,
+      "message": "Hmm. Right. I was thinking that if client requested a wm to change a state, there was no need to notify client about that, because it was the client who triggered the change.\nIn case of restoring from the minimize state, the client must know the state had been changed.\n\nBut there are shorcut keys for maximizing and minimizing, which means the client doesn\u0027t know if the window has changed it\u0027s states. Thus, we must always notify if the state has been changed.\nGood catch, thank you!",
+      "parentUuid": "6d8a9902_8c5c44c0",
       "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5098ac35_e9573717",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-12T12:53:44Z",
+      "side": 1,
+      "message": "Done. I suppose moving them to x11_util.h is ok, isn\u0027t it?\nhttps://chromium-review.googlesource.com/c/chromium/src/+/863882",
+      "parentUuid": "1175b504_be1b55a0",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
