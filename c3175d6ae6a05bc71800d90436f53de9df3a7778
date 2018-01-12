@@ -22,6 +22,30 @@
       "revId": "c3175d6ae6a05bc71800d90436f53de9df3a7778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7924da1_a49660d3",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-12T21:10:53Z",
+      "side": 0,
+      "message": "Yup.",
+      "parentUuid": "9de3f1b6_b0f0e56f",
+      "range": {
+        "startLine": 163,
+        "startChar": 33,
+        "endLine": 163,
+        "endChar": 34
+      },
+      "revId": "c3175d6ae6a05bc71800d90436f53de9df3a7778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

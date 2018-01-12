@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "34be8e0d_e41e3a82",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-12T21:10:53Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll switch that to \u0027f\u0027.",
+      "parentUuid": "532cef8a_7e510f05",
+      "range": {
+        "startLine": 159,
+        "startChar": 30,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdc7a7b6_b69b542d",
         "filename": "components/url_formatter/idn_spoof_checker.cc",
         "patchSetId": 6
@@ -60,6 +84,24 @@
       "writtenOn": "2018-01-12T20:42:37Z",
       "side": 1,
       "message": "Carryover from a previous CL but... this still looks like a capital \u0027i\u0027 to me rather than an \u0027l\u0027.",
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538022a1_49ffa222",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-12T21:10:53Z",
+      "side": 1,
+      "message": "Yeah... It\u0027s crbug.com/792163 (it\u0027s font-dependent...).",
+      "parentUuid": "bdc7a7b6_b69b542d",
       "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +143,30 @@
       "side": 1,
       "message": "Doesn\u0027t look like it:\n\nwmnr -\u003e wrnnr\n\nThe \u0027m\u0027 is expanded to \"rn\", everything else is left alone.",
       "parentUuid": "2859c65e_4d71aa8b",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49da1e18_ddb5ea18",
+        "filename": "components/url_formatter/top_domains/test_skeletons.gperf",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-12T21:10:53Z",
+      "side": 1,
+      "message": "Yeah. What Peter said.",
+      "parentUuid": "cb960bc6_e85d965a",
       "range": {
         "startLine": 19,
         "startChar": 0,
@@ -157,6 +223,30 @@
       "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad25a9b7_0be1e730",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-12T21:10:53Z",
+      "side": 1,
+      "message": "Thank you for catching it.",
+      "parentUuid": "a0f9dd23_af9bb628",
+      "range": {
+        "startLine": 433,
+        "startChar": 33,
+        "endLine": 433,
+        "endChar": 43
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
