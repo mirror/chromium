@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c592b03c_2f7792b4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54aad782_c20b1cf5",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 41
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aa8e690_2fa8149a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 32
@@ -45,6 +69,30 @@
       "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a572ece_f0d8a513",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aa8e690_2fa8149a",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 66
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f43eedb_17bba149",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a843048e_dd165032",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 57
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0167bc_ad6ca192",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 32
@@ -91,6 +163,30 @@
       "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a12845c_d8d117ef",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0167bc_ad6ca192",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 31
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "837a86b7_7734e89a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Added a ctor for LineBoxAndFragments to simplify this part.",
+      "parentUuid": "0563ffc3_a70078db",
+      "range": {
+        "startLine": 199,
+        "startChar": 61,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1420188d_002479d1",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 32
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d7f7447b_7211a929",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1420188d_002479d1",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 40
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e7aa445_b1a7bb71",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 32
@@ -154,6 +298,24 @@
       "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5acdcaf_c10f07ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done by early-returning the failed case.",
+      "parentUuid": "1e7aa445_b1a7bb71",
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "2f0d2413_e36698de",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6943726a_e6e1d7d7",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c6c23c8_88249cbf",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect_test.cc",
         "patchSetId": 32
@@ -191,6 +377,30 @@
       "writtenOn": "2018-01-12T09:42:23Z",
       "side": 1,
       "message": "Could you introduce operator\u003d\u003d() to avoid to use macro?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "d9b1f014b6d2e82b488ec4104782cdf4daeabc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ce5f7e_dbf60a58",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect_test.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T23:10:17Z",
+      "side": 1,
+      "message": "Might be tricky right now. NGCaretPosition carries a |offset_to_container_box_| field, which these tests do not quite care about.",
+      "parentUuid": "3c6c23c8_88249cbf",
       "range": {
         "startLine": 60,
         "startChar": 0,
