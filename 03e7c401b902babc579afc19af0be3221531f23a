@@ -16,6 +16,24 @@
       "revId": "03e7c401b902babc579afc19af0be3221531f23a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0caafba7_69d7e92f",
+        "filename": "tools/traffic_annotation/summary/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T13:44:57Z",
+      "side": 1,
+      "message": "Ahem, sorry. And sure, up to you.",
+      "parentUuid": "3f936569_5aef48da",
+      "revId": "03e7c401b902babc579afc19af0be3221531f23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
