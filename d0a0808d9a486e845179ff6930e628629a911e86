@@ -16,6 +16,24 @@
       "revId": "d0a0808d9a486e845179ff6930e628629a911e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6ddeea_7e425e8f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T05:06:33Z",
+      "side": 0,
+      "message": "Good idea!\nIn this way, we can change this line to:\n\nselection_ \u003d CretaeVisibleSelection(\n  PrepareToModifySelection(alter, direction));\n\nNote: We\u0027ll move |direction| to member varaible of |SelectionMoifier|.\nIf so, we\u0027ll have:\n\nselection_ \u003d CretaeVisibleSelection(PrepareToModifySelection(alter));",
+      "parentUuid": "7551d19c_0ac50137",
+      "revId": "d0a0808d9a486e845179ff6930e628629a911e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

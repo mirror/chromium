@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ff91d5_cc50cac0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T05:06:33Z",
+      "side": 1,
+      "message": "To reduce variable assignment, what about below?\n\nselection_ \u003d CreateVisibleSelection(\n  alter \u003d\u003d SelectionModifierAlternation::kExtend\n    ? PrepareToExtendSelection(direction)\n    : current_selection_);",
+      "range": {
+        "startLine": 604,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 60
+      },
+      "revId": "2dc0519b97f24068e3a4b1ca68969a50135a7af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa02423_53c5f31d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T05:06:33Z",
+      "side": 1,
+      "message": "To reduce assignment to variable, how about below?\n\nselection_ \u003d CreateVisibleSelection(\n  alter \u003d\u003d SelectionModifyAlteration::kExtend\n    ? PrepareToExtendSelection(\n        direction \u003d\u003d SelectionModifyVerticalDirection::kUp\n            ? SelectionModifyDirection::kBackward\n            : SelectionModifyDirection::kForward)\n    : current_selection_);",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 737,
+        "endChar": 3
+      },
+      "revId": "2dc0519b97f24068e3a4b1ca68969a50135a7af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
