@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8211784_a92a0821",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T21:33:51Z",
+      "side": 1,
+      "message": "Done!  https://bugs.chromium.org/p/v8/issues/detail?id\u003d7303",
+      "parentUuid": "e10f344f_438fdc4e",
+      "revId": "031ce73ddc718ad16dc31da5f62577b573bd8870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd32d36a_ac518dbc",
         "filename": "extensions/renderer/native_extension_bindings_system.cc",
         "patchSetId": 1
