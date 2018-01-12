@@ -10,6 +10,7 @@
 #include "base/synchronization/waitable_event.h"
 #include "content/public/common/resource_response_info.h"
 #include "content/public/common/url_loader_throttle.h"
+#include "content/public/common/wrapper_shared_url_loader_factory.h"
 #include "content/renderer/loader/sync_load_response.h"
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/resource_request.h"
@@ -22,27 +23,28 @@ void SyncLoadContext::StartAsyncWithWaitableEvent(
     int routing_id,
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
-    mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
+    std::unique_ptr<SharedURLLoaderFactoryInfo> url_loader_factory_info,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     SyncLoadResponse* response,
     base::WaitableEvent* event) {
   auto* context = new SyncLoadContext(
-      request.get(), std::move(url_loader_factory_pipe), response, event);
+      request.get(), std::move(url_loader_factory_info), response, event);
 
   context->request_id_ = context->resource_dispatcher_->StartAsync(
       std::move(request), routing_id, nullptr, frame_origin, traffic_annotation,
       true /* is_sync */, base::WrapUnique(context),
-      context->url_loader_factory_.get(), std::move(throttles),
+      context->url_loader_factory_, std::move(throttles),
       mojom::URLLoaderClientEndpointsPtr());
 }
 
 SyncLoadContext::SyncLoadContext(
     network::ResourceRequest* request,
-    mojom::URLLoaderFactoryPtrInfo url_loader_factory,
+    std::unique_ptr<SharedURLLoaderFactoryInfo> url_loader_factory,
     SyncLoadResponse* response,
     base::WaitableEvent* event)
     : response_(response), event_(event) {
-  url_loader_factory_.Bind(std::move(url_loader_factory));
+  url_loader_factory_ =
+      SharedURLLoaderFactory::Create(std::move(url_loader_factory));
 
   // Constructs a new ResourceDispatcher specifically for this request.
   resource_dispatcher_ =
