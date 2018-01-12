@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "322f992a_99c7ff27",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "\u003e Yes it is an IPC message sender. It is needed to send the queued gpu messages.\n\ncan we use a separate sender that\u0027s unrelated to IPC sync compositing?",
+      "parentUuid": "ca7c4fe4_fc889393",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0781c869_2d648617",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 6
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "What do you want to do?",
       "parentUuid": "b3d73f02_a6259d81",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2c9e24_7aa53b5f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "\u003e What do you want to do?\n\nI mean under what condition can the view be null? feels like this should be a DCHECK instead?",
+      "parentUuid": "06ae1cd6_9505bb34",
       "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

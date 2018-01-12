@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a49c445_423a620b",
+        "filename": "content/renderer/android/synchronous_compositor_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "revId": "70f3d32a0b77a6214b22ccc0b4486540880373e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

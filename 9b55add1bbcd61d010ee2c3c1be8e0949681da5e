@@ -1,0 +1,493 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb3118c_707fd057",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "this is receiving IPC from renderer, so general defensiveness need to apply there, so make sure count is positive, it\u0027s not overriding anything already map, etc, and kill renderer if any of these checks fail",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494d78a7_7a9e8a97",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "DCHECK count is 0 to begin with",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c389b2_abe0c6e5",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "this call can just happen in Host where it calls SyncStateAfterVSync",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0308b0_a76f4b51",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "\"\u003e 0\" to be safe, or you can declare the variable to be unsigned int",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757c4855_135d99f1",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "ditto being defensive with renderer data",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b34965a_4742e6ea",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "clear pending_sync_params_ at the end",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75835f9_bc198666",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "group these two and comment they are called on the IO thread",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40f6a9c_469f1c83",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "const, and maybe move up to the other const member",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009681f6_9ea4ff1b",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "comment what this lock protects (and lock generally need to be declared above things it protects)\n\nalso update the comment on the lock above",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8d0e54_bd413782",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "is it cosher to use a mojo type like this? is there unnecessary stuff in the generated code, or is it just an interface?\n\ndanger is something new is added to the interface, and then forget to add an override here",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c924e46_c1222f97",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "err, why are there two versions of this?\n\nOh these are the synchronous calls. So I guess this collapses into the above comment about not overriding mojo types",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527ba6dd_9d08e281",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "can we add thread asserts",
+      "range": {
+        "startLine": 136,
+        "startChar": 26,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b864613_48c3abe8",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "so this still uses the message filter. I guess will require some work when ripping out the IPC code path in the future\n\nshould kill the renderer if this returns false",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f62b81d_f9f4d5d3",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "mojo::",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 6
+      },
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd394d1f_ccadd5b3",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "should this be NOTREACHED or something even more severe? dropping this call breaks all rendering, right?",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3896ad_edca3b2a",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "any reason this is not in the constructor?",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05858c60_8849aa8a",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "DCHECK they are not both set at the same time",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fac08a_53434deb",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "else notreached",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff55cc64_f233e5f5",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "this doesn\u0027t exist",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0b0e32_6dc9bb5b",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "nit: don\u0027t reorder",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ad6a14_9066bc94",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "ditto reorder, also can still be const",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b371fc47_0a9fc55d",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "Can use DeleteSoon instead",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d1b358_8e5c12fb",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "NOTREACHED?",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3c7f21_7b9e133a",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "probably should mark this OS_ANDROID too",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a88df96_ee7b1888",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "indent is wrong here actually",
+      "range": {
+        "startLine": 1182,
+        "startChar": 2,
+        "endLine": 1182,
+        "endChar": 4
+      },
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f595141e_0021152d",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2122,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "can you explain why this is guaranteed to be after WidgetInputHandlerManager::InitOnCompositorThread?\n\nthis whole chain of calls starting from here appear to be on the wrong thread?",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1133421f_db6128e9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T23:52:12Z",
+      "side": 1,
+      "message": "anything unsets it? afaik destruction isn\u0027t guaranteed to be ordered here?",
+      "revId": "9b55add1bbcd61d010ee2c3c1be8e0949681da5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
