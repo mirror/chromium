@@ -10449,6 +10449,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Compositing.Display.Draw.Quads" units="quads">
+  <owner>ccameron@chromium.org</owner>
+  <summary>
+    The total number of quads in all render passes in a CompositorFrame.
+  </summary>
+</histogram>
+
 <histogram
     name="Compositing.DisplayListRecordingSource.UpdateInvalidatedAreaPerMs"
     units="pixels/ms">
