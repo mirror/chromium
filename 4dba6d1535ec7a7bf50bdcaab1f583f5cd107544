@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0242a6d3_1332e43a",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "why does this need to be public? please make it private if possible",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9735b2_c1b21563",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "nit: ScopedLockedToRoot to match the name of the ash constant",
+      "range": {
+        "startLine": 211,
+        "startChar": 36,
+        "endLine": 211,
+        "endChar": 52
+      },
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad10aff0_ca6cd14c",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "ditto, can it be private?",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 30
+      },
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19ef8ca_92a43d0b",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "hm, what if client needs request x\u003d0, y\u003d0? do we need this special case here or can we instead require the client to provide x/y?",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af0be71_3be43392",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "nit: scoped_locked_to_root",
+      "range": {
+        "startLine": 501,
+        "startChar": 19,
+        "endLine": 501,
+        "endChar": 23
+      },
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65011e7_6071f7cf",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "doesn\u0027t this fix belong in base class?",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e0e8e6_fb574dc8",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "nit: const gfx::Point\u0026 location, instead of x+y",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207cc2a0_b5e11df7",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T20:56:54Z",
+      "side": 1,
+      "message": "these delegate overrides should be unified with base class instead of this class doing it\u0027s own thing. if the state that determine the return value of these functions is part of the base class then the function logic should also be in the base class.",
+      "revId": "4dba6d1535ec7a7bf50bdcaab1f583f5cd107544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
