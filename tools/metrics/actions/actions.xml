@@ -1202,20 +1202,6 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Android.ChromeHome.AcceptedSurvey">
-  <owner>danielpark@chromium.org</owner>
-  <description>
-    User clicked on the invite to take a survey in the survey infobar.
-  </description>
-</action>
-
-<action name="Android.ChromeHome.ClickedSurveyInfoBarCloseButton">
-  <owner>danielpark@chromium.org</owner>
-  <description>
-    User dismissed the survey infobar by tapping on its close button.
-  </description>
-</action>
-
 <action name="Android.ChromeHome.Closed">
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
@@ -1389,6 +1375,11 @@ should be able to be added at any place in this file.
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <description>User showed the suggestions bottom sheet content.</description>
+</action>
+
+<action name="Android.ChromeHome.Survey.ShowSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>The survey infobar was displayed.</description>
 </action>
 
 <action name="Android.ContentDetectorActivated">
