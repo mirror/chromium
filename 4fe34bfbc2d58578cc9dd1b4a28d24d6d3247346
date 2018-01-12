@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aa7af11_6db3cd83",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-12T21:31:22Z",
+      "side": 0,
+      "message": "Please identify any strings that this CL removes, and fully remove them from the .grd file, C++ files, and tests.",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "4fe34bfbc2d58578cc9dd1b4a28d24d6d3247346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
