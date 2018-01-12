@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87cad551_2dc5daec",
+        "filename": "third_party/WebKit/Source/core/editing/LocalCaretRectTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-12T17:22:29Z",
+      "side": 1,
+      "message": "Should this be the default for these test classes, and be overridden in the opposite\ndirection for quirks tests? That way it applies to new tests automatically.",
+      "revId": "bd98a3930f9fef3ecf5ab548173eefaef0b61193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
