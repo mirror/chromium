@@ -14,7 +14,6 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/sessions/core/tab_restore_service.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
@@ -22,7 +21,6 @@
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
 #import "ios/chrome/browser/sessions/test_session_service.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
-#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_view.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/test/block_cleanup_test.h"
@@ -134,46 +132,12 @@ TEST_F(NewTabPageControllerTest, NewTabBarItemDidChange) {
   NewTabPageBar* bar = [NTPView tabBar];
   NSUInteger bookmarkIndex = 0;
   UIButton* button = [[bar buttons] objectAtIndex:bookmarkIndex];
-  UIControlEvents event = !PresentNTPPanelModally()
-                              ? UIControlEventTouchDown
-                              : UIControlEventTouchUpInside;
-  [button sendActionsForControlEvents:event];
+  [button sendActionsForControlEvents:UIControlEventTouchUpInside];
 
-  // Expecting bookmarks panel to be loaded now and to be the current controller
-  // on iPad but not iPhone.
-  // Deliberately comparing pointers.
-  if (!PresentNTPPanelModally()) {
-    EXPECT_EQ([controller_ currentController],
-              (id<NewTabPagePanelProtocol>)[controller_ bookmarkController]);
-  } else {
-    EXPECT_NE([controller_ currentController],
-              (id<NewTabPagePanelProtocol>)[controller_ bookmarkController]);
-  }
-}
-
-// TODO(crbug.com/753599): Remove this test when clean up old bookmarks.
-TEST_F(NewTabPageControllerTest, SelectBookmarkPanel) {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    return;
-  }
-  // Expecting on start up that the bookmarkController does not exist.
+  // Expecting bookmarks panel NOT to be loaded as the current controller.
   // Deliberately comparing pointers.
   EXPECT_NE([controller_ currentController],
             (id<NewTabPagePanelProtocol>)[controller_ bookmarkController]);
-
-  // Switching to the Bookmarks panel.
-  [controller_ selectPanel:ntp_home::BOOKMARKS_PANEL];
-
-  // Expecting bookmarks panel to be loaded now and to be the current controller
-  // on iPad but not iPhone.
-  // Deliberately comparing pointers.
-  if (!PresentNTPPanelModally()) {
-    EXPECT_EQ([controller_ currentController],
-              (id<NewTabPagePanelProtocol>)[controller_ bookmarkController]);
-  } else {
-    EXPECT_NE([controller_ currentController],
-              (id<NewTabPagePanelProtocol>)[controller_ bookmarkController]);
-  }
 }
 
 TEST_F(NewTabPageControllerTest, SelectIncognitoPanel) {
@@ -185,18 +149,11 @@ TEST_F(NewTabPageControllerTest, SelectIncognitoPanel) {
   // Switch to the Bookmarks panel.
   [incognitoController_ selectPanel:ntp_home::BOOKMARKS_PANEL];
 
-  // Expecting bookmarks panel to be loaded now and to be the current controller
-  // on iPad but not iPhone.
+  // Expecting bookmarks panel NOT to be loaded as the current controller.
   // Deliberately comparing pointers.
-  if (!PresentNTPPanelModally()) {
-    EXPECT_EQ(
-        [incognitoController_ currentController],
-        (id<NewTabPagePanelProtocol>)[incognitoController_ bookmarkController]);
-  } else {
-    EXPECT_NE(
-        [incognitoController_ currentController],
-        (id<NewTabPagePanelProtocol>)[incognitoController_ bookmarkController]);
-  }
+  EXPECT_NE(
+      [incognitoController_ currentController],
+      (id<NewTabPagePanelProtocol>)[incognitoController_ bookmarkController]);
 }
 
 TEST_F(NewTabPageControllerTest, TestWantsLocationBarHintText) {

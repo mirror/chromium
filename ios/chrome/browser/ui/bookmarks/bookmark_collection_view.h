@@ -86,8 +86,6 @@ class BookmarkNode;
 //       that position.
 // * |changeOrientation:|: Calls |updateCollectionView|.
 // * |setScrollsToTop:|: Applies |scrollsToTop| to the collection view.
-// * |setEditing:animated:|: This method updates the editing property, but has
-//       no other effect. Subclasses must provide the actual functionality.
 @interface BookmarkCollectionView
     : UIView<BookmarkHomePrimaryView, BookmarkModelBridgeObserver>
 

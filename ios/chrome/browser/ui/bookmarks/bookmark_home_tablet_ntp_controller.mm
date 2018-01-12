@@ -19,8 +19,6 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #import "ios/chrome/browser/ui/alert_coordinator/action_sheet_coordinator.h"
-#import "ios/chrome/browser/ui/bookmarks/bars/bookmark_editing_bar.h"
-#import "ios/chrome/browser/ui/bookmarks/bars/bookmark_navigation_bar.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_folder_editor_view_controller.h"
@@ -49,19 +47,12 @@
 
 using bookmarks::BookmarkNode;
 
-namespace {
-// The margin on top to the navigation bar.
-const CGFloat kNavigationBarTopMargin = 8.0;
-}  // namespace
-
 @interface BookmarkHomeTabletNTPController ()<BookmarkMenuViewDelegate>
 
 #pragma mark View loading, laying out, and switching.
 
 // Returns whether the menu should be in a side panel that slides in.
 - (BOOL)shouldPresentMenuInSlideInPanel;
-// Returns the leading margin of the folder view.
-- (CGFloat)folderViewLeadingMargin;
 // Updates the frame of the folder view.
 - (void)refreshFrameOfFolderView;
 // Returns the frame of the folder view.
@@ -69,13 +60,6 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 
 // The menu button is pressed on the editing bar.
 - (void)toggleMenuAnimated;
-
-#pragma mark Navigation bar
-
-- (void)updateNavigationBarWithDuration:(CGFloat)duration
-                            orientation:(UIInterfaceOrientation)orientation;
-// Whether the edit button on the navigation bar should be shown.
-- (BOOL)shouldShowEditButton;
 
 @end
 
@@ -107,27 +91,10 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 
     [self updatePrimaryMenuItem:item animated:NO];
   }
-
-  // Make sure the navigation bar is the frontmost subview.
-  [self.view bringSubviewToFront:self.navigationBar];
-
-  CGFloat leadingMargin = [self folderViewLeadingMargin];
-
-  // Prevent the panelView from hijacking the gestures so that the
-  // NTPController's scrollview can still scroll with the gestures.
-  [self.panelView enableSideSwiping:NO];
-
-  CGFloat width = self.view.bounds.size.width;
-  LayoutRect navBarLayout =
-      LayoutRectMake(leadingMargin, width, 0, width - leadingMargin,
-                     CGRectGetHeight([self navigationBarFrame]));
-  self.navigationBar.frame = LayoutRectGetRect(navBarLayout);
-  [self.editingBar setFrame:[self editingBarFrame]];
-
+  
   UIInterfaceOrientation orient = GetInterfaceOrientation();
   [self refreshFrameOfFolderView];
   [self.folderView changeOrientation:orient];
-  [self updateNavigationBarWithDuration:0 orientation:orient];
   if (![self shouldPresentMenuInSlideInPanel])
     [self updateMenuViewLayout];
 
@@ -143,10 +110,6 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = bookmark_utils_ios::mainBackgroundColor();
-  self.navigationBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-  [self.navigationBar setMenuTarget:self action:@selector(toggleMenuAnimated)];
-  [self.view addSubview:self.navigationBar];
 
   if (self.bookmarks->loaded())
     [self loadBookmarkViews];
@@ -171,24 +134,8 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 
   self.menuView.delegate = self;
 
-  // Set view frames and add them to hierarchy.
-  if ([self shouldPresentMenuInSlideInPanel]) {
-    // Add the panelView to the view hierarchy.
-    [self.view addSubview:self.panelView];
-    CGSize size = self.view.bounds.size;
-    CGFloat navBarHeight = CGRectGetHeight([self navigationBarFrame]);
-    LayoutRect panelLayout = LayoutRectMake(
-        0, size.width, navBarHeight, size.width, size.height - navBarHeight);
-
-    // Initialize the panelView with the menuView and the folderView.
-    [self.panelView setFrame:LayoutRectGetRect(panelLayout)];
-    [self.panelView.menuView addSubview:self.menuView];
-    self.menuView.frame = self.panelView.menuView.bounds;
-    [self.panelView.contentView addSubview:self.folderView];
-  } else {
-    [self.view addSubview:self.menuView];
-    [self.view addSubview:self.folderView];
-  }
+  [self.view addSubview:self.menuView];
+  [self.view addSubview:self.folderView];
 
   // Load the last primary menu item which the user had active.
   BookmarkMenuItem* item = nil;
@@ -217,59 +164,7 @@ const CGFloat kNavigationBarTopMargin = 8.0;
                      animated:(BOOL)animated {
   [super updatePrimaryMenuItem:menuItem animated:animated];
 
-  // Make sure the navigation bar is the frontmost subview.
-  [self.view bringSubviewToFront:self.navigationBar];
-
   [self refreshFrameOfFolderView];
-
-  self.navigationBar.hidden = NO;
-  [self updateNavigationBarAnimated:animated
-                        orientation:GetInterfaceOrientation()];
-  [self updateEditBarShadow];
-}
-
-- (CGRect)editingBarFrame {
-  return CGRectInset(self.navigationBar.frame, 24.0, 0);
-}
-
-- (void)showEditingBarAnimated:(BOOL)animated {
-  CGRect endFrame = [self editingBarFrame];
-  if (self.editingBar.hidden) {
-    CGRect startFrame = endFrame;
-    startFrame.origin.y = -CGRectGetHeight(startFrame);
-    self.editingBar.frame = startFrame;
-  }
-  self.editingBar.hidden = NO;
-  [UIView animateWithDuration:animated ? 0.2 : 0
-      delay:0
-      options:UIViewAnimationOptionBeginFromCurrentState
-      animations:^{
-        self.editingBar.alpha = 1;
-        self.editingBar.frame = endFrame;
-      }
-      completion:^(BOOL finished) {
-        if (finished)
-          self.navigationBar.hidden = YES;
-      }];
-}
-
-- (void)hideEditingBarAnimated:(BOOL)animated {
-  CGRect frame = [self editingBarFrame];
-  if (!self.editingBar.hidden) {
-    frame.origin.y = -CGRectGetHeight(frame);
-  }
-  self.navigationBar.hidden = NO;
-  [UIView animateWithDuration:animated ? 0.2 : 0
-      delay:0
-      options:UIViewAnimationOptionBeginFromCurrentState
-      animations:^{
-        self.editingBar.alpha = 0;
-        self.editingBar.frame = frame;
-      }
-      completion:^(BOOL finished) {
-        if (finished)
-          self.editingBar.hidden = YES;
-      }];
 }
 
 - (ActionSheetCoordinator*)createActionSheetCoordinatorOnView:(UIView*)view {
@@ -291,22 +186,14 @@ const CGFloat kNavigationBarTopMargin = 8.0;
   return IsCompactTablet();
 }
 
-- (CGFloat)folderViewLeadingMargin {
-  if ([self shouldPresentMenuInSlideInPanel])
-    return 0;
-  return [self menuWidth];
-}
-
 - (void)refreshFrameOfFolderView {
   self.folderView.frame = [self frameForFolderView];
 }
 
 - (CGRect)frameForFolderView {
   CGFloat topInset = 0;
-  if (!IsCompactTablet())
-    topInset = CGRectGetHeight([self navigationBarFrame]);
 
-  CGFloat leadingMargin = [self folderViewLeadingMargin];
+  CGFloat leadingMargin = 0;
   CGSize size = self.view.bounds.size;
   LayoutRect folderViewLayout =
       LayoutRectMake(leadingMargin, size.width, topInset,
@@ -321,7 +208,6 @@ const CGFloat kNavigationBarTopMargin = 8.0;
   BOOL menuItemChanged = ![[self primaryMenuItem] isEqual:menuItem];
   [self toggleMenuAnimated];
   if (menuItemChanged) {
-    [self setEditing:NO animated:YES];
     [self updatePrimaryMenuItem:menuItem animated:YES];
   }
 }
@@ -335,34 +221,6 @@ const CGFloat kNavigationBarTopMargin = 8.0;
   } else {
     [self.panelView showMenuAnimated:YES];
   }
-}
-
-#pragma mark - Navigation bar
-
-- (CGRect)navigationBarFrame {
-  return CGRectMake(0, 0, CGRectGetWidth(self.view.bounds),
-                    [BookmarkNavigationBar expectedContentViewHeight] +
-                        kNavigationBarTopMargin);
-}
-
-- (void)updateNavigationBarAnimated:(BOOL)animated
-                        orientation:(UIInterfaceOrientation)orientation {
-  CGFloat duration = animated ? bookmark_utils_ios::menuAnimationDuration : 0;
-  [self updateNavigationBarWithDuration:duration orientation:orientation];
-}
-
-- (void)updateNavigationBarWithDuration:(CGFloat)duration
-                            orientation:(UIInterfaceOrientation)orientation {
-  [self.navigationBar setTitle:[self.primaryMenuItem titleForNavigationBar]];
-  if ([self shouldShowEditButton])
-    [self.navigationBar showEditButtonWithAnimationDuration:duration];
-  else
-    [self.navigationBar hideEditButtonWithAnimationDuration:duration];
-
-  if ([self shouldShowBackButtonOnNavigationBar])
-    [self.navigationBar showBackButtonInsteadOfMenuButton:duration];
-  else
-    [self.navigationBar showMenuButtonInsteadOfBackButton:duration];
 }
 
 - (BOOL)shouldShowEditButton {

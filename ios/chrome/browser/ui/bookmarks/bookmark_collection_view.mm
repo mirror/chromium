@@ -272,39 +272,6 @@ CGFloat minFaviconSizePt = 16;
       CGPointMake(self.collectionView.contentOffset.x, y);
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-  if (self.editing == editing)
-    return;
-
-  _editing = editing;
-  [UIView animateWithDuration:animated ? 0.2 : 0.0
-                        delay:0
-                      options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     self.shadow.alpha = editing ? 0.0 : 1.0;
-                   }
-                   completion:nil];
-
-  // If the promo is active this means that it is removed and added as the edit
-  // mode changes, making reloading the data mandatory.
-  if ([self isPromoActive]) {
-    [self.collectionView reloadData];
-    [self.collectionView.collectionViewLayout invalidateLayout];
-  } else {
-    // Update the visual state of the bookmark cells without reloading the
-    // section.
-    // This prevents flickering of images that need to be asynchronously
-    // reloaded.
-    NSArray* indexPaths = [self.collectionView indexPathsForVisibleItems];
-    for (NSIndexPath* indexPath in indexPaths) {
-      [self updateEditingStateOfCellAtIndexPath:indexPath
-                          animateMenuVisibility:animated
-                           animateSelectedState:NO];
-    }
-  }
-  [self promoStateChangedAnimated:animated];
-}
-
 - (void)setScrollsToTop:(BOOL)scrollsToTop {
   self.collectionView.scrollsToTop = scrollsToTop;
 }
