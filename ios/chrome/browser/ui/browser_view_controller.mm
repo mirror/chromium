@@ -134,6 +134,7 @@
 #import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/commands/toolbar_commands.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
@@ -162,8 +163,11 @@
 #import "ios/chrome/browser/ui/main_content/main_content_ui_broadcasting_util.h"
 #import "ios/chrome/browser/ui/main_content/main_content_ui_state.h"
 #import "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.h"
+#import "ios/chrome/browser/ui/ntp/incognito_view_controller.h"
 #import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_presenter.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_tab_helper.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_coordinator.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/page_info/page_info_legacy_coordinator.h"
@@ -417,6 +421,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     MFMailComposeViewControllerDelegate,
                                     NetExportTabHelperDelegate,
                                     NewTabPageControllerObserver,
+                                    NewTabPagePresenter,
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
@@ -711,6 +716,13 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // The webState of the active tab.
 @property(nonatomic, readonly) web::WebState* currentWebState;
 
+// Coordinator for the ContentSuggestions.
+@property(nonatomic, strong)
+    ContentSuggestionsCoordinator* contentSuggestionsCoordinator;
+
+// View controller for incognito
+@property(nonatomic, strong) IncognitoViewController* incognitoViewController;
+
 // BVC initialization
 // ------------------
 // If the BVC is initialized with a valid browser state & tab model immediately,
@@ -947,6 +959,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // DialogPresenterDelegate property
 @synthesize dialogPresenterDelegateIsPresenting =
     _dialogPresenterDelegateIsPresenting;
+@synthesize contentSuggestionsCoordinator = _contentSuggestionsCoordinator;
+@synthesize incognitoViewController = _incognitoViewController;
 
 #pragma mark - Object lifecycle
 
@@ -1436,6 +1450,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   Tab* currentTab = [_model currentTab];
   [currentTab dismissModals];
+  [self.contentSuggestionsCoordinator dismissModals];
+  [self.incognitoViewController dismissModals];
 
   if (currentTab) {
     auto* findHelper = FindTabHelper::FromWebState(currentTab.webState);
@@ -2884,6 +2900,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   NetExportTabHelper::CreateForWebState(tab.webState, self);
   CaptivePortalDetectorTabHelper::CreateForWebState(tab.webState, self);
   PassKitTabHelper::CreateForWebState(tab.webState, _passKitCoordinator);
+  NewTabPageTabHelper::CreateForWebState(tab.webState, self);
 
   // The language detection helper accepts a callback from the translate
   // client, so must be created after it.
@@ -2966,6 +2983,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (id)nativeControllerForTab:(Tab*)tab {
   id nativeController = tab.webController.nativeController;
+  if (tab && tab.webState->GetLastCommittedURL() == GURL("chrome://newtab/")) {
+    if (self.isOffTheRecord) {
+      nativeController = self.incognitoViewController;
+    } else {
+      nativeController = self.contentSuggestionsCoordinator;
+    }
+  }
   return nativeController ? nativeController : _temporaryNativeController;
 }
 
@@ -3067,6 +3091,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   NSMutableArray* overlays = [NSMutableArray array];
+  if (tab.nativeController) {
+    SnapshotOverlay* nativeControllerView =
+        [[SnapshotOverlay alloc] initWithView:tab.nativeController.view
+                                      yOffset:0];
+    [overlays addObject:nativeControllerView];
+  }
   UIView* voiceSearchView = [self voiceSearchOverlayViewForTab:tab];
   if (voiceSearchView) {
     CGFloat voiceSearchYOffset = [self voiceSearchOverlayYOffsetForTab:tab];
@@ -3800,6 +3830,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (id<CRWNativeContent>)controllerForURL:(const GURL&)url
                                 webState:(web::WebState*)webState {
+  return nil;
   DCHECK(url.SchemeIs(kChromeUIScheme));
 
   id<CRWNativeContent> nativeController = nil;
@@ -5504,6 +5535,62 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)printWebState:(web::WebState*)webState {
   if (webState == [_model currentTab].webState)
     [self.dispatcher printTab];
+}
+
+#pragma mark - NewTabPagePresenter
+
+- (void)showNTP:(web::WebState*)webState {
+  UIViewController* viewController;
+  if (self.isOffTheRecord) {
+    if (!self.incognitoViewController) {
+      self.incognitoViewController = [[IncognitoViewController alloc]
+           initWithLoader:self
+          toolbarDelegate:self.toolbarInterface];
+    }
+    viewController = self.incognitoViewController;
+  } else {
+    if (!self.contentSuggestionsCoordinator) {
+      self.contentSuggestionsCoordinator = [
+          [ContentSuggestionsCoordinator alloc] initWithBaseViewController:nil];
+      self.contentSuggestionsCoordinator.URLLoader = self;
+      self.contentSuggestionsCoordinator.dispatcher = self.dispatcher;
+      self.contentSuggestionsCoordinator.browserState = self.browserState;
+      self.contentSuggestionsCoordinator.webStateList = [_model webStateList];
+    }
+    [self.contentSuggestionsCoordinator start];
+    viewController = self.contentSuggestionsCoordinator.viewController;
+  }
+  viewController.title = l10n_util::GetNSString(IDS_NEW_TAB_TITLE);
+  [viewController willMoveToParentViewController:self];
+  [self addChildViewController:viewController];
+  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
+  tab.nativeController = viewController;
+  [self displayTab:tab isNewSelection:NO];
+  if (!self.isOffTheRecord) {
+    [self.contentSuggestionsCoordinator wasShown];
+  }
+  [viewController didMoveToParentViewController:self];
+}
+
+- (void)hideNTP:(web::WebState*)webState {
+  UIViewController* viewController;
+  if (self.isOffTheRecord) {
+    DCHECK(self.incognitoViewController);
+    viewController = self.incognitoViewController;
+  } else {
+    DCHECK(self.contentSuggestionsCoordinator);
+    viewController = self.contentSuggestionsCoordinator.viewController;
+    // Do we want to save scrollOffset?
+  }
+  [viewController willMoveToParentViewController:nil];
+  [viewController.view removeFromSuperview];
+  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
+  tab.nativeController = nil;
+  [self displayTab:tab isNewSelection:NO];
+  [viewController removeFromParentViewController];
+  if (!self.isOffTheRecord) {
+    [self.contentSuggestionsCoordinator stop];
+  }
 }
 
 #pragma mark - RepostFormTabHelperDelegate

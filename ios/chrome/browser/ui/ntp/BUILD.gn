@@ -8,8 +8,15 @@ source_set("ntp") {
     "new_tab_page_header_constants.h",
     "new_tab_page_header_constants.mm",
     "new_tab_page_panel_protocol.h",
+    "new_tab_page_presenter.h",
+    "new_tab_page_tab_helper.h",
+    "new_tab_page_tab_helper.mm",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
+  deps = [
+    "//base",
+    "//ios/web/public:public",
+  ]
 }
 
 source_set("ntp_header") {

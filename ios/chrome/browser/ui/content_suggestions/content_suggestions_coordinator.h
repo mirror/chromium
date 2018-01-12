@@ -7,6 +7,8 @@
 
 #import "ios/chrome/browser/ui/coordinators/chrome_coordinator.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_panel_protocol.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
+#import "ios/public/provider/chrome/browser/voice/logo_animation_controller.h"
 
 namespace ios {
 class ChromeBrowserState;
@@ -23,7 +25,9 @@ class WebStateList;
 // Coordinator to manage the Suggestions UI via a
 // ContentSuggestionsViewController.
 @interface ContentSuggestionsCoordinator
-    : ChromeCoordinator<NewTabPagePanelProtocol>
+    : ChromeCoordinator<NewTabPagePanelProtocol,
+                        LogoAnimationControllerOwnerOwner,
+                        ToolbarOwner>
 
 // BrowserState used to create the ContentSuggestionFactory.
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;

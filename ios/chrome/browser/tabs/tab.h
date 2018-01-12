@@ -126,6 +126,8 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // |YES| if the tab has finished loading.
 @property(nonatomic, readonly) BOOL loadFinished;
 
+@property(nonatomic, weak) UIViewController* nativeController;
+
 // Creates a new Tab with the given WebState.
 - (instancetype)initWithWebState:(web::WebState*)webState;
 
