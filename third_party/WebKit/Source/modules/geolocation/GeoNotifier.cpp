@@ -87,7 +87,8 @@ void GeoNotifier::TimerFired(TimerBase*) {
 
   // As the timer fires asynchronously, it's possible that the execution context
   // has already gone.  Check it first.
-  if (!geolocation_->GetExecutionContext()) {
+  if (!geolocation_->GetExecutionContext() ||
+      geolocation_->GetExecutionContext()->IsContextDestroyed()) {
     return;  // Do not invoke anything because of no execution context.
   }
 
