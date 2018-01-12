@@ -20,12 +20,37 @@
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/extension.h"
 
+namespace {
+
+using UpdateClientCallback =
+    extensions::UpdateDataProvider::UpdateClientCallback;
+
+void InstallUpdateCallback(content::BrowserContext* context,
+                           const std::string& extension_id,
+                           const std::string& public_key,
+                           const base::FilePath& unpacked_dir,
+                           UpdateClientCallback update_client_callback) {
+  using InstallError = update_client::InstallError;
+  using Result = update_client::CrxInstaller::Result;
+
+  extensions::ExtensionSystem::Get(context)->InstallUpdate(
+      extension_id, public_key, unpacked_dir,
+      base::BindOnce(
+          [](UpdateClientCallback update_client_callback, bool success) {
+            DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+            std::move(update_client_callback)
+                .Run(Result(success ? InstallError::NONE
+                                    : InstallError::GENERIC_ERROR));
+          },
+          std::move(update_client_callback)));
+}
+
+}  // namespace
+
 namespace extensions {
 
-UpdateDataProvider::UpdateDataProvider(content::BrowserContext* browser_context,
-                                       InstallCallback install_callback)
-    : browser_context_(browser_context),
-      install_callback_(std::move(install_callback)) {}
+UpdateDataProvider::UpdateDataProvider(content::BrowserContext* browser_context)
+    : browser_context_(browser_context) {}
 
 UpdateDataProvider::~UpdateDataProvider() {}
 
@@ -93,10 +118,9 @@ void UpdateDataProvider::RunInstallCallback(
     return;
   }
 
-  DCHECK(!install_callback_.is_null());
   content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
       ->PostTask(FROM_HERE,
-                 base::BindOnce(std::move(install_callback_), browser_context_,
+                 base::BindOnce(InstallUpdateCallback, browser_context_,
                                 extension_id, public_key, unpacked_dir,
                                 std::move(update_client_callback)));
 }
