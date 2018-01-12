@@ -5,6 +5,7 @@
 #include "core/layout/LayoutTestHelper.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "core/dom/Document.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/page/Page.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"

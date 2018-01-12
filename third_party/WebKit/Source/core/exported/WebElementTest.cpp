@@ -88,6 +88,7 @@ WebElement WebElementTest::TestElement() {
 }
 
 TEST_F(WebElementTest, HasNonEmptyLayoutSize) {
+  QuirksModeScope quirker(GetDocument());
   InsertHTML(kEmptyBlock);
   EXPECT_FALSE(TestElement().HasNonEmptyLayoutSize());
 

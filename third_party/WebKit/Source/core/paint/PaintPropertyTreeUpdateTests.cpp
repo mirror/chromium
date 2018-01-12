@@ -453,6 +453,7 @@ TEST_P(PaintPropertyTreeUpdateTest, BuildingStopsAtThrottledFrames) {
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
+  QuirksModeScope quirker(GetDocument());
   SetBodyInnerHTML(R"HTML(
     <style>
       body { margin:0 }
