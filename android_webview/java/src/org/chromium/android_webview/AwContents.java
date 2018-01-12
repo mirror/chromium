@@ -1702,6 +1702,13 @@ public class AwContents implements SmartClipProvider {
      */
     @VisibleForTesting
     public void loadUrl(LoadUrlParams params) {
+        String url = params.getBaseUrl();
+        if (url == null) {
+            url = params.getUrl();
+        }
+        url = nativeCanonicalizeUrl(mNativeAwContents, url);
+        mContentsClient.getCallbackHelper().addCanonicalizedUrlToQueue(url);
+
         if (params.getLoadUrlType() == LoadURLType.DATA && !params.isBaseUrlDataScheme()) {
             // This allows data URLs with a non-data base URL access to file:///android_asset/ and
             // file:///android_res/ URLs. If AwSettings.getAllowFileAccess permits, it will also
@@ -3662,4 +3669,5 @@ public class AwContents implements SmartClipProvider {
 
     private native void nativeGrantFileSchemeAccesstoChildProcess(long nativeAwContents);
     private native void nativeResumeLoadingCreatedPopupWebContents(long nativeAwContents);
+    private native String nativeCanonicalizeUrl(long nativeAwContents, String url);
 }
