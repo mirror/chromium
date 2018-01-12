@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9be80691_b2cbf082",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/PostMessageTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3589e55_75934f7c",
+      "range": {
+        "startLine": 608,
+        "startChar": 60,
+        "endLine": 608,
+        "endChar": 75
+      },
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeed423f_92e753c2",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b86b33_39c48579",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "That is called by AppWebMessagePort::UnwrapJavaArray at https://chromium-review.googlesource.com/c/chromium/src/+/853231/8/content/browser/android/app_web_message_port.cc#29",
+      "parentUuid": "eeed423f_92e753c2",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d877be0c_dc0070cf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "That matches the behavior of the old code... start receiving messages and then not delivering them anywhere, so yes...",
+      "parentUuid": "7159d346_c5d7e4a6",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b130e96_055cef4d",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9237f1f4_4fc146f2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Ah, good point. It does indeed seem like Connector behaves badly if start is called again. start just calls WatcherImpl.start, which then calls nativeStart, which then ends up calling Watch on a SimpleWatcher instance that already is watching. And that will then DCHECK fail.\n\nAdded a test and a fix.",
+      "parentUuid": "0b130e96_055cef4d",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

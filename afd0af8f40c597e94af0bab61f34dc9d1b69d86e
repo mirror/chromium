@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b7ef1a0_4fce14a3",
+        "filename": "content/browser/android/app_web_message_port.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556bd73b_a3a72d6b",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b5b28e_5694ac47",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-10T05:37:47Z",
       "side": 1,
       "message": "how expensive are the encode/decode things now they are on the UI thread?",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd00a9dd_b4fa626f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Nothing changed with encode. PostMessage already always was run fully on the UI thread.\nRegarding decode, I don\u0027t think that\u0027s terribly expensive, but if you\u0027re concerned it wouldn\u0027t be hard to move that to the handler thread instead. It\u0027s only the creation of AppWebMessagePort instances for received ports that has to happen on the UI thread, the decoding of the message itself could be done anywhere.",
+      "parentUuid": "18b5b28e_5694ac47",
       "range": {
         "startLine": 42,
         "startChar": 33,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41f48178_00a4c883",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "I can\u0027t import both this and org.chromium.mojo.bindings.Message (afaik), so the question is which one would you prefer for me to import?",
+      "parentUuid": "92090132_86b90d90",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a773ab_72504594",
         "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
         "patchSetId": 6
@@ -82,6 +154,24 @@
       "writtenOn": "2018-01-10T05:37:47Z",
       "side": 1,
       "message": "how does this happen exactly? when is the callback null? would it be easier to use a dummy MessageReceiver instead to make the intention clear?",
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940a1261_adc5887f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "It happens when setMessageCallback is called with a null callback, exactly like in the old code. I now changed it to just set the connectors incomingMessageReceiver to null instead, dropping messages that way. Although that loses the ability to log when messages are received. So if we want to keep that option I guess I could indeed have a special MessageReceiver implementation that just logs + drops all messages (open question would be if it should try to deserialize/decode messages before logging?).",
+      "parentUuid": "40a773ab_72504594",
       "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -108,6 +198,30 @@
       "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb64b4a_13a1c571",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08c8fac_6e77efb6",
+      "range": {
+        "startLine": 136,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
