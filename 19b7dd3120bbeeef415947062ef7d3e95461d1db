@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4a88640_18060c39",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-12T20:25:18Z",
+      "side": 0,
+      "message": "It\u0027s used in an overridden method, so by definition the interface declaration has included or forward declared it.",
+      "parentUuid": "21cfbe0a_18760fb0",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31308a3b_0519fcfc",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d176de60_319fa14b",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-12T20:25:18Z",
+      "side": 0,
+      "message": "same here, since we must have included the declaration of FrameHostMsg_OpenURL_Params",
+      "parentUuid": "31308a3b_0519fcfc",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc637b3c_837e6250",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-12T20:05:11Z",
       "side": 0,
       "message": "The new location isn\u0027t included.",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2833f8a3_b2c44a8e",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-12T20:25:18Z",
+      "side": 0,
+      "message": "ResourceRequest, included above, by definition must include ResoureRequestBody.",
+      "parentUuid": "dc637b3c_837e6250",
       "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
