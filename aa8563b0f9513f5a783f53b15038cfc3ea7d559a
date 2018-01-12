@@ -16,6 +16,24 @@
       "revId": "aa8563b0f9513f5a783f53b15038cfc3ea7d559a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae48d4f5_a1656f78",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1126515
+      },
+      "writtenOn": "2018-01-12T07:54:16Z",
+      "side": 1,
+      "message": "Not needed. I have removed the unnecessary properties.",
+      "parentUuid": "68a29c75_43da210b",
+      "revId": "aa8563b0f9513f5a783f53b15038cfc3ea7d559a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
