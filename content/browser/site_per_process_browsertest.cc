@@ -803,6 +803,19 @@ bool ConvertJSONToPoint(const std::string& str, gfx::PointF* point) {
 }
 #endif  // defined(USE_AURA) || defined (OS_ANDROID)
 
+size_t GetNumRenderWidgetHostViews(WebContents* web_contents) {
+  std::set<RenderWidgetHostView*> set;
+  for (RenderFrameHost* rfh : web_contents->GetAllFrames()) {
+    if (RenderWidgetHostView* rwhv = static_cast<RenderFrameHostImpl*>(rfh)
+                                         ->frame_tree_node()
+                                         ->render_manager()
+                                         ->GetRenderWidgetHostView()) {
+      set.insert(rwhv);
+    }
+  }
+  return set.size();
+}
+
 }  // namespace
 
 //
@@ -1033,14 +1046,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossSiteIframe) {
   NavigateFrameToURL(child, http_url);
   EXPECT_EQ(http_url, observer.last_navigation_url());
   EXPECT_TRUE(observer.last_navigation_succeeded());
-  {
-    // There should be only one RenderWidgetHost when there are no
-    // cross-process iframes.
-    std::set<RenderWidgetHostView*> views_set =
-        web_contents()->GetRenderWidgetHostViewsInTree();
-    EXPECT_EQ(1U, views_set.size());
-  }
-
+  // Expect only one RenderWidgetHost when there are no cross-process iframes.
+  EXPECT_EQ(1U, GetNumRenderWidgetHostViews(web_contents()));
   EXPECT_EQ(
       " Site A\n"
       "   |--Site A\n"
@@ -1070,13 +1077,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossSiteIframe) {
   EXPECT_NE(shell()->web_contents()->GetRenderViewHost(), rvh);
   EXPECT_NE(shell()->web_contents()->GetSiteInstance(), site_instance);
   EXPECT_NE(shell()->web_contents()->GetMainFrame()->GetProcess(), rph);
-  {
-    // There should be now two RenderWidgetHosts, one for each process
-    // rendering a frame.
-    std::set<RenderWidgetHostView*> views_set =
-        web_contents()->GetRenderWidgetHostViewsInTree();
-    EXPECT_EQ(2U, views_set.size());
-  }
+  // Expect one RenderWidgetHost per process rendering a frame.
+  EXPECT_EQ(2U, GetNumRenderWidgetHostViews(web_contents()));
   RenderFrameProxyHost* proxy_to_parent =
       child->render_manager()->GetProxyToParent();
   EXPECT_TRUE(proxy_to_parent);
@@ -1123,11 +1125,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossSiteIframe) {
   EXPECT_NE(shell()->web_contents()->GetMainFrame()->GetProcess(),
             child->current_frame_host()->GetProcess());
   EXPECT_NE(rph, child->current_frame_host()->GetProcess());
-  {
-    std::set<RenderWidgetHostView*> views_set =
-        web_contents()->GetRenderWidgetHostViewsInTree();
-    EXPECT_EQ(2U, views_set.size());
-  }
+  EXPECT_EQ(2U, GetNumRenderWidgetHostViews(web_contents()));
   EXPECT_EQ(proxy_to_parent, child->render_manager()->GetProxyToParent());
   EXPECT_TRUE(proxy_to_parent->cross_process_frame_connector());
   EXPECT_NE(
@@ -8286,10 +8284,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
           static_cast<float>(third_counter.GetCount());
   EXPECT_GT(2.5f, ratio + 1 / ratio) << "Ratio is: " << ratio;
 
-  // Make sure all views can become visible.
-  EXPECT_TRUE(first_child_view->CanBecomeVisible());
-  EXPECT_TRUE(second_child_view->CanBecomeVisible());
-  EXPECT_TRUE(nested_child_view->CanBecomeVisible());
+  // Make sure all views are showing.
+  EXPECT_TRUE(first_child_view->IsShowing());
+  EXPECT_TRUE(second_child_view->IsShowing());
+  EXPECT_TRUE(nested_child_view->IsShowing());
 
   // Hide the first frame and wait for the notification to be posted by its
   // RenderWidgetHost.
@@ -8303,10 +8301,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   ASSERT_TRUE(hide_observer.WaitUntilSatisfied());
   EXPECT_TRUE(first_child_view->FrameConnectorForTesting()->IsHidden());
 
-  // Verify that only the second view can become visible now.
-  EXPECT_FALSE(first_child_view->CanBecomeVisible());
-  EXPECT_TRUE(second_child_view->CanBecomeVisible());
-  EXPECT_FALSE(nested_child_view->CanBecomeVisible());
+  // Verify that only the second view is showing now.
+  EXPECT_FALSE(first_child_view->IsShowing());
+  EXPECT_TRUE(second_child_view->IsShowing());
+  EXPECT_FALSE(nested_child_view->IsShowing());
 
   // Now hide and show the WebContents (to simulate a tab switch).
   shell()->web_contents()->WasHidden();
@@ -8380,7 +8378,7 @@ IN_PROC_BROWSER_TEST_F(
       static_cast<RenderWidgetHostViewChildFrame*>(
           root->child_at(1)->current_frame_host()->GetView());
 
-  EXPECT_FALSE(first_child_view->CanBecomeVisible());
+  EXPECT_FALSE(first_child_view->IsShowing());
 
   ChildFrameCompositorFrameSwapCounter first_counter(first_child_view);
   ChildFrameCompositorFrameSwapCounter second_counter(second_child_view);

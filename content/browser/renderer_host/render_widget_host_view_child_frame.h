@@ -302,10 +302,12 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   virtual bool HasEmbedderChanged();
 
-  // Returns false if the view cannot be shown. This is the case where the frame
-  // associated with this view or a cross process ancestor frame has been hidden
-  // using CSS.
-  bool CanBecomeVisible();
+  // RenderWidgetHostViewBase:
+  void WasShown() override;
+  void WasHidden() override;
+
+  // Whether this view is visible when its parent is visible.
+  bool is_visible_in_parent_ = true;
 
   using FrameSwappedCallbackList =
       base::circular_deque<std::unique_ptr<base::Closure>>;
