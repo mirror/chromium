@@ -64,10 +64,13 @@ SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
 }
 
-void SurfaceLayer::SetPrimarySurfaceId(const viz::SurfaceId& surface_id) {
+void SurfaceLayer::SetPrimarySurfaceId(
+    const viz::SurfaceId& surface_id,
+    base::Optional<uint32_t> deadline_in_frames) {
   if (primary_surface_id_ == surface_id)
     return;
   primary_surface_id_ = surface_id;
+  deadline_in_frames_ = deadline_in_frames;
   UpdateDrawsContent(HasDrawableContent());
   SetNeedsCommit();
 }
