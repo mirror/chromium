@@ -68,8 +68,8 @@ suite('CategoryDefaultSetting', function() {
      */
     const prefsLocationEnabled = {
       defaults: {
-        geolocation: {
-          setting: 'allow',
+        [settings.ContentSettingsTypes.GEOLOCATION]: {
+          setting: settings.ContentSetting.ALLOW,
         },
       },
     };
@@ -86,8 +86,8 @@ suite('CategoryDefaultSetting', function() {
      */
     const prefsLocationDisabled = {
       defaults: {
-        geolocation: {
-          setting: 'block',
+        [settings.ContentSettingsTypes.GEOLOCATION]: {
+          setting: settings.ContentSetting.BLOCK,
         },
       },
     };
@@ -100,8 +100,8 @@ suite('CategoryDefaultSetting', function() {
   test('test Flash content setting in DETECT/ASK setting', function() {
     const prefsFlash = {
       defaults: {
-        plugins: {
-          setting: 'detect_important_content',
+        [settings.ContentSettingsTypes.PLUGINS]: {
+          setting: settings.ContentSetting.IMPORTANT_CONTENT,
         },
       },
     };
@@ -114,8 +114,8 @@ suite('CategoryDefaultSetting', function() {
   test('test Flash content setting in legacy ALLOW setting', function() {
     const prefsFlash = {
       defaults: {
-        plugins: {
-          setting: 'allow',
+        [settings.ContentSettingsTypes.PLUGINS]: {
+          setting: settings.ContentSetting.ALLOW,
         },
       },
     };
@@ -128,8 +128,8 @@ suite('CategoryDefaultSetting', function() {
   test('test Flash content setting in BLOCK setting', function() {
     const prefsFlash = {
       defaults: {
-        plugins: {
-          setting: 'block',
+        [settings.ContentSettingsTypes.PLUGINS]: {
+          setting: settings.ContentSetting.BLOCK,
         },
       },
     };
@@ -142,8 +142,8 @@ suite('CategoryDefaultSetting', function() {
   test('test content setting from extension', function() {
     const prefs = {
       defaults: {
-        mic: {
-          setting: 'block',
+        [settings.ContentSettingsTypes.MIC]: {
+          setting: settings.ContentSetting.BLOCK,
           source: ContentSettingProvider.EXTENSION,
         },
       },
@@ -272,8 +272,8 @@ suite('CategoryDefaultSetting', function() {
      */
     const prefsCookiesSessionOnly = {
       defaults: {
-        cookies: {
-          setting: 'session_only',
+        [settings.ContentSettingsTypes.COOKIES]: {
+          setting: settings.ContentSetting.SESSION_ONLY,
         },
       },
     };
