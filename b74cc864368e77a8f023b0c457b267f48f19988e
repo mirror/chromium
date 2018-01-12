@@ -51,6 +51,24 @@
       "revId": "b74cc864368e77a8f023b0c457b267f48f19988e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef502a60_3a88cee8",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T00:17:01Z",
+      "side": 1,
+      "message": "Won\u0027t it cause relayout and repaint? I\u0027m ok for now, but we probably should look into why \u0026 potential fix to avoid unnecessary relayout/repaint.\n\nPlease file a bug and add TODO here.",
+      "parentUuid": "391f0b6d_9b9edfa4",
+      "revId": "b74cc864368e77a8f023b0c457b267f48f19988e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
