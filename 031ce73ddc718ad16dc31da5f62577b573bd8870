@@ -34,6 +34,24 @@
       "revId": "031ce73ddc718ad16dc31da5f62577b573bd8870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7d15b4_28a92f44",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T17:19:13Z",
+      "side": 1,
+      "message": "Ah, okay, that makes sense.  So to me, sounds like maybe DCHECKs are the right idea here, since this *should* never happen, but probably could somehow, knowing JS. :)  SGTY?  Thanks for the info!",
+      "parentUuid": "87d849e5_b2445306",
+      "revId": "031ce73ddc718ad16dc31da5f62577b573bd8870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
