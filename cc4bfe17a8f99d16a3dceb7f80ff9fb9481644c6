@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f631e368_a5f45eaf",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-12T17:36:59Z",
+      "side": 1,
+      "message": "Have we decided that the \"interaction\" signal is right for us?\n\nShould we consider a tab that was visible for more than x consecutive seconds are \"interacted\"? (The user might have read content on the tab if it was visible for more than x consecutive seconds)",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 351,
+        "endChar": 5
+      },
+      "revId": "cc4bfe17a8f99d16a3dceb7f80ff9fb9481644c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
