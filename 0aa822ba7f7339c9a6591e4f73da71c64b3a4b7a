@@ -16,6 +16,57 @@
       "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9bba1e_12feda39",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T18:45:30Z",
+      "side": 1,
+      "message": "I think you can just safely ignore this?",
+      "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1367ea_171bd82d",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T18:45:30Z",
+      "side": 1,
+      "message": "FWIW, I\u0027ve been using ReadSimple directly for rects.",
+      "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa6c66d_c9658d45",
+        "filename": "cc/test/transfer_cache_test_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T18:45:30Z",
+      "side": 1,
+      "message": "Maybe make these protected? I don\u0027t think internal functions should be public.",
+      "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
