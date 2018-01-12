@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e1b9853_2adb7efb",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T19:53:52Z",
+      "side": 1,
+      "message": "Sorry to bikeshed, but can you make this function a verb, like \"storeCustomData\" or \"recordCustomData\" or something along those lines?",
+      "revId": "89e68105f3bac721f3d79c0bcf4df479fbbde6ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
