@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac3f04ef_e7cc0fb0",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T00:34:12Z",
+      "side": 1,
+      "message": "This is my own ignorance, but what updates the surface layer in the SurfaceLayerBridge? I would have expected that a change here would also require a change there, but maybe that\u0027s backwards.\n\nDoes this code https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d131 get called from the browser when you submit a frame with a different local surface id or do you need to make that update yourself?",
+      "revId": "23981b8d4c7688d1015f585a70e1c25f52e5fbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
