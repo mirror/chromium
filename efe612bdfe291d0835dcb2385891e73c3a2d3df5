@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0eff5f4_79e19d51",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "True. I would prefer that it DCHECK for the non-deserialization cases, but I don\u0027t think doing anything goofy like having separate constructors is worthwhile. Removed.",
+      "parentUuid": "7295e63c_cc75579b",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67ce916_d4a13a1a",
         "filename": "mojo/public/cpp/base/big_buffer.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b45c916d_6fb2b26b",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d67ce916_d4a13a1a",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 74
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de215db2_b58bcdf9",
         "filename": "mojo/public/cpp/base/big_buffer.cc",
         "patchSetId": 10
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c73184cb_542d939b",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Already done in future patch set",
+      "parentUuid": "de215db2_b58bcdf9",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f0051de_21ed4c2c",
         "filename": "mojo/public/cpp/base/big_buffer.cc",
         "patchSetId": 10
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-12T08:18:30Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccd5c92_b2517f4e",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "4f0051de_21ed4c2c",
       "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "658b10f4_a9db3df1",
+        "filename": "mojo/public/cpp/base/big_buffer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "I was originally feeling fancy, but I thought the construction/destruction messiness was not worth the change.",
+      "parentUuid": "7e3d96e0_a1e32ca3",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a07355_22c25594",
         "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
         "patchSetId": 10
@@ -110,6 +212,24 @@
       "writtenOn": "2018-01-12T08:18:30Z",
       "side": 1,
       "message": "Nit: please call these files big_buffer_struct_traits.* (the automated security reviewer enforcement expects files to be called that)",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3d00ff_840b05c1",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Done. For the future we should consider standardizing on a more general name like mojom_traits if we want just one thing.",
+      "parentUuid": "21a07355_22c25594",
       "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +250,24 @@
       "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf441ed_900c0523",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17fe628_81a625b0",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "e76e50bc_a62b9661",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968dbbc8_ce75d5a4",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 26
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e8083f_fae79c80",
         "filename": "mojo/public/cpp/bindings/lib/serialization.h",
         "patchSetId": 10
@@ -167,6 +329,30 @@
       "writtenOn": "2018-01-12T08:18:30Z",
       "side": 1,
       "message": "I guess this is because we never had a unit test exercising the union path before?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8f6ca5_e0aacb47",
+        "filename": "mojo/public/cpp/bindings/lib/serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Correct. Any unions in tests have been tested without using SerializeAndDeserialize.",
+      "parentUuid": "77e8083f_fae79c80",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "3c6cef7f_d0a7b42b",
+        "filename": "mojo/public/mojom/base/big_buffer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Agreed, but we don\u0027t actually expose an API to get information about a shared buffer\u0027s size. We should.\n\nI started work to improve Mojo shm APIs, but ultimately I kept running into roadblocks with the base APIs. Since digit@ seems to be thoroughly on top of that problem, my plan is to revisit Mojo shm once base shm is in a better state.",
+      "parentUuid": "1b98b521_55429d98",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "946660a5_0b023d5d",
         "filename": "mojo/public/mojom/base/big_buffer.mojom",
         "patchSetId": 10
@@ -216,6 +420,30 @@
       "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce09f710_2b82f26f",
+        "filename": "mojo/public/mojom/base/big_buffer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T18:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946660a5_0b023d5d",
+      "range": {
+        "startLine": 13,
+        "startChar": 71,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
