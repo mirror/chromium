@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca9f64b_0f1f577e",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-12T17:14:45Z",
+      "side": 1,
+      "message": "Congratulations on getting the year right, it\u0027s going to take me until at least March to stop putting 2017 in copyright headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "27c9274b6054e3096445c87a41bdd6ff2a6a0b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d2aae9d_3728de84",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-12T17:14:45Z",
+      "side": 1,
+      "message": "Can you add a comment to this class similar to the one on NetErrorPageController?",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "27c9274b6054e3096445c87a41bdd6ff2a6a0b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
