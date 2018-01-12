@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d475b73c_b3aaf34a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:49:53Z",
+      "side": 1,
+      "message": "Let\u0027s utilize SelectionTemplate::is_base_first_ cache.\n\nconst EpehemralRange range(visible_selection.Start(), visible_selection.End());\nSelectionInDOMTree::Builder builder;\nif (IsBaseStart(visible_selection, direction))\n  builder.SetAsForwadSelection(range);\nelse\n  builder.SetAsBackwardSelection(range);\nreturn CreateVisibleSelection(builder.Build());",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "487b73250dd1afc07cd251fddf5b2b3a26d3c8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95341d88_b30bacc0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T09:49:53Z",
+      "side": 1,
+      "message": "nit: Please add |const|, since this function doesn\u0027t modify member variables.",
+      "range": {
+        "startLine": 77,
+        "startChar": 69,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "487b73250dd1afc07cd251fddf5b2b3a26d3c8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
