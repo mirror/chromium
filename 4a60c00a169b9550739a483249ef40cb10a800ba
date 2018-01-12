@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "67fdd3ac_cd608d63",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-12T17:56:50Z",
+      "side": 1,
+      "message": "We should have ProfileHelper::GetProfileByUserIdHashForTest called explicitly before this since we are simulating login instead of exercising real login code path in this test. Otherwise, AccessibilityManager would still be using sign-in profile and we are not really testing what we want.\n\nSuggest to get back the StartUserSession method and use that (without the SetPrefServiceForTest call).",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
@@ -13,6 +30,24 @@
       "writtenOn": "2018-01-12T17:47:50Z",
       "side": 1,
       "message": "nit: I might remove the assertions from line 611 to 620. The fact that the profiles change this way seems like an internal impl detail, not the end-user behavior we want to test. This feels a little like a \"change detector\" test. xiyuan, WDYT?",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de74804c_7f9c5242",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-12T17:56:50Z",
+      "side": 1,
+      "message": "+1\n\nI don\u0027t think we should test this detail either.",
+      "parentUuid": "be0732d1_83170048",
       "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
