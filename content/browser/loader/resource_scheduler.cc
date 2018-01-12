@@ -183,17 +183,17 @@ struct ResourceScheduler::RequestPriorityParams {
 
 class ResourceScheduler::RequestQueue {
  public:
-  typedef std::multiset<ScheduledResourceRequest*, ScheduledResourceSorter>
+  typedef std::multiset<ScheduledResourceRequestImpl*, ScheduledResourceSorter>
       NetQueue;
 
   RequestQueue() : fifo_ordering_ids_(0) {}
   ~RequestQueue() {}
 
   // Adds |request| to the queue with given |priority|.
-  void Insert(ScheduledResourceRequest* request);
+  void Insert(ScheduledResourceRequestImpl* request);
 
   // Removes |request| from the queue.
-  void Erase(ScheduledResourceRequest* request) {
+  void Erase(ScheduledResourceRequestImpl* request) {
     PointerMap::iterator it = pointers_.find(request);
     CHECK(it != pointers_.end());
     queue_.erase(it->second);
@@ -209,7 +209,7 @@ class ResourceScheduler::RequestQueue {
   }
 
   // Returns true if |request| is queued.
-  bool IsQueued(ScheduledResourceRequest* request) const {
+  bool IsQueued(ScheduledResourceRequestImpl* request) const {
     return base::ContainsKey(pointers_, request);
   }
 
@@ -217,7 +217,8 @@ class ResourceScheduler::RequestQueue {
   bool IsEmpty() const { return queue_.size() == 0; }
 
  private:
-  typedef std::map<ScheduledResourceRequest*, NetQueue::iterator> PointerMap;
+  typedef std::map<ScheduledResourceRequestImpl*, NetQueue::iterator>
+      PointerMap;
 
   uint32_t MakeFifoOrderingId() {
     fifo_ordering_ids_ += 1;
@@ -234,13 +235,14 @@ class ResourceScheduler::RequestQueue {
 
 // This is the handle we return to the ResourceDispatcherHostImpl so it can
 // interact with the request.
-class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
+class ResourceScheduler::ScheduledResourceRequestImpl
+    : public ScheduledResourceRequest {
  public:
-  ScheduledResourceRequest(const ClientId& client_id,
-                           net::URLRequest* request,
-                           ResourceScheduler* scheduler,
-                           const RequestPriorityParams& priority,
-                           bool is_async)
+  ScheduledResourceRequestImpl(const ClientId& client_id,
+                               net::URLRequest* request,
+                               ResourceScheduler* scheduler,
+                               const RequestPriorityParams& priority,
+                               bool is_async)
       : client_id_(client_id),
         request_(request),
         ready_(false),
@@ -257,7 +259,7 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
     request_->SetUserData(kUserDataKey, std::make_unique<UnownedPointer>(this));
   }
 
-  ~ScheduledResourceRequest() override {
+  ~ScheduledResourceRequestImpl() override {
     if ((attributes_ & kAttributeLayoutBlocking) == kAttributeLayoutBlocking) {
       UMA_HISTOGRAM_COUNTS_100(
           "ResourceScheduler.PeakDelayableRequestsInFlight.LayoutBlocking",
@@ -272,7 +274,7 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
     scheduler_->RemoveRequest(this);
   }
 
-  static ScheduledResourceRequest* ForRequest(net::URLRequest* request) {
+  static ScheduledResourceRequestImpl* ForRequest(net::URLRequest* request) {
     UnownedPointer* pointer =
         static_cast<UnownedPointer*>(request->GetUserData(kUserDataKey));
     return pointer ? pointer->get() : nullptr;
@@ -296,12 +298,12 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
       if (start_mode == START_ASYNC) {
         scheduler_->task_runner()->PostTask(
             FROM_HERE,
-            base::BindOnce(&ScheduledResourceRequest::Start,
+            base::BindOnce(&ScheduledResourceRequestImpl::Start,
                            weak_ptr_factory_.GetWeakPtr(), START_SYNC));
         return;
       }
       deferred_ = false;
-      Resume();
+      delegate()->ResumeDelegate();
     }
 
     ready_ = true;
@@ -337,25 +339,23 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
  private:
   class UnownedPointer : public base::SupportsUserData::Data {
    public:
-    explicit UnownedPointer(ScheduledResourceRequest* pointer)
+    explicit UnownedPointer(ScheduledResourceRequestImpl* pointer)
         : pointer_(pointer) {}
 
-    ScheduledResourceRequest* get() const { return pointer_; }
+    ScheduledResourceRequestImpl* get() const { return pointer_; }
 
    private:
-    ScheduledResourceRequest* const pointer_;
+    ScheduledResourceRequestImpl* const pointer_;
 
     DISALLOW_COPY_AND_ASSIGN(UnownedPointer);
   };
 
   static const void* const kUserDataKey;
 
-  // ResourceThrottle interface:
+  // ScheduledResourceRequest implemnetation
   void WillStartRequest(bool* defer) override {
     deferred_ = *defer = !ready_;
   }
-
-  const char* GetNameForLogging() const override { return "ResourceScheduler"; }
 
   const ClientId client_id_;
   net::URLRequest* request_;
@@ -372,18 +372,19 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
   // Cached to excessive recomputation in ShouldKeepSearching.
   const net::HostPortPair host_port_pair_;
 
-  base::WeakPtrFactory<ResourceScheduler::ScheduledResourceRequest>
+  base::WeakPtrFactory<ResourceScheduler::ScheduledResourceRequestImpl>
       weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(ScheduledResourceRequest);
+  DISALLOW_COPY_AND_ASSIGN(ScheduledResourceRequestImpl);
 };
 
-const void* const ResourceScheduler::ScheduledResourceRequest::kUserDataKey =
-    &ResourceScheduler::ScheduledResourceRequest::kUserDataKey;
+const void* const
+    ResourceScheduler::ScheduledResourceRequestImpl::kUserDataKey =
+        &ResourceScheduler::ScheduledResourceRequestImpl::kUserDataKey;
 
 bool ResourceScheduler::ScheduledResourceSorter::operator()(
-    const ScheduledResourceRequest* a,
-    const ScheduledResourceRequest* b) const {
+    const ScheduledResourceRequestImpl* a,
+    const ScheduledResourceRequestImpl* b) const {
   // Want the set to be ordered first by decreasing priority, then by
   // decreasing intra_priority.
   // ie. with (priority, intra_priority)
@@ -398,7 +399,7 @@ bool ResourceScheduler::ScheduledResourceSorter::operator()(
 }
 
 void ResourceScheduler::RequestQueue::Insert(
-    ScheduledResourceRequest* request) {
+    ScheduledResourceRequestImpl* request) {
   DCHECK(!base::ContainsKey(pointers_, request));
   request->set_fifo_ordering(MakeFifoOrderingId());
   pointers_[request] = queue_.insert(request);
@@ -436,7 +437,7 @@ class ResourceScheduler::Client {
   ~Client() {}
 
   void ScheduleRequest(const net::URLRequest& url_request,
-                       ScheduledResourceRequest* request) {
+                       ScheduledResourceRequestImpl* request) {
     SetRequestAttributes(request, DetermineRequestAttributes(request));
     ShouldStartReqResult should_start = ShouldStartRequest(request);
     if (should_start == START_REQUEST) {
@@ -449,7 +450,7 @@ class ResourceScheduler::Client {
     }
   }
 
-  void RemoveRequest(ScheduledResourceRequest* request) {
+  void RemoveRequest(ScheduledResourceRequestImpl* request) {
     if (pending_requests_.IsQueued(request)) {
       pending_requests_.Erase(request);
       DCHECK(!base::ContainsKey(in_flight_requests_, request));
@@ -471,7 +472,7 @@ class ResourceScheduler::Client {
     // anything that depends on those limits before calling
     // ClearInFlightRequests() below.
     while (!pending_requests_.IsEmpty()) {
-      ScheduledResourceRequest* request =
+      ScheduledResourceRequestImpl* request =
           *pending_requests_.GetNextHighestIterator();
       pending_requests_.Erase(request);
       // Starting requests asynchronously ensures no side effects, and avoids
@@ -527,7 +528,7 @@ class ResourceScheduler::Client {
     }
   }
 
-  void ReprioritizeRequest(ScheduledResourceRequest* request,
+  void ReprioritizeRequest(ScheduledResourceRequestImpl* request,
                            RequestPriorityParams old_priority_params,
                            RequestPriorityParams new_priority_params) {
     request->url_request()->SetPriority(new_priority_params.priority);
@@ -571,7 +572,7 @@ class ResourceScheduler::Client {
         total_layout_blocking_count_);
   }
 
-  void InsertInFlightRequest(ScheduledResourceRequest* request) {
+  void InsertInFlightRequest(ScheduledResourceRequestImpl* request) {
     in_flight_requests_.insert(request);
     SetRequestAttributes(request, DetermineRequestAttributes(request));
     RecordRequestCountMetrics();
@@ -593,7 +594,7 @@ class ResourceScheduler::Client {
     }
   }
 
-  void EraseInFlightRequest(ScheduledResourceRequest* request) {
+  void EraseInFlightRequest(ScheduledResourceRequestImpl* request) {
     size_t erased = in_flight_requests_.erase(request);
     DCHECK_EQ(1u, erased);
     // Clear any special state that we were tracking for this request.
@@ -608,7 +609,7 @@ class ResourceScheduler::Client {
 
   size_t CountRequestsWithAttributes(
       const RequestAttributes attributes,
-      ScheduledResourceRequest* current_request) {
+      ScheduledResourceRequestImpl* current_request) {
     size_t matching_request_count = 0;
     for (RequestSet::const_iterator it = in_flight_requests_.begin();
          it != in_flight_requests_.end(); ++it) {
@@ -641,7 +642,7 @@ class ResourceScheduler::Client {
     return (request_attributes & matching_attributes) == matching_attributes;
   }
 
-  void SetRequestAttributes(ScheduledResourceRequest* request,
+  void SetRequestAttributes(ScheduledResourceRequestImpl* request,
                             RequestAttributes attributes) {
     RequestAttributes old_attributes = request->attributes();
     if (old_attributes == attributes)
@@ -670,7 +671,7 @@ class ResourceScheduler::Client {
   }
 
   RequestAttributes DetermineRequestAttributes(
-      ScheduledResourceRequest* request) {
+      ScheduledResourceRequestImpl* request) {
     RequestAttributes attributes = kAttributeNone;
 
     if (base::ContainsKey(in_flight_requests_, request))
@@ -724,7 +725,7 @@ class ResourceScheduler::Client {
     return false;
   }
 
-  void StartRequest(ScheduledResourceRequest* request,
+  void StartRequest(ScheduledResourceRequestImpl* request,
                     StartMode start_mode,
                     RequestStartTrigger trigger) {
     if (resource_scheduler_->yielding_scheduler_enabled()) {
@@ -796,7 +797,7 @@ class ResourceScheduler::Client {
   //   * Never exceed 6 delayable requests for a given host.
 
   ShouldStartReqResult ShouldStartRequest(
-      ScheduledResourceRequest* request) const {
+      ScheduledResourceRequestImpl* request) const {
     if (!resource_scheduler_->enabled())
       return START_REQUEST;
 
@@ -913,7 +914,7 @@ class ResourceScheduler::Client {
   // For a request that is ready to start, return START_REQUEST if the
   // scheduler doesn't need to yield, else YIELD_SCHEDULER.
   ShouldStartReqResult ShouldStartOrYieldRequest(
-      ScheduledResourceRequest* request) const {
+      ScheduledResourceRequestImpl* request) const {
     DCHECK_GE(started_requests_since_yielding_, 0);
 
     // Don't yield if:
@@ -948,7 +949,7 @@ class ResourceScheduler::Client {
         pending_requests_.GetNextHighestIterator();
 
     while (request_iter != pending_requests_.End()) {
-      ScheduledResourceRequest* request = *request_iter;
+      ScheduledResourceRequestImpl* request = *request_iter;
       ShouldStartReqResult query_result = ShouldStartRequest(request);
 
       if (query_result == START_REQUEST) {
@@ -1044,15 +1045,15 @@ ResourceScheduler::~ResourceScheduler() {
   DCHECK(client_map_.empty());
 }
 
-std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
-    int child_id,
-    int route_id,
-    bool is_async,
-    net::URLRequest* url_request) {
+std::unique_ptr<ResourceScheduler::ScheduledResourceRequest>
+ResourceScheduler::ScheduleRequest(int child_id,
+                                   int route_id,
+                                   bool is_async,
+                                   net::URLRequest* url_request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   ClientId client_id = MakeClientId(child_id, route_id);
-  std::unique_ptr<ScheduledResourceRequest> request(
-      new ScheduledResourceRequest(
+  std::unique_ptr<ScheduledResourceRequestImpl> request(
+      new ScheduledResourceRequestImpl(
           client_id, url_request, this,
           RequestPriorityParams(url_request->priority(), 0), is_async));
 
@@ -1072,7 +1073,7 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
   return std::move(request);
 }
 
-void ResourceScheduler::RemoveRequest(ScheduledResourceRequest* request) {
+void ResourceScheduler::RemoveRequest(ScheduledResourceRequestImpl* request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (base::ContainsKey(unowned_requests_, request)) {
     unowned_requests_.erase(request);
@@ -1199,7 +1200,7 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
   }
 
   auto* scheduled_resource_request =
-      ScheduledResourceRequest::ForRequest(request);
+      ScheduledResourceRequestImpl::ForRequest(request);
 
   // Downloads don't use the resource scheduler.
   if (!scheduled_resource_request) {
@@ -1233,7 +1234,7 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
 void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
                                             net::RequestPriority new_priority) {
   int current_intra_priority = 0;
-  auto* existing_request = ScheduledResourceRequest::ForRequest(request);
+  auto* existing_request = ScheduledResourceRequestImpl::ForRequest(request);
   if (existing_request) {
     current_intra_priority =
         existing_request->get_request_priority_params().intra_priority;

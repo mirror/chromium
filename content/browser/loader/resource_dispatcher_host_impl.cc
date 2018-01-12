@@ -276,6 +276,30 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
 
 }  // namespace
 
+class ResourceDispatcherHostImpl::ResourceThrottleAdapter final
+    : public ResourceThrottle,
+      public ResourceScheduler::ScheduledResourceRequest::Delegate {
+ public:
+  explicit ResourceThrottleAdapter(
+      std::unique_ptr<ResourceScheduler::ScheduledResourceRequest> request)
+      : request_(std::move(request)) {
+    request_->set_delegate(this);
+  }
+  ~ResourceThrottleAdapter() override {}
+
+  // ResourceThrottle implementation
+  void WillStartRequest(bool* defer) override {
+    request_->WillStartRequest(defer);
+  }
+  const char* GetNameForLogging() const override { return "ResourceScheduler"; }
+
+  // ScheduledResourceRequest::Delegate implementation
+  void ResumeDelegate() override { ResourceThrottle::Resume(); }
+
+ private:
+  std::unique_ptr<ResourceScheduler::ScheduledResourceRequest> request_;
+};
+
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo() {}
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo(const LoadInfo& other) = default;
 ResourceDispatcherHostImpl::LoadInfo::~LoadInfo() {}
@@ -1381,8 +1405,9 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
 
   // TODO(ricea): Stop looking this up so much.
   ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
-  throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
-                                                  info->IsAsync(), request));
+  throttles.push_back(
+      std::make_unique<ResourceThrottleAdapter>(scheduler_->ScheduleRequest(
+          child_id, route_id, info->IsAsync(), request)));
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.
