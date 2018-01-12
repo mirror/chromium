@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a7089c_e9350dca",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-12T08:41:36Z",
+      "side": 0,
+      "message": "Don\u0027t you need to keep this? If you remove this, I would expect to not see the bookmarks button at the bottom of the NTP.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 44
+      },
+      "revId": "ae42d324d6e2f1921b70c9f0a26f124d0207b198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
