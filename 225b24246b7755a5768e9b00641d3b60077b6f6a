@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9329e37a_53b2fa11",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T07:23:37Z",
+      "side": 1,
+      "message": "The false value of|ReplaceComposition()| means IMC has been gone. There\nare no reasons to selection.\n\nI think it is better to |return false| here.",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 402,
+        "endChar": 27
+      },
+      "revId": "225b24246b7755a5768e9b00641d3b60077b6f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
