@@ -8,6 +8,8 @@
 #ifndef BASE_CALLBACK_INTERNAL_H_
 #define BASE_CALLBACK_INTERNAL_H_
 
+#include <utility>
+
 #include "base/base_export.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
@@ -136,7 +138,7 @@ class BASE_EXPORT CallbackBase {
 
   // Allow initializing of |bind_state_| via the constructor to avoid default
   // initialization of the scoped_refptr.
-  explicit CallbackBase(BindStateBase* bind_state);
+  explicit CallbackBase(scoped_refptr<BindStateBase> bind_state);
 
   InvokeFuncStorage polymorphic_invoke() const {
     return bind_state_->polymorphic_invoke_;
@@ -159,8 +161,8 @@ class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
   CallbackBaseCopyable& operator=(CallbackBaseCopyable&& c);
 
  protected:
-  explicit CallbackBaseCopyable(BindStateBase* bind_state)
-      : CallbackBase(bind_state) {}
+  explicit CallbackBaseCopyable(scoped_refptr<BindStateBase> bind_state)
+      : CallbackBase(std::move(bind_state)) {}
   ~CallbackBaseCopyable() = default;
 };
 
