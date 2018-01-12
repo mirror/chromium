@@ -45,6 +45,29 @@
       "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a043b05_85fb42e5",
+        "filename": "extensions/renderer/console.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T09:50:42Z",
+      "side": 0,
+      "message": "The message here (\"e::console:\") is oddly specific. Have you checked with the author if this is used for searches or something?",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

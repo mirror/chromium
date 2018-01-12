@@ -16,6 +16,29 @@
       "revId": "37acb5ebe19e5a5e1514a931c7a058297d140d6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136ffa97_0dd351fb",
+        "filename": "extensions/renderer/console.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T09:50:42Z",
+      "side": 1,
+      "message": "nit: s/minidimp/minidump/",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "37acb5ebe19e5a5e1514a931c7a058297d140d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
