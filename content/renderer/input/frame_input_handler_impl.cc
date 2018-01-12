@@ -229,6 +229,26 @@ void FrameInputHandlerImpl::Replace(const base::string16& word) {
   render_frame_->SyncSelectionIfRequired();
 }
 
+void FrameInputHandlerImpl::ReplaceTextAtRange(const gfx::Range& range,
+                                               const base::string16& word) {
+  if (!main_thread_task_runner_->BelongsToCurrentThread()) {
+    RunOnMainThread(base::Bind(&FrameInputHandlerImpl::ReplaceTextAtRange,
+                               weak_this_, range, word));
+    return;
+  }
+
+  if (!render_frame_)
+    return;
+
+  blink::WebLocalFrame* frame = render_frame_->GetWebFrame();
+  frame->SelectRange(blink::WebRange(range.start(), range.end()),
+                     blink::WebLocalFrame::kHideSelectionHandle,
+                     blink::mojom::SelectionMenuBehavior::kHide);
+
+  frame->ReplaceSelection(blink::WebString::FromUTF16(word), false);
+  render_frame_->SyncSelectionIfRequired();
+}
+
 void FrameInputHandlerImpl::ReplaceMisspelling(const base::string16& word) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
     RunOnMainThread(base::Bind(&FrameInputHandlerImpl::ReplaceMisspelling,

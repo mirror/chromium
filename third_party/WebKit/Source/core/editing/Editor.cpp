@@ -1829,10 +1829,9 @@ void Editor::TidyUpHTMLStructure(Document& document) {
   // TODO(tkent): Should we check and move Text node children of <html>?
 }
 
-void Editor::ReplaceSelection(const String& text) {
+void Editor::ReplaceSelection(const String& text, bool smart_replace) {
   DCHECK(!GetFrame().GetDocument()->NeedsLayoutTreeUpdate());
   bool select_replacement = Behavior().ShouldSelectReplacement();
-  bool smart_replace = true;
   ReplaceSelectionWithText(text, select_replacement, smart_replace,
                            InputEvent::InputType::kInsertReplacementText);
 }

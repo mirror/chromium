@@ -11,8 +11,10 @@
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
+#include "core/editing/VisiblePosition.h"
 #include "core/editing/ime/ImeTextSpanVectorBuilder.h"
 #include "core/editing/ime/InputMethodController.h"
+#include "core/editing/iterators/TextIterator.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -160,6 +162,15 @@ WebRange WebInputMethodControllerImpl::CompositionRange() {
   editable->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   return PlainTextRange::Create(*editable, range);
+}
+
+WebRange WebInputMethodControllerImpl::GetEditingWordOffsets() const {
+  const VisibleSelection& selection =
+      GetFrame()->Selection().ComputeVisibleSelectionInDOMTree();
+
+  const VisiblePosition& position = selection.VisibleBase();
+  VisiblePosition start = StartOfWord(position, kPreviousWordIfOnBoundary);
+  return EphemeralRange(start.DeepEquivalent(), position.DeepEquivalent());
 }
 
 WebRange WebInputMethodControllerImpl::GetSelectionOffsets() const {

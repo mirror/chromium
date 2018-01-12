@@ -72,6 +72,8 @@ class WebInputMethodController {
   // Fetches the character range of the current composition, also called the
   // "marked range."
   virtual WebRange CompositionRange() { return WebRange(); };
+
+  virtual WebRange GetEditingWordOffsets() const = 0;
 };
 
 }  // namespace blink
