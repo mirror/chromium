@@ -22,6 +22,30 @@
       "revId": "127493cf59024e75bcd66ee6df2f56723333f934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd4f868_65acfa93",
+        "filename": "ios/web_view/internal/cwv_scroll_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2018-01-12T06:29:13Z",
+      "side": 1,
+      "message": "That won\u0027t work because self.contentOffset \u003d _proxy.contentOffset invokes -setContentOffset: defined above, so it would cause infinite recursive calls. So I believe I cannot use automatic KVO notification for this, but let me know if you have any solution.",
+      "parentUuid": "1674ebea_668728e7",
+      "range": {
+        "startLine": 183,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 26
+      },
+      "revId": "127493cf59024e75bcd66ee6df2f56723333f934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
