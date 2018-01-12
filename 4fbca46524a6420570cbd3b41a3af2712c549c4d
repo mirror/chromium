@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "507102c3_60a36115",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001745
+      },
+      "writtenOn": "2018-01-12T21:28:27Z",
+      "side": 1,
+      "message": "Nit: you\u0027re sorting twice, would it be worth doing this once and storing in a variable?",
+      "range": {
+        "startLine": 181,
+        "startChar": 28,
+        "endLine": 181,
+        "endChar": 34
+      },
+      "revId": "4fbca46524a6420570cbd3b41a3af2712c549c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
