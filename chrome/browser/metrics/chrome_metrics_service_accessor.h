@@ -18,6 +18,7 @@ class BrowserProcessImpl;
 class ChromeMetricsServiceClient;
 class ChromePasswordManagerClient;
 class NavigationMetricsRecorder;
+class PrefService;
 class Profile;
 
 namespace {
@@ -109,6 +110,7 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   friend class extensions::ChromeMetricsPrivateDelegate;
   friend class extensions::FileManagerPrivateIsUMAEnabledFunction;
   friend void ChangeMetricsReportingStateWithReply(
+      PrefService*,
       bool,
       const OnMetricsReportingCallbackType&);
   friend class options::BrowserOptionsHandler;
@@ -133,10 +135,13 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   FRIEND_TEST_ALL_PREFIXES(ChromeMetricsServiceAccessorTest,
                            MetricsReportingEnabled);
 
-  // Returns true if metrics reporting is enabled.
+  // Returns true if metrics reporting is enabled. |local_state| is the
+  // PrefService for local state. Typically this comes from
+  // g_browser_process->local_state(), but during startup |g_browser_process|
+  // may not have been created.
   // TODO(gayane): Consolidate metric prefs on all platforms.
   // http://crbug.com/362192,  http://crbug.com/532084
-  static bool IsMetricsAndCrashReportingEnabled();
+  static bool IsMetricsAndCrashReportingEnabled(PrefService* local_state);
 
   // Calls metrics::MetricsServiceAccessor::RegisterSyntheticFieldTrial() with
   // g_browser_process->metrics_service(). See that function's declaration for
