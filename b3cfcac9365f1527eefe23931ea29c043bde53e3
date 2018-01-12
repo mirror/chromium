@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "415d36d6_9ff0fe27",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-12T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e16c0db_92f531e2",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 9
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0162d6_831d8067",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6c4fd6_7c125207",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-12T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0162d6_831d8067",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 25
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bad51ab1_f064d5ff",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-12T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ce4521f_a543abae",
+      "range": {
+        "startLine": 210,
+        "startChar": 11,
+        "endLine": 210,
+        "endChar": 15
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "965a86f1_97fa8d34",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "72111890_297b735f",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-12T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965a86f1_97fa8d34",
+      "range": {
+        "startLine": 212,
+        "startChar": 24,
+        "endLine": 212,
+        "endChar": 41
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d54b80c_f54444ee",
         "filename": "chrome/browser/conflicts/installed_programs_win.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900fdc4a_dc89af67",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-12T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d54b80c_f54444ee",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 23
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
