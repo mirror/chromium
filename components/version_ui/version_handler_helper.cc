@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/base_switches.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
@@ -14,6 +15,18 @@
 #include "components/variations/active_field_trials.h"
 
 namespace version_ui {
+
+namespace {
+
+std::string GenerateCmdParam(const std::string& param_key,
+                             const std::string& param_value) {
+  if (!param_value.empty()) {
+    return " --" + param_key + "=\"" + param_value + "\"";
+  }
+  return "";
+}
+
+}  // namespace
 
 std::unique_ptr<base::Value> GetVariationsList() {
   std::vector<std::string> variations;
@@ -42,6 +55,24 @@ std::unique_ptr<base::Value> GetVariationsList() {
   }
 
   return std::move(variations_list);
+}
+
+base::Value GetVariationsCmd() {
+  std::string field_trial_states;
+  base::FieldTrialList::AllStatesToString(&field_trial_states, true);
+
+  std::string enable_features;
+  std::string disable_features;
+  base::FeatureList::GetInstance()->GetFeatureOverrides(&enable_features,
+                                                        &disable_features);
+
+  std::string variations_cmd_data =
+      GenerateCmdParam(switches::kForceFieldTrials, field_trial_states) +
+      GenerateCmdParam(switches::kEnableFeatures, enable_features) +
+      GenerateCmdParam(switches::kDisableFeatures, disable_features);
+
+  base::Value variations_cmd(variations_cmd_data);
+  return variations_cmd;
 }
 
 }  // namespace version_ui
