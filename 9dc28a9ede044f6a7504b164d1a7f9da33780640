@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a356de29_db2900df",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-12T14:31:05Z",
+      "side": 1,
+      "message": "Is this documented anywhere? It\u0027s not mentioned at https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes.\n\nI\u0027d argue that \"superclass definitely must have declared this\" isn\u0027t a whole lot better than other reasons to not include what you use. Like anything else, the fact that some method is inherited could change in the future. To me the beauty of IWYU is the acronym entirely encapsulates the rule. No need for caveats or special cases, just: if you use it, declare/include it.",
+      "parentUuid": "ace4427e_f0de70d4",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "235aedce_cf5ed0a1",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
         "patchSetId": 28
