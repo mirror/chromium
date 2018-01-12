@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cce6bc73_7f0340ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T16:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad447bc_717ddde3",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f2d55c_872dd3d9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T05:53:35Z",
       "side": 1,
       "message": "didn\u0027t follow this comment.  Why not just change all callers in the same CL?  Or, is there a CL with caller change to look at?",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93145948_cffed3b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T16:53:26Z",
+      "side": 1,
+      "message": "This is called by the internal tree, so my plan was do this, change internal, remove old function",
+      "parentUuid": "f8f2d55c_872dd3d9",
       "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
