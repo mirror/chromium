@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f94e216_356b924b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-12T06:47:00Z",
+      "side": 1,
+      "message": "the local id set in the constructor will be unused. \n |current_size_in_pixels_| will be 0x0 the first time a frame arrives here, and (hopefully) a mismatch.\n\nprobably better as written than leaving it uninitialized, though.  seems like generating ids is pretty cheap.\n\nso, uh, nevermind.  :)",
+      "revId": "23981b8d4c7688d1015f585a70e1c25f52e5fbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac3f04ef_e7cc0fb0",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 2
