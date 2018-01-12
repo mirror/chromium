@@ -352,7 +352,7 @@ deps = {
   },
 
   'src/third_party/ffmpeg':
-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'eb53b52399f5b46426202f77a12dba3fe822ee09',
+    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '637aae8ee5c490736a675c9016a6beab3a83184f',
 
   'src/third_party/findbugs': {
       'url': Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '4275d9ac8610db6b1bc9a5e887f97e41b33fac67',
