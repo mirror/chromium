@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b5114d5_64ec3039",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:58:05Z",
+      "side": 1,
+      "message": "nit: Prefer |path_index| or just |i| here; style guide discourages abbreviations/truncations.",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 22
+      },
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcbcf9b_76f6f1ca",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:58:05Z",
+      "side": 1,
+      "message": "Do you need this, or could you just check whether |dir.IsValid()| below?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd93f374_e6f22e1c",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 4
@@ -25,6 +71,53 @@
     },
     {
       "key": {
+        "uuid": "63b21311_fcbf8175",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:58:05Z",
+      "side": 1,
+      "message": "The problem is that this API only takes ownership of the fd if the call succeeds; otherwise the fd remains valid, including the handles it contains. So you\u0027re kind of stuck with the fdio_transfer_fd(get())... release() dance.",
+      "parentUuid": "dd93f374_e6f22e1c",
+      "range": {
+        "startLine": 85,
+        "startChar": 30,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1049aee_3f59322c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:58:05Z",
+      "side": 1,
+      "message": "nit: If you wrap |handles[0]| into a ScopedZxHandle immediately after release()ing the fd then you don\u0027t need to remember to close() it here, and you can release() it to launchpad_add_handle(...) which makes the transfer of ownership easier to spot at a glance.",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 33
+      },
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55318d2a_fb9954bd",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 4
@@ -36,6 +129,24 @@
       "writtenOn": "2018-01-11T23:30:19Z",
       "side": 1,
       "message": "I realize this isn\u0027t new to this CL, but it seems like the early returns don\u0027t really match the API style of launchpad. Do we need to get to a launchpad_go() or a launchpad_abort()? Otherwise what happens to e.g. the handles that have been duplicated, but never finalized either way.",
+      "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcee630_d3b7023c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:58:05Z",
+      "side": 1,
+      "message": "That is a very good point; we are missing a call to launchad_destroy() in the failure cases!\n\nPerhaps define a ScopedLaunchpad similar to ScopedZxHandle, in this cc?",
+      "parentUuid": "55318d2a_fb9954bd",
       "revId": "e393b11a1f425f84764b358841aa22273e3ec0fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
