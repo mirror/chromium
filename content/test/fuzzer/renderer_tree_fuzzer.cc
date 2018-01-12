@@ -588,7 +588,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   std::string html;
   nodes->WriteHtml(&html);
 
-  env->adapter->LoadHTML(html, "http://www.example.org");
+  env->adapter->LoadHTMLWithUrlOverride(html.c_str(), "http://www.example.org");
   return 0;
 }
 

@@ -841,7 +841,7 @@ TEST_F(MAYBE_PrintRenderFrameHelperPreviewTest,
       "<!DOCTYPE html>"
       "<style>"
       "@media (min-width: 540px) {"
-      "  #container {"
+      "  %23container {"
       "    width: 540px;"
       "  }"
       "}"

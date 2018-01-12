@@ -383,7 +383,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        "uSeRnAmE",
        "johnsmith"},
       // Check removal of special characters.
-      {{"u1_s2-e3~r4/n5(a)6m#e", "", "johnsmith"},
+      {{"u1_s2-e3~r4/n5(a)6m%23e", "", "johnsmith"},
        {"email", "", "js@google.com"},
        "u1_s2-e3~r4/n5(a)6m#e",
        "johnsmith"},
