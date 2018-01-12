@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06150599_8a0c9ad5",
+        "filename": "components/history/core/browser/typed_url_sync_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T01:26:08Z",
+      "side": 1,
+      "message": "It kind of feels like you really want the test class to inherit from the tester, so the cases that require type specific are really just an extension of the base test cases, using exactly the same access.",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79ca57d_14fec6f6",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T01:26:08Z",
+      "side": 1,
+      "message": "I like create and mutate being separate. Seems like you might be able to have it already make a new different piece of data. Or maybe pass in a string or int to seed the data, so that CreateEntity(\"a\") will always create the same element.\n\nSeems like separating Create from Store might be useful, so you don\u0027t have to have local vs remote. But, since you\u0027re always dealing with specifics, we\u0027re not going to be able to verify that remote data causes the local side to see the right data. You could have the tester implement something to convert to/from data/native, but, that\u0027d be repeating work that\u0027s already in most bridges. And what the native actually looks like differs greatly between bridges, so maybe that doesn\u0027t make any sense.",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f3891f_13dc9923",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T01:26:08Z",
+      "side": 1,
+      "message": "Such fancy test matching everywhere!",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98db33e5_bf2e5bb8",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T01:26:08Z",
+      "side": 1,
+      "message": "Yeah, visits are pretty much impossible to do generically without reproducing the model type specific logic. If you knew the remote should completely overwrite the local, that\u0027s one thing. But since the merged copy won\u0027t look like either the local or remote, you\u0027re kind of stuck.\n\nFor some types, it seems like you could use a generic version, remote wins, but maybe there\u0027s a way you can signal that this type doesn\u0027t behave like that, and then have a type specific case to handle it. Perhaps that\u0027s the way most cases could work, with potential overrides everywhere.",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
