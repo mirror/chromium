@@ -325,7 +325,6 @@ class BASE_EXPORT FieldTrial : public RefCounted<FieldTrial> {
   // false, if the trial has not been disabled true is returned and
   // |field_trial_state| is filled in; otherwise, the result is false and
   // |field_trial_state| is left untouched.
-  // This function is deadlock-free if the caller is holding a lock.
   bool GetStateWhileLocked(State* field_trial_state, bool include_expired);
 
   // Returns the group_name. A winner need not have been chosen.
