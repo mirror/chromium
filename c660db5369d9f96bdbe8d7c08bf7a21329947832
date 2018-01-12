@@ -22,6 +22,57 @@
       "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeed423f_92e753c2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-12T18:59:08Z",
+      "side": 1,
+      "message": "(out of curiosity) who calls this?",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7159d346_c5d7e4a6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-12T18:59:08Z",
+      "side": 1,
+      "message": "Setting this receiver to null and starts the connector means the connector keeps listening but discarding messages. Is that intended?",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b130e96_055cef4d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-12T18:59:08Z",
+      "side": 1,
+      "message": "Is setMessageCallback allowed to be called multiple times? If yes it probably has issues if the connector has been started. Have you tried that?",
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
