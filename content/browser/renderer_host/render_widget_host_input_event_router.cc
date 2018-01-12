@@ -1120,21 +1120,19 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
                                   latency);
 }
 
-RenderWidgetHostViewBase*
-RenderWidgetHostInputEventRouter::FindTouchpadGestureEvent(
+RenderWidgetTargetResult
+RenderWidgetHostInputEventRouter::FindTouchpadGestureEventTarget(
     RenderWidgetHostViewBase* root_view,
     const blink::WebGestureEvent& event) const {
   if (event.GetType() != blink::WebInputEvent::kGesturePinchBegin &&
       event.GetType() != blink::WebInputEvent::kGestureFlingStart) {
-    return nullptr;
+    return {nullptr, false, gfx::PointF()};
   }
 
   gfx::PointF transformed_point;
-  auto result = FindViewAtLocation(root_view, event.PositionInWidget(),
-                                   event.PositionInScreen(),
-                                   viz::EventSource::TOUCH, &transformed_point);
-  // TODO(crbug.com/796656): Do not ignore |result.should_query_view|.
-  return result.view;
+  return FindViewAtLocation(root_view, event.PositionInWidget(),
+                            event.PositionInScreen(), viz::EventSource::TOUCH,
+                            &transformed_point);
 }
 
 void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
@@ -1142,9 +1140,7 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
     blink::WebGestureEvent* event,
     const ui::LatencyInfo& latency) {
   DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event->source_device);
-  RenderWidgetHostViewBase* target =
-      FindTouchpadGestureEvent(root_view, *event);
-  DispatchTouchpadGestureEvent(root_view, target, *event, latency);
+  event_targeter_->FindTargetAndDispatch(root_view, *event, latency);
 }
 
 void RenderWidgetHostInputEventRouter::DispatchTouchpadGestureEvent(
@@ -1204,10 +1200,21 @@ RenderWidgetHostInputEventRouter::FindTargetSynchronously(
   if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
     return FindMouseEventTarget(
         root_view, static_cast<const blink::WebMouseEvent&>(event));
-  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
+  }
+
+  if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
     return FindMouseWheelEventTarget(
         root_view, static_cast<const blink::WebMouseWheelEvent&>(event));
   }
+
+  if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+    if (gesture_event.source_device ==
+        blink::WebGestureDevice::kWebGestureDeviceTouchpad) {
+      return FindTouchpadGestureEventTarget(root_view, gesture_event);
+    }
+  }
+
   // TODO(crbug.com/796656): Handle other types of events.
   NOTREACHED();
   return RenderWidgetTargetResult();
@@ -1223,12 +1230,24 @@ void RenderWidgetHostInputEventRouter::DispatchEventToTarget(
                        static_cast<const blink::WebMouseEvent&>(event),
                        latency);
     return;
-  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
+  }
+
+  if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
     DispatchMouseWheelEvent(
         root_view, target, static_cast<const blink::WebMouseWheelEvent&>(event),
         latency);
     return;
   }
+
+  if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+    if (gesture_event.source_device ==
+        blink::WebGestureDevice::kWebGestureDeviceTouchpad) {
+      DispatchTouchpadGestureEvent(root_view, target, gesture_event, latency);
+      return;
+    }
+  }
+
   // TODO(crbug.com/796656): Handle other types of events.
   NOTREACHED();
 }
