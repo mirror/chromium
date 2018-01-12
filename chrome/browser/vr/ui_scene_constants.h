@@ -65,8 +65,6 @@ static constexpr float kUrlBarBackButtonIconSizeDMM = 0.048f;
 static constexpr float kUrlBarBackButtonIconOffsetDMM = 0.0045f;
 static constexpr float kUrlBarSeparatorWidthDMM = 0.002f;
 static constexpr float kUrlBarOriginRegionWidthDMM = 0.583f;
-static constexpr float kUrlBarOriginContentWidthDMM = 0.556f;
-static constexpr float kUrlBarOriginContentOffsetDMM = 0.007f;
 
 static constexpr float kOverlayPlaneDistance = 2.3f;
 

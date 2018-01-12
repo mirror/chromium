@@ -1254,23 +1254,51 @@ Vector2d RenderText::GetAlignmentOffset(size_t line_number) {
 
 void RenderText::ApplyFadeEffects(internal::SkiaTextRenderer* renderer) {
   const int width = display_rect().width();
-  if (multiline() || elide_behavior_ != FADE_TAIL || GetContentWidth() <= width)
+  if (multiline() || elide_behavior_ != FADE_TAIL)
+    return;
+  if (GetContentWidth() <= width && display_offset_.x() == 0)
     return;
 
   const int gradient_width = CalculateFadeGradientWidth(font_list(), width);
   if (gradient_width == 0)
     return;
 
-  HorizontalAlignment horizontal_alignment = GetCurrentHorizontalAlignment();
+  int left_edge = 0;
+  int right_edge = 0;
+  switch (GetCurrentHorizontalAlignment()) {
+    case ALIGN_LEFT:
+      left_edge = 0;
+      right_edge = GetContentWidth();
+      break;
+    case ALIGN_RIGHT:
+      left_edge = width - GetContentWidth();
+      right_edge = width;
+      break;
+    case ALIGN_CENTER:
+      left_edge = (width - GetContentWidth()) / 2;
+      right_edge = (width + GetContentWidth() + 1) / 2;
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+  left_edge += display_offset_.x();
+  right_edge += display_offset_.x();
+
+  bool left_overflow = left_edge < 0;
+  bool right_overflow = right_edge > width;
+  if (!left_overflow && !right_overflow)
+    return;
+
   Rect solid_part = display_rect();
   Rect left_part;
   Rect right_part;
-  if (horizontal_alignment != ALIGN_LEFT) {
+  if (left_overflow) {
     left_part = solid_part;
     left_part.Inset(0, 0, solid_part.width() - gradient_width, 0);
     solid_part.Inset(gradient_width, 0, 0, 0);
   }
-  if (horizontal_alignment != ALIGN_RIGHT) {
+  if (right_overflow) {
     right_part = solid_part;
     right_part.Inset(solid_part.width() - gradient_width, 0, 0, 0);
     solid_part.Inset(0, 0, gradient_width, 0);

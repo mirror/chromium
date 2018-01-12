@@ -1347,8 +1347,7 @@ void UiSceneCreator::CreateUrlBar() {
       kUrlBarOriginContent, kPhaseForeground, 512, url_click_callback,
       base::BindRepeating(&UiBrowserInterface::OnUnsupportedMode,
                           base::Unretained(browser_)));
-  origin_content->SetSize(kUrlBarOriginContentWidthDMM, kUrlBarHeightDMM);
-  origin_content->SetTranslate(kUrlBarOriginContentOffsetDMM, 0, 0);
+  origin_content->SetSize(kUrlBarOriginRegionWidthDMM, kUrlBarHeightDMM);
   VR_BIND_VISIBILITY(origin_content, !model->fullscreen_enabled());
   origin_content->AddBinding(
       VR_BIND_FUNC(ToolbarState, Model, model_, model->toolbar_state, UrlBar,
