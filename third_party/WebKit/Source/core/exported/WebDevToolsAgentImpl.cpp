@@ -533,8 +533,6 @@ void WebDevToolsAgentImpl::Reattach(int session_id, const String& saved_state) {
   String state = saved_state;
   InspectorSession* session = InitializeSession(session_id, &state);
   session->Restore();
-  if (worker_client_)
-    worker_client_->ResumeStartup();
 }
 
 void WebDevToolsAgentImpl::Detach(int session_id) {

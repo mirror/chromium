@@ -56,11 +56,8 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
 
-  void PauseForDebugOnStart();
-  bool IsPausedForDebugOnStart();
-  bool IsReadyForInspection();
-  void WorkerReadyForInspection();
   void WorkerRestarted(int worker_process_id, int worker_route_id);
+  void WorkerReadyForInspection();
   void WorkerDestroyed();
   void WorkerVersionInstalled();
   void WorkerVersionDoomed();
@@ -82,12 +79,9 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
 
  private:
   enum WorkerState {
-    WORKER_UNINSPECTED,
-    WORKER_INSPECTED,
+    WORKER_NOT_READY,
+    WORKER_READY,
     WORKER_TERMINATED,
-    WORKER_PAUSED_FOR_DEBUG_ON_START,
-    WORKER_READY_FOR_DEBUG_ON_START,
-    WORKER_PAUSED_FOR_REATTACH,
   };
 
   ~ServiceWorkerDevToolsAgentHost() override;
