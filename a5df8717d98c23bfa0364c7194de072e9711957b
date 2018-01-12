@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb86ad53_fcc6e576",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-12T20:09:23Z",
+      "side": 1,
+      "message": "This looks more like an \"F\" to me?",
+      "range": {
+        "startLine": 159,
+        "startChar": 30,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2859c65e_4d71aa8b",
+        "filename": "components/url_formatter/top_domains/test_skeletons.gperf",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-12T20:09:23Z",
+      "side": 1,
+      "message": "This one /seems/ to be different than the pattern used for the others? (e.g. it seems to be trying to collide \"rn\" twice?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04d79f4_83aa8229",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-12T20:09:23Z",
+      "side": 1,
+      "message": "Is |diacritci| a technical term or a typo (e.g. diacritical\")?",
+      "range": {
+        "startLine": 433,
+        "startChar": 33,
+        "endLine": 433,
+        "endChar": 43
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
