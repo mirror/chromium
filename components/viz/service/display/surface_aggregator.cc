@@ -860,6 +860,8 @@ gfx::Rect SurfaceAggregator::PrewalkTree(Surface* surface,
 
   std::vector<ResourceId> referenced_resources;
   size_t reserve_size = frame.resource_list.size();
+  if (recycling_frames_)
+    reserve_size += stuck_frame_referenced_resources_.size();
   referenced_resources.reserve(reserve_size);
 
   bool invalid_frame = false;
@@ -967,6 +969,22 @@ gfx::Rect SurfaceAggregator::PrewalkTree(Surface* surface,
     return gfx::Rect();
   CHECK(debug_weak_this.get());
   valid_surfaces_.insert(surface->surface_id());
+
+  if (recycling_frames_) {
+    referenced_resources.insert(referenced_resources.end(),
+                                stuck_frame_referenced_resources_.begin(),
+                                stuck_frame_referenced_resources_.end());
+  }
+  // Build up a list of the resources that will be used.
+  if (about_to_recycle_frames_) {
+    for (auto resource : referenced_resources) {
+      auto found = std::find(stuck_frame_referenced_resources_.end(),
+                             stuck_frame_referenced_resources_.end(), resource);
+      if (found == stuck_frame_referenced_resources_.end()) {
+        stuck_frame_referenced_resources_.push_back(resource);
+      }
+    }
+  }
 
   ResourceIdSet resource_set(std::move(referenced_resources),
                              base::KEEP_FIRST_OF_DUPES);
