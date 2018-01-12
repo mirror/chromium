@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b88800_edf0fcfc",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "Switch to C++ style cast? (git cl lint should mention this)",
+      "range": {
+        "startLine": 655,
+        "startChar": 6,
+        "endLine": 655,
+        "endChar": 18
+      },
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951fb097_6cccf284",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "Should this method ever return false? e.g. When |delegate_| evals to false.",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e643207_b9576625",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "Forward declare instead?",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be72538_6e8f82a9",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "Can you briefly document pure virtual methods?",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a98c19_cea00e1c",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "Usually not needed with interface classes.",
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7585c7d9_933f5eb1",
+        "filename": "chrome/renderer/ssl/ssl_certificate_error_page_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T20:10:55Z",
+      "side": 1,
+      "message": "I think you can make this \"const delegate_\" and it will give you more assurances that |delegate_| won\u0027t change from non-nullptr to nullptr.",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "745c65ca6b86a95fb9f75174173dbee689cecb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
