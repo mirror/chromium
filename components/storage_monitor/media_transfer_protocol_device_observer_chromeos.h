@@ -20,16 +20,9 @@ class FilePath;
 
 namespace storage_monitor {
 
-// Gets the mtp device information given a |storage_name|. On success,
-// fills in |id|, |name|, |location|, |vendor_name|, and |product_name|.
-typedef void (*GetStorageInfoFunc)(
-    const std::string& storage_name,
-    device::MediaTransferProtocolManager* mtp_manager,
-    std::string* id,
-    base::string16* name,
-    std::string* location,
-    base::string16* vendor_name,
-    base::string16* product_name);
+// Get the fake mtp device information given a |storage_name| for test.
+typedef device::mojom::MtpStorageInfo* (*GetMtpStorageInfoTestFunc)(
+    const std::string& storage_name);
 
 // Helper class to send MTP storage attachment and detachment events to
 // StorageMonitor.
@@ -54,7 +47,7 @@ class MediaTransferProtocolDeviceObserverChromeOS
   MediaTransferProtocolDeviceObserverChromeOS(
       StorageMonitor::Receiver* receiver,
       device::MediaTransferProtocolManager* mtp_manager,
-      GetStorageInfoFunc get_storage_info_func);
+      GetMtpStorageInfoTestFunc get_storage_info_test_func);
 
   // device::MediaTransferProtocolManager::Observer implementation.
   // Exposed for unit tests.
@@ -83,9 +76,9 @@ class MediaTransferProtocolDeviceObserverChromeOS
   // Map of all attached mtp devices.
   StorageLocationToInfoMap storage_map_;
 
-  // Function handler to get storage information. This is useful to set a mock
-  // handler for unit testing.
-  GetStorageInfoFunc get_storage_info_func_;
+  // Function handler to get fake MTP storage information.
+  // This is only useful to set a mock handler for unit testing.
+  GetMtpStorageInfoTestFunc get_storage_info_test_func_;
 
   // The notifications object to use to signal newly attached devices.
   // Guaranteed to outlive this class.
