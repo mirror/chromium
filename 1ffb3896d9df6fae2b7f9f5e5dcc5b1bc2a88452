@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3f722b_969e68d8",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-12T17:42:39Z",
+      "side": 1,
+      "message": "nit: s/effective/provided/",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "1ffb3896d9df6fae2b7f9f5e5dcc5b1bc2a88452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf8b2cb_e6b7e50d",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-12T17:42:39Z",
+      "side": 1,
+      "message": "Makes sense to insert another EXPECT_FALSE for IsCurrentSessionAllowedOnlyForOffHours() before this line - because here is the point where the OffHours mode is potentially allowed to be turned on.",
+      "revId": "1ffb3896d9df6fae2b7f9f5e5dcc5b1bc2a88452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
