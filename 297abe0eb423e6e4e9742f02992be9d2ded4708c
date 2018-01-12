@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b267fae0_ea245b32",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-12T16:48:04Z",
+      "side": 1,
+      "message": "Is there a particular reason this does not need gpu_tests mixin?",
+      "revId": "297abe0eb423e6e4e9742f02992be9d2ded4708c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
