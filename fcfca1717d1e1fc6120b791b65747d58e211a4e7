@@ -46,6 +46,30 @@
       "revId": "fcfca1717d1e1fc6120b791b65747d58e211a4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718c15cc_efcebec6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/1.1/form-action-resubmission-iframe-reload-from-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-12T17:22:25Z",
+      "side": 0,
+      "message": "\u003e I tried to explain it in my first message:\n\u003e \n\u003e \u003e These tests were not there to enforce chromium to meet a specification, but to document the current behavior (which looked strange to me). This behavior has changed after this patch, form re-submissions are no more blocked.\n\u003e \u003e The reason I can\u0027t adapt these tests is that a non-blocked form re-submission needs the user to manually approve the navigation and I can\u0027t do it using a LayoutTest.\n\u003e \n\u003e So the reason is that in the LayoutTest, I can\u0027t click on \"OK\" (in the new dialog that appeared) to approve the form re-submission.\n\nAh, ok.  Sorry for missing this.  This SGTM.",
+      "parentUuid": "e652ccc0_74dee3db",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "fcfca1717d1e1fc6120b791b65747d58e211a4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
