@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3354abd1_8ffd38ae",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8645550_99ce063e",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5555c39d_141087cf",
         "filename": "ash/system/power/power_off_menu_item_view.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aeff4fee_5c5c3f73",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5555c39d_141087cf",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40446e7e_fe7f4a20",
         "filename": "ash/system/power/power_off_menu_item_view.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-12T18:13:34Z",
       "side": 1,
       "message": "Why the first parameter of the Font() is \"power_off\"? Seems it should be a font_name? https://cs.chromium.org/chromium/src/ui/gfx/font.h?rcl\u003d3e41705981a543b8bfcc7437efb656b637a6c242\u0026l\u003d73\n\nAnd why do have to set your own font but not the bundled ones? https://cs.chromium.org/chromium/src/ui/base/resource/resource_bundle.h?rcl\u003d92876eb5f98ff7ac1761c85c706bd0c25e07042e\u0026l\u003d55",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f511233_dc85a4bc",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Thanks. Used MediumFont instead. Please check.",
+      "parentUuid": "40446e7e_fe7f4a20",
       "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "467e60af_e860b47c",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1442479a_80c65259",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b11bd1_e0292a4e",
         "filename": "ash/system/power/power_off_menu_item_view.h",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "62e233e5_d6829364",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b11bd1_e0292a4e",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "871fd1c8_e02be648",
         "filename": "ash/system/power/power_off_menu_view.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-12T18:13:34Z",
       "side": 1,
       "message": "optional: it seems this function shared most of its code with PowerOffMenuScreenView::PowerOffMenuBackgroundView::ScheduleShowHideAnimation(). Can they share codes in some way? Up to you though.",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70b93c1_a62a2b4b",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "The animation here and in PowerOffMenuBackgroundView are animating different views. They will get different layer and animator I think. I will keep it as is currently.",
+      "parentUuid": "871fd1c8_e02be648",
       "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0df71373_b850aa89",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a98b32_9d6e2868",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0826caf7_4b4885ec",
         "filename": "ash/system/power/power_off_menu_view.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7efbadc_32144ba5",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0826caf7_4b4885ec",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "54b1fe53_f8e7c1a8",
+        "filename": "ash/system/power/power_off_menu_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6e856d_484849b8",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c586534_a6355f68",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a97b16_4c6010e5",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T23:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c586534_a6355f68",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
