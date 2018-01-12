@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0872d823_7bfbbe01",
+        "filename": "third_party/WebKit/Source/core/testing/PageTestBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-12T11:29:32Z",
+      "side": 1,
+      "message": "Why do you need a class for this. Do any of the tests test both quirks an strict mode? If so, they should be split into separate tests, I think.",
+      "revId": "84142b500d545a869d7c94cad39cf54dad8055a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
