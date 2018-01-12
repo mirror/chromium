@@ -337,6 +337,11 @@ class AwContents : public FindHelper::Listener,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 
+  base::android::ScopedJavaLocalRef<jstring> CanonicalizeUrl(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jstring>& url);
+
   jlong GetAutofillProvider(JNIEnv* env,
                             const base::android::JavaParamRef<jobject>& obj);
 
