@@ -1011,6 +1011,12 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void CreateUsbChooserService(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request);
+
+  // Returns whether a base::TaskScheduler should be created when
+  // BrowserMainLoop starts.
+  // If false, a task scheduler has been created by the embedder, and browser
+  // main loop should skip creating a second one.
+  virtual bool ShouldCreateTaskScheduler();
 };
 
 }  // namespace content
