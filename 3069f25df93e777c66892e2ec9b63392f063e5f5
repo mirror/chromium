@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06d0c042_eb5c453e",
+        "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2018-01-12T10:18:53Z",
+      "side": 1,
+      "message": "I could not find a trivial way of doing this, perhaps there is one. But the for range-based loops require either an array or an object type that implements \"begin()\" and \"end()\", a pointer won\u0027t work, and if you try to have it be a pointer to the array, it doesn\u0027t work because the array types are different so you can\u0027t declare a pointer type that can point to both. I assume using std::vector or something else will do the trick but at that point I don\u0027t see it as much of a gain.",
+      "parentUuid": "735b57c0_5ad6eb4c",
+      "revId": "3069f25df93e777c66892e2ec9b63392f063e5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34948e4b_8f518080",
         "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3069f25df93e777c66892e2ec9b63392f063e5f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11f80a0_6425989c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/SourceListDirective.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2018-01-12T10:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34948e4b_8f518080",
+      "revId": "3069f25df93e777c66892e2ec9b63392f063e5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
