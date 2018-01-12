@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45b5eecd_e159a59c",
+        "filename": "net/socket/socket_test_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T18:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7373451_26aab059",
+      "range": {
+        "startLine": 1900,
+        "startChar": 20,
+        "endLine": 1900,
+        "endChar": 21
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518e04c7_bf8b945e",
         "filename": "net/socket/socket_test_util.h",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285e03bb_a1bd9177",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T18:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "518e04c7_bf8b945e",
+      "range": {
+        "startLine": 1112,
+        "startChar": 7,
+        "endLine": 1112,
+        "endChar": 30
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cea3f610_6229f5e3",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T18:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7785e1c_11c7ff2c",
+      "range": {
+        "startLine": 1113,
+        "startChar": 12,
+        "endLine": 1113,
+        "endChar": 15
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3c06bd_94c40f68",
         "filename": "net/socket/socket_test_util.h",
         "patchSetId": 19
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f6d16e49_e0f1e2b7",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T18:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3c06bd_94c40f68",
+      "range": {
+        "startLine": 1136,
+        "startChar": 47,
+        "endLine": 1136,
+        "endChar": 52
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c80297f_c9fe994a",
         "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e737b2fa_2c1af3ca",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T18:00:00Z",
+      "side": 1,
+      "message": "Hmm, in tests in Chromium, I see 6100 instances of declaring scoped_refptr\u0027s but only 275 instances of MakeRefCounted.  I think I\u0027ll leave this as is for now as it matches the predominant style.  This might be better suited for a later wider ranging cleanup CL.  I have a very slight disposition against MakeRefCounted as it seems MakeRefCounted, when used with local variables, is generally used with the \"auto\" keyword which I find to be a little harder to read.",
+      "parentUuid": "5c80297f_c9fe994a",
+      "range": {
+        "startLine": 1008,
+        "startChar": 26,
+        "endLine": 1008,
+        "endChar": 38
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
