@@ -118,10 +118,6 @@ typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
 // controller.
 @property(nonatomic, strong) BookmarkPromoController* bookmarkPromoController;
 
-// Whether the panel view can be brought into view and hidden by swipe gesture.
-// TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
-@property(nonatomic, assign) BOOL sideSwipingPossible;
-
 // The action sheet coordinator used when trying to edit a single bookmark.
 // TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
 @property(nonatomic, strong) ActionSheetCoordinator* actionSheetCoordinator;

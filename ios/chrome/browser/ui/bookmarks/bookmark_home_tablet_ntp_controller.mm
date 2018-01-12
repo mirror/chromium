@@ -113,10 +113,6 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 
   CGFloat leadingMargin = [self folderViewLeadingMargin];
 
-  // Prevent the panelView from hijacking the gestures so that the
-  // NTPController's scrollview can still scroll with the gestures.
-  [self.panelView enableSideSwiping:NO];
-
   CGFloat width = self.view.bounds.size.width;
   LayoutRect navBarLayout =
       LayoutRectMake(leadingMargin, width, 0, width - leadingMargin,
