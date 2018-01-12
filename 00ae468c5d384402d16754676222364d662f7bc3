@@ -52,6 +52,24 @@
       "revId": "00ae468c5d384402d16754676222364d662f7bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e16785_12276b05",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T19:54:23Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly (paradoxically, as someone who works on Blink I am least likely to use this feature or know who does). The CL description suggests that this has a large impact on the output artifact size for users who do, which is why I assumed the impact of 0 vs 1 was non-negligible for those users.",
+      "parentUuid": "c73fd62f_8fb79b4c",
+      "revId": "00ae468c5d384402d16754676222364d662f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
