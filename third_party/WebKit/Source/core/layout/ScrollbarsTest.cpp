@@ -9,6 +9,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/DevToolsEmulator.h"
+#include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayerScrollableArea.h"
@@ -974,6 +975,65 @@ TEST_P(ScrollbarsTest,
 
   // No DCHECK Fails. Issue 676678.
   Compositor().BeginFrame();
+}
+
+TEST_P(ScrollbarsTest,
+       CustomScrollbarFractionalMarginsWillNotCauseDCHECKFailure) {
+  WebView().Resize(WebSize(200, 200));
+
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+      <style>
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        margin-left: 10.2px;
+        margin-top: 20.4px;
+        margin-right: 30.6px;
+        margin-bottom: 40.8px;
+      }
+      #d1 {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        overflow-x:scroll;
+        overflow-y:scroll;
+      }
+    </style>
+    <div id='d1'/>
+  )HTML");
+
+  // No DCHECK failure. Issue 801123.
+  Compositor().BeginFrame();
+
+  Element* div = GetDocument().getElementById("d1");
+  ASSERT_TRUE(div);
+
+  ScrollableArea* div_scrollable =
+      ToLayoutBox(div->GetLayoutObject())->GetScrollableArea();
+
+  ASSERT_TRUE(div_scrollable->HorizontalScrollbar());
+  LayoutScrollbar* horizontal_scrollbar =
+      ToLayoutScrollbar(div_scrollable->HorizontalScrollbar());
+  const LayoutScrollbarPart* horizontal_track =
+      horizontal_scrollbar->GetPart(kTrackBGPart);
+  ASSERT_TRUE(horizontal_track);
+  EXPECT_EQ(10, horizontal_track->MarginLeft());
+  EXPECT_EQ(31, horizontal_track->MarginRight());
+
+  ASSERT_TRUE(div_scrollable->VerticalScrollbar());
+  LayoutScrollbar* vertical_scrollbar =
+      ToLayoutScrollbar(div_scrollable->VerticalScrollbar());
+  const LayoutScrollbarPart* vertical_track =
+      vertical_scrollbar->GetPart(kTrackBGPart);
+  ASSERT_TRUE(vertical_track);
+  EXPECT_EQ(20, vertical_track->MarginTop());
+  EXPECT_EQ(41, vertical_track->MarginBottom());
 }
 
 // Make sure root custom scrollbar can change by Emulator but div custom
