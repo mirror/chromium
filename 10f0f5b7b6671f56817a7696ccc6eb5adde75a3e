@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb6c794f_46b24326",
+        "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-12T19:06:55Z",
+      "side": 1,
+      "message": "Good catch. It\u0027s worth a comment here saying that these OnContextLost callbacks can cause the last reference of the command buffer proxy to be released.",
+      "range": {
+        "startLine": 497,
+        "startChar": 7,
+        "endLine": 497,
+        "endChar": 11
+      },
+      "revId": "10f0f5b7b6671f56817a7696ccc6eb5adde75a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
