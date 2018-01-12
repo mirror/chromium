@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc589287_169b2e27",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T05:09:32Z",
+      "side": 1,
+      "message": "Oops…",
+      "parentUuid": "892e028e_09b66535",
+      "range": {
+        "startLine": 235,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 24
+      },
+      "revId": "08100124f3892a060ecb790b6e7470b912865e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b071bfc8_aaa980e8",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T04:11:28Z",
       "side": 1,
       "message": "Is this space required?",
+      "range": {
+        "startLine": 2807,
+        "startChar": 33,
+        "endLine": 2807,
+        "endChar": 34
+      },
+      "revId": "08100124f3892a060ecb790b6e7470b912865e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d907c6_be0dd0db",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T05:09:32Z",
+      "side": 1,
+      "message": "If I recall correctly (I copy-pasted this from the input event test case), I added the space to make sure the cursor position at the end is actually from the JavaScript and it’s not just getting left at the end of the text.",
+      "parentUuid": "b071bfc8_aaa980e8",
       "range": {
         "startLine": 2807,
         "startChar": 33,
