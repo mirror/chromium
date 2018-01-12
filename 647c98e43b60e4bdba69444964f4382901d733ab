@@ -452,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "3d9db83b_ec893f3c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T20:33:06Z",
+      "side": 1,
+      "message": "Thanks. This was more about future-proofing the code than about current correctness. :-)",
+      "parentUuid": "3c653081_93b29591",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a612ba34_b933d7ef",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
