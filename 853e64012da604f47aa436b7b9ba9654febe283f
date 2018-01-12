@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "31e06bd6_3ec86cb0",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T09:03:11Z",
+      "side": 1,
+      "message": "Seems unavoidable :/... GenerateId will return an invalid ID in these cases, so should be ok. You could DCHECK in GenerateId if we feel this should never happen.",
+      "parentUuid": "3ec660c6_4519f60f",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d839fb_157594eb",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T09:03:11Z",
+      "side": 1,
+      "message": "Where are these changes used?",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 53
+      },
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453be282_68061d22",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 2
@@ -36,6 +83,24 @@
       "writtenOn": "2018-01-11T09:52:43Z",
       "side": 1,
       "message": "This needs to be plumbed all the way to RenderWidgetHostView* which is the source of LocalSurfaceIds.\n\nSo on Aura platforms, the aura::Window generates the LocalSurfaceIds so the new LocalSurfaceId needs to be plumbed there.",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f738525e_e48a6350",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T09:03:11Z",
+      "side": 1,
+      "message": "Seems like if we do this plumbing we can maybe avoid storing this here as well? Just overwrite the current Id there and then send the new Id down to this class.",
+      "parentUuid": "453be282_68061d22",
       "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +188,24 @@
       "side": 1,
       "message": "No this isn\u0027t quite right. Do this here:\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?q\u003dRenderWidget::Resize\u0026sq\u003dpackage:chromium\u0026l\u003d1321\n\nand/or here\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?q\u003dRenderWidget::Resize\u0026sq\u003dpackage:chromium\u0026l\u003d617\n\nIn either case, you can have a conflict and you might need to reject the new LocalSurfaceId from the parent.",
       "parentUuid": "bbc1d266_d26d95dd",
+      "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68021e23_5f517be4",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T09:03:11Z",
+      "side": 1,
+      "message": "To clarify, what would lead to a conflict where we would reject the LocalSurfaceId from the parent? If the parent sends the ID with a size which doesn\u0027t match the one we\u0027ve previously requested? Does this happen if we send a child ID to the parent while a new parent ID is already in flight (or vis-versa)? Is there a more sophisticated method of conflict resolution needed (can the parent sometimes win)?",
+      "parentUuid": "f96da444_5657fe77",
       "revId": "853e64012da604f47aa436b7b9ba9654febe283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
