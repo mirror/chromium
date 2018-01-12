@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9802e9c9_b9f26858",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T08:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64936727_b4de6e8b",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ebc536_11017d2f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67966069_f33c13f0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T08:36:32Z",
+      "side": 1,
+      "message": "Thanks. I didn\u0027t know it.",
+      "parentUuid": "90bad5bc_71a3a773",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1426ac8e_8648fce7",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -99,6 +135,24 @@
       "writtenOn": "2018-01-10T09:45:29Z",
       "side": 1,
       "message": "Maybe move to LayoutBlockFlow, or its own class similar to NGInlineFragmentIterator?",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2757a1c8_099e285f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T08:36:32Z",
+      "side": 1,
+      "message": "Moved to LayoutBlockFlow.",
+      "parentUuid": "5c8dcd5b_b12c4988",
       "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +206,24 @@
       "side": 1,
       "message": "Could we try to keep this simple for now? I discussed with the paint team about merging FragmentData with NGPaintFragment in future, or link them, and paint directly handles NGPaintFragment instead of going though LayoutObject, but it\u0027s not happening in a short time frame. It\u0027d be rather a big project, probably after our phase 1.\n\nWe have NGInlineFragmentIterator for NGPhysicalFragment, but currently have only 1 traversal code for NGPaintFragment (NGPaintFragment::PaintInlineBoxForDescendants). If we get more traversals for NGPaintFragment, we can make another iterator by sharing the code.\n\nAnother possibility is that, as we discussed before, we could store either paint or physical fragments in LayoutText if we access a lot, once we have completely switched to NGPaint. All the traversal code will be gone if we go that way.\n\nAt this point, I can\u0027t determine the best way to do the traversal, and I\u0027d like to understand how we\u0027d like to iterate physical/paint fragments better.",
       "parentUuid": "6ad728bf_a65d9316",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bab649_bbe331cd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T08:36:32Z",
+      "side": 1,
+      "message": "Move the entry point to ObjectPaintInvalidator.cpp.",
+      "parentUuid": "ee13954c_c600ea1a",
       "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
