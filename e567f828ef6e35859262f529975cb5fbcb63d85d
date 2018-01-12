@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7dc29d7_d1e66ad4",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-12T21:19:26Z",
+      "side": 1,
+      "message": "I think just auto is preferred in this case.",
+      "revId": "e567f828ef6e35859262f529975cb5fbcb63d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4a6595_05549cf7",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-12T21:19:26Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e567f828ef6e35859262f529975cb5fbcb63d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd17e261_11a5e9f9",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 3
@@ -25,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "205698af_bfa8e296",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-12T21:19:26Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "cd17e261_11a5e9f9",
+      "range": {
+        "startLine": 813,
+        "startChar": 24,
+        "endLine": 813,
+        "endChar": 53
+      },
+      "revId": "e567f828ef6e35859262f529975cb5fbcb63d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a392c117_be55ab38",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 3
@@ -36,6 +94,24 @@
       "writtenOn": "2018-01-12T21:17:41Z",
       "side": 1,
       "message": "Is there any possibility that stream.get() is nullptr in l.1299? Maybe a DCHECK for that here would be good to add, too.",
+      "revId": "e567f828ef6e35859262f529975cb5fbcb63d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43099a8d_4ac2dc94",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-12T21:19:26Z",
+      "side": 1,
+      "message": "No, this is a unique_ptr, we crash on OOM, so no chance of nullptr.",
+      "parentUuid": "a392c117_be55ab38",
       "revId": "e567f828ef6e35859262f529975cb5fbcb63d85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
