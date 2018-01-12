@@ -172,6 +172,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/zygote_features.h"
 #include "device/gamepad/gamepad_haptics_manager.h"
 #include "device/gamepad/gamepad_monitor.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -236,10 +237,6 @@
 #include "content/browser/mach_broker_mac.h"
 #endif
 
-#if defined(OS_POSIX)
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // defined(OS_POSIX)
-
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_switches.h"
 #endif
@@ -263,6 +260,10 @@
 
 #if BUILDFLAG(USE_MINIKIN_HYPHENATION)
 #include "content/browser/hyphenation/hyphenation_impl.h"
+#endif
+
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#include "content/public/common/zygote_handle.h"
 #endif
 
 #if defined(OS_WIN)
@@ -427,9 +428,9 @@ class RendererSandboxedProcessLauncherDelegate
 
     return GetContentClient()->browser()->PreSpawnRenderer(policy);
   }
+#endif  // OS_WIN
 
-#elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
   ZygoteHandle GetZygote() override {
     const base::CommandLine& browser_command_line =
         *base::CommandLine::ForCurrentProcess();
@@ -439,7 +440,7 @@ class RendererSandboxedProcessLauncherDelegate
       return nullptr;
     return GetGenericZygote();
   }
-#endif  // OS_WIN
+#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
 
   service_manager::SandboxType GetSandboxType() override {
     return service_manager::SANDBOX_TYPE_RENDERER;
