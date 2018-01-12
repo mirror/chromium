@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ff9d2afb_3739840d",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T01:40:52Z",
+      "side": 1,
+      "message": "After offline discussion with oshima@, we decide to use DCHECK in the LoadDisplayMixedMirrorModeParams() because those cases should never happen.",
+      "parentUuid": "d60090a5_d7f75878",
+      "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05895c21_eadf305b",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 18
