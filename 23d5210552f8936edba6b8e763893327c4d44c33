@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c23a46a2_e84c6343",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T17:40:18Z",
+      "side": 1,
+      "message": "nit: name just \"autoclick_delay\" since it is a TimeDelta",
+      "revId": "23d5210552f8936edba6b8e763893327c4d44c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3d51a3_b7629bd3",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T17:40:18Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "23d5210552f8936edba6b8e763893327c4d44c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee95b0b4_ac334b90",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T17:40:18Z",
+      "side": 1,
+      "message": "nit: no _ms_ because it\u0027s a TimeDelta",
+      "revId": "23d5210552f8936edba6b8e763893327c4d44c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
