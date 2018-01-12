@@ -87,6 +87,24 @@
       "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924a37fa_3b06cc9f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T08:41:51Z",
+      "side": 0,
+      "message": "Let\u0027s use EventScopeQueue in FinishComposingText() to use one pattern in\nIMC.cpp.",
+      "parentUuid": "ea1e9bae_95f3e107",
+      "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

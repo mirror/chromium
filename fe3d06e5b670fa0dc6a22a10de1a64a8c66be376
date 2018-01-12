@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb7133d_870a5a55",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T08:41:51Z",
+      "side": 1,
+      "message": "We should make all call sites to use ScopedEventQueue to use one pattern\nto allow have DCHECK(... scoped event queue is active ...)",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 42
+      },
+      "revId": "fe3d06e5b670fa0dc6a22a10de1a64a8c66be376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be28ede_0a27a22e",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T08:41:51Z",
+      "side": 1,
+      "message": "Could you make |DispatchCompositionEndEvent()| to use |EventDispatcher::DispatchScopedEvent()| to avoid block scope |EventQueueScope| for simplifying source code?",
+      "revId": "fe3d06e5b670fa0dc6a22a10de1a64a8c66be376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
