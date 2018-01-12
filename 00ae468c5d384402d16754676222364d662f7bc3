@@ -34,6 +34,24 @@
       "revId": "00ae468c5d384402d16754676222364d662f7bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73fd62f_8fb79b4c",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-12T19:50:09Z",
+      "side": 1,
+      "message": "Currently we interpret remove_webcore_debug_symbols as a request to cap the webcore symbol level at 0. Another reasonable interpretation (this change) is to treat it as a request to cap it at 1.\n\nIn both cases we are respecting the users wishes, and we are giving the developers the requested build-time savings.\n\nWhen I made this change for Windows I found that going from 2 to 1 gave essentially all of the build-time advantages. Is it different on Linux? That is, are the costs for using minimal_symbols instead of no_symbols actually noticeable? We can only justify the increased complexity of blink_symbol_level or similar if 1 versus 0 actually matters. I don\u0027t know.",
+      "parentUuid": "10e004bc_0e57b989",
+      "revId": "00ae468c5d384402d16754676222364d662f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
