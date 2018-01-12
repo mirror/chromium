@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4cb4ecdf_0abebf9a",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T19:22:04Z",
+      "side": 1,
+      "message": "It\u0027s just that this is inconsistent with the philosophy we\u0027ve followed thus far. For example, NaN rects should also never happen, but we still tolerate them.",
+      "parentUuid": "9fd7f52a_67671686",
+      "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1367ea_171bd82d",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 4
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "I\u0027m not sure where I stand on this generally. Its publicly inherited, callers can always cast to the base class and access these methods. But since this is a test utility anyway, I feel public should be fine.",
       "parentUuid": "7aa6c66d_c9658d45",
+      "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244aa9f4_167c7d76",
+        "filename": "cc/test/transfer_cache_test_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T19:22:04Z",
+      "side": 1,
+      "message": "Generally speaking, protected is the \"same\" as public in the sense that the derived class can expose the functionality publicly, but we still use protected :)\n\nI still feel that the functions exposed here should not be public. Having the functionality in public sends a clear signal to authors that these functions are OK to call directly, which certainly isn\u0027t the case here.",
+      "parentUuid": "4b56d9c9_91b8c99b",
       "revId": "0aa822ba7f7339c9a6591e4f73da71c64b3a4b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
