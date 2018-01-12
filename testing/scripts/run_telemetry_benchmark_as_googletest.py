@@ -136,6 +136,8 @@ def run_benchmark(args, rest_args):
     # json-test-results format is included
     tempfile_name = os.path.join(tempfile_dir, 'test-results.json')
     with open(tempfile_name) as f:
+      for line in f:
+        print line
       json_test_results = json.load(f)
     num_failures = json_test_results['num_failures_by_type'].get('FAIL', 0)
     valid = bool(rc == 0 or num_failures != 0)
