@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "4c08b963_f80c3dfb",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:03:43Z",
+      "side": 1,
+      "message": "In the future, it might be useful to know that devices we tried to set to a given path (i.e., because of the Android version) failed prerequisites. Would it be sufficient to have a FailedPrerequisitesForRenderPath\u003d\u003cpath\u003e? Would we want to also report the path it fell back to (also reported by the metric in this CL).\n\nIt doesn\u0027t appear that we have this scenario now, so we can consider this later.",
+      "parentUuid": "87088107_9c781371",
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7f1ca2_8df3ce4c",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 7

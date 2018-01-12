@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb750907_c597465a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:03:43Z",
+      "side": 1,
+      "message": "OOC, does this return the empty string for the default and disabled options in the chrome://flags dropdown? What does it return for enabled?",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9518762_31c4deed",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100319,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:03:43Z",
+      "side": 1,
+      "message": "This should probably be `XR.WebXR.`.\nWe should decide on VR./XR. as well.",
+      "range": {
+        "startLine": 100319,
+        "startChar": 17,
+        "endLine": 100319,
+        "endChar": 20
+      },
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2811b0d5_166df522",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100322,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:03:43Z",
+      "side": 1,
+      "message": "nit: Everything through \"selected\" is the main description, and I think we should either end with a period or parenthesize the rest.",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0949cf46_08c2ddd9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100323,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:03:43Z",
+      "side": 1,
+      "message": "nit: There is/will also be the default for a given platform (Android version). \"Current settings\" here probably refers to the chrome flag and/or Finch experiment.\n\nIt might be better to just say this can be affected by overrides and device capabilities.",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
