@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a2959ac_b19b2c3e",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T01:08:03Z",
+      "side": 1,
+      "message": "hmm... is that correct? By checking http://www.chromevox.com/keyboard_shortcuts.html, I only see Search+Shift combination as modifier key. Also we have introduced search + alt + arrowkey for active window movement between displays: https://chromium-review.googlesource.com/c/chromium/src/+/738826\n\nI will keep it as-it-is now. And change it later if I misunderstood it.",
+      "parentUuid": "4bdfce56_1ad2e6bd",
+      "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5927cd5a_d403a068",
         "filename": "ash/accessibility/accessibility_controller.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T16:29:10Z",
       "side": 1,
       "message": "How can this occur? I see that previously, we return early if there was no profile in AccessibilityManager. Should this at least cause some logging, if not a CHECK?",
+      "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2113036_cc33d0c7",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T01:08:03Z",
+      "side": 1,
+      "message": "This could happen like before signin pref is ready. It rarely happens I think.\n\nI am ok with either early return or logging. I would do it in next CL if we want the change.",
+      "parentUuid": "5927cd5a_d403a068",
       "revId": "8c4d0dca794ee8b451ffcefc551153d5179620ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
