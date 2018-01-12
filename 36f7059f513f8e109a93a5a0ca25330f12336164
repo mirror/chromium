@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c72f9f26_f08771c5",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T19:24:13Z",
+      "side": 0,
+      "message": "sadrul left a comment about the static_cast here in https://chromium-review.googlesource.com/c/chromium/src/+/862632 so I fixed it in that CL...",
+      "range": {
+        "startLine": 206,
+        "startChar": 27,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "36f7059f513f8e109a93a5a0ca25330f12336164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
