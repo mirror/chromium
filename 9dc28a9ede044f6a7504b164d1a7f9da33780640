@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ace4427e_f0de70d4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "nit: it\u0027s normally unnecessary for iwyu to forward-declare things you need only to implement an inherited interface. i.e. there\u0027s already a guarantee that the header for the class you\u0027re inheriting from has declared the necessary stuff, and if the parent class stops using it then the child class is forced to remove its dependency too, so the usual iwyu arguments don\u0027t apply",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235aedce_cf5ed0a1",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "nit: ui::AXNodeData* node_data",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dcbe67_b0cb6a17",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "nit: wrap to 80 cols?",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c024bd32_7a757ef0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. (also it\u0027s not overridable so probably isn\u0027t being called)\n\nNote: IsAccessibilityFocusable() only relates to tab traversal, not to screen readers and things. things are always focusable for screen readers unless they are AX_IGNORED",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c866f75e_a3fa227a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "nit: does inlining {popup_view_id} here work?\n\ni.e.\n\nnode_data-\u003eAddIntListAttribute(ui::AX_ATTR_CONTROLS_IDS, {popup_view_id});",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425b2c8e_f6cfbad5",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "nit: \n\n// static \nbase::string16 AutocompleteMatchType::ToAccessibilityLabel(\n\n\n(i.e. similar to ::ToString above)",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8dbd538_24db0acb",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:56:31Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
