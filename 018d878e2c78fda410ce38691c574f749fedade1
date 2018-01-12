@@ -229,6 +229,24 @@
       "revId": "018d878e2c78fda410ce38691c574f749fedade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878e0cb8_ab3c0d73",
+        "filename": "third_party/WebKit/Source/devtools/front_end/dom_extension/DOMExtension.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-12T00:59:44Z",
+      "side": 1,
+      "message": "Before I added this, this line of test fails: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/devtools/layers/layers-panel-mouse-events.js?l\u003d53 It\u0027s trapped in an infinite loop here. I think before this CL it\u0027s getting out of the loop when innerNode is null, but elementFromPoint isn\u0027t returning null anymore.\n\nCan you elaborate more on some things that may break? I\u0027m not really familiar with the usage of this method. Thanks!",
+      "parentUuid": "a1c5ded3_4f25d35d",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
