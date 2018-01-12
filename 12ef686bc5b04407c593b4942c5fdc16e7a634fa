@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad447bc_717ddde3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-12T05:53:35Z",
+      "side": 1,
+      "message": "nit, prepend [Chromecast] to subject",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f2d55c_872dd3d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-12T05:53:35Z",
+      "side": 1,
+      "message": "didn\u0027t follow this comment.  Why not just change all callers in the same CL?  Or, is there a CL with caller change to look at?",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
