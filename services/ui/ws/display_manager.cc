@@ -91,6 +91,13 @@ bool DisplayManager::SetDisplayConfiguration(
     return false;
   }
 
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays: " << displays.size()
+             << " mirrors: " << mirrors.size();
+  if (mirrors.empty() && displays.size() == 1u &&
+      displays[0].id() == display::kUnifiedDisplayId) {
+    return true;
+  }
+
   std::set<int64_t> display_ids;
   size_t primary_display_index = std::numeric_limits<size_t>::max();
   bool found_internal_display = false;
@@ -116,6 +123,8 @@ bool DisplayManager::SetDisplayConfiguration(
       return false;
     }
     found_internal_display |= mirror.id() == internal_display_id;
+    LOG(ERROR) << "MSW mirror: " << mirror.id()
+               << " found: " << found_internal_display;
   }
   for (size_t i = 0; i < displays.size(); ++i) {
     const display::Display& display = displays[i];
@@ -130,6 +139,8 @@ bool DisplayManager::SetDisplayConfiguration(
     if (display.id() == primary_display_id)
       primary_display_index = i;
     found_internal_display |= display.id() == internal_display_id;
+    LOG(ERROR) << "MSW display: " << display.id()
+               << " found: " << found_internal_display;
     Display* ws_display = GetDisplayById(display.id());
     if (!ws_display && display.id() != display::kUnifiedDisplayId) {
       LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "

@@ -261,11 +261,8 @@ bool ShouldSendGestureEvents() {
   return true;
 }
 
-void SendMacTouchpadPinchSequenceWithExpectedTarget(
-    RenderWidgetHostViewBase* root_view,
-    const gfx::Point& gesture_point,
-    RenderWidgetHostViewBase*& router_touchpad_gesture_target,
-    RenderWidgetHostViewBase* expected_target) {
+void SendMacTouchpadPinchStartUpdate(RenderWidgetHostViewBase* root_view,
+                                     const gfx::Point& gesture_point) {
   auto* root_view_mac = static_cast<RenderWidgetHostViewMac*>(root_view);
   RenderWidgetHostViewCocoa* cocoa_view = root_view_mac->cocoa_view();
 
@@ -282,7 +279,12 @@ void SendMacTouchpadPinchSequenceWithExpectedTarget(
       MockGestureEvent(NSEventTypeMagnify, 0.25, gesture_point.x(),
                        gesture_point.y(), NSEventPhaseChanged);
   [cocoa_view magnifyWithEvent:pinchUpdateEvent];
-  EXPECT_EQ(expected_target, router_touchpad_gesture_target);
+}
+
+void SendMacTouchpadPinchEnd(RenderWidgetHostViewBase* root_view,
+                             const gfx::Point& gesture_point) {
+  auto* root_view_mac = static_cast<RenderWidgetHostViewMac*>(root_view);
+  RenderWidgetHostViewCocoa* cocoa_view = root_view_mac->cocoa_view();
 
   NSEvent* pinchEndEvent =
       MockGestureEvent(NSEventTypeMagnify, 0, gesture_point.x(),
@@ -290,7 +292,6 @@ void SendMacTouchpadPinchSequenceWithExpectedTarget(
   [cocoa_view magnifyWithEvent:pinchEndEvent];
   if (ShouldSendGestureEvents())
     [cocoa_view endGestureWithEvent:pinchEndEvent];
-  EXPECT_EQ(expected_target, router_touchpad_gesture_target);
 }
 
 }  // namespace
@@ -328,14 +329,22 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessMacBrowserTest,
   gfx::Point child_center(150, 450);
 
   // Send touchpad pinch sequence to main-frame.
-  SendMacTouchpadPinchSequenceWithExpectedTarget(
-      rwhv_parent, main_frame_point, router->touchpad_gesture_target_.target,
-      rwhv_parent);
+  InputEventAckWaiter main_waiter(rwhv_parent->GetRenderWidgetHost(),
+                                  blink::WebInputEvent::kGesturePinchBegin);
+  SendMacTouchpadPinchStartUpdate(rwhv_parent, main_frame_point);
+  main_waiter.Wait();
+  EXPECT_EQ(rwhv_parent, router->touchpad_gesture_target_.target);
+  SendMacTouchpadPinchEnd(rwhv_parent, main_frame_point);
+  EXPECT_EQ(rwhv_parent, router->touchpad_gesture_target_.target);
 
   // Send touchpad pinch sequence to child.
-  SendMacTouchpadPinchSequenceWithExpectedTarget(
-      rwhv_parent, child_center, router->touchpad_gesture_target_.target,
-      rwhv_child);
+  InputEventAckWaiter child_waiter(rwhv_child->GetRenderWidgetHost(),
+                                   blink::WebInputEvent::kGesturePinchBegin);
+  SendMacTouchpadPinchStartUpdate(rwhv_parent, child_center);
+  child_waiter.Wait();
+  EXPECT_EQ(rwhv_child, router->touchpad_gesture_target_.target);
+  SendMacTouchpadPinchEnd(rwhv_parent, child_center);
+  EXPECT_EQ(rwhv_child, router->touchpad_gesture_target_.target);
 }
 
 }  // namespace content
