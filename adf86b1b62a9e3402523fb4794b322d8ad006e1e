@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f582c6ae_15c37d56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-takeRecords.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-12T19:14:59Z",
+      "side": 1,
+      "message": "Nit: I have a mild preference for putting all the entryTypes on new lines, as it makes these a bit easier to read.",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "adf86b1b62a9e3402523fb4794b322d8ad006e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
