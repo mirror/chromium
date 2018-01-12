@@ -16,6 +16,24 @@
       "revId": "e9515504c27b369f9f9c201d6d78704b47a053cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8992ceba_90247dd8",
+        "filename": "testing/gtest_ios/unittest-Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-12T21:11:33Z",
+      "side": 1,
+      "message": "This is in Chrome Info.plist. As part of sync\u0027ing up the two list, this end up being added. I\u0027ll update the CL description so it is more explicit.",
+      "parentUuid": "843397a1_5c97e7ea",
+      "revId": "e9515504c27b369f9f9c201d6d78704b47a053cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
