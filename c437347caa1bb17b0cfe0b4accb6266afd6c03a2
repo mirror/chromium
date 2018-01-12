@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "d5dffcb2_243cf134",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:46:31Z",
+      "side": 1,
+      "message": "Nevermind - this is in Blink.",
+      "parentUuid": "5fa73350_4958e949",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8733e3_521d7a96",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:46:31Z",
+      "side": 1,
+      "message": "Related to the comment about naming below: The fact that this code translates to returning a device to the client is a bit indirect. Are there even perhaps cases where this code runs but no device is returned?\n\nIt\u0027s probably not WebXR.HasDevice either because you could access `navigator.xr` without this code being called.\n\nI think we need to figure out what exactly we want to report and rename and potentially move the metric recording accordingly.\n\nIs there a method where we report the result of requestDevices where we could look at the result? Also, is it worth reporting the case where there were 0 devices? While that may be the difference between DidRequest and HasDevice, there will be some amount of unresolved promises. I\u0027m not sure whether that\u0027s worth recording, though.",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "466a8faa_f1413bdf",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -57,6 +92,53 @@
         "startLine": 2372,
         "startChar": 16,
         "endLine": 2372,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fadc7b9_ed326180",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:46:31Z",
+      "side": 1,
+      "message": "Ignore this and see the replacement below.",
+      "parentUuid": "29dbe521_c0ff89b7",
+      "range": {
+        "startLine": 2372,
+        "startChar": 16,
+        "endLine": 2372,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c394c4_e598ba2f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:46:31Z",
+      "side": 1,
+      "message": "The objects in the \"Did\" and \"Has\" metrics are different. Should we be more specific in the metric name? Maybe this should be DidReceive or (still has the object issue) DidReturn.",
+      "range": {
+        "startLine": 2377,
+        "startChar": 16,
+        "endLine": 2377,
         "endChar": 19
       },
       "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
