@@ -239,27 +239,20 @@ void TargetAutoAttacher::SetAttachToFrames(bool attach_to_frames) {
 
 // -------- ServiceWorkerDevToolsManager::Observer ----------
 
-void TargetAutoAttacher::WorkerCreated(ServiceWorkerDevToolsAgentHost* host) {
+void TargetAutoAttacher::WorkerCreated(ServiceWorkerDevToolsAgentHost* host,
+                                       bool* should_pause_on_start) {
   BrowserContext* browser_context = nullptr;
   if (render_frame_host_)
     browser_context = render_frame_host_->GetProcess()->GetBrowserContext();
   auto hosts = GetMatchingServiceWorkers(browser_context, frame_urls_);
-  if (hosts.find(host->GetId()) != hosts.end() && !host->IsAttached() &&
-      !host->IsPausedForDebugOnStart() && wait_for_debugger_on_start_) {
-    host->PauseForDebugOnStart();
-  }
+  if (hosts.find(host->GetId()) != hosts.end() && wait_for_debugger_on_start_)
+    *should_pause_on_start = true;
 }
 
 void TargetAutoAttacher::WorkerReadyForInspection(
-    ServiceWorkerDevToolsAgentHost* host) {
-  DCHECK(host->IsReadyForInspection());
-  if (ServiceWorkerDevToolsManager::GetInstance()
-          ->debug_service_worker_on_start()) {
-    // When debug_service_worker_on_start is true, a new DevTools window will
-    // be opened in ServiceWorkerDevToolsManager::WorkerReadyForInspection.
-    return;
-  }
-  ReattachServiceWorkers(host->IsPausedForDebugOnStart());
+    ServiceWorkerDevToolsAgentHost* host,
+    bool is_waiting_for_debugger) {
+  ReattachServiceWorkers(is_waiting_for_debugger);
 }
 
 void TargetAutoAttacher::WorkerVersionInstalled(

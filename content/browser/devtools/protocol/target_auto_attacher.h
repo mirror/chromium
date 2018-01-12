@@ -46,8 +46,10 @@ class TargetAutoAttacher : public ServiceWorkerDevToolsManager::Observer {
                              bool waiting_for_debugger);
 
   // ServiceWorkerDevToolsManager::Observer implementation.
-  void WorkerCreated(ServiceWorkerDevToolsAgentHost* host) override;
-  void WorkerReadyForInspection(ServiceWorkerDevToolsAgentHost* host) override;
+  void WorkerCreated(ServiceWorkerDevToolsAgentHost* host,
+                     bool* should_pause_on_start) override;
+  void WorkerReadyForInspection(ServiceWorkerDevToolsAgentHost* host,
+                                bool is_waiting_for_debugger) override;
   void WorkerVersionInstalled(ServiceWorkerDevToolsAgentHost* host) override;
   void WorkerVersionDoomed(ServiceWorkerDevToolsAgentHost* host) override;
   void WorkerDestroyed(ServiceWorkerDevToolsAgentHost* host) override;

@@ -69,20 +69,26 @@ void ServiceWorkerDevToolsManager::WorkerCreated(
                                            url, scope, is_installed_version,
                                            *devtools_worker_token);
     live_hosts_[worker_id] = host;
-    for (auto& observer : observer_list_)
-      observer.WorkerCreated(host.get());
-    if (debug_service_worker_on_start_)
-      host->PauseForDebugOnStart();
-    *pause_on_start = host->IsPausedForDebugOnStart();
+    *pause_on_start = debug_service_worker_on_start_;
+    for (auto& observer : observer_list_) {
+      bool should_pause_on_start = false;
+      observer.WorkerCreated(host.get(), &should_pause_on_start);
+      if (should_pause_on_start)
+        *pause_on_start = true;
+    }
+    if (*pause_on_start)
+      host->MarkAsPausedOnStart();
     return;
   }
 
   ServiceWorkerDevToolsAgentHost* agent_host = *it;
   terminated_hosts_.erase(it);
   live_hosts_[worker_id] = agent_host;
-  agent_host->WorkerRestarted(worker_process_id, worker_route_id);
+  agent_host->WorkerRestarted(worker_process_id, worker_route_id,
+                              pause_on_start);
+  if (*pause_on_start)
+    agent_host->MarkAsPausedOnStart();
   *devtools_worker_token = agent_host->devtools_worker_token();
-  *pause_on_start = agent_host->IsAttached();
 }
 
 void ServiceWorkerDevToolsManager::WorkerReadyForInspection(
@@ -94,12 +100,14 @@ void ServiceWorkerDevToolsManager::WorkerReadyForInspection(
   if (it == live_hosts_.end())
     return;
   scoped_refptr<ServiceWorkerDevToolsAgentHost> host = it->second;
-  host->WorkerReadyForInspection();
+  bool paused_on_start;
+  host->WorkerReadyForInspection(&paused_on_start);
+  bool is_waiting_for_debugger = paused_on_start;
   for (auto& observer : observer_list_)
-    observer.WorkerReadyForInspection(host.get());
+    observer.WorkerReadyForInspection(host.get(), is_waiting_for_debugger);
 
   // Then bring up UI for the ones not picked by other clients.
-  if (host->IsPausedForDebugOnStart() && !host->IsAttached())
+  if (is_waiting_for_debugger && !host->IsAttached())
     host->Inspect();
 }
 
