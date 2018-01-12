@@ -146,6 +146,10 @@ const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
 // Whether this device has an internal stylus.
 const char kHasInternalStylus[] = "has-internal-stylus";
 
+// Set if the device is tablet or detachable. Then long press the power button
+// will show the power off menu.
+const char kIsTabletOrDetachableDevice[] = "is_tablet_or_detachable";
+
 // Draws a circle at each touch point, similar to the Android OS developer
 // option "Show taps".
 const char kShowTaps[] = "show-taps";

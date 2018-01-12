@@ -27,9 +27,11 @@ class ConvertiblePowerButtonController;
 class LockStateController;
 class PowerButtonDisplayController;
 class PowerButtonScreenshotController;
+class TabletPowerButtonController;
 
-// Handles power button and lock button events. For convertible devices,
-// power button events are handled by ConvertiblePowerButtonController to
+// Handles power button and lock button events. For convertible/tablet devices,
+// power button events are handled by
+// ConvertiblePowerButtonController/TabletPowerButtonController to
 // perform corresponding power button behavior, except forced clamshell set by
 // command line. For clamshell devices, power button acts locking or shutdown.
 // On tablet mode, power button may also be consumed to take a screenshot.
@@ -93,6 +95,10 @@ class ASH_EXPORT PowerButtonController
     return convertible_controller_.get();
   }
 
+  TabletPowerButtonController* tablet_power_button_controller_for_test() {
+    return tablet_controller_.get();
+  }
+
   void set_power_button_type_for_test(ButtonType button_type) {
     button_type_ = button_type;
   }
@@ -150,9 +156,15 @@ class ASH_EXPORT PowerButtonController
   // Handles events for convertible devices.
   std::unique_ptr<ConvertiblePowerButtonController> convertible_controller_;
 
+  // Handles events for tablet or detached detachable devices.
+  std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.
   base::OneShotTimer display_off_timer_;
+
+  // True if the device is tablet or detachable.
+  bool is_tablet_or_detachable_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonController);
 };
