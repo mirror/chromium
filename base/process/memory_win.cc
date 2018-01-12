@@ -15,7 +15,6 @@
 // we provide a default that falls back to regular malloc.
 typedef void* (*MallocFn)(size_t);
 extern "C" void* (*const malloc_unchecked)(size_t);
-extern "C" void* (*const malloc_default)(size_t) = &malloc;
 
 #if defined(_M_IX86)
 #pragma comment(linker, "/alternatename:_malloc_unchecked=_malloc_default")
