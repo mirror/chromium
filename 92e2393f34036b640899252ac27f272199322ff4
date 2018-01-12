@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9752428_be0c0a31",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-12T18:48:09Z",
+      "side": 1,
+      "message": "tests",
+      "range": {
+        "startLine": 16,
+        "startChar": 71,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b25777_619fb11c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-12T18:48:09Z",
+      "side": 1,
+      "message": "Extra space here",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780e85ae_64975400",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-12T18:48:09Z",
+      "side": 1,
+      "message": "Should this be wrapped in ```?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7d676b_ea87f549",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-12T18:48:09Z",
+      "side": 1,
+      "message": "Should this also be wrapped in ```?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
