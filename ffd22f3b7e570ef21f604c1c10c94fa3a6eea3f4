@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c041e73f_760ba0e3",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T03:21:59Z",
+      "side": 1,
+      "message": "I\u0027m guessing there\u0027s a good reason, but why not pass |profile| to IsDiceEnabledForProfile? (i.e. can Dice ever be enabled for guest sessions?)",
+      "revId": "ffd22f3b7e570ef21f604c1c10c94fa3a6eea3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
