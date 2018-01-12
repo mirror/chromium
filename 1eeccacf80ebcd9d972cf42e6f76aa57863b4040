@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1661eb7_4688088a",
+        "filename": "media/filters/ffmpeg_glue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-12T00:46:42Z",
+      "side": 0,
+      "message": "This already uses pthread_once, so we can probably drop the static bool and CHECK here.",
+      "revId": "1eeccacf80ebcd9d972cf42e6f76aa57863b4040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
