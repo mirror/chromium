@@ -34,6 +34,40 @@
       "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fa70e3_5ba97e6b",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptGroupElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-12T04:51:00Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need the variable |slot|.\n\nroot.AppendChild(HTMLSlotElement::CreateUserAgentCustomAssignSlot(GetDocument()));",
+      "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7b6db3_667fef44",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-12T04:51:00Z",
+      "side": 1,
+      "message": "nit: We can delete the variable |slot|.\n\nroot.AppnedChild(TMLSlotElement::CreateUserAgentCustomAssignSlot(GetDocument()));",
+      "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
