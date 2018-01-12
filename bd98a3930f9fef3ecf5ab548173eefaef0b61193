@@ -16,6 +16,24 @@
       "revId": "bd98a3930f9fef3ecf5ab548173eefaef0b61193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4197ca66_669f5a40",
+        "filename": "third_party/WebKit/Source/core/editing/LocalCaretRectTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-12T17:31:18Z",
+      "side": 1,
+      "message": "Not sure if I understand.\n\nThe default used to be quirks mode. With this CL it\u0027s no-quirks (\"strict\") mode. Some tests, like this one, started to fail then, so a few tests need to remain in quirks mode. It might be possible to make most of them pass in strict mode too, if someone bothers to investigate and do the work.\n\nNew tests will be in strict mode automatically. The only ones that will remain in quirks mode, are those that contain a line like the above.",
+      "parentUuid": "87cad551_2dc5daec",
+      "revId": "bd98a3930f9fef3ecf5ab548173eefaef0b61193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
