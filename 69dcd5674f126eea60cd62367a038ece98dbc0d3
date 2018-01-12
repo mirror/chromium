@@ -46,6 +46,30 @@
       "revId": "69dcd5674f126eea60cd62367a038ece98dbc0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17af27c0_4247c355",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-12T07:03:09Z",
+      "side": 1,
+      "message": "Got it. Thank you!",
+      "parentUuid": "64ff635b_2e028951",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 21
+      },
+      "revId": "69dcd5674f126eea60cd62367a038ece98dbc0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
