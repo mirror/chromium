@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d0ae88_03535f79",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T06:30:31Z",
+      "side": 1,
+      "message": "Because Blink doesn\u0027t prefer one letter and abbreved variable name, \ncould you rename them?\n\nExample:\np \u003d\u003e passed_position\nx \u003d\u003e x_point\npos \u003d\u003e position\nn \u003d\u003e new_position\n\nIt is OK to use other names if you have other candidates.",
+      "range": {
+        "startLine": 60,
+        "startChar": 65,
+        "endLine": 60,
+        "endChar": 66
+      },
+      "revId": "36185d29b5756ba46c72347d0756c74c4e8638cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
