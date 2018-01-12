@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "aa9e0454_7d96b586",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-12T08:56:43Z",
+      "side": 1,
+      "message": "It needs to postMessage to the parent window in both \u0027resolve\u0027 and \u0027reject\u0027 condition, so it should be kept.",
+      "parentUuid": "060cdcd2_3dada5fd",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a17995d_806e79c6",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 4
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "b83e4f90_9549cab6",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-12T08:56:43Z",
+      "side": 1,
+      "message": "ScreenOrientationController is used in more than one place: 1) in WebLocalFrameImpl.cpp 2) in MediaControlsOrientationLockDelegate.cpp. Seems the MediaControl might be failed to lock if the ScreenOrientationController is lazy-created too late.\n\nBesides above, I found at the beginning of the fucntion ScreenOrientation::Create(), there is a comments saying that not all the frames are supported to have a ScreenOrientationController. How can we know whether to lazy-create or not on a given frame?\n\nIt is really good to make it clear here, but I prefer to implement this \"lazy-init\" in a separate CL too, WDYT?",
+      "parentUuid": "2b3bacf4_18c6929b",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af54e445_ce40854b",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
         "patchSetId": 4
@@ -163,6 +199,30 @@
       "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33038275_014b72b2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-12T08:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af54e445_ce40854b",
+      "range": {
+        "startLine": 81,
+        "startChar": 67,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
