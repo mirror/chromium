@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4981c1f0_691ab7ce",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "This is only used in one place right below. There, if you do double divided by int, the result is a double. Thus this variable + cast isn\u0027t needed.",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc26a2a_025c8f08",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "DPIs",
+      "range": {
+        "startLine": 266,
+        "startChar": 52,
+        "endLine": 266,
+        "endChar": 55
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b52188a_67d2ade4",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "rotate to page,",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 26
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f40693_579e9b89",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this comment be changed, just like the one on line 864?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0db3b2_24b45bb0",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Can this check and the one on line 805 be done in a consistent manner? I don\u0027t have strong feeling on which way is better.",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c431100a_fd920efc",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "gfx::Size has int values, whereas |dpi| was previously a double. Is this an issue?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81d069f_2733efe0",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "\"!!\" -\u003e \"\"",
+      "range": {
+        "startLine": 1508,
+        "startChar": 8,
+        "endLine": 1508,
+        "endChar": 10
+      },
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad12fa8_27248d50",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Can you add a comment to explain why this is Windows only?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8e426d_f376dbb5",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Split this code into its own function? Where if it\u0027s a square DPI, just return early.",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3fd60a_1dd7246d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Can this stay with the other Windows-only DPI code?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9590600a_a902f2f9",
+        "filename": "components/printing/test/mock_printer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Do we ever pass in non-square DPIs here? i.e. does std::min() vs. std::max() matter here? Should std::min() be made consistent with some other piece of code?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f401c824_2351c9c9",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 4405,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "The if and else blocks look very similar now. Just calculate:\n\ndobuel scale_factor \u003d std::max(scale_factor_x, scale_factor_y);\n\nand use that?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a8764f_620298bc",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "Can you remind me (for the N-th time) why we are flipping to std::min()?",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72ca249_8ffe9f59",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T02:02:05Z",
+      "side": 1,
+      "message": "There are a bunch of places with this pattern:\n\ngfx::Size(settings().dpi_horizontal(), settings().dpi_vertical())\n\nIf we add something like:\n\nconst gfx::Size\u0026 dpi_size() const { return dpi_; }\n\nThen all those callers can be simplified.",
+      "revId": "3e1cb763351f7202e6f99eb4a937ab35e9d5e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
