@@ -73,6 +73,7 @@ void ResourceRequestInfo::AllocateForTesting(
       false,                               // is_download
       false,                               // is_stream
       allow_download,                      // allow_download
+      false,                               // should_squelch_download
       false,                               // has_user_gesture
       false,                               // enable load timing
       request->has_upload(),               // enable upload progress
@@ -142,6 +143,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
     bool is_download,
     bool is_stream,
     bool allow_download,
+    bool should_squelch_download,
     bool has_user_gesture,
     bool enable_load_timing,
     bool enable_upload_progress,
@@ -168,6 +170,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       is_download_(is_download),
       is_stream_(is_stream),
       allow_download_(allow_download),
+  should_squelch_download_(should_squelch_download),
       has_user_gesture_(has_user_gesture),
       enable_load_timing_(enable_load_timing),
       enable_upload_progress_(enable_upload_progress),

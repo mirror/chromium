@@ -586,6 +586,12 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
   if (form)
     navigation_info.form = WebFormElement(form);
 
+  // Downloads aren't allowed for sandboxed iframes.
+  // TODO(cbentzel): Also apply to feature policy
+  Document* doc = static_cast<Document*>(GetWebFrame()->GetDocument());
+  if (doc->EnforceSandboxFlags(0)) {
+   navigation_info.should_squelch_downloads = true;
+  }
   // The frame has navigated either by itself or by the action of the
   // |origin_document| when it is defined. |source_location| represents the
   // line of code that has initiated the navigation. It is used to let web

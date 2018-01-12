@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
@@ -428,6 +429,8 @@ NavigationRequest::~NavigationRequest() {
 }
 
 void NavigationRequest::BeginNavigation() {
+  base::debug::StackTrace().Print();
+  
   DCHECK(!loader_);
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
