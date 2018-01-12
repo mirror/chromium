@@ -22,6 +22,30 @@
       "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2815a0_0f8f364f",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-12T17:47:26Z",
+      "side": 1,
+      "message": "Right now it\u0027s just arbitrary, although if you know of a way to determine the ideal value instead let me know. We can improve the quality of the favicons even further on high dpi devices, as can even be seen from the screenshots.",
+      "parentUuid": "150f597d_a8436afb",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
