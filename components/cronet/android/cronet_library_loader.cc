@@ -48,14 +48,10 @@ base::MessageLoop* g_init_message_loop = nullptr;
 
 net::NetworkChangeNotifier* g_network_change_notifier = nullptr;
 
-bool NativeInit() {
-  if (!base::android::OnJNIOnLoadInit())
-    return false;
+void NativeInit() {
   if (!base::TaskScheduler::GetInstance())
     base::TaskScheduler::CreateAndStartWithDefaultParams("Cronet");
-
   url::Initialize();
-  return true;
 }
 
 }  // namespace
@@ -72,9 +68,9 @@ jint CronetOnLoad(JavaVM* vm, void* reserved) {
   if (!RegisterMainDexNatives(env) || !RegisterNonMainDexNatives(env)) {
     return -1;
   }
-  if (!NativeInit()) {
+  if (!base::android::OnJNIOnLoadInit())
     return -1;
-  }
+  NativeInit();
   return JNI_VERSION_1_6;
 }
 
@@ -85,13 +81,10 @@ void CronetOnUnLoad(JavaVM* jvm, void* reserved) {
   base::android::LibraryLoaderExitHook();
 }
 
-void JNI_CronetLibraryLoader_CronetInitOnInitThread(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller) {
+void InitOnInitThread() {
 #if !BUILDFLAG(USE_PLATFORM_ICU_ALTERNATIVES)
   base::i18n::InitializeICU();
 #endif
-
   base::FeatureList::InitializeInstance(std::string(), std::string());
   DCHECK(!base::MessageLoop::current());
   DCHECK(!g_init_message_loop);
@@ -104,10 +97,24 @@ void JNI_CronetLibraryLoader_CronetInitOnInitThread(
   g_network_change_notifier = net::NetworkChangeNotifier::Create();
 }
 
+
+void JNI_CronetLibraryLoader_CronetInitOnInitThread(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& jcaller) {
+  InitOnInitThread();
+}
+
 ScopedJavaLocalRef<jstring> JNI_CronetLibraryLoader_GetCronetVersion(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   return base::android::ConvertUTF8ToJavaString(env, CRONET_VERSION);
+}
+
+void EnsureInitialized() {
+  if (g_init_message_loop)
+    return;
+  NativeInit();
+  InitOnInitThread();
 }
 
 std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService(

@@ -82,6 +82,10 @@ TEST_F(CronetStructTest, TestCronet_PublicKeyPins) {
       second, Cronet_PublicKeyPins_get_includeSubdomains(first));
   EXPECT_EQ(Cronet_PublicKeyPins_get_includeSubdomains(first),
             Cronet_PublicKeyPins_get_includeSubdomains(second));
+  Cronet_PublicKeyPins_set_expirationDate(
+      second, Cronet_PublicKeyPins_get_expirationDate(first));
+  EXPECT_EQ(Cronet_PublicKeyPins_get_expirationDate(first),
+            Cronet_PublicKeyPins_get_expirationDate(second));
   Cronet_PublicKeyPins_Destroy(first);
   Cronet_PublicKeyPins_Destroy(second);
 }
@@ -96,6 +100,10 @@ TEST_F(CronetStructTest, TestCronet_EngineParams) {
                                     Cronet_EngineParams_get_userAgent(first));
   EXPECT_STREQ(Cronet_EngineParams_get_userAgent(first),
                Cronet_EngineParams_get_userAgent(second));
+  Cronet_EngineParams_set_acceptLanguage(
+      second, Cronet_EngineParams_get_acceptLanguage(first));
+  EXPECT_STREQ(Cronet_EngineParams_get_acceptLanguage(first),
+               Cronet_EngineParams_get_acceptLanguage(second));
   Cronet_EngineParams_set_storagePath(
       second, Cronet_EngineParams_get_storagePath(first));
   EXPECT_STREQ(Cronet_EngineParams_get_storagePath(first),
@@ -131,6 +139,10 @@ TEST_F(CronetStructTest, TestCronet_EngineParams) {
           first),
       Cronet_EngineParams_get_enablePublicKeyPinningBypassForLocalTrustAnchors(
           second));
+  Cronet_EngineParams_set_experimentalOptions(
+      second, Cronet_EngineParams_get_experimentalOptions(first));
+  EXPECT_STREQ(Cronet_EngineParams_get_experimentalOptions(first),
+               Cronet_EngineParams_get_experimentalOptions(second));
   Cronet_EngineParams_Destroy(first);
   Cronet_EngineParams_Destroy(second);
 }
