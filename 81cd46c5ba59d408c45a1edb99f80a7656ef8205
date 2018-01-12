@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "762b60e6_bfc7e9d0",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-12T07:42:23Z",
+      "side": 1,
+      "message": "It should not happen. But it could due to bugs in cros_gralloc (or somewhere along the allocation path), if it allocates the buffer with unexpected format. We will get this error. I think I would prefer to keep NotifyError for easier debugging. WDYT?",
+      "parentUuid": "b745fded_89caefb2",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a95a26_904ad469",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
         "patchSetId": 14
