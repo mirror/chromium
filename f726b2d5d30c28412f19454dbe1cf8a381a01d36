@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ed20b9_8dedc2d1",
+        "filename": "chrome/browser/signin/signin_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T12:21:23Z",
+      "side": 1,
+      "message": "Can you move this to:\nchrome/browser/signin/account_consistency_mode_manager.h\nas a static method?\n\nThe implementation can stay the same.\n\nAccountConsistencyModeManager is where I plan to move all the dice configuration code. I started a couple weeks ago and then stopped, but I\u0027ll come back to it.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "f726b2d5d30c28412f19454dbe1cf8a381a01d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
