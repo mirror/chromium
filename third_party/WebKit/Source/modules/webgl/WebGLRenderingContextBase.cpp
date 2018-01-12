@@ -6300,8 +6300,12 @@ void WebGLRenderingContextBase::LoseContextImpl(
 
   RemoveAllCompressedTextureFormats();
 
-  if (mode != kRealLostContext)
-    DestroyContext();
+  // Always destroy the context, regardless of context loss mode. This will
+  // cause the drawing buffer to be destroyed as well. The drawing buffer is
+  // recreated in the event that the context is restored by MaybeRestoreContext.
+  // If this was a real lost context, the OpenGL calls done during DrawingBuffer
+  // destruction will be ignored.
+  DestroyContext();
 
   ConsoleDisplayPreference display =
       (mode == kRealLostContext) ? kDisplayInConsole : kDontDisplayInConsole;
@@ -7510,13 +7514,9 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     }
   }
 
-  // If the context was lost due to RealLostContext, we need to destroy the old
-  // DrawingBuffer before creating new DrawingBuffer to ensure resource budget
-  // enough.
-  if (GetDrawingBuffer()) {
-    drawing_buffer_->BeginDestruction();
-    drawing_buffer_ = nullptr;
-  }
+  // Drawing buffer should have aready been destroyed during context loss to
+  // ensure its resources were freed.
+  DCHECK(!GetDrawingBuffer());
 
   auto execution_context = Host()->GetTopExecutionContext();
   Platform::ContextAttributes attributes = ToPlatformContextAttributes(

@@ -490,14 +490,16 @@ const gpu::GpuFeatureInfo& ContextProviderCommandBuffer::GetGpuFeatureInfo()
 void ContextProviderCommandBuffer::OnLostContext() {
   CheckValidThreadOrLockAcquired();
 
+  gpu::CommandBuffer::State state = GetCommandBufferProxy()->GetLastState();
+  command_buffer_metrics::UmaRecordContextLost(context_type_, state.error,
+                                               state.context_lost_reason);
+
+  // Calling OnContextLost for all observers may cause the CommandBufferProxy to
+  // be destroyed.
   for (auto& observer : observers_)
     observer.OnContextLost();
   if (gr_context_)
     gr_context_->OnLostContext();
-
-  gpu::CommandBuffer::State state = GetCommandBufferProxy()->GetLastState();
-  command_buffer_metrics::UmaRecordContextLost(context_type_, state.error,
-                                               state.context_lost_reason);
 }
 
 void ContextProviderCommandBuffer::AddObserver(viz::ContextLostObserver* obs) {
