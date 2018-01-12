@@ -18,6 +18,7 @@ SessionTab::SessionTab()
     : tab_visual_index(-1),
       current_navigation_index(-1),
       pinned(false) {
+  LOG(ERROR) << "SKYM CTOR " << window_id.id();
 }
 
 SessionTab::~SessionTab() {
@@ -25,6 +26,7 @@ SessionTab::~SessionTab() {
 
 void SessionTab::SetFromSyncData(const sync_pb::SessionTab& sync_data,
                                  base::Time timestamp) {
+  LOG(ERROR) << "SKYM window_id.set_id " << sync_data.window_id();
   window_id.set_id(sync_data.window_id());
   tab_id.set_id(sync_data.tab_id());
   tab_visual_index = sync_data.tab_visual_index();
@@ -44,6 +46,7 @@ void SessionTab::SetFromSyncData(const sync_pb::SessionTab& sync_data,
 sync_pb::SessionTab SessionTab::ToSyncData() const {
   sync_pb::SessionTab sync_data;
   sync_data.set_tab_id(tab_id.id());
+  LOG(ERROR) << "SKYM set_window_id " << window_id.id();
   sync_data.set_window_id(window_id.id());
   sync_data.set_tab_visual_index(tab_visual_index);
   sync_data.set_current_navigation_index(current_navigation_index);

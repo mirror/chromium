@@ -13,6 +13,7 @@ SyncedSessionWindow::~SyncedSessionWindow() {}
 sync_pb::SessionWindow SyncedSessionWindow::ToSessionWindowProto() const {
   sync_pb::SessionWindow sync_data;
   sync_data.set_browser_type(window_type);
+  LOG(ERROR) << "SKYM set_window_id " << wrapped_window.window_id.id();
   sync_data.set_window_id(wrapped_window.window_id.id());
   sync_data.set_selected_tab_index(wrapped_window.selected_tab_index);
 
