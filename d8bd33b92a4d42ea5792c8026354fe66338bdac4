@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2863dd9d_52648d01",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T20:15:53Z",
+      "side": 1,
+      "message": "Nit: No need for the \"_\" suffix anymore (same below), since we don\u0027t have @private either. These constants are only defined within the scope so they are private in the most fundamental way (not just as far as compiler is concerned).",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "d8bd33b92a4d42ea5792c8026354fe66338bdac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db57b944_90e494b3",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T20:15:53Z",
+      "side": 1,
+      "message": "Does the order here matter? If not, let\u0027s keep them in alphabetical order.",
+      "revId": "d8bd33b92a4d42ea5792c8026354fe66338bdac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
