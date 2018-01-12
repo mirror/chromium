@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad1dbc0a_22b3c108",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2018-01-12T20:37:05Z",
+      "side": 1,
+      "message": "Previously, mWebContentsAccessibility was created lazily in getAccessibilityNodeProvider. Now it seems like we\u0027ll always have it, which wastes some memory in the case it\u0027s not needed.",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced7e27e_a379c280",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2018-01-12T20:37:05Z",
+      "side": 1,
+      "message": "Should we also do \"mWebContentsAccessibility \u003d null;\" to ensure garbage collection? (It doesn\u0027t seem to matter right now because most places nulls CVC after destroying it, but just in case.)",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f89a596_d3881f26",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
