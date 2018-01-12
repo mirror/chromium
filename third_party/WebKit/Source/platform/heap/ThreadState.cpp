@@ -297,8 +297,9 @@ void ThreadState::VisitStack(Visitor* visitor) {
   }
 }
 
-void ThreadState::VisitPersistents(Visitor* visitor) {
-  persistent_region_->TracePersistentNodes(visitor);
+void ThreadState::VisitPersistents(Visitor* visitor,
+                                   BlinkGC::TraceOption option) {
+  persistent_region_->TracePersistentNodes(visitor, option);
   if (trace_dom_wrappers_) {
     TRACE_EVENT0("blink_gc", "V8GCController::traceDOMWrappers");
     trace_dom_wrappers_(isolate_, visitor);
@@ -1265,13 +1266,6 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
   GCForbiddenScope gc_forbidden_scope(this);
 
   {
-    // Access to the CrossThreadPersistentRegion has to be prevented
-    // while in the marking phase because otherwise other threads may
-    // allocate or free PersistentNodes and we can't handle
-    // that. Grabbing this lock also prevents non-attached threads
-    // from accessing any GCed heap while a GC runs.
-    CrossThreadPersistentRegion::LockScope persistent_lock(
-        ProcessHeap::GetCrossThreadPersistentRegion());
 
     {
       TRACE_EVENT2("blink_gc,devtools.timeline", "BlinkGCMarking",
@@ -1279,7 +1273,9 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
                    "gcReason", GcReasonString(reason));
       MarkPhasePrologue(stack_state, gc_type, reason);
       MarkPhaseVisitRoots();
-      CHECK(MarkPhaseAdvanceMarking(std::numeric_limits<double>::infinity()));
+      bool complete = MarkPhaseAdvanceMarking(
+          std::numeric_limits<double>::infinity(), BlinkGC::kNone);
+      CHECK(complete);
       MarkPhaseEpilogue();
     }
   }
@@ -1352,9 +1348,6 @@ void ThreadState::MarkPhaseVisitRoots() {
   NoAllocationScope no_allocation_scope(this);
   StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
 
-  // 1. Trace persistent roots.
-  Heap().VisitPersistentRoots(current_gc_data_.visitor.get());
-
   // 2. Trace objects reachable from the stack.
   {
     SafePointScope safe_point_scope(current_gc_data_.stack_state, this);
@@ -1364,7 +1357,8 @@ void ThreadState::MarkPhaseVisitRoots() {
       WTF::CurrentTimeTicksInMilliseconds() - start_time;
 }
 
-bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds) {
+bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds,
+                                          BlinkGC::TraceOption option) {
   double start_time = WTF::CurrentTimeTicksInMilliseconds();
 
   ScriptForbiddenScope script_forbidden;
@@ -1372,6 +1366,17 @@ bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds) {
   // finalization that happens when the visitorScope is torn down).
   NoAllocationScope no_allocation_scope(this);
   StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
+
+  {
+    // Access to the CrossThreadPersistentRegion has to be prevented
+    // while in the marking phase because otherwise other threads may
+    // allocate or free PersistentNodes and we can't handle
+    // that. Grabbing this lock also prevents non-attached threads
+    // from accessing any GCed heap while a GC runs.
+    CrossThreadPersistentRegion::LockScope persistent_lock(
+        ProcessHeap::GetCrossThreadPersistentRegion());
+    Heap().VisitPersistentRoots(current_gc_data_.visitor.get(), option);
+  }
 
   // 3. Transitive closure to trace objects including ephemerons.
   bool complete = Heap().AdvanceMarkingStackProcessing(
@@ -1383,6 +1388,10 @@ bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds) {
 }
 
 void ThreadState::MarkPhaseEpilogue() {
+  bool complete =
+      MarkPhaseAdvanceMarking(std::numeric_limits<double>::infinity(),
+                              BlinkGC::kRegisterPersistentWeakCallbacks);
+  CHECK(complete);
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();

@@ -106,6 +106,8 @@ class PLATFORM_EXPORT BlinkGC final {
     kV8MinorGC,
     kV8MajorGC,
   };
+
+  enum TraceOption { kNone, kRegisterPersistentWeakCallbacks };
 };
 
 }  // namespace blink

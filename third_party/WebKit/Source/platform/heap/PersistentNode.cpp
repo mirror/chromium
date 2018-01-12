@@ -40,8 +40,9 @@ int PersistentRegion::NumberOfPersistents() {
   return persistent_count;
 }
 
-void PersistentRegion::EnsurePersistentNodeSlots(void* self,
-                                                 TraceCallback trace) {
+void PersistentRegion::EnsurePersistentNodeSlots(
+    void* self,
+    PersistentTraceCallback trace) {
   DCHECK(!free_list_head_);
   PersistentNodeSlots* slots = new PersistentNodeSlots;
   for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
@@ -76,6 +77,7 @@ void PersistentRegion::ReleasePersistentNode(
 // we delete the PersistentNodeSlot. This function rebuilds the free
 // list of PersistentNodes.
 void PersistentRegion::TracePersistentNodes(Visitor* visitor,
+                                            BlinkGC::TraceOption option,
                                             ShouldTraceCallback should_trace) {
   size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
   base::debug::Alias(&debug_marked_object_size);
@@ -100,7 +102,7 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
         ++persistent_count;
         if (!should_trace(visitor, node))
           continue;
-        node->TracePersistentNode(visitor);
+        node->TracePersistentNode(visitor, option);
         debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
       }
     }
