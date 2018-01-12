@@ -151,6 +151,9 @@ class CONTENT_EXPORT WebContentsDelegate {
   // or a panel window.
   virtual bool IsPopupOrPanel(const WebContents* source) const;
 
+  // Called to determine if the WebContents is a presentation receiver.
+  virtual bool IsPresentationReceiver();
+
   // Notification that the target URL has changed.
   virtual void UpdateTargetURL(WebContents* source,
                                const GURL& url) {}

@@ -138,6 +138,9 @@ std::string ChromeDevToolsManagerDelegate::GetTargetType(
       return DevToolsAgentHost::kTypePage;
   }
 
+  if (web_contents->GetDelegate()->IsPresentationReceiver())
+    return DevToolsAgentHost::kTypePresentation;
+
   std::string extension_name;
   std::string extension_type;
   if (!GetExtensionInfo(web_contents, &extension_name, &extension_type))

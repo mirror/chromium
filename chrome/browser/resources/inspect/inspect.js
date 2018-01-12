@@ -130,6 +130,7 @@ function populateLocalTargets(data) {
   removeChildren('apps-list');
   removeChildren('workers-list');
   removeChildren('service-workers-list');
+  removeChildren('presentations-list');
   removeChildrenExceptAdditional('others-list');
 
   for (var i = 0; i < data.length; i++) {
@@ -143,6 +144,8 @@ function populateLocalTargets(data) {
       addToWorkersList(data[i]);
     else if (data[i].type === 'service_worker')
       addToServiceWorkersList(data[i]);
+    else if (data[i].type === 'presentation')
+      addToPresentationsList(data[i]);
     else
       addToOthersList(data[i]);
   }
@@ -450,6 +453,10 @@ function addToServiceWorkersList(data) {
       data, $('service-workers-list'), ['name', 'description', 'url']);
   addActionLink(
       row, 'terminate', sendTargetCommand.bind(null, 'close', data), false);
+}
+
+function addToPresentationsList(data) {
+  addTargetToList(data, $('presentations-list'), ['url']);
 }
 
 function addToOthersList(data) {

@@ -58,6 +58,9 @@ class PresentationReceiverWindowController final
   // PresentationReceiverWindowDelegate overrides.
   content::WebContents* web_contents() const final;
 
+  // Overridden from content::WebContentsDelegate:
+  bool IsPresentationReceiver() override;
+
  private:
   friend class PresentationReceiverWindowControllerBrowserTest;
 

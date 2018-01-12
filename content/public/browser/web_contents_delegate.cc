@@ -37,6 +37,10 @@ bool WebContentsDelegate::IsPopupOrPanel(const WebContents* source) const {
   return false;
 }
 
+bool WebContentsDelegate::IsPresentationReceiver() {
+  return false;
+}
+
 bool WebContentsDelegate::CanOverscrollContent() const { return false; }
 
 bool WebContentsDelegate::ShouldSuppressDialogs(WebContents* source) {

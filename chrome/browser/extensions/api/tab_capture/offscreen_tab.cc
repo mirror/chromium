@@ -97,6 +97,7 @@ OffscreenTab::OffscreenTab(OffscreenTabsOwner* owner)
                                  base::Unretained(this)))),
       capture_poll_timer_(false, false),
       content_capture_was_detected_(false),
+      is_presentation_receiver_(false),
       navigation_policy_(
           std::make_unique<media_router::DefaultNavigationPolicy>()) {
   DCHECK(otr_profile_registration_->profile());
@@ -144,6 +145,7 @@ void OffscreenTab::Start(const GURL& start_url,
              << "presentation_id=" << optional_presentation_id;
     media_router::ReceiverPresentationServiceDelegateImpl::CreateForWebContents(
         offscreen_tab_web_contents_.get(), optional_presentation_id);
+    is_presentation_receiver_ = true;
 
     // Presentations are not allowed to perform top-level navigations after
     // initial load.  This is enforced through sandboxing flags, but we also
@@ -195,6 +197,10 @@ bool OffscreenTab::ShouldFocusLocationBarByDefault(WebContents* source) {
 bool OffscreenTab::ShouldFocusPageAfterCrash() {
   // Never focus the page.  Not even after a crash.
   return false;
+}
+
+bool OffscreenTab::IsPresentationReceiver() {
+  return is_presentation_receiver_;
 }
 
 void OffscreenTab::CanDownload(const GURL& url,
