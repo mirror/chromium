@@ -132,6 +132,24 @@
     },
     {
       "key": {
+        "uuid": "46e2d0f3_b4ee46db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T12:39:55Z",
+      "side": 1,
+      "message": "Could the test look like:\n```\nscreen.orientation.lock(\u0027portrait-primary\u0027).then(function() \u003d\u003e {\n  msg \u003d screen.orientation.type;\n}, function(error) {\n  msg.error.name;\n}).then(function() {\n  parent.window.postMessage(msg, \u0027*\u0027);\n});\n```",
+      "parentUuid": "aa9e0454_7d96b586",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a17995d_806e79c6",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 4
@@ -200,6 +218,24 @@
       "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfcbf35_9ad71c6b",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T12:39:55Z",
+      "side": 1,
+      "message": "MediaControlsOrientationLockDelegate can use ScreenOrientationControllerImpl because it is in modules/. Though, it\u0027s besides the point and it should still allow lazy init. Happy to have this out of this CL though.",
+      "parentUuid": "b83e4f90_9549cab6",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
