@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d463e1c7_c1278e06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T03:04:50Z",
+      "side": 1,
+      "message": "Whoops!  I missed your top level comment.  Ignore this!\n\nDo we already have a test for this behavior?  If not, can we add a quick one in this CL (or in a followup)?",
+      "parentUuid": "2b3875fb_066733a8",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99f444a0_ee19e94d",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 1
