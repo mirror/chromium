@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0152a532_a5d9053a",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "I\u0027d move this down below the extracted_length check.\n\nThen you could do \n\n  std::vector\u003cuint8_t\u003e credential_id_length \u003d {0, extracted_length[0]};",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99be5e8_3e3f10a7",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "A bit unrelated to this change, but could you enforce the correct length of these at compile time by making these std::array\u003cuint8_t\u003es of the correct size instead? E.g.\n\n  std::array\u003cuint8_t, 16\u003e aaguid_;\n  std::array\u003cuint8_t, 2\u003e credential_id_length_;\n\nMaybe in a follow up CL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3b721c_4f7556ea",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "could you split this check in two so that you don\u0027t Extract() y if x is already empty?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977e084e_c5b01eec",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "Could you keep a LOG statement here? Maybe DLOG(ERROR) \u003c\u003c \"Invalid U2F response\";?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5565121_d3680e09",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "maybe inline this?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffb7f84_ec80d5e9",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "maybe inline this too?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3c5582_a8ab0519",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T10:02:21Z",
+      "side": 1,
+      "message": "can this be a base::span\u003cconst uint8_t\u003e?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
