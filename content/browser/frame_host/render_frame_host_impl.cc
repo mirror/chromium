@@ -2443,6 +2443,7 @@ void RenderFrameHostImpl::OnAccessibilityEvents(
       detail.id = param.id;
       detail.ax_tree_id = GetAXTreeID();
       detail.event_from = param.event_from;
+      detail.action_request_id = param.action_request_id;
       if (param.update.has_tree_data) {
         detail.update.has_tree_data = true;
         ax_content_tree_data_ = param.update.tree_data;
@@ -2540,6 +2541,7 @@ void RenderFrameHostImpl::OnAccessibilityFindInPageResult(
 }
 
 void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
+    int action_request_id,
     const gfx::Point& point,
     int child_frame_routing_id,
     int child_frame_browser_plugin_instance_id,
@@ -2563,6 +2565,7 @@ void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
     return;
 
   ui::AXActionData action_data;
+  action_data.request_id = action_request_id;
   action_data.target_point = point;
   action_data.action = ui::AX_ACTION_HIT_TEST;
   action_data.hit_test_event_to_fire = event_to_fire;
