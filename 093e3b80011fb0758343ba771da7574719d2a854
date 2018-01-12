@@ -16,6 +16,24 @@
       "revId": "093e3b80011fb0758343ba771da7574719d2a854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdfa063_117252ac",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-12T09:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdea11ce_46ad1b7f",
+      "revId": "093e3b80011fb0758343ba771da7574719d2a854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
