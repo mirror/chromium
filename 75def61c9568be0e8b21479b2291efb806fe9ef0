@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4262c966_31147263",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2861,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-12T14:32:53Z",
+      "side": 1,
+      "message": "This weirdness is fixed in the follow up:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/862229\n... those two can be reviewed together if you so prefer, since Doom w/o blocking for Open might actually happen?",
+      "range": {
+        "startLine": 2860,
+        "startChar": 10,
+        "endLine": 2861,
+        "endChar": 0
+      },
+      "revId": "75def61c9568be0e8b21479b2291efb806fe9ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
