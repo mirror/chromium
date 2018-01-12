@@ -164,6 +164,30 @@
       "revId": "b440c90a4e1baa60f19c913fd11a53f9095ad619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05fa5a5_3faf9488",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/performanceobservers.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-12T00:27:24Z",
+      "side": 1,
+      "message": "Oops, you are right. It\u0027s especially true when they are in parallel scopes. It\u0027s better to use pe then.",
+      "parentUuid": "bdcd00b2_3297b78c",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "b440c90a4e1baa60f19c913fd11a53f9095ad619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
