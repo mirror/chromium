@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "614835ff_54d39518",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-01-12T06:12:58Z",
+      "side": 0,
+      "message": "This is to show a flag in chrome://flags\nBecause your change is only used by embedders, there\u0027s no need to expose it in chrome://flags",
+      "range": {
+        "startLine": 761,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 24
+      },
+      "revId": "c3c5b11d11f96e44c3762d17227bd8b27ba2611e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67de8e6_0439936c",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-01-12T06:12:58Z",
+      "side": 0,
+      "message": "As I mentioned in the previous comment, there\u0027s no need to change this file.",
+      "revId": "c3c5b11d11f96e44c3762d17227bd8b27ba2611e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36775890_2e0be6aa",
+        "filename": "media/base/media_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-01-12T06:12:58Z",
+      "side": 0,
+      "message": "I would recommend add another Android-only media switch, which is used when creating an AudioFocusDelegate.\n\nkEnableAudioFocus is considered always on for Android, so the flag doesn\u0027t exist.",
+      "revId": "c3c5b11d11f96e44c3762d17227bd8b27ba2611e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
