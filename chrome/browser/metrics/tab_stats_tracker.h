@@ -205,6 +205,7 @@ class TabStatsTracker::UmaStatsReportingDelegate {
   static const char kUnusedTabsInIntervalHistogramNameBase[];
   static const char kUsedAndClosedInIntervalHistogramNameBase[];
   static const char kUsedTabsInIntervalHistogramNameBase[];
+  static const char kVisibleNotInteractedInIntervalHistogramNameBase[];
 
   UmaStatsReportingDelegate() {}
   virtual ~UmaStatsReportingDelegate() {}

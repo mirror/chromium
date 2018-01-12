@@ -84,6 +84,9 @@ const char TabStatsTracker::UmaStatsReportingDelegate::
         "Tabs.UsedAndClosedInInterval.Count";
 const char TabStatsTracker::UmaStatsReportingDelegate::
     kUsedTabsInIntervalHistogramNameBase[] = "Tabs.UsedInInterval.Count";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kVisibleNotInteractedInIntervalHistogramNameBase[] =
+        "Tabs.VisibleNotInteractedInInterval.Count";
 
 const TabStatsDataStore::TabsStats& TabStatsTracker::tab_stats() const {
   return tab_stats_data_store_->tab_stats();
@@ -323,23 +326,28 @@ void TabStatsTracker::UmaStatsReportingDelegate::ReportUsageDuringInterval(
   size_t used_and_closed_tabs = 0;
   size_t unused_tabs = 0;
   size_t unused_and_closed_tabs = 0;
+  size_t visible_not_interacted = 0;
+
   for (const auto& iter : interval_map) {
-    // There's currently no distinction between a visible/audible tab and one
-    // that has been interacted with in these metrics.
-    // TODO(sebmarchand): Add a metric that track the number of tab that have
-    // been visible/audible but not interacted with during an interval,
-    // https://crbug.com/800828.
-    if (iter.second.interacted_during_interval ||
-        iter.second.visible_or_audible_during_interval) {
-      if (iter.second.exists_currently)
+    // A tab is considered to be used if it becomes visible or audible and/or if
+    // it's interacted with.
+    bool used = iter.second.interacted_during_interval ||
+                iter.second.visible_or_audible_during_interval;
+    if (iter.second.exists_currently) {
+      if (used)
         ++used_tabs;
       else
-        ++used_and_closed_tabs;
-    } else {
-      if (iter.second.exists_currently)
         ++unused_tabs;
+    } else {
+      if (used)
+        ++used_and_closed_tabs;
       else
         ++unused_and_closed_tabs;
+    }
+
+    if (iter.second.visible_or_audible_during_interval &&
+        !iter.second.interacted_during_interval) {
+      ++visible_not_interacted;
     }
   }
 
@@ -355,6 +363,10 @@ void TabStatsTracker::UmaStatsReportingDelegate::ReportUsageDuringInterval(
   std::string unused_histogram_name = GetIntervalHistogramName(
       UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramNameBase,
       interval);
+  std::string visible_not_interacted_histogram_name = GetIntervalHistogramName(
+      UmaStatsReportingDelegate::
+          kVisibleNotInteractedInIntervalHistogramNameBase,
+      interval);
 
   base::UmaHistogramCounts10000(used_and_closed_histogram_name,
                                 used_and_closed_tabs);
@@ -362,6 +374,8 @@ void TabStatsTracker::UmaStatsReportingDelegate::ReportUsageDuringInterval(
   base::UmaHistogramCounts10000(unused_and_closed_histogram_name,
                                 unused_and_closed_tabs);
   base::UmaHistogramCounts10000(unused_histogram_name, unused_tabs);
+  base::UmaHistogramCounts10000(visible_not_interacted_histogram_name,
+                                visible_not_interacted);
 }
 
 // static
