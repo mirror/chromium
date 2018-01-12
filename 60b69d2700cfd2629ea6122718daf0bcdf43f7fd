@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37628409_5c4240d8",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T01:12:04Z",
+      "side": 1,
+      "message": "Separate context is easy enough so I did that.",
+      "parentUuid": "ab1a8653_c14ed70e",
+      "revId": "60b69d2700cfd2629ea6122718daf0bcdf43f7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e7832e6_f99b1ee9",
         "filename": "gpu/command_buffer/client/raster_implementation_gles.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T00:12:43Z",
       "side": 1,
       "message": "IIUC we need the maximum contiguous size here.  I think GetTransferBufferFreeSize() gives total free size (GetTotalFreeSizeNoWaiting), rather than largest free size (GetLargestFreeSizeNoWaiting).",
+      "revId": "60b69d2700cfd2629ea6122718daf0bcdf43f7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41a5302_386d13c1",
+        "filename": "gpu/command_buffer/client/raster_implementation_gles.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T01:12:04Z",
+      "side": 1,
+      "message": "Good catch. Existing code had this issue and I just moved the code. I made a separate fix here: https://chromium-review.googlesource.com/c/chromium/src/+/862883",
+      "parentUuid": "6e7832e6_f99b1ee9",
       "revId": "60b69d2700cfd2629ea6122718daf0bcdf43f7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
