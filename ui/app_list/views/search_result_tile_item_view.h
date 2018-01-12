@@ -47,6 +47,9 @@ class APP_LIST_EXPORT SearchResultTileItemView
   // color.
   void SetParentBackgroundColor(SkColor color);
 
+  // Records the context menu user journey time.
+  void OnContextMenuClosed(const base::TimeTicks open_time);
+
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
