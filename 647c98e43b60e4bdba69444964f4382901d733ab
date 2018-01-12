@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "4b937181_82abaaf6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T19:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "470c9c69_1b35510c",
+      "range": {
+        "startLine": 117,
+        "startChar": 13,
+        "endLine": 117,
+        "endChar": 18
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44843f6c_6e3971e3",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 3
@@ -392,6 +416,30 @@
       "side": 1,
       "message": "There are *three* WebGestureDevice enums at present (4 if you count \u0027undefined\u0027). We only handle two of them. Guarding against the two we don\u0027t want can be done with a DCHECK.",
       "parentUuid": "9ce10aab_1da91283",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c653081_93b29591",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T19:13:18Z",
+      "side": 1,
+      "message": "I see, we should already have reached the NOTREACHED in RenderWidgetHostInputEventRouter::FindTargetSynchronously tho if it\u0027s not touchscreen/touchpad? Added the DCHECK to make sure.",
+      "parentUuid": "d05f80bb_a154a80c",
       "range": {
         "startLine": 192,
         "startChar": 20,
