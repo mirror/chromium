@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4991b122_1d635f21",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-12T15:24:00Z",
+      "side": 1,
+      "message": "Is this the same thing as checking Document::IsSecureContext on the owner document? It seems like Document has a lot more going on than just an origin check. I wonder if we should actually either save a reference to the owner document in the constructor or cache it\u0027s secure context status.",
+      "revId": "3a2de7db268cf2c53cf0dcca4e597f40ca6d4554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
