@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c23758_2e83f41d",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-12T20:46:56Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s worth adding commentary about the alternative implementations here and why they don\u0027t work (or don\u0027t work as well).",
+      "revId": "5b173981a613733e5e57596f5667f391b12d239f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
