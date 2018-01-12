@@ -21,7 +21,6 @@
 #include "components/nacl/loader/nacl_trusted_listener.h"
 #include "components/nacl/loader/nonsfi/nonsfi_main.h"
 #include "content/public/common/content_descriptors.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_sync_channel.h"
@@ -29,6 +28,7 @@
 #include "ppapi/nacl_irt/irt_manifest.h"
 #include "ppapi/nacl_irt/plugin_startup.h"
 #include "services/service_manager/public/cpp/service_context.h"
+#include "services/service_manager/switches.h"
 
 #if !defined(OS_NACL_NONSFI)
 #error "This file must be built for nacl_helper_nonsfi."

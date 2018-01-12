@@ -26,7 +26,6 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/pepper_plugin_info.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
@@ -37,6 +36,7 @@
 #include "ppapi/proxy/ppapi_messages.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/sandbox/switches.h"
+#include "services/service_manager/switches.h"
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_WIN)

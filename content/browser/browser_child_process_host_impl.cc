@@ -42,7 +42,6 @@
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
@@ -50,6 +49,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/embedder/switches.h"
+#include "services/service_manager/switches.h"
 
 #if defined(OS_MACOSX)
 #include "content/browser/mach_broker_mac.h"
@@ -234,8 +234,9 @@ void BrowserChildProcessHostImpl::Launch(
                              arraysize(kForwardSwitches));
 
   if (child_connection_) {
-    cmd_line->AppendSwitchASCII(switches::kServiceRequestChannelToken,
-                                child_connection_->service_token());
+    cmd_line->AppendSwitchASCII(
+        service_manager::switches::kServiceRequestChannelToken,
+        child_connection_->service_token());
   }
 
   DCHECK(broker_client_invitation_);

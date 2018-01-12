@@ -40,6 +40,7 @@ source_set("minimal") {
     "//ppapi/c",
     "//ppapi/proxy:ipc",
     "//sandbox",
+    "//services/service_manager:switches",
     "//services/service_manager/public/cpp",
   ]
 }
@@ -127,6 +128,7 @@ if (is_linux) {
       "//ipc",
       "//mojo/edk/system",
       "//sandbox/linux:sandbox_services",
+      "//services/service_manager:switches",
       "//services/service_manager/sandbox",
       "//url/ipc:url_ipc",
     ]
@@ -234,6 +236,7 @@ if (is_nacl_nonsfi) {
       "//native_client/src/untrusted/nacl",
       "//ppapi/proxy",
       "//sandbox/linux:sandbox",
+      "//services/service_manager:switches",
       "//services/service_manager/public/cpp",
       "//services/service_manager/sandbox",
     ]

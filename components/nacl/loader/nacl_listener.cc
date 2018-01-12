@@ -32,7 +32,6 @@
 #include "components/nacl/loader/nacl_ipc_adapter.h"
 #include "components/nacl/loader/nacl_validation_db.h"
 #include "components/nacl/loader/nacl_validation_query.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message_filter.h"
@@ -40,6 +39,7 @@
 #include "native_client/src/public/nacl_app.h"
 #include "native_client/src/public/nacl_desc.h"
 #include "services/service_manager/public/cpp/service_context.h"
+#include "services/service_manager/switches.h"
 
 #if defined(OS_LINUX)
 #include "content/public/common/common_sandbox_support_linux.h"

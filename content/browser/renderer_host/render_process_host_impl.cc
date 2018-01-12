@@ -164,7 +164,6 @@
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/resource_type.h"
@@ -205,6 +204,7 @@
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/runner/common/switches.h"
 #include "services/service_manager/sandbox/switches.h"
+#include "services/service_manager/switches.h"
 #include "storage/browser/fileapi/sandbox_file_system_backend.h"
 #include "third_party/WebKit/public/public_features.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -2513,9 +2513,9 @@ void RenderProcessHostImpl::AppendRendererCommandLine(
 #endif
 
   AppendCompositorCommandLineFlags(command_line);
-
-  command_line->AppendSwitchASCII(switches::kServiceRequestChannelToken,
-                                  child_connection_->service_token());
+  command_line->AppendSwitchASCII(
+      service_manager::switches::kServiceRequestChannelToken,
+      child_connection_->service_token());
   command_line->AppendSwitchASCII(switches::kRendererClientId,
                                   std::to_string(GetID()));
 }

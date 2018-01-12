@@ -8,7 +8,6 @@
 
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/service_names.mojom.h"
 #include "ipc/ipc.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -19,6 +18,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
+#include "services/service_manager/switches.h"
 
 #if defined(OS_POSIX)
 #include "base/posix/global_descriptors.h"
@@ -49,7 +49,7 @@ service_manager::mojom::ServiceRequest ConnectToServiceManager(
     mojo::edk::IncomingBrokerClientInvitation* invitation) {
   const std::string service_request_channel_token =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kServiceRequestChannelToken);
+          service_manager::switches::kServiceRequestChannelToken);
   DCHECK(!service_request_channel_token.empty());
   mojo::ScopedMessagePipeHandle parent_handle =
       invitation->ExtractMessagePipe(service_request_channel_token);

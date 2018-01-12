@@ -45,7 +45,6 @@
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/simple_connection_filter.h"
@@ -69,6 +68,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "services/service_manager/switches.h"
 
 #if defined(OS_POSIX)
 #include "base/posix/global_descriptors.h"
@@ -462,7 +462,7 @@ void ChildThreadImpl::Init(const Options& options) {
 
     std::string service_request_token =
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-            switches::kServiceRequestChannelToken);
+            service_manager::switches::kServiceRequestChannelToken);
     if (!service_request_token.empty() && invitation) {
       service_request_pipe =
           invitation->ExtractMessagePipe(service_request_token);

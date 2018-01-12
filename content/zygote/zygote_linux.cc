@@ -35,7 +35,6 @@
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
@@ -45,6 +44,7 @@
 #include "services/service_manager/embedder/set_process_title.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "services/service_manager/sandbox/sandbox.h"
+#include "services/service_manager/switches.h"
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 
 // See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_zygote.md
@@ -548,9 +548,9 @@ base::ProcessId Zygote::ReadArgsAndFork(base::PickleIterator iter,
   base::GlobalDescriptors::Mapping mapping;
   std::string process_type;
   std::string channel_id;
-  const std::string channel_id_prefix = std::string("--") +
-                                        switches::kServiceRequestChannelToken +
-                                        std::string("=");
+  const std::string channel_id_prefix =
+      std::string("--") +
+      service_manager::switches::kServiceRequestChannelToken + std::string("=");
 
   if (!iter.ReadString(&process_type))
     return -1;

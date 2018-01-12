@@ -23,13 +23,13 @@
 #include "chrome/common/importer/firefox_importer_utils.h"
 #include "chrome/utility/importer/firefox_importer_unittest_utils_mac.mojom.h"
 #include "content/public/common/content_descriptors.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/switches.h"
 #include "testing/multiprocess_func_list.h"
 
 namespace {

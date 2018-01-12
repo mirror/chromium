@@ -69,12 +69,10 @@ config("static_switches_defines") {
 source_set("static_switches") {
   public = [
     "content_switches.h",
-    "mojo_channel_switches.h",
   ]
   sources = [
     "//content/common/content_export.h",
     "content_switches.cc",
-    "mojo_channel_switches.cc",
   ]
 
   public_configs = [ ":static_switches_defines" ]
@@ -167,8 +165,6 @@ jumbo_source_set("common_sources") {
     "menu_item.h",
     "mhtml_generation_params.cc",
     "mhtml_generation_params.h",
-    "mojo_channel_switches.cc",
-    "mojo_channel_switches.h",
     "network_connection_tracker.cc",
     "network_connection_tracker.h",
     "notification_resources.cc",

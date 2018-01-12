@@ -113,6 +113,7 @@ target(link_target_type, "child") {
     "//services/device/public/cpp/power_monitor",
     "//services/device/public/interfaces:constants",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
+    "//services/service_manager:switches",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
     "//services/service_manager/runner/common",

@@ -45,6 +45,7 @@ static_library("browser") {
     "//ppapi/host",
     "//ppapi/proxy:ipc",
     "//ppapi/shared_impl",
+    "//services/service_manager:switches",
   ]
 
   public_deps = [

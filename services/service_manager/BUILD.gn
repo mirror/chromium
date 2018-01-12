@@ -13,7 +13,6 @@ group("all") {
     "//services/service_manager/background",
     "//services/service_manager/standalone",
   ]
-
   if (!is_ios) {
     deps += [
       # These tests heavily rely on service binaries, which are not supported on
@@ -33,15 +32,12 @@ source_set("service_manager") {
     "service_manager.h",
     "service_overrides.cc",
     "service_overrides.h",
-    "switches.cc",
-    "switches.h",
   ]
-
   deps = [
     "//base/third_party/dynamic_annotations",
   ]
-
   public_deps = [
+    ":switches",
     "//base",
     "//mojo/public/cpp/bindings",
     "//services/catalog:lib",
@@ -51,6 +47,15 @@ source_set("service_manager") {
     "//services/service_manager/runner/host:lib",
     "//services/service_manager/sandbox",
   ]
+}
+
+static_library("switches") {
+  sources = [
+    "export.h",
+    "switches.cc",
+    "switches.h",
+  ]
+  defines = [ "SERVICE_MANAGER_IMPL" ]
 }
 
 service_manifest("manifest") {

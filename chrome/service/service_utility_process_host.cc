@@ -30,7 +30,6 @@
 #include "chrome/services/printing/public/interfaces/pdf_to_emf_converter.mojom.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/sandbox_init.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
@@ -45,6 +44,7 @@
 #include "sandbox/win/src/sandbox_policy.h"
 #include "sandbox/win/src/sandbox_types.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "services/service_manager/switches.h"
 #include "ui/base/ui_base_switches.h"
 
 namespace {
@@ -310,8 +310,9 @@ bool ServiceUtilityProcessHost::StartProcess(bool no_sandbox) {
 
   base::CommandLine cmd_line(exe_path);
   cmd_line.AppendSwitchASCII(switches::kProcessType, switches::kUtilityProcess);
-  cmd_line.AppendSwitchASCII(switches::kServiceRequestChannelToken,
-                             mojo_bootstrap_token);
+  cmd_line.AppendSwitchASCII(
+      service_mananger::switches::kServiceRequestChannelToken,
+      mojo_bootstrap_token);
   cmd_line.AppendSwitch(switches::kLang);
   cmd_line.AppendArg(switches::kPrefetchArgumentOther);
 

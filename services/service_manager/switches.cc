@@ -10,5 +10,9 @@ namespace switches {
 // Enable the tracing service.
 const char kEnableTracing[] = "enable-service-manager-tracing";
 
+/// The token to use to construct the message pipe for a service in a child
+// process.
+const char kServiceRequestChannelToken[] = "service-request-channel-token";
+
 }  // namespace switches
 }  // namespace service_manager

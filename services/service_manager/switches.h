@@ -5,12 +5,15 @@
 #ifndef SERVICES_SERVICE_MANAGER_SWITCHES_H_
 #define SERVICES_SERVICE_MANAGER_SWITCHES_H_
 
+#include "services/service_manager/export.h"
+
 namespace service_manager {
 namespace switches {
 
 // All switches in alphabetical order. The switches should be documented
 // alongside the definition of their values in the .cc file.
-extern const char kEnableTracing[];
+SERVICE_MANAGER_EXPORT extern const char kEnableTracing[];
+SERVICE_MANAGER_EXPORT extern const char kServiceRequestChannelToken[];
 
 }  // namespace switches
 }  // namespace service_manager
