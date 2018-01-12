@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d20721_f82e06c9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2945,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-12T15:34:10Z",
+      "side": 1,
+      "message": "sdy@ and I had a chat about this on Monday and from that the idea sounds reasonable. If there is a non-web-exposed color that is used when the rendered has not yet provided a new frame to paint matching the new window size, letting that be influenced by the fullscreen mode seems reasonable, especially if it were hooked into the top layer mechanism (and ::backdrop) that fullscreen should be moved to.\n\nHowever, is DocumentBackgroundColor() only used for that purpose? There are quite a few call sites and it\u0027s not trivial to see where it all ends up. It does look like most of it is for in-main-thread stuff and not what the compositor or browser process is doing?\n\nThere is one additional thing that we discussed that I don\u0027t quite understand how it works. It seems like this couldn\u0027t help anything that happens during the fullscreen transition, because by the time we can compute this information we can also paint a new frame. But sdy@ says that this is not the only reason to do this, there\u0027s also the matter of layers and power saving mode.\n\nsdy@, if this were isolated/reduced to just affect things that are strictly outside of the web content (overscroll and other stuff that\u0027s not (yet) part of the web platform) and was made to look at the ::backdrop pseudo-element in top layer, would it still serve the purpose you have in mind? That would seem to me like a reasonable thing at least.\n\nSome testing of what other browsers on Mac to with overscroll might be interesting though. Whether they all do the same thing or not, it\u0027s something that browsers might want to converge on and then things like this would enter spec land.",
+      "range": {
+        "startLine": 2945,
+        "startChar": 0,
+        "endLine": 2945,
+        "endChar": 5
+      },
+      "revId": "e25ad715994b345f3a3818000c15cab9857247ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
