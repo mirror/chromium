@@ -16,6 +16,24 @@
       "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4056298_73770e07",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-12T04:37:21Z",
+      "side": 1,
+      "message": "I still prefer implementing those as a static member function in each class because\nit is clear that the function belongs to its class, the selection criteria can be\nwritten in its own class implementation file.",
+      "parentUuid": "77fee119_d540619d",
+      "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
