@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "6bd5a5e3_3f10e42d",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "tiny nit: add a new line between C and C++ headers: https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c69e456_e20ea9bb",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "tiny nit: could switch the order here so that it matches the order of getters and the private member list? Then also update the CC file to respect the new order",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 80
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11517e5c_dbf7dfe0",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: empty line",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faffc718_7a0b6d17",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "same here, ideally this matches the order of getters and private members",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d567e43a_566a9485",
+        "filename": "device/ctap/authenticator_make_credential_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: empty line",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0e2609_a46b4b43",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a6894e_413bde78",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c408fb14_b59b9cf1",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 14
@@ -13,6 +174,98 @@
       "writtenOn": "2018-01-12T08:55:03Z",
       "side": 1,
       "message": "I did find this a little confusing as well. What do you think about something like \"AuthenticatorSupportedOptions\" to highlight that this is information about an authenticator rather than options passed to the authenticator?",
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e188153_0b6907b8",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "as mentioned in the follow up CL: do we really need the nested namespace here? the names should be descriptive enough so that there are no name collisions. also the nested namespace adds clutter",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793a89bb_68db77f9",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: if you drop the nested namespace, maybe name this kCTAPResponseCodeList to be more descriptive?\n\nalso, could you add extern linkage for this? otherwise there will be multiple copies of this array in the binary in case you include this header multiple times.",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6213b5e8_660d5554",
+        "filename": "device/ctap/ctap_get_assertion_request_param.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit: these strings could be constants, right? at least \"uv\" is also used in another file",
+      "range": {
+        "startLine": 59,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636e62bf_3b8394c4",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T09:18:10Z",
+      "side": 1,
+      "message": "nit : empty line above",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
       "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
