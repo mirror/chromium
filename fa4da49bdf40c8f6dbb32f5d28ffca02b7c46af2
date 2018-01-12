@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "96b5bcfd_227c8d1d",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 46
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-12T12:26:39Z",
+      "side": 1,
+      "message": "This should still be needed in the scenario where the global object is reused, in which case we std::move() in an unbound InterfaceRequest at the call site. \n\nIt is my hope that the following tests should fail that if you make this field required:\n\nRenderFrameRemoteInterfacesTest.ChildFrameReusingWindowOfInitialDocument\n\nRenderFrameHostImplBrowserTest.InterfaceProviderRequestIsOptionalForFirstCommit\n\nPlease let me know if that\u0027s not the case. :-)",
+      "parentUuid": "f040e62c_b6559496",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d3232b_036795a9",
         "filename": "content/common/frame.mojom",
         "patchSetId": 46
