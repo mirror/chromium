@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66c8269_e3167890",
+        "filename": "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-12T15:01:03Z",
+      "side": 1,
+      "message": "Can we use a histogram to record Pass/Fail instead? With that, you may not need to record two separate UserMetricsAction.",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 35
+      },
+      "revId": "d8dd8ba25c81b769ac3c6e2cb03522fb529de0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
