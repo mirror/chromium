@@ -16,6 +16,24 @@
       "revId": "b77e931946ff55b657edbbd8ac90d46d56388de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721546c3_89a4f8b8",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-12T08:35:51Z",
+      "side": 1,
+      "message": "Sounds good to use the same pointer.\nI was thinking this CL was a refactoring, but it means nothing. What we actually want to do is what you commented.\nThanks.",
+      "parentUuid": "da7d7fb4_2361e6a0",
+      "revId": "b77e931946ff55b657edbbd8ac90d46d56388de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
