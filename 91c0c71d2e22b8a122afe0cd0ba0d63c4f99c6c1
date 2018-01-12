@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b838042a_eba4d0a5",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-12T02:09:39Z",
+      "side": 1,
+      "message": "So now we add the loader to loaders_ and do a bit more work, but I assume it should be fine? (Wasn\u0027t obvious to me)",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a74a0bc_6fffc699",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-12T02:09:39Z",
+      "side": 1,
+      "message": "Why we can skip GetResource()-\u003eErrorOccured() case in the new code?",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51d323c_c4720bb1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-12T02:09:39Z",
+      "side": 1,
+      "message": "Maybe add a one-line comment here to describe what this means?",
+      "revId": "91c0c71d2e22b8a122afe0cd0ba0d63c4f99c6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
