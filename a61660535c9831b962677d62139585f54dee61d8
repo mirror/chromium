@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e582892_f8723f14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:20:02Z",
+      "side": 1,
+      "message": "Please add an assert bottomNavShadow !\u003d null so that we have a chance of possibly catching this on local builds.",
+      "revId": "a61660535c9831b962677d62139585f54dee61d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
