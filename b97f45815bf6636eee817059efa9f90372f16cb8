@@ -234,6 +234,30 @@
       "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75e9a782_d43795dc",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T18:14:14Z",
+      "side": 1,
+      "message": "That\u0027s completely fine, and you\u0027re right about its low usage.  I do think reference counted values are more leak prone than other values, though (Since people are more likely to assume they\u0027re magically cleaned up, even if never put in a scoped_refptr).  As someone who always writes out unique_ptr\u003cFoo\u003e foo \u003d std::make_unique\u003cFoo\u003e, I agree with you on auto, though I don\u0027t think using MakeRefCounted really mandates using it.",
+      "parentUuid": "e737b2fa_2c1af3ca",
+      "range": {
+        "startLine": 1008,
+        "startChar": 26,
+        "endLine": 1008,
+        "endChar": 38
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
