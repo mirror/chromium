@@ -286,6 +286,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ff6206_b45827f4",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T21:04:39Z",
+      "side": 0,
+      "message": "yosin@:\n\nThis first block shouldn\u0027t be calling DeleteSelection(), should it?\n\nif (TypingCommand::PrepareDeleteSelection(GetDocument())) {\n  ... dispatch before input ...\n  TypingCommand::DeleteSelection(...);\n}\n\nYou have both DeleteSelection() and PrepareDeleteSelection() calling each other.\n\nWhat condition should PrepareDeleteSelection() check? Just that there\u0027s a range selection?\n\nIt looks like InputMethodController::DeleteSurroundingText() might also be missing the beforeinput event? It seems like a good idea to move this into TypingCommand::DeleteSelection().",
+      "parentUuid": "00643b11_b0a293b5",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
