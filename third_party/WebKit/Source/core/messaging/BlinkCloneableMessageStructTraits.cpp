@@ -42,8 +42,33 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
         blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
                                       blob->size, std::move(blob->blob)));
   }
+  Vector<WTF::ArrayBufferContents> arrayBuffersContents;
+  if (!data.ReadArrayBufferContentsArray(&arrayBuffersContents))
+    return false;
+  for (auto& contents : arrayBuffersContents) {
+    WTF::ArrayBufferContents newContents;
+    contents.Transfer(newContents);
+    out->message->AddArrayBufferContents(newContents);
+  }
+  arrayBuffersContents.clear();
 
   return true;
 }
 
+bool StructTraits<blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                  WTF::ArrayBufferContents>::
+    Read(blink::mojom::blink::SerializedArrayBufferContents::DataView data,
+         WTF::ArrayBufferContents* out) {
+  mojo::ArrayDataView<uint8_t> user_contents;
+  data.GetContentsDataView(&user_contents);
+  const void* allocation_base =
+      reinterpret_cast<const void*>(user_contents.data());
+  WTF::ArrayBufferContents abc(user_contents.size(), 1,
+                               WTF::ArrayBufferContents::kNotShared,
+                               WTF::ArrayBufferContents::kDontInitialize);
+  memcpy(abc.Data(), const_cast<void*>(allocation_base), user_contents.size());
+
+  *out = std::move(abc);
+  return true;
+}
 }  // namespace mojo
