@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b07dd987_31ad284b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 7513,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9d59ca_7c8008e1",
+      "range": {
+        "startLine": 7513,
+        "startChar": 95,
+        "endLine": 7513,
+        "endChar": 98
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77d5374_5c36a17c",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d788753c_e4f6dc14",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77d5374_5c36a17c",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 28
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7bf83ccc_8a778ad5",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f29f96c_fe7214ac",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "362477e0_47f12db2",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56453333_e29358b6",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "362477e0_47f12db2",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "24f24917_155f54c5",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f05d75_17aa8687",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c441ed_2a2d2f5d",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5def0074_3045713d",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c441ed_2a2d2f5d",
+      "range": {
+        "startLine": 33,
+        "startChar": 15,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e4e4d5_d1c73ea9",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-10T10:17:25Z",
       "side": 1,
       "message": "This class has simple dependencies, so unit testing it should be straight forward. It should be unit tested in this CL (adding tests in the same CL as the code is in general better as it forces us to write code that can be unit tested).\n\nTake a look at https://cs.chromium.org/chromium/src/chrome/browser/ui/views/hover_button_unittest.cc to see how to write a unit test for views code.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec37f68_fbfd8a78",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Still need to add this.",
+      "parentUuid": "67e4e4d5_d1c73ea9",
       "range": {
         "startLine": 35,
         "startChar": 5,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "ca077fb7_07601a13",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c98474d_acc59e15",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cffe2ad_d9012544",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf97aa4_6d42781f",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cffe2ad_d9012544",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "6ac5d63f_b1309e9a",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a24406_25f9562e",
+      "range": {
+        "startLine": 91,
+        "startChar": 26,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "563b2951_32721858",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
         "patchSetId": 6
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d814b8fc_a39a3418",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "I added the parent bubble as a parameter in the constructor to make sure that there is one.",
+      "parentUuid": "563b2951_32721858",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92651091_405cef7f",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
         "patchSetId": 6
@@ -269,6 +533,24 @@
       "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a46df3e_7f65b955",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92651091_405cef7f",
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "72c1c7a9_d32ae7a8",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64c6521_fd91bd82",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f6532e_3a76005c",
         "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
         "patchSetId": 6
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "8856f8b7_88c4f06c",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "I forgot to remove this. The action handling comes with another CL.",
+      "parentUuid": "e3f6532e_3a76005c",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b7982fd_97855fb4",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -338,6 +668,30 @@
       "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c24e47f_35e39b5d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T16:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7982fd_97855fb4",
+      "range": {
+        "startLine": 705,
+        "startChar": 4,
+        "endLine": 705,
+        "endChar": 27
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
