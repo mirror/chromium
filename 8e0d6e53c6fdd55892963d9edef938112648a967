@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9919773_b69e5157",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "Suggest rewording this to mention that SSHD would allow us to do this, but is currently limited in the number of connections it can handle due to POSIX-lite.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b75c1d_85a1f777",
+        "filename": "build/fuchsia/layout_test_proxy/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "Is there anything specific to layout-tests about this proxy?  Can\u0027t it be used for any other test that needs simple TCP-port relaying back to the host?\n\nWhat do we actually use for the equivalent function on Android?\n\nYou\u0027re repurposing the internals of RemoteTestServerProxy for this, so that it essentially equivalent except that RTSP has code to launch the actual test server in Python, and this new server doesn\u0027t - could we just modify the RemoteTestServerProxy to support running against an existing server?\n\nFailing that, could we at least put this simple TCP proxy alongside the RTSP, rather than hidden away in build/fuchsia?",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084cc96f_6a30eed1",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: Do we actually need an at-exit manager for this code?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a61c463_0d749db6",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "What is the use-case for proxying multiple ports?\n\nDo we always just forward them to the same-numbered port on the remote address?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072cf0cb_4790f0cc",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: port_string",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d603e75_cb14773a",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: Move this check to be |!ports_strings.empty()|, before the decode loop.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427e46fa_1849e63c",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "Does this actually need to be declared before we create the ports?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e0d190_a8880a79",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "How does this process get quit?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d625634_82c4f206",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: This can be CHECK(Initialize()).",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d04337b_afc387d9",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: This too.",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6430cb38_b3fe5132",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "These comments are the sort of thing I\u0027d expect on the class header to describe the API - Core is an internal implementation detail, so I don\u0027t think we need such detailed comments here, especially the one on local_port() seems overkill.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5731f4f_906623bc",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "Do we want to continue even if these fail, or should this be LOG(FATAL), or CHECK_EQ(result, OK) \u003c\u003c ErrorToString(result)?",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4efc56b_43487eb4",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "typo: initialized_event",
+      "range": {
+        "startLine": 331,
+        "startChar": 24,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331fcedb_90ef022b",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "nit: I think you can std::move(core_) these days.",
+      "range": {
+        "startLine": 348,
+        "startChar": 41,
+        "endLine": 348,
+        "endChar": 56
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcab950_7672193c",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "typo: calls-\u003ecall",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4a3b72_8e6791a4",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-12T02:39:23Z",
+      "side": 1,
+      "message": "What is the use-case for have Initialize and Start be separate like this?",
+      "range": {
+        "startLine": 39,
+        "startChar": 58,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
