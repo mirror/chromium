@@ -14,6 +14,22 @@
 
 namespace offline_pages {
 
+ArchiveValidator::ArchiveValidator() {
+  secure_hash_ = crypto::SecureHash::Create(crypto::SecureHash::SHA256);
+}
+
+ArchiveValidator::~ArchiveValidator() = default;
+
+void ArchiveValidator::Update(const void* input, size_t len) {
+  secure_hash_->Update(input, len);
+}
+
+std::string ArchiveValidator::Finish() {
+  std::string digest(crypto::kSHA256Length, 0);
+  secure_hash_->Finish(&(digest[0]), digest.size());
+  return digest;
+}
+
 // static
 std::string ArchiveValidator::ComputeDigest(const base::FilePath& file_path) {
   base::File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
