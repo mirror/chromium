@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83bba051_e4dffaf3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T02:19:49Z",
+      "side": 1,
+      "message": "Is this better as:\n\nPosts a task to the worker thread to close global scope and terminate the underlying thread. This task may be blocked by JavaScript execution on the worker thread, so this function also forcibly terminates JavaScript execution after a certain grace period.",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6997916a_286e745d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T02:19:49Z",
+      "side": 1,
+      "message": "I had trobule understanding the default behavior until looking at the code and the impl comment. I.e., what\u0027s the diff betwen Terminate() and ensuring script execution has terminated?\n\nI think the problem is the Terminate() documentation doesn\u0027t mention it\u0027s posting a task to the worker thread that can be blocked by JS execution. I added a suggestion above.\n\nIn which case I think this can be:\n\"The default behavior is to call Terminate() and synchronously call EnsureScriptExecutionTerminates() to ensure the thread is quickly terminated.\"",
+      "range": {
+        "startLine": 119,
+        "startChar": 24,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cd620e_733fb34a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T02:19:49Z",
+      "side": 1,
+      "message": "\"to do cleanup\"?",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b316e69_91ae12a6",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T02:19:49Z",
+      "side": 1,
+      "message": "Does this function need to be public?",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258079a3_d2bfc1d9",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T02:19:49Z",
+      "side": 1,
+      "message": "Is there a specific reason for the DCHECK? If not we can just remove it.",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
