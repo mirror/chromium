@@ -646,9 +646,6 @@
       name: "ModuleScriptsImportMetaUrl",
     },
     {
-      name: "MojoBlobs",
-    },
-    {
       name: "MojoBlobURLs",
     },
     {
