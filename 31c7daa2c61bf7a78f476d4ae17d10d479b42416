@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22036d1_817ede52",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-12T00:05:06Z",
+      "side": 1,
+      "message": "I believe this can be a const method.",
+      "range": {
+        "startLine": 119,
+        "startChar": 72,
+        "endLine": 119,
+        "endChar": 73
+      },
+      "revId": "31c7daa2c61bf7a78f476d4ae17d10d479b42416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd55ffe_cc68fb32",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-12T00:05:06Z",
+      "side": 1,
+      "message": "else { VLOG(2) \u003c\u003c ... } ?",
+      "revId": "31c7daa2c61bf7a78f476d4ae17d10d479b42416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
