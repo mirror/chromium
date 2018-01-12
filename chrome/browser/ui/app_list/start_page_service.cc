@@ -34,6 +34,8 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chromeos/audio/cras_audio_handler.h"
+#include "components/language/core/common/locale_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/zoom/zoom_controller.h"
@@ -58,7 +60,6 @@
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
 #include "ui/app_list/app_list_switches.h"
-#include "chromeos/audio/cras_audio_handler.h"
 
 using base::RecordAction;
 using base::UserMetricsAction;
@@ -397,6 +398,7 @@ void StartPageService::StartSpeechRecognition(
     std::string profile_locale;
     profile_locale = profile_->GetPrefs()->GetString(
         prefs::kApplicationLocale);
+    language::ConvertToActualUILocale(&profile_locale);
     if (profile_locale.empty())
       profile_locale = g_browser_process->GetApplicationLocale();
 
