@@ -27,13 +27,6 @@
 
 namespace ash {
 
-namespace {
-
-// A non-zero brightness used for test.
-constexpr int kNonZeroBrightness = 10;
-
-}  // namespace
-
 class ConvertiblePowerButtonControllerTest : public PowerButtonTestBase {
  public:
   ConvertiblePowerButtonControllerTest() = default;
@@ -66,14 +59,6 @@ class ConvertiblePowerButtonControllerTest : public PowerButtonTestBase {
   bool GetGlobalTouchscreenEnabled() const {
     return Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
         TouchscreenEnabledSource::GLOBAL);
-  }
-
-  // Advance clock to ensure the intended tablet power button display forcing
-  // off is not ignored since we will ignore the repeated power button up if
-  // they come too close.
-  void AdvanceClockToAvoidIgnoring() {
-    tick_clock_->Advance(power_button_util::kIgnoreRepeatedButtonUpDelay +
-                         base::TimeDelta::FromMilliseconds(1));
   }
 
   DISALLOW_COPY_AND_ASSIGN(ConvertiblePowerButtonControllerTest);

@@ -31,6 +31,8 @@ class ConvertiblePowerButtonControllerTestApi;
 class LockStateController;
 class LockStateControllerTestApi;
 class PowerButtonScreenshotController;
+class TabletPowerButtonController;
+class TabletPowerButtonControllerTestApi;
 enum class LoginStatus;
 
 // Base test fixture and utils for testing power button related functions.
@@ -52,6 +54,9 @@ class PowerButtonTestBase : public AshTestBase {
   // Vector pointing sideways (e.g. screen in 90-degree clamshell).
   static constexpr gfx::Vector3dF kSidewaysVector = {
       0, ConvertiblePowerButtonController::kGravity, 0};
+
+  // A non-zero brightness used for test.
+  static constexpr int kNonZeroBrightness = 10;
 
   // AshTestBase:
   void SetUp() override;
@@ -103,8 +108,17 @@ class PowerButtonTestBase : public AshTestBase {
   // Enables or disables tablet mode based on |enable|.
   void EnableTabletMode(bool enable);
 
-  void set_has_tablet_mode_switch(bool has_tablet_mode_switch) {
-    has_tablet_mode_switch_ = has_tablet_mode_switch;
+  // Advance clock to ensure the intended convertible/tablet power button
+  // display forcing off is not ignored since we will ignore the repeated power
+  // button up if they come too close.
+  void AdvanceClockToAvoidIgnoring();
+
+  void set_has_convertible_switch(bool has_convertible_switch) {
+    has_convertible_switch_ = has_convertible_switch;
+  }
+
+  void set_has_tablet_switch(bool has_tablet_switch) {
+    has_tablet_switch_ = has_tablet_switch;
   }
 
   // Ownership is passed on to chromeos::DBusThreadManager.
@@ -115,24 +129,29 @@ class PowerButtonTestBase : public AshTestBase {
   LockStateController* lock_state_controller_ = nullptr;      // Not owned.
   ConvertiblePowerButtonController* convertible_controller_ =
       nullptr;  // Not owned.
+  TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
   PowerButtonScreenshotController* screenshot_controller_ =
       nullptr;  // Not owned.
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
   std::unique_ptr<ConvertiblePowerButtonControllerTestApi>
       convertible_test_api_;
+  std::unique_ptr<TabletPowerButtonControllerTestApi> tablet_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
 
   // Indicates whether switches::kAshEnableTabletMode is appended.
-  bool has_tablet_mode_switch_ = true;
+  bool has_convertible_switch_ = true;
+
+  // Indicates whether switches::kIsTabletOrDetachableDevice is appended.
+  bool has_tablet_switch_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonTestBase);
 };
 
-// Base test fixture same as PowerButtonTestBase excepts that tablet mode swtich
+// Base test fixture same as PowerButtonTestBase excepts that convertible swtich
 // is not set.
 class NoTabletModePowerButtonTestBase : public PowerButtonTestBase {
  public:
-  NoTabletModePowerButtonTestBase() { set_has_tablet_mode_switch(false); }
+  NoTabletModePowerButtonTestBase() { set_has_convertible_switch(false); }
   ~NoTabletModePowerButtonTestBase() override {}
 
  private:

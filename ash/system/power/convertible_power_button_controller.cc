@@ -130,7 +130,7 @@ void ConvertiblePowerButtonController::OnTabletModeEnded() {
     lock_state_controller_->CancelShutdownAnimation();
 }
 
-void ConvertiblePowerButtonController::CancelTabletPowerButton() {
+void ConvertiblePowerButtonController::CancelConvertiblePowerButton() {
   if (lock_state_controller_->CanCancelShutdownAnimation())
     lock_state_controller_->CancelShutdownAnimation();
   force_off_on_button_up_ = false;
