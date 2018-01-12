@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1bfb699_28515d08",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-12T16:32:43Z",
+      "side": 1,
+      "message": "flags should not be needed. It is not calling startActivity anyway.",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 27
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7f080d_c8ea4c45",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-12T16:32:43Z",
+      "side": 1,
+      "message": "Is there a reason for not using LocalBroadcastManager?",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e5e064_a1c5e5b4",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1206742
+      },
+      "writtenOn": "2018-01-12T16:32:43Z",
+      "side": 1,
+      "message": "Whats the difference between this whole function and just \"return ContextUtil.getApplicationContext()\" ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 87
+      },
+      "revId": "848967293f8d9e0115ff9262f8461c18bbdbbf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
