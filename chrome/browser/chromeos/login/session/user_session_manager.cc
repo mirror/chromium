@@ -23,6 +23,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/sys_info.h"
+#include "base/syslog_logging.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/about_flags.h"
@@ -118,9 +119,12 @@
 #include "components/user_manager/user_names.h"
 #include "components/user_manager/user_type.h"
 #include "components/version_info/version_info.h"
+#include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/site_isolation_policy.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/common/features/feature_session_type.h"
 #include "net/cert/sth_distributor.h"
@@ -276,7 +280,7 @@ base::CommandLine CreatePerSessionCommandLine(Profile* profile) {
   about_flags::ConvertFlagsToSwitches(&flags_storage_, &user_flags,
                                       flags_ui::kAddSentinels);
 
-  UserSessionManager::MaybeAppendPolicySwitches(&user_flags);
+  //#UserSessionManager::MaybeAppendPolicySwitches(&user_flags);
 
   return user_flags;
 }
@@ -295,15 +299,23 @@ bool NeedRestartToApplyPerSessionFlags(
 
   // TODO: Remove this special handling for site isolation and isolate origins.
   auto* current_command_line = base::CommandLine::ForCurrentProcess();
-  if (current_command_line->HasSwitch(::switches::kSitePerProcess) !=
-      user_flags.HasSwitch(::switches::kSitePerProcess)) {
-    out_command_line_difference->insert(::switches::kSitePerProcess);
-  }
-  if (current_command_line->GetSwitchValueASCII(::switches::kIsolateOrigins) !=
-      user_flags.GetSwitchValueASCII(::switches::kIsolateOrigins)) {
-    out_command_line_difference->insert(::switches::kIsolateOrigins);
-  }
+  // if (current_command_line->HasSwitch(::switches::kSitePerProcess) !=
+  // user_flags.HasSwitch(::switches::kSitePerProcess)) {
+  // out_command_line_difference->insert(::switches::kSitePerProcess);
+  //}
+  // if (current_command_line->GetSwitchValueASCII(::switches::kIsolateOrigins)
+  // !=  user_flags.GetSwitchValueASCII(::switches::kIsolateOrigins)) {
+  // out_command_line_difference->insert(::switches::kIsolateOrigins);
+  //}
+  std::vector<url::Origin> origins;
+  origins.push_back(url::Origin::Create(GURL("https://yahoo.com")));
+  origins.push_back(url::Origin::Create(GURL("https://yahoo.de")));
+  origins.push_back(url::Origin::Create(GURL("https://de.yahoo.com")));
+  SYSLOG(WARNING) << "[PM] Adding " << origins.size() << " to isolated";
 
+  content::ChildProcessSecurityPolicyImpl* policy =
+      content::ChildProcessSecurityPolicyImpl::GetInstance();
+  policy->AddIsolatedOrigins(origins);
   if (out_command_line_difference->empty() &&
       about_flags::AreSwitchesIdenticalToCurrentCommandLine(
           user_flags, *current_command_line, out_command_line_difference)) {

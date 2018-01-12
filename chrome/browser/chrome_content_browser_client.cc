@@ -27,6 +27,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/syslog_logging.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -1175,6 +1176,17 @@ bool ChromeContentBrowserClient::DoesSiteRequireDedicatedProcess(
   }
 #endif
   return false;
+}
+
+bool ChromeContentBrowserClient::GetSitePerProcessSetting() {
+  bool value =
+      g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess);
+  SYSLOG(WARNING) << "[PM] GetSiteProcessSetting called, returning " << value;
+  return value;
+}
+
+std::string ChromeContentBrowserClient::GetIsolateOriginsList() {
+  return g_browser_process->local_state()->GetString(prefs::kIsolateOrigins);
 }
 
 // TODO(creis, nick): https://crbug.com/160576 describes a weakness in our
