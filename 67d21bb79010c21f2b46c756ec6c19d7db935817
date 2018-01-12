@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f7bae4_deac865b",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2018-01-12T23:16:49Z",
+      "side": 1,
+      "message": "coalesce",
+      "range": {
+        "startLine": 458,
+        "startChar": 5,
+        "endLine": 458,
+        "endChar": 14
+      },
+      "revId": "67d21bb79010c21f2b46c756ec6c19d7db935817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
