@@ -50,6 +50,24 @@
       "revId": "944b47db2f9c1f585c17a25b0fcfba4e12060350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7cd7f7_9322c871",
+        "filename": "chromecast/renderer/cast_content_renderer_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T20:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07bff51_05a935c6",
+      "revId": "944b47db2f9c1f585c17a25b0fcfba4e12060350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

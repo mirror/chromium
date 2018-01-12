@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "97594d23_85300f77",
+        "filename": "chromecast/browser/extensions/cast_extensions_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T20:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970865d9_50f91c7a",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a074b5ed_f702fe27",
         "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
         "patchSetId": 10
@@ -222,6 +240,24 @@
       "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afe577a_7b866ba2",
+        "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T20:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9a843db_a1a8d237",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
