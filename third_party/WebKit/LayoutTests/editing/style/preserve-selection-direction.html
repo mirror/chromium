@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+test(() => assert_selection(
+  '<div contenteditable>Thi^s is |some sample text</div>',
+  selection => {
+     assert_equals(selection.anchorOffset, 3);
+     assert_equals(selection.focusOffset, 8);
+     selection.document.execCommand('foreColor', false, 'green');
+     assert_equals(selection.anchorOffset, 0);
+     assert_equals(selection.focusOffset, 5);
+  },
+  '<div contenteditable>Thi<font color="#008000">^s is |</font>some sample text</div>'),
+  'Preserve forward selection direction  - Anchor offset must be smaller than focus offset.');
+
+test(() => assert_selection(
+  '<div contenteditable>Thi|s is ^some sample text</div>',
+  selection => {
+     assert_equals(selection.anchorOffset, 8);
+     assert_equals(selection.focusOffset, 3);
+     selection.document.execCommand('foreColor', false, 'green');
+     assert_equals(selection.anchorOffset, 5);
+     assert_equals(selection.focusOffset, 0);
+  },
+  '<div contenteditable>Thi<font color="#008000">|s is ^</font>some sample text</div>'),
+  'Preserve backward selection direction  - Anchor offset must be bigger than focus offset.');
+</script>
