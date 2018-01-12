@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "11db74e1_faf03489",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-12T21:52:31Z",
+      "side": 1,
+      "message": "Hmm, this doesn\u0027t fall back to `ReportUnsupportedDirective` if experimental feature flag is on and type is not either of the options.",
+      "range": {
+        "startLine": 1400,
+        "startChar": 5,
+        "endLine": 1400,
+        "endChar": 0
+      },
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d532a457_3f54286c",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
