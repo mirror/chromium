@@ -52,6 +52,24 @@
       "revId": "a4230a6acdde7de6c1baca6b654503709169a67f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cec8fe_55da9b2e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "Yeah, we have a few implicit ways of signalling that, but nothing explicit.\n\nGiven that, I guess I\u0027m ok with this for now.",
+      "parentUuid": "23cd3153_920f1be3",
+      "revId": "a4230a6acdde7de6c1baca6b654503709169a67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
