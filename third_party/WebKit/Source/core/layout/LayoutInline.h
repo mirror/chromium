@@ -195,6 +195,8 @@ class CORE_EXPORT LayoutInline : public LayoutBoxModelObject {
     return AlwaysCreateLineBoxesForLayoutInline();
   }
   void SetAlwaysCreateLineBoxes(bool always_create_line_boxes = true) {
+    if (always_create_line_boxes)
+      rare_stat_.AddReason(kReasonLICreatesLineBoxes);
     SetAlwaysCreateLineBoxesForLayoutInline(always_create_line_boxes);
   }
   void UpdateAlwaysCreateLineBoxes(bool full_layout);

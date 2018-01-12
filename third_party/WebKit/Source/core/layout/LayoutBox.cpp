@@ -105,6 +105,7 @@ LayoutBox::LayoutBox(ContainerNode* node)
       max_preferred_logical_width_(-1),
       inline_box_wrapper_(nullptr) {
   SetIsBox();
+  rare_stat_.AddReason(kReasonLBAll);
 }
 
 PaintLayerType LayoutBox::LayerTypeRequired() const {
@@ -1438,11 +1439,13 @@ bool LayoutBox::HasOverrideLogicalContentWidth() const {
 void LayoutBox::SetOverrideLogicalContentHeight(LayoutUnit height) {
   DCHECK_GE(height, 0);
   EnsureRareData().override_logical_content_height_ = height;
+  rare_stat_.AddReason(kReasonLBOverrideSize);
 }
 
 void LayoutBox::SetOverrideLogicalContentWidth(LayoutUnit width) {
   DCHECK_GE(width, 0);
   EnsureRareData().override_logical_content_width_ = width;
+  rare_stat_.AddReason(kReasonLBOverrideSize);
 }
 
 void LayoutBox::ClearOverrideLogicalContentHeight() {
@@ -2298,6 +2301,7 @@ void LayoutBox::SetSpannerPlaceholder(
   // Not expected to change directly from one spanner to another.
   CHECK(!rare_data_ || !rare_data_->spanner_placeholder_);
   EnsureRareData().spanner_placeholder_ = &placeholder;
+  rare_stat_.AddReason(kReasonLBSpannerPlaceholder);
 }
 
 void LayoutBox::ClearSpannerPlaceholder() {
@@ -2310,6 +2314,8 @@ void LayoutBox::SetPaginationStrut(LayoutUnit strut) {
   if (!strut && !rare_data_)
     return;
   EnsureRareData().pagination_strut_ = strut;
+  if (strut)
+    rare_stat_.AddReason(kReasonLBPaginationStrut);
 }
 
 bool LayoutBox::IsBreakBetweenControllable(EBreakBetween break_value) const {
@@ -5647,6 +5653,8 @@ void LayoutBox::SetOffsetToNextPage(LayoutUnit offset) {
   if (!rare_data_ && !offset)
     return;
   EnsureRareData().offset_to_next_page_ = offset;
+  if (offset)
+    rare_stat_.AddReason(kReasonLBPageOffset);
 }
 
 void LayoutBox::LogicalExtentAfterUpdatingLogicalWidth(
@@ -5812,6 +5820,8 @@ void LayoutBox::SetPercentHeightContainer(LayoutBlock* container) {
   if (!container && !rare_data_)
     return;
   EnsureRareData().percent_height_container_ = container;
+  if (container)
+    rare_stat_.AddReason(kReasonLBPercentHeightContainer);
 }
 
 void LayoutBox::RemoveFromPercentHeightContainer() {
