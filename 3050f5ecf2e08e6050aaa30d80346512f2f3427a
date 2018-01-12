@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75c0fcaf_43854300",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T23:14:41Z",
+      "side": 1,
+      "message": "Right. Done",
+      "parentUuid": "c27f3025_a14e5d7c",
+      "revId": "3050f5ecf2e08e6050aaa30d80346512f2f3427a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b944b116_745948a7",
         "filename": "content/public/common/BUILD.gn",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T23:01:00Z",
       "side": 1,
       "message": "I wonder if we should just reuse this buildflag header for all //content/public/common features.",
+      "revId": "3050f5ecf2e08e6050aaa30d80346512f2f3427a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d5530a_e9d143e8",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T23:14:41Z",
+      "side": 1,
+      "message": "See comment about \"entanglement\" I added to CL description.  I\u0027d like zygote* to move out of content someday so having its own file is a step in that direction.",
+      "parentUuid": "b944b116_745948a7",
       "revId": "3050f5ecf2e08e6050aaa30d80346512f2f3427a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3050f5ecf2e08e6050aaa30d80346512f2f3427a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3097d5a2_474f61af",
+        "filename": "content/public/common/zygote_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T23:14:41Z",
+      "side": 1,
+      "message": "Nah, you don\u0027t get to include this header unless you check\u0027d first.  Part of the new rules.  Added error case.",
+      "parentUuid": "e8094f77_6be502b9",
+      "revId": "3050f5ecf2e08e6050aaa30d80346512f2f3427a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
