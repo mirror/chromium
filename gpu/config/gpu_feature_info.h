@@ -39,6 +39,9 @@ struct GPU_EXPORT GpuFeatureInfo {
   bool IsWorkaroundEnabled(int32_t workaround) const;
 
   // Return true if GpuFeatureInfo is computed.
+  bool IsInitialized() const;
+
+  // Return false if a feature is uninitialized or an entry is out of range.
   bool IsValid() const;
 
   GpuFeatureInfo& operator=(const GpuFeatureInfo&);
@@ -52,6 +55,8 @@ struct GPU_EXPORT GpuFeatureInfo {
   std::vector<int32_t> enabled_gpu_driver_bug_workarounds;
   // Disabled extensions separated by whitespaces.
   std::string disabled_extensions;
+  // Applied gpu blacklist entry indices.
+  std::vector<uint32_t> applied_gpu_blacklist_entries;
   // Applied gpu driver bug list entry indices.
   std::vector<uint32_t> applied_gpu_driver_bug_list_entries;
 };

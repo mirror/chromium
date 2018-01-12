@@ -44,4 +44,11 @@ std::unique_ptr<GpuBlacklist> GpuBlacklist::Create(
   return list;
 }
 
+// static
+bool GpuBlacklist::IsEntryIndicesValid(
+    const std::vector<uint32_t>& entry_indices) {
+  return GpuControlList::IsEntryIndicesValid(entry_indices,
+                                             kSoftwareRenderingListEntryCount);
+}
+
 }  // namespace gpu

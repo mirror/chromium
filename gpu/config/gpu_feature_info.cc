@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include "gpu/config/gpu_blacklist.h"
+#include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_driver_bug_workaround_type.h"
 #include "ui/gl/gl_context.h"
 
@@ -46,10 +48,21 @@ bool GpuFeatureInfo::IsWorkaroundEnabled(int32_t workaround) const {
          this->enabled_gpu_driver_bug_workarounds.end();
 }
 
-bool GpuFeatureInfo::IsValid() const {
+bool GpuFeatureInfo::IsInitialized() const {
   // Check if any feature status is undefined.
   return status_values[GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
          kGpuFeatureStatusUndefined;
+}
+
+bool GpuFeatureInfo::IsValid() const {
+  for (int ii = 0; ii < NUMBER_OF_GPU_FEATURE_TYPES; ++ii) {
+    if (kGpuFeatureStatusUndefined == status_values[ii])
+      return false;
+  }
+  if (!GpuBlacklist::IsEntryIndicesValid(applied_gpu_blacklist_entries))
+    return false;
+  return GpuDriverBugList::IsEntryIndicesValid(
+      applied_gpu_driver_bug_list_entries);
 }
 
 }  // namespace gpu

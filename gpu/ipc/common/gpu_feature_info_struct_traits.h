@@ -69,6 +69,8 @@ struct StructTraits<gpu::mojom::GpuFeatureInfoDataView, gpu::GpuFeatureInfo> {
     return data.ReadEnabledGpuDriverBugWorkarounds(
                &out->enabled_gpu_driver_bug_workarounds) &&
            data.ReadDisabledExtensions(&out->disabled_extensions) &&
+           data.ReadAppliedGpuBlacklistEntries(
+               &out->applied_gpu_blacklist_entries) &&
            data.ReadAppliedGpuDriverBugListEntries(
                &out->applied_gpu_driver_bug_list_entries);
   }
@@ -87,6 +89,11 @@ struct StructTraits<gpu::mojom::GpuFeatureInfoDataView, gpu::GpuFeatureInfo> {
   static const std::string& disabled_extensions(
       const gpu::GpuFeatureInfo& info) {
     return info.disabled_extensions;
+  }
+
+  static const std::vector<uint32_t>& applied_gpu_blacklist_entries(
+      const gpu::GpuFeatureInfo& info) {
+    return info.applied_gpu_blacklist_entries;
   }
 
   static const std::vector<uint32_t>& applied_gpu_driver_bug_list_entries(
