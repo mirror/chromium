@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e16b737e_826ce7fc",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:45:27Z",
+      "side": 1,
+      "message": "nit: Would it make the code more readable to just return\n\n{nullptr, false, gfx::PointF()}\n\ninstead?",
+      "range": {
+        "startLine": 1132,
+        "startChar": 28,
+        "endLine": 1132,
+        "endChar": 45
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c513375f_6943d95f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:45:27Z",
+      "side": 1,
+      "message": "nit: Perhaps just directly return the result of the call in line 1135?",
+      "range": {
+        "startLine": 1138,
+        "startChar": 10,
+        "endLine": 1138,
+        "endChar": 16
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4301fdac_a32ddeab",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:45:27Z",
+      "side": 1,
+      "message": "This will need to be merged with the other GestureEvent code for TouchScreen devices before this lands.",
+      "range": {
+        "startLine": 117,
+        "startChar": 13,
+        "endLine": 117,
+        "endChar": 18
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44843f6c_6e3971e3",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:45:27Z",
+      "side": 1,
+      "message": "This will be incompatible with the CL for touch/gesture. You\u0027ll need to also check the WebGestureDevice setting on the event as well.\n\nQuestion: do we need to static_cast the event here to avoid slicing the object when it\u0027s passed to DispatchEventToTarget?",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
