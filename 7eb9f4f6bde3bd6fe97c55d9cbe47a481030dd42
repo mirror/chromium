@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3906eb7e_f6af530f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-12T23:16:55Z",
+      "side": 1,
+      "message": "Why do we only want this for this one dialog? To me it feels like we should do it everywhere (or at least all checkboxes/radio buttons) or not at all.",
+      "range": {
+        "startLine": 457,
+        "startChar": 13,
+        "endLine": 457,
+        "endChar": 37
+      },
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
