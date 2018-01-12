@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc97d9e5_3134ffef",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T23:43:01Z",
+      "side": 0,
+      "message": "If these were ever actually logged, they should be marked as obsolete rather than removed.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 33,
+        "endLine": 1205,
+        "endChar": 47
+      },
+      "revId": "ed1f011d02f001dc643338cc5eed086f153f4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

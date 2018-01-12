@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dcd0037_8f77f191",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T23:43:01Z",
+      "side": 1,
+      "message": "s/histogram.xml/enums.xml",
+      "range": {
+        "startLine": 86,
+        "startChar": 70,
+        "endLine": 86,
+        "endChar": 80
+      },
+      "revId": "bb58a02830c0f0d8d0fa41eb04fd136e1215c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e83ea9b_a248596e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 22254,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T23:43:01Z",
+      "side": 1,
+      "message": "These labels could be a bit more descriptive e.g. \"Indirectly closed while visible\" and \"Indirectly closed while hidden\"",
+      "range": {
+        "startLine": 22254,
+        "startChar": 24,
+        "endLine": 22254,
+        "endChar": 39
+      },
+      "revId": "bb58a02830c0f0d8d0fa41eb04fd136e1215c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
