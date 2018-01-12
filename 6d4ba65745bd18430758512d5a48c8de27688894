@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "dba6e9bd_abfc4a0b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T21:40:54Z",
+      "side": 1,
+      "message": "Does it mean that this patch is for NG selection paint invalidation only? If so, could you make it clear in the commit message?",
+      "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c06c33a_f68447dd",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_mixin.cc",
         "patchSetId": 10
