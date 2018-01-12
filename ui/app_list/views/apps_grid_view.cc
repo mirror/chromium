@@ -1031,7 +1031,7 @@ void AppsGridView::ViewHierarchyChanged(
 
 void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
   // Bail on STATE_START or no apps page to make PaginationModel happy.
-  if (contents_view_->GetActiveState() == AppListModel::STATE_START ||
+  if (contents_view_->GetActiveState() == ash::AppListState::STATE_START ||
       pagination_model_.total_pages() <= 0) {
     return;
   }
@@ -1140,7 +1140,7 @@ bool AppsGridView::HandleScroll(int offset, ui::EventType type) {
     return false;
 
   // Bail on STATE_START or no apps page to make PaginationModel happy.
-  if (contents_view_->GetActiveState() == AppListModel::STATE_START ||
+  if (contents_view_->GetActiveState() == ash::AppListState::STATE_START ||
       pagination_model_.total_pages() <= 0) {
     return false;
   }
@@ -1350,12 +1350,13 @@ bool AppsGridView::HandleSuggestionsMove(int page_delta,
     int new_index = suggestions_container_->selected_index() + slot_x_delta;
     if (new_index == suggestions_container_->num_results()) {
       suggestions_container_->ClearSelectedIndex();
-      if (contents_view_->GetActiveState() == AppListModel::STATE_START) {
+      if (contents_view_->GetActiveState() == ash::AppListState::STATE_START) {
         // In state start, moving right out of |suggestions_container_| should
         // give selection to the expand arrow.
         expand_arrow_view_->SetSelected(true);
       } else {
-        DCHECK(contents_view_->GetActiveState() == AppListModel::STATE_APPS);
+        DCHECK(contents_view_->GetActiveState() ==
+               ash::AppListState::STATE_APPS);
         // In state apps, moving right out of |suggestions_container_| should
         // give selection to the first tile of all apps.
         SetSelectedItemByIndex(Index(0, 0));
@@ -1367,12 +1368,12 @@ bool AppsGridView::HandleSuggestionsMove(int page_delta,
   }
 
   if (slot_y_delta == 1) {
-    if (contents_view_->GetActiveState() == AppListModel::STATE_START) {
+    if (contents_view_->GetActiveState() == ash::AppListState::STATE_START) {
       // In state start, moving down from |suggestions_container_| should give
       // selection to the expand arrow.
       expand_arrow_view_->SetSelected(true);
     } else {
-      DCHECK(contents_view_->GetActiveState() == AppListModel::STATE_APPS);
+      DCHECK(contents_view_->GetActiveState() == ash::AppListState::STATE_APPS);
       // In state apps, moving down from |suggestions_container_| should give
       // selection to the first row of all apps.
       SetSelectedItemByIndex(
@@ -1397,7 +1398,7 @@ bool AppsGridView::HandleExpandArrowMove(int page_delta,
                                          int slot_y_delta) {
   DCHECK(suggestions_container_);
   DCHECK(expand_arrow_view_);
-  DCHECK(contents_view_->GetActiveState() == AppListModel::STATE_START);
+  DCHECK(contents_view_->GetActiveState() == ash::AppListState::STATE_START);
 
   if (page_delta != 0 || slot_x_delta == 1 || slot_y_delta == 1 ||
       (slot_x_delta == 0 && slot_y_delta == 0)) {

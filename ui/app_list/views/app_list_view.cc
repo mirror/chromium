@@ -776,7 +776,7 @@ void AppListView::SetChildViewsForStateTransition(
 
   if (target_state == AppListViewState::PEEKING) {
     app_list_main_view_->contents_view()->SetActiveState(
-        AppListModel::STATE_START);
+        ash::AppListState::STATE_START);
     // Set the apps to first page at STATE_START state.
     PaginationModel* pagination_model = GetAppsPaginationModel();
     if (pagination_model->total_pages() > 0 &&
@@ -788,7 +788,7 @@ void AppListView::SetChildViewsForStateTransition(
     GetAppsGridView()->StartTimerToIgnoreScrollEvents();
 
     app_list_main_view_->contents_view()->SetActiveState(
-        AppListModel::STATE_APPS, !is_side_shelf_);
+        ash::AppListState::STATE_APPS, !is_side_shelf_);
   }
 }
 
@@ -1323,7 +1323,7 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
       if (search_box_is_empty) {
         SetState(AppListViewState::FULLSCREEN_ALL_APPS);
         app_list_main_view()->contents_view()->SetActiveState(
-            AppListModel::State::STATE_APPS);
+            ash::AppListState::STATE_APPS);
       }
       break;
     case AppListViewState::FULLSCREEN_ALL_APPS:
