@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d6af538_3aeab1a9",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T03:19:48Z",
+      "side": 1,
+      "message": "optional: Maybe include an example string, \"(e.g. \"Chromium OS system\")\" to the comment? I had a hard time understanding what \"App name\" means.",
+      "revId": "c36184c44d57599c905c4fd70629d5f4cd5098a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a47eefe4_cfad75ad",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 3
