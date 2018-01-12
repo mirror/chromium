@@ -166,6 +166,40 @@
     },
     {
       "key": {
+        "uuid": "4460fac5_18fd61a6",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: \"const bool client_controlled_move_resize_\" and TODO for being removed.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a6dc58_0e7c97a4",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99652dbf_d4337eb4",
         "filename": "components/exo/shell_surface_base.cc",
         "patchSetId": 34
@@ -201,6 +235,75 @@
     },
     {
       "key": {
+        "uuid": "5c3c9dc6_94d5ffde",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "OK, so this is a general improvement for using touch to resize windows and not specific to ARC++? Can you move this into a separate CL? Also, the \"ARC window\" comment below should be changed to not use language that refer to ARC.",
+      "parentUuid": "4187177c_be0f387a",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b721f45_378915ac",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: \"const bool client_controlled_move_resize_\" and TODO for being removed.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d53071_bdf87686",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011af03c_19f2902c",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "please remove this change",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba8da82_a10f2c27",
         "filename": "components/exo/shell_surface_base.h",
         "patchSetId": 34
@@ -230,6 +333,24 @@
       "side": 1,
       "message": "Moved to ClientControlledShellSurface.\n\nThis is a temporary flag to detect which drag mode it should do. I\u0027ll remove this once transition is complete and stable. I tried to move to ctor, but it requires changes to many files. Since this will be removed very soon I prefer to keep it this way. Please let me know if you still prefer that way, and I\u0027ll make that change.",
       "parentUuid": "0ba8da82_a10f2c27",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66fed3a_9c011e8d",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "Ok, not moving to ctor is fine. But as \u0027true\u0027 is the default behavior, can you change it to something like \"client_controlled_move_resize\" and add a TODO with a bug number for removing it?",
+      "parentUuid": "868a500e_9cca25ef",
       "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

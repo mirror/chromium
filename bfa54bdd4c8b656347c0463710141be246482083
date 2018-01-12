@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee1f20d_590dcaf3",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "please remove this",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1633a374_61cd0658",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "private:\n ash::wm::ClientControlledState* const state_;\nand add\nDISALLOW_COPY_AND_ASSIGN",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2120a311_2e47fc49",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "private:\n aura::Window* const window_;\nand add\nDISALLOW_COPY_AND_ASSIGN",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f388512_9fd0b2d4",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "please remove this debug logging before landing the change",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202ca787_9be4a678",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "I think this deserve a comment. Why is maximum size empty when can_maximize is false?",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dde091c_ee7493e3",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: scoepd_set_bounds",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 45
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcd04f6_25e7857a",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: scoepd_set_bounds",
+      "range": {
+        "startLine": 643,
+        "startChar": 27,
+        "endLine": 643,
+        "endChar": 43
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d62c9d_d6cd21f2",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "do we need to add this state? seems superfluous as \"minimum_size_ !\u003d maximum_size_\" is the same..",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d9503a_2a17cd39",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "nit: \"bounds_change \u0026 ash::WindowResizer::kBoundsChange_Resizes\" should be enough and is easier to read, I think",
+      "range": {
+        "startLine": 2381,
+        "startChar": 6,
+        "endLine": 2381,
+        "endChar": 70
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f67471_8c6bcc83",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 2384,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-12T16:38:15Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2383,
+        "startChar": 13,
+        "endLine": 2384,
+        "endChar": 14
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
