@@ -37,6 +37,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/NodeComputedStyle.h"
+#include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
@@ -49,12 +50,14 @@
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/html_names.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutReplaced.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "core/svg/SVGSVGElement.h"
 #include "core/svg_names.h"
 #include "platform/Length.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/transforms/TransformOperations.h"
 #include "platform/wtf/Assertions.h"
@@ -635,6 +638,20 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
       style.Display() == EDisplay::kInline &&
       parent_style.UserModify() == EUserModify::kReadOnly) {
     style.SetDisplay(EDisplay::kInlineBlock);
+  }
+
+  // If intrinsically sized images and videos are disallowed by feature policy,
+  // use default intrinsic size (300 x 150) instead.
+  if (IsHTMLImageElement(element) || IsSVGImageElement(element) ||
+      IsHTMLVideoElement(element)) {
+    if (IsSupportedInFeaturePolicy(FeaturePolicyFeature::kUnsizedImage) &&
+        !element->GetDocument().GetFrame()->IsFeatureEnabled(
+            FeaturePolicyFeature::kUnsizedImage)) {
+      if (!style.Width().IsSpecified())
+        style.SetLogicalWidth(Length(LayoutReplaced::kDefaultWidth, kFixed));
+      if (!style.Height().IsSpecified())
+        style.SetLogicalHeight(Length(LayoutReplaced::kDefaultHeight, kFixed));
+    }
   }
 }
 }  // namespace blink
