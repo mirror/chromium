@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c369f2_94197e4e",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T22:45:05Z",
+      "side": 1,
+      "message": "nit: I saw this comment, but maybe it could say:\n\nOur call to |ExpectFaviconServiceCalls(expected A calls, expected B calls)| above should...\n\nThat definitely would have cleared it up for me.",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 34
+      },
+      "revId": "962ae7d215569743a76f3d7b3ad29b81b447a9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
