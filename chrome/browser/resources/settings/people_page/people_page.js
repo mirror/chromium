@@ -283,7 +283,8 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
-    cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    if (!this.diceEnabled_)  // If DICE-enabled, this button won't exist here.
+      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();

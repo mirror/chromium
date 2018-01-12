@@ -41,6 +41,22 @@
          * See settings_ui.html. */
         z-index: 1;
       }
+
+      settings-section > * {
+        @apply(--shadow-elevation-2dp);
+        background-color: white;
+        border-radius: 2px;
+        display: block;
+      }
+
+      settings-section > *:not(:first-child) {
+        margin-top: 12px;
+      }
+
+      settings-section.expanded > *,
+      settings-section.expanding > * {
+        display: initial;
+      }
     </style>
   </template>
 </dom-module>
