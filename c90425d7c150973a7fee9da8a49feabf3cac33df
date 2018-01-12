@@ -52,6 +52,24 @@
       "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bbc25c4_8687dabe",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-12T18:22:31Z",
+      "side": 1,
+      "message": "Done. I tried with faking an error, and yes, the pipe shuts down and GPU process goes away. I think this behavior is good.",
+      "parentUuid": "a1659895_d83a8228",
+      "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
