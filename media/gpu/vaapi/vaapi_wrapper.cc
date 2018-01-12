@@ -163,9 +163,6 @@ class VADisplayState {
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
 
  private:
-  // Returns false on init failure.
-  static bool PostSandboxInitialization();
-
   // Protected by |va_lock_|.
   int refcount_;
 
@@ -200,8 +197,11 @@ void VADisplayState::PreSandboxInitialization() {
     VADisplayState::Get()->SetDrmFd(drm_file.GetPlatformFile());
 }
 
-// static
-bool VADisplayState::PostSandboxInitialization() {
+VADisplayState::VADisplayState()
+    : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
+
+bool VADisplayState::Initialize() {
+  va_lock_.AssertAcquired();
   const std::string va_suffix(std::to_string(VA_MAJOR_VERSION + 1));
   StubPathMap paths;
 
@@ -213,8 +213,8 @@ bool VADisplayState::PostSandboxInitialization() {
     paths[kModuleVa_x11].push_back("libva-x11.so.1");
 #endif
 
-  const bool success = InitializeStubs(paths);
-  if (!success) {
+  static bool result = InitializeStubs(paths);
+  if (!result) {
     static const char kErrorMsg[] = "Failed to initialize VAAPI libs";
 #if defined(OS_CHROMEOS)
     // When Chrome runs on Linux with target_os="chromeos", do not log error
@@ -223,19 +223,8 @@ bool VADisplayState::PostSandboxInitialization() {
 #else
     DVLOG(1) << kErrorMsg;
 #endif
-  }
-  return success;
-}
-
-VADisplayState::VADisplayState()
-    : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
-
-bool VADisplayState::Initialize() {
-  va_lock_.AssertAcquired();
-
-  static bool result = PostSandboxInitialization();
-  if (!result)
     return false;
+  }
 
   if (refcount_++ > 0)
     return true;
@@ -1166,6 +1155,13 @@ bool VaapiWrapper::BlitSurface(
 // static
 void VaapiWrapper::PreSandboxInitialization() {
   VADisplayState::PreSandboxInitialization();
+  // next command will dlopen all necessary libraries for
+  // va-api to function properly, to know:
+  // libva.so
+  // i965_drv_video.so
+  // hybrid_drv_video.so (platforms that support it)
+  // libva-x11.so (X11) or libva-drm.so (Ozone).
+  VASupportedProfiles::Get();
 }
 
 VaapiWrapper::VaapiWrapper()
