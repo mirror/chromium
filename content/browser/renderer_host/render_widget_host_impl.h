@@ -801,6 +801,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       uint32_t last_shared_bitmap_sequence_number) override;
   void SetupInputRouter();
 
+  bool SurfacePropertiesMismatch(
+      const RenderWidgetSurfaceProperties& first,
+      const RenderWidgetSurfaceProperties& second) const;
+
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
 #endif
