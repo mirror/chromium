@@ -312,6 +312,31 @@ class UnboundWidgetInputHandler : public mojom::WidgetInputHandler {
   }
 };
 
+// TODO(ericrk): On Android we need to request a new surface ID when things
+// like top/bottom control height or selection handles change. This will be
+// enabled by child surface id generation. For now ignore these mismatches.
+// Remove this function when this issue is resolved: https://crbug.com/789259
+// and https://crbug.com/801350
+bool SurfacePropertiesMismatch(const RenderWidgetSurfaceProperties& first,
+                               const RenderWidgetSurfaceProperties& second) {
+#ifndef OS_ANDROID
+  return first != second;
+#else
+  // To make this comparison resistant to changes in
+  // RenderWidgetSurfaceProperties, create new properties which are forced to
+  // match only for those categories we want to ignore.
+  RenderWidgetSurfaceProperties second_reduced = second;
+  second_reduced.top_controls_height = first.top_controls_height;
+  second_reduced.top_controls_shown_ratio = first.top_controls_shown_ratio;
+  second_reduced.bottom_controls_height = first.bottom_controls_height;
+  second_reduced.bottom_controls_shown_ratio =
+      first.bottom_controls_shown_ratio;
+  second_reduced.selection = first.selection;
+
+  return first != second_reduced;
+#endif
+}
+
 }  // namespace
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2699,7 +2724,8 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
   if (local_surface_id == last_local_surface_id_ &&
-      new_surface_properties != last_surface_properties_) {
+      SurfacePropertiesMismatch(new_surface_properties,
+                                last_surface_properties_)) {
     static auto* crash_key = base::debug::AllocateCrashKeyString(
         "surface-invariants-violation", base::debug::CrashKeySize::Size256);
     base::debug::ScopedCrashKeyString key_value(
