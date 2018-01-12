@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e80b47e2_b82e2f58",
+        "filename": "components/download/downloader/in_progress/proto/download_source.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-12T18:42:52Z",
+      "side": 1,
+      "message": "Done, make sense.",
+      "parentUuid": "8cbf5956_0a235095",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7280ac_96ae904d",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8537793_d9bf27bf",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-12T18:42:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ad7280ac_96ae904d",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25020b04_94843bff",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-12T18:42:52Z",
+      "side": 1,
+      "message": "Done, make sense, seems COUNT is redundant if it\u0027s not directly pass to histogram functions.",
+      "parentUuid": "1b60ce24_10349e5d",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8822b66_52142161",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-11T22:09:18Z",
       "side": 1,
       "message": "why we need to add back value 6?",
+      "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94181ea7_d89e0d07",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-12T18:42:52Z",
+      "side": 1,
+      "message": "We previously might forgot to add it, so in uma dashboard, this value doesn\u0027t have decription. This can fix description for older version where we still have this in use.",
+      "parentUuid": "c8822b66_52142161",
       "revId": "ce7f6c96a30fda8ffab6833af165611fe22e266d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
