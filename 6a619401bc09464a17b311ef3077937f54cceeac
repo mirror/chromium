@@ -242,6 +242,30 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c474fc07_f7702dda",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-12T09:45:32Z",
+      "side": 1,
+      "message": "Why WaitableEvent and ConditionVariable?\n\nFor this to work we\u0027d have to make CommandLine::Init private somehow I think (to force callers to use the new thing or every other embedder will forget).\n\nBut for ScopedBlockingCall if we init the LazyInstance early, then it\u0027s essentially free after that isn\u0027t it? I\u0027m not saying it\u0027s ideal but it addresses 99% of the problem in a simple manner, no?",
+      "parentUuid": "597411ac_72750d00",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 20
+      },
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
