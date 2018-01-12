@@ -18,6 +18,10 @@ class NavigationHandle;
 // directive, blocking requests which violate them.
 // It is enforcing it only if PlzNavigate is enabled. Blink is still enforcing
 // the 'form-action' directive on the renderer process.
+// TODO(arthursonzogni): https://crbug.com/663512: Depending on specification
+// clarification, we might be able to delete FormSubmissionThrottle altogether.
+// It will be deleted if the final specification clarifies that form-action
+// should NOT be enforced on redirects.
 class CONTENT_EXPORT FormSubmissionThrottle : public NavigationThrottle {
  public:
   static std::unique_ptr<NavigationThrottle> MaybeCreateThrottleFor(
