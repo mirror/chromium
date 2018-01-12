@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f339f029_44576178",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-12T06:34:00Z",
+      "side": 1,
+      "message": "const KeyframeEffectReadOnly\u0026",
+      "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef209f4b_708c7c17",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModel.h",
         "patchSetId": 2
@@ -48,6 +65,41 @@
       "side": 1,
       "message": "This is fine for now, refactoring that is not simple...",
       "parentUuid": "ef209f4b_708c7c17",
+      "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07057481_51193422",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModel.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-12T06:34:00Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s ugly but I\u0027m not sure there\u0027s a better way.",
+      "parentUuid": "85b806e2_880d9295",
+      "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16b99e0_2f2ea45c",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-12T06:34:00Z",
+      "side": 1,
+      "message": "const KeyframeEffectReadOnly\u0026 ?",
       "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
