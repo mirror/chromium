@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c1b5122_ec5cc055",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-12T16:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6acb80_24ba27a5",
+      "range": {
+        "startLine": 309,
+        "startChar": 8,
+        "endLine": 309,
+        "endChar": 24
+      },
+      "revId": "53f08e819f7e7f1b5f078297439ca3b42149fd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "312353f4_66e44695",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "53f08e819f7e7f1b5f078297439ca3b42149fd46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb01168_ac7d41bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-12T16:18:12Z",
+      "side": 1,
+      "message": "Gating this CL behind a flag is very difficult for many reasons. I had originally thought we could gate this by just not drawing the texture in VR, and thus not showing the fallback path to users, but that would break NativePages. I\u0027d need to somehow special case allowing NativePages to use this path but otherwise turning it off, and that\u0027s probably not worth doing. I plan to land this after M65 branch cut without a flag, as we definitely need this patch for M66.",
+      "parentUuid": "312353f4_66e44695",
+      "range": {
+        "startLine": 329,
+        "startChar": 25,
+        "endLine": 329,
+        "endChar": 26
+      },
+      "revId": "53f08e819f7e7f1b5f078297439ca3b42149fd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
