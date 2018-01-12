@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ac7e8c_c914c10b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-12T17:23:08Z",
+      "side": 1,
+      "message": "Ah ha!  I didn\u0027t know this was constructed via reflection.  I suspect the actual fix might be to add @UsedByReflection here.  Proguard goes and mangles/obfuscates/shortens our class names and it can map it all together if you use standard java construction.  When you use reflection all bets are off, so this annotation tells Proguard to leave this class alone.\n\nIt might be a combo of both TBH, but this is often a gotcha when doing that kind of construction.  Proguard maps might not work across test and java, but let\u0027s give that a whirl.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "395a3b027b2ff592c558ee43e56521ffdf9702d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
