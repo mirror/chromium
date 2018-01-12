@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6503e1c_8047f6c6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T18:38:17Z",
+      "side": 1,
+      "message": "Because this is a Bind, this actually makes a copy of the event. If we don\u0027t specify the right type here with static_cast\u003c\u003e, then we copy the wrong number of bytes, causing failures when we then later attempt to static_cast\u003c\u003e it based on the event\u0027s type.\n\nThe fix is to do as the TODO above (line 99) says: use a WebScopedInputEvent.",
+      "revId": "9fc0d763534033f0a8c68efe3c98b6b98740e44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879032f0_852cadbe",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T18:38:17Z",
+      "side": 1,
+      "message": "This is good change, since it doesn\u0027t actually make a copy of the event.",
+      "revId": "9fc0d763534033f0a8c68efe3c98b6b98740e44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
