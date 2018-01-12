@@ -202,11 +202,16 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
     _surfaceCreated = YES;
   }
 
-  [PhysicalKeyboardDetector detectOnView:_hostView
-                                callback:^(BOOL hasPhysicalKeyboard) {
-                                  _hasPhysicalKeyboard = hasPhysicalKeyboard;
-                                  [_clientKeyboard becomeFirstResponder];
-                                }];
+  [_clientKeyboard becomeFirstResponder];
+  // TODO(yuweih): Commented out because the detector doesn't quite work if
+  // split keyboard is being used. This will cause the `Show|Hide Keyboard`
+  // button always show when the physical keyboard presents.
+  //  [PhysicalKeyboardDetector detectOnView:_hostView
+  //                                callback:^(BOOL hasPhysicalKeyboard) {
+  //                                  _hasPhysicalKeyboard =
+  //                                  hasPhysicalKeyboard;
+  //                                  [_clientKeyboard becomeFirstResponder];
+  //                                }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -284,9 +289,15 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
 #pragma mark - Keyboard Notifications
 
 - (void)keyboardWillShow:(NSNotification*)notification {
+  // Note that this won't be called if the keyboard is floating.
+
   // The soft keyboard can be triggered by the PhysicalKeyboardDetector, in this
   // case we don't need to change the keyboard size.
-  if (!_clientKeyboard.isFirstResponder) {
+  // keyboardWillShow may be called with a wrong keyboard size when the physical
+  // keyboard is plugged in while the soft keyboard is hidden. This is
+  // potentially an OS bug. `!_clientKeyboard.showsSoftKeyboard` works around
+  // it.
+  if (!_clientKeyboard.isFirstResponder || !_clientKeyboard.showsSoftKeyboard) {
     return;
   }
 
@@ -299,11 +310,13 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
     return;
   }
 
-  CGSize keyboardSize =
-      [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey]
-          CGRectValue]
-          .size;
-  [self setKeyboardSize:keyboardSize needsLayout:YES];
+  // On iOS 10 the keyboard might be partially shown, i.e. part of the keyboard
+  // is below the screen.
+  CGRect keyboardRect = [[[notification userInfo]
+      objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGSize visibleKeyboardSize =
+      CGRectIntersection(self.view.bounds, keyboardRect).size;
+  [self setKeyboardSize:visibleKeyboardSize needsLayout:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {
@@ -486,6 +499,7 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
                        title:IDS_SHOW_KEYBOARD
                      handler:^() {
                        weakClientKeyboard.showsSoftKeyboard = YES;
+                       [weakClientKeyboard becomeFirstResponder];
                      }];
     }
   }
