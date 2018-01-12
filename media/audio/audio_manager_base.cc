@@ -24,6 +24,7 @@
 #include "media/audio/fake_audio_input_stream.h"
 #include "media/audio/fake_audio_output_stream.h"
 #include "media/base/media_switches.h"
+#include "media/mojo/services/mojo_audio_debug_recording_file_provider.h"
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 #include "media/audio/audio_input_stream_data_interceptor.h"
@@ -557,40 +558,6 @@ int AudioManagerBase::GetUserBufferSize() {
 std::unique_ptr<AudioLog> AudioManagerBase::CreateAudioLog(
     AudioLogFactory::AudioComponent component) {
   return audio_log_factory_->CreateAudioLog(component);
-}
-
-void AudioManagerBase::InitializeDebugRecording() {
-  if (!GetTaskRunner()->BelongsToCurrentThread()) {
-    // AudioManager is deleted on the audio thread, so it's safe to post
-    // unretained.
-    GetTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&AudioManagerBase::InitializeDebugRecording,
-                              base::Unretained(this)));
-    return;
-  }
-
-  DCHECK(!debug_recording_manager_);
-  debug_recording_manager_ = CreateAudioDebugRecordingManager(GetTaskRunner());
-}
-
-void AudioManagerBase::EnableDebugRecording(
-    const base::FilePath& base_file_name) {
-  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
-  DCHECK(debug_recording_manager_)
-      << "InitializeDebugRecording() must be called before enabling";
-  debug_recording_manager_->EnableDebugRecording(base_file_name);
-}
-
-void AudioManagerBase::DisableDebugRecording() {
-  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
-  if (debug_recording_manager_)
-    debug_recording_manager_->DisableDebugRecording();
-}
-
-std::unique_ptr<AudioDebugRecordingManager>
-AudioManagerBase::CreateAudioDebugRecordingManager(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  return std::make_unique<AudioDebugRecordingManager>(std::move(task_runner));
 }
 
 void AudioManagerBase::SetMaxStreamCountForTesting(int max_input,

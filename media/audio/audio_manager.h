@@ -20,7 +20,6 @@
 #include "media/base/audio_parameters.h"
 
 namespace base {
-class FilePath;
 class SingleThreadTaskRunner;
 }
 
@@ -173,13 +172,6 @@ class MEDIA_EXPORT AudioManager {
   virtual std::unique_ptr<AudioLog> CreateAudioLog(
       AudioLogFactory::AudioComponent component) = 0;
 
-  // Enable debug recording. InitializeDebugRecording() must be called before
-  // this function.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name) = 0;
-
-  // Disable debug recording.
-  virtual void DisableDebugRecording() = 0;
-
   // Gets the name of the audio manager (e.g., Windows, Mac, PulseAudio).
   virtual const char* GetName() = 0;
 
@@ -193,10 +185,6 @@ class MEDIA_EXPORT AudioManager {
   explicit AudioManager(std::unique_ptr<AudioThread> audio_thread);
 
   virtual void ShutdownOnAudioThread() = 0;
-
-  // Initializes output debug recording. Can be called on any thread; will post
-  // to the audio thread if not called on it.
-  virtual void InitializeDebugRecording() = 0;
 
   // Returns true if the OS reports existence of audio devices. This does not
   // guarantee that the existing devices support all formats and sample rates.

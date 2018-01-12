@@ -35,7 +35,6 @@ void AudioDebugRecordingHelper::EnableDebugRecording(
     const base::FilePath& file_name) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!debug_writer_);
-  DCHECK(!file_name.empty());
 
   debug_writer_ = CreateAudioDebugFileWriter(params_);
   create_file_callback_.Run(
