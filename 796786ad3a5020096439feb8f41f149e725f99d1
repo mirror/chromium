@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24b58f1a_35312f47",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-12T23:54:04Z",
+      "side": 1,
+      "message": "Sanity: these files are no longer protected by the \"proprietary_codecs\" flag. I assume this is intended.",
+      "range": {
+        "startLine": 176,
+        "startChar": 10,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "796786ad3a5020096439feb8f41f149e725f99d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0254f30_9b137977",
+        "filename": "media/test/pipeline_integration_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-12T23:54:04Z",
+      "side": 1,
+      "message": "s/ENABLE_LIBVPX/ENABLE_AV1_DECODER",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "796786ad3a5020096439feb8f41f149e725f99d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
