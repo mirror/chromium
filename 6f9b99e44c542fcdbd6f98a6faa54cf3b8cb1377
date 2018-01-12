@@ -123,6 +123,24 @@
       "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a58a24_b8269cc5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-12T17:52:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7327f522_126d9f6a",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
