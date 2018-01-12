@@ -85,6 +85,7 @@ component("test_export_component") {
   deps = [
     ":test_export",
   ]
+  defines = [ "MOJO_TEST_BLINK_IMPLEMENTATION" ]
 }
 
 if (!is_ios) {
