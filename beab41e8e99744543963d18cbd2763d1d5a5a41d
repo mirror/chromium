@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "cc4ca3de_6d23d4c7",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T23:53:45Z",
+      "side": 1,
+      "message": "You should be able to create a util function which accepts a view* parameter. Up to you.",
+      "parentUuid": "f70b93c1_a62a2b4b",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32a98b32_9d6e2868",
         "filename": "ash/system/power/power_off_menu_view.cc",
         "patchSetId": 6
