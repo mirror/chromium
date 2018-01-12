@@ -93,6 +93,30 @@
       "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae388cc6_73d94423",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T00:36:36Z",
+      "side": 1,
+      "message": "Marking as resolved...",
+      "parentUuid": "be3ebcec_cc77d655",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
