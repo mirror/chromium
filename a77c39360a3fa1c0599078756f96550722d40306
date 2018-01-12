@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d59bfbc4_fdedcf11",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2018-01-12T14:57:25Z",
+      "side": 1,
+      "message": "why is the about protocol specifically exempted? Should this be local schemes instead?",
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d532a457_3f54286c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2018-01-12T14:57:25Z",
+      "side": 1,
+      "message": "I assume this was left in by mistake?",
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
