@@ -61,8 +61,10 @@ static_library("router") {
   if (enable_extensions) {
     deps += [
       "discovery",
+      "//chrome/browser/ui",
       "//extensions/browser",
       "//mojo/public/cpp/bindings",
+      "//ui/base:ui_features",
     ]
     sources += [
       "event_page_request_manager.cc",
