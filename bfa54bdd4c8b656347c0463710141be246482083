@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e9669f0_88361c3e",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee1f20d_590dcaf3",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1633a374_61cd0658",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 38
@@ -33,6 +51,24 @@
       "revId": "bfa54bdd4c8b656347c0463710141be246482083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e671f3f3_025f14ea",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1633a374_61cd0658",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d30fc6c9_a8fd473e",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120a311_2e47fc49",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f388512_9fd0b2d4",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 38
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "464dd644_dede51c1",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f388512_9fd0b2d4",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "202ca787_9be4a678",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 38
@@ -84,6 +156,24 @@
       "revId": "bfa54bdd4c8b656347c0463710141be246482083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb8ff87_d5707852",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done\n\nIn latest patch, I changed to return empty because the maximum size is fake in this class and simply used to indicate the resizability.",
+      "parentUuid": "202ca787_9be4a678",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "27cd4f62_cc257652",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dde091c_ee7493e3",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 45
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bcd04f6_25e7857a",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 38
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "c1eaed24_28a28654",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcd04f6_25e7857a",
+      "range": {
+        "startLine": 643,
+        "startChar": 27,
+        "endLine": 643,
+        "endChar": 43
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66d62c9d_d6cd21f2",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 38
@@ -144,6 +282,24 @@
       "writtenOn": "2018-01-12T16:38:15Z",
       "side": 1,
       "message": "do we need to add this state? seems superfluous as \"minimum_size_ !\u003d maximum_size_\" is the same..",
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaab894e_a11660a9",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "66d62c9d_d6cd21f2",
       "revId": "bfa54bdd4c8b656347c0463710141be246482083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "4143feef_e5ffd79e",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d9503a_2a17cd39",
+      "range": {
+        "startLine": 2381,
+        "startChar": 6,
+        "endLine": 2381,
+        "endChar": 70
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f67471_8c6bcc83",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 38
@@ -193,6 +373,30 @@
       "revId": "bfa54bdd4c8b656347c0463710141be246482083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b23f6b_34dab5b4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 2384,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T20:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f67471_8c6bcc83",
+      "range": {
+        "startLine": 2383,
+        "startChar": 13,
+        "endLine": 2384,
+        "endChar": 14
+      },
+      "revId": "bfa54bdd4c8b656347c0463710141be246482083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
