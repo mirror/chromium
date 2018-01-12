@@ -758,7 +758,6 @@ const FeatureEntry::Choice kTLS13VariantChoices[] = {
      switches::kTLS13VariantDraft23},
 };
 
-#if !defined(OS_ANDROID)
 const FeatureEntry::Choice kEnableAudioFocusChoices[] = {
     {flag_descriptions::kEnableAudioFocusDisabled, "", ""},
     {flag_descriptions::kEnableAudioFocusEnabled, switches::kEnableAudioFocus,
@@ -768,7 +767,6 @@ const FeatureEntry::Choice kEnableAudioFocusChoices[] = {
      switches::kEnableAudioFocus, switches::kEnableAudioFocusDuckFlash},
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 };
-#endif  // !defined(OS_ANDROID)
 
 const FeatureEntry::Choice kForceColorProfileChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},

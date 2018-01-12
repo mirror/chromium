@@ -9,16 +9,10 @@
 
 namespace content {
 
-class MediaSessionImpl;
-
 // AudioFocusDelegate is an interface abstracting audio focus handling for the
 // MediaSession class.
 class AudioFocusDelegate {
  public:
-  // Factory method returning an implementation of AudioFocusDelegate.
-  static std::unique_ptr<AudioFocusDelegate> Create(
-      MediaSessionImpl* media_session);
-
   virtual ~AudioFocusDelegate() = default;
 
   virtual bool RequestAudioFocus(

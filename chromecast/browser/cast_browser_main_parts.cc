@@ -208,8 +208,6 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
 #if !defined(OS_ANDROID)
     // GPU shader disk cache disabling is largely to conserve disk space.
     {switches::kDisableGpuShaderDiskCache, ""},
-    // Enable audio focus by default (even on non-Android platforms).
-    {switches::kEnableAudioFocus, ""},
 #endif
 #if BUILDFLAG(IS_CAST_AUDIO_ONLY)
     {switches::kDisableGpu, ""},
@@ -237,6 +235,8 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
     // BrowserThreadsStarted).  The GPU process will be created as soon as a
     // renderer needs it, which always happens after main loop starts.
     {switches::kDisableGpuEarlyInit, ""},
+    // Enable audio focus by default.
+    {switches::kEnableAudioFocus, ""},
     // Enable navigator.connection API.
     // TODO(derekjchow): Remove this switch when enabled by default.
     {switches::kEnableNetworkInformationDownlinkMax, ""},
