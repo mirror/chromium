@@ -9,22 +9,35 @@ function requestDeviceWithOptionsAndConnect(options) {
 
 window.onmessage = messageEvent => {
   switch (messageEvent.data.type) {
+    case 'RequestDevice':
+      navigator.bluetooth.requestDevice({
+        filters: [{services: ['generic_access']}]
+      })
+        .then(device => {
+          if (device.constructor.name === 'BluetoothDevice') {
+            parent.postMessage('Success', '*');
+          } else {
+            parent.postMessage(
+                `FAIL: requestDevice in iframe returned ${device.name}`, '*');
+          }})
+        .catch(err => parent.postMessage(`${err.name}: ${err.message}`, '*'));
+      break;
     case 'RequestAndConnect':
       requestDeviceWithOptionsAndConnect(messageEvent.data.options)
-      .then(gatt => {
-        device = gatt.device;
-        parent.postMessage('Connected', '*');
-      }).catch(err => {
-        parent.postMessage(`FAIL: ${err}`, '*');
-      });
+        .then(gatt => {
+          device = gatt.device;
+          parent.postMessage('Connected', '*');
+        }).catch(err => {
+          parent.postMessage(`FAIL: ${err}`, '*');
+        });
       break;
     case 'DiscoverServices':
       requestDeviceWithOptionsAndConnect(messageEvent.data.options)
-      .then(gatt => gatt.getPrimaryServices())
-      .then(() => parent.postMessage('DiscoveryComplete', '*'))
-      .catch(err => {
-        parent.postMessage(`FAIL: ${err}`, '*');
-      });
+        .then(gatt => gatt.getPrimaryServices())
+        .then(() => parent.postMessage('DiscoveryComplete', '*'))
+        .catch(err => {
+          parent.postMessage(`FAIL: ${err}`, '*');
+        });
       break;
     default:
       parent.postMessage(`FAIL: Bad message type: ${messageEvent.data.type}`,
