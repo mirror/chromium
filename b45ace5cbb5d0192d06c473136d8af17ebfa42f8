@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89103bbe_3a4e55f0",
+        "filename": "gpu/config/gpu_blacklist.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T22:48:01Z",
+      "side": 1,
+      "message": "Very minor nit: AreEntryIndicesValid reads slightly better, since the subject is plural. Ditto elsewhere.",
+      "revId": "b45ace5cbb5d0192d06c473136d8af17ebfa42f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9610306_0cf07dad",
+        "filename": "gpu/ipc/common/gpu_feature_info_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T22:48:01Z",
+      "side": 1,
+      "message": "Nit: I would prefer for this to just call GpuBlacklist::IsEntryIndicesValid() and GpuDriverBugList::IsEntryIndicesValid() directly. Only IPC code should need to check this, so it would be nice not to expose IsValid() on GpuFeatureInfo.",
+      "revId": "b45ace5cbb5d0192d06c473136d8af17ebfa42f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
