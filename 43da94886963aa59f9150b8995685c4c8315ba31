@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a36ac559_1e0f4523",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1149154
+      },
+      "writtenOn": "2018-01-12T18:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8725b5_466ccd92",
+      "revId": "43da94886963aa59f9150b8995685c4c8315ba31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a14537f9_0235e54e",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "43da94886963aa59f9150b8995685c4c8315ba31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90839979_a42d7b92",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1149154
+      },
+      "writtenOn": "2018-01-12T18:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14537f9_0235e54e",
+      "revId": "43da94886963aa59f9150b8995685c4c8315ba31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
