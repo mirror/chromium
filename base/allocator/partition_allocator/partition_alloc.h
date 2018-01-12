@@ -451,7 +451,7 @@ struct PartitionDirectMapExtent {
 };
 
 struct BASE_EXPORT PartitionRootBase {
-  PartitionRootBase();
+  constexpr PartitionRootBase();
   virtual ~PartitionRootBase();
   size_t total_size_of_committed_pages = 0;
   size_t total_size_of_super_pages = 0;
@@ -492,7 +492,7 @@ enum PartitionPurgeFlags {
 
 // Never instantiate a PartitionRoot directly, instead use PartitionAlloc.
 struct BASE_EXPORT PartitionRoot : public PartitionRootBase {
-  PartitionRoot();
+  constexpr PartitionRoot();
   ~PartitionRoot() override;
   // This references the buckets OFF the edge of this struct. All uses of
   // PartitionRoot must have the bucket array come right after.
@@ -519,7 +519,7 @@ struct BASE_EXPORT PartitionRoot : public PartitionRootBase {
 // Never instantiate a PartitionRootGeneric directly, instead use
 // PartitionAllocatorGeneric.
 struct BASE_EXPORT PartitionRootGeneric : public PartitionRootBase {
-  PartitionRootGeneric();
+  constexpr PartitionRootGeneric();
   ~PartitionRootGeneric() override;
   subtle::SpinLock lock;
   // Some pre-computed constants.
@@ -1049,7 +1049,7 @@ class SizeSpecificPartitionAllocator {
 
 class BASE_EXPORT PartitionAllocatorGeneric {
  public:
-  PartitionAllocatorGeneric();
+  constexpr PartitionAllocatorGeneric();
   ~PartitionAllocatorGeneric();
 
   void init() { partition_root_.Init(); }

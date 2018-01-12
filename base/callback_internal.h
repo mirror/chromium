@@ -135,8 +135,8 @@ class BASE_EXPORT CallbackBase {
   bool EqualsInternal(const CallbackBase& other) const;
 
   // Allow initializing of |bind_state_| via the constructor to avoid default
-  // initialization of the scoped_refptr.
-  explicit CallbackBase(BindStateBase* bind_state);
+  // initialization of the scoped_refptr. constexpr if |bind_state| is null.
+  explicit constexpr CallbackBase(BindStateBase* bind_state);
 
   InvokeFuncStorage polymorphic_invoke() const {
     return bind_state_->polymorphic_invoke_;
@@ -159,7 +159,8 @@ class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
   CallbackBaseCopyable& operator=(CallbackBaseCopyable&& c);
 
  protected:
-  explicit CallbackBaseCopyable(BindStateBase* bind_state)
+  // constexpr if |bind_state| is null.
+  explicit constexpr CallbackBaseCopyable(BindStateBase* bind_state)
       : CallbackBase(bind_state) {}
   ~CallbackBaseCopyable() = default;
 };
