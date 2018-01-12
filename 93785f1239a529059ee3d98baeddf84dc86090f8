@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28e7e5a9_44db6992",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c2b84db_bf02f454",
+      "range": {
+        "startLine": 159,
+        "startChar": 37,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4d80d24_a49f5ca4",
         "filename": "content/common/frame.mojom",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T01:18:48Z",
       "side": 1,
       "message": "\"hashes of hosts\"?",
+      "range": {
+        "startLine": 249,
+        "startChar": 42,
+        "endLine": 249,
+        "endChar": 55
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9956910_224e4c7d",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "// Elements of |set| are hashes of host to upgrade.\n?",
+      "parentUuid": "a4d80d24_a49f5ca4",
       "range": {
         "startLine": 249,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cb22c772_96a11953",
+        "filename": "content/common/frame_replication_state.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "004c2f97_c44f02cd",
+      "range": {
+        "startLine": 121,
+        "startChar": 15,
+        "endLine": 121,
+        "endChar": 16
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86bbe014_ad21fb1e",
         "filename": "third_party/WebKit/Source/core/dom/SecurityContext.cpp",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c517a175_c8ea5ec1",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86bbe014_ad21fb1e",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b99990a_5574cca5",
         "filename": "third_party/WebKit/Source/core/frame/Frame.cpp",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-11T01:18:48Z",
       "side": 1,
       "message": "redundant line?",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff414c1d_b7caefc5",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Why?\n\nIt look like I need to update this comment (like in FrameLoader::UpgradeInsecureRequest)",
+      "parentUuid": "0b99990a_5574cca5",
       "range": {
         "startLine": 274,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6f023dbd_e7223ce9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Thanks for asking this!\nWhen I wrote this CL, it was needed to support the OOPIF without PlzNavigate.\nWhen PlzNavigate was not landed, I think there was two paths for navigation depending on whether the navigation will \"stay\" in the same process or not. With PlzNavigate, it will always go to the browser.\n\nIt means I can remove Frame::UpgradeInsecureRequest. Sorry about this.",
+      "parentUuid": "c6b776a4_a8ab75f9",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 24
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1433198_f2d0ebe0",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-11T01:18:48Z",
       "side": 1,
       "message": "Why does this need to take in a set, if we only end up passing one hash into it?  When would a SecurityContext\u0027s set have more than one entry in it?",
+      "range": {
+        "startLine": 213,
+        "startChar": 18,
+        "endLine": 213,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5374706_1018b8df",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "I update the code and also the part with EnforceInsecureRequestPolicy for symmetry.\n\nNow EnforceInsecureRequestPolicy() and EnforceInsecureNavigationSet() do add any new policy/set but only replicates their policy to the remote frames.",
+      "parentUuid": "a1433198_f2d0ebe0",
       "range": {
         "startLine": 213,
         "startChar": 18,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "e4e91f85_77b1f340",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Yes childs inherits from parents.\nSo B\u0027s set is always a superset of A\u0027s set\nhttps://w3c.github.io/webappsec-upgrade-insecure-requests/#nesting",
+      "parentUuid": "d6f0df38_419d5003",
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb765444_0bd7071c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 5
@@ -191,6 +377,30 @@
       "writtenOn": "2018-01-11T01:18:48Z",
       "side": 1,
       "message": "Is this line needed? (We\u0027re already in this function)",
+      "range": {
+        "startLine": 1721,
+        "startChar": 0,
+        "endLine": 1721,
+        "endChar": 53
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f9f4e4_62cf4f20",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "I reorganize this whole function.",
+      "parentUuid": "eb765444_0bd7071c",
       "range": {
         "startLine": 1721,
         "startChar": 0,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "0eb53a9d_c060b736",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "I removed this line.\n\nFor subresource, it is easy, it means the document that contains them.\nFor the main frame, it is the document that has initiated the navigation. Please note that you don\u0027t always have an origin document (navigation initiated by the omnibox for instance)",
+      "parentUuid": "87d3a8a2_85588f76",
+      "range": {
+        "startLine": 1725,
+        "startChar": 45,
+        "endLine": 1725,
+        "endChar": 61
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f1205e4_e9b9aca3",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 5
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "c10dc700_4dfbfbaa",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f1205e4_e9b9aca3",
+      "range": {
+        "startLine": 1727,
+        "startChar": 0,
+        "endLine": 1727,
+        "endChar": 47
+      },
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0a62bb6_1d081f8d",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 5
@@ -263,6 +521,24 @@
       "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d4a8b8_74ca78e6",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0a62bb6_1d081f8d",
+      "revId": "93785f1239a529059ee3d98baeddf84dc86090f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

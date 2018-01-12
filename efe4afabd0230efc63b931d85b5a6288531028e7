@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "4d1f36f2_39fadd47",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T09:24:41Z",
+      "side": 1,
+      "message": "I updated the code. Now EnforceInsecure{RequestPolicy,NavigationSet} doesn\u0027t add any new thing, but only trigger the replication to the other frames. It mean that execution_context_-\u003eGetSecurityContext()-\u003e{SetInsecureRequestPolicy, AddInsecureNavigationUpgrade} must always be called.",
+      "parentUuid": "d8da4d60_6d9c8014",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38035c73_a03fb34b",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 1
