@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "491bbdb2_68eb7622",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s good practice and I don\u0027t see that suggested in the doc (I suppose it doesn\u0027t mention LayoutTests/virtual explicitly - I suspect it may be a recent addition). However, we do have some tests in LayoutTests/virtual. I\u0027ve added some recently in virtual/android/url-bar and virtual/android/rootscroller and there exist a few others. I\u0027ve had good success with this approach so I don\u0027t see a reason to avoid it.\n\nUsing the approach here means doubling the amount of work the poor bots have to do for scroll-customization for no reason as well as adding confusion (is the test flaky? should it be fixed?). Absent any reason I\u0027m missing I think we should just add/move scroll-customization tests to LayoutTests/virtual.",
+      "parentUuid": "5fae3ae2_730d3fd1",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20841c89_dc345a7d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -344,6 +368,30 @@
       "side": 1,
       "message": "I believe not. We are only interested in class\u003d\"a\" div and whether or not the handlers are called. Thanks for catching these. :)",
       "parentUuid": "5cc5c0ea_a8cd6340",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "310e137a_77f55505",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b66413_f9f5c3e1",
       "range": {
         "startLine": 27,
         "startChar": 2,

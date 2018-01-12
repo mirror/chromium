@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "f1ae7f9d_dbe93f80",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "I would just add a \u003cdiv id\u003d\"spacer\" style\u003d\"width: 1000px; height: 1000px\u003e\u003c/div\u003e inside. Then reset the scrollLeft and scrollTop to 300px explicitly. (or calculate it using (scrollWidth - clientWidth)/2).",
+      "parentUuid": "d704c177_ee4deea4",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4769ed92_a7f0ff85",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "Nit: gpuBenchmarking should be here too.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "119048ba_28bbc767",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 48
@@ -36,6 +77,47 @@
     },
     {
       "key": {
+        "uuid": "fd0ad9be_0397f8b2",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "Ack. If it\u0027s related to fling, shouldn\u0027t we only need the pause before pointerUp? Please file a bug to fix this test and block it on the gpuBenchmarking bug currently assigned to Navid.",
+      "parentUuid": "119048ba_28bbc767",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1a2e9a_ed55161d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "document.body is guaranteed to be valid in every way during window.onload so a regular test should work fine but I don\u0027t really care either way (I\u0027d just remove the comment).",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80d9d1ed_4f050bb6",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -47,6 +129,75 @@
       "writtenOn": "2018-01-11T17:07:58Z",
       "side": 1,
       "message": "I am basically making sure the test runs after window.onload event. So I broke it up like this. The logic is intact.",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8346dfe2_82f5862d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure what our policy on console.log in tests is but I would remove these.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 38
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ab2590_d0e6efb2",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollCustomizationCallbacks.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "DCHECK that element isn\u0027t nullptr.",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdc3394_e210afbf",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T19:36:44Z",
+      "side": 1,
+      "message": "Nit: All these should now be 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
