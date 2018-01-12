@@ -123,7 +123,12 @@ void BrowserPolicyConnectorBase::SetPolicyProviderForTesting(
 
 void BrowserPolicyConnectorBase::AddPolicyProvider(
     std::unique_ptr<ConfigurationPolicyProvider> provider) {
+  ConfigurationPolicyProvider* provider_ptr = provider.get();
   policy_providers_.push_back(std::move(provider));
+  if (is_initialized_)
+    provider_ptr->Init(GetSchemaRegistry());
+  if (policy_service_)
+    policy_service_->AddProvider(provider_ptr);
 }
 
 void BrowserPolicyConnectorBase::SetPlatformPolicyProvider(

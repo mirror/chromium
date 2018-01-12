@@ -77,13 +77,8 @@ PolicyServiceImpl::PolicyServiceImpl(const Providers& providers)
   for (int domain = 0; domain < POLICY_DOMAIN_SIZE; ++domain)
     initialization_complete_[domain] = true;
   providers_ = providers;
-  for (auto* provider : providers) {
-    provider->AddObserver(this);
-    for (int domain = 0; domain < POLICY_DOMAIN_SIZE; ++domain) {
-      initialization_complete_[domain] &=
-          provider->IsInitializationComplete(static_cast<PolicyDomain>(domain));
-    }
-  }
+  for (auto* provider : providers)
+    OnProviderAdded(provider);
   // There are no observers yet, but calls to GetPolicies() should already get
   // the processed policy values.
   MergeAndTriggerUpdates();
@@ -93,6 +88,12 @@ PolicyServiceImpl::~PolicyServiceImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
   for (auto* provider : providers_)
     provider->RemoveObserver(this);
+}
+
+void PolicyServiceImpl::AddProvider(ConfigurationPolicyProvider* provider) {
+  providers_.push_back(provider);
+  OnProviderAdded(provider);
+  MergeAndTriggerUpdates();
 }
 
 void PolicyServiceImpl::AddObserver(PolicyDomain domain,
@@ -150,6 +151,14 @@ void PolicyServiceImpl::RefreshPolicies(const base::Closure& callback) {
       refresh_pending_.insert(provider);
     for (auto* provider : providers_)
       provider->RefreshPolicies();
+  }
+}
+
+void PolicyServiceImpl::OnProviderAdded(ConfigurationPolicyProvider* provider) {
+  provider->AddObserver(this);
+  for (int domain = 0; domain < POLICY_DOMAIN_SIZE; ++domain) {
+    initialization_complete_[domain] &=
+        provider->IsInitializationComplete(static_cast<PolicyDomain>(domain));
   }
 }
 
