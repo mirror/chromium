@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SIGNIN_SIGNIN_UTIL_H_
 #define CHROME_BROWSER_SIGNIN_SIGNIN_UTIL_H_
 
+class Profile;
+
 namespace signin_util {
 
 // Return whether the force sign in policy is enabled or not.
@@ -16,6 +18,11 @@ void SetForceSigninForTesting(bool enable);
 
 // Reset force sign in to uninitialized state for testing.
 void ResetForceSigninForTesting();
+
+// If true, then account management is done through Gaia webpages.
+// Can only be used on the UI thread.
+// Returns false if |profile| is in Guest or Incognito mode.
+bool IsDiceEnabledForProfile(const Profile* profile);
 
 }  // namespace signin_util
 
