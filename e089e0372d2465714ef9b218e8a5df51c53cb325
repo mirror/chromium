@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8834f7eb_ff80986a",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-12T23:07:42Z",
+      "side": 1,
+      "message": "Looking more into it, will media_player_ only ever be null when this happens? If so, it looks like the player will never play, which would make it okay. Am I understanding that correctly?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "e089e0372d2465714ef9b218e8a5df51c53cb325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
