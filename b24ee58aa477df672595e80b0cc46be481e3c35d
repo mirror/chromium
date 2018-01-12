@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca747840_124395ca",
+        "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T02:33:08Z",
+      "side": 1,
+      "message": "I think we can actually merge this one with WorkerCreated and attach immediately (agent host will handle the \"ready for inspection\" part). I\u0027ll give it a try tomorrow.",
+      "revId": "b24ee58aa477df672595e80b0cc46be481e3c35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
