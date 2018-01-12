@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5770f26a_4f365e04",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-12T16:18:15Z",
+      "side": 1,
+      "message": "If it\u0027s necessary to have:\n1- NTPMediator prep up\n2- setupViewController\n3- NTPMediator setUp\nthis flow should be documented.",
+      "revId": "4d663b69349a3bb80af110c392b550f40c6ff85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32426987_67821356",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-12T16:18:15Z",
+      "side": 1,
+      "message": "What\u0027s up with the indentation? Is it the review tool, or really indented +4? Line 596 is correctly indented.",
+      "revId": "4d663b69349a3bb80af110c392b550f40c6ff85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
