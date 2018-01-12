@@ -34,6 +34,24 @@
       "revId": "d0a0808d9a486e845179ff6930e628629a911e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9055710_d86eb2f2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-12T06:42:28Z",
+      "side": 0,
+      "message": "Avoided If check and used ternary operator.\nSince we modify the selection only for extend, therefore it may be of no use to call\nPrepareToModifySelection when selection alteration is not extend.",
+      "parentUuid": "fb6ddeea_7e425e8f",
+      "revId": "d0a0808d9a486e845179ff6930e628629a911e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
