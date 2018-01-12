@@ -269,8 +269,14 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   // Tracks UMA stats for SurfaceDrawQuads during a call to Aggregate().
   SurfaceDrawQuadUmaStats uma_stats_;
 
-  base::WeakPtrFactory<SurfaceAggregator> weak_factory_;
+  std::vector<ResourceId> stuck_frame_referenced_resources_;
 
+ public:
+  bool about_to_recycle_frames_ = false;
+  bool recycling_frames_ = false;
+
+ private:
+  base::WeakPtrFactory<SurfaceAggregator> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(SurfaceAggregator);
 };
 

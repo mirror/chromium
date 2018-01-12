@@ -567,8 +567,9 @@ void GLRenderer::BeginDrawingFrame() {
   // so that drawing can proceed without GL context switching interruptions.
   for (const auto& pass : *current_frame()->render_passes_in_draw_order) {
     for (auto* quad : pass->quad_list) {
-      for (ResourceId resource_id : quad->resources)
+      for (ResourceId resource_id : quad->resources) {
         resource_provider_->WaitSyncToken(resource_id);
+      }
     }
   }
 

@@ -20,6 +20,9 @@ VIZ_COMMON_EXPORT extern const char kDeadlineToSynchronizeSurfaces[];
 
 VIZ_COMMON_EXPORT uint32_t GetDeadlineToSynchronizeSurfaces();
 
+VIZ_COMMON_EXPORT extern const char kReuseAggregateResultCounter[];
+VIZ_COMMON_EXPORT extern const char kAggregateWhenReusing[];
+
 }  // namespace switches
 
 #endif  // COMPONENTS_VIZ_COMMON_SWITCHES_H_
