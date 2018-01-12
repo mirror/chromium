@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1480f4a_acc767f1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T04:46:58Z",
+      "side": 0,
+      "message": "This patch doesn\u0027t introduce but move.\nThis function here is also exposed to Editing.\nWhy do you move only FlatTree version to /editing ?",
+      "revId": "b7c2c4ec1b901041af24793d679e3acaec4b750d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
