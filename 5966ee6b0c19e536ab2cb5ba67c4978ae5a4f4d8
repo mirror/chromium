@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03f3155_ea16d23a",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T20:30:49Z",
+      "side": 1,
+      "message": "Aside: I\u0027m a little surprised these changes didn\u0027t require updating tests. Maybe we don\u0027t have very good test coverage here. Not for this CL, it might be nice to add more coverage if we don\u0027t have any.",
+      "revId": "5966ee6b0c19e536ab2cb5ba67c4978ae5a4f4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
