@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fac2744_9ccd84b7",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-12T20:11:52Z",
+      "side": 1,
+      "message": "Bah, yep, totally forgot about this :(. I need to fix the scripts to not need this.",
+      "revId": "539fc31e8fd0452938af8de3be9d8d6b1dfcd81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
