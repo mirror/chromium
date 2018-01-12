@@ -13,7 +13,6 @@ namespace ntp_home {
 enum PanelIdentifier {
   NONE,
   HOME_PANEL,
-  BOOKMARKS_PANEL,
   RECENT_TABS_PANEL,
   INCOGNITO_PANEL,
 };
