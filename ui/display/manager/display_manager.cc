@@ -611,7 +611,8 @@ void DisplayManager::RegisterDisplayProperty(
     float ui_scale,
     const gfx::Insets* overscan_insets,
     const gfx::Size& resolution_in_pixels,
-    float device_scale_factor) {
+    float device_scale_factor,
+    float display_zoom_factor) {
   if (display_info_.find(display_id) == display_info_.end())
     display_info_[display_id] =
         ManagedDisplayInfo(display_id, std::string(), false);
@@ -640,6 +641,8 @@ void DisplayManager::RegisterDisplayProperty(
                             device_scale_factor);
     display_modes_[display_id] = mode;
   }
+
+  display_zoom_factors_[display_id] = display_zoom_factor;
 }
 
 bool DisplayManager::GetActiveModeForDisplayId(int64_t display_id,
