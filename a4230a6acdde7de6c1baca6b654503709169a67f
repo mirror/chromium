@@ -34,6 +34,24 @@
       "revId": "a4230a6acdde7de6c1baca6b654503709169a67f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cd3153_920f1be3",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-12T22:40:03Z",
+      "side": 1,
+      "message": "~30s and produces a ~20 MB file\n\nI really just want a \"if_running_on_bot\" flag, and this is the best I could come up with.",
+      "parentUuid": "bae3c3a0_1d81dbfa",
+      "revId": "a4230a6acdde7de6c1baca6b654503709169a67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
