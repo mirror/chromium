@@ -6,20 +6,12 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 static_library("cpp") {
   sources = [
-    "cors_error_status.cc",
-    "cors_error_status.h",
-    "http_raw_request_response_info.cc",
-    "http_raw_request_response_info.h",
     "mutable_network_traffic_annotation_tag_struct_traits.h",
     "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
     "net_adapters.h",
-    "network_param_ipc_traits.cc",
-    "network_param_ipc_traits.h",
     "proxy_resolving_client_socket.cc",
     "proxy_resolving_client_socket.h",
-    "url_loader_completion_status.cc",
-    "url_loader_completion_status.h",
   ]
 
   public_deps = [
@@ -28,10 +20,33 @@ static_library("cpp") {
   ]
 
   deps = [
+    ":typemap_dependencies",
     "//base",
     "//ipc",
     "//mojo/common",
     "//net",
+  ]
+}
+
+static_library("typemap_dependencies") {
+  sources = [
+    "cors_error_status.cc",
+    "cors_error_status.h",
+    "http_raw_request_response_info.cc",
+    "http_raw_request_response_info.h",
+    "network_param_ipc_traits.cc",
+    "network_param_ipc_traits.h",
+    "url_loader_completion_status.cc",
+    "url_loader_completion_status.h",
+  ]
+  public_deps = [
+    "//url/ipc:url_ipc",
+  ]
+  deps = [
+    "//base",
+    "//ipc",
+    "//net",
+    "//services/network/public/interfaces:interfaces_shared",
   ]
 }
 
