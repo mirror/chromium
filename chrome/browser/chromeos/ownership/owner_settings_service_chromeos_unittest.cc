@@ -14,6 +14,7 @@
 #include "base/test/scoped_path_override.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/settings/device_settings_provider.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
 #include "chrome/common/chrome_paths.h"
@@ -28,9 +29,6 @@ namespace em = enterprise_management;
 namespace chromeos {
 
 namespace {
-
-void OnPrefChanged(const std::string& /* setting */) {
-}
 
 class PrefsChecker : public ownership::OwnerSettingsService::Observer {
  public:
@@ -98,8 +96,7 @@ class OwnerSettingsServiceChromeOSTest : public DeviceSettingsTestBase {
 
   void SetUp() override {
     DeviceSettingsTestBase::SetUp();
-    provider_.reset(new DeviceSettingsProvider(base::Bind(&OnPrefChanged),
-                                               &device_settings_service_));
+    provider_ = CreateDeviceSettingsProvider(&device_settings_service_);
     owner_key_util_->SetPrivateKey(device_policy_.GetSigningKey());
     InitOwner(AccountId::FromUserEmail(device_policy_.policy_data().username()),
               true);
@@ -199,8 +196,7 @@ class OwnerSettingsServiceChromeOSNoOwnerTest
 
   void SetUp() override {
     DeviceSettingsTestBase::SetUp();
-    provider_.reset(new DeviceSettingsProvider(base::Bind(&OnPrefChanged),
-                                               &device_settings_service_));
+    provider_ = CreateDeviceSettingsProvider(&device_settings_service_);
     FlushDeviceSettings();
     service_ = OwnerSettingsServiceChromeOSFactory::GetForBrowserContext(
         profile_.get());

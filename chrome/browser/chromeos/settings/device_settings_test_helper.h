@@ -14,6 +14,7 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/policy/device_policy_builder.h"
+#include "chrome/browser/chromeos/settings/device_settings_provider.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
 #include "components/ownership/mock_owner_key_util.h"
@@ -48,6 +49,7 @@ class DeviceSettingsTestBase : public testing::Test {
   DeviceSettingsTestBase();
   ~DeviceSettingsTestBase() override;
 
+  // testing::Test:
   void SetUp() override;
   void TearDown() override;
 
@@ -80,6 +82,11 @@ class DeviceSettingsTestBase : public testing::Test {
  private:
   DISALLOW_COPY_AND_ASSIGN(DeviceSettingsTestBase);
 };
+
+std::unique_ptr<DeviceSettingsProvider> CreateDeviceSettingsProvider(
+    DeviceSettingsService* device_settings_service,
+    const DeviceSettingsProvider::NotifyObserversCallback& notify_cb =
+        DeviceSettingsProvider::NotifyObserversCallback());
 
 }  // namespace chromeos
 
