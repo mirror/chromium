@@ -34,6 +34,24 @@
       "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d8c0e5_0ea1b02c",
+        "filename": "third_party/WebKit/public/web/WebWidget.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-12T21:00:24Z",
+      "side": 1,
+      "message": "All animations, composited or not, are updated in DocumentAnimations::UpdateAnimations, which\nis part of the compositing lifecycle step:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d252\n\nYou will also need the compositing step to get correct scrolling state.\n\nIf you need hit testing, you need to update the lifecycle to PrePaintClean.\n\nI think you should change the code to compute up to PrePaintClean, for the reasons listed\nabove, as well as that this is forward-compatible to the final version of Slimming Paint.",
+      "parentUuid": "d8544e94_e6f87155",
+      "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
