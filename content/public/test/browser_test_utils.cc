@@ -1116,7 +1116,6 @@ bool ExecuteScriptInIsolatedWorldAndExtractBool(
 bool ExecuteScriptAndExtractString(const ToRenderFrameHost& adapter,
                                    const std::string& script,
                                    std::string* result) {
-  LOG(INFO) << "ExecuteScriptAndExtractString";
   DCHECK(result);
   std::unique_ptr<base::Value> value;
   if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, &value) ||
