@@ -68,6 +68,29 @@
       "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b3d63d_9d78c8f5",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-12T19:38:00Z",
+      "side": 1,
+      "message": "Invalidate",
+      "range": {
+        "startLine": 516,
+        "startChar": 12,
+        "endLine": 516,
+        "endChar": 21
+      },
+      "revId": "6d4ba65745bd18430758512d5a48c8de27688894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
