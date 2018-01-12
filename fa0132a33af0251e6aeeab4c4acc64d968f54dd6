@@ -70,6 +70,30 @@
       "revId": "fa0132a33af0251e6aeeab4c4acc64d968f54dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4deed3e_3bc37194",
+        "filename": "chrome/browser/browsing_data/browsing_data_counter_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-12T09:33:50Z",
+      "side": 1,
+      "message": "Hm, I tried to remove the braces but the ifs above and below DeleteCookies use braces and it looks weird that this one doesn\u0027t. I solved the consistency issue by adding braces to every if in here. I think this way the code is easier to read. \nThis way we also don\u0027t have to add or remove them everytime a parameter changes :D",
+      "parentUuid": "dcf8d9e3_def3c7f2",
+      "range": {
+        "startLine": 72,
+        "startChar": 57,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "fa0132a33af0251e6aeeab4c4acc64d968f54dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

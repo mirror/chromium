@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f0bebc5_f0a03d76",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-12T09:33:50Z",
+      "side": 0,
+      "message": "Yes, I will do that but I worried that git gets confused if I do it in this CL.",
+      "parentUuid": "0a622615_5195ab57",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "33f4fe6b2eb1c5358e78adadf0d459b17a4b59b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b61089_9cbdd1e8",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "33f4fe6b2eb1c5358e78adadf0d459b17a4b59b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c752b60_c95e2a34",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-12T09:33:50Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "70b61089_9cbdd1e8",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 76
+      },
+      "revId": "33f4fe6b2eb1c5358e78adadf0d459b17a4b59b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
