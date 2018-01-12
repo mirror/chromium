@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
@@ -17,7 +18,6 @@
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
 #include "content/public/browser/render_frame_host.h"
@@ -139,6 +139,29 @@ void PopulateProtocolHandlers(content::WebContents* web_contents,
   }
 }
 
+// Returns the core type of the transition, or OTHER if the core type is not one
+// that we report.
+void PopulatePageTransitionMetrics(ukm::builders::TabManager_TabMetrics* entry,
+                                   ui::PageTransition page_transition) {
+  // We only report the following core types.
+  // Note: Redirects unrelated to clicking a link still get the "link" type.
+  if (ui::PageTransitionCoreTypeIs(page_transition, ui::PAGE_TRANSITION_LINK) ||
+      ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_AUTO_BOOKMARK) ||
+      ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_FORM_SUBMIT) ||
+      ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_RELOAD)) {
+    entry->SetPageTransitionCoreType(
+        ui::PageTransitionStripQualifier(page_transition));
+  }
+
+  entry->SetPageTransitionFromAddressBar(static_cast<bool>(
+      page_transition & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR));
+  entry->SetPageTransitionIsRedirect(
+      ui::PageTransitionIsRedirect(page_transition));
+}
+
 }  // namespace
 
 TabMetricsLoggerImpl::TabMetricsLoggerImpl() = default;
@@ -194,6 +217,7 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
       g_browser_process->GetTabManager();
   DCHECK(tab_manager);
 
+  PopulatePageTransitionMetrics(&entry, tab_metrics.page_transition);
   entry
       .SetHasBeforeUnloadHandler(
           web_contents->GetMainFrame()->GetSuddenTerminationDisablerState(
@@ -204,6 +228,7 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
       // resource_coordinator refactor: crbug.com/775644.
       .SetIsExtensionProtected(!tab_manager->IsTabAutoDiscardable(web_contents))
       .SetIsPinned(tab_strip_model->IsTabPinned(index))
+      .SetNavigationEntryCount(web_contents->GetController().GetEntryCount())
       .SetSequenceId(++sequence_id_)
       .Record(ukm_recorder);
 }
