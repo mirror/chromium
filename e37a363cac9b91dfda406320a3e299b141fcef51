@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bdbaf3_d8e2f108",
+        "filename": "net/base/mime_sniffer_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-01-12T23:01:30Z",
+      "side": 1,
+      "message": "Shall we do the truncation after the url and mime_type_hint has been extracted? The fuzzer should still be able to blow up those strings.",
+      "revId": "e37a363cac9b91dfda406320a3e299b141fcef51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
