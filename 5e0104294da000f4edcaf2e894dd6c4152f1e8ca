@@ -70,6 +70,30 @@
       "revId": "5e0104294da000f4edcaf2e894dd6c4152f1e8ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63460b4_4d91ac5e",
+        "filename": "ui/message_center/message_center_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T18:20:18Z",
+      "side": 0,
+      "message": "I think ScopedNotificationsIterationLock is overzealous. For example, in RemoveNotification, the notification is first removed, then all observers are informed (by way of the notification\u0027s ID string). What is the danger here? An observer could add or remove notifications in the handler for that without breaking anything. The only thing passed to the observer is an ID; any and all code needs to be cognizant that GetVisibleNotificationById can return null. The observer list itself (that which you\u0027re iterating over) is resilient to being modified. The ID or the Notification object being used for the observer calls are copies and shouldn\u0027t be affected by deleting the notification from the NotificationList. Can you lay out a sequence of events that would cause a crash after this patch, but would be caught by your proposed DCHECK?\n\nIt\u0027s hard to see the details of the tether crash any more because the go/crash link is expired, but since the crash was in tether code I\u0027m pretty sure the bug was in tether code. I don\u0027t think khorimoto\u0027s explanations/theories are quite right, but it\u0027s hard to analyze since the stack is no longer accessible and all the relevant code is hard to dig up.",
+      "parentUuid": "b7b2dc87_95d901ba",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "5e0104294da000f4edcaf2e894dd6c4152f1e8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
