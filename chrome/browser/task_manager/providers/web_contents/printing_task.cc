@@ -15,6 +15,7 @@ base::string16 PrefixPrintTitle(const base::string16& title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_PRINT_PREFIX, title);
 }
 
+
 }  // namespace
 
 PrintingTask::PrintingTask(content::WebContents* web_contents)
