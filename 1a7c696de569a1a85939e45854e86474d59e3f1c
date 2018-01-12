@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7a8d7cd_49dbeb7e",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-12T19:33:54Z",
+      "side": 1,
+      "message": "I see there is no other call, but it is more functional to keep that parameterized.",
+      "parentUuid": "1184b2b3_96a0089c",
+      "range": {
+        "startLine": 818,
+        "startChar": 21,
+        "endLine": 818,
+        "endChar": 64
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04a60d41_df183123",
         "filename": "content/renderer/media/gpu/rtc_video_decoder.h",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4e6e316f_6a4c2b8e",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-12T19:33:54Z",
+      "side": 1,
+      "message": "I moved them to .cc file after refactoring the test.",
+      "parentUuid": "cd18d690_c742d257",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8bcdd53_f7fc8675",
         "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
         "patchSetId": 1
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "cc57dd58_ccfb72ee",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-12T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8bcdd53_f7fc8675",
+      "range": {
+        "startLine": 359,
+        "startChar": 28,
+        "endLine": 359,
+        "endChar": 35
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea5efa4_99be3fa1",
         "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2018-01-11T21:36:04Z",
       "side": 1,
       "message": "suggest adding a comment explaining that Decode() is called as many times as necessary to exhaust all buffers and then expects the following Decode() to fail increasing error counter.\n\nI think this test makes a lot of assumptions about internal behavior of the class that\u0027s being tested, which is not great. Is it possible to avoid these assumptions here? E.g. maybe replace kMaxNumOfPendingBuffers and kNumSharedMemorySegments with a single kMaxParallelDecodeRequests?",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 379,
+        "endChar": 13
+      },
+      "revId": "1a7c696de569a1a85939e45854e86474d59e3f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3fef90_5f9330cb",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-12T19:33:54Z",
+      "side": 1,
+      "message": "Taking another look at test, I agree with your suggestion. I will not surface those numbers from the implementation and push for decode until it saturates.",
+      "parentUuid": "1ea5efa4_99be3fa1",
       "range": {
         "startLine": 377,
         "startChar": 2,
