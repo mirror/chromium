@@ -11,6 +11,15 @@ namespace network {
 
 namespace cors {
 
+namespace header_names {
+
+const char kAccessControlAllowCredentials[] =
+    "Access-Control-Allow-Credentials";
+const char kAccessControlAllowOrigin[] = "Access-Control-Allow-Origin";
+const char kAccessControlAllowSuborigin[] = "Access-Control-Allow-Suborigin";
+
+}  // namespace header_names
+
 base::Optional<mojom::CORSError> CheckAccess(
     const GURL& response_url,
     const int response_status_code,
@@ -68,6 +77,11 @@ base::Optional<mojom::CORSError> CheckAccess(
       return mojom::CORSError::kDisallowCredentialsNotSetToTrue;
   }
   return base::nullopt;
+}
+
+bool IsCORSEnabledRequestMode(mojom::FetchRequestMode mode) {
+  return mode == mojom::FetchRequestMode::kCORS ||
+         mode == mojom::FetchRequestMode::kCORSWithForcedPreflight;
 }
 
 }  // namespace cors
