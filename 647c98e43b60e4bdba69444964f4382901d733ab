@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "36189358_1c6d18f6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea9b667_b19e1930",
+      "range": {
+        "startLine": 1132,
+        "startChar": 28,
+        "endLine": 1132,
+        "endChar": 45
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c513375f_6943d95f",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76875065_523ff56b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c513375f_6943d95f",
+      "range": {
+        "startLine": 1138,
+        "startChar": 10,
+        "endLine": 1138,
+        "endChar": 16
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "fe1cc7e5_21788cdd",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426629da_26cde405",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8d14aca_8e52e0ba",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -142,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "dc25a156_6fcbc5cc",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d14aca_8e52e0ba",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4301fdac_a32ddeab",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 3
@@ -153,6 +237,30 @@
       "writtenOn": "2018-01-12T14:45:27Z",
       "side": 1,
       "message": "This will need to be merged with the other GestureEvent code for TouchScreen devices before this lands.",
+      "range": {
+        "startLine": 117,
+        "startChar": 13,
+        "endLine": 117,
+        "endChar": 18
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470c9c69_1b35510c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Yea, will rebase when that CL has landed",
+      "parentUuid": "4301fdac_a32ddeab",
       "range": {
         "startLine": 117,
         "startChar": 13,
@@ -212,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "9ce10aab_1da91283",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Why do we have to check the WebGestureDevice setting on the event? They all go to delegate_-\u003eDispatchEventToTarget?",
+      "parentUuid": "b7f6106e_d4a9827d",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a612ba34_b933d7ef",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
@@ -223,6 +355,24 @@
       "writtenOn": "2018-01-12T15:59:47Z",
       "side": 1,
       "message": "Are there cases where we know for sure that the event should be dispatched asynchronously? If there is (e.g. when root_view !\u003d expected_target, I think?), then it would be useful to have an EXPECT_FALSE(!waiter.EventWasReceived()); before the Wait(), to validate that event is not being targeted+dispatched synchronously.",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1762671_99c91b27",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7043,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "when root_view !\u003d expected_target, added check to observer to make sure it\u0027s async",
+      "parentUuid": "a612ba34_b933d7ef",
       "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -243,6 +393,24 @@
       "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6c142a_0ff6263b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7096,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-12T18:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304ce1a8_003e5672",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
