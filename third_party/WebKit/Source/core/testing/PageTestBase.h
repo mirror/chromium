@@ -51,6 +51,22 @@ class PageTestBase : public ::testing::Test {
   // See external/wpt/css/fonts/ahem/README for more about the 'Ahem' font.
   static void LoadAhem(LocalFrame&);
 
+  // Temporarily enter quirks mode.
+  class QuirksModeScope {
+    STACK_ALLOCATED();
+
+   public:
+    QuirksModeScope(Document& document)
+        : document_(&document), old_mode_(document.GetCompatibilityMode()) {
+      document_->SetCompatibilityMode(Document::kQuirksMode);
+    }
+    ~QuirksModeScope() { document_->SetCompatibilityMode(old_mode_); }
+
+   private:
+    Member<Document> document_;
+    Document::CompatibilityMode old_mode_;
+  };
+
  protected:
   void LoadAhem();
 

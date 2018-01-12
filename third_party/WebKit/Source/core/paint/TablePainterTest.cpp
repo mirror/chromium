@@ -55,6 +55,7 @@ TEST_P(TablePainterTest, Background) {
 }
 
 TEST_P(TablePainterTest, BackgroundWithCellSpacing) {
+  QuirksModeScope quirker(GetDocument());
   SetBodyInnerHTML(R"HTML(
     <style>
       body { margin: 0; }
