@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47904f4_3fe4337e",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-12T06:50:55Z",
+      "side": 1,
+      "message": "The \"remove_webcore_debug_symbols\" flag is for developers who are not interested in debugging WebCore code.\n(https://www.chromium.org/developers/gn-build-configuration)\nIIUC this change results in making builds slower for those developers.\n\nHow about adding a new separate flag which makes the webcore debug symbol minimum? (e.g. \"minimum_webcore_debug_symbols\")",
+      "revId": "00ae468c5d384402d16754676222364d662f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
