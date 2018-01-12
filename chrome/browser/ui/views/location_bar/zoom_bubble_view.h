@@ -10,6 +10,7 @@
 #include "base/timer/timer.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
+#include "components/sessions/core/session_id.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -160,6 +161,8 @@ class ZoomBubbleView : public LocationBarBubbleDelegateView,
   // |web_contents_|.
   // Not owned.
   ImmersiveModeController* immersive_mode_controller_;
+
+  const SessionID session_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ZoomBubbleView);
 };
