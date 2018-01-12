@@ -16,6 +16,24 @@
       "revId": "6344d5ffcac8274fd928d147ba1968089afc5969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91e14e6_84003ca3",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3956,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-12T17:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1150e2d_399a871e",
+      "revId": "6344d5ffcac8274fd928d147ba1968089afc5969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
