@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51e0b104_f5633858",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T18:27:15Z",
+      "side": 1,
+      "message": "the nomenclature comes from here: https://cs.chromium.org/chromium/src/ui/message_center/views/notification_header_view.h?rcl\u003d5478ca083bc1563d05815781e55fb2bb759837cc\u0026l\u003d26\n\nexpanded the comment",
+      "parentUuid": "9d6af538_3aeab1a9",
+      "revId": "c36184c44d57599c905c4fd70629d5f4cd5098a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a47eefe4_cfad75ad",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T03:08:14Z",
       "side": 1,
       "message": "Can we add\nDCHECK(!display_source.empty() || notifier_id.type \u003d\u003d NotifierId::SYSTEM_COMPONENT); or just\nDCHECK(notifier_id.type \u003d\u003d NotifierId::SYSTEM_COMPONENT); ?\n\nSo that notification that expects default |display_source| but NotifierId type is not SYSTEM_COMPONENT will be warned.",
+      "revId": "c36184c44d57599c905c4fd70629d5f4cd5098a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dfcb3e_0bb67ec7",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T18:27:15Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "a47eefe4_cfad75ad",
       "revId": "c36184c44d57599c905c4fd70629d5f4cd5098a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
