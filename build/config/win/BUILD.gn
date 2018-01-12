@@ -65,6 +65,10 @@ config("compiler") {
   # experimental. See crbug.com/82385.
   if (is_clang) {
     cflags += [ "-fmsc-version=1911" ]
+    cflags += [
+      "-mllvm",
+      "-emit-codeview-ghash-section",
+    ]
 
     if (current_cpu == "x86") {
       cflags += [ "-m32" ]
@@ -274,6 +278,10 @@ config("common_linker_setup") {
     ldflags += [ "/DYNAMICBASE:NO" ]
   } else {
     ldflags += [ "/DYNAMICBASE" ]
+  }
+
+  if (is_clang) {
+    ldflags += [ "/DEBUG:GHASH" ]
   }
 
   if (win_linker_timing) {
