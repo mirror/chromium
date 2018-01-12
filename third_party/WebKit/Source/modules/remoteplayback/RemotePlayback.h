@@ -13,7 +13,6 @@
 #include "modules/ModulesExport.h"
 #include "modules/presentation/PresentationAvailabilityObserver.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Compiler.h"
@@ -133,8 +132,7 @@ class MODULES_EXPORT RemotePlayback final
   DEFINE_ATTRIBUTE_EVENT_LISTENER(connect);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(disconnect);
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  void Trace(blink::Visitor*) override;
 
  private:
   friend class V8RemotePlayback;
@@ -158,8 +156,7 @@ class MODULES_EXPORT RemotePlayback final
 
   WebRemotePlaybackState state_;
   WebRemotePlaybackAvailability availability_;
-  HeapHashMap<int, TraceWrapperMember<AvailabilityCallbackWrapper>>
-      availability_callbacks_;
+  HeapHashMap<int, Member<AvailabilityCallbackWrapper>> availability_callbacks_;
   Member<HTMLMediaElement> media_element_;
   Member<ScriptPromiseResolver> prompt_promise_resolver_;
   Vector<KURL> availability_urls_;
