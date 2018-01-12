@@ -857,10 +857,11 @@ void ChromeBrowserMainParts::PreEarlyInitialization() {
     chrome_extra_parts_[i]->PreEarlyInitialization();
 }
 
-void ChromeBrowserMainParts::PostEarlyInitialization() {
+int ChromeBrowserMainParts::PostEarlyInitialization() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PostEarlyInitialization");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PostEarlyInitialization();
+  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void ChromeBrowserMainParts::ToolkitInitialized() {
