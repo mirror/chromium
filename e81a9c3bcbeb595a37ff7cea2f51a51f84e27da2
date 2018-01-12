@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a692deeb_c488fb4d",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T22:11:13Z",
+      "side": 1,
+      "message": "Should we DCHECK ShouldQueueEvents() here?",
+      "revId": "e81a9c3bcbeb595a37ff7cea2f51a51f84e27da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325607f9_cc7ccfdd",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T22:11:13Z",
+      "side": 1,
+      "message": "We can declare the EventQueueScope here to reduce code duplication.",
+      "revId": "e81a9c3bcbeb595a37ff7cea2f51a51f84e27da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
