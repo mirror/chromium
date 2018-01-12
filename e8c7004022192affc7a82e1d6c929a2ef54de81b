@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a55ebaba_819a9038",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-12T21:37:07Z",
+      "side": 0,
+      "message": "I think I\u0027ve convinced myself that it\u0027s ok to use nullptr instead of GetDocument() here. That Document is used for (1) security checks that don\u0027t apply if we\u0027re not changing the URL, (2) setting a referrer, but ResourceRequestForReload already does that, (3) selecting a FrameLoadType if one wasn\u0027t provided, but this function provides one.",
+      "revId": "e8c7004022192affc7a82e1d6c929a2ef54de81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
