@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adbeb435_16d5f344",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-12T01:51:02Z",
+      "side": 1,
+      "message": "Note to self: use 1 \u003c\u003c 20 here to match what is used in the block_size printf code.",
+      "revId": "6ce64ac156379367c9b3ba3969f6bfc14dbc9345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
