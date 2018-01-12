@@ -15,11 +15,6 @@ Polymer({
 
   properties: {
     /**
-     * If time zone auto detection is enabled.
-     */
-    timeZoneAutoDetect: Boolean,
-
-    /**
      * This stores active time zone display name to be used in other UI
      * via bi-directional binding.
      */
@@ -47,9 +42,11 @@ Polymer({
 
   observers: [
     'maybeGetTimeZoneListPerUser_(' +
-        'prefs.settings.timezone.value, timeZoneAutoDetect)',
+        'prefs.settings.timezone.value,' +
+        'prefs.generated.resolve_timezone_by_geolocation_on_off.value)',
     'maybeGetTimeZoneListPerSystem_(' +
-        'prefs.cros.system.timezone.value, timeZoneAutoDetect)',
+        'prefs.cros.system.timezone.value,' +
+        'prefs.generated.resolve_timezone_by_geolocation_on_off.value)',
     'updateActiveTimeZoneName_(prefs.cros.system.timezone.value)',
   ],
 
@@ -57,6 +54,11 @@ Polymer({
   attached: function() {
     this.maybeGetTimeZoneList_();
   },
+
+  /**
+   * True if getTimeZones request was sent to Chrome, but result is not
+   * yet received. */
+  getTimeZonesRequestSent_: false,
 
   /**
    * Fetches the list of time zones if necessary.
@@ -73,12 +75,17 @@ Polymer({
         return;
       }
     }
+
     // Only fetch the list once.
     if (this.timeZoneList_.length > 1 || !CrSettingsPrefs.isInitialized)
       return;
 
+    if (this.getTimeZonesRequestSent_)
+      return;
+
     // If auto-detect is enabled, we only need the current time zone.
-    if (this.timeZoneAutoDetect) {
+    if (this.getPref('generated.resolve_timezone_by_geolocation_on_off')
+            .value) {
       const isPerUserTimezone =
           this.getPref('cros.flags.per_user_timezone_enabled').value;
       if (this.timeZoneList_[0].value ==
@@ -87,8 +94,18 @@ Polymer({
         return;
       }
     }
+    // Setting several preferences at once will trigger several
+    // |maybeGetTimeZoneList_| calls, which we don't want.
+    this.getTimeZonesRequestSent_ = true;
+    cr.sendWithPromise('getTimeZones')
+        .then(
+            this.setTimeZoneList_.bind(this),
+            this.fetchTimeZoneListFailed_.bind(this));
+  },
 
-    cr.sendWithPromise('getTimeZones').then(this.setTimeZoneList_.bind(this));
+  // Unblocks getTimeZones request of previous one has failed.
+  fetchTimeZoneListFailed_: function() {
+    this.getTimeZonesRequestSent_ = false;
   },
 
   /**
@@ -113,6 +130,7 @@ Polymer({
    * @private
    */
   setTimeZoneList_: function(timeZones) {
+    this.getTimeZonesRequestSent_ = false;
     this.timeZoneList_ = timeZones.map(function(timeZonePair) {
       return {
         name: timeZonePair[1],
@@ -140,14 +158,15 @@ Polymer({
    * Computes visibility of user timezone preference.
    * @param {?chrome.settingsPrivate.PrefObject} prefUserTimezone
    *     pref.settings.timezone
-   * @param {settings.TimeZoneAutoDetectMethod} prefResolveValue
-   *     prefs.settings.resolve_timezone_by_geolocation_method.value
+   * @param {boolean} prefResolveOnOffValue
+   *     prefs.generated.resolve_timezone_by_geolocation_on_off.value
    * @return {boolean}
    * @private
    */
-  isUserTimeZoneSelectorHidden_: function(prefUserTimezone, prefResolveValue) {
+  isUserTimeZoneSelectorHidden_: function(
+      prefUserTimezone, prefResolveOnOffValue) {
     return (prefUserTimezone && prefUserTimezone.controlledBy != null) ||
-        prefResolveValue != settings.TimeZoneAutoDetectMethod.DISABLED;
+        prefResolveOnOffValue;
   },
 });
 })();
