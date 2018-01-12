@@ -400,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "6bd391d1_9099a5eb",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-12T20:57:30Z",
+      "side": 1,
+      "message": "After testing it out with different default search engines and different Finch groups, I realized that you were right all long. If DEFAULT_SERP is used without sending the URL, then it necessarily uses the cache. Another way of saying this is: \"if we cannot send the url and we are not in the most visited field trial nor in the personalized field trial (i.e. using cache), then return and don\u0027t show anything\". See link here:\n\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/zero_suggest_provider.cc?l\u003d192 \n\nI have removed PERSONALIZED_SUGGESTIONS in the latest patch.",
+      "parentUuid": "ed92e21c_b1f55784",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b98b89_f1d92415",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 3
