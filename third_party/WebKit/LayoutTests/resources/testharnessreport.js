@@ -105,6 +105,7 @@
             // Fullscreen tests all use the same automation script.
             src = automationPath + '/fullscreen/auto-click.js';
         } else if (
+            pathAndBase.startsWith('/css/') ||
             pathAndBase.startsWith('/pointerevents/') ||
             pathAndBase.startsWith('/uievents/') ||
             pathAndBase.startsWith('/pointerlock/') ||
