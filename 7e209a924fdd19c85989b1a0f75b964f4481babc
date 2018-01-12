@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1506c36c_7cb5ec78",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31321431_807432b6",
+      "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3291b12_600df117",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271de723_aa710462",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:28:10Z",
+      "side": 1,
+      "message": "Correct in both cases.",
+      "parentUuid": "e3291b12_600df117",
+      "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "778272e1_f81489dc",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db9736e_5f61b3ed",
+      "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef33ef4_528b3f39",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
@@ -84,6 +138,24 @@
       "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2156c7bf_6bbdd9d6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T14:28:10Z",
+      "side": 1,
+      "message": "Agreed. I think it would be best to leave all the coordinate stuff to the delegate, and remove it from RenderWidgetTargeter. I\u0027m happy to look after doing that once Ria\u0027s next CL lands.",
+      "parentUuid": "2ef33ef4_528b3f39",
+      "revId": "7e209a924fdd19c85989b1a0f75b964f4481babc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
