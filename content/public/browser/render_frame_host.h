@@ -305,6 +305,10 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // RenderFrameHost.
   virtual void ViewSource() = 0;
 
+  // Call |FlushForTesting()| on Network Service related interfaces. For test
+  // use only.
+  virtual void FlushNetworkInterfaceForTesting() = 0;
+
  private:
   // This interface should only be implemented inside content.
   friend class RenderFrameHostImpl;
