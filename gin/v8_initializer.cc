@@ -41,7 +41,6 @@ namespace {
 // None of these globals are ever freed nor closed.
 base::MemoryMappedFile* g_mapped_natives = nullptr;
 base::MemoryMappedFile* g_mapped_snapshot = nullptr;
-base::MemoryMappedFile* g_mapped_v8_context_snapshot = nullptr;
 
 bool GenerateEntropy(unsigned char* buffer, size_t amount) {
   base::RandBytes(buffer, amount);
@@ -241,17 +240,14 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
   }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+  DCHECK(g_mapped_snapshot);
   v8::StartupData natives;
-  natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
-  natives.raw_size = static_cast<int>(g_mapped_natives->length());
-  v8::V8::SetNativesDataBlob(&natives);
+  v8::StartupData snapshot;
 
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
-    snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
-    snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
-    v8::V8::SetSnapshotDataBlob(&snapshot);
-  }
+  GetV8ExternalSnapshotData(&natives, &snapshot);
+
+  v8::V8::SetNativesDataBlob(&natives);
+  v8::V8::SetSnapshotDataBlob(&snapshot);
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
 
   v8::V8::SetEntropySource(&GenerateEntropy);
@@ -279,11 +275,6 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
   *natives_size_out = natives.raw_size;
   *snapshot_data_out = snapshot.data;
   *snapshot_size_out = snapshot.raw_size;
-}
-
-// static
-void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
 }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
@@ -315,11 +306,10 @@ void V8Initializer::LoadV8Natives() {
 
 // static
 void V8Initializer::LoadV8ContextSnapshot() {
-  if (g_mapped_v8_context_snapshot)
+  if (g_mapped_snapshot)
     return;
 
-  MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
-                &g_mapped_v8_context_snapshot);
+  MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName), &g_mapped_snapshot);
 
   // TODO(peria): Check if the snapshot file is loaded successfully.
 }
@@ -379,7 +369,7 @@ void V8Initializer::LoadV8NativesFromFD(base::PlatformFile natives_pf,
 void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
                                                 int64_t snapshot_offset,
                                                 int64_t snapshot_size) {
-  if (g_mapped_v8_context_snapshot)
+  if (g_mapped_snapshot)
     return;
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
 
@@ -390,7 +380,7 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
     snapshot_region.size = snapshot_size;
   }
 
-  if (MapV8File(snapshot_pf, snapshot_region, &g_mapped_v8_context_snapshot)) {
+  if (MapV8File(snapshot_pf, snapshot_region, &g_mapped_snapshot)) {
     g_opened_files.Get()[kV8ContextSnapshotFileName] =
         std::make_pair(snapshot_pf, snapshot_region);
   }
