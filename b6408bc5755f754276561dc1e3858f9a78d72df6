@@ -22,6 +22,30 @@
       "revId": "b6408bc5755f754276561dc1e3858f9a78d72df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cba5ab_6aa96085",
+        "filename": "content/common/resize_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-12T20:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c696edec_76804d6c",
+      "range": {
+        "startLine": 35,
+        "startChar": 36,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "b6408bc5755f754276561dc1e3858f9a78d72df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
