@@ -5,6 +5,7 @@
 #include "components/sync/model_impl/processor_entity_tracker.h"
 
 #include "base/base64.h"
+#include "base/debug/stack_trace.h"
 #include "base/sha1.h"
 #include "base/trace_event/memory_usage_estimator.h"
 #include "components/sync/base/time.h"
@@ -82,6 +83,9 @@ void ProcessorEntityTracker::SetCommitData(EntityData* data) {
 }
 
 void ProcessorEntityTracker::CacheCommitData(const EntityDataPtr& data_ptr) {
+  LOG(WARNING) << "============ sequence_number:"
+               << metadata_.sequence_number();
+  // base::debug::StackTrace stack; stack.Print();
   DCHECK(RequiresCommitData());
   commit_data_ = data_ptr;
   DCHECK(HasCommitData());
@@ -115,6 +119,9 @@ bool ProcessorEntityTracker::RequiresCommitRequest() const {
 }
 
 bool ProcessorEntityTracker::RequiresCommitData() const {
+  // LOG(WARNING) << "RequiresCommitRequest():" << RequiresCommitRequest()
+  //              << " HasCommitData():" << HasCommitData()
+  //              << " metadata_.is_deleted():" << metadata_.is_deleted();
   return RequiresCommitRequest() && !HasCommitData() && !metadata_.is_deleted();
 }
 
@@ -174,7 +181,7 @@ void ProcessorEntityTracker::MakeLocalChange(std::unique_ptr<EntityData> data) {
   metadata_.set_modification_time(TimeToProtoTime(modification_time));
   metadata_.set_is_deleted(false);
 
-  // SetCommitData will update data's fileds from metadata and wrap it into
+  // SetCommitData will update data's fields from metadata and wrap it into
   // immutable EntityDataPtr.
   SetCommitData(data.get());
 }

@@ -12,6 +12,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/debug/stack_trace.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "components/sync/base/time.h"
@@ -88,16 +89,21 @@ class TestModelTypeSyncBridge : public FakeModelTypeSyncBridge {
     return FakeModelTypeSyncBridge::GetStorageKey(entity_data);
   }
 
-  void OnPendingCommitDataLoaded() {
+  void OnCommitDataLoaded() {
     ASSERT_TRUE(data_callback_);
     data_callback_.Run();
     data_callback_.Reset();
   }
 
+  //TODO(mamir) : Check is this is still needed.
   void InitializeToReadyState() {
     if (!data_callback_.is_null()) {
-      OnPendingCommitDataLoaded();
+      OnCommitDataLoaded();
     }
+  }
+
+  base::Closure GetDataCallback() {
+    return data_callback_;
   }
 
   void SetInitialSyncDone(bool is_done) {
@@ -144,6 +150,7 @@ class TestModelTypeSyncBridge : public FakeModelTypeSyncBridge {
  private:
   void CaptureDataCallback(DataCallback callback,
                            std::unique_ptr<DataBatch> data) {
+    //base::debug::StackTrace stack; stack.Print();
     EXPECT_FALSE(data_callback_);
     data_callback_ = base::Bind(callback, base::Passed(std::move(data)));
   }
@@ -153,7 +160,7 @@ class TestModelTypeSyncBridge : public FakeModelTypeSyncBridge {
   int apply_call_count_ = 0;
   int get_storage_key_call_count_ = 0;
 
-  // Stores the data callback between GetData() and OnPendingCommitDataLoaded().
+  // Stores the data callback between GetData() and OnCommitDataLoaded().
   base::Closure data_callback_;
 
   // Whether to return GetData results synchronously. Overrides the default
@@ -201,7 +208,7 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
     type_processor()->ModelReadyToSync(db().CreateMetadataBatch());
   }
 
-  void OnPendingCommitDataLoaded() { bridge()->OnPendingCommitDataLoaded(); }
+  void OnCommitDataLoaded() { bridge()->OnCommitDataLoaded(); }
 
   void OnSyncStarting() {
     type_processor()->OnSyncStarting(
@@ -220,8 +227,9 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
   EntitySpecifics WriteItemAndAck(const std::string& key,
                                   const std::string& value) {
     EntitySpecifics specifics = bridge()->WriteItem(key, value);
+    base::RunLoop().RunUntilIdle();
     worker()->VerifyPendingCommits(
-        {FakeModelTypeSyncBridge::TagHashFromKey(key)});
+        {{FakeModelTypeSyncBridge::TagHashFromKey(key)}});
     worker()->AckOnePendingCommit();
     EXPECT_EQ(0U, worker()->GetNumPendingCommits());
     return specifics;
@@ -229,9 +237,12 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
 
   void WriteItemAndAck(const std::string& key,
                        std::unique_ptr<EntityData> entity_data) {
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 1 ";
     bridge()->WriteItem(key, std::move(entity_data));
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 2 ";
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 3 ";
     worker()->VerifyPendingCommits(
-        {FakeModelTypeSyncBridge::TagHashFromKey(key)});
+        {{FakeModelTypeSyncBridge::TagHashFromKey(key)}});
     worker()->AckOnePendingCommit();
     EXPECT_EQ(0U, worker()->GetNumPendingCommits());
     return;
@@ -295,6 +306,7 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
   void CheckPostConditions() { EXPECT_FALSE(expect_error_); }
 
   void OnReadyToConnect(std::unique_ptr<ActivationContext> context) {
+    //base::debug::StackTrace stack; stack.Print();
     std::unique_ptr<MockModelTypeWorker> worker(
         new MockModelTypeWorker(context->model_type_state, type_processor()));
     // Keep an unsafe pointer to the commit queue the processor will use.
@@ -330,7 +342,6 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
 
   // Local write before initial sync.
   bridge()->WriteItem(kKey1, kValue1);
-
   // Has data, but no metadata, entity in the processor, or commit request.
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
@@ -349,7 +360,8 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
   EXPECT_EQ(2U, ProcessorEntityCount());
   EXPECT_EQ(1, db().GetMetadata(kKey1).sequence_number());
   EXPECT_EQ(0, db().GetMetadata(kKey2).sequence_number());
-  worker()->VerifyPendingCommits({kHash1});
+
+  worker()->VerifyPendingCommits({{kHash1}});
 }
 
 // Test that an initial sync filters out tombstones in the processor.
@@ -430,7 +442,9 @@ TEST_F(SharedModelTypeProcessorTest, StartErrors) {
   type_processor()->ReportError(FROM_HERE, "boom");
   ExpectError();
   OnSyncStarting();
-  OnPendingCommitDataLoaded();
+  // TODO(pavely): Commit data aren't loaded automatically now on startup.
+  // Simply remove this?
+  //OnCommitDataLoaded();
 }
 
 // This test covers race conditions during loading pending data. All cases
@@ -444,138 +458,159 @@ TEST_F(SharedModelTypeProcessorTest, StartErrors) {
 //
 // This results in 2 + 12 = 14 orderings of the events.
 TEST_F(SharedModelTypeProcessorTest, LoadPendingCommit) {
+  // TODO(mamir): Cases where data is loaded before connecting to Sync don't apply anymore and hence are commented out.
   // Data, connect.
-  EntitySpecifics specifics1 = ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  OnPendingCommitDataLoaded();
-  OnSyncStarting();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics1);
+  // EntitySpecifics specifics1 = ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // OnSyncStarting();
+  // OnCommitDataLoaded();
+  // EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, specifics1);
 
   // Connect, data.
   EntitySpecifics specifics2 = ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   OnSyncStarting();
-  EXPECT_EQ(nullptr, worker());
-  OnPendingCommitDataLoaded();
+  // Model is directly ready because it doesn't wait for pending data anymore.
+  // Hence worker() is not null.
+  //EXPECT_EQ(nullptr, worker());
+  OnCommitDataLoaded();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics2});
 
-  // Data, connect, put.
-  EntitySpecifics specifics3 = ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  OnPendingCommitDataLoaded();
-  OnSyncStarting();
-  EntitySpecifics specifics4 = bridge()->WriteItem(kKey1, kValue2);
-  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics3);
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics4);
+  // // Data, connect, put.
+  // EntitySpecifics specifics3 = ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // OnCommitDataLoaded();
+  // OnSyncStarting();
+  // EntitySpecifics specifics4 = bridge()->WriteItem(kKey1, kValue2);
+  // EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, specifics3);
+  // worker()->VerifyNthPendingCommit(1, kHash1, specifics4);
 
-  // Data, put, connect.
-  ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  OnPendingCommitDataLoaded();
-  EntitySpecifics specifics5 = bridge()->WriteItem(kKey1, kValue2);
-  OnSyncStarting();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics5);
+  // // Data, put, connect.
+  // ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // OnCommitDataLoaded();
+  // EntitySpecifics specifics5 = bridge()->WriteItem(kKey1, kValue2);
+  // OnSyncStarting();
+  // EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, specifics5);
 
   // Connect, data, put.
   EntitySpecifics specifics6 = ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   OnSyncStarting();
-  OnPendingCommitDataLoaded();
+  OnCommitDataLoaded();
   EntitySpecifics specifics7 = bridge()->WriteItem(kKey1, kValue2);
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics6);
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics7);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics6});
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics7});
 
   // Connect, put, data.
   ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   OnSyncStarting();
   EntitySpecifics specifics8 = bridge()->WriteItem(kKey1, kValue2);
-  EXPECT_EQ(nullptr, worker());
-  OnPendingCommitDataLoaded();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics8);
+  // Model is directly ready because it doesn't wait for pending data anymore.
+  // Hence worker() is not null.
+  // EXPECT_EQ(nullptr, worker());
+  OnCommitDataLoaded();
+  // TODO(mamir): how many pending commits should be there?
+  // They were 1 before the worker is never ready before loading the data
+  // But now the worker is ready before the data is loaded.
+  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics8});
 
-  // Put, data, connect.
-  ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  EntitySpecifics specifics9 = bridge()->WriteItem(kKey1, kValue2);
-  OnPendingCommitDataLoaded();
-  OnSyncStarting();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics9);
+  // // Put, data, connect.
+  // ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // EntitySpecifics specifics9 = bridge()->WriteItem(kKey1, kValue2);
+  // OnCommitDataLoaded();
+  // OnSyncStarting();
+  // EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, specifics9);
 
   // Put, connect, data.
   ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   EntitySpecifics specifics10 = bridge()->WriteItem(kKey1, kValue2);
   OnSyncStarting();
-  EXPECT_EQ(nullptr, worker());
-  OnPendingCommitDataLoaded();
+  // Model is directly ready because it doesn't wait for pending data anymore.
+  // Hence worker() is not null.
+  //EXPECT_EQ(nullptr, worker());
+  // No data will be loaded because the data is available after Put and hence the callback will not be called.
+  // OnCommitDataLoaded();
+  EXPECT_FALSE(bridge()->GetDataCallback());
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics10);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics10});
 
-  // Data, connect, delete.
-  EntitySpecifics specifics11 = ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  OnPendingCommitDataLoaded();
-  OnSyncStarting();
-  bridge()->DeleteItem(kKey1);
-  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics11);
-  worker()->VerifyNthPendingCommit(1, kHash1, kEmptySpecifics);
+  // // Data, connect, delete.
+  // EntitySpecifics specifics11 = ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // OnCommitDataLoaded();
+  // OnSyncStarting();
+  // bridge()->DeleteItem(kKey1);
+  // EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, specifics11);
+  // worker()->VerifyNthPendingCommit(1, kHash1, kEmptySpecifics);
 
-  // Data, delete, connect.
-  ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  OnPendingCommitDataLoaded();
-  bridge()->DeleteItem(kKey1);
-  OnSyncStarting();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  // // Data, delete, connect.
+  // ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // OnCommitDataLoaded();
+  // bridge()->DeleteItem(kKey1);
+  // OnSyncStarting();
+  // EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
 
   // Connect, data, delete.
   EntitySpecifics specifics12 = ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   OnSyncStarting();
-  OnPendingCommitDataLoaded();
+  OnCommitDataLoaded();
   bridge()->DeleteItem(kKey1);
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics12);
-  worker()->VerifyNthPendingCommit(1, kHash1, kEmptySpecifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics12});
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {kEmptySpecifics});
 
   // Connect, delete, data.
   ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   OnSyncStarting();
   bridge()->DeleteItem(kKey1);
-  EXPECT_EQ(nullptr, worker());
-  OnPendingCommitDataLoaded();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  // Model is directly ready because it doesn't wait for pending data anymore.
+  // Hence worker() is not null.
+  // EXPECT_EQ(nullptr, worker());
+  OnCommitDataLoaded();
+  // TODO(mamir): how many pending commits should be there?
+  // They were 1 before the worker is never ready before loading the data
+  // But now the worker is ready before the data is loaded.
+  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
 
-  // Delete, data, connect.
-  ResetStateWriteItem(kKey1, kValue1);
-  InitializeToMetadataLoaded();
-  bridge()->DeleteItem(kKey1);
-  OnPendingCommitDataLoaded();
-  OnSyncStarting();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  // // Delete, data, connect.
+  // ResetStateWriteItem(kKey1, kValue1);
+  // InitializeToMetadataLoaded();
+  // bridge()->DeleteItem(kKey1);
+  // OnCommitDataLoaded();
+  // OnSyncStarting();
+  // EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
 
   // Delete, connect, data.
   ResetStateWriteItem(kKey1, kValue1);
   InitializeToMetadataLoaded();
   bridge()->DeleteItem(kKey1);
   OnSyncStarting();
-  EXPECT_EQ(nullptr, worker());
-  OnPendingCommitDataLoaded();
+  // Model is directly ready because it doesn't wait for pending data anymore.
+  // Hence worker() is not null.
+  // EXPECT_EQ(nullptr, worker());
+  // No data will be loaded because the data is available after Put and hence the callback will not be called.
+  // OnCommitDataLoaded();
+  EXPECT_FALSE(bridge()->GetDataCallback());
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
 }
 
 // Tests cases where pending data loads synchronously.
@@ -586,7 +621,7 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingSynchronous) {
   InitializeToMetadataLoaded();
   OnSyncStarting();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics1);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics1});
 
   // Sync, model.
   EntitySpecifics specifics2 = ResetStateWriteItem(kKey1, kValue1);
@@ -594,7 +629,7 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingSynchronous) {
   bridge()->ExpectSynchronousDataCallback();
   InitializeToMetadataLoaded();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics2});
 }
 
 // This test covers race conditions during loading a pending delete. All cases
@@ -613,7 +648,7 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingDelete) {
   InitializeToMetadataLoaded();
   OnSyncStarting();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
 
   // Connect, put.
   ResetStateDeleteItem(kKey1, kValue1);
@@ -622,8 +657,8 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingDelete) {
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
   EntitySpecifics specifics1 = bridge()->WriteItem(kKey1, kValue2);
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics1);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics1});
 
   // Put, connect.
   ResetStateDeleteItem(kKey1, kValue1);
@@ -631,7 +666,7 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingDelete) {
   EntitySpecifics specifics2 = bridge()->WriteItem(kKey1, kValue2);
   OnSyncStarting();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics2});
 
   // Connect, delete.
   ResetStateDeleteItem(kKey1, kValue1);
@@ -640,8 +675,8 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingDelete) {
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
   bridge()->DeleteItem(kKey1);
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
-  worker()->VerifyNthPendingCommit(1, kHash1, kEmptySpecifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {kEmptySpecifics});
 
   // Delete, connect.
   ResetStateDeleteItem(kKey1, kValue1);
@@ -649,7 +684,7 @@ TEST_F(SharedModelTypeProcessorTest, LoadPendingDelete) {
   bridge()->DeleteItem(kKey1);
   OnSyncStarting();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, kEmptySpecifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {kEmptySpecifics});
 }
 
 // Test that loading a committed item does not queue another commit.
@@ -673,7 +708,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalCreateItem) {
   bridge()->WriteItem(kKey1, kValue1);
 
   // Verify the commit request this operation has triggered.
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
   const CommitRequestData& tag1_request_data =
       worker()->GetLatestPendingCommitForHash(kHash1);
   const EntityData& tag1_data = tag1_request_data.entity.value();
@@ -714,7 +749,7 @@ TEST_F(SharedModelTypeProcessorTest, CommitOnlySimple) {
   InitializeToReadyState();
 
   bridge()->WriteItem(kKey1, kValue1);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
@@ -730,17 +765,17 @@ TEST_F(SharedModelTypeProcessorTest, CommitOnlyUnsyncedChanges) {
   InitializeToReadyState();
 
   bridge()->WriteItem(kKey1, kValue1);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
   bridge()->WriteItem(kKey1, kValue2);
-  worker()->VerifyPendingCommits({kHash1, kHash1});
+  worker()->VerifyPendingCommits({{kHash1}, {kHash1}});
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
   worker()->AckOnePendingCommit();
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
 
@@ -830,7 +865,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalUpdateItem) {
 
   bridge()->WriteItem(kKey1, kValue1);
   EXPECT_EQ(1U, db().metadata_count());
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   const CommitRequestData& request_data_v1 =
       worker()->GetLatestPendingCommitForHash(kHash1);
@@ -839,7 +874,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalUpdateItem) {
 
   bridge()->WriteItem(kKey1, kValue2);
   EXPECT_EQ(1U, db().metadata_count());
-  worker()->VerifyPendingCommits({kHash1, kHash1});
+  worker()->VerifyPendingCommits({{kHash1}, {kHash1}});
 
   const CommitRequestData& request_data_v2 =
       worker()->GetLatestPendingCommitForHash(kHash1);
@@ -882,10 +917,10 @@ TEST_F(SharedModelTypeProcessorTest, LocalUpdateItemRedundant) {
   InitializeToReadyState();
   bridge()->WriteItem(kKey1, kValue1);
   EXPECT_EQ(1U, db().metadata_count());
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   bridge()->WriteItem(kKey1, kValue1);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 }
 
 // Thoroughly tests the data generated by a server item creation.
@@ -965,7 +1000,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalDeleteItem) {
   // Metadata is not removed until the commit response comes back.
   EXPECT_EQ(1U, db().metadata_count());
   EXPECT_EQ(1U, ProcessorEntityCount());
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   const EntityMetadata metadata_v2 = db().GetMetadata(kKey1);
   EXPECT_TRUE(metadata_v2.is_deleted());
@@ -1002,7 +1037,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalDeleteItemUncommitted) {
 TEST_F(SharedModelTypeProcessorTest, LocalDeleteItemInterleaved) {
   InitializeToReadyState();
   bridge()->WriteItem(kKey1, kValue1);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
   const CommitRequestData& data_v1 =
       worker()->GetLatestPendingCommitForHash(kHash1);
 
@@ -1016,7 +1051,7 @@ TEST_F(SharedModelTypeProcessorTest, LocalDeleteItemInterleaved) {
   EXPECT_EQ(0U, db().data_count());
   EXPECT_EQ(1U, db().metadata_count());
   EXPECT_EQ(1U, ProcessorEntityCount());
-  worker()->VerifyPendingCommits({kHash1, kHash1});
+  worker()->VerifyPendingCommits({{kHash1}, {kHash1}});
 
   const CommitRequestData& data_v2 =
       worker()->GetLatestPendingCommitForHash(kHash1);
@@ -1100,7 +1135,7 @@ TEST_F(SharedModelTypeProcessorTest, ServerDeleteUnknown) {
 TEST_F(SharedModelTypeProcessorTest, CommitFailedOnServer) {
   InitializeToReadyState();
   bridge()->WriteItem(kKey1, kValue1);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   // Entity is sent to server. Processor shouldn't include it in local changes.
   CommitRequestDataList commit_request;
@@ -1142,7 +1177,7 @@ TEST_F(SharedModelTypeProcessorTest, TwoIndependentItems) {
   const EntityMetadata metadata1 = db().GetMetadata(kKey1);
 
   // There should be one commit request for this item only.
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   bridge()->WriteItem(kKey2, kValue2);
   EXPECT_EQ(2U, db().data_count());
@@ -1150,7 +1185,7 @@ TEST_F(SharedModelTypeProcessorTest, TwoIndependentItems) {
   const EntityMetadata metadata2 = db().GetMetadata(kKey2);
 
   // The second write should trigger another single-item commit request.
-  worker()->VerifyPendingCommits({kHash1, kHash2});
+  worker()->VerifyPendingCommits({{kHash1}, {kHash2}});
 
   EXPECT_FALSE(metadata1.is_deleted());
   EXPECT_EQ(1, metadata1.sequence_number());
@@ -1170,8 +1205,8 @@ TEST_F(SharedModelTypeProcessorTest, ConflictResolutionChangesMatch) {
   EXPECT_EQ(kValue1, db().GetValue(kKey1));
   EXPECT_EQ(1U, db().metadata_change_count());
   EXPECT_EQ(kUncommittedVersion, db().GetMetadata(kKey1).server_version());
-  worker()->VerifyPendingCommits({kHash1});
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics);
+  worker()->VerifyPendingCommits({{kHash1}});
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics});
 
   // Changes match doesn't call ResolveConflict.
   worker()->UpdateFromServer(kHash1, specifics);
@@ -1179,7 +1214,7 @@ TEST_F(SharedModelTypeProcessorTest, ConflictResolutionChangesMatch) {
   // Updated metadata but not data; no new commit request.
   EXPECT_EQ(1U, db().data_change_count());
   EXPECT_EQ(1, db().GetMetadata(kKey1).server_version());
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 }
 
 TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseLocal) {
@@ -1197,8 +1232,8 @@ TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseLocal) {
   EXPECT_EQ(2U, db().data_change_count());
   EXPECT_EQ(4U, db().metadata_change_count());
   EXPECT_EQ(2, db().GetMetadata(kKey1).server_version());
-  worker()->VerifyPendingCommits({kHash1, kHash1});
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics2);
+  worker()->VerifyPendingCommits({{kHash1}, {kHash1}});
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics2});
 }
 
 TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseRemote) {
@@ -1212,7 +1247,7 @@ TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseRemote) {
   EXPECT_EQ(kValue2, db().GetValue(kKey1));
   EXPECT_EQ(2U, db().metadata_change_count());
   EXPECT_EQ(1, db().GetMetadata(kKey1).server_version());
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 }
 
 TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseNew) {
@@ -1226,9 +1261,9 @@ TEST_F(SharedModelTypeProcessorTest, ConflictResolutionUseNew) {
   EXPECT_EQ(kValue3, db().GetValue(kKey1));
   EXPECT_EQ(2U, db().metadata_change_count());
   EXPECT_EQ(1, db().GetMetadata(kKey1).server_version());
-  worker()->VerifyPendingCommits({kHash1, kHash1});
-  worker()->VerifyNthPendingCommit(1, kHash1,
-                                   GenerateSpecifics(kKey1, kValue3));
+  worker()->VerifyPendingCommits({{kHash1}, {kHash1}});
+  worker()->VerifyNthPendingCommit(1, {kHash1},
+                                   {GenerateSpecifics(kKey1, kValue3)});
 }
 
 // Test proper handling of disconnect and reconnect.
@@ -1286,6 +1321,7 @@ TEST_F(SharedModelTypeProcessorTest, Disable) {
   // The third item is added after disable.
   bridge()->WriteItem(kKey3, kValue3);
 
+
   // Now we re-enable.
   OnSyncStarting();
   worker()->UpdateFromServer();
@@ -1293,7 +1329,7 @@ TEST_F(SharedModelTypeProcessorTest, Disable) {
 
   // Once we're ready to commit, all three local items should consider
   // themselves uncommitted and pending for commit.
-  worker()->VerifyPendingCommits({kHash1, kHash2, kHash3});
+  worker()->VerifyPendingCommits({{kHash1}, {kHash2}, {kHash3}});
 }
 
 // Test re-encrypt everything when desired encryption key changes.
@@ -1304,23 +1340,22 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptCommitsWithNewKey) {
   EntitySpecifics specifics1 = WriteItemAndAck(kKey1, kValue1);
   // Create another item and don't wait for its commit response.
   EntitySpecifics specifics2 = bridge()->WriteItem(kKey2, kValue2);
-  worker()->VerifyPendingCommits({kHash2});
+  worker()->VerifyPendingCommits({{kHash2}});
   EXPECT_EQ(1U, db().GetMetadata(kKey1).sequence_number());
   EXPECT_EQ(1U, db().GetMetadata(kKey2).sequence_number());
 
   // Receive notice that the account's desired encryption key has changed.
   worker()->UpdateWithEncryptionKey("k1");
-  // Tag 2 is recommitted immediately because the data was in memory.
+  // No pending commits because Tag 1 requires data load.
+  ASSERT_EQ(1U, worker()->GetNumPendingCommits());
+  // Tag 1 needs to go to the store to load its data before recommitting.
+  OnCommitDataLoaded();
+  // All data are in memory now.
   ASSERT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash2, specifics2);
+  worker()->VerifyNthPendingCommit(1, {kHash1, kHash2}, {specifics1, specifics2});
   // Sequence numbers in the store are updated.
   EXPECT_EQ(2U, db().GetMetadata(kKey1).sequence_number());
   EXPECT_EQ(2U, db().GetMetadata(kKey2).sequence_number());
-
-  // Tag 1 needs to go to the store to load its data before recommitting.
-  OnPendingCommitDataLoaded();
-  ASSERT_EQ(3U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(2, kHash1, specifics1);
 }
 
 // Test that an error loading pending commit data for re-encryption is
@@ -1351,23 +1386,21 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptUpdatesWithNewKey) {
   // Set desired encryption key to k2 to force updates to some items.
   worker()->UpdateWithEncryptionKey("k2", update);
 
-  // kKey2 needed to be re-encrypted and had data so it was queued immediately.
-  worker()->VerifyPendingCommits({kHash2});
-  OnPendingCommitDataLoaded();
-  // kKey1 needed data so once that's loaded, it is also queued.
-  worker()->VerifyPendingCommits({kHash2, kHash1});
+  OnCommitDataLoaded();
+  // kKey1 needed data so once that's loaded, kKey1 and kKey2 are queued for commit.
+  worker()->VerifyPendingCommits({{kHash1, kHash2}});
 
   // Receive a separate update that was encrypted with key k1.
   worker()->UpdateFromServer(kHash4, GenerateSpecifics(kKey4, kValue1), 1,
                              "k1");
   // Receipt of updates encrypted with old key also forces a re-encrypt commit.
-  worker()->VerifyPendingCommits({kHash2, kHash1, kHash4});
+  worker()->VerifyPendingCommits({{kHash1, kHash2}, {kHash4}});
 
   // Receive an update that was encrypted with key k2.
   worker()->UpdateFromServer(kHash5, GenerateSpecifics(kKey5, kValue1), 1,
                              "k2");
   // That was the correct key, so no re-encryption is required.
-  worker()->VerifyPendingCommits({kHash2, kHash1, kHash4});
+  worker()->VerifyPendingCommits({{kHash1, kHash2}, {kHash4}});
 }
 
 // Test that re-encrypting enqueues the right data for USE_LOCAL conflicts.
@@ -1377,7 +1410,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseLocal) {
   WriteItemAndAck(kKey1, kValue1);
   worker()->UpdateWithEncryptionKey("k1");
   EntitySpecifics specifics = bridge()->WriteItem(kKey1, kValue2);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 
   bridge()->SetConflictResolution(ConflictResolution::UseLocal());
   // Unencrypted update needs to be re-commited with key k1.
@@ -1385,14 +1418,15 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseLocal) {
 
   // Ensure the re-commit has the correct value.
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics);
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics});
   EXPECT_EQ(kValue2, db().GetValue(kKey1));
 
-  // GetData was launched as a result of UpdateWithEncryptionKey(). Since the
-  // conflict resolution encrypted all entities, the GetData result should be
-  // ignored.
-  OnPendingCommitDataLoaded();
-  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  // GetData was launched as a result of GetLocalChanges call(). Since the
+  // conflict resolution encrypted all entities, no data is required.
+  // The extra pending commit should be empty.
+  OnCommitDataLoaded();
+  EXPECT_EQ(3U, worker()->GetNumPendingCommits());
+  worker()->VerifyNthPendingCommit(2, {}, {});
 }
 
 // Test that re-encrypting enqueues the right data for USE_REMOTE conflicts.
@@ -1408,7 +1442,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseRemote) {
 
   // Ensure the re-commit has the correct value.
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics);
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics});
   EXPECT_EQ(kValue2, db().GetValue(kKey1));
 }
 
@@ -1425,8 +1459,8 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseNew) {
 
   // Ensure the re-commit has the correct value.
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash1,
-                                   GenerateSpecifics(kKey1, kValue3));
+  worker()->VerifyNthPendingCommit(1, {kHash1},
+                                   {GenerateSpecifics(kKey1, kValue3)});
   EXPECT_EQ(kValue3, db().GetValue(kKey1));
 }
 
@@ -1444,12 +1478,13 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictWhileLoading) {
 
   // Ensure the re-commit has the correct value.
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics});
   EXPECT_EQ(kValue2, db().GetValue(kKey1));
 
-  // Data load completing shouldn't change anything.
-  OnPendingCommitDataLoaded();
-  EXPECT_EQ(1U, worker()->GetNumPendingCommits());
+  // Data load completing should add no commit requests.
+  OnCommitDataLoaded();
+  EXPECT_EQ(2U, worker()->GetNumPendingCommits());
+  worker()->VerifyNthPendingCommit(1, {}, {});
 }
 
 // Tests that a real remote change wins over a local encryption-only change.
@@ -1457,9 +1492,9 @@ TEST_F(SharedModelTypeProcessorTest, IgnoreLocalEncryption) {
   InitializeToReadyState();
   EntitySpecifics specifics = WriteItemAndAck(kKey1, kValue1);
   worker()->UpdateWithEncryptionKey("k1");
-  OnPendingCommitDataLoaded();
+  OnCommitDataLoaded();
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics});
 
   worker()->UpdateFromServer(kHash1, GenerateSpecifics(kKey1, kValue2));
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
@@ -1476,7 +1511,7 @@ TEST_F(SharedModelTypeProcessorTest, IgnoreRemoteEncryption) {
   worker()->UpdateWithEncryptionKey("k1", update);
 
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics2});
 }
 
 // Same as above but with two commit requests before one ack.
@@ -1489,14 +1524,14 @@ TEST_F(SharedModelTypeProcessorTest, IgnoreRemoteEncryptionInterleaved) {
   worker()->AckOnePendingCommit();
   // kValue2 is now the base value.
   EXPECT_EQ(1U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(0, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(0, {kHash1}, {specifics2});
 
   UpdateResponseDataList update;
   update.push_back(worker()->GenerateUpdateData(kHash1, specifics1, 1, "k1"));
   worker()->UpdateWithEncryptionKey("k1", update);
 
   EXPECT_EQ(2U, worker()->GetNumPendingCommits());
-  worker()->VerifyNthPendingCommit(1, kHash1, specifics2);
+  worker()->VerifyNthPendingCommit(1, {kHash1}, {specifics2});
 }
 
 // Tests that UpdateStorageKey propagates storage key to ProcessorEntityTracker
@@ -1555,7 +1590,7 @@ TEST_F(SharedModelTypeProcessorTest, ReencryptionWithEmptyStorageKeys) {
   update.push_back(worker()->GenerateUpdateData(
       kHash1, GenerateSpecifics(kKey1, kValue1), 1, "ek1"));
   worker()->UpdateWithEncryptionKey("ek2", update);
-  worker()->VerifyPendingCommits({kHash1});
+  worker()->VerifyPendingCommits({{kHash1}});
 }
 
 // Tests that UntrackEntity won't propagate storage key to

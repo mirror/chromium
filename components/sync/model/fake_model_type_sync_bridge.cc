@@ -175,7 +175,9 @@ void FakeModelTypeSyncBridge::WriteItem(
     const std::string& key,
     std::unique_ptr<EntityData> entity_data) {
   db_->PutData(key, *entity_data);
+  LOG(WARNING) << " >>>>>>>>>  FakeModelTypeSyncBridge::WriteItem 1";
   if (change_processor()->IsTrackingMetadata()) {
+    LOG(WARNING) << " >>>>>>>>>  FakeModelTypeSyncBridge::WriteItem 2";
     auto change_list = CreateMetadataChangeList();
     change_processor()->Put(key, std::move(entity_data), change_list.get());
     ApplyMetadataChangeList(std::move(change_list));
