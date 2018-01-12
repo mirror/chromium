@@ -106,6 +106,24 @@
       "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b59ffc1_f5575903",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T23:45:07Z",
+      "side": 1,
+      "message": "I\u0027ve been thinking about this more, and I think we don\u0027t want to recommend this. It seems quite dicey to have to rely on fast termination to avoid issues with global destructors in the Chrome binary--not to mention we\u0027ll still be emitting the binary code that runs them.\n\nDoes the built-in synchronization on static do a better job of not spinning than LazyInstance? If that works, I\u0027d be inclined to go with that approach. I also think we should add a NoDestructor\u003c\u003e helper to avoid all the static T* instance \u003d new T; boilerplate, but that\u0027s a separate discussion.",
+      "parentUuid": "81edfffe_88343cc3",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
