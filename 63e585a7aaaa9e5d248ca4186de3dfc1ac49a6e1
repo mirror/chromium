@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f8a0e38_3fbb5100",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "734dac1b_3e0231cf",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f83693df_bad12b0d",
         "filename": "chrome/browser/devtools/device/android_web_socket.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508b82dd_6eb41262",
+        "filename": "chrome/browser/devtools/device/android_web_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f83693df_bad12b0d",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "395aa6f2_dcad1afa",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "236c7163_da969f90",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a70bb34_78d7b164",
         "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d788a23a_f8020c6e",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a70bb34_78d7b164",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b7940c83_946b2d03",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744a0b94_37ea6eeb",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41711eac_ee837f85",
         "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0933e696_a3f3cea7",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41711eac_ee837f85",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "784eff56_345df92f",
         "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-10T16:51:03Z",
       "side": 1,
       "message": "YES, local cookies of android device.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789a2fa4_9bade483",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Which cookie_store are they stored in?\nOr it is a different mechanism than normal cookies?",
+      "parentUuid": "784eff56_345df92f",
       "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5b376f51_6eeaa6ba",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57553e6_7a411f67",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f0fcd6c_772d0e0b",
         "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2018-01-10T16:51:03Z",
       "side": 1,
       "message": "This is only used for remote debugging and mirrors traffic from Android device. Any policy affecting traffic on connected Android device effectively affects this one.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9669eb8f_75891504",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-12T13:35:51Z",
+      "side": 1,
+      "message": "I did not find any related policy. Do you have any suggestion?",
+      "parentUuid": "3f0fcd6c_772d0e0b",
       "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
