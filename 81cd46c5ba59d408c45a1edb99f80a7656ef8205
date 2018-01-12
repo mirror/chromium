@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b745fded_89caefb2",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:34:05Z",
+      "side": 1,
+      "message": "If this is never expected (assuming no attacker), I\u0027d say this should be a mojo::ReportBadMessage then. Notifying an error like this makes it seem like it\u0027s an expected situation that should be gracefully handled.",
+      "parentUuid": "aee2fcc6_9b10832c",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a95a26_904ad469",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
         "patchSetId": 14
