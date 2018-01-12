@@ -16,6 +16,24 @@
       "revId": "f9269584f81ebf8f7f29ab94ce7f9d60a66c0af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971192ba_ca7676bb",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-12T16:23:59Z",
+      "side": 1,
+      "message": "Thanks for the suggestion; I\u0027ll try to do this in a follow-up CL next week.",
+      "parentUuid": "a80db45b_05bb92ab",
+      "revId": "f9269584f81ebf8f7f29ab94ce7f9d60a66c0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
