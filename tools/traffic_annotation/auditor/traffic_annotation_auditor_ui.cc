@@ -59,6 +59,10 @@ Options:
   --annotations-file  Optional path to a TSV output file with all annotations.
   --limit             Limit for the maximum number of returned errors.
                       Use 0 for unlimited.
+  --nice              Optional flag, stating not to return error in exit code if
+                      auditor fails to perform the tests. This flag can be used
+                      for trybots to avoid spamming when there is there is
+                      something unexpected in running the tests.
   path_filters        Optional paths to filter which files the tool is run on.
                       It can also include deleted files names when auditor is
                       run on a partial repository.
@@ -335,6 +339,7 @@ int main(int argc, char* argv[]) {
   base::FilePath annotations_file =
       command_line.GetSwitchValuePath("annotations-file");
   std::vector<std::string> path_filters;
+  int nice_error_result = command_line.HasSwitch("nice") ? 0 : 1;
   int outputs_limit = 0;
   if (command_line.HasSwitch("limit")) {
     if (!base::StringToInt(command_line.GetSwitchValueNative("limit"),
@@ -342,6 +347,8 @@ int main(int argc, char* argv[]) {
         outputs_limit < 0) {
       LOG(ERROR)
           << "The value for 'limit' switch should be a positive integer.";
+
+      // This error doen't get nice, as it is a commandline switch.
       return 1;
     }
   }
@@ -375,6 +382,8 @@ int main(int argc, char* argv[]) {
   if (build_path.empty()) {
     LOG(ERROR)
         << "You must specify a compiled build directory to run the auditor.\n";
+
+    // This error doen't get nice, as it is a commandline switch.
     return 1;
   }
 
@@ -384,7 +393,7 @@ int main(int argc, char* argv[]) {
   if (extractor_input.empty()) {
     if (!auditor.RunClangTool(path_filters, filter_files, all_files)) {
       LOG(ERROR) << "Failed to run clang tool.";
-      return 1;
+      return nice_error_result;
     }
 
     // Write extractor output if requested.
@@ -398,7 +407,7 @@ int main(int argc, char* argv[]) {
     if (!base::ReadFileToString(extractor_input, &raw_output)) {
       LOG(ERROR) << "Could not read input file: "
                  << extractor_input.value().c_str();
-      return 1;
+      return nice_error_result;
     } else {
       auditor.set_clang_tool_raw_output(raw_output);
     }
@@ -406,12 +415,12 @@ int main(int argc, char* argv[]) {
 
   // Process extractor output.
   if (!auditor.ParseClangToolRawOutput())
-    return 1;
+    return nice_error_result;
 
   // Perform checks.
   if (!auditor.RunAllChecks(path_filters, test_only)) {
     LOG(ERROR) << "Running checks failed.";
-    return 1;
+    return nice_error_result;
   }
 
   // Write the summary file.
@@ -419,7 +428,7 @@ int main(int argc, char* argv[]) {
       !WriteSummaryFile(summary_file, auditor.extracted_annotations(),
                         auditor.extracted_calls(), auditor.errors())) {
     LOG(ERROR) << "Could not write summary file.";
-    return 1;
+    return nice_error_result;
   }
 
   // Write annotations TSV file.
@@ -429,7 +438,7 @@ int main(int argc, char* argv[]) {
         !WriteAnnotationsFile(annotations_file, auditor.extracted_annotations(),
                               missing_ids)) {
       LOG(ERROR) << "Could not write TSV file.";
-      return 1;
+      return nice_error_result;
     }
   }
 
@@ -441,7 +450,7 @@ int main(int argc, char* argv[]) {
     if (!auditor.exporter().SaveAnnotationsXML() ||
         !RunAnnotationDownstreamUpdater(source_path)) {
       LOG(ERROR) << "Could not update annotations XML or downstream files.";
-      return 1;
+      return nice_error_result;
     }
   }
 
