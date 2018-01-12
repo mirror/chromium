@@ -144,6 +144,8 @@
   [self.toolbarCoordinator cancelOmniboxEdit];
 }
 
+#pragma mark - FakeboxFocuser
+
 - (void)focusFakebox {
   [self.toolbarCoordinator focusFakebox];
 }

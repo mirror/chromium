@@ -1015,12 +1015,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (id<ApplicationCommands,
       BrowserCommands,
       OmniboxFocuser,
+      FakeboxFocuser,
       SnackbarCommands,
       UrlLoader,
       WebToolbarDelegate>)dispatcher {
-  return static_cast<id<ApplicationCommands, BrowserCommands, OmniboxFocuser,
-                        SnackbarCommands, UrlLoader, WebToolbarDelegate>>(
-      _dispatcher);
+  return static_cast<
+      id<ApplicationCommands, BrowserCommands, OmniboxFocuser, FakeboxFocuser,
+         SnackbarCommands, UrlLoader, WebToolbarDelegate>>(_dispatcher);
 }
 
 - (void)setActive:(BOOL)active {
@@ -1932,6 +1933,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                                     dispatcher:self.dispatcher]];
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
+  [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
+                            forProtocol:@protocol(FakeboxFocuser)];
   [self.legacyToolbarCoordinator setTabCount:[_model count]];
   [_toolbarCoordinator start];
   [self updateBroadcastState];

@@ -36,6 +36,7 @@ std::string FragmentFromIdentifier(ntp_home::PanelIdentifier panel);
 @protocol IncognitoViewControllerDelegate;
 @protocol NewTabPagePanelProtocol;
 @protocol OmniboxFocuser;
+@protocol FakeboxFocuser;
 @protocol SnackbarCommands;
 @class TabModel;
 @protocol UrlLoader;
@@ -90,6 +91,7 @@ std::string FragmentFromIdentifier(ntp_home::PanelIdentifier panel);
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
                              OmniboxFocuser,
+                             FakeboxFocuser,
                              SnackbarCommands,
                              UrlLoader>)dispatcher
            safeAreaInset:(UIEdgeInsets)safeAreaInset;

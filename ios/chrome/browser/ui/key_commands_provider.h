@@ -9,6 +9,7 @@
 
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
+#import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 
 @protocol KeyCommandsPlumbing<NSObject>
@@ -47,13 +48,13 @@
 // BrowserViewController.
 @interface KeyCommandsProvider : NSObject
 
-- (NSArray*)
-keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
-    baseViewController:(UIViewController*)baseViewController
-            dispatcher:
-                (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)
-                    dispatcher
-           editingText:(BOOL)editingText;
+- (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
+                baseViewController:(UIViewController*)baseViewController
+                        dispatcher:(id<ApplicationCommands,
+                                       BrowserCommands,
+                                       OmniboxFocuser,
+                                       FakeboxFocuser>)dispatcher
+                       editingText:(BOOL)editingText;
 
 @end
 
