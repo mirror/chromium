@@ -16,6 +16,24 @@
       "revId": "8738071e484555f67be9c1ea8b04d399e62a4999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6855241b_9d50a797",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-12T17:40:53Z",
+      "side": 0,
+      "message": "Accidental deletion indeed, re-added the breaks now.",
+      "parentUuid": "68e39746_fcc94e59",
+      "revId": "8738071e484555f67be9c1ea8b04d399e62a4999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
