@@ -165,6 +165,10 @@ std::unique_ptr<ListValue> GetRegistrationListValue(
     registration_info->SetString("scope", registration.pattern.spec());
     registration_info->SetString(
         "registration_id", base::Int64ToString(registration.registration_id));
+    registration_info->SetBoolean("navigation_preload_enabled",
+                                  registration.navigation_preload_enabled);
+    registration_info->SetString("navigation_preload_header",
+                                 registration.navigation_preload_header);
 
     if (registration.active_version.version_id !=
         blink::mojom::kInvalidServiceWorkerVersionId) {
