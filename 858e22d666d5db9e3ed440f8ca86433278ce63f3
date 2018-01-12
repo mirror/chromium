@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f4b33ac_15fa9059",
+        "filename": "third_party/WebKit/Source/core/paint/SVGContainerPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-12T10:16:55Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure why this would be needed. I thought it was decided that replaced content would not be fragmented, or am I misremembering? But even if multicol doesn\u0027t need it I guess printing might...",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "858e22d666d5db9e3ed440f8ca86433278ce63f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
