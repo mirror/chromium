@@ -56,8 +56,7 @@ public class AutofillPopupBridge implements AutofillDelegate, DialogInterface.On
     @CalledByNative
     private static AutofillPopupBridge create(View anchorView, long nativeAutofillPopupViewAndroid,
             WindowAndroid windowAndroid) {
-        return new AutofillPopupBridge(anchorView, nativeAutofillPopupViewAndroid,
-                windowAndroid);
+        return new AutofillPopupBridge(anchorView, nativeAutofillPopupViewAndroid, windowAndroid);
     }
 
     @Override
@@ -77,9 +76,7 @@ public class AutofillPopupBridge implements AutofillDelegate, DialogInterface.On
 
     @Override
     public void accessibilityFocusCleared() {
-        if (mWebContentsAccessibility != null) {
-            mWebContentsAccessibility.onAutofillPopupAccessibilityFocusCleared();
-        }
+        mWebContentsAccessibility.onAutofillPopupAccessibilityFocusCleared();
     }
 
     @Override
@@ -95,9 +92,7 @@ public class AutofillPopupBridge implements AutofillDelegate, DialogInterface.On
     private void dismiss() {
         if (mAutofillPopup != null) mAutofillPopup.dismiss();
         if (mDeletionDialog != null) mDeletionDialog.dismiss();
-        if (mWebContentsAccessibility != null) {
-            mWebContentsAccessibility.onAutofillPopupDismissed();
-        }
+        mWebContentsAccessibility.onAutofillPopupDismissed();
     }
 
     /**
@@ -119,9 +114,7 @@ public class AutofillPopupBridge implements AutofillDelegate, DialogInterface.On
         if (mAutofillPopup != null) {
             mAutofillPopup.filterAndShow(
                     suggestions, isRtl, backgroundColor, dividerColor, dropdownItemHeight, margin);
-            if (mWebContentsAccessibility != null) {
-                mWebContentsAccessibility.onAutofillPopupDisplayed(mAutofillPopup.getListView());
-            }
+            mWebContentsAccessibility.onAutofillPopupDisplayed(mAutofillPopup.getListView());
         }
     }
 

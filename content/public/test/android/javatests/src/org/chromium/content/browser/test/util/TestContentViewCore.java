@@ -6,12 +6,9 @@ package org.chromium.content.browser.test.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.view.ViewStructure;
-import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
@@ -259,41 +256,9 @@ public class TestContentViewCore implements ContentViewCore {
     }
 
     @Override
-    public boolean supportsAccessibilityAction(int action) {
-        return false;
-    }
-
-    @Override
-    public boolean performAccessibilityAction(int action, Bundle arguments) {
-        return false;
-    }
-
-    @Override
     public WebContentsAccessibility getWebContentsAccessibility() {
         return null;
     }
-
-    @Override
-    public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        return null;
-    }
-
-    @Override
-    public void onProvideVirtualStructure(ViewStructure structure, boolean ignoreScrollOffset) {}
-
-    @Override
-    public void setObscuredByAnotherView(boolean isObscured) {}
-
-    @Override
-    public boolean isTouchExplorationEnabled() {
-        return false;
-    }
-
-    @Override
-    public void setAccessibilityState(boolean state) {}
-
-    @Override
-    public void setShouldSetAccessibilityFocusOnPageLoad(boolean on) {}
 
     @Override
     public boolean getIsMobileOptimizedHint() {

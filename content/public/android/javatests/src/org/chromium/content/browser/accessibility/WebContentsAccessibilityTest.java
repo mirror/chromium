@@ -77,17 +77,18 @@ public class WebContentsAccessibilityTest {
      * returns something not null.
      */
     private AccessibilityNodeProvider enableAccessibilityAndWaitForNodeProvider() {
-        final ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
+        final WebContentsAccessibility wcax =
+                mActivityTestRule.getContentViewCore().getWebContentsAccessibility();
+        wcax.setState(true);
 
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return contentViewCore.getAccessibilityNodeProvider() != null;
+                return wcax.getAccessibilityNodeProvider() != null;
             }
         });
 
-        return contentViewCore.getAccessibilityNodeProvider();
+        return wcax.getAccessibilityNodeProvider();
     }
 
     AccessibilityEventCallbackHelper mAccessibilityEventCallbackHelper;
@@ -112,8 +113,9 @@ public class WebContentsAccessibilityTest {
 
         // Get the AccessibilityNodeProvider.
         ContentViewCore contentViewCore = mActivityTestRule.getContentViewCore();
-        contentViewCore.setAccessibilityState(true);
-        AccessibilityNodeProvider provider = contentViewCore.getAccessibilityNodeProvider();
+        WebContentsAccessibility wcax = contentViewCore.getWebContentsAccessibility();
+        wcax.setState(true);
+        AccessibilityNodeProvider provider = wcax.getAccessibilityNodeProvider();
 
         // Wait until we find a node in the accessibility tree with the text "Text".
         // Whenever the tree is updated, an AccessibilityEvent is fired, so we can just wait until

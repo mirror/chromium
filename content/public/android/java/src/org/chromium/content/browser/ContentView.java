@@ -22,6 +22,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.base.TraceEvent;
+import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.ui.base.EventForwarder;
 
 /**
@@ -83,11 +84,9 @@ public class ContentView extends FrameLayout
 
     @Override
     public boolean performAccessibilityAction(int action, Bundle arguments) {
-        if (mContentViewCore.supportsAccessibilityAction(action)) {
-            return mContentViewCore.performAccessibilityAction(action, arguments);
-        }
-
-        return super.performAccessibilityAction(action, arguments);
+        WebContentsAccessibility wcax = mContentViewCore.getWebContentsAccessibility();
+        return wcax.supportsAction(action) ? wcax.performAction(action, arguments)
+                                           : super.performAccessibilityAction(action, arguments);
     }
 
     /**
@@ -113,12 +112,9 @@ public class ContentView extends FrameLayout
 
     @Override
     public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        AccessibilityNodeProvider provider = mContentViewCore.getAccessibilityNodeProvider();
-        if (provider != null) {
-            return provider;
-        } else {
-            return super.getAccessibilityNodeProvider();
-        }
+        AccessibilityNodeProvider provider =
+                mContentViewCore.getWebContentsAccessibility().getAccessibilityNodeProvider();
+        return provider != null ? provider : super.getAccessibilityNodeProvider();
     }
 
     // Needed by ContentViewCore.InternalAccessDelegate
@@ -186,7 +182,8 @@ public class ContentView extends FrameLayout
     @Override
     public boolean onHoverEvent(MotionEvent event) {
         boolean consumed = getEventForwarder().onHoverEvent(event);
-        if (!mContentViewCore.isTouchExplorationEnabled()) super.onHoverEvent(event);
+        WebContentsAccessibility wcax = mContentViewCore.getWebContentsAccessibility();
+        if (!wcax.isTouchExplorationEnabled()) super.onHoverEvent(event);
         return consumed;
     }
 
@@ -331,7 +328,8 @@ public class ContentView extends FrameLayout
 
         @Override
         public void onProvideVirtualStructure(final ViewStructure structure) {
-            mContentViewCore.onProvideVirtualStructure(structure, false);
+            WebContentsAccessibility wcax = mContentViewCore.getWebContentsAccessibility();
+            wcax.onProvideVirtualStructure(structure, false);
         }
     }
 }

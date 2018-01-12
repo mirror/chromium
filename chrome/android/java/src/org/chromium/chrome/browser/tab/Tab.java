@@ -1821,7 +1821,7 @@ public class Tab
             destroyNativePageInternal(previousNativePage);
 
             if (mContentViewCore != null) {
-                mContentViewCore.setObscuredByAnotherView(false);
+                mContentViewCore.getWebContentsAccessibility().setObscuredByAnotherView(false);
                 mContentViewCore.getWebContents().setImportance(ChildProcessImportance.NORMAL);
             }
 
@@ -1868,7 +1868,7 @@ public class Tab
             // For browser tabs, we want to set accessibility focus to the page
             // when it loads. This is not the default behavior for embedded
             // web views.
-            mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
+            mContentViewCore.getWebContentsAccessibility().setShouldFocusOnPageLoad(true);
 
             mContentViewCore.addImeEventObserver(new ImeEventObserver() {
                 @Override
@@ -3171,7 +3171,7 @@ public class Tab
         if (cvc != null) {
             boolean isWebContentObscured = isObscuredByAnotherViewForAccessibility()
                     || isShowingSadTab();
-            cvc.setObscuredByAnotherView(isWebContentObscured);
+            cvc.getWebContentsAccessibility().setObscuredByAnotherView(isWebContentObscured);
         }
     }
 

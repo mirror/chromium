@@ -2421,7 +2421,7 @@ public class AwContents implements SmartClipProvider {
         }
         // for webview, the platform already calculates the scroll (as it is a view) in
         // ViewStructure tree. Do not offset for it in the snapshop x,y position calculations.
-        mContentViewCore.onProvideVirtualStructure(structure, true);
+        mContentViewCore.getWebContentsAccessibility().onProvideVirtualStructure(structure, true);
     }
 
     public void onProvideAutoFillVirtualStructure(ViewStructure structure, int flags) {
@@ -2720,8 +2720,9 @@ public class AwContents implements SmartClipProvider {
     }
 
     public boolean supportsAccessibilityAction(int action) {
-        return isDestroyedOrNoOperation(WARN) ? false
-                : mContentViewCore.supportsAccessibilityAction(action);
+        return isDestroyedOrNoOperation(WARN)
+                ? false
+                : mContentViewCore.getWebContentsAccessibility().supportsAction(action);
     }
 
     /**
@@ -3549,15 +3550,17 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-            return isDestroyedOrNoOperation(WARN) ? null
-                                                  : mContentViewCore.getAccessibilityNodeProvider();
+            return isDestroyedOrNoOperation(WARN)
+                    ? null
+                    : mContentViewCore.getWebContentsAccessibility().getAccessibilityNodeProvider();
         }
 
         @Override
         public boolean performAccessibilityAction(final int action, final Bundle arguments) {
             return isDestroyedOrNoOperation(WARN)
                     ? false
-                    : mContentViewCore.performAccessibilityAction(action, arguments);
+                    : mContentViewCore.getWebContentsAccessibility().performAction(
+                              action, arguments);
         }
     }
 

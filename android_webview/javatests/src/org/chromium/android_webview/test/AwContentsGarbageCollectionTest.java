@@ -173,7 +173,7 @@ public class AwContentsGarbageCollectionTest {
             mActivityTestRule.loadUrlAsync(
                     containerViews[i].getAwContents(), ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
             providers[i] = ThreadUtils.runOnUiThreadBlocking(() -> {
-                containerView.getContentViewCore().setAccessibilityState(true);
+                containerView.getContentViewCore().getWebContentsAccessibility().setState(true);
                 return containerView.getAccessibilityNodeProvider();
             });
             Assert.assertNotNull(providers[i]);
