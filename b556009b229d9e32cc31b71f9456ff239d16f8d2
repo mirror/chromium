@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df23e8a3_0d8453fb",
+        "filename": "chrome/browser/ui/browser_view_prefs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-01-12T19:24:22Z",
+      "side": 1,
+      "message": "After removing the bubble shown count pref, the body of this method was USE_X11 only, so I killed the method for non-X11. Happy to revert if this doesn\u0027t work for some reason.",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "b556009b229d9e32cc31b71f9456ff239d16f8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
