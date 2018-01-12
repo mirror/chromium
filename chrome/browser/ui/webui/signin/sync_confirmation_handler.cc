@@ -79,9 +79,6 @@ void SyncConfirmationHandler::HandleUndo(const base::ListValue* args) {
   base::RecordAction(base::UserMetricsAction("Signin_Undo_Signin"));
   LoginUIServiceFactory::GetForProfile(profile_)->SyncConfirmationUIClosed(
       LoginUIService::ABORT_SIGNIN);
-  SigninManagerFactory::GetForProfile(profile_)->SignOut(
-      signin_metrics::ABORT_SIGNIN,
-      signin_metrics::SignoutDelete::IGNORE_METRIC);
 
   if (browser_)
     browser_->signin_view_controller()->CloseModalSignin();
@@ -118,6 +115,20 @@ void SyncConfirmationHandler::OnAccountUpdated(const AccountInfo& info) {
 
 void SyncConfirmationHandler::CloseModalSigninWindow(
     LoginUIService::SyncConfirmationUIClosedResult result) {
+  switch (result) {
+    case LoginUIService::CONFIGURE_SYNC_FIRST:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_WithAdvancedSyncSettings"));
+      break;
+    case LoginUIService::SYNC_WITH_DEFAULT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_WithDefaultSyncSettings"));
+      break;
+    case LoginUIService::ABORT_SIGNIN:
+      // This case is handled in HandleUndo().
+      NOTREACHED();
+      break;
+  }
   LoginUIServiceFactory::GetForProfile(profile_)->SyncConfirmationUIClosed(
       result);
   if (browser_)
