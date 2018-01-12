@@ -32,6 +32,7 @@
 #include "components/guest_view/browser/guest_view_message_filter.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_url_handler.h"
+#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -283,12 +284,27 @@ GURL ChromeContentBrowserClientExtensionsPart::GetEffectiveURL(
   if (extension->from_bookmark())
     return url;
 
+  // TODO: update.
   // If |url| corresponds to an isolated origin, don't resolve effective URLs,
   // since isolated origins should take precedence over hosted apps.  One
   // exception is a URL for Chrome Web Store, which should always be resolved
   // to its effective URL, so that the CWS process gets proper bindings.
-  if (is_isolated_origin && extension->id() != kWebStoreAppId)
-    return url;
+  // TODO: remove |is_isolated_origin|.
+  if (is_isolated_origin && extension->id() != kWebStoreAppId) {
+    url::Origin isolated_origin;
+    auto* policy = content::ChildProcessSecurityPolicy::GetInstance();
+    policy->GetMatchingIsolatedOrigin(url::Origin::Create(url),
+                                      &isolated_origin);
+    LOG(ERROR) << "  GetEffectiveURL has isolated origin";
+    LOG(ERROR) << "  url=" << url;
+    LOG(ERROR) << "  isolated origin=" << isolated_origin.Serialize();
+    if (!DoesOriginMatchAllURLsInWebExtent(isolated_origin,
+                                           extension->web_extent())) {
+      LOG(ERROR) << "  Origin contain NOT contain web extent";
+      return url;
+    }
+    LOG(ERROR) << "  Origin contains web extent";
+  }
 
   // If the URL is part of an extension's web extent, convert it to an
   // extension URL.
@@ -749,6 +765,23 @@ void ChromeContentBrowserClientExtensionsPart::RecordShouldAllowOpenURLFailure(
 
   UMA_HISTOGRAM_ENUMERATION("Extensions.ShouldAllowOpenURL.Failure.Scheme",
                             scheme, SCHEME_LAST);
+}
+
+// static
+bool ChromeContentBrowserClientExtensionsPart::
+    DoesOriginMatchAllURLsInWebExtent(const url::Origin& origin,
+                                      const URLPatternSet& web_extent) {
+  DCHECK(origin.scheme() == url::kHttpsScheme ||
+         origin.scheme() == url::kHttpScheme);
+  URLPattern origin_pattern(URLPattern::SCHEME_HTTPS | URLPattern::SCHEME_HTTP);
+  origin_pattern.SetScheme(origin.scheme());
+  origin_pattern.SetHost(origin.host());
+  origin_pattern.SetMatchSubdomains(true);
+  origin_pattern.SetPath("/*");
+
+  URLPatternSet origin_pattern_list;
+  origin_pattern_list.AddPattern(origin_pattern);
+  return origin_pattern_list.Contains(web_extent);
 }
 
 void ChromeContentBrowserClientExtensionsPart::RenderProcessWillLaunch(
