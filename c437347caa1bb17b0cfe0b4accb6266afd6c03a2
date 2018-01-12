@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa73350_4958e949",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:20:47Z",
+      "side": 1,
+      "message": "This code applies to both WebXR and VR browsing, right?",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466a8faa_f1413bdf",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:20:47Z",
+      "side": 1,
+      "message": "`WebXR` as discussed",
+      "range": {
+        "startLine": 2355,
+        "startChar": 16,
+        "endLine": 2355,
+        "endChar": 27
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dbe521_c0ff89b7",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T20:20:47Z",
+      "side": 1,
+      "message": "The objects in the \"Did\" and \"Has\" metrics are different. In fact, these metrics aren\u0027t even specific to the WebXR API, so maybe they should be in a separate namespace. (I don\u0027t know what that does to our ability to understand the data. Maybe we should do namespacing  within the metric names rather than the event name. Does that mean there should be a single \"XR\" event name with everything else recorded as metrics under it?",
+      "range": {
+        "startLine": 2372,
+        "startChar": 16,
+        "endLine": 2372,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
