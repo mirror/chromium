@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5f9f73_2a35a40d",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T00:03:35Z",
+      "side": 1,
+      "message": "This can be unconditional; if RLS is disabled, root_layer_-\u003eGetScrollableArea()-\u003eGetScrollOffset() will be (0, 0).",
+      "revId": "5db5bb72c99849dda4c7cdb47d1be96ddec99d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
