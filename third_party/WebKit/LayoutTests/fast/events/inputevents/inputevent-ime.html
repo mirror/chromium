@@ -234,7 +234,8 @@
     textInputController.setComposition('hello');
     resetEventLog();
 
-    textInputController.unmarkText();
+  textInputController.unmarkText();
+  console.log(eventLog);
     assert_array_equals(eventLog, [
       'beforeinput: isComposing=true, data="hello"',
       'compositionupdate: data="hello"',
