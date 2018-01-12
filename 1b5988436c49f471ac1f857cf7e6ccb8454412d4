@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f749e7c_75e38e1d",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-12T19:34:17Z",
+      "side": 1,
+      "message": "I\u0027ll add a comment for this test in the next patch, but essentially this tests: when a tab is open to chrome page that the extension overrides. In such case, that page should reload to the default page content when the extension is unloaded.\n\nI couldn\u0027t find existing tests for this, but the link I shared in the previous comment shows that this reload is occurring.",
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f26dfeb_3491e247",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-12T19:34:17Z",
+      "side": 1,
+      "message": "Do you know of a way to compare contents of WebContents?",
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
