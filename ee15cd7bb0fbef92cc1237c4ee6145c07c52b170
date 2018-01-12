@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "dd90acba_9cf7da7f",
+        "filename": "components/ntp_snippets/content_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-12T14:32:55Z",
+      "side": 1,
+      "message": "Should you rename it to |has_signed_in|? \n\nThe method is called after the state change, thus, \"now\" may be ambiguous.\n|has_signed_in| describes the state change and feels unambiguous.",
+      "range": {
+        "startLine": 133,
+        "startChar": 38,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee93b6b9_568e7255",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-12T14:32:55Z",
+      "side": 1,
+      "message": "/*is_signed_in\u003d*/true\n\nor whatever the parameter name is :)\n\nThen when reading it is immediately clear what true actually means here.",
+      "range": {
+        "startLine": 529,
+        "startChar": 23,
+        "endLine": 529,
+        "endChar": 27
+      },
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ca3795_6bc763c0",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-12T14:32:55Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 534,
+        "startChar": 23,
+        "endLine": 534,
+        "endChar": 28
+      },
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c15431_3f6e285f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-12T14:32:55Z",
+      "side": 1,
+      "message": "/*is_signed_in\u003d*/false\n\nor whatever the parameter name is.",
+      "range": {
+        "startLine": 412,
+        "startChar": 14,
+        "endLine": 412,
+        "endChar": 19
+      },
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7758e24_e4aa03e3",
         "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.cc",
         "patchSetId": 2
@@ -13,6 +105,29 @@
       "writtenOn": "2018-01-12T11:22:27Z",
       "side": 1,
       "message": "should now be removable :)",
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690564df_09e776bf",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-12T14:32:55Z",
+      "side": 1,
+      "message": "Nit: you could avoid \"*not*\" by rephrasing:\n\"The state should not change, even though a sign in has occurred\".",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 45
+      },
       "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
