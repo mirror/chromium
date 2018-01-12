@@ -64,7 +64,6 @@
 #include "components/autofill/core/common/form_data_predictions.h"
 #include "components/autofill/core/common/form_field_data.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
-#include "components/autofill/core/common/signatures_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/security_state/core/security_state.h"
@@ -963,7 +962,7 @@ bool AutofillManager::IsShowingUnmaskPrompt() {
   return full_card_request_ && full_card_request_->IsGettingFullCard();
 }
 
-const std::vector<std::unique_ptr<FormStructure>>&
+const std::map<FormSignature, std::unique_ptr<FormStructure>>&
 AutofillManager::GetFormStructures() {
   return form_structures_;
 }
@@ -1003,12 +1002,13 @@ void AutofillManager::OnLoadedServerPredictions(
   // |form_signatures|. We invert both lists because most recent forms are at
   // the end of the list (and reverse the resulting pointer vector).
   std::vector<FormStructure*> queried_forms;
+  auto form_structures_it = form_structures_.end();
   for (const std::string& signature : base::Reversed(form_signatures)) {
-    for (auto& cur_form : base::Reversed(form_structures_)) {
-      if (cur_form->FormSignatureAsStr() == signature) {
-        queried_forms.push_back(cur_form.get());
-        break;
-      }
+    form_structures_it =
+        form_structures_.find(autofill::StrToHash64Bit(signature));
+    if (form_structures_it != form_structures_.end()) {
+      queried_forms.push_back(form_structures_it->second.get());
+      break;
     }
   }
   std::reverse(queried_forms.begin(), queried_forms.end());
@@ -1425,23 +1425,15 @@ bool AutofillManager::FindCachedForm(const FormData& form,
   // original versions of the forms.
   *form_structure = nullptr;
   const auto& form_signature = autofill::CalculateFormSignature(form);
-  for (auto& cur_form : base::Reversed(form_structures_)) {
-    if (cur_form->form_signature() == form_signature || *cur_form == form) {
-      *form_structure = cur_form.get();
-
-      // The same form might be cached with multiple field counts: in some
-      // cases, non-autofillable fields are filtered out, whereas in other cases
-      // they are not.  To avoid thrashing the cache, keep scanning until we
-      // find a cached version with the same number of fields, if there is one.
-      if (cur_form->field_count() == form.fields.size())
-        break;
-    }
+  auto form_structures_it = form_structures_.find(form_signature);
+  if (form_structures_it != form_structures_.end()) {
+    *form_structure = form_structures_it->second.get();
+    LOG(ERROR) << "Found it";
+    return true;
   }
 
-  if (!(*form_structure))
-    return false;
-
-  return true;
+  LOG(ERROR) << "DidNotFindIt";
+  return false;
 }
 
 bool AutofillManager::GetCachedFormAndField(const FormData& form,
@@ -1454,6 +1446,14 @@ bool AutofillManager::GetCachedFormAndField(const FormData& form,
   if (!FindCachedForm(form, form_structure) &&
       !FormStructure(form).ShouldBeParsed()) {
     return false;
+  }
+
+  LOG(ERROR) << "Ts " << (*form_structure)->field_count();
+
+  if (!*form_structure) {
+    LOG(ERROR) << "Not found in cache";
+  } else {
+    LOG(ERROR) << "Found in cache";
   }
 
   // Update the cached form to reflect any dynamic changes to the form data, if
@@ -1510,8 +1510,11 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
   // Note: We _must not_ remove the original version of the cached form from
   // the list of |form_structures_|. Otherwise, we break parsing of the
   // crowdsourcing server's response to our query.
-  if (!ParseForm(live_form, updated_form))
+  if (!ParseForm(live_form, updated_form)) {
     return false;
+  }
+
+  LOG(ERROR) << "cahc " << cached_form->field_count();
 
   if (cached_form)
     (*updated_form)->UpdateFromCache(*cached_form, true);
@@ -1665,15 +1668,21 @@ bool AutofillManager::ParseForm(const FormData& form,
 
   auto form_structure = std::make_unique<FormStructure>(form);
   form_structure->ParseFieldTypesFromAutocompleteAttributes();
-  if (!form_structure->ShouldBeParsed())
+  LOG(ERROR) << "Fd " << form_structure->field_count();
+  if (!form_structure->ShouldBeParsed()) {
+    LOG(ERROR) << "ERERERER";
     return false;
+  }
 
   // Ownership is transferred to |form_structures_| which maintains it until
   // the manager is Reset() or destroyed. It is safe to use references below
   // as long as receivers don't take ownership.
-  form_structure->set_form_parsed_timestamp(TimeTicks::Now());
-  form_structures_.push_back(std::move(form_structure));
-  *parsed_form_structure = form_structures_.back().get();
+  FormSignature form_signature = form_structure->form_signature();
+  if (form_structures_.find(form_signature) == form_structures_.end()) {
+    form_structure->set_form_parsed_timestamp(TimeTicks::Now());
+    form_structures_[form_signature] = std::move(form_structure);
+  }
+  *parsed_form_structure = form_structures_[form_signature].get();
   (*parsed_form_structure)->DetermineHeuristicTypes(client_->GetUkmRecorder());
   return true;
 }

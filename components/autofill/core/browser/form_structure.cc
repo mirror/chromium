@@ -684,10 +684,15 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
                                     const bool apply_is_autofilled) {
   // Map from field signatures to cached fields.
   std::map<base::string16, const AutofillField*> cached_fields;
+  LOG(ERROR) << "1 " << cached_form.field_count();
   for (size_t i = 0; i < cached_form.field_count(); ++i) {
+    LOG(ERROR) << "in1";
     auto* const field = cached_form.field(i);
+    LOG(ERROR) << "in2";
     cached_fields[field->unique_name()] = field;
+    LOG(ERROR) << "in3";
   }
+  LOG(ERROR) << "2";
   for (auto& field : *this) {
     const auto& cached_field = cached_fields.find(field->unique_name());
     if (cached_field != cached_fields.end()) {
@@ -715,6 +720,7 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
           cached_field->second->only_fill_when_focused());
     }
   }
+  LOG(ERROR) << "3";
 
   UpdateAutofillCount();
 
@@ -1018,7 +1024,6 @@ const AutofillField* FormStructure::field(size_t index) const {
     NOTREACHED();
     return nullptr;
   }
-
   return fields_[index].get();
 }
 
