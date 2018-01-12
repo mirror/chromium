@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbcb2536_c2479084",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T16:54:49Z",
+      "side": 1,
+      "message": "Done, I split this off into https://crrev.com/c/864146 and added tests.",
+      "parentUuid": "88438e86_4e9e9497",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d28b0bbb_1dcc35e0",
         "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516d5d39_fb84524f",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-12T16:54:49Z",
+      "side": 1,
+      "message": "Ack, thanks for the explanation. Sorry for being slow with this, I will address this next week.",
+      "parentUuid": "035aab5a_77616e8c",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
