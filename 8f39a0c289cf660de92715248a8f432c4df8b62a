@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "a9a7af78_72c9c425",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SavedPasswordEntry.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T23:59:00Z",
+      "side": 1,
+      "message": "Yes please, and move it to the widgets/ package (maybe in sub-package with other editable preference related things.\n\nAlso, is there a better package for this class besides the top level chrome/browser?",
+      "parentUuid": "41cc4b6a_6d0f8495",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a285da_59aa5ed1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
         "patchSetId": 8
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "is there a tool for moving and updating imports. I thin ./tools/git/move_source_file.py doesn\u0027t work for Java.",
       "parentUuid": "35a285da_59aa5ed1",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f94884_ad5e470b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T23:59:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure.. I usually use the refactor feature in Eclipse.",
+      "parentUuid": "8c9fefe7_71e7ed89",
       "range": {
         "startLine": 13,
         "startChar": 0,
