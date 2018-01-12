@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "587b849e_bb898103",
+        "filename": "third_party/WebKit/Source/core/css/AbstractPropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-12T04:29:28Z",
+      "side": 0,
+      "message": "nit: I think we should keep \"{}\" if the statement inside is 2 lines?",
+      "revId": "076607e7f9a785d72663f12c3704ba5046ccc5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

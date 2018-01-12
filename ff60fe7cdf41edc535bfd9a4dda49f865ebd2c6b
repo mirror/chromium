@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "031200cc_bbe55c63",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/parser/templates/AtRuleDescriptors.cpp.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-12T04:29:28Z",
+      "side": 1,
+      "message": "Add CHECK against WTF_ARRAY_LENGTH()? Vector has CHECK, but this is for static array.\n\nOr doing \"if\" check and return an empty string, as AtRuleCSSStyleDeclaration::item() does is fine with me.",
+      "revId": "ff60fe7cdf41edc535bfd9a4dda49f865ebd2c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada58781_18e6fc57",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-12T04:29:28Z",
+      "side": 1,
+      "message": "nit: g_empty_string\nditto for other functions that return String.",
+      "revId": "ff60fe7cdf41edc535bfd9a4dda49f865ebd2c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
