@@ -630,10 +630,12 @@ __gCrWeb['common'] = __gCrWeb.common;
   * @param {Element} element The element that changed.
   */
   __gCrWeb.common.notifyElementValueChanged = function(element) {
+    __gCrWeb.common.createAndDispatchHTMLEvent(element, 'focus', true, false);
     __gCrWeb.common.createAndDispatchHTMLEvent(element, 'keydown', true, false);
     __gCrWeb.common.createAndDispatchHTMLEvent(element, 'change', true, false);
     __gCrWeb.common.createAndDispatchHTMLEvent(element, 'input', true, false);
     __gCrWeb.common.createAndDispatchHTMLEvent(element, 'keyup', true, false);
+    __gCrWeb.common.createAndDispatchHTMLEvent(element, 'blur', true, false);
   };
 
   /**
