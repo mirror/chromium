@@ -172,7 +172,9 @@ QuicFrame CopyRetransmittableControlFrame(const QuicFrame& frame) {
       copy = QuicFrame(QuicPingFrame(frame.ping_frame.control_frame_id));
       break;
     default:
-      DCHECK(false);
+      QUIC_BUG << "Try to copy a non-retransmittable control frame: " << frame;
+      copy = QuicFrame(QuicPingFrame(kInvalidControlFrameId));
+      break;
   }
   return copy;
 }
