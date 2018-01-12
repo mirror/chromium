@@ -1,0 +1,9 @@
+include_rules = [
+  # KSV is intended to be a small app with restrictive DEPS. Current design has
+  # a lightweight dep on //ash/frame to allow the dialog to customize the window
+  # frame. This could be refactored away in the future if we want KSV to be a
+  # completely independent mojo app under mustash.
+  "-ash",
+  "-chrome",
+  "+ui/events/keycodes"
+]
