@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48191df7_e9b7c2e8",
+        "filename": "content/browser/gpu/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-12T16:27:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e1d6f10_001723a8",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d59ef12_4dd93481",
         "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T18:54:57Z",
       "side": 1,
       "message": "I think you need to call Stop() here, to make sure we synchronize with the GPU thread. Otherwise Init() could be running at the same time we destroy |this|, causing undefined behavior.",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df618f3_f22c10a4",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-12T16:27:16Z",
+      "side": 1,
+      "message": "\u003e I think you need to call Stop() here, to make sure we synchronize with the GPU thread.\n\nI don\u0027t want to change any behavior, I just want to change the timing of when things happen. \n\n\u003e Otherwise Init() could be running at the same time we destroy |this|, causing undefined behavior.\n\nRight, that\u0027s what led to the crash in ExtractInProcessMessagePipe(). I was thinking, since this timing can actually happen live (or can it not?), we better test it. My goal here is that the two threads (IO thread and GPU thread) would tolerate such an extreme timing (even tough it\u0027s quite unlikely).",
+      "parentUuid": "0d59ef12_4dd93481",
       "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

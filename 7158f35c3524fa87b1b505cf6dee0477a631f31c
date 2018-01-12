@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1347a8e1_df267113",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-12T16:27:16Z",
+      "side": 1,
+      "message": "I think the allocations happen in GpuServiceProxy::EstablishGpuChannel (called from GpuProcessHost::EstablishGpuChannel):\n\n  params.Allocate(buffer);\n  ...\n  new GpuService_EstablishGpuChannel_ForwardToCallback ...",
+      "parentUuid": "8b02e6be_27d35e64",
+      "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4c42697_9b3ec301",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
