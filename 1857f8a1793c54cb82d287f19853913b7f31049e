@@ -623,6 +623,98 @@
     },
     {
       "key": {
+        "uuid": "4d93f88c_e22a76dc",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T21:19:21Z",
+      "side": 1,
+      "message": "Rather than using an embedded test server, I suggest using mock sockets.  I think all you need to do is add a mock write of the HTTP request/response headers (And in the GET case, encode the request as part of the URL), and use the TCP mock classes instead of the UDP ones.  The advantage is it checks reads and writes, uses more of the shared infrastructure, and and doesn\u0027t require quite so much logic in here - we\u0027d be checking the written data for an exact match against expectations, rather than checking the contents.  Also makes this a single-threaded test, and so a bit more deterministic.",
+      "range": {
+        "startLine": 404,
+        "startChar": 23,
+        "endLine": 404,
+        "endChar": 34
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98d723b_666b3791",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T21:19:21Z",
+      "side": 1,
+      "message": "Should make sure whether we send a GET or a POST according to the input list.",
+      "range": {
+        "startLine": 407,
+        "startChar": 37,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03822279_4833e454",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T21:19:21Z",
+      "side": 1,
+      "message": "Need to document these methods",
+      "range": {
+        "startLine": 457,
+        "startChar": 7,
+        "endLine": 457,
+        "endChar": 23
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa37c84_0623e8f9",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T21:19:21Z",
+      "side": 1,
+      "message": "clear_udp",
+      "range": {
+        "startLine": 458,
+        "startChar": 11,
+        "endLine": 458,
+        "endChar": 19
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b0cfae_ae3d6c42",
         "filename": "net/dns/host_resolver.h",
         "patchSetId": 20
