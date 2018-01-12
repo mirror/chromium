@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8330fb01_6cf5669e",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T17:48:50Z",
+      "side": 1,
+      "message": "This used to be Other for navigation preload.",
+      "range": {
+        "startLine": 1212,
+        "startChar": 32,
+        "endLine": 1212,
+        "endChar": 40
+      },
+      "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1120ea1_7a90ab11",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T17:48:50Z",
+      "side": 1,
+      "message": "Let\u0027s do this from ResetNavigationRequest, so we can have a blocked reason.",
+      "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56c7b03_f17c54fa",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T17:48:50Z",
+      "side": 1,
+      "message": "I think we should instrument from here, and issue wasBlocked vs loadingFailed over protocol.",
+      "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
