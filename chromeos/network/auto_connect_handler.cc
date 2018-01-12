@@ -181,11 +181,13 @@ void AutoConnectHandler::ScanCompleted(const DeviceState* device) {
 
 void AutoConnectHandler::ResolveRequestCompleted(
     bool network_properties_changed) {
+  bool client_certs_were_resolved = client_certs_resolved_;
   client_certs_resolved_ = true;
 
-  // Only request to connect to the best network if network properties were
-  // actually changed. Otherwise only process existing requests.
-  if (network_properties_changed) {
+  // Only request to connect to the best network if this was the first
+  // ResolveRequestCompleted call and network properties were actually changed.
+  // Otherwise only process existing requests.
+  if (!client_certs_were_resolved && network_properties_changed) {
     RequestBestConnection(
         AutoConnectReason::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED);
   } else {
