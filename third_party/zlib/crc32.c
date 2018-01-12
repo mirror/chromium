@@ -30,6 +30,7 @@
 
 #include "deflate.h"
 #include "x86.h"
+#include "arm.h"
 #include "crc32_simd.h"
 #include "zutil.h"      /* for STDC and FAR definitions */
 
@@ -266,6 +267,23 @@ unsigned long ZEXPORT crc32(crc, buf, len)
         /* Fall into the default crc32 for the remaining data. */
         buf += chunk_size;
     }
+
+#elif defined(CRC32_SIMD_ARMV8_NEON)
+    /*
+     * Use arm crc32 SIMD, if present, to compute the crc32. Check
+     * CPU features here first, again to avoid TSAN problems. Note
+     * a little endian ARMv8 device is assumed.
+     */
+    if (buf == Z_NULL) {
+        if (!len) /* Assume user is calling crc32(0, NULL, 0); */
+            arm_check_features();
+        return 0UL;
+    }
+
+    if (arm_cpu_enable_crc32) {
+        return ~crc32_crc32_simd_(buf, len, ~(uint32_t)crc);
+    }
+
 #endif /* CRC32_SIMD_SSE42_PCLMUL */
 
     return crc32_z(crc, buf, len);
