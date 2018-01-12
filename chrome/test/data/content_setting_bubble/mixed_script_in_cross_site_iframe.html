@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mixed content in cross-site iframe test</title>
+</head>
+<body>
+<script>
+var f = document.createElement('iframe');
+f.src = location.search.substring(1);
+document.body.appendChild(f);
+</script>
+</body>
+</html>
