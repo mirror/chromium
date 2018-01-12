@@ -25,14 +25,7 @@ sk_sp<GrGLInterface> CreateGLES2InterfaceBindings(GLES2Interface* impl) {
   sk_sp<GrGLInterface> interface(new GrGLInterface);
   interface->fStandard = kGLES_GrGLStandard;
 
-  // Allowing Skia to use GL ES 3.0 caused a perf test regression (see Issue
-  // 719572). Until that can be understood we are limiting to ES 2.0 (with
-  // extensions).
-  auto get_string = [impl](GLenum name) {
-    if (name == GL_VERSION)
-      return reinterpret_cast<const GLubyte*>("OpenGL ES 2.0 Chromium");
-    return impl->GetString(name);
-  };
+  auto get_string = gles_bind(&GLES2Interface::GetString, impl);
   auto get_stringi = gles_bind(&GLES2Interface::GetStringi, impl);
   auto get_integerv = gles_bind(&GLES2Interface::GetIntegerv, impl);
   interface->fExtensions.init(kGLES_GrGLStandard, get_string, get_stringi,
