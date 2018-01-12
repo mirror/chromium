@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6467259_42f77302",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T17:02:26Z",
+      "side": 1,
+      "message": "Add blank line.",
+      "range": {
+        "startLine": 378,
+        "startChar": 27,
+        "endLine": 378,
+        "endChar": 44
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2743904b_ca501a05",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T17:02:26Z",
+      "side": 1,
+      "message": "To fit one line: s/profile_sync_service/sync_service",
+      "range": {
+        "startLine": 380,
+        "startChar": 36,
+        "endLine": 380,
+        "endChar": 56
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6316b8_efb00ebf",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T17:02:26Z",
+      "side": 1,
+      "message": "I think we need to revoke the token here as well. So maybe call AbortAndDelete in this case is the right thing to do.\n\nIf we want to make sure we call them in the same order as before, then we need to first revoke the token and then sign out.",
+      "range": {
+        "startLine": 405,
+        "startChar": 23,
+        "endLine": 405,
+        "endChar": 30
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af83e064_7760c6c5",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T17:02:26Z",
+      "side": 1,
+      "message": "I think we should call here CloseModalSigninWindow(LoginUIService::ABORT_SIGNIN) and move the record action in there.\n\nAnd we could also probably move did_user_explicitly_interact_ \u003d true in there.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
