@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a571770_669f7525",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T18:00:50Z",
+      "side": 1,
+      "message": "This is a nice naming change too, thanks!",
+      "revId": "d8a0747aa8aa39b8f7fb49520bae4cdd4b8a3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31691b02_08d24389",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T18:00:50Z",
+      "side": 1,
+      "message": "Why does this checked returned_lost vs just lost? This seems like a logic change from before, so just wanted to understand better since I\u0027m not as familiar with this as danakj is.",
+      "revId": "d8a0747aa8aa39b8f7fb49520bae4cdd4b8a3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
