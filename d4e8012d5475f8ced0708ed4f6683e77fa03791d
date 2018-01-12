@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "def7f98f_44289fd6",
+        "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1113104
+      },
+      "writtenOn": "2018-01-12T16:11:44Z",
+      "side": 1,
+      "message": "\"for example, it makes\"",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e786167b_5b467f67",
         "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
         "patchSetId": 2
