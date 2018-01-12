@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "31c6c179_da7f4a50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T18:41:01Z",
+      "side": 1,
+      "message": "I was thinking if we were missing any other browser initiated changes (fullscreening?), but you\u0027re right, resize should get them all.",
+      "parentUuid": "6b0a3983_493fa170",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54b4e9c_77449800",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "When renderer generates new IDs I expect them to be routed to the browser and probably still end up here first... this may not be the case with full Viz though, so maybe it\u0027s not worth doing this CHECK. removed.",
       "parentUuid": "e28381bf_4ef5864a",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e37096b_e473b56d",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T18:41:01Z",
+      "side": 1,
+      "message": "That\u0027s what I meant, when the renderer starts generating new IDs, they will end up here and will be different, right? The parent sequence number will be the same, but the child sequence number will increment.\n\nAlso, now that I think about it, you could still have a case where the local_surface_id_ was incremented and a frame with the previous id was in flight.",
+      "parentUuid": "87a4f135_0935b998",
       "range": {
         "startLine": 90,
         "startChar": 9,
