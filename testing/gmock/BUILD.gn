@@ -16,6 +16,9 @@ source_set("gmock") {
   deps = [
     "//third_party/googletest:gmock",
   ]
+  public_deps = [
+    "//testing:gmock_mutant",
+  ]
 
   public_configs = [
     "//third_party/googletest:gmock_config",

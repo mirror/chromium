@@ -10,6 +10,9 @@ import stat
 import subprocess
 import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__), 'scripts'))
+import common
+
 # This is hardcoded to be src/ relative to this script.
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -170,7 +173,7 @@ def symbolize_snippets_in_json(cmd, env):
     raise subprocess.CalledProcessError(p.returncode, symbolize_command)
 
 
-def run_executable(cmd, env):
+def run_executable(cmd, env, stdoutfile=None):
   """Runs an executable with:
     - CHROME_HEADLESS set to indicate that the test is running on a
       bot and shouldn't do anything interactive like show modal dialogs.
@@ -199,7 +202,7 @@ def run_executable(cmd, env):
   msan = '--msan=1' in cmd
   tsan = '--tsan=1' in cmd
   cfi_diag = '--cfi-diag=1' in cmd
-  if sys.platform in ['win32', 'cygwin']:
+  if stdoutfile or sys.platform in ['win32', 'cygwin']:
     # Symbolization works in-process on Windows even when sandboxed.
     use_symbolization_script = False
   else:
@@ -228,8 +231,12 @@ def run_executable(cmd, env):
   sys.stdout.flush()
   env.update(extra_env or {})
   try:
-    # See above comment regarding offline symbolization.
-    if use_symbolization_script:
+    if stdoutfile:
+      # Write to stdoutfile and poll to produce terminal output.
+      return common.run_command_with_output(cmd, env=env,
+                                            stdoutfile=stdoutfile)
+    elif use_symbolization_script:
+      # See above comment regarding offline symbolization.
       # Need to pipe to the symbolizer script.
       p1 = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE,
                             stderr=sys.stdout)
