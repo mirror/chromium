@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445fbe2f_7819838a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "Can you early return here if container is in already_checked?",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c75fe6_d4b7e77d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "This should be a HeapVector\u003cMember\u003cNode\u003e\u003e",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870c4736_f7bc14de",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "This seems like very odd behavior.  If the scrolling container does not have a focus candidate, why do we scroll it?  And why return here; why not continue looking for a focus candidate outside the current scrolling container?",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ad7d7d_85ea2f51",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "Why just scroll 40 pixels and stop here?  Why not scroll all the way to the candidate?",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ff7d65_28083c47",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "Same question.",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb6434f_9e0f1606",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "Same question.",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8776af_258bb185",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-12T23:39:55Z",
+      "side": 1,
+      "message": "Can you please refactor this slightly:\n\nwhile (container) {\n  consumed \u003d ...;\n  if (consumed)\n    break;\n\nJust a small optimization to avoid an unnecessary layout if the next container is a document.",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
