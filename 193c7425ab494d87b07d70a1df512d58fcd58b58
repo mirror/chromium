@@ -68,6 +68,30 @@
       "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e04d74f_2c774902",
+        "filename": "extensions/renderer/console.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-12T17:16:05Z",
+      "side": 0,
+      "message": "The \"e::console\" string comes from r189105 by kalman@ (https://chromiumcodereview.appspot.com/12918009/patch/63001/64001), but https://bugs.chromium.org/u/kalman@chromium.org/ says 1) Last visit: Never, 2) Email to this user bounced: 359 days ago and I also see that the Rietveld user label says \"not at google - send to devlin\".",
+      "parentUuid": "8a043b05_85fb42e5",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
