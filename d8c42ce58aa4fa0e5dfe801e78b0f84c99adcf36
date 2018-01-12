@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "592c312f_237869bd",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T14:52:45Z",
+      "side": 1,
+      "message": "Looks like a good candidate for a subroutine.",
+      "range": {
+        "startLine": 48,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfef1329_96813c50",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T14:52:45Z",
+      "side": 1,
+      "message": "It\u0027s your call, but I see this and think: If you wanted to use rbegin(), why not just use it?\n\nAn alternative?\n\nwhile (eldest !\u003d pages_without_favicons_.rend() \u0026\u0026 eldest-\u003esecond \u003c\u003d timeout)\n  eldest \u003d ...Erase...",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea355cc_a75dee78",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T14:52:45Z",
+      "side": 1,
+      "message": "The old code returned here. I\u0027m not sure what the point of calling back these requests with a blank image. Maybe you just want to erase them?",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
