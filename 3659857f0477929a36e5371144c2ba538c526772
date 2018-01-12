@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c93011f6_e12bf308",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88bfe06f_4d2ee38b",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229e77d1_2625dc14",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dfc6472d_3c8f9d06",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Returning the controllers via an NSWindow category method seems OK to me (if your window doesn\u0027t have one they return nil), but I have switched over to the class method style.",
+      "parentUuid": "229e77d1_2625dc14",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "861a11f5_7b24720e",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "3659857f0477929a36e5371144c2ba538c526772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c294d9_5235d2c7",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "861a11f5_7b24720e",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,48 @@
     },
     {
       "key": {
+        "uuid": "cd754ef6_e69521c1",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4449930e_53054e09",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6f436db_01370d5a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef227776_25ce4717",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b225598c_0717cdeb",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
         "patchSetId": 4
@@ -113,6 +209,30 @@
       "revId": "3659857f0477929a36e5371144c2ba538c526772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b5c826_954eabcc",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b225598c_0717cdeb",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "2d2a23cd_f3884aeb",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Thanks - I was struggling for a name.",
+      "parentUuid": "50660d3c_1d9665bd",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "168e4d5a_7fe11a9c",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
         "patchSetId": 4
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "22137ecc_5eecaf4a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "168e4d5a_7fe11a9c",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44bf74ef_45618c29",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
         "patchSetId": 4
@@ -170,6 +332,24 @@
       "revId": "3659857f0477929a36e5371144c2ba538c526772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c7c794_4aa8cb6c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T19:38:10Z",
+      "side": 1,
+      "message": "OK, but there is not much point because we\u0027re descending from NSObject.",
+      "parentUuid": "44bf74ef_45618c29",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
