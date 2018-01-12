@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3a50b6_245760cf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-12T16:41:27Z",
+      "side": 1,
+      "message": "It\u0027d be great if all of the interfaces called by ContentViewCore could\nbe grouped together.\n\nPreviously all of the @CalledByNative interfaces were at the bottom of\nthis source file, now they seem lost in the middle.",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
