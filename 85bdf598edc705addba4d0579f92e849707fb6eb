@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1074399_c294cf18",
+        "filename": "chrome/browser/autofill/autofill_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-12T22:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e164d84_28be95d1",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c95a10_a882ce35",
         "filename": "components/autofill/content/common/autofill_driver.mojom",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T19:47:36Z",
       "side": 1,
       "message": "I see tests for XHR_SUCCEEDED and FORM_SUBMISSION, but not the other sources. Should tests be added for more coverage?",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70341cec_2057fa4a",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-12T22:14:10Z",
+      "side": 1,
+      "message": "added some tests in FormAutocompleteTest, also modified AutofillProviderBrowserTests, all sources should be covered now.",
+      "parentUuid": "74c95a10_a882ce35",
       "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d508436c_09e316e0",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-12T22:14:10Z",
+      "side": 1,
+      "message": "nice, thanks!",
+      "parentUuid": "817b1b0c_531e67a8",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "718d9b84_6c373a3f",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-12T22:14:10Z",
+      "side": 1,
+      "message": "I couldn\u0027t come up with better name, but add a new method OnNoMoreSubmission() and clear the submitted_forms_ in it, not sure if it resolves your concern or not.",
+      "parentUuid": "d39f1bf1_e344399c",
+      "range": {
+        "startLine": 862,
+        "startChar": 2,
+        "endLine": 862,
+        "endChar": 18
+      },
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7f848e4_e5ab94fe",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22449ae_a0129a85",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-12T22:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7f848e4_e5ab94fe",
+      "revId": "85bdf598edc705addba4d0579f92e849707fb6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
