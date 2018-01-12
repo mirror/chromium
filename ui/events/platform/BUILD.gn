@@ -10,12 +10,15 @@ jumbo_component("platform") {
     # Allow this target to include events_export.h without depending on the
     # events target (which would be circular).
     "../events_export.h",
+    "key_event_filter.h",
     "platform_event_dispatcher.h",
     "platform_event_observer.h",
     "platform_event_source.cc",
     "platform_event_source.h",
     "platform_event_source_stub.cc",
     "platform_event_types.h",
+    "platform_key_event_filter.cc",
+    "platform_key_event_filter.h",
     "scoped_event_dispatcher.cc",
     "scoped_event_dispatcher.h",
   ]
