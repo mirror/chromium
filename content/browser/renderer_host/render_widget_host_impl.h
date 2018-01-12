@@ -849,6 +849,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // The current size of the RenderWidget.
   gfx::Size current_size_;
 
+  // If valid, this is the child-generated LocalSurfaceId.
+  viz::LocalSurfaceId received_local_surface_id_;
+
   // Resize information that was previously sent to the renderer.
   std::unique_ptr<ResizeParams> old_resize_params_;
 
