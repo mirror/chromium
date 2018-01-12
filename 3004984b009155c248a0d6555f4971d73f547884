@@ -52,6 +52,24 @@
       "revId": "3004984b009155c248a0d6555f4971d73f547884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd57934_011a5690",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-12T18:15:14Z",
+      "side": 1,
+      "message": "Er, not expected latency, but effective type.\n\nIf effective_type is a parameter to the method, then I\u0027d expect the caller to set it appropriately.",
+      "parentUuid": "3626fcc5_9a01adcf",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
