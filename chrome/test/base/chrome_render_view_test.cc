@@ -132,6 +132,7 @@ void ChromeRenderViewTest::SetUp() {
 }
 
 void ChromeRenderViewTest::TearDown() {
+  LOG(ERROR) << "+++++++++++++++++ ChromeRenderViewTest::BeginTearDown";
   base::RunLoop().RunUntilIdle();
 
 #if defined(LEAK_SANITIZER)
@@ -141,6 +142,7 @@ void ChromeRenderViewTest::TearDown() {
 #endif
   content::RenderViewTest::TearDown();
   registry_.reset();
+  LOG(ERROR) << "+++++++++++++++++ ChromeRenderViewTest::EndTearDown";
 }
 
 content::ContentClient* ChromeRenderViewTest::CreateContentClient() {
@@ -170,8 +172,9 @@ void ChromeRenderViewTest::InitChromeContentRendererClient(
       base::MakeUnique<extensions::Dispatcher>(
           std::make_unique<ChromeExtensionsDispatcherDelegate>()));
 #endif
+
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  client->SetSpellcheck(new SpellCheck(nullptr));
+  client->InitSpellCheck();
 #endif
 }
 
