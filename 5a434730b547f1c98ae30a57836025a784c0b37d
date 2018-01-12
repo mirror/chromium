@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fd302ca5_e7abc6fc",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-12T22:28:10Z",
+      "side": 1,
+      "message": "Just after ~SlowGpuThread, ~InProcessGpuThread runs. I\u0027m thinking of https://isocpp.org/wiki/faq/dtors#calling-base-dtor. Since ~InProcessGpuThread does Stop() already, I didn\u0027t want to add an extra Stop() here. We\u0027d do Stop() twice, which is probably harmless, but still slightly different from what happens in production?",
+      "parentUuid": "cda71bf0_a4c7f89d",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61dceae_e9f8d722",
         "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
         "patchSetId": 11
