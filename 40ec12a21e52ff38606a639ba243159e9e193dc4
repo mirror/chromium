@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc45e416_48bfb249",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "Duplicate display id was found?\nDisplay ids must not duplicate?",
+      "range": {
+        "startLine": 553,
+        "startChar": 5,
+        "endLine": 553,
+        "endChar": 39
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9bd44b_667095a7",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "e.g.,",
+      "range": {
+        "startLine": 902,
+        "startChar": 29,
+        "endLine": 902,
+        "endChar": 30
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc019f2_76493afb",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 1293,
+        "startChar": 2,
+        "endLine": 1293,
+        "endChar": 6
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6642daa0_f555a4e3",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "This is just an enum. Pass by value.",
+      "range": {
+        "startLine": 411,
+        "startChar": 21,
+        "endLine": 411,
+        "endChar": 43
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bf7940_0eb86828",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "You don\u0027t need this copy constructor. This can be just the default.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 76
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08b6a14_2040d1c1",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T17:49:17Z",
+      "side": 1,
+      "message": "I think this should go after \u0027class\u0027",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
