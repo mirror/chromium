@@ -81,16 +81,19 @@ message DynamicInterstitial {
   // by |interstitial_type| will be displayed.
   repeated string sha256_hash = 1;
 
+  // The MITMSoftware list.
+  optional MITMSoftware mitm_software = 2;
+
   // If the SSL error's cert status contains |cert_error|, then it can be
   // matched with this dynamic interstitial.
-  optional CertError cert_error = 2;
+  optional CertError cert_error = 3;
 
   // The type of interstitial that should be shown. This value is associated
   // with the DynamicInterstitialPageType enum.
-  optional InterstitialPageType interstitial_type = 3;
+  optional InterstitialPageType interstitial_type = 4;
 
   // The support URL that will be displayed on the interstitial.
-  optional string support_url = 4;
+  optional string support_url = 5;
 }
 
 message SSLErrorAssistantConfig {
