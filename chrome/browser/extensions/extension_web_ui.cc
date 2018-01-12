@@ -167,6 +167,7 @@ void ValidateOverridesList(const extensions::ExtensionSet* all_extensions,
 void UnregisterAndReplaceOverrideForWebContents(const std::string& page,
                                                 Profile* profile,
                                                 WebContents* web_contents) {
+  LOG(INFO) << "UnregisterAndReplaceOverrideForWebContentis";
   if (Profile::FromBrowserContext(web_contents->GetBrowserContext()) != profile)
     return;
 
