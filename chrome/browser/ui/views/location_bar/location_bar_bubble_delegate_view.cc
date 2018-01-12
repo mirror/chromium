@@ -18,11 +18,11 @@
 LocationBarBubbleDelegateView::WebContentMouseHandler::WebContentMouseHandler(
     LocationBarBubbleDelegateView* bubble,
     content::WebContents* web_contents)
-    : bubble_(bubble), web_contents_(web_contents) {
+    : content::WebContentsObserver(web_contents), bubble_(bubble) {
   DCHECK(bubble_);
-  DCHECK(web_contents_);
+  DCHECK(web_contents);
   event_monitor_ = views::EventMonitor::CreateWindowMonitor(
-      this, web_contents_->GetTopLevelNativeWindow());
+      this, web_contents->GetTopLevelNativeWindow());
 }
 
 LocationBarBubbleDelegateView::WebContentMouseHandler::
@@ -31,7 +31,7 @@ LocationBarBubbleDelegateView::WebContentMouseHandler::
 void LocationBarBubbleDelegateView::WebContentMouseHandler::OnKeyEvent(
     ui::KeyEvent* event) {
   if ((event->key_code() == ui::VKEY_ESCAPE ||
-       web_contents_->IsFocusedElementEditable()) &&
+       (web_contents() && web_contents()->IsFocusedElementEditable())) &&
       event->type() == ui::ET_KEY_PRESSED)
     bubble_->CloseBubble();
 }
