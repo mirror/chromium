@@ -1052,6 +1052,40 @@ void PasswordAutofillAgent::UserGestureObserved() {
   gatekeeper_.OnUserGesture();
 }
 
+void PasswordAutofillAgent::EnableAssistIconForPasswordFields() {
+  // TODO: this is just a placeholder, we may need more sophisticated logic.
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+
+  blink::WebVector<blink::WebFormElement> forms;
+  frame->GetDocument().Forms(forms);
+  for (blink::WebFormElement& form : forms) {
+    blink::WebVector<blink::WebFormControlElement> elements;
+    form.GetFormControlElements(elements);
+    for (blink::WebFormControlElement& element : elements) {
+      auto* input_element = ToWebInputElement(&element);
+      if (input_element && input_element->IsPasswordFieldForAutofill()) {
+        input_element->SetAssistance(
+            blink::AssistanceIconVisibility::kVisibleOnInteraction,
+            blink::AssistanceType::kPasswordManager,
+            base::BindRepeating([] { LOG(ERROR) << "Pressed assist"; }));
+      }
+    }
+  }
+
+  std::vector<blink::WebFormControlElement> control_elements =
+      form_util::GetUnownedAutofillableFormFieldElements(
+          frame->GetDocument().All(), nullptr);
+  for (blink::WebFormControlElement& element : control_elements) {
+    auto* input_element = ToWebInputElement(&element);
+    if (input_element && input_element->IsPasswordFieldForAutofill()) {
+      input_element->SetAssistance(
+          blink::AssistanceIconVisibility::kVisibleOnInteraction,
+          blink::AssistanceType::kPasswordManager,
+          base::BindRepeating([] { LOG(ERROR) << "Pressed assist"; }));
+    }
+  }
+}
+
 void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
@@ -1082,6 +1116,8 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
     }
     return;
   }
+
+  EnableAssistIconForPasswordFields();
 
   blink::WebVector<blink::WebFormElement> forms;
   frame->GetDocument().Forms(forms);
