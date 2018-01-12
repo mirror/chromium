@@ -22,6 +22,30 @@
       "revId": "5b401fd84bb3edef7030823cd9188afcd497e54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ea9468_f930f735",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T11:54:11Z",
+      "side": 1,
+      "message": "Thanks for the offline explanation.\n\nIt makes sense to keep this flag, but let\u0027s name it something like \"--error-resilient\".",
+      "parentUuid": "c4050255_97fe56c6",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "5b401fd84bb3edef7030823cd9188afcd497e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
