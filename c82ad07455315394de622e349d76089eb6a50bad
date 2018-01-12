@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a956ad6_c6b39b07",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T22:31:54Z",
+      "side": 1,
+      "message": "Two questions:\n\nQ1: Can we also ensure that the user can\u0027t transition into dev mode by opening the dev console and typing the following?\n chrome.developerPrivate.updateProfileConfiguration({inDeveloperMode: true})\n\nQ2: IIUC, currently these checks assume that when DeveloperToolsDisabled policy is enabled, the user is not in dev mode. Should we turn this assumption to an assertion or something similar?",
+      "revId": "c82ad07455315394de622e349d76089eb6a50bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
