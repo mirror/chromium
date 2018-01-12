@@ -1,0 +1,616 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13941cc_08f6d2f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "I usually say \"ash_unittests\" and/or the test name (\"FooBarTest\"). This sounds like you added a new test binary",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7a5c9d_5b12e1f8",
+        "filename": "chrome/browser/ui/ash/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Please add a comment about why the deps are restricted.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f53ef1_410d487a",
+        "filename": "chrome/browser/ui/ash/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Since this file is in the directory //c/b/ui/ash/ksv, I think +chrome/browser/ui/ash/ksv would be fine.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9075b78_a74df9c9",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Don\u0027t put this in namespace ksv (code in //chrome does not go in any namespace)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6189d2f_c88e7035",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: for (const Foo\u0026 foo : ash::kAcceleratorData)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a76852d_3a93807e",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Please provide a comment, either here or at the top of the test, that explains why this is \u003e\u003d 1 and not \u003d\u003d 1. (I\u0027m guessing duplicate accelerators, but I don\u0027t remember why we duplicate them.)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da00bf8_29c048c3",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: I think you can just do 0u, no l",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72247065_eaf6d385",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "since ksv_to_ids.accelerator_ids has length \u003e 1, why not just read the modifier out of the first item here?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a3296e_ab54acdc",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Code in chrome doesn\u0027t go in a namespace. I would either use namespace keyboard_shortcut_viewer_util or make a static utility class KeyboardShortcutViewerUtil.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3593f005_5e59323a",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Also, please add a README.md file that explains briefly what ksv is (like the full name of the feature, a brief description, go/ link to design doc)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfda95b7_ad1757ef",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "I would probably just call this \"ksv\" and maybe comment what the acronym means.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d0e7fd_fbb135d8",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "ksv_export.h (for consistency with ash_export.h, ui_export.h, etc.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa38c56_5b2415a8",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a separate models subdir.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e1832c_f105277c",
+        "filename": "ui/chromeos/ksv/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Please add comment here about deps (something about how it is intended to be a small app)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f22ee1_6fed3379",
+        "filename": "ui/chromeos/ksv/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Don\u0027t add an OWNERS file yet. I\u0027d like the next 1 or 2 CLs to be reviewed by //ui/chromeos owners, then you can add an owners file with yourself in it.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e262a9a9_a4406a9a",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: \"namespace ksv\" above",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8046c37_a98bd031",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "KeyboardShortcutItem",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7190d523_d41bd2f9",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: I find this data table hard to read. The structures are complex, so the nested {{}}} initializers are tricky, and you have to have comments explaining the sections.\n\nAlternate ideas:\n* Have two data tables, one just a list of KeyboardShortcutItems, the other a list of |shortcut_id| (or |description_id|) to the list of |accelerator_ids|.\n* Provide a constructor for KeyboardShortcutItem that doesn\u0027t take |replacement_codes| so you can get rid of the lines that are always blank. Switch to enum class for the category. Then you might be able to eliminate some of the comments and make this table more dense.\n\nIt\u0027s hard for me to really understand |replacement_codes| without an example where it won\u0027t be automatically generated (your test implies that sometimes it\u0027s not automatic?)",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd00875_acf073fc",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "super-nit: \"while not have\" -\u003e \"to avoid\" or \"in order not to have\". Avoiding the dep is the reason this exists.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5410af03_ccf776fa",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "super-nit: I would just say \"by tests\".\n\noptional: You could also name the struct AcceleratorIdForTest\n\nBut is this part of the comment true? It looks like you\u0027re going to use data from the accelerators to do something with replacement strings, so it\u0027s not really just for testing.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324b4eab_d28f4782",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "What is this used for?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3794f85_de85d125",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: initialize these two to 0 or something",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7e2096_4dd7e83e",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Why not return a std::map\u003cKeyboardShortcutItem, std::vector\u003cAcceleratorId\u003e\u003e ?\n\nThen you could avoid the struct KSVItemToAcceleratorIds.\n\nAlso, you could return const\u0026 to avoid copying the map (or vector) each time.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b7d183_d5935189",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: For desc you might mention that this is for all single modifier shortcuts.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe1667a_0fec3bad",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "desc\u003d\"Description of the command in keyboard shortcut viewer\" or similar\n\n\"explain the description\" sounds redundant",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de3415e_4ba8e8c6",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "desc\u003d\"Human readable version of the keyboard shortcut\" or similar\n\n\"explain the shortcut\" sounds like the description, but that\u0027s the string above",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb7fddd_a9fafb43",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "DCHECK that categories isn\u0027t empty?\n\nAre there any other useful assertions you can make?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c87af89_9ba246e8",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "Category. Also, can this be \"enum class\"?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad5514f_de362d32",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: \". The\" \u003d\u003e \" and the \"",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e59ff74_628ccd4c",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nit: either \"bubbles\" -\u003e icons or symbols, or explain what bubble means in this context. Most readers of UI code will assume it is related to system UI bubbles.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4ad642_ef5893a4",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "nice docs!",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee1d1f9_3a71f867",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "If these are string resource ids I would mention \"resource ID\" somewhere in the comments, or name the members description_resource_id or description_string_id.",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff17d5b5_5e38833b",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "can this and/or shortcut_id be const?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b50e4a_a75a604c",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "corresponding",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d3af1d_5877278f",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "This could use an example. Is it something like Alt+Left will have two items in the vector, one for Alt and one for Left?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd2809e_a8874746",
+        "filename": "ui/chromeos/ksv/models/keyboard_shortcut_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T04:37:09Z",
+      "side": 1,
+      "message": "It might make more sense if the list of AcceleratorIds was part of this struct. Then there would only be one master struct. You could also then DCHECK in the constructor that either replacement_codes or accelerator_ids was non-empty, compute one from the other, etc. WDYT?",
+      "revId": "76d5c3077fd3c1013a506cfc76057b2d1ed7be58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
