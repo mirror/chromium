@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b54c8de_f8df4a82",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-12T15:52:10Z",
+      "side": 1,
+      "message": "Done.\n1) Tests added\n2) I\u0027ve verified that manually; not sure if there is a hardware simulation test. If there is let me know.",
+      "parentUuid": "959ad8ce_c8a3a3a4",
+      "range": {
+        "startLine": 486,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 48
+      },
+      "revId": "74308ee66534459501f1b7a9c46f2e25e7a518e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfd71eac_6bbf2578",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "74308ee66534459501f1b7a9c46f2e25e7a518e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1184d7_984aba0d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-12T15:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd71eac_6bbf2578",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 55
+      },
+      "revId": "74308ee66534459501f1b7a9c46f2e25e7a518e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
