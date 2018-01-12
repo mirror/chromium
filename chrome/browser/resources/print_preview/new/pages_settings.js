@@ -66,7 +66,7 @@ Polymer({
   },
 
   observers: [
-    'onRangeChange_(errorState_, rangesToPrint_)',
+    'onRangeChange_(errorState_, pagesToPrint_, rangesToPrint_)',
     'onRadioChange_(allSelected_, customSelected_)'
   ],
 
@@ -188,7 +188,8 @@ Polymer({
     }
     this.$$('.user-value').classList.remove('invalid');
     this.setSettingValid('pages', true);
-    this.setSetting('pages', this.rangesToPrint_);
+    this.setSetting('pages', this.pagesToPrint_);
+    this.setSetting('ranges', this.rangesToPrint_);
   },
 
   /** @private */

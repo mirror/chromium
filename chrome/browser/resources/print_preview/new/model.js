@@ -41,6 +41,7 @@ Polymer({
      *   rasterize: !print_preview_new.Setting,
      *   vendorItems: !print_preview_new.Setting,
      *   otherOptions: !print_preview_new.Setting,
+     *   ranges: !print_preview_new.Setting,
      * }}
      */
     settings: {
@@ -81,7 +82,7 @@ Polymer({
           available: true,
         },
         margins: {
-          value: 0,
+          value: print_preview.ticket_items.MarginsTypeValue.DEFAULT,
           valid: true,
           available: true,
         },
@@ -134,6 +135,13 @@ Polymer({
         // expose the availability of the other options settings section.
         otherOptions: {
           value: null,
+          valid: true,
+          available: true,
+        },
+        // This does not represent a real settings value, but is used to
+        // propagate the correctly formatted ranges for print tickets.
+        ranges: {
+          value: [],
           valid: true,
           available: true,
         },
