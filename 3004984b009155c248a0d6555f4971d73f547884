@@ -106,6 +106,24 @@
       "revId": "3004984b009155c248a0d6555f4971d73f547884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e56d769_ede8fc0c",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-12T19:26:34Z",
+      "side": 1,
+      "message": "\u003e But it still leaves the problem that we\u0027re duplicating the logic of mapping latency to effective connection type here. How will you keep them in sync?\n\nYes, that\u0027s a problem. I was planning to hardcode the thresholds in a .h file somewhere in //net which can be read here too. OK to do that in next CL?\n\n\u003e Also, won\u0027t it be weird if the effective connection type doesn\u0027t map to what devtools says the connection type is?\n\nI do not think the ECT needs to map to connection type in devtools. e.g., a fast 3G connection can have ECT of 4G or slow 3G connection can have ECT of 2G.",
+      "parentUuid": "4b4852b1_5fb38b6c",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
