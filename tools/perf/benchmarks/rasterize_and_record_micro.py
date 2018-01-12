@@ -18,11 +18,11 @@ class _RasterizeAndRecordMicro(perf_benchmark.PerfBenchmark):
                       help='Wait time before the benchmark is started '
                       '(must be long enough to load all content)')
     parser.add_option('--rasterize-repeat', type='int',
-                      default=100,
+                      default=1,
                       help='Repeat each raster this many times. Increase '
                       'this value to reduce variance.')
     parser.add_option('--record-repeat', type='int',
-                      default=100,
+                      default=1,
                       help='Repeat each record this many times. Increase '
                       'this value to reduce variance.')
     parser.add_option('--timeout', type='int',
