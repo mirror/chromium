@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "662f3696_f6da910c",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-12T10:27:12Z",
+      "side": 1,
+      "message": "I\u0027m not, but I know who is: crbug.com/801497. I suggest that we keep going on this CL in the meantime, since it doesn\u0027t seem like Ke He\u0027s changes as-is are making the situation any worse than it currently is here.",
+      "parentUuid": "4f776ff3_33793e08",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "060cdcd2_3dada5fd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
         "patchSetId": 4
