@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7758e24_e4aa03e3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-12T11:22:27Z",
+      "side": 1,
+      "message": "should now be removable :)",
+      "revId": "ee15cd7bb0fbef92cc1237c4ee6145c07c52b170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
