@@ -37,7 +37,8 @@ const char kFocusURLFragment[] = "focus";
 
 }  // namespace
 
-class ChromeVoxPanelWebContentsObserver : public content::WebContentsObserver {
+class ChromeVoxPanel::ChromeVoxPanelWebContentsObserver
+    : public content::WebContentsObserver {
  public:
   ChromeVoxPanelWebContentsObserver(content::WebContents* web_contents,
                                     ChromeVoxPanel* panel)
@@ -111,9 +112,11 @@ ChromeVoxPanel::ChromeVoxPanel(content::BrowserContext* browser_context,
   SetShadowElevation(widget_->GetNativeWindow(), wm::ShadowElevation::MEDIUM);
 
   display::Screen::GetScreen()->AddObserver(this);
+  ash::Shell::Get()->AddShellObserver(this);
 }
 
 ChromeVoxPanel::~ChromeVoxPanel() {
+  ash::Shell::Get()->RemoveShellObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
 }
 
@@ -180,6 +183,11 @@ views::View* ChromeVoxPanel::GetContentsView() {
 
 void ChromeVoxPanel::OnDisplayMetricsChanged(const display::Display& display,
                                              uint32_t changed_metrics) {
+  UpdateWidgetBounds();
+}
+
+void ChromeVoxPanel::OnFullscreenStateChanged(bool is_fullscreen,
+                                              aura::Window* root_window) {
   UpdateWidgetBounds();
 }
 
