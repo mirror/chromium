@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d60090a5_d7f75878",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T00:10:06Z",
+      "side": 1,
+      "message": "This is called only once after (re)start to set params in DisplayManager from preferences. So if mixed mirror mode is enabled before you restart, the preferences should not be empty.",
+      "parentUuid": "2e69a976_856fb471",
+      "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05895c21_eadf305b",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe71ff6_d9a62af9",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T00:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05895c21_eadf305b",
+      "revId": "bc70523a5d80b72c5efea30acd791c3d20aba867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
