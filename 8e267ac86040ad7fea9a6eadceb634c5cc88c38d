@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61cac6f1_4544bdc0",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-12T06:24:46Z",
+      "side": 1,
+      "message": "This API has no test files. I thought the idea is to keep the API simple so that no tests are required.",
+      "parentUuid": "96513aa8_55c5dff7",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27485588_32ac8bfd",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3c5b0e_15ea8bf5",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-12T06:24:46Z",
+      "side": 1,
+      "message": "This method has been moved into anonymous namespace now.",
+      "parentUuid": "27485588_32ac8bfd",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f27b8553_d90eb270",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-12T06:24:46Z",
+      "side": 1,
+      "message": "Yeah it doesn\u0027t make sense. I\u0027ve fixed it: now it returns the base language all the time.",
+      "parentUuid": "9028ae50_ac8ea67d",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d95f9d_1217042e",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e2bfde69_cf95f84d",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-12T06:24:46Z",
+      "side": 1,
+      "message": "No particular reason, but complexity wise it\u0027s the same of find. This code reads better than find() IMO.\nI would like to use base::ContainsValue, but it doesn\u0027t not work for sets: https://cs.chromium.org/chromium/src/base/stl_util.h?rcl\u003d1885b36281dbc689db94a5d65a847b1ae3a3d377\u0026l\u003d101",
+      "parentUuid": "94d95f9d_1217042e",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eae919e_ba40ab7b",
         "filename": "components/translate/core/common/translate_util.h",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0274d5ad_ed7e22c2",
+        "filename": "components/translate/core/common/translate_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-12T06:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eae919e_ba40ab7b",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
