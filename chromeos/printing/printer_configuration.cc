@@ -10,9 +10,46 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "net/base/ip_endpoint.h"
+#include "url/third_party/mozilla/url_parse.h"
 #include "url/url_constants.h"
 
+#include "printing_constants.h"
+
 namespace chromeos {
+
+bool ParseUri(const std::string& printer_uri, UriComponents* uri) {
+  DCHECK(uri);
+  const char* uri_ptr = printer_uri.c_str();
+  url::Parsed parsed;
+  url::ParseStandardURL(uri_ptr, printer_uri.length(), &parsed);
+  if (!parsed.scheme.is_valid() || !parsed.host.is_valid() ||
+      !parsed.path.is_valid()) {
+    return false;
+  }
+  base::StringPiece scheme(&uri_ptr[parsed.scheme.begin], parsed.scheme.len);
+  base::StringPiece host(&uri_ptr[parsed.host.begin], parsed.host.len);
+  base::StringPiece path(&uri_ptr[parsed.path.begin], parsed.path.len);
+
+  bool encrypted = scheme != kIppScheme;
+  int port = ParsePort(uri_ptr, parsed.port);
+  // Port not specified.
+  if (port == url::SpecialPort::PORT_UNSPECIFIED ||
+      port == url::SpecialPort::PORT_INVALID) {
+    if (scheme == kIppScheme) {
+      port = kIppPort;
+    } else if (scheme == kIppsScheme) {
+      port = kIppsPort;
+    }
+  }
+
+  uri->set_encrypted(encrypted);
+  uri->set_scheme(scheme.as_string());
+  uri->set_host(host.as_string());
+  uri->set_port(port);
+  uri->set_path(path.as_string());
+
+  return true;
+}
 
 namespace {
 
@@ -119,6 +156,18 @@ Printer::PrinterProtocol Printer::GetProtocol() const {
     return PrinterProtocol::kLpd;
 
   return PrinterProtocol::kUnknown;
+}
+
+std::string Printer::UriForCups() const {
+  if (!effective_uri_.empty()) {
+    return effective_uri_;
+  } else {
+    return uri_;
+  }
+}
+
+bool Printer::GetUriComponents(UriComponents* uri) const {
+  return chromeos::ParseUri(uri_, uri);
 }
 
 bool Printer::PpdReference::operator==(

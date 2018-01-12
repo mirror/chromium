@@ -12,12 +12,20 @@
 #include "base/time/time.h"
 #include "chromeos/chromeos_export.h"
 #include "net/base/host_port_pair.h"
+#include "url/third_party/mozilla/url_parse.h"
+
+#include "uri_components.h"
 
 namespace net {
 class IPEndPoint;
 }  // namespace net
 
 namespace chromeos {
+
+// Parses |printer_uri| into its components and writes them into |uri|. Returns
+// true if the uri was parsed successfully, returns false otherwise. No
+// changes are made to |uri| if this function returns false.
+bool ParseUri(const std::string& printer_uri, UriComponents* uri);
 
 class CHROMEOS_EXPORT Printer {
  public:
@@ -148,6 +156,14 @@ class CHROMEOS_EXPORT Printer {
 
   Source source() const { return source_; }
   void set_source(const Source source) { source_ = source; }
+
+  // Get the URI that we want for talking to cups.
+  std::string UriForCups() const;
+
+  // Parses the printer's uri into its components and writes them into |uri|.
+  // Returns true if the uri was parsed successfully, returns false otherwise.
+  // No changes are made to |uri| if this function returns false.
+  bool GetUriComponents(UriComponents* uri) const;
 
  private:
   // Globally unique identifier. Empty indicates a new printer.
