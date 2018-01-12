@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b76eaea5_67b61bc8",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-12T07:07:32Z",
+      "side": 1,
+      "message": "Please be careful about readability.\nI want to have only |selection_ \u003d PrepareToModifySelection(alter, \n                direction \u003d\u003d SelectionModifyVerticalDirection::kUp\n                    ? SelectionModifyDirection::kBackward\n                    : SelectionModifyDirection::kForward));| here\nand |selection_ \u003d PrepareToModifySelection(alter, direction );| there\nso that the beginning of SelectionModifier::Modify and ModifyWithPageGranularity\nlooks similar and simple.",
+      "revId": "0c3e6f5da3a472305edbdbf04214a1ccc915be71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
