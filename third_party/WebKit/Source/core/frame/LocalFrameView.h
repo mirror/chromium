@@ -1044,11 +1044,13 @@ class CORE_EXPORT LocalFrameView final
       DocumentLifecycle::LifecycleState target_state);
 
   void ScrollContentsIfNeededRecursive();
-  void UpdateStyleAndLayoutIfNeededRecursive();
+  void UpdateStyleAndLayoutTreeRecursive();
+  void UpdateLayoutRecursive();
   void PrePaint();
   void PaintTree();
 
-  void UpdateStyleAndLayoutIfNeededRecursiveInternal();
+  void UpdateStyleAndLayoutTreeRecursiveInternal();
+  void UpdateLayoutRecursiveInternal();
 
   void PushPaintArtifactToCompositor(
       CompositorElementIdSet& composited_element_ids);
@@ -1064,7 +1066,6 @@ class CORE_EXPORT LocalFrameView final
 
   bool ContentsInCompositedLayer() const;
 
-  void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
   bool PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
