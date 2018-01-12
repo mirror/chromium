@@ -98,6 +98,7 @@ class DisplayErrorObserver;
 class DisplayPrefs;
 class DisplayShutdownObserver;
 class DragDropController;
+class DockedMagnifier;
 class EventClientImpl;
 class EventTransformationHandler;
 class FirstRunHelper;
@@ -345,6 +346,7 @@ class ASH_EXPORT Shell : public SessionObserver,
     return display_error_observer_.get();
   }
 
+  DockedMagnifier* docked_magnifier() { return docked_magnifier_.get(); }
   ::wm::CompoundEventFilter* env_filter() { return env_filter_.get(); }
   EventClientImpl* event_client() { return event_client_.get(); }
   EventTransformationHandler* event_transformation_handler() {
@@ -770,6 +772,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<PartialMagnificationController>
       partial_magnification_controller_;
   std::unique_ptr<HighlighterController> highlighter_controller_;
+
+  std::unique_ptr<DockedMagnifier> docked_magnifier_;
 
   // The split view controller for Chrome OS in tablet mode.
   std::unique_ptr<SplitViewController> split_view_controller_;
