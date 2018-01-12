@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "2726e756_08a6b53c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T05:06:52Z",
+      "side": 1,
+      "message": "I see, I guess it can live in public to keep all the overrides together.",
+      "parentUuid": "54f6af96_ad548545",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "258079a3_d2bfc1d9",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
         "patchSetId": 2
