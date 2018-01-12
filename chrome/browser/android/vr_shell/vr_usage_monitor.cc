@@ -8,9 +8,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/rappor/public/rappor_utils.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 
 namespace vr_shell {
 
@@ -126,6 +128,20 @@ void SendRapporEnteredVideoMode(const GURL& origin, vr::Mode mode) {
       break;
   }
 }
+
+int GetRoundedDuration(base::Time start, base::Time end) {
+  base::TimeDelta duration = end - start;
+  if (duration.InHours() > 2) {
+    return duration.InHours() * 3600;
+  } else if (duration.InMinutes() > 10) {
+    return (duration.InMinutes() / 10) * 10 * 60;
+  } else if (duration.InSeconds() > 60) {
+    return duration.InMinutes() * 60;
+  } else {
+    return duration.InSeconds();
+  }
+}
+
 }  // namespace
 
 template <SessionEventName SessionType>
@@ -316,6 +332,41 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
     }
   }
 
+  // Log UKMs.
+  if (mode_ == vr::Mode::kNoVr && mode == vr::Mode::kVrBrowsingRegular) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetEnteredBrowsing(1)
+        .Record(ukm_recorder);
+
+    time_on_page_start_ = base::Time::Now();
+  }
+
+  if (mode == vr::Mode::kVrBrowsingFullscreen) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetEnteredFullscreen(1)
+        .Record(ukm_recorder);
+  }
+
+  if (mode_ == vr::Mode::kVrBrowsingRegular && mode == vr::Mode::kNoVr) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+    DCHECK(time_on_page_start_ <= base::Time::Now());
+
+    ukm::builders::VR_Browsing(
+        ukm::GetSourceIdForWebContentsDocument(web_contents()))
+        .SetTimeOnPage(
+            GetRoundedDuration(time_on_page_start_, base::Time::Now()))
+        .Record(ukm_recorder);
+  }
+
   mode_ = mode;
 }
 
@@ -330,6 +381,7 @@ VrMetricsHelper::VrMetricsHelper(content::WebContents* contents,
   num_videos_playing_ = contents->GetCurrentlyPlayingVideoCount();
   is_fullscreen_ = contents->IsFullscreen();
   origin_ = contents->GetLastCommittedURL();
+  time_on_page_start_ = base::Time::Now();
 
   Observe(contents);
   if (started_with_autopresentation) {
@@ -392,6 +444,19 @@ void VrMetricsHelper::MediaStoppedPlaying(
   }
 }
 
+void VrMetricsHelper::DidStartNavigation(content::NavigationHandle* handle) {
+  if (handle && handle->IsInMainFrame() && !handle->IsSameDocument()) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+    ukm::builders::VR_Browsing(
+        ukm::ConvertToSourceId(handle->GetNavigationId(),
+                               ukm::SourceIdType::NAVIGATION_ID))
+        .SetTimeOnPage(
+            GetRoundedDuration(time_on_page_start_, base::Time::Now()))
+        .Record(ukm_recorder);
+  }
+}
+
 void VrMetricsHelper::DidFinishNavigation(content::NavigationHandle* handle) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -405,6 +470,16 @@ void VrMetricsHelper::DidFinishNavigation(content::NavigationHandle* handle) {
     // look at page loads, since those will underestimate on some pages, and
     // overestimate on others.
     num_session_navigation_++;
+
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    DCHECK(ukm_recorder);
+    ukm::builders::VR_Browsing(
+        ukm::ConvertToSourceId(handle->GetNavigationId(),
+                               ukm::SourceIdType::NAVIGATION_ID))
+        .SetNavigatedToPage(1)
+        .Record(ukm_recorder);
+
+    time_on_page_start_ = base::Time::Now();
   }
 }
 
