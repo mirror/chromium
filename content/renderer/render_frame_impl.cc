@@ -3423,6 +3423,12 @@ void RenderFrameImpl::CommitFailedNavigation(
   browser_side_navigation_pending_url_ = GURL();
 }
 
+void RenderFrameImpl::UpdateSubresourceLoaderFactories(
+    URLLoaderFactoryBundle subresource_loaders) {
+  DCHECK(subresource_loader_factories_);
+  subresource_loader_factories_->MergeOrAssign(std::move(subresource_loaders));
+}
+
 // mojom::HostZoom implementation ----------------------------------------------
 
 void RenderFrameImpl::SetHostZoomLevel(const GURL& url, double zoom_level) {

@@ -72,6 +72,10 @@ class CONTENT_EXPORT URLLoaderFactoryBundle {
   // original (this) bundle.
   URLLoaderFactoryBundle Clone();
 
+  // Move |URLLoaderFactoryPtr|'s from |source_bundle| into |*this|. Overrides
+  // the factory with the same scheme key.
+  void MergeOrAssign(URLLoaderFactoryBundle source_bundle);
+
  private:
   friend struct mojo::StructTraits<mojom::URLLoaderFactoryBundleDataView,
                                    URLLoaderFactoryBundle>;
