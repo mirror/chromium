@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77fee119_d540619d",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-12T04:20:58Z",
+      "side": 1,
+      "message": "Nit; I think IsFirstSummary(node), CanAssignToSelectSlot(node), CanAssignToOptGroupSlot(node) should be implemented in this anonymous namespace, instead of each claass\u0027s static functions.\n\nI don\u0027t have a strong opinion either, however, that would be better.",
+      "revId": "e344d28dc7103e959ac480a8c16baa06638d9b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
