@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f936569_5aef48da",
+        "filename": "tools/traffic_annotation/summary/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-12T13:31:10Z",
+      "side": 1,
+      "message": "I\u0027m jochen@ (and I don\u0027t think I\u0027m really a good reviewer for annotations, so maybe remove me)?",
+      "revId": "03e7c401b902babc579afc19af0be3221531f23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
