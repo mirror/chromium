@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,11 +54,8 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.util.ViewUtils;
-import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomePromoDialog;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.base.DeviceFormFactor;
-import org.chromium.ui.text.NoUnderlineClickableSpan;
-import org.chromium.ui.text.SpanApplier;
 
 /**
  * The native new tab page, represented by some basic data such as title and url, and an Android
@@ -295,7 +291,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
         initializeSearchBoxTextView();
         initializeVoiceSearchButton();
-        initializeChromeHomePromo();
         initializeLayoutChangeListeners();
         setSearchProviderInfo(searchProviderHasLogo, searchProviderIsGoogle);
         mSearchProviderLogoView.showSearchProviderInitialView();
@@ -420,29 +415,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             }
         });
         TraceEvent.end(TAG + ".initializeVoiceSearchButton()");
-    }
-
-    private void initializeChromeHomePromo() {
-        if (DeviceFormFactor.isTablet()
-                || !ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-            return;
-        }
-
-        NoUnderlineClickableSpan link = new NoUnderlineClickableSpan() {
-            @Override
-            public void onClick(View view) {
-                new ChromeHomePromoDialog(mTab.getActivity(), ChromeHomePromoDialog.ShowReason.NTP)
-                        .show();
-            }
-        };
-
-        TextView textView = mNewTabPageLayout.findViewById(R.id.chrome_home_promo_text);
-        textView.setText(
-                SpanApplier.applySpans(getResources().getString(R.string.ntp_chrome_home_promo),
-                        new SpanApplier.SpanInfo("<link>", "</link>", link)));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        mNewTabPageLayout.findViewById(R.id.chrome_home_promo_container)
-                .setVisibility(View.VISIBLE);
     }
 
     private void initializeLayoutChangeListeners() {
@@ -703,16 +675,10 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * Updates the padding for the tile grid based on what is shown above it.
      */
     private void updateTileGridPadding() {
-        final int paddingTop;
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-            // The Chrome Home promo has enough whitespace.
-            paddingTop = 0;
-        } else {
-            // Set a bit more top padding on the tile grid if there is no logo.
-            paddingTop = getResources().getDimensionPixelSize(shouldShowLogo()
-                            ? R.dimen.tile_grid_layout_padding_top
-                            : R.dimen.tile_grid_layout_no_logo_padding_top);
-        }
+        // Set a bit more top padding on the tile grid if there is no logo.
+        final int paddingTop = getResources().getDimensionPixelSize(shouldShowLogo()
+                        ? R.dimen.tile_grid_layout_padding_top
+                        : R.dimen.tile_grid_layout_no_logo_padding_top);
         mSiteSectionViewHolder.itemView.setPadding(
                 0, paddingTop, 0, mSiteSectionViewHolder.itemView.getPaddingBottom());
     }
