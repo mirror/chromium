@@ -41,13 +41,13 @@ void DeviceMotionEventPump::SendStartMessage() {
   if (!accelerometer_.sensor && !linear_acceleration_sensor_.sensor &&
       !gyroscope_.sensor) {
     if (!sensor_provider_) {
-      RenderFrame* const render_frame = GetRenderFrame();
-      if (!render_frame)
+      InitRenderFrame();
+      if (!render_frame_)
         return;
 
-      CHECK(render_frame->GetRemoteInterfaces());
+      CHECK(render_frame_->GetRemoteInterfaces());
 
-      render_frame->GetRemoteInterfaces()->GetInterface(
+      render_frame_->GetRemoteInterfaces()->GetInterface(
           mojo::MakeRequest(&sensor_provider_));
       sensor_provider_.set_connection_error_handler(
           base::BindOnce(&DeviceSensorEventPump::HandleSensorProviderError,
