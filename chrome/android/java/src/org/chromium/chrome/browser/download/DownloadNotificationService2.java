@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
@@ -312,6 +313,16 @@ public class DownloadNotificationService2 {
             return;
         }
         int notificationId = entry == null ? getNotificationId(id) : entry.notificationId;
+        if (notificationId == DownloadForegroundService.getPinnedNotificationId()) {
+            DownloadPinnedNotificationInfo pinnedNotificationInfo =
+                    new DownloadPinnedNotificationInfo(
+                            DownloadNotificationFactory.DownloadStatus.PAUSED, "", -1, false, false,
+                            "", "",
+                            mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id));
+            DownloadForegroundService.updatePinnedNotificationInfo(
+                    pinnedNotificationInfo.getSharedPreferenceString());
+        }
+
         Context context = ContextUtils.getApplicationContext();
 
         DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
@@ -362,7 +373,19 @@ public class DownloadNotificationService2 {
             long systemDownloadId, boolean isOffTheRecord, boolean isSupportedMimeType,
             boolean isOpenable, Bitmap icon, String originalUrl, String referrer) {
         Context context = ContextUtils.getApplicationContext();
+
         int notificationId = getNotificationId(id);
+        if (notificationId == DownloadForegroundService.getPinnedNotificationId()) {
+            DownloadPinnedNotificationInfo pinnedNotificationInfo =
+                    new DownloadPinnedNotificationInfo(
+                            DownloadNotificationFactory.DownloadStatus.SUCCESSFUL, filePath,
+                            systemDownloadId, isSupportedMimeType, isOpenable, originalUrl,
+                            referrer,
+                            mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id));
+            DownloadForegroundService.updatePinnedNotificationInfo(
+                    pinnedNotificationInfo.getSharedPreferenceString());
+        }
+
         if (icon == null && mDownloadSuccessLargeIcon == null) {
             Bitmap bitmap =
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.offline_pin);
@@ -412,6 +435,16 @@ public class DownloadNotificationService2 {
         }
 
         int notificationId = getNotificationId(id);
+        if (notificationId == DownloadForegroundService.getPinnedNotificationId()) {
+            DownloadPinnedNotificationInfo pinnedNotificationInfo =
+                    new DownloadPinnedNotificationInfo(
+                            DownloadNotificationFactory.DownloadStatus.FAILED, "", -1, false, false,
+                            "", "",
+                            mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id));
+            DownloadForegroundService.updatePinnedNotificationInfo(
+                    pinnedNotificationInfo.getSharedPreferenceString());
+        }
+
         Context context = ContextUtils.getApplicationContext();
 
         DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
@@ -590,17 +623,28 @@ public class DownloadNotificationService2 {
                 .apply();
     }
 
-    void onForegroundServiceRestarted(int pinnedNotificationId) {
+    void onForegroundServiceRestarted(
+            int pinnedNotificationId, String pinnedNotificationInfoString) {
+        Log.e("joy",
+                "onForegroundServiceRestarted pinnedNotificationId: " + pinnedNotificationId
+                        + " pinnedNotificationInfoString: " + pinnedNotificationInfoString);
         updateNotificationsForShutdown();
         resumeAllPendingDownloads();
 
         // In API < 24, notifications pinned to the foreground will get killed with the service.
         // Fix this by relaunching the notification that was pinned to the service as the service
         // dies, if there is one.
-        relaunchPinnedNotification(pinnedNotificationId);
+        if (!pinnedNotificationInfoString.isEmpty()) {
+            DownloadPinnedNotificationInfo pinnedNotificationInfo =
+                    DownloadPinnedNotificationInfo.parseFromString(pinnedNotificationInfoString);
+            relaunchPinnedNotification(pinnedNotificationId, pinnedNotificationInfo);
+        }
+
+        DownloadForegroundService.clearPinnedNotificationInfo();
     }
 
     void onForegroundServiceTaskRemoved() {
+        Log.e("joy", "onForegroundServiceTaskRemoved");
         // If we've lost all Activities, cancel the off the record downloads.
         if (ApplicationStatus.isEveryActivityDestroyed()) {
             cancelOffTheRecordDownloads();
@@ -617,29 +661,41 @@ public class DownloadNotificationService2 {
      * notification a new id in order to rebuild and relaunch the notification.
      * @param pinnedNotificationId Id of the notification pinned to the service when it died.
      */
-    private void relaunchPinnedNotification(int pinnedNotificationId) {
+    private void relaunchPinnedNotification(
+            int pinnedNotificationId, DownloadPinnedNotificationInfo info) {
+        Log.e("joy", "relaunchPinnedNotification pinnedNotificationId: " + pinnedNotificationId);
         // If there was no notification pinned to the service, no correction is necessary.
         if (pinnedNotificationId == INVALID_NOTIFICATION_ID) return;
+        if (!(info.mDownloadStatus == DownloadNotificationFactory.DownloadStatus.FAILED
+                    || info.mDownloadStatus == DownloadNotificationFactory.DownloadStatus.SUCCESSFUL
+                    || info.mDownloadStatus == DownloadNotificationFactory.DownloadStatus.PAUSED)) {
+            return;
+        }
 
-        List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
-        List<DownloadSharedPreferenceEntry> copies =
-                new ArrayList<DownloadSharedPreferenceEntry>(entries);
-        for (DownloadSharedPreferenceEntry entry : copies) {
-            if (entry.notificationId == pinnedNotificationId) {
-                // Get new notification id that is not associated with the service.
-                DownloadSharedPreferenceEntry updatedEntry =
-                        new DownloadSharedPreferenceEntry(entry.id, getNextNotificationId(),
-                                entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.fileName,
-                                entry.isAutoResumable, entry.isTransient);
+        DownloadSharedPreferenceEntry entry = info.mEntry;
+        DownloadSharedPreferenceEntry updatedEntry = new DownloadSharedPreferenceEntry(entry.id,
+                getNextNotificationId(), entry.isOffTheRecord, entry.canDownloadWhileMetered,
+                entry.fileName, entry.isAutoResumable, entry.isTransient);
+
+        switch (info.mDownloadStatus) {
+            case FAILED:
                 mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(updatedEntry);
-
-                // Right now this only happens in the paused case, so re-build and re-launch the
-                // paused notification, with the updated notification id..
+                notifyDownloadFailed(entry.id, entry.fileName, null);
+                break;
+            case SUCCESSFUL:
+                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(updatedEntry);
+                notifyDownloadSuccessful(entry.id, info.mFilePath, entry.fileName,
+                        info.mSystemDownloadId, entry.isOffTheRecord, info.mIsSupportedMimeType,
+                        info.mIsOpenable, null, info.mOriginalUrl, info.mReferrer);
+                break;
+            case PAUSED:
+                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(updatedEntry);
                 notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
                         entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
                         null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
-                return;
-            }
+                break;
+            default:
+                break;
         }
     }
 

@@ -67,6 +67,9 @@ public class DownloadForegroundServiceManager {
 
     public void updateDownloadStatus(Context context, DownloadStatus downloadStatus,
             int notificationId, Notification notification) {
+        Log.e("joy",
+                "updateDownloadStatus downloadStatus: " + downloadStatus
+                        + " notificationId: " + notificationId);
         mDownloadUpdateQueue.put(notificationId,
                 new DownloadUpdate(notificationId, notification, downloadStatus, context));
         processDownloadUpdateQueue(false /* not isProcessingPending */);
@@ -207,14 +210,14 @@ public class DownloadForegroundServiceManager {
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
-            mBoundService.startOrUpdateForegroundService(notificationId, notification);
-
             // In the case that there was another notification pinned to the foreground, re-launch
             // that notification because it gets cancelled in the switching process.
             // This does not happen for API >= 24.
             if (mPinnedNotificationId != notificationId && Build.VERSION.SDK_INT < 24) {
                 relaunchPinnedNotification();
             }
+
+            mBoundService.startOrUpdateForegroundService(notificationId, notification);
 
             mPinnedNotificationId = notificationId;
         }
@@ -274,6 +277,8 @@ public class DownloadForegroundServiceManager {
 
         // Only reset the pinned notification if it was killed or detached.
         if (notificationHandledProperly) mPinnedNotificationId = INVALID_NOTIFICATION_ID;
+
+        DownloadForegroundService.clearPinnedNotificationInfo();
     }
 
     @VisibleForTesting

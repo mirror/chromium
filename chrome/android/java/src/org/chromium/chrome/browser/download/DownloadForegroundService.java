@@ -10,7 +10,6 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -18,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ServiceCompat;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.AppHooks;
 
@@ -26,7 +26,12 @@ import org.chromium.chrome.browser.AppHooks;
  */
 public class DownloadForegroundService extends Service {
     private static final String KEY_PINNED_NOTIFICATION_ID = "PinnedNotificationId";
+    private static final String KEY_PINNED_NOTIFICATION_INFO = "PinnedNotifcationInfo";
     private final IBinder mBinder = new LocalBinder();
+
+    public DownloadForegroundService() {
+        super();
+    }
 
     /**
      * Start the foreground service with this given context.
@@ -83,8 +88,8 @@ public class DownloadForegroundService extends Service {
         boolean notificationDetached = detachNotification && isSdkAtLeast24();
         boolean notificationDetachedOrKilled = notificationDetached || killNotification;
 
-        // Reset pinned notification if notification is properly detached or killed.
-        if (notificationDetachedOrKilled) clearPinnedNotificationId();
+        //        // Reset pinned notification if notification is properly detached or killed.
+        //        if (notificationDetachedOrKilled) clearPinnedNotificationId();
 
         // Detach notification from foreground if possible.
         if (notificationDetached) {
@@ -109,7 +114,7 @@ public class DownloadForegroundService extends Service {
             // Pass along the id of the notification that was pinned to the service when it died so
             // that the observers can do any corrections (ie. relaunch notification) if needed.
             DownloadForegroundServiceObservers.alertObserversServiceRestarted(
-                    getPinnedNotificationId());
+                    getPinnedNotificationId(), getPinnedNotificationInfo());
 
             // Allow observers to restart service on their own, if needed.
             stopSelf();
@@ -164,8 +169,9 @@ public class DownloadForegroundService extends Service {
      */
     @VisibleForTesting
     static int getPinnedNotificationId() {
-        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
-        return sharedPrefs.getInt(KEY_PINNED_NOTIFICATION_ID, INVALID_NOTIFICATION_ID);
+        Log.e("joy", "getPinnedNotificationId");
+        return ContextUtils.getAppSharedPreferences().getInt(
+                KEY_PINNED_NOTIFICATION_ID, INVALID_NOTIFICATION_ID);
     }
 
     /**
@@ -174,9 +180,11 @@ public class DownloadForegroundService extends Service {
      * @param pinnedNotificationId Id of the notification pinned to the service.
      */
     private static void updatePinnedNotificationId(int pinnedNotificationId) {
+        Log.e("joy", "updatePinnedNotificationId pinnedNotificationId: " + pinnedNotificationId);
         ContextUtils.getAppSharedPreferences()
                 .edit()
                 .putInt(KEY_PINNED_NOTIFICATION_ID, pinnedNotificationId)
+                .remove(KEY_PINNED_NOTIFICATION_INFO)
                 .apply();
     }
 
@@ -184,8 +192,27 @@ public class DownloadForegroundService extends Service {
      * Clear stored value for the id of the notification pinned to the service.
      */
     @VisibleForTesting
-    static void clearPinnedNotificationId() {
-        ContextUtils.getAppSharedPreferences().edit().remove(KEY_PINNED_NOTIFICATION_ID).apply();
+    static void clearPinnedNotificationInfo() {
+        Log.e("joy", "clearPinnedNotificationInfo");
+        ContextUtils.getAppSharedPreferences()
+                .edit()
+                .remove(KEY_PINNED_NOTIFICATION_ID)
+                .remove(KEY_PINNED_NOTIFICATION_INFO)
+                .apply();
+    }
+
+    static String getPinnedNotificationInfo() {
+        Log.e("joy", "getPinnedNotificationInfo");
+        return ContextUtils.getAppSharedPreferences().getString(KEY_PINNED_NOTIFICATION_INFO, "");
+    }
+
+    static void updatePinnedNotificationInfo(String pinnedNotificationInfo) {
+        Log.e("joy",
+                "updatePinnedNotificationInfo pinnedNotificationInfo: " + pinnedNotificationInfo);
+        ContextUtils.getAppSharedPreferences()
+                .edit()
+                .putString(KEY_PINNED_NOTIFICATION_INFO, pinnedNotificationInfo)
+                .apply();
     }
 
     /** Methods for testing. */

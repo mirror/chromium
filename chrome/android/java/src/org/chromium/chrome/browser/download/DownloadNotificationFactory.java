@@ -52,7 +52,8 @@ public final class DownloadNotificationFactory {
         SUCCESSFUL,
         FAILED,
         DELETED,
-        SUMMARY // TODO(jming): Remove when summary notification is no longer in-use.
+        SUMMARY, // TODO(jming): Remove when summary notification is no longer in-use.
+        UNKNOWN
     }
 
     /**

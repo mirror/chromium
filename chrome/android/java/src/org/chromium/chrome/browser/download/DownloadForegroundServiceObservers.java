@@ -31,7 +31,7 @@ public final class DownloadForegroundServiceObservers {
          * Called when the foreground service was automatically restarted because of START_STICKY.
          * @param pinnedNotificationId Id of the notification pinned to the service when it died.
          */
-        void onForegroundServiceRestarted(int pinnedNotificationId);
+        void onForegroundServiceRestarted(int pinnedNotificationId, String pinnedNotificationInfo);
 
         /**
          * Called when any task (service or activity) is removed from the service's application.
@@ -89,14 +89,16 @@ public final class DownloadForegroundServiceObservers {
         prefs.edit().putStringSet(KEY_FOREGROUND_SERVICE_OBSERVERS, observers).apply();
     }
 
-    static void alertObserversServiceRestarted(int pinnedNotificationId) {
+    static void alertObserversServiceRestarted(
+            int pinnedNotificationId, String pinnedNotificationInfo) {
         Set<String> observers = getAllObservers();
         removeAllObservers();
 
         for (String observerClassName : observers) {
             DownloadForegroundServiceObservers.Observer observer =
                     DownloadForegroundServiceObservers.getObserverFromClassName(observerClassName);
-            if (observer != null) observer.onForegroundServiceRestarted(pinnedNotificationId);
+            if (observer != null)
+                observer.onForegroundServiceRestarted(pinnedNotificationId, pinnedNotificationInfo);
         }
     }
 

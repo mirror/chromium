@@ -10,9 +10,10 @@ package org.chromium.chrome.browser.download;
 public class DownloadNotificationServiceObserver
         implements DownloadForegroundServiceObservers.Observer {
     @Override
-    public void onForegroundServiceRestarted(int pinnedNotificationId) {
+    public void onForegroundServiceRestarted(
+            int pinnedNotificationId, String pinnedNotificationInfo) {
         DownloadNotificationService2.getInstance().onForegroundServiceRestarted(
-                pinnedNotificationId);
+                pinnedNotificationId, pinnedNotificationInfo);
     }
 
     @Override
