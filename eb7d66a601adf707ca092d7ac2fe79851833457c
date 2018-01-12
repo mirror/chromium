@@ -16,6 +16,24 @@
       "revId": "eb7d66a601adf707ca092d7ac2fe79851833457c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619d9aa9_7020aa14",
+        "filename": "docs/chromeos_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-12T22:26:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8ac7e911_894281ed",
+      "revId": "eb7d66a601adf707ca092d7ac2fe79851833457c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
