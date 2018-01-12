@@ -6336,6 +6336,8 @@ bool CreateImageValidInternalFormat(GLenum internalformat,
       return capabilities.texture_format_etc1;
     case GL_R16_EXT:
       return capabilities.texture_norm16;
+    case GL_RGB10_A2_EXT:
+      return capabilities.image_ar30;
     case GL_RED:
     case GL_RG_EXT:
     case GL_RGB:
@@ -6351,6 +6353,7 @@ bool CreateImageValidInternalFormat(GLenum internalformat,
 }
 
 }  // namespace
+
 
 GLuint GLES2Implementation::CreateImageCHROMIUMHelper(ClientBuffer buffer,
                                                       GLsizei width,
