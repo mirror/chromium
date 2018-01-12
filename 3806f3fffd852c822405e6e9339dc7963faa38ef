@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e0247522_0bfc9b60",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-12T14:26:16Z",
+      "side": 1,
+      "message": "We discussed that already offline a bit. The use of Isolate::GetCurrent() is fragile and a lot of APIs have moved to explicitly passing Isolate or Context for that reason.",
+      "parentUuid": "7b8c33e3_817a7c28",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b2f04d_855a1906",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 19
@@ -196,6 +214,24 @@
       "side": 1,
       "message": "We would have to track that on the V8 side, as this API just returns a pointer. To do this, we\u0027ll have to modify the ArrayBuffer::Allocator API. I\u0027ll look into that starting next week.",
       "parentUuid": "9c129324_997620de",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a540c109_29ac400a",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-12T14:26:16Z",
+      "side": 1,
+      "message": "V8 knows the Isolate upon freeing which could be used to infer the partition as far as I can see. https://cs.chromium.org/chromium/src/v8/src/objects.cc?q\u003dFreeBackingStore\u0026l\u003d18960",
+      "parentUuid": "eb1e1d94_db6e8d38",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
