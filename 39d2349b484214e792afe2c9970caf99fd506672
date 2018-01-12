@@ -22,6 +22,30 @@
       "revId": "39d2349b484214e792afe2c9970caf99fd506672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8112bd64_dd420d8b",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4decd07_f36642d8",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "39d2349b484214e792afe2c9970caf99fd506672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
