@@ -25,6 +25,57 @@
     },
     {
       "key": {
+        "uuid": "fc5d7c91_13a9b831",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T18:49:10Z",
+      "side": 1,
+      "message": "Is it necessary to clip to this path, or can this just call canvas-\u003eDrawPath with the paint args to fill? It might also be possible to call DrawRoundRect with the left side beyond the visible bounds to make it so just the right side has rounded corners.",
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7e1958_b068847e",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T18:49:10Z",
+      "side": 1,
+      "message": "Add a comment description of this type and its values.",
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a669ee_a29cf8ed",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T18:49:10Z",
+      "side": 1,
+      "message": "It would be nice if these values can be derived from LayoutProvider, NativeTheme, layout_constants, etc., rather than defining local magic numbers that aren\u0027t consistent with the rest of the UI.",
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad36b82_6f7578d7",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 2
@@ -42,6 +93,23 @@
         "endLine": 170,
         "endChar": 21
       },
+      "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ca80a8_a662ae3b",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T18:49:10Z",
+      "side": 1,
+      "message": "Try to follow how the existing pattern with kTabTitleColor_Active, etc. Or better yet, integrate NativeTheme use. It would be great if this control could properly handle high contrast mode coloring (presuming that\u0027s still a thing on Chrome OS).",
       "revId": "4a91aad456b57414b6d76a5ea38de080d30e619b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
