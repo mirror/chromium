@@ -68,6 +68,30 @@
       "revId": "01076065d2fc920f263ee179a59df844507ad63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92577ed_70795d44",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T20:41:28Z",
+      "side": 1,
+      "message": "\u003e We can\u0027t get rid of the scroll offset truncation in Blink like this. It\u0027s something we\u0027ve wanted to do for a while but it\u0027s not quite this simple. Doing this will break various other things inside Blink.\n\nRight :p the original question was how close is this.\n\nWe were only toggling things in the CL to see if it fixes webview tests.\n\n\u003e \n\u003e Can you help me understand why this change is needed in Blink? Blink offsets have always been integers and you\u0027re doing the DIP adjustment above Blink in AndroidWebView code so I don\u0027t understand why we need to make this change.\n\nCame from me not wanting to relax webview scroll test constraints:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/844266/5/android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java#265\n\nApps in webview can set scroll directly in physical pixels from browser side. My concern is that app try to set scroll to X, but then bubble up as scrolled to X-1 or X+1 due to rounding.\n\nJaebaek did all the investigation here, and honestly, I don\u0027t really understand how things work currently. But webview has this weird way to do scale to avoid issues at end points: https://cs.chromium.org/chromium/src/android_webview/browser/browser_view_renderer.cc?rcl\u003dffb5de3934abd4e16399b2f79e7100823c6076fd\u0026l\u003d576\n\nand that\u0027s going to be skipped over in the new code path, so Jaebaek was trying to find where rounding was happening.\n\n\u003e \n\u003e It might be helpful if you show me the path from how LocalDOMWindow::scrollX|Y gets to SynchronousCompositor::DidChangeRootLayerScrollOffset. My assumption was that these values will all come from CC which has all the fractional parts of the scroll offset.\n\nDidChangeRootLayerScrollOffset happens when app directly sets webview scroll, so shouldn\u0027t come from LocalDOMWindow::scrollX|Y. Otherwise than that, your assumption is correct, scroll in SynchronousCompositorHost comes from cc.",
+      "parentUuid": "bf64ecf2_2eda4ef9",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
