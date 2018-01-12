@@ -69,8 +69,11 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
  public:
   using ShapeRects = std::vector<gfx::Rect>;
 
-  CustomFrameView(views::Widget* widget, bool enabled)
-      : CustomFrameViewAsh(widget) {
+  CustomFrameView(views::Widget* widget,
+                  bool enabled,
+                  bool client_controlled_move_resize)
+      : CustomFrameViewAsh(widget),
+        client_controlled_move_resize_(client_controlled_move_resize) {
     SetEnabled(enabled);
     if (!enabled)
       CustomFrameViewAsh::SetShouldPaintHeader(false);
@@ -121,7 +124,7 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
     return client_bounds;
   }
   int NonClientHitTest(const gfx::Point& point) override {
-    if (enabled())
+    if (enabled() || !client_controlled_move_resize_)
       return ash::CustomFrameViewAsh::NonClientHitTest(point);
     return GetWidget()->client_view()->NonClientHitTest(point);
   }
@@ -147,6 +150,10 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
   }
 
  private:
+  // TODO(oshima): Remove this once the transition to new drag/resize
+  // is complete. https://crbug.com/801666.
+  const bool client_controlled_move_resize_;
+
   DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
 };
 
@@ -604,7 +611,6 @@ void ShellSurfaceBase::OnSurfaceCommit() {
         UpdateSystemModal();
     }
   }
-
   SubmitCompositorFrame();
 }
 
@@ -705,7 +711,7 @@ void ShellSurfaceBase::OnSurfaceDestroying(Surface* surface) {
 // views::WidgetDelegate overrides:
 
 bool ShellSurfaceBase::CanResize() const {
-  return !movement_disabled_;
+  return !movement_disabled_ && minimum_size_ != maximum_size_;
 }
 
 bool ShellSurfaceBase::CanMaximize() const {
@@ -757,7 +763,8 @@ views::NonClientFrameView* ShellSurfaceBase::CreateNonClientFrameView(
   if (!frame_enabled_ && !window_state->HasDelegate()) {
     window_state->SetDelegate(std::make_unique<CustomWindowStateDelegate>());
   }
-  CustomFrameView* frame_view = new CustomFrameView(widget, frame_enabled_);
+  CustomFrameView* frame_view = new CustomFrameView(
+      widget, frame_enabled_, client_controlled_move_resize_);
   if (has_frame_colors_)
     frame_view->SetFrameColors(active_frame_color_, inactive_frame_color_);
   return frame_view;
@@ -1120,7 +1127,7 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   }
 
   // 2) When a window is being dragged.
-  if (IsResizing())
+  if (resizer_ && IsResizing())
     return;
 
   // Return early if there is pending configure requests.
