@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b1f6b26_5535e524",
+        "filename": "tools/gn/command_check.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1259526
+      },
+      "writtenOn": "2018-01-12T14:42:50Z",
+      "side": 1,
+      "message": "Not actual any more",
+      "range": {
+        "startLine": 131,
+        "startChar": 46,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "2917b947609f899ad6a3bffec0bfae9c38889413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
