@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e2427946_e42bdb12",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T16:30:32Z",
+      "side": 1,
+      "message": "Very interesting! Thank you for digging into this.\n\nCoalescePendingMotionEvents() seems to try to not coalesce with a scroll event though [1]. Is there a reason that isn\u0027t helping in this case?\n\nSince this can affect only mouse events, I think if we want to have this check, we should have it only for mouse events (i.e below).\n\n[1] https://cs.chromium.org/chromium/src/ui/base/x/x11_util.cc?l\u003d351",
+      "parentUuid": "954dab6c_f72642d4",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ac0d37_155021c4",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
         "patchSetId": 4
