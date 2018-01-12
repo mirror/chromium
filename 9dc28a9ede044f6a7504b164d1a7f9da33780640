@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ed058b0a_9748da70",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "235aedce_cf5ed0a1",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9dcbe67_b0cb6a17",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
         "patchSetId": 28
@@ -68,6 +86,24 @@
       "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c84434_b75c8b78",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9dcbe67_b0cb6a17",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9a3cfa9f_e9561a5e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c024bd32_7a757ef0",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c866f75e_a3fa227a",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 28
@@ -102,6 +156,24 @@
       "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a32299_6afad791",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c866f75e_a3fa227a",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "146db452_e3627ac7",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "425b2c8e_f6cfbad5",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8dbd538_24db0acb",
         "filename": "components/omnibox/browser/autocomplete_match_type.cc",
         "patchSetId": 28
@@ -136,6 +226,24 @@
       "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49daadf_ff2aed8d",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-12T15:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8dbd538_24db0acb",
+      "revId": "9dc28a9ede044f6a7504b164d1a7f9da33780640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
