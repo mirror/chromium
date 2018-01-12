@@ -34,6 +34,24 @@
       "revId": "6ce64ac156379367c9b3ba3969f6bfc14dbc9345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8218575_454f7b2e",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-12T02:11:52Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "75a3057f_3e74b1fd",
+      "revId": "6ce64ac156379367c9b3ba3969f6bfc14dbc9345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
