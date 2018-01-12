@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3622522_531bbf96",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-12T11:23:02Z",
+      "side": 1,
+      "message": "For translation, MDD would also require access to |salt_and_origin_callback_| and other utility methods such as ComputeGroupIDSalt, TranslateMediaDeviceInfoArray, TranslateDeviceInfo which currently exist in MDDH. Should we move these to MDD as well? What do you suggest? These are also getting used at other places in MDDH.",
+      "range": {
+        "startLine": 311,
+        "startChar": 53,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "c4bed72ec6c5845f6002e6d418894be3f070415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
