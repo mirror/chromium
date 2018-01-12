@@ -127,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "95f1f3af_235be627",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3443,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-12T07:28:29Z",
+      "side": 1,
+      "message": "It looks like there\u0027s a lot of duplicated code here.  Is there a way to share via a common helper?",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce9d8b8_f4451c08",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 8
@@ -138,6 +155,24 @@
       "writtenOn": "2018-01-11T19:10:40Z",
       "side": 1,
       "message": "In the previous version of this code, we would still proceed with a load in this case, but it would use blink::kWebHistoryDifferentDocumentLoad. With this code we will drop the navigation. This is a change in behavior and I don\u0027t understand why it is ok to drop the navigation.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498bf0dc_5fa53b1c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-12T07:28:29Z",
+      "side": 1,
+      "message": "\u003e In the previous version of this code, we would still proceed with a load in this case, but it would use blink::kWebHistoryDifferentDocumentLoad. With this code we will drop the navigation. This is a change in behavior and I don\u0027t understand why it is ok to drop the navigation.\n\nYes, I think we might need to convert it to a different document load and use the other path if the document sequence number doesn\u0027t match.  This can happen if you click the back button (intended to go back same-document) just before the DidCommit message arrives from the renderer.  I don\u0027t think we want to ignore it.",
+      "parentUuid": "8ce9d8b8_f4451c08",
       "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
