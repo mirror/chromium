@@ -46,6 +46,30 @@
       "revId": "c4bed72ec6c5845f6002e6d418894be3f070415e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b058f7_230ab2ec",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-12T12:28:19Z",
+      "side": 1,
+      "message": "Sure, we can do that for the common utility methods.\n\nAnd, as far as |salt_and_origin_callback_| is concerned, I see two possibilities.\n1. We can move it to MDD and then let MDDH access it through a getter.\n2. Pass it as an argument in MDD\u0027s Subscribe method and store it in the struct.\nYour opinion, please.\n\nSimilar idea for |group_id_salt_base_| as well.",
+      "parentUuid": "7eaf847b_76acfec2",
+      "range": {
+        "startLine": 311,
+        "startChar": 53,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "c4bed72ec6c5845f6002e6d418894be3f070415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
