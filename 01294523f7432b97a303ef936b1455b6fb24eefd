@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17370bc6_03b95456",
+        "filename": "chrome/common/extensions/api/automation_internal.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T23:22:46Z",
+      "side": 1,
+      "message": "nit: Unnecessary empty line.",
+      "revId": "01294523f7432b97a303ef936b1455b6fb24eefd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8caefa_28458366",
+        "filename": "content/common/accessibility_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T23:22:46Z",
+      "side": 1,
+      "message": "I don\u0027t see changes in ui/accessibility/ax_action_data.h where ui::AXActionData is declared. This should correspond to the real layout of ui::AXActionData, which doesn\u0027t seem the case here. Have I missed something?",
+      "revId": "01294523f7432b97a303ef936b1455b6fb24eefd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
