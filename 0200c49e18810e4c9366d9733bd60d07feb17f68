@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb00c41_b707f91d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-12T18:15:41Z",
+      "side": 1,
+      "message": "Maybe re-wrap this comment? You also lost a space and this will render as \"tosymbolize\"",
+      "revId": "0200c49e18810e4c9366d9733bd60d07feb17f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
