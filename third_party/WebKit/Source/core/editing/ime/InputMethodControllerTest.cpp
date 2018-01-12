@@ -2758,4 +2758,172 @@ TEST_F(InputMethodControllerTest,
                    .ComputeOffsetInContainerNode());
 }
 
+TEST_F(InputMethodControllerTest,
+       CommitTextWithOpenCompositionAndCompositionEndEventHandlerChangingText) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello</div>", "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('compositionend', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO WORLD';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "hello".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 0, 5);
+
+  // Commit text, leaving the cursor at the end of the newly-inserted text.
+  // JavaScript will make the text longer by changing it to "HELLO WORLD",
+  // while trying to move the selection to the end of the string (where we
+  // should leave it).
+  Controller().CommitText("HELLO", Vector<ImeTextSpan>(), 0);
+
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringWithOpenCompositionAndCompositionEndEventHandlerChangingText) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('compositionend', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HI ';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 2);"
+      "    selection.extend(node.firstChild, 2);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Delete the composition range, leaving the cursor in place. JavaScript will
+  // change the text and move the cursor after "HI", where it should be left.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), 0, 0);
+
+  EXPECT_EQ(2, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringAndCompositionEndEventHandlerChangingSelection) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('compositionend', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Change the composition text to the empty string (so we end up with
+  // "hello ") and move the cursor to before "hello". JavaScript will change
+  // the text and move the cursor after "hello", where it should be left.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), -6, -6);
+
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       FinishComposingTextDoNotKeepSelectionAndCompositionEndEventHandler) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('compositionend', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // JavaScript will change the text and move the cursor after "hello", where
+  // it should be left.
+  Controller().FinishComposingText(
+      InputMethodController::ConfirmCompositionBehavior::kKeepSelection);
+
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       FinishComposingTextKeepSelectionAndCompositionEndEventHandler) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('compositionend', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // JavaScript will change the text and move the cursor after "hello", where
+  // it should be left.
+  Controller().FinishComposingText(
+      InputMethodController::ConfirmCompositionBehavior::kDoNotKeepSelection);
+
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
 }  // namespace blink
