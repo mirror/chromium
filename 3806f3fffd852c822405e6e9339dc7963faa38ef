@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "069af4a7_fce76520",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-12T22:14:24Z",
+      "side": 1,
+      "message": "I suppose the big issue on 32-bit is increased address space fragmentation? If we observe a problem there, I\u0027d be OK doing this on 64-bit only. But it\u0027d be nice to give it a try on 32-bit and see what happens.",
+      "parentUuid": "d0b2f04d_855a1906",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 76
+      },
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d614c40f_80547bf2",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
@@ -143,6 +167,24 @@
       "side": 1,
       "message": "Currently no.\n\nCan we mitigate the memory concern by lazily instantiating ParitionRootGeneric (i.e., the first time the SecurityOrigin allocated an ArrayBuffer).",
       "parentUuid": "a6845cb5_1ee0ebf2",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97742433_a085aea2",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-12T22:14:24Z",
+      "side": 1,
+      "message": "Another idea would be to key it off of content::SiteInstance rather than off of SecurityOrigin. SiteInstance is strictly more broad than SecurityOrigin (so fewer partitions → less address space fragmentation; somewhat less granularity of protection; granularity aligned with Site Isolation which is our best boundary anyway; and maybe SiteInstance is a more natural owner of a partition than SecurityOrigin).",
+      "parentUuid": "76aded81_5cd53b22",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -232,6 +274,23 @@
       "side": 1,
       "message": "V8 knows the Isolate upon freeing which could be used to infer the partition as far as I can see. https://cs.chromium.org/chromium/src/v8/src/objects.cc?q\u003dFreeBackingStore\u0026l\u003d18960",
       "parentUuid": "eb1e1d94_db6e8d38",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816a98fc_1ae31c9c",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-12T22:14:24Z",
+      "side": 1,
+      "message": "Is this the best type of lock to use, here? I have a bug open to get rid of it, if I can come up with something as good. It\u0027d be nice, but is not necessary, to reduce the # of SpinLock call sites.",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
