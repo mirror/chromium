@@ -57,6 +57,24 @@
       "revId": "fe3d06e5b670fa0dc6a22a10de1a64a8c66be376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625115db_00b15773",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T21:39:26Z",
+      "side": 1,
+      "message": "I talked to xiaochengh@, and he said it appears that if two scoped events are enqueued and one destroys the document, the remaining events are not fired.\n\nPasting HTML with multiple DOM nodes into this example enqueues multiple DOMNodeInserted events, but the first one destroys the document.\nhttps://jsfiddle.net/rq2hLkuy/1/\n\nGiven that, I will go ahead with making this change, and I will also combine this CL with the one that fixes the same bug in compositionend:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/862889",
+      "parentUuid": "f4224059_09e0a555",
+      "revId": "fe3d06e5b670fa0dc6a22a10de1a64a8c66be376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
