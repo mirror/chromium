@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385f2fc2_cfb37bdd",
+        "filename": "components/cronet/android/cronet_url_request_adapter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T14:53:38Z",
+      "side": 1,
+      "message": "will this fail with multiple concurrent GetStatus() calls?  I feel like the status listener needs to be passed in some way (a callback wrapper class) to the GetStatus() call, similar to how it used to be done.",
+      "range": {
+        "startLine": 157,
+        "startChar": 67,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "bd86aca19773fe7f712521503dd1727c45103a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7529ee92_2cdae064",
+        "filename": "components/cronet/cronet_url_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T14:53:38Z",
+      "side": 1,
+      "message": "any particular reason for using constructor call instead of assignment here?  I\u0027d vote for using assignment to match existing style.",
+      "revId": "bd86aca19773fe7f712521503dd1727c45103a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6609a051_3896ea16",
+        "filename": "components/cronet/cronet_url_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T14:53:38Z",
+      "side": 1,
+      "message": "how about changing network_tasks_ to an instance of NetworkTasks, rather than a unique_ptr?  we could move the load_flags calculation into a static function that takes a CronetURLRequestContext*.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "bd86aca19773fe7f712521503dd1727c45103a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8997b4_fe231634",
+        "filename": "components/cronet/cronet_url_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T14:53:38Z",
+      "side": 1,
+      "message": "Part of me says move all this to ~NetworkTasks and make CronetURLRequest::Destroy() just call network_thread_-\u003eDeleteSoon(this), but we shouldn\u0027t be doing work in a destructor, so the current way is fine.  Part of me says make |request| a unique_ptr, but if the network thread gets destroyed abnormally, then we may hit some DCHECKs about being on the wrong thread, so I guess leaking is better.  Anyhow, marking this as resolved as no action is necessary.",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 17
+      },
+      "revId": "bd86aca19773fe7f712521503dd1727c45103a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
