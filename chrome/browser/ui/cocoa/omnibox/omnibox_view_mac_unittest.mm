@@ -16,6 +16,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
+#include "components/omnibox/browser/test_omnibox_edit_model.h"
 #include "components/toolbar/toolbar_model_impl.h"
 #include "content/public/common/content_constants.h"
 #include "testing/platform_test.h"
@@ -24,31 +25,6 @@
 #include "ui/gfx/image/image.h"
 
 namespace {
-
-class MockOmniboxEditModel : public OmniboxEditModel {
- public:
-  MockOmniboxEditModel(OmniboxView* view,
-                       OmniboxEditController* controller,
-                       Profile* profile)
-      : OmniboxEditModel(
-            view,
-            controller,
-            base::WrapUnique(new ChromeOmniboxClient(controller, profile))),
-        up_or_down_count_(0) {}
-
-  void OnUpOrDownKeyPressed(int count) override { up_or_down_count_ = count; }
-
-  int up_or_down_count() const { return up_or_down_count_; }
-
-  void set_up_or_down_count(int count) {
-    up_or_down_count_ = count;
-  }
-
- private:
-  int up_or_down_count_;
-
-  DISALLOW_COPY_AND_ASSIGN(MockOmniboxEditModel);
-};
 
 class MockOmniboxPopupView : public OmniboxPopupView {
  public:
@@ -127,8 +103,9 @@ TEST_F(OmniboxViewMacTest, TabToAutocomplete) {
   OmniboxViewMac view(NULL, profile(), NULL, NULL);
 
   // This is deleted by the omnibox view.
-  MockOmniboxEditModel* model =
-      new MockOmniboxEditModel(&view, NULL, profile());
+  TestOmniboxEditModel* model = new TestOmniboxEditModel(
+      &view, nullptr,
+      base::MakeUnique<ChromeOmniboxClient>(nullptr, profile()));
   SetModel(&view, model);
 
   MockOmniboxPopupView popup_view;
@@ -153,8 +130,9 @@ TEST_F(OmniboxViewMacTest, UpDownArrow) {
   OmniboxViewMac view(NULL, profile(), NULL, NULL);
 
   // This is deleted by the omnibox view.
-  MockOmniboxEditModel* model =
-      new MockOmniboxEditModel(&view, NULL, profile());
+  TestOmniboxEditModel* model = new TestOmniboxEditModel(
+      &view, nullptr,
+      base::MakeUnique<ChromeOmniboxClient>(nullptr, profile()));
   SetModel(&view, model);
 
   MockOmniboxPopupView popup_view;
@@ -186,8 +164,9 @@ TEST_F(OmniboxViewMacTest, WritingDirectionLTR) {
   OmniboxViewMac view(&edit_controller, profile(), NULL, NULL);
 
   // This is deleted by the omnibox view.
-  MockOmniboxEditModel* model =
-      new MockOmniboxEditModel(&view, &edit_controller, profile());
+  TestOmniboxEditModel* model = new TestOmniboxEditModel(
+      &view, &edit_controller,
+      base::MakeUnique<ChromeOmniboxClient>(&edit_controller, profile()));
   MockOmniboxPopupView popup_view;
   OmniboxPopupModel popup_model(&popup_view, model);
 
@@ -218,8 +197,9 @@ TEST_F(OmniboxViewMacTest, WritingDirectionRTL) {
   OmniboxViewMac view(&edit_controller, profile(), NULL, NULL);
 
   // This is deleted by the omnibox view.
-  MockOmniboxEditModel* model =
-      new MockOmniboxEditModel(&view, &edit_controller, profile());
+  TestOmniboxEditModel* model = new TestOmniboxEditModel(
+      &view, &edit_controller,
+      base::MakeUnique<ChromeOmniboxClient>(&edit_controller, profile()));
   MockOmniboxPopupView popup_view;
   OmniboxPopupModel popup_model(&popup_view, model);
 
