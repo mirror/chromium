@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45e8063e_586d3738",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/web-animations/interfaces/KeyframeEffect/processing-a-keyframes-argument-001-expected.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-12T04:49:00Z",
+      "side": 1,
+      "message": "As per the same question asked in patchset 24, yes:\n\n\"Because the element in this test is null, which we (incorrectly) do not support (see http://crbug.com/772014). This patch changes the point at which the input \u0027keyframes\u0027 object is parsed, from IDL time (see e.g. https://chromium-review.googlesource.com/c/chromium/src/+/760542/24/third_party/WebKit/Source/core/animation/KeyframeEffect.idl) to EffectInput::Convert (which is more correct).\n\nIn short, if the early-exit for null element wasn\u0027t in our code we would correctly throw for this test.\"",
+      "parentUuid": "ebbc57a4_15ae8b1c",
+      "revId": "5e163d8d2fcf3124aa99bdb85a80a6b6407f7015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d209fca3_a1eceba2",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 26
@@ -39,6 +57,30 @@
       "revId": "5e163d8d2fcf3124aa99bdb85a80a6b6407f7015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658c9079_ede4880e",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-12T04:49:00Z",
+      "side": 1,
+      "message": "The spec. Step 2.5.1 (and onwards) of the \u0027Otherwise\u0027 branch in step 5 of the procedure to process a keyframes argument (https://drafts.csswg.org/web-animations-1/#process-a-keyframes-argument).",
+      "parentUuid": "d209fca3_a1eceba2",
+      "range": {
+        "startLine": 444,
+        "startChar": 12,
+        "endLine": 444,
+        "endChar": 32
+      },
+      "revId": "5e163d8d2fcf3124aa99bdb85a80a6b6407f7015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
