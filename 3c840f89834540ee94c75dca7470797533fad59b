@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c14b4260_9a729036",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T17:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6467259_42f77302",
+      "range": {
+        "startLine": 378,
+        "startChar": 27,
+        "endLine": 378,
+        "endChar": 44
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2743904b_ca501a05",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6f0c6c05_4c8b48af",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T17:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2743904b_ca501a05",
+      "range": {
+        "startLine": 380,
+        "startChar": 36,
+        "endLine": 380,
+        "endChar": 56
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c6316b8_efb00ebf",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "3c840f89834540ee94c75dca7470797533fad59b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12d3a9b_050e2b7c",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T17:16:27Z",
+      "side": 1,
+      "message": "Done, although I revoked the token after signing out, as it is easier to implement and shouldn\u0027t make a difference.",
+      "parentUuid": "0c6316b8_efb00ebf",
+      "range": {
+        "startLine": 405,
+        "startChar": 23,
+        "endLine": 405,
+        "endChar": 30
+      },
+      "revId": "3c840f89834540ee94c75dca7470797533fad59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
