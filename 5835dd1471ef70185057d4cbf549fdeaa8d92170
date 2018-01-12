@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f082269f_e6981bfd",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "Done for vibration_pattern, but if I do that for \u0027data\u0027 then it fails to compile because PlatformNotificationData.data is actually a vector of chars, not ints.\n\nHave added a TODO to read it directly once we\u0027ve changed PlatformNotificationData to store a vector of ints.",
+      "parentUuid": "81fb460f_46dde85d",
+      "range": {
+        "startLine": 116,
+        "startChar": 35,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f33a13_d609ef12",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-09T10:11:26Z",
       "side": 1,
       "message": "Are there limits on how long each vibration in the vibration pattern can be, as well as a limit on the length of the vibration pattern? The spec seems to indicate that such a thing exists.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6b36d1_bbb3d4e7",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "The spec says that the implementation should truncate the vibration array and clamp the max vibration duration: https://w3c.github.io/vibration/#dfn-validate-and-normalize \n\n@peter/dcheng: Should I be implementing this normalization here in the mojo code, or just verifying that it has already been done (and returning false if it hasn\u0027t) ?",
+      "parentUuid": "92f33a13_d609ef12",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "180b2fe1_4b84e544",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb9122c_76841c48",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06f69f0a_5624a426",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
         "patchSetId": 32
@@ -87,6 +147,24 @@
       "writtenOn": "2018-01-09T10:11:26Z",
       "side": 1,
       "message": "Nit: please return const refs for objects that aren\u0027t cheap to copy. Also, once it\u0027s returning a const ref, simple getters like this can just be inlined into the header.\n\n(https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple)",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08247fff_8bf169de",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "I have already returned const refs and inlined everything other than the WTF::Strings, the blink::KURLs, and the Vectors.\n\nFor these, I don\u0027t think I can return a const ref, because they are stored in WebNotificationData as Web* types, not WTF types. (When I try to return const refs I get errors, e.g. \n../../third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp:92:10: error: returning reference to local temporary object [-Werror,-Wreturn-stack-address]\n..presumably because there\u0027s a local temporary object constructed under the hood for the conversion between WTF and Web types.",
+      "parentUuid": "06f69f0a_5624a426",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "bf494fdb_4291840e",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb2d11fb_477f3778",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c087753_d669df9b",
         "filename": "third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h",
         "patchSetId": 32
@@ -124,6 +220,24 @@
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b151f958_405fcaac",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "huh, that\u0027s weird, I thought I required that to compile at one point, but it seems fine without now.\n\nFixed.",
+      "parentUuid": "2c087753_d669df9b",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +258,24 @@
     },
     {
       "key": {
+        "uuid": "62712ef5_1d949b65",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c2d634e_0a335f83",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7c10b7_9786d43e",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
         "patchSetId": 32
@@ -158,6 +290,24 @@
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4f98d2_ee0bdbe4",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T18:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb7c10b7_9786d43e",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
