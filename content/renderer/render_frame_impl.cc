@@ -137,7 +137,6 @@
 #include "content/renderer/renderer_blink_platform_impl.h"
 #include "content/renderer/renderer_webapplicationcachehost_impl.h"
 #include "content/renderer/savable_resources.h"
-#include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_network_provider.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
@@ -1286,7 +1285,6 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       devtools_agent_(nullptr),
       presentation_dispatcher_(nullptr),
       push_messaging_client_(nullptr),
-      screen_orientation_dispatcher_(nullptr),
       render_accessibility_(nullptr),
       previews_state_(PREVIEWS_UNSPECIFIED),
       effective_connection_type_(
@@ -5211,13 +5209,6 @@ bool RenderFrameImpl::AllowContentInitiatedDataUrlNavigations(
     const blink::WebURL& url) {
   // Error pages can navigate to data URLs.
   return url.GetString() == kUnreachableWebDataURL;
-}
-
-blink::WebScreenOrientationClient*
-RenderFrameImpl::GetWebScreenOrientationClient() {
-  if (!screen_orientation_dispatcher_)
-    screen_orientation_dispatcher_ = new ScreenOrientationDispatcher(this);
-  return screen_orientation_dispatcher_;
 }
 
 void RenderFrameImpl::PostAccessibilityEvent(const blink::WebAXObject& obj,
