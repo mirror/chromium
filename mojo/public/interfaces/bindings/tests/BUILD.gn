@@ -85,6 +85,7 @@ component("test_export_component") {
   deps = [
     ":test_export",
   ]
+  defines = [ "MOJO_TEST_BLINK_IMPLEMENTATION" ]
 }
 
 if (!is_ios) {
@@ -104,11 +105,19 @@ mojom("test_export") {
   export_class_attribute = "MOJO_TEST_EXPORT"
   export_define = "MOJO_TEST_IMPLEMENTATION=1"
   export_header = "mojo/public/cpp/bindings/tests/mojo_test_export.h"
+
+  export_class_attribute_shared = "MOJO_TEST_EXPORT"
+  export_define_shared = "MOJO_TEST_IMPLEMENTATION"
+  export_header_shared = "mojo/public/cpp/bindings/tests/mojo_test_export.h"
+
   if (!is_ios) {
     export_class_attribute_blink = "MOJO_TEST_BLINK_EXPORT"
     export_define_blink = "MOJO_TEST_BLINK_IMPLEMENTATION=1"
     export_header_blink =
         "mojo/public/cpp/bindings/tests/mojo_test_blink_export.h"
+    export_class_attribute_shared = "MOJO_TEST_EXPORT"
+    export_define_shared = "MOJO_TEST_IMPLEMENTATION"
+    export_header_shared = "mojo/public/cpp/bindings/tests/mojo_test_export.h"
   }
   visibility = [ ":test_export_component" ]
   if (!is_ios) {
