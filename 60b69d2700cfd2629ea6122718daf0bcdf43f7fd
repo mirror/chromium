@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1a8653_c14ed70e",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-12T00:12:43Z",
+      "side": 1,
+      "message": "Both the raster \u0026 gl are on the same context here.  Since you\u0027ve added some of the synchronization, should we just go ahead and make separate contexts?\n\nIf keeping the shared context, please add RI::BeginGpuRaster()/RI::EndGpuRaster() around the GL parts.",
+      "revId": "60b69d2700cfd2629ea6122718daf0bcdf43f7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7832e6_f99b1ee9",
+        "filename": "gpu/command_buffer/client/raster_implementation_gles.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-12T00:12:43Z",
+      "side": 1,
+      "message": "IIUC we need the maximum contiguous size here.  I think GetTransferBufferFreeSize() gives total free size (GetTotalFreeSizeNoWaiting), rather than largest free size (GetLargestFreeSizeNoWaiting).",
+      "revId": "60b69d2700cfd2629ea6122718daf0bcdf43f7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
