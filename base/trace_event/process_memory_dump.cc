@@ -13,6 +13,7 @@
 #include "base/memory/shared_memory_tracker.h"
 #include "base/process/process_metrics.h"
 #include "base/strings/stringprintf.h"
+#include "base/trace_event/heap_profiler_allocation_crasher.h"
 #include "base/trace_event/heap_profiler_heap_dump_writer.h"
 #include "base/trace_event/heap_profiler_serialization_state.h"
 #include "base/trace_event/memory_infra_background_whitelist.h"
@@ -286,6 +287,7 @@ void ProcessMemoryDump::DumpHeapUsage(
         metrics_by_context,
     base::trace_event::TraceEventMemoryOverhead& overhead,
     const char* allocator_name) {
+  EnableCrashUploadOnAllocationIfNeeded(metrics_by_context, allocator_name);
   // The heap profiler serialization state can be null here if heap profiler was
   // enabled when a process dump is in progress.
   if (heap_profiler_serialization_state() && !metrics_by_context.empty()) {
@@ -474,6 +476,35 @@ void ProcessMemoryDump::AddSuballocation(const MemoryAllocatorDumpGuid& source,
   std::string child_mad_name = target_node_name + "/__" + source.ToString();
   MemoryAllocatorDump* target_child_mad = CreateAllocatorDump(child_mad_name);
   AddOwnershipEdge(source, target_child_mad->guid());
+}
+
+void ProcessMemoryDump::EnableCrashUploadOnAllocationIfNeeded(
+    const std::unordered_map<base::trace_event::AllocationContext,
+                             base::trace_event::AllocationMetrics>&
+        metrics_by_context,
+    const char* allocator_name) {
+  if (dump_args_.level_of_detail != MemoryDumpLevelOfDetail::BACKGROUND ||
+      AllocationContextTracker::capture_mode() !=
+          AllocationContextTracker::CaptureMode::MIXED_STACK) {
+    return;
+  }
+
+  // Currently only enabled for Malloc.
+  if (strcmp(allocator_name, "malloc") != 0)
+    return;
+
+  size_t total_unknown_size = 0;
+  size_t total_shim_allocated = 0;
+  for (const auto& context_and_metrics : metrics_by_context) {
+    total_shim_allocated += context_and_metrics.second.size;
+    if (context_and_metrics.first.type_name == nullptr)
+      total_unknown_size += context_and_metrics.second.size;
+  }
+  if (total_unknown_size > 0.2 * total_shim_allocated) {
+    HeapProfilerAllocationCrasher::GetInstance()
+        ->EnableCrashingForAllocatorIfPossible(
+            HeapProfilerAllocationCrasher::ALLOCATOR_TYPE_MALLOC);
+  }
 }
 
 MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {

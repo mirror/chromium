@@ -14,6 +14,7 @@
 #include "base/debug/profiler.h"
 #include "base/trace_event/heap_profiler_allocation_context.h"
 #include "base/trace_event/heap_profiler_allocation_context_tracker.h"
+#include "base/trace_event/heap_profiler_allocation_crasher.h"
 #include "base/trace_event/heap_profiler_heap_dump_writer.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event_argument.h"
@@ -355,6 +356,14 @@ void MallocDumpProvider::InsertAllocation(void* address, size_t size) {
   AllocationContext context;
   if (!tracker->GetContextSnapshot(&context))
     return;
+
+  if (HeapProfilerAllocationCrasher::is_enabled_for_allocator(
+          HeapProfilerAllocationCrasher::ALLOCATOR_TYPE_MALLOC)) {
+    if (context.type_name == nullptr) {
+      HeapProfilerAllocationCrasher::GetInstance()->UploadCrashReport(
+          HeapProfilerAllocationCrasher::ALLOCATOR_TYPE_MALLOC);
+    }
+  }
 
   if (!allocation_register_.is_enabled())
     return;
