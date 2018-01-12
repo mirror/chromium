@@ -9,7 +9,6 @@
 
 @protocol ApplicationCommands;
 @class BookmarkHomeViewController;
-@class BookmarkHomeTabletNTPController;
 @protocol NewTabPagePanelProtocol;
 @protocol UrlLoader;
 
@@ -26,13 +25,6 @@ class ChromeBrowserState;
 bookmarkControllerWithBrowserState:(ios::ChromeBrowserState*)browserState
                             loader:(id<UrlLoader>)loader
                         dispatcher:(id<ApplicationCommands>)dispatcher;
-
-// Returns an instance of a NewTabPagePanelProtocol that can navigate and edit
-// the bookmark hierarchy.
-- (BookmarkHomeTabletNTPController*)
-bookmarkPanelControllerForBrowserState:(ios::ChromeBrowserState*)browserState
-                                loader:(id<UrlLoader>)loader
-                            dispatcher:(id<ApplicationCommands>)dispatcher;
 
 @end
 
