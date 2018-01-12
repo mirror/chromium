@@ -43,6 +43,14 @@ static inline bool IsSimpleLengthPropertyID(CSSPropertyID property_id,
     case CSSPropertyPaddingLeft:
     case CSSPropertyPaddingRight:
     case CSSPropertyPaddingTop:
+    case CSSPropertyScrollMarginTop:
+    case CSSPropertyScrollMarginRight:
+    case CSSPropertyScrollMarginBottom:
+    case CSSPropertyScrollMarginLeft:
+    case CSSPropertyScrollMarginBlockStart:
+    case CSSPropertyScrollMarginBlockEnd:
+    case CSSPropertyScrollMarginInlineStart:
+    case CSSPropertyScrollMarginInlineEnd:
     case CSSPropertyScrollPaddingTop:
     case CSSPropertyScrollPaddingRight:
     case CSSPropertyScrollPaddingBottom:
@@ -51,14 +59,6 @@ static inline bool IsSimpleLengthPropertyID(CSSPropertyID property_id,
     case CSSPropertyScrollPaddingBlockEnd:
     case CSSPropertyScrollPaddingInlineStart:
     case CSSPropertyScrollPaddingInlineEnd:
-    case CSSPropertyScrollSnapMarginTop:
-    case CSSPropertyScrollSnapMarginRight:
-    case CSSPropertyScrollSnapMarginBottom:
-    case CSSPropertyScrollSnapMarginLeft:
-    case CSSPropertyScrollSnapMarginBlockStart:
-    case CSSPropertyScrollSnapMarginBlockEnd:
-    case CSSPropertyScrollSnapMarginInlineStart:
-    case CSSPropertyScrollSnapMarginInlineEnd:
     case CSSPropertyWebkitLogicalWidth:
     case CSSPropertyWebkitLogicalHeight:
     case CSSPropertyWebkitMinLogicalWidth:
