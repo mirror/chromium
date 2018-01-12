@@ -10,6 +10,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/shell_observer.h"
+#include "base/optional.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
@@ -22,6 +23,7 @@ class Point;
 }
 
 namespace display {
+struct MixedMirrorModeParams;
 struct TouchCalibrationData;
 }
 
@@ -62,6 +64,11 @@ class ASH_EXPORT DisplayPrefs : public ShellObserver {
   bool ParseTouchCalibrationStringForTest(
       const std::string& str,
       std::array<std::pair<gfx::Point, gfx::Point>, 4>* point_pair_quad);
+
+  // Stores the given |mixed_params| for tests. Clears stored parameters if
+  // |mixed_params| is null.
+  void StoreDisplayMixedMirrorModeParamsForTest(
+      const base::Optional<display::MixedMirrorModeParams>& mixed_params);
 
  protected:
   friend class DisplayPrefsTest;
