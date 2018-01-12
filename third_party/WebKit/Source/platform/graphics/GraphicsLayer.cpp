@@ -565,6 +565,9 @@ RasterInvalidationTracking* GraphicsLayer::GetRasterInvalidationTracking()
 void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
                                             const IntRect& rect,
                                             PaintInvalidationReason reason) {
+  if (FirstPaintInvalidationTracking::IsEnabled())
+    debug_info_.AppendAnnotatedInvalidateRect(rect, reason);
+
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
     EnsureRasterInvalidator().EnsureTracking();
 
@@ -1143,12 +1146,8 @@ void GraphicsLayer::SetNeedsDisplayInRect(
   if (!DrawsContent())
     return;
 
-  if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_) {
+  if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_)
     SetNeedsDisplayInRectInternal(rect);
-    // TODO(wangxianzhu): Need equivalence for SPv175/SPv2.
-    if (FirstPaintInvalidationTracking::IsEnabled())
-      debug_info_.AppendAnnotatedInvalidateRect(rect, invalidation_reason);
-  }
 
   TrackRasterInvalidation(client, rect, invalidation_reason);
 }
