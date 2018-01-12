@@ -9,9 +9,13 @@
 #include "{{filename}}"
 {% endfor %}
 
+#include "bindings/core/v8/V8GCController.h"
+
 namespace blink {
 
 v8::Maybe<{{return_cpp_type}}> {{cpp_class}}::Invoke({{argument_declarations | join(', ')}}) {
+  V8GCController::CollectAllGarbageForTesting(GetIsolate());
+
   // This function implements "invoke" steps in
   // "3.10. Invoking callback functions".
   // https://heycam.github.io/webidl/#es-invoking-callback-functions
