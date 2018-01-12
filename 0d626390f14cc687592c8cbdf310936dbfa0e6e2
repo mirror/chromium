@@ -22,6 +22,30 @@
       "revId": "0d626390f14cc687592c8cbdf310936dbfa0e6e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e55f22_cc395f36",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-12T20:40:21Z",
+      "side": 1,
+      "message": "There are no ordering guarantees between callbacks of different WebContentsObservers.\n\nIf you want to associate metrics with the navigation that is committing, you can instead do:\nukm::ConvertToSourceId(\n        navigation_handle-\u003eGetNavigationId(), ukm::SourceIdType::NAVIGATION_ID)\n\nwhich will return the SourceId associated with the current NavigationHandle.\n\nWe\u0027ll upate the GetSourceIdForWebContentsDocument docs to explain this.",
+      "parentUuid": "d8eda6d5_fe925ae3",
+      "range": {
+        "startLine": 478,
+        "startChar": 13,
+        "endLine": 478,
+        "endChar": 46
+      },
+      "revId": "0d626390f14cc687592c8cbdf310936dbfa0e6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
