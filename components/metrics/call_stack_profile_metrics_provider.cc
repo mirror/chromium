@@ -56,11 +56,21 @@ const ProcessPhase
         ProcessPhase::SHUTDOWN_START,
 };
 
-// Parameters for browser process sampling. Not const since these may be
-// changed when transitioning from start-up profiling to periodic profiling.
-CallStackProfileParams g_browser_process_sampling_params(
+// Parameters for UI thread of browser process sampling. Not const since these
+// may be changed when transitioning from start-up profiling to periodic
+// profiling.
+CallStackProfileParams g_ui_thread_sampling_params(
     CallStackProfileParams::BROWSER_PROCESS,
     CallStackProfileParams::UI_THREAD,
+    CallStackProfileParams::PROCESS_STARTUP,
+    CallStackProfileParams::MAY_SHUFFLE);
+
+// Parameters for IO thread of browser process sampling. Not const since these
+// may be changed when transitioning from start-up profiling to periodic
+// profiling.
+CallStackProfileParams g_io_thread_sampling_params(
+    CallStackProfileParams::BROWSER_PROCESS,
+    CallStackProfileParams::IO_THREAD,
     CallStackProfileParams::PROCESS_STARTUP,
     CallStackProfileParams::MAY_SHUFFLE);
 
@@ -553,9 +563,14 @@ CallStackProfileMetricsProvider::CallStackProfileMetricsProvider() {
 CallStackProfileMetricsProvider::~CallStackProfileMetricsProvider() {
 }
 
-StackSamplingProfiler::CompletedCallback
-CallStackProfileMetricsProvider::GetProfilerCallbackForBrowserProcessStartup() {
-  return internal::GetProfilerCallback(&g_browser_process_sampling_params);
+StackSamplingProfiler::CompletedCallback CallStackProfileMetricsProvider::
+    GetProfilerCallbackForBrowserProcessUIThreadStartup() {
+  return internal::GetProfilerCallback(&g_ui_thread_sampling_params);
+}
+
+StackSamplingProfiler::CompletedCallback CallStackProfileMetricsProvider::
+    GetProfilerCallbackForBrowserProcessIOThreadStartup() {
+  return internal::GetProfilerCallback(&g_io_thread_sampling_params);
 }
 
 // static
