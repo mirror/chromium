@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df07f8f6_cba1144b",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-12T13:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b16797_836866d1",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec7fbf9_b27aaece",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "70c43810_36b99a9e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-12T13:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec7fbf9_b27aaece",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5abd8f8_492e42c2",
         "filename": "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe2ea1c_dc8890f8",
+        "filename": "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-12T13:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5abd8f8_492e42c2",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "157cdfcb4d58d5db8b3979102cbf185c59c063a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
