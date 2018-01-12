@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0dc6d4b_e1178587",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T01:56:19Z",
+      "side": 1,
+      "message": "is this needed? Updating button labels used to need it, but the new way (DialogModelChanged()) is on the BubbleDialogDelegate",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9294343e_07effb09",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T01:56:19Z",
+      "side": 1,
+      "message": "can this be done with a test api? something like\n\n(in hung_renderer_view.h)\n\nnamespace test {\nclass HungRendererViewTestApi;\n}\n\nclass HungPagesTableModel {\n ..\n private:\n  friend class test::HungRenderViewTestApi;\n  ..\n};\n\nclass HungRendererDialogView {\n ..\n private;\n  friend class test::HungRenderViewTestApi;\n  ..\n};\n\n\n\nand in hung_renderer_view_browsertest.cc\n\nnamespace test {\nclass HungRenderViewTestApi {\n public:\n  // constructor\n\n  static void AddWebContents(HungRendererDialogView* view, content::WebContents* web_contentS) {\n    HungPagesTableModel* model \u003d view-\u003ehung_pages_table_model_.get();\n    model-\u003etab_observers_-\u003epush_back(std::make_unique\u003cHungPagesTableModel::WebContentsObserverImpl\u003e(model, web_contentS);\n     // etc.\n    \n    }\n\n\n};\n\n};",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1cef35_e6a3212d",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T01:56:19Z",
+      "side": 1,
+      "message": "huh - this was removed in r514480 (how rude :p)\n\nIt would be cool if this was in the toolkti_views section so it runs on Mac... I\u0027m guessing it\u0027s not yet wired up though :/",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
