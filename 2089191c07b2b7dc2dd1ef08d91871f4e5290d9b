@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbbc752_cab5affd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "I think this should be configurable from the outside for non-ChromeOS platforms. I mean on Win/Linux/macOS/mobile, we should allow the client to create an IdentityTestEnvironment that is signed out.",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56ceed2_7fe38171",
+        "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "Maybe:\ns/AutomaticallyGrantAccessTokenRequests/SetAutomaticallyIssueAccessTokens",
+      "range": {
+        "startLine": 143,
+        "startChar": 36,
+        "endLine": 143,
+        "endChar": 41
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6dd5ae_dc9a35f6",
+        "filename": "services/identity/public/cpp/identity_test_environment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "I think on non Chrome-OS platforms we should be able to create a IdentityTestEnvironmentInternal for a signed out state. Otherwise writing tests will be tricky (basically we will not be able to write any test that starts from a sign-out state).",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4586896e_7311a14a",
+        "filename": "services/identity/public/cpp/identity_test_environment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "Should WaitForAccessTokenRequest be called here?",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684bdfc4_02d4ff6e",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "Ideally this method should just be private (no need for it to be public if IssueErrorForAllPendingAccessTokenRequests calls it) .",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0924fc9_64971749",
+        "filename": "services/identity/public/cpp/identity_test_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:38:15Z",
+      "side": 1,
+      "message": "It really looks like this is no longer a diagnostic observer as we are starting to use it for different purposes (at least in tests). While I think that may be acceptable in tests, if we plan to use it for other purposes in production code, we may want to rename it to something else?",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "2089191c07b2b7dc2dd1ef08d91871f4e5290d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
