@@ -15,10 +15,12 @@ class PrefRegistrySyncable;
 // Register local state preferences specific to BrowserView.
 void RegisterBrowserViewLocalPrefs(PrefRegistrySimple* registry);
 
+#if defined(USE_X11)
 // Register profile-specific preferences specific to BrowserView. These
 // preferences may be synced, depending on the pref's |sync_status| parameter.
 void RegisterBrowserViewProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry);
+#endif
 
 // Converts deprecated int tabstrip layout type into a boolean value indicating
 // stacked layout preference.

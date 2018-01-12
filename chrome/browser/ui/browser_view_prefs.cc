@@ -28,17 +28,13 @@ void RegisterBrowserViewLocalPrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kTabStripStackedLayout, false);
 }
 
+#if defined(USE_X11)
 void RegisterBrowserViewProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-#if defined(USE_X11)
   registry->RegisterBooleanPref(prefs::kUseCustomChromeFrame,
                                 ui::GetCustomFramePrefDefault());
-#endif
-
-  registry->RegisterIntegerPref(
-      prefs::kBackShortcutBubbleShownCount, 0,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
+#endif
 
 void MigrateBrowserTabStripPrefs(PrefService* prefs) {
   if (prefs->HasPrefPath(kTabStripLayoutType)) {

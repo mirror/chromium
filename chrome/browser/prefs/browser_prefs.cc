@@ -646,8 +646,11 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
 #if defined(TOOLKIT_VIEWS)
-  RegisterBrowserViewProfilePrefs(registry);
   RegisterInvertBubbleUserPrefs(registry);
+#endif
+
+#if defined(TOOLKIT_VIEWS) && defined(USE_X11)
+  RegisterBrowserViewProfilePrefs(registry);
 #endif
 
 #if defined(OS_CHROMEOS)
