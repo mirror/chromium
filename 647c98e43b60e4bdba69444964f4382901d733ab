@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ea9b667_b19e1930",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e16b737e_826ce7fc",
+      "range": {
+        "startLine": 1132,
+        "startChar": 28,
+        "endLine": 1132,
+        "endChar": 45
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c513375f_6943d95f",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -42,6 +66,40 @@
         "endLine": 1138,
         "endChar": 16
       },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426629da_26cde405",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "No else",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d14aca_8e52e0ba",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "No else",
       "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +146,64 @@
         "endLine": 192,
         "endChar": 33
       },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f6106e_d4a9827d",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "It takes a const-ref. As long as we are not making a copy, we should be OK.",
+      "parentUuid": "44843f6c_6e3971e3",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a612ba34_b933d7ef",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7043,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "Are there cases where we know for sure that the event should be dispatched asynchronously? If there is (e.g. when root_view !\u003d expected_target, I think?), then it would be useful to have an EXPECT_FALSE(!waiter.EventWasReceived()); before the Wait(), to validate that event is not being targeted+dispatched synchronously.",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304ce1a8_003e5672",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7096,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-12T15:59:47Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
