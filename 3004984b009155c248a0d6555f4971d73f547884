@@ -124,6 +124,24 @@
       "revId": "3004984b009155c248a0d6555f4971d73f547884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2a4ffb_1baecce1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-12T19:38:41Z",
+      "side": 1,
+      "message": "If that\u0027s the case then let\u0027s just call SetNetworkQualityInfoOverride with kType2G for now, and in a later CL do the proper mapping using shared code.",
+      "parentUuid": "3e56d769_ede8fc0c",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
