@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a1842fb_aab82851",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T23:25:24Z",
+      "side": 1,
+      "message": "nit: just \":typemap_dependencies\"",
+      "revId": "64da7af3258dbe4b648317d204a7af076c7af14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7428710_45c9379f",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T23:25:24Z",
+      "side": 1,
+      "message": "nit: this is redundant and should be removed",
+      "revId": "64da7af3258dbe4b648317d204a7af076c7af14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13feccfe_3a0132dc",
+        "filename": "services/network/public/cpp/network_types.typemap",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T23:25:24Z",
+      "side": 1,
+      "message": "nit: You should also add public_deps with \"//net\" in it given your public_headers value.",
+      "revId": "64da7af3258dbe4b648317d204a7af076c7af14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
