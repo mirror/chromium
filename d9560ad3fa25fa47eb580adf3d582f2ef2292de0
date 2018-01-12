@@ -505,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "5d82c782_8ad9c2ca",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-12T17:42:09Z",
+      "side": 1,
+      "message": "Indeed, how unusual!  It won\u0027t compile for me unless I target arm64.",
+      "parentUuid": "11f53014_a6894f85",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7827dfe3_947753f1",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
