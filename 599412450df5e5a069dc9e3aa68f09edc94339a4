@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e0da60_dd48ddec",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4782,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-12T20:15:51Z",
+      "side": 1,
+      "message": "The only edge case I worry about is if |webViewLoadingStateDidChange| happens before |webView:didCommitNavigation|. Then _loadStatus will be changed to PAGE_LOADED first and later may fail the DCHECK(_loadStatus \u003d\u003d REQUESTED) in |webPageChangedWithContext:|.\n\nCan you try loading about:blank with this change and see if it triggers the DCHECK? If not, it\u0027s probably OK for now. For regular page loads, _webView.isLoading should be true until after |webView:didFinishNavigation| is called.\n\nI feel this is another case where we\u0027re conflating loading and navigation though. It would be nice if we can tease them apart at some point.",
+      "range": {
+        "startLine": 4782,
+        "startChar": 62,
+        "endLine": 4782,
+        "endChar": 0
+      },
+      "revId": "599412450df5e5a069dc9e3aa68f09edc94339a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
