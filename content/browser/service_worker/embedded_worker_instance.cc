@@ -129,6 +129,8 @@ void SetupOnUIThread(
   }
 
   // Register to DevTools and update params accordingly.
+  // TODO(dgozman): we can now remove this routing id and use something else
+  // as id when talking to ServiceWorkerDevToolsManager.
   const int routing_id = rph->GetNextRoutingID();
   ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
       process_id, routing_id, context, weak_context,
@@ -900,6 +902,11 @@ void EmbeddedWorkerInstance::SetDevToolsAttached(bool attached) {
   devtools_attached_ = attached;
   if (attached)
     registry_->OnDevToolsAttached(embedded_worker_id_);
+}
+
+void EmbeddedWorkerInstance::GetDevToolsAgent(
+    blink::mojom::DevToolsAgentAssociatedRequest request) {
+  client_->GetDevToolsAgent(std::move(request));
 }
 
 void EmbeddedWorkerInstance::OnNetworkAccessedForScriptLoad() {
