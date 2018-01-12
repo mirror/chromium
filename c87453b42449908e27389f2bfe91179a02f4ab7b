@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8065055_60949bd5",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-12T20:00:06Z",
+      "side": 1,
+      "message": "Should we be running this InitializeSwitchableGPUs code on more platforms than just macOS? I know that that\u0027s the only platform where we currently support it; just wondering.",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 34
+      },
+      "revId": "c87453b42449908e27389f2bfe91179a02f4ab7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d806516_e0ed3479",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-12T20:00:06Z",
+      "side": 1,
+      "message": "Consider updating this comment to !OS_ANDROID .",
+      "range": {
+        "startLine": 143,
+        "startChar": 11,
+        "endLine": 143,
+        "endChar": 21
+      },
+      "revId": "c87453b42449908e27389f2bfe91179a02f4ab7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e089d0_b67e27a5",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-12T20:00:06Z",
+      "side": 1,
+      "message": "Are the applied_gpu_blacklist_entries used for any feature enabling/disabling decisions on the renderer process side? Just trying to understand whether this will affect anything except the about:gpu page.",
+      "revId": "c87453b42449908e27389f2bfe91179a02f4ab7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
