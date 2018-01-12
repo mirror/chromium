@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8fe3b6a_13672c7d",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T22:31:46Z",
+      "side": 1,
+      "message": "This is quite a complicated formula! Can we achieve the same result with a simpler one?",
+      "range": {
+        "startLine": 694,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 33
+      },
+      "revId": "5966ee6b0c19e536ab2cb5ba67c4978ae5a4f4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f3155_ea16d23a",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 7
