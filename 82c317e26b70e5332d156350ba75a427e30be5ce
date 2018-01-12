@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9562d77_a4ce6ad1",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T17:46:05Z",
+      "side": 1,
+      "message": "These could be merged to send one record.  I\u0027ll do that.",
+      "parentUuid": "062122b9_06258e8d",
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60345e39_308440b2",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e96a1356_34c6729b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T17:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60345e39_308440b2",
+      "range": {
+        "startLine": 2359,
+        "startChar": 16,
+        "endLine": 2359,
+        "endChar": 20
+      },
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9385091f_76936d8b",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64973053_ecea8838",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T17:46:05Z",
+      "side": 1,
+      "message": "Renamed to Did* for the booleans for whether respective APIs were called.",
+      "parentUuid": "9385091f_76936d8b",
+      "revId": "82c317e26b70e5332d156350ba75a427e30be5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
