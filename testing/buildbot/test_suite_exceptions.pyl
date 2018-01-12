@@ -349,28 +349,6 @@
       },
     },
   },
-  # TODO(dpranke): browser_side_navigation is the default now; we should
-  # not run these at all, or flip them to renderer_side_navigation.
-  'browser_side_navigation_browser_tests': {
-    'modifications': {
-      # client.v8.chromium
-      'Linux - Future (dbg)': {
-        'swarming': {
-          'shards': 10,
-        },
-      },
-    },
-  },
-  'browser_side_navigation_interactive_ui_tests': {
-    'modifications': {
-      # client.v8.chromium
-      'Linux - Future (dbg)': {
-        'swarming': {
-          'shards': 3,
-        },
-      },
-    },
-  },
   'browser_tests': {
     'remove_from': [
       # chromium.clang
@@ -394,27 +372,6 @@
           'shards': 20,
         },
       },
-      'linux-chromeos-rel': {
-        'swarming': {
-          'shards': 5,
-        },
-      },
-      'Linux Tests': {
-        'swarming': {
-          'shards': 5,
-        },
-      },
-      'Linux Tests SANDBOX': {
-        'swarming': {
-          'shards': 5,
-        },
-      },
-      # chromium.clang
-      'CFI Linux (icall)': {
-        'swarming': {
-          'shards': 5,
-        },
-      },
       'CrWinClang(dbg)': {
         'swarming': {
           'shards': 20,
@@ -423,16 +380,6 @@
       'CrWinClang64(dbg)': {
         'swarming': {
           'shards': 20,
-        },
-      },
-      'ToTLinux': {
-        'swarming': {
-          'shards': 5,
-        },
-      },
-      'ToTLinuxASan': {
-        'swarming': {
-          'shards': 5,
         },
       },
       'ToTWin(dbg)': {
@@ -4008,12 +3955,12 @@
       },
       'WebKit Mac10.10': {
         'swarming': {
-          'shards': 4,
+          'shards': 6,
         },
       },
       'WebKit Mac10.11': {
         'swarming': {
-          'shards': 4,
+          'shards': 6,
         },
       },
       'WebKit Mac10.11 (dbg)': {
@@ -4021,17 +3968,17 @@
           '--debug',
         ],
         'swarming': {
-          'shards': 4,
+          'shards': 6,
         },
       },
       'WebKit Mac10.11 (retina)': {
         'swarming': {
-          'shards': 4,
+          'shards': 6,
         },
       },
       'WebKit Mac10.12': {
         'swarming': {
-          'shards': 4,
+          'shards': 6,
         },
       },
       'WebKit Win10': {
@@ -4041,7 +3988,7 @@
               'os': 'Windows-10-14393',
             },
           ],
-          'shards': 5,
+          'shards': 6,
         },
       },
       'WebKit Win7': {
@@ -4051,7 +3998,7 @@
               'os': 'Windows-7-SP1',
             },
           ],
-          'shards': 2,
+          'shards': 6,
         },
       },
       'WebKit Win7 (dbg)': {
@@ -4062,7 +4009,7 @@
             },
           ]
         },
-        'shards': 2,
+        'shards': 6,
       },
 
       # chromium.win
