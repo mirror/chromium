@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2929c5ab_1d69adaf",
+        "filename": "chrome/browser/ui/app_list/app_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "Please check the spelling",
+      "range": {
+        "startLine": 33,
+        "startChar": 54,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42f3443_95255bb4",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "hmm :)",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 53
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8468dc_64dbba8a",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "nit: I would split ContextMenuUserJourneyTime to ContextMenu.UserJourneyTime",
+      "range": {
+        "startLine": 270,
+        "startChar": 28,
+        "endLine": 270,
+        "endChar": 54
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c2c96d_24a6bd6f",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "nit: Split? ContextMenu.ShowSource",
+      "range": {
+        "startLine": 284,
+        "startChar": 34,
+        "endLine": 284,
+        "endChar": 55
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace5dacd_25f1ec75",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "Can we make sure that this is safe? Would not we need weak ptrs here?",
+      "range": {
+        "startLine": 293,
+        "startChar": 56,
+        "endLine": 293,
+        "endChar": 78
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d132db_72961df6",
+        "filename": "ui/app_list/views/app_list_item_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "const base::TimeTicks\u0026 or base::TimeTicks?",
+      "range": {
+        "startLine": 132,
+        "startChar": 27,
+        "endLine": 132,
+        "endChar": 48
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d7cfcd_67e6bf25",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "nit: split here and other places.",
+      "range": {
+        "startLine": 242,
+        "startChar": 32,
+        "endLine": 242,
+        "endChar": 58
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bbb10c_e370dab1",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-12T23:04:39Z",
+      "side": 1,
+      "message": "make sure we are safe",
+      "range": {
+        "startLine": 399,
+        "startChar": 17,
+        "endLine": 399,
+        "endChar": 39
+      },
+      "revId": "4f2a119b9bf5062a2ef0aa74f7a667b021af68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
