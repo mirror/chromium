@@ -397,12 +397,12 @@ bool InputMethodController::FinishComposingText(
     const PlainTextRange& old_offsets = GetSelectionOffsets();
     Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
 
+    bool should_dispatch_composition_end = true;
     if (is_too_long) {
-      if (ReplaceComposition(ComposingText()))
-        DispatchCompositionEndEvent(GetFrame(), composing);
+      if (!ReplaceComposition(ComposingText()))
+        should_dispatch_composition_end = false;
     } else {
       Clear();
-      DispatchCompositionEndEvent(GetFrame(), composing);
     }
 
     // Event handler might destroy document.
@@ -415,8 +415,12 @@ bool InputMethodController::FinishComposingText(
 
     const EphemeralRange& old_selection_range =
         EphemeralRangeForOffsets(old_offsets);
-    if (old_selection_range.IsNull())
+    if (old_selection_range.IsNull()) {
+      if (should_dispatch_composition_end)
+        DispatchCompositionEndEvent(GetFrame(), composing);
       return false;
+    }
+
     const SelectionInDOMTree& selection =
         SelectionInDOMTree::Builder()
             .SetBaseAndExtent(old_selection_range)
@@ -426,6 +430,10 @@ bool InputMethodController::FinishComposingText(
                        .SetShouldCloseTyping(true)
                        .SetShouldShowHandle(is_handle_visible)
                        .Build());
+
+    if (should_dispatch_composition_end)
+      DispatchCompositionEndEvent(GetFrame(), composing);
+
     return true;
   }
 
