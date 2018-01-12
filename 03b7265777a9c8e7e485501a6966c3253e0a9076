@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffb7ca6_bb7aad20",
+        "filename": "cc/trees/render_frame_metadata.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T00:26:33Z",
+      "side": 1,
+      "message": "nit: do we need Clone(), as opposed to making this a value type (copyable)?\n(I don\u0027t think it\u0027s used)",
+      "revId": "03b7265777a9c8e7e485501a6966c3253e0a9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
