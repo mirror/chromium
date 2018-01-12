@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "975532d7_fefcda73",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-12T16:53:36Z",
+      "side": 1,
+      "message": "Good point. Leave what you have.",
+      "parentUuid": "f02292d2_7a88cb36",
+      "range": {
+        "startLine": 797,
+        "startChar": 30,
+        "endLine": 797,
+        "endChar": 63
+      },
+      "revId": "b4b848995efeaae3085be34c03dbf81e14c46f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fd01d96_fbafbdd0",
         "filename": "components/history/core/browser/thumbnail_database.h",
         "patchSetId": 6
