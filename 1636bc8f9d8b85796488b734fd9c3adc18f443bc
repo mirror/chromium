@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df9ee39_73cf58f4",
+        "filename": "tools/traffic_annotation/summary/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-12T14:45:59Z",
+      "side": 1,
+      "message": "LGTM, as long as you let me ask y\u0027all questions if anyone asks me to approve things. :)",
+      "revId": "1636bc8f9d8b85796488b734fd9c3adc18f443bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
