@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a0671dc_b1cb6e1c",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-01-12T17:11:38Z",
+      "side": 1,
+      "message": "Is the comment still accurate? It looks to me like the new escaping function should handle control characters already too...",
+      "revId": "525027af5b039c0e027e212dd721349e900aaf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
