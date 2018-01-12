@@ -16,6 +16,24 @@
       "revId": "343937d5e610b36aac0a19c87782cfe17bfcc3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a143d2a2_4e1e45ab",
+        "filename": "ash/public/cpp/app_list/app_list_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-12T00:17:33Z",
+      "side": 1,
+      "message": "By switching to |INVALID_STATE|, app list will actually crash.\n\n|INVALID_STATE| only stands for:\n- a not-initialized state;\n- an unfound state (it seems that it\u0027s never hit);\n\nSo far we don\u0027t have any case transiting it across IPC. But we cannot simply get rid of it and use a valid state for the above cases.\n\nI think we can delete it from mojom struct and keep it in the typemapped struct, and document that we should never pass it over IPC. (Also the same to |STATE_CUSTOM_LAUNCHER_PAGE_DEPRECATED|).\n\nIf it somehow reaches this traits.h, we just return a random state (e.g. |STATE_APPS|) and mark it NOTREACHED.\n\nWill this make sense?",
+      "parentUuid": "9eb07c46_fa01bbab",
+      "revId": "343937d5e610b36aac0a19c87782cfe17bfcc3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
