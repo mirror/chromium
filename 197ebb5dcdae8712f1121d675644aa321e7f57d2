@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1716595_92b8600c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T07:38:51Z",
+      "side": 1,
+      "message": "nit: s/VisbilePosition/const VisiblePosition\u0026/",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "197ebb5dcdae8712f1121d675644aa321e7f57d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30b6af8_1a45f141",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T07:38:51Z",
+      "side": 1,
+      "message": "nit: s/VisbilePosition/const VisiblePosition\u0026/",
+      "revId": "197ebb5dcdae8712f1121d675644aa321e7f57d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
