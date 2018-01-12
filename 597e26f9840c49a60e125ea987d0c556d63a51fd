@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea7a05dd_b273b2eb",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-12T21:24:59Z",
+      "side": 1,
+      "message": "Use ChromeLayoutProvider::DISTANCE_MODAL_DIALOG_PREFERRED_WIDTH here (unless the slightly reduced size breaks the pre-Harmony layout, but it shouldn\u0027t). Also it\u0027s not a constant anymore, so use snake_case.",
+      "range": {
+        "startLine": 179,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 31
+      },
+      "revId": "597e26f9840c49a60e125ea987d0c556d63a51fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
