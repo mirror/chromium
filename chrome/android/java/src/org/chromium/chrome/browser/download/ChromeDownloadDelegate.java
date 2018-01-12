@@ -232,6 +232,7 @@ public class ChromeDownloadDelegate {
                 || "application/octet-stream".equals(mimeType)
                 || "binary/octet-stream".equals(mimeType)
                 || "octet/stream".equals(mimeType)
+                || "application/download".equals(mimeType)
                 || "application/force-download".equals(mimeType)
                 || "application/unknown".equals(mimeType)) {
 
