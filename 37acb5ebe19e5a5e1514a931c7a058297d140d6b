@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99317d8_af441adf",
+        "filename": "base/debug/alias_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:49:15Z",
+      "side": 1,
+      "message": "Nit: might be nice to order the bounds check first.",
+      "revId": "37acb5ebe19e5a5e1514a931c7a058297d140d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
