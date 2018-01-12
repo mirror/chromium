@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b8c33e3_817a7c28",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-12T00:48:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06dc8b40_3430ea88",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b2f04d_855a1906",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 19
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "c2e6abb8_252d0304",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-12T00:48:51Z",
+      "side": 1,
+      "message": "We can. I was reluctant to attach a partition to SecurityOrigin, as it\u0027s not really related to the class.\n\nSince there are likely only a few origins in a process, a base::small_map could be used instead of std::unordered_map.",
+      "parentUuid": "d614c40f_80547bf2",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "297e7fa3_147ccc6f",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
@@ -70,6 +106,24 @@
       "writtenOn": "2018-01-12T00:28:48Z",
       "side": 1,
       "message": "Oh, you have to create a mapping between allocated entries and partitions... This should be pretty heavy (i.e., O(# of allocated entries)), right?\n\nHmm. The reason you need the mapping is that ArrayBuffers are not guaranteed to be created and destructed on the same SecurityOrigin, right? (considering document.domain etc)",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca00e7c_5dd3f5d0",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-12T00:48:51Z",
+      "side": 1,
+      "message": "Yes, it is pretty heavy. Unfortunately I couldn\u0027t get the mapping from void* (allocation base) to PartitionRootGeneric* to work robustly (it returned pointers that didn\u0027t match the root I thought I created.)\n\nAlso, ArrayBuffer::Allocator::Free can be called on a background thread, where it\u0027s not clear what the Context is.",
+      "parentUuid": "297e7fa3_147ccc6f",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
