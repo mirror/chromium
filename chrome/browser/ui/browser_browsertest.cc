@@ -1159,7 +1159,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
   ASSERT_TRUE(embedded_test_server()->Start());
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
   chrome::ShowHistory(browser());
-  content::WebContents* default_history_page = tab_strip_model->GetActiveWebContents();
+  content::WebContents* default_history_page =
+      tab_strip_model->GetActiveWebContents();
 
   const Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("options_page/"));
@@ -1171,7 +1172,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
       ui_test_utils::BROWSER_TEST_NONE);
 
   GURL options_url = extension->GetResourceURL("options.html");
-  EXPECT_TRUE(extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(extension, browser()->profile()));
+  EXPECT_TRUE(extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(
+      extension, browser()->profile()));
 
   ASSERT_EQ(3, tab_strip_model->count());
   EXPECT_EQ(options_url.spec(),

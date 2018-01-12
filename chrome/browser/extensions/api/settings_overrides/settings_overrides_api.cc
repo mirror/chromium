@@ -193,22 +193,17 @@ void SettingsOverridesAPI::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const Extension* extension,
     UnloadedExtensionReason reason) {
-  LOG(INFO) << "on Extension unlaoded";
   const SettingsOverrides* settings = SettingsOverrides::Get(extension);
   if (settings) {
-    LOG(INFO) << "\tsettings exist";
     if (settings->homepage) {
-      LOG(INFO) << "\toverride homepage";
       UnsetPref(extension->id(), prefs::kHomePage);
       UnsetPref(extension->id(), prefs::kHomePageIsNewTabPage);
     }
     if (!settings->startup_pages.empty()) {
-      LOG(INFO) << "\toverride startup";
       UnsetPref(extension->id(), prefs::kRestoreOnStartup);
       UnsetPref(extension->id(), prefs::kURLsToRestoreOnStartup);
     }
     if (settings->search_engine) {
-      LOG(INFO) << "\toverride search engine";
       if (settings->search_engine->is_default) {
         // Current extension can be overriding DSE.
         UnsetPref(extension->id(),
@@ -218,8 +213,6 @@ void SettingsOverridesAPI::OnExtensionUnloaded(
       url_service_->RemoveExtensionControlledTURL(
           extension->id(), TemplateURL::NORMAL_CONTROLLED_BY_EXTENSION);
     }
-  } else {
-    LOG(INFO) << "\tsettingds don't exist";
   }
 }
 

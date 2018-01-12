@@ -2118,7 +2118,8 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
           web_contents->GetController().LoadURL(
               url,
               content::Referrer::SanitizeForRequest(
-                  url, content::Referrer(url, blink::kWebReferrerPolicyDefault)),
+                  url,
+                  content::Referrer(url, blink::kWebReferrerPolicyDefault)),
               ui::PAGE_TRANSITION_RELOAD, std::string());
         }
       } else {
