@@ -22,7 +22,7 @@ namespace {
 // this array may either refer to features defined in the header of this file or
 // in other locations in the code base (e.g. content_features.h).
 const base::Feature* kFeaturesExposedToJava[] = {
-    &kRequestUnbufferedDispatch,
+    &kRequestUnbufferedDispatch, &kSelectionInsertionHandleObserver,
 };
 
 const base::Feature* FindFeatureExposedToJava(const std::string& feature_name) {
@@ -40,6 +40,8 @@ const base::Feature* FindFeatureExposedToJava(const std::string& feature_name) {
 // Alphabetical:
 const base::Feature kRequestUnbufferedDispatch{
     "RequestUnbufferedDispatch", base::FEATURE_ENABLED_BY_DEFAULT};
+const base::Feature kSelectionInsertionHandleObserver{
+    "SelectionInsertionHandleObserver", base::FEATURE_ENABLED_BY_DEFAULT};
 
 static jboolean JNI_ContentFeatureList_IsEnabled(
     JNIEnv* env,

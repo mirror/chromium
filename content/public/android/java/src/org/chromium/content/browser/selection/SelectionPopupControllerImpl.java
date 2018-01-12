@@ -41,6 +41,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.content.R;
 import org.chromium.content.browser.ContentClassFactory;
+import org.chromium.content.browser.ContentFeatureList;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
@@ -239,7 +240,9 @@ public class SelectionPopupControllerImpl
 
         mLastSelectedText = "";
 
-        mHandleObserver = ContentClassFactory.get().createHandleObserver(view);
+        if (ContentFeatureList.isEnabled(ContentFeatureList.SELECTION_INSERTION_HANDLE_OBSERVER)) {
+            mHandleObserver = ContentClassFactory.get().createHandleObserver(view);
+        }
         mDragStarted = false;
 
         if (initializeNative) nativeInit(mWebContents);

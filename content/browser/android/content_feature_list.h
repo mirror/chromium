@@ -12,6 +12,7 @@ namespace android {
 
 // Alphabetical:
 extern const base::Feature kRequestUnbufferedDispatch;
+extern const base::Feature kSelectionInsertionHandleObserver;
 
 }  // namespace android
 }  // namespace content
