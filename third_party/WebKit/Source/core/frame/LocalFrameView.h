@@ -1045,10 +1045,10 @@ class CORE_EXPORT LocalFrameView final
 
   void ScrollContentsIfNeededRecursive();
   void UpdateStyleAndLayoutIfNeededRecursive();
+  void UpdateStyleAndLayoutTreeIfNeededRecursive();
+  void UpdateLayoutIfNeededRecursive();
   void PrePaint();
   void PaintTree();
-
-  void UpdateStyleAndLayoutIfNeededRecursiveInternal();
 
   void PushPaintArtifactToCompositor(
       CompositorElementIdSet& composited_element_ids);
@@ -1064,9 +1064,8 @@ class CORE_EXPORT LocalFrameView final
 
   bool ContentsInCompositedLayer() const;
 
-  void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
-  bool PerformLayout(bool in_subtree_layout);
+  void PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
   void PerformPostLayoutTasks();
 
@@ -1320,7 +1319,6 @@ class CORE_EXPORT LocalFrameView final
   bool needs_scrollbars_update_;
   bool suppress_adjust_view_size_;
   bool allows_layout_invalidation_after_layout_clean_;
-  bool forcing_layout_parent_view_;
   bool needs_intersection_observation_;
   bool needs_forced_compositing_update_;
   bool scroll_gesture_region_is_dirty_;

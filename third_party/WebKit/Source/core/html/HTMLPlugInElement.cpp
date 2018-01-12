@@ -209,7 +209,14 @@ void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
     context.previous_in_flow = layout_object;
 }
 
-void HTMLPlugInElement::IntrinsicDimensionsChanged() {}
+void HTMLPlugInElement::IntrinsicDimensionsChanged() {
+  LayoutEmbeddedObject* layout_embedded_object = GetLayoutEmbeddedObject();
+  if (!layout_embedded_object)
+    return;
+  layout_embedded_object
+      ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+          LayoutInvalidationReason::kSizeChanged);
+}
 
 void HTMLPlugInElement::UpdatePlugin() {
   UpdatePluginInternal();
