@@ -87,6 +87,24 @@
       "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5569459_5d5c7775",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-12T19:07:37Z",
+      "side": 1,
+      "message": "Good to know, I\u0027ll do that",
+      "parentUuid": "68941a7b_ba45ab92",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
