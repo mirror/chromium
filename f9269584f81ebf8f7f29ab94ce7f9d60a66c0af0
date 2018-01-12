@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a80db45b_05bb92ab",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:21:23Z",
+      "side": 1,
+      "message": "nit: since we\u0027re on C++14, we could avoid the outer trait struct and just do:\n\n  template \u003ctypename T\u003e\n  using AddMemberIfNeeded \u003d std::conditional_t\u003cWTF::IsGarbageCollectedType\u003cT\u003e::value,\n                                               Member\u003cT\u003e, T\u003e;\n\nsimilar below; wdyt? (I personally like avoiding having to say \"typename ...::type\".)\n\nEven if we do still want the inner ::type, you can just alias AddMemberIfNeeded to std::conditional, without needing to take apart and then reassemble the wrapping struct.",
+      "revId": "f9269584f81ebf8f7f29ab94ce7f9d60a66c0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
