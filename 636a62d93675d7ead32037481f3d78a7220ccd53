@@ -22,6 +22,30 @@
       "revId": "636a62d93675d7ead32037481f3d78a7220ccd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e2e724_1c4a0f8b",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3202,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T01:22:51Z",
+      "side": 1,
+      "message": "Fair point, I did that. Needed a few more checks in commands to make sure we don\u0027t access null pointers. PTAL.",
+      "parentUuid": "5e8165a0_7e99c066",
+      "range": {
+        "startLine": 3202,
+        "startChar": 6,
+        "endLine": 3202,
+        "endChar": 21
+      },
+      "revId": "636a62d93675d7ead32037481f3d78a7220ccd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
