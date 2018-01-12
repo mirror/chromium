@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2ab844d9_dc72f1e8",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T11:00:40Z",
+      "side": 1,
+      "message": "Can you CC me on the bug https://crbug.com/663512?\n\nI strongly agree with that.\nI added this comment in the header of FormSubmissionThrottle.",
+      "parentUuid": "c2372854_e0928459",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5607be9_feb83d90",
         "filename": "content/browser/frame_host/form_submission_throttle.cc",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ce9bff_2fa4e7f8",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T11:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5607be9_feb83d90",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6f407edd_b3d95e54",
+        "filename": "content/browser/frame_host/form_submission_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T11:00:40Z",
+      "side": 1,
+      "message": "What do you mean by storing/exposing the navigation-initiator from the NavigationHandle. Do you mean the initiator origin?\nI don\u0027t think having the initiator origin helps, because we also need the initiator CSP.\n\nIf \"navigation-initiator\" means knowing which frame_tree_node_id the navigation comes from, I am not aware of a bug related to id.\n\nHere are some though about what can be done if we really have to enforce form-action on redirects:\n#1  ----\nIt would be super useful (in several other cases) in the browser to know the id of the frame that has initiated the navigation. For the moment, we only know its origin.\nIf we knew it, we could check CSP on it for instance.\n\nBut there is an issue with it:\nLet A and B be two window.\n1) A triggers a form submission, it targets B (with url x)\n2) A checks form-action CSP for the initial load.\n3) A closes itself.\n4) The browser makes B navigating, it must check A\u0027s CSP (and no more B\u0027s CSP), but there is no more A.\n\n#2  ----\nMaybe we could freeze A\u0027s CSP in an object when the navigation is initiated and uses it for each redirects. We already transmit CSP from the renderer to the browser when they are updated. I am not fond of this solution.",
+      "parentUuid": "df5098cc_e734db8d",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e1c264_cc11c783",
         "filename": "content/browser/frame_host/form_submission_throttle_browsertest.cc",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2018-01-11T18:35:45Z",
       "side": 1,
       "message": "Please associate this TODO with bug(s) and/or give hints to future readers when this TODO will become actionable.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 58
+      },
+      "revId": "efd66a6ba114f4f92879ef166be5e0208d06df75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbba31e1_dd96c283",
+        "filename": "content/browser/frame_host/form_submission_throttle_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-12T11:00:40Z",
+      "side": 1,
+      "message": "Yeah, this doesn\u0027t look like a real TODO. Just something informative. I will remove the TODO and add a link to the issue.",
+      "parentUuid": "24e1c264_cc11c783",
       "range": {
         "startLine": 86,
         "startChar": 0,
