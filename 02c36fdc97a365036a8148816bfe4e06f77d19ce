@@ -22,6 +22,30 @@
       "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c8790d_64a741a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-12T21:14:36Z",
+      "side": 1,
+      "message": "Right but then you\u0027d need an instantiation in some .cc file in every translation unit... highly impractical",
+      "parentUuid": "4102c2d7_799c6209",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
