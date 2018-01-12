@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94d2322_cb96e709",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T23:38:45Z",
+      "side": 1,
+      "message": "nit: Consider adding \"using chrome_test_util::ContentSuggestionCollectionView;| to improve the formatting.",
+      "revId": "7a52dde182ac03f78528d15698e084423cf358ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db4aa05_9ce98757",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T23:38:45Z",
+      "side": 1,
+      "message": "Can we actually understand what happens if this returns nil? From my understanding this method is called for LegacyNavigationManager, which is current production code.",
+      "range": {
+        "startLine": 1769,
+        "startChar": 20,
+        "endLine": 1769,
+        "endChar": 26
+      },
+      "revId": "7a52dde182ac03f78528d15698e084423cf358ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
