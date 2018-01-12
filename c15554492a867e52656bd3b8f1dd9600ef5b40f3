@@ -16,6 +16,24 @@
       "revId": "c15554492a867e52656bd3b8f1dd9600ef5b40f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b7452_84dd0ac9",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-12T05:22:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "044fb053_0dfdf79c",
+      "revId": "c15554492a867e52656bd3b8f1dd9600ef5b40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
