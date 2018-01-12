@@ -121,7 +121,8 @@ class BodyJsonConsumer final : public BodyConsumerBase {
     v8::Local<v8::String> input_string = V8String(isolate, string);
     v8::TryCatch trycatch(isolate);
     v8::Local<v8::Value> parsed;
-    if (v8::JSON::Parse(isolate, input_string).ToLocal(&parsed))
+    if (v8::JSON::Parse(Resolver()->GetExecutionContext(), input_string)
+            .ToLocal(&parsed))
       Resolver()->Resolve(parsed);
     else
       Resolver()->Reject(trycatch.Exception());
