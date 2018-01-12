@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d5cc3d_342a55d6",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-12T01:34:20Z",
+      "side": 1,
+      "message": "This will build this target on all platforms (incl. Android, iOS, and Fuchsia) except the MSVC win bots; is that really the right logic? I wouldn\u0027t have thought MSVC would affect this ...\n\nAlso, if this is the intended change, your CL description is no longer right.",
+      "revId": "d091587732a1c98a632d9a44a3d2d64220220068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
