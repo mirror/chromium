@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "2b3875fb_066733a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T02:54:11Z",
+      "side": 1,
+      "message": "I think this is the behavior we *want*, but not what we currently have in Chrome today (today, the tab closes, I think?).  Was this patch intended to fix that, or is that forthcoming?  Or am I missing something?",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f444a0_ee19e94d",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T02:54:11Z",
+      "side": 1,
+      "message": "not: about:blank is not the NTP.  The former is defined by the web spec as a blank DOM, whereas the latter is just the default \"launching point\", and has things like the search bar, most visited sites, etc.  It\u0027s a subtle distinction, but can be important.\n\nHere, I think the right choice would be to redirect to the NTP (i.e., chrome://newtab).",
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f832d1_e7c8e910",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T02:54:11Z",
+      "side": 1,
+      "message": "I don\u0027t know for sure that AUTO_TOPLEVEL is the right choice here, but I also don\u0027t know what would be better.  Maybe a browser/ui reviewer would know for sure.",
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713926da_32037f6b",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T02:54:11Z",
+      "side": 1,
+      "message": "nit: instead, let\u0027s use:\nGURL extension_url \u003d extension-\u003eGetResourceURL(\"options.html\");",
+      "revId": "fbae1448c5e54f96635ef19591b75de5b2686988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26fb8314_9c81b63b",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 1
