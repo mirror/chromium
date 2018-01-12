@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e2a611fa_4fe9040d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2018-01-12T03:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e86fcd5_a08b8283",
+      "revId": "5ac2f5e005889abb536ee7bc449c66c293e1011c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf0e5ec7_6537a658",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 9
