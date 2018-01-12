@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d26a8b4_1f92fda6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "Nit: \"suggestions section\" could get confused with a section in the section list (/ _the_ Articles suggestion section). mContextualSuggestions(Section)?\n\nI would also move this further up -- I\u0027ve tried to keep the nodes above in the order in which they show up in the UI.",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e953fc_b75a5ccf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "I think it would be better to set the header visibility in a single place rather than having two methods that mess with it. Really, what we want to do is tell this object that there is another section somewhere else, so it should treat it the same as if there were multiple sections in maybeHideArticlesHeader():\n\n  if (mSections.size() !\u003d 1 || mHasExternalSections) return;",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 49
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3253648f_3ed382dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "Actually, why does this need to be a separate node? The section could just live inside the regular SectionList, and this class could turn into a controller that updates the SuggestionsSection as necessary.",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de17ba7_8f456544",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really accurate if it\u0027s in a private method, because that one can\u0027t be overridden.",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 21
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e14fcf3_ced14cef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": ":) You probably want an assert false here or something (you shouldn\u0027t be able to dismiss this section, right?).",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 56
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00c7eb9_b45f0d63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "What happens when you open a new tab later?",
+      "range": {
+        "startLine": 214,
+        "startChar": 27,
+        "endLine": 214,
+        "endChar": 52
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64d4b29_11f3ee18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-12T13:30:19Z",
+      "side": 1,
+      "message": "Now that this happens after construction, I would put the assignment into an if-statement instead.",
+      "range": {
+        "startLine": 217,
+        "startChar": 18,
+        "endLine": 217,
+        "endChar": 22
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
