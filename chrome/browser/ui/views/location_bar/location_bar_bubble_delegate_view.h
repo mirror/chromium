@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/event_monitor.h"
 
@@ -62,7 +63,8 @@ class LocationBarBubbleDelegateView : public views::BubbleDialogDelegateView,
   // The class listens for WebContentsView events and closes the bubble. Useful
   // for bubbles that do not start out focused but need to close when the user
   // interacts with the web view.
-  class WebContentMouseHandler : public ui::EventHandler {
+  class WebContentMouseHandler : public ui::EventHandler,
+                                 public content::WebContentsObserver {
    public:
     WebContentMouseHandler(LocationBarBubbleDelegateView* bubble,
                            content::WebContents* web_contents);
@@ -74,7 +76,6 @@ class LocationBarBubbleDelegateView : public views::BubbleDialogDelegateView,
 
    private:
     LocationBarBubbleDelegateView* bubble_;
-    content::WebContents* web_contents_;
     std::unique_ptr<views::EventMonitor> event_monitor_;
 
     DISALLOW_COPY_AND_ASSIGN(WebContentMouseHandler);
