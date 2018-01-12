@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ff8dc7_b1ed13c9",
+        "filename": "cc/paint/paint_op_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T23:42:59Z",
+      "side": 1,
+      "message": "This needs a comment about what this means.  Both here and in the writer.",
+      "revId": "8c7ad54525cf8f114c57eb821f6bb17195c9d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524381b8_55fd4361",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-12T23:42:59Z",
+      "side": 1,
+      "message": "We should probably send the pixels here and not re-encode to PNG when sending pixel data to the browser.",
+      "revId": "8c7ad54525cf8f114c57eb821f6bb17195c9d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
