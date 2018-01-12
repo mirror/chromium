@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "147280bc_8ae30b3d",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T23:27:22Z",
+      "side": 1,
+      "message": "Your comment makes sense overall. The problem is that SiteInsatnce only exists on the browser process side and not on the renderer side. Introducing SiteInstance notion in the renderer will be non-trivial amount of work and not sure if it will be beneficial.",
+      "parentUuid": "97742433_a085aea2",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "297e7fa3_147ccc6f",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
