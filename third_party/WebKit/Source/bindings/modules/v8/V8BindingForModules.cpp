@@ -338,7 +338,8 @@ static IDBKey* CreateIDBKeyFromValueAndKeyPath(
       }
       if (element == "lastModifiedDate") {
         v8_value =
-            v8::Date::New(isolate, V8File::ToImpl(object)->lastModifiedDate());
+            v8::Date::New(context, V8File::ToImpl(object)->lastModifiedDate())
+                .ToLocalChecked();
         continue;
       }
       // Fall through.
