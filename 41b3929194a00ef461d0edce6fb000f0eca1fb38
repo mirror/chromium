@@ -16,6 +16,24 @@
       "revId": "41b3929194a00ef461d0edce6fb000f0eca1fb38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15261862_e7afb30a",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-12T18:06:44Z",
+      "side": 1,
+      "message": "No, it is a function of latency (or http_rtt_msec).",
+      "parentUuid": "64e1b568_c405d2c7",
+      "revId": "41b3929194a00ef461d0edce6fb000f0eca1fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
