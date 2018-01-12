@@ -1623,6 +1623,9 @@ extern const char kDisableNetworkSettingsConfigDescription[];
 extern const char kNewKoreanImeName[];
 extern const char kNewKoreanImeDescription[];
 
+extern const char kNewTouchSupportForScreenMagnificationName[];
+extern const char kNewTouchSupportForScreenMagnificationDescription[];
+
 extern const char kNewZipUnpackerName[];
 extern const char kNewZipUnpackerDescription[];
 

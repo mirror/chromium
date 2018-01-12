@@ -441,6 +441,10 @@ const char kNaturalScrollDefault[] = "enable-natural-scroll-default";
 // devices in other categories this flag must be missing.
 const char kNeedArcMigrationPolicyCheck[] = "need-arc-migration-policy-check";
 
+// Enables new implementation of touch support for screen magnification.
+const char kNewTouchSupportForScreenMagnification[] =
+    "new-touch-support-for-screen-magnification";
+
 // An optional comma-separated list of IDs of apps that can be used to take
 // notes. If unset, a hardcoded list is used instead.
 const char kNoteTakingAppIds[] = "note-taking-app-ids";
