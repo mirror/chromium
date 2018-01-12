@@ -10,15 +10,11 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #import "ios/chrome/browser/ui/alert_coordinator/action_sheet_coordinator.h"
 #import "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.h"
-#import "ios/chrome/browser/ui/bookmarks/bars/bookmark_editing_bar.h"
-#import "ios/chrome/browser/ui/bookmarks/bars/bookmark_navigation_bar.h"
-#import "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_controller_factory.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_folder_editor_view_controller.h"
@@ -70,7 +66,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }  // namespace
 
 @interface BookmarkHomeViewController ()<
-    BookmarkCollectionViewDelegate,
     BookmarkEditViewControllerDelegate,
     BookmarkFolderEditorViewControllerDelegate,
     BookmarkFolderViewControllerDelegate,
@@ -92,18 +87,14 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 @synthesize browserState = _browserState;
 @synthesize editing = _editing;
 @synthesize editIndexPaths = _editIndexPaths;
-@synthesize editingBar = _editingBar;
 @synthesize editViewController = _editViewController;
 @synthesize folderEditor = _folderEditor;
 @synthesize folderSelector = _folderSelector;
-@synthesize folderView = _folderView;
 @synthesize loader = _loader;
 @synthesize menuView = _menuView;
-@synthesize navigationBar = _navigationBar;
 @synthesize panelView = _panelView;
 @synthesize primaryMenuItem = _primaryMenuItem;
 @synthesize scrollToTop = _scrollToTop;
-@synthesize sideSwipingPossible = _sideSwipingPossible;
 @synthesize waitForModelView = _waitForModelView;
 @synthesize homeDelegate = _homeDelegate;
 @synthesize bookmarksTableView = _bookmarksTableView;
@@ -154,41 +145,28 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  if (!base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    self.navigationBar =
-        [[BookmarkNavigationBar alloc] initWithFrame:CGRectZero];
-    [self.navigationBar setEditTarget:self
-                               action:@selector(navigationBarWantsEditing:)];
-    [self.navigationBar setBackTarget:self
-                               action:@selector(navigationBarBack:)];
-  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Set the delegate here to make sure it is working when navigating in the
-    // ViewController hierarchy (as each view controller is setting itself as
-    // delegate).
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  }
+  // Set the delegate here to make sure it is working when navigating in the
+  // ViewController hierarchy (as each view controller is setting itself as
+  // delegate).
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Set the content position after views are laid out,
-    // to ensure the right window of rows is shown. Once
-    // used, reset self.cachedContentPosition.
-    if (self.cachedContentPosition) {
-      [self.bookmarksTableView
-          setContentPosition:self.cachedContentPosition.floatValue];
-      self.cachedContentPosition = nil;
-    }
-    // The height of contextBar might change due to word wrapping of buttons
-    // after titleLabel or orientation changed.
-    [self.contextBar updateHeight];
+  // Set the content position after views are laid out, to ensure the right
+  // window of rows is shown. Once used, reset self.cachedContentPosition.
+  if (self.cachedContentPosition) {
+    [self.bookmarksTableView
+        setContentPosition:self.cachedContentPosition.floatValue];
+    self.cachedContentPosition = nil;
   }
+  // The height of contextBar might change due to word wrapping of buttons
+  // after titleLabel or orientation changed.
+  [self.contextBar updateHeight];
 }
 
 #pragma mark - Public
@@ -201,11 +179,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 #pragma mark - Protected
 
 - (void)loadBookmarkViews {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self loadBookmarkViewsForNewUI];
-  } else {
-    [self loadBookmarkViewsForOldUI];
-  }
+  [self loadBookmarkViewsForNewUI];
 }
 
 - (void)updatePrimaryMenuItem:(BookmarkMenuItem*)menuItem
@@ -215,12 +189,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
     return;
 
   self.primaryMenuItem = menuItem;
-
-  [self.folderView resetFolder:self.primaryMenuItem.folder];
-  [self.folderView promoStateChangedAnimated:NO];
-
-  [self.folderView changeOrientation:GetInterfaceOrientation()];
-  [self.folderView setScrollsToTop:!self.scrollToTop];
 
   [self.menuView updatePrimaryMenuItem:self.primaryMenuItem];
 }
@@ -242,22 +210,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (void)cachePosition {
-  if (self.folderView) {
-    bookmark_utils_ios::CachePosition(
-        [self.folderView contentPositionInPortraitOrientation],
-        [self primaryMenuItem]);
-    return;
-  }
-
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Cache position for BookmarkTableView in new UI.
-    [BookmarkPathCache
-        cacheBookmarkUIPositionWithPrefService:self.browserState->GetPrefs()
-                                      folderId:_rootNode->id()
-                                scrollPosition:(double)self.bookmarksTableView
-                                                   .contentPosition];
-    return;
-  }
+  // Cache position for BookmarkTableView in new UI.
+  [BookmarkPathCache
+      cacheBookmarkUIPositionWithPrefService:self.browserState->GetPrefs()
+                                    folderId:_rootNode->id()
+                              scrollPosition:(double)self.bookmarksTableView
+                                                 .contentPosition];
 }
 
 - (BOOL)shouldShowBackButtonOnNavigationBar {
@@ -274,62 +232,26 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 #pragma mark - Subclasses must override
 
-- (void)showEditingBarAnimated:(BOOL)animated {
-  NOTREACHED() << "Must be overridden by subclass";
-}
-
-- (void)hideEditingBarAnimated:(BOOL)animated {
-  NOTREACHED() << "Must be overridden by subclass";
-}
-
-- (CGRect)editingBarFrame {
-  NOTREACHED() << "Must be overridden by subclass";
-  return CGRectZero;
-}
-
 - (ActionSheetCoordinator*)createActionSheetCoordinatorOnView:(UIView*)view {
   NOTREACHED() << "Must be overridden by subclass";
   return nil;
 }
 
-- (void)updateNavigationBarAnimated:(BOOL)animated
-                        orientation:(UIInterfaceOrientation)orientation {
-  NOTREACHED() << "Must be overridden by subclass";
-}
-
 #pragma mark - BookmarkPromoControllerDelegate
 
 - (void)promoStateChanged:(BOOL)promoEnabled {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarksTableView promoStateChangedAnimated:YES];
-  } else {
-    [self.folderView promoStateChangedAnimated:YES];
-  }
+  [self.bookmarksTableView promoStateChangedAnimated:YES];
 }
 
 - (void)configureSigninPromoWithConfigurator:
             (SigninPromoViewConfigurator*)configurator
                              identityChanged:(BOOL)identityChanged {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarksTableView
-        configureSigninPromoWithConfigurator:configurator
-                             identityChanged:identityChanged];
-  } else {
-    [self.folderView configureSigninPromoWithConfigurator:configurator
-                                          identityChanged:identityChanged];
-  }
+  [self.bookmarksTableView
+      configureSigninPromoWithConfigurator:configurator
+                           identityChanged:identityChanged];
 }
 
 #pragma mark Action sheet callbacks
-
-// Enters into edit mode by selecting the given node corresponding to the
-// given cell.
-- (void)selectFirstNode:(const BookmarkNode*)node
-               withCell:(UICollectionViewCell*)cell {
-  DCHECK(!self.editing);
-  [self insertEditNode:node atIndexPath:[self indexPathForCell:cell]];
-  [self setEditing:YES animated:YES];
-}
 
 // Opens the folder move editor for the given node.
 - (void)moveNodes:(const std::set<const BookmarkNode*>&)nodes {
@@ -572,22 +494,14 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   bookmark_utils_ios::MoveBookmarksWithUndoToast(
       folderPicker.editedNodes, self.bookmarks, folder, self.browserState);
 
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setTableViewEditing:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
 }
 
 - (void)folderPickerDidCancel:(BookmarkFolderViewController*)folderPicker {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setTableViewEditing:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
@@ -633,11 +547,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   self.editViewController.delegate = nil;
   self.editViewController = nil;
   [self dismissViewControllerAnimated:YES completion:NULL];
-
-  // The editViewController can be displayed from the menu button, or from the
-  // edit button in edit mode. Either way, after it's dismissed, edit mode
-  // should be off.
-  [self setEditing:NO animated:NO];
 }
 
 - (void)bookmarkEditorWillCommitTitleOrUrlChange:
@@ -690,215 +599,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   }
 }
 
-// This method statelessly updates the editing top bar from |_editNodes| and
-// |editing|.
-- (void)updateEditingStateAnimated:(BOOL)animated {
-  if (!self.editing) {
-    [self hideEditingBarAnimated:animated];
-    [self updateEditBarShadow];
-    [self enableSideSwiping:YES];
-    return;
-  }
-
-  if (!self.editingBar) {
-    self.editingBar =
-        [[BookmarkEditingBar alloc] initWithFrame:[self editingBarFrame]];
-    [self.editingBar setCancelTarget:self action:@selector(editingBarCancel)];
-    [self.editingBar setDeleteTarget:self action:@selector(editingBarDelete)];
-    [self.editingBar setMoveTarget:self action:@selector(editingBarMove)];
-    [self.editingBar setEditTarget:self action:@selector(editingBarEdit)];
-
-    [self.view addSubview:self.editingBar];
-    self.editingBar.alpha = 0;
-    self.editingBar.hidden = YES;
-  }
-
-  int bookmarkCount = 0;
-  int folderCount = 0;
-  for (auto* node : _editNodes) {
-    if (node->is_url())
-      ++bookmarkCount;
-    else
-      ++folderCount;
-  }
-  [self.editingBar updateUIWithBookmarkCount:bookmarkCount
-                                 folderCount:folderCount];
-
-  [self showEditingBarAnimated:animated];
-  [self updateEditBarShadow];
-  [self enableSideSwiping:NO];
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-  if (_editing == editing)
-    return;
-
-  _editing = editing;
-
-  if (editing) {
-    self.bookmarkPromoController.shouldShowSigninPromo = NO;
-  } else {
-    // Only reset the editing state when leaving edit mode. This allows
-    // subclasses to add nodes for editing before entering edit mode.
-    [self resetEditNodes];
-    [self.bookmarkPromoController updateShouldShowSigninPromo];
-  }
-
-  [self updateEditingStateAnimated:animated];
-  if ([[self primaryMenuItem] supportsEditing])
-    [self.folderView setEditing:editing animated:animated];
-}
-
-- (void)updateEditBarShadow {
-  [self.editingBar showShadow:self.editing];
-}
-
-#pragma mark Editing Bar Callbacks
-
-// The cancel button was tapped on the editing bar.
-- (void)editingBarCancel {
-  [self setEditing:NO animated:YES];
-}
-
-// The move button was tapped on the editing bar.
-- (void)editingBarMove {
-  [self moveNodes:_editNodes];
-}
-
-// The delete button was tapped on the editing bar.
-- (void)editingBarDelete {
-  [self deleteSelectedNodes];
-  [self setEditing:NO animated:YES];
-}
-
-// The edit button was tapped on the editing bar.
-- (void)editingBarEdit {
-  DCHECK_EQ(_editNodes.size(), 1u);
-  const BookmarkNode* node = *(_editNodes.begin());
-  [self editNode:node];
-}
-
 #pragma mark - BookmarkCollectionViewDelegate
-
-// This class owns multiple views that have a delegate that conforms to
-// BookmarkCollectionViewDelegate, or a subprotocol of
-// BookmarkCollectionViewDelegate.
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)view
-                          cell:(UICollectionViewCell*)cell
-             addNodeForEditing:(const BookmarkNode*)node {
-  [self insertEditNode:node atIndexPath:[self indexPathForCell:cell]];
-  [self updateEditingStateAnimated:YES];
-}
-
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)view
-                          cell:(UICollectionViewCell*)cell
-          removeNodeForEditing:(const BookmarkNode*)node {
-  [self removeEditNode:node atIndexPath:[self indexPathForCell:cell]];
-  if (_editNodes.size() == 0)
-    [self setEditing:NO animated:YES];
-  else
-    [self updateEditingStateAnimated:YES];
-}
-
-- (const std::set<const BookmarkNode*>&)nodesBeingEdited {
-  return _editNodes;
-}
-
-- (void)bookmarkCollectionViewDidScroll:(BookmarkCollectionView*)view {
-  [self updateEditBarShadow];
-}
-
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)view
-              didLongPressCell:(UICollectionViewCell*)cell
-                   forBookmark:(const BookmarkNode*)node {
-  DCHECK(!self.editing);
-  [self selectFirstNode:node withCell:cell];
-}
-
-- (BOOL)bookmarkCollectionViewShouldShowPromoCell:
-    (BookmarkCollectionView*)collectionView {
-  return self.bookmarkPromoController.shouldShowSigninPromo;
-}
-
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)view
-    selectedFolderForNavigation:(const BookmarkNode*)folder {
-  BookmarkMenuItem* menuItem = nil;
-  if (view == self.folderView) {
-    const BookmarkNode* parent = RootLevelFolderForNode(folder, self.bookmarks);
-    menuItem =
-        [BookmarkMenuItem folderMenuItemForNode:folder rootAncestor:parent];
-  } else {
-    NOTREACHED();
-    return;
-  }
-  [self updatePrimaryMenuItem:menuItem animated:YES];
-}
-
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)view
-      selectedUrlForNavigation:(const GURL&)url {
-  [self dismissWithURL:url];
-}
-
-- (void)bookmarkCollectionView:(BookmarkCollectionView*)collectionView
-          wantsMenuForBookmark:(const BookmarkNode*)node
-                        onView:(UIView*)view
-                       forCell:(BookmarkItemCell*)cell {
-  DCHECK(!self.editViewController);
-  DCHECK(!self.actionSheetCoordinator);
-  self.actionSheetCoordinator = [self createActionSheetCoordinatorOnView:view];
-
-  __weak BookmarkHomeViewController* weakSelf = self;
-
-  // Select action.
-  [self.actionSheetCoordinator
-      addItemWithTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_ACTION_SELECT)
-                action:^{
-                  [weakSelf selectFirstNode:node withCell:cell];
-                  weakSelf.actionSheetCoordinator = nil;
-                }
-                 style:UIAlertActionStyleDefault];
-
-  // Edit action.
-  [self.actionSheetCoordinator
-      addItemWithTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_ACTION_EDIT)
-                action:^{
-                  [weakSelf editNode:node];
-                  weakSelf.actionSheetCoordinator = nil;
-                }
-                 style:UIAlertActionStyleDefault];
-
-  // Move action.
-  [self.actionSheetCoordinator
-      addItemWithTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_ACTION_MOVE)
-                action:^{
-                  std::set<const BookmarkNode*> nodes;
-                  nodes.insert(node);
-                  [weakSelf moveNodes:nodes];
-                  weakSelf.actionSheetCoordinator = nil;
-                }
-                 style:UIAlertActionStyleDefault];
-
-  // Delete action.
-  [self.actionSheetCoordinator
-      addItemWithTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_ACTION_DELETE)
-                action:^{
-                  std::set<const BookmarkNode*> nodes;
-                  nodes.insert(node);
-                  [weakSelf deleteNodes:nodes];
-                  weakSelf.actionSheetCoordinator = nil;
-                }
-                 style:UIAlertActionStyleDestructive];
-
-  // Cancel action.
-  [self.actionSheetCoordinator
-      addItemWithTitle:l10n_util::GetNSString(IDS_CANCEL)
-                action:^{
-                  weakSelf.actionSheetCoordinator = nil;
-                }
-                 style:UIAlertActionStyleCancel];
-
-  [self.actionSheetCoordinator start];
-}
 
 - (SigninPromoViewMediator*)signinPromoViewMediator {
   return self.bookmarkPromoController.signinPromoViewMediator;
@@ -915,8 +616,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   // Bookmark Model is loaded after presenting Bookmarks,  we need to check
   // again here if restoring of cache position is needed.  It is to prevent
   // crbug.com/765503.
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration) &&
-      [BookmarkPathCache
+  if ([BookmarkPathCache
           getBookmarkUIPositionCacheWithPrefService:self.browserState
                                                         ->GetPrefs()
                                               model:self.bookmarks
@@ -945,12 +645,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (void)bookmarkNodeChanged:(const BookmarkNode*)node {
-  // The title of the folder may have changed.
-  if (self.primaryMenuItem.type == bookmarks::MenuItemFolder &&
-      self.primaryMenuItem.folder == node) {
-    UIInterfaceOrientation orient = GetInterfaceOrientation();
-    [self updateNavigationBarAnimated:NO orientation:orient];
-  }
 }
 
 - (void)bookmarkNodeChildrenChanged:(const BookmarkNode*)bookmarkNode {
@@ -968,15 +662,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                  fromFolder:(const BookmarkNode*)folder {
   [self removeEditNode:node atIndexPath:nil];
 
-  if (_rootNode == node &&
-      base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
+  if (_rootNode == node) {
     [self setTableViewEditing:NO];
   }
 }
 
 - (void)bookmarkModelRemovedAllNodes {
-  // All non-permanent nodes have been removed.
-  [self setEditing:NO animated:YES];
 }
 
 #pragma mark - Accessibility
@@ -1006,17 +697,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                                               menuViewWidth:self.menuWidth];
   self.panelView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
-  // Create folder view.
-  BookmarkCollectionView* view = [[BookmarkCollectionView alloc]
-      initWithBrowserState:self.browserState
-                     frame:CGRectZero
-                 presenter:self /* id<SigninPresenter> */];
-  self.folderView = view;
-  [self.folderView setEditing:self.editing animated:NO];
-  self.folderView.autoresizingMask =
-      UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-  self.folderView.delegate = self;
 }
 
 // Set up UI views for the new UI.
@@ -1191,48 +871,32 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
       rendererInitiated:NO];
 }
 
-- (void)enableSideSwiping:(BOOL)enable {
-  if (self.sideSwipingPossible) {
-    [self.panelView enableSideSwiping:enable];
-  }
-}
-
 // Deletes the nodes, and presents a toast with an undo button.
 - (void)deleteSelectedNodes {
   [self deleteNodes:_editNodes];
 }
 
-// Returns NSIndexPath for a given cell.
-- (NSIndexPath*)indexPathForCell:(UICollectionViewCell*)cell {
-  DCHECK(self.folderView.collectionView);
-  NSIndexPath* indexPath =
-      [self.folderView.collectionView indexPathForCell:cell];
-  return indexPath;
-}
-
 - (void)updateViewConstraints {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    if (self.contextBar && self.bookmarksTableView) {
-      NSDictionary* views = @{
-        @"tableView" : self.bookmarksTableView,
-        @"contextBar" : self.contextBar,
-      };
-      NSArray* constraints = @[
-        @"V:|[tableView][contextBar]|",
-        @"H:|[tableView]|",
-        @"H:|[contextBar]|",
-      ];
-      ApplyVisualConstraints(constraints, views);
-    } else if (self.bookmarksTableView) {
-      NSDictionary* views = @{
-        @"tableView" : self.bookmarksTableView,
-      };
-      NSArray* constraints = @[
-        @"V:|[tableView]|",
-        @"H:|[tableView]|",
-      ];
-      ApplyVisualConstraints(constraints, views);
-    }
+  if (self.contextBar && self.bookmarksTableView) {
+    NSDictionary* views = @{
+      @"tableView" : self.bookmarksTableView,
+      @"contextBar" : self.contextBar,
+    };
+    NSArray* constraints = @[
+      @"V:|[tableView][contextBar]|",
+      @"H:|[tableView]|",
+      @"H:|[contextBar]|",
+    ];
+    ApplyVisualConstraints(constraints, views);
+  } else if (self.bookmarksTableView) {
+    NSDictionary* views = @{
+      @"tableView" : self.bookmarksTableView,
+    };
+    NSArray* constraints = @[
+      @"V:|[tableView]|",
+      @"H:|[tableView]|",
+    ];
+    ApplyVisualConstraints(constraints, views);
   }
   [super updateViewConstraints];
 }

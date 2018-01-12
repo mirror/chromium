@@ -13,9 +13,7 @@ class BookmarkNode;
 }  // namespace bookmarks
 
 @class ActionSheetCoordinator;
-@class BookmarkCollectionView;
 @class BookmarkContextBar;
-@class BookmarkEditingBar;
 @class BookmarkEditViewController;
 @class BookmarkFolderEditorViewController;
 @class BookmarkFolderViewController;
@@ -52,10 +50,6 @@ typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 
 // The main view showing all the bookmarks.
-// TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
-@property(nonatomic, strong) BookmarkCollectionView* folderView;
-
-// The main view showing all the bookmarks.
 @property(nonatomic, strong) BookmarkTableView* bookmarksTableView;
 
 // The view controller used to pick a folder in which to move the selected
@@ -68,10 +62,6 @@ typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
 // The menu with all the folders.
 // TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
 @property(nonatomic, strong) BookmarkMenuView* menuView;
-
-// The navigation bar sits on top of the main content.
-// TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
-@property(nonatomic, strong) BookmarkNavigationBar* navigationBar;
 
 // The app bar for the bookmarks.
 @property(nonatomic, strong) MDCAppBar* appBar;
@@ -106,21 +96,12 @@ typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
 // The set of selected index paths for edition.
 @property(nonatomic, strong) NSMutableArray* editIndexPaths;
 
-// The layout code in this class relies on the assumption that the editingBar
-// has the same frame as the navigationBar.
-// TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
-@property(nonatomic, strong) BookmarkEditingBar* editingBar;
-
 // The view controller to present when editing the current folder.
 @property(nonatomic, strong) BookmarkFolderEditorViewController* folderEditor;
 
 // The controller managing the display of the promo cell and the promo view
 // controller.
 @property(nonatomic, strong) BookmarkPromoController* bookmarkPromoController;
-
-// Whether the panel view can be brought into view and hidden by swipe gesture.
-// TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
-@property(nonatomic, assign) BOOL sideSwipingPossible;
 
 // The action sheet coordinator used when trying to edit a single bookmark.
 // TODO(crbug.com/753599): Remove this property when clean up old bookmarks.
@@ -168,50 +149,10 @@ typedef NS_ENUM(NSInteger, BookmarksContextBarState) {
 // TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
 - (ActionSheetCoordinator*)createActionSheetCoordinatorOnView:(UIView*)view;
 
-// Shows the editing bar, this method MUST be overridden by subclass to
-// tailor the behaviour according to device.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (void)showEditingBarAnimated:(BOOL)animated;
-
-// Hides the editing bar, this method MUST be overridden by subclass to
-// tailor the behaviour according to device.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (void)hideEditingBarAnimated:(BOOL)animated;
-
-// Returns the frame for editingBar, MUST be overridden by subclass.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (CGRect)editingBarFrame;
-
 #pragma mark - Navigation bar.
 
 // Callback for when navigation bar is cancelled.
 - (void)navigationBarCancel:(id)sender;
-
-// Updates the UI of the navigation bar with the primaryMenuItem.
-// This method should be called anytime:
-//  (1)The primary view changes.
-//  (2)The primary view has type folder, and the relevant folder has changed.
-//  (3)The interface orientation changes.
-//  (4)viewWillAppear, as the interface orientation may have changed.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (void)updateNavigationBarAnimated:(BOOL)animated
-                        orientation:(UIInterfaceOrientation)orientation;
-
-#pragma mark - Edit
-
-// This method updates the property, and resets the edit nodes.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
-
-// Instaneously updates the shadow of the edit bar.
-// This method should be called anytime:
-//  (1)|editing| property changes.
-//  (2)The primary view changes.
-//  (3)The primary view's collection view is scrolled.
-// (2) is not necessary right now, as it is only possible to switch primary
-// views when |editing| is NO. When |editing| is NO, the shadow is never shown.
-// TODO(crbug.com/753599): Remove this method when clean up old bookmarks.
-- (void)updateEditBarShadow;
 
 @end
 

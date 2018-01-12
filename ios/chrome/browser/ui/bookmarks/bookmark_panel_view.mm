@@ -304,10 +304,6 @@
   return self.hasStartPoint;
 }
 
-- (void)enableSideSwiping:(BOOL)enable {
-  self.panRecognizer.enabled = enable;
-}
-
 #pragma mark Private methods
 
 - (void)resetUserDrivenAnimation {
