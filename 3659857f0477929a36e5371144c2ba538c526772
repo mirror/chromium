@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40fa63c5_ae343c74",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-12T23:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f19d9d_39745842",
+      "revId": "3659857f0477929a36e5371144c2ba538c526772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "861a11f5_7b24720e",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
         "patchSetId": 4
