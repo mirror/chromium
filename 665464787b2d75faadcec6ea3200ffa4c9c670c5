@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97f1a97_5615b702",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T15:15:36Z",
+      "side": 1,
+      "message": "These are only debug urls, we need to filter more. I think RenderProcessHost::FilterURL will help.",
+      "revId": "665464787b2d75faadcec6ea3200ffa4c9c670c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
