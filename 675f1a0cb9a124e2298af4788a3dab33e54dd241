@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1945463d_78be22cf",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:10:25Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should set this flag in AllVisiblePositionsRangeLengthBehavior...\n\nAnyway, it seems risky to change so much in this patch. Let\u0027s file a tracking bug to see if all users of AllVisiblePositionsRangeLengthBehavior() actually need the double newlines or not.",
+      "range": {
+        "startLine": 1936,
+        "startChar": 11,
+        "endLine": 1936,
+        "endChar": 42
+      },
+      "revId": "675f1a0cb9a124e2298af4788a3dab33e54dd241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313e6e24_4f519345",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:10:25Z",
+      "side": 1,
+      "message": "nit: Supresses",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "675f1a0cb9a124e2298af4788a3dab33e54dd241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae0a2ff_f8c62248",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:10:25Z",
+      "side": 1,
+      "message": "nit: Supresses",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 15
+      },
+      "revId": "675f1a0cb9a124e2298af4788a3dab33e54dd241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b62263_3281158f",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:10:25Z",
+      "side": 1,
+      "message": "nit: supresses",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "675f1a0cb9a124e2298af4788a3dab33e54dd241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a5c953_0d2ec9a5",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:10:25Z",
+      "side": 1,
+      "message": "nit: Supresses",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 22
+      },
+      "revId": "675f1a0cb9a124e2298af4788a3dab33e54dd241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
