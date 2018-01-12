@@ -1,0 +1,14 @@
+module perfetto.mojom;
+
+struct DataSourceConfig {
+  string name;
+  uint32 target_buffer;
+  string trace_category_filters;
+};
+
+interface Producer {
+    OnConnect();
+    OnDisconnect();
+    CreateDataSourceInstance(int64 id, DataSourceConfig config);
+};
+
