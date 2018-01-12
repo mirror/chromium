@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8aa5bd_4d2606bf",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-12T22:39:32Z",
+      "side": 1,
+      "message": "TabWindowController?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "eb8c8b71e15a514e53009ab7d7f482acb005ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
