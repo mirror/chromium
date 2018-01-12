@@ -246,6 +246,7 @@ class CONTENT_EXPORT ChildProcessSecurityPolicyImpl
   // about port.
   bool IsIsolatedOrigin(const url::Origin& origin);
 
+  // TODO: move to public
   // This function will check whether |origin| requires process isolation, and
   // if so, it will return true and put the most specific matching isolated
   // origin into |result|.
@@ -264,7 +265,7 @@ class CONTENT_EXPORT ChildProcessSecurityPolicyImpl
   //   https://baz.bar.foo.isolated.com/ -->  https://bar.foo.isolated.com/
   //   https://unisolated.com/           -->  (unique origin)
   bool GetMatchingIsolatedOrigin(const url::Origin& origin,
-                                 url::Origin* result);
+                                 url::Origin* result) override;
 
   // Removes a previously added isolated origin, currently only used in tests.
   //

@@ -9,9 +9,19 @@
 
 #include "base/test/histogram_tester.h"
 #include "chrome/common/chrome_content_client.h"
+#include "extensions/common/url_pattern_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
+
+namespace {
+
+void AddPattern(URLPatternSet* set, const std::string& pattern) {
+  int schemes = URLPattern::SCHEME_ALL;
+  set->AddPattern(URLPattern(schemes, pattern));
+}
+
+}  // namespace
 
 typedef testing::Test ChromeContentBrowserClientExtensionsPartTest;
 
@@ -65,6 +75,56 @@ TEST_F(ChromeContentBrowserClientExtensionsPartTest,
                        test_schemes.size());
   uma.ExpectBucketCount("Extensions.ShouldAllowOpenURL.Failure.Scheme",
                         0 /* SCHEME_UNKNOWN */, 0);
+}
+
+TEST_F(ChromeContentBrowserClientExtensionsPartTest,
+       IsolatedOriginsAndHostedAppWebExtents) {
+  auto does_origin_contain_extent = [](const std::string& origin,
+                                       const URLPatternSet& extent) {
+    return ChromeContentBrowserClientExtensionsPart::
+        DoesOriginMatchAllURLsInWebExtent(url::Origin::Create(GURL(origin)),
+                                          extent);
+  };
+
+  {
+    URLPatternSet set;
+    AddPattern(&set, "https://www.google.com/*");
+    AddPattern(&set, "https://www.yahoo.com/*");
+    EXPECT_FALSE(does_origin_contain_extent("https://google.com", set));
+    EXPECT_FALSE(does_origin_contain_extent("https://www.google.com", set));
+    EXPECT_FALSE(does_origin_contain_extent("https://www.yahoo.com", set));
+  }
+
+  {
+    URLPatternSet set;
+    AddPattern(&set, "https://mail.google.com/foo/");
+    EXPECT_TRUE(does_origin_contain_extent("https://google.com", set));
+    EXPECT_TRUE(does_origin_contain_extent("https://mail.google.com", set));
+    // URLs in |set| are not subdomains of this origin.
+    EXPECT_FALSE(does_origin_contain_extent("https://xx.mail.google.com", set));
+    // Wrong scheme.
+    EXPECT_FALSE(does_origin_contain_extent("http://mail.google.com", set));
+    EXPECT_FALSE(does_origin_contain_extent("https://www.yahoo.com", set));
+  }
+
+  {
+    URLPatternSet set;
+    AddPattern(&set, "https://mail.google.com/foo/");
+    AddPattern(&set, "https://calendar.google.com/bar/");
+    AddPattern(&set, "https://google.com/baz/qux/");
+    EXPECT_TRUE(does_origin_contain_extent("https://google.com", set));
+    EXPECT_FALSE(does_origin_contain_extent("https://mail.google.com", set));
+    EXPECT_FALSE(
+        does_origin_contain_extent("https://calendar.google.com", set));
+  }
+
+  {
+    URLPatternSet set;
+    AddPattern(&set, "*://mail.google.com/foo/");
+    // False, since the extent includes non-https schemes, which won't match
+    // the origin.
+    EXPECT_FALSE(does_origin_contain_extent("https://google.com", set));
+  }
 }
 
 }  // namespace extensions

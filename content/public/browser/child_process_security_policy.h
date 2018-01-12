@@ -213,6 +213,10 @@ class ChildProcessSecurityPolicy {
   // check is superseded by a UI thread check.  See https://crbug.com/656752.
   virtual bool HasSpecificPermissionForOrigin(int child_id,
                                               const url::Origin& origin) = 0;
+
+  // TODO: move comment here.
+  virtual bool GetMatchingIsolatedOrigin(const url::Origin& origin,
+                                         url::Origin* result) = 0;
 };
 
 }  // namespace content
