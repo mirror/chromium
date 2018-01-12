@@ -194,8 +194,6 @@ const char kHistogramForegroundToFirstContentfulPaint[] =
 const char kHistogramForegroundToFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.ForegroundToFirstMeaningfulPaint";
 
-const char kHistogramCacheRequestPercentParseStop[] =
-    "PageLoad.Experimental.Cache.RequestPercent.ParseStop";
 const char kHistogramCacheTotalRequestsParseStop[] =
     "PageLoad.Experimental.Cache.TotalRequests.ParseStop";
 const char kHistogramTotalRequestsParseStop[] =
@@ -600,15 +598,13 @@ void CorePageLoadMetricsObserver::OnParseStop(
 
     int total_resources = num_cache_resources_ + num_network_resources_;
     if (total_resources) {
-      int percent_cached = (100 * num_cache_resources_) / total_resources;
-      UMA_HISTOGRAM_PERCENTAGE(internal::kHistogramCacheRequestPercentParseStop,
-                               percent_cached);
       UMA_HISTOGRAM_COUNTS(internal::kHistogramCacheTotalRequestsParseStop,
                            num_cache_resources_);
       UMA_HISTOGRAM_COUNTS(internal::kHistogramTotalRequestsParseStop,
                            num_cache_resources_ + num_network_resources_);
 
       // Separate out parse duration based on cache percent.
+      int percent_cached = (100 * num_cache_resources_) / total_resources;
       if (percent_cached <= 50) {
         PAGE_LOAD_HISTOGRAM(
             "PageLoad.Experimental.ParseDuration.CachedPercent.0-50",
