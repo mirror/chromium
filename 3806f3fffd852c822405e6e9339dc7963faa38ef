@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "76aded81_5cd53b22",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T01:07:23Z",
+      "side": 1,
+      "message": "Currently no.\n\nCan we mitigate the memory concern by lazily instantiating ParitionRootGeneric (i.e., the first time the SecurityOrigin allocated an ArrayBuffer).",
+      "parentUuid": "a6845cb5_1ee0ebf2",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "297e7fa3_147ccc6f",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
@@ -142,6 +160,24 @@
       "side": 1,
       "message": "Yes, it is pretty heavy. Unfortunately I couldn\u0027t get the mapping from void* (allocation base) to PartitionRootGeneric* to work robustly (it returned pointers that didn\u0027t match the root I thought I created.)\n\nAlso, ArrayBuffer::Allocator::Free can be called on a background thread, where it\u0027s not clear what the Context is.",
       "parentUuid": "297e7fa3_147ccc6f",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c129324_997620de",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T01:07:23Z",
+      "side": 1,
+      "message": "I think this is a show stopper...\n\nIt would be (not good but) better to let Allocator::Free search all ArrayBuffer partitions if Free is called on a different context of thread...\n\nIs there any way to encode where ArrayBuffer is allocated in the ArrayBuffer itself or an ArrayBuffer handle?",
+      "parentUuid": "0ca00e7c_5dd3f5d0",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
