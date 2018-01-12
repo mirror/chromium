@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d236fe34_67ddd2f5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "Nit: What about `file:`?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5194a797_81bc17a7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "`data:` should always be unique, shouldn\u0027t it?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17d33eb_f9dd7bdb",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "Nit: This message could contain the origin to make it easier to debug. Perhaps \"The origin `[serialized origin]` is not allowed to access `PublicKeyCredential` objects.\"?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c23fb1_3186d5fc",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "Nit: Perhaps \"The relying party ID `[relyingPartyID]` is not valid for `[serialized origin]`.\"?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250132bc_a2d87f35",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "I don\u0027t understand this block. Why are we checking the origin\u0027s `domain` value (e.g. whatever `document.domain` was set to)? Does that matter for the purposes of WebAuthN?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d64af5_dca74a03",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what `!effective_domain` means. It\u0027s a string, and I don\u0027t think we define a negation operation on it. Do you mean something like `!effective_domain.IsEmpty()`?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0152ea_b469a979",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 1,
+      "message": "Should we check the result here to determine if we rejected so we can exit early before diving into `authenticator-\u003eMakeCredential()` below?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
