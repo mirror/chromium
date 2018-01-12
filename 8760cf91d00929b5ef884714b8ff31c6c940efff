@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8acc0e_d6e696a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ChromeDownloadDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-12T23:18:35Z",
+      "side": 1,
+      "message": "nit: please move this whole list to a GENERIC_MIME_TYPES array so that it would be easier to add remove later on",
+      "revId": "8760cf91d00929b5ef884714b8ff31c6c940efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
