@@ -4783,9 +4783,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  web::NavigationContextImpl* existingContext =
-      [self contextForPendingNavigationWithURL:webViewURL];
-
   if (!navigationWasCommitted && ![_pendingNavigationInfo cancelled]) {
     // A fast back-forward navigation does not call |didCommitNavigation:|, so
     // signal page change explicitly.
@@ -4794,6 +4791,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         [self isKVOChangePotentialSameDocumentNavigationToURL:webViewURL];
     [self setDocumentURL:webViewURL];
 
+    web::NavigationContextImpl* existingContext =
+        [self contextForPendingNavigationWithURL:webViewURL];
     if (!existingContext) {
       // This URL was not seen before, so register new load request.
       std::unique_ptr<web::NavigationContextImpl> newContext =
@@ -4822,13 +4821,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 
   [self updateSSLStatusForCurrentNavigationItem];
-
-  // WKWebView does not trigger |webView:didFinishNavigation| for back-forward
-  // navigations. So signal did finish navigation explicitly.
-  if (existingContext &&
-      existingContext->GetWKNavigationType() == WKNavigationTypeBackForward) {
-    [self didFinishNavigation:nil];
-  }
+  [self didFinishNavigation:nil];
 }
 
 - (void)webViewTitleDidChange {
