@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97521d33_efa9303d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9919773_b69e5157",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b75c1d_85a1f777",
         "filename": "build/fuchsia/layout_test_proxy/BUILD.gn",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "Is there anything specific to layout-tests about this proxy?  Can\u0027t it be used for any other test that needs simple TCP-port relaying back to the host?\n\nWhat do we actually use for the equivalent function on Android?\n\nYou\u0027re repurposing the internals of RemoteTestServerProxy for this, so that it essentially equivalent except that RTSP has code to launch the actual test server in Python, and this new server doesn\u0027t - could we just modify the RemoteTestServerProxy to support running against an existing server?\n\nFailing that, could we at least put this simple TCP proxy alongside the RTSP, rather than hidden away in build/fuchsia?",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb768eab_226fc3cc",
+        "filename": "build/fuchsia/layout_test_proxy/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "\u003e Is there anything specific to layout-tests about this proxy?  Can\u0027t it be used for any other test that needs simple TCP-port relaying back to the host?\n\nThere is nothing specific to layout tests right now, but it will be used only for layout tests I think. Calling it this way makes the purpose clearer and it gives us freedom to add some layout-specific logic if necessary. Currently it\u0027s not a generic TCP proxy (it always binds to localhost and it only supports the same port number on both ends). I\u0027d prefer keeping it this way, unless there is some other case when a generic TCP proxy will be useful.\n\n\n\u003e What do we actually use for the equivalent function on Android?\n\nADB can forward TCP connections from an Android device connected to the host. Also when running Android tests there is usually no network connection between the device and the host, so this proxy couldn\u0027t replace ADB.\n\n\n\u003e \n\u003e You\u0027re repurposing the internals of RemoteTestServerProxy for this, so that it essentially equivalent except that RTSP has code to launch the actual test server in Python, and this new server doesn\u0027t - could we just modify the RemoteTestServerProxy to support running against an existing server?\n\nRTSP doesn\u0027t launch test server. net::RemoteTestServer is responsible for starting the server and then it instantiates RTSP if necessary (it\u0027s not necessary on Android).\nFor layout tests we will want to run multiple instances of content_shell against the same server with a fixed port on the target machine. That\u0027s the reason the proxy needs to be in a separate process.\nnet_unittests are different because these tests are responsible for starting test server, i.e. each test server instance is used in only one test. There can be multiple testserver instances running in parallel with their individual proxies.\n\n\n\u003e \n\u003e Failing that, could we at least put this simple TCP proxy alongside the RTSP, rather than hidden away in build/fuchsia?\n\nIMO net/test/spawned_test_server would not be the right place to put it because it\u0027s not related to the testserver.py used in net_unittests. I also don\u0027t think this code belongs to //net because it has nothing to do with other code in //net, except reusing some of it.\n\nWDYT about moving it to //testing/fuchsia?",
+      "parentUuid": "d8b75c1d_85a1f777",
       "range": {
         "startLine": 9,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9828be13_94b24d9d",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "084cc96f_6a30eed1",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a61c463_0d749db6",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "What is the use-case for proxying multiple ports?\n\nDo we always just forward them to the same-numbered port on the remote address?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7d2ee0_1b121bd0",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Layout tests need multiple ports. Here is full list of the ports:\nhttps://codesearch.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py?q\u003dandroid.py+webkit\u0026dr\u003dC\u0026l\u003d119\n\nYes port numbers will match on both ends.",
+      "parentUuid": "4a61c463_0d749db6",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "19a9e757_93dc3292",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "072cf0cb_4790f0cc",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d603e75_cb14773a",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5cf2f44a_b0f6179d",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d603e75_cb14773a",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427e46fa_1849e63c",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "Does this actually need to be declared before we create the ports?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc477bb_41e83d43",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Yes. net::TcpSocketProxy creates sockets and then calls Listen(), which wouldn\u0027t work without message loop. There are also DCHECKs to ensure that sockets are created only on IO thread.",
+      "parentUuid": "427e46fa_1849e63c",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "b5a15d18_65c74106",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "The calling process will need to kill it somehow. When the process is started over SSH it will be killed when the SSH connection is closed (it works on Fuchsia after https://fuchsia-review.googlesource.com/c/garnet/+/108272)",
+      "parentUuid": "68e0d190_a8880a79",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d625634_82c4f206",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 4
@@ -197,6 +389,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "nit: This can be CHECK(Initialize()).",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2b3f64_5ecae518",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "It\u0027s best to avoid side-effects inside CHECK() because someone may try changing DCHECK which breaks stuff release build (often creating hard-to-debug bugs, not in this case).",
+      "parentUuid": "9d625634_82c4f206",
       "range": {
         "startLine": 101,
         "startChar": 6,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "41220a80_0db9c033",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "same here",
+      "parentUuid": "9d04337b_afc387d9",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6430cb38_b3fe5132",
         "filename": "net/test/tcp_socket_proxy.cc",
         "patchSetId": 4
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "3896d590_cca45bdd",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6430cb38_b3fe5132",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5731f4f_906623bc",
         "filename": "net/test/tcp_socket_proxy.cc",
         "patchSetId": 4
@@ -266,6 +530,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "Do we want to continue even if these fail, or should this be LOG(FATAL), or CHECK_EQ(result, OK) \u003c\u003c ErrorToString(result)?",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd0609d_649f670e",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "For layout_test_proxy it\u0027s better to handle this case as an error instead of fatal condition because the script that started layout_test_proxy may need to handle this case somehow. At very least reporting this error instead of crashing will make it easier to debug the issue when local_port is not available for some reason (e.g. it will happen if two instances of run-webkit-tests are started for the same target Fuchsia device).",
+      "parentUuid": "a5731f4f_906623bc",
       "range": {
         "startLine": 245,
         "startChar": 0,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "d5a819e5_a2b493f8",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4efc56b_43487eb4",
+      "range": {
+        "startLine": 331,
+        "startChar": 24,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "331fcedb_90ef022b",
         "filename": "net/test/tcp_socket_proxy.cc",
         "patchSetId": 4
@@ -321,6 +633,30 @@
       "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacdf952_67c49a22",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "331fcedb_90ef022b",
+      "range": {
+        "startLine": 348,
+        "startChar": 41,
+        "endLine": 348,
+        "endChar": 56
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "166982f6_30f71d88",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbcab950_7672193c",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c4a3b72_8e6791a4",
         "filename": "net/test/tcp_socket_proxy.h",
         "patchSetId": 4
@@ -358,6 +718,30 @@
       "writtenOn": "2018-01-12T02:39:23Z",
       "side": 1,
       "message": "What is the use-case for have Initialize and Start be separate like this?",
+      "range": {
+        "startLine": 39,
+        "startChar": 58,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d175fcbb_e958164d",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-12T19:18:03Z",
+      "side": 1,
+      "message": "For OCSP tests we need to start HTTPServer and OCSPServer together. HTTPServer needs to know the port number for OCSPServer. Having initialization separate from Start() allows to pre-allocate local port before the remote port is know. This allows to start HTTPServer and OCSPServer at the same time, with a single request to the test server spawner. See https://chromium-review.googlesource.com/#/c/810096/",
+      "parentUuid": "6c4a3b72_8e6791a4",
       "range": {
         "startLine": 39,
         "startChar": 58,
