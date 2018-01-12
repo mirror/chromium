@@ -16,6 +16,24 @@
       "revId": "86e129af0d26acc7aca30e2a2d82eff1ee962d55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374ab2ba_104e02f1",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-12T00:13:59Z",
+      "side": 1,
+      "message": "Right, we don\u0027t need it. Seems like I was a bit confused here.",
+      "parentUuid": "013c3424_7a256497",
+      "revId": "86e129af0d26acc7aca30e2a2d82eff1ee962d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
