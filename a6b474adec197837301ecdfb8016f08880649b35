@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d52c0fa_621caca0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-12T04:33:01Z",
+      "side": 1,
+      "message": "Just use fd.get(), no need for an extra variable to pass to a function.\n\nGeneral rules for when to put a value to a new variable.\n- The value is verbose to get from its original location.\n- The fully qualified name isn\u0027t descriptive (common when using a map .second)\n- Getting the value from its original location is expensive.\n- You use it more than once (unless it\u0027s already short, descriptive and inexpensive)",
+      "revId": "a6b474adec197837301ecdfb8016f08880649b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4543df12_2cdce27c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-12T04:33:01Z",
+      "side": 1,
+      "message": "Since you are not chunking with has_more you need to ensure you actually read all the bytes requested. You have to read length bytes before calling the callback. base::ReadFromFileDescriptor I think does it correctly?",
+      "revId": "a6b474adec197837301ecdfb8016f08880649b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
