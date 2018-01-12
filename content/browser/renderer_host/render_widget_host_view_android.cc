@@ -457,10 +457,11 @@ void RenderWidgetHostViewAndroid::OnContextLost() {
 RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
     RenderWidgetHostImpl* widget_host,
     ContentViewCore* content_view_core)
-    : host_(widget_host),
+    : RenderWidgetHostViewBase(
+          RenderWidgetHostImpl::From(widget_host)->delegate()->IsHidden()),
+      host_(widget_host),
       begin_frame_source_(nullptr),
       outstanding_begin_frame_requests_(0),
-      is_showing_(!widget_host->is_hidden()),
       is_window_visible_(true),
       is_window_activity_started_(true),
       is_in_vr_(false),
@@ -649,26 +650,26 @@ bool RenderWidgetHostViewAndroid::IsSurfaceAvailableForCopy() const {
 }
 
 void RenderWidgetHostViewAndroid::Show() {
-  if (is_showing_)
+  if (is_visible_in_parent_)
     return;
 
-  is_showing_ = true;
-  ShowInternal();
+  is_visible_in_parent_ = true;
+  WasShown();
 }
 
 void RenderWidgetHostViewAndroid::Hide() {
-  if (!is_showing_)
+  if (!is_visible_in_parent_)
     return;
 
-  is_showing_ = false;
-  HideInternal();
+  is_visible_in_parent_ = false;
+  WasHidden();
 }
 
 bool RenderWidgetHostViewAndroid::IsShowing() {
   // ContentViewCore represents the native side of the Java
   // ContentViewCore.  It being NULL means that it is not attached
   // to the View system yet, so we treat this RWHVA as hidden.
-  return is_showing_ && content_view_core_;
+  return is_visible_in_parent_ && content_view_core_;
 }
 
 void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_px,
@@ -1540,8 +1541,8 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   EvictFrameIfNecessary();
 }
 
-void RenderWidgetHostViewAndroid::ShowInternal() {
-  bool show = is_showing_ && is_window_activity_started_ && is_window_visible_;
+void RenderWidgetHostViewAndroid::WasShown() {
+  bool show = IsShowing() && is_window_activity_started_ && is_window_visible_;
   if (!show)
     return;
 
@@ -1563,8 +1564,9 @@ void RenderWidgetHostViewAndroid::ShowInternal() {
   }
 }
 
-void RenderWidgetHostViewAndroid::HideInternal() {
-  DCHECK(!is_showing_ || !is_window_activity_started_ || !is_window_visible_)
+void RenderWidgetHostViewAndroid::WasHidden() {
+  DCHECK(!is_visible_in_parent_ || !is_window_activity_started_ ||
+         !is_window_visible_)
       << "Hide called when the widget should be shown.";
 
   // Only preserve the frontbuffer if the activity was stopped while the
@@ -1575,7 +1577,7 @@ void RenderWidgetHostViewAndroid::HideInternal() {
   // Only stop observing the root window if the widget has been explicitly
   // hidden and the frontbuffer is being cleared. This allows window visibility
   // notifications to eventually clear the frontbuffer.
-  bool stop_observing_root_window = !is_showing_ && hide_frontbuffer;
+  bool stop_observing_root_window = !is_visible_in_parent_ && hide_frontbuffer;
 
   if (hide_frontbuffer) {
     view_.GetLayer()->SetHideLayerAndSubtree(true);
@@ -1583,7 +1585,7 @@ void RenderWidgetHostViewAndroid::HideInternal() {
   }
 
   if (stop_observing_root_window) {
-    DCHECK(!is_showing_);
+    DCHECK(!is_visible_in_parent_);
     StopObservingRootWindow();
   }
 
@@ -1638,7 +1640,7 @@ void RenderWidgetHostViewAndroid::ClearBeginFrameRequest(
 void RenderWidgetHostViewAndroid::StartObservingRootWindow() {
   DCHECK(content_view_core_);
   DCHECK(view_.GetWindowAndroid());
-  DCHECK(is_showing_);
+  DCHECK(is_visible_in_parent_);
   if (observing_root_window_)
     return;
 
@@ -2054,7 +2056,7 @@ void RenderWidgetHostViewAndroid::DidOverscroll(
   if (sync_compositor_)
     sync_compositor_->DidOverscroll(params);
 
-  if (!content_view_core_ || !is_showing_)
+  if (!content_view_core_ || !is_visible_in_parent_)
     return;
 
   if (overscroll_controller_)
@@ -2114,7 +2116,7 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
     return;
   }
 
-  if (is_showing_ && view_.GetWindowAndroid())
+  if (is_visible_in_parent_ && view_.GetWindowAndroid())
     StartObservingRootWindow();
 
   if (resize)
@@ -2202,16 +2204,16 @@ void RenderWidgetHostViewAndroid::OnRootWindowVisibilityChanged(bool visible) {
   is_window_visible_ = visible;
 
   if (visible)
-    ShowInternal();
+    WasShown();
   else
-    HideInternal();
+    WasHidden();
 }
 
 void RenderWidgetHostViewAndroid::OnAttachedToWindow() {
   if (!content_view_core_)
     return;
 
-  if (is_showing_)
+  if (is_visible_in_parent_)
     StartObservingRootWindow();
   DCHECK(view_.GetWindowAndroid());
   if (view_.GetWindowAndroid()->GetCompositor())
@@ -2309,14 +2311,14 @@ void RenderWidgetHostViewAndroid::OnActivityStopped() {
   TRACE_EVENT0("browser", "RenderWidgetHostViewAndroid::OnActivityStopped");
   DCHECK(observing_root_window_);
   is_window_activity_started_ = false;
-  HideInternal();
+  WasHidden();
 }
 
 void RenderWidgetHostViewAndroid::OnActivityStarted() {
   TRACE_EVENT0("browser", "RenderWidgetHostViewAndroid::OnActivityStarted");
   DCHECK(observing_root_window_);
   is_window_activity_started_ = true;
-  ShowInternal();
+  WasShown();
 }
 
 void RenderWidgetHostViewAndroid::OnLostResources() {

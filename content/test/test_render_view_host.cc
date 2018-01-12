@@ -61,9 +61,9 @@ void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
 }
 
 TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
-    : rwh_(RenderWidgetHostImpl::From(rwh)),
-      is_showing_(false),
-      is_occluded_(false),
+    : RenderWidgetHostViewBase(
+          RenderWidgetHostImpl::From(rwh)->delegate()->IsHidden()),
+      rwh_(RenderWidgetHostImpl::From(rwh)),
       did_swap_compositor_frame_(false),
       background_color_(SK_ColorWHITE) {
 #if defined(OS_ANDROID)
@@ -122,24 +122,18 @@ bool TestRenderWidgetHostView::HasFocus() const {
 }
 
 void TestRenderWidgetHostView::Show() {
-  is_showing_ = true;
-  is_occluded_ = false;
+  is_visible_in_parent_ = true;
+  if (IsShowing())
+    WasShown();
 }
 
 void TestRenderWidgetHostView::Hide() {
-  is_showing_ = false;
+  is_visible_in_parent_ = false;
+  WasHidden();
 }
 
 bool TestRenderWidgetHostView::IsShowing() {
-  return is_showing_;
-}
-
-void TestRenderWidgetHostView::WasUnOccluded() {
-  is_occluded_ = false;
-}
-
-void TestRenderWidgetHostView::WasOccluded() {
-  is_occluded_ = true;
+  return is_visible_in_parent_ && !parent_is_hidden();
 }
 
 void TestRenderWidgetHostView::RenderProcessGone(base::TerminationStatus status,
@@ -234,6 +228,14 @@ void TestRenderWidgetHostView::OnFirstSurfaceActivation(
 
 void TestRenderWidgetHostView::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
+}
+
+void TestRenderWidgetHostView::WasShown() {
+  was_shown_ = true;
+}
+
+void TestRenderWidgetHostView::WasHidden() {
+  was_shown_ = false;
 }
 
 TestRenderViewHost::TestRenderViewHost(

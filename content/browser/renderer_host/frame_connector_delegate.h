@@ -168,9 +168,9 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual bool IsThrottled() const;
   virtual bool IsSubtreeThrottled() const;
 
-  // Called by RenderWidgetHostViewChildFrame to update the visibility of any
-  // nested child RWHVCFs inside it.
-  virtual void SetVisibilityForChildViews(bool visible) const {}
+  // Called by RenderWidgetHostViewChildFrame to update the parent visibility of
+  // any nested child RWHVCFs inside it.
+  virtual void SetParentIsHiddenForChildViews(bool parent_is_hidden) const {}
 
   // Called to resize the child renderer. |frame_rect| is in pixels if
   // zoom-for-dsf is enabled, and in DIP if not.
