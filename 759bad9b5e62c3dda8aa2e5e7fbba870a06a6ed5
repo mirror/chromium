@@ -262,6 +262,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00643b11_b0a293b5",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T19:50:29Z",
+      "side": 0,
+      "message": "I personally don\u0027t mind temporarily adding another dispatch site of \u0027beforeinput\u0027. It\u0027s already scattered around.\n\nHowever, is it time to resume the \u0027beforeinput\u0027 unification project: crbug.com/670035?",
+      "parentUuid": "3c47178f_4d4931e3",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
