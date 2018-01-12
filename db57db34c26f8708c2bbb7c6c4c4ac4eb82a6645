@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d29ca03_c216b934",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-01-12T18:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18e0d01_329490b1",
+      "range": {
+        "startLine": 26,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "db57db34c26f8708c2bbb7c6c4c4ac4eb82a6645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa9e82a_b7d0f152",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d4dbd033_1c054f9a",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-01-12T18:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa9e82a_b7d0f152",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "db57db34c26f8708c2bbb7c6c4c4ac4eb82a6645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "774a4799_3147af63",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-12T16:55:07Z",
       "side": 1,
       "message": "Move this with BubbleIconView overrides below.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "db57db34c26f8708c2bbb7c6c4c4ac4eb82a6645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf65fd0_df3def3a",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2018-01-12T18:47:07Z",
+      "side": 1,
+      "message": "I need to keep it public or stuff in c/b/ui/views/location_bar/ wont be able to call it.",
+      "parentUuid": "774a4799_3147af63",
       "range": {
         "startLine": 24,
         "startChar": 3,
