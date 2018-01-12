@@ -22,6 +22,30 @@
       "revId": "2a7938b943e9ee3b4527d3eb24937551c9e85d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d458b2_5ed641ff",
+        "filename": "content/shell/test_runner/text_input_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T00:49:23Z",
+      "side": 1,
+      "message": "I’m not sure; I’m just copying what I see most of the other code in this file doing (FirstRectForCharacterRange() is the only method using FocusedFrame()).",
+      "parentUuid": "edcb518a_e62a730d",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 263,
+        "endChar": 40
+      },
+      "revId": "2a7938b943e9ee3b4527d3eb24937551c9e85d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
