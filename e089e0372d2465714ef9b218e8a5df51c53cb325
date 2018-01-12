@@ -22,6 +22,30 @@
       "revId": "e089e0372d2465714ef9b218e8a5df51c53cb325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c637d09a_dc9ebed7",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-12T23:31:23Z",
+      "side": 1,
+      "message": "MediaPlayerRenderer\u0027s initialization is triggered by the MediaPlayerRendererClient\u0027s (which lives in the renderer process and is owned by WMPI), so there might be a window during which the MPR is fully created, but not initialized. As part of initialization, we also sometimes throttle the rate of creation of MediaPlayerBridges, adding an artificial delay to mitigate attempts to DOS the Android MediaServer.\n\nThere is therefore a time window where the WebContent\u0027s muting state might change, but a perfectly valid MPR is just waiting for its MediaPlayerBridge to be created.\n\nI need to look into what the best solution for \"making sure that we pick up the appropriate mute state is after we do initialize\".",
+      "parentUuid": "8834f7eb_ff80986a",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "e089e0372d2465714ef9b218e8a5df51c53cb325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
