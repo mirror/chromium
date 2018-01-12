@@ -25,6 +25,7 @@ gfx::ImageSkia* GetPrerenderIcon() {
   if (!ui::ResourceBundle::HasSharedInstance())
     return nullptr;
 
+
   g_prerender_icon =
       ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(IDR_PRERENDER);
   return g_prerender_icon;
