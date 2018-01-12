@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58cae119_ce9b71db",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-12T23:45:09Z",
+      "side": 1,
+      "message": "Just noticed this comment is out-of-date, copied from perf_device_trigger.py. I\u0027ll update it before CQ\u0027ing.",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
