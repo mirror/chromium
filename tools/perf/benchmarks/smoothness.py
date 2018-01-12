@@ -453,3 +453,18 @@ class SmoothnessToughSchedulingCases(_Smoothness):
     # has been named this way for long time, we keep the name as-is to avoid
     # data migration.
     return 'scheduler.tough_scheduling_cases'
+
+
+@benchmark.Owner(emails=['enne@chromium.org'])
+class SmoothnessOopRasterizationTop25(_Smoothness):
+  """Measures rendering statistics for the top 25 with oop rasterization.
+  """
+  tag = 'oop_rasterization'
+  page_set = page_sets.Top25SmoothPageSet
+
+  def SetExtraBrowserOptions(self, options):
+    silk_flags.CustomizeBrowserOptionsForOopRasterization(options)
+
+  @classmethod
+  def Name(cls):
+    return 'smoothness.oop_rasterization.top_25_smooth'

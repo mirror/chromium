@@ -144,3 +144,19 @@ class ThreadTimesToughScrollingCases(_ThreadTimes):
   @classmethod
   def Name(cls):
     return 'thread_times.tough_scrolling_cases'
+
+
+@benchmark.Owner(emails=['enne@chromium.org'])
+class ThreadTimesOopRasterKeyMobile(_ThreadTimes):
+  """Measure timeline metrics for key mobile pages while using out of process
+  raster."""
+  tag = 'oop_rasterization'
+  page_set = page_sets.KeyMobileSitesSmoothPageSet
+
+  def SetExtraBrowserOptions(self, options):
+    super(ThreadTimesOopRasterKeyMobile, self).SetExtraBrowserOptions(options)
+    silk_flags.CustomizeBrowserOptionsForOopRasterization(options)
+
+  @classmethod
+  def Name(cls):
+    return 'thread_times.oop_rasterization.key_mobile'
