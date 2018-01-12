@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c2cf1a1_6805b885",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "I would use \"Duplicate display id was found\". thx.",
+      "parentUuid": "cc45e416_48bfb249",
+      "range": {
+        "startLine": 553,
+        "startChar": 5,
+        "endLine": 553,
+        "endChar": 39
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b9bd44b_667095a7",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4912c2b3_ea500044",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9bd44b_667095a7",
+      "range": {
+        "startLine": 902,
+        "startChar": 29,
+        "endLine": 902,
+        "endChar": 30
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67434349_5f534a9b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc019f2_76493afb",
+      "range": {
+        "startLine": 1293,
+        "startChar": 2,
+        "endLine": 1293,
+        "endChar": 6
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6642daa0_f555a4e3",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 21
@@ -91,6 +163,30 @@
       "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4049c1_46054aee",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6642daa0_f555a4e3",
+      "range": {
+        "startLine": 411,
+        "startChar": 21,
+        "endLine": 411,
+        "endChar": 43
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7f864216_555a7415",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30bf7940_0eb86828",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 76
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08b6a14_2040d1c1",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 21
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-12T17:49:17Z",
       "side": 1,
       "message": "I think this should go after \u0027class\u0027",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "40ec12a21e52ff38606a639ba243159e9e193dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42d891e_80b5cabb",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-12T18:29:16Z",
+      "side": 1,
+      "message": "With the export here of after \u0027class\u0027, the local compiler does not report error but trybot fails. I think I could try to remove it here.",
+      "parentUuid": "d08b6a14_2040d1c1",
       "range": {
         "startLine": 113,
         "startChar": 5,
