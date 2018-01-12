@@ -421,7 +421,6 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
     return display_id_list;
   }
 
-  CHECK_LE(2u, active_display_list_.size());
   return display_id_list;
 }
 
