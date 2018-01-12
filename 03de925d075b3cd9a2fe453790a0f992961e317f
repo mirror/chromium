@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37eaa08a_5f352b89",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-12T17:48:12Z",
+      "side": 1,
+      "message": "You can just use:\n\nhttp://www.cplusplus.com/reference/random/uniform_real_distribution/",
+      "range": {
+        "startLine": 837,
+        "startChar": 7,
+        "endLine": 837,
+        "endChar": 35
+      },
+      "revId": "03de925d075b3cd9a2fe453790a0f992961e317f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
