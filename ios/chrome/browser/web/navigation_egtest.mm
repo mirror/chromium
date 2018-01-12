@@ -320,6 +320,26 @@ std::unique_ptr<net::test_server::HttpResponse> WindowLocationHashHandlers(
   }
 }
 
+// Test back-and-forward navigation from and to NTP.
+- (void)testHistoryBackAndForwardAroundNTP {
+  GREYAssertTrue(self.testServer->Start(), @"Test server failed to start.");
+  const GURL testURL = self.testServer->GetURL(kSimpleFileBasedTestURL);
+  [ChromeEarlGrey loadURL:testURL];
+  [ChromeEarlGrey waitForWebViewContainingText:"pony"];
+
+  // Tap the back button and verify NTP is loaded.
+  [[EarlGrey selectElementWithMatcher:BackButton()] performAction:grey_tap()];
+  [ChromeEarlGrey waitForPageToFinishLoading];
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::
+                                          ContentSuggestionCollectionView()]
+      assertWithMatcher:grey_notNil()];
+
+  // Tap the forward button and verify test page is loaded.
+  [[EarlGrey selectElementWithMatcher:ForwardButton()]
+      performAction:grey_tap()];
+  [ChromeEarlGrey waitForWebViewContainingText:"pony"];
+}
+
 // Tests navigating forward via window.history.forward() to an error page.
 - (void)testHistoryForwardToErrorPage {
 // TODO(crbug.com/694662): This test relies on external URL because of the bug.
