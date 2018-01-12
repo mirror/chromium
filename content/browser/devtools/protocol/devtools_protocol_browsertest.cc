@@ -2515,12 +2515,39 @@ class DevToolsDownloadContentTest : public DevToolsProtocolTest {
 
   void SetDownloadBehavior(const std::string& behavior,
                            const std::string& download_path) {
+    SetDownloadBehavior(behavior, download_path, 0);
+  }
+
+  void SetDownloadBehavior(const std::string& behavior,
+                           const std::string& download_path,
+                           int max_size) {
     std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
     params->SetString("behavior", behavior);
     params->SetString("downloadPath", download_path);
+    if (max_size)
+      params->SetInteger("max_size", max_size);
     SendCommand("Page.setDownloadBehavior", std::move(params));
 
     EXPECT_GE(result_ids_.size(), 1u);
+  }
+
+  void ReadStreamToString(const std::string& stream, std::string* contents) {
+    std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+    params->SetString("handle", stream);
+    bool eof;
+    do {
+      base::DictionaryValue* reply = SendCommand("IO.read", std::move(params));
+      std::string data;
+      reply->GetString("data", &data);
+      reply->GetBoolean("eof", &eof);
+
+      if (data.size()) {
+        base::Base64Decode(data, &data);
+        *contents += data;
+      }
+    } while (!eof);
+
+    EXPECT_GE(contents->size(), 1u);
   }
 
   // Create a DownloadTestObserverTerminal that will wait for the
@@ -2780,5 +2807,138 @@ IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, MultiDownload) {
   ASSERT_TRUE(base::ContentsEqual(
       file2, GetTestFilePath("download", "download-test.lib")));
 }
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, StreamSingleDownload) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download");
+
+  GURL url(embedded_test_server()->GetURL("/download/download-test.lib"));
+  shell()->LoadURL(url);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  std::string test_contents;
+  base::ReadFileToString(GetTestFilePath("download", "download-test.lib"),
+                         &test_contents);
+  ASSERT_EQ(download_contents, test_contents);
+}
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadSmallMaxSize) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(embedded_test_server()->GetURL("/download/download-test.lib"));
+  shell()->LoadURL(url);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  std::string test_contents;
+  base::ReadFileToString(GetTestFilePath("download", "download-test.lib"),
+                         &test_contents);
+  ASSERT_EQ(download_contents, test_contents);
+}
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadCancelled) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(embedded_test_server()->GetURL("/download/download-test.lib"));
+  shell()->LoadURL(url);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::unique_ptr<base::DictionaryValue> read_params(
+      new base::DictionaryValue());
+  read_params->SetString("handle", stream);
+  SendCommand("IO.read", std::move(read_params));
+
+  std::unique_ptr<base::DictionaryValue> close_params(
+      new base::DictionaryValue());
+  close_params->SetString("handle", stream);
+  SendCommand("IO.close", std::move(close_params), true);
+
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+}
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadShutdown) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(embedded_test_server()->GetURL("/download/download-test.lib"));
+  shell()->LoadURL(url);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+}
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, StreamDownloadAndAllow) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  SetupEnsureNoPendingDownloads();
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download");
+
+  GURL url(embedded_test_server()->GetURL("/download/download-test.lib"));
+  shell()->LoadURL(url);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  std::string test_contents;
+  base::ReadFileToString(GetTestFilePath("download", "download-test.lib"),
+                         &test_contents);
+  ASSERT_EQ(download_contents, test_contents);
+
+  SetDownloadBehavior("allow", "download");
+
+  DownloadItem* download = StartDownloadAndReturnItem(
+      shell(),
+      GURL(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib")));
+  ASSERT_EQ(DownloadItem::IN_PROGRESS, download->GetState());
+
+  WaitForCompletion(download);
+  ASSERT_EQ(DownloadItem::COMPLETE, download->GetState());
+}
+
 #endif  // !defined(ANDROID)
 }  // namespace content
