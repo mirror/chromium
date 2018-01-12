@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654488c4_f8d83d99",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-12T20:52:35Z",
+      "side": 1,
+      "message": "nit: I think \u0027\u0026\u003d\u0027 is expected to work correctly for \u0027bool\u0027 but not for \u0027BOOL\u0027.",
+      "range": {
+        "startLine": 212,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 14
+      },
+      "revId": "9878c6d7cbd22356510f906165830a1f34ca4bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
