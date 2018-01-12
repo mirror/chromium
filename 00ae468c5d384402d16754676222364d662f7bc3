@@ -16,6 +16,24 @@
       "revId": "00ae468c5d384402d16754676222364d662f7bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e004bc_0e57b989",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T15:13:12Z",
+      "side": 1,
+      "message": "+1 (though maybe this should be conceptualized as a \"blink_symbol_level\" or similar, with remove_webcore_debug_symbols remaining as a legacy arg?)\n\nIt seems to me that if someone has asked for no Blink symbols because they aren\u0027t working on Blink or looking at its stack traces, then we should respect that.",
+      "parentUuid": "a47904f4_3fe4337e",
+      "revId": "00ae468c5d384402d16754676222364d662f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
