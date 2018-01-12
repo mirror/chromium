@@ -211,6 +211,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531d1b55_47daee94",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T19:06:47Z",
+      "side": 1,
+      "message": "Sorry for not being clear:  My CL does not split them.  It just splits the groups, like we do for SOCKS (Most because it\u0027s easier, and I don\u0027t have time to do more)",
+      "parentUuid": "fb6bc95e_b04caf50",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
