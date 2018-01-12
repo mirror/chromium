@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9157ef68_45193ed4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-12T10:49:58Z",
+      "side": 1,
+      "message": "This now always returns true (again), so bool -\u003e void (which prompts additional code-removal, and forcing_layout_parent_view_ is now also dead I believe.)",
+      "range": {
+        "startLine": 1017,
+        "startChar": 0,
+        "endLine": 1017,
+        "endChar": 4
+      },
+      "revId": "074e49aa1bc76570b28e3b7880f77359f0558400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae19881_3410eccf",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3448,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-12T10:49:58Z",
+      "side": 1,
+      "message": "For less boilerplate:\n\nForAllChildLocalFrameViews([](LocalFrameView\u0026 view) {\n  if (view.EmbeddedReplacedContent())\n    view.GetLayoutView()-\u003eGetDocument().UpdateStyleAndLayoutTree();\n});",
+      "range": {
+        "startLine": 3440,
+        "startChar": 2,
+        "endLine": 3448,
+        "endChar": 3
+      },
+      "revId": "074e49aa1bc76570b28e3b7880f77359f0558400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
