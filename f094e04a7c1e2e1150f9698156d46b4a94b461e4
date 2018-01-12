@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "bddd3000_27375ce6",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-12T01:13:38Z",
+      "side": 1,
+      "message": "All I can say is that I, as an example reader, am unable to understand from the comment and method name what it gives me, and I would have to read the implementation and dig up context.\n\nBut I may indeed be having too little context/background knowledge about how screen orientation is typically handled, and maybe the terms you are using will be understood by other devs.",
+      "parentUuid": "ad444717_cb5a3f4b",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d172295_6c7e15f5",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 3

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "57eb0a2a_f2597a78",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-12T01:13:38Z",
+      "side": 1,
+      "message": "BTW, this is something that would be caught and verified by unit test, and it demonstrates that there is enough complexity here to make them useful/needed.",
+      "parentUuid": "b5a0d489_bc2736a8",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d811d6_7a5608d0",
         "filename": "media/capture/video/win/video_capture_device_utils_win.h",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "At this stage, I thought about it and don\u0027t see any advantage and necessity to have a class. (only for unittests? Not worthy I suppose.) \nAs to unittest, it\u0027s not so necessary so far. The logic itself is simple. The result is depend on the system API returns and can be only verified by visual check. Mocking won\u0027t help as I can imagine.",
       "parentUuid": "06d811d6_7a5608d0",
+      "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e5ac47_89a7a36c",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-12T01:13:38Z",
+      "side": 1,
+      "message": "The idea of making this a class and abstracting the Windows API calls is \nspecifically for allowing the test to simulate the different cases of what the \nWindows APIs might return.\n\nHere is an example for how this may look:\n\nclass WindowsCameraAndDisplayRotationAPIs {\n public:\n  virtual ~WindowsCameraAndDisplayRotationAPIs() {}\n  virtual bool EnumDisplaySettings(...) \u003d 0;\n  virtual bool GetAutoRotationState(...) \u003d 0;\n  ...\n};\n\nclass WindowsCameraAndDisplayRotationProvider {\n public:\n  WindowsCameraAndDisplayRotationProvider(\n      std::unique_ptr\u003cWindowsCameraAndDisplayRotationAPIs\u003e windows_apis)\n    : windows_apis_(std::move(windows_apis)) {}\n\n  int GetCameraRotation();\n\n private: \n  bool IsAutoRotationEnabled();\n  bool HasActiveInternalDisplayDevice(DISPLAY_DEVICE* internal_display_device);\n  HRESULT CheckPathInfoForInternal(const PCWSTR device_name);\n\n  std::unique_ptr\u003cWindowsCameraAndDisplayRotationAPIs\u003e windows_apis_;\n};\n\nclass MockWindowsCameraAndDisplayRotationAPIs : public WindowsCameraAndDisplayRotationAPIs {\n public:\n  MOCK_METHOD... \n  MOCK_METHOD...\n};\n\nclass WindowsCameraAndDisplayRotationAPIs : public WindowsCameraAndDisplayRotationAPIs {\n  bool EnumDisplaySettings(...) override {\n    // TODO: call actual Windows API\n  }\n\n  bool GetAutoRotationState(...) override {\n    // TODO: call actual Windows API\n  } \n};\n\nIn the code, you are pointing out several special cases for external cameras \nand displays affect the rotation results. I think each one of those should \nget covered by a test case demonstrating what we want the rotation value to be \nand verifying that our implementation gives that value.",
+      "parentUuid": "5bf7b96a_8178dc31",
       "revId": "4e4c3a9ddcbfc542eeeaf0d5dc68327eea5df3f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

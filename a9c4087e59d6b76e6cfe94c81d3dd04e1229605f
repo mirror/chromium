@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f330f5e_a69f9ce9",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-12T01:13:38Z",
+      "side": 1,
+      "message": "To me, it looks like this comment describes why we need to call HasActiveInternalDisplayDevice() and consider its result. Therefore, this comment should probably go to the invocation instead of here.",
+      "revId": "a9c4087e59d6b76e6cfe94c81d3dd04e1229605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
