@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6abb69_6e8bb885",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T15:28:47Z",
+      "side": 1,
+      "message": "Actually let\u0027s make this less order-dependent by putting javadoc on each of them. And we could be a bit clearer about the values they mirror:\n\n/**\n * Separator used to separate the notification origin from additional data such as the\n * developer specified tag.\n * \n * Its value MUST match the value of kSeparator in \n * content/browser/notifications/notification_id_generator.cc\n */\nstatic final String NOTIFICATION_TAG_SEPARATOR \u003d \"#\";\n\n/**\n * Prefix used to identify tags originating from persistent notifications.\n * \n * Its value MUST match kPersistentNotificationPrefix in \n * content/browser/notifications/notification_id_generator.cc\n */\nstatic final String PERSISTENT_NOTIFICATION_TAG_PREFIX \u003d \"p\";",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 95
+      },
+      "revId": "b5e8ef7d90cd50dd0051eb4ca732b876a55b03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93671e5b_03f84083",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T15:28:47Z",
+      "side": 1,
+      "message": "if an \u0027if\u0027 statement spans \u003e 1 line in java it needs braces according to our style guide:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/java/java.md#curly-braces",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 23
+      },
+      "revId": "b5e8ef7d90cd50dd0051eb4ca732b876a55b03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

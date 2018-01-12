@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "4c9cb3a6_71e38475",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T15:28:47Z",
+      "side": 1,
+      "message": "Sounds good. Thanks for updating the TODO :)",
+      "parentUuid": "e4cf6cb5_fb6f80db",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 80
+      },
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ab0f3f8_adc4ab77",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
         "patchSetId": 12
@@ -265,6 +289,24 @@
       "side": 1,
       "message": "Thanks, I\u0027ll include the link to the bug.\nFWIW, I actually prefer TODO(bug-reference) to TODO(username). We have seen in this review itself that a TODO(miguel) was confusing and we don\u0027t know why it was there. Had there been a bug, there would\u0027ve been more of a context, and bugs also get more easily assigned to someone other than whoever wrote up the TODO.",
       "parentUuid": "4ab0f3f8_adc4ab77",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd5aa5f_cac8e8fe",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-12T15:28:47Z",
+      "side": 1,
+      "message": "Well said! Seems like there\u0027s agreement on the java@chromium.org thread too: \n\nhttps://groups.google.com/a/chromium.org/d/msg/java/_Qz571x0_dE/LOBFCWDkAQAJ",
+      "parentUuid": "b51220db_c33ccdab",
       "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
