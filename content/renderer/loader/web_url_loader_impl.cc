@@ -928,12 +928,6 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
   int64_t total_transfer_size = status.encoded_data_length;
   int64_t encoded_body_size = status.encoded_body_length;
 
-  if (stream_override_ && stream_override_->stream_url.is_empty()) {
-    // TODO(kinuko|scottmg|jam): This is wrong. https://crbug.com/705744.
-    total_transfer_size = stream_override_->total_transferred;
-    encoded_body_size = stream_override_->total_transferred;
-  }
-
   if (ftp_listing_delegate_) {
     ftp_listing_delegate_->OnCompletedRequest();
     ftp_listing_delegate_.reset(nullptr);
