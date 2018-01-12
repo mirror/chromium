@@ -104,6 +104,24 @@
       "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "319feb90_3070ed1b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T18:07:08Z",
+      "side": 1,
+      "message": "Hmm... I think post message (or even synchronously scripting) this would actually be good enough and be a little clearer. I would recommend that personally.",
+      "parentUuid": "6828c8c1_769a278c",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
