@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18f3bd24_1d42e48a",
+        "filename": "ash/system/power/power_off_menu_screen_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b795055a_3bdba17b",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43037705_7cd94a73",
         "filename": "ash/system/power/power_off_menu_screen_view.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b32f188_1bc80b0d",
+        "filename": "ash/system/power/power_off_menu_screen_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43037705_7cd94a73",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "19c67230_4df8011a",
+        "filename": "ash/system/power/power_off_menu_screen_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05513926_9b0a39f1",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb24792_e7828b07",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-11T15:35:51Z",
       "side": 1,
       "message": "i am thinking you only need to DismissMenu when ScreenState is not ScreenState::ON?\n\nTests might need to update brightness change for backlights forced off change and suspend imminent.",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a024980_adbd0001",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "I think it may doesn\u0027t matter whether to check the |screen_state| here. Since we will check the menu state in DismissMenu.",
+      "parentUuid": "4cb24792_e7828b07",
       "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "da659947_9cd57c49",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2914f0b_d93fc0ee",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "340a6aaf_32ebc508",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dedb2d11_7ae2a882",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "340a6aaf_32ebc508",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78de6160_2092c67f",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-11T15:35:51Z",
       "side": 1,
       "message": "might be good to check whether |fullscreen_widget_| is created",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a6fa9a_7ddfa587",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "If press quickly the first time. I think |fullscreen_widget_| will not be created?\nLong press the button will show the menu and IsMenuOpened() already means the |fullscreen_widget_| is created.",
+      "parentUuid": "78de6160_2092c67f",
       "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

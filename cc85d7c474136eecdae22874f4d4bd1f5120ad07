@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "05d8fcc3_cb1bae64",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1c6fe1_bfc112c4",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04faa4d3_999da39a",
         "filename": "ash/system/power/power_off_menu_item_view.cc",
         "patchSetId": 2
@@ -407,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "1dec67f2_c7193f7b",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6803305_67cbb064",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a3007f_d5b82816",
         "filename": "ash/system/power/power_off_menu_screen_view.cc",
         "patchSetId": 2
@@ -457,6 +493,24 @@
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618ceca9_20c1fc76",
+        "filename": "ash/system/power/power_off_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-12T02:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7234517d_621ee725",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
