@@ -636,6 +636,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   ImageManager* GetImageManagerForTest() override {
     return group_->image_manager();
   }
+  ServiceTransferCache* GetTransferCacheForTest() override {
+    return transfer_cache_.get();
+  }
 
   bool HasPendingQueries() const override;
   void ProcessPendingQueries(bool did_finish) override;
@@ -2426,6 +2429,14 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   std::unique_ptr<VertexArrayManager> vertex_array_manager_;
 
+  // ServiceTransferCache uses Ids based on transfer buffer shm_id+offset, which
+  // are guaranteed to be unique within the scope of the TransferBufferManager
+  // which generates them. Because of this, |transfer_cache_| must have a
+  // narrower scope than |transfer_buffer_manager_|.
+  // In the future, we could add necessary scoping Id(s) to allow a single
+  // ServiceTransferCache to be shared among multiple contexts / channels.
+  std::unique_ptr<ServiceTransferCache> transfer_cache_;
+
   // The format of the back buffer_
   GLenum back_buffer_color_format_;
   bool back_buffer_has_depth_;
@@ -3188,6 +3199,7 @@ GLES2DecoderImpl::GLES2DecoderImpl(
       offscreen_single_buffer_(false),
       offscreen_saved_color_format_(0),
       offscreen_buffer_should_have_alpha_(false),
+      transfer_cache_(new ServiceTransferCache),
       back_buffer_color_format_(0),
       back_buffer_has_depth_(false),
       back_buffer_has_stencil_(false),
@@ -5006,6 +5018,8 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
 
     if (group_ && group_->texture_manager())
       group_->texture_manager()->MarkContextLost();
+    if (gr_context_)
+      gr_context_->abandonContext();
   }
   deschedule_until_finished_fences_.clear();
 
@@ -5041,6 +5055,7 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   copy_texture_CHROMIUM_.reset();
   srgb_converter_.reset();
   clear_framebuffer_blit_.reset();
+  transfer_cache_.reset();
 
   if (framebuffer_manager_.get()) {
     framebuffer_manager_->Destroy(have_context);
@@ -20442,7 +20457,7 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
   cc::PaintOp::DeserializeOptions options;
-  TransferCacheDeserializeHelperImpl impl(GetContextGroup()->transfer_cache());
+  TransferCacheDeserializeHelperImpl impl(transfer_cache_.get());
   options.transfer_cache = &impl;
 
   int op_idx = 0;
@@ -20545,7 +20560,7 @@ void GLES2DecoderImpl::DoCreateTransferCacheEntryINTERNAL(
   ServiceDiscardableHandle handle(std::move(handle_buffer), handle_shm_offset,
                                   handle_shm_id);
 
-  if (!GetContextGroup()->transfer_cache()->CreateLockedEntry(
+  if (!transfer_cache_->CreateLockedEntry(
           entry_type, entry_id, handle, gr_context_.get(),
           base::make_span(data_memory, data_size))) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glCreateTransferCacheEntryINTERNAL",
@@ -20565,7 +20580,7 @@ void GLES2DecoderImpl::DoUnlockTransferCacheEntryINTERNAL(GLuint raw_entry_type,
     return;
   }
 
-  if (!GetContextGroup()->transfer_cache()->UnlockEntry(entry_type, entry_id)) {
+  if (!transfer_cache_->UnlockEntry(entry_type, entry_id)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glUnlockTransferCacheEntryINTERNAL",
                        "Attempt to unlock an invalid ID");
   }
@@ -20582,7 +20597,7 @@ void GLES2DecoderImpl::DoDeleteTransferCacheEntryINTERNAL(GLuint raw_entry_type,
     return;
   }
 
-  if (!GetContextGroup()->transfer_cache()->DeleteEntry(entry_type, entry_id)) {
+  if (!transfer_cache_->DeleteEntry(entry_type, entry_id)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glDeleteTransferCacheEntryINTERNAL",
                        "Attempt to delete an invalid ID");
   }
