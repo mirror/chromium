@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6f1004_a0174445",
+        "filename": "chrome/browser/resources/print_preview/new/app.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "No need to programmatically add the listener in JS. Let\u0027s add it here declaratively.\n\non-save-sticky-settings\u003d\"[[onSaveStickySettings_]]\"",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4715753a_19147b61",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "See related comment in HTML file.",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5797d842_d99e8043",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "print-preview-model already has an ID. Let\u0027s use that instead, like\n\nthis.$.model",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 34
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba49e6d4_070dad8e",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "s/Event/CustomEvent",
+      "range": {
+        "startLine": 152,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 19
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554a3ec_0f1fd241",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "!print_preview.RecentDestination",
+      "range": {
+        "startLine": 166,
+        "startChar": 22,
+        "endLine": 166,
+        "endChar": 53
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a357c7_a31d9ac4",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "NUM_DESTINATIONS_ and STICKY_SETTING_NAMES_ don\u0027t need to be defined on |this|. Lets put them outside of this class near the top of this file, and wrap with a function scope. See example https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/drop_overlay.js?type\u003dcs\u0026l\u003d5,30",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fdc50d_effcd41a",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "IIUC, all code paths within this function set this.initialized_ to true at some point. Also this function is entirely synchronous (it does not yield at any point). So, can we simplify and just execute the following in the 1st line of the function and remove all other similar calls?\n\nthis.initialized_ \u003d true;",
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055fa66e_08a1ebd6",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "Use non-ES6 syntax here, since this is not an ES6 class.",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 44
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1827cf_16db1859",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "Can this just be\nthis.recentDestinations \u003d recentDestinations;",
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a9de40_cccbb1e2",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "Since this event only has a single item as a payload, we can simplify as follows\n\nthis.fire(\u0027save-sticky-settings\u0027, JSON.stringify(serialization));\n\nand in app.js just use |e.detail| instead of |e.detail.stickySettings|.",
+      "range": {
+        "startLine": 414,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 57
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc0027c_b6793dc7",
+        "filename": "chrome/test/data/webui/print_preview/restore_state_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-12T18:12:40Z",
+      "side": 1,
+      "message": "Are we just ensuring that saveAppState is called once at the end? Or is this supposed to check that it is called every time? If you intend to test the former, it is a bit tricky (need more code to trigger N asynchronous functions in a serial manner, example https://github.com/google/lovefield/blob/741cef2e35ccdaa0b27b03edfed883e7e78c0f18/tools/promise_util.js#L35).\n\nHaving said that, I think this is more of and end-to-end test, instead of a unit test. Here is an alternate proposal.\n\n1) Create a dedicated unit test just for print-preview-model.\n2) In that test, change all the sticky settings one-by-one and ensure that the event is fired N times, and with the expected payload each time.\n3) In app.js test, simply test that upon receiving such an event nativeLayer is called with the correct parameters.\n\nEssentially this is breaking an end-to-end test with two smaller unit tests.",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 58
+      },
+      "revId": "0e190819b7ca0a146ba6bdd509ea95d3e497c08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
