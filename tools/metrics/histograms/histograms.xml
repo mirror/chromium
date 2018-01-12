@@ -58121,6 +58121,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PageLoad.Experimental.Cache.RequestPercent.ParseStop"
     units="%">
+  <obsolete>
+    Deprecated Jan 2018
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The percent of resources loaded from cache for the given page load. Recorded
