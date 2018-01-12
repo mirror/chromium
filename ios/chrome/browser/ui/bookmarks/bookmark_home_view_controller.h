@@ -86,11 +86,6 @@ class BookmarkNode;
 
 // Dispatcher for sending commands.
 @property(nonatomic, readonly, weak) id<ApplicationCommands> dispatcher;
-
-// Dismisses any modal interaction elements. Note that this
-// method is currently used in case of handset only. In the future it
-// will be used by both cases.
-- (void)dismissModals;
 @end
 
 @interface BookmarkHomeViewController (ExposedForTesting)
