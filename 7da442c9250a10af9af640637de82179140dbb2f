@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1fe390_48c427a3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34970,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2018-01-12T18:07:57Z",
+      "side": 1,
+      "message": "do we want something to check whether we had to delete a sentinel file because we got a later version and it was fine?",
+      "range": {
+        "startLine": 34970,
+        "startChar": 12,
+        "endLine": 34970,
+        "endChar": 38
+      },
+      "revId": "7da442c9250a10af9af640637de82179140dbb2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
