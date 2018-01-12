@@ -22,17 +22,19 @@
 #include "remoting/client/chromoting_client_runtime.h"
 #include "remoting/client/client_telemetry_logger.h"
 #include "remoting/client/input/native_device_keymap.h"
-#include "remoting/protocol/chromium_port_allocator_factory.h"
 #include "remoting/protocol/chromium_socket_factory.h"
 #include "remoting/protocol/client_authentication_config.h"
 #include "remoting/protocol/frame_consumer.h"
 #include "remoting/protocol/host_stub.h"
+#include "remoting/protocol/mobile_port_allocator_factory.h"
 #include "remoting/protocol/network_settings.h"
 #include "remoting/protocol/performance_tracker.h"
 #include "remoting/protocol/transport_context.h"
 #include "remoting/protocol/video_renderer.h"
 #include "remoting/signaling/server_log_entry.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
+
+#include "remoting/protocol/chromium_port_allocator_factory.h"
 
 namespace remoting {
 
@@ -427,7 +429,7 @@ void ChromotingSession::ConnectToHostOnNetworkThread() {
   scoped_refptr<protocol::TransportContext> transport_context =
       new protocol::TransportContext(
           signaling_.get(),
-          base::MakeUnique<protocol::ChromiumPortAllocatorFactory>(),
+          base::MakeUnique<protocol::MobilePortAllocatorFactory>(),
           base::MakeUnique<ChromiumUrlRequestFactory>(
               runtime_->url_requester()),
           protocol::NetworkSettings(
