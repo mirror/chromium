@@ -163,6 +163,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25272bff_f1f62d6e",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T17:18:35Z",
+      "side": 1,
+      "message": "I don\u0027t think my fix blocks either of those approaches - it would have merge conflicts with splitting the pools, likely, but that would also (independently) fix the issue my CL fixes, so shouldn\u0027t be any real issues with the merge.",
+      "parentUuid": "cbc41f60_23852407",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
