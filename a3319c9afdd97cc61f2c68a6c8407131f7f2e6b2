@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ea6d210_6694e3e5",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-12T09:23:55Z",
+      "side": 1,
+      "message": "Nit: webrtc_logging::DeleteOldWebRtcLogFiles()",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7d48df_e4ef85b6",
+        "filename": "components/webrtc_logging/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-12T09:23:55Z",
+      "side": 1,
+      "message": "Please make sure that you build and run with WebRTC disabled to test that. There\u0027s no automatic testing for that in the try bots.",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d8b58c_e6c4d4b7",
+        "filename": "components/webrtc_logging/common/partial_circular_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-12T09:23:55Z",
+      "side": 1,
+      "message": "Nit: empty line before.",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444e976f_22d7898b",
+        "filename": "components/webrtc_logging/common/partial_circular_buffer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-12T09:23:55Z",
+      "side": 1,
+      "message": "Nit: empty line before.",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
