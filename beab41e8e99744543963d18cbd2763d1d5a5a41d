@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8645550_99ce063e",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T15:02:32Z",
+      "side": 1,
+      "message": "nit: looks like dash is more common than under score.",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5555c39d_141087cf",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T15:02:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b11bd1_e0292a4e",
+        "filename": "ash/system/power/power_off_menu_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T15:02:32Z",
+      "side": 1,
+      "message": "I think you forget to update here. const base::string16\u0026",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c586534_a6355f68",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T15:02:32Z",
+      "side": 1,
+      "message": "nit: soon",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

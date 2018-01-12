@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "3e77c03f_6cb47b4e",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T15:02:32Z",
+      "side": 1,
+      "message": "OK, it is pretty rough though. But it is good to me.",
+      "parentUuid": "4a024980_adbd0001",
+      "revId": "6bafd0a37f5e9dd7dcc7052a6bedf8b1a062011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2914f0b_d93fc0ee",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 4
