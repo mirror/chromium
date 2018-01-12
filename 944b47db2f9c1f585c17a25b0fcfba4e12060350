@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8682bcd3_92443e07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T00:15:03Z",
+      "side": 1,
+      "message": "We do have the linker set up to remove dead code. From my experience with removing extensions code from Android builds, the linker is not sufficiently smart or is conservative. So if you actually manage to exclude all the extension APIs not used by cast_shell, you will likely see even more dead code removal with help from the linker.",
+      "revId": "944b47db2f9c1f585c17a25b0fcfba4e12060350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "968d2faa_6d889d06",
         "filename": "chromecast/browser/extensions/cast_display_info_provider.h",
         "patchSetId": 11
