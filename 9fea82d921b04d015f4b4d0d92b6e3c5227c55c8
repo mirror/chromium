@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e590986_8f17d0eb",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-12T07:07:31Z",
+      "side": 1,
+      "message": "IIUC, this is necessary on notifying frames when mixed (HTTP and HTTPs) contents are loaded, and the loading team will fix not to use frames in the future. It is not feasible to remove this call so far (it might not be impossible but it\u0027d be hard).",
+      "revId": "9fea82d921b04d015f4b4d0d92b6e3c5227c55c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
