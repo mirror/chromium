@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b360cb8d_a97890b8",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "Worth sharing URLLoader\u0027s SSLPrivateKeyInternal code?  It makes this CL bigger, but it gets us test coverage of the new path in production.  (Would also require hooking up the network client to RDH)",
+      "range": {
+        "startLine": 416,
+        "startChar": 16,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acba8893_9c5fb505",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "It\u0027s call through the NetworkServiceClient interface, not through URLLoaderClient (The URLLoader itself is actually being consumed in the renderer process)",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1111d690_30020fab",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "I defer to mattm, but I assume we can\u0027t just move this over to the UI thread in this CL.",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7546b9_b9676af0",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "Should DCHECK what each method is called on, for documentation purposes.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1f136d_9d231bf2",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "This can use BrowserThread::DeleteSoon (And can remove the DeleteThis method)",
+      "range": {
+        "startLine": 107,
+        "startChar": 49,
+        "endLine": 107,
+        "endChar": 59
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da869755_e3a11307",
+        "filename": "content/browser/ssl_private_key_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "include callback.h, and bind.h.",
+      "range": {
+        "startLine": 30,
+        "startChar": 22,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd90edb_71289c03",
+        "filename": "content/browser/ssl_private_key_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "This should probably include ref_counted.h, net_errors.h, \u003cstdint.h\u003e, and \u003cvector\u003e.",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6cc2f1_425ea52d",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "nit:  We generally only have one such comment, above the first method (Possible followed by a space if there are multiple methods, with line breaks between them, up to you)",
+      "range": {
+        "startLine": 206,
+        "startChar": 5,
+        "endLine": 206,
+        "endChar": 8
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fb970e_43b8a9a6",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "if ssl_private_key.encountered_error(), should probably post a task to run callback with some scary net::Error asynchronously.  Again, should be tested.",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 20
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb070cad_95c7ab07",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "range": {
+        "startLine": 213,
+        "startChar": 20,
+        "endLine": 213,
+        "endChar": 41
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde1b276_c3252ff5",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "DCHECK_LE(net_error, 0);\nDCHECK_NE(net_error, net::ERR_IO_PENDING);\n\n(If we trust the process enough to provide certs, I assume we trust the net error it gives us.  If not, can abort in those cases instead)",
+      "range": {
+        "startLine": 221,
+        "startChar": 41,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea375a3_077cfc0a",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "Should listen to this mojo pipe for errors, and on error (If there\u0027s a request pending), fail any pending request (With test).",
+      "range": {
+        "startLine": 225,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46374f3a_e5c84918",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 226,
+        "startChar": 24,
+        "endLine": 226,
+        "endChar": 46
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab4dbf0_567d62e0",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "BindOnce",
+      "range": {
+        "startLine": 425,
+        "startChar": 12,
+        "endLine": 425,
+        "endChar": 16
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353ceaf8_e5b93e81",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "Argument order should match SSLPrivateKey\u0027s constructor (I have no opinion on which order to use).",
+      "range": {
+        "startLine": 743,
+        "startChar": 28,
+        "endLine": 743,
+        "endChar": 43
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3a0a40_d770150d",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T20:44:32Z",
+      "side": 1,
+      "message": "Do we need to support nullptrs?  I assume we won\u0027t request a cert with a null SSLCertRequestInfo?",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
