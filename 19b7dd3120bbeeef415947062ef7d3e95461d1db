@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21cfbe0a_18760fb0",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T20:05:11Z",
+      "side": 0,
+      "message": "Don\u0027t we need to include the new location of the header? Otherwise you are depending on some other header file to include it, which is against the style guide of include what you use.",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31308a3b_0519fcfc",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T20:05:11Z",
+      "side": 0,
+      "message": "Same issue here with include what you use.",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc637b3c_837e6250",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-12T20:05:11Z",
+      "side": 0,
+      "message": "The new location isn\u0027t included.",
+      "revId": "19b7dd3120bbeeef415947062ef7d3e95461d1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
