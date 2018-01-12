@@ -105,6 +105,24 @@
       "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7327f522_126d9f6a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-12T16:55:40Z",
+      "side": 1,
+      "message": "startActivityCompletely() waits for the class type which is passed to the constructor of ChromeActivityTestRule. WebApkIntegrationTest passes WebApkActivity to the constructor.",
+      "parentUuid": "b6fa21bb_7ae48355",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
