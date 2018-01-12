@@ -16,6 +16,24 @@
       "revId": "b7c2c4ec1b901041af24793d679e3acaec4b750d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7d6686_601df644",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T05:50:30Z",
+      "side": 0,
+      "message": "The reason is that, we don\u0027t want to have flat tree related shenanigans in layout/.\n\nFor this particular function, it\u0027s just a wrapper of\n\nNGInlineFormattingContextOf(ToPositionInDOMTree(position_in_flat_tree))\n\nto make editing code easier.\n\nSo we move it to NGFlatTreeShorthands, which will hold all such editing-oriented wrapper functions.",
+      "parentUuid": "b1480f4a_acc767f1",
+      "revId": "b7c2c4ec1b901041af24793d679e3acaec4b750d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
