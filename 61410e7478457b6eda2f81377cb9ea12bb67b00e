@@ -46,6 +46,30 @@
       "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82811180_10dec333",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2018-01-12T17:47:40Z",
+      "side": 1,
+      "message": "I guess my question is: would 64 be even better? I guess that depends on the device DPI. Do we use dynamic px size then?",
+      "parentUuid": "150f597d_a8436afb",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
