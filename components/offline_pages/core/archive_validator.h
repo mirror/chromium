@@ -13,11 +13,21 @@ namespace base {
 class FilePath;
 }
 
+namespace crypto {
+class SecureHash;
+}
+
 namespace offline_pages {
 
-// Contains all helper functions to validate an archive file.
+// Used to validate an archive file.
 class ArchiveValidator {
  public:
+  ArchiveValidator();
+  ~ArchiveValidator();
+
+  void Update(const void* input, size_t len);
+  std::string Finish();
+
   // Computes a SHA256 digest of the specified file. Empty string will be
   // returned if the digest cannot be computed.
   static std::string ComputeDigest(const base::FilePath& file_path);
@@ -29,7 +39,9 @@ class ArchiveValidator {
                            const std::string& expected_digest);
 
  private:
-  DISALLOW_IMPLICIT_CONSTRUCTORS(ArchiveValidator);
+  std::unique_ptr<crypto::SecureHash> secure_hash_;
+
+  DISALLOW_COPY_AND_ASSIGN(ArchiveValidator);
 };
 
 }  // namespace offline_pages
