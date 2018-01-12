@@ -16,6 +16,24 @@
       "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8544e94_e6f87155",
+        "filename": "third_party/WebKit/public/web/WebWidget.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-12T20:30:09Z",
+      "side": 1,
+      "message": "We\u0027re disabling threaded animations, scrolling etc. when using this, so all we need to run is blink animations + layout. No need to update the impl-side.",
+      "parentUuid": "b234b4f1_86de445e",
+      "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
