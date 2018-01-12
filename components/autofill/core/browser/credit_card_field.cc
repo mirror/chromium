@@ -88,7 +88,8 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
   // Using 'new' to access private constructor.
   auto credit_card_field = base::WrapUnique(new CreditCardField());
   size_t saved_cursor = scanner->SaveCursor();
-
+  bool has_cc_number_or_verification;
+  int unkonwn_fields = 0;
   // Credit card fields can appear in many different orders.
   // We loop until no more credit card related fields are found, see |break| at
   // the bottom of the loop.
@@ -218,6 +219,18 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
       return nullptr;
     }
 
+    has_cc_number_or_verification = (credit_card_field->verification_ ||
+                                     !credit_card_field->numbers_.empty());
+    unkonwn_fields++;
+
+    // Since cc#/verification and expiration are inter-dependent for the final
+    // detection decision, we allow for UNKONWN fields in between. Therefore, if
+    // only one of them is found, we will keep looking.
+    if ((has_cc_number_or_verification || credit_card_field->HasExpiration()) &&
+        unkonwn_fields < 4) {
+      scanner->Advance();
+      continue;
+    }
     break;
   }
 
@@ -234,9 +247,8 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
   // a strong enough signal that this is a credit card.  It is possible that
   // the number and name were parsed in a separate part of the form.  So if
   // the cvc and date were found independently they are returned.
-  const bool has_cc_number_or_verification =
-      (credit_card_field->verification_ ||
-       !credit_card_field->numbers_.empty());
+  has_cc_number_or_verification = (credit_card_field->verification_ ||
+                                   !credit_card_field->numbers_.empty());
   if (has_cc_number_or_verification && credit_card_field->HasExpiration())
     return std::move(credit_card_field);
 
