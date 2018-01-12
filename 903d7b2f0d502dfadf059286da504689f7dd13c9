@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fef6788_872fef70",
+        "filename": "content/browser/android/content_feature_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T22:28:13Z",
+      "side": 1,
+      "message": "observer? o_O",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "903d7b2f0d502dfadf059286da504689f7dd13c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c93b49_0d419184",
+        "filename": "content/browser/android/content_feature_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T22:28:13Z",
+      "side": 1,
+      "message": "for chrome as well?",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "903d7b2f0d502dfadf059286da504689f7dd13c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
