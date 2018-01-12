@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9f370e4_89a4c1fe",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-12T18:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "592c312f_237869bd",
+      "range": {
+        "startLine": 48,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfef1329_96813c50",
         "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6f0b1ef0_fe377f3a",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-12T18:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfef1329_96813c50",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ea355cc_a75dee78",
         "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3747c883_8244e3be",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-12T18:18:56Z",
+      "side": 1,
+      "message": "Done. Thanks, that was a mistake!",
+      "parentUuid": "7ea355cc_a75dee78",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "d8c42ce58aa4fa0e5dfe801e78b0f84c99adcf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
