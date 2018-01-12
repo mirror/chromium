@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313ea92e_fb95539f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 10
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-12T06:30:25Z",
+      "side": 1,
+      "message": "Could you file a new bug for that, use the new bug number here, and remove the comment from here?",
+      "revId": "883c31953bdea7e16c5caf795777b39ccdaa9655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
