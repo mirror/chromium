@@ -228,6 +228,36 @@ void MapperMogaPro(const Gamepad& input, Gamepad* mapped) {
   mapped->axes_length = AXIS_INDEX_COUNT;
 }
 
+void MapperSwitchPro(const Gamepad& input, Gamepad* mapped) {
+  enum SwitchProButtons {
+    SWITCH_PRO_BUTTON_CAPTURE = BUTTON_INDEX_COUNT,
+    SWITCH_PRO_BUTTON_COUNT
+  };
+
+  // The Switch Pro controller reports a larger logical range than the analog
+  // axes are capable of, and as a result the axis values received here only
+  // cover about 70% of the full analog range. Renormalize the axis values to
+  // cover the full range. The axis extents were determined experimentally.
+  const static float kAxisMin = -0.7f;
+  const static float kAxisMax = 0.7f;
+
+  *mapped = input;
+  mapped->buttons[BUTTON_INDEX_META] = input.buttons[12];
+  mapped->buttons[SWITCH_PRO_BUTTON_CAPTURE] = input.buttons[13];
+  mapped->axes[AXIS_INDEX_LEFT_STICK_X] =
+      RenormalizeAndClipAxis(input.axes[0], kAxisMin, kAxisMax);
+  mapped->axes[AXIS_INDEX_LEFT_STICK_Y] =
+      RenormalizeAndClipAxis(input.axes[1], kAxisMin, kAxisMax);
+  mapped->axes[AXIS_INDEX_RIGHT_STICK_X] =
+      RenormalizeAndClipAxis(input.axes[3], kAxisMin, kAxisMax);
+  mapped->axes[AXIS_INDEX_RIGHT_STICK_Y] =
+      RenormalizeAndClipAxis(input.axes[4], kAxisMin, kAxisMax);
+  DpadFromAxis(mapped, input.axes[9]);
+
+  mapped->buttons_length = SWITCH_PRO_BUTTON_COUNT;
+  mapped->axes_length = AXIS_INDEX_COUNT;
+}
+
 struct MappingData {
   const char* const vendor_id;
   const char* const product_id;
@@ -239,6 +269,7 @@ struct MappingData {
     {"054c", "05c4", MapperDualshock4},          // Playstation Dualshock 4
     {"054c", "09cc", MapperDualshock4},          // Dualshock 4 (PS4 Slim)
     {"054c", "0ba0", MapperDualshock4},          // Dualshock 4 USB receiver
+    {"057e", "2009", MapperSwitchPro},           // Switch Pro Controller (BT)
     {"0583", "2060", MapperIBuffalo},            // iBuffalo Classic
     {"0955", "7210", MapperNvShield},            // Nvidia Shield gamepad
     {"0b05", "4500", MapperADT1},                // Nexus Player Controller
