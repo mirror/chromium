@@ -266,6 +266,30 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cee25d7_c945bfb7",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-12T18:36:50Z",
+      "side": 1,
+      "message": "\u003e Why WaitableEvent and ConditionVariable?\n\nBecause they use ScopedBlockingCall, which requires initialization.\n\n\u003e \n\u003e For this to work we\u0027d have to make CommandLine::Init private somehow I think (to force callers to use the new thing or every other embedder will forget).\n\nMaybe we could keep CommandLine separate, but rename AtExitManager -\u003e BaseEnvironment and make it handle both ScopedBlockingCall pointers initialization and AtExit destructors?\n\n\u003e \n\u003e But for ScopedBlockingCall if we init the LazyInstance early, then it\u0027s essentially free after that isn\u0027t it? I\u0027m not saying it\u0027s ideal but it addresses 99% of the problem in a simple manner, no?\n\nIt feels hacky to \"initialize\" a LazyInstance. Also, accesses are not free since they involve an atomic read+barrier [1]. But since it\u0027s a quick solution and doing a more complex solution wouldn\u0027t help users that much, we can do it.\n\n[1] I know, we can say that it doesn\u0027t matter since they happen before/after blocking calls.",
+      "parentUuid": "c474fc07_f7702dda",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 20
+      },
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
