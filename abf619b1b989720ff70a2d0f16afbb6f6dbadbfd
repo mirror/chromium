@@ -139,6 +139,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc41f60_23852407",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T17:17:23Z",
+      "side": 1,
+      "message": "This CL assumes that a proxy socket pool only has requests using an HTTP or HTTPS proxy, which turns out to be false.  I have a fix almost read for review (Which doesn\u0027t actually change that, just separates the groups).  We could split the pools apart (Which generally seems like a good idea, anyways) or just use the socket params to determine the timeout instead of the socket pool.",
+      "parentUuid": "e0d29ab2_eeda210e",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
