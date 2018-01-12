@@ -136,6 +136,9 @@ class BASE_EXPORT CallbackBase {
   // Returns true if this callback equals |other|. |other| may be null.
   bool EqualsInternal(const CallbackBase& other) const;
 
+  // Constructs a null CallbackBase.
+  constexpr CallbackBase() = default;
+
   // Takes ownership of |bind_state|.
   explicit CallbackBase(scoped_refptr<BindStateBase> bind_state);
 
@@ -160,8 +163,12 @@ class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
   CallbackBaseCopyable& operator=(CallbackBaseCopyable&& c);
 
  protected:
+  // Constructs a null CallbackBaseCopyable.
+  constexpr CallbackBaseCopyable() = default;
+
   explicit CallbackBaseCopyable(scoped_refptr<BindStateBase> bind_state)
       : CallbackBase(std::move(bind_state)) {}
+
   ~CallbackBaseCopyable() = default;
 };
 

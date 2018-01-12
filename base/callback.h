@@ -28,7 +28,8 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  OnceCallback() : internal::CallbackBase(nullptr) {}
+  // Constructs a null OnceCallback.
+  constexpr OnceCallback() = default;
 
   explicit OnceCallback(scoped_refptr<internal::BindStateBase> bind_state)
       : internal::CallbackBase(std::move(bind_state)) {}
@@ -75,7 +76,8 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
+  // Constructs a null RepeatingCallback.
+  constexpr RepeatingCallback() = default;
 
   explicit RepeatingCallback(scoped_refptr<internal::BindStateBase> bind_state)
       : internal::CallbackBaseCopyable(std::move(bind_state)) {}
