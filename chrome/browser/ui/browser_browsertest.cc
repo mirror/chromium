@@ -588,8 +588,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, DISABLED_CrossProcessNavCancelsDialogs) {
   EXPECT_TRUE(js_helper->IsShowingDialogForTesting());
 
   // A cross-site navigation should force the dialog to close.
-  GURL url2("http://www.example.com/empty.html");
-  ui_test_utils::NavigateToURL(browser(), url2);
+  GURL options_url("http://www.example.com/empty.html");
+  ui_test_utils::NavigateToURL(browser(), options_url);
   EXPECT_FALSE(js_helper->IsShowingDialogForTesting());
 
   // Make sure input events still work in the renderer process.
@@ -624,8 +624,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SadTabCancelsDialogs) {
   EXPECT_FALSE(dialog_queue->HasActiveDialog());
 
   // Make sure subsequent navigations work.
-  GURL url2("http://www.example.com/empty.html");
-  ui_test_utils::NavigateToURL(browser(), url2);
+  GURL options_url("http://www.example.com/empty.html");
+  ui_test_utils::NavigateToURL(browser(), options_url);
 }
 
 // Make sure that dialogs opened by subframes are closed when the process dies.
@@ -658,8 +658,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SadTabCancelsSubframeDialogs) {
   EXPECT_FALSE(js_helper->IsShowingDialogForTesting());
 
   // Make sure subsequent navigations work.
-  GURL url2("data:text/html,foo");
-  ui_test_utils::NavigateToURL(browser(), url2);
+  GURL options_url("data:text/html,foo");
+  ui_test_utils::NavigateToURL(browser(), options_url);
 }
 
 // Make sure modal dialogs within a guestview are closed when an interstitial
@@ -760,8 +760,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, BeforeUnloadVsBeforeReload) {
   content::PrepContentsForBeforeUnloadTest(contents);
 
   // Navigate to another url, and check that we get a "before unload" dialog.
-  GURL url2(url::kAboutBlankURL);
-  browser()->OpenURL(OpenURLParams(url2, Referrer(),
+  GURL options_url(url::kAboutBlankURL);
+  browser()->OpenURL(OpenURLParams(options_url, Referrer(),
                                    WindowOpenDisposition::CURRENT_TAB,
                                    ui::PAGE_TRANSITION_TYPED, false));
 
@@ -1129,19 +1129,16 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
   const Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("options_page/"));
   ASSERT_TRUE(extension);
-  LOG(INFO) << extension->id();
 
-  std::string url_string = std::string(extensions::kExtensionScheme) + "://" +
-                           extension->id() + "/" + "options.html";
-  LOG(INFO) << url_string;
-  GURL url(url_string);
-  ui_test_utils::NavigateToURL(browser(), url);
+  GURL extension_url = extension->GetResourceURL("options.html");
+  ui_test_utils::NavigateToURL(browser(), extension_url);
+  ui_test_utils::NavigateToURL(browser(), extension_url);
 
-  ASSERT_EQ(1, tab_strip_model->count());
-  EXPECT_EQ(url_string,
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+  EXPECT_EQ(extension_url.spec(),
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
 
-  // Uninstall the extension and make sure TabClosing is sent.
+  // Uninstall the extension.
   ExtensionService* service =
       extensions::ExtensionSystem::Get(browser()->profile())
           ->extension_service();
@@ -1154,8 +1151,57 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
 
   // There should only be one tab now.
   ASSERT_EQ(1, tab_strip_model->count());
-  EXPECT_EQ(url::kAboutBlankURL,
+  EXPECT_EQ(chrome::kChromeUINewTabURL,
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
+}
+
+#include "chrome/browser/extensions/extension_tab_util.h"
+
+IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+  int first_tab_index = tab_strip_model->active_index();
+  //chrome::ShowHistory(browser());
+  GURL extension_url("chrome://history");
+  //ui_test_utils::NavigateToURL(browser(), extension_url);
+    ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  content::WebContents* default_history_page = tab_strip_model->GetActiveWebContents();
+  tab_strip_model->CloseWebContentsAt(first_tab_index, TabStripModel::CLOSE_NONE);
+
+  ASSERT_EQ(1, tab_strip_model->count());
+
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("options_page/"));
+  ASSERT_TRUE(extension);
+
+  GURL options_url = extension->GetResourceURL("options.html");
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  EXPECT_TRUE(extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(extension, browser()->profile()));
+
+  ASSERT_EQ(3, tab_strip_model->count());
+  EXPECT_EQ(options_url.spec(),
+            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+
+  // Uninstall the extension.
+  ExtensionService* service =
+      extensions::ExtensionSystem::Get(browser()->profile())
+          ->extension_service();
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser()->profile());
+  extensions::TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(),
+                           extensions::UnloadedExtensionReason::UNINSTALL);
+  registry_observer.WaitForExtensionUnloaded();
+
+  // There should only be one tab now.
+  ASSERT_EQ(2, tab_strip_model->count());
+  EXPECT_EQ("chrome://history/",
+            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+  EXPECT_EQ(default_history_page, tab_strip_model->GetActiveWebContents());
 }
 
 // Open with --app-id=<id>, and see that an application tab opens by default.
