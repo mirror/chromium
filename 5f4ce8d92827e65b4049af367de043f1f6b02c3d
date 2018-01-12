@@ -34,6 +34,24 @@
       "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067fb44e_9221e0bb",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-12T02:51:43Z",
+      "side": 0,
+      "message": "Can you point me to where this check is done in e.g. gpu_video_decode_accelerator_host? I cannot find any relevant code after a quick look.",
+      "parentUuid": "c0f427f1_5e20e417",
+      "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

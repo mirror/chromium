@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d1a398_1af508a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-12T02:51:43Z",
+      "side": 1,
+      "message": "The wording is still confusing IMHO (\"available to the system\"?). If you have confirmed that VAVDA/VAVEA/VAJDA and acceleration in Chrome itself are still working, just write it so. :)",
+      "revId": "f6c6421efc42733fe978d53d4cbde0ed1c0ee839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27daa3b3_77e63a27",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-12T02:51:43Z",
+      "side": 1,
+      "message": "What I had in mind for this was slightly simpler:\n\n1) Move the body of PostSandboxInitialization() at the end of PreSandboxInitialization()\n2) Delete PostSandBoxInitialization() and the call to it in VADisplayState().\n\nAlthough this requires testing, I believe this would work just as before. PreSandboxInitialization() is called only once, which will mimic the static qualifier we used to call PostSandboxInitialization(), and we will have all the sandboxing-related code in one single function.",
+      "revId": "f6c6421efc42733fe978d53d4cbde0ed1c0ee839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
