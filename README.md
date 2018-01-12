@@ -14,3 +14,6 @@ Learn how to [Get Around the Chromium Source Code Directory Structure
 
 
 Parent branch first patchset
+
+
+Child branch first patchset
