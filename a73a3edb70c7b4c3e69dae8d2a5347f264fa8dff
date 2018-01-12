@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431c1dde_637ca7b9",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T17:50:00Z",
+      "side": 1,
+      "message": "we didn\u0027t talk about this patch specifically unfortunately, we just covered some basics of the design/implementation flow re: svg, icon and png. But AFAIU the plan is that icons will come in two flavors: 20dp and 16dp. Most icons will probably just exist in 16dp but in some cases like dialog window icons, we may use 20dp.\n\nWe didn\u0027t touch on the \"grid\" i.e. the internal padding. I guess this should work assuming Max or whoever is in charge approves the screenshots.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b35c6b_90efcc5b",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T17:50:00Z",
+      "side": 1,
+      "message": "nit: typically would call this icon. |vector| is confusing because it sounds like the data structure",
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41b1088_a397b503",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-12T17:50:00Z",
+      "side": 1,
+      "message": "here you call this text color, but in the .cc you call it icon_color, the difference being DeriveDefaultIconColor. I\u0027d say you should treat it as the related text color (similar to SetImageFromVectorIcon) and push the DeriveDefault call into the function.",
+      "range": {
+        "startLine": 192,
+        "startChar": 64,
+        "endLine": 192,
+        "endChar": 74
+      },
+      "revId": "a73a3edb70c7b4c3e69dae8d2a5347f264fa8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
