@@ -228,7 +228,7 @@ void RenderWidgetHostViewEventHandler::UnlockMouse() {
   // after the cursor is moved ends up getting a large movement delta which is
   // not what sites expect. The delta is computed in the
   // ModifyEventMovementAndCoords function.
-  global_mouse_position_ = unlocked_global_mouse_position_;
+  global_mouse_position_ = gfx::ToFlooredPoint(unlocked_global_mouse_position_);
   window_->MoveCursorTo(gfx::ToFlooredPoint(unlocked_mouse_position_));
 
   aura::client::CursorClient* cursor_client =
@@ -828,10 +828,10 @@ void RenderWidgetHostViewEventHandler::ModifyEventMovementAndCoords(
   // We do not measure movement as the delta from cursor to center because
   // we may receive more mouse movement events before our warp has taken
   // effect.
-  event->movement_x = gfx::ToFlooredInt(event->PositionInScreen().x -
-                                        global_mouse_position_.x());
-  event->movement_y = gfx::ToFlooredInt(event->PositionInScreen().y -
-                                        global_mouse_position_.y());
+  event->movement_x = gfx::ToFlooredInt(event->PositionInScreen().x) -
+                      global_mouse_position_.x();
+  event->movement_y = gfx::ToFlooredInt(event->PositionInScreen().y) -
+                      global_mouse_position_.y();
 
   global_mouse_position_.SetPoint(event->PositionInScreen().x,
                                   event->PositionInScreen().y);
@@ -856,7 +856,7 @@ void RenderWidgetHostViewEventHandler::MoveCursorToCenter() {
   // TODO(crbug.com/781182): Set the global position when move cursor to center.
   // This is a workaround for a bug from Windows update 16299, and should be remove
   // once the bug is fixed in OS.
-  gfx::PointF center_in_screen(window_->GetBoundsInScreen().CenterPoint());
+  gfx::Point center_in_screen(window_->GetBoundsInScreen().CenterPoint());
   global_mouse_position_ = center_in_screen;
 #else
   synthetic_move_sent_ = true;
