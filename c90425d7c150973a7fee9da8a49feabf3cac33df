@@ -16,6 +16,24 @@
       "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fdb563_96ebbbe3",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-12T00:49:00Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this.",
+      "parentUuid": "c997f168_aa46d879",
+      "revId": "c90425d7c150973a7fee9da8a49feabf3cac33df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
