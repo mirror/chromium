@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47eefe4_cfad75ad",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-12T03:08:14Z",
+      "side": 1,
+      "message": "Can we add\nDCHECK(!display_source.empty() || notifier_id.type \u003d\u003d NotifierId::SYSTEM_COMPONENT); or just\nDCHECK(notifier_id.type \u003d\u003d NotifierId::SYSTEM_COMPONENT); ?\n\nSo that notification that expects default |display_source| but NotifierId type is not SYSTEM_COMPONENT will be warned.",
+      "revId": "c36184c44d57599c905c4fd70629d5f4cd5098a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
