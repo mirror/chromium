@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6beb7b18_80b728f6",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-12T10:24:02Z",
+      "side": 1,
+      "message": "Given these functions are almost identical, can we just have a single LoadV8SnapshotFile and #ifdef the decision of whether we load kV8SnapshotDataDescriptor or kV8ContextSnapshotDataDescriptor or call gin::V8Initializer::LoadV8Snapshot or gin::V8Initializer::LoadV8ContextSnapshot()?",
+      "range": {
+        "startLine": 200,
+        "startChar": 40,
+        "endLine": 200,
+        "endChar": 65
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76cf0a2_28e54481",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-12T10:24:02Z",
+      "side": 1,
+      "message": "The isolate is always held / created by an IsolateHolder so I find kIsolateHolder a bit confusing. How about:\nenum class IsolateUser {\n  kNormal,\n  kSnapshotCreator,\n}",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 4
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09b67f0_a3648c6b",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-12T10:24:02Z",
+      "side": 1,
+      "message": "This is a change in behavior - in the previous code if the snapshot file fails to load for some reason we can still run Chrome, but now we crash. Could you change it back to the previous code and followup with this change if you want to clean it up (and are sure it\u0027s safe) in a followup CL?",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 28
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e17425_ba112994",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-12T10:24:02Z",
+      "side": 1,
+      "message": "Can we have some logic to make sure the caller only calls one of LoadV8ContextSnapshot or LoadV8Snapshot, or perhaps we could replace all the LoadV8ContextSnapshot type functions with just LoadV8Snapshot which has an enum passed as an argument to specify whether to load the context snapshot or the normal one (defaulting to the normal one) - that way we can just check that it is always called with the same enum by a given process.",
+      "range": {
+        "startLine": 308,
+        "startChar": 20,
+        "endLine": 308,
+        "endChar": 41
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
