@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "126ab911_5d42ce9d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T15:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0b30cd_f73ef541",
+      "range": {
+        "startLine": 375,
+        "startChar": 18,
+        "endLine": 375,
+        "endChar": 72
+      },
+      "revId": "835695648279cfaf6bae9d47740229c38b92d510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2884fd18_88138d14",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "835695648279cfaf6bae9d47740229c38b92d510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68ae4c8_90b301bb",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-12T15:59:29Z",
+      "side": 1,
+      "message": "We need it here because it is for the entire expression.",
+      "parentUuid": "2884fd18_88138d14",
+      "range": {
+        "startLine": 796,
+        "startChar": 7,
+        "endLine": 796,
+        "endChar": 8
+      },
+      "revId": "835695648279cfaf6bae9d47740229c38b92d510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
