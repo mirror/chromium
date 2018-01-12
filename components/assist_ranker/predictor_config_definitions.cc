@@ -40,7 +40,7 @@ const base::flat_set<std::string>* GetContextualSearchFeatureWhitelist() {
            "OutcomeWasPanelOpened", "OutcomeWasQuickActionClicked",
            "OutcomeWasQuickAnswerSeen", "Previous28DayCtrPercent",
            "Previous28DayImpressionsCount", "PreviousWeekCtrPercent",
-           "PreviousWeekImpressionsCount", "ScreenTopDps", "TapDuration",
+           "PreviousWeekImpressionsCount", "ScreenTopDps", "TapDurationMs",
            "WasScreenBottom"});
   return kContextualSearchFeatureWhitelist;
 }
