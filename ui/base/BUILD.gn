@@ -649,6 +649,24 @@ component("base") {
   }
 }
 
+component("keyboard_lock") {
+  sources = [
+    "keyboard_lock/platform_hook.h",
+    "keyboard_lock/platform_hook_posix.cc",
+    "keyboard_lock/platform_hook_win.cc",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//ui/events",
+    "//ui/events:dom_keycode_converter",
+    "//ui/events/platform:key_event_filter",
+  ]
+}
+
 static_library("test_support") {
   testonly = true
   sources = [
