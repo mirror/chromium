@@ -214,6 +214,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8b305b_968744dd",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-12T08:05:02Z",
+      "side": 0,
+      "message": "If we have a caret selection, we will fire the beforeinput event, but then TypingCommand::DeleteSelection() will have nothing to delete and will not fire an input event. I think we should not fire either event in this case.",
+      "parentUuid": "04c9c4d8_9fdbc7eb",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
