@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67af76dd_8b6e6975",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-12T14:15:21Z",
+      "side": 1,
+      "message": "Minor but this is only when |AdjustToClearance| above returns true, correct? Isn\u0027t it more straightforward to use the return value?",
+      "revId": "a04010ddfa984661bb88ff0b788bb69869bb9dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
