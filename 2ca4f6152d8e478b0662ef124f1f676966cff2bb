@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5475189_9fb9c6ac",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-12T06:40:53Z",
+      "side": 0,
+      "message": "Is kDisableSmoothScrolling still needed?  It\u0027s still in this list.",
+      "range": {
+        "startLine": 2601,
+        "startChar": 14,
+        "endLine": 2601,
+        "endChar": 36
+      },
+      "revId": "2ca4f6152d8e478b0662ef124f1f676966cff2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6153d8_5a8536d8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2602,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-12T06:40:53Z",
+      "side": 0,
+      "message": "Weird, seems that nobody checks this switch at all?  (There\u0027s only a DCHECK with it.)",
+      "range": {
+        "startLine": 2602,
+        "startChar": 14,
+        "endLine": 2602,
+        "endChar": 31
+      },
+      "revId": "2ca4f6152d8e478b0662ef124f1f676966cff2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
