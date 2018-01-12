@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "980f659f_0b39076c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-12T15:10:47Z",
+      "side": 1,
+      "message": "C++11 has some shiny new pseudo random number generation stuff.\nhttp://en.cppreference.com/w/cpp/numeric/random\n\nWe\u0027re already using this here: https://cs.chromium.org/chromium/src/ui/gfx/color_transform_fuzzer.cc?rcl\u003d926bf293faabd120115fa5a105eb8dcc6eeadf0a\u0026l\u003d21\n\nWhy not use that?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 78
+      },
+      "revId": "b6d4b80533c6a1a015584fc2de84b714fbda4392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
