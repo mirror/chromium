@@ -16,6 +16,24 @@
       "revId": "2f4803cd99f495f7385f9887837eff15a3ad7dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6de858e_58184604",
+        "filename": "gpu/config/gpu_control_list_format.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-12T01:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94267c2c_b7c9245e",
+      "revId": "2f4803cd99f495f7385f9887837eff15a3ad7dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
