@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f137a46_97201d8c",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T07:54:17Z",
+      "side": 1,
+      "message": "Could you introduce helper class CompositionEndDispatch to simplify\nthis change?\n\nclass CompositionEndDispatch final {\n  CompositionEndDispatch(...) ... {}\n  ~CompositionEndDispatch() {\n    if (!should_dispatch_composition_end_)\n     return;\n    // Is it better to hold IMC and check IMC::IsAvaiable()?\n    ... dispatch compositionend ...\n  }\n  void SetShouldDispatchCompositionEvent() { should_dispatch_compositon_end_ \u003d true; }\n private:\n  LocalFrame\u0026 frame_;\n  const String data_;\n  bool should_dispatch_compositon_end_ \u003d false;\n\n  // We will have EventQueueScope here.\n\n  DISALLOW_COPY_AND_ASSIGN(CompositionEndDispatch);\n};",
+      "revId": "d44d2ba84407eec8647969616254f456a7d85e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
