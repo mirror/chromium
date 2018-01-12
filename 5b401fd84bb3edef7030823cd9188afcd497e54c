@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4050255_97fe56c6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T11:47:54Z",
+      "side": 1,
+      "message": "Why isn\u0027t \"nice\" simply always on?\n\nIs there a usecase where \"auditor got no files on input\" needs to return an error code?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "5b401fd84bb3edef7030823cd9188afcd497e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
