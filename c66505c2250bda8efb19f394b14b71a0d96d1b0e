@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a9f0db3b_a1455f3b",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-12T19:02:15Z",
+      "side": 1,
+      "message": "The difference is the call to ShowInactive vs Show.\n\nThe former shows the widget, yes, but does not make it active (or focused).\n\nAccessibility tools track system focus, so ShowInactive is a no-op for these tools.\n\nI left a comment to that effect for future readers.",
+      "parentUuid": "80814ef9_d1dff138",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 72
+      },
+      "revId": "c66505c2250bda8efb19f394b14b71a0d96d1b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "037ab383_2b633f33",
         "filename": "ui/views/window/dialog_client_view.cc",
         "patchSetId": 3
@@ -68,6 +92,30 @@
       "revId": "c66505c2250bda8efb19f394b14b71a0d96d1b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d1fafa_3d35e05b",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-12T19:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037ab383_2b633f33",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 64
+      },
+      "revId": "c66505c2250bda8efb19f394b14b71a0d96d1b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
