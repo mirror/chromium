@@ -46,6 +46,30 @@
       "revId": "71c74265c31325bdbcecefb9b4e4ae088c3fb382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36d023c_08469d96",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-12T19:41:57Z",
+      "side": 0,
+      "message": "Upon retesting, the .focus() is now needed. Either I made a mistake in my last test, or walmart.com changed. I\u0027ve added \u0027focus\u0027 and \u0027blur\u0027 events to notifyElementValueChanged().",
+      "parentUuid": "d8ca27ac_76ef1ffa",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 21
+      },
+      "revId": "71c74265c31325bdbcecefb9b4e4ae088c3fb382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
