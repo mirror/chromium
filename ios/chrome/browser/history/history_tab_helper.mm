@@ -176,7 +176,6 @@ void HistoryTabHelper::PageLoaded(
 }
 
 void HistoryTabHelper::TitleWasSet(web::WebState* web_state) {
-  DCHECK_EQ(web_state_, web_state);
   if (delay_notification_) {
     return;
   }
