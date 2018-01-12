@@ -144,6 +144,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
 #include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
@@ -7048,8 +7049,14 @@ class TestReportingService : public ReportingService {
     return true;
   }
 
+  const ReportingPolicy& GetPolicy() const override {
+    NOTIMPLEMENTED();
+    return dummy_policy_;
+  }
+
  private:
   std::vector<Header> headers_;
+  ReportingPolicy dummy_policy_;
 };
 
 std::unique_ptr<test_server::HttpResponse> SendReportToHeader(
