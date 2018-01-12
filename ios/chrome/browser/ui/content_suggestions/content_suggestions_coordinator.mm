@@ -43,6 +43,7 @@
 
 @interface ContentSuggestionsCoordinator ()<
     ContentSuggestionsViewControllerAudience,
+    NTPReloading,
     OverscrollActionsControllerDelegate>
 
 @property(nonatomic, strong)
@@ -135,6 +136,7 @@
              mostVisitedSite:std::move(mostVisitedFactory)];
   self.contentSuggestionsMediator.commandHandler = self.NTPMediator;
   self.contentSuggestionsMediator.headerProvider = self.headerController;
+  self.contentSuggestionsMediator.reloader = self;
 
   self.headerController.promoCanShow =
       [self.contentSuggestionsMediator notificationPromo]->CanShow();
@@ -196,6 +198,12 @@
       [self.contentSuggestionsMediator notificationPromo];
   notificationPromo->HandleViewed();
   [self.headerController setPromoCanShow:notificationPromo->CanShow()];
+}
+
+#pragma mark - NTPReloading
+
+- (void)reloadNTP {
+  [self.delegate reloadNTP];
 }
 
 #pragma mark - OverscrollActionsControllerDelegate
