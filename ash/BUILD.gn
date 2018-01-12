@@ -994,6 +994,7 @@ component("ash") {
     "wm/wm_window_animations.h",
     "wm/workspace/backdrop_controller.cc",
     "wm/workspace/backdrop_controller.h",
+    "wm/workspace/backdrop_delegate.cc",
     "wm/workspace/backdrop_delegate.h",
     "wm/workspace/magnetism_matcher.cc",
     "wm/workspace/magnetism_matcher.h",
