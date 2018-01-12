@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "d64e3a94_b826de3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T00:52:39Z",
+      "side": 1,
+      "message": "Could you add that this patch does it only on resize events?",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54b4e9c_77449800",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T00:52:39Z",
+      "side": 1,
+      "message": "Could you make this exception conditional on surface sync being enabled? This should still always be true otherwise.",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 55
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28381bf_4ef5864a",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T00:52:39Z",
+      "side": 1,
+      "message": "These ids will be different with surface sync once the renderer starts generating new ids right? Would be good to add a comment.",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0703d62_25f710ab",
         "filename": "ui/android/delegated_frame_host_android.cc",
         "patchSetId": 4
