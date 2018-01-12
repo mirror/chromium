@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9b318eb_eada9b27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68265c16_7dcc5145",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7ca825_cddeb854",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e21dea18_ea39ab8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7ca825_cddeb854",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58970279_8d603fc7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d2238b_2ab96973",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58970279_8d603fc7",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "6a9f2ae4_bb5c0d16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c278e8c6_32e16f1c",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 85
+      },
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ded8e0b3_e6b564d8",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeIntentTest.java",
         "patchSetId": 12
@@ -90,6 +168,24 @@
       "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcdf303_525bf309",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeIntentTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded8e0b3_e6b564d8",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "e4cf6cb5_fb6f80db",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "I see that notificationId is very overloaded in our code, which is quite confusing. Per our offline chat, let\u0027s keep this CL scoped to simplifying platform tag only and handle this suggestion in a separate CL.\nI\u0027ll walk through this code in a debugger to better be able to rename variables and simplify further.",
+      "parentUuid": "ac3ec4f6_a5f57883",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 80
+      },
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ab0f3f8_adc4ab77",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
         "patchSetId": 12
@@ -130,6 +250,24 @@
       "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51220db_c33ccdab",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-12T12:46:37Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll include the link to the bug.\nFWIW, I actually prefer TODO(bug-reference) to TODO(username). We have seen in this review itself that a TODO(miguel) was confusing and we don\u0027t know why it was there. Had there been a bug, there would\u0027ve been more of a context, and bugs also get more easily assigned to someone other than whoever wrote up the TODO.",
+      "parentUuid": "4ab0f3f8_adc4ab77",
+      "revId": "33b9b5e770f460fa7369f035a608529bd78a62bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
