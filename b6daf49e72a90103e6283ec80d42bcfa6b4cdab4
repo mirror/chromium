@@ -16,6 +16,24 @@
       "revId": "b6daf49e72a90103e6283ec80d42bcfa6b4cdab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f5482c_6c67414f",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-12T23:16:02Z",
+      "side": 1,
+      "message": "Done. |callback| is reused, and I believe we don\u0027t really want to flush expectations?",
+      "parentUuid": "c6ea5527_5b3ecc01",
+      "revId": "b6daf49e72a90103e6283ec80d42bcfa6b4cdab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
