@@ -53,15 +53,6 @@ PartitionBucket g_sentinel_bucket;
 
 }  // namespace
 
-PartitionRootBase::PartitionRootBase() = default;
-PartitionRootBase::~PartitionRootBase() = default;
-PartitionRoot::PartitionRoot() = default;
-PartitionRoot::~PartitionRoot() = default;
-PartitionRootGeneric::PartitionRootGeneric() = default;
-PartitionRootGeneric::~PartitionRootGeneric() = default;
-PartitionAllocatorGeneric::PartitionAllocatorGeneric() = default;
-PartitionAllocatorGeneric::~PartitionAllocatorGeneric() = default;
-
 static LazyInstance<subtle::SpinLock>::Leaky g_initialized_lock =
     LAZY_INSTANCE_INITIALIZER;
 static bool g_initialized = false;
