@@ -108,6 +108,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
                                const GURL& effective_url) override;
   bool DoesSiteRequireDedicatedProcess(content::BrowserContext* browser_context,
                                        const GURL& effective_site_url) override;
+  bool GetSitePerProcessSetting() override;
+  std::string GetIsolateOriginsList() override;
   bool ShouldLockToOrigin(content::BrowserContext* browser_context,
                           const GURL& effective_site_url) override;
   bool ShouldBypassDocumentBlocking(

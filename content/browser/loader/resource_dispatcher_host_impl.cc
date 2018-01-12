@@ -329,6 +329,9 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
 
   // Monitor per-tab outstanding requests only if OOPIF is not enabled, because
   // the routing id doesn't represent tabs in OOPIF modes.
+  // NOTE: These checks also help pre-warm the policy cached values on the main
+  // thread. If removed from here make sure the first invocation of those
+  // functions still happens on the UI thread!
   if (!SiteIsolationPolicy::UseDedicatedProcessesForAllSites() &&
       !SiteIsolationPolicy::IsTopDocumentIsolationEnabled() &&
       !SiteIsolationPolicy::AreIsolatedOriginsEnabled()) {

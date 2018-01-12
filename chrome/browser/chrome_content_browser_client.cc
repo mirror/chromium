@@ -1177,6 +1177,14 @@ bool ChromeContentBrowserClient::DoesSiteRequireDedicatedProcess(
   return false;
 }
 
+bool ChromeContentBrowserClient::GetSitePerProcessSetting() {
+  return g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess);
+}
+
+std::string ChromeContentBrowserClient::GetIsolateOriginsList() {
+  return g_browser_process->local_state()->GetString(prefs::kIsolateOrigins);
+}
+
 // TODO(creis, nick): https://crbug.com/160576 describes a weakness in our
 // origin-lock enforcement, where we don't have a way to efficiently know
 // effective URLs on the IO thread, and wind up killing processes that e.g.
