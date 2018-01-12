@@ -209,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "db64d020_fab6a7a2",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T19:00:58Z",
+      "side": 1,
+      "message": "I looked and couldn\u0027t find it (though maybe I was using the wrong search terms!). However, the guide didn\u0027t have nice things to say about using if-else decision tress to implement cheap RTTI, which is sort of applicable here ;-)\n\nhttps://google.github.io/styleguide/cppguide.html#Run-Time_Type_Information__RTTI_",
+      "parentUuid": "eb93e1d3_ebe4d1cd",
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8d14aca_8e52e0ba",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -350,6 +368,30 @@
       "side": 1,
       "message": "Why do we have to check the WebGestureDevice setting on the event? They all go to delegate_-\u003eDispatchEventToTarget?",
       "parentUuid": "b7f6106e_d4a9827d",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "647c98e43b60e4bdba69444964f4382901d733ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05f80bb_a154a80c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-12T19:00:58Z",
+      "side": 1,
+      "message": "There are *three* WebGestureDevice enums at present (4 if you count \u0027undefined\u0027). We only handle two of them. Guarding against the two we don\u0027t want can be done with a DCHECK.",
+      "parentUuid": "9ce10aab_1da91283",
       "range": {
         "startLine": 192,
         "startChar": 20,
