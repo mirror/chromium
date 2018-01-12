@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13f06f8_d9c1b8d6",
+        "filename": "chrome/browser/content_settings/mixed_content_settings_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T18:32:02Z",
+      "side": 1,
+      "message": "Will this be also called for iframes that are present at page load? I suppose so, but the test doesn\u0027t cover it by embedding \u003ciframe\u003e directly in the HTML.",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d0ec9_95354a93",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T18:32:02Z",
+      "side": 1,
+      "message": "Maybe also check that the JS did not yet run at this point?\n\nWhich basically amounts to \"verify that mixed script is blocked by default even for OOPIF iframes\". Which should follow from mixed script being off by default in general, but still, this is a good place to verify.",
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8287a14b_023b0b1e",
+        "filename": "chrome/test/data/content_setting_bubble/mixed_script_in_cross_site_iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T18:32:02Z",
+      "side": 1,
+      "message": "nit: Can you add a comment how this works, i.e. that it expects the iframe URL as a query parameter?",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 47
+      },
+      "revId": "56952f5a1e6ec0db302e5ea3e4b77146248d09de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
