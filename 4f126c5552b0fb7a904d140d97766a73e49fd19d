@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67836856_16c3fb62",
+        "filename": "chromeos/printing/uri_components.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-12T22:58:02Z",
+      "side": 1,
+      "message": "It would be nice if this were immutable since it looks like we only read it.\n\nAlso, please add a class comment.",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "4f126c5552b0fb7a904d140d97766a73e49fd19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
