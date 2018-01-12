@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "954dab6c_f72642d4",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-12T14:19:00Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve been able to reproduce the issue.\n\nCoalescePendingMotionEvents can return a mouse scroll event, if user has a context menu or anything other window opened, which requires to translate event locations. To reproduce this, do the following: open a browser, open a context menu, start moving a mouse pointer around and scroll at the same time.\n\nAnd when MouseEvent is constructed, the EventTypeFromXEvent returns ET_UNKNOWN for the XI_Motion type events. It\u0027s this line - https://cs.chromium.org/chromium/src/ui/events/x/events_x_utils.cc?q\u003devents_x_ut\u0026sq\u003dpackage:chromium\u0026l\u003d439.\n\nAnd then we we do event-\u003eAsLocatedEvent(), it fails with a CHECK(IsLocatedEvent), because the current type is unknown and that event mustn\u0027t have been created.",
+      "parentUuid": "d25c267d_36d3ff4d",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ac0d37_155021c4",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
         "patchSetId": 4
