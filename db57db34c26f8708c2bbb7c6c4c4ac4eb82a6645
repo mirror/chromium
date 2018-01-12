@@ -140,6 +140,30 @@
       "revId": "db57db34c26f8708c2bbb7c6c4c4ac4eb82a6645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a986bb09_263cca6c",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-12T18:58:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ecf65fd0_df3def3a",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "db57db34c26f8708c2bbb7c6c4c4ac4eb82a6645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
