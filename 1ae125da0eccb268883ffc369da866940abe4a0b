@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d109f9e9_419eb284",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-12T16:25:39Z",
+      "side": 1,
+      "message": "I could also just dcheck here if it\u0027s called when there is none.  Practically, the call should never be made at all.",
+      "parentUuid": "5f29d114_04859d96",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5c7dea_66785d49",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T15:50:26Z",
       "side": 1,
       "message": "Do we need the Sleep() call? I think RunUntilIdle() should run any posted tasks.\n\nWhat\u0027s the reason for the posted task to be delayed?",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5d3515_fe8f54fe",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-12T16:25:39Z",
+      "side": 1,
+      "message": "A delayed task still leaves the loop \"idle\".  Only ready-to-run tasks are guaranteed to execute before this call returns.\n\nThe task is delayed, according to its comment, to \"start recording before doing expensive initialization work.\"",
+      "parentUuid": "bc5c7dea_66785d49",
       "range": {
         "startLine": 104,
         "startChar": 34,
