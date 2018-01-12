@@ -92,7 +92,12 @@ static_library("router") {
       "providers/wired_display/wired_display_presentation_receiver.h",
       "providers/wired_display/wired_display_presentation_receiver_factory.cc",
       "providers/wired_display/wired_display_presentation_receiver_factory.h",
+      "providers/wired_display/wired_display_presentation_receiver_factory_flag.cc",
     ]
+    if (is_mac && !mac_views_browser) {
+      sources -= [ "providers/wired_display/wired_display_presentation_receiver_factory_flag.cc" ]
+      sources += [ "providers/wired_display/wired_display_presentation_receiver_factory_flag_mac.cc" ]
+    }
   }
 }
 
