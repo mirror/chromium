@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
@@ -61,7 +62,9 @@ DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
       host_frame_sink_manager_(host_frame_sink_manager),
       frame_sink_manager_(frame_sink_manager),
       client_(client),
-      begin_frame_source_(this) {
+      begin_frame_source_(this),
+      enable_surface_synchronization_(
+          features::IsSurfaceSynchronizationEnabled()) {
   DCHECK(view_);
   DCHECK(client_);
 
@@ -83,6 +86,9 @@ DelegatedFrameHostAndroid::~DelegatedFrameHostAndroid() {
 void DelegatedFrameHostAndroid::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame) {
+  DCHECK(!enable_surface_synchronization_ ||
+         local_surface_id == local_surface_id_);
+
   if (local_surface_id != surface_info_.id().local_surface_id()) {
     DestroyDelegatedContent();
     DCHECK(!content_layer_);
@@ -192,6 +198,16 @@ void DelegatedFrameHostAndroid::DetachFromCompositor() {
   registered_parent_compositor_ = nullptr;
 }
 
+void DelegatedFrameHostAndroid::WasResized() {
+  if (enable_surface_synchronization_) {
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+
+    // TODO(ericrk): We should handle updating our surface layer with the new
+    // ID. See similar behavior in delegated_frame_host.cc.
+    // https://crbug.com/801350
+  }
+}
+
 void DelegatedFrameHostAndroid::DidReceiveCompositorFrameAck(
     const std::vector<viz::ReturnedResource>& resources) {
   client_->ReclaimResources(resources);
@@ -246,6 +262,10 @@ void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
 
 viz::SurfaceId DelegatedFrameHostAndroid::SurfaceId() const {
   return surface_info_.id();
+}
+
+viz::LocalSurfaceId DelegatedFrameHostAndroid::LocalSurfaceId() const {
+  return local_surface_id_;
 }
 
 }  // namespace ui
