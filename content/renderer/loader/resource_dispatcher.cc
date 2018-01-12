@@ -368,32 +368,32 @@ void ResourceDispatcher::StartSync(
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
-    mojom::URLLoaderFactory* url_loader_factory,
+    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
   CheckSchemeForReferrerPolicy(*request);
 
-    mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
-    url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
-    base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
-                              base::WaitableEvent::InitialState::NOT_SIGNALED);
+  std::unique_ptr<SharedURLLoaderFactoryInfo> factory_info =
+      url_loader_factory->Clone();
+  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                            base::WaitableEvent::InitialState::NOT_SIGNALED);
 
-    // Prepare the configured throttles for use on a separate thread.
-    for (const auto& throttle : throttles)
-      throttle->DetachFromCurrentSequence();
+  // Prepare the configured throttles for use on a separate thread.
+  for (const auto& throttle : throttles)
+    throttle->DetachFromCurrentSequence();
 
-    // A task is posted to a separate thread to execute the request so that
-    // this thread may block on a waitable event. It is safe to pass raw
-    // pointers to |sync_load_response| and |event| as this stack frame will
-    // survive until the request is complete.
-    base::CreateSingleThreadTaskRunnerWithTraits({})->PostTask(
-        FROM_HERE,
-        base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
-                       std::move(request), routing_id, frame_origin,
-                       traffic_annotation, std::move(url_loader_factory_copy),
-                       std::move(throttles), base::Unretained(response),
-                       base::Unretained(&event)));
+  // A task is posted to a separate thread to execute the request so that
+  // this thread may block on a waitable event. It is safe to pass raw
+  // pointers to |sync_load_response| and |event| as this stack frame will
+  // survive until the request is complete.
+  base::CreateSingleThreadTaskRunnerWithTraits({})->PostTask(
+      FROM_HERE,
+      base::BindOnce(&SyncLoadContext::StartAsyncWithWaitableEvent,
+                     std::move(request), routing_id, frame_origin,
+                     traffic_annotation, std::move(factory_info),
+                     std::move(throttles), base::Unretained(response),
+                     base::Unretained(&event)));
 
-    event.Wait();
+  event.Wait();
 }
 
 int ResourceDispatcher::StartAsync(
@@ -404,7 +404,7 @@ int ResourceDispatcher::StartAsync(
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     bool is_sync,
     std::unique_ptr<RequestPeer> peer,
-    mojom::URLLoaderFactory* url_loader_factory,
+    scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
   CheckSchemeForReferrerPolicy(*request);
