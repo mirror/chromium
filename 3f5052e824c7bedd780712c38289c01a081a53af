@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da81becd_0d8af736",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T13:37:36Z",
+      "side": 1,
+      "message": "You missed these comments.",
+      "range": {
+        "startLine": 387,
+        "startChar": 30,
+        "endLine": 387,
+        "endChar": 34
+      },
+      "revId": "3f5052e824c7bedd780712c38289c01a081a53af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb1375c_ec608ac2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-12T13:37:36Z",
+      "side": 1,
+      "message": "And these variable names.",
+      "range": {
+        "startLine": 397,
+        "startChar": 13,
+        "endLine": 397,
+        "endChar": 30
+      },
+      "revId": "3f5052e824c7bedd780712c38289c01a081a53af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
