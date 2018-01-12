@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f174269e_554c8039",
+        "filename": "chrome/app/framework.order",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:39:44Z",
+      "side": 1,
+      "message": "Will this be needed for every new thread_local variable we add anywhere? If so, that would be rather inconvenient going forward; can we make this automatic or unnecessary somehow?",
+      "revId": "beb3222ee3e018bec003c5590db38596ef662c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7e9938_c32f3188",
+        "filename": "third_party/WebKit/Source/platform/wtf/ThreadSpecific.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:39:44Z",
+      "side": 1,
+      "message": "Comment about why we cannot use IsMainThread here? (It would seem natural to do so.)",
+      "revId": "beb3222ee3e018bec003c5590db38596ef662c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b91604_f769a735",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:39:44Z",
+      "side": 1,
+      "message": "nit: explain the difference between component and non-component versions",
+      "revId": "beb3222ee3e018bec003c5590db38596ef662c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa1bc5c_2b62cca7",
+        "filename": "third_party/WebKit/Source/platform/wtf/WTF.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:39:44Z",
+      "side": 1,
+      "message": "nit: comment about why this is necessary",
+      "revId": "beb3222ee3e018bec003c5590db38596ef662c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
