@@ -16,6 +16,24 @@
       "revId": "3a2de7db268cf2c53cf0dcca4e597f40ca6d4554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5efe15b_50fda1c5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-12T16:47:33Z",
+      "side": 1,
+      "message": "This is definitely not the same as checking Document::IsSecureContext. As far as I can tell, the Worklet logic for IsSecureContext is the same as for ServiceWorkers, which I thought would be sufficient.\n\nHowever, I think caching the secure context for the document is a good idea, and should address my concerns in my other comment.",
+      "parentUuid": "4991b122_1d635f21",
+      "revId": "3a2de7db268cf2c53cf0dcca4e597f40ca6d4554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
