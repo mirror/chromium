@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e346ee_0c811b8b",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-12T21:19:38Z",
+      "side": 1,
+      "message": "nit: IsHealthy is pretty generic. Maybe IsWindowSyncable?",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 14
+      },
+      "revId": "d481cc313fa938905275822caebaaf508f3ebffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
