@@ -128,6 +128,9 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   void OnTouchDragTimer(const gfx::Point& tap_down_location,
                         const gfx::Point& tap_down_root_location);
 
+  // Records the context menu user journey time.
+  void OnContextMenuClosed(const base::TimeTicks open_time);
+
   // views::ContextMenuController overrides:
   void ShowContextMenuForView(views::View* source,
                               const gfx::Point& point,

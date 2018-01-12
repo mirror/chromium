@@ -8,6 +8,7 @@
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_item.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -50,6 +51,14 @@ constexpr int kMouseDragUIDelayInMs = 200;
 // ET_GESTURE_LONG_PRESS delay, which is too long for this case, e.g., about
 // 650ms.
 constexpr int kTouchLongpressDelayInMs = 300;
+
+// Histogram name used to record how a context menu is shown.
+const std::string kContextMenuShowSourceAppGrid =
+    "Apps.ContextMenuShowSource.AppGrid";
+
+// Histogram name used to record the user journey time of a context menu.
+const std::string kContextMenuUserJourneyTimeAppGrid =
+    "Apps.ContextMenuUserJourneyTime.AppGrid";
 
 }  // namespace
 
@@ -265,6 +274,11 @@ void AppListItemView::SetItemPercentDownloaded(int percent_downloaded) {
   progress_bar_->SetValue(percent_downloaded / 100.0);
 }
 
+void AppListItemView::OnContextMenuClosed(const base::TimeTicks open_time) {
+  UMA_HISTOGRAM_TIMES(kContextMenuUserJourneyTimeAppGrid,
+                      base::TimeTicks::Now() - open_time);
+}
+
 void AppListItemView::ShowContextMenuForView(views::View* source,
                                              const gfx::Point& point,
                                              ui::MenuSourceType source_type) {
@@ -275,11 +289,17 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
   if (!menu_model)
     return;
 
+  UMA_HISTOGRAM_ENUMERATION(kContextMenuShowSourceAppGrid, source_type,
+                            ui::MenuSourceType::MENU_SOURCE_TYPE_LAST);
+
   if (!apps_grid_view_->IsSelectedView(this))
     apps_grid_view_->ClearAnySelectedView();
   int run_types = views::MenuRunner::HAS_MNEMONICS |
                   views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
-  context_menu_runner_.reset(new views::MenuRunner(menu_model, run_types));
+  context_menu_runner_.reset(new views::MenuRunner(
+      menu_model, run_types,
+      base::Bind(&AppListItemView::OnContextMenuClosed, base::Unretained(this),
+                 base::TimeTicks::Now())));
   context_menu_runner_->RunMenuAt(GetWidget(), NULL,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);

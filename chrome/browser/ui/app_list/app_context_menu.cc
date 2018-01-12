@@ -9,6 +9,14 @@
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 
+namespace {
+
+// Histogram name used to record commands executed from app context menus.
+const std::string kContextMenuExecuteCommandFromApp =
+    "Apps.ContextMenuExectueCommand.FromApp";
+
+}  // namespace
+
 namespace app_list {
 
 AppContextMenu::AppContextMenu(AppContextMenuDelegate* delegate,
@@ -30,6 +38,7 @@ ui::MenuModel* AppContextMenu::GetMenuModel() {
 
   menu_model_.reset(new ui::SimpleMenuModel(this));
   BuildMenu(menu_model_.get());
+  menu_model_->set_histogram_name(kContextMenuExecuteCommandFromApp);
   return menu_model_.get();
 }
 
