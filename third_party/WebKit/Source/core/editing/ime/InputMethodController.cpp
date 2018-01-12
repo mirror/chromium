@@ -59,6 +59,16 @@ namespace blink {
 
 namespace {
 
+void DispatchCompositionStartEvent(LocalFrame& frame, const String& text) {
+  Element* target = frame.GetDocument()->FocusedElement();
+  if (!target)
+    return;
+
+  CompositionEvent* event = CompositionEvent::Create(
+      EventTypeNames::compositionstart, frame.DomWindow(), text);
+  target->DispatchEvent(event);
+}
+
 void DispatchCompositionUpdateEvent(LocalFrame& frame, const String& text) {
   Element* target = frame.GetDocument()->FocusedElement();
   if (!target)
@@ -723,9 +733,7 @@ void InputMethodController::SetComposition(
   // empty because this function doesn't create a composition node when the text
   // is empty.
   if (!HasComposition()) {
-    target->DispatchEvent(CompositionEvent::Create(
-        EventTypeNames::compositionstart, GetFrame().DomWindow(),
-        GetFrame().SelectedText()));
+    DispatchCompositionStartEvent(GetFrame(), GetFrame().SelectedText());
     if (!IsAvailable())
       return;
   }
@@ -841,6 +849,16 @@ void InputMethodController::SetCompositionFromExistingText(
     const Vector<ImeTextSpan>& ime_text_spans,
     unsigned composition_start,
     unsigned composition_end) {
+  Element* target = GetDocument().FocusedElement();
+  if (!target)
+    return;
+
+  if (!HasComposition()) {
+    DispatchCompositionStartEvent(GetFrame(), "");
+    if (!IsAvailable())
+      return;
+  }
+
   Element* editable = GetFrame()
                           .Selection()
                           .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -872,6 +890,8 @@ void InputMethodController::SetCompositionFromExistingText(
     composition_range_ = Range::Create(GetDocument());
   composition_range_->setStart(range.StartPosition());
   composition_range_->setEnd(range.EndPosition());
+
+  DispatchCompositionUpdateEvent(GetFrame(), ComposingText());
 }
 
 EphemeralRange InputMethodController::CompositionEphemeralRange() const {
