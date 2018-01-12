@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7295e63c_cc75579b",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "This could fail right? Nothing stops a remote end from sending size \u003e actual size of shmem region.",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67ce916_d4a13a1a",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Glorious.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 74
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de215db2_b58bcdf9",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Omit default and just put the NOTREACHED() after the switch (...)?",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0051de_21ed4c2c",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3d96e0_a1e32ca3",
+        "filename": "mojo/public/cpp/base/big_buffer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "If you\u0027re feeling fancy, you could union this and not need the Optional...\n\nIt would make the various constructors a bit harder to write though.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a07355_22c25594",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Nit: please call these files big_buffer_struct_traits.* (the automated security reviewer enforcement expects files to be called that)",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17fe628_81a625b0",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "I\u0027m skeptical that we really want to allow people to pass shmem regions that are 4GB in size. Maybe checked_cast is good enough, and gives us some crash report coverage?",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968dbbc8_ce75d5a4",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "FWIW, it should be possible to just write:\n\n*out \u003d mojo_base::BigBuffer(bytes_view);\n\nhere",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 26
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e8083f_fae79c80",
+        "filename": "mojo/public/cpp/bindings/lib/serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "I guess this is because we never had a unit test exercising the union path before?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b98b521_55429d98",
+        "filename": "mojo/public/mojom/base/big_buffer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Nit: this feels unfortunate, because the existence of a mutable size argument to UnwrapSharedMemoryHandle seems to hint that we store that info somewhere else already...",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946660a5_0b023d5d",
+        "filename": "mojo/public/mojom/base/big_buffer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T08:18:30Z",
+      "side": 1,
+      "message": "Nit: will",
+      "range": {
+        "startLine": 13,
+        "startChar": 71,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
