@@ -230,11 +230,10 @@ public class ChromeDownloadDelegate {
         // the right MIME type from the file extension (if any):
         if (mimeType == null || mimeType.isEmpty() || "text/plain".equals(mimeType)
                 || "application/octet-stream".equals(mimeType)
-                || "binary/octet-stream".equals(mimeType)
-                || "octet/stream".equals(mimeType)
+                || "binary/octet-stream".equals(mimeType) || "octet/stream".equals(mimeType)
+                || "application/download".equals(mimeType)
                 || "application/force-download".equals(mimeType)
                 || "application/unknown".equals(mimeType)) {
-
             String extension = getFileExtension(url, filename);
             String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
             if (newMimeType != null) {
