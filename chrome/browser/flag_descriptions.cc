@@ -489,6 +489,11 @@ const char kEnableOutOfBlinkCORSName[] = "Out of blink CORS";
 const char kEnableOutOfBlinkCORSDescription[] =
     "CORS handling logic is moved out of blink.";
 
+const char kEnableOutOfProcessDisplayName[] =
+    "Out of process display compositor";
+const char kEnableOutOfProcessDisplayDescription[] =
+    "Moves the display compositor from the browser to GPU process.";
+
 const char kEnableOutOfProcessHeapProfilingName[] =
     "Out of process heap profiling.";
 const char kEnableOutOfProcessHeapProfilingDescription[] =

@@ -52,6 +52,7 @@
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
@@ -1434,7 +1435,7 @@ void BrowserMainLoop::GetCompositingModeReporter(
     return;
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz))
+  if (base::FeatureList::IsEnabled(features::kEnableOutOfProcessDisplay))
     forwarding_compositing_mode_reporter_impl_->BindRequest(std::move(request));
   else
     compositing_mode_reporter_impl_->BindRequest(std::move(request));
@@ -1508,7 +1509,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   if (browser_is_viz_host) {
     host_frame_sink_manager_ = std::make_unique<viz::HostFrameSinkManager>();
     BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
+    if (base::FeatureList::IsEnabled(features::kEnableOutOfProcessDisplay)) {
       forwarding_compositing_mode_reporter_impl_ =
           std::make_unique<viz::ForwardingCompositingModeReporterImpl>();
 
