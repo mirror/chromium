@@ -21,7 +21,6 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/property_tree.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -132,7 +131,7 @@ class CC_EXPORT LayerTreeHostCommon {
     ElementId element_id;
     // TODO(miletus): Use ScrollOffset once LayerTreeHost/Blink fully supports
     // fractional scroll offset.
-    gfx::Vector2d scroll_delta;
+    gfx::Vector2dF scroll_delta;
 
     bool operator==(const ScrollUpdateInfo& other) const;
   };

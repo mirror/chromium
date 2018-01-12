@@ -286,12 +286,9 @@ void ScrollableArea::ScrollOffsetChanged(const ScrollOffset& offset,
   TRACE_EVENT0("blink", "ScrollableArea::scrollOffsetChanged");
 
   ScrollOffset old_offset = GetScrollOffset();
-  ScrollOffset truncated_offset = ShouldUseIntegerScrollOffset()
-                                      ? ScrollOffset(FlooredIntSize(offset))
-                                      : offset;
 
   // Tell the derived class to scroll its contents.
-  UpdateScrollOffset(truncated_offset, scroll_type);
+  UpdateScrollOffset(offset, scroll_type);
 
   // Tell the scrollbars to update their thumb postions.
   // If the scrollbar does not have its own layer, it must always be
