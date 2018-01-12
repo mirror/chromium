@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8188b7b9_3a9e6d97",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-12T22:15:16Z",
+      "side": 1,
+      "message": "Assuming this use looks okay, I\u0027ll rename this method away from ForTesting().",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7fd6c90_d4af7f2e",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 2
