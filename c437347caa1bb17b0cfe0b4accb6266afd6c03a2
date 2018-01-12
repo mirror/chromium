@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e9558b1_b242b3ac",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T22:42:12Z",
+      "side": 1,
+      "message": "This is only for WebXR",
+      "parentUuid": "d5dffcb2_243cf134",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8733e3_521d7a96",
         "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-12T20:46:31Z",
       "side": 1,
       "message": "Related to the comment about naming below: The fact that this code translates to returning a device to the client is a bit indirect. Are there even perhaps cases where this code runs but no device is returned?\n\nIt\u0027s probably not WebXR.HasDevice either because you could access `navigator.xr` without this code being called.\n\nI think we need to figure out what exactly we want to report and rename and potentially move the metric recording accordingly.\n\nIs there a method where we report the result of requestDevices where we could look at the result? Also, is it worth reporting the case where there were 0 devices? While that may be the difference between DidRequest and HasDevice, there will be some amount of unresolved promises. I\u0027m not sure whether that\u0027s worth recording, though.",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43a375e_d642e8aa",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T22:42:12Z",
+      "side": 1,
+      "message": "Devices may be returned through getVRDisplays promises or the onvrdisplayconnect window event.  Both of these go through this codepath when we obtain displays from the browser, and there are no other cases where we go through this codepath.\n\nThe promises are resolved in VRController::OnGetDisplays or VRController::GetDisplays if display_synced_ is true.  I could trigger the UKM from both of these locations, but we\u0027d miss the onvrdisplayconnect window event - perhaps it is worth having multiple metrics for these?\n\nI\u0027m leaning towards either keeping the metric as-is, or triggering it in OnGetDisplays/GetDisplays and not worrying about measuring onvrdisplayconnect displays for now (since none of our devices currently support hot-plug for the current milestone).",
+      "parentUuid": "9d8733e3_521d7a96",
       "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "95668c3b_eb294dbf",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T22:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fadc7b9_ed326180",
+      "range": {
+        "startLine": 2372,
+        "startChar": 16,
+        "endLine": 2372,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c394c4_e598ba2f",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -135,6 +195,30 @@
       "writtenOn": "2018-01-12T20:46:31Z",
       "side": 1,
       "message": "The objects in the \"Did\" and \"Has\" metrics are different. Should we be more specific in the metric name? Maybe this should be DidReceive or (still has the object issue) DidReturn.",
+      "range": {
+        "startLine": 2377,
+        "startChar": 16,
+        "endLine": 2377,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d887af6c_2ccb1f00",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-12T22:42:12Z",
+      "side": 1,
+      "message": "There is both the window.onvrdisplayconnected event and the navigator.getVRDisplays call that can return devices to a site.  The current implementation will trigger this ukm for either.  \n\nI\u0027m ok with a rename or new metric indicating specifically whether getVRDisplays returned a device, and whether that supports presentation.\n\nI\u0027ll think about naming to differentiate these cases a bit.",
+      "parentUuid": "b5c394c4_e598ba2f",
       "range": {
         "startLine": 2377,
         "startChar": 16,
