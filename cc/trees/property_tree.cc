@@ -1359,15 +1359,13 @@ gfx::ScrollOffset ScrollTree::PullDeltaForMainThread(
   // equivalent to rounding to the nearest integer offset.
   gfx::ScrollOffset current_offset =
       scroll_offset->Current(/* is_active_tree */ true);
-  gfx::ScrollOffset rounded_offset =
-      gfx::ScrollOffset(roundf(current_offset.x()), roundf(current_offset.y()));
   // The calculation of the difference from the rounded active base is to
   // represent the integer delta that the main thread should know about.
   gfx::ScrollOffset active_base = scroll_offset->ActiveBase();
   gfx::ScrollOffset diff_active_base =
       gfx::ScrollOffset(active_base.x() - roundf(active_base.x()),
                         active_base.y() - roundf(active_base.y()));
-  scroll_offset->SetCurrent(rounded_offset + diff_active_base);
+  scroll_offset->SetCurrent(current_offset + diff_active_base);
   gfx::ScrollOffset delta = scroll_offset->PullDeltaForMainThread();
   scroll_offset->SetCurrent(current_offset);
   return delta;
@@ -1381,7 +1379,7 @@ void ScrollTree::CollectScrollDeltas(
     gfx::ScrollOffset scroll_delta =
         PullDeltaForMainThread(map_entry.second.get());
 
-    gfx::Vector2d scroll_delta_vector(scroll_delta.x(), scroll_delta.y());
+    gfx::Vector2dF scroll_delta_vector(scroll_delta.x(), scroll_delta.y());
     ElementId id = map_entry.first;
 
     if (!scroll_delta.IsZero()) {
