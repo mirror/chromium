@@ -90,6 +90,70 @@
     },
     {
       "key": {
+        "uuid": "b390296e_15041133",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T23:44:17Z",
+      "side": 1,
+      "message": "The new WebXR API\u0027s devicechange does not return devices like this, so I think we can ignore that scenario.\n\nMy main concern is that it\u0027s not obvious or enforced that this path is only called in those cases. We can worry about that in WebXR since this will be deprecated soon. We should, however, determine what we want this metric to mean and name it such.",
+      "parentUuid": "e43a375e_d642e8aa",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea0f361_f00b3b00",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T23:44:17Z",
+      "side": 1,
+      "message": "nit: whether",
+      "range": {
+        "startLine": 217,
+        "startChar": 30,
+        "endLine": 217,
+        "endChar": 34
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda80b2c_d7ef1e8c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T23:44:17Z",
+      "side": 1,
+      "message": "I think `has` (or `did`) is more common.",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 14
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "466a8faa_f1413bdf",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 4
@@ -219,6 +283,30 @@
       "side": 1,
       "message": "There is both the window.onvrdisplayconnected event and the navigator.getVRDisplays call that can return devices to a site.  The current implementation will trigger this ukm for either.  \n\nI\u0027m ok with a rename or new metric indicating specifically whether getVRDisplays returned a device, and whether that supports presentation.\n\nI\u0027ll think about naming to differentiate these cases a bit.",
       "parentUuid": "b5c394c4_e598ba2f",
+      "range": {
+        "startLine": 2377,
+        "startChar": 16,
+        "endLine": 2377,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09529d43_1023b692",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T23:44:17Z",
+      "side": 1,
+      "message": "See above. Let\u0027s assume it\u0027s only getVRDisplays()/xr.requestDevice().",
+      "parentUuid": "d887af6c_2ccb1f00",
       "range": {
         "startLine": 2377,
         "startChar": 16,
