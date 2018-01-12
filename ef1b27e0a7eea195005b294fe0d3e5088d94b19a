@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22b2a954_1e49f6c2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-12T14:28:53Z",
+      "side": 1,
+      "message": "Because this callback can be called multiple times (OnTaskCompletedHandler is invoked for each task scheduler runs).",
+      "parentUuid": "592e959a_87c2f3fe",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2b2aa7a_da5390ee",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aea8ca54_328079af",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-12T14:28:53Z",
+      "side": 1,
+      "message": "Thanks for spotting this, I thought that base random was pseudorandom (as opposed to crypto::Random).\n\nI don\u0027t like the idea of recording 1 in every n task. It introduces all sorts of biases (there probably is a pattern in the order of tasks run during page open) and all the nice maths will stop working. \n\nI prefer honest sampling, so I introduced a fast pseudorandom generator with random seed.",
+      "parentUuid": "b2b2aa7a_da5390ee",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94468e73_85f4ec68",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-11T18:42:06Z",
       "side": 1,
       "message": "In some places this is added after task start and end times, and in other places it\u0027s added before.\n\nI think I\u0027d prefer being consistent about adding it after.",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 78
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41195d_e67216d7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-12T14:28:53Z",
+      "side": 1,
+      "message": "In all other places it\u0027s added after. This place is special -- we have an output parameter which should come last, and inserting |cpu_time| between |task_start_time| and |task_end_time| felt even more weird.",
+      "parentUuid": "94468e73_85f4ec68",
       "range": {
         "startLine": 339,
         "startChar": 0,
@@ -91,6 +163,30 @@
       "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9423ac_2eacd9a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-12T14:28:53Z",
+      "side": 1,
+      "message": "Yes, I have that on my list. Will come in a separate patch, however.",
+      "parentUuid": "02913121_30d21b56",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "ef1b27e0a7eea195005b294fe0d3e5088d94b19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
