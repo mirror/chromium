@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb6c9fdb_643d57f9",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-12T23:03:13Z",
+      "side": 1,
+      "message": "I understand the motive, but is the user experience affected too much to justify having this complex formula?\n\nThis is how complicated this formula is:\n\nscale \u003d MIN + (MAX - MIN) * ( Y_OFFSET * FACTOR + SQRT((scale - MIN) / (MAX - MIN)) )^2\n\nI doubt if users will be able to feel any difference if we are able to achieve an approximation using a simpler formula.",
+      "parentUuid": "35295eec_3eb6550e",
+      "range": {
+        "startLine": 694,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 33
+      },
+      "revId": "5966ee6b0c19e536ab2cb5ba67c4978ae5a4f4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f3155_ea16d23a",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 7
