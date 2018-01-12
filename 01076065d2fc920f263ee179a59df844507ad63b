@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f12aa5_0f465265",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T20:22:53Z",
+      "side": 1,
+      "message": "I think it\u0027s more accurate to say it must be in DIPs since CSS pixels are affected by browser zoom (Ctrl+/- zooming) which I\u0027m quite certain this isn\u0027t.",
+      "range": {
+        "startLine": 17,
+        "startChar": 56,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf030fb7_9c98cb6d",
+        "filename": "android_webview/browser/browser_view_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T20:22:53Z",
+      "side": 1,
+      "message": "Is the comment on this member in the .h wrong? It says it\u0027s in CSS pixels.",
+      "range": {
+        "startLine": 366,
+        "startChar": 33,
+        "endLine": 366,
+        "endChar": 51
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf64ecf2_2eda4ef9",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-12T20:22:53Z",
+      "side": 1,
+      "message": "We can\u0027t get rid of the scroll offset truncation in Blink like this. It\u0027s something we\u0027ve wanted to do for a while but it\u0027s not quite this simple. Doing this will break various other things inside Blink.\n\nCan you help me understand why this change is needed in Blink? Blink offsets have always been integers and you\u0027re doing the DIP adjustment above Blink in AndroidWebView code so I don\u0027t understand why we need to make this change.\n\nIt might be helpful if you show me the path from how LocalDOMWindow::scrollX|Y gets to SynchronousCompositor::DidChangeRootLayerScrollOffset. My assumption was that these values will all come from CC which has all the fractional parts of the scroll offset.",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
