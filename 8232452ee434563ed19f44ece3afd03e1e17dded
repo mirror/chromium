@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a82011_e8c8f0ab",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-12T02:37:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we add #paste-into-folder?",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29672a9_740dc341",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-12T02:37:13Z",
+      "side": 1,
+      "message": "Maybe we should hide this separator when we don\u0027t have paste option?",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
