@@ -22,6 +22,30 @@
       "revId": "69dcd5674f126eea60cd62367a038ece98dbc0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ff635b_2e028951",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-12T06:51:53Z",
+      "side": 1,
+      "message": "The extension is set to incognito:split. It at least starts in incognito context when Files app dialog box mode is invoked from incognito browser.\nWhen the extension starts, it\u0027ll be called via restoreSingleVolume_, upon invocation of onGetMetadataRequested from an external app, IIUC.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/zip_archiver/js/app.js?type\u003dcs\u0026q\u003drestoresinglevolume_\u0026sq\u003dpackage:chromium\u0026l\u003d401\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/zip_archiver/js/app.js?type\u003dcs\u0026q\u003dfile:zip_archiver+onGetMetadataRequested\u0026sq\u003dpackage:chromium\u0026l\u003d625",
+      "parentUuid": "8eadf530_7edf9d84",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 21
+      },
+      "revId": "69dcd5674f126eea60cd62367a038ece98dbc0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
