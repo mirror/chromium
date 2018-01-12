@@ -28,6 +28,7 @@
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
+#include "content/public/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/public/renderer/resource_dispatcher_delegate.h"
@@ -447,11 +448,14 @@ int ResourceDispatcher::StartAsync(
     request->load_flags |= net::LOAD_IGNORE_LIMITS;
   }
 
+  // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
+  // pointer into SharedURLLoaderFactory.
   std::unique_ptr<ThrottlingURLLoader> url_loader =
       ThrottlingURLLoader::CreateLoaderAndStart(
-          url_loader_factory, std::move(throttles), routing_id, request_id,
-          options, request.get(), client.get(), traffic_annotation,
-          std::move(task_runner));
+          base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+              url_loader_factory),
+          std::move(throttles), routing_id, request_id, options, request.get(),
+          client.get(), traffic_annotation, std::move(task_runner));
   pending_requests_[request_id]->url_loader = std::move(url_loader);
   pending_requests_[request_id]->url_loader_client = std::move(client);
 
