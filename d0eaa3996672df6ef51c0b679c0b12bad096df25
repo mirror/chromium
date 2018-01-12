@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91f937b_69c430a8",
+        "filename": "base/time/time_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-12T23:41:36Z",
+      "side": 1,
+      "message": "This looks good to me, but how about we also add a unit test? It would be good for our build waterfalls to detect if this assumption is ever violated (on specific models, in VMs, or on future models). Something like:\n\nTEST(TimeTicks, Android_FromUptimeMillis_ClocksMatch) {\n  // Run the loop up to 50 times until the test passes, to avoid false-negatives caused\n  // by a possible thread context switch between the two samplings of the clock.\n  for (int i \u003d 0; i \u003c 50; ++i) {\n    const TimeTicks ticks \u003d TimeTicks::Now();\n    // Thread context switch may occur here.\n    const jlong uptime_millis \u003d ...jni call here...;\n    if ((ticks - TimeTicks::FromUptimeMillis(uptime_millis)).magnitude() \u003c\n        base::TimeDelta::FromMilliseconds(100)) {\n      SUCCEED();\n      return;\n    }\n  }\n  FAIL();\n}",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "d0eaa3996672df6ef51c0b679c0b12bad096df25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
