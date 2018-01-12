@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "645fd406_2caafcca",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:24:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we get anything from making these const references?  It\u0027s also not a common pattern.",
+      "range": {
+        "startLine": 491,
+        "startChar": 23,
+        "endLine": 491,
+        "endChar": 55
+      },
+      "revId": "7a146fa8f4a4c6f2ef1718033e8c0e8be58c5d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
