@@ -911,43 +911,6 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
   }
 }
 
-inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
-  AutoReset<bool> prevent_update_layout(&forcing_layout_parent_view_, true);
-  auto* owner_layout_object = frame_->OwnerLayoutObject();
-  if (!owner_layout_object || !owner_layout_object->GetFrame())
-    return;
-
-  LayoutReplaced* content_box = EmbeddedReplacedContent();
-  if (!content_box)
-    return;
-
-  LayoutSVGRoot* svg_root = ToLayoutSVGRoot(content_box);
-  if (svg_root->EverHadLayout() && !svg_root->NeedsLayout())
-    return;
-
-  // If the embedded SVG document appears the first time, the ownerLayoutObject
-  // has already finished layout without knowing about the existence of the
-  // embedded SVG document, because LayoutReplaced embeddedReplacedContent()
-  // returns 0, as long as the embedded document isn't loaded yet. Before
-  // bothering to lay out the SVG document, mark the ownerLayoutObject needing
-  // layout and ask its LocalFrameView for a layout. After that the
-  // LayoutEmbeddedObject (ownerLayoutObject) carries the correct size, which
-  // LayoutSVGRoot::computeReplacedLogicalWidth/Height rely on, when laying out
-  // for the first time, or when the LayoutSVGRoot size has changed dynamically
-  // (eg. via <script>).
-  LocalFrameView* frame_view = owner_layout_object->GetFrame()->View();
-
-  // Mark the owner layoutObject as needing layout.
-  owner_layout_object
-      ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
-          LayoutInvalidationReason::kUnknown);
-
-  // Synchronously enter layout, to layout the view containing the host
-  // object/embed/iframe.
-  DCHECK(frame_view);
-  frame_view->UpdateLayout();
-}
-
 void LocalFrameView::PerformPreLayoutTasks() {
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::performPreLayoutTasks");
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPreLayout);
@@ -983,6 +946,8 @@ void LocalFrameView::PerformPreLayoutTasks() {
     document->EvaluateMediaQueryList();
   }
 
+  // TODO(chrishtr): style and layout tree update should not happen inside
+  // layout.
   document->UpdateStyleAndLayoutTree();
   Lifecycle().AdvanceTo(DocumentLifecycle::kStyleClean);
 
@@ -1071,13 +1036,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
     DCHECK(!layout_subtree_root_list_.IsEmpty());
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
-
-  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
-  // that happens, abandon layout.
-  bool was_attached = is_attached_;
-  ForceLayoutParentViewIfNeeded();
-  if (was_attached && !is_attached_)
-    return false;
 
   DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
@@ -3195,8 +3153,14 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
   else
     ClearPrintContext();
 
-  UpdateStyleAndLayoutIfNeededRecursive();
-  DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
+  {
+    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
+    UpdateStyleAndLayoutTreeRecursive();
+    DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kStyleClean);
+
+    UpdateLayoutRecursive();
+    DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
+  }
 
   if (target_state == DocumentLifecycle::kLayoutClean) {
     UpdateViewportIntersectionsForSubtree(target_state);
@@ -3451,30 +3415,43 @@ std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
       ->paint_artifact_compositor_->LayersAsJSON(flags);
 }
 
-void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursive() {
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
-  UpdateStyleAndLayoutIfNeededRecursiveInternal();
+void LocalFrameView::UpdateStyleAndLayoutTreeRecursive() {
+  UpdateStyleAndLayoutTreeRecursiveInternal();
 }
 
-void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
+void LocalFrameView::UpdateStyleAndLayoutTreeRecursiveInternal() {
+  if (ShouldThrottleRendering() || !frame_->GetDocument()->IsActive())
+    return;
+
+  TRACE_EVENT0("blink",
+               "LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal");
+
+  frame_->GetDocument()->UpdateStyleAndLayoutTree();
+
+  HeapVector<Member<LocalFrameView>> frame_views;
+  for (Frame* child = frame_->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    if (!child->IsLocalFrame())
+      continue;
+    if (LocalFrameView* view = ToLocalFrame(child)->View())
+      frame_views.push_back(view);
+  }
+
+  for (const auto& frame_view : frame_views)
+    frame_view->UpdateLayoutRecursiveInternal();
+}
+
+void LocalFrameView::UpdateLayoutRecursive() {
+  UpdateLayoutRecursiveInternal();
+}
+
+void LocalFrameView::UpdateLayoutRecursiveInternal() {
   if (ShouldThrottleRendering() || !frame_->GetDocument()->IsActive())
     return;
 
   ScopedFrameBlamer frame_blamer(frame_);
-  TRACE_EVENT0("blink",
-               "LocalFrameView::updateStyleAndLayoutIfNeededRecursive");
 
-  // We have to crawl our entire subtree looking for any FrameViews that need
-  // layout and make sure they are up to date.
-  // Mac actually tests for intersection with the dirty region and tries not to
-  // update layout for frames that are outside the dirty region.  Not only does
-  // this seem pointless (since those frames will have set a zero timer to
-  // layout anyway), but it is also incorrect, since if two frames overlap, the
-  // first could be excluded from the dirty region but then become included
-  // later by the second frame adding rects to the dirty region when it lays
-  // out.
-
-  frame_->GetDocument()->UpdateStyleAndLayoutTree();
+  TRACE_EVENT0("blink", "LocalFrameView::UpdateLayoutRecursiveInternal");
 
   CHECK(!ShouldThrottleRendering());
   CHECK(frame_->GetDocument()->IsActive());
@@ -3507,7 +3484,7 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   }
 
   for (const auto& frame_view : frame_views)
-    frame_view->UpdateStyleAndLayoutIfNeededRecursiveInternal();
+    frame_view->UpdateLayoutRecursiveInternal();
 
   // These asserts ensure that parent frames are clean, when child frames
   // finished updating layout and style.
