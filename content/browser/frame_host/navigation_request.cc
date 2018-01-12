@@ -1083,7 +1083,6 @@ void NavigationRequest::OnStartChecksComplete(
   bool report_raw_headers = false;
   RenderFrameDevToolsAgentHost::OnWillSendNavigationRequest(
       frame_tree_node_, begin_params_.get(), &report_raw_headers);
-
   loader_ = NavigationURLLoader::Create(
       browser_context->GetResourceContext(), partition,
       std::make_unique<NavigationRequestInfo>(

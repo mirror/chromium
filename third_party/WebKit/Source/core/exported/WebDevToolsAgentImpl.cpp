@@ -740,14 +740,6 @@ bool WebDevToolsAgentImpl::HandleInputEvent(const WebInputEvent& event) {
   return false;
 }
 
-bool WebDevToolsAgentImpl::CacheDisabled() {
-  for (auto& it : network_agents_) {
-    if (it.value->CacheDisabled())
-      return true;
-  }
-  return false;
-}
-
 void WebDevToolsAgentImpl::FlushProtocolNotifications() {
   for (auto& it : sessions_)
     it.value->flushProtocolNotifications();
