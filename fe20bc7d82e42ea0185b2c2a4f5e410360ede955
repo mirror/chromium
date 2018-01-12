@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27b33464_c69574ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-12T11:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e72c408_3714e778",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "fe20bc7d82e42ea0185b2c2a4f5e410360ede955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f48ffb_915f013e",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bca5eb60_e575bfe0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-12T11:51:42Z",
+      "side": 1,
+      "message": "I did try to reuse MaybeAdvanceVirtualTime, the tricky thing is task_starvation_count_ but I found a way to sort that now.",
+      "parentUuid": "b6f48ffb_915f013e",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "fe20bc7d82e42ea0185b2c2a4f5e410360ede955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60db9b5_ca6739a4",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "fe20bc7d82e42ea0185b2c2a4f5e410360ede955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4851df_088e1649",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-12T11:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60db9b5_ca6739a4",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "fe20bc7d82e42ea0185b2c2a4f5e410360ede955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
