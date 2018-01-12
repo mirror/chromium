@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e1a55dc1_393cee3f",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T10:49:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2bfde69_cf95f84d",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eae919e_ba40ab7b",
         "filename": "components/translate/core/common/translate_util.h",
         "patchSetId": 10
