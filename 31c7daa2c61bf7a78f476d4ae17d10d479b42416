@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68a4bc90_5be5f9b8",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-12T00:15:44Z",
+      "side": 1,
+      "message": "indeed :)",
+      "parentUuid": "f22036d1_817ede52",
+      "range": {
+        "startLine": 119,
+        "startChar": 72,
+        "endLine": 119,
+        "endChar": 73
+      },
+      "revId": "31c7daa2c61bf7a78f476d4ae17d10d479b42416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffd55ffe_cc68fb32",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "31c7daa2c61bf7a78f476d4ae17d10d479b42416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16b4c53_14582209",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-12T00:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd55ffe_cc68fb32",
+      "revId": "31c7daa2c61bf7a78f476d4ae17d10d479b42416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
