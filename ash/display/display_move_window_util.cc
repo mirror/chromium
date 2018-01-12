@@ -151,11 +151,13 @@ void HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection direction) {
       window = ::wm::GetTransientParent(window);
     if (window == window->GetRootWindow())
       return;
-  } else {
-    MruWindowTracker::WindowList window_list =
-        Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
-    if (window_list.empty() || window_list.front() != window)
-      return;
+  }
+
+  MruWindowTracker::WindowList window_list =
+      Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+  if (std::find(window_list.begin(), window_list.end(), window) ==
+      window_list.end()) {
+    return;
   }
 
   display::Display origin_display =

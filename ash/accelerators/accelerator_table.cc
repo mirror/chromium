@@ -161,7 +161,7 @@ const AcceleratorData kAcceleratorData[] = {
      MOVE_WINDOW_TO_BELOW_DISPLAY},
     {true, ui::VKEY_LEFT, ui::EF_COMMAND_DOWN | ui::EF_ALT_DOWN,
      MOVE_WINDOW_TO_LEFT_DISPLAY},
-    {true, ui::VKEY_RIGHT, ui::EF_COMMAND_DOWN | ui::EF_ALT_DOWN,
+    {true, ui::VKEY_RIGHT, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
      MOVE_WINDOW_TO_RIGHT_DISPLAY},
 
     // Media Player shortcuts.

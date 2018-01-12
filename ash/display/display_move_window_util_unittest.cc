@@ -37,6 +37,22 @@ gfx::Rect GetDefaultLeftSnappedBoundsInDisplay(
   return work_area;
 }
 
+views::Widget* CreateTestWidgetWithParent(views::Widget::InitParams::Type type,
+                                          gfx::NativeView parent,
+                                          const gfx::Rect& bounds,
+                                          bool child) {
+  views::Widget::InitParams params(type);
+  params.delegate = nullptr;
+  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  params.parent = parent;
+  params.bounds = bounds;
+  params.child = child;
+  views::Widget* widget = new views::Widget;
+  widget->Init(params);
+  widget->Show();
+  return widget;
+}
+
 }  // namespace
 
 using DisplayMoveWindowUtilTest = AshTestBase;
@@ -451,14 +467,9 @@ TEST_F(DisplayMoveWindowUtilTest, ActiveTransientChildWindow) {
 
   // Create a |child| transient widget of |window|. When |child| is shown, it is
   // activated.
-  std::unique_ptr<views::Widget> child(new views::Widget);
-  views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW);
-  params.delegate = nullptr;
-  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
-  params.bounds = gfx::Rect(20, 30, 40, 50);
-  params.parent = window->GetNativeWindow();
-  child->Init(params);
-  child->Show();
+  std::unique_ptr<views::Widget> child(CreateTestWidgetWithParent(
+      views::Widget::InitParams::TYPE_WINDOW, window->GetNativeView(),
+      gfx::Rect(20, 30, 40, 50), false));
   display::Screen* screen = display::Screen::GetScreen();
   EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
             screen->GetDisplayNearestWindow(window->GetNativeWindow()).id());
@@ -478,6 +489,32 @@ TEST_F(DisplayMoveWindowUtilTest, ActiveTransientChildWindow) {
             window->GetNativeWindow()->GetBoundsInScreen());
   EXPECT_EQ(gfx::Rect(420, 30, 40, 50),
             child->GetNativeWindow()->GetBoundsInScreen());
+}
+
+TEST_F(DisplayMoveWindowUtilTest, AnotherTest) {
+  UpdateDisplay("400x300,400x300");
+  std::unique_ptr<views::Widget> window(CreateTestWidgetWithParent(
+      views::Widget::InitParams::TYPE_BUBBLE, Shell::GetPrimaryRootWindow(),
+      gfx::Rect(10, 20, 200, 100), true));
+
+  std::unique_ptr<views::Widget> child(CreateTestWidgetWithParent(
+      views::Widget::InitParams::TYPE_WINDOW, window->GetNativeView(),
+      gfx::Rect(20, 30, 40, 50), false));
+  display::Screen* screen = display::Screen::GetScreen();
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(window->GetNativeWindow()).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(child->GetNativeWindow()).id());
+  // Ensure |child| window is activated.
+  EXPECT_FALSE(wm::IsActiveWindow(window->GetNativeWindow()));
+  EXPECT_TRUE(wm::IsActiveWindow(child->GetNativeWindow()));
+
+  // Operate moving window to right display.
+  HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(window->GetNativeWindow()).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(child->GetNativeWindow()).id());
 }
 
 }  // namespace ash
