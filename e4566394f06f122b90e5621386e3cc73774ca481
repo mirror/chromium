@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607d8df7_a1c3d68f",
+        "filename": "ios/chrome/browser/signin/authentication_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:54:45Z",
+      "side": 1,
+      "message": "I think this call always return a not-null object as the second parameter is true. So the CHECK is equivalent to CHECK(service-\u003einitialized());\n\nIf you want this function to not create the service, then you may pass \"false\" to GetServiceForBrowserState.",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "e4566394f06f122b90e5621386e3cc73774ca481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c98bac_f6686ff5",
+        "filename": "ios/chrome/browser/signin/authentication_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-12T13:54:45Z",
+      "side": 1,
+      "message": "Ditto as above - this is equivalent to CHECK(!service-\u003einitialized())",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "e4566394f06f122b90e5621386e3cc73774ca481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
