@@ -94,6 +94,30 @@
       "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c66a01_bdb99579",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2018-01-12T17:53:43Z",
+      "side": 1,
+      "message": "Does it have to be power of 2?\nThe dynamic answer would be to get the icon size in dp and use dpToPx() to convert it to pixels. And then maybe round up to power of 2?",
+      "parentUuid": "93911420_e25e45be",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
