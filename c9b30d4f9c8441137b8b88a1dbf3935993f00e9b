@@ -16,6 +16,24 @@
       "revId": "c9b30d4f9c8441137b8b88a1dbf3935993f00e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07515588_d60b96cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2018-01-12T09:24:58Z",
+      "side": 1,
+      "message": "Yeah we need to use a union of both. Thanks for the suggestion.\n\nWe cannot use only the VisualOverflowRect(), that was the first version of this patch\nand the following test was failing:\nfast/css-grid-layout/painting-item-marginbox-overflowing-grid-area.html\n\nThe reason is that the VisualOverflowRect() always has 0x0 as position,\nand in that test we use margins to make the item overflow the grid area.\nThat information comes in the position of the FrameRect(), so using only\nVisualOverflowRect() is not enough.",
+      "parentUuid": "74712e8f_ea950d70",
+      "revId": "c9b30d4f9c8441137b8b88a1dbf3935993f00e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
