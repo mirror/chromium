@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0e3ac4_5b047402",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "what is a divider?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec70cd01_4b18c4a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "What is this?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd91a53e_75b6f828",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "Can we just make everything after the spacer to be considered as added to the right section?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49760a6d_c50d405f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "Consider add item priorities instead of introducing a right section?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ba6b9d_aff685e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelinePanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "Do not use FIXME. Use TODO",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb38edb_d7605fe5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "can we have a common part shared?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de43f86_9a253679",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "should you update _insertionPoint?",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cd72b4_4b7f1b3c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "it doesn\u0027t seem to respect _reverse property",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643e2668_8ef4a120",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/toolbar.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-12T01:21:15Z",
+      "side": 1,
+      "message": "toolbars are transparent",
+      "revId": "49d42b6047645c60c0c5daf92141566dce06a698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
