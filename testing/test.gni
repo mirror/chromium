@@ -233,7 +233,7 @@ template("test") {
 
     group(target_name) {
       testonly = true
-      data_deps = [
+      deps = [
         ":$_gen_runner_target",
         ":$_pkg_target",
       ]
