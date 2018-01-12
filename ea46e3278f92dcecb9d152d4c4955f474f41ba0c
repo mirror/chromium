@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a859b345_fed436fe",
+        "filename": "chrome/app/nibs/FirstRunBubble.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T02:12:51Z",
+      "side": 0,
+      "message": "Can IDS_FR_BUBBLE_CHANGE be deleted from generated_resources.grd?\n\nand\n - IDS_FR_BUBBLE_SUBTEXT\n - IDS_FR_BUBBLE_TITLE\n\nor any others you can find",
+      "range": {
+        "startLine": 52,
+        "startChar": 75,
+        "endLine": 52,
+        "endChar": 95
+      },
+      "revId": "ea46e3278f92dcecb9d152d4c4955f474f41ba0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09824c71_2fc1abc6",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T02:12:51Z",
+      "side": 0,
+      "message": "normally deleting UMA needs an \u003cobsolete\u003e added in histograms.xml  .. but it looks like this was never added :o",
+      "revId": "ea46e3278f92dcecb9d152d4c4955f474f41ba0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa70743_ed1ff2dc",
+        "filename": "chrome/installer/util/master_preferences_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-12T02:12:51Z",
+      "side": 0,
+      "message": "note I don\u0027t know enough about master_preferenes to know whether removing stuff from here has any implications for \"things\", but grt@ probably has an idea :)",
+      "revId": "ea46e3278f92dcecb9d152d4c4955f474f41ba0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
