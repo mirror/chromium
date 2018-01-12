@@ -113,7 +113,7 @@ bool ShouldInterruptForMethod(const String& method) {
          method == "Debugger.setBreakpointByUrl" ||
          method == "Debugger.removeBreakpoint" ||
          method == "Debugger.setBreakpointsActive" ||
-         method == "Performance.getMetrics" || method == "Page.crash";
+         method == "Performance.getMetrics";
 }
 
 }  // namespace
@@ -232,9 +232,6 @@ class WebDevToolsAgentImpl::IOSession : public mojom::blink::DevToolsSession {
                                const String& method,
                                const String& message) override {
     DCHECK(ShouldInterruptForMethod(method));
-    // Crash renderer.
-    if (method == "Page.crash")
-      CHECK(false);
 
     MainThreadDebugger::InterruptMainThreadAndRun(
         CrossThreadBind(&WebDevToolsAgentImpl::DispatchMessageFromFrontend,
