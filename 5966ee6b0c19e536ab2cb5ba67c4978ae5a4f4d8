@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35295eec_3eb6550e",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-12T22:35:09Z",
+      "side": 1,
+      "message": "Dominic was hoping for something exponential mapping the range (0, 1) to (1, 20), to make increases consistent by distance whether the user moves quickly or slowly. This is as simple as I could think of to meet those constraints:\ny \u003d 19*x^2 + 1",
+      "parentUuid": "f8fe3b6a_13672c7d",
+      "range": {
+        "startLine": 694,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 33
+      },
+      "revId": "5966ee6b0c19e536ab2cb5ba67c4978ae5a4f4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f3155_ea16d23a",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 7
