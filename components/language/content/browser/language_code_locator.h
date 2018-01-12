@@ -24,8 +24,9 @@ class LanguageCodeLocator {
                                            double longitude) const;
 
  private:
-  // Map from s2 cellid to ';' delimited list of language codes.
-  const base::flat_map<uint64_t, std::string> district_languages_;
+  // Map from s2 cellid to ';' delimited list of language codes enum.
+  const base::flat_map<uint32_t, char> district_languages_;
+  const base::flat_map<char, std::string> language_code_enums_;
 
   DISALLOW_COPY_AND_ASSIGN(LanguageCodeLocator);
 };

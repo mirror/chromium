@@ -39,19 +39,30 @@ def ExtractCellIds(language_districts):
     """Convert <language code>: [<cell_ids>...] into
        a list of cell_id : language_code pairs."""
     cell_language_code_pairs = []
+    language_code_enum = {}
     for language_code, cell_ids in language_districts:
         cell_ids = cell_ids.split(";")
         for cell_id in cell_ids:
-            cell_language_code_pairs.append((cell_id, language_code))
-    return cell_language_code_pairs
+            # We only store a coarser cell_ids. (represent using uint32_t)
+            coarse_cell_id = cell_id[:-8]
+            # Change language code to language_enum to save some space.
+            if not language_code_enum.has_key(language_code):
+                language_code_enum[language_code] = len(language_code_enum)
+            language_enum = language_code_enum[language_code]
+            cell_language_code_pairs.append((coarse_cell_id, language_enum))
+    return cell_language_code_pairs, language_code_enum
 
 
-def GenerateCpp(output_path, template_path, cell_language_code_pairs):
+def GenerateCpp(output_path,
+                template_path,
+                cell_language_code_pairs,
+                language_code_enum):
     """Render the template to generate cpp code for LanguageCodeLocator."""
     with open(template_path, "r") as f:
         template = jinja2.Template(f.read())
         context = {
-            "cell_lang_pairs" : cell_language_code_pairs
+            "cell_lang_pairs" : cell_language_code_pairs,
+            "language_code_enums" : language_code_enum
         }
         generated_code = template.render(context)
 
@@ -77,9 +88,13 @@ def Main():
     template_file_path = args.template
     data_file_path = args.inputs
 
-    cell_language_code_pairs = ExtractCellIds(ParseInputCsv(data_file_path))
+    cell_language_code_pairs, language_code_enum = ExtractCellIds(
+        ParseInputCsv(data_file_path))
 
-    GenerateCpp(output_path, template_file_path, cell_language_code_pairs)
+    GenerateCpp(output_path,
+                template_file_path,
+                cell_language_code_pairs,
+                list(language_code_enum.items()))
 
 if __name__ == "__main__":
     Main()
