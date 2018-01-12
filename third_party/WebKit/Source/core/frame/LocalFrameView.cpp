@@ -1072,12 +1072,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
 
-  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
-  // that happens, abandon layout.
-  bool was_attached = is_attached_;
-  ForceLayoutParentViewIfNeeded();
-  if (was_attached && !is_attached_)
-    return false;
 
   DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
@@ -3475,6 +3469,20 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   // out.
 
   frame_->GetDocument()->UpdateStyleAndLayoutTree();
+
+  // Update style for all embedded replaced content under this frame, so
+  // that intrinsic size computation for any embedded objects has up-to-date
+  // information.
+  // TODO(chrishtr): generalize this to fully separate style from layout.
+  for (Frame* child = frame_->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    if (!child->IsLocalFrame())
+      continue;
+    if (LocalFrameView* view = ToLocalFrame(child)->View()) {
+      if (view->EmbeddedReplacedContent())
+        view->GetLayoutView()->GetDocument().UpdateStyleAndLayoutTree();
+    }
+  }
 
   CHECK(!ShouldThrottleRendering());
   CHECK(frame_->GetDocument()->IsActive());
