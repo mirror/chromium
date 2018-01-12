@@ -31,9 +31,9 @@ favicon_base::FaviconImageResult GetDummyFaviconResult() {
 }
 
 void VerifyFetchedFavicon(int* count, const gfx::Image& favicon) {
-  DCHECK(count);
   EXPECT_FALSE(favicon.IsEmpty());
-  ++(*count);
+  if (count)
+    ++(*count);
 }
 
 void Fail(const gfx::Image& favicon) {
@@ -198,4 +198,39 @@ TEST_F(FaviconCacheTest, ClearIconsWithHistoryDeletions) {
       cache_.GetFaviconForPageUrl(kUrlA, base::BindOnce(&NoOp)).IsEmpty());
   EXPECT_TRUE(
       cache_.GetFaviconForPageUrl(kUrlB, base::BindOnce(&NoOp)).IsEmpty());
+}
+
+TEST_F(FaviconCacheTest, CacheNullFavicons) {
+  ExpectFaviconServiceCalls(1, 0);
+
+  EXPECT_TRUE(
+      cache_.GetFaviconForPageUrl(kUrlA, base::BindOnce(&NoOp)).IsEmpty());
+  favicon_service_a_site_response_.Run(favicon_base::FaviconImageResult());
+
+  // The mock FaviconService's EXPECT_CALL verifies that we do not make another
+  // call to FaviconService.
+  EXPECT_TRUE(
+      cache_.GetFaviconForPageUrl(kUrlA, base::BindOnce(&NoOp)).IsEmpty());
+}
+
+TEST_F(FaviconCacheTest, ExpireNullFavicons) {
+  ExpectFaviconServiceCalls(2, 0);
+
+  EXPECT_TRUE(
+      cache_.GetFaviconForPageUrl(kUrlA, base::BindOnce(&NoOp)).IsEmpty());
+  favicon_service_a_site_response_.Run(favicon_base::FaviconImageResult());
+
+  cache_.OnURLVisited(nullptr /* history_service */, ui::PAGE_TRANSITION_LINK,
+                      history::URLRow(kUrlA), history::RedirectList(),
+                      base::Time::Now());
+
+  // Now the empty favicon should have been expired and we expect our second
+  // call to the mock underlying FaviconService.
+  EXPECT_TRUE(cache_
+                  .GetFaviconForPageUrl(
+                      kUrlA, base::BindOnce(&VerifyFetchedFavicon, nullptr))
+                  .IsEmpty());
+  favicon_service_a_site_response_.Run(GetDummyFaviconResult());
+  EXPECT_FALSE(
+      cache_.GetFaviconForPageUrl(kUrlA, base::BindOnce(&NoOp)).IsEmpty());
 }
