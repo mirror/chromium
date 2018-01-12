@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c408fb14_b59b9cf1",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-12T08:55:03Z",
+      "side": 1,
+      "message": "I did find this a little confusing as well. What do you think about something like \"AuthenticatorSupportedOptions\" to highlight that this is information about an authenticator rather than options passed to the authenticator?",
+      "revId": "2108e6ed4c7dafc9693280985704d6a3fc916769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
