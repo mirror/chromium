@@ -199,7 +199,8 @@ void MediaPlayerRenderer::SetVolume(float volume) {
 
 void MediaPlayerRenderer::UpdateVolume() {
   float volume = web_contents_muted_ ? 0 : volume_;
-  media_player_->SetVolume(volume);
+  if (media_player_)
+    media_player_->SetVolume(volume);
 }
 
 base::TimeDelta MediaPlayerRenderer::GetMediaTime() {
