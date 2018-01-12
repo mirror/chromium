@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f181a8a_2f9072ec",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T19:05:49Z",
+      "side": 1,
+      "message": "Do you handle this wallpaper::NUM_WALLPAPER_LAYOUT case on all the caller sites? Otherwise it might be good to keep it return a valid value.",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e9d31b_e6f5f094",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T19:05:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b19b793_d799cb55",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T19:05:49Z",
+      "side": 1,
+      "message": "We may not need this function. See comment below in wallpaper_private_api.cc.",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52d2408_253877ce",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T19:05:49Z",
+      "side": 1,
+      "message": "you may not need this variable. You can get the current wallpaper\u0027s location from |current_wallpaper_|?",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8842b8_4acd84ab",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T19:05:49Z",
+      "side": 1,
+      "message": "It seems no one is using \"currentWallpaper\" now.",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
