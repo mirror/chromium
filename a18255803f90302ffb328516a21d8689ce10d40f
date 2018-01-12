@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb73b7e1_ae01c116",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ab69c9_bf84df63",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e1ed6a3_056282f3",
         "filename": "net/http/http_stream_factory_impl_job.cc",
         "patchSetId": 17
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1ee68a81_2e0d841f",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35bce8a5_7180425f",
+      "range": {
+        "startLine": 953,
+        "startChar": 6,
+        "endLine": 953,
+        "endChar": 13
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4574edf_73894a07",
         "filename": "net/socket/client_socket_pool_base.h",
         "patchSetId": 17
@@ -115,6 +163,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14464932_c50419c2",
+        "filename": "net/socket/client_socket_pool_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4574edf_73894a07",
+      "range": {
+        "startLine": 633,
+        "startChar": 15,
+        "endLine": 633,
+        "endChar": 21
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4805178e_1ae28b26",
+        "filename": "net/socket/socket_test_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c986d01_001c57da",
+      "range": {
+        "startLine": 1963,
+        "startChar": 0,
+        "endLine": 1963,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b3befd_157e8556",
         "filename": "net/socket/socket_test_util.h",
         "patchSetId": 17
@@ -161,6 +257,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e497af3_cf816558",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done, this required making MockTransportClientSocketPool::MockConnectJob better mimic TransportConnectJob.",
+      "parentUuid": "40b3befd_157e8556",
+      "range": {
+        "startLine": 1108,
+        "startChar": 27,
+        "endLine": 1108,
+        "endChar": 31
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ef7ed8ae_49a7f0b6",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b7ebf9_89e46af7",
+      "range": {
+        "startLine": 1111,
+        "startChar": 17,
+        "endLine": 1111,
+        "endChar": 0
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac204ac_3c2bc08b",
         "filename": "net/socket/socket_test_util.h",
         "patchSetId": 17
@@ -207,6 +351,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2082eacd_c44c5ea1",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac204ac_3c2bc08b",
+      "range": {
+        "startLine": 1124,
+        "startChar": 26,
+        "endLine": 1124,
+        "endChar": 27
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4b01aef8_70336d83",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15af3443_0a2bec1b",
+      "range": {
+        "startLine": 1127,
+        "startChar": 2,
+        "endLine": 1127,
+        "endChar": 25
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8962e45_4690a5f8",
         "filename": "net/socket/socks_client_socket_pool_unittest.cc",
         "patchSetId": 17
@@ -253,6 +445,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978e1858_840aa8c6",
+        "filename": "net/socket/socks_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8962e45_4690a5f8",
+      "range": {
+        "startLine": 365,
+        "startChar": 17,
+        "endLine": 365,
+        "endChar": 26
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "8a17c2f6_1fce63a7",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c62dc68e_83685786",
+      "range": {
+        "startLine": 983,
+        "startChar": 18,
+        "endLine": 983,
+        "endChar": 19
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb263c2_23b01cd6",
         "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
         "patchSetId": 17
@@ -299,6 +539,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4aa1df3_a74074dd",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb263c2_23b01cd6",
+      "range": {
+        "startLine": 988,
+        "startChar": 31,
+        "endLine": 988,
+        "endChar": 37
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "21dec3d7_6e4f3030",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae593ca5_32a83bed",
+      "range": {
+        "startLine": 990,
+        "startChar": 24,
+        "endLine": 990,
+        "endChar": 25
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5da43c75_4ff47945",
         "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
         "patchSetId": 17
@@ -345,6 +633,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c90dc9_86cd6372",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da43c75_4ff47945",
+      "range": {
+        "startLine": 1030,
+        "startChar": 5,
+        "endLine": 1030,
+        "endChar": 9
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "8d3f600d_c8170b03",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c182578_785f62ff",
+      "range": {
+        "startLine": 1059,
+        "startChar": 23,
+        "endLine": 1059,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eeec731_131c0584",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 17
@@ -391,6 +727,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d0157b_68eb0a34",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "I see what you\u0027re saying, ClientSocketPoolBaseHelper::ProcessPendingRequest() grabs the highest priority request to kick off another connect job.  I think this is fine as the highest priority pending request can be looked at as the one yelling the loudest for a connection, so I think it\u0027s fine to blame the minuscule bandwidth used by a SYN packet on it.  The highest priority pending request will be the first to receive the next successfully connected socket, so in some ways any new connection attempts increase the chances that this happens sooner (e.g. prior connect attempts are stuck), so this seems an acceptable attribution.  Determining perfect attribution isn\u0027t possible without being able to predict which connection attempt will succeed first, which is impossible.",
+      "parentUuid": "7eeec731_131c0584",
+      "range": {
+        "startLine": 1158,
+        "startChar": 7,
+        "endLine": 1158,
+        "endChar": 36
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -699,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "a130170b_4c9a16f5",
+        "filename": "net/socket/websocket_transport_client_socket_pool.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b2c947_8f80ef91",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 30
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab943a77_6520d3b1",
         "filename": "net/spdy/chromium/spdy_test_util_common.h",
         "patchSetId": 17
@@ -719,6 +1103,30 @@
       "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e7cd7e_9cd4d0ef",
+        "filename": "net/spdy/chromium/spdy_test_util_common.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-12T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab943a77_6520d3b1",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 17
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
