@@ -16,6 +16,24 @@
       "revId": "d976350068d95d5aad8ccf4926693fc56713cab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c3c068_cfcfa81b",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-12T01:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc007a9_58d1999d",
+      "revId": "d976350068d95d5aad8ccf4926693fc56713cab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
