@@ -10904,6 +10904,25 @@
       If this policy is set to 1, ads will not be blocked on sites with intrusive ads.
       If this policy is left not set, 2 will be used.''',
     },
+    {
+      'name': 'ARCSideloadingAllowed',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome_os:65-'],
+      'device_only': True,
+      'features': {
+        'can_be_recommended': False,
+        'dynamic_refresh': False,
+        'per_profile': False,
+      },
+      'example_value': True,
+      'id': 410,
+      'caption': '''Allow ARC APK Sideloading''',
+      'tags': [],
+      'desc': '''If this policy is set, an enrolled user can enable APK sideloading for all users of the device.
+
+      If this policy is not set, users will not be able to enable APK sideloading.''',
+    },
   ],
 
   'messages': {
