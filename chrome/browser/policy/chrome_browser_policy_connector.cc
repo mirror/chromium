@@ -86,6 +86,8 @@ void ChromeBrowserPolicyConnector::Init(
   InitInternal(local_state, std::move(device_management_service));
 }
 
+void ChromeBrowserPolicyConnector::OnPreCreateThreads() {}
+
 std::unique_ptr<ConfigurationPolicyProvider>
 ChromeBrowserPolicyConnector::CreatePlatformProvider() {
 #if defined(OS_WIN)

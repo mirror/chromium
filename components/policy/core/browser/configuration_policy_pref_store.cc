@@ -25,7 +25,14 @@ namespace {
 // Policies are loaded early on startup, before PolicyErrorMaps are ready to
 // be retrieved. This function is posted to UI to log any errors found on
 // Refresh below.
-void LogErrors(PolicyErrorMap* errors) {
+void LogErrors(std::unique_ptr<PolicyErrorMap> errors) {
+  // Clank doesn't synchronously process startup tasks, so it's possible
+  // |errors| isn't ready yet. Assume it will be shortly.
+  if (!errors->IsReady()) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&LogErrors, std::move(errors)));
+    return;
+  }
   PolicyErrorMap::const_iterator iter;
   for (iter = errors->begin(); iter != errors->end(); ++iter) {
     base::string16 policy = base::ASCIIToUTF16(iter->first);
@@ -138,7 +145,7 @@ PrefValueMap* ConfigurationPolicyPrefStore::CreatePreferencesFromPolicies() {
   // Retrieve and log the errors once the UI loop is ready. This is only an
   // issue during startup.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&LogErrors, base::Owned(errors.release())));
+      FROM_HERE, base::BindOnce(&LogErrors, std::move(errors)));
 
   return prefs.release();
 }

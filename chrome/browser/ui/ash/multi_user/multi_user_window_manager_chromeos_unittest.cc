@@ -32,6 +32,7 @@
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/ui/ash/chrome_new_window_client.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
@@ -311,7 +312,7 @@ class MultiUserWindowManagerChromeOSTest : public AshTestBase {
 
 void MultiUserWindowManagerChromeOSTest::SetUp() {
   chromeos::DeviceSettingsService::Initialize();
-  chromeos::CrosSettings::Initialize();
+  chromeos::CrosSettingsTestApi::InitializeForTest();
   ash_test_helper()->set_test_shell_delegate(new TestShellDelegateChromeOS);
   ash::AshTestEnvironmentContent* test_environment =
       static_cast<ash::AshTestEnvironmentContent*>(

@@ -39,6 +39,8 @@ class POLICY_EXPORT PolicyServiceImpl
 
   ~PolicyServiceImpl() override;
 
+  void AddProvider(ConfigurationPolicyProvider* provider);
+
   // PolicyService overrides:
   void AddObserver(PolicyDomain domain,
                    PolicyService::Observer* observer) override;
@@ -50,6 +52,10 @@ class POLICY_EXPORT PolicyServiceImpl
 
  private:
   using Observers = base::ObserverList<PolicyService::Observer, true>;
+
+  // Called when a ConfigurationPolicyProvider is added. This doesn't call
+  // MergeAndTriggerUpdates(), it's assumed calling code will handle that.
+  void OnProviderAdded(ConfigurationPolicyProvider* provider);
 
   // ConfigurationPolicyProvider::Observer overrides:
   void OnUpdatePolicy(ConfigurationPolicyProvider* provider) override;
