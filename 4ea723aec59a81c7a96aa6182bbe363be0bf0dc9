@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44d001fb_d7f6d5e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-12T22:08:12Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b93a78b8_ce502759",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bafdaa41_dca1cd02",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1209750a_9d36661b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 9614,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-12T22:08:12Z",
+      "side": 0,
+      "message": "Yes, they are unused duplicates of Android.ChromeHome.Survey.DownloadResponseCode and Android.ChromeHome.Survey.ShowSurvey.",
+      "parentUuid": "bafdaa41_dca1cd02",
+      "range": {
+        "startLine": 9603,
+        "startChar": 0,
+        "endLine": 9614,
+        "endChar": 12
+      },
+      "revId": "4ea723aec59a81c7a96aa6182bbe363be0bf0dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
