@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9ccd5a4_e580c273",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d26a8b4_1f92fda6",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e953fc_b75a5ccf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6de9a5_edad8c4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e953fc_b75a5ccf",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 49
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03544905_76f3d015",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "This approach provides us flexibility on where the contextual suggestions are displayed. There is a follow-on prototype that will show suggestions in a separate bottom sheet tab, in which case having a separate node is easier than having this live inside of SectionList.",
+      "parentUuid": "3253648f_3ed382dd",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de17ba7_8f456544",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c1145b_e3424bc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "6de17ba7_8f456544",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 21
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "09758317_e4c442f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Done.\n\n\u003e you shouldn\u0027t be able to dismiss this section, right?\n\nI don\u0027t actually know. This is a throwaway prototype for user studies, so I\u0027m intentionally not implementing everything.",
+      "parentUuid": "3e14fcf3_ced14cef",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 56
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f00c7eb9_b45f0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5698bc17_b032b4ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Previously the contextual suggestions section remained visible.\n\nI added a method to ContextualSuggestionsSection to hide/show the section. There are some rough edges (e.g. articles for you header is visible on NTP), but this is a throwaway prototype for UX research so rough edges and scenarios that don\u0027t work are OK.",
+      "parentUuid": "f00c7eb9_b45f0d63",
+      "range": {
+        "startLine": 214,
+        "startChar": 27,
+        "endLine": 214,
+        "endChar": 52
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b64d4b29_11f3ee18",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af704f9c_d58e4a24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64d4b29_11f3ee18",
+      "range": {
+        "startLine": 217,
+        "startChar": 18,
+        "endLine": 217,
+        "endChar": 22
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

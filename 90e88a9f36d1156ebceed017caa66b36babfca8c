@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15cf6624_053cd28c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T17:59:29Z",
+      "side": 1,
+      "message": "Please see video in bug for loading view.",
+      "revId": "90e88a9f36d1156ebceed017caa66b36babfca8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
