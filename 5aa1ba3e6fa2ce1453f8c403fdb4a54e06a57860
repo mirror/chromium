@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "674165f9_6c5ec77f",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-12T10:14:48Z",
+      "side": 1,
+      "message": "+1, and I\u0027d go further and split this to make this actionable:\n\n\"The origin `[serialized origin]` is an opaque origin and hence not allowed to access `PublicKeyCredential` objects.\"\n\n\"The origin `[serialized origin]` does not correspond to a valid domain, and therefore not allowed to access `PublicKeyCredential` objects.\"?",
+      "parentUuid": "a17d33eb_f9dd7bdb",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c865d00d_dfbb90ce",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -115,6 +133,24 @@
       "writtenOn": "2018-01-12T08:05:02Z",
       "side": 1,
       "message": "Nit: Perhaps \"The relying party ID `[relyingPartyID]` is not valid for `[serialized origin]`.\"?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0506fd1a_6f406eee",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-12T10:14:48Z",
+      "side": 1,
+      "message": "+1, and I\u0027d go further to make this actionable:\n\n\"The relying party ID `[relyingPartyID]` is not a registrable domain suffix of, nor equal to `[serialized origin]`.\"?",
+      "parentUuid": "24c23fb1_3186d5fc",
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
