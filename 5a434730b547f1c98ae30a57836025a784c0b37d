@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "3e32edf5_a96998e7",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T22:39:58Z",
+      "side": 1,
+      "message": "Not calling Stop() in ~SlowGpuThread causes undefined behavior, regardless of what happens in ~InProcessGpuThread. It would show up as a data race on the vtable pointer. Without it, by the time the task that calls the virtual Init() runs on the GPU thread, the vtable pointer may (or may not, it\u0027s a data race) have been replaced by a pointer to the vtable of InProcessGpuThread, depending on how far along the SlowGpuThread destructor is, i.e. you don\u0027t even know which Init function gets called.\n\nThis is the same reason why ~InProcessGpuThread calls Stop, even though ~Thread (the destructor of the base class) also calls Stop.",
+      "parentUuid": "fd302ca5_e7abc6fc",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61dceae_e9f8d722",
         "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
         "patchSetId": 11
