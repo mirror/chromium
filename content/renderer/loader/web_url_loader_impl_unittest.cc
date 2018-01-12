@@ -21,6 +21,7 @@
 #include "base/time/time.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_response_info.h"
+#include "content/public/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/request_extra_data.h"
@@ -160,7 +161,8 @@ class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
       : loader_(new WebURLLoaderImpl(
             dispatcher,
             blink::scheduler::GetSingleThreadTaskRunnerForTesting(),
-            &fake_url_loader_factory_)),
+          base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+              &fake_url_loader_factory_)),
         delete_on_receive_redirect_(false),
         delete_on_receive_response_(false),
         delete_on_receive_data_(false),
