@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a08b9b9_173ac2c2",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-12T23:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65cffc08_3d53cc0e",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "c7079c81be6255fc822b51ed8a45f2a7a129d296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f641504_309a06e7",
         "filename": "extensions/browser/updater/update_data_provider.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "c7079c81be6255fc822b51ed8a45f2a7a129d296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9a17d3_d32b2762",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-12T23:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f641504_309a06e7",
+      "revId": "c7079c81be6255fc822b51ed8a45f2a7a129d296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
