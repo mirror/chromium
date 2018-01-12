@@ -589,8 +589,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, DISABLED_CrossProcessNavCancelsDialogs) {
   EXPECT_TRUE(js_helper->IsShowingDialogForTesting());
 
   // A cross-site navigation should force the dialog to close.
-  GURL options_url("http://www.example.com/empty.html");
-  ui_test_utils::NavigateToURL(browser(), options_url);
+  GURL url2("http://www.example.com/empty.html");
+  ui_test_utils::NavigateToURL(browser(), url2);
   EXPECT_FALSE(js_helper->IsShowingDialogForTesting());
 
   // Make sure input events still work in the renderer process.
@@ -625,8 +625,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SadTabCancelsDialogs) {
   EXPECT_FALSE(dialog_queue->HasActiveDialog());
 
   // Make sure subsequent navigations work.
-  GURL options_url("http://www.example.com/empty.html");
-  ui_test_utils::NavigateToURL(browser(), options_url);
+  GURL url2("http://www.example.com/empty.html");
+  ui_test_utils::NavigateToURL(browser(), url2);
 }
 
 // Make sure that dialogs opened by subframes are closed when the process dies.
@@ -659,8 +659,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SadTabCancelsSubframeDialogs) {
   EXPECT_FALSE(js_helper->IsShowingDialogForTesting());
 
   // Make sure subsequent navigations work.
-  GURL options_url("data:text/html,foo");
-  ui_test_utils::NavigateToURL(browser(), options_url);
+  GURL url2("data:text/html,foo");
+  ui_test_utils::NavigateToURL(browser(), url2);
 }
 
 // Make sure modal dialogs within a guestview are closed when an interstitial
@@ -761,8 +761,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, BeforeUnloadVsBeforeReload) {
   content::PrepContentsForBeforeUnloadTest(contents);
 
   // Navigate to another url, and check that we get a "before unload" dialog.
-  GURL options_url(url::kAboutBlankURL);
-  browser()->OpenURL(OpenURLParams(options_url, Referrer(),
+  GURL url2(url::kAboutBlankURL);
+  browser()->OpenURL(OpenURLParams(url2, Referrer(),
                                    WindowOpenDisposition::CURRENT_TAB,
                                    ui::PAGE_TRANSITION_TYPED, false));
 
@@ -1155,29 +1155,32 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
 }
 
-IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
+IN_PROC_BROWSER_TEST_F(BrowserTest,
+                       NavigateToDefaultChromePageOnExtensionUnload) {
   ASSERT_TRUE(embedded_test_server()->Start());
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
+  // Open the chrome://history/ page in the current tab.
   chrome::ShowHistory(browser());
   content::WebContents* default_history_page =
       tab_strip_model->GetActiveWebContents();
 
   const Extension* extension =
-      LoadExtension(test_data_dir_.AppendASCII("options_page/"));
+      LoadExtension(test_data_dir_.AppendASCII("api_test")
+                        .AppendASCII("override")
+                        .AppendASCII("history"));
   ASSERT_TRUE(extension);
 
+  // Open the chrome://history/ page in a new tab.
   GURL extension_url(chrome::kChromeUIHistoryURL);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui_test_utils::BROWSER_TEST_NONE);
 
-  GURL options_url = extension->GetResourceURL("options.html");
-  EXPECT_TRUE(extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(
-      extension, browser()->profile()));
+  // TODO(catmullings): Check that the chrome://history/ page contains
+  // extensions content. Also check the the first chrome://history/ tab opened
+  // contains the default chrome history page content.
 
-  ASSERT_EQ(3, tab_strip_model->count());
-  EXPECT_EQ(options_url.spec(),
-            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+  ASSERT_EQ(2, tab_strip_model->count());
 
   // Uninstall the extension.
   ExtensionService* service =
@@ -1190,10 +1193,12 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
                            extensions::UnloadedExtensionReason::UNINSTALL);
   registry_observer.WaitForExtensionUnloaded();
 
-  // There should only be one tab now.
+  // Check that the latest opened chrome://history/ page contains the default
+  // chrome history page content.
   ASSERT_EQ(2, tab_strip_model->count());
   EXPECT_EQ(chrome::kChromeUIHistoryURL,
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
+  // TODO(catmullings): The following check doesn't pass.
   EXPECT_EQ(default_history_page, tab_strip_model->GetActiveWebContents());
 }
 
