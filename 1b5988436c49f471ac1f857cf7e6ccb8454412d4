@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f2ee163_28cb07f1",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T20:24:00Z",
+      "side": 1,
+      "message": "nit: GetURL() is deprecated; prefer GetLastCommittedURL()",
+      "range": {
+        "startLine": 1155,
+        "startChar": 53,
+        "endLine": 1155,
+        "endChar": 59
+      },
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f749e7c_75e38e1d",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 2
@@ -19,6 +42,41 @@
     },
     {
       "key": {
+        "uuid": "518df851_55b5ac82",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T20:24:00Z",
+      "side": 1,
+      "message": "Thanks for adding this!  I\u0027m not sure it belongs in this test file, though - can we add a new file, extension_web_ui_browsertest.cc?  Then we can pretty much just copy-paste this into there. :)",
+      "parentUuid": "9f749e7c_75e38e1d",
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815860c7_4a38f57e",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T20:24:00Z",
+      "side": 1,
+      "message": "We\u0027ll want to use BROWSER_TEST_WAIT_FOR_NAVIGATION here to ensure that the tab is fully navigated.",
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f26dfeb_3491e247",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +88,24 @@
       "writtenOn": "2018-01-12T19:34:17Z",
       "side": 1,
       "message": "Do you know of a way to compare contents of WebContents?",
+      "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8880cea0_80ae86f7",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-12T20:24:00Z",
+      "side": 1,
+      "message": "The easiest way is to compare contents is to use ExecuteScriptAndExtract* methods.  e.g., for the extension content, you might do something like:\n\nbool is_history_override_page \u003d false;\nEXPECT_TRUE(content::ExecuteScriptAndExtractBool(\n    web_contents,\n    \"domAutomationController.send(\\n\"\n    \"    document.body.textContent.indexOf(\u0027History Override\u0027) !\u003d\u003d -1);\\n\",\n    \u0026is_history_override_page);\nEXPECT_TRUE(is_history_override_page);\n\nThat said, we don\u0027t care quite as much about the content as the page itself.  What does WebContents::GetLastCommittedURL() return for the case when the extension is overriding the page?  Is it still chrome://history?  If not, just compare that URL.  If it *is* still chrome://history with the extension override, then instead extract the URL from the renderer, using a similar pattern to above:\n\nstd::string location;\nEXPECT_TRUE(content::ExecuteScriptAndExtractString(\n    web_contents,\n    \"domAutomationController.send(location.href);\\n\"\n    \u0026location);\nEXPECT_EQ(extension-\u003eid(), GURL(location).host());  // Extension has control\n\nThe location.href for the *real* chrome://history page will always be chrome://history, whereas the location.href for the extension page will point to it\u0027s html file in the extension\u0027s directory.\n\nThe advantage to comparing URL rather than content is that it\u0027s a bit more stable (e.g., protecting against the history page just changing its UI some day).",
+      "parentUuid": "6f26dfeb_3491e247",
       "revId": "1b5988436c49f471ac1f857cf7e6ccb8454412d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
