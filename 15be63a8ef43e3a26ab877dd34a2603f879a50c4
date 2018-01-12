@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b0a3983_493fa170",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T03:39:10Z",
+      "side": 1,
+      "message": "I believe this will handle all common cases, other than omnibox/selection handle ones. Resize catches any sort of change to the surface, and lines up with RenderWidgetHostViewAura / DelegatedFrameHost. Added a note.",
+      "parentUuid": "d64e3a94_b826de3a",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d54b4e9c_77449800",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T00:52:39Z",
       "side": 1,
       "message": "Could you make this exception conditional on surface sync being enabled? This should still always be true otherwise.",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 55
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df4159b_56211762",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T03:39:10Z",
+      "side": 1,
+      "message": "Oh, yeah, updated.",
+      "parentUuid": "d54b4e9c_77449800",
       "range": {
         "startLine": 325,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "87a4f135_0935b998",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T03:39:10Z",
+      "side": 1,
+      "message": "When renderer generates new IDs I expect them to be routed to the browser and probably still end up here first... this may not be the case with full Viz though, so maybe it\u0027s not worth doing this CHECK. removed.",
+      "parentUuid": "e28381bf_4ef5864a",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0703d62_25f710ab",
         "filename": "ui/android/delegated_frame_host_android.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df96859e_a057a846",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-12T03:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0703d62_25f710ab",
+      "revId": "15be63a8ef43e3a26ab877dd34a2603f879a50c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
