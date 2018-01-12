@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33c80184_78794b46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-12T18:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c408bd03_128650fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd814d56_93badd7d",
         "filename": "content/network/url_request_context_builder_mojo.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c1dd60_5444b771",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-12T18:33:11Z",
+      "side": 1,
+      "message": "merge mistake, I think.  removed.",
+      "parentUuid": "cd814d56_93badd7d",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "79ba5749_fd71419b",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-12T18:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab6eed63_fd38eedb",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 55
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52735cf3_b5daf888",
         "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
         "patchSetId": 14
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "967a52d6_667cae35",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-12T18:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52735cf3_b5daf888",
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047c12f8_b5b6ca47",
         "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
         "patchSetId": 14
@@ -102,6 +192,24 @@
       "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63680301_66919c1d",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2018-01-12T18:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047c12f8_b5b6ca47",
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
