@@ -434,7 +434,9 @@ TEST_F(MemoryCacheCorrectnessTest, PostToSameURLTwice) {
   FetchParameters fetch2(request2);
   RawResource* resource2 = RawResource::FetchSynchronously(fetch2, Fetcher());
 
-  EXPECT_EQ(resource2, GetMemoryCache()->ResourceForURL(request2.Url()));
+  ASSERT_TRUE(resource2);
+  EXPECT_EQ(nullptr, GetMemoryCache()->ResourceForURL(request2.Url()));
+  EXPECT_TRUE(resource2->ErrorOccurred());
   EXPECT_NE(resource1, resource2);
 }
 

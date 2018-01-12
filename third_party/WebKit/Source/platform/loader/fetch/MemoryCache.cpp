@@ -163,6 +163,9 @@ void MemoryCache::AddInternal(ResourceMap* resource_map,
 void MemoryCache::Remove(Resource* resource) {
   DCHECK(WTF::IsMainThread());
   DCHECK(resource);
+  if (resource->Url().IsNull())
+    return;
+
   RESOURCE_LOADING_DVLOG(1) << "Evicting resource " << resource << " for "
                             << resource->Url().GetString() << " from cache";
   TRACE_EVENT1("blink", "MemoryCache::evict", "resource",
