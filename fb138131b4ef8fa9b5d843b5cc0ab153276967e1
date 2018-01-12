@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f3455e_90b0da7a",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-12T06:29:47Z",
+      "side": 1,
+      "message": "nit: Since you\u0027re touching this line, I think this is a place where ui::EventType is preferred over auto. The type itself does not appear anywhere in the value and is a simple type.\n\nhttps://google.github.io/styleguide/cppguide.html#auto",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 6
+      },
+      "revId": "fb138131b4ef8fa9b5d843b5cc0ab153276967e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
