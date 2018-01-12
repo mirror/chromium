@@ -69,6 +69,24 @@
       "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68941a7b_ba45ab92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-12T17:02:41Z",
+      "side": 1,
+      "message": "Usually we change both together.  The way to do it is use the \u0027Depends-On\u0027 tag on the internal CL with format \"Depends-On: chromium/\u003ccode-review-id\u003e\".  Then you can run the internal CQ against the upstream CL (it will cherry-pick it), and ask reviewers to look at both together.\n\nLand upstream, cherry-pick to internal and land.",
+      "parentUuid": "93145948_cffed3b3",
+      "revId": "12ef686bc5b04407c593b4942c5fdc16e7a634fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
