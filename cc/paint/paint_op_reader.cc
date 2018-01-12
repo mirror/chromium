@@ -570,6 +570,8 @@ void PaintOpReader::ReadColorFilterPaintFilter(
 
   ReadFlattenable(&color_filter);
   Read(&input);
+  if (!color_filter)
+    SetInvalid();
   if (!valid_)
     return;
   filter->reset(new ColorFilterPaintFilter(std::move(color_filter),
