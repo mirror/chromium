@@ -16,6 +16,24 @@
       "revId": "3004984b009155c248a0d6555f4971d73f547884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06de061e_2dc5c7b1",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-12T17:09:03Z",
+      "side": 1,
+      "message": "I thought about that but the downside of that approach is that we are putting this RTT logic in devtools instead of NetworkStateNotifier. I am not sure if Devtools is the right place for that. WDYT?",
+      "parentUuid": "7f7c6331_4169b1f1",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
