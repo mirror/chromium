@@ -16,6 +16,24 @@
       "revId": "3065acd9425196749478815fac43926b351b7cbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09521027_b4109e76",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-12T10:43:54Z",
+      "side": 1,
+      "message": "It incorrectly asserts both audio and video stats are present, I filed and referenced\nhttps://github.com/w3c/web-platform-tests/issues/9010",
+      "parentUuid": "334fff35_aedd7e39",
+      "revId": "3065acd9425196749478815fac43926b351b7cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
