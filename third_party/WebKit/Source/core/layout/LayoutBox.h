@@ -208,6 +208,7 @@ struct LayoutBoxRareData {
 // (e.g. the overflows). Thus it is paramount to know which box a function is
 // manipulating. Also of critical importance is the coordinate system used (see
 // the COORDINATE SYSTEMS section in LayoutBoxModelObject).
+
 class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
  public:
   explicit LayoutBox(ContainerNode*);
@@ -1574,6 +1575,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutBoxRareData& EnsureRareData() {
     if (!rare_data_)
       rare_data_ = std::make_unique<LayoutBoxRareData>();
+    rare_stat_.AddReason(kReasonLBRareData);
     return *rare_data_.get();
   }
 
@@ -1722,6 +1724,8 @@ inline void LayoutBox::SetInlineBoxWrapper(InlineBox* box_wrapper) {
   }
 
   inline_box_wrapper_ = box_wrapper;
+  if (box_wrapper)
+    rare_stat_.AddReason(kReasonLBInlineBoxWrapper);
 }
 
 inline bool LayoutBox::IsForcedFragmentainerBreakValue(
