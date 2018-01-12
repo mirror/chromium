@@ -17,6 +17,10 @@ namespace content {
 class AudioFocusDelegateAndroid : public AudioFocusDelegate {
  public:
   explicit AudioFocusDelegateAndroid(MediaSessionImpl* media_session);
+
+  static std::unique_ptr<AudioFocusDelegate> Create(
+      MediaSessionImpl* media_session);
+
   ~AudioFocusDelegateAndroid() override;
 
   void Initialize();

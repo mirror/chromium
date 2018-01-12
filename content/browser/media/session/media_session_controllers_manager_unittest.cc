@@ -48,11 +48,12 @@ class MediaSessionControllersManagerTest
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kEnableInternalMediaSession);
     }
+#endif
+
     if (IsAudioFocusEnabled()) {
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kEnableAudioFocus);
     }
-#endif
 
     media_player_id_ = MediaSessionControllersManager::MediaPlayerId(
         contents()->GetMainFrame(), 1);

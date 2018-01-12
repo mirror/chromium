@@ -6,8 +6,10 @@
 
 #include <algorithm>
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "content/browser/media/session/audio_focus_delegate.h"
+#include "content/browser/media/session/audio_focus_delegate_android.h"
+#include "content/browser/media/session/audio_focus_delegate_default.h"
 #include "content/browser/media/session/media_session_controller.h"
 #include "content/browser/media/session/media_session_player_observer.h"
 #include "content/browser/media/session/media_session_service_impl.h"
@@ -17,6 +19,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "media/base/media_content_type.h"
+#include "media/base/media_switches.h"
 #include "third_party/WebKit/public/platform/modules/mediasession/media_session.mojom.h"
 
 #if defined(OS_ANDROID)
@@ -565,7 +568,12 @@ MediaSessionImpl::MediaSessionImpl(WebContents* web_contents)
 }
 
 void MediaSessionImpl::Initialize() {
-  delegate_ = AudioFocusDelegate::Create(this);
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kAndroidAudioFocus)) {
+    delegate_ = AudioFocusDelegateAndroid::Create(this);
+  } else {
+    delegate_ = AudioFocusDelegateDefault::Create(this);
+  }
 }
 
 bool MediaSessionImpl::RequestSystemAudioFocus(

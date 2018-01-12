@@ -9,6 +9,9 @@
 
 namespace switches {
 
+// Use AudioFocusDelegateAndroid for audio focus logic.
+const char kAndroidAudioFocus[] = "android-audio-focus";
+
 // Allow users to specify a custom buffer size for debugging purpose.
 const char kAudioBufferSize[] = "audio-buffer-size";
 
@@ -76,12 +79,10 @@ const char kUseCras[] = "use-cras";
 const char kUnsafelyAllowProtectedMediaIdentifierForDomain[] =
     "unsafely-allow-protected-media-identifier-for-domain";
 
-#if !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 // Enable a internal audio focus management between tabs in such a way that two
 // tabs can't  play on top of each other.
 // The allowed values are: "" (empty) or |kEnableAudioFocusDuckFlash|.
 const char kEnableAudioFocus[] = "enable-audio-focus";
-#endif  // !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 // This value is used as an option for |kEnableAudioFocus|. Flash will

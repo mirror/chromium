@@ -76,7 +76,7 @@ void AudioFocusDelegateAndroid::RecordSessionDuck(
 }
 
 // static
-std::unique_ptr<AudioFocusDelegate> AudioFocusDelegate::Create(
+std::unique_ptr<AudioFocusDelegate> AudioFocusDelegateAndroid::Create(
     MediaSessionImpl* media_session) {
   AudioFocusDelegateAndroid* delegate =
       new AudioFocusDelegateAndroid(media_session);

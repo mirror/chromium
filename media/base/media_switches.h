@@ -21,6 +21,8 @@ class CommandLine;
 
 namespace switches {
 
+MEDIA_EXPORT extern const char kAndroidAudioFocus[];
+
 MEDIA_EXPORT extern const char kAudioBufferSize[];
 
 MEDIA_EXPORT extern const char kAutoplayPolicy[];
@@ -52,9 +54,7 @@ MEDIA_EXPORT extern const char kUseCras[];
 MEDIA_EXPORT extern const char
     kUnsafelyAllowProtectedMediaIdentifierForDomain[];
 
-#if !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 MEDIA_EXPORT extern const char kEnableAudioFocus[];
-#endif  // !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 MEDIA_EXPORT extern const char kEnableAudioFocusDuckFlash[];
@@ -127,6 +127,7 @@ MEDIA_EXPORT extern const base::Feature kPreloadMediaEngagementData;
 MEDIA_EXPORT extern const base::Feature kResumeBackgroundVideo;
 MEDIA_EXPORT extern const base::Feature kSpecCompliantCanPlayThrough;
 MEDIA_EXPORT extern const base::Feature kSupportExperimentalCdmInterface;
+MEDIA_EXPORT extern const base::Feature kUseAndroidAudioFocus;
 MEDIA_EXPORT extern const base::Feature kUseAndroidOverlay;
 MEDIA_EXPORT extern const base::Feature kUseAndroidOverlayAggressively;
 MEDIA_EXPORT extern const base::Feature kUseNewMediaCache;

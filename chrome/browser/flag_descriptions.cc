@@ -691,6 +691,15 @@ const char kEffectiveConnectionType2GDescription[] = "2G";
 const char kEffectiveConnectionType3GDescription[] = "3G";
 const char kEffectiveConnectionType4GDescription[] = "4G";
 
+const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
+const char kEnableAudioFocusDescription[] =
+    "Manage audio focus across tabs to improve the audio mixing.";
+const char kEnableAudioFocusDisabled[] = "Disabled";
+const char kEnableAudioFocusEnabled[] = "Enabled";
+const char kEnableAudioFocusEnabledDuckFlash[] =
+    "Enabled (Flash lowers volume when interrupted by other sound, "
+    "experimental)";
+
 const char kFillOnAccountSelectName[] = "Fill passwords on account selection";
 const char kFillOnAccountSelectDescription[] =
     "Filling of passwords when an account is explicitly selected by the user "
@@ -2213,15 +2222,6 @@ const char kDoodlesOnLocalNtpName[] = "Enable doodles on the local NTP";
 const char kDoodlesOnLocalNtpDescription[] =
     "Show doodles on the local New Tab page if Google is the default search "
     "engine.";
-
-const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
-const char kEnableAudioFocusDescription[] =
-    "Manage audio focus across tabs to improve the audio mixing.";
-const char kEnableAudioFocusDisabled[] = "Disabled";
-const char kEnableAudioFocusEnabled[] = "Enabled";
-const char kEnableAudioFocusEnabledDuckFlash[] =
-    "Enabled (Flash lowers volume when interrupted by other sound, "
-    "experimental)";
 
 const char kEnableNewAppMenuIconName[] = "Enable the New App Menu Icon";
 const char kEnableNewAppMenuIconDescription[] =
