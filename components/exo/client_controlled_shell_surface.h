@@ -50,6 +50,10 @@ class ClientControlledShellSurface
     geometry_changed_callback_ = callback;
   }
 
+  void set_server_side_drag(bool server_side_drag) {
+    server_side_drag_ = server_side_drag;
+  }
+
   // Called when the client was maximized.
   void SetMaximized();
 
@@ -69,6 +73,29 @@ class ClientControlledShellSurface
   void set_state_changed_callback(
       const StateChangedCallback& state_changed_callback) {
     state_changed_callback_ = state_changed_callback;
+  }
+
+  // Set the callback to run when the surface bounds changed.
+  using BoundsChangedCallback = base::RepeatingCallback<void(
+      ash::mojom::WindowStateType current_state_type,
+      int64_t display_id,
+      const gfx::Rect& bounds,
+      int bounds_change)>;
+  void set_bounds_changed_callback(
+      const BoundsChangedCallback& bounds_changed_callback) {
+    bounds_changed_callback_ = bounds_changed_callback;
+  }
+
+  // Set the callback to run when the drag operation started.
+  using DragStartedCallback = base::RepeatingCallback<void(int direction)>;
+  void set_drag_started_callback(const DragStartedCallback& callback) {
+    drag_started_callback_ = callback;
+  }
+
+  // Set the callback to run when the drag operation finished.
+  using DragFinishedCallback = base::RepeatingCallback<void(int, int, bool)>;
+  void set_drag_finished_callback(const DragFinishedCallback& callback) {
+    drag_finished_callback_ = callback;
   }
 
   // Pin/unpin the surface. Pinned surface cannot be switched to
@@ -99,12 +126,35 @@ class ClientControlledShellSurface
   void OnWindowStateChangeEvent(ash::mojom::WindowStateType old_state,
                                 ash::mojom::WindowStateType next_state);
 
+  // Sends the window bounds change event to client. |display_id| specifies in
+  // which display the surface should live in. |bounds_change| is
+  // a masked value of ash::WindowResizer::kBoundsChange_Xxx, and specifies
+  // how the bounds was changed.
+  void OnBoundsChangeEvent(ash::mojom::WindowStateType current_state,
+                           int64_t display_id,
+                           const gfx::Rect& bounds,
+                           int bounds_change);
+  // Sends the window drag events to client.
+  void OnDragStarted(int component);
+  void OnDragFinished(bool cancel, const gfx::Point& location);
+
+  void StartResize_DEPRECATED();
+
+  // Starts the move-by-drag operation.
+  void StartMove(int x, int y);
+
+  // Set if the surface can be maximzied.
+  void SetCanMaximize(bool can_maximize);
+
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
   bool IsTouchEnabled(Surface* surface) const override;
 
   // Overridden from views::WidgetDelegate:
   bool CanResize() const override;
+  bool CanMaximize() const override;
+  gfx::Size GetMaximumSize() const override;
+
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override;
 
@@ -119,6 +169,7 @@ class ClientControlledShellSurface
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds,
                              ui::PropertyChangeReason reason) override;
+  void OnWindowAddedToRootWindow(aura::Window* window) override;
 
   // Overridden from display::DisplayObserver:
   void OnDisplayMetricsChanged(const display::Display& display,
@@ -139,6 +190,9 @@ class ClientControlledShellSurface
       const DelegateFactoryCallback& callback);
 
  private:
+  class ScopedSetBoundsLocally;
+  class ScopedLockToRoot;
+
   // Overridden from ShellSurface:
   void SetWidgetBounds(const gfx::Rect& bounds) override;
   gfx::Rect GetShadowBounds() const override;
@@ -172,6 +226,9 @@ class ClientControlledShellSurface
   double pending_scale_ = 1.0;
 
   StateChangedCallback state_changed_callback_;
+  BoundsChangedCallback bounds_changed_callback_;
+  DragStartedCallback drag_started_callback_;
+  DragFinishedCallback drag_finished_callback_;
 
   // TODO(reveman): Use configure callbacks for orientation. crbug.com/765954
   Orientation pending_orientation_ = Orientation::LANDSCAPE;
@@ -181,6 +238,13 @@ class ClientControlledShellSurface
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
   ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
+
+  bool can_resize_ = false;
+  bool can_maximize_ = true;
+
+  gfx::Point last_gesture_location_in_root_;
+
+  std::unique_ptr<ash::DragDetails> drag_details_;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
 
