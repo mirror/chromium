@@ -22,6 +22,30 @@
       "revId": "d8dd8ba25c81b769ac3c6e2cb03522fb529de0b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0faa05fc_1b296c97",
+        "filename": "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-12T15:06:44Z",
+      "side": 1,
+      "message": "There\u0027s no metric for Pass, not sure what you mean.",
+      "parentUuid": "c66c8269_e3167890",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 35
+      },
+      "revId": "d8dd8ba25c81b769ac3c6e2cb03522fb529de0b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
