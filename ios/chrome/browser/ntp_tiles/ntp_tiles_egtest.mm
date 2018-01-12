@@ -54,12 +54,14 @@ using web::test::HttpServer;
       assertWithMatcher:grey_nil()];
 
   [ChromeEarlGrey loadURL:URL];
-
   // After loading URL, need to do another action before opening a new tab
   // with the icon present.
   [ChromeEarlGrey goBack];
 
   chrome_test_util::OpenNewTab();
+  // New tab page is not loaded within a single tick so wait before assert.
+  [ChromeEarlGrey waitForPageToFinishLoading];
+
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(@"title1")]
       assertWithMatcher:grey_notNil()];
