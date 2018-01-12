@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4578b1db_eacc34ad",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "From Style Guide: \"Make data members private, unless they are static const (and follow the naming convention for constants). \"\n\nMake data members private, unless they are static const (and follow the naming convention for constants). \n\nHow about passing ExternalAppsLaunchPolicyDecider into CreateForWebState? This way tests and production app will exercise the same code path (which follows Unit testing best practices: http://go/unit-test-practices#public-apis)",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd197320_4f526396",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "Consider moving this class to ios/chrome/test/fakes",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d05ee3_1a8c7ab8",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "Counting the number of calls is something that we could get with OCMock (except that with OCMock we could also verify the URL). Fakes like this are better than mocks, because they allow testing state instead of interactions (http://go/mocks#prefer-testing-state), so it\u0027s really good that we have a fake.\n\nWith that do you think if we change appLauncherTabHelper:launchAppWithURL:linkTapped: to test the state instead of interaction. One suggestion could be to add:\n\n@interface LaunchedApp\n@property (nonatomic) GURL URL;\n@property (nonatomic) BOOL linkTapped;\n@end\n\n@interface FakeAppLauncherTabHelperDelegate\n@property (nonatomic, readonly) NSArray* launchedApps;\n@end\n\n@implementation FakeAppLauncherTabHelperDelegate\n- (BOOL)appLauncherTabHelper:(AppLauncherTabHelper*)tabHelper\n            launchAppWithURL:(const GURL\u0026)URL\n                  linkTapped:(BOOL)linkTapped {\n  LaunchedApp* app \u003d [[LaunchedApp alloc] init];\n  app.URL \u003d URL;\n  app.linkTapped \u003d linkTapped;\n  [_launchedApps addObject:app];\n}\n@end",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f53dcb3_cc1bf088",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "Consider moving this class to ios/chrome/test/fakes",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8698cf_bbcc3054",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis",
+      "range": {
+        "startLine": 51,
+        "startChar": 11,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd098f55_677e5e09",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator_unittest.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-12T16:28:35Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis\n\nThis specific method is implementation detail of coordinator. Tests which rely on implementation details often fail during legitimate refactoring, so they can not catch regressions. \n\nIf I understand correctly, you want to mock tapping on UI elements, which is something that EG tests can do better. EG tests are definitely out of scope for this CL, so how about we just don\u0027t test tapping on labels?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "f045f4896ba634a6dc205ac959e89b8156ac0dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
