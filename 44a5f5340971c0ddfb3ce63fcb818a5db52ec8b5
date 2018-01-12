@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04f49f9b_9cdcc6a7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-12T15:04:10Z",
+      "side": 1,
+      "message": "Remove this comment from here. It no longer applies.",
+      "range": {
+        "startLine": 325,
+        "startChar": 18,
+        "endLine": 325,
+        "endChar": 27
+      },
+      "revId": "44a5f5340971c0ddfb3ce63fcb818a5db52ec8b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

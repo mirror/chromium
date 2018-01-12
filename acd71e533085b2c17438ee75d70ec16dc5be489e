@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd51516_f6712bac",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-12T15:04:10Z",
+      "side": 0,
+      "message": "Right, we only needed this call in CanvasResourceProvider_Texture::ProduceFrame (it is already there), so that we only trigger copy on write on textures that are meant to be sent to the compositor.   Could you please copy this whole comment block and paste it above the call to notifyContentWillChange in CanvasResourceProvider_Texture::ProduceFrame?",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 43
+      },
+      "revId": "acd71e533085b2c17438ee75d70ec16dc5be489e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
