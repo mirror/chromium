@@ -22,6 +22,30 @@
       "revId": "962ae7d215569743a76f3d7b3ad29b81b447a9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb75b1a_d2ecdbd7",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-12T23:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22c369f2_94197e4e",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 34
+      },
+      "revId": "962ae7d215569743a76f3d7b3ad29b81b447a9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
