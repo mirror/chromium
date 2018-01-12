@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64e1b568_c405d2c7",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T18:05:28Z",
+      "side": 1,
+      "message": "drive-by: can we infer effective type based on type?",
+      "revId": "41b3929194a00ef461d0edce6fb000f0eca1fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
