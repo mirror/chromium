@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2ba81ca_e1d32cd7",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-12T03:36:29Z",
+      "side": 1,
+      "message": "The intents are sent between mediashell and launcher activity to load web contents fragments:\n\nINTENT_SHOW_WEB_CONTENT: mediashell (Component) -\u003e launcher\nINTENT_STOP_WEB_CONTENT_INTERNAL: mediashell (Fragment delegate in Component) -\u003e mediashell (Fragment)\nINTENT_STOP_WEB_CONTENT: mediashell (fragment) -\u003e launcher\n\nI removed INTENT_WEB_CONTENT_STOPPED and merge it to INTENT_STOP_WEB_CONTENT. Also done with moving them to CastIntents.java",
+      "parentUuid": "99498638_c132aaf1",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8be3ddd_6c2b8c7b",
         "filename": "chromecast/browser/android/cast_web_contents_surface_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a26781_7385874c",
+        "filename": "chromecast/browser/android/cast_web_contents_surface_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-12T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8be3ddd_6c2b8c7b",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "60b6dcf0_3a45ce8e",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-12T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e46417_c382f268",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "551673fd_65067835",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c054c22_7371d92e",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1259934
+      },
+      "writtenOn": "2018-01-12T03:36:29Z",
+      "side": 1,
+      "message": "Reverted",
+      "parentUuid": "551673fd_65067835",
+      "revId": "46e7cf9ca06c736e67a6fe444bb23920802e1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
