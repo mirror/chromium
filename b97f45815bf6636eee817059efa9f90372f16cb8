@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7373451_26aab059",
+        "filename": "net/socket/socket_test_util.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:19:29Z",
+      "side": 1,
+      "message": "This should be \"return WrappedStreamSocket::Connect(callback);\"",
+      "range": {
+        "startLine": 1900,
+        "startChar": 20,
+        "endLine": 1900,
+        "endChar": 21
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518e04c7_bf8b945e",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:19:29Z",
+      "side": 1,
+      "message": "Add comment that this is true if the current tag was applied before Connect() was called?",
+      "range": {
+        "startLine": 1112,
+        "startChar": 7,
+        "endLine": 1112,
+        "endChar": 30
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7785e1c_11c7ff2c",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:19:29Z",
+      "side": 1,
+      "message": "Both of these methods should be const.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 12,
+        "endLine": 1113,
+        "endChar": 15
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3c06bd_94c40f68",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:19:29Z",
+      "side": 1,
+      "message": "nit:  free\u0027d -\u003e freed (I assume the \"\u0027\" is deliberate, but it\u0027s very rarely used).",
+      "range": {
+        "startLine": 1136,
+        "startChar": 47,
+        "endLine": 1136,
+        "endChar": 52
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c80297f_c9fe994a",
+        "filename": "net/socket/ssl_client_socket_pool_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-12T16:19:29Z",
+      "side": 1,
+      "message": "optional nit:  These should probably be base::MakeRefCounted\u003cIOBuffer\u003e",
+      "range": {
+        "startLine": 1008,
+        "startChar": 26,
+        "endLine": 1008,
+        "endChar": 38
+      },
+      "revId": "b97f45815bf6636eee817059efa9f90372f16cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
