@@ -161,6 +161,8 @@ class ZoomBubbleView : public LocationBarBubbleDelegateView,
   // Not owned.
   ImmersiveModeController* immersive_mode_controller_;
 
+  const SessionID session_id_;
+
   DISALLOW_COPY_AND_ASSIGN(ZoomBubbleView);
 };
 
