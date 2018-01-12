@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "581b0857_e68e2725",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-12T04:55:30Z",
+      "side": 1,
+      "message": "computeContanerNode() -\u003e ComputeContainerNode()",
+      "revId": "3d169ba7c49e2a454eeec1b36d222193a60fc67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780d0770_2c5e8ea1",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-12T04:55:30Z",
+      "side": 1,
+      "message": "Please rename it to CreateRangeAdjustedToTreeScope().  The current name looks to create a Document.",
+      "revId": "3d169ba7c49e2a454eeec1b36d222193a60fc67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
