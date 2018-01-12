@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595b825f_5c8c0343",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_eg_test.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T10:42:24Z",
+      "side": 1,
+      "message": "The \"deps\", \"public_deps\", ... are list of target names, so it is strange for hooks_deps to be the name of a single target. I would prefer to call this variable \"hooks_target\" (like the \"entitlements_target\" above).\n\n  hooks_target\n    (optional) label of the target defining the hooks used in tests. Defaults\n    to \"//ios/chrome/test/earl_grey:hooks\" if undefined.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "688c52fe73a8cb3919cdc14e3b1034ccc3e2a4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676f1629_79b11ccc",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_eg_test.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T10:42:24Z",
+      "side": 1,
+      "message": "I don\u0027t really like polluting the namespace of templates with variables they don\u0027t use. Please make the following changes:\n\n1. add \"hooks_target\" to the exclusion list of the forward_variables_from above,\n2. change the few lines below to:\n\n  if (defined(invoker.hooks_target)) {\n    assert(invoker.hooks_target !\u003d \"\", \"hooks_target must be non-empty if defined\")\n    deps +\u003d [ invoker.hooks_target ]\n  } else {\n    deps +\u003d [ \"//ios/chrome/test/earl_grey:hooks\" ]\n  }",
+      "revId": "688c52fe73a8cb3919cdc14e3b1034ccc3e2a4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
