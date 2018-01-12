@@ -57,6 +57,24 @@
       "revId": "433307f8c81bdf8cc0b658144b0b721ba07490ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a94acc_6e8a96d9",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-12T03:28:32Z",
+      "side": 1,
+      "message": "Oops, my bad, somehow my eyes didn\u0027t work well... yep that should work.",
+      "parentUuid": "d5833df3_2e9573f9",
+      "revId": "433307f8c81bdf8cc0b658144b0b721ba07490ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
