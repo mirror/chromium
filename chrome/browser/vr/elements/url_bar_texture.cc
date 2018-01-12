@@ -22,6 +22,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/render_text.h"
+#include "ui/gfx/text_utils.h"
 
 namespace vr {
 
@@ -34,12 +35,15 @@ namespace {
 // (or more) of it's children.  For now, there is a tight dependency between the
 // element size, and the constants given here, so use scene constants for the
 // width and height used here.
-constexpr float kWidth = kUrlBarOriginContentWidthDMM;
+constexpr float kWidth = kUrlBarOriginRegionWidthDMM;
 constexpr float kHeight = kUrlBarHeightDMM;
 constexpr float kFontHeight = 0.027f;
 constexpr float kFieldSpacing = 0.014f;
 constexpr float kSecurityIconSize = 0.048f;
 constexpr float kChipTextLineMargin = kHeight * 0.3f;
+constexpr float kMinPathWidth = 0.032f;
+constexpr float kLeftMargin = 0.014f;
+constexpr float kRightMargin = 0.020f;
 
 using security_state::SecurityLevel;
 
@@ -73,6 +77,38 @@ void SetEmphasis(RenderTextWrapper* render_text,
 
 gfx::PointF PercentToMeters(const gfx::PointF& percent) {
   return gfx::PointF(percent.x() * kWidth, percent.y() * kHeight);
+}
+
+void SetUrlElisionTextOffset(const GURL& gurl,
+                             const base::string16& text,
+                             const url::Parsed& parsed,
+                             gfx::RenderText* render_text,
+                             int min_path_pixels) {
+  int total_width = render_text->GetContentWidth();
+
+  // Find the length of the host portion.
+  gfx::Range range(0, parsed.CountCharactersBefore(url::Parsed::PATH, false));
+  std::vector<gfx::Rect> rects =
+      render_text->GetSubstringBoundsForTesting(range);
+  gfx::Rect host_bounds;
+  for (const auto& rect : rects)
+    host_bounds.Union(rect);
+
+  // Choose a right-edge cutoff point.  If there is nothing after the host, then
+  // it's the end of the host.  If there is a path, then include a limited
+  // portion of the path.
+  int path_width = total_width - host_bounds.width();
+  int field_width = render_text->display_rect().width();
+  int anchor_point =
+      host_bounds.width() + std::min(min_path_pixels, path_width);
+
+  int offset = 0;
+  if (anchor_point > field_width) {
+    offset = anchor_point - field_width;
+    offset++;
+  }
+
+  render_text->SetDisplayOffset(-offset);
 }
 
 }  // namespace
@@ -122,7 +158,7 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
 
   // Keep track of horizontal position as elements are added left to right.
-  float left_edge = 0;
+  float left_edge = kLeftMargin;
 
   // Site security state icon.
   if (state_.should_display_url && state_.vector_icon != nullptr) {
@@ -183,14 +219,17 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   }
 
   if (state_.should_display_url) {
+    gfx::Rect text_bounds;
+
     float url_x = left_edge;
     if (!url_render_text_ || url_dirty_) {
-      float url_width = kWidth - url_x;
-      gfx::Rect text_bounds(ToPixels(url_x), 0, ToPixels(url_width),
-                            ToPixels(kHeight));
+      float url_width = kWidth - url_x - kRightMargin;
+      text_bounds =
+          gfx::Rect(ToPixels(url_x), 0, ToPixels(url_width), ToPixels(kHeight));
       RenderUrl(texture_size, text_bounds);
       url_dirty_ = false;
     }
+
     url_render_text_->Draw(&gfx_canvas);
     rendered_url_text_ = url_render_text_->text();
     rendered_url_text_rect_ = url_render_text_->display_rect();
@@ -205,22 +244,19 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
       url_formatter::kFormatUrlOmitTrivialSubdomains;
 
   url::Parsed parsed;
-  const base::string16 unelided_url = url_formatter::FormatUrl(
+  const base::string16 text = url_formatter::FormatUrl(
       state_.gurl, format_types, net::UnescapeRule::NORMAL, &parsed, nullptr,
       nullptr);
 
   int pixel_font_height = texture_size.height() * kFontHeight / kHeight;
   gfx::FontList font_list;
-  if (!GetDefaultFontList(pixel_font_height, unelided_url, &font_list))
+  if (!GetDefaultFontList(pixel_font_height, text, &font_list))
     failure_callback_.Run(UiUnsupportedMode::kUnhandledCodePoint);
-
-  const base::string16 text = url_formatter::ElideUrlSimple(
-      state_.gurl, unelided_url, font_list, text_bounds.width(), &parsed);
 
   std::unique_ptr<gfx::RenderText> render_text(CreateRenderText());
   render_text->SetFontList(font_list);
   render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  render_text->SetElideBehavior(gfx::TRUNCATE);
+  render_text->SetElideBehavior(gfx::FADE_TAIL);
   render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
   render_text->SetText(text);
   render_text->SetDisplayRect(text_bounds);
@@ -228,6 +264,9 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
   RenderTextWrapper vr_render_text(render_text.get());
   ApplyUrlStyling(text, parsed, state_.security_level, &vr_render_text,
                   colors_);
+
+  SetUrlElisionTextOffset(state_.gurl, text, parsed, render_text.get(),
+                          ToPixels(kMinPathWidth));
 
   url_render_text_ = std::move(render_text);
 }
