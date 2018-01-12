@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "0756d6e1_a91b4ab3",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-12T13:34:50Z",
+      "side": 1,
+      "message": "The comment does not properly explain what the method does.\n\nA better comment for this would be\n\"Notifies WebRTCInternals about the removal of the peer connection identified with local id |lid|\"\n\n|lid| is a local (renderer-side) ID for a peer connection. In this case, it is necessary to pass it.",
+      "parentUuid": "3cf27d82_72cc6231",
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657fbab4_1a46a535",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 17
@@ -116,6 +134,30 @@
       "writtenOn": "2018-01-12T07:55:33Z",
       "side": 1,
       "message": "Can we associate this with a RenderFrameHost object instead of relying on the origin to send accurate origin information?",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af01e692_e3a46a28",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-12T13:34:50Z",
+      "side": 1,
+      "message": "We should do that, but I think we should do it on a separate CL, since the purpose of this CL is just to migrate the IPC messages to Mojo.\n\nc.padhi@: You can add a TODO (assigned to me) to address this issue.",
+      "parentUuid": "9be1c6b0_671a1633",
       "range": {
         "startLine": 32,
         "startChar": 15,
