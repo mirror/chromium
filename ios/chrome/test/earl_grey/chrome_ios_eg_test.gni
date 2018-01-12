@@ -39,6 +39,10 @@ import("//ios/third_party/earl_grey/ios_eg_test.gni")
 #   deps
 #        list of labels to depends on.
 #
+#   hooks_deps
+#       (optional) specific deps for the hooks used in tests. Defaults to
+#       //ios/chrome/test/earl_grey:hooks.
+#
 # This template defines two targets, one named "${target_name}" is the EarlGrey
 # test application, and the other named "${target_name}_deps_group" is a group
 # target that depends on the template "deps" property (used to implement the
@@ -115,11 +119,14 @@ template("chrome_ios_eg_test") {
       _eg_main_application_delegate = invoker.eg_main_application_delegate
     }
 
+    if (!defined(hooks_deps)) {
+      hooks_deps = "//ios/chrome/test/earl_grey:hooks"
+    }
     deps = [
       ":$_deps_group_name",
       "//ios/chrome/app:main",
-      "//ios/chrome/test/earl_grey:hooks",
       "//ios/testing:http_server_bundle_data",
+      hooks_deps,
     ]
     if (!defined(bundle_deps)) {
       bundle_deps = []
