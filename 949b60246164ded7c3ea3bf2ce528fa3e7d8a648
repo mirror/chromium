@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "4c1b792b_ff92ce9b",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1259876
+      },
+      "writtenOn": "2018-01-12T02:31:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether can I use IDBCursorSource here.\nFrom the spec, the \u0027source\u0027 of IDBRequest should be an union of (IDBObjectStore or IDBIndex or IDBCursor), which is different from the \u0027source\u0027 of IDBCursor.\nAny suggestion here?",
+      "parentUuid": "1b346349_c2e02e43",
+      "revId": "949b60246164ded7c3ea3bf2ce528fa3e7d8a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b314c9_dd3ef655",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
         "patchSetId": 1
