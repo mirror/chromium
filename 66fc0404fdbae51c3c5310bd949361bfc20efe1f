@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e9bf8d_2f031f0f",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-12T09:38:39Z",
+      "side": 1,
+      "message": "nit: Could we add a comment here about the reason for this?\n\n\"The Device Service interfaces are depended on by Blink\u0027s platform target, and themselves use interfaces from the Network Service that are typemapped to Blink platform types. To resolve this circular dependency, the Device Service interfaces must effectively become part of the platform target in the component build.\"\n\nor if you have better wording to explain the situation :)",
+      "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77de7d0_999e48cf",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-12T09:38:39Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9b1a52_40c4df4f",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-12T09:38:39Z",
+      "side": 1,
+      "message": "just to make sure I\u0027m understanding the situation correctly, this change isn\u0027t strictly speaking needed, right? This target has no platform dependency and we don\u0027t expect it to grow one, since it\u0027s just defining constants.",
+      "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
