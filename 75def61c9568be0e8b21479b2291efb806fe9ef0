@@ -45,6 +45,30 @@
       "revId": "75def61c9568be0e8b21479b2291efb806fe9ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062f2cd9_2e0ce73a",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-12T16:22:00Z",
+      "side": 1,
+      "message": "Yeah, good point, done. (Also noticed an incorrect comment on the state enum and tweaked it).",
+      "parentUuid": "49cd0488_d3a39308",
+      "range": {
+        "startLine": 631,
+        "startChar": 22,
+        "endLine": 631,
+        "endChar": 39
+      },
+      "revId": "75def61c9568be0e8b21479b2291efb806fe9ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
