@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab7de4f2_7c37cb42",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T09:40:58Z",
+      "side": 1,
+      "message": "ShouldDetectInRenderer",
+      "revId": "bda35dfd3af4ee116593444d61ed98dc8a96bbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bba89f3_18bcbe91",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T09:40:58Z",
+      "side": 1,
+      "message": "Should we really have this line?",
+      "revId": "bda35dfd3af4ee116593444d61ed98dc8a96bbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
