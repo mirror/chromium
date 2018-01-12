@@ -450,12 +450,13 @@ TEST_F(StructTraitsTest, GpuPreferences) {
 
 TEST_F(StructTraitsTest, GpuFeatureInfo) {
   GpuFeatureInfo input;
-  input.status_values[GPU_FEATURE_TYPE_FLASH3D] =
-      gpu::kGpuFeatureStatusBlacklisted;
+  for (int ii = 0; ii < NUMBER_OF_GPU_FEATURE_TYPES; ++ii)
+    input.status_values[ii] = kGpuFeatureStatusEnabled;
+  input.status_values[GPU_FEATURE_TYPE_FLASH3D] = kGpuFeatureStatusBlacklisted;
   input.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] =
-      gpu::kGpuFeatureStatusUndefined;
+      kGpuFeatureStatusSoftware;
   input.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
-      gpu::kGpuFeatureStatusDisabled;
+      kGpuFeatureStatusDisabled;
 
   GpuFeatureInfo output;
   ASSERT_TRUE(mojom::GpuFeatureInfo::Deserialize(
