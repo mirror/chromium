@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f29d114_04859d96",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-12T15:50:26Z",
+      "side": 1,
+      "message": "Instead of arbitrarily returning 0 for these scenarios, how about making a has_client_id() function and checking that before calling client_id()? And this function can EXPECT_TRUE(has_client_id());",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5c7dea_66785d49",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-12T15:50:26Z",
+      "side": 1,
+      "message": "Do we need the Sleep() call? I think RunUntilIdle() should run any posted tasks.\n\nWhat\u0027s the reason for the posted task to be delayed?",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
