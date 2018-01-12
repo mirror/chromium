@@ -33,10 +33,6 @@ class GIN_EXPORT V8Initializer {
                                         const char** snapshot_data_out,
                                         int* snapshot_size_out);
 
-  // Get address and size information for currently loaded V8 context snapshot.
-  // If no snapshot is loaded, the return values are nullptr and 0.
-  static void GetV8ContextSnapshotData(v8::StartupData* snapshot);
-
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
 
   // Load V8 snapshot from default resources, if they are available.
