@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83440175_b65ad74b",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 3423,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T13:06:13Z",
+      "side": 1,
+      "message": "For this one and OnPlayerLoaded, we could use DOM events. Though, because there are so many callbacks that do not have DOM events associated with, it\u0027s probably not a big deal to have specific callbacks for these.",
+      "range": {
+        "startLine": 3423,
+        "startChar": 59,
+        "endLine": 3423,
+        "endChar": 73
+      },
+      "revId": "10a2909c8e2cd3f9e488371c7619aeef77756f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c9ba8c_31c2da92",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T13:06:13Z",
+      "side": 1,
+      "message": "Now that\u0027s in Blink, should we have this associated to something such as the Page? It will avoid recording things between two websites that share the same renderer process.\n\nThe Page is one way of doing things but will not work well for OOPIF. I guess we can register with the root of the OOPIF tree but I can\u0027t recall what\u0027s the right way to do this in Blink.",
+      "revId": "10a2909c8e2cd3f9e488371c7619aeef77756f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
