@@ -5,8 +5,10 @@
 #include "chrome/browser/signin/signin_util.h"
 
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 
 namespace signin_util {
 namespace {
@@ -40,6 +42,11 @@ void SetForceSigninForTesting(bool enable) {
 
 void ResetForceSigninForTesting() {
   g_is_force_signin_enabled_cache = NOT_CACHED;
+}
+
+bool IsDiceEnabledForProfile(const Profile* profile) {
+  return profile->GetProfileType() == Profile::ProfileType::REGULAR_PROFILE &&
+         signin::IsDiceEnabledForProfile(profile->GetPrefs());
 }
 
 }  // namespace signin_util

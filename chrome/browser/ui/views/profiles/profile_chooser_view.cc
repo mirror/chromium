@@ -30,6 +30,7 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/signin/signin_ui_util.h"
+#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
@@ -59,7 +60,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_header_helper.h"
@@ -177,7 +177,7 @@ views::ImageButton* CreateBackButton(views::ButtonListener* listener) {
 
 BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   if (!profile->IsSupervised()) {
-    return signin::IsDiceEnabledForProfile(profile->GetPrefs())
+    return signin_util::IsDiceEnabledForProfile(profile)
                ? BadgedProfilePhoto::BADGE_TYPE_SYNC_COMPLETE
                : BadgedProfilePhoto::BADGE_TYPE_NONE;
   }
@@ -372,10 +372,9 @@ ProfileChooserView::ProfileChooserView(views::View* anchor_view,
       gaia_service_type_(service_type),
       access_point_(access_point),
       close_bubble_helper_(this, browser),
-      menu_width_(
-          signin::IsDiceEnabledForProfile(browser->profile()->GetPrefs())
-              ? kFixedMenuWidthDice
-              : kFixedMenuWidthPreDice) {
+      menu_width_(signin_util::IsDiceEnabledForProfile(browser->profile())
+                      ? kFixedMenuWidthDice
+                      : kFixedMenuWidthPreDice) {
   // The sign in webview will be clipped on the bottom corners without these
   // margins, see related bug <http://crbug.com/593203>.
   set_margins(gfx::Insets(0, 0, 2, 0));
@@ -672,7 +671,7 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
         profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   } else if (sender == current_profile_card_) {
-    if (signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())) {
+    if (signin_util::IsDiceEnabledForProfile(browser_->profile())) {
       chrome::ShowSettingsSubPage(browser_, chrome::kSyncSetupSubPage);
     } else {
       avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
@@ -792,7 +791,7 @@ views::View* ProfileChooserView::CreateProfileChooserView(
     option_buttons_view = CreateOptionsView(false, avatar_menu);
   }
 
-  if (!(signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs()) &&
+  if (!(signin_util::IsDiceEnabledForProfile(browser_->profile()) &&
         sync_error_view)) {
     layout->StartRow(1, 0);
     layout->AddView(current_profile_view);
@@ -836,7 +835,7 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded(
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   if (error != sync_ui_util::SUPERVISED_USER_AUTH_ERROR &&
-      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())) {
+      signin_util::IsDiceEnabledForProfile(browser_->profile())) {
     return CreateDiceSyncErrorView(avatar_item, error, button_string_id,
                                    content_string_id);
   }
@@ -936,7 +935,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
     const AvatarMenu::Item& avatar_item,
     bool is_guest) {
   if (!avatar_item.signed_in &&
-      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs()))
+      signin_util::IsDiceEnabledForProfile(browser_->profile()))
     return CreateDiceSigninView();
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
@@ -959,9 +958,10 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 
   // Show the profile name by itself if not signed in or account consistency is
   // disabled. Otherwise, show the email attached to the profile.
-  bool show_email = avatar_item.signed_in && !account_consistency_enabled;
+  bool show_email =
+      !is_guest && avatar_item.signed_in && !account_consistency_enabled;
   const base::string16 hover_button_title =
-      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())
+      !is_guest && signin_util::IsDiceEnabledForProfile(browser_->profile())
           ? l10n_util::GetStringUTF16(IDS_PROFILES_SYNCED_TO_TITLE)
           : profile_name;
   HoverButton* profile_card = new HoverButton(
