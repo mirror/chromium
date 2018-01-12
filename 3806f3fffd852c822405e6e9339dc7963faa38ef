@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "a6845cb5_1ee0ebf2",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-12T00:52:21Z",
+      "side": 1,
+      "message": "I should add, if it\u0027s OK to add a partition to SecurityOrigin, that would help with lifetime management. Related question: Is there a cheap way to tell when a PartitionRootGeneric is empty, so we could potentially release memory? Otherwise, we would have to track allocations per partition.",
+      "parentUuid": "c2e6abb8_252d0304",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "297e7fa3_147ccc6f",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
         "patchSetId": 19
