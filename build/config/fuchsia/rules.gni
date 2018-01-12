@@ -126,8 +126,8 @@ template("test_runner_script") {
 template("fuchsia_executable_runner") {
   forward_variables_from(invoker, [ "exe_target" ])
 
-  _pkg_target = "${target_name}_pkg"
-  _gen_runner_target = "${target_name}_runner"
+  _pkg_target = "${exe_target}_pkg"
+  _gen_runner_target = "${exe_target}_runner"
   _archive_target = "${target_name}_archive"
   _exe_name = get_label_info(exe_target, "name")
 
