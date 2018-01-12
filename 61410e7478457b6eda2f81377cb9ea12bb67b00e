@@ -118,6 +118,30 @@
       "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c7c11a_269830d4",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-12T19:15:01Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to be a power of 2 according to the LargeIconService. I\u0027ve changed it to dynamically choose a desired size.",
+      "parentUuid": "83c66a01_bdb99579",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "61410e7478457b6eda2f81377cb9ea12bb67b00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
