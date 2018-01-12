@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4145c968_22c913fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchEntityHeuristic.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T00:40:58Z",
+      "side": 1,
+      "message": "nit: remove extra space",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "5e89800bc5492df31f8019c0344c8ab0d1544c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac02139_6354e715",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchEntityHeuristic.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T00:40:58Z",
+      "side": 1,
+      "message": "nit: Left over debugging statement",
+      "range": {
+        "startLine": 126,
+        "startChar": 12,
+        "endLine": 126,
+        "endChar": 67
+      },
+      "revId": "5e89800bc5492df31f8019c0344c8ab0d1544c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22abe9b_0f048624",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchEntityHeuristicTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T00:40:58Z",
+      "side": 1,
+      "message": "nit: remove this line",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "5e89800bc5492df31f8019c0344c8ab0d1544c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856d4f4d_45604256",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-12T00:40:58Z",
+      "side": 1,
+      "message": "Can language ever be null? If so, we should set it to the empty string before converting it to UTF8.",
+      "range": {
+        "startLine": 144,
+        "startChar": 50,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "5e89800bc5492df31f8019c0344c8ab0d1544c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
