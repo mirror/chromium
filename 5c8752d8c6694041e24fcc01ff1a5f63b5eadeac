@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f9581fc_5a8fe209",
+        "filename": "components/sync_sessions/sessions_sync_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2580,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 0,
+      "message": "As far as I can tell, the delegate\u0027s window ids are completely broken within these tests. The native model should be keeping them correct, and these tests do not attempt to. The reason this worked previously, was because it was a placeholder tab delegate, so the SessionsSyncManager cannot ask the delegate for a window id. Instead it has to get it from the window delegate, and thus is used to be correct.",
+      "revId": "5c8752d8c6694041e24fcc01ff1a5f63b5eadeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

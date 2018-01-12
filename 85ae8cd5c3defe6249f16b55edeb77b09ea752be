@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbd327ec_80162d14",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462af923_cb82bc47",
+      "range": {
+        "startLine": 326,
+        "startChar": 27,
+        "endLine": 326,
+        "endChar": 43
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409495d5_94bf64fb",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "70cf38c9_353f3bc5",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b7ee51_930fa362",
+      "range": {
+        "startLine": 328,
+        "startChar": 22,
+        "endLine": 328,
+        "endChar": 24
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ef146fc_352f8853",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409495d5_94bf64fb",
+      "range": {
+        "startLine": 328,
+        "startChar": 43,
+        "endLine": 328,
+        "endChar": 55
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cdff0a7_fcbeb0b0",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad503385_0d71ecfb",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cdff0a7_fcbeb0b0",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 19
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "40699035_ab7b42ad",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2745f4a2_04e40036",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 337,
+        "endChar": 36
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0413420b_f93a98e9",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4b2784f5_caf1baec",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "That\u0027s a great point, we don\u0027t want them polluting our histogram, will filter them out.",
+      "parentUuid": "0413420b_f93a98e9",
+      "range": {
+        "startLine": 345,
+        "startChar": 12,
+        "endLine": 345,
+        "endChar": 16
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd98c49_7180de81",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -160,6 +304,53 @@
       "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a56543_f2e16dc2",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "I tried that first, but the type deduction wasn\u0027t smart enough.",
+      "parentUuid": "cdd98c49_7180de81",
+      "range": {
+        "startLine": 388,
+        "startChar": 8,
+        "endLine": 388,
+        "endChar": 14
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8133e44b_6d06b7a7",
+        "filename": "components/sync_sessions/sessions_sync_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-12T21:16:41Z",
+      "side": 1,
+      "message": "Whoops, I should have probably given these test cases real names :)",
+      "range": {
+        "startLine": 1104,
+        "startChar": 32,
+        "endLine": 1104,
+        "endChar": 35
+      },
+      "revId": "85ae8cd5c3defe6249f16b55edeb77b09ea752be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
