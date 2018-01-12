@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b916e17_a695e0a3",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-12T21:09:13Z",
+      "side": 1,
+      "message": "optional nit: You don\u0027t need to cast (as 100.f is float), but you may leave it as is.",
+      "revId": "04706e2ead61c15ca5d0ba041e845993f333b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
