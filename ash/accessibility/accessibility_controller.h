@@ -9,6 +9,7 @@
 
 #include "ash/ash_constants.h"
 #include "ash/ash_export.h"
+#include "ash/public/cpp/accessibility_types.h"
 #include "ash/public/interfaces/accessibility_controller.mojom.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
@@ -56,6 +57,10 @@ class ASH_EXPORT AccessibilityController
   void SetMonoAudioEnabled(bool enabled);
   bool IsMonoAudioEnabled() const;
 
+  void SetSpokenFeedbackEnabled(bool enabled,
+                                AccessibilityNotificationVisibility notify);
+  bool IsSpokenFeedbackEnabled() const;
+
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
 
@@ -92,6 +97,7 @@ class ASH_EXPORT AccessibilityController
   void UpdateHighContrastFromPref();
   void UpdateLargeCursorFromPref();
   void UpdateMonoAudioFromPref();
+  void UpdateSpokenFeedbackFromPref();
 
   service_manager::Connector* connector_ = nullptr;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
@@ -107,6 +113,12 @@ class ASH_EXPORT AccessibilityController
   bool large_cursor_enabled_ = false;
   int large_cursor_size_in_dip_ = kDefaultLargeCursorSize;
   bool mono_audio_enabled_ = false;
+  bool spoken_feedback_enabled_ = false;
+
+  // TODO(warx): consider removing this and replacing it with a more reliable
+  // way (https://crbug.com/800270).
+  AccessibilityNotificationVisibility spoken_feedback_notification_ =
+      A11Y_NOTIFICATION_NONE;
 
   // Used to force the backlights off to darken the screen.
   std::unique_ptr<ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
