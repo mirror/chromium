@@ -20,6 +20,7 @@ import android.view.inputmethod.InputConnection;
 import org.junit.Assert;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.blink_public.web.WebTextInputMode;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.SelectionPopupControllerImpl;
 import org.chromium.content.browser.test.util.Criteria;
@@ -109,7 +110,8 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
         mConnection = getInputConnection();
         mImeAdapter = getImeAdapter();
 
-        waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT});
+        waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT});
         Assert.assertEquals(0, mConnectionFactory.getOutAttrs().initialSelStart);
         Assert.assertEquals(0, mConnectionFactory.getOutAttrs().initialSelEnd);
 
@@ -171,8 +173,10 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
         Assert.assertEquals(after, getTextAfterCursor(100, 0));
     }
 
-    void waitForKeyboardStates(int show, int hide, int restart, Integer[] history) {
-        final String expected = stringifyKeyboardStates(show, hide, restart, history);
+    void waitForKeyboardStates(int show, int hide, int restart, Integer[] textInputTypeHistory,
+            Integer[] textInputModeHistory) {
+        final String expected = stringifyKeyboardStates(
+                show, hide, restart, textInputTypeHistory, textInputModeHistory);
         CriteriaHelper.pollUiThread(Criteria.equals(expected, new Callable<String>() {
             @Override
             public String call() {
@@ -183,20 +187,24 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
 
     void resetAllStates() {
         mInputMethodManagerWrapper.reset();
-        mConnectionFactory.clearTextInputTypeHistory();
+        mConnectionFactory.resetAllStates();
     }
 
     String getKeyboardStates() {
         int showCount = mInputMethodManagerWrapper.getShowSoftInputCounter();
         int hideCount = mInputMethodManagerWrapper.getHideSoftInputCounter();
         int restartCount = mInputMethodManagerWrapper.getRestartInputCounter();
-        Integer[] history = mConnectionFactory.getTextInputTypeHistory();
-        return stringifyKeyboardStates(showCount, hideCount, restartCount, history);
+        Integer[] textInputTypeHistory = mConnectionFactory.getTextInputTypeHistory();
+        Integer[] textInputModeHistory = mConnectionFactory.getTextInputModeHistory();
+        return stringifyKeyboardStates(
+                showCount, hideCount, restartCount, textInputTypeHistory, textInputModeHistory);
     }
 
-    String stringifyKeyboardStates(int show, int hide, int restart, Integer[] history) {
+    String stringifyKeyboardStates(int show, int hide, int restart, Integer[] inputTypeHistory,
+            Integer[] inputModeHistory) {
         return "show count: " + show + ", hide count: " + hide + ", restart count: " + restart
-                + ", input type history: " + Arrays.deepToString(history);
+                + ", input type history: " + Arrays.deepToString(inputTypeHistory)
+                + ", input mode history: " + Arrays.deepToString(inputModeHistory);
     }
 
     void performEditorAction(final int action) {
@@ -564,6 +572,7 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
         private final ChromiumBaseInputConnection.Factory mFactory;
 
         private final List<Integer> mTextInputTypeList = new ArrayList<>();
+        private final List<Integer> mTextInputModeList = new ArrayList<>();
         private EditorInfo mOutAttrs;
 
         public TestInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
@@ -575,6 +584,7 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
                 int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
                 EditorInfo outAttrs) {
             mTextInputTypeList.add(inputType);
+            mTextInputModeList.add(inputMode);
             mOutAttrs = outAttrs;
             return mFactory.initializeAndGet(view, imeAdapter, inputType, inputFlags, inputMode,
                     selectionStart, selectionEnd, outAttrs);
@@ -591,8 +601,15 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
             return result;
         }
 
-        public void clearTextInputTypeHistory() {
+        public void resetAllStates() {
             mTextInputTypeList.clear();
+            mTextInputModeList.clear();
+        }
+
+        public Integer[] getTextInputModeHistory() {
+            Integer[] result = new Integer[mTextInputModeList.size()];
+            mTextInputModeList.toArray(result);
+            return result;
         }
 
         public EditorInfo getOutAttrs() {

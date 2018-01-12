@@ -31,6 +31,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.blink_public.web.WebTextInputMode;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -452,7 +453,11 @@ public class ImeTest {
         mRule.waitForKeyboardStates(7, 0, 7,
                 new Integer[] {TextInputType.TEXT_AREA, TextInputType.TEXT_AREA,
                         TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.CONTENT_EDITABLE,
-                        TextInputType.SEARCH, TextInputType.TEXT});
+                        TextInputType.SEARCH, TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT});
         ArrayList<EditorInfo> editorInfoList =
                 mRule.getInputMethodManagerWrapper().getEditorInfoList();
         Assert.assertEquals(7, editorInfoList.size());
@@ -481,7 +486,10 @@ public class ImeTest {
         mRule.waitForKeyboardStates(6, 0, 6,
                 new Integer[] {TextInputType.SEARCH, TextInputType.CONTENT_EDITABLE,
                         TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT_AREA,
-                        TextInputType.TEXT_AREA});
+                        TextInputType.TEXT_AREA},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT});
         editorInfoList = mRule.getInputMethodManagerWrapper().getEditorInfoList();
         Assert.assertEquals(6, editorInfoList.size());
         // search1.
@@ -505,7 +513,7 @@ public class ImeTest {
         mRule.focusElement("input_radio", false);
 
         // hideSoftKeyboard(), mRule.restartInput()
-        mRule.waitForKeyboardStates(0, 1, 1, new Integer[] {});
+        mRule.waitForKeyboardStates(0, 1, 1, new Integer[] {}, new Integer[] {});
 
         // When input connection is null, we still need to set flags to prevent InputMethodService
         // from entering fullscreen mode and from opening custom UI.
@@ -522,20 +530,24 @@ public class ImeTest {
 
         // showSoftInput(), mRule.restartInput()
         mRule.focusElement("input_number1");
-        mRule.waitForKeyboardStates(1, 1, 2, new Integer[] {TextInputType.NUMBER});
+        mRule.waitForKeyboardStates(1, 1, 2, new Integer[] {TextInputType.NUMBER},
+                new Integer[] {WebTextInputMode.DEFAULT});
         Assert.assertNotNull(mRule.getInputMethodManagerWrapper().getInputConnection());
 
         mRule.focusElement("input_number2");
         // Hide should never be called here. Otherwise we will see a flicker. Restarted to
         // reset internal states to handle the new input form.
-        mRule.waitForKeyboardStates(
-                2, 1, 3, new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER});
+        mRule.waitForKeyboardStates(2, 1, 3,
+                new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT});
 
         mRule.focusElement("input_text");
         // showSoftInput() on input_text. mRule.restartInput() on input_number1 due to focus change,
         // and mRule.restartInput() on input_text later.
         mRule.waitForKeyboardStates(3, 1, 4,
-                new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT});
+                new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT});
 
         mRule.setComposingText("a", 1);
         mRule.waitAndVerifyUpdateSelection(0, 0, 0, -1, -1);
@@ -554,7 +566,9 @@ public class ImeTest {
 
         mRule.waitForKeyboardStates(4, 1, 5,
                 new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
-                        TextInputType.TEXT_AREA});
+                        TextInputType.TEXT_AREA},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT});
         Assert.assertEquals(0, mRule.getConnectionFactory().getOutAttrs().initialSelStart);
         Assert.assertEquals(0, mRule.getConnectionFactory().getOutAttrs().initialSelEnd);
 
@@ -564,7 +578,10 @@ public class ImeTest {
         mRule.focusElement("input_text");
         mRule.waitForKeyboardStates(5, 1, 6,
                 new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
-                        TextInputType.TEXT_AREA, TextInputType.TEXT});
+                        TextInputType.TEXT_AREA, TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT});
         Assert.assertEquals(1, mRule.getConnectionFactory().getOutAttrs().initialSelStart);
         Assert.assertEquals(1, mRule.getConnectionFactory().getOutAttrs().initialSelEnd);
 
@@ -572,7 +589,10 @@ public class ImeTest {
         // hideSoftInput(), mRule.restartInput()
         mRule.waitForKeyboardStates(5, 2, 7,
                 new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
-                        TextInputType.TEXT_AREA, TextInputType.TEXT});
+                        TextInputType.TEXT_AREA, TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT,
+                        WebTextInputMode.DEFAULT});
     }
     @Test
     @SmallTest
@@ -717,15 +737,17 @@ public class ImeTest {
     public void testPhysicalKeyboard_AttachDetach() throws Throwable {
         attachPhysicalKeyboard();
         // We still call showSoftKeyboard, which will be ignored by physical keyboard.
-        mRule.waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT});
+        mRule.waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT});
         mRule.setComposingText("a", 1);
-        mRule.waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT});
+        mRule.waitForKeyboardStates(1, 0, 1, new Integer[] {TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT});
         detachPhysicalKeyboard();
         mRule.assertWaitForKeyboardStatus(true);
         // Now we really show soft keyboard. We also call mRule.restartInput when configuration
         // changes.
-        mRule.waitForKeyboardStates(
-                2, 0, 2, new Integer[] {TextInputType.TEXT, TextInputType.TEXT});
+        mRule.waitForKeyboardStates(2, 0, 2, new Integer[] {TextInputType.TEXT, TextInputType.TEXT},
+                new Integer[] {WebTextInputMode.DEFAULT, WebTextInputMode.DEFAULT});
 
         reloadPage();
 
