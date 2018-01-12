@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cda71bf0_a4c7f89d",
+        "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-12T21:25:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean. InProcessGpuThread calls Stop in its destructor, so in production it will ensure InProcessGpuThread::Init will happen before InProcessGpuThread destruction. I think your issue was that there was no ordering guarantee wrt BrowserChildProcessHostImpl destruction.\n\nThe Stop we need to add here is to avoid adding undefined behavior in the test. I don\u0027t think it makes sense to test without it.",
+      "parentUuid": "9df618f3_f22c10a4",
+      "revId": "5a434730b547f1c98ae30a57836025a784c0b37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61dceae_e9f8d722",
         "filename": "content/browser/gpu/in_process_gpu_thread_browsertests.cc",
         "patchSetId": 11
