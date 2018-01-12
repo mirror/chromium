@@ -16,6 +16,24 @@
       "revId": "031ce73ddc718ad16dc31da5f62577b573bd8870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d849e5_b2445306",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-12T16:50:44Z",
+      "side": 1,
+      "message": "Looking at the source...it looks like it does bypass the usual Proxy hooks, but you could still have interceptor/access check failures (e.g. I think if you try to apply this to contentWindow of a cross-origin iframe, you can get an exception thrown here).",
+      "parentUuid": "fd32d36a_ac518dbc",
+      "revId": "031ce73ddc718ad16dc31da5f62577b573bd8870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
