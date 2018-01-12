@@ -22,6 +22,23 @@
       "revId": "433307f8c81bdf8cc0b658144b0b721ba07490ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c39175_4648c906",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-12T01:26:15Z",
+      "side": 1,
+      "message": "We\u0027ve moved the callback on line 238, I doubt we have callback here at this point?",
+      "revId": "433307f8c81bdf8cc0b658144b0b721ba07490ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
