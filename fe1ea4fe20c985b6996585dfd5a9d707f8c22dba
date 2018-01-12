@@ -22,6 +22,30 @@
       "revId": "fe1ea4fe20c985b6996585dfd5a9d707f8c22dba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52dc6a7_12a297f2",
+        "filename": "content/renderer/blob_storage/blob_transport_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-12T23:37:01Z",
+      "side": 0,
+      "message": "I could have sworn I already re-added the histogram, but hat must have just been the more or less equivalent trace event. Now done (in blink::BlobDataHandle right before calling the mojo Register method).",
+      "parentUuid": "8a781cc2_01f021c3",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 62
+      },
+      "revId": "fe1ea4fe20c985b6996585dfd5a9d707f8c22dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
