@@ -1133,6 +1133,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
 
   GURL extension_url = extension->GetResourceURL("options.html");
   ui_test_utils::NavigateToURL(browser(), extension_url);
+  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
 
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
   EXPECT_EQ(
@@ -1149,6 +1150,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
   service->UnloadExtension(extension->id(),
                            extensions::UnloadedExtensionReason::UNINSTALL);
   registry_observer.WaitForExtensionUnloaded();
+  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
 
   // There should only be one tab now.
   ASSERT_EQ(1, tab_strip_model->count());
