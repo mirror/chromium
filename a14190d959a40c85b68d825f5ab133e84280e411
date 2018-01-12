@@ -22,6 +22,30 @@
       "revId": "a14190d959a40c85b68d825f5ab133e84280e411",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25db559c_ff420663",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T06:29:37Z",
+      "side": 1,
+      "message": "Done. Having a \"duh\" moment...",
+      "parentUuid": "635381ac_50f42475",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "a14190d959a40c85b68d825f5ab133e84280e411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
