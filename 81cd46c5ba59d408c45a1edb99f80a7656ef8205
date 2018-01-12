@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aee2fcc6_9b10832c",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-12T02:15:39Z",
+      "side": 1,
+      "message": "No, it shouldn\u0027t. However, we consider the ARC++ side as a untrusted client here.",
+      "parentUuid": "090df727_10e75750",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a95a26_904ad469",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
         "patchSetId": 14
