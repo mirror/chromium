@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50557bbe_03830127",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T22:02:14Z",
+      "side": 1,
+      "message": "Similar to the discussions in billorr\u0027s CL:\n* XR.VRBrowsing? (Would the \u0027R\u0027 be upper or lower case? Let\u0027s match histograms.)\n* What is the correct scoping for this? I guess UKMs are implicitly per-page/document so adding `.Document` might be redundant. OTOH, UKMs provide nice features other than the URL. For example, grouping of metrics for a session. Is this supported?\n  - In any case, it might make sense to align the structure/naming of UKMs and histograms, meaning that page actions (bad name since that means something else) are in their own namespace. As with billorr\u0027s CL, that might be problematic in that event names determine what gets grouped together. In that case, we could do structuring in the metric name.\n\nThoughts?",
+      "range": {
+        "startLine": 2355,
+        "startChar": 13,
+        "endLine": 2355,
+        "endChar": 24
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511dc38b_5356a432",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-12T22:02:14Z",
+      "side": 1,
+      "message": "approximate",
+      "range": {
+        "startLine": 2374,
+        "startChar": 10,
+        "endLine": 2374,
+        "endChar": 20
+      },
+      "revId": "7170ef0f3e31b37d7c67a85259b8ef769b454324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
