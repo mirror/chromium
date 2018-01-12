@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "966c7a6c_e27becc9",
+        "filename": "mojo/public/cpp/base/big_buffer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T23:10:30Z",
+      "side": 1,
+      "message": "Maybe std::variant will make this less painful. I\u0027m not sure though.",
+      "parentUuid": "658b10f4_a9db3df1",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a07355_22c25594",
         "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
         "patchSetId": 10
@@ -230,6 +254,24 @@
       "side": 1,
       "message": "Done. For the future we should consider standardizing on a more general name like mojom_traits if we want just one thing.",
       "parentUuid": "21a07355_22c25594",
+      "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20723262_d1e3af54",
+        "filename": "mojo/public/cpp/base/big_buffer_union_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T23:10:30Z",
+      "side": 1,
+      "message": "I guess if we\u0027re going to (try) to encourage putting things in mojom/, we may as well do this at the same time. Any volunteers? \u003d)",
+      "parentUuid": "4f3d00ff_840b05c1",
       "revId": "efe612bdfe291d0835dcb2385891e73c3a2d3df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
