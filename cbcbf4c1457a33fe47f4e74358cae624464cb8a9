@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ab2f3dd_385ef894",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "I removed it, since the enum is rather self-explanatory.",
+      "parentUuid": "0feebc62_b9822275",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d658b5_a0148cc5",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7113e332_4dbc8eb8",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d658b5_a0148cc5",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "51d27ba9_3ee825e0",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b5f5fb8_c34f2a14",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de20184_d76c521d",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 29
@@ -67,6 +121,24 @@
       "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c34cddb_4546bc60",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Enamel has seen this and did not mention any issues.\nhttps://groups.google.com/a/google.com/forum/#!topic/chrome-password-manager-team/jBHWH_q_0D8",
+      "parentUuid": "3de20184_d76c521d",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "eed8250d_c34865f6",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a45e9e_61308e48",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ab1ef2_1a0605ef",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 29
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bd561fde_4cd1409d",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ab1ef2_1a0605ef",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4227623d_157ecb54",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 29
@@ -118,6 +226,24 @@
       "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e425880_604db413",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 29
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-12T15:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4227623d_157ecb54",
+      "revId": "cbcbf4c1457a33fe47f4e74358cae624464cb8a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
