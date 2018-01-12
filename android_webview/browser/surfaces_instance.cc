@@ -159,8 +159,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
     device_scale_factor_ = device_scale_factor;
     display_->SetLocalSurfaceId(root_id_, device_scale_factor);
   }
-  bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(root_id_, std::move(frame));
 
   display_->Resize(viewport);
   display_->DrawAndSwap();
@@ -204,8 +203,7 @@ void SurfacesInstance::SetSolidColorRootFrame() {
       viz::BeginFrameAck::CreateManualAckWithDamage();
   frame.metadata.referenced_surfaces = child_ids_;
   frame.metadata.device_scale_factor = device_scale_factor_;
-  bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(root_id_, std::move(frame));
 }
 
 void SurfacesInstance::DidReceiveCompositorFrameAck(

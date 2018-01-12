@@ -666,8 +666,10 @@ TEST_F(CompositorFrameSinkSupportTest, ZeroFrameSize) {
   SurfaceId id(support_->frame_sink_id(), local_surface_id_);
   auto frame =
       CompositorFrameBuilder().AddRenderPass(gfx::Rect(), gfx::Rect()).Build();
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  bool success;
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_TRUE(success);
   EXPECT_FALSE(GetSurfaceForId(id));
 }
 
@@ -679,8 +681,10 @@ TEST_F(CompositorFrameSinkSupportTest, ZeroDeviceScaleFactor) {
                    .AddDefaultRenderPass()
                    .SetDeviceScaleFactor(0.f)
                    .Build();
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  bool success;
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_TRUE(success);
   EXPECT_FALSE(GetSurfaceForId(id));
 }
 
@@ -693,8 +697,10 @@ TEST_F(CompositorFrameSinkSupportTest, FrameSizeMismatch) {
   auto frame = CompositorFrameBuilder()
                    .AddRenderPass(gfx::Rect(5, 5), gfx::Rect())
                    .Build();
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  bool success;
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_TRUE(success);
   EXPECT_TRUE(GetSurfaceForId(id));
 
   // Submit a frame with size (5,4). This frame should be rejected and the
@@ -702,8 +708,9 @@ TEST_F(CompositorFrameSinkSupportTest, FrameSizeMismatch) {
   frame = CompositorFrameBuilder()
               .AddRenderPass(gfx::Rect(5, 4), gfx::Rect())
               .Build();
-  EXPECT_FALSE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_FALSE(success);
   manager_.surface_manager()->GarbageCollectSurfaces();
   EXPECT_FALSE(GetSurfaceForId(id));
 }
@@ -719,8 +726,10 @@ TEST_F(CompositorFrameSinkSupportTest, DeviceScaleFactorMismatch) {
                    .AddDefaultRenderPass()
                    .SetDeviceScaleFactor(0.5f)
                    .Build();
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  bool success;
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_TRUE(success);
   EXPECT_TRUE(GetSurfaceForId(id));
 
   // Submit a frame with device scale factor of 0.4. This frame should be
@@ -729,8 +738,9 @@ TEST_F(CompositorFrameSinkSupportTest, DeviceScaleFactorMismatch) {
               .AddDefaultRenderPass()
               .SetDeviceScaleFactor(0.4f)
               .Build();
-  EXPECT_FALSE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
+  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame), nullptr,
+                                  &success);
+  EXPECT_FALSE(success);
   manager_.surface_manager()->GarbageCollectSurfaces();
   EXPECT_FALSE(GetSurfaceForId(id));
 }
