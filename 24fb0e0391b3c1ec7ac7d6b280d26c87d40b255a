@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505a216c_46b85816",
+        "filename": "services/service_manager/public/interfaces/service_factory.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:54:17Z",
+      "side": 1,
+      "message": "Which processes are reporting the PID and why can we trust them not to lie about it?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "24fb0e0391b3c1ec7ac7d6b280d26c87d40b255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
