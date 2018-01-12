@@ -34967,6 +34967,14 @@ Called by update_net_trust_anchors.py.-->
       label="Timestamp shown indicating the page was just updated on reload"/>
 </enum>
 
+<enum name="PreviewsProcessHintsResult">
+  <int value="0" label="Previews processed but no Previews hints found"/>
+  <int value="1" label="Previews processed and Previews hints found"/>
+  <int value="2"
+      label="Failed to finish processing same version previously so skipping
+             to avoid potential crash loop"/>
+</enum>
+
 <enum name="PreviewsUserOptedOut">
   <int value="0" label="The user did not choose to reload the full page."/>
   <int value="1" label="The user chose to reload the full page."/>
