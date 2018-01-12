@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "8a3d9a50_74e94d38",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-12T11:36:02Z",
+      "side": 0,
+      "message": "WDYT of keeping this out of is_android builds and only add them back when is_chromecast. In which case, you could manually remove the _android file?",
+      "revId": "c3c5b11d11f96e44c3762d17227bd8b27ba2611e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36775890_2e0be6aa",
         "filename": "media/base/media_switches.h",
         "patchSetId": 2
