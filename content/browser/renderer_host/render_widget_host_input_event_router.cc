@@ -6,10 +6,9 @@
 
 #include <vector>
 
-#include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/quads/surface_draw_quad.h"
-#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -174,7 +173,7 @@ RenderWidgetHostInputEventRouter::RenderWidgetHostInputEventRouter()
       event_targeter_(std::make_unique<RenderWidgetTargeter>(this)),
       weak_ptr_factory_(this) {
   enable_viz_ =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
+      base::FeatureList::IsEnabled(features::kEnableOutOfProcessDisplay);
 }
 
 RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {

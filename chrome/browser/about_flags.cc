@@ -88,6 +88,7 @@
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/translate/core/browser/translate_ranker_impl.h"
 #include "components/version_info/version_info.h"
+#include "components/viz/common/features.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/feature_h264_with_openh264_ffmpeg.h"
@@ -3674,6 +3675,12 @@ const FeatureEntry kFeatureEntries[] = {
          security_state::features::kMarkHttpAsFeature,
          kMarkHttpAsFeatureVariations,
          "MarkHttpAs")},
+
+    {"enable-out-of-process-display",
+     flag_descriptions::kEnableOutOfProcessDisplayName,
+     flag_descriptions::kEnableOutOfProcessDisplayDescription,
+     kOsLinux | kOsWin | kOsMac,
+     FEATURE_VALUE_TYPE(features::kEnableOutOfProcessDisplay)},
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
