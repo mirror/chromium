@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3955dcbd_e03145b4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-12T05:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83bba051_e4dffaf3",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6997916a_286e745d",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 2
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "61827a3d_189c040a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-12T05:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20cd620e_733fb34a",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6f7d180_4c650c2b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-12T05:00:25Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s much better. Updated.",
+      "parentUuid": "6997916a_286e745d",
+      "range": {
+        "startLine": 119,
+        "startChar": 24,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b316e69_91ae12a6",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-12T02:19:49Z",
       "side": 1,
       "message": "Does this function need to be public?",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f6af96_ad548545",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-12T05:00:25Z",
+      "side": 1,
+      "message": "Actually it can be protected since ServiceWorkerThread uses WorkerThread::TerminateForTesting(), but I thought TerminateForTesting() doesn\u0027t have to be in protected since we already have TerminateAllWorkersForTesting in public.\nWDYT?",
+      "parentUuid": "3b316e69_91ae12a6",
       "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +180,24 @@
       "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01064dde_48598b08",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-12T05:00:25Z",
+      "side": 1,
+      "message": "No specific reason. It\u0027s just for saying it\u0027s before Detach().",
+      "parentUuid": "258079a3_d2bfc1d9",
+      "revId": "298bd92073da95fe007c600a590075743cb7bdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
