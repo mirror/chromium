@@ -99,6 +99,11 @@
 namespace cc {
 namespace {
 
+// Used with the --cc-check-damage-early flag to determine how many consecutive
+// frames can have damage before disabling the damage check in
+// WillBeginImplFrame.
+constexpr int kDamagedFrameLimit = 3;
+
 // Small helper class that saves the current viewport location as the user sees
 // it and resets to the same location.
 class ViewportAnchor {
@@ -248,6 +253,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       requires_high_res_to_draw_(false),
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
+      consecutive_frame_with_damage_count_(kDamagedFrameLimit),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -890,11 +896,15 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   bool has_damage = HasDamage();
   active_tree_->ResetHandleVisibilityChanged();
 
+  if (has_damage && consecutive_frame_with_damage_count_ < kDamagedFrameLimit)
+    consecutive_frame_with_damage_count_++;
+
   if (!has_damage) {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
     DCHECK(!resourceless_software_draw_);
+    consecutive_frame_with_damage_count_ = 0;
     return DRAW_SUCCESS;
   }
 
@@ -2135,11 +2145,15 @@ bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
 
   // We can only check damage if we can draw. Otherwise, the default behavior
   // is to assume there is damage.
-  if (settings_.check_damage_early && CanDraw()) {
+  if (settings_.enable_early_damage_check &&
+      consecutive_frame_with_damage_count_ < kDamagedFrameLimit && CanDraw()) {
     active_tree()->UpdateDrawProperties();
     DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                         active_tree_->GetRenderSurfaceList());
-    return HasDamage();
+    bool has_damage = HasDamage();
+    if (!has_damage)
+      consecutive_frame_with_damage_count_ = 0;
+    return has_damage;
   }
   // Assume there is damage if we cannot check for damage.
   return true;
