@@ -57,8 +57,16 @@ void WebView::SetWebContents(content::WebContents* replacement) {
   DetachWebContents();
   WebContentsObserver::Observe(replacement);
   // web_contents() now returns |replacement| from here onwards.
-  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
-                                  : FocusBehavior::NEVER);
+  if (web_contents()) {
+    SetFocusBehavior(FocusBehavior::ALWAYS);
+  } else {
+    // Manually clear focus before setting focus behavior to never so that the
+    // focus is not temporarily advanced to an arbitrary place in the UI,
+    // which confuses screen readers.
+    if (GetWidget())
+      GetWidget()->GetFocusManager()->ClearFocus();
+    SetFocusBehavior(FocusBehavior::NEVER);
+  }
   if (wc_owner_.get() != replacement)
     wc_owner_.reset();
   if (embed_fullscreen_widget_mode_enabled_) {
