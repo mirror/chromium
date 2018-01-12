@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7fd6c90_d4af7f2e",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-12T22:14:27Z",
+      "side": 1,
+      "message": "As asked in email - I thought I\u0027d have to add FADE_BOTH_ENDS, but now, I don\u0027t think we do.  FADE_TAIL already fades both edges for centered text, so it can do the same for offset text.  The _TAIL part of the name is somewhat questionable now though.  :)",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f1462_840976b2",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-12T22:14:27Z",
+      "side": 1,
+      "message": "I could pull this block out to a helper function as it\u0027s doing a reasonably generic task.",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc433b8_aab289ad",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-12T22:14:27Z",
+      "side": 1,
+      "message": "When we set display offsets, there is some code to cap the min/max offset.  That could could retain state like \"we are shifted as far to one side as we can\", such that this fade code could shrink, but I think it\u0027s better to leave the calculations here.",
+      "revId": "c54f8daaedfe9cb7a5b3798e3949027f583df5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
