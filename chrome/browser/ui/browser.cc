@@ -2114,10 +2114,12 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
           // navigate to the default NTP page. Note that if there is an
           // installed extension that overrides the NTP page, that extensions
           // content will override the NTP contents.
-          NavigateParams params(this, GURL(chrome::kChromeUINewTabURL),
-                                ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
-          params.source_contents = web_contents;
-          Navigate(&params);
+          GURL url(chrome::kChromeUINewTabURL);
+          web_contents->GetController().LoadURL(
+              url,
+              content::Referrer::SanitizeForRequest(
+                  url, content::Referrer(url, blink::kWebReferrerPolicyDefault)),
+              ui::PAGE_TRANSITION_RELOAD, std::string());
         }
       } else {
         chrome::UnmuteIfMutedByExtension(web_contents, extension->id());

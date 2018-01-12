@@ -34,6 +34,7 @@
 #include "chrome/browser/devtools/devtools_window_testing.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/first_run/first_run.h"
@@ -1132,7 +1133,6 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
 
   GURL extension_url = extension->GetResourceURL("options.html");
   ui_test_utils::NavigateToURL(browser(), extension_url);
-  ui_test_utils::NavigateToURL(browser(), extension_url);
 
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
   EXPECT_EQ(extension_url.spec(),
@@ -1155,31 +1155,22 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
 }
 
-#include "chrome/browser/extensions/extension_tab_util.h"
-
 IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
   ASSERT_TRUE(embedded_test_server()->Start());
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
-  int first_tab_index = tab_strip_model->active_index();
-  //chrome::ShowHistory(browser());
-  GURL extension_url("chrome://history");
-  //ui_test_utils::NavigateToURL(browser(), extension_url);
-    ui_test_utils::NavigateToURLWithDisposition(
-      browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
-      ui_test_utils::BROWSER_TEST_NONE);
+  chrome::ShowHistory(browser());
   content::WebContents* default_history_page = tab_strip_model->GetActiveWebContents();
-  tab_strip_model->CloseWebContentsAt(first_tab_index, TabStripModel::CLOSE_NONE);
-
-  ASSERT_EQ(1, tab_strip_model->count());
 
   const Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("options_page/"));
   ASSERT_TRUE(extension);
 
-  GURL options_url = extension->GetResourceURL("options.html");
+  GURL extension_url(chrome::kChromeUIHistoryURL);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui_test_utils::BROWSER_TEST_NONE);
+
+  GURL options_url = extension->GetResourceURL("options.html");
   EXPECT_TRUE(extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(extension, browser()->profile()));
 
   ASSERT_EQ(3, tab_strip_model->count());
@@ -1199,7 +1190,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigatePageOnExtensionUnload) {
 
   // There should only be one tab now.
   ASSERT_EQ(2, tab_strip_model->count());
-  EXPECT_EQ("chrome://history/",
+  EXPECT_EQ(chrome::kChromeUIHistoryURL,
             tab_strip_model->GetActiveWebContents()->GetURL().spec());
   EXPECT_EQ(default_history_page, tab_strip_model->GetActiveWebContents());
 }
