@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6066cda_7cb3c3ad",
+        "filename": "ios/chrome/browser/signin/authentication_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T14:04:02Z",
+      "side": 1,
+      "message": "GetServiceForBrowserState(..., true) can still return null if either:\n1. browser_state IsOffTheRecord returns true (as GetBrowserStateToUse() is not overridden),\n2. browser_state is TestChromeBrowserState (since ServiceIsNULLWhileTesting() returns true).\n\nSo service may be null during testing or for off-the-record browser_state. I do not want to crash in those cases (at least not in the call to initialized()).",
+      "parentUuid": "607d8df7_a1c3d68f",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "e4566394f06f122b90e5621386e3cc73774ca481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42c98bac_f6686ff5",
         "filename": "ios/chrome/browser/signin/authentication_service_factory.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e4566394f06f122b90e5621386e3cc73774ca481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bf1d7e_0c63cf9e",
+        "filename": "ios/chrome/browser/signin/authentication_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-12T14:04:02Z",
+      "side": 1,
+      "message": "For the same reason, service may be null. Since it is an error, I want to check this before checking whether it is initialised (though it is not a security error so I can split it to a separate DCHECK if you want).",
+      "parentUuid": "42c98bac_f6686ff5",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "e4566394f06f122b90e5621386e3cc73774ca481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
