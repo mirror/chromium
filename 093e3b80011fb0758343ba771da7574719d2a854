@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdea11ce_46ad1b7f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T00:34:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer AddMemberIfNeeded though.",
+      "revId": "093e3b80011fb0758343ba771da7574719d2a854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
