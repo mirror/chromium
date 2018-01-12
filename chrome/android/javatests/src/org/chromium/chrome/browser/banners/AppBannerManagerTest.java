@@ -91,6 +91,9 @@ public class AppBannerManagerTest {
     private static final String WEB_APP_PATH =
             "/chrome/test/data/banners/manifest_test_page.html";
 
+    private static final String WEB_APP_BEFORE_INSTALL_PROMPT_PATH =
+            "/chrome/test/data/banners/prompt_test_page.html";
+
     private static final String WEB_APP_SHORT_TITLE_MANIFEST =
             "/chrome/test/data/banners/manifest_short_name_only.json";
 
@@ -191,6 +194,7 @@ public class AppBannerManagerTest {
     private TestPackageManager mPackageManager;
     private EmbeddedTestServer mTestServer;
     private String mWebAppUrl;
+    private String mWebAppApiUrl;
 
     @Before
     public void setUp() throws Exception {
@@ -218,6 +222,7 @@ public class AppBannerManagerTest {
         mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
         mNativeAppUrl = mTestServer.getURL(NATIVE_APP_PATH);
         mWebAppUrl = mTestServer.getURL(WEB_APP_PATH);
+        mWebAppApiUrl = mTestServer.getURL(WEB_APP_BEFORE_INSTALL_PROMPT_PATH);
     }
 
     @After
@@ -626,12 +631,43 @@ public class AppBannerManagerTest {
     @Test
     @SmallTest
     @Feature({"AppBanners"})
-    public void testAppInstalledEvent() throws Exception {
+    public void testPostInstallationAutomaticPrompt() throws Exception {
         triggerWebAppBanner(mWebAppUrl, WEB_APP_TITLE, true);
 
         // The appinstalled event should fire (and cause the title to change).
         Tab tab = mActivityTestRule.getActivity().getActivityTab();
         new TabTitleObserver(tab, "Got appinstalled").waitForTitleUpdate(3);
+
+        // We should have recorded the AUTOMATIC_BROWSER_TAB install source.
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertEquals(1,
+                        RecordHistogram.getHistogramValueCountForTesting(
+                                "Webapp.Install.Source", 2));
+            }
+        });
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AppBanners"})
+    public void testPostInstallationApi() throws Exception {
+        triggerWebAppBanner(mWebAppApiUrl, WEB_APP_TITLE, true);
+
+        // The appinstalled event should fire (and cause the title to change).
+        Tab tab = mActivityTestRule.getActivity().getActivityTab();
+        new TabTitleObserver(tab, "Got appinstalled").waitForTitleUpdate(3);
+
+        // We should have recorded the API_BROWSER_TAB install source.
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertEquals(1,
+                        RecordHistogram.getHistogramValueCountForTesting(
+                                "Webapp.Install.Source", 4));
+            }
+        });
     }
 
     @Test
