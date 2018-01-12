@@ -190,6 +190,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c9c4d8_9fdbc7eb",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T08:02:17Z",
+      "side": 0,
+      "message": "Do we really need to check Selection.IsRange()? Since, this code can work\nboth IsCaret() and IsRange(), we don\u0027t need to check include DCHECK, here.",
+      "parentUuid": "f3923a43_2b8080fc",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
