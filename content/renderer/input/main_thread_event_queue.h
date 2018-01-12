@@ -13,6 +13,7 @@
 #include "content/common/input/input_event_dispatch_type.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/input_event_ack_state.h"
+#include "content/renderer/input/input_event_prediction.h"
 #include "content/renderer/input/main_thread_event_queue_task_list.h"
 #include "content/renderer/input/scoped_web_input_event_with_latency_info.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -102,6 +103,8 @@ class CONTENT_EXPORT MainThreadEventQueue
 
   // Request unbuffered input events until next pointerup.
   void RequestUnbufferedInputEvents();
+
+  InputEventPredictor event_predictor_;
 
  protected:
   friend class base::RefCountedThreadSafe<MainThreadEventQueue>;
