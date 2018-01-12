@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c70f259e_73fb8daa",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-12T22:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ea6d210_6694e3e5",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7d48df_e4ef85b6",
         "filename": "components/webrtc_logging/browser/BUILD.gn",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-12T09:23:55Z",
       "side": 1,
       "message": "Please make sure that you build and run with WebRTC disabled to test that. There\u0027s no automatic testing for that in the try bots.",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852305db_ea14641a",
+        "filename": "components/webrtc_logging/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-12T22:51:02Z",
+      "side": 1,
+      "message": "I can\u0027t build Chrome Linux with `enable_webrtc \u003d false`, even on ToT.\n\ncrbug.com/800653\n\nSeems `enable_webrtc \u003d false` is true by default with an audio-only Chromecast build (is_chromecast \u003d true, is_cast_audio_only \u003d true) but that presents errors as well.",
+      "parentUuid": "cd7d48df_e4ef85b6",
       "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fe8028c7_99e133ca",
+        "filename": "components/webrtc_logging/common/partial_circular_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-12T22:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d8b58c_e6c4d4b7",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444e976f_22d7898b",
         "filename": "components/webrtc_logging/common/partial_circular_buffer_unittest.cc",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e6b2b4_9bbac812",
+        "filename": "components/webrtc_logging/common/partial_circular_buffer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-12T22:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "444e976f_22d7898b",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
