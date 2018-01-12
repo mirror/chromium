@@ -29,5 +29,8 @@ include_rules = [
 specific_include_rules = {
   "audio_manager_unittest.cc": [
     "+chromeos/dbus"
+  ],
+  "paint_canvas_video_renderer_unittest.cc": [
+    "+cc/test"
   ]
 }

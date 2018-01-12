@@ -63,6 +63,7 @@ source_set("unit_tests") {
   deps = [
     "//base",
     "//base/test:test_support",
+    "//cc:test_support",
     "//cc/paint",
     "//gpu:test_support",
     "//gpu/command_buffer/client:gles2_interface",

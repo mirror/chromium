@@ -10,6 +10,7 @@
 #include "base/message_loop/message_loop.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/skia_paint_canvas.h"
+#include "cc/test/test_context_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface_stub.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -23,7 +24,6 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
-#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 using media::VideoFrame;
@@ -639,14 +639,14 @@ void MailboxHoldersReleased(const gpu::SyncToken& sync_token) {}
 // Test that PaintCanvasVideoRendererTest::Paint doesn't crash when GrContext is
 // abandoned.
 TEST_F(PaintCanvasVideoRendererTest, ContextLost) {
-  sk_sp<const GrGLInterface> null_interface(GrGLCreateNullInterface());
-  sk_sp<GrContext> gr_context = GrContext::MakeGL(std::move(null_interface));
-  gr_context->abandonContext();
+  scoped_refptr<cc::TestContextProvider> test_context_provider =
+      cc::TestContextProvider::Create();
+  test_context_provider->GrContext()->abandonContext();
 
   cc::SkiaPaintCanvas canvas(AllocBitmap(kWidth, kHeight));
 
-  TestGLES2Interface gles2;
-  Context3D context_3d(&gles2, gr_context.get());
+  Context3D context_3d(test_context_provider->ContextGL(),
+                       test_context_provider->GrContext());
   gfx::Size size(kWidth, kHeight);
   gpu::MailboxHolder holders[VideoFrame::kMaxPlanes] = {gpu::MailboxHolder(
       gpu::Mailbox::Generate(), gpu::SyncToken(), GL_TEXTURE_RECTANGLE_ARB)};
@@ -667,15 +667,16 @@ TEST_F(PaintCanvasVideoRendererTest, CorrectFrameSizeToVisibleRect) {
   SkImageInfo imInfo =
       SkImageInfo::MakeN32(fWidth, fHeight, kOpaque_SkAlphaType);
 
-  sk_sp<const GrGLInterface> glInterface(GrGLCreateNullInterface());
-  sk_sp<GrContext> grContext = GrContext::MakeGL(std::move(glInterface));
+  scoped_refptr<cc::TestContextProvider> test_context_provider =
+      cc::TestContextProvider::Create();
 
-  sk_sp<SkSurface> surface =
-      SkSurface::MakeRenderTarget(grContext.get(), SkBudgeted::kYes, imInfo);
+  sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
+      test_context_provider->GrContext(), SkBudgeted::kYes, imInfo);
   cc::SkiaPaintCanvas canvas(surface->getCanvas());
 
   TestGLES2Interface gles2;
-  Context3D context_3d(&gles2, grContext.get());
+  Context3D context_3d(test_context_provider->ContextGL(),
+                       test_context_provider->GrContext());
   gfx::Size coded_size(fWidth, fHeight);
   gfx::Size visible_size(fWidth / 2, fHeight / 2);
 
