@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "06dc8b40_3430ea88",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T00:28:48Z",
+      "side": 1,
+      "message": "Would it be possible to pass in v8::Context to Allocate? It\u0027s not nice that the Blink side needs to call GetCurrent and get the current context.\n\nYou\u0027ll need to change the V8 side though. A follow-up CL is fine.",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0b2f04d_855a1906",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 19
@@ -19,6 +36,40 @@
         "endLine": 561,
         "endChar": 76
       },
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d614c40f_80547bf2",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T00:28:48Z",
+      "side": 1,
+      "message": "Instead of creating a mapping, can we make SecurityOrigin own the Partition? Then we won\u0027t need to maintain the mapping between the keys and the partitions.",
+      "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297e7fa3_147ccc6f",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-12T00:28:48Z",
+      "side": 1,
+      "message": "Oh, you have to create a mapping between allocated entries and partitions... This should be pretty heavy (i.e., O(# of allocated entries)), right?\n\nHmm. The reason you need the mapping is that ArrayBuffers are not guaranteed to be created and destructed on the same SecurityOrigin, right? (considering document.domain etc)",
       "revId": "3806f3fffd852c822405e6e9339dc7963faa38ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
