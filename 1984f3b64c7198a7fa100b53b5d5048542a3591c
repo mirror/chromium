@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66834e32_8ee887ef",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T19:47:47Z",
+      "side": 1,
+      "message": "I would think you\u0027d check this first? You couldn\u0027t possibly have entries without a service, ya?",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "1984f3b64c7198a7fa100b53b5d5048542a3591c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9c7ea6_0b86ccd7",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T19:47:47Z",
+      "side": 1,
+      "message": "btw, I\u0027m cool with you changing this to \u0027auto\u0027 if you like, since the type is pretty long, and \u0027rbegin()\u0027 behaves as expected.",
+      "range": {
+        "startLine": 111,
+        "startChar": 41,
+        "endLine": 111,
+        "endChar": 57
+      },
+      "revId": "1984f3b64c7198a7fa100b53b5d5048542a3591c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885fab35_f7d4fb4d",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T19:47:47Z",
+      "side": 1,
+      "message": "It looks like you added the non-counting Verify() below, but didn\u0027t restore the DCHECK. Did you want it?",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "1984f3b64c7198a7fa100b53b5d5048542a3591c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d04a4f_d5317e9b",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T19:47:47Z",
+      "side": 1,
+      "message": "Just curious, these can\u0027t use the \u0027count\u0027 version?",
+      "range": {
+        "startLine": 170,
+        "startChar": 57,
+        "endLine": 170,
+        "endChar": 77
+      },
+      "revId": "1984f3b64c7198a7fa100b53b5d5048542a3591c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282bbf44_6cf3a951",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-12T19:47:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t appear that this tests aging out by time. If I have this right, intentional?",
+      "range": {
+        "startLine": 233,
+        "startChar": 28,
+        "endLine": 233,
+        "endChar": 32
+      },
+      "revId": "1984f3b64c7198a7fa100b53b5d5048542a3591c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
