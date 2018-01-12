@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5f356e0_563a283a",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2920,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Ah, yes! Done.",
+      "parentUuid": "d6efb15d_5f45b7b2",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173e9313_d33b0a13",
         "filename": "chrome/browser/notifications/mock_itoastnotification.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d793ad2e_8ebb9a88",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Not sure. I guess keeping a counter is warranted.",
+      "parentUuid": "173e9313_d33b0a13",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4445f1c_e211a6d3",
         "filename": "chrome/browser/notifications/mock_itoastnotification.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12df6cb9_bc4e24fc",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4445f1c_e211a6d3",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "c5c12daf_8b77a5f5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Done. Also remembered to switch to CoInitializeEx this time. :)",
+      "parentUuid": "00317931_4b3a326b",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d74cb8b1_ec12e087",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 6
@@ -101,6 +173,24 @@
       "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b333b00_01f3ca52",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Yes. CoInitialize[Ex] should be called for each COM thread at least once if COM is required. Subsequent calls are harmless but return S_FALSE.",
+      "parentUuid": "d74cb8b1_ec12e087",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "9b61bf7f_c5d99224",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "550a8ac3_332b284a",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1183dccb_0483fc24",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
         "patchSetId": 6
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "580b684c_758ffddc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1183dccb_0483fc24",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84e490a_4a04ebc4",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
         "patchSetId": 6
@@ -152,6 +278,24 @@
       "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf8d9f5_b5f9e096",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-12T10:26:52Z",
+      "side": 1,
+      "message": "Totally works, just like Magic Johnson. :)",
+      "parentUuid": "d84e490a_4a04ebc4",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
