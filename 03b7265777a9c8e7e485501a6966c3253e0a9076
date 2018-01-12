@@ -16,6 +16,24 @@
       "revId": "03b7265777a9c8e7e485501a6966c3253e0a9076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71459971_f2dca490",
+        "filename": "cc/trees/render_frame_metadata.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-12T15:15:26Z",
+      "side": 1,
+      "message": "There is one copy in RenderWidgetHostImpl, where we will cache this. But since this is just for passing data I\u0027m fine with this being copyable.\n\nDone.",
+      "parentUuid": "7ffb7ca6_bb7aad20",
+      "revId": "03b7265777a9c8e7e485501a6966c3253e0a9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
