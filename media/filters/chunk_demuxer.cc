@@ -774,7 +774,8 @@ void ChunkDemuxer::OnEnabledAudioTracksChanged(
   std::set<ChunkDemuxerStream*> enabled_streams;
   for (const auto& id : track_ids) {
     ChunkDemuxerStream* stream = track_id_to_demux_stream_map_[id];
-    DCHECK(stream);
+    if (!stream)
+      continue;
     DCHECK_EQ(DemuxerStream::AUDIO, stream->type());
     // TODO(servolk): Remove after multiple enabled audio tracks are supported
     // by the media::RendererImpl.
