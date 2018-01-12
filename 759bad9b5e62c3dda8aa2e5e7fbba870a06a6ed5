@@ -238,6 +238,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c47178f_4d4931e3",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-12T08:28:09Z",
+      "side": 0,
+      "message": "If so \"beforeinput\" event should be dispatched in TypingCommand::DeleteSelection() for localization of changes in DeleteSelection().\n\nLike:\n\nif (TypingCommand::PrepareDeleteSelection(GetDocument())) {\n  ... dispatch before input ...\n  TypingCommand::DeleteSelection(...);\n}\n\nbool TypginCommand::PrepareDeleteSeelction(...) {\n  ... check condition ...\n}\n\n\nvoid TypingCommand::DeleteSelection(...) {\n  if (!PrepareDeleteSeelction(GetDocument()))\n    return;\n  ... delete selection ...\n}",
+      "parentUuid": "2f8b305b_968744dd",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
