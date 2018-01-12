@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892e028e_09b66535",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T04:11:28Z",
+      "side": 1,
+      "message": "Irrelevant change?",
+      "range": {
+        "startLine": 235,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 24
+      },
+      "revId": "08100124f3892a060ecb790b6e7470b912865e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b071bfc8_aaa980e8",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T04:11:28Z",
+      "side": 1,
+      "message": "Is this space required?",
+      "range": {
+        "startLine": 2807,
+        "startChar": 33,
+        "endLine": 2807,
+        "endChar": 34
+      },
+      "revId": "08100124f3892a060ecb790b6e7470b912865e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
