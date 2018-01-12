@@ -1108,6 +1108,14 @@ class MockTaggingStreamSocket : public WrappedStreamSocket {
   SocketTag tag_;
 };
 
+// Constants for a successful SOCKS v4 handshake (connecting to localhost on
+// port 80, for the request).
+extern const char kSOCKS4OkRequestLocalHostPort80[];
+extern const int kSOCKS4OkRequestLocalHostPort80Length;
+
+extern const char kSOCKS4OkReply[];
+extern const int kSOCKS4OkReplyLength;
+
 // Constants for a successful SOCKS v5 handshake.
 extern const char kSOCKS5GreetRequest[];
 extern const int kSOCKS5GreetRequestLength;
