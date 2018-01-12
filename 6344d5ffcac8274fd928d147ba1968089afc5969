@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1150e2d_399a871e",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3956,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-12T17:29:42Z",
+      "side": 1,
+      "message": "6 shards appears to be the default for chromium_webkit_isolated_scripts. Can we just remove the shard counts from these exception entries instead?",
+      "revId": "6344d5ffcac8274fd928d147ba1968089afc5969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
