@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb4107d_f34ee3ce",
+        "filename": "content/browser/push_messaging/push_messaging_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "I\u0027d rather pursue the new DCHECK about ACTIVATING/ACTIVATED in a separate CL. It\u0027s enforcing a more semantic/web-exposed behavior than simply checking if the worker thread is running, so I\u0027d rather the Push feature owners look more carefully at it.\n\nWe can also remove line 127 since StartRequestWithCustomTimeout has the same DCHECK.",
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5463dc7b_44156f08",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "We can remove line 379 since it follows immediately from line 371",
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd63f18_dd40cac2",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e0de52_6b8f0088",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "In this case, just |status| seems sufficient given the function name.",
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b918d6_316a33f0",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "Can also move this change  to a diff CL.",
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d29386_b16c4d69",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-12T03:35:01Z",
+      "side": 1,
+      "message": "The grammar is a bit confusing. I recommend smaller sentences:\n\n// Starts the worker if it isn\u0027t already running. Calls |callback| with SERVICE_WORKER_OK when the worker started up successfully or if it is already running. Otherwise, calls |callback| with an error code.",
+      "range": {
+        "startLine": 267,
+        "startChar": 28,
+        "endLine": 268,
+        "endChar": 17
+      },
+      "revId": "fdd069bd86d207f3dca61bb3f896b778d3eff7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
