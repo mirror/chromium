@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d846aae0_c922e877",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "I don\u0027t mind doing it, really. However, my patch touches this test just because the behavior change makes this test become wrong; we can\u0027t use the \u0027move\u0027 operation, but we have to use \u0027extend\u0027 instead. \n\nThis is just the 5th tests with the same, old and outdated, format, so I think converting it to a selection_test based one would hide the required change I had to make because of the patch itself.",
+      "parentUuid": "10460ea5_efe2c20f",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b061b4c_513145ab",
         "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T03:56:32Z",
       "side": 1,
       "message": "nit: Please remove trailing whitespace.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbfabd8_2cebe43b",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Those tralining white spaces were already in the original file. I can remove them in this patch, but as we\u0027ll probably convert it to a selection_test() format, I think we can keep just the changes required because of the patch.",
+      "parentUuid": "4b061b4c_513145ab",
       "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0567a25_4b55cc34",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Same case here",
+      "parentUuid": "49f681cf_c00b28f0",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdba207_10324ce3",
         "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-11T03:56:32Z",
       "side": 1,
       "message": "nit: Please remove trailing whitespace.",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997c4415_ab3ea3e5",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/block-style-005.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Same case here",
+      "parentUuid": "9cdba207_10324ce3",
       "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "db7a654d_cb31c9ef",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/preserve-selection-direction.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31cedcbd_c7ceed7a",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59fbcf22_0020e118",
         "filename": "third_party/WebKit/LayoutTests/editing/style/preserve-selection-direction.html",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0235c78_6ab8362b",
+        "filename": "third_party/WebKit/LayoutTests/editing/style/preserve-selection-direction.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59fbcf22_0020e118",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "22b62973_cc038666",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "406731c4_0aa0c173",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 38
+      },
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f94f1108_9fc09530",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 6
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "d3606dd8_577af89e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94f1108_9fc09530",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c02a3102_fb2dc095",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 6
@@ -158,6 +308,24 @@
       "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c4156a_36b56c55",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-12T11:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02a3102_fb2dc095",
+      "revId": "496d56e5804cb7865afec9d8e191b73f47b3ebba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
