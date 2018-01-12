@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
 #include "chrome/browser/platform_util.h"
@@ -114,7 +115,8 @@ views::View* FirstRunDialog::CreateExtraView() {
 bool FirstRunDialog::Accept() {
   GetWidget()->Hide();
 
-  ChangeMetricsReportingStateWithReply(report_crashes_->checked(),
+  ChangeMetricsReportingStateWithReply(g_browser_process->local_state(),
+                                       report_crashes_->checked(),
                                        base::Bind(&InitCrashReporterIfEnabled));
 
   if (make_default_->checked())
