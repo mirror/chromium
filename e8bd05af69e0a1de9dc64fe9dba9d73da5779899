@@ -198,6 +198,30 @@
       "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7670b6ab_3f995027",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T18:11:03Z",
+      "side": 1,
+      "message": "I might avoid mentioning PausableTimer, since that\u0027s an internal implementation detail. How about:\n\nQueues a callback to run script when the context is not paused, e.g. for a modal JS dialog or window.print(). This callback can run immediately if the context is not paused. If the context is invalidated...",
+      "parentUuid": "d4c4c952_0d42de2b",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 15
+      },
+      "revId": "e8bd05af69e0a1de9dc64fe9dba9d73da5779899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
