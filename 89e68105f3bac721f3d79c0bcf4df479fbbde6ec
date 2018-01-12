@@ -16,6 +16,29 @@
       "revId": "89e68105f3bac721f3d79c0bcf4df479fbbde6ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77613e02_d2b80992",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-12T20:02:50Z",
+      "side": 1,
+      "message": "nit: CustomDataRasterCallback? Makes it clearer that the callback is invoked when rasterizing this op.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "89e68105f3bac721f3d79c0bcf4df479fbbde6ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
