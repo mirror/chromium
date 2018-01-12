@@ -761,18 +761,12 @@ void ServiceWorkerProviderHost::RemoveAllMatchingRegistrations() {
 
 void ServiceWorkerProviderHost::IncreaseProcessReference(
     const GURL& pattern) {
-  if (context_ && context_->process_manager()) {
-    context_->process_manager()->AddProcessReferenceToPattern(
-        pattern, render_process_id_);
-  }
+  // TODO(falken): Remove this no-op.
 }
 
 void ServiceWorkerProviderHost::DecreaseProcessReference(
     const GURL& pattern) {
-  if (context_ && context_->process_manager()) {
-    context_->process_manager()->RemoveProcessReferenceFromPattern(
-        pattern, render_process_id_);
-  }
+  // TODO(falken): Remove this no-op.
 }
 
 void ServiceWorkerProviderHost::ReturnRegistrationForReadyIfNeeded() {
