@@ -9,6 +9,8 @@
 #include <set>
 
 #include "base/bind.h"
+#include "base/bit_cast.h"
+#include "base/rand_util.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/trace_event/trace_event.h"
@@ -27,6 +29,7 @@ namespace scheduler {
 namespace {
 
 const double kLongTaskTraceEventThreshold = 0.05;
+const double kSamplingRateForRecordingCPUTime = 0.01;
 
 double MonotonicTimeInSeconds(base::TimeTicks time_ticks) {
   return (time_ticks - base::TimeTicks()).InSecondsF();
@@ -48,6 +51,7 @@ TaskQueueManager::TaskQueueManager(
     : real_time_domain_(new RealTimeDomain()),
       graceful_shutdown_helper_(new internal::GracefulQueueShutdownHelper()),
       controller_(std::move(controller)),
+      random_generator_(base::RandUint64()),
       weak_factory_(this) {
   // TODO(altimin): Create a sequence checker here.
   DCHECK(controller_->RunsTasksInCurrentSequence());
@@ -474,6 +478,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   base::WeakPtr<TaskQueueManager> protect = GetWeakPtr();
   internal::TaskQueueImpl::Task pending_task =
       work_queue->TakeTaskFromWorkQueue();
+  bool should_record_cpu_time = ShouldRecordCPUTimeForTask();
 
   // It's possible the task was canceled, if so bail out.
   // The task should be non-null, but it seems to be possible to due
@@ -507,6 +512,10 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   NotifyWillProcessTaskObservers(pending_task, queue, time_before_task,
                                  &task_start_time);
 
+  base::ThreadTicks task_start_cpu_time;
+  if (should_record_cpu_time)
+    task_start_cpu_time = base::ThreadTicks::Now();
+
   {
     TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
                  queue->GetName());
@@ -525,8 +534,16 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     currently_executing_task_queue_ = prev_executing_task_queue;
   }
 
-  NotifyDidProcessTaskObservers(pending_task, queue, task_start_time,
-                                time_after_task);
+  base::ThreadTicks task_end_cpu_time;
+  if (should_record_cpu_time)
+    task_end_cpu_time = base::ThreadTicks::Now();
+
+  NotifyDidProcessTaskObservers(
+      pending_task, queue,
+      should_record_cpu_time ? base::Optional<base::TimeDelta>(
+                                   task_end_cpu_time - task_start_cpu_time)
+                             : base::nullopt,
+      task_start_time, time_after_task);
 
   return ProcessTaskResult::kExecuted;
 }
@@ -579,6 +596,7 @@ void TaskQueueManager::NotifyWillProcessTaskObservers(
 void TaskQueueManager::NotifyDidProcessTaskObservers(
     const internal::TaskQueueImpl::Task& pending_task,
     internal::TaskQueueImpl* queue,
+    base::Optional<base::TimeDelta> cpu_time,
     base::TimeTicks task_start_time,
     base::TimeTicks* time_after_task) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
@@ -617,7 +635,8 @@ void TaskQueueManager::NotifyDidProcessTaskObservers(
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "TaskQueueManager.QueueOnTaskCompleted");
     if (task_start_time_sec && task_end_time_sec)
-      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task);
+      queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task,
+                             cpu_time);
   }
 
   if (task_start_time_sec && task_end_time_sec &&
@@ -811,6 +830,26 @@ base::TickClock* TaskQueueManager::GetClock() const {
 
 base::TimeTicks TaskQueueManager::NowTicks() const {
   return controller_->GetClock()->NowTicks();
+}
+
+namespace {
+
+double RandomProbabilityFromRandInt(uint64_t value) {
+  static const uint64_t kExponentBits = uint64_t{0x3FF0000000000000};
+  static const uint64_t kMantissaMask = uint64_t{0x000FFFFFFFFFFFFF};
+  uint64_t random = (value & kMantissaMask) | kExponentBits;
+  return bit_cast<double>(random) - 1;
+}
+
+}  // namespace
+
+bool TaskQueueManager::ShouldRecordCPUTimeForTask() {
+  return RandomProbabilityFromRandInt(random_generator_()) <
+         kSamplingRateForRecordingCPUTime;
+}
+
+void TaskQueueManager::SetRandomSeed(uint64_t value) {
+  random_generator_.seed(value);
 }
 
 }  // namespace scheduler
