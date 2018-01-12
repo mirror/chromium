@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f89a596_d3881f26",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "isNativeInitialized\n\nevery usage of mNativeObj has to be guarded by this, and no, isAccessibilityEnabled is not good enough because it doesn\u0027t imply native object is not null",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d14ed10_3b6ffac7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "just inline this, and you don\u0027t need isNativeInit check anymore",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb3e389_d6728eb0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "this appears a bit too lazy, what if client sets enable first, and calls getAccessibilityNodeProvider second, the enable just gets dropped, and then I don\u0027t know what happens after that..\n\nI think registering for the broadcast receiver have a similar problem here",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132a0dcb_8834b3c5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "call this destroy. what happens as a result is an implementation detail",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe381da_0b527179",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "is are null checks needed everywhere now?",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58c7d27_f83c4fa7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-12T19:48:15Z",
+      "side": 1,
+      "message": "isNativeInit check",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed3a50b6_245760cf",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
