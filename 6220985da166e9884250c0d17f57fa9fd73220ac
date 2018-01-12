@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5218dc39_2a67eee9",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6113d8_6030045c",
+      "range": {
+        "startLine": 231,
+        "startChar": 4,
+        "endLine": 231,
+        "endChar": 11
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c7143e_e585b55a",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f65ef4e9_16a38f81",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c7143e_e585b55a",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 35
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2368119_866a3c11",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e7d604_eaabba31",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "We don\u0027t actually need to observe the signin manager, as per your other comment. Removed.",
+      "parentUuid": "d2368119_866a3c11",
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "f8de8dfc_f270b7aa",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6623cdd_1b5adbcd",
+      "range": {
+        "startLine": 257,
+        "startChar": 31,
+        "endLine": 257,
+        "endChar": 49
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d62ea35_6cd77de4",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -108,6 +198,30 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4540978_a90bb882",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Not possible. We would need to change FetchPolicyForSignedInUser(), because it currently only accept RepeatableCallbacks.",
+      "parentUuid": "5d62ea35_6cd77de4",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 16
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6b3ca9bc_3c9a9cee",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd11047f_20586da0",
+      "range": {
+        "startLine": 372,
+        "startChar": 21,
+        "endLine": 372,
+        "endChar": 22
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c01405c5_03f05a34",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -154,6 +292,30 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b72315_5124c744",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c01405c5_03f05a34",
+      "range": {
+        "startLine": 379,
+        "startChar": 59,
+        "endLine": 379,
+        "endChar": 60
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "4875a5b4_00c4dcae",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da30181_90c3b32e",
+      "range": {
+        "startLine": 380,
+        "startChar": 19,
+        "endLine": 380,
+        "endChar": 44
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9fe587_1acd438a",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -194,6 +380,24 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b12cb6_ff11a030",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done.\nI also moved the call to SigninManager::SignOut() here in this class, for more consistency.",
+      "parentUuid": "7c9fe587_1acd438a",
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "50a06580_368fd1f5",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2013019d_fb3af45c",
+      "range": {
+        "startLine": 403,
+        "startChar": 9,
+        "endLine": 403,
+        "endChar": 23
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5d09f07_4d88128b",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -240,6 +468,30 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef28496_5db52fbd",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Obsolete, this function is removed.",
+      "parentUuid": "d5d09f07_4d88128b",
+      "range": {
+        "startLine": 410,
+        "startChar": 49,
+        "endLine": 410,
+        "endChar": 54
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "0e59530d_9a7d6994",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Agreed. This was copied from SigninTracker, but seems unnecessary.",
+      "parentUuid": "fcfa3594_1f9b3b40",
+      "range": {
+        "startLine": 411,
+        "startChar": 22,
+        "endLine": 411,
+        "endChar": 45
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51401760_a7670583",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 13
@@ -286,6 +562,30 @@
       "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f231dcd_98a061d4",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-12T16:42:20Z",
+      "side": 1,
+      "message": "Good catch, I forgot to rebase this.",
+      "parentUuid": "51401760_a7670583",
+      "range": {
+        "startLine": 427,
+        "startChar": 28,
+        "endLine": 427,
+        "endChar": 0
+      },
+      "revId": "6220985da166e9884250c0d17f57fa9fd73220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
