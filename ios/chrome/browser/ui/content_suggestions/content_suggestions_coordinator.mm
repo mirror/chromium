@@ -43,6 +43,7 @@
 
 @interface ContentSuggestionsCoordinator ()<
     ContentSuggestionsViewControllerAudience,
+    NTPReloading,
     OverscrollActionsControllerDelegate>
 
 @property(nonatomic, strong)
@@ -135,6 +136,7 @@
              mostVisitedSite:std::move(mostVisitedFactory)];
   self.contentSuggestionsMediator.commandHandler = self.NTPMediator;
   self.contentSuggestionsMediator.headerProvider = self.headerController;
+  self.contentSuggestionsMediator.reloader = self;
 
   self.headerController.promoCanShow =
       [self.contentSuggestionsMediator notificationPromo]->CanShow();
@@ -142,6 +144,19 @@
   self.metricsRecorder = [[ContentSuggestionsMetricsRecorder alloc] init];
   self.metricsRecorder.delegate = self.contentSuggestionsMediator;
 
+  self.NTPMediator.consumer = self.headerController;
+  self.NTPMediator.dispatcher = self.dispatcher;
+  self.NTPMediator.NTPMetrics =
+      [[NTPHomeMetrics alloc] initWithBrowserState:self.browserState];
+  self.NTPMediator.metricsRecorder = self.metricsRecorder;
+  self.NTPMediator.suggestionsMediator = self.contentSuggestionsMediator;
+  self.NTPMediator.suggestionsService = contentSuggestionsService;
+
+  [self setUpViewController];
+  [self.NTPMediator setUp];
+}
+
+- (void)setUpViewController {
   self.suggestionsViewController = [[ContentSuggestionsViewController alloc]
       initWithStyle:CollectionViewControllerStyleDefault];
   [self.suggestionsViewController
@@ -153,15 +168,7 @@
   self.suggestionsViewController.containsToolbar = YES;
   self.suggestionsViewController.dispatcher = self.dispatcher;
 
-  self.NTPMediator.consumer = self.headerController;
-  self.NTPMediator.dispatcher = self.dispatcher;
-  self.NTPMediator.NTPMetrics =
-      [[NTPHomeMetrics alloc] initWithBrowserState:self.browserState];
-  self.NTPMediator.metricsRecorder = self.metricsRecorder;
   self.NTPMediator.suggestionsViewController = self.suggestionsViewController;
-  self.NTPMediator.suggestionsMediator = self.contentSuggestionsMediator;
-  self.NTPMediator.suggestionsService = contentSuggestionsService;
-  [self.NTPMediator setUp];
 
   [self.suggestionsViewController addChildViewController:self.headerController];
   [self.headerController
@@ -178,6 +185,7 @@
   self.NTPMediator = nil;
   self.contentSuggestionsMediator = nil;
   self.headerController = nil;
+  self.suggestionsViewController = nil;
   _visible = NO;
 }
 
@@ -196,6 +204,17 @@
       [self.contentSuggestionsMediator notificationPromo];
   notificationPromo->HandleViewed();
   [self.headerController setPromoCanShow:notificationPromo->CanShow()];
+}
+
+#pragma mark - NTPReloading
+
+- (void)reloadNTP {
+  [self.viewController willMoveToParentViewController:nil];
+  [self.viewController.view removeFromSuperview];
+  [self.viewController didMoveToParentViewController:nil];
+
+  [self setUpViewController];
+  [self.delegate reloadNTP];
 }
 
 #pragma mark - OverscrollActionsControllerDelegate

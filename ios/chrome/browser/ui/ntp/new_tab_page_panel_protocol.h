@@ -18,6 +18,8 @@ extern const int kNewTabPageDistanceToFadeShadow;
 - (void)updateNtpBarShadowForPanelController:
     (id<NewTabPagePanelProtocol>)ntpPanelController;
 
+- (void)reloadNTP;
+
 @end
 
 // TODO(jbbegue): rename, extract and upstream so that CRWNativeContent can

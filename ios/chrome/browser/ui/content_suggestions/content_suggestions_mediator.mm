@@ -115,6 +115,7 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 @synthesize faviconMediator = _faviconMediator;
 @synthesize learnMoreItem = _learnMoreItem;
 @synthesize readingListNeedsReload = _readingListNeedsReload;
+@synthesize reloader = _reloader;
 
 #pragma mark - Public
 
@@ -407,6 +408,7 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
 - (void)contentSuggestionsServiceFullRefreshRequired:
     (ntp_snippets::ContentSuggestionsService*)suggestionsService {
   [self.dataSink reloadAllData];
+  [self.reloader reloadNTP];
 }
 
 - (void)contentSuggestionsServiceShutdown:
