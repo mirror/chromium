@@ -111,7 +111,7 @@ class NetworkTrafficAnnotationChecker():
     else:
       file_paths = []
 
-    args = [self.auditor_path, "--test-only", "--limit=%i" % limit,
+    args = [self.auditor_path, "--test-only", "--limit=%i" % limit, "--nice",
             "--build-path=" + self.build_path ] + file_paths
 
     if sys.platform.startswith("win"):
