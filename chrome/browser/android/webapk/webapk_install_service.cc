@@ -37,7 +37,7 @@ void WebApkInstallService::InstallAsync(content::WebContents* web_contents,
                                         const ShortcutInfo& shortcut_info,
                                         const SkBitmap& primary_icon,
                                         const SkBitmap& badge_icon,
-                                        WebAppInstallSource install_source) {
+                                        WebappInstallSource install_source) {
   if (IsInstallInProgress(shortcut_info.manifest_url)) {
     ShortcutHelper::ShowWebApkInstallInProgressToast();
     return;
