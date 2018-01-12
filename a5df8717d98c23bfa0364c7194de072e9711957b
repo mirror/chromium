@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "532cef8a_7e510f05",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-12T20:42:37Z",
+      "side": 1,
+      "message": "Yeah, to me too; I pasted it in the omnibox and all the search suggestions pretended it was an f (e.g. \"ғacebook\"), so I suggest using that mapping.",
+      "parentUuid": "cb86ad53_fcc6e576",
+      "range": {
+        "startLine": 159,
+        "startChar": 30,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc7a7b6_b69b542d",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-12T20:42:37Z",
+      "side": 1,
+      "message": "Carryover from a previous CL but... this still looks like a capital \u0027i\u0027 to me rather than an \u0027l\u0027.",
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2859c65e_4d71aa8b",
         "filename": "components/url_formatter/top_domains/test_skeletons.gperf",
         "patchSetId": 6
@@ -48,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "cb960bc6_e85d965a",
+        "filename": "components/url_formatter/top_domains/test_skeletons.gperf",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-12T20:42:37Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like it:\n\nwmnr -\u003e wrnnr\n\nThe \u0027m\u0027 is expanded to \"rn\", everything else is left alone.",
+      "parentUuid": "2859c65e_4d71aa8b",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a04d79f4_83aa8229",
         "filename": "components/url_formatter/url_formatter_unittest.cc",
         "patchSetId": 6
@@ -59,6 +124,30 @@
       "writtenOn": "2018-01-12T20:09:23Z",
       "side": 1,
       "message": "Is |diacritci| a technical term or a typo (e.g. diacritical\")?",
+      "range": {
+        "startLine": 433,
+        "startChar": 33,
+        "endLine": 433,
+        "endChar": 43
+      },
+      "revId": "a5df8717d98c23bfa0364c7194de072e9711957b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f9dd23_af9bb628",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-12T20:42:37Z",
+      "side": 1,
+      "message": "I think \"diacritic\" was intended.",
+      "parentUuid": "a04d79f4_83aa8229",
       "range": {
         "startLine": 433,
         "startChar": 33,
