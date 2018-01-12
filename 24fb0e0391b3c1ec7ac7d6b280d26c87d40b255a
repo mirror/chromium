@@ -22,6 +22,30 @@
       "revId": "24fb0e0391b3c1ec7ac7d6b280d26c87d40b255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249db7af_8f9a7318",
+        "filename": "services/service_manager/public/interfaces/service_factory.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-12T23:15:53Z",
+      "side": 1,
+      "message": "Any service to which we grant the service_manager:client_process capability, or any service which packages other services, i.e. which the Service Manager trusts enough to be a delegated service instance creator via the ServiceFactory interface.\n\nThe former is easy to analyze, but this CL really deals with the latter. OOP services today are packaged in content_packaged_services (the browser process) and so SM delegates to the browser to create those service instances.\n\nA couple of points:\n\n (a) In practice only the browser process sends PIDs to SM today, and\n     this CL does not change that.\n (b) The Service Manager doesn\u0027t actually use the PID for anything\n     interesting other than reporting it back to interested clients.\n     It may be the case that privileged clients (like the browser)\n     could then do something interesting to a bogus PID (e.g. kill it),\n     but no existing clients do this.\n (c) I think it could be reasonable for the Service Manager to only\n     acknowledge PID information from factory services which also\n     specify the service_manager:client_process capability; that\n     might get a bit messy, not sure.",
+      "parentUuid": "505a216c_46b85816",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "24fb0e0391b3c1ec7ac7d6b280d26c87d40b255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
