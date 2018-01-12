@@ -22,6 +22,29 @@
       "revId": "75def61c9568be0e8b21479b2291efb806fe9ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cd0488_d3a39308",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-12T16:03:21Z",
+      "side": 1,
+      "message": "I have a hard time with setting state to FAILURE in a method called MakeUninitialized. The comment in the header even says it. Perhaps rename the function to ResetEntry?",
+      "range": {
+        "startLine": 631,
+        "startChar": 22,
+        "endLine": 631,
+        "endChar": 39
+      },
+      "revId": "75def61c9568be0e8b21479b2291efb806fe9ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
