@@ -1064,7 +1064,6 @@ class CORE_EXPORT LocalFrameView final
 
   bool ContentsInCompositedLayer() const;
 
-  void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
   bool PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
