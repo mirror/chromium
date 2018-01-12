@@ -154,10 +154,10 @@ static bool IsBaseStart(const VisibleSelection& visible_selection,
 // handle base/extent don't match to start/end, e.g. granularity != character,
 // and start/end adjustment in |visibleSelection::validate()| for range
 // selection.
-static SelectionInDOMTree PrepareToExtendSelection(
-    const SelectionInDOMTree& selection,
+SelectionInDOMTree SelectionModifier::PrepareToModifySelection(
     SelectionModifyDirection direction) {
-  const VisibleSelection& visible_selection = CreateVisibleSelection(selection);
+  const VisibleSelection& visible_selection =
+      CreateVisibleSelection(current_selection_);
   if (visible_selection.Start().IsNull())
     return visible_selection.AsSelection();
   const bool base_is_start = IsBaseStart(visible_selection, direction);
@@ -167,15 +167,6 @@ static SelectionInDOMTree PrepareToExtendSelection(
       .Extend(base_is_start ? visible_selection.End()
                             : visible_selection.Start())
       .Build();
-}
-
-static SelectionInDOMTree PrepareToModifySelection(
-    const SelectionInDOMTree& selection,
-    SelectionModifyAlteration alter,
-    SelectionModifyDirection direction) {
-  return alter == SelectionModifyAlteration::kExtend
-             ? PrepareToExtendSelection(selection, direction)
-             : CreateVisibleSelection(selection).AsSelection();
 }
 
 VisiblePosition SelectionModifier::PositionForPlatform(
@@ -610,8 +601,10 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  selection_ = CreateVisibleSelection(
-      PrepareToModifySelection(current_selection_, alter, direction));
+  selection_ =
+      CreateVisibleSelection(alter == SelectionModifyAlteration::kExtend
+                                 ? PrepareToModifySelection(direction)
+                                 : current_selection_);
 
   bool was_range = selection_.IsRange();
   VisiblePosition original_start_position = selection_.VisibleStart();
@@ -735,11 +728,13 @@ bool SelectionModifier::ModifyWithPageGranularity(
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  selection_ = CreateVisibleSelection(PrepareToModifySelection(
-      current_selection_, alter,
-      direction == SelectionModifyVerticalDirection::kUp
-          ? SelectionModifyDirection::kBackward
-          : SelectionModifyDirection::kForward));
+  selection_ = CreateVisibleSelection(
+      alter == SelectionModifyAlteration::kExtend
+          ? PrepareToModifySelection(
+                direction == SelectionModifyVerticalDirection::kUp
+                    ? SelectionModifyDirection::kBackward
+                    : SelectionModifyDirection::kForward)
+          : current_selection_);
 
   VisiblePosition pos;
   LayoutUnit x_pos;
