@@ -34,6 +34,7 @@
 #include "chrome/browser/devtools/devtools_window_testing.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/first_run/first_run.h"
@@ -106,6 +107,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -1116,6 +1118,88 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_TabClosingWhenRemovingExtension) {
 
   // There should only be one tab now.
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
+}
+
+// Tests that when an extension is unloaded, if only one tab is opened
+// containing extenions related content, then the tab is kept opened and is
+// directed to the default NTP page.
+IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("options_page/"));
+  ASSERT_TRUE(extension);
+
+  GURL extension_url = extension->GetResourceURL("options.html");
+  ui_test_utils::NavigateToURL(browser(), extension_url);
+
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+  EXPECT_EQ(extension_url.spec(),
+            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+
+  // Uninstall the extension.
+  ExtensionService* service =
+      extensions::ExtensionSystem::Get(browser()->profile())
+          ->extension_service();
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser()->profile());
+  extensions::TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(),
+                           extensions::UnloadedExtensionReason::UNINSTALL);
+  registry_observer.WaitForExtensionUnloaded();
+
+  // There should only be one tab now.
+  ASSERT_EQ(1, tab_strip_model->count());
+  EXPECT_EQ(chrome::kChromeUINewTabURL,
+            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserTest,
+                       NavigateToDefaultChromePageOnExtensionUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+  // Open the chrome://history/ page in the current tab.
+  chrome::ShowHistory(browser());
+  content::WebContents* default_history_page =
+      tab_strip_model->GetActiveWebContents();
+
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("api_test")
+                        .AppendASCII("override")
+                        .AppendASCII("history"));
+  ASSERT_TRUE(extension);
+
+  // Open the chrome://history/ page in a new tab.
+  GURL extension_url(chrome::kChromeUIHistoryURL);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GURL(extension_url), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+
+  // TODO(catmullings): Check that the chrome://history/ page contains
+  // extensions content. Also check the the first chrome://history/ tab opened
+  // contains the default chrome history page content.
+
+  ASSERT_EQ(2, tab_strip_model->count());
+
+  // Uninstall the extension.
+  ExtensionService* service =
+      extensions::ExtensionSystem::Get(browser()->profile())
+          ->extension_service();
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser()->profile());
+  extensions::TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(),
+                           extensions::UnloadedExtensionReason::UNINSTALL);
+  registry_observer.WaitForExtensionUnloaded();
+
+  // Check that the latest opened chrome://history/ page contains the default
+  // chrome history page content.
+  ASSERT_EQ(2, tab_strip_model->count());
+  EXPECT_EQ(chrome::kChromeUIHistoryURL,
+            tab_strip_model->GetActiveWebContents()->GetURL().spec());
+  // TODO(catmullings): The following check doesn't pass.
+  EXPECT_EQ(default_history_page, tab_strip_model->GetActiveWebContents());
 }
 
 // Open with --app-id=<id>, and see that an application tab opens by default.
