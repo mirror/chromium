@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b030c1a1_dcd06a1b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5328,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a1100f7_5b0419fa",
+      "range": {
+        "startLine": 5328,
+        "startChar": 109,
+        "endLine": 5328,
+        "endChar": 110
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cd49f53_779a9ccd",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T21:16:28Z",
       "side": 1,
       "message": "Translators rely on the message description to translate strings, and \"clipboard read access\" may be difficult for them to understand. Suggested description:\nTitle of the info bubble shown when a page has been allowed access to read the contents of the system clipboard (e.g. ctrl+c).",
+      "range": {
+        "startLine": 5331,
+        "startChar": 56,
+        "endLine": 5331,
+        "endChar": 129
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9548317_bed0a128",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5331,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd49f53_779a9ccd",
       "range": {
         "startLine": 5331,
         "startChar": 56,
@@ -117,6 +165,78 @@
     },
     {
       "key": {
+        "uuid": "65025e86_a8083a20",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5334,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debe7365_87bee458",
+      "range": {
+        "startLine": 5334,
+        "startChar": 113,
+        "endLine": 5334,
+        "endChar": 117
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82761e7c_1740fdb6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5334,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddcbad80_c14cb65e",
+      "range": {
+        "startLine": 5334,
+        "startChar": 58,
+        "endLine": 5334,
+        "endChar": 77
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "448f5d85_150c6e2e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5334,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77fa5272_e7ff63a4",
+      "range": {
+        "startLine": 5334,
+        "startChar": 134,
+        "endLine": 5334,
+        "endChar": 163
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49426915_416a66df",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 11
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-11T21:16:28Z",
       "side": 1,
       "message": "Translators rely on the message description to translate strings, and \"clipboard read access\" may be difficult for them to understand. Suggested description:\nTitle of the info bubble shown when a page has been denied access to read the contents of the system clipboard (e.g. ctrl+c).",
+      "range": {
+        "startLine": 5343,
+        "startChar": 56,
+        "endLine": 5343,
+        "endChar": 128
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "682894db_04859a9c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5343,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t add the parenthetical (ctrl-c) because that key shortcut initiates a system copy that is not covered by this permissions. This permission only covers JS-initiated copies using the async API.",
+      "parentUuid": "49426915_416a66df",
       "range": {
         "startLine": 5343,
         "startChar": 56,
@@ -209,6 +353,78 @@
     },
     {
       "key": {
+        "uuid": "e80b1826_34b86053",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5346,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f830bc6_47e2d33b",
+      "range": {
+        "startLine": 5346,
+        "startChar": 58,
+        "endLine": 5346,
+        "endChar": 77
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c120bb7_b902befc",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5346,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e9779f_a5d8292b",
+      "range": {
+        "startLine": 5346,
+        "startChar": 113,
+        "endLine": 5346,
+        "endChar": 117
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ea9fd2d_b1b5c424",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5346,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ddecbc_4d31b52f",
+      "range": {
+        "startLine": 5346,
+        "startChar": 141,
+        "endLine": 5346,
+        "endChar": 162
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881c2f26_63a5b8a8",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 11
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-11T21:16:28Z",
       "side": 1,
       "message": "Delete - technically accurate but not needed to describe the string, and might confuse translators.",
+      "range": {
+        "startLine": 5352,
+        "startChar": 136,
+        "endLine": 5352,
+        "endChar": 140
+      },
+      "revId": "bebbf59fe8cab0ebaa1f530977f3cbfbf6c979c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5a61158_a89f7271",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5352,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-12T00:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881c2f26_63a5b8a8",
       "range": {
         "startLine": 5352,
         "startChar": 136,
