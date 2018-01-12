@@ -48,6 +48,7 @@ aggregate_vector_icons("chrome_vector_icons") {
     "globe.icon",
     "google_g_logo.icon",
     "google_pay_logo.icon",
+    "google_pay_logo_with_vertical_separator.icon",
     "horizontal_menu.1x.icon",
     "horizontal_menu.icon",
     "image.icon",
