@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "334fff35_aedd7e39",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-12T09:48:52Z",
+      "side": 1,
+      "message": "Why not call validateStatsReport(report)?\nvalidateRtcStats is a very loose validation: it validates only that the id and timestamp exist.",
+      "revId": "3065acd9425196749478815fac43926b351b7cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
