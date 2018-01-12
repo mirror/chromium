@@ -103,6 +103,7 @@ class CC_PAINT_EXPORT RecordPaintCanvas final : public PaintCanvas {
   void Annotate(AnnotationType type,
                 const SkRect& rect,
                 sk_sp<SkData> data) override;
+  void customData(uint64_t id) override;
 
   // Don't shadow non-virtual helper functions.
   using PaintCanvas::clipRect;
