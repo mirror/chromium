@@ -1,0 +1,566 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23fc3ae3_c75b1c71",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: I might inline the notification init here:\n  items_[index].has_notification \u003d app_id_to_notification_id_.count(item.id.app_id) \u003e 0;\n\nThen inline UpdateItemNotificationByIndex into UpdateItemNotificationsAndNotifyObservers, just to simplify the private API for this feature a bit.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1aa386_78f1518a",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: app_id.empty()",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf1bb39_a9eab09f",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: inline AddToNotificationMaps and RemoveFromNotificationMaps into the public API (there\u0027s little reason to split these out into private helpers)",
+      "range": {
+        "startLine": 323,
+        "startChar": 17,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac38aea_b7eb6d4e",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: has_notification?",
+      "range": {
+        "startLine": 121,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0289a65c_ca2f4d75",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "out params should be pointers, not refs.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff849430_1b63c6c4",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "It might make sense to design this feature using ShelfId instead of app_id, even if the ShelfIds generally don\u0027t use launch ids yet.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd2f87d_9c5278e3",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: |const int index \u003d model_-\u003eAdd(item);| and use index below instead of |2|, or do |EXPECT_EQ(2, model_-\u003eAdd(item));| here.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba560c7_db735bfe",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: use |index| instead of |2|, ditto below",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e931f1_7cbdc261",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: do |EXPECT_EQ(index, model_-\u003eAdd(item));| or make index non-const and update it here",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692d255a_a0879b43",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Ditto, get the index from the model, or check that the item id at index |2| is correct.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e21b419_2527803a",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: rename existing consts, etc. to qualify which indicator they mean",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c50b797_2703730b",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "\"An indicator shown when the corresponding app has a notification.\"",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2b1d6b_3829e342",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Why is this and the alpha needed? Can you just paint the circle and border directly onto |canvas|? I wonder if AppStatusIndicatorView can be simplified similarly.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f92888_7624d9be",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Rather than copying the status indicator, maybe just Show/Hide the view (this simple dot could even be drawn by ShelfButton::OnPaint, and reduced to a bool flag and a helper function). If you like following the existing pattern, at least rename ShowAttention to something more relevant to the notification indicator. (really, the status one is shown in the running and attention state, so \u0027attention\u0027 isn\u0027t relevant to either indicator)",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e928fa_26f9dd89",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Rather than copying the pattern for the status indicator, maybe just do something like:\n  gfx::Rect notification_indicator_bounds(icon_view_bounds.right() - kNotificationIndicatorRadiusDip * 2, icon_view_bounds.top(), kNotificationIndicatorRadiusDip * 2, kNotificationIndicatorRadiusDip * 2);\nThat might even work regardless of the shelf alignment.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd49d1a_2b6a5993",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: \"at least\"",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdd10c8_4f8e4da6",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: call this IsShowingNotificationIndicator, and make the comment more general",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce59ea1e_a2009fa2",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: \"of the button\"",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4666ca39_a50c93cf",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece288dd_791fc3a2",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "use the NotifierType enum values here (check !\u003d APPLICATION)",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad31c1b1_912b600c",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: follow the pattern elsewhere in the file, don\u0027t change these below.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78300c1d_e81a3090",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "comment",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f75af6e_13499906",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: use |\u003d std::make_unique| in the line above, or inline that in the call below",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bb1490_fd3150e8",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to parameterize all existing ShelfController tests and make the new fixtures bail on one of the two pram values. Just enable the feature in the new fixtures via commandline, or make a subclass like ShelfTouchableContextMenuTest for the new fixtures if you need to do the feature list change during SetUp), and optionally test that the controller skips notification functionality when the feature is disabled.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe053ae_df89da9a",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: \u0027Received\u0027 maybe just \"HasNotificationBasic\" is a reasonable fixture name.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df09757_4f1eb185",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "nit: remove this blank line",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09b2f1d_c1d79324",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "It might make sense to move this fixture to the ShelfModel unit tests, closer to where app ids are mapped to a set of notification ids; there\u0027s less of a need to test that logic at this intermediary level",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656294bc_9eb6647d",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "avoid an early return here, nest the logic below in a code block",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849e7d61_3090a903",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Add the commandline flag in the fixtures themselves instead of making a subclass, if possible.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d221bc_364ea349",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Avoid adding GetNextAppId, just construct a new unique string id here.",
+      "range": {
+        "startLine": 2177,
+        "startChar": 20,
+        "endLine": 2177,
+        "endChar": 31
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6baddf5_c0fb041c",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "Move this to the ShelfController ctor, and remove the observer in the dtor if needed",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133e3abf_ab2a8897",
+        "filename": "ui/app_list/app_list_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-12T23:44:15Z",
+      "side": 1,
+      "message": "// Enables touchable context menus for app items in the shelf and app list.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
