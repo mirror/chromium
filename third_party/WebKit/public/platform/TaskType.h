@@ -136,7 +136,13 @@ enum class TaskType : unsigned {
   // Tasks for tests or mock objects.
   kInternalTest = 26,
 
-  kCount = 27,
+  // Tasks that are posted back the result from the WebCrypto task runner to the
+  // Blink thread that initiated the call and holds the Promise. Tasks with this
+  // type are posted at:
+  // * //components/webcrypto
+  kInternalWebCrypto = 27,
+
+  kCount = 28,
 };
 
 }  // namespace blink
