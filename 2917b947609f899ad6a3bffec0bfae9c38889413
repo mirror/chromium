@@ -22,6 +22,30 @@
       "revId": "2917b947609f899ad6a3bffec0bfae9c38889413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2be7fd_a880cb75",
+        "filename": "tools/gn/command_check.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2018-01-12T15:17:58Z",
+      "side": 1,
+      "message": "True. I\u0027m not sure whether just to remove the whole paragraph or somehow rephrase it.",
+      "parentUuid": "0b1f6b26_5535e524",
+      "range": {
+        "startLine": 131,
+        "startChar": 46,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "2917b947609f899ad6a3bffec0bfae9c38889413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
