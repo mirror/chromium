@@ -52,6 +52,24 @@
       "revId": "71cdd6ccd82ac1d612567f26500f6e94f959c77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545ba5a8_e190d37f",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-12T04:29:50Z",
+      "side": 1,
+      "message": "Since we return this as an error, this will cause error field to be set in the response, which will presumably trigger this exception in Telemetry: https://cs.chromium.org/chromium/src/third_party/catapult/telemetry/telemetry/internal/backends/chrome_inspector/inspector_runtime.py?rcl\u003d30e5a9f19de9cff42ee5ff8b5d9a4be5546e3588\u0026l\u003d83",
+      "parentUuid": "fe03f9a6_d2d40aa2",
+      "revId": "71cdd6ccd82ac1d612567f26500f6e94f959c77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
