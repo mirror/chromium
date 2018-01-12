@@ -61,6 +61,7 @@ TEST_F(SpatialNavigationTest, FindContainerWhenEnclosingContainerIsIframe) {
 
 TEST_F(SpatialNavigationTest,
        FindContainerWhenEnclosingContainerIsScrollableOverflowBox) {
+  QuirksModeScope quirker(GetDocument());
   SetBodyInnerHTML(
       "<!DOCTYPE html>"
       "<style>"
