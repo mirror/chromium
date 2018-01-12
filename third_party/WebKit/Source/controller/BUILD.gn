@@ -102,7 +102,6 @@ jumbo_source_set("webkit_unit_tests_sources") {
     "//base/test:test_support",
     "//content/test:test_support",
     "//gpu:test_support",
-    "//services/device/public/interfaces:interfaces_blink",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/Source/core:unit_tests",
