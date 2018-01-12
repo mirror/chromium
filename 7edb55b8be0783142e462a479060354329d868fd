@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb950100_0fa8ca22",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/resources/parsing-testcommon.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b15a78f_243a826a",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62054a19_0c3fb203",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/resources/parsing-testcommon.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "7edb55b8be0783142e462a479060354329d868fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed3bf38_6d4a5099",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/resources/parsing-testcommon.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "I have added wording in the assert calls.",
+      "parentUuid": "62054a19_0c3fb203",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b1a4899b_e7639c27",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-image-threshold-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bfbfc5a_21996475",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84007fc0_0a9e6f3f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-invalid.html",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "7edb55b8be0783142e462a479060354329d868fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5101963_d7fd6946",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-invalid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84007fc0_0a9e6f3f",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8438edf6_655e89f1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912541f2_851441aa",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b0f136_9ee889f0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5a82c719_8a3d944e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "closest-side is a shape-radius.\nhttps://drafts.csswg.org/css-shapes/#typedef-shape-radius\n\u003cshape-radius\u003e \u003d \u003clength-percentage\u003e | closest-side | farthest-side\n\nI think Blink\u0027s logic in omitting closest-side when serializing is based on\n\n\u003cshape-radius\u003e \u003d ...\n... If omitted it defaults to closest-side.\n\nI\u0027ll swap the arguments in the test so the second argument isn\u0027t the default.",
+      "parentUuid": "70b0f136_9ee889f0",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b8bb51e_cd56b706",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "7edb55b8be0783142e462a479060354329d868fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca01268_0d14c819",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-shapes/parsing/shape-outside-valid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-12T02:59:39Z",
+      "side": 1,
+      "message": "Added comment: Spec is silent about url serialization.",
+      "parentUuid": "8b8bb51e_cd56b706",
+      "revId": "7edb55b8be0783142e462a479060354329d868fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
