@@ -181,6 +181,24 @@
       "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ead5a60_1b85fa25",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-12T16:47:45Z",
+      "side": 1,
+      "message": "Done. It (probably) happens because the model-\u003eYesNukeThisDialogPlease() call ends up destroying it before returning, so after the ::Ok() call it\u0027s gone-gone, which is before the dialog destructor, even if ::Ok() -\u003e CloseWidget() happens straight away.",
+      "parentUuid": "d25d9fe4_31fd4d6b",
+      "revId": "307a2a080530ffc2637e1bc50d4954967c3f12e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
