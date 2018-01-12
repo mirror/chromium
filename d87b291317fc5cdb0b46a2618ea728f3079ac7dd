@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "01199a01_fc99d839",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:55:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we have to thread hop now. Is it because the interface is associated and lives on the IO thread now?",
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd13ead_ff711d03",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 17
@@ -19,6 +36,23 @@
         "endLine": 9,
         "endChar": 30
       },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf27d82_72cc6231",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:55:33Z",
+      "side": 1,
+      "message": "It\u0027s not clear what a renderer local id is. Overall, I think this mojom needs a bit more comments: what is a peer connection tracker, why does it need to track peer connections, is it associated with any browser-side objects (i.e. frame, web contents?), et cetera.\n\nIdeally we should be trying to structure the Mojo interface in a way that it\u0027s not necessary to pass lid at all.",
       "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +98,29 @@
         "startChar": 0,
         "endLine": 31,
         "endChar": 40
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be1c6b0_671a1633",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-12T07:55:33Z",
+      "side": 1,
+      "message": "Can we associate this with a RenderFrameHost object instead of relying on the origin to send accurate origin information?",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 28
       },
       "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
