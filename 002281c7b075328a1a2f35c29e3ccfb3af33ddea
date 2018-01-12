@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "667e9e11_ddaee690",
+        "filename": "components/cronet/url_request_context_config_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-12T22:07:01Z",
+      "side": 1,
+      "message": "Should this be \u0027#if BUILDFLAG(ENABLE_REPORTING)\u0027?",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 29
+      },
+      "revId": "002281c7b075328a1a2f35c29e3ccfb3af33ddea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
