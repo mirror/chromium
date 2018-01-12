@@ -16,6 +16,7 @@
 #include "net/base/net_errors.h"
 #include "net/server/web_socket_encoder.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using content::BrowserThread;
 using net::WebSocket;
@@ -24,6 +25,25 @@ namespace {
 
 const int kBufferSize = 16 * 1024;
 const char kCloseResponse[] = "\x88\x80\x2D\x0E\x1E\xFA";
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("android_web_socket", R"(
+        semantics {
+          sender: "Android Web Socket"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "This request cannot be disabled in settings, however it will only "
+            "be sent if user ..."
+          policy_exception_justification:
+            "Not implemented, considered not required as the request is only "
+            "sent if ..."
+        })");
 
 }  // namespace
 
@@ -133,9 +153,11 @@ class AndroidDeviceManager::AndroidWebSocket::WebSocketImpl {
 
     scoped_refptr<net::StringIOBuffer> buffer =
         new net::StringIOBuffer(request_buffer_);
+
     result = socket_->Write(buffer.get(), buffer->size(),
                             base::Bind(&WebSocketImpl::SendPendingRequests,
-                                       weak_factory_.GetWeakPtr()));
+                                       weak_factory_.GetWeakPtr()),
+                            kTrafficAnnotation);
     if (result != net::ERR_IO_PENDING)
       SendPendingRequests(result);
   }
