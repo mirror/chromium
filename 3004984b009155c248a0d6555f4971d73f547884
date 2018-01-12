@@ -88,6 +88,24 @@
       "revId": "3004984b009155c248a0d6555f4971d73f547884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4852b1_5fb38b6c",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-12T19:14:52Z",
+      "side": 1,
+      "message": "That works. But it still leaves the problem that we\u0027re duplicating the logic of mapping latency to effective connection type here. How will you keep them in sync? Also, won\u0027t it be weird if the effective connection type doesn\u0027t map to what devtools says the connection type is?",
+      "parentUuid": "abffe53b_32766021",
+      "revId": "3004984b009155c248a0d6555f4971d73f547884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
