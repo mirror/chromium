@@ -283,6 +283,7 @@ void TextFieldInputType::CreateShadowSubtree() {
   DCHECK(GetElement().Shadow());
   ShadowRoot* shadow_root = GetElement().UserAgentShadowRoot();
   DCHECK(!shadow_root->HasChildren());
+  // shadow_root->SetDelegatesFocus(true);
 
   Document& document = GetElement().GetDocument();
   bool should_have_assist_button = ShouldHaveAssistButton();
@@ -299,12 +300,16 @@ void TextFieldInputType::CreateShadowSubtree() {
       EditingViewPortElement::Create(document);
   HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
   editing_view_port->AppendChild(inner_editor);
+  editing_view_port->setTabIndex(0);
   container->AppendChild(editing_view_port);
 
   if (should_have_data_list_indicator)
     container->AppendChild(DataListIndicatorElement::Create(document));
-  if (should_have_assist_button)
-    container->AppendChild(AssistButtonElement::Create(document, *this));
+  if (should_have_assist_button) {
+    auto* e = AssistButtonElement::Create(document, *this);
+    e->setTabIndex(0);
+    container->AppendChild(e);
+  }
   // FIXME: Because of a special handling for a spin button in
   // LayoutTextControlSingleLine, we need to put it to the last position. It's
   // inconsistent with multiple-fields date/time types.

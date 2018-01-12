@@ -95,6 +95,8 @@ class AssistButtonElement final : public HTMLDivElement {
   static AssistButtonElement* Create(Document&, AssistButtonOwner&);
   void Trace(blink::Visitor*) override;
 
+  bool SupportsFocus() const override;
+
  private:
   explicit AssistButtonElement(Document&, AssistButtonOwner&);
   void DefaultEventHandler(Event*) override;

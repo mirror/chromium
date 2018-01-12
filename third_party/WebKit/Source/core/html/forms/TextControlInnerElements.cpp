@@ -231,6 +231,10 @@ void AssistButtonElement::Trace(blink::Visitor* visitor) {
   HTMLDivElement::Trace(visitor);
 }
 
+bool AssistButtonElement::SupportsFocus() const {
+  return true;
+}
+
 void AssistButtonElement::DefaultEventHandler(Event* event) {
   // If the element is visible, on mouseup, notify owner.
   HTMLInputElement* input(ToHTMLInputElement(OwnerShadowHost()));
