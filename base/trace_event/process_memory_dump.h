@@ -262,6 +262,12 @@ class BASE_EXPORT ProcessMemoryDump {
       int importance,
       bool is_weak);
 
+  void EnableCrashUploadOnAllocationIfNeeded(
+      const std::unordered_map<base::trace_event::AllocationContext,
+                               base::trace_event::AllocationMetrics>&
+          metrics_by_context,
+      const char* allocator_name);
+
   MemoryAllocatorDump* GetBlackHoleMad();
 
   UnguessableToken process_token_;

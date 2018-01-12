@@ -565,6 +565,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/trace_event/event_name_filter.cc',
       'base/trace_event/heap_profiler_allocation_context.cc',
       'base/trace_event/heap_profiler_allocation_context_tracker.cc',
+      'base/trace_event/heap_profiler_allocation_crasher.cc',
       'base/trace_event/heap_profiler_allocation_register.cc',
       'base/trace_event/heap_profiler_event_filter.cc',
       'base/trace_event/heap_profiler_heap_dump_writer.cc',

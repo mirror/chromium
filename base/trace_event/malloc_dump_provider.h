@@ -61,7 +61,7 @@ class BASE_EXPORT MallocDumpProvider : public MemoryDumpProvider {
   PlatformThreadId tid_dumping_heap_;
 
   bool emit_metrics_on_memory_dump_ = true;
-  base::Lock emit_metrics_on_memory_dump_lock_;
+  Lock emit_metrics_on_memory_dump_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(MallocDumpProvider);
 };
