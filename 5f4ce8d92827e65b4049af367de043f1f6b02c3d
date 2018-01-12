@@ -52,6 +52,24 @@
       "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5b5e51_c66c7cfe",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-12T20:36:41Z",
+      "side": 0,
+      "message": "Ah, it is gpu_video_decoder_factory.cc:127 where gpu_preferences contains enable/disable of h/w decoder. Then gpu_utils.cc:57 handles the flags.  Not long ago an overhauling of the flags landed when most of the checks were standardized.  I am not too familiar with the newest code but I understand it as a natural evolution from when this didn\u0027t exist and it was handled in a similar way.  \n\nAs I am looking into this code again there are other possible optimizations in the sandbox code but I would prefer to make those changes on future patches if you agree.  \n\nFWIW, I also tested that scenario and s/w decoder kicks in as usual. (toggling the flags will force a UI restart).",
+      "parentUuid": "067fb44e_9221e0bb",
+      "revId": "5f4ce8d92827e65b4049af367de043f1f6b02c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
