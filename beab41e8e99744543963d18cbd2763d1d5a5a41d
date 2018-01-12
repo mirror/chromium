@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "40446e7e_fe7f4a20",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "Why the first parameter of the Font() is \"power_off\"? Seems it should be a font_name? https://cs.chromium.org/chromium/src/ui/gfx/font.h?rcl\u003d3e41705981a543b8bfcc7437efb656b637a6c242\u0026l\u003d73\n\nAnd why do have to set your own font but not the bundled ones? https://cs.chromium.org/chromium/src/ui/base/resource/resource_bundle.h?rcl\u003d92876eb5f98ff7ac1761c85c706bd0c25e07042e\u0026l\u003d55",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1442479a_80c65259",
+        "filename": "ash/system/power/power_off_menu_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b11bd1_e0292a4e",
         "filename": "ash/system/power/power_off_menu_item_view.h",
         "patchSetId": 6
@@ -47,6 +81,74 @@
       "writtenOn": "2018-01-12T15:02:32Z",
       "side": 1,
       "message": "I think you forget to update here. const base::string16\u0026",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871fd1c8_e02be648",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "optional: it seems this function shared most of its code with PowerOffMenuScreenView::PowerOffMenuBackgroundView::ScheduleShowHideAnimation(). Can they share codes in some way? Up to you though.",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a98b32_9d6e2868",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0826caf7_4b4885ec",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "|rect| is not used?",
+      "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6e856d_484849b8",
+        "filename": "ash/system/power/power_off_menu_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-12T18:13:34Z",
+      "side": 1,
+      "message": "nit: if it\u0027s only for testing, rename it to has_sign_out_item_for_testing()?",
       "revId": "beab41e8e99744543963d18cbd2763d1d5a5a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
