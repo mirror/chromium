@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "148e007b_8cd4744d",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-12T19:00:47Z",
+      "side": 1,
+      "message": "Should these also be runtime checks in release?\nIn other words, should this be \u0027if\u0027?",
+      "range": {
+        "startLine": 487,
+        "startChar": 2,
+        "endLine": 487,
+        "endChar": 11
+      },
+      "revId": "f2a9bb8eedd7b0253230d2cc2a893c38fcc9a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcd01a1_e07c6383",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-12T19:00:47Z",
+      "side": 1,
+      "message": "Would it make sense to conditionally disable this test?\nSee for example https://cs.chromium.org/chromium/src/base/tools_sanity_unittest.cc?rcl\u003d97d48a97b08848c87fe973d76050c1769d4d75b8\u0026l\u003d128",
+      "range": {
+        "startLine": 430,
+        "startChar": 6,
+        "endLine": 430,
+        "endChar": 17
+      },
+      "revId": "f2a9bb8eedd7b0253230d2cc2a893c38fcc9a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f8e5ed_d22bd1eb",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-12T19:00:47Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 463,
+        "startChar": 6,
+        "endLine": 463,
+        "endChar": 17
+      },
+      "revId": "f2a9bb8eedd7b0253230d2cc2a893c38fcc9a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
