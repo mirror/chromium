@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d22cfd_2de5f737",
+        "filename": "base/process/launch.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "the mechanism here is fine, but I\u0027ve no idea what\u0027s safe to pass as a value and why.  Maybe add a comment about the implications of exposing these paths to untrustworthy children?",
+      "range": {
+        "startLine": 202,
+        "startChar": 1,
+        "endLine": 202,
+        "endChar": 2
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae273a3_1b0b5a42",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: maybe range-based for loop?",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e68ca68_eba6277e",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: paths_c_str.data() ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 61,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e764fd34_93ceb176",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: maybe specialize std::default_delete\u003c\u003e so this can be used more simply, e.g. https://cs.chromium.org/chromium/src/media/video/video_encode_accelerator.h?rcl\u003d4bccc9372c2644679beecf3e3a88b3630ec32132\u0026l\u003d200",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 67
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca8a2cd_3ee652ab",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: or lp.reset(... ) ?\nnot sure what the nesting is buying us here.",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687f87a5_4c807e2d",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: {} not strictly required here.",
+      "range": {
+        "startLine": 210,
+        "startChar": 62,
+        "endLine": 210,
+        "endChar": 63
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e609f318_c300efc0",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: maybe a comment that launchpad_go took ownership of lp iff it was success.",
+      "range": {
+        "startLine": 242,
+        "startChar": 24,
+        "endLine": 242,
+        "endChar": 35
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615c8932_a7e1bec3",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: I\u0027d keep the inversion, and avoid the else since we return before it.",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55c855f_4991fb9d",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-12T22:42:52Z",
+      "side": 1,
+      "message": "nit: maybe invert test and avoid the else, since return as last part of block.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
