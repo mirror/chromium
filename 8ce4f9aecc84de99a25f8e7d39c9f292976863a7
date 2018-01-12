@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3045255b_7afadf3f",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T15:18:47Z",
+      "side": 1,
+      "message": "As I said, this one should be similar to AdbClientSocket: https://cs.chromium.org/chromium/src/chrome/browser/devtools/device/adb/adb_client_socket.cc?rcl\u003d138652c9e5bc18add6649a2651162193b2053dc6\u0026l\u003d201",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96590845_846e573a",
+        "filename": "chrome/browser/devtools/device/android_web_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T15:18:47Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9898f39c_8bc7ec4e",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T15:18:47Z",
+      "side": 1,
+      "message": "I have no idea about this.",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a36507_0d3b3b04",
+        "filename": "content/browser/devtools/protocol/tethering_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-12T15:18:47Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
