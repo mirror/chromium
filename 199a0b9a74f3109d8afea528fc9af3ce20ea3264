@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe934923_b94f4698",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "ack, done.",
+      "parentUuid": "28c16153_9adfde8b",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a97edca7_616c8674",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "931d9640_315dda40",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8dd8b8_c8256a46",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "054582a9_5346823c",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "writtenOn": "2018-01-10T17:47:49Z",
       "side": 1,
       "message": "If this is waiting for A11yControllerClient to send to ash, can it call A11yControllerClient.FlushForTesting() instead? That makes it clearer which thing we\u0027re waiting for.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457abc5d_614d10cd",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "Removed |braille_controller_| here as it is not used.\n\nIn AccessibilityManagerLoginTest, I changed the comment to:\n// Spin the message loop to ensure chrome see the pref change from ash. [1]\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/accessibility/accessibility_manager.cc?q\u003daccessibility_manager\u0026dr\u003dCSs\u0026l\u003d1398",
+      "parentUuid": "054582a9_5346823c",
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "cd9759f9_224bdb7a",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "ack, done.",
+      "parentUuid": "e45ed099_0eac4a49",
+      "range": {
+        "startLine": 577,
+        "startChar": 2,
+        "endLine": 577,
+        "endChar": 26
+      },
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "973890f1_710bfa8a",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -144,6 +222,24 @@
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef31dcd2_a90d413c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "Done. And removed many others.",
+      "parentUuid": "973890f1_710bfa8a",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +272,24 @@
       "side": 1,
       "message": "When user changes a11y prefs in the login screen, the pref is stored in the sign-in. And when a user signs in, the a11y prefs are copied to the user profile (when certain conditions are met) [1]. ResumeSavedPref is testing this behavior. \n\nHowever, it looks like the current test code is broken (due to my CL https://codereview.chromium.org/2918203002 that fixes ProfileManager::GetActiveUserProfile can skip UserSessionManager to load user profile). All SetXXXPref actually writes user profile after my change and ResumeSavedPref is not testing what is supposed to test. :( And good this CL would fix that.\n\nWe should move the CreateSession and user profile loading down around SessionStarted to make the intention of the test more clear.\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/accessibility/accessibility_manager.cc?rcl\u003df88fdc177092bb375d7f1a38a70a23f8e14abc03\u0026l\u003d191-211",
       "parentUuid": "9f934891_24defd52",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6332e4_993065df",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-12T09:35:05Z",
+      "side": 1,
+      "message": "xiyuan: I revised this test into two sections:\n(1) from signin screen to logged, GetActiveUserProfile becoming user profile but the profile in AccessibilityManager is still signin profile;\n(2) the profile in AccessibilityManager becomes user profile.\n\nBy Check *FromPref() methods, we could see prefs copied.",
+      "parentUuid": "0cef8b0f_c420388e",
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
