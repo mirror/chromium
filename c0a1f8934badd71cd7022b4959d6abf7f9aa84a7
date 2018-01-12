@@ -16,6 +16,24 @@
       "revId": "c0a1f8934badd71cd7022b4959d6abf7f9aa84a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d07721_5d710144",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-12T04:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c9be93_331d9efc",
+      "revId": "c0a1f8934badd71cd7022b4959d6abf7f9aa84a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
