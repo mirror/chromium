@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "109da985_248d2d1b",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-12T00:45:10Z",
+      "side": 1,
+      "message": "In a local poll, only about half the respondents knew this was 10MB.  I rewrote it in terms of a kMegaByte constant to help such folks.",
+      "parentUuid": "442831c4_65b9f708",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3163e3_2d1470a6",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -480,6 +504,30 @@
       "revId": "47698b33914c67af06100488d8a31636be8ad492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f17f983_3ed80034",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-12T00:45:10Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "5c3163e3_2d1470a6",
+      "range": {
+        "startLine": 296,
+        "startChar": 34,
+        "endLine": 296,
+        "endChar": 74
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
