@@ -142,6 +142,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eaba4f5_74f2536b",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T01:43:00Z",
+      "side": 0,
+      "message": "\u003e My layout tests use \u003cinput\u003e elements, which I think always have selection offsets defined. I don’t think it’s possible to remove the selection entirely. So I already have a test for caret/collapsed selections. \n\nAre you referring to \"setComposition with no composition open, empty text, no selection\"?\n\n\u003e I guess what I don’t have a is a test for the “no selection” case, which I guess would require making the test use contenteditable.",
+      "parentUuid": "8f5029f8_6373d255",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
