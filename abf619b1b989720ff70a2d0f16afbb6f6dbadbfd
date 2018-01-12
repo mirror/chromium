@@ -187,6 +187,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6bc95e_b04caf50",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-12T18:53:10Z",
+      "side": 1,
+      "message": "SG, I will wait for your CL that splits the HTTPS and HTTP socket pools. Thanks!",
+      "parentUuid": "25272bff_f1f62d6e",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
