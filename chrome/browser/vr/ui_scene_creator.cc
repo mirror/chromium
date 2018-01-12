@@ -567,7 +567,7 @@ void UiSceneCreator::CreateSystemIndicators() {
     bool PermissionsModel::*signal;
   };
   const std::vector<Indicator> indicators = {
-      {kAudioCaptureIndicator, vector_icons::kMicrophoneIcon,
+      {kAudioCaptureIndicator, vector_icons::kMicIcon,
        IDS_AUDIO_CALL_NOTIFICATION_TEXT_2,
        &PermissionsModel::audio_capture_enabled},
       {kVideoCaptureIndicator, vector_icons::kVideocamIcon,
@@ -975,7 +975,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
       kVoiceSearchButton, kPhaseForeground,
       base::BindRepeating(&UiBrowserInterface::SetVoiceSearchActive,
                           base::Unretained(browser_), true),
-      vector_icons::kMicrophoneIcon);
+      vector_icons::kMicIcon);
   voice_search_button->SetSize(kVoiceSearchButtonDiameterDMM,
                                kVoiceSearchButtonDiameterDMM);
   voice_search_button->set_hover_offset(kButtonZOffsetHoverDMM);
