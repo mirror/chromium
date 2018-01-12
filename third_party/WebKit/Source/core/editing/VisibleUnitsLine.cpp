@@ -181,7 +181,7 @@ PositionWithAffinityTemplate<Strategy> StartPositionForLine(
   if (c.IsNull())
     return PositionWithAffinityTemplate<Strategy>();
 
-  RootInlineBox* root_box =
+  const RootInlineBox* root_box =
       RenderedPosition(c.GetPosition(), c.Affinity()).RootBox();
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
@@ -403,7 +403,7 @@ static PositionWithAffinityTemplate<Strategy> EndPositionForLine(
   if (c.IsNull())
     return PositionWithAffinityTemplate<Strategy>();
 
-  RootInlineBox* root_box =
+  const RootInlineBox* root_box =
       RenderedPosition(c.GetPosition(), c.Affinity()).RootBox();
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
@@ -693,7 +693,7 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
         node, visible_position, editable_type);
     if (position.IsNotNull()) {
       RenderedPosition rendered_position((CreateVisiblePosition(position)));
-      root = rendered_position.RootBox();
+      root = const_cast<RootInlineBox*>(rendered_position.RootBox());
       if (!root)
         return CreateVisiblePosition(position);
     }
@@ -757,7 +757,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
         node, visible_position, editable_type);
     if (position.IsNotNull()) {
       RenderedPosition rendered_position((CreateVisiblePosition(position)));
-      root = rendered_position.RootBox();
+      root = const_cast<RootInlineBox*>(rendered_position.RootBox());
       if (!root)
         return CreateVisiblePosition(position);
     }
