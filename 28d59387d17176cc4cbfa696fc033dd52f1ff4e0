@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "970865d9_50f91c7a",
+        "filename": "chromecast/browser/extensions/cast_extensions_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T00:11:23Z",
+      "side": 1,
+      "message": "Maybe add a TODO in the meanwhile?",
+      "parentUuid": "56e876a1_2a04a07d",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a074b5ed_f702fe27",
         "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
         "patchSetId": 10
@@ -183,6 +201,24 @@
       "side": 1,
       "message": "No, we don\u0027t need those APIs. Eventually I hope to remove them (and the associated deps) as we mainly just want guest_view, but I\u0027m not 100% how to do that yet and it\u0027s better to get a patch that pulls in the world sooner so people can get unblocked now",
       "parentUuid": "a074b5ed_f702fe27",
+      "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a843db_a1a8d237",
+        "filename": "chromecast/browser/extensions/stub_storage_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-12T00:11:23Z",
+      "side": 1,
+      "message": "Maybe a TODO here too?",
+      "parentUuid": "ae779d85_3aa80590",
       "revId": "28d59387d17176cc4cbfa696fc033dd52f1ff4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
