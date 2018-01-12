@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3589e55_75934f7c",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/PostMessageTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-12T11:47:19Z",
+      "side": 1,
+      "message": "\"letting it echo\", seeing as you\u0027re touching the comment anyway. And is \"that is initialized\" redundant now too?\n\nThanks a lot; this makes much more sense.",
+      "range": {
+        "startLine": 608,
+        "startChar": 60,
+        "endLine": 608,
+        "endChar": 75
+      },
+      "revId": "c660db5369d9f96bdbe8d7c08bf7a21329947832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
