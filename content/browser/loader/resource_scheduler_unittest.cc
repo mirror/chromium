@@ -92,6 +92,30 @@ void ConfigureYieldFieldTrial(
   scoped_feature_list->InitWithFeatureList(std::move(feature_list));
 }
 
+class ScheduledResourceRequestAdapter final
+    : public ResourceThrottle,
+      public ResourceScheduler::ScheduledResourceRequest::Delegate {
+ public:
+  explicit ScheduledResourceRequestAdapter(
+      std::unique_ptr<ResourceScheduler::ScheduledResourceRequest> request)
+      : request_(std::move(request)) {
+    request_->set_delegate(this);
+  }
+  ~ScheduledResourceRequestAdapter() override {}
+
+  // ResourceThrottle implmentation
+  void WillStartRequest(bool* defer) override {
+    return request_->WillStartRequest(defer);
+  }
+  const char* GetNameForLogging() const override { return "ResourceScheduler"; }
+
+  // ScheduledResourceRequest::Delegate implmentation
+  void ResumeDelegate() override { ResourceThrottle::Resume(); }
+
+ private:
+  std::unique_ptr<ResourceScheduler::ScheduledResourceRequest> request_;
+};
+
 class TestRequest : public ResourceThrottle::Delegate {
  public:
   TestRequest(std::unique_ptr<net::URLRequest> url_request,
@@ -271,8 +295,10 @@ class ResourceSchedulerTest : public testing::Test {
                                                  bool is_async) {
     std::unique_ptr<net::URLRequest> url_request(
         NewURLRequestWithChildAndRoute(url, priority, child_id, route_id));
-    std::unique_ptr<ResourceThrottle> throttle(scheduler_->ScheduleRequest(
-        child_id, route_id, is_async, url_request.get()));
+    std::unique_ptr<ResourceThrottle> throttle(
+        std::make_unique<ScheduledResourceRequestAdapter>(
+            scheduler_->ScheduleRequest(child_id, route_id, is_async,
+                                        url_request.get())));
     auto request = std::make_unique<TestRequest>(
         std::move(url_request), std::move(throttle), scheduler());
     request->Start();
@@ -1121,8 +1147,10 @@ TEST_F(ResourceSchedulerTest, CancelOtherRequestsWhileResuming) {
 
   std::unique_ptr<net::URLRequest> url_request(
       NewURLRequest("http://host/low2", net::LOWEST));
-  std::unique_ptr<ResourceThrottle> throttle(scheduler()->ScheduleRequest(
-      kChildId, kRouteId, true, url_request.get()));
+  std::unique_ptr<ResourceThrottle> throttle(
+      std::make_unique<ScheduledResourceRequestAdapter>(
+          scheduler()->ScheduleRequest(kChildId, kRouteId, true,
+                                       url_request.get())));
   std::unique_ptr<CancelingTestRequest> low2(new CancelingTestRequest(
       std::move(url_request), std::move(throttle), scheduler()));
   low2->Start();
