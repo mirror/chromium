@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b0c158b_c15efdd1",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-12T22:43:57Z",
+      "side": 1,
+      "message": "It\u0027s a good question. It looks that internally NSThread priority has much lower resolution than double. E.g., if value \u00270.8\u0027 is set, reading the priority back will always return  \u00270.80645161290322576\u0027. Setting the priority as \u00270.80645161290322576\u0027 will return the same number as well.\n\nThe previous test sets the priority as \u00271.0\u0027. That value always returned back as 1.0. I changed the test to check within the range too just in case if somebody decided to use a priority value rather than \u00271.0\u0027.",
+      "parentUuid": "d53b0875_bba18116",
+      "range": {
+        "startLine": 488,
+        "startChar": 5,
+        "endLine": 488,
+        "endChar": 75
+      },
+      "revId": "c78c270ce8fda83bbd69ad79ceaec288fa1f5c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fadb6e42_83fc8050",
         "filename": "components/cronet/ios/test/cronet_test_base.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c78c270ce8fda83bbd69ad79ceaec288fa1f5c69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53252699_e362d553",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-12T22:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fadb6e42_83fc8050",
+      "range": {
+        "startLine": 268,
+        "startChar": 24,
+        "endLine": 268,
+        "endChar": 38
+      },
+      "revId": "c78c270ce8fda83bbd69ad79ceaec288fa1f5c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
