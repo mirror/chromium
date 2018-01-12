@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a080e1_ec87babc",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T07:07:38Z",
+      "side": 1,
+      "message": "I remember there\u0027s a non-const member function of RootInlineBox blocking us from making |root| const, but forgot which one it is.\n\nCould you find that function out, and add a comment:\n\n// TODO(crbug.com/766448): Change |root| into |const RootInlineBox*|, which is currently blocked by |RootInlineBox::TheFunctionYouFound()|.",
+      "revId": "68c5b7f784dc4c6181faa1d3c77a5bdb3931cf97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb05710c_d6c2349c",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-12T07:07:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "68c5b7f784dc4c6181faa1d3c77a5bdb3931cf97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
