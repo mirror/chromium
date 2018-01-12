@@ -249,75 +249,79 @@ enum {
     _view.safeAreaInsetForToolbar = safeAreaInset;
     [tabBar setDelegate:self];
 
-    bool isIncognito = _browserState->IsOffTheRecord();
+    [self setUp];
+  }
+  return self;
+}
 
-    NSString* incognito = l10n_util::GetNSString(IDS_IOS_NEW_TAB_INCOGNITO);
-    NSString* home = l10n_util::GetNSString(IDS_IOS_NEW_TAB_HOME);
-    NSString* bookmarks =
-        l10n_util::GetNSString(IDS_IOS_NEW_TAB_BOOKMARKS_PAGE_TITLE_MOBILE);
-    NSString* openTabs = l10n_util::GetNSString(IDS_IOS_NEW_TAB_RECENT_TABS);
+- (void)setUp {
+  bool isIncognito = _browserState->IsOffTheRecord();
 
-    NSMutableArray* tabBarItems = [NSMutableArray array];
-    NewTabPageBarItem* itemToDisplay = nil;
-    if (isIncognito) {
-      NewTabPageBarItem* incognitoItem = [NewTabPageBarItem
-          newTabPageBarItemWithTitle:incognito
-                          identifier:ntp_home::INCOGNITO_PANEL
-                               image:[UIImage imageNamed:@"ntp_incognito"]];
-      if (!PresentNTPPanelModally()) {
-        // Only add the bookmarks tab item for Incognito.
-        NewTabPageBarItem* bookmarksItem = [NewTabPageBarItem
-            newTabPageBarItemWithTitle:bookmarks
-                            identifier:ntp_home::BOOKMARKS_PANEL
-                                 image:[UIImage imageNamed:@"ntp_bookmarks"]];
-        [tabBarItems addObject:bookmarksItem];
-        [tabBarItems addObject:incognitoItem];
-        self.view.tabBar.items = tabBarItems;
-      }
-      itemToDisplay = incognitoItem;
-    } else {
-      NewTabPageBarItem* homeItem = [NewTabPageBarItem
-          newTabPageBarItemWithTitle:home
-                          identifier:ntp_home::HOME_PANEL
-                               image:[UIImage imageNamed:@"ntp_mv_search"]];
+  NSString* incognito = l10n_util::GetNSString(IDS_IOS_NEW_TAB_INCOGNITO);
+  NSString* home = l10n_util::GetNSString(IDS_IOS_NEW_TAB_HOME);
+  NSString* bookmarks =
+      l10n_util::GetNSString(IDS_IOS_NEW_TAB_BOOKMARKS_PAGE_TITLE_MOBILE);
+  NSString* openTabs = l10n_util::GetNSString(IDS_IOS_NEW_TAB_RECENT_TABS);
+
+  NSMutableArray* tabBarItems = [NSMutableArray array];
+  NewTabPageBarItem* itemToDisplay = nil;
+  if (isIncognito) {
+    NewTabPageBarItem* incognitoItem = [NewTabPageBarItem
+        newTabPageBarItemWithTitle:incognito
+                        identifier:ntp_home::INCOGNITO_PANEL
+                             image:[UIImage imageNamed:@"ntp_incognito"]];
+    if (!PresentNTPPanelModally()) {
+      // Only add the bookmarks tab item for Incognito.
       NewTabPageBarItem* bookmarksItem = [NewTabPageBarItem
           newTabPageBarItemWithTitle:bookmarks
                           identifier:ntp_home::BOOKMARKS_PANEL
                                image:[UIImage imageNamed:@"ntp_bookmarks"]];
       [tabBarItems addObject:bookmarksItem];
-      if (!PresentNTPPanelModally()) {
-        [tabBarItems addObject:homeItem];
-      }
-
-      NewTabPageBarItem* openTabsItem = [NewTabPageBarItem
-          newTabPageBarItemWithTitle:openTabs
-                          identifier:ntp_home::RECENT_TABS_PANEL
-                               image:[UIImage imageNamed:@"ntp_opentabs"]];
-      [tabBarItems addObject:openTabsItem];
+      [tabBarItems addObject:incognitoItem];
       self.view.tabBar.items = tabBarItems;
+    }
+    itemToDisplay = incognitoItem;
+  } else {
+    NewTabPageBarItem* homeItem = [NewTabPageBarItem
+        newTabPageBarItemWithTitle:home
+                        identifier:ntp_home::HOME_PANEL
+                             image:[UIImage imageNamed:@"ntp_mv_search"]];
+    NewTabPageBarItem* bookmarksItem = [NewTabPageBarItem
+        newTabPageBarItemWithTitle:bookmarks
+                        identifier:ntp_home::BOOKMARKS_PANEL
+                             image:[UIImage imageNamed:@"ntp_bookmarks"]];
+    [tabBarItems addObject:bookmarksItem];
+    if (!PresentNTPPanelModally()) {
+      [tabBarItems addObject:homeItem];
+    }
 
-      if (PresentNTPPanelModally()) {
-        itemToDisplay = homeItem;
+    NewTabPageBarItem* openTabsItem = [NewTabPageBarItem
+        newTabPageBarItemWithTitle:openTabs
+                        identifier:ntp_home::RECENT_TABS_PANEL
+                             image:[UIImage imageNamed:@"ntp_opentabs"]];
+    [tabBarItems addObject:openTabsItem];
+    self.view.tabBar.items = tabBarItems;
+
+    if (PresentNTPPanelModally()) {
+      itemToDisplay = homeItem;
+    } else {
+      PrefService* prefs = _browserState->GetPrefs();
+      int shownPage = prefs->GetInteger(prefs::kNtpShownPage);
+      shownPage = shownPage & ~INDEX_MASK;
+
+      if (shownPage == BOOKMARKS_PAGE_ID) {
+        itemToDisplay = bookmarksItem;
+      } else if (shownPage == OPEN_TABS_PAGE_ID) {
+        itemToDisplay = openTabsItem;
       } else {
-        PrefService* prefs = _browserState->GetPrefs();
-        int shownPage = prefs->GetInteger(prefs::kNtpShownPage);
-        shownPage = shownPage & ~INDEX_MASK;
-
-        if (shownPage == BOOKMARKS_PAGE_ID) {
-          itemToDisplay = bookmarksItem;
-        } else if (shownPage == OPEN_TABS_PAGE_ID) {
-          itemToDisplay = openTabsItem;
-        } else {
-          itemToDisplay = homeItem;
-        }
+        itemToDisplay = homeItem;
       }
     }
-    DCHECK(itemToDisplay);
-    [self setUpScrollView];
-    [self showPanel:itemToDisplay];
-    [self updateOverlayScrollPosition];
   }
-  return self;
+  DCHECK(itemToDisplay);
+  [self setUpScrollView];
+  [self showPanel:itemToDisplay];
+  [self updateOverlayScrollPosition];
 }
 
 - (void)dealloc {
@@ -776,6 +780,19 @@ enum {
   if (_currentController != ntpPanelController)
     return;
   [self.view.tabBar setShadowAlpha:[ntpPanelController alphaForBottomShadow]];
+}
+
+- (void)reloadNTP {
+  if (_browserState->IsOffTheRecord())
+    return;
+
+  [self.contentSuggestionsCoordinator.viewController
+      willMoveToParentViewController:nil];
+  [self.contentSuggestionsCoordinator.viewController.view removeFromSuperview];
+  [self.contentSuggestionsCoordinator.viewController
+      didMoveToParentViewController:nil];
+
+  [self setUp];
 }
 
 @end

@@ -33,6 +33,12 @@ class GURL;
 class LargeIconCache;
 class NotificationPromoWhatsNew;
 
+@protocol NTPReloading
+
+- (void)reloadNTP;
+
+@end
+
 // Mediator for ContentSuggestions. Makes the interface between a
 // ntp_snippets::ContentSuggestionsService and the Objective-C services using
 // its data.
@@ -56,6 +62,8 @@ initWithContentService:
 @property(nonatomic, weak, nullable)
     id<ContentSuggestionsCommands, ContentSuggestionsGestureCommands>
         commandHandler;
+
+@property(nonatomic, weak, nullable) id<NTPReloading> reloader;
 
 @property(nonatomic, weak, nullable) id<ContentSuggestionsHeaderProvider>
     headerProvider;
