@@ -103,12 +103,6 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter);
   ~EmbeddedWorkerTestHelper() override;
 
-  // Registers this sender for the process.
-  // TODO(falken): Rename or delete this function. It used to call a function in
-  // ServiceWorkerProcessManager to associate a process with a pattern (hence
-  // the name), but that function no longer exists.
-  void SimulateAddProcessToPattern(const GURL& pattern, int process_id);
-
   // IPC::Sender implementation.
   bool Send(IPC::Message* message) override;
 

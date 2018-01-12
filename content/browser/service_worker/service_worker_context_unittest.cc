@@ -647,8 +647,6 @@ TEST_F(ServiceWorkerContextTest, ProviderHostIterator) {
       base::MakeRefCounted<ServiceWorkerVersion>(
           registration.get(), GURL("http://www.example.com/test/script_url"),
           1L /* version_id */, helper_->context()->AsWeakPtr());
-  helper_->SimulateAddProcessToPattern(
-      GURL("http://www.example.com/test/script_url"), kRenderProcessId2);
   remote_endpoints.emplace_back();
   std::unique_ptr<ServiceWorkerProviderHost> host4 =
       CreateProviderHostForServiceWorkerContext(
