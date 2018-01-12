@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686fa338_e046110a",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "nit: no need for \":ksv\" at end",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18581a79_6b55d64b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "nit: Accessibility",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c14d5e_6ebecbc1",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "nit: CATEGORY -\u003e ksv::Category or just \"category\"",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e7d0e7_224ef391",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "For later: This comment could move into the function that implements this behavior.",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83df565e_ddd7d395",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "nit: It\u0027s not |description_id| any more. Also, I think you could just remove these comments, since the type is pretty obvious from IDS_KSV_DESCRIPTION_*",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21edad1_c175dffe",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "ditto. If the line wrapping gets weird without these you can use // clang-format off and // clang-format on comments.",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e10d58_a64d9d5b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to say how they are generated. You could just say |replacement_codes| (useful I think because the list is empty). Alternately, maybe you could provide a constructor for KeyboardShortcutItem that doesn\u0027t take a |replacement_codes| argument and remove all these blank {}? Or give the constructor a default arg, like \u003d {} ?",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358f35a8_4a603d2b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "You can forward declare KeyboardShortcutItem.",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9fd618_caed087d",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295d0c75_3c132d3b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-12T19:20:38Z",
+      "side": 1,
+      "message": "nit: This kind of comment isn\u0027t very useful, because the reader can tell from the return type that it returns a list and the type of the item in the list (which isn\u0027t \"KSVItem\" by the way). More useful would be to say what sort of things are in the list, like chrome and ash keyboard shortcuts (or \"browser and system UI shortcut metadata\" or something).",
+      "revId": "a661fdc088256d7fddb296f5b50d6fd41b40372f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
