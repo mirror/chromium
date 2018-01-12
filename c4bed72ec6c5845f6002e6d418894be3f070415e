@@ -70,6 +70,30 @@
       "revId": "c4bed72ec6c5845f6002e6d418894be3f070415e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "543df9f1_b320263d",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-12T12:59:41Z",
+      "side": 1,
+      "message": "(1) should be doable. An alternative is to have another |salt_and_origin_callback_| field in MDD. The purpose of that field is to be able to use an alternative to GetMediaDeviceSaltAndOrigin() in tests.\nFor example, MediaStreamDispatcherHost has one such field.\nYet another choice is to explore the possibility of having MDD return enumeration results already translated to MDDH, so that MDDH does not need |salt_and_origin_callback_| at all.",
+      "parentUuid": "16b058f7_230ab2ec",
+      "range": {
+        "startLine": 311,
+        "startChar": 53,
+        "endLine": 311,
+        "endChar": 0
+      },
+      "revId": "c4bed72ec6c5845f6002e6d418894be3f070415e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
