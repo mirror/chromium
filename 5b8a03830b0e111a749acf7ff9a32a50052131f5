@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca71a2d_2ebef97f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-12T01:59:17Z",
+      "side": 1,
+      "message": "Should probably add what kind of clean up is being done.",
+      "revId": "5b8a03830b0e111a749acf7ff9a32a50052131f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed717196_110de34f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-12T01:59:17Z",
+      "side": 1,
+      "message": "Tools Menu or tools menu",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "5b8a03830b0e111a749acf7ff9a32a50052131f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
