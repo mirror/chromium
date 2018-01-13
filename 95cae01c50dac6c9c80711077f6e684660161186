@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51823d33_7b9c46f3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-13T00:01:54Z",
+      "side": 1,
+      "message": "Moving the code here fixes a bug in my earlier patch: the scroll offset\nneeds to be remove *before* putting a clip in the cache, or when it is pulled\nback out the scroll will be wrong.",
+      "revId": "95cae01c50dac6c9c80711077f6e684660161186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
