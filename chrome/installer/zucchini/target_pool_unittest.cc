@@ -4,6 +4,7 @@
 
 #include "chrome/installer/zucchini/target_pool.h"
 
+#include <cmath>
 #include <utility>
 #include <vector>
 
@@ -41,6 +42,21 @@ TEST(TargetPoolTest, KeyOffset) {
       offset_t key = target_pool.KeyForOffset(offset);
       EXPECT_LT(key, target_pool.size());
       EXPECT_EQ(offset, target_pool.OffsetForKey(key));
+    }
+    for (offset_t offset = 0; offset <= target_pool.targets().back();
+         ++offset) {
+      offset_t key = target_pool.KeyForClosestOffset(offset);
+      EXPECT_LT(key, target_pool.size());
+      if (key + 1 < target_pool.size()) {
+        EXPECT_LE(
+            std::abs(int32_t(offset - target_pool.OffsetForKey(key))),
+            std::abs(int32_t(offset - target_pool.OffsetForKey(key + 1))));
+      }
+      if (key - 1 < target_pool.size()) {
+        EXPECT_LE(
+            std::abs(int32_t(offset - target_pool.OffsetForKey(key))),
+            std::abs(int32_t(offset - target_pool.OffsetForKey(key - 1))));
+      }
     }
   };
   test_key_offset({0});

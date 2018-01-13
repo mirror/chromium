@@ -10,6 +10,7 @@
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/algorithm.h"
+#include "chrome/installer/zucchini/equivalence_map.h"
 
 namespace zucchini {
 
@@ -22,6 +23,7 @@ TargetPool::TargetPool(std::vector<offset_t>&& targets) {
 }
 
 TargetPool::TargetPool(TargetPool&&) = default;
+TargetPool::TargetPool(const TargetPool&) = default;
 TargetPool::~TargetPool() = default;
 
 void TargetPool::InsertTargets(const std::vector<Reference>& references) {
@@ -41,10 +43,37 @@ void TargetPool::InsertTargets(ReferenceReader&& references) {
   SortAndUniquify(&targets_);
 }
 
-offset_t TargetPool::KeyForOffset(offset_t offset) const {
+void TargetPool::InsertTargets(TargetSource* targets) {
+  for (auto target = targets->GetNext(); target.has_value();
+       target = targets->GetNext()) {
+    targets_.push_back(*target);
+  }
+  SortAndUniquify(&targets_);
+}
+
+void TargetPool::InsertTargets(const std::vector<offset_t>& targets) {
+  std::copy(targets.begin(), targets.end(), std::back_inserter(targets_));
+  SortAndUniquify(&targets_);
+}
+
+key_t TargetPool::KeyForOffset(offset_t offset) const {
   auto pos = std::lower_bound(targets_.begin(), targets_.end(), offset);
   DCHECK(pos != targets_.end() && *pos == offset);
   return static_cast<offset_t>(pos - targets_.begin());
+}
+
+key_t TargetPool::KeyForClosestOffset(offset_t offset) const {
+  auto pos = std::lower_bound(targets_.begin(), targets_.end(), offset);
+  if (pos != targets_.begin()) {
+    if (pos == targets_.end() || *pos - offset > offset - pos[-1])
+      --pos;
+  }
+  return static_cast<offset_t>(pos - targets_.begin());
+}
+
+void TargetPool::Project(const OffsetMapper& offset_mapper) {
+  offset_mapper.ProjectOffsets(&targets_);
+  std::sort(targets_.begin(), targets_.end());
 }
 
 }  // namespace zucchini
