@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0870cd15_6c9da093",
+        "filename": "base/process/launch.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T01:20:50Z",
+      "side": 1,
+      "message": "Technically we don\u0027t even require that this is a set of namespaces meaningful in the parent process; the generalised form of this would be a map\u003cstring,handle\u003e.\n\nPerhaps the mode of use would be more obvious if we had this be a |namespace_map| of that form, and provide a function to populate that with a set of handles from a subset of the parent process\u0027 paths - the separation between mechanism \u0026 policy might make it more straightforward to document \u0026 grok?",
+      "parentUuid": "74d22cfd_2de5f737",
+      "range": {
+        "startLine": 202,
+        "startChar": 1,
+        "endLine": 202,
+        "endChar": 2
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ae273a3_1b0b5a42",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 6
@@ -87,6 +111,29 @@
         "startChar": 33,
         "endLine": 131,
         "endChar": 67
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60199ab_2f52efa7",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T01:20:50Z",
+      "side": 1,
+      "message": "I actually meant using ScopedGeneric\u003claunchpad_t\u003e because ScopedGeneric\u003c\u003e provides a receive() method, allowing you to write:\n\nlaunchpad_create(job, argv_cstr[0], lp.receive())\n\nso you don\u0027t need to receive the |lp| pointer into an unmanaged pointer and then wrap it.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 49
       },
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

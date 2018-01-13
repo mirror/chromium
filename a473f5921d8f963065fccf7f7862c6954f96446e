@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277860cd_63574f63",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T01:20:50Z",
+      "side": 1,
+      "message": "This should be scoped_handle.release(), so you don\u0027t then need the separate ignore_result(release()) below.",
+      "range": {
+        "startLine": 108,
+        "startChar": 38,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "a473f5921d8f963065fccf7f7862c6954f96446e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
