@@ -58,7 +58,9 @@ void BlockPainter::Paint(const PaintInfo& paint_info,
   }
 
   if (original_phase != PaintPhase::kSelfBlockBackgroundOnly &&
-      original_phase != PaintPhase::kSelfOutlineOnly) {
+      original_phase != PaintPhase::kSelfOutlineOnly &&
+      // We have already applied clip in SVGForeignObjectClipper.
+      !layout_block_.IsSVGForeignObject()) {
     BoxClipper box_clipper(layout_block_, local_paint_info,
                            adjusted_paint_offset, contents_clip_behavior);
     layout_block_.PaintObject(local_paint_info, adjusted_paint_offset);
