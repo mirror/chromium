@@ -123,6 +123,8 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // Must be called on the compositor thread.
   virtual void SetOnNewProcessedFrameCallback(OnNewProcessedFrameCB cb);
 
+  void UpdateRotation(media::VideoRotation rotation);
+
   void set_tick_clock_for_testing(base::TickClock* tick_clock) {
     tick_clock_ = tick_clock;
   }

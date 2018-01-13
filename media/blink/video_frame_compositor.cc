@@ -313,4 +313,8 @@ bool VideoFrameCompositor::CallRender(base::TimeTicks deadline_min,
   return new_frame || had_new_background_frame;
 }
 
+void VideoFrameCompositor::UpdateRotation(media::VideoRotation rotation) {
+  submitter_->SetRotation(rotation);
+}
+
 }  // namespace media
