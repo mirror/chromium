@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48e67bcc_323e6e07",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-13T00:05:06Z",
+      "side": 1,
+      "message": "Nope, done.",
+      "parentUuid": "d0dc6d4b_e1178587",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9294343e_07effb09",
         "filename": "chrome/browser/ui/views/hung_renderer_view.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "05ad28fe_275510ee",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-13T00:05:06Z",
+      "side": 1,
+      "message": "Done, though I just added HungRendererDialogViewBrowserTest as a friend (and you don\u0027t have to forward declare it either, turns out).",
+      "parentUuid": "9294343e_07effb09",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1cef35_e6a3212d",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e414c54c_976ca193",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-13T00:05:06Z",
+      "side": 1,
+      "message": "Nope. I tried putting it in the general toolkit_views section and it didn\u0027t compile on Mac... alas.",
+      "parentUuid": "cf1cef35_e6a3212d",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
