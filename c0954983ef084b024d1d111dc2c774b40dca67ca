@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3483aca3_c450c2a4",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-13T02:28:34Z",
+      "side": 1,
+      "message": "Sounds reasonable.",
+      "parentUuid": "d5cd92d9_40c924fa",
+      "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15527040_470187e2",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-13T00:02:43Z",
       "side": 1,
       "message": "Should this be dispatched before or after composition_range_ is updated? The spec says:\n\nhttps://www.w3.org/TR/uievents/#event-type-compositionupdate\n“A user agent SHOULD dispatch this event during a composition session when a text composition system updates its active text passage with a new character, which is reflected in the string in data.\n\nIn text composition systems which keep the ongoing composition in sync with the input control, the compositionupdate event MUST be dispatched before the control is updated.”\n\n\nNote that SetCompositionFromExistingText() does not change the text of the “input control.”",
+      "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44d5b8f_588f79ff",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-13T02:28:34Z",
+      "side": 1,
+      "message": "The spec seems a little bit vague... Anyway, I think it should be here, so that the |data| string can reflect the active text passage update as required by the spec.\n\nOr, what does other browsers do for this case?",
+      "parentUuid": "15527040_470187e2",
       "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
