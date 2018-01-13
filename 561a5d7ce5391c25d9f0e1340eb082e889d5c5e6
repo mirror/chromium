@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88109324_6e9dffc2",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5918,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-13T03:41:07Z",
+      "side": 1,
+      "message": "I just realized that resetting to view_size_before_emulation_ is wrong in case someone did resize WebContentsView. We should grab the size from there instead.\n\nAlso, ideally, we would prohibit resizing RWHV through any other means (at least when WebContentsView size changes), but that is not needed in headless and will be unused code currently. Let\u0027s add a TODO though.",
+      "revId": "561a5d7ce5391c25d9f0e1340eb082e889d5c5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
