@@ -22,6 +22,30 @@
       "revId": "974e0a526a21c0133fc9dfef13479488d0bebafb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3856a750_468a7c27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-13T00:03:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure either. I didn\u0027t find any doc that specified and saw multiple ways in existing code including\n\nENUM_VALUE, // Comment.\n\nand\n\n// Comment.\nENUM_VALUE,\n\nI don\u0027t have a strong preference and will do whichever you prefer.",
+      "parentUuid": "4343acfd_73572738",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "974e0a526a21c0133fc9dfef13479488d0bebafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
