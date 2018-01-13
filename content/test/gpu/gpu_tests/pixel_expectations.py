@@ -106,3 +106,10 @@ class PixelExpectations(GpuTestExpectations):
     self.Fail('Pixel_Video_VP9', ['win', 'intel'], bug=602688)
     self.Fail('Pixel_DirectComposition_Video_VP9', ['win', 'intel'],
         bug=602688)
+
+    # Temporary suppression for
+    # https://chromium-review.googlesource.com/c/chromium/src/+/861085
+    self.Fail('Pixel_OffscreenCanvasTransferAfterStyleResize', ['android'],
+              bug=77154)
+    self.Fail('Pixel_OffscreenCanvasTransferBeforeStyleResize', ['android'],
+              bug=77154)
