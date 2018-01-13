@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e649ea_a83e0428",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-13T01:45:04Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO)",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 55
+      },
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

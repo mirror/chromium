@@ -94,6 +94,30 @@
       "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8280bd_18b2b100",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-13T01:45:04Z",
+      "side": 1,
+      "message": "As background, this synchronization primitives supports internal synchronization with the profiling thread for a use case (restarting the profiler) that is not used here.",
+      "parentUuid": "8de7008c_4ffe661f",
+      "range": {
+        "startLine": 1144,
+        "startChar": 29,
+        "endLine": 1144,
+        "endChar": 54
+      },
+      "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
