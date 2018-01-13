@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bac05f8_0872a956",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-13T01:40:08Z",
+      "side": 1,
+      "message": "AFAIK, this call only returns the specific parameter string. This is always an empty string if disabled. An enabled feature can optionally supply a parameter value for this parameter name.\n\nIn the current implementation, if it\u0027s set from flags, the result is an empty string for all of Enabled, Disabled, and Default since those don\u0027t set the parameter value.\n\nThe code here could separately check for features::kWebXrRenderPath being enabled to decide on an appropriate default path at runtime, but we\u0027re not currently using that.",
+      "parentUuid": "eb750907_c597465a",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9518762_31c4deed",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7efbe5d5_04fda6e4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100319,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-13T01:40:08Z",
+      "side": 1,
+      "message": "Changed to \"XR.WebXR.RenderPath.Used\". I\u0027m open to renaming to \"VR.\" prefix also, but you mentioned that we can still do that up until branch if necessary.",
+      "parentUuid": "f9518762_31c4deed",
+      "range": {
+        "startLine": 100319,
+        "startChar": 17,
+        "endLine": 100319,
+        "endChar": 20
+      },
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2811b0d5_166df522",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "938d3908_9ec6ed96",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100322,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-13T01:40:08Z",
+      "side": 1,
+      "message": "Changed to: \n\n    Records the WebXR/WebVR render path used for presentation. This is affected\n    by overrides and device capabilities.",
+      "parentUuid": "2811b0d5_166df522",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0949cf46_08c2ddd9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -73,6 +133,24 @@
       "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64a61aa_0b46e48b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 100323,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-13T01:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0949cf46_08c2ddd9",
+      "revId": "739374f49ffd479be2ddd02c26eab4e0a51fef8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

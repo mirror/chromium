@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "4e7ac098_4100652f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-13T01:40:08Z",
+      "side": 1,
+      "message": "Acknowledged. I think this is something we can add later, I renamed the existing metric to add a \".Used\" suffix to disambiguate it from future additions such as the requested path or supported-but-not-selected path.",
+      "parentUuid": "4c08b963_f80c3dfb",
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7f1ca2_8df3ce4c",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 7
