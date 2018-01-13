@@ -73,10 +73,11 @@ class VariationsSeedStore {
   // Reports to UMA that the seed format specified by the server is unsupported.
   void ReportUnsupportedSeedFormatError();
 
-  // Returns the serial number of the last loaded or stored seed.
-  const std::string& variations_serial_number() const {
-    return variations_serial_number_;
-  }
+  // Returns the serial number of the most recently received seed, or an empty
+  // string if there is no seed (or if it could not be read).
+  // Side-effect: If there is a failure while attempting to read the latest seed
+  // from prefs, clears the prefs associated with the seed.
+  const std::string& GetLatestSerialNumber();
 
   // Registers Local State prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
@@ -155,7 +156,7 @@ class VariationsSeedStore {
   PrefService* local_state_;
 
   // Cached serial number from the most recently fetched variations seed.
-  std::string variations_serial_number_;
+  std::string latest_serial_number_;
 
   DISALLOW_COPY_AND_ASSIGN(VariationsSeedStore);
 };
