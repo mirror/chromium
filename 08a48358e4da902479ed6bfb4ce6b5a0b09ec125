@@ -16,6 +16,24 @@
       "revId": "08a48358e4da902479ed6bfb4ce6b5a0b09ec125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ad38ca_6db850d5",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-13T00:34:02Z",
+      "side": 1,
+      "message": "I agree it can be removed. Thanks for review!\n\nBoth issues goes away after device test.",
+      "parentUuid": "85e5a65a_dfc524de",
+      "revId": "08a48358e4da902479ed6bfb4ce6b5a0b09ec125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
