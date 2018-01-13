@@ -7,6 +7,7 @@
 #include "base/test/mock_callback.h"
 #include "base/test/test_simple_task_runner.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
+#include "chrome/browser/media/router/test/mock_media_router.h"
 #include "chrome/browser/media/router/test/test_helper.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -38,18 +39,23 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
   MockDialMediaSinkServiceImpl(
       const OnSinksDiscoveredCallback& sinks_discovered_cb,
       const OnDialSinkAddedCallback& dial_sink_added_cb,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
       : DialMediaSinkServiceImpl(std::unique_ptr<service_manager::Connector>(),
                                  sinks_discovered_cb,
                                  dial_sink_added_cb,
+                                 available_sinks_updated_cb,
                                  request_context,
                                  task_runner),
         sinks_discovered_cb_(sinks_discovered_cb),
-        dial_sink_added_cb_(dial_sink_added_cb) {}
+        dial_sink_added_cb_(dial_sink_added_cb),
+        available_sinks_updated_cb_(available_sinks_updated_cb) {}
   ~MockDialMediaSinkServiceImpl() override = default;
 
   MOCK_METHOD0(Start, void());
+  MOCK_METHOD1(StartMonitoringAvailableSinksForApp, void(const std::string&));
+  MOCK_METHOD1(StopMonitoringAvailableSinksForApp, void(const std::string&));
 
   OnSinksDiscoveredCallback sinks_discovered_cb() {
     return sinks_discovered_cb_;
@@ -57,9 +63,14 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
 
   OnDialSinkAddedCallback dial_sink_added_cb() { return dial_sink_added_cb_; }
 
+  OnAvailableSinksUpdatedCallback available_sinks_updated_cb() {
+    return available_sinks_updated_cb_;
+  }
+
  private:
   OnSinksDiscoveredCallback sinks_discovered_cb_;
   OnDialSinkAddedCallback dial_sink_added_cb_;
+  OnAvailableSinksUpdatedCallback available_sinks_updated_cb_;
 };
 
 class TestDialMediaSinkService : public DialMediaSinkService {
@@ -73,13 +84,14 @@ class TestDialMediaSinkService : public DialMediaSinkService {
   std::unique_ptr<DialMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
   CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb,
              const OnDialSinkAddedCallback& dial_sink_added_cb,
+             const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
              const scoped_refptr<net::URLRequestContextGetter>& request_context)
       override {
     auto mock_impl = std::unique_ptr<MockDialMediaSinkServiceImpl,
                                      base::OnTaskRunnerDeleter>(
-        new MockDialMediaSinkServiceImpl(sinks_discovered_cb,
-                                         dial_sink_added_cb, request_context,
-                                         task_runner_),
+        new MockDialMediaSinkServiceImpl(
+            sinks_discovered_cb, dial_sink_added_cb, available_sinks_updated_cb,
+            request_context, task_runner_),
         base::OnTaskRunnerDeleter(task_runner_));
     mock_impl_ = mock_impl.get();
     return mock_impl;
@@ -139,6 +151,62 @@ TEST_F(DialMediaSinkServiceTest, OnDialSinkAddedCallback) {
 
   EXPECT_CALL(*this, OnDialSinkAdded(sink));
   mock_impl_->dial_sink_added_cb().Run(sink);
+}
+
+TEST_F(DialMediaSinkServiceTest, TestAddRemoveSinkQuery) {
+  MediaSource youtube_source("cast-dial:YouTube");
+  MediaSource netflix_source("cast-dial:Netflix");
+  MockMediaRouter mock_router;
+
+  MockMediaSinksObserver observer1(
+      &mock_router, youtube_source,
+      url::Origin::Create(GURL("https://tv.youtube.com")));
+  MockMediaSinksObserver observer2(
+      &mock_router, youtube_source,
+      url::Origin::Create(GURL("https://www.youtube.com")));
+  MockMediaSinksObserver observer3(
+      &mock_router, netflix_source,
+      url::Origin::Create(GURL("https://www.netflix.com")));
+  MockMediaSinksObserver observer4(
+      &mock_router, netflix_source,
+      url::Origin::Create(GURL("https://www.netflix.com")));
+
+  EXPECT_CALL(*mock_impl_, StartMonitoringAvailableSinksForApp("YouTube"))
+      .Times(1);
+  EXPECT_CALL(*mock_impl_, StartMonitoringAvailableSinksForApp("Netflix"))
+      .Times(1);
+  service_->RegisterMediaSinksObserver(&observer1);
+  service_->RegisterMediaSinksObserver(&observer3);
+  EXPECT_CALL(observer4, OnSinksReceived(std::vector<MediaSink>()));
+  service_->RegisterMediaSinksObserver(&observer4);
+  task_runner_->RunUntilIdle();
+
+  MediaSink sink("sink id 1", "sink name 1", SinkIconType::GENERIC);
+  MediaSinkInternal sink_internal(sink, DialSinkExtraData());
+  std::vector<MediaSink> sinks{sink};
+
+  EXPECT_CALL(observer1, OnSinksReceived(sinks));
+  mock_impl_->available_sinks_updated_cb().Run("YouTube", {sink_internal});
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(observer2, OnSinksReceived(sinks));
+  service_->RegisterMediaSinksObserver(&observer2);
+
+  EXPECT_CALL(observer3, OnSinksReceived(sinks));
+  EXPECT_CALL(observer4, OnSinksReceived(sinks));
+  mock_impl_->available_sinks_updated_cb().Run("Netflix", {sink_internal});
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(*mock_impl_, StopMonitoringAvailableSinksForApp("YouTube"))
+      .Times(2);
+  service_->UnregisterMediaSinksObserver(&observer1);
+  service_->UnregisterMediaSinksObserver(&observer2);
+  task_runner_->RunUntilIdle();
+
+  EXPECT_CALL(observer1, OnSinksReceived(_)).Times(0);
+  EXPECT_CALL(observer2, OnSinksReceived(_)).Times(0);
+  mock_impl_->available_sinks_updated_cb().Run("YouTube", {sink_internal});
+  base::RunLoop().RunUntilIdle();
 }
 
 }  // namespace media_router
