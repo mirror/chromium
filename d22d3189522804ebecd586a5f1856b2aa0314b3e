@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb16da4_3ffac6a6",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-13T00:41:22Z",
+      "side": 1,
+      "message": "I think this should probably be just ObjCCast and not strict, right?",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 33
+      },
+      "revId": "d22d3189522804ebecd586a5f1856b2aa0314b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
