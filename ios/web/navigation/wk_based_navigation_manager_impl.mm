@@ -125,10 +125,6 @@ void WKBasedNavigationManagerImpl::AddPendingItem(
       last_committed_item ? last_committed_item->GetURL() : GURL::EmptyGURL(),
       &transient_url_rewriters_);
   RemoveTransientURLRewriters();
-  // Ignore URL rewrite if this is a placeholder URL
-  if (placeholder_navigation_util::IsPlaceholderUrl(url)) {
-    pending_item_->SetURL(url);
-  }
   UpdatePendingItemUserAgentType(user_agent_override_option,
                                  GetLastCommittedNonAppSpecificItem(),
                                  pending_item_.get());
@@ -530,6 +526,10 @@ void WKBasedNavigationManagerImpl::FinishGoToIndex(
         << " has_empty_window_open_item: "
         << (empty_window_open_item_ != nullptr);
   }
+}
+
+bool WKBasedNavigationManagerImpl::IsPlaceholderUrl(const GURL& url) const {
+  return placeholder_navigation_util::IsPlaceholderUrl(url);
 }
 
 int WKBasedNavigationManagerImpl::GetWKCurrentItemIndex() const {
