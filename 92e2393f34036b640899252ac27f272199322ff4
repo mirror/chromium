@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8903042_69a8a643",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-13T01:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9752428_be0c0a31",
+      "range": {
+        "startLine": 16,
+        "startChar": 71,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b25777_619fb11c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "92e2393f34036b640899252ac27f272199322ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb30901_72ef62ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-13T01:46:14Z",
+      "side": 1,
+      "message": "https://en.wikipedia.org/wiki/Sentence_spacing is subjective, and somehow I changed to preferring it /shrug/.",
+      "parentUuid": "85b25777_619fb11c",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2e6215b0_2ccd99b8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-13T01:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "780e85ae_64975400",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf7d676b_ea87f549",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "92e2393f34036b640899252ac27f272199322ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e550ec16_e7bb56a8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-13T01:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf7d676b_ea87f549",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "92e2393f34036b640899252ac27f272199322ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
