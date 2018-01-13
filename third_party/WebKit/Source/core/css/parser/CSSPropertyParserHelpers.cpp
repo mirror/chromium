@@ -269,7 +269,10 @@ CSSPrimitiveValue* ConsumeNumber(CSSParserTokenRange& range,
     if (value_range == kValueRangeNonNegative && token.NumericValue() < 0)
       return nullptr;
     return CSSPrimitiveValue::Create(
-        range.ConsumeIncludingWhitespace().NumericValue(), token.GetUnitType());
+        range.ConsumeIncludingWhitespace().NumericValue(),
+        token.GetNumericValueType() == kIntegerValueType
+            ? CSSPrimitiveValue::UnitType::kInteger
+            : CSSPrimitiveValue::UnitType::kNumber);
   }
   CalcParser calc_parser(range, kValueRangeAll);
   if (const CSSCalcValue* calculation = calc_parser.Value()) {
