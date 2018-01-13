@@ -46,6 +46,30 @@
       "revId": "a191ad3d3f0e2baaeef23e9ed7ea4d434fec49b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bf24d51_21e0acc2",
+        "filename": "chrome/app/vector_icons/google_pay_logo.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-13T01:10:09Z",
+      "side": 1,
+      "message": "which would presumably have a title that necessitates the same vertical separator, no?\n\nIt doesn\u0027t feel like the separator should be part of the image. Even with the separator, imo it looks rather disjointed to have two fonts (different in size, color and typeface) right next to each other. Which designer are you working with? Have they coordinated with the designers working on secondary UI? It would be hard to insert a separator in the layout code, but I think that\u0027s by design --- individual dialogs shouldn\u0027t be making choices like this which make them look different from all other dialogs. If we absolutely have to stamp the \"G Pay\" logo somewhere it would probably be less disruptive to use it as the ExtraView.",
+      "parentUuid": "f6d8ca10_5ac0989f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "a191ad3d3f0e2baaeef23e9ed7ea4d434fec49b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
