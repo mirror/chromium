@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78a76f72_eb47e147",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58cae119_ce9b71db",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa622e5_d16d8591",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9316998e_316ceccb",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Thanks, will make this change.",
+      "parentUuid": "6fa622e5_d16d8591",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6b1c42ea_1d6fa8b6",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Thanks, changed. Realized the unit test did not have coverage of the error cases and there were bugs in them. Added tests.",
+      "parentUuid": "e823ebe1_c3de53f1",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc0d12e_3c4f8af1",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -85,6 +151,30 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64976403_105d1ff5",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Oops, that was an oversight. Changed to use self.make_temp_file.",
+      "parentUuid": "afc0d12e_3c4f8af1",
+      "range": {
+        "startLine": 162,
+        "startChar": 3,
+        "endLine": 163,
+        "endChar": 41
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "8d076811_5628244f",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "3b43a38b_31177fe0",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "041f7edf_886c04f6",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -136,6 +244,24 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3740a29_d2d4faf5",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Done. Out of curiosity, what does this do for a query of bots/count, in particular when we\u0027re only querying a subset of the bots?",
+      "parentUuid": "041f7edf_886c04f6",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "69938a8f_fa2c4bb0",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. It\u0027s a fair point, but structuring things this way keeps all invocations of swarming.py uniform in this file, and makes things easier to mock for unit tests.",
+      "parentUuid": "6d9db870_93c40b7a",
+      "range": {
+        "startLine": 171,
+        "startChar": 33,
+        "endLine": 171,
+        "endChar": 42
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25f73a71_18ff60eb",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -185,6 +335,30 @@
     },
     {
       "key": {
+        "uuid": "bbdd8aa7_6ad81164",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Oops, this was a brain fart. I intended to make an assertion about the value that was just decremented. Fixed.",
+      "parentUuid": "25f73a71_18ff60eb",
+      "range": {
+        "startLine": 215,
+        "startChar": 5,
+        "endLine": 215,
+        "endChar": 36
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eac6e13_b9311f28",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -199,6 +373,24 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dadc548_7bfe2795",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Thanks for the feedback. Added a comment describing what\u0027s going on.",
+      "parentUuid": "4eac6e13_b9311f28",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +417,30 @@
     },
     {
       "key": {
+        "uuid": "1d0861a3_f258b9cc",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "Yes, thanks. Fixed.",
+      "parentUuid": "caa19618_a2df8769",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6894841_ccfb2061",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -239,6 +455,24 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713f33c2_d04f1d4e",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T03:47:14Z",
+      "side": 1,
+      "message": "It\u0027s mocked out in the unit tests, so is useful.",
+      "parentUuid": "e6894841_ccfb2061",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
