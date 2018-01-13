@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a392d9c1_c37ca66e",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce7d2ee0_1b121bd0",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072cf0cb_4790f0cc",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "3ef6f6c4_b4c1dde6",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8bc477bb_41e83d43",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e0d190_a8880a79",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -375,6 +423,30 @@
       "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdc482c_48bda42a",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b5a15d18_65c74106",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -554,6 +626,30 @@
       "side": 1,
       "message": "For layout_test_proxy it\u0027s better to handle this case as an error instead of fatal condition because the script that started layout_test_proxy may need to handle this case somehow. At very least reporting this error instead of crashing will make it easier to debug the issue when local_port is not available for some reason (e.g. it will happen if two instances of run-webkit-tests are started for the same target Fuchsia device).",
       "parentUuid": "a5731f4f_906623bc",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 40
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a20705_22e996f0",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:14:29Z",
+      "side": 1,
+      "message": "If the calling code is going to handle this condition then we really need to signal it back to the caller, rather than just logging the error, surely?\n\nAs for logging vs crashing, I disagree - I think logging and then continuing on as though nothing went wrong makes it _harder_ to debug, if anything, since it is then likely that the test will sit idle and eventually timeout, or we\u0027ll crash at some other point because things are in a weird state.\n\nIf you just don\u0027t want to log-spew a backtrace for a well-defined error then perhaps just LOG(ERROR) and then exit.",
+      "parentUuid": "2cd0609d_649f670e",
       "range": {
         "startLine": 245,
         "startChar": 0,
@@ -751,6 +847,30 @@
       "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b102ac_047e1ec4",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:14:29Z",
+      "side": 1,
+      "message": "As discussed offline, the confusion was in the |remote_address| naming - essentially we call Initialize(port) and then Start(remote_address_and_port) to tell it what to proxy through to.\n\nPerhaps it would be clearer to actually rename the methods to StartListening(port) and StartProxying(remote_endpoint)?",
+      "parentUuid": "d175fcbb_e958164d",
+      "range": {
+        "startLine": 39,
+        "startChar": 58,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
