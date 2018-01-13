@@ -31,6 +31,8 @@ bool InitializeStaticGLBindingsOSMesaGL() {
     LOG(ERROR) << "PathService::Get failed.";
     return false;
   }
+#else
+  module_path = module_path.Append("..").Append("lib");
 #endif  // !defined(OS_FUCHSIA)
 
   base::FilePath library_path = module_path.Append("libosmesa.so");
