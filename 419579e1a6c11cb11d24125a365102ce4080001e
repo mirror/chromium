@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa5a96b_c457845f",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-13T00:10:35Z",
+      "side": 1,
+      "message": "nit:\nIn C++ the style is \n/*store_last_modified\u003d*/true\n(The post-value style is used in JavaScript).\n\nSee https://google.github.io/styleguide/cppguide.html#Implementation_Comments",
+      "revId": "419579e1a6c11cb11d24125a365102ce4080001e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
