@@ -715,6 +715,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // and supports tooltips. If the view does not contain the point, returns
   // NULL.
   virtual View* GetTooltipHandlerForPoint(const gfx::Point& point);
+  virtual View* GetTooltipHandlerWithTooltipForPoint(const gfx::Point& point);
 
   // Return the cursor that should be used for this view or the default cursor.
   // The event location is in the receiver's coordinate system. The caller is

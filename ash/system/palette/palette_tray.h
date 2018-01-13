@@ -70,6 +70,10 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void OnLockStateChanged(bool locked) override;
   void OnLocalStatePrefServiceInitialized(PrefService* pref_service) override;
 
+  // views::View:
+  bool GetTooltipText(const gfx::Point& p,
+                      base::string16* tooltip) const override;
+
   // TrayBackgroundView:
   void ClickedOutsideBubble() override;
   base::string16 GetAccessibleNameForTray() override;

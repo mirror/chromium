@@ -125,6 +125,10 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   // |callback| with the result.
   void CanSwitchAwayFromActiveUser(base::OnceCallback<void(bool)> callback);
 
+  // views::View:
+  bool GetTooltipText(const gfx::Point& p,
+                      base::string16* tooltip) const override;
+
   // TrayBackgroundView:
   void UpdateAfterShelfAlignmentChange() override;
   void AnchorUpdated() override;

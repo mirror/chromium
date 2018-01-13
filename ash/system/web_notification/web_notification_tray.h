@@ -70,6 +70,10 @@ class ASH_EXPORT WebNotificationTray
   // Returns true if the message center bubble is visible.
   bool IsMessageCenterVisible() const;
 
+  // views::View:
+  bool GetTooltipText(const gfx::Point& p,
+                      base::string16* tooltip) const override;
+
   // Overridden from TrayBackgroundView.
   void UpdateAfterShelfAlignmentChange() override;
   void AnchorUpdated() override;

@@ -998,6 +998,31 @@ View* View::GetTooltipHandlerForPoint(const gfx::Point& point) {
   return this;
 }
 
+View* View::GetTooltipHandlerWithTooltipForPoint(const gfx::Point& point) {
+  // TODO(tdanderson): Move this implementation into ViewTargetDelegate.
+  if (!HitTestPoint(point) || !CanProcessEventsWithinSubtree())
+    return NULL;
+
+  // Walk the child Views recursively looking for the View that most
+  // tightly encloses the specified point.
+  View::Views children = GetChildrenInZOrder();
+  DCHECK_EQ(child_count(), static_cast<int>(children.size()));
+  for (auto* child : base::Reversed(children)) {
+    if (!child->visible())
+      continue;
+
+    gfx::Point point_in_child_coords(point);
+    ConvertPointToTarget(this, child, &point_in_child_coords);
+    View* handler =
+        child->GetTooltipHandlerWithTooltipForPoint(point_in_child_coords);
+    base::string16 tooltip;
+    if (handler && handler->GetTooltipText(point_in_child_coords, &tooltip)) {
+      return handler;
+    }
+  }
+  return this;
+}
+
 gfx::NativeCursor View::GetCursor(const ui::MouseEvent& event) {
 #if defined(OS_WIN)
   static ui::Cursor arrow;
