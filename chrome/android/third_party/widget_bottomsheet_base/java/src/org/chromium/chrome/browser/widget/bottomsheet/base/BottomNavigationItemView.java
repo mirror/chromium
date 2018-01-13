@@ -137,27 +137,27 @@ public class BottomNavigationItemView extends LinearLayout implements MenuView.I
     @Override
     public void setChecked(boolean checked) {
         if (!mLabelHidden) {
-            ViewCompat.setPivotX(mLargeLabel, mLargeLabel.getWidth() / 2f);
-            ViewCompat.setPivotY(mLargeLabel, mLargeLabel.getBaseline());
-            ViewCompat.setPivotX(mSmallLabel, mSmallLabel.getWidth() / 2f);
-            ViewCompat.setPivotY(mSmallLabel, mSmallLabel.getBaseline());
+            mLargeLabel.setPivotX(mLargeLabel.getWidth() / 2f);
+            mLargeLabel.setPivotY(mLargeLabel.getBaseline());
+            mSmallLabel.setPivotX(mSmallLabel.getWidth() / 2f);
+            mSmallLabel.setPivotY(mSmallLabel.getBaseline());
 
             if (checked) {
                 mLargeLabel.setVisibility(VISIBLE);
                 mSmallLabel.setVisibility(INVISIBLE);
 
-                ViewCompat.setScaleX(mLargeLabel, 1f);
-                ViewCompat.setScaleY(mLargeLabel, 1f);
-                ViewCompat.setScaleX(mSmallLabel, mScaleUpFactor);
-                ViewCompat.setScaleY(mSmallLabel, mScaleUpFactor);
+                mLargeLabel.setScaleX(1f);
+                mLargeLabel.setScaleY(1f);
+                mSmallLabel.setScaleX(mScaleUpFactor);
+                mSmallLabel.setScaleY(mScaleUpFactor);
             } else {
                 mLargeLabel.setVisibility(INVISIBLE);
                 mSmallLabel.setVisibility(VISIBLE);
 
-                ViewCompat.setScaleX(mLargeLabel, mScaleDownFactor);
-                ViewCompat.setScaleY(mLargeLabel, mScaleDownFactor);
-                ViewCompat.setScaleX(mSmallLabel, 1f);
-                ViewCompat.setScaleY(mSmallLabel, 1f);
+                mLargeLabel.setScaleX(mScaleDownFactor);
+                mLargeLabel.setScaleY(mScaleDownFactor);
+                mSmallLabel.setScaleX(1f);
+                mSmallLabel.setScaleY(1f);
             }
         }
 
