@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e893a72f_47d209fd",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-13T01:32:45Z",
+      "side": 1,
+      "message": "I don\u0027t *think* there\u0027s any reason they need to be on the IO thread anymore, but I\u0027d probably like to see such a change in a separate CL anyway.",
+      "parentUuid": "1111d690_30020fab",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc7546b9_b9676af0",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 12
@@ -683,6 +707,23 @@
     },
     {
       "key": {
+        "uuid": "b65e3443_5258f403",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-13T01:32:45Z",
+      "side": 1,
+      "message": "It looks like there is some subtlety missing here. A client cert request can have 3 outcomes:\n1) A certificate (and matching private key) are selected.\n2) The connection is continued with no client cert. (Either because there were no matching ones, or the used cancelled the selection dialog.) That would be ContinueWithCertificate(nullptr,nullptr).\n3) The request is aborted (eg because the tab was closed, or the cert was requested through a connection that can\u0027t prompt like extensions). (In this case, no selection is cached.)",
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
@@ -723,6 +764,29 @@
         "startChar": 10,
         "endLine": 167,
         "endChar": 0
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b5a7e9_33d011d2",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-13T01:32:45Z",
+      "side": 1,
+      "message": "I think this is going to cause issues with client certs that depend on the printable_string_is_utf8 hack (crbug.com/770323). If I understand correctly, all the X509Certificates that get passed from one mojo service to another will be re-parsed with the default parsing options, which won\u0027t work for any client certs that depend on that hack.\n\nI guess one option might be to have CreateFromPickle always use the printable_string_is_utf8 hack option. For X509Certificates that were created and serialized normally setting the option wouldn\u0027t have any effect, whereas certs that were parsed with the hack and then serialized would now be de-serializable.\n\n(I\u0027m starting to wonder if maybe that hack should have been done a different way entirely..)",
+      "range": {
+        "startLine": 344,
+        "startChar": 29,
+        "endLine": 344,
+        "endChar": 45
       },
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
