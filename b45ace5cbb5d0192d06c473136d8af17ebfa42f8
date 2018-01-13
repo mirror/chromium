@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64b68a7a_387eaa9c",
+        "filename": "gpu/config/gpu_blacklist.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-13T00:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89103bbe_3a4e55f0",
+      "revId": "b45ace5cbb5d0192d06c473136d8af17ebfa42f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9610306_0cf07dad",
         "filename": "gpu/ipc/common/gpu_feature_info_struct_traits.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "b45ace5cbb5d0192d06c473136d8af17ebfa42f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe52878a_79eb8db6",
+        "filename": "gpu/ipc/common/gpu_feature_info_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-13T00:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9610306_0cf07dad",
+      "revId": "b45ace5cbb5d0192d06c473136d8af17ebfa42f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
