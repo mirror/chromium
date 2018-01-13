@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "90b299b5_9e2f18f0",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-13T05:12:09Z",
+      "side": 1,
+      "message": "nit: since this file is in c/b/extensions, it can be in the extensions namespace (and avoid extensions:: prefixes)",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1730dddd_b719e427",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-13T05:12:09Z",
+      "side": 1,
+      "message": "nit: is this actually needed?",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb892a73_8dabaafe",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-13T05:12:09Z",
+      "side": 1,
+      "message": "nit: s/extensions/the extension\u0027s",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a72283_cc1f10f0",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-13T05:12:09Z",
+      "side": 1,
+      "message": "nit: move this above the EXPECT_EQ of committed urls (i.e., three lines up).  Committed URL can be affected by navigation (depending on the stage of navigation), so this will help ensure stability.",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db95993_1dd7fa0d",
+        "filename": "chrome/browser/extensions/extension_web_ui_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-13T05:12:09Z",
+      "side": 1,
+      "message": "nitty nit: given the (IMO helpful) \"// Extension has control\" comment above, let\u0027s add an equivalent \"// Default history page has control\" type comment here.",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9996fe16_d9d37934",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 5
