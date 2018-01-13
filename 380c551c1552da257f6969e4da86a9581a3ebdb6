@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "175d4542_4a279b70",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-13T07:22:05Z",
+      "side": 1,
+      "message": "This all looks very wrong. We end up with a lot of ifdefs in code that uses PathService, but PathService is supposed to hide platform-specific details :-(. In this particular case it looks like we need cross-platform DIR_ASSETS or DIR_RESOURCES.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 49
+      },
+      "revId": "380c551c1552da257f6969e4da86a9581a3ebdb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857f8cb4_fe1a6cd0",
+        "filename": "ui/gl/gl_implementation_osmesa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-13T07:22:05Z",
+      "side": 1,
+      "message": "This is not the right fix.\nlibosmesa.so fails to load, but ../lib/libosmesa.so works. So it looks like the loader searches /pkg/bin, but not /pkg/lib. Kevin, what\u0027s expected location for libs in fuchsia packages? Should we package them in bin? Is there a way to tell the loader to look for libs in /pkg/lib?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "380c551c1552da257f6969e4da86a9581a3ebdb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
