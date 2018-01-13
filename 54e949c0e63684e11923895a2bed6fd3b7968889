@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ae99cbb_9918bfd4",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-13T06:14:16Z",
+      "side": 1,
+      "message": "Thanks; good call. Updated here and StorageManager too, and made a new file QuotaUtils where I put the connector function.",
+      "parentUuid": "eb51a54a_bafb6f65",
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d649fe5_9f6d9a8a",
         "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.h",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "05ffc849_fd358c5f",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-13T06:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d649fe5_9f6d9a8a",
+      "range": {
+        "startLine": 81,
+        "startChar": 37,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f69ff574_9599be74",
         "filename": "third_party/WebKit/Source/modules/quota/StorageManager.h",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a23244_6d7bd947",
+        "filename": "third_party/WebKit/Source/modules/quota/StorageManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-13T06:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f69ff574_9599be74",
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
