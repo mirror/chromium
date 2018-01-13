@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308303e1_b3f2ee8e",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T00:12:18Z",
+      "side": 1,
+      "message": "I found this comment slightly confusing; I thought it was referring to a null mojo object, which obviously shouldn\u0027t hit this path.",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1948f1_02ebed81",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T00:12:18Z",
+      "side": 1,
+      "message": "*out \u003d g_empty_string;",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b67de36_ee6a0eb8",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T00:12:18Z",
+      "side": 1,
+      "message": "Maybe ASSERT this as well.",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f20fdc_1b02149d",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T00:12:18Z",
+      "side": 1,
+      "message": "Nit: WTF::Vector\u003cchar\u003e for consistency.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
