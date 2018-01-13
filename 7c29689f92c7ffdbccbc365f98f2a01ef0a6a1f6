@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bac78d1_5b5d89f5",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Not sure how to hook up the network service client to the resource dispatcher host at this time, maybe a follow-up CL?",
+      "parentUuid": "b360cb8d_a97890b8",
+      "range": {
+        "startLine": 416,
+        "startChar": 16,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acba8893_9c5fb505",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c40fe1_ae199ee7",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acba8893_9c5fb505",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "81c9a89d_fbaabbb6",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7546b9_b9676af0",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1f136d_9d231bf2",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 12
@@ -114,6 +186,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f20615_22646028",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1f136d_9d231bf2",
+      "range": {
+        "startLine": 107,
+        "startChar": 49,
+        "endLine": 107,
+        "endChar": 59
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5264b929_ecf00a54",
+        "filename": "content/browser/ssl_private_key_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da869755_e3a11307",
+      "range": {
+        "startLine": 30,
+        "startChar": 22,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd90edb_71289c03",
         "filename": "content/browser/ssl_private_key_impl.h",
         "patchSetId": 12
@@ -160,6 +280,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e93b5b_57942afe",
+        "filename": "content/browser/ssl_private_key_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd90edb_71289c03",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "6c1ba049_19078584",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f6cc2f1_425ea52d",
+      "range": {
+        "startLine": 206,
+        "startChar": 5,
+        "endLine": 206,
+        "endChar": 8
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6fb970e_43b8a9a6",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 12
@@ -206,6 +374,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e512d8cc_b134baef",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Code was added to handle ssl_private_key.encountered_error() case, but not sure how we are going to test it. Any suggestions are welcome.",
+      "parentUuid": "e6fb970e_43b8a9a6",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 20
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "a47a5623_6b618105",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb070cad_95c7ab07",
+      "range": {
+        "startLine": 213,
+        "startChar": 20,
+        "endLine": 213,
+        "endChar": 41
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde1b276_c3252ff5",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 12
@@ -252,6 +468,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664228a6_b9dced63",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde1b276_c3252ff5",
+      "range": {
+        "startLine": 221,
+        "startChar": 41,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "5a2f79ac_e61d1be7",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "The mojo pipe error handling code is added. But not sure how we are going to test it. Any suggestions are welcome.",
+      "parentUuid": "4ea375a3_077cfc0a",
+      "range": {
+        "startLine": 225,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46374f3a_e5c84918",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 12
@@ -298,6 +562,30 @@
       "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851f0330_f3dba351",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46374f3a_e5c84918",
+      "range": {
+        "startLine": 226,
+        "startChar": 24,
+        "endLine": 226,
+        "endChar": 46
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "fbc32c78_74dc9112",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab4dbf0_567d62e0",
+      "range": {
+        "startLine": 425,
+        "startChar": 12,
+        "endLine": 425,
+        "endChar": 16
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "353ceaf8_e5b93e81",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 12
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "3b221b31_7b758df7",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353ceaf8_e5b93e81",
+      "range": {
+        "startLine": 743,
+        "startChar": 28,
+        "endLine": 743,
+        "endChar": 43
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
@@ -358,6 +694,30 @@
       "writtenOn": "2018-01-12T20:44:32Z",
       "side": 1,
       "message": "Do we need to support nullptrs?  I assume we won\u0027t request a cert with a null SSLCertRequestInfo?",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bba916_71338192",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-13T01:02:43Z",
+      "side": 1,
+      "message": "I assume we won\u0027t request a cert with a null SSLCertRequestInfo, but from the existing examples of scoped_refptr ParamTraits in the code base:\nhttps://cs.chromium.org/search/?q\u003d%22ParamTraits%3Cscoped_refptr%22\u0026type\u003dcs\nthey all check if p is nullptr. So I guess it is ok to support nullptrs here just to be safe?",
+      "parentUuid": "eb3a0a40_d770150d",
       "range": {
         "startLine": 167,
         "startChar": 10,
