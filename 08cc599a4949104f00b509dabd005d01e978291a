@@ -22,6 +22,30 @@
       "revId": "08cc599a4949104f00b509dabd005d01e978291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38199cd8_94cf7912",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1226095
+      },
+      "writtenOn": "2018-01-13T08:15:02Z",
+      "side": 1,
+      "message": "Hi Toby, thanks for review.\nI found that onRotationChanged() is called earlier than setVisible() and setOrigin().The mRotationChanged is set true in onRotationChanged() and checked in setOrigin(), so that can fix the specific case and avoid extra work. For correct case, only an additional check in setOrigin().\n\nI update the CL, PTAL, thanks!",
+      "parentUuid": "9c367a2f_5eca715a",
+      "range": {
+        "startLine": 585,
+        "startChar": 8,
+        "endLine": 585,
+        "endChar": 24
+      },
+      "revId": "08cc599a4949104f00b509dabd005d01e978291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
