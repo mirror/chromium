@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d82525db_4b5ffea5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T01:03:18Z",
+      "side": 1,
+      "message": "The ideal way to do this would be to switch to a mock TickClock, so that we can instantaneously fast-forward time, and then RunUntilIdle() here - that is easy if the test is single-threaded or relies on TaskScheduler (there is a MOCK_TIME mode for ScopedTaskEnvironment) but hard for multi-process tests.\n\nSo, is it feasible to use mock-time for these tests?  If so then let\u0027s file a bug for that follow-up work, which will make the test faster and possibly simpler, too. :)",
+      "parentUuid": "b6a09b53_ab00ef64",
+      "range": {
+        "startLine": 1811,
+        "startChar": 0,
+        "endLine": 1813,
+        "endChar": 42
+      },
+      "revId": "8606f4a79b3db28e282747254edf1fc3d942ec97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d52cba68_d8cc2ac2",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 1
