@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9996fe16_d9d37934",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-13T03:01:54Z",
+      "side": 1,
+      "message": "Nit: \"NTP page\" is redundant; \"NTP\" is sufficient.",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efe75dc_7f585d24",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-13T03:01:54Z",
+      "side": 1,
+      "message": "Nit: extension\u0027s",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfec007_d2d81f2b",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-13T03:01:54Z",
+      "side": 1,
+      "message": "Nit: extenions related -\u003e extension-related; opened -\u003e open",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70e98c6_0133f44b",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-13T03:01:54Z",
+      "side": 1,
+      "message": "Nit: NTP page -\u003e NTP (here and below)",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453ea29b_5f0cdbda",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-13T03:01:54Z",
+      "side": 1,
+      "message": "Nit: \", with the NTP loaded.\"?",
+      "revId": "b71bb6b8965564dfda8c3eb5866e4d841823e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
