@@ -131,6 +131,9 @@
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebRemoteScrollProperties.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 // Used to check for dirty layouts violating document lifecycle rules.
@@ -175,6 +178,36 @@ WebRemoteScrollAlignment ToWebRemoteScrollAlignment(
   NOTREACHED();
   return WebRemoteScrollAlignment::kCenterIfNeeded;
 }
+
+class ScopedUsHistogramAndUkmTimer {
+  STACK_ALLOCATED();
+
+ public:
+  explicit ScopedUsHistogramAndUkmTimer(LocalFrameView* view,
+                                        CustomCountHistogram& counter,
+                                        const char* ukm_metric)
+      : view_(view),
+        start_time_(CurrentTimeTicks()),
+        counter_(counter),
+        ukm_metric_(ukm_metric) {}
+
+  ~ScopedUsHistogramAndUkmTimer() {
+    int64_t elapsed = (CurrentTimeTicks() - start_time_).InMicroseconds();
+    counter_.Count(elapsed);
+    view_->RecordUkmPerformanceMetric(ukm_metric_, elapsed);
+  }
+
+ private:
+  Member<LocalFrameView> view_;
+  TimeTicks start_time_;
+  CustomCountHistogram& counter_;
+  const char* ukm_metric_;
+};
+
+#define SCOPED_UMA_AND_UKM_TIMER(uma_name, ukm_name)                \
+  DEFINE_STATIC_LOCAL_IMPL(CustomCountHistogram, scoped_us_counter, \
+                           (uma_name, 0, 10000000, 50), false);     \
+  ScopedUsHistogramAndUkmTimer timer(this, scoped_us_counter, ukm_name);
 
 }  // namespace
 
@@ -3330,7 +3363,7 @@ void LocalFrameView::PrePaint() {
   });
 
   {
-    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
+    SCOPED_UMA_AND_UKM_TIMER("Blink.PrePaint.UpdateTime", "PrePaint");
     PrePaintTreeWalk().Walk(*this);
   }
 
@@ -3341,7 +3374,7 @@ void LocalFrameView::PrePaint() {
 
 void LocalFrameView::PaintTree() {
   TRACE_EVENT0("blink", "LocalFrameView::paintTree");
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Paint.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Paint.UpdateTime", "Paint");
 
   DCHECK(GetFrame() == GetPage()->MainFrame() ||
          (!GetFrame().Tree().Parent()->IsLocalFrame()));
@@ -3424,7 +3457,7 @@ void LocalFrameView::PushPaintArtifactToCompositor(
         paint_artifact_compositor_->GetWebLayer(), &GetFrame());
   }
 
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Compositing.UpdateTime", "Compositing");
 
   paint_artifact_compositor_->Update(paint_controller_->GetPaintArtifact(),
                                      composited_element_ids);
@@ -3439,7 +3472,7 @@ std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
 }
 
 void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursive() {
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.StyleAndLayout.UpdateTime", "StyleAndLayout");
   UpdateStyleAndLayoutIfNeededRecursiveInternal();
 }
 
@@ -5739,4 +5772,13 @@ ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
   return page->GetScrollbarTheme();
 }
 
+void LocalFrameView::RecordUkmPerformanceMetric(const char* metric,
+                                                int64_t value) {
+  ukm::UkmRecorder* ukm_recorder = frame_->GetDocument()->UkmRecorder();
+  DCHECK(ukm_recorder);
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      frame_->GetDocument()->UkmSourceID(), "Blink.UpdateTime");
+  builder->AddMetric(metric, value);
+}
 }  // namespace blink
