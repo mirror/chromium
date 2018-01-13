@@ -9,10 +9,10 @@
 #include "base/logging.h"
 #include "base/synchronization/waitable_event.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/resource_response_info.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "content/renderer/loader/sync_load_response.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/resource_response_info.h"
 
 namespace content {
 
@@ -57,8 +57,9 @@ SyncLoadContext::~SyncLoadContext() {}
 
 void SyncLoadContext::OnUploadProgress(uint64_t position, uint64_t size) {}
 
-bool SyncLoadContext::OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                                         const ResourceResponseInfo& info) {
+bool SyncLoadContext::OnReceivedRedirect(
+    const net::RedirectInfo& redirect_info,
+    const network::ResourceResponseInfo& info) {
   if (redirect_info.new_url.GetOrigin() != response_->url.GetOrigin()) {
     LOG(ERROR) << "Cross origin redirect denied";
     response_->error_code = net::ERR_ABORTED;
@@ -73,7 +74,8 @@ bool SyncLoadContext::OnReceivedRedirect(const net::RedirectInfo& redirect_info,
   return true;
 }
 
-void SyncLoadContext::OnReceivedResponse(const ResourceResponseInfo& info) {
+void SyncLoadContext::OnReceivedResponse(
+    const network::ResourceResponseInfo& info) {
   response_->headers = info.headers;
   response_->mime_type = info.mime_type;
   response_->charset = info.charset;
