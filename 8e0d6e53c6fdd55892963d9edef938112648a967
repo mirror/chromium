@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "51e3f5c3_86fb17f7",
+        "filename": "build/fuchsia/layout_test_proxy/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:18:17Z",
+      "side": 1,
+      "message": "Regarding the location of the implementation, //testing/fuchsia doesn\u0027t exist yet, so it seems unfortunate for us to have to create it.\n\nIf we only need this until SSHD gets fixed, how about putting it under //build/fuchsia but with a comment in the BUILD.gn referring to the Chromium bug and stating that we should remove all this code once SSHD works?",
+      "parentUuid": "cb768eab_226fc3cc",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "084cc96f_6a30eed1",
         "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
         "patchSetId": 4
@@ -485,6 +509,30 @@
       "side": 1,
       "message": "It\u0027s best to avoid side-effects inside CHECK() because someone may try changing DCHECK which breaks stuff release build (often creating hard-to-debug bugs, not in this case).",
       "parentUuid": "9d625634_82c4f206",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 58
+      },
+      "revId": "8e0d6e53c6fdd55892963d9edef938112648a967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a1c605_1873904c",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-13T02:18:17Z",
+      "side": 1,
+      "message": "I disagree; CHECK(ImportantCallWithAmazingSideEffects()) is perfectly standard in the codebase. :)",
+      "parentUuid": "1c2b3f64_5ecae518",
       "range": {
         "startLine": 101,
         "startChar": 6,
