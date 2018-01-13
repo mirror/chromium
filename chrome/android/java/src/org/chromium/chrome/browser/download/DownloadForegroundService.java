@@ -83,8 +83,8 @@ public class DownloadForegroundService extends Service {
         boolean notificationDetached = detachNotification && isSdkAtLeast24();
         boolean notificationDetachedOrKilled = notificationDetached || killNotification;
 
-        // Reset pinned notification if notification is properly detached or killed.
-        if (notificationDetachedOrKilled) clearPinnedNotificationId();
+//        // Reset pinned notification if notification is properly detached or killed.
+//        if (notificationDetachedOrKilled) clearPinnedNotificationId();
 
         // Detach notification from foreground if possible.
         if (notificationDetached) {

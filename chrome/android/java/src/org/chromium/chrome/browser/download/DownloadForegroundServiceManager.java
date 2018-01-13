@@ -207,14 +207,14 @@ public class DownloadForegroundServiceManager {
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
-            mBoundService.startOrUpdateForegroundService(notificationId, notification);
-
             // In the case that there was another notification pinned to the foreground, re-launch
             // that notification because it gets cancelled in the switching process.
             // This does not happen for API >= 24.
             if (mPinnedNotificationId != notificationId && Build.VERSION.SDK_INT < 24) {
                 relaunchPinnedNotification();
             }
+
+            mBoundService.startOrUpdateForegroundService(notificationId, notification);
 
             mPinnedNotificationId = notificationId;
         }
@@ -249,6 +249,14 @@ public class DownloadForegroundServiceManager {
         boolean needAdjustNotificationPreLollipop =
                 isPreLollipop() && downloadStatus == DownloadStatus.PAUSE;
 
+        // Relaunch notification so it is no longer pinned to the foreground service when the
+        // download is completed/failed or if a pre-Lollipop adjustment is needed.
+        if (((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
+                && Build.VERSION.SDK_INT < 24)
+                || needAdjustNotificationPreLollipop) {
+            relaunchPinnedNotification();
+        }
+
         // Pause: only try to detach, do not kill notification.
         // Complete/failed: try to detach, if that doesn't work, kill.
         // Cancel: don't even try to detach, just kill.
@@ -264,16 +272,10 @@ public class DownloadForegroundServiceManager {
                 stopAndUnbindServiceInternal(detachNotification, killNotification);
         mBoundService = null;
 
-        // Relaunch notification so it is no longer pinned to the foreground service when the
-        // download is completed/failed or if a pre-Lollipop adjustment is needed.
-        if (((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
-                    && Build.VERSION.SDK_INT < 24)
-                || needAdjustNotificationPreLollipop) {
-            relaunchPinnedNotification();
-        }
-
         // Only reset the pinned notification if it was killed or detached.
         if (notificationHandledProperly) mPinnedNotificationId = INVALID_NOTIFICATION_ID;
+
+        DownloadForegroundService.clearPinnedNotificationId();
     }
 
     @VisibleForTesting

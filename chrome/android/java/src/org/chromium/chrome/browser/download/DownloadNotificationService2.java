@@ -591,13 +591,13 @@ public class DownloadNotificationService2 {
     }
 
     void onForegroundServiceRestarted(int pinnedNotificationId) {
-        updateNotificationsForShutdown();
-        resumeAllPendingDownloads();
-
         // In API < 24, notifications pinned to the foreground will get killed with the service.
         // Fix this by relaunching the notification that was pinned to the service as the service
         // dies, if there is one.
         relaunchPinnedNotification(pinnedNotificationId);
+
+        updateNotificationsForShutdown();
+        resumeAllPendingDownloads();
     }
 
     void onForegroundServiceTaskRemoved() {
@@ -635,9 +635,9 @@ public class DownloadNotificationService2 {
 
                 // Right now this only happens in the paused case, so re-build and re-launch the
                 // paused notification, with the updated notification id..
-                notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
-                        entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
-                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
+//                notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
+//                        entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
+//                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
                 return;
             }
         }
