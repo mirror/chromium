@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58be8c94_855a2a81",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-13T00:34:38Z",
+      "side": 1,
+      "message": "I would cache this as:\nconst int scale_range \u003d kMaxMagnifiedScale - kNonMagnifiedScale;\nsince we\u0027re using it here and below.",
+      "range": {
+        "startLine": 911,
+        "startChar": 38,
+        "endLine": 911,
+        "endChar": 77
+      },
+      "revId": "56021c9f324c56acf323559f9dd1b511e05ab3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
