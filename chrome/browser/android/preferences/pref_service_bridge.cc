@@ -248,6 +248,12 @@ static jboolean JNI_PrefServiceBridge_GetAutoplayEnabled(
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_AUTOPLAY);
 }
 
+static jboolean JNI_PrefServiceBridge_GetClipboardEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_CLIPBOARD_READ);
+}
+
 static jboolean JNI_PrefServiceBridge_GetSoundEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
@@ -652,6 +658,17 @@ static void JNI_PrefServiceBridge_SetAutoplayEnabled(
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
       CONTENT_SETTINGS_TYPE_AUTOPLAY,
+      allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
+}
+
+static void JNI_PrefServiceBridge_SetClipboardEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jboolean allow) {
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
+  host_content_settings_map->SetDefaultContentSetting(
+      CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
       allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
 }
 
