@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd93c92_0c1dd75c",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-13T00:57:13Z",
+      "side": 1,
+      "message": "No underscore.",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3978f4d7_dc7f9727",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-13T00:57:13Z",
+      "side": 1,
+      "message": "Nit: You can replace this by:\n\nEXPECT_TRUE(accelerator_ids.insert(accelerator_id).second) \u003c\u003c \"error message\";",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922a8b2b_bb045cc0",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-13T00:57:13Z",
+      "side": 1,
+      "message": "Do you need to KSV_EXPORT this too?\n\n(optional) Also please document. It\u0027s not clear to someone who doesn\u0027t know what KSV is. Maybe call it ShortcutCategory?",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde1d0e6_5ca8a496",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-13T00:57:13Z",
+      "side": 1,
+      "message": "ALTGR is not the same as ALT.",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 20
+      },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
