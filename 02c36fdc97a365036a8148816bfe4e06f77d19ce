@@ -46,6 +46,30 @@
       "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957be075_f16af4b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T00:28:00Z",
+      "side": 1,
+      "message": "OK, but I don\u0027t get how that implies this comment in the commit message. Usually when the single-definition rule is violated, I assume that it\u0027s because of multiple definitions, not because there\u0027s zero (since that\u0027s what the compile error below seems to imply?)\n\nOh... I think I get it. Because it\u0027s marked constexpr, it\u0027s considered inline, which means the extern template business just doesn\u0027t work. I think this explanation could be refined a bit to make that clear, though I don\u0027t have a good suggestion on how \u003d/",
+      "parentUuid": "63c8790d_64a741a7",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
