@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "66104378_d0c4ea1f",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T08:09:02Z",
+      "side": 1,
+      "message": "Typically, the normalization happens in the sender side, and the receiver side code is just for validation (i.e. we just return false here). However, that does lead to duplication of logic... I\u0027m not super familiar with the notification API: would it be possible for JS to inspect these values after requesting a notification? If so, should it see the clamped values?",
+      "parentUuid": "1e6b36d1_bbb3d4e7",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47792af9_2d352c9c",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
@@ -165,6 +183,24 @@
       "side": 1,
       "message": "I have already returned const refs and inlined everything other than the WTF::Strings, the blink::KURLs, and the Vectors.\n\nFor these, I don\u0027t think I can return a const ref, because they are stored in WebNotificationData as Web* types, not WTF types. (When I try to return const refs I get errors, e.g. \n../../third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp:92:10: error: returning reference to local temporary object [-Werror,-Wreturn-stack-address]\n..presumably because there\u0027s a local temporary object constructed under the hood for the conversion between WTF and Web types.",
       "parentUuid": "06f69f0a_5624a426",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f01588a_a84a5b57",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T08:09:02Z",
+      "side": 1,
+      "message": "Ah... you\u0027re right. Sorry for missing that.",
+      "parentUuid": "08247fff_8bf169de",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
