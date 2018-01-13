@@ -51,6 +51,24 @@
       "revId": "23981b8d4c7688d1015f585a70e1c25f52e5fbad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce8e57a3_d5c31ba6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-13T03:22:25Z",
+      "side": 1,
+      "message": "Drive-by: Videos don\u0027t currently take advantage of surface sync and so they update both the primary and fallback Ids on the SurfaceLayer on FirstSurfaceActivation of the submitted surface.\n\nI\u0027m not sure what the current resize behavior is like on videos and whether surface sync would be useful here. \n\nAlso you need to change the surface ID on device scale factor change as well.",
+      "parentUuid": "09a38aed_c121a9cd",
+      "revId": "23981b8d4c7688d1015f585a70e1c25f52e5fbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
