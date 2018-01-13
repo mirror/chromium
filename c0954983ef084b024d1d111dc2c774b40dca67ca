@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5cd92d9_40c924fa",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-13T00:02:43Z",
+      "side": 1,
+      "message": "Note: the spec for compositionstart says:\n\nhttps://www.w3.org/TR/uievents/#event-type-compositionstart\n“Some implementations MAY populate the data attribute of the compositionstart event with the text currently selected in the document (for editing and replacement). Otherwise, the value of the data attribute MUST be the empty string.”\n\nFor SetComposition(), we set the data attribute as the selected text (if there is a selection), since we’re replacing the currently selected text with the new composition text. Here, I am setting the data attribute to the empty string, since the selected text has absolutely no bearing on what the composition ends up being (we use the composition_start and composition_end offsets and ignore the selection).",
+      "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15527040_470187e2",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-13T00:02:43Z",
+      "side": 1,
+      "message": "Should this be dispatched before or after composition_range_ is updated? The spec says:\n\nhttps://www.w3.org/TR/uievents/#event-type-compositionupdate\n“A user agent SHOULD dispatch this event during a composition session when a text composition system updates its active text passage with a new character, which is reflected in the string in data.\n\nIn text composition systems which keep the ongoing composition in sync with the input control, the compositionupdate event MUST be dispatched before the control is updated.”\n\n\nNote that SetCompositionFromExistingText() does not change the text of the “input control.”",
+      "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
