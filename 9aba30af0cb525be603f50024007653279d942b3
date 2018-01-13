@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c52ee505_5e0f139d",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-13T00:06:10Z",
+      "side": 1,
+      "message": "I just added the handling for outside caller sites (the only one is WallpaperView). I think it\u0027s confusing to return a valid value when the wallpaper is null.",
+      "parentUuid": "7f181a8a_2f9072ec",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e9d31b_e6f5f094",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9aba30af0cb525be603f50024007653279d942b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084d4b71_5fe4d798",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-13T00:06:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24e9d31b_e6f5f094",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "337188c1_658a315b",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-13T00:06:10Z",
+      "side": 1,
+      "message": "It seems \u0027currentWallpaper\u0027 is still being used here https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js?q\u003dwallpaper_manager.js\u0026dr\u0026l\u003d471\n\nIn addition this method will be very useful for another CL https://chromium-review.googlesource.com/c/chromium/src/+/848193/7   But since I just rebased this current CL so this method is added here.",
+      "parentUuid": "0b19b793_d799cb55",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e52d2408_253877ce",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "9aba30af0cb525be603f50024007653279d942b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d578c3db_9e37ba76",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-13T00:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52d2408_253877ce",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
