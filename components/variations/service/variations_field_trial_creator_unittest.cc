@@ -155,8 +155,9 @@ TEST_F(FieldTrialCreatorTest, SetupFieldTrials_Basic) {
       &prefs_, &variations_service_client);
 
   // Simulate a seed having been stored recently.
-  prefs_.SetInt64(prefs::kVariationsLastFetchTime,
-                  base::Time::Now().ToInternalValue());
+  prefs_.SetInt64(
+      prefs::kVariationsLastFetchTime,
+      base::Time::Now().ToDeltaSinceWindowsEpoch().InMicroseconds());
 
   // Check that field trials are created from the seed. Since the test study has
   // only 1 experiment with 100% probability weight, we must be part of it.
@@ -192,7 +193,8 @@ TEST_F(FieldTrialCreatorTest, SetupFieldTrials_ExpiredSeed) {
   // Simulate an expired seed.
   const base::Time seed_date =
       base::Time::Now() - base::TimeDelta::FromDays(31);
-  prefs_.SetInt64(prefs::kVariationsLastFetchTime, seed_date.ToInternalValue());
+  prefs_.SetInt64(prefs::kVariationsLastFetchTime,
+                  seed_date.ToDeltaSinceWindowsEpoch().InMicroseconds());
 
   // Check that field trials are not created from the expired seed.
   EXPECT_FALSE(field_trial_creator.SetupFieldTrials());

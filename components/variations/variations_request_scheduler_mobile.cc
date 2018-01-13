@@ -30,8 +30,9 @@ void VariationsRequestSchedulerMobile::Start() {
   // period, run the task. Otherwise, do nothing. Note that no future requests
   // are scheduled since it is unlikely that the mobile process would live long
   // enough for the timer to fire.
-  const base::Time last_fetch_time = base::Time::FromInternalValue(
-      local_state_->GetInt64(prefs::kVariationsLastFetchTime));
+  const base::Time last_fetch_time =
+      base::Time::FromDeltaSinceWindowsEpoch(base::TimeDelta::FromMicroseconds(
+          local_state_->GetInt64(prefs::kVariationsLastFetchTime)));
   if (base::Time::Now() > last_fetch_time + GetFetchPeriod()) {
     last_request_time_ = base::Time::Now();
     task().Run();

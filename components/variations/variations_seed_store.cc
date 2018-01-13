@@ -235,8 +235,8 @@ void VariationsSeedStore::UpdateSeedDateAndLogDayChange(
   if (local_state_->HasPrefPath(prefs::kVariationsSeedDate)) {
     const int64_t stored_date_value =
         local_state_->GetInt64(prefs::kVariationsSeedDate);
-    const base::Time stored_date =
-        base::Time::FromInternalValue(stored_date_value);
+    const base::Time stored_date = base::Time::FromDeltaSinceWindowsEpoch(
+        base::TimeDelta::FromMicroseconds(stored_date_value));
 
     result = GetSeedDateChangeState(server_date_fetched, stored_date);
   }
@@ -244,16 +244,18 @@ void VariationsSeedStore::UpdateSeedDateAndLogDayChange(
   UMA_HISTOGRAM_ENUMERATION("Variations.SeedDateChange", result,
                             UpdateSeedDateResult::ENUM_SIZE);
 
-  local_state_->SetInt64(prefs::kVariationsSeedDate,
-                         server_date_fetched.ToInternalValue());
+  local_state_->SetInt64(
+      prefs::kVariationsSeedDate,
+      server_date_fetched.ToDeltaSinceWindowsEpoch().InMicroseconds());
 }
 
 // static
 void VariationsSeedStore::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kVariationsCompressedSeed, std::string());
   registry->RegisterStringPref(prefs::kVariationsCountry, std::string());
-  registry->RegisterInt64Pref(prefs::kVariationsSeedDate,
-                              base::Time().ToInternalValue());
+  registry->RegisterInt64Pref(
+      prefs::kVariationsSeedDate,
+      base::Time().ToDeltaSinceWindowsEpoch().InMicroseconds());
   registry->RegisterStringPref(prefs::kVariationsSeedSignature, std::string());
 }
 

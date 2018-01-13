@@ -87,7 +87,8 @@ std::string GetHardwareClass() {
 // expiry and start date checks.
 base::Time GetReferenceDateForExpiryChecks(PrefService* local_state) {
   const int64_t date_value = local_state->GetInt64(prefs::kVariationsSeedDate);
-  const base::Time seed_date = base::Time::FromInternalValue(date_value);
+  const base::Time seed_date = base::Time::FromDeltaSinceWindowsEpoch(
+      base::TimeDelta::FromMicroseconds(date_value));
   const base::Time build_time = base::GetBuildTime();
   // Use the build time for date checks if either the seed date is invalid or
   // the build time is newer than the seed date.
@@ -175,10 +176,10 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
   if (!LoadSeed(&seed))
     return false;
 
-  const int64_t last_fetch_time_internal =
+  const int64_t serialized_last_fetch_time =
       local_state()->GetInt64(prefs::kVariationsLastFetchTime);
-  const base::Time last_fetch_time =
-      base::Time::FromInternalValue(last_fetch_time_internal);
+  const base::Time last_fetch_time = base::Time::FromDeltaSinceWindowsEpoch(
+      base::TimeDelta::FromMicroseconds(serialized_last_fetch_time));
   if (last_fetch_time.is_null()) {
     // If the last fetch time is missing and we have a seed, then this must be
     // the first run of Chrome. Store the current time as the last fetch time.
@@ -348,8 +349,9 @@ void VariationsFieldTrialCreator::StorePermanentCountry(
 void VariationsFieldTrialCreator::RecordLastFetchTime() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  local_state()->SetInt64(prefs::kVariationsLastFetchTime,
-                          base::Time::Now().ToInternalValue());
+  local_state()->SetInt64(
+      prefs::kVariationsLastFetchTime,
+      base::Time::Now().ToDeltaSinceWindowsEpoch().InMicroseconds());
 }
 
 bool VariationsFieldTrialCreator::LoadSeed(VariationsSeed* seed) {
