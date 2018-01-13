@@ -20,7 +20,9 @@ SpellcheckLanguage::~SpellcheckLanguage() {
 
 void SpellcheckLanguage::Init(base::File file, const std::string& language) {
   DCHECK(platform_spelling_engine_.get());
+  LOG(ERROR) << "SpellcheckLanguage::Init pre";
   platform_spelling_engine_->Init(std::move(file));
+  LOG(ERROR) << "SpellcheckLanguage::Init post";
 
   character_attributes_.SetDefaultLanguage(language);
   text_iterator_.Reset();
@@ -29,6 +31,7 @@ void SpellcheckLanguage::Init(base::File file, const std::string& language) {
 
 bool SpellcheckLanguage::InitializeIfNeeded() {
   DCHECK(platform_spelling_engine_.get());
+  LOG(ERROR) << "SpellcheckLanguage::InitIfNeeded pre";
   return platform_spelling_engine_->InitializeIfNeeded();
 }
 
@@ -51,6 +54,7 @@ SpellcheckLanguage::SpellcheckWordResult SpellcheckLanguage::SpellCheckWord(
     return IS_CORRECT;
 
   // Do nothing if spell checking is disabled.
+  LOG(ERROR) << "SpellcheckLanguage::SpellCheckWord IsEnabled pre";
   if (!platform_spelling_engine_.get() ||
       !platform_spelling_engine_->IsEnabled())
     return IS_CORRECT;

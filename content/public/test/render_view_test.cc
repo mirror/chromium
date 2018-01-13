@@ -318,49 +318,69 @@ void RenderViewTest::SetUp() {
 }
 
 void RenderViewTest::TearDown() {
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 1";
   // Run the loop so the release task from the renderwidget executes.
   base::RunLoop().RunUntilIdle();
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 2";
   // Simulate the Widget receiving a close message. This should result on
   // releasing the internal reference counts and destroying the internal state.
   ViewMsg_Close msg(view_->GetRoutingID());
   static_cast<RenderViewImpl*>(view_)->OnMessageReceived(msg);
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 3";
   std::unique_ptr<blink::WebLeakDetector> leak_detector =
       base::WrapUnique(blink::WebLeakDetector::Create(this));
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 4";
   leak_detector->PrepareForLeakDetection(view_->GetWebView()->MainFrame());
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 5";
   // |view_| is ref-counted and deletes itself during the RunUntilIdle() call
   // below.
   view_ = nullptr;
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 6";
   mock_process_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 7";
 
   RenderThreadImpl::SetRendererBlinkPlatformImplForTesting(nullptr);
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 8";
 
   // After telling the view to close and resetting mock_process_ we may get
   // some new tasks which need to be processed before shutting down WebKit
   // (http://crbug.com/21508).
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 9";
 
 #if defined(OS_WIN)
   ClearDWriteFontProxySenderForTesting();
 #endif
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 10";
+
 #if defined(OS_MACOSX)
   autorelease_pool_.reset();
 #endif
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 11";
   leak_detector->CollectGarbageAndReport();
 
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 12";
   blink_platform_impl_.Shutdown();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 13";
   platform_->PlatformUninitialize();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 14";
   platform_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 15";
   params_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 16";
   command_line_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 17";
 
   test_io_thread_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 18";
   ipc_support_.reset();
+  LOG(ERROR) << "::::::::::::::::::::::::: RVT::TearDown 19";
 }
 
 void RenderViewTest::OnLeakDetectionComplete(const Result& result) {

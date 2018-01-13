@@ -49,6 +49,7 @@ HunspellEngine::HunspellEngine(
       initialized_(false),
       dictionary_requested_(false),
       embedder_provider_(embedder_provider) {
+  LOG(ERROR) << "******** HUNSPELL CTOR";
   // Wait till we check the first word before doing any initializing.
 }
 
@@ -125,9 +126,13 @@ bool HunspellEngine::InitializeIfNeeded() {
   if (!initialized_ && !dictionary_requested_) {
     // |embedder_provider_| will be nullptr in tests.
     if (embedder_provider_) {
+      LOG(ERROR) << "+++++++++ CLICK1";
       spellcheck::mojom::SpellCheckHostPtr spell_check_host;
+      LOG(ERROR) << "+++++++++ CLICK2";
       embedder_provider_->GetInterface(&spell_check_host);
+      LOG(ERROR) << "+++++++++ CLICK3";
       spell_check_host->RequestDictionary();
+      LOG(ERROR) << "+++++++++ CLICK4";
     }
     dictionary_requested_ = true;
     return true;
