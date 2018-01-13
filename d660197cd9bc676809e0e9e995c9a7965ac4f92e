@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e37cb171_a082864e",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-13T05:28:03Z",
+      "side": 1,
+      "message": "It seems like this comment probably ought to be revised.\n(The changes to the header imply that local_state can be null during startup...)",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ecd556_5ee27f66",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-13T05:28:03Z",
+      "side": 1,
+      "message": "You probably need to change this too.",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9899b01f_9ba0cda6",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-13T05:28:03Z",
+      "side": 1,
+      "message": "This seems odd.  You\u0027re passing in a local state and then caching it.  If this is created early in the flow, however, you say that it might not be a real pointer to g_browser_process-\u003elocal_state().  Won\u0027t this mean you\u0027re caching the wrong value, and thus the wrong value will get used on this IsConsentGiven()?\n\nGiven all my questions, I have to ask: have you tested this change?",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fae94f_2c9c0922",
+        "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-13T05:28:03Z",
+      "side": 1,
+      "message": "This seems weird.  We\u0027re having ChangeMetricsReportingStateWithReply() use |local_state|, but the actual SetMetricsReporting() still uses g_browser_process.\n\nAnd perhaps also see other uses of g_browser_process-\u003elocal_state() in this file",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
