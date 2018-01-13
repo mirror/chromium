@@ -23,7 +23,7 @@ class Point;
 namespace display {
 struct MixedMirrorModeParams;
 struct TouchCalibrationData;
-}
+}  // namespace display
 
 namespace chromeos {
 

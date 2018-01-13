@@ -17,7 +17,7 @@
 namespace chromeos {
 class DisplayConfigurationObserver;
 class DisplayPrefs;
-}
+}  // namespace chromeos
 
 namespace keyboard {
 class KeyboardUI;

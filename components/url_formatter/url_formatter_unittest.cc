@@ -443,7 +443,10 @@ const IDNTestCase idn_cases[] = {
     // phĸtb.com
     {"xn--phtb-m0a.com", L"ph\x0138tb.com", false},
     // phkŧb.com
-    {"xn--phkb-d7a.com", L"phk\x0167" L"b.com", false},
+    {"xn--phkb-d7a.com",
+     L"phk\x0167"
+     L"b.com",
+     false},
     // phktƅ.com
     {"xn--phkt-ocb.com", L"phkt\x0185.com", false},
     // ҏнкть.com
