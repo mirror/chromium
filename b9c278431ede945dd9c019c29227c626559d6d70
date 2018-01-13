@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca13f66a_18dabcff",
+        "filename": "chrome/browser/resources/print_preview/new/pages_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "onRangeChange_ ends up executing twice, for a single change, because it depends on both pagesToPrint_ and rangesToPrint_.\n\nCan we avoid this by having onRangeChange to depend only on rangesToPrint_ like before? Given that rangesToPrint_ already depends on pagesToPrint_, there should be no chance of pagesToPrint_ not having been updated by the time the observer fires.",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719e82c7_6404fe80",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "I think this can be slightly simplified such that only the overlay has position absolute, but not the plugin. See https://pastebin.com/QFQW7KEs.",
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9fb58c_2016ae4e",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "Nit:\njumpingDotsEl.classList.toggle(\u0027jumping-dots\u0027, this.state.previewLoading);\n\nAlso since onPreviewStateChanged_ always delegates to setOverlayVisible_, can we move this line at line 148 and remove current lines 148-153? Would it be equivalent?",
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb2c7b6_25178e06",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "Nit: Use ES6 template literal\n\nreturn `chrome://print/${previewUid}/${index}/print.pdf`;",
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadc3d8e_51dd6c13",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "Does this comment apply to all fields from here to line 361? It is not very clear.",
+      "range": {
+        "startLine": 343,
+        "startChar": 31,
+        "endLine": 343,
+        "endChar": 47
+      },
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936db3f3_7190f720",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-13T00:15:08Z",
+      "side": 1,
+      "message": "Nit (optional: These are identical with the logic in CreatePrintPreviewUISource. Perhaps put those in a helper method and share, like AddPrintPreviewFlags?",
+      "range": {
+        "startLine": 434,
+        "startChar": 1,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "b9c278431ede945dd9c019c29227c626559d6d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
