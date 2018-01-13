@@ -967,6 +967,8 @@ class CORE_EXPORT LocalFrameView final
   // scrollable area, or gains/loses a composited layer.
   void ScrollableAreasDidChange();
 
+  void RecordUkmPerformanceMetric(const char* metric, int64_t value);
+
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
