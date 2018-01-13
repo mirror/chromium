@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "407f02e7_d238e31c",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-13T00:52:17Z",
+      "side": 1,
+      "message": "It\u0027s not obvious. In an earlier revision, Mark felt it was confusing why there were two different AutocompleteMatch variables in-play. I just added a scope (and renamed the variable) to try to clarify things.",
+      "parentUuid": "652faba8_15c29b8e",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e014c7ae_f3608127",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "54c512ed_686536fb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-13T00:52:17Z",
+      "side": 1,
+      "message": "Done. I added an assert in the unit test.",
+      "parentUuid": "9bda265f_fe4a54c7",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0fdcb44_3be5632d",
         "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
         "patchSetId": 5
@@ -104,6 +140,24 @@
       "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f4f13d_c4e5b757",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-13T00:52:17Z",
+      "side": 1,
+      "message": "I tried fairly hard to do this (See PS13), as I see the benefit, but it doesn\u0027t work well.\n\nThis TestOmniboxEditModel overrides behavior that the MockOmniboxEditModel in the mac test specifically relies on from the base class. In other words -- the usages of the two test classes clash.\n\nI tried making the overrides conditional, but the outcome started to look like spaghetti, so I backed out those changes.",
+      "parentUuid": "a0fdcb44_3be5632d",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
