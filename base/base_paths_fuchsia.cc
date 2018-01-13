@@ -33,6 +33,9 @@ bool PathProviderFuchsia(int key, FilePath* result) {
     case FILE_MODULE:
       NOTIMPLEMENTED();
       return false;
+    case DIR_MODULE:
+      *result = FilePath("/lib");
+      return true;
     case FILE_EXE: {
       *result = base::MakeAbsoluteFilePath(base::FilePath(
           base::CommandLine::ForCurrentProcess()->GetProgram().AsUTF8Unsafe()));

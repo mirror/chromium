@@ -15,6 +15,10 @@
 #include "base/android/path_utils.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include "base/base_paths_fuchsia.h"
+#endif
+
 namespace ui {
 
 bool PathProvider(int key, base::FilePath* result) {
@@ -25,6 +29,13 @@ bool PathProvider(int key, base::FilePath* result) {
   base::FilePath cur;
   switch (key) {
     case DIR_LOCALES:
+#if defined(OS_ANDROID)
+      if (!PathService::Get(DIR_RESOURCE_PAKS_ANDROID, &cur))
+        return false;
+#elif defined(OS_FUCHSIA)
+      if (!PathService::Get(base::DIR_FUCHSIA_RESOURCES, &cur))
+        return false;
+#else
       if (!PathService::Get(base::DIR_MODULE, &cur))
         return false;
 #if defined(OS_MACOSX)
@@ -32,11 +43,10 @@ bool PathProvider(int key, base::FilePath* result) {
       // App dir.
       cur = cur.DirName();
       cur = cur.Append(FILE_PATH_LITERAL("Resources"));
-#elif defined(OS_ANDROID)
-      if (!PathService::Get(DIR_RESOURCE_PAKS_ANDROID, &cur))
-        return false;
-#else
+#else  // !defined(OS_MACOSX)
       cur = cur.Append(FILE_PATH_LITERAL("locales"));
+#endif  // !defined(OS_MACOSX)
+
 #endif
       create_dir = true;
       break;
