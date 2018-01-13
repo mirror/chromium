@@ -202,6 +202,7 @@ class BASE_EXPORT ScopedAllowBlocking {
   // This can only be instantiated by friends. Use ScopedAllowBlockingForTesting
   // in unit tests to avoid the friend requirement.
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest, ScopedAllowBlocking);
+  friend class base::StackSamplingProfiler;
   friend class cronet::CronetPrefsManager;
   friend class cronet::CronetURLRequestContext;
   friend class resource_coordinator::TabManagerDelegate;  // crbug.com/778703
@@ -265,6 +266,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
   friend class base::GetAppOutputScopedAllowBaseSyncPrimitives;
+  friend class base::StackSamplingProfiler;
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
   friend class midi::TaskService;  // https://crbug.com/796830

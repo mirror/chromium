@@ -1167,6 +1167,9 @@ int BrowserMainLoop::CreateThreads() {
     }
 
     TRACE_EVENT_END0("startup", "BrowserMainLoop::CreateThreads:start");
+
+    if (parts_ && id == BrowserThread::IO)
+      parts_->PostThreadCreate(io_thread_.get());
   }
   created_threads_ = true;
   return result_code_;

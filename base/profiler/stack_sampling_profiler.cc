@@ -815,6 +815,8 @@ void StackSamplingProfiler::Start() {
     return;
 
   // Wait for profiling to be "inactive", then reset it for the upcoming run.
+  base::ScopedAllowBlocking allow_blocking;
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   profiling_inactive_.Wait();
   profiling_inactive_.Reset();
 
