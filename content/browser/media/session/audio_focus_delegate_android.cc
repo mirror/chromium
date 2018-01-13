@@ -75,13 +75,4 @@ void AudioFocusDelegateAndroid::RecordSessionDuck(
   media_session_->RecordSessionDuck();
 }
 
-// static
-std::unique_ptr<AudioFocusDelegate> AudioFocusDelegate::Create(
-    MediaSessionImpl* media_session) {
-  AudioFocusDelegateAndroid* delegate =
-      new AudioFocusDelegateAndroid(media_session);
-  delegate->Initialize();
-  return std::unique_ptr<AudioFocusDelegate>(delegate);
-}
-
 }  // namespace content
