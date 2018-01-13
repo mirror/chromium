@@ -22,6 +22,149 @@
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa622e5_d16d8591",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "nit: map doesn\u0027t return a list in python3 AFAIK; you\u0027d need to do list(map(...)). Don\u0027t know how worth it it is to change.",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e823ebe1_c3de53f1",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "nit: I think these should technically be ValueError? Not sure how much it matters though.",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc0d12e_3c4f8af1",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "I\u0027d at least duplicate this comment in self.make_temp_file, even if this portion of code doesn\u0027t use that function.",
+      "range": {
+        "startLine": 162,
+        "startChar": 3,
+        "endLine": 163,
+        "endChar": 41
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36923dc9_4031e0b9",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "Any reason to not use self.make_temp_file here?",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f73a71_18ff60eb",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense to me. I thought this was a list?",
+      "range": {
+        "startLine": 215,
+        "startChar": 5,
+        "endLine": 215,
+        "endChar": 36
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eac6e13_b9311f28",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "This for loop took a bit for me to understand. I might have appreciated a comment explaining how line 221-223 implement the algorithm described in the function properly. It does make sense now, just had to stare at it a bit. So up to you how much you want to explain this.",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa19618_a2df8769",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-13T00:09:45Z",
+      "side": 1,
+      "message": "This can be replaced with\n\nfor i, status in enumerate(self._bot_statuses):\n\nright?",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
