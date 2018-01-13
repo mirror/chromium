@@ -16,6 +16,24 @@
       "revId": "9d375281ab18f815be304b5490c36d2212b4f8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4515e79_68c54e36",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-13T00:55:35Z",
+      "side": 1,
+      "message": "Since we\u0027re requesting a full size decode, it shouldn\u0027t. The filter quality is not serialized and is only used to actually transfer the image to the other side. If the shader is used in a context that requires a scale, then the filter quality from the paint flags will be used on the gpu process... At least that\u0027s my reasoning...",
+      "parentUuid": "141e63de_942f79f6",
+      "revId": "9d375281ab18f815be304b5490c36d2212b4f8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
