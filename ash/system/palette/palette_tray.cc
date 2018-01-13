@@ -456,6 +456,7 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
 }
 
 void PaletteTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   HidePalette();
 }
 

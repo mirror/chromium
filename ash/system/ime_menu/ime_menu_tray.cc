@@ -457,6 +457,7 @@ bool ImeMenuTray::PerformAction(const ui::Event& event) {
 }
 
 void ImeMenuTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   bubble_.reset();
   ime_list_view_ = nullptr;
   SetIsActive(false);

@@ -387,7 +387,13 @@ TrayBubbleView* TrayBackgroundView::GetBubbleView() {
   return nullptr;
 }
 
-void TrayBackgroundView::CloseBubble() {}
+void TrayBackgroundView::CloseBubble() {
+  // Destroy the |clipping_window_| if close the bubble. Otherwise,
+  // AcceleratorRouter will not process the accelerator to make the keyboard
+  // shortcut working when all the windows are minimized.
+  if (clipping_window_)
+    clipping_window_.reset();
+}
 
 void TrayBackgroundView::ShowBubble(bool show_by_click) {}
 
@@ -490,7 +496,8 @@ aura::Window* TrayBackgroundView::GetBubbleWindowContainer() {
   // in maximize mode, to avoid tray bubble and shelf overlap.
   if (Shell::Get()
           ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+          ->IsTabletModeWindowManagerEnabled() &&
+      drag_controller()) {
     if (!clipping_window_.get()) {
       clipping_window_ = std::make_unique<aura::Window>(nullptr);
       clipping_window_->Init(ui::LAYER_NOT_DRAWN);

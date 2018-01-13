@@ -641,6 +641,7 @@ bool WebNotificationTray::PerformAction(const ui::Event& event) {
 }
 
 void WebNotificationTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   message_center_ui_controller_->HideMessageCenterBubble();
 }
 
