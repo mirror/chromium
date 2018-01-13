@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "10082ff8_9c1dedc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-13T00:18:33Z",
+      "side": 1,
+      "message": "flag -\u003e flags",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d695f9ce_6fc0b13f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-13T00:18:33Z",
+      "side": 1,
+      "message": "wrap at 80 chars (or earlier)",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23fc3ae3_c75b1c71",
         "filename": "ash/public/cpp/shelf_model.cc",
         "patchSetId": 1
@@ -59,6 +99,29 @@
     },
     {
       "key": {
+        "uuid": "0fa50b98_af25a1b0",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-13T00:18:33Z",
+      "side": 1,
+      "message": "notifier_id -\u003e notification_id to avoid confusion.\n\nWe have a NotifierId and it is a different concept from notification id. And looks like the CL is using notification id.",
+      "range": {
+        "startLine": 68,
+        "startChar": 48,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac38aea_b7eb6d4e",
         "filename": "ash/public/cpp/shelf_model.h",
         "patchSetId": 1
@@ -93,6 +156,29 @@
       "writtenOn": "2018-01-12T23:44:15Z",
       "side": 1,
       "message": "out params should be pointers, not refs.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0545ba_3344b9d3",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-13T00:18:33Z",
+      "side": 1,
+      "message": "Reference arg should all be const. Output arg should be passed via a pointer.\n\nhttps://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "range": {
+        "startLine": 133,
+        "startChar": 34,
+        "endLine": 133,
+        "endChar": 46
+      },
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +264,23 @@
       "writtenOn": "2018-01-12T23:44:15Z",
       "side": 1,
       "message": "Ditto, get the index from the model, or check that the item id at index |2| is correct.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6f84c7_3bc1b22c",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-13T00:18:33Z",
+      "side": 1,
+      "message": "Would this cause problems since I don\u0027t think //ash depends on //ui/app_list?\n\nI wonder whether we should add it to ash_switches.h/cc or create a ash_features.h/cc.",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
