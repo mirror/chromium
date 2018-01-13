@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contains a nested iframe</title>
+  </head>
+  <body>
+  <script>
+document.body.onload = () => {
+  let iframe = document.getElementsByTagName('iframe')[0];
+  let port = window.location.search.substring(1);
+  console.log(window.location.href);
+  console.log(window.location.search);
+  pathname = window.location.pathname.replace('cross_domain_iframe', 'outer')
+  iframe_src = window.location.protocol + '//' + 'localhost' + ':' + window.location.port + pathname
+  //iframe_src = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + pathname
+  console.log('try ' + iframe_src)
+  iframe.src = iframe_src
+}
+  //iframe.src = '
+
+  </script>
+    <p><a href="#one">One</a></p>
+    <iframe src="outer.html">
+  </body>
+</html>
