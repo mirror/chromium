@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad694909_b65d805a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2018-01-13T00:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d52c0fa_621caca0",
+      "revId": "a6b474adec197837301ecdfb8016f08880649b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4543df12_2cdce27c",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a6b474adec197837301ecdfb8016f08880649b35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13eed3c_06ebabdc",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2018-01-13T00:31:44Z",
+      "side": 1,
+      "message": "base::ReadFromFD doesn\u0027t output how many bytes were actually read, and also returns false in the case that it doesn\u0027t read as many bytes as requested. I believe for this callback, we need to supply how many bytes were actually read.\n\nI made a change that copies what ReadFromFD does, but with the added benefit of getting exactly how many bytes were read.",
+      "parentUuid": "4543df12_2cdce27c",
+      "revId": "a6b474adec197837301ecdfb8016f08880649b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
