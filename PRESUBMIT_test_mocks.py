@@ -51,6 +51,16 @@ class MockCannedChecks(object):
 
     return errors
 
+  def GetCodereviewOwnerAndReviewers(self, input_api, email_regexp,
+                                     approval_needed):
+    return ('patch-owner@chromium.org', ['patch-reviewer@chromium.org'])
+
+
+class MockOwnersDb(object):
+  def __init__(self):
+    self.email_regexp = re.compile(r'^[\w\-\+\%\.]+\@[\w\-\+\%\.]+$')
+
+
 class MockInputApi(object):
   """Mock class for the InputApi class.
 
@@ -64,6 +74,7 @@ class MockInputApi(object):
     self.json = json
     self.re = re
     self.os_path = os.path
+    self.owners_db = MockOwnersDb()
     self.platform = sys.platform
     self.python_executable = sys.executable
     self.platform = sys.platform

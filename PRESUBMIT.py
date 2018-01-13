@@ -1655,6 +1655,34 @@ def _CheckIpcOwners(input_api, output_api):
     # this CL. Auto-CC the review list.
     output_api.AppendCC('ipc-security-reviews@chromium.org')
 
+    # TODO(https://crbug.com/801315): Hack to work around the fact that OWNERS
+    # checks for newly added files are ignored, even though newly added IPC
+    # files still need to be security reviewed.
+    owners_db = input_api.owners_db
+    owner_email, reviewers = (
+        input_api.canned_checks.GetCodereviewOwnerAndReviewers(
+          input_api,
+          owners_db.email_regexp,
+          approval_needed=input_api.is_committing))
+
+    owner_email = owner_email or input_api.change.author_email
+
+    reviewers_plus_owner = set(reviewers)
+    if owner_email:
+      reviewers_plus_owner.add(owner_email)
+
+    # Read in security owners:
+    security_owners = set()
+    with file('ipc/SECURITY_OWNERS') as f:
+      lines = f.read().splitlines()
+      for line in lines:
+        if owners_db.email_regexp.match(line):
+          security_owners.add(line)
+
+    # Make sure that at least one reviewer is a security owner.
+    if not security_owners.intersection(reviewers_plus_owner):
+      print 'BAD'
+
   # Go through the OWNERS files to check, filtering out rules that are already
   # present in that OWNERS file.
   for owners_file, patterns in to_check.iteritems():

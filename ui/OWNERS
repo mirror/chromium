@@ -9,3 +9,6 @@ ccameron@chromium.org
 # If you're doing structural changes get a review from one of the OWNERS.
 per-file *.gyp*=*
 per-file BUILD.gn=*
+
+per-file *_struct_traits*.*=set noparent
+per-file *_struct_traits*.*=file://ipc/SECURITY_OWNERS
