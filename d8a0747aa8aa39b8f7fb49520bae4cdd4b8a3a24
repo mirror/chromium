@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af39f25e_14daccd8",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-13T09:54:14Z",
+      "side": 1,
+      "message": "Indeed I am also kind struggling in this name:)",
+      "parentUuid": "0a571770_669f7525",
+      "revId": "d8a0747aa8aa39b8f7fb49520bae4cdd4b8a3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31691b02_08d24389",
         "filename": "cc/resources/layer_tree_resource_provider.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d8a0747aa8aa39b8f7fb49520bae4cdd4b8a3a24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d41f194_62685138",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-13T09:54:14Z",
+      "side": 1,
+      "message": "returned_lost is from lost (In LayerTreeResourceProvider::ReceiveReturnsFromParent): \nimported.returned_lost |\u003d returned.lost;\n\nhttps://cs.chromium.org/chromium/src/cc/resources/layer_tree_resource_provider.cc?type\u003dcs\u0026q\u003dLayerTreeResourceProvider::ReceiveReturnsFromParent\u0026sq\u003dpackage:chromium\u0026l\u003d318",
+      "parentUuid": "31691b02_08d24389",
+      "revId": "d8a0747aa8aa39b8f7fb49520bae4cdd4b8a3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
