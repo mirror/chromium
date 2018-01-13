@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb1dea89_c309970e",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-13T00:45:29Z",
+      "side": 1,
+      "message": "Reworded",
+      "parentUuid": "308303e1_b3f2ee8e",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1948f1_02ebed81",
         "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.cpp",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a761bc3_8c4a6d6e",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-13T00:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc1948f1_02ebed81",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b67de36_ee6a0eb8",
         "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraitsTest.cpp",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1968c028_f9f19cfd",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-13T00:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b67de36_ee6a0eb8",
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e97388_01017cbf",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-13T00:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29f20fdc_1b02149d",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "98c29dd46312a1589255f1c277e7ed6e666cbaf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
