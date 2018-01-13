@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8893d7f6_8898dc70",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-13T02:32:31Z",
+      "side": 1,
+      "message": "I note that these tests are marked Flaky higher up, so this suppression won\u0027t work as expected; it will collide in unexpected ways. Sorry there isn\u0027t more error checking for this. Regardless, please do the following:\n\n1) Comment out the expectations for these two tests higher up in the file.\n2) Mark these two failing on all platforms, not just Android.\n3) Increment the version number for these two tests in src/content/test/gpu/gpu_tests/pixel_test_pages.py .\n\nThen after this CL is committed, please make another CL which removes these two new expectations and uncomments the old flaky expectations. Feel free to CQ it TBR\u0027d to me.\n\nThanks.",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "617e032ec9edbfbc277088fda425aa03003f1e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
