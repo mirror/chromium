@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336425ba_fe06bd87",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "I think this is an assumption that is guaranteed by a piece of code far away from this one. So it may happen. It\u0027d be probably safer to have an early return here to avoid dereferencing null.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ece697_36719acc",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "0 values for these 2 members are valid ones, meaning \"candidates[0] is a valid page\" and \"no more bytes to read\". This initialization sets them into values not consistent with the state of the Job. For example,  OfflinePageRequestJob::GetMimeType() will serve incorrect result if called at unfortunate time. It would be okay to add sentinel values like -1 for either one to indicate \u0027out of bounds\u0027, or at least make sure all conditionals with them are not ambiguous, as in GetMimeType()...",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a67a44_b8647b86",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "What is \u0027rv\u0027? Lets use more descriptive name.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c507b0b0_baa564bc",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "Why does this job cares about Range header? If it does, the class comment to OfflinePageRequestJob has to have a sentence about it.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05f45fc_5832b458",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "Is the result \u003d\u003d 0 an indicator of EOF? A short comment could be useful.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e31e9a_33ecc086",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "not -\u003e no",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bdf2ac_41fbad31",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "The class comment should also mention what this class does to untrusted pages (which failed digest verification)",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc74885_4a5bd5e8",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "I\u0027d normalize the range here because it may come from a request header set by 3rd party code (JS or extension?) So integer overflow or negative results are possible.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd10cab_4171de31",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "I think this class comment needs more info now.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baf4587_508c4972",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "formatting - two lines can be merged.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fbf8ea_c44deea8",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "Rhe -\u003e The",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2287cfa0_26cba38f",
+        "filename": "components/offline_pages/core/archive_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "It would be less scary to have \"const char* buffer\" to indicate it\u0027s some sort of an input stream buffer, and not just abstract anything buffer. I think we only have void* in places where actual address is used, not the object it points to...",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b64b28_d4bcfabc",
+        "filename": "components/offline_pages/core/archive_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-13T02:55:12Z",
+      "side": 1,
+      "message": "I would suggest re-implementing static helpers using the new non-static ArchiveValidator. It would at least ensure the same hash is used and in the same way.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
