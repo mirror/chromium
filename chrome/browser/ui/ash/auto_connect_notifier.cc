@@ -122,24 +122,19 @@ void AutoConnectNotifier::OnAutoConnectedInitiated(int auto_connect_reasons) {
 }
 
 void AutoConnectNotifier::DisplayNotification() {
-  auto notification = std::make_unique<message_center::Notification>(
-      message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE,
+  auto notification = message_center::Notification::CreateSystemNotification(
       kAutoConnectNotificationId,
       l10n_util::GetStringUTF16(IDS_NETWORK_AUTOCONNECT_NOTIFICATION_TITLE),
       l10n_util::GetStringUTF16(IDS_NETWORK_AUTOCONNECT_NOTIFICATION_MESSAGE),
-      gfx::Image() /* image */, base::string16() /* display_source */,
-      GURL() /* origin_url */,
-      message_center::NotifierId(
-          message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
-          ash::system_notifier::kNotifierNetwork),
-      message_center::RichNotificationData(), nullptr /* delegate */);
+      gfx::Image() /* icon */, ash::system_notifier::kNotifierNetwork,
+      base::Bind(&base::DoNothing));
 
-  notification->SetSystemPriority();
   notification->set_small_image(
       gfx::Image(gfx::CanvasImageSource::MakeImageSkia<
                  ash::network_icon::SignalStrengthImageSource>(
           ash::network_icon::ARCS, gfx::kGoogleBlue500, kSignalIconSize,
           kSignalStrength)));
+  notification->set_accent_color(gfx::kGoogleBlue500);
 
   NotificationDisplayService::GetForProfile(profile_)->Display(
       NotificationHandler::Type::TRANSIENT, *notification);
