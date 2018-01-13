@@ -18,6 +18,7 @@
 -IndexedDBBrowserTestSingleProcess.RenderThreadShutdownTest
 -RenderThreadImplDiscardableMemoryBrowserTest.*
 -RenderViewBrowserTest.ConfirmCacheInformationPlumbed
+-ResourceFetcherNetworkServiceTests.*
 -ResourceFetcherTests.*
 -SavableResourcesTest.*
 -WebRtcCaptureFromElementBrowserTest.CaptureFromCanvas2DHandlesContextLoss
