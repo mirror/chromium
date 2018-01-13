@@ -46,6 +46,8 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/common/url_utils.h"
+#include "content/public/common/weak_wrapper_shared_url_loader_factory.h"
+#include "content/public/common/wrapper_shared_url_loader_factory.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_content_disposition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -303,9 +305,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // Requests to WebUI scheme won't get redirected to/from other schemes
     // or be intercepted, so we just let it go here.
     if (factory_for_webui.is_valid()) {
-      webui_factory_ptr_.Bind(std::move(factory_for_webui));
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-          webui_factory_ptr_.get(),
+          base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
+              std::move(factory_for_webui)),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_, navigation_ui_data_.get()),
           0 /* routing_id */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
@@ -444,8 +446,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     url_chain_.push_back(resource_request_->url);
     uint32_t options = GetURLLoaderOptions(resource_request_->resource_type ==
                                            RESOURCE_TYPE_MAIN_FRAME);
+    // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
+    // pointer into SharedURLLoaderFactory. Need to further refactor the factory
+    // getters.
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-        factory,
+        base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(factory),
         GetContentClient()->browser()->CreateURLLoaderThrottles(
             web_contents_getter_, navigation_ui_data_.get()),
         frame_tree_node_id_, 0 /* request_id? */, options,
@@ -666,7 +671,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   base::Callback<WebContents*()> web_contents_getter_;
   std::unique_ptr<NavigationUIData> navigation_ui_data_;
   scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
-  mojom::URLLoaderFactoryPtr webui_factory_ptr_;
 
   std::unique_ptr<ThrottlingURLLoader> url_loader_;
 
