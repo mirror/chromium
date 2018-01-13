@@ -89,6 +89,11 @@ class UI_BASE_EXPORT WindowEventTarget {
   // Notification from the forwarder window that its parent changed.
   virtual void HandleParentChanged() = 0;
 
+  // Apply the transform from Direct Manipulation API.
+  virtual LRESULT ApplyDManipTransform(float scale,
+                                       float scroll_x,
+                                       float scroll_y) = 0;
+
  protected:
   WindowEventTarget();
   virtual ~WindowEventTarget();
