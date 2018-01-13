@@ -111,7 +111,7 @@ Element* EnclosingBlockFlowElement(
     const Node&);  // Deprecated, use enclosingBlock instead.
 Element* EnclosingTableCell(const Position&);
 Element* AssociatedElementOf(const Position&);
-Node* EnclosingEmptyListItem(const VisiblePosition&);
+const Node* EnclosingEmptyListItem(const VisiblePosition&);
 Element* EnclosingAnchorElement(const Position&);
 // Returns the lowest ancestor with the specified QualifiedName. If the
 // specified Position is editable, this function returns an editable
@@ -360,7 +360,7 @@ HTMLElement* CreateHTMLElement(Document&, const QualifiedName&);
 HTMLElement* EnclosingList(const Node*);
 HTMLElement* OutermostEnclosingList(const Node*,
                                     const HTMLElement* root_list = nullptr);
-Node* EnclosingListChild(const Node*);
+const Node* EnclosingListChild(const Node*);
 
 // -------------------------------------------------------------------------
 // Element

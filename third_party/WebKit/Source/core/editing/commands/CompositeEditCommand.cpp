@@ -1618,8 +1618,8 @@ void CompositeEditCommand::MoveParagraphs(
 bool CompositeEditCommand::BreakOutOfEmptyListItem(
     EditingState* editing_state) {
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
-  Node* empty_list_item =
-      EnclosingEmptyListItem(EndingVisibleSelection().VisibleStart());
+  Node* empty_list_item = const_cast<Node*>(
+      EnclosingEmptyListItem(EndingVisibleSelection().VisibleStart()));
   if (!empty_list_item)
     return false;
 
@@ -1896,7 +1896,7 @@ Position CompositeEditCommand::PositionAvoidingSpecialElementBoundary(
 // Splits the tree parent by parent until we reach the specified ancestor. We
 // use VisiblePositions to determine if the split is necessary. Returns the last
 // split node.
-Node* CompositeEditCommand::SplitTreeToNode(Node* start,
+Node* CompositeEditCommand::SplitTreeToNode(const Node* start,
                                             Node* end,
                                             bool should_split_ancestor) {
   DCHECK(start);
@@ -1910,7 +1910,7 @@ Node* CompositeEditCommand::SplitTreeToNode(Node* start,
 
   Node* end_node = end;
   Node* node = nullptr;
-  for (node = start; node->parentNode() != end_node;
+  for (node = const_cast<Node*>(start); node->parentNode() != end_node;
        node = node->parentNode()) {
     Element* parent_element = node->parentElement();
     if (!parent_element)

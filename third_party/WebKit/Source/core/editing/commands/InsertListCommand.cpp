@@ -46,8 +46,8 @@ namespace blink {
 
 using namespace HTMLNames;
 
-static Node* EnclosingListChild(Node* node, Node* list_node) {
-  Node* list_child = EnclosingListChild(node);
+static const Node* EnclosingListChild(Node* node, Node* list_node) {
+  const Node* list_child = EnclosingListChild(node);
   while (list_child && EnclosingList(list_child) != list_node)
     list_child = EnclosingListChild(list_child->parentNode());
   return list_child;
@@ -333,7 +333,7 @@ bool InsertListCommand::DoApplyForSingleParagraph(
   // selectionForParagraphIteration should probably be renamed and deployed
   // inside setEndingSelection().
   Node* selection_node = EndingVisibleSelection().Start().AnchorNode();
-  Node* list_child_node = EnclosingListChild(selection_node);
+  Node* list_child_node = const_cast<Node*>(EnclosingListChild(selection_node));
   bool switch_list_type = false;
   if (list_child_node) {
     if (!HasEditableStyle(*list_child_node->parentNode()))
@@ -393,11 +393,11 @@ bool InsertListCommand::DoApplyForSingleParagraph(
         return false;
 
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-      Node* first_child_in_list =
+      Node* first_child_in_list = const_cast<Node*>(
           EnclosingListChild(VisiblePosition::FirstPositionInNode(*list_element)
                                  .DeepEquivalent()
                                  .AnchorNode(),
-                             list_element);
+                             list_element));
       Element* outer_block =
           first_child_in_list && IsBlockFlowElement(*first_child_in_list)
               ? ToElement(first_child_in_list)
@@ -467,8 +467,8 @@ void InsertListCommand::UnlistifyParagraph(
   // Since, unlistify paragraph inserts nodes into parent and removes node
   // from parent, if parent of |listElement| should be editable.
   DCHECK(HasEditableStyle(*list_element->parentNode()));
-  Node* next_list_child;
-  Node* previous_list_child;
+  const Node* next_list_child;
+  const Node* previous_list_child;
   VisiblePosition start;
   VisiblePosition end;
   DCHECK(list_child_node);
@@ -644,7 +644,7 @@ void InsertListCommand::ListifyParagraph(const VisiblePosition& original_start,
         Position::InParentBeforeNode(*insertion_pos.ComputeContainerNode());
   }
   // Also avoid the containing list item.
-  Node* const list_child = EnclosingListChild(insertion_pos.AnchorNode());
+  const Node* const list_child = EnclosingListChild(insertion_pos.AnchorNode());
   if (IsHTMLLIElement(list_child))
     insertion_pos = Position::InParentBeforeNode(*list_child);
 

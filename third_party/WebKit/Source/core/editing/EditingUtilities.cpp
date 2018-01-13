@@ -1423,7 +1423,7 @@ HTMLElement* EnclosingList(const Node* node) {
   return nullptr;
 }
 
-Node* EnclosingListChild(const Node* node) {
+const Node* EnclosingListChild(const Node* node) {
   if (!node)
     return nullptr;
   // Check for a list item element, or for a node whose parent is a list
@@ -1433,10 +1433,7 @@ Node* EnclosingListChild(const Node* node) {
 
   // FIXME: This function is inappropriately named if it starts with node
   // instead of node->parentNode()
-  // TODO(editing-dev): We should make this function return |const Node*| and
-  // make const_cast<> restricted inside editing/commands.
-  for (Node* n = const_cast<Node*>(node); n && n->parentNode();
-       n = n->parentNode()) {
+  for (const Node* n = node; n && n->parentNode(); n = n->parentNode()) {
     if (IsHTMLLIElement(*n) ||
         (IsHTMLListElement(n->parentNode()) && n != root))
       return n;
@@ -1449,11 +1446,11 @@ Node* EnclosingListChild(const Node* node) {
 
 // FIXME: This method should not need to call
 // isStartOfParagraph/isEndOfParagraph
-Node* EnclosingEmptyListItem(const VisiblePosition& visible_pos) {
+const Node* EnclosingEmptyListItem(const VisiblePosition& visible_pos) {
   DCHECK(visible_pos.IsValid());
 
   // Check that position is on a line by itself inside a list item
-  Node* list_child_node =
+  const Node* list_child_node =
       EnclosingListChild(visible_pos.DeepEquivalent().AnchorNode());
   if (!list_child_node || !IsStartOfParagraph(visible_pos) ||
       !IsEndOfParagraph(visible_pos))

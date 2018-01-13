@@ -208,8 +208,8 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   // enclosingBlock.
   Element* start_block = EnclosingBlock(
       insertion_position.ParentAnchoredEquivalent().ComputeContainerNode());
-  Node* list_child_node = EnclosingListChild(
-      insertion_position.ParentAnchoredEquivalent().ComputeContainerNode());
+  Node* list_child_node = const_cast<Node*>(EnclosingListChild(
+      insertion_position.ParentAnchoredEquivalent().ComputeContainerNode()));
   HTMLElement* list_child = list_child_node && list_child_node->IsHTMLElement()
                                 ? ToHTMLElement(list_child_node)
                                 : nullptr;

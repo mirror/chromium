@@ -216,7 +216,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
   Position PositionAvoidingSpecialElementBoundary(const Position&,
                                                   EditingState*);
 
-  Node* SplitTreeToNode(Node*, Node*, bool split_ancestor = false);
+  Node* SplitTreeToNode(const Node*, Node*, bool split_ancestor = false);
 
   static bool IsNodeVisiblyContainedWithin(Node&, const EphemeralRange&);
 
