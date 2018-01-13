@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e021b9ce_61b6f5ba",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-13T04:32:47Z",
+      "side": 1,
+      "message": "Can this be a base::Feature rather than a switch? I\u0027d suggest putting it in ui/base/ui_base_features.h, like kSecondaryUiMd.\n\nThey can be used on the command line with --enable-features\u003d[NameOfFeature], can be enabled or disabled by Finch easily, and can also be easily added to chrome://flags which we may want to do for ease of UX/QA testing later down the line. Switches can do all of the above, but are a bit more unwieldly to work with, and base::Feature is the canonical way to add feature flags now. :)",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
