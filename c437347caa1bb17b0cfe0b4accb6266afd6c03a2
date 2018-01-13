@@ -108,6 +108,29 @@
     },
     {
       "key": {
+        "uuid": "fe0b992f_827ea57a",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-13T00:07:34Z",
+      "side": 1,
+      "message": "Since https://chromium-review.googlesource.com/c/chromium/src/+/767209 has landed, you can call UkmSourceID() before UkmRecorder() now, so you could simplify this to:\n\nif (!already_logged_getFrameData_ \u0026\u0026 GetDocument() \u0026\u0026\n      GetDocument()-\u003eIsInMainFrame()) {\n    already_logged_getFrameData_ \u003d true;\n    ukm::builders::XR_Devices_Api(GetDocument()-\u003eUkmSourceID())\n        .SetDidRequestPose(1)\n        .Record(GetDocument()-\u003eUkmRecorder());\n}",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ea0f361_f00b3b00",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
         "patchSetId": 4
