@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141e63de_942f79f6",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-13T00:42:09Z",
+      "side": 1,
+      "message": "Does the quality matter here?",
+      "revId": "9d375281ab18f815be304b5490c36d2212b4f8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
