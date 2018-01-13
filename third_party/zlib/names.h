@@ -176,9 +176,13 @@
 #define inflate_fast_chunk_ Cr_z_inflate_fast_chunk_
 #endif
 
-#if defined(CRC32_SIMD_SSE42_PCLMUL)
+/* Symbols added by arm.c */
+#define arm_cpu_enable_crc32 Cr_z_arm_cpu_enable_crc32
+#define arm_cpu_enable_pmull Cr_z_arm_cpu_enable_pmull
+#define arm_check_features Cr_z_arm_check_features
+
 /* Symbols added by crc32_simd.c */
 #define crc32_sse42_simd_ Cr_z_crc32_sse42_simd_
-#endif
+#define crc32_crc32_simd_ Cr_z_crc32_crc32_simd_
 
 #endif  /* THIRD_PARTY_ZLIB_NAMES_H_ */
