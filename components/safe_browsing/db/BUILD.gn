@@ -44,6 +44,10 @@ group("db") {
   deps = [
     ":safe_browsing_db_shared",
     ":v4_local_database_manager",
+    # TODO(vakh): The following has been temporarily added here for
+    # crbug.com/750327 so that ninja can build it. Once that target is actually
+    # in use, it should be removed from here.
+    "//third_party/unrar:unrar",
   ]
 }
 
