@@ -412,6 +412,19 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
       nav_entry->set_should_replace_entry(true);
       pending_entry_ = nav_entry;
       DCHECK_EQ(-1, pending_entry_index_);
+    } else if (reload_type == ReloadType::DISABLE_PREVIEWS) {
+      // Revise the navigation entry to use original URL (since the previews
+      // treatment many have affected what the committed URL was).
+      LOG(WARNING) << "XXXXX  ::Reload CreateNavigationEntry for original URL: " << entry->GetOriginalRequestURL();
+      NavigationEntryImpl* nav_entry = NavigationEntryImpl::FromNavigationEntry(
+          CreateNavigationEntry(entry->GetOriginalRequestURL(),
+                                entry->GetReferrer(),
+                                ui::PAGE_TRANSITION_RELOAD, false,
+                                entry->extra_headers(), browser_context_)
+              .release());
+      nav_entry->set_should_replace_entry(true);
+      pending_entry_ = nav_entry;
+      DCHECK_EQ(-1, pending_entry_index_);
     } else {
       pending_entry_ = entry;
       pending_entry_index_ = current_index;
