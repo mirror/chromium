@@ -105,6 +105,63 @@
     },
     {
       "key": {
+        "uuid": "3b43a38b_31177fe0",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2018-01-13T00:58:39Z",
+      "side": 1,
+      "message": "you are not using the utility functions you created below.",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041f7edf_886c04f6",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2018-01-13T00:58:39Z",
+      "side": 1,
+      "message": "Add --limit 0, as the default is 200. It will likely be fine, until it\u0027s not. :)",
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9db870_93c40b7a",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2018-01-13T00:58:39Z",
+      "side": 1,
+      "message": "FTR, by default is to print the json at stdout. That will make the code slightly shorter, errors are printed at stderr.",
+      "range": {
+        "startLine": 171,
+        "startChar": 33,
+        "endLine": 171,
+        "endChar": 42
+      },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25f73a71_18ff60eb",
         "filename": "content/test/gpu/trigger_gpu_test.py",
         "patchSetId": 14
@@ -162,6 +219,23 @@
         "endLine": 220,
         "endChar": 36
       },
+      "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6894841_ccfb2061",
+        "filename": "content/test/gpu/trigger_gpu_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2018-01-13T00:58:39Z",
+      "side": 1,
+      "message": "that function isn\u0027t really useful?",
       "revId": "e4ae0a073bb826be26b6ef9b32dfbdba68996faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
