@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94fc5a22_1dee05a3",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-13T19:59:50Z",
+      "side": 1,
+      "message": "This comment is still valid, unit tests may still supply null.\n\nI updated the comment in the header. My change isn\u0027t to more broadly allow local state to be null, rather to create local state before g_browser_process, in which case you can\u0027t do g_browser_process-\u003elocal_state(), instead what becomes g_browser_process-\u003elocal_state() must be passed in. That\u0027s the motivation for this change. I\u0027ve split this off from a bigger patch in hopes of making it easier to review. The mongo patch is here: https://chromium-review.googlesource.com/c/chromium/src/+/853300 .",
+      "parentUuid": "e37cb171_a082864e",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02ecd556_5ee27f66",
         "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-13T05:28:03Z",
       "side": 1,
       "message": "You probably need to change this too.",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab10ea1_589183c6",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-13T19:59:50Z",
+      "side": 1,
+      "message": "Please correct me if I\u0027m wrong, but AFAICT this code isn\u0027t called during local state/about-flags/field-trials creation. It\u0027s only code impacted by that that needs to be updated.",
+      "parentUuid": "02ecd556_5ee27f66",
       "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af090f1c_020b79f8",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-13T19:59:50Z",
+      "side": 1,
+      "message": "I added a comment to this class about why. Hopefully my other responses to your question better explain the need for this. As to testing, the mega patch (and this patch) both pass the CQ. Certainly browser_tests are triggering this code path, I didn\u0027t verify that unit tests also touch it.",
+      "parentUuid": "9899b01f_9ba0cda6",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65fae94f_2c9c0922",
         "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-13T05:28:03Z",
       "side": 1,
       "message": "This seems weird.  We\u0027re having ChangeMetricsReportingStateWithReply() use |local_state|, but the actual SetMetricsReporting() still uses g_browser_process.\n\nAnd perhaps also see other uses of g_browser_process-\u003elocal_state() in this file",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4620122f_2de45a94",
+        "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-13T19:59:50Z",
+      "side": 1,
+      "message": "Again, it\u0027s all about the timing. I\u0027m only touching things that may be hit during creation of local state/about-flags/field-trials. I realize this is fragile, but I\u0027m worried that trying to move creation of g_browser_process earlier is likely to entail an even worse set of problems. I\u0027m certainly open to other ideas.",
+      "parentUuid": "65fae94f_2c9c0922",
       "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
