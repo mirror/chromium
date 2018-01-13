@@ -688,17 +688,9 @@ void MagnificationControllerImpl::OnScrollEvent(ui::ScrollEvent* event) {
 
     if (event->type() == ui::ET_SCROLL) {
       ui::ScrollEvent* scroll_event = event->AsScrollEvent();
-      float scale = GetScale();
-
-      // Adjust the scale linearly based on the y_offset.
-      float linear_adjustment =
-          std::sqrt((scale - kNonMagnifiedScale) /
-                    (kMaxMagnifiedScale - kNonMagnifiedScale));
-      linear_adjustment += scroll_event->y_offset() * kScrollScaleChangeFactor;
-      scale = (kMaxMagnifiedScale - kNonMagnifiedScale) *
-                  std::pow(linear_adjustment, 2) +
-              kNonMagnifiedScale;
-      SetScale(scale, true);
+      SetScale(GetScaleFromScroll(scroll_event->y_offset() *
+                                  kScrollScaleChangeFactor),
+               false);
       event->StopPropagation();
       return;
     }
@@ -910,6 +902,18 @@ void MagnificationControllerImpl::OnCaretBoundsChanged(
       base::TimeDelta::FromMilliseconds(
           disable_move_magnifier_delay_ ? 0 : kMoveMagnifierDelayInMs),
       this, &MagnificationControllerImpl::OnMoveMagnifierTimer);
+}
+
+float MagnificationController::GetScaleFromScroll(float linear_offset) {
+  float scale = GetScale();
+  // Adjust the scale linearly based on the |linear_offset|
+  float linear_adjustment = std::sqrt(
+      (scale - kNonMagnifiedScale) / (kMaxMagnifiedScale - kNonMagnifiedScale));
+  linear_adjustment += linear_offset;
+  scale = (kMaxMagnifiedScale - kNonMagnifiedScale) * linear_adjustment *
+              linear_adjustment +
+          kNonMagnifiedScale;
+  return scale;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
