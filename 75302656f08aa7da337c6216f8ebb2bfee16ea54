@@ -48,6 +48,40 @@
     },
     {
       "key": {
+        "uuid": "bbec4833_8fd5aabc",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T07:34:25Z",
+      "side": 1,
+      "message": "Nit: return std::tie(keycode, modifiers) \u003c std::tie(other.keycode, other.modifiers);",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a074742_c2714a70",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T07:34:25Z",
+      "side": 1,
+      "message": "Nit: pass by const ref.",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "922a8b2b_bb045cc0",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 4
@@ -88,6 +122,40 @@
         "endLine": 93,
         "endChar": 20
       },
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb28401_23c975d6",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T07:34:25Z",
+      "side": 1,
+      "message": "This should be marked constexpr. I believe this will reveal other issues though: for example, line 20 likely isn\u0027t constexpr compatible, because it requires a static initializer (which are forbidden).",
+      "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7be76c8_8862e0dc",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-13T07:34:25Z",
+      "side": 1,
+      "message": "Consider returning a base::span\u003c\u003e here: it\u0027s iterable and cheap to construct from an array of items and won\u0027t require the static local",
       "revId": "75302656f08aa7da337c6216f8ebb2bfee16ea54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
