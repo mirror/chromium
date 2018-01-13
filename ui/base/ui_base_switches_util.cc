@@ -10,6 +10,15 @@
 
 namespace switches {
 
+bool IsTouchableChromeEnabled() {
+#if defined(OS_CHROMEOS)
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableTouchableChrome);
+#else
+  return false;
+#endif  // defined(OS_CHROMEOS)
+}
+
 bool IsTouchDragDropEnabled() {
 #if defined(OS_CHROMEOS) || defined(OS_ANDROID)
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(

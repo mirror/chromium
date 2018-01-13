@@ -9,6 +9,8 @@
 
 namespace switches {
 
+UI_BASE_EXPORT bool IsTouchableChromeEnabled();
+
 UI_BASE_EXPORT bool IsLinkDisambiguationPopupEnabled();
 UI_BASE_EXPORT bool IsTouchDragDropEnabled();
 

@@ -42,6 +42,9 @@ const char kDisableTouchAdjustment[] = "disable-touch-adjustment";
 // Disables touch event based drag and drop.
 const char kDisableTouchDragDrop[] = "disable-touch-drag-drop";
 
+// Enables the touchable chrome.
+const char kEnableTouchDragDrop[] = "enable-touchable-chrome";
+
 // Enables touch event based drag and drop.
 const char kEnableTouchDragDrop[] = "enable-touch-drag-drop";
 
