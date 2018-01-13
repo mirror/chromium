@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c0264a_dddd90bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-13T03:30:46Z",
+      "side": 1,
+      "message": "WDYT about a checkbox at the bottom of the zoom menu saying \"Auto-adjust zoom\", on by default, which affects both rotating and changing device?",
+      "revId": "4655c8e509a55f8e4e5ae1b30ce3338233233579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
