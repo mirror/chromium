@@ -190,6 +190,12 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
       const storage::AsyncFileUtil::StatusCallback& callback,
       smbprovider::ErrorType error) const;
 
+  void HandleRequestReadFileCallback(int32_t length,
+                                     scoped_refptr<net::IOBuffer> buffer,
+                                     const ReadChunkReceivedCallback& callback,
+                                     smbprovider::ErrorType error,
+                                     const base::ScopedFD& fd) const;
+
   int32_t GetMountId() const;
 
   SmbProviderClient* GetSmbProviderClient() const;
