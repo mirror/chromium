@@ -543,8 +543,9 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
       message_center::Notification::CreateSystemNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title,
           text, gfx::Image(), base::string16(), GURL(),
-          message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                     system_notifier::kNotifierAccessibility),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              system_notifier::kNotifierAccessibility),
           message_center::RichNotificationData(), nullptr,
           GetNotificationIcon(being_enabled),
           message_center::SystemNotificationWarningLevel::NORMAL);
