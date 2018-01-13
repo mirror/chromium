@@ -1092,7 +1092,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestSurfaceDamage);
 class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   void InitializeSettings(LayerTreeSettings* settings) override {
     settings->using_synchronous_renderer_compositor = true;
-    settings->check_damage_early = true;
+    settings->enable_early_damage_check = true;
   }
 
  protected:
@@ -1113,7 +1113,7 @@ class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
   void DidCommit() override {
-    if (layer_tree_host()->SourceFrameNumber() == 1)
+    if (layer_tree_host()->SourceFrameNumber() == 2)
       root_->SetOpacity(0.9f);
   }
 
@@ -1125,12 +1125,12 @@ class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   }
 
   void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
-    if (impl->active_tree()->source_frame_number() == 1)
+    if (impl->active_tree()->source_frame_number() == 2)
       EndTest();
   }
 
   void DidInvalidateLayerTreeFrameSink(LayerTreeHostImpl* impl) override {
-    if (impl->active_tree()->source_frame_number() == 1)
+    if (impl->active_tree()->source_frame_number() == 2)
       ADD_FAILURE();
   }
 
