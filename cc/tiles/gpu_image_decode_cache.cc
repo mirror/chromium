@@ -1492,6 +1492,11 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
     context_->RasterInterface()->UnlockDiscardableTextureCHROMIUM(
         GlIdFromSkImage(image));
   }
+  if (images_pending_unlock_.size() > 0) {
+    // If we unlocked images, we have removed any outstanding texture bindings
+    // for those images. We need to inform Skia of this.
+    context_->GrContext()->resetContext(kTextureBinding_GrGLBackendState);
+  }
   images_pending_unlock_.clear();
 
   for (auto id : ids_pending_unlock_) {
