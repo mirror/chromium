@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c60b70a_08373150",
+        "filename": "base/base_paths_fuchsia.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-13T07:27:51Z",
+      "side": 1,
+      "message": "Have you considered adding a cross-platform DIR_RESOURCES?\nOther platforms often use DIR_MODULE to find resources that are not libraries. Having cross-platform constant will allow to minimize ifdefs in the code that uses PathService, because PathService is supposed to hide platform-specific details.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "22dfd645351368e1a2cd44d18f07ec0862487681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
