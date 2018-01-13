@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3b1aee_17aad555",
+        "filename": "components/language/content/browser/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-13T02:34:20Z",
+      "side": 1,
+      "message": "Note: since they all start with 0x3, you could assert it and keep an extra byte of accuracy by recording cell_id[1:9]. Not sure if it matters though.",
+      "revId": "da2972b1a1e97cc198b3f0875b24316f4d61a4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c45ae6_6ad9db69",
+        "filename": "components/language/content/browser/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-13T02:34:20Z",
+      "side": 1,
+      "message": "This will be dense, so you can just use an array.",
+      "revId": "da2972b1a1e97cc198b3f0875b24316f4d61a4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
