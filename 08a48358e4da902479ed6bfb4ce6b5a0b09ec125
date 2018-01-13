@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e5a65a_dfc524de",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-13T00:26:40Z",
+      "side": 1,
+      "message": "it might be possible to remove the |is_persistent| parameter later as we can always get it from the user info? If so, you don\u0027t have to do it in this CL though.",
+      "revId": "08a48358e4da902479ed6bfb4ce6b5a0b09ec125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1fd0292c_d8056105",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-13T00:26:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c52ee505_5e0f139d",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e9d31b_e6f5f094",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "It seems \u0027currentWallpaper\u0027 is still being used here https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js?q\u003dwallpaper_manager.js\u0026dr\u0026l\u003d471\n\nIn addition this method will be very useful for another CL https://chromium-review.googlesource.com/c/chromium/src/+/848193/7   But since I just rebased this current CL so this method is added here.",
       "parentUuid": "0b19b793_d799cb55",
+      "revId": "9aba30af0cb525be603f50024007653279d942b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d86c11_dff2e297",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-13T00:26:40Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t find it when I searched for it. Makes sense then.",
+      "parentUuid": "337188c1_658a315b",
       "revId": "9aba30af0cb525be603f50024007653279d942b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
