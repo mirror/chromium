@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41edd144_817de6f6",
+        "filename": "chrome/app/vector_icons/google_pay_logo.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-13T00:11:39Z",
+      "side": 1,
+      "message": "what\u0027s this file used for now?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "a191ad3d3f0e2baaeef23e9ed7ea4d434fec49b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
