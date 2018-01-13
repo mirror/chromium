@@ -22,6 +22,8 @@ namespace net {
 // |params| provided to the NetworkQualityEstimatorParams constructor.
 NET_EXPORT extern const char kForceEffectiveConnectionType[];
 NET_EXPORT extern const char kEffectiveConnectionTypeSlow2GOnCellular[];
+NET_EXPORT extern const base::TimeDelta
+    kHttpRttEffectiveConnectionTypeThresholds[EFFECTIVE_CONNECTION_TYPE_LAST];
 
 // NetworkQualityEstimatorParams computes the configuration parameters for
 // the network quality estimator.
