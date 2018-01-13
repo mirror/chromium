@@ -42,7 +42,7 @@ class CORE_EXPORT IdentifiersFactory {
  public:
   static String CreateIdentifier();
 
-  static String RequestId(unsigned long identifier);
+  static String RequestId(DocumentLoader*, unsigned long identifier);
 
   // Returns embedder-provided frame token that is consistent across processes
   // and can be used for request / call attribution to the context frame.
