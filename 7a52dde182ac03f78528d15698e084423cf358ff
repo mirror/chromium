@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed88222b_81c68924",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-13T01:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94d2322_cb96e709",
+      "revId": "7a52dde182ac03f78528d15698e084423cf358ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db4aa05_9ce98757",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-12T23:38:45Z",
       "side": 1,
       "message": "Can we actually understand what happens if this returns nil? From my understanding this method is called for LegacyNavigationManager, which is current production code.",
+      "range": {
+        "startLine": 1769,
+        "startChar": 20,
+        "endLine": 1769,
+        "endChar": 26
+      },
+      "revId": "7a52dde182ac03f78528d15698e084423cf358ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aae7957_c2002abf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-13T01:32:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but this TODO has been here since before the refactor. I\u0027ve moved it from line 1751 to here.",
+      "parentUuid": "0db4aa05_9ce98757",
       "range": {
         "startLine": 1769,
         "startChar": 20,
