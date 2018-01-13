@@ -591,6 +591,7 @@ bool SystemTray::PerformAction(const ui::Event& event) {
 }
 
 void SystemTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   if (!system_bubble_)
     return;
   system_bubble_->bubble()->Close();
