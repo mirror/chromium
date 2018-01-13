@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c317ac8_00dbc56d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-13T00:48:28Z",
+      "side": 1,
+      "message": "I\u0027ve added comments in the StackSamplingConfiguration class.",
+      "parentUuid": "d24caf81_8daba311",
+      "range": {
+        "startLine": 843,
+        "startChar": 6,
+        "endLine": 843,
+        "endChar": 50
+      },
+      "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b72827a_5167f5d4",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T22:47:03Z",
       "side": 1,
       "message": "The extra indirection via BrowserThread::PostTask makes this more complicated than necessary. It\u0027s not clear without reading the BrowserThread::PostTask implementation if the BrowserThread has already been configured to support this call by the time PostThreadCreate is invoked in BrowserMainLoop.\n\nWe probably should pass the base::Thread* instead and then do thread-\u003emessage_loop()-\u003etask-runner()-\u003ePostTask(...) in this function.",
+      "range": {
+        "startLine": 1227,
+        "startChar": 4,
+        "endLine": 1227,
+        "endChar": 27
+      },
+      "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed2b758_b48ac3cb",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-13T00:48:28Z",
+      "side": 1,
+      "message": "Sure, I\u0027ve updated the code accordingly. Btw, thread-\u003etask-runner() should be enough.",
+      "parentUuid": "8b72827a_5167f5d4",
       "range": {
         "startLine": 1227,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa9067d_d412c9be",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-13T00:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169ac5b7_e0d607b7",
+      "range": {
+        "startLine": 1234,
+        "startChar": 5,
+        "endLine": 1234,
+        "endChar": 45
+      },
+      "revId": "b8b32552b298c2bd80cfa9ae89bda48bed07f6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
