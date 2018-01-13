@@ -22,6 +22,30 @@
       "revId": "a191ad3d3f0e2baaeef23e9ed7ea4d434fec49b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d8ca10_5ac0989f",
+        "filename": "chrome/app/vector_icons/google_pay_logo.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-13T00:30:36Z",
+      "side": 1,
+      "message": "Nothing currently, so I\u0027ve now removed it.  I believe we intend to use it for the card unmask dialog as well, but I\u0027d rather just bring it back when that time comes.",
+      "parentUuid": "41edd144_817de6f6",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "a191ad3d3f0e2baaeef23e9ed7ea4d434fec49b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
