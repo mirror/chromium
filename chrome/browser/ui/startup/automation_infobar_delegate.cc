@@ -4,8 +4,13 @@
 
 #include "chrome/browser/ui/startup/automation_infobar_delegate.h"
 
+#include "base/base_switches.h"
+#include "base/command_line.h"
+#include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/infobars/core/infobar.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -32,7 +37,16 @@ bool AutomationInfoBarDelegate::ShouldExpire(
 }
 
 base::string16 AutomationInfoBarDelegate::GetMessageText() const {
-  return l10n_util::GetStringUTF16(IDS_CONTROLLED_BY_AUTOMATION);
+  std::vector<base::string16> messages;
+  messages.push_back(l10n_util::GetStringUTF16(IDS_CONTROLLED_BY_AUTOMATION));
+
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kAutoConfirmExtensionPrompts)) {
+  messages.push_back(
+      l10n_util::GetStringUTF16(IDS_AUTO_CONFIRM_EXTENSION_PROMPTS));
+  }
+
+  return base::JoinString(messages, base::ASCIIToUTF16(" "));
 }
 
 int AutomationInfoBarDelegate::GetButtons() const {

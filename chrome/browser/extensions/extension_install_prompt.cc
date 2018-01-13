@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/callback_helpers.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -19,6 +20,7 @@
 #include "chrome/browser/extensions/permissions_updater.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/extensions/extension_install_ui_factory.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_strings.h"
@@ -72,24 +74,31 @@ SkBitmap GetDefaultIconBitmapForMaxScaleFactor(bool is_app) {
 // If auto confirm is enabled then posts a task to proceed with or cancel the
 // install and returns true. Otherwise returns false.
 bool AutoConfirmPrompt(ExtensionInstallPrompt::DoneCallback* callback) {
-  switch (extensions::ScopedTestDialogAutoConfirm::GetAutoConfirmValue()) {
-    case extensions::ScopedTestDialogAutoConfirm::NONE:
-      return false;
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  bool bypassInstallationConfirm =
+      command_line->HasSwitch(switches::kEnableAutomation) &&
+      command_line->HasSwitch(switches::kAutoConfirmExtensionPrompts);
+  extensions::ScopedTestDialogAutoConfirm::AutoConfirm autoConfirm =
+      extensions::ScopedTestDialogAutoConfirm::GetAutoConfirmValue();
+
+  if (bypassInstallationConfirm ||
+      autoConfirm == extensions::ScopedTestDialogAutoConfirm::ACCEPT ||
+      extensions::ScopedTestDialogAutoConfirm::ACCEPT_AND_OPTION) {
     // We use PostTask instead of calling the callback directly here, because in
     // the real implementations it's highly likely the message loop will be
     // pumping a few times before the user clicks accept or cancel.
-    case extensions::ScopedTestDialogAutoConfirm::ACCEPT:
-    case extensions::ScopedTestDialogAutoConfirm::ACCEPT_AND_OPTION:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(base::ResetAndReturn(callback),
-                                    ExtensionInstallPrompt::Result::ACCEPTED));
-      return true;
-    case extensions::ScopedTestDialogAutoConfirm::CANCEL:
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(base::ResetAndReturn(callback),
+                                  ExtensionInstallPrompt::Result::ACCEPTED));
+    return true;
+  } else if (autoConfirm == extensions::ScopedTestDialogAutoConfirm::CANCEL) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
           base::BindOnce(base::ResetAndReturn(callback),
                          ExtensionInstallPrompt::Result::USER_CANCELED));
       return true;
+  } else if (autoConfirm == extensions::ScopedTestDialogAutoConfirm::NONE) {
+    return false;
   }
 
   NOTREACHED();
