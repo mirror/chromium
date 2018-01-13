@@ -72,6 +72,14 @@ const char kAuthExtensionPath[]             = "auth-ext-path";
 // Whitelist for Negotiate Auth servers
 const char kAuthServerWhitelist[]           = "auth-server-whitelist";
 
+// This flag, when used in conjunction with the --enable-automation flag,
+// automatically confirms dialogs raised by extensions and apps. One example
+// of such a dialog is the installation confirmation dialog that comes up when
+// a user clicks install on an extension in the chrome web store.
+// This flag is used by webdriver automation that wishes to test the item
+// installation scenario.
+const char kAutoConfirmExtensionPrompts[] = "auto-confirm-extension-prompts";
+
 // This flag makes Chrome auto-open DevTools window for each tab. It is
 // intended to be used by developers and automation to not require user
 // interaction for opening DevTools.

@@ -10957,6 +10957,9 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_CONTROLLED_BY_AUTOMATION" desc="Message shown when the browser session is being controlled by an automated test.">
       Chrome is being controlled by automated test software.
     </message>
+    <message name="IDS_AUTO_CONFIRM_EXTENSION_PROMPTS" desc="Message shown when confirmation prompts from extensions and apps are automatically accepted.">
+      User will not be prompted to confirm when installing extensions from Chrome Webstore.
+    </message>
 
     <!-- Media capture notification strings -->
     <if expr="is_android or enable_vr">
