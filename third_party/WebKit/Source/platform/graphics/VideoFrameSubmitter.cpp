@@ -109,14 +109,16 @@ void VideoFrameSubmitter::SubmitFrame(
   DCHECK_CALLED_ON_VALID_THREAD(media_thread_checker_);
   DCHECK(compositor_frame_sink_);
 
+  VLOG(0) << "HIT";
+  VLOG(0) << video_frame->natural_size().ToString();
+
   viz::CompositorFrame compositor_frame;
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
 
-  // TODO(lethalantidote): Replace with true size. Current is just for test.
   render_pass->SetNew(1, gfx::Rect(video_frame->coded_size()),
                       gfx::Rect(video_frame->coded_size()), gfx::Transform());
   render_pass->filters = cc::FilterOperations();
-  resource_provider_->AppendQuads(render_pass.get(), video_frame);
+  resource_provider_->AppendQuads(render_pass.get(), video_frame, rotation_);
   compositor_frame.metadata.begin_frame_ack = begin_frame_ack;
   compositor_frame.metadata.device_scale_factor = 1;
   compositor_frame.metadata.may_contain_video = true;
@@ -161,6 +163,10 @@ void VideoFrameSubmitter::OnBeginFrame(const viz::BeginFrameArgs& args) {
   SubmitFrame(current_begin_frame_ack, video_frame);
 
   provider_->PutCurrentFrame();
+}
+
+void VideoFrameSubmitter::SetRotation(media::VideoRotation rotation) {
+  rotation_ = rotation;
 }
 
 void VideoFrameSubmitter::DidReceiveCompositorFrameAck(

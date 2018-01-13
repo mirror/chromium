@@ -1095,6 +1095,12 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
       return;
     }
   }
+
+  if (surface_layer_for_video_enabled_) {
+    compositor_->UpdateRotation(
+        pipeline_metadata_.video_decoder_config.video_rotation());
+  }
+
   video_renderer_.Paint(
       video_frame, canvas, gfx::RectF(gfx_rect), flags,
       pipeline_metadata_.video_decoder_config.video_rotation(), context_3d);
@@ -1552,6 +1558,9 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
       video_weblayer_->layer()->SetContentsOpaque(opaque_);
       video_weblayer_->SetContentsOpaqueIsFixed(true);
       client_->SetWebLayer(video_weblayer_.get());
+    } else {
+      compositor_->UpdateRotation(
+          pipeline_metadata_.video_decoder_config.video_rotation());
     }
   }
 
@@ -1764,6 +1773,11 @@ void WebMediaPlayerImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
   gfx::Size old_size = pipeline_metadata_.natural_size;
   if (rotated_size == old_size)
     return;
+
+  if (surface_layer_for_video_enabled_) {
+    compositor_->UpdateRotation(
+        pipeline_metadata_.video_decoder_config.video_rotation());
+  }
 
   pipeline_metadata_.natural_size = rotated_size;
   CreateWatchTimeReporter();
