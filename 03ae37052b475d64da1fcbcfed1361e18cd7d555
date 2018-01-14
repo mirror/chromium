@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0ee739fc_025e53a4",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-14T23:41:22Z",
+      "side": 1,
+      "message": "\u003e Done, though I just added HungRendererDialogViewBrowserTest as a friend (and you don\u0027t have to forward declare it either, turns out).\n\nooh neat - yeah that\u0027s nice.  (the forward declare is only needed when namespaces get involved -- if a type first appears in a `friend class` declaration it\u0027s implicitly forward declared in the same namespace as the enclosing class, which in this case is global scope (which is fine))",
+      "parentUuid": "05ad28fe_275510ee",
+      "revId": "03ae37052b475d64da1fcbcfed1361e18cd7d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1cef35_e6a3212d",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 4
