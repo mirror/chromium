@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cb06d2f_f42e48f0",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/CSSLayoutWorklet.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-14T06:06:28Z",
+      "side": 1,
+      "message": "Can you add a test case for layoutWorklet to http/tests/worklet/import-on-insecure-context.html?",
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210ec687_964662b5",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/LayoutWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-14T06:06:28Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a3f0d8_8be25f33",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/LayoutWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-14T06:06:28Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
