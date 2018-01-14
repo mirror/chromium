@@ -46,11 +46,13 @@ const char kServiceWorkerTerminationCanceledMesage[] =
     "Service Worker termination by a timeout timer was canceled because "
     "DevTools is attached.";
 
-void NotifyWorkerReadyForInspectionOnUI(int worker_process_id,
-                                        int worker_route_id) {
+void NotifyWorkerReadyForInspectionOnUI(
+    int worker_process_id,
+    int worker_route_id,
+    blink::mojom::DevToolsAgentAssociatedPtr devtools_agent_ptr) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ServiceWorkerDevToolsManager::GetInstance()->WorkerReadyForInspection(
-      worker_process_id, worker_route_id);
+      worker_process_id, worker_route_id, std::move(devtools_agent_ptr));
 }
 
 void NotifyWorkerDestroyedOnUI(int worker_process_id, int worker_route_id) {
@@ -129,6 +131,8 @@ void SetupOnUIThread(
   }
 
   // Register to DevTools and update params accordingly.
+  // TODO(dgozman): we can now remove this routing id and use something else
+  // as id when talking to ServiceWorkerDevToolsManager.
   const int routing_id = rph->GetNextRoutingID();
   ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
       process_id, routing_id, context, weak_context,
@@ -193,11 +197,13 @@ class EmbeddedWorkerInstance::DevToolsProxy {
                                            process_id_, agent_route_id_));
   }
 
-  void NotifyWorkerReadyForInspection() {
+  void NotifyWorkerReadyForInspection(
+      blink::mojom::DevToolsAgentAssociatedPtr devtools_agent_ptr) {
     DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(NotifyWorkerReadyForInspectionOnUI,
-                                           process_id_, agent_route_id_));
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(NotifyWorkerReadyForInspectionOnUI, process_id_,
+                       agent_route_id_, std::move(devtools_agent_ptr)));
   }
 
   void NotifyWorkerVersionInstalled() {
@@ -689,8 +695,12 @@ void EmbeddedWorkerInstance::RequestTermination() {
 }
 
 void EmbeddedWorkerInstance::OnReadyForInspection() {
-  if (devtools_proxy_)
-    devtools_proxy_->NotifyWorkerReadyForInspection();
+  if (devtools_proxy_) {
+    blink::mojom::DevToolsAgentAssociatedPtr devtools_agent_ptr;
+    client_->GetDevToolsAgent(mojo::MakeRequest(&devtools_agent_ptr));
+    devtools_proxy_->NotifyWorkerReadyForInspection(
+        std::move(devtools_agent_ptr));
+  }
 }
 
 void EmbeddedWorkerInstance::OnScriptReadStarted() {
