@@ -6,6 +6,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/test_accessibility_controller_client.h"
+#include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
@@ -35,6 +36,22 @@ gfx::Rect GetDefaultLeftSnappedBoundsInDisplay(
   auto work_area = display.work_area();
   work_area.set_width(work_area.width() / 2);
   return work_area;
+}
+
+views::Widget* CreateTestWidgetWithParent(views::Widget::InitParams::Type type,
+                                          gfx::NativeView parent,
+                                          const gfx::Rect& bounds,
+                                          bool child) {
+  views::Widget::InitParams params(type);
+  params.delegate = nullptr;
+  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  params.parent = parent;
+  params.bounds = bounds;
+  params.child = child;
+  views::Widget* widget = new views::Widget;
+  widget->Init(params);
+  widget->Show();
+  return widget;
 }
 
 }  // namespace
@@ -301,7 +318,7 @@ TEST_F(DisplayMoveWindowUtilTest, A11yAlert) {
 }
 
 // Tests that moving window between displays is no-op if active window is not in
-// cycle window list.
+// window cycle list.
 TEST_F(DisplayMoveWindowUtilTest, NoMovementIfNotInCycleWindowList) {
   // Layout: [p][1]
   UpdateDisplay("400x300,400x300");
@@ -451,14 +468,9 @@ TEST_F(DisplayMoveWindowUtilTest, ActiveTransientChildWindow) {
 
   // Create a |child| transient widget of |window|. When |child| is shown, it is
   // activated.
-  std::unique_ptr<views::Widget> child(new views::Widget);
-  views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW);
-  params.delegate = nullptr;
-  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
-  params.bounds = gfx::Rect(20, 30, 40, 50);
-  params.parent = window->GetNativeWindow();
-  child->Init(params);
-  child->Show();
+  std::unique_ptr<views::Widget> child(CreateTestWidgetWithParent(
+      views::Widget::InitParams::TYPE_WINDOW, window->GetNativeView(),
+      gfx::Rect(20, 30, 40, 50), false));
   display::Screen* screen = display::Screen::GetScreen();
   EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
             screen->GetDisplayNearestWindow(window->GetNativeWindow()).id());
@@ -478,6 +490,48 @@ TEST_F(DisplayMoveWindowUtilTest, ActiveTransientChildWindow) {
             window->GetNativeWindow()->GetBoundsInScreen());
   EXPECT_EQ(gfx::Rect(420, 30, 40, 50),
             child->GetNativeWindow()->GetBoundsInScreen());
+}
+
+// Test that when active window is transient child window, no movement if its
+// first non-transient transient-parent window is not in window cycle list.
+TEST_F(DisplayMoveWindowUtilTest, TransientParentNotInCycleWindowList) {
+  UpdateDisplay("400x300,400x300");
+  aura::Window* w1 =
+      CreateTestWindowInShellWithBounds(gfx::Rect(100, 100, 50, 50));
+  wm::ActivateWindow(w1);
+
+  // Create a window |w2| in non-switchable window container.
+  aura::Window* setting_bubble_container =
+      Shell::GetPrimaryRootWindowController()->GetContainer(
+          kShellWindowId_SettingBubbleContainer);
+  std::unique_ptr<aura::Window> w2 = CreateChildWindow(
+      setting_bubble_container, gfx::Rect(10, 20, 200, 100), -1);
+  wm::ActivateWindow(w2.get());
+
+  // Create a |child| transient widget of |w2|. When |child| is shown, it is
+  // activated.
+  std::unique_ptr<views::Widget> child(
+      CreateTestWidgetWithParent(views::Widget::InitParams::TYPE_WINDOW,
+                                 w2.get(), gfx::Rect(20, 30, 40, 50), false));
+  display::Screen* screen = display::Screen::GetScreen();
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(w1).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(w2.get()).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(child->GetNativeWindow()).id());
+  // Ensure |child| window is activated.
+  EXPECT_FALSE(wm::IsActiveWindow(w1));
+  EXPECT_FALSE(wm::IsActiveWindow(w2.get()));
+  EXPECT_TRUE(wm::IsActiveWindow(child->GetNativeWindow()));
+
+  HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(w1).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(w2.get()).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(child->GetNativeWindow()).id());
 }
 
 }  // namespace ash

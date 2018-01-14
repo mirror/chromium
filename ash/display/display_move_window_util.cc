@@ -144,18 +144,20 @@ void HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection direction) {
     return;
 
   // If |window| is transient window, move its first non-transient
-  // transient-parent window instead. Otherwise, it should be the first one in
-  // window cycle list.
+  // transient-parent window instead.
   if (::wm::GetTransientParent(window)) {
     while (::wm::GetTransientParent(window))
       window = ::wm::GetTransientParent(window);
     if (window == window->GetRootWindow())
       return;
-  } else {
-    MruWindowTracker::WindowList window_list =
-        Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
-    if (window_list.empty() || window_list.front() != window)
-      return;
+  }
+
+  // The movement target window must be in window cycle list.
+  MruWindowTracker::WindowList window_list =
+      Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+  if (std::find(window_list.begin(), window_list.end(), window) ==
+      window_list.end()) {
+    return;
   }
 
   display::Display origin_display =
