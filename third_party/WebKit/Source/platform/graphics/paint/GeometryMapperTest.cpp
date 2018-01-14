@@ -25,7 +25,8 @@ class GeometryMapperTest : public ::testing::Test,
       const PropertyTreeState& ancestor_property_tree_state) {
     GeometryMapperClipCache::ClipAndTransform clip_and_transform(
         ancestor_property_tree_state.Clip(),
-        ancestor_property_tree_state.Transform());
+        ancestor_property_tree_state.Transform(),
+        kIgnorePlatformOverlayScrollbarSize);
     return descendant_clip->GetClipCache().GetCachedClip(clip_and_transform);
   }
 
@@ -35,7 +36,8 @@ class GeometryMapperTest : public ::testing::Test,
       FloatClipRect& mapping_rect,
       bool& success) {
     GeometryMapper::LocalToAncestorVisualRectInternal(
-        local_state, ancestor_state, mapping_rect, success);
+        local_state, ancestor_state, mapping_rect,
+        kIgnorePlatformOverlayScrollbarSize, success);
   }
 
   // Variables required by CHECK_MAPPINGS(). The tests should set these
