@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abec189b_ad431c88",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "NIT: {}",
+      "range": {
+        "startLine": 226,
+        "startChar": 61,
+        "endLine": 226,
+        "endChar": 62
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceb9da4_c2cbaa64",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "NIT: {}",
+      "range": {
+        "startLine": 237,
+        "startChar": 48,
+        "endLine": 237,
+        "endChar": 49
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb1e77a_8bbcf5e6",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "If an Equivalence ends up with length \u003d\u003d 0, should it be removed completely from |equivalences_|?",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 3
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf16c946_7b1a08ba",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "NIT: in-place",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 33
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac621318_8c267b45",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "Should mention the assumption that |offsets| is sorted.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819bec7b_1de79543",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "NIT: \"Offset\" seems redundant. How about ForwardProject() ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 21
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac44db57_f77f00fb",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "Combine the two functions into PruneEquivalencesAndSortBySource()?\n\nFor better testing, maybe make this static and take std::vector\u003cEqiuvalence\u003e*, so it can be tested independently?\n\nThe objective (\"what\") of pruning should be explained. Proposal:\n// Sorts |equivalences| by |src_offset| and remove all source overlaps; so a source location that was covered by some Equivalence would become covered by exactly one Equivalence. Moreover, for the offset, the equivalence corresponds to the largest (pre-pruning) covering Equivalence, and in case of a tie, the Equivalence with minimal |src_offset|.\n\nAnd maybe:\n// |equivalences| may change in size since empty Equivalences are removed.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 15
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcce574_c967a888",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "- Shift dst_offset by 10 to break symmetry?  \n- dst ranges should not overlap (or add comment to say that they overlap here for test, but in actual application this doesn\u0027t happen).\n- Add cases to show that shorting occurs?",
+      "range": {
+        "startLine": 253,
+        "startChar": 42,
+        "endLine": 253,
+        "endChar": 43
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c81069d_ea21fbea",
+        "filename": "chrome/installer/zucchini/target_pool.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "Reorder these functions to follow .h order, if you change those",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 74
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85ce5d9_ddce1d87",
+        "filename": "chrome/installer/zucchini/target_pool.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "// This can be called multiple times in succession. This is done (instead of inserting everything first, then sort and uniquify once) to prioritize memory reduction over running time.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb26fc1_f58f091d",
+        "filename": "chrome/installer/zucchini/target_pool.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "// If distances are equal, prefer [lower/higher] key.",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 32
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d77f03_a41be27e",
+        "filename": "chrome/installer/zucchini/target_pool.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "\"\u003e\" prefers higher key; \"\u003e\u003d\" prefers lower key in the event of tie.",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be821d1b_ac480d45",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "It\u0027s rather odd to have 4 ways to initialize the same data... But I suppose being explicit is better than hiding the differences under template. \n\nNIT: Sort |target| initializers by directness (example below).\nThis leaks some abstraction, but might be helpful to unify all the comments and explain why each is useful, e.g.:\n\n// Insert new targets from various sources. These invalidate all previous key lookups.\n// - From a list of targets, useful for [Zucchini-apply???]:\nvoid InsertTargets(const std::vector\u003coffset_t\u003e\u0026 targets);\n// - From TargetSource, useful for ???:\nvoid InsertTargets(TargetSource* targets);\n// - From list of References, useful for ???:\nvoid InsertTargets(const std::vector\u003cReference\u003e\u0026 references);\n// - From ReferenceReader, useful for ???:\nvoid InsertTargets(ReferenceReader\u0026\u0026 references);",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d85ab40_ed9a968d",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "Does this assume that |targets_| is non-empty?  Please add to comment if so.  If this is not assumed (can be empty), then unit test should also have empty case.",
+      "range": {
+        "startLine": 45,
+        "startChar": 53,
+        "endLine": 45,
+        "endChar": 54
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d155241_e1cfaca8",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "\"nearest\" seems to be more commonly used in computer science?",
+      "range": {
+        "startLine": 48,
+        "startChar": 56,
+        "endLine": 48,
+        "endChar": 63
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd41b45_4ebc51c5",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "NearestKeyForOffset()?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b92d449_092c7eaf",
+        "filename": "chrome/installer/zucchini/target_pool_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "The test for closest/nearest can be made more mechanical, using look-up tables / string.  For example:\n\n[Add empty case if warranged].\ntest_key_offset({0}, \"0000000000000000\");\ntest_key_offset({1}, \"0000000000000000\");\ntest_key_offset({0, 1}, \"0111111111111111\");\ntest_key_offset({0, 2}, \"0?11111111111111\");\ntest_key_offset({1, 2}, \"0011111111111111\");\ntest_key_offset({1, 3}, \"00?1111111111111\");\ntest_key_offset({1, 3, 7, 9, 13}, \"00?11?22?33?4444\");\n[Add a mixed case where gaps between number are not all even.]",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3248dbc4_792a05b7",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-14T04:36:03Z",
+      "side": 1,
+      "message": "Optional: Remove {}.",
+      "range": {
+        "startLine": 117,
+        "startChar": 44,
+        "endLine": 117,
+        "endChar": 45
+      },
+      "revId": "16c7d67a881e8a476e514ece0ce48ec7d9703aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
