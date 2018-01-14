@@ -17,7 +17,6 @@
 #include "content/common/content_param_traits_macros.h"
 #include "content/common/navigation_params.h"
 #include "content/public/common/common_param_traits.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_message_macros.h"
 #include "net/base/request_priority.h"
@@ -26,6 +25,7 @@
 #include "services/network/public/cpp/network_param_ipc_traits.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
 #ifndef INTERNAL_CONTENT_COMMON_RESOURCE_MESSAGES_H_
@@ -75,19 +75,6 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::ServiceWorkerMode,
 
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebMixedContentContextType,
                           blink::WebMixedContentContextType::kLast)
-
-IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseHead)
-  IPC_STRUCT_TRAITS_PARENT(network::ResourceResponseInfo)
-  IPC_STRUCT_TRAITS_MEMBER(request_start)
-  IPC_STRUCT_TRAITS_MEMBER(response_start)
-IPC_STRUCT_TRAITS_END()
-
-IPC_STRUCT_TRAITS_BEGIN(content::SyncLoadResult)
-  IPC_STRUCT_TRAITS_PARENT(content::ResourceResponseHead)
-  IPC_STRUCT_TRAITS_MEMBER(error_code)
-  IPC_STRUCT_TRAITS_MEMBER(final_url)
-  IPC_STRUCT_TRAITS_MEMBER(data)
-IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(net::MutableNetworkTrafficAnnotationTag)
   IPC_STRUCT_TRAITS_MEMBER(unique_id_hash_code)
