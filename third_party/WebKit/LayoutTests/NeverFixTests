@@ -282,8 +282,6 @@ crbug.com/642912 http/tests/wasm/ [ WontFix ]
 webaudio/codec-tests/mp3 [ WontFix ]
 webaudio/codec-tests/aac [ WontFix ]
 
-# WPT for CSS cascade
-crbug.com/763610 external/wpt/css/CSS2/cascade [ WontFix ]
 # The revert keyword is not yet supported.
 external/wpt/css/css-cascade/revert-val-001.html [ WontFix ]
 

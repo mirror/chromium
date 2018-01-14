@@ -2723,6 +2723,9 @@ crbug.com/181374 external/wpt/css/css-display/display-contents-dynamic-table-001
 
 # ====== End of display: contents tests ======
 
+# external/css/CSS2/cascade
+crbug.com/763610 external/wpt/css/CSS2/cascade/inherit-computed-001.html [ Failure ]
+
 crbug.com/676229 [ Win Linux Mac ] plugins/mouse-click-plugin-clears-selection.html [ Failure Pass ]
 crbug.com/736333 [ Win7 Linux ] plugins/iframe-plugin-bgcolor.html [ Failure Pass ]
 crbug.com/742670 [ Mac ] plugins/iframe-plugin-bgcolor.html [ Failure Pass ]
