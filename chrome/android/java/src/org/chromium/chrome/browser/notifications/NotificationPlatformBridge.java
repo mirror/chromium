@@ -20,6 +20,8 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
@@ -46,6 +48,7 @@ import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
@@ -432,11 +435,12 @@ public class NotificationPlatformBridge {
         // read the origin of the notification.
         if (tag == null || !tag.startsWith(PLATFORM_TAG_PREFIX)) return null;
 
-        String[] parts = tag.split(NotificationConstants.NOTIFICATION_TAG_SEPARATOR);
-        assert parts.length >= 3;
+        List<String> parts =
+                Splitter.on(NotificationConstants.NOTIFICATION_TAG_SEPARATOR).splitToList(tag);
+        assert parts.size() >= 3;
         try {
-            URI uri = new URI(parts[1]);
-            if (uri.getHost() != null) return parts[1];
+            URI uri = new URI(parts.get(1));
+            if (uri.getHost() != null) return parts.get(1);
         } catch (URISyntaxException e) {
             Log.e(TAG, "Expected to find a valid url in the notification tag extra.", e);
             return null;
