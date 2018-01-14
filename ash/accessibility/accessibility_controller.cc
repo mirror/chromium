@@ -40,6 +40,10 @@ void NotifyAccessibilityStatusChanged(
       notification_visibility);
 }
 
+PrefService* GetActivePrefService() {
+  return Shell::Get()->session_controller()->GetActivePrefService();
+}
+
 }  // namespace
 
 AccessibilityController::AccessibilityController(
@@ -201,11 +205,6 @@ void AccessibilityController::OnActiveUserPrefServiceChanged(
   ObservePrefs(prefs);
 }
 
-void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
-  pref_service_for_test_ = prefs;
-  ObservePrefs(prefs);
-}
-
 void AccessibilityController::FlushMojoForTest() {
   client_.FlushForTesting();
 }
@@ -245,12 +244,6 @@ void AccessibilityController::ObservePrefs(PrefService* prefs) {
   UpdateLargeCursorFromPref();
   UpdateMonoAudioFromPref();
   UpdateSpokenFeedbackFromPref();
-}
-
-PrefService* AccessibilityController::GetActivePrefService() const {
-  if (pref_service_for_test_)
-    return pref_service_for_test_;
-  return Shell::Get()->session_controller()->GetActivePrefService();
 }
 
 void AccessibilityController::UpdateAutoclickFromPref() {
