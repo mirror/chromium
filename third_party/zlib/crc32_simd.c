@@ -154,4 +154,55 @@ uint32_t ZLIB_INTERNAL crc32_sse42_simd_(  /* SSE4.2+PCLMUL */
     return _mm_extract_epi32(x1, 1);
 }
 
+#elif defined(CRC32_SIMD_ARMV8_NEON_LE)
+
+/*
+ * crc32_crc32_simd_(): compute the crc32 of the buffer, where the buffer
+ * length should be greater than 0, on little endian ARMv8 devices.
+ */
+
+#include <arm_acle.h>
+
+uint32_t ZLIB_INTERNAL crc32_crc32_simd_(  /* ARMv8 crc32x */
+    const unsigned char *buf,
+    z_size_t len,
+    uint32_t crc)
+{
+    uint32_t c = crc;
+
+    while (len && ((uintptr_t)buf & 7)) {
+        c = __crc32b(c, *buf++);
+        --len;
+    }
+
+    const uint64_t *buf64 = (const uint64_t *)buf;
+
+    while (len >= 64) {
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+        c = __crc32d(c, *buf64++);
+
+        len -= 64;
+    }
+
+    while (len >= 8) {
+        c = __crc32d(c, *buf64++);
+        len -= 8;
+    }
+
+    buf = (const unsigned char *)buf64;
+
+    while (len--) {
+        c = __crc32b(c, *buf++);
+    }
+
+    return c;
+}
+
 #endif  /* CRC32_SIMD_SSE42_PCLMUL */
