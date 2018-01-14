@@ -22,6 +22,30 @@
       "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf1c5aa_075b35bb",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-14T23:50:38Z",
+      "side": 1,
+      "message": "\u003e Can this be a base::Feature rather than a switch? I\u0027d suggest putting it in ui/base/ui_base_features.h, like kSecondaryUiMd.\n\u003e \n\u003e They can be used on the command line with --enable-features\u003d[NameOfFeature], can be enabled or disabled by Finch easily, and can also be easily added to chrome://flags which we may want to do for ease of UX/QA testing later down the line. Switches can do all of the above, but are a bit more unwieldly to work with, and base::Feature is the canonical way to add feature flags now. :)\n\n+1 yes please :). I added ui_base_features.cc in r510764, so doing this should be straightforward. Note this launch will interact with SecondaryUiMd, which is in the same place, so keeping them together would be nice.\n\n(aside - note there\u0027s also interaction with MaterialDesignController::MATERIAL_HYBRID -- but that isn\u0027t used much and the MaterialDesignController API is really clunky and hard to use in tests -- I think we can get rid of it once --enable-features\u003dTouchableChrome is launched -- it will be super confusing trying to cater for both).",
+      "parentUuid": "e021b9ce_61b6f5ba",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
