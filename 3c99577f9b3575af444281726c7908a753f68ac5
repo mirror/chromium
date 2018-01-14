@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac8dabb_97c06028",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "TestExpectations",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3a095e_c5c8f314",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "Nit, I think this paragraph could be reworded to be clearer.\n\nAlso, trivia note: Both spellings \"flaky\" and \"flakey\" are used; flaky seems more common, but interestingly flakey is slightly more common in Australia than other places:\nhttps://trends.google.com/trends/explore?q\u003dflaky,flakey",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd2f9b6_cabf5f2b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "If you\u0027d like it\u0027s also possible to include the default in the help string as a variable like this:\n\n  \u0027... (default: %(default)s)\u0027\n\nhttps://docs.python.org/3/library/argparse.html#help",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a44844_3a4b000a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "Since this is a local variable only in scope for about 10 lines, it\u0027s OK to use a shorter name like `remover` if you\u0027d like.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102dd4b1_773cd5a5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "This name is getting a little long :-P Although it\u0027s descriptive, I suppose.\n\nIt\u0027s OK to keep this name, or if you prefer you can rename it to something like ExpectationLineRemover (or any other name you think is good).",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6544583c_5fc9e9ef",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "Nit: single quotes for consistency",
+      "range": {
+        "startLine": 81,
+        "startChar": 85,
+        "endLine": 81,
+        "endChar": 90
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882b2e42_aaf65f71",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "We can also write `if not expectations`, which appears to be recommended by the Google style guide (https://google.github.io/styleguide/pyguide.html?showone\u003dTrue/False_evaluations#True/False_evaluations).",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da09d711_7f69e65b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "Nit: use periods at the end of comments like this for consistency.",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753d2548_252bdd1b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-14T19:05:15Z",
+      "side": 1,
+      "message": "len(expectations) \u003d\u003d 1",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "3c99577f9b3575af444281726c7908a753f68ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
