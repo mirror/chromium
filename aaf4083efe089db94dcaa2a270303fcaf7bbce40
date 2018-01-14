@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7923590d_7ac3cfd1",
+        "filename": "third_party/WebKit/Source/build/scripts/rule_bison.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-14T23:25:14Z",
+      "side": 1,
+      "message": "Bison generates foo.hh for foo.cc generation. It seems there is no ways to specify generated header file name.",
+      "revId": "aaf4083efe089db94dcaa2a270303fcaf7bbce40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
