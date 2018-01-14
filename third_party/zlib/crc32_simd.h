@@ -25,3 +25,12 @@ uint32_t ZLIB_INTERNAL crc32_sse42_simd_(
  */
 #define Z_CRC32_SSE42_MINIMUM_LENGTH 64
 #define Z_CRC32_SSE42_CHUNKSIZE_MASK 15
+
+/*
+ * crc32_crc32_simd_(): compute the crc32 of the buffer, where the buffer
+ * length should be greater than 0, on little endian ARMv8 devices.
+ */
+uint32_t ZLIB_INTERNAL crc32_crc32_simd_(
+    const unsigned char *buf,
+    z_size_t len,
+    uint32_t crc);
