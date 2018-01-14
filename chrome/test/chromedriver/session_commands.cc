@@ -1080,7 +1080,7 @@ Status ExecuteSetAutoReporting(Session* session,
 Status ExecuteUnimplementedCommand(Session* session,
                                    const base::DictionaryValue& params,
                                    std::unique_ptr<base::Value>* value) {
-  return Status(kUnknownCommand);
+  return Status(kUnknownCommand, "what why?");
 }
 
 Status ExecuteGetScreenOrientation(Session* session,
