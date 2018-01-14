@@ -139,6 +139,24 @@
       "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90df5cbf_a5e75ed2",
+        "filename": "chrome/browser/metrics/metrics_reporting_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-14T21:37:03Z",
+      "side": 1,
+      "message": "Another option is to make many of these functions take local state. At least they would be consistent. I can certainly look into this if you prefer it.",
+      "parentUuid": "4620122f_2de45a94",
+      "revId": "d660197cd9bc676809e0e9e995c9a7965ac4f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
