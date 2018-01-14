@@ -85,6 +85,7 @@ component("test_export_component") {
   deps = [
     ":test_export",
   ]
+  defines = [ "MOJO_TEST_IMPLEMENTATION" ]
 }
 
 if (!is_ios) {
@@ -104,6 +105,7 @@ mojom("test_export") {
   export_class_attribute = "MOJO_TEST_EXPORT"
   export_define = "MOJO_TEST_IMPLEMENTATION=1"
   export_header = "mojo/public/cpp/bindings/tests/mojo_test_export.h"
+
   if (!is_ios) {
     export_class_attribute_blink = "MOJO_TEST_BLINK_EXPORT"
     export_define_blink = "MOJO_TEST_BLINK_IMPLEMENTATION=1"
