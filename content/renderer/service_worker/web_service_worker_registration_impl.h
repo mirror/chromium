@@ -139,6 +139,23 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerObjectInfoPtr active) override;
   void UpdateFound() override;
 
+  using RegistrationObjectHostResponseCallback =
+      base::OnceCallback<void(blink::mojom::ServiceWorkerErrorType,
+                              const base::Optional<std::string>&)>;
+  // |callback| may be thread-hostile (must destroy on the caller thread of
+  // |host_for_global_scope_|). This function returns a thread-safe response
+  // callback, which adapts to run |callback| and is able to be destroyed on an
+  // arbitrary thread.
+  RegistrationObjectHostResponseCallback
+  WrapRegistrationObjectHostResponseCallback(
+      RegistrationObjectHostResponseCallback callback);
+  // Gets the response callback from |callback_map_| with the key |callback_id|,
+  // then runs it.
+  void OnRegistrationObjectHostResponseBack(
+      uint64_t callback_id,
+      blink::mojom::ServiceWorkerErrorType error,
+      const base::Optional<std::string>& error_msg);
+
   // RefCounted traits implementation, rather than delete |impl| directly, calls
   // |impl->DetachAndMaybeDestroy()| to notify that the last reference to it has
   // gone away.
@@ -213,7 +230,7 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg);
   void OnDidGetNavigationPreloadState(
-      std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks,
+      uint64_t web_callbacks_id,
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg,
       blink::mojom::NavigationPreloadStatePtr state);
@@ -278,6 +295,14 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   LifecycleState state_;
 
   std::vector<QueuedTask> queued_tasks_;
+
+  // Please see comments of WrapRegistrationObjectHostResponseCallback().
+  // TODO(leonhsl): Once we can avoid using Mojo thread safe ptr for
+  // |host_for_global_scope_|, we can eliminate these two maps.
+  std::map<uint64_t, RegistrationObjectHostResponseCallback> callback_map_;
+  std::map<uint64_t, std::unique_ptr<WebGetNavigationPreloadStateCallbacks>>
+      get_navigation_preload_state_callbacks_map_;
+  uint64_t next_request_id_ = 0;
 
   // For service worker client contexts, |this| is tracked (not owned) in
   // |provider_context_for_client_->controllee_state_->registrations_|.
