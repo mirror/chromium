@@ -78,7 +78,7 @@ class URLLoaderClientImplTest : public ::testing::Test,
 };
 
 TEST_F(URLLoaderClientImplTest, OnReceiveResponse) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
 
@@ -88,7 +88,7 @@ TEST_F(URLLoaderClientImplTest, OnReceiveResponse) {
 }
 
 TEST_F(URLLoaderClientImplTest, ResponseBody) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
 
@@ -110,7 +110,7 @@ TEST_F(URLLoaderClientImplTest, ResponseBody) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnReceiveRedirect) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   net::RedirectInfo redirect_info;
 
   url_loader_client_->OnReceiveRedirect(redirect_info, response_head);
@@ -121,7 +121,7 @@ TEST_F(URLLoaderClientImplTest, OnReceiveRedirect) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnDataDownloaded) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
   url_loader_client_->OnDataDownloaded(8, 13);
@@ -137,7 +137,7 @@ TEST_F(URLLoaderClientImplTest, OnDataDownloaded) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnReceiveCachedMetadata) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   std::vector<uint8_t> metadata;
   metadata.push_back('a');
 
@@ -153,7 +153,7 @@ TEST_F(URLLoaderClientImplTest, OnReceiveCachedMetadata) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnTransferSizeUpdated) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
   url_loader_client_->OnTransferSizeUpdated(4);
@@ -167,7 +167,7 @@ TEST_F(URLLoaderClientImplTest, OnTransferSizeUpdated) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnCompleteWithoutResponseBody) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -181,7 +181,7 @@ TEST_F(URLLoaderClientImplTest, OnCompleteWithoutResponseBody) {
 }
 
 TEST_F(URLLoaderClientImplTest, OnCompleteWithResponseBody) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -215,7 +215,7 @@ TEST_F(URLLoaderClientImplTest, OnCompleteWithResponseBody) {
 // bytes arrives after the completion message. URLLoaderClientImpl should
 // restore the order.
 TEST_F(URLLoaderClientImplTest, OnCompleteShouldBeTheLastMessage) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -247,7 +247,7 @@ TEST_F(URLLoaderClientImplTest, OnCompleteShouldBeTheLastMessage) {
 TEST_F(URLLoaderClientImplTest, CancelOnReceiveResponse) {
   request_peer_context_.cancel_on_receive_response = true;
 
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -269,7 +269,7 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveResponse) {
 TEST_F(URLLoaderClientImplTest, CancelOnReceiveData) {
   request_peer_context_.cancel_on_receive_data = true;
 
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   mojo::DataPipe data_pipe(DataPipeOptions());
@@ -297,7 +297,7 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveData) {
 }
 
 TEST_F(URLLoaderClientImplTest, Defer) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -322,7 +322,7 @@ TEST_F(URLLoaderClientImplTest, Defer) {
 }
 
 TEST_F(URLLoaderClientImplTest, DeferWithResponseBody) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -363,7 +363,7 @@ TEST_F(URLLoaderClientImplTest, DeferWithResponseBody) {
 // As "transfer size update" message is handled specially in the implementation,
 // we have a separate test.
 TEST_F(URLLoaderClientImplTest, DeferWithTransferSizeUpdated) {
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -410,7 +410,7 @@ TEST_F(URLLoaderClientImplTest, SetDeferredDuringFlushingDeferredMessage) {
   request_peer_context_.defer_on_redirect = true;
 
   net::RedirectInfo redirect_info;
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveRedirect(redirect_info, response_head);
@@ -472,7 +472,7 @@ TEST_F(URLLoaderClientImplTest,
        SetDeferredDuringFlushingDeferredMessageOnTransferSizeUpdated) {
   request_peer_context_.defer_on_transfer_size_updated = true;
 
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
@@ -514,7 +514,7 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveDataWhileFlushing) {
   request_peer_context_.cancel_on_receive_data = true;
   dispatcher_->SetDefersLoading(request_id_, true);
 
-  ResourceResponseHead response_head;
+  network::ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
   mojo::DataPipe data_pipe(DataPipeOptions());

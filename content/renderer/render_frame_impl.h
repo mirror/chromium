@@ -130,6 +130,10 @@ namespace media {
 class MediaPermission;
 }
 
+namespace network {
+struct ResourceResponseHead;
+}
+
 namespace service_manager {
 class InterfaceProvider;
 }
@@ -173,7 +177,6 @@ struct FrameOwnerProperties;
 struct FrameReplicationState;
 struct NavigationParams;
 struct RequestNavigationParams;
-struct ResourceResponseHead;
 struct ScreenInfo;
 
 class CONTENT_EXPORT RenderFrameImpl
@@ -516,7 +519,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // mojom::FrameNavigationControl implementation:
   void CommitNavigation(
-      const ResourceResponseHead& head,
+      const network::ResourceResponseHead& head,
       const GURL& body_url,
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
@@ -1094,7 +1097,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-      const ResourceResponseHead& head,
+      const network::ResourceResponseHead& head,
       const GURL& body_url,
       bool is_same_document_navigation);
 

@@ -2,24 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// See http://dev.chromium.org/developers/design-documents/multi-process-resource-loading
+// See
+// http://dev.chromium.org/developers/design-documents/multi-process-resource-loading
 
-#ifndef CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_H_
-#define CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_H_
+#ifndef SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_H_
+#define SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_H_
 
 #include <string>
 
 #include "base/compiler_specific.h"
 #include "base/memory/ref_counted.h"
-#include "content/common/content_export.h"
 #include "net/url_request/url_request_status.h"
 #include "services/network/public/cpp/resource_response_info.h"
 #include "url/gurl.h"
 
-namespace content {
+namespace network {
 
 // Parameters for a resource response header.
-struct ResourceResponseHead : network::ResourceResponseInfo {
+struct ResourceResponseHead : ResourceResponseInfo {
   // TimeTicks::Now() when the browser received the request from the renderer.
   base::TimeTicks request_start;
   // TimeTicks::Now() when the browser sent the response to the renderer.
@@ -39,8 +39,7 @@ struct SyncLoadResult : ResourceResponseHead {
 
 // Simple wrapper that refcounts ResourceResponseHead.
 // Inherited, rather than typedef'd, to allow forward declarations.
-struct CONTENT_EXPORT ResourceResponse
-    : public base::RefCountedThreadSafe<ResourceResponse> {
+struct ResourceResponse : public base::RefCountedThreadSafe<ResourceResponse> {
  public:
   ResourceResponseHead head;
 
@@ -57,6 +56,6 @@ struct CONTENT_EXPORT ResourceResponse
   ~ResourceResponse() {}
 };
 
-}  // namespace content
+}  // namespace network
 
-#endif  // CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_H_
+#endif  // SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_H_
