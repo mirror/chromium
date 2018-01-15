@@ -16,6 +16,24 @@
       "revId": "8fff7185411d8a200a7f29dd78d655aba2916cf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90319c3b_1f38393e",
+        "filename": "build/config/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2018-01-15T14:44:29Z",
+      "side": 1,
+      "message": "Yes, I was going to ask you the same question.\nLet me file another CL (I have also forgot to delete a comment on snprintf). Give me ~30 minutes.",
+      "parentUuid": "4606186e_84a440f7",
+      "revId": "8fff7185411d8a200a7f29dd78d655aba2916cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
