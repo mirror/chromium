@@ -70,6 +70,30 @@
       "revId": "5872ede8846a1692457a3d5863a302309a747c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e63fc4b_847ef702",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-15T03:06:20Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "ae5eca82_9edec053",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 162,
+        "endChar": 26
+      },
+      "revId": "5872ede8846a1692457a3d5863a302309a747c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
