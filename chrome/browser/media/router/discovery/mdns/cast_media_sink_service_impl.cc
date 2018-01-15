@@ -11,9 +11,9 @@
 #include "base/time/default_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/media_router_feature.h"
+#include "chrome/browser/media/router/providers/cast/cast_message_handler.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/media_sink.h"
-#include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_channel_util.h"
 #include "components/cast_channel/cast_socket_service.h"
 #include "components/cast_channel/logger.h"
@@ -23,102 +23,9 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
+namespace media_router {
+
 namespace {
-
-media_router::MediaSinkInternal CreateCastSinkFromDialSink(
-    const media_router::MediaSinkInternal& dial_sink) {
-  const std::string& unique_id = dial_sink.sink().id();
-  const std::string& friendly_name = dial_sink.sink().name();
-  media_router::MediaSink sink(unique_id, friendly_name,
-                               media_router::SinkIconType::CAST,
-                               media_router::MediaRouteProviderId::EXTENSION);
-
-  media_router::CastSinkExtraData extra_data;
-  extra_data.ip_endpoint =
-      net::IPEndPoint(dial_sink.dial_data().ip_address,
-                      media_router::CastMediaSinkServiceImpl::kCastControlPort);
-  extra_data.model_name = dial_sink.dial_data().model_name;
-  extra_data.discovered_by_dial = true;
-  extra_data.capabilities = cast_channel::CastDeviceCapability::NONE;
-
-  return media_router::MediaSinkInternal(sink, extra_data);
-}
-
-void RecordError(cast_channel::ChannelError channel_error,
-                 cast_channel::LastError last_error) {
-  media_router::MediaRouterChannelError error_code =
-      media_router::MediaRouterChannelError::UNKNOWN;
-
-  switch (channel_error) {
-    // TODO(crbug.com/767204): Add in errors for transient socket and timeout
-    // errors, but only after X number of occurences.
-    case cast_channel::ChannelError::UNKNOWN:
-      error_code = media_router::MediaRouterChannelError::UNKNOWN;
-      break;
-    case cast_channel::ChannelError::AUTHENTICATION_ERROR:
-      error_code = media_router::MediaRouterChannelError::AUTHENTICATION;
-      break;
-    case cast_channel::ChannelError::CONNECT_ERROR:
-      error_code = media_router::MediaRouterChannelError::CONNECT;
-      break;
-    case cast_channel::ChannelError::CONNECT_TIMEOUT:
-      error_code = media_router::MediaRouterChannelError::CONNECT_TIMEOUT;
-      break;
-    case cast_channel::ChannelError::PING_TIMEOUT:
-      error_code = media_router::MediaRouterChannelError::PING_TIMEOUT;
-      break;
-    default:
-      // Do nothing and let the standard launch failure issue surface.
-      break;
-  }
-
-  // If we have details, we may override the generic error codes set above.
-  // TODO(crbug.com/767204): Expand and refine below as we see more actual
-  // reports.
-
-  // General certificate errors
-  if ((last_error.challenge_reply_error ==
-           cast_channel::ChallengeReplyError::PEER_CERT_EMPTY ||
-       last_error.challenge_reply_error ==
-           cast_channel::ChallengeReplyError::FINGERPRINT_NOT_FOUND ||
-       last_error.challenge_reply_error ==
-           cast_channel::ChallengeReplyError::CERT_PARSING_FAILED ||
-       last_error.challenge_reply_error ==
-           cast_channel::ChallengeReplyError::CANNOT_EXTRACT_PUBLIC_KEY) ||
-      (last_error.net_return_value <=
-           net::ERR_CERT_COMMON_NAME_INVALID &&  // CERT_XXX errors
-       last_error.net_return_value > net::ERR_CERT_END) ||
-      last_error.channel_event ==
-          cast_channel::ChannelEvent::SSL_SOCKET_CONNECT_FAILED ||
-      last_error.channel_event ==
-          cast_channel::ChannelEvent::SEND_AUTH_CHALLENGE_FAILED ||
-      last_error.channel_event ==
-          cast_channel::ChannelEvent::AUTH_CHALLENGE_REPLY_INVALID) {
-    error_code = media_router::MediaRouterChannelError::GENERAL_CERTIFICATE;
-  }
-
-  // Certificate timing errors
-  if (last_error.channel_event ==
-          cast_channel::ChannelEvent::SSL_CERT_EXCESSIVE_LIFETIME ||
-      last_error.net_return_value == net::ERR_CERT_DATE_INVALID) {
-    error_code = media_router::MediaRouterChannelError::CERTIFICATE_TIMING;
-  }
-
-  // Network/firewall access denied
-  if (last_error.net_return_value == net::ERR_NETWORK_ACCESS_DENIED) {
-    error_code = media_router::MediaRouterChannelError::NETWORK;
-  }
-
-  // Authentication errors (assumed active ssl manipulation)
-  if (last_error.challenge_reply_error ==
-          cast_channel::ChallengeReplyError::CERT_NOT_SIGNED_BY_TRUSTED_CA ||
-      last_error.challenge_reply_error ==
-          cast_channel::ChallengeReplyError::SIGNED_BLOBS_MISMATCH) {
-    error_code = media_router::MediaRouterChannelError::AUTHENTICATION;
-  }
-
-  media_router::CastAnalytics::RecordDeviceChannelError(error_code);
-}
 
 // Parameter names.
 constexpr char kParamNameInitialDelayInMilliSeconds[] = "initial_delay_in_ms";
@@ -151,11 +58,98 @@ constexpr int kMaxLivenessTimeoutInSeconds = 60;
 // Max failure count allowed for a Cast channel.
 constexpr int kMaxFailureCount = 100;
 
-}  // namespace
+MediaSinkInternal CreateCastSinkFromDialSink(
+    const MediaSinkInternal& dial_sink) {
+  const std::string& unique_id = dial_sink.sink().id();
+  const std::string& friendly_name = dial_sink.sink().name();
+  MediaSink sink(unique_id, friendly_name, SinkIconType::CAST,
+                 MediaRouteProviderId::EXTENSION);
 
-namespace media_router {
+  CastSinkExtraData extra_data;
+  extra_data.ip_endpoint =
+      net::IPEndPoint(dial_sink.dial_data().ip_address,
+                      CastMediaSinkServiceImpl::kCastControlPort);
+  extra_data.model_name = dial_sink.dial_data().model_name;
+  extra_data.discovered_by_dial = true;
+  extra_data.capabilities = cast_channel::CastDeviceCapability::NONE;
 
-namespace {
+  return MediaSinkInternal(sink, extra_data);
+}
+
+void RecordError(cast_channel::ChannelError channel_error,
+                 cast_channel::LastError last_error) {
+  MediaRouterChannelError error_code = MediaRouterChannelError::UNKNOWN;
+
+  switch (channel_error) {
+    // TODO(crbug.com/767204): Add in errors for transient socket and timeout
+    // errors, but only after X number of occurences.
+    case cast_channel::ChannelError::UNKNOWN:
+      error_code = MediaRouterChannelError::UNKNOWN;
+      break;
+    case cast_channel::ChannelError::AUTHENTICATION_ERROR:
+      error_code = MediaRouterChannelError::AUTHENTICATION;
+      break;
+    case cast_channel::ChannelError::CONNECT_ERROR:
+      error_code = MediaRouterChannelError::CONNECT;
+      break;
+    case cast_channel::ChannelError::CONNECT_TIMEOUT:
+      error_code = MediaRouterChannelError::CONNECT_TIMEOUT;
+      break;
+    case cast_channel::ChannelError::PING_TIMEOUT:
+      error_code = MediaRouterChannelError::PING_TIMEOUT;
+      break;
+    default:
+      // Do nothing and let the standard launch failure issue surface.
+      break;
+  }
+
+  // If we have details, we may override the generic error codes set above.
+  // TODO(crbug.com/767204): Expand and refine below as we see more actual
+  // reports.
+
+  // General certificate errors
+  if ((last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::PEER_CERT_EMPTY ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::FINGERPRINT_NOT_FOUND ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::CERT_PARSING_FAILED ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::CANNOT_EXTRACT_PUBLIC_KEY) ||
+      (last_error.net_return_value <=
+           net::ERR_CERT_COMMON_NAME_INVALID &&  // CERT_XXX errors
+       last_error.net_return_value > net::ERR_CERT_END) ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::SSL_SOCKET_CONNECT_FAILED ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::SEND_AUTH_CHALLENGE_FAILED ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::AUTH_CHALLENGE_REPLY_INVALID) {
+    error_code = MediaRouterChannelError::GENERAL_CERTIFICATE;
+  }
+
+  // Certificate timing errors
+  if (last_error.channel_event ==
+          cast_channel::ChannelEvent::SSL_CERT_EXCESSIVE_LIFETIME ||
+      last_error.net_return_value == net::ERR_CERT_DATE_INVALID) {
+    error_code = MediaRouterChannelError::CERTIFICATE_TIMING;
+  }
+
+  // Network/firewall access denied
+  if (last_error.net_return_value == net::ERR_NETWORK_ACCESS_DENIED) {
+    error_code = MediaRouterChannelError::NETWORK;
+  }
+
+  // Authentication errors (assumed active ssl manipulation)
+  if (last_error.challenge_reply_error ==
+          cast_channel::ChallengeReplyError::CERT_NOT_SIGNED_BY_TRUSTED_CA ||
+      last_error.challenge_reply_error ==
+          cast_channel::ChallengeReplyError::SIGNED_BLOBS_MISMATCH) {
+    error_code = MediaRouterChannelError::AUTHENTICATION;
+  }
+
+  CastAnalytics::RecordDeviceChannelError(error_code);
+}
 
 bool IsNetworkIdUnknownOrDisconnected(const std::string& network_id) {
   return network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
@@ -168,12 +162,14 @@ bool IsNetworkIdUnknownOrDisconnected(const std::string& network_id) {
 constexpr int CastMediaSinkServiceImpl::kMaxDialSinkFailureCount;
 
 CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
-    const OnSinksDiscoveredCallback& callback,
+    const OnSinksDiscoveredCallback& sinks_discovered_cb,
+    const SinkQueryCallback& sink_query_cb,
     cast_channel::CastSocketService* cast_socket_service,
     DiscoveryNetworkMonitor* network_monitor,
     const scoped_refptr<net::URLRequestContextGetter>&
         url_request_context_getter)
-    : MediaSinkServiceBase(callback),
+    : MediaSinkServiceBase(sinks_discovered_cb),
+      sink_query_cb_(sink_query_cb),
       cast_socket_service_(cast_socket_service),
       network_monitor_(network_monitor),
       task_runner_(cast_socket_service_->task_runner()),
@@ -243,6 +239,8 @@ void CastMediaSinkServiceImpl::Start() {
   network_monitor_->GetNetworkId(base::BindOnce(
       &CastMediaSinkServiceImpl::OnNetworksChanged, GetWeakPtr()));
   network_monitor_->AddObserver(this);
+
+  message_handler_ = CastMessageHandler::GetInstance();
 }
 
 void CastMediaSinkServiceImpl::OnDiscoveryComplete() {
@@ -250,14 +248,13 @@ void CastMediaSinkServiceImpl::OnDiscoveryComplete() {
   current_sinks_.clear();
 
   // Copy cast sink from |current_sinks_map_| to |current_sinks_|.
-  for (const auto& sink_it : current_sinks_map_) {
+  for (const auto& ip_and_sink : current_sinks_map_) {
+    const auto& sink = ip_and_sink.second;
     DVLOG(2) << "Discovered by "
-             << (sink_it.second.cast_data().discovered_by_dial ? "DIAL"
-                                                               : "mDNS")
-             << " [name]: " << sink_it.second.sink().name()
-             << " [ip_endpoint]: "
-             << sink_it.second.cast_data().ip_endpoint.ToString();
-    current_sinks_.insert(sink_it.second);
+             << (sink.cast_data().discovered_by_dial ? "DIAL" : "mDNS")
+             << " [name]: " << sink.sink().name()
+             << " [ip_endpoint]: " << sink.cast_data().ip_endpoint.ToString();
+    current_sinks_.insert(sink);
   }
 
   MediaSinkServiceBase::OnDiscoveryComplete();
@@ -498,7 +495,7 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
              << ip_endpoint.ToString() << " [error_state]: "
              << cast_channel::ChannelErrorToString(error_state);
 
-    OnChannelOpenFailed(ip_endpoint);
+    OnChannelOpenFailed(ip_endpoint, cast_sink.sink().id());
     CastAnalytics::RecordCastChannelConnectResult(
         MediaRouterChannelConnectResults::FAILURE);
     return;
@@ -526,7 +523,7 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
 
   CastAnalytics::RecordCastChannelConnectResult(
       MediaRouterChannelConnectResults::SUCCESS);
-  media_router::CastSinkExtraData extra_data = cast_sink.cast_data();
+  CastSinkExtraData extra_data = cast_sink.cast_data();
   // Manually set device capabilities for sinks discovered via DIAL as DIAL
   // discovery does not provide capability info.
   if (cast_sink.cast_data().discovered_by_dial) {
@@ -549,16 +546,53 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
              !cast_sink.cast_data().discovered_by_dial) {
     metrics_.RecordCastSinkDiscoverySource(SinkSource::kDialMdns);
   }
-  current_sinks_map_[ip_endpoint] = cast_sink;
 
+  AddOrUpdateSink(ip_endpoint, cast_sink, socket);
   failure_count_map_.erase(ip_endpoint);
   MediaSinkServiceBase::RestartTimer();
 }
 
+void CastMediaSinkServiceImpl::AddOrUpdateSink(
+    const net::IPEndPoint& ip_endpoint,
+    const MediaSinkInternal& sink,
+    cast_channel::CastSocket* socket) {
+  const MediaSink::Id& sink_id = sink.sink().id();
+  current_sinks_map_.insert_or_assign(ip_endpoint, sink);
+  for (const std::string& app_id : availability_tracker_.GetRegisteredApps()) {
+    if (availability_tracker_.IsAvailabilityKnown(sink_id, app_id))
+      continue;
+
+    message_handler_->RequestAppAvailability(
+        socket, app_id,
+        base::BindOnce(&CastMediaSinkServiceImpl::UpdateAppAvailability,
+                       GetWeakPtr(), sink_id));
+  }
+
+  // If the same sink is already mapped to a stale IP address, we need to
+  // remove it from the map as well. There should be at most one such entry.
+  auto it = current_sinks_map_.begin();
+  while (it != current_sinks_map_.end()) {
+    if (it->first == ip_endpoint || it->second.sink().id() != sink_id) {
+      ++it;
+    } else {
+      current_sinks_map_.erase(it);
+      break;
+    }
+  }
+}
+
 void CastMediaSinkServiceImpl::OnChannelOpenFailed(
-    const net::IPEndPoint& ip_endpoint) {
-  current_sinks_map_.erase(ip_endpoint);
-  MediaSinkServiceBase::RestartTimer();
+    const net::IPEndPoint& ip_endpoint,
+    const MediaSink::Id& sink_id) {
+  // Check the sink ID before erasing, as another sink might have taken its
+  // old IP address.
+  auto it = current_sinks_map_.find(ip_endpoint);
+  if (it != current_sinks_map_.end() && it->second.sink().id() == sink_id) {
+    current_sinks_map_.erase(it);
+    MediaSinkServiceBase::RestartTimer();
+  }
+
+  UpdateSinkQueries(availability_tracker_.RemoveResultsForSink(sink_id));
 }
 
 void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
@@ -602,6 +636,115 @@ void CastMediaSinkServiceImpl::AttemptConnection(
                   SinkSource::kConnectionRetry);
     }
   }
+}
+
+void CastMediaSinkServiceImpl::RunSinkQueryCallback(
+    const MediaSource::Id& source_id,
+    const std::vector<MediaSinkInternal>& sinks) {
+  // Cast devices are valid on all origins.
+  sink_query_cb_.Run(source_id, sinks, std::vector<url::Origin>());
+}
+
+void CastMediaSinkServiceImpl::UpdateSinkQueries(
+    const std::vector<ParsedMediaSource>& sources) {
+  for (const auto& source : sources) {
+    auto sink_ids = availability_tracker_.GetAvailableSinks(source);
+    RunSinkQueryCallback(source.source_id, GetSinksByIds(sink_ids));
+  }
+}
+
+std::vector<MediaSinkInternal> CastMediaSinkServiceImpl::GetSinksByIds(
+    const base::flat_set<MediaSink::Id>& sink_ids) const {
+  std::vector<MediaSinkInternal> sinks;
+  for (const auto& sink_id : sink_ids) {
+    const MediaSinkInternal* sink = GetSinkById(sink_id);
+    if (!sink)
+      sinks.push_back(*sink);
+  }
+  return sinks;
+}
+
+const MediaSinkInternal* CastMediaSinkServiceImpl::GetSinkById(
+    const MediaSink::Id& sink_id) const {
+  const MediaSinkInternal* sink = nullptr;
+  for (const auto& ip_and_sink : current_sinks_map_) {
+    if (ip_and_sink.second.sink().id() == sink_id) {
+      sink = &ip_and_sink.second;
+      break;
+    }
+  }
+  return sink;
+}
+
+void CastMediaSinkServiceImpl::UpdateAppAvailability(
+    const MediaSink::Id& sink_id,
+    const std::string& app_id,
+    cast_channel::GetAppAvailabilityResult result) {
+  if (!GetSinkById(sink_id))
+    return;
+
+  if (result == cast_channel::GetAppAvailabilityResult::kUnknown) {
+    // TODO(imcheng): Retry?
+    DVLOG(2) << "App availability unknown for sink: " << sink_id
+             << ", app: " << app_id;
+    return;
+  }
+
+  AppAvailability availability =
+      result == cast_channel::GetAppAvailabilityResult::kAvailable
+          ? AppAvailability::kAvailable
+          : AppAvailability::kUnavailable;
+
+  DVLOG(1) << "App " << app_id << " on  sink " << sink_id << " is "
+           << (availability == AppAvailability::kAvailable);
+  UpdateSinkQueries(availability_tracker_.UpdateAppAvailability(sink_id, app_id,
+                                                                availability));
+}
+
+void CastMediaSinkServiceImpl::StartObservingMediaSinks(
+    const ParsedMediaSource& source) {
+  // A broadcast request is not an actual sink query; it is used to send a
+  // app precache message to receivers.
+  if (source.broadcast_request) {
+    // TODO(imcheng): Implement broadcast, or figure out a re-design that does
+    // not use sink queries.
+    return;
+  }
+
+  if (availability_tracker_.HasSource(source))
+    return;
+
+  base::flat_set<std::string> new_app_ids =
+      availability_tracker_.RegisterSource(source);
+  base::flat_set<MediaSink::Id> cached_sink_ids =
+      availability_tracker_.GetAvailableSinks(source);
+  std::vector<MediaSinkInternal> cached_sinks = GetSinksByIds(cached_sink_ids);
+  if (!cached_sinks.empty())
+    RunSinkQueryCallback(source.source_id, cached_sinks);
+
+  for (const auto& app_id : new_app_ids) {
+    for (const auto& ip_and_sink : current_sinks_map_) {
+      const auto& sink = ip_and_sink.second;
+      auto channel_id = sink.cast_data().cast_channel_id;
+      auto* socket = cast_socket_service_->GetSocket(channel_id);
+      if (!socket) {
+        DLOG(ERROR) << "Socket not found for " << channel_id;
+        continue;
+      }
+      if (!availability_tracker_.IsAvailabilityKnown(sink.sink().id(),
+                                                     app_id)) {
+        message_handler_->RequestAppAvailability(
+            socket, app_id,
+            base::BindOnce(&CastMediaSinkServiceImpl::UpdateAppAvailability,
+                           GetWeakPtr(), sink.sink().id()));
+      }
+    }
+  }
+}
+
+void CastMediaSinkServiceImpl::StopObservingMediaSinks(
+    const MediaSource::Id& source_id) {
+  availability_tracker_.UnregisterSource(source_id);
 }
 
 OnDialSinkAddedCallback CastMediaSinkServiceImpl::GetDialSinkAddedCallback() {

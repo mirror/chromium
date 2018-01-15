@@ -15,8 +15,10 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
+#include "chrome/browser/media/router/providers/cast/parsed_media_source.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service_util.h"
+#include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace media_router {
@@ -45,8 +47,13 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   // Starts Cast sink discovery. No-ops if already started.
   // |sink_discovery_cb|: Callback to invoke when the list of discovered sinks
   // has been updated.
+  // |sink_query_cb|: Callback to invoke when sink query result has been
+  // updated.
+  // Note that it is possible for the callbacks to be invoked after |this| is
+  // destroyed.
   // Marked virtual for tests.
-  virtual void Start(const OnSinksDiscoveredCallback& sinks_discovered_cb);
+  virtual void Start(const OnSinksDiscoveredCallback& sinks_discovered_cb,
+                     const SinkQueryCallback& sink_query_cb);
 
   // Initiates discovery immediately in response to a user gesture
   // (i.e., opening the Media Router dialog).
@@ -54,9 +61,17 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   // Marked virtual for tests.
   virtual void OnUserGesture();
 
+  // Starts observing sinks compatible with |source|. Sink updates will be
+  // notified via |sink_query_cb| passed into |Start()|.
+  void StartObservingMediaSinks(const ParsedMediaSource& source);
+
+  // Stops observing sinks compatible with |source_id|.
+  void StopObservingMediaSinks(const MediaSource::Id& source_id);
+
   // Marked virtual for tests.
   virtual std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
-  CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb);
+  CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb,
+             const SinkQueryCallback& sink_query_cb);
 
   // Registers with DnsSdRegistry to listen for Cast devices. Note that this is
   // called on |Start()| on all platforms except for Windows. On Windows, this
@@ -78,9 +93,6 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestTimer);
 
   void OnDialSinkAdded(const MediaSinkInternal& sink);
-  void RunSinksDiscoveredCallback(
-      const OnSinksDiscoveredCallback& sinks_discovered_cb,
-      std::vector<MediaSinkInternal> sinks);
 
   // DnsSdRegistry::DnsSdObserver implementation
   void OnDnsSdEvent(const std::string& service_type,
