@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8aba3e_5a9333bd",
+        "filename": "cc/input/scroll_snap_data.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T10:40:19Z",
+      "side": 1,
+      "message": "I believe these should be in an initializer list.",
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb139931_4532721a",
+        "filename": "cc/input/scroll_snap_data.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T10:40:19Z",
+      "side": 1,
+      "message": "nit: const;",
+      "range": {
+        "startLine": 151,
+        "startChar": 59,
+        "endLine": 151,
+        "endChar": 60
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7e468b_14489004",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 3803,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T10:40:19Z",
+      "side": 1,
+      "message": "const SnapContainerData\u0026",
+      "range": {
+        "startLine": 3803,
+        "startChar": 2,
+        "endLine": 3803,
+        "endChar": 19
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0866037_4015b6cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T10:40:19Z",
+      "side": 1,
+      "message": "nit: const SnapContainerData\u0026",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 19
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b3b774_713b89ff",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T10:40:19Z",
+      "side": 1,
+      "message": "nit: const Optional\u003cSnapContainerData\u003e\u0026",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
