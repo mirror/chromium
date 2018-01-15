@@ -310,6 +310,30 @@
       "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa789fd_a62fc928",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T04:43:26Z",
+      "side": 0,
+      "message": "Yes, according to current impl of DeleteSelection(), it is checking\nFS.VS.IsRange().\nBTW, it is seems WillDeleteSelection() is better name.\n\nBecause of all call sites of TypingCommand::DeleteSelection(),\nexcept for in  InsertTextDuringCompositionWithEvents(), is in\nIMC.cpp, we can have IMC version of DeleteSeleciton() in IMC.cpp as\nstatic function.\n\nNote: The call site[1] already dispatch \"beforeinput\", it\nseems we can have DeleteSelection() for IMC in IMC.cpp as static\nfunction.\n\nAnyway, it is worth to try to introduce IMC version of DeleteSelection()\nwhich dispatching \"beforeinput\" before calling TypingCommand::DeleteSelection().\n\nNote: I\u0027m not sure value of isComposing for DeleteSurroundingText()\n\n\n[1]\nInputMethodController::ExtendSelectionAndDelete() {\n ...\n  Node* target \u003d GetDocument().FocusedElement();\n  if (target) {\n    DispatchBeforeInputEditorCommand(\n        target, InputEvent::InputType::kDeleteContentBackward,\n        TargetRangesForInputEvent(*target));\n  }\n\n// Note: Selection may not be IsRange() here.\n  TypingCommand::DeleteSelection(GetDocument());\n}",
+      "parentUuid": "56ff6206_b45827f4",
+      "range": {
+        "startLine": 698,
+        "startChar": 6,
+        "endLine": 698,
+        "endChar": 36
+      },
+      "revId": "759bad9b5e62c3dda8aa2e5e7fbba870a06a6ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
