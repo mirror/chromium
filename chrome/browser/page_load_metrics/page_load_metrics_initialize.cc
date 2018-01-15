@@ -90,6 +90,7 @@ void PageLoadMetricsEmbedder::RegisterObservers(
       prerender::PrerenderManagerFactory::GetForBrowserContext(
           web_contents_->GetBrowserContext());
   bool is_prerendering =
+      prerender_manager &&
       !!prerender_manager->GetPrerenderContents(web_contents_);
   if (!is_prerendering) {
     tracker->AddObserver(base::MakeUnique<AbortsPageLoadMetricsObserver>());
