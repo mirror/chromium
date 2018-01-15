@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1be7dab_674a5242",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-15T06:14:02Z",
+      "side": 1,
+      "message": "Note: isolated origins must have http or https schemes - see IsolatedOriginUtil::IsValidIsolatedOrigin() - and these are also the only schemes allowed to be matched below.",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
