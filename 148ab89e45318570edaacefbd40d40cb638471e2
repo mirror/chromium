@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34644bef_fdef8e43",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T16:41:28Z",
+      "side": 1,
+      "message": "nit: This is kind of unused now that you split the test cases into two.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 51
+      },
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303ea8cf_d4fe8ba2",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T16:41:28Z",
+      "side": 1,
+      "message": "I just learned that:\n\n(https://login.awesomecompany, awesomecompany) -\u003e valid\n(https://earth.login.awesomecompany, login.awesomecompany) -\u003e valid\n(https://google.com:1337, google.com) -\u003e valid\n\nPlus could you please add tests for:\n\n(https://notgoogle.com, google.com) -\u003e invalid\n(https://not-google.com, google.com) -\u003e invalid\n(https://evil.appspot.com, appspot.com) -\u003e invalid\n(https://evil.co.uk, co.uk) -\u003e invalid\n\n(https://google.com, google.com.) -\u003e ??\n(https://google.com., google.com) -\u003e ??\n(https://google.com., google.com.) -\u003e ??\n(https://google.com, google.com..) -\u003e ??\n(https://google.com.., google.com) -\u003e ??\n(https://google.com.., google.com..) -\u003e ??\n\n(https://.google.com, google.com) -\u003e ??\n(https://..google.com, google.com) -\u003e ??\n(https://google.com, .google.com) -\u003e ??\n(https://.google.com, .google.com) -\u003e ??\n(https://..google.com, .google.com) -\u003e ??\n(https://accounts.google.com, .google.com) -\u003e ??\n\n(https://1.2.3, 1.2.3) -\u003e invalid\n(https://1.2.3, 2.3) -\u003e invalid\n\n(https://127.0.0.1, 127.0.0.1) -\u003e invalid\n(https://127.0.0.1, 27.0.0.1) -\u003e invalid\n(https://127.0.0.1, .0.0.1) -\u003e invalid\n(https://127.0.0.1, 0.0.1) -\u003e invalid\n\n(https://[::127.0.0.1], 127.0.0.1) -\u003e invalid\n(https://[::127.0.0.1], [127.0.0.1]) -\u003e invalid\n(https://[::1], 1) -\u003e invalid\n(https://[::1], 1]) -\u003e invalid\n(https://[::1], ::1) -\u003e invalid\n(https://[::1], [::1]) -\u003e invalid\n(https://[1::1], ::1) -\u003e invalid\n(https://[1::1], ::1]) -\u003e invalid\n(https://[1::1], [::1]) -\u003e invalid\n\n(http://google.com:443, google.com) -\u003e invalid\n(data:google.com, google.com) -\u003e invalid\n(data:text/html,google.com, google.com) -\u003e invalid\n(ws://google.com, google.com) -\u003e invalid\n(wss:///google.com, google.com) -\u003e ??\n(gopher://google.com, google.com) -\u003e invalid\n(ftp://google.com, google.com) -\u003e invalid\n(file:///google.com, google.com) -\u003e invalid\n\n(data:, \u003cempty string\u003e) -\u003e invalid\n(https://google.com, \u003cempty string\u003e) -\u003e invalid\n(ws://google.com, \u003cempty string\u003e) -\u003e invalid\n(wss:///google.com, \u003cempty string\u003e) -\u003e invalid\n(gopher://google.com, \u003cempty string\u003e) -\u003e invalid\n(ftp://google.com, \u003cempty string\u003e) -\u003e invalid\n(file:///google.com, \u003cempty string\u003e) -\u003e invalid\n\nIt would be good to have webkit unittest or layout test coverage for the same list of pairs, so that it\u0027s not trivial to DoS the renderer by calling credential.get methods with frivolous RPIDs.\n\nWe should certainly have about:blank, javascipt:alert(), and at least one \u003ciframe srcdoc\u003d\"...\"\u003e layout test.",
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d4a172_d241570c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T16:41:28Z",
+      "side": 1,
+      "message": "nit: Update comment.",
+      "range": {
+        "startLine": 155,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 25
+      },
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
