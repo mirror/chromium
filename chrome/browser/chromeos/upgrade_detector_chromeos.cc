@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "base/memory/singleton.h"
+#include "base/memory/ptr_util.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/update_engine_client.h"
 
@@ -160,11 +160,6 @@ void UpgradeDetectorChromeos::OnChannelsReceived(
 }
 
 // static
-UpgradeDetectorChromeos* UpgradeDetectorChromeos::GetInstance() {
-  return base::Singleton<UpgradeDetectorChromeos>::get();
-}
-
-// static
-UpgradeDetector* UpgradeDetector::GetInstance() {
-  return UpgradeDetectorChromeos::GetInstance();
+std::unique_ptr<UpgradeDetector> UpgradeDetector::Create() {
+  return base::WrapUnique(new UpgradeDetectorChromeos());
 }

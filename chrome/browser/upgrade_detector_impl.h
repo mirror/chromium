@@ -31,9 +31,6 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   // run on a thread where I/O operations are allowed.
   static base::Version GetCurrentlyInstalledVersion();
 
-  // Returns the global instance.
-  static UpgradeDetectorImpl* GetInstance();
-
  protected:
   UpgradeDetectorImpl();
 
@@ -45,14 +42,7 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   void NotifyOnUpgradeWithTimePassed(base::TimeDelta time_passed);
 
  private:
-  // A callback that receives the results of |DetectUpgradeTask|.
-  using UpgradeDetectedCallback = base::OnceCallback<void(UpgradeAvailable)>;
-
-#if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
-  // Receives the results of AreAutoupdatesEnabled and starts the upgrade check
-  // timer.
-  void OnAutoupdatesEnabledResult(bool auto_updates_enabled);
-#endif
+  friend class UpgradeDetector;
 
   // Start the timer that will call |CheckForUpgrade()|.
   void StartTimerForUpgradeCheck();
@@ -65,10 +55,6 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   // badging) of the notification.
   void StartUpgradeNotificationTimer();
 
-  // Sends out a notification and starts a one shot timer to wait until
-  // notifying the user.
-  void UpgradeDetected(UpgradeAvailable upgrade_available);
-
   // Returns true after calling UpgradeDetected if current install is outdated.
   bool DetectOutdatedInstall();
 
@@ -77,11 +63,11 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   // user that a new version is available.
   void NotifyOnUpgrade();
 
-  // Determines whether or not an update is available, posting |callback| with
-  // the result to |callback_task_runner| if so.
-  static void DetectUpgradeTask(
-      scoped_refptr<base::TaskRunner> callback_task_runner,
-      UpgradeDetectedCallback callback);
+  void OnUpgradeDetected(bool is_critical);
+
+  // Sends out a notification and starts a one shot timer to wait until
+  // notifying the user.
+  void ReceivedNotification(NotificationType notification);
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -95,11 +81,8 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   // has passed and we should start notifying the user.
   base::RepeatingTimer upgrade_notification_timer_;
 
-  // True if this build is a dev or canary channel build.
-  bool is_unstable_channel_;
-
-  // True if auto update is turned on.
-  bool is_auto_update_enabled_;
+  // True if this browser is on the Google Chrome canary or dev channels.
+  const bool is_unstable_channel_;
 
   // When the upgrade was detected - either a software update or a variations
   // update, whichever happened first.
@@ -115,6 +98,5 @@ class UpgradeDetectorImpl : public UpgradeDetector,
 
   DISALLOW_COPY_AND_ASSIGN(UpgradeDetectorImpl);
 };
-
 
 #endif  // CHROME_BROWSER_UPGRADE_DETECTOR_IMPL_H_

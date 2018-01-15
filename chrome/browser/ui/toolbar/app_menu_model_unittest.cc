@@ -60,13 +60,28 @@ class AppMenuModelTest : public BrowserWithTestWindowTest,
   AppMenuModelTest() = default;
   ~AppMenuModelTest() override = default;
 
+  void SetUp() override {
+    BrowserWithTestWindowTest::SetUp();
+    upgrade_detector_ = UpgradeDetector::Create();
+    TestingBrowserProcess::GetGlobal()->SetUpgradeDetector(
+        upgrade_detector_.get());
+  }
+  void TearDown() override {
+    TestingBrowserProcess::GetGlobal()->SetUpgradeDetector(nullptr);
+    BrowserWithTestWindowTest::TearDown();
+  }
+
   // Don't handle accelerators.
   bool GetAcceleratorForCommandId(int command_id,
                                   ui::Accelerator* accelerator) const override {
     return false;
   }
 
+ protected:
+  UpgradeDetector* upgrade_detector() { return upgrade_detector_.get(); }
+
  private:
+  std::unique_ptr<UpgradeDetector> upgrade_detector_;
   DISALLOW_COPY_AND_ASSIGN(AppMenuModelTest);
 };
 
@@ -112,9 +127,8 @@ TEST_F(AppMenuModelTest, Basics) {
   // the exact number.
   EXPECT_GT(itemCount, 10);
 
-  UpgradeDetector* detector = UpgradeDetector::GetInstance();
-  detector->NotifyUpgrade();
-  EXPECT_TRUE(detector->notify_upgrade());
+  upgrade_detector()->NotifyUpgrade(UpgradeDetector::UPGRADE_ANNOYANCE_LOW);
+  EXPECT_TRUE(upgrade_detector()->notify_upgrade());
   EXPECT_EQ(browser_defaults::kShowUpgradeMenuItem,
             model.IsCommandIdVisible(IDC_UPGRADE_DIALOG));
 

@@ -12,17 +12,10 @@
 #include "chrome/browser/upgrade_detector.h"
 #include "chromeos/dbus/update_engine_client.h"
 
-namespace base {
-template <typename T>
-struct DefaultSingletonTraits;
-}  // namespace base
-
 class UpgradeDetectorChromeos : public UpgradeDetector,
                                 public chromeos::UpdateEngineClient::Observer {
  public:
   ~UpgradeDetectorChromeos() override;
-
-  static UpgradeDetectorChromeos* GetInstance();
 
   // Initializes the object. Starts observing changes from the update
   // engine.
@@ -33,7 +26,7 @@ class UpgradeDetectorChromeos : public UpgradeDetector,
   void Shutdown();
 
  private:
-  friend struct base::DefaultSingletonTraits<UpgradeDetectorChromeos>;
+  friend class UpgradeDetector;
   class ChannelsRequester;
 
   UpgradeDetectorChromeos();

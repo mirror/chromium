@@ -321,7 +321,8 @@ ExtensionService::ExtensionService(Profile* profile,
                  chrome::NOTIFICATION_PROFILE_DESTRUCTION_STARTED,
                  content::Source<Profile>(profile_));
 
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->AddObserver(this);
 
   extensions::ExtensionManagementFactory::GetForBrowserContext(profile_)
       ->AddObserver(this);
@@ -383,7 +384,8 @@ extensions::PendingExtensionManager*
 }
 
 ExtensionService::~ExtensionService() {
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->RemoveObserver(this);
   // No need to unload extensions here because they are profile-scoped, and the
   // profile is in the process of being deleted.
   for (const auto& provider : external_extension_providers_)
