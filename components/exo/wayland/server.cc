@@ -2928,6 +2928,9 @@ class WaylandDataDeviceDelegate : public DataDeviceDelegate {
     wl_data_device_send_selection(data_device_resource_,
                                   GetDataOfferResource(&data_offer));
   }
+  uint32_t GetClientSerial() override {
+    return wl_display_get_serial(wl_client_get_display(client_));
+  }
 
  private:
   wl_client* const client_;
