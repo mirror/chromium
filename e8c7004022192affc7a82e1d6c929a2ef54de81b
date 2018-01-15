@@ -16,6 +16,24 @@
       "revId": "e8c7004022192affc7a82e1d6c929a2ef54de81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb79fab0_9ffa2219",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-15T08:58:13Z",
+      "side": 0,
+      "message": "And to give you more confidence, it was also the initial value we used to use before:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/730729",
+      "parentUuid": "a55ebaba_819a9038",
+      "revId": "e8c7004022192affc7a82e1d6c929a2ef54de81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
