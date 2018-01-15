@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07df61b5_2c816967",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-15T02:03:18Z",
+      "side": 1,
+      "message": "I\u0027m addressing this issue at https://crrev.com/c/863403",
+      "range": {
+        "startLine": 722,
+        "startChar": 2,
+        "endLine": 723,
+        "endChar": 74
+      },
+      "revId": "5b0879c77d86676a28d6e4334c3bdca0f005f6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
