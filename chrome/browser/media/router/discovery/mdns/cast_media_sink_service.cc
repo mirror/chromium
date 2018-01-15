@@ -108,19 +108,21 @@ CastMediaSinkService::~CastMediaSinkService() {
 }
 
 void CastMediaSinkService::Start(
-    const OnSinksDiscoveredCallback& sinks_discovered_cb) {
+    const OnSinksDiscoveredCallback& sinks_discovered_cb,
+    const SinkQueryCallback& sink_query_cb) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(!impl_);
 
-  // |sinks_discovered_cb| should only be invoked on the current sequence.
-  // We wrap |sinks_discovered_cb| in a member function bound with WeakPtr to
-  // ensure it will only be invoked while |this| is still valid.
-  impl_ = CreateImpl(base::BindRepeating(
-      &RunSinksDiscoveredCallbackOnSequence,
-      base::SequencedTaskRunnerHandle::Get(),
-      base::BindRepeating(&CastMediaSinkService::RunSinksDiscoveredCallback,
-                          weak_ptr_factory_.GetWeakPtr(),
-                          sinks_discovered_cb)));
+  // Note the callbacks don't go through |this|, which means they can be invoked
+  // even after |this| is destroyed. Practically speaking, this should only
+  // happen during browser shutdown.
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::SequencedTaskRunnerHandle::Get();
+  OnSinksDiscoveredCallback sinks_discovered_cb_on_seq = base::BindRepeating(
+      &RunSinksDiscoveredCallbackOnSequence, task_runner, sinks_discovered_cb);
+  SinkQueryCallback sink_query_cb_on_seq = base::BindRepeating(
+      &RunSinkQueryCallbackOnSequence, task_runner, sink_query_cb);
+  impl_ = CreateImpl(sinks_discovered_cb_on_seq, sink_query_cb_on_seq);
   impl_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::Start,
                                 base::Unretained(impl_.get())));
@@ -132,15 +134,16 @@ void CastMediaSinkService::Start(
 
 std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
 CastMediaSinkService::CreateImpl(
-    const OnSinksDiscoveredCallback& sinks_discovered_cb) {
+    const OnSinksDiscoveredCallback& sinks_discovered_cb,
+    const SinkQueryCallback& sink_query_cb) {
   cast_channel::CastSocketService* cast_socket_service =
       cast_channel::CastSocketService::GetInstance();
   scoped_refptr<base::SequencedTaskRunner> task_runner =
       cast_socket_service->task_runner();
   return std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>(
-      new CastMediaSinkServiceImpl(sinks_discovered_cb, cast_socket_service,
-                                   DiscoveryNetworkMonitor::GetInstance(),
-                                   request_context_),
+      new CastMediaSinkServiceImpl(
+          sinks_discovered_cb, sink_query_cb, cast_socket_service,
+          DiscoveryNetworkMonitor::GetInstance(), request_context_),
       base::OnTaskRunnerDeleter(task_runner));
 }
 
@@ -166,6 +169,22 @@ void CastMediaSinkService::OnUserGesture() {
   impl_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::AttemptConnection,
                                 base::Unretained(impl_.get()), cast_sinks_));
+}
+
+void CastMediaSinkService::StartObservingMediaSinks(
+    const ParsedMediaSource& source) {
+  impl_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::StartObservingMediaSinks,
+                     base::Unretained(impl_.get()), source));
+}
+
+void CastMediaSinkService::StopObservingMediaSinks(
+    const MediaSource::Id& source_id) {
+  impl_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::StopObservingMediaSinks,
+                     base::Unretained(impl_.get()), source_id));
 }
 
 void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
@@ -213,12 +232,6 @@ void CastMediaSinkService::OnDialSinkAdded(const MediaSinkInternal& sink) {
   impl_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::OnDialSinkAdded,
                                 base::Unretained(impl_.get()), sink));
-}
-
-void CastMediaSinkService::RunSinksDiscoveredCallback(
-    const OnSinksDiscoveredCallback& sinks_discovered_cb,
-    std::vector<MediaSinkInternal> sinks) {
-  sinks_discovered_cb.Run(std::move(sinks));
 }
 
 }  // namespace media_router

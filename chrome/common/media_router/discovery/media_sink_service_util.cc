@@ -17,4 +17,14 @@ void RunSinksDiscoveredCallbackOnSequence(
   task_runner->PostTask(FROM_HERE, base::BindOnce(callback, std::move(sinks)));
 }
 
+void RunSinkQueryCallbackOnSequence(
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+    const SinkQueryCallback& callback,
+    const MediaSource::Id& source_id,
+    const std::vector<MediaSinkInternal>& sinks,
+    const std::vector<url::Origin>& origins) {
+  task_runner->PostTask(FROM_HERE,
+                        base::BindOnce(callback, source_id, sinks, origins));
+}
+
 }  // namespace media_router
