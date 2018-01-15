@@ -33,7 +33,7 @@ namespace {
 // watched:
 //  - com.apple.hitoolbox.windows.transitionmode
 //  - com.apple.hitoolbox.windows.flushmode
-const CFStringRef kAllModes[] = {
+constexpr CFStringRef kAllModes[] = {
     kCFRunLoopCommonModes,
 
     // Mode that only sees Chrome work sources.
