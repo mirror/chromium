@@ -22,6 +22,30 @@
       "revId": "5bc544493e96018f011162c09186d317a558674f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfc9285_2e385e72",
+        "filename": "ios/chrome/browser/pref_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-15T17:14:21Z",
+      "side": 0,
+      "message": "Look at MigrateObsoleteLocalStatePrefs/MigrateObsoleteBrowserStatePrefs.\n\nThe way to do this is to keep the pref, move the registration to RegisterLocalStatePrefs/RegisterBrowserStatePrefs (including the definition of the name if possible), then in MigrateObsolete{Local,Browser}StatePrefs call ClearPref().\n\nAlso add a TODO and create a bug with a milestone to remove the pref.",
+      "parentUuid": "83d5fe7b_43edef99",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "5bc544493e96018f011162c09186d317a558674f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
