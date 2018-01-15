@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfda07fe_1cf0a2bb",
+        "filename": "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e?",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160995e6_c83a13d9",
+        "filename": "components/subresource_filter/content/browser/content_ruleset_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "#dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9339a1f7_a8587aa6",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49b8836_c5368815",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6007ee5f_7971fe10",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdf1373_6f6a1b07",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a23479_400c0faa",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features_test_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acbab8d_d7d9f2de",
+        "filename": "components/subresource_filter/core/common/activation_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-15T13:34:19Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "8907da2fbca0b7225345ad5ecf3d231591760405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
