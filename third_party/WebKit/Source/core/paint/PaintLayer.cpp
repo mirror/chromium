@@ -1881,8 +1881,8 @@ PaintLayer* PaintLayer::HitTestLayer(
     bool applied_transform,
     const HitTestingTransformState* transform_state,
     double* z_offset) {
-  DCHECK(GetLayoutObject().GetDocument().Lifecycle().GetState() >=
-         DocumentLifecycle::kCompositingClean);
+  CHECK(GetLayoutObject().GetDocument().Lifecycle().GetState() >=
+        DocumentLifecycle::kCompositingClean);
 
   if (!IsSelfPaintingLayer() && !HasSelfPaintingLayerDescendant())
     return nullptr;
