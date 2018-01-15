@@ -244,7 +244,7 @@ class TraceTrait<const T> : public TraceTrait<T> {};
 
 template <typename T>
 void TraceTrait<T>::Trace(Visitor* visitor, void* self) {
-  static_assert(WTF::IsTraceable<T>::value, "T should not be traced");
+  static_assert(WTF::IsTraceable<T>::value, "T must be traceable.");
   static_cast<T*>(self)->Trace(visitor);
 }
 

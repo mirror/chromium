@@ -4,7 +4,6 @@
 
 #include "modules/remoteplayback/AvailabilityCallbackWrapper.h"
 
-#include "bindings/modules/v8/v8_remote_playback_availability_callback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
 
 namespace blink {
@@ -15,7 +14,7 @@ AvailabilityCallbackWrapper::AvailabilityCallbackWrapper(
 
 AvailabilityCallbackWrapper::AvailabilityCallbackWrapper(
     base::RepeatingClosure callback)
-    : internal_cb_(std::move(callback)) {}
+    : bindings_cb_(nullptr), internal_cb_(std::move(callback)) {}
 
 void AvailabilityCallbackWrapper::Run(RemotePlayback* remote_playback,
                                       bool new_availability) {
@@ -26,15 +25,6 @@ void AvailabilityCallbackWrapper::Run(RemotePlayback* remote_playback,
   }
 
   bindings_cb_->InvokeAndReportException(remote_playback, new_availability);
-}
-
-void AvailabilityCallbackWrapper::Trace(blink::Visitor* visitor) {
-  visitor->Trace(bindings_cb_);
-}
-
-void AvailabilityCallbackWrapper::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
-  visitor->TraceWrappers(bindings_cb_);
 }
 
 }  // namespace blink
