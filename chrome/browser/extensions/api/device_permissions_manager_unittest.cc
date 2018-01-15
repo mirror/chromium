@@ -42,7 +42,7 @@ class FakeHidDeviceManager : public HidDeviceManager {
 
 std::unique_ptr<KeyedService> CreateHidDeviceManager(
     content::BrowserContext* context) {
-  return base::MakeUnique<FakeHidDeviceManager>(context);
+  return std::make_unique<FakeHidDeviceManager>(context);
 }
 
 }  // namespace

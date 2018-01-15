@@ -9,7 +9,6 @@
 
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -64,12 +63,12 @@ namespace {
 const char kGoodCrx[] = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
 
 std::unique_ptr<KeyedService> BuildAPI(content::BrowserContext* context) {
-  return base::MakeUnique<DeveloperPrivateAPI>(context);
+  return std::make_unique<DeveloperPrivateAPI>(context);
 }
 
 std::unique_ptr<KeyedService> BuildEventRouter(
     content::BrowserContext* profile) {
-  return base::MakeUnique<EventRouter>(profile, ExtensionPrefs::Get(profile));
+  return std::make_unique<EventRouter>(profile, ExtensionPrefs::Get(profile));
 }
 
 bool HasAllUrlsPermission(const Extension* extension,
@@ -165,7 +164,7 @@ const Extension* DeveloperPrivateApiUnitTest::LoadUnpackedExtension() {
       " \"permissions\": [\"*://*/*\"]"
       "}";
 
-  test_extension_dirs_.push_back(base::MakeUnique<TestExtensionDir>());
+  test_extension_dirs_.push_back(std::make_unique<TestExtensionDir>());
   TestExtensionDir* dir = test_extension_dirs_.back().get();
   dir->WriteManifest(kManifest);
 
@@ -218,7 +217,7 @@ void DeveloperPrivateApiUnitTest::TestExtensionPrefSetting(
   EXPECT_FALSE(has_pref.Run()) << key;
 
   {
-    auto parameters = base::MakeUnique<base::DictionaryValue>();
+    auto parameters = std::make_unique<base::DictionaryValue>();
     parameters->SetString("extensionId", extension_id);
     parameters->SetBoolean(key, true);
 
@@ -239,7 +238,7 @@ void DeveloperPrivateApiUnitTest::TestExtensionPrefSetting(
   }
 
   {
-    auto parameters = base::MakeUnique<base::DictionaryValue>();
+    auto parameters = std::make_unique<base::DictionaryValue>();
     parameters->SetString("extensionId", extension_id);
     parameters->SetBoolean(key, false);
 
@@ -1097,7 +1096,7 @@ TEST_F(DeveloperPrivateApiUnitTest, RepairPolicyExtension) {
 
   // Set up a mock provider with a policy extension.
   std::unique_ptr<MockExternalProvider> mock_provider =
-      base::MakeUnique<MockExternalProvider>(
+      std::make_unique<MockExternalProvider>(
           service(), Manifest::EXTERNAL_POLICY_DOWNLOAD);
   MockExternalProvider* mock_provider_ptr = mock_provider.get();
   AddMockExternalProvider(std::move(mock_provider));
@@ -1133,7 +1132,7 @@ TEST_F(DeveloperPrivateApiUnitTest, RepairPolicyExtension) {
 // when DeveloperToolsDisabled policy is active.
 TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateDevModeDisabledPolicy) {
   testing_pref_service()->SetManagedPref(prefs::kExtensionsUIDeveloperMode,
-                                         base::MakeUnique<base::Value>(false));
+                                         std::make_unique<base::Value>(false));
 
   UpdateProfileConfigurationDevMode(true);
 

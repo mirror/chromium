@@ -95,7 +95,7 @@ class BrowserActionInteractiveTest : public ExtensionApiTest {
 
   // BrowserTestBase:
   void SetUpOnMainThread() override {
-    host_watcher_ = base::MakeUnique<ExtensionHostWatcher>();
+    host_watcher_ = std::make_unique<ExtensionHostWatcher>();
     ExtensionApiTest::SetUpOnMainThread();
     EXPECT_TRUE(ui_test_utils::BringBrowserWindowToFront(browser()));
   }

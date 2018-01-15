@@ -14,7 +14,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/test/base/testing_profile.h"
@@ -219,7 +218,7 @@ TEST_F(ExtensionUserScriptLoaderTest, SkipBOMAtTheBeginning) {
   ASSERT_EQ(written, content.size());
 
   std::unique_ptr<UserScript> user_script(new UserScript());
-  user_script->js_scripts().push_back(base::MakeUnique<UserScript::File>(
+  user_script->js_scripts().push_back(std::make_unique<UserScript::File>(
       temp_dir_.GetPath(), path.BaseName(), GURL()));
 
   UserScriptList user_scripts;
@@ -243,7 +242,7 @@ TEST_F(ExtensionUserScriptLoaderTest, LeaveBOMNotAtTheBeginning) {
   ASSERT_EQ(written, content.size());
 
   std::unique_ptr<UserScript> user_script(new UserScript());
-  user_script->js_scripts().push_back(base::MakeUnique<UserScript::File>(
+  user_script->js_scripts().push_back(std::make_unique<UserScript::File>(
       temp_dir_.GetPath(), path.BaseName(), GURL()));
 
   UserScriptList user_scripts;

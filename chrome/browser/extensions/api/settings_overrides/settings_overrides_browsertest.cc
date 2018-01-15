@@ -30,7 +30,7 @@ const int kTestExtensionPrepopulatedId = 1;
 // TemplateURLData with search engines settings from test extension manifest.
 // chrome/test/data/extensions/settings_override/manifest.json
 std::unique_ptr<TemplateURLData> TestExtensionSearchEngine(PrefService* prefs) {
-  auto result = base::MakeUnique<TemplateURLData>();
+  auto result = std::make_unique<TemplateURLData>();
   result->SetShortName(base::ASCIIToUTF16("name.de"));
   result->SetKeyword(base::ASCIIToUTF16("keyword.de"));
   result->SetURL("http://www.foo.de/s?q={searchTerms}&id=10");

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/mdns/mdns_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
@@ -35,7 +34,7 @@ class MDnsAPITest : public ExtensionApiTest {
 
   void SetUpTestDnsSdRegistry() {
     extensions::MDnsAPI* api = extensions::MDnsAPI::Get(profile());
-    dns_sd_registry_ = base::MakeUnique<media_router::MockDnsSdRegistry>(api);
+    dns_sd_registry_ = std::make_unique<media_router::MockDnsSdRegistry>(api);
     EXPECT_CALL(*dns_sd_registry_, AddObserver(api))
         .Times(1);
     api->SetDnsSdRegistryForTesting(dns_sd_registry_.get());

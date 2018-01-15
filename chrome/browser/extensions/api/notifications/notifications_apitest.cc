@@ -175,7 +175,7 @@ class NotificationsApiTest : public ExtensionApiTest {
 
     DCHECK(profile());
     display_service_tester_ =
-        base::MakeUnique<NotificationDisplayServiceTester>(profile());
+        std::make_unique<NotificationDisplayServiceTester>(profile());
   }
 
   void TearDownOnMainThread() override {
