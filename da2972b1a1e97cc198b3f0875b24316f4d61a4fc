@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33ad6a0c_131437b4",
+        "filename": "components/language/content/browser/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-15T00:08:34Z",
+      "side": 1,
+      "message": "it\u0027s likely this work will be extend to the whole world, the \u00270x3\u0027 assumption will not stand then (0x prefix will still stand but wouldn\u0027t affect the accuracy/binary_size)",
+      "parentUuid": "4e3b1aee_17aad555",
+      "revId": "da2972b1a1e97cc198b3f0875b24316f4d61a4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3c45ae6_6ad9db69",
         "filename": "components/language/content/browser/language_code_locator.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "da2972b1a1e97cc198b3f0875b24316f4d61a4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17d2694_cb8c345e",
+        "filename": "components/language/content/browser/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-15T00:08:34Z",
+      "side": 1,
+      "message": "good pickup! thanks for the suggestion!",
+      "parentUuid": "e3c45ae6_6ad9db69",
+      "revId": "da2972b1a1e97cc198b3f0875b24316f4d61a4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
