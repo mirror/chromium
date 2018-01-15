@@ -105,6 +105,24 @@
       "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6182e8a8_b865e2f9",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-15T19:09:02Z",
+      "side": 1,
+      "message": "Done now. I overwrote IsDiscoveryComplete to be able to dynamically check whether the lists of characteristics match. Also I reset the notified flag so that new notifications can be sent when new characteristics are discovered. This allows me to keep the test I disabled in a previous patchset. Please take a look whether the current implementation makes sense.",
+      "parentUuid": "516d5d39_fb84524f",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
