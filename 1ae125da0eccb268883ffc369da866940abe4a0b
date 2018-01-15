@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0a07ade4_cc4cd607",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T22:27:18Z",
+      "side": 1,
+      "message": "Okay, maybe add a TODO for now?",
+      "parentUuid": "f49686a6_1ca196af",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5c7dea_66785d49",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 6
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "A delayed task still leaves the loop \"idle\".  Only ready-to-run tasks are guaranteed to execute before this call returns.\n\nThe task is delayed, according to its comment, to \"start recording before doing expensive initialization work.\"",
       "parentUuid": "bc5c7dea_66785d49",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce46d4e0_d66d41fe",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T22:27:18Z",
+      "side": 1,
+      "message": "I see. It looks like that code was copied from the MetricsService structure, which actually does some expensive work in its init task. Looking at the UKM code, I don\u0027t think the following are expensive:\n\n client_id_ \u003d LoadOrGenerateClientId(pref_service_);\n session_id_ \u003d LoadSessionId(pref_service_);\n report_count_ \u003d 0;\n\nI think we should just simplify that code to do those inline.",
+      "parentUuid": "bc5d3515_fe8f54fe",
       "range": {
         "startLine": 104,
         "startChar": 34,
