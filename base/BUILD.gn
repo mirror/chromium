@@ -1230,6 +1230,7 @@ jumbo_component("base") {
       "process/process_iterator_linux.cc",
       "process/process_metrics_linux.cc",
       "sys_info_linux.cc",
+      "time/time_android.cc",
     ]
     set_sources_assignment_filter(sources_assignment_filter)
 
