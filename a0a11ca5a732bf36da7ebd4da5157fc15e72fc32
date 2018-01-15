@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6cb78f_75235262",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-15T16:37:41Z",
+      "side": 1,
+      "message": "FYI, http://bit.ly/snav2 (currently under review) takes another approach to fix this bug:\n\nIt always considers iframes (and scrollable areas) as focusables (without checking their content). By doing so we can avoid the \"dig into a new container\"-step that the current implementation does. Plus, snav2 does not need the extra stack or skip list that this CL introduces...\n\nIf/when we do snav2, we will need to change the expectation here, but that\u0027s fine... (Currently snav2 is blocked on crbug.com/585413).",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "a0a11ca5a732bf36da7ebd4da5157fc15e72fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

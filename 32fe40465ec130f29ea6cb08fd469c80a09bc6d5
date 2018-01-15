@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4d0ebf95_663a8f68",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-15T16:37:41Z",
+      "side": 1,
+      "message": "Yes, spatnav is often used where there is no mouse, so without a mouse pointer/mouse scroll wheel, the user relies on the arrow keys for scrolling.\n\nI see it as spatnav \"takes control\" over the 4 arrow keys. When spatnav can\u0027t find anything to focus nearby, it falls back to scrolling. Here we give the user a chance to scroll the current container line by line because she might want to read some (unfocusable) text between the focusables.\n\nYes, we do continue, but only when the container is already scrolled to its end.",
+      "parentUuid": "870c4736_f7bc14de",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1ad7d7d_85ea2f51",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -135,6 +153,24 @@
       "writtenOn": "2018-01-15T12:47:45Z",
       "side": 1,
       "message": "I just added these code to don\u0027t break existing tests.\n\nThe origin of this code is from: https://chromium.googlesource.com/chromium/blink/+/a9562bacebd076981df5eec2d0380cc62d91f566\n\nHonestly, I also cannot understand why this condition must exist. But at least, if we remove is_offscreen_after_scrolling, 5 tests break. For example:\nsnav-iframe-with-offscreen-focusable-element.html\nexpected:\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"end\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"start\"\n\nactual:\nTEST COMPLETE\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was 2.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was end.\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"end\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was 1.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was start.\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"start\"\n\n\nI also hope make this condition more clear. But I think that is outside of this CL\u0027s scope.",
+      "parentUuid": "f1ad7d7d_85ea2f51",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f2acc7_5b50c9af",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-15T16:37:41Z",
+      "side": 1,
+      "message": "I think this also is to give mouse-less users a chance to scroll and read the document (here inside an iframe) line by line.",
       "parentUuid": "f1ad7d7d_85ea2f51",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
