@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8742e1f_f93ce55d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T15:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74cd66d2_95d7268d",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adb8ff3_a432b92f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "72e2c7938075b8eb14f035a757301a605c646011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c5206f_487bd4e9",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T15:37:13Z",
+      "side": 1,
+      "message": "removed as discussed",
+      "parentUuid": "8adb8ff3_a432b92f",
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "72e2c7938075b8eb14f035a757301a605c646011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0955ae45_feddf74e",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T15:37:13Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "06c26422_9177af39",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -97,6 +163,24 @@
       "revId": "72e2c7938075b8eb14f035a757301a605c646011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8839143c_202f58cd",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T15:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "994e41e1_5057cf59",
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
