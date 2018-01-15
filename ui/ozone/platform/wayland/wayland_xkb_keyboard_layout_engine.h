@@ -49,6 +49,7 @@ class WaylandXkbKeyboardLayoutEngineImpl
     xkb_mod_index_t control = 0;
     xkb_mod_index_t alt = 0;
     xkb_mod_index_t shift = 0;
+    xkb_mod_index_t caps = 0;
   } xkb_mod_indexes_;
 };
 

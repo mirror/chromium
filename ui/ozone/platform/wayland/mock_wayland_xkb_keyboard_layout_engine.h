@@ -25,7 +25,8 @@ class MockWaylandXkbKeyboardLayoutEngine
   void UpdateModifiers(uint32_t depressed_mods,
                        uint32_t latched_mods,
                        uint32_t locked_mods,
-                       uint32_t group) override {}
+                       uint32_t group) override;
+
  private:
   bool Lookup(ui::DomCode dom_code,
               int event_flags,
