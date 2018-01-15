@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8426175e_4932076a",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T17:28:10Z",
+      "side": 1,
+      "message": "My concern is that if/elsing the functional differences, while easier to write (for now), is probably not easier to read or maintain, and that it\u0027s very likely that these three or four conditionals will become six or eight or twelve in the next six months. \n\nReducing code duplication is definitely something we should be doing where needed, but collecting different functionalities into a single class is something we know doesn\u0027t scale well over time. One of the most basic refactoring steps to untangle cases like that is to factor separate modes into subclasses. I\u0027d rather just start there.\n\nThis is even more true of the view controllers. Aside from containing a horizontal array of controls, the primary and secondary toolbars seem like completely different things.",
+      "parentUuid": "e36c95a4_9836066b",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54520d8f_1d67e072",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
         "patchSetId": 2
@@ -129,6 +153,29 @@
         "startChar": 15,
         "endLine": 17,
         "endChar": 33
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5672e5f6_435c9909",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T17:28:10Z",
+      "side": 1,
+      "message": "I think having this method defined for a view controller without a location bar (the secondary toolbar) is a mistake.",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 26
       },
       "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
