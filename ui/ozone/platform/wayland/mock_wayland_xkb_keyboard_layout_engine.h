@@ -26,8 +26,6 @@ class MockWaylandXkbKeyboardLayoutEngine
                        uint32_t latched_mods,
                        uint32_t locked_mods,
                        uint32_t group) override {}
-  void SetEventModifiers(ui::EventModifiers* event_modifiers) override {}
-
  private:
   bool Lookup(ui::DomCode dom_code,
               int event_flags,

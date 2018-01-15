@@ -47,9 +47,4 @@ void WaylandXkbKeyboardLayoutEngineImpl::UpdateModifiers(
     event_modifiers_->UpdateModifier(MODIFIER_SHIFT, true);
 }
 
-void WaylandXkbKeyboardLayoutEngineImpl::SetEventModifiers(
-    EventModifiers* event_modifiers) {
-  event_modifiers_ = event_modifiers;
-}
-
 }  // namespace ui
