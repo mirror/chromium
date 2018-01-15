@@ -290,6 +290,30 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76b0a85_845717dd",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-15T11:54:36Z",
+      "side": 1,
+      "message": "I like changing AtExitManager into ScopedBaseEnvironmentManager (or something like that) which would enforce initialization and tear down semantics of base APIs.\n\nThat guarantees we (and embedders) are forced to replace AtExitManager with the new hotness.\n\nI think it would also make sense to have this API take in the command-line string as a parameter and be in charge of CommandLine::Init (since we now properly force all callers to be updated that sounds reasonable to me). Not required though if you find out the two are initialized in different places in different embedders and it\u0027s hard to coalesce.",
+      "parentUuid": "8cee25d7_c945bfb7",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 20
+      },
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
