@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe5c6462_be1a8be5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "based",
+      "range": {
+        "startLine": 17,
+        "startChar": 57,
+        "endLine": 17,
+        "endChar": 61
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2267a3_b4227aae",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4497,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "ProxyHostPortPairAsString()",
+      "range": {
+        "startLine": 4497,
+        "startChar": 36,
+        "endLine": 4497,
+        "endChar": 54
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd08a73_87f1223c",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "nit: /socks4",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 29
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719a732f_451f7da9",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4560,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 4560,
+        "startChar": 42,
+        "endLine": 4560,
+        "endChar": 51
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b66b2b_ee83ffc3",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "or just CreateAutoDetect()",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a0dc993_b48a971a",
         "filename": "net/socket/client_socket_pool_manager.cc",
         "patchSetId": 7
@@ -13,6 +128,30 @@
       "writtenOn": "2018-01-12T20:41:39Z",
       "side": 1,
       "message": "Not doing that in this CL because I have too much of a backlog to dig into it.  If I had time...",
+      "range": {
+        "startLine": 157,
+        "startChar": 45,
+        "endLine": 157,
+        "endChar": 52
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e924c69_d8b48681",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T22:48:23Z",
+      "side": 1,
+      "message": "Yeah, seems should be mixing in ProxyServer::ToURI() to the connection group string, as that already includes a serialization of the proxy scheme, and host:port.\n\nAlso I don\u0027t think this function should be taking ProxyInfo as its input (full fallback list of proxy servers), but rather just a single ProxyServer.",
+      "parentUuid": "8a0dc993_b48a971a",
       "range": {
         "startLine": 157,
         "startChar": 45,
