@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d96183_933e7409",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T06:35:11Z",
+      "side": 0,
+      "message": "If the lid was just opened then wasn\u0027t it in an unstable angle? We may not receive an accelerometer event for this angle.",
+      "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
