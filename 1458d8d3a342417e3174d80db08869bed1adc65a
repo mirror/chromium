@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abbb1d95_e925e8bc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T15:26:40Z",
+      "side": 1,
+      "message": "Missing a trailing \"_\" - as it is, you\u0027re checking the parameter rather than the member, and it has been moved so should always be null?",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cddd40_0e6bf262",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T15:26:40Z",
+      "side": 1,
+      "message": "This TODO really belongs on InstanceID::GetToken, no?",
+      "range": {
+        "startLine": 175,
+        "startChar": 44,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc435996_a0d0446f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T15:26:40Z",
+      "side": 1,
+      "message": "nit: Actual type rather than auto? Just from reading this line, I don\u0027t know what this is.",
+      "range": {
+        "startLine": 589,
+        "startChar": 42,
+        "endLine": 589,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6504333f_88755805",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T15:26:40Z",
+      "side": 1,
+      "message": "nit: Comment, since this is kinda the crucial point of the test?",
+      "range": {
+        "startLine": 601,
+        "startChar": 27,
+        "endLine": 601,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
