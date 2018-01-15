@@ -99,6 +99,15 @@ KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
       Timing());
 }
 
+KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
+                                       KeyframeEffectReadOnly* source,
+                                       ExceptionState& exception_state) {
+  Timing new_timing = source->SpecifiedTiming();
+  KeyframeEffectModelBase* model = source->Model()->Clone();
+  return new KeyframeEffect(source->Target(), model, new_timing,
+                            source->GetPriority(), source->GetEventDelegate());
+}
+
 KeyframeEffect::KeyframeEffect(Element* target,
                                KeyframeEffectModelBase* model,
                                const Timing& timing,
