@@ -940,4 +940,13 @@ TEST_F(WebRtcEventLogManagerTest,
   ASSERT_EQ(file_path_2, expected_path_2);
 }
 
+TEST_F(WebRtcEventLogManagerTest,
+       InstructWebRtcToStartSendingEventLogsWhenLocalLoggingStarted) {
+}
+
+TEST_F(WebRtcEventLogManagerTest,
+       InstructWebRtcToStartSendingEventLogsWhenLocalLoggingStopped) {
+}
+
+
 }  // namespace content
