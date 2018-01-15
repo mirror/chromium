@@ -237,7 +237,7 @@ class CONTENT_EXPORT RenderWidgetHostViewEventHandler
   // Relative to the upper-left corner of the screen.
   gfx::PointF unlocked_global_mouse_position_;
   // Last cursor position relative to screen. Used to compute movementX/Y.
-  gfx::PointF global_mouse_position_;
+  gfx::Point global_mouse_position_;
   // In mouse locked mode, we synthetically move the mouse cursor to the center
   // of the window when it reaches the window borders to avoid it going outside.
   // This flag is used to differentiate between these synthetic mouse move
