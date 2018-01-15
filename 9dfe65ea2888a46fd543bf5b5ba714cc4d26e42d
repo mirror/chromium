@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "af53998c_bf5351d0",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! Done.",
+      "parentUuid": "f1ae7f9d_dbe93f80",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4769ed92_a7f0ff85",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 48
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-12T19:36:44Z",
       "side": 1,
       "message": "Nit: gpuBenchmarking should be here too.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe4bc9e_503371af",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Yes I forgot. Thanks!",
+      "parentUuid": "4769ed92_a7f0ff85",
       "range": {
         "startLine": 45,
         "startChar": 6,
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "e45ad5b2_657bfa80",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "You are right. I think the this one is not necessary. I only need the one before \u0027pointerUp\u0027. Thanks!\n\nThat being said, is it still considered to be a bug? i.e., having to put in a pause in between (as opposed to this just being a the need for more explicit documentation about pointerActionSequence). If so I will add the bug number here.",
+      "parentUuid": "fd0ad9be_0397f8b2",
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a2e9a_ed55161d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 48
@@ -115,6 +175,30 @@
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699e9c97_dae9625d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Ack. But I was getting an exception due to document.body being nullptr before. This is change is mainly for the setup phase which has to run after window.onload. I think the tests themselves, as you said, will run after onload.",
+      "parentUuid": "8b1a2e9a_ed55161d",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +242,30 @@
     },
     {
       "key": {
+        "uuid": "64af712b_1ed32314",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 48
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Uh this is left by mistake. Thanks for catching it.",
+      "parentUuid": "8346dfe2_82f5862d",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 38
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ab2590_d0e6efb2",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollCustomizationCallbacks.cpp",
         "patchSetId": 48
@@ -181,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "be4a8f30_54b85e68",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollCustomizationCallbacks.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ab2590_d0e6efb2",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdc3394_e210afbf",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
         "patchSetId": 48
@@ -201,6 +333,30 @@
       "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30089629_7c30f558",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcdc3394_e210afbf",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9dfe65ea2888a46fd543bf5b5ba714cc4d26e42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

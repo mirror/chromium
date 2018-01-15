@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f07474_d0676ffd",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 50
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Is this against blink formatting? I ended up with presubmit errors in all such occurrences. If that is the case, then I guess the idea of \u0027int\u0027 inside namespace might not quite work. Maybe revert to enum or use a struct instead?",
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61aca0a_95c1855d",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollCustomization.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "I get a strange compile error for \"uint8_t\". \"unsigned char\" works.",
+      "revId": "52d8dd20baacc6f070f126c2686fc2e6ec46b97a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

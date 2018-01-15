@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "e07d7c98_7c3c94d1",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-15T23:04:31Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation. What I had done before is somewhat mentioned in the doc listed. But regardless, your explanation makes sense, esp. about the part about the bots. I moved the test to virtual/ and made the required modifications.",
+      "parentUuid": "491bbdb2_68eb7622",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20841c89_dc345a7d",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
