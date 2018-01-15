@@ -4,8 +4,8 @@
 
 #include "content/renderer/loader/cors_url_loader_factory.h"
 
+#include "content/network/cors/cors_url_loader.h"
 #include "content/public/common/url_loader_factory.mojom.h"
-#include "content/renderer/loader/cors_url_loader.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace content {
