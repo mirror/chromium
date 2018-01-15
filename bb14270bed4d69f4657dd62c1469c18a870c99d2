@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71db01db_48319950",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-15T13:10:35Z",
+      "side": 1,
+      "message": "Nit: Would \"types\" be better? sub-implementation reminds of subclasses, which is not the case here.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f32f66_e4b0f4e3",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-15T13:10:35Z",
+      "side": 1,
+      "message": "Optional nit: I would not add this. This is a detail of ToolbarType, which could change.",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54520d8f_1d67e072",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-15T13:10:35Z",
+      "side": 1,
+      "message": "Optional nit: Would AdaptiveToolbar(View)Interacting be a better name for a protocol?",
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11fa55f_0584d81c",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-15T13:10:35Z",
+      "side": 1,
+      "message": "Same comment.",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932f9668_0ab01ffa",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-15T13:10:35Z",
+      "side": 1,
+      "message": "Is this related to the refactor?",
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
