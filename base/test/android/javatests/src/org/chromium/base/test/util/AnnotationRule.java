@@ -91,7 +91,7 @@ public abstract class AnnotationRule extends ExternalResource {
         mTestDescription = description;
 
         mCollectedAnnotations = mAnnotationExtractor.getMatchingAnnotations(description);
-        if (mCollectedAnnotations.isEmpty()) return base;
+        if (mCollectedAnnotations.isEmpty() && !shouldAlwaysApply()) return base;
 
         // Return the wrapped statement to execute before() and after().
         return super.apply(base, description);
@@ -130,5 +130,14 @@ public abstract class AnnotationRule extends ExternalResource {
     protected Annotation getClosestAnnotation() {
         assert !mCollectedAnnotations.isEmpty() : "The rule should not trigger without match.";
         return mCollectedAnnotations.get(mCollectedAnnotations.size() - 1);
+    }
+
+    /**
+     * Returns whether the rule should apply even if none of the annotations it's supposed to react
+     * to are present. This can be useful if the rule should interact with parameterized tests for
+     * example, that dynamically set state instead of relying on declared annotations.
+     */
+    protected boolean shouldAlwaysApply() {
+        return false;
     }
 }

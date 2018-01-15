@@ -165,6 +165,13 @@ public class Features {
             reset();
         }
 
+        @Override
+        protected boolean shouldAlwaysApply() {
+            // Always apply the rule so that it's possible to register features in setUp() and get
+            // them cleared even when there are no Features annotations. (e.g. parameterized tests)
+            return true;
+        }
+
         abstract protected void applyFeatures();
 
         private void collectFeatures() {
