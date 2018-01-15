@@ -34,6 +34,24 @@
       "revId": "bd083f78a214c4cfdd297d1711c56c9a8e9d509a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0898109_799d245f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T07:05:57Z",
+      "side": 0,
+      "message": "Thanks for explanation.\nCould you add a comment before MoveCaret() call to help readers who miss ScopedEventQueue\nat L404?",
+      "parentUuid": "9e44b076_f0dadadb",
+      "revId": "bd083f78a214c4cfdd297d1711c56c9a8e9d509a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
