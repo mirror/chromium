@@ -34,6 +34,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/install_util.h"
@@ -45,7 +46,7 @@ namespace {
 
 // How long (in milliseconds) to wait (each cycle) before checking whether
 // Chrome's been upgraded behind our back.
-const int kCheckForUpgradeMs = 2 * 60 * 60 * 1000;  // 2 hours.
+constexpr base::TimeDelta kCheckForUpgradeDelta = base::TimeDelta::FromHours(2);
 
 // How long to wait (each cycle) before checking which severity level we should
 // be at. Once we reach the highest severity, the timer will stop.
@@ -82,24 +83,56 @@ bool IsTesting() {
 }
 
 // How often to check for an upgrade.
-int GetCheckForUpgradeEveryMs() {
+base::TimeDelta GetCheckForUpgradeDelta() {
   // Check for a value passed via the command line.
-  int interval_ms;
-  std::string interval = CmdLineInterval();
-  if (!interval.empty() && base::StringToInt(interval, &interval_ms))
-    return interval_ms * 1000;  // Command line value is in seconds.
+  int interval;
+  std::string interval_string = CmdLineInterval();
+  if (!interval_string.empty() && base::StringToInt(interval_string, &interval))
+    return base::TimeDelta::FromSeconds(interval);
 
-  return kCheckForUpgradeMs;
+  return kCheckForUpgradeDelta;
 }
 
-#if !defined(OS_WIN) || defined(GOOGLE_CHROME_BUILD)
-// Return true if the current build is one of the unstable channels.
+// Returns true if auto updates are supported but disabled.
+bool AutoUpdatesDisabled() {
+  // For testing, --simulate-outdated-no-au can be used to force the browser to
+  // believe that auto updates are supported but somehow broken.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kSimulateOutdatedNoAU)) {
+    return true;
+  }
+#if defined(OS_WIN)
+  // The app guid is an empty string if auto updates are not even supported
+  // (i.e., Chromium builds).
+  if (!*install_static::GetAppGuid())
+    return false;
+  // Report that auto updates are disabled only if no previous attempt has been
+  // made to enable them via the outdated upgrade bubble.
+  if ((!g_browser_process->local_state() ||
+       !g_browser_process->local_state()->GetBoolean(
+           prefs::kAttemptedToEnableAutoupdate)) &&
+      !GoogleUpdateSettings::AreAutoupdatesEnabled()) {
+    return true;
+  }
+  return false;
+#elif defined(OS_MACOSX)
+  // Report based on the status of Keystone.
+  return !keystone_glue::KeystoneEnabled();
+#elif defined(OS_POSIX)
+  // Auto update is supported regardless of branding.
+  return false;
+#else
+  static_assert(false, "UNIMPLEMENTED");
+  return false;
+#endif
+}
+
+// Return true if the browser is on the Google Chrome dev or canary channels.
 bool IsUnstableChannel() {
-  version_info::Channel channel = chrome::GetChannel();
+  const version_info::Channel channel = chrome::GetChannel();
   return channel == version_info::Channel::DEV ||
          channel == version_info::Channel::CANARY;
 }
-#endif  // !defined(OS_WIN) || defined(GOOGLE_CHROME_BUILD)
 
 // Gets the currently installed version. On Windows, if |critical_update| is not
 // NULL, also retrieves the critical update version info if available.
@@ -138,129 +171,8 @@ base::Version GetCurrentlyInstalledVersionImpl(base::Version* critical_update) {
   return installed_version;
 }
 
-}  // namespace
-
-UpgradeDetectorImpl::UpgradeDetectorImpl()
-    : blocking_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN,
-           base::MayBlock()})),
-      is_unstable_channel_(false),
-      is_auto_update_enabled_(true),
-      build_date_(base::GetBuildTime()),
-      weak_factory_(this) {
-  base::CommandLine command_line(*base::CommandLine::ForCurrentProcess());
-  // The different command line switches that affect testing can't be used
-  // simultaneously, if they do, here's the precedence order, based on the order
-  // of the if statements below:
-  // - kDisableBackgroundNetworking prevents any of the other command line
-  //   switch from being taken into account.
-  // - kSimulateUpgrade supersedes critical or outdated upgrade switches.
-  // - kSimulateCriticalUpdate has precedence over kSimulateOutdated.
-  // - kSimulateOutdatedNoAU has precedence over kSimulateOutdated.
-  // - kSimulateOutdated[NoAu] can work on its own, or with a specified date.
-  if (command_line.HasSwitch(switches::kDisableBackgroundNetworking))
-    return;
-  if (command_line.HasSwitch(switches::kSimulateUpgrade)) {
-    UpgradeDetected(UPGRADE_AVAILABLE_REGULAR);
-    return;
-  }
-  if (command_line.HasSwitch(switches::kSimulateCriticalUpdate)) {
-    UpgradeDetected(UPGRADE_AVAILABLE_CRITICAL);
-    return;
-  }
-  if (SimulatingOutdated()) {
-    // The outdated simulation can work without a value, which means outdated
-    // now, or with a value that must be a well formed date/time string that
-    // overrides the build date.
-    // Also note that to test with a given time/date, until the network time
-    // tracking moves off of the VariationsService, the "variations-server-url"
-    // command line switch must also be specified for the service to be
-    // available on non GOOGLE_CHROME_BUILD.
-    std::string switch_name;
-    if (command_line.HasSwitch(switches::kSimulateOutdatedNoAU)) {
-      is_auto_update_enabled_ = false;
-      switch_name = switches::kSimulateOutdatedNoAU;
-    } else {
-      switch_name = switches::kSimulateOutdated;
-    }
-    std::string build_date = command_line.GetSwitchValueASCII(switch_name);
-    base::Time maybe_build_time;
-    bool result = base::Time::FromString(build_date.c_str(), &maybe_build_time);
-    if (result && !maybe_build_time.is_null()) {
-      // We got a valid build date simulation so use it and check for upgrades.
-      build_date_ = maybe_build_time;
-      StartTimerForUpgradeCheck();
-    } else {
-      // Without a valid date, we simulate that we are already outdated...
-      UpgradeDetected(
-          is_auto_update_enabled_ ? UPGRADE_NEEDED_OUTDATED_INSTALL
-                                  : UPGRADE_NEEDED_OUTDATED_INSTALL_NO_AU);
-    }
-    return;
-  }
-
-  // Register for experiment notifications. Note that since this class is a
-  // singleton, it does not need to unregister for notifications when destroyed,
-  // since it outlives the VariationsService.
-  variations::VariationsService* variations_service =
-      g_browser_process->variations_service();
-  if (variations_service)
-    variations_service->AddObserver(this);
-
-#if defined(OS_WIN)
-// Only enable upgrade notifications for Google Chrome builds. Chromium has no
-// upgrade channel.
-#if defined(GOOGLE_CHROME_BUILD)
-  // Check whether the build is an unstable channel before starting the timer.
-  is_unstable_channel_ = IsUnstableChannel();
-  // There might be a policy/enterprise environment preventing updates, so
-  // validate updatability and then call StartTimerForUpgradeCheck
-  // appropriately. Skip this step if a past attempt has been made to enable
-  // auto updates.
-  if (g_browser_process->local_state() &&
-      g_browser_process->local_state()->GetBoolean(
-          prefs::kAttemptedToEnableAutoupdate)) {
-    StartTimerForUpgradeCheck();
-  } else {
-    base::PostTaskAndReplyWithResult(
-        blocking_task_runner_.get(), FROM_HERE,
-        base::BindOnce(&GoogleUpdateSettings::AreAutoupdatesEnabled),
-        base::BindOnce(&UpgradeDetectorImpl::OnAutoupdatesEnabledResult,
-                       weak_factory_.GetWeakPtr()));
-  }
-#endif  // defined(GOOGLE_CHROME_BUILD)
-#else   // defined(OS_WIN)
-#if defined(OS_MACOSX)
-  // Only enable upgrade notifications if the updater (Keystone) is present.
-  if (!keystone_glue::KeystoneEnabled()) {
-    is_auto_update_enabled_ = false;
-    return;
-  }
-#elif defined(OS_POSIX)
-  // Always enable upgrade notifications regardless of branding.
-#else
-  return;
-#endif
-  // Check whether the build is an unstable channel before starting the timer.
-  is_unstable_channel_ = IsUnstableChannel();
-  StartTimerForUpgradeCheck();
-#endif  // defined(OS_WIN)
-}
-
-UpgradeDetectorImpl::~UpgradeDetectorImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
-
-// static
-base::Version UpgradeDetectorImpl::GetCurrentlyInstalledVersion() {
-  return GetCurrentlyInstalledVersionImpl(NULL);
-}
-
-// static
-void UpgradeDetectorImpl::DetectUpgradeTask(
-    scoped_refptr<base::TaskRunner> callback_task_runner,
-    UpgradeDetectedCallback callback) {
+void DetectUpgradeTask(scoped_refptr<base::TaskRunner> callback_task_runner,
+                       base::OnceCallback<void(bool)> callback) {
   base::Version critical_update;
   base::Version installed_version =
       GetCurrentlyInstalledVersionImpl(&critical_update);
@@ -278,48 +190,109 @@ void UpgradeDetectorImpl::DetectUpgradeTask(
   if (!installed_version.IsValid() || installed_version > running_version) {
     // If a more recent version is available, it might be that we are lacking
     // a critical update, such as a zero-day fix.
-    UpgradeAvailable upgrade_available = UPGRADE_AVAILABLE_REGULAR;
-    if (critical_update.IsValid() && critical_update > running_version)
-      upgrade_available = UPGRADE_AVAILABLE_CRITICAL;
-
-    // Fire off the upgrade detected task.
     callback_task_runner->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), upgrade_available));
+        FROM_HERE, base::BindOnce(std::move(callback),
+                                  critical_update.IsValid() &&
+                                      critical_update > running_version));
   }
+}
+
+}  // namespace
+
+UpgradeDetectorImpl::~UpgradeDetectorImpl() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
+
+// static
+base::Version UpgradeDetectorImpl::GetCurrentlyInstalledVersion() {
+  return GetCurrentlyInstalledVersionImpl(NULL);
+}
+
+UpgradeDetectorImpl::UpgradeDetectorImpl()
+    : UpgradeDetector(AutoUpdatesDisabled()),
+      blocking_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN,
+           base::MayBlock()})),
+      is_unstable_channel_(IsUnstableChannel()),
+      build_date_(base::GetBuildTime()),
+      weak_factory_(this) {
+  base::CommandLine command_line(*base::CommandLine::ForCurrentProcess());
+  // The different command line switches that affect testing can't be used
+  // simultaneously, if they do, here's the precedence order, based on the order
+  // of the if statements below:
+  // - kDisableBackgroundNetworking prevents any of the other command line
+  //   switch from being taken into account.
+  // - kSimulateUpgrade supersedes critical or outdated upgrade switches.
+  // - kSimulateCriticalUpdate has precedence over kSimulateOutdated.
+  // - kSimulateOutdatedNoAU has precedence over kSimulateOutdated.
+  // - kSimulateOutdated[NoAu] can work on its own, or with a specified date.
+  if (command_line.HasSwitch(switches::kDisableBackgroundNetworking))
+    return;
+  if (command_line.HasSwitch(switches::kSimulateUpgrade)) {
+    ReceivedNotification(kRegularUpdateAvailable);
+    return;
+  }
+  if (command_line.HasSwitch(switches::kSimulateCriticalUpdate)) {
+    ReceivedNotification(kCriticalUpdateAvailable);
+    return;
+  }
+  if (SimulatingOutdated()) {
+    // The outdated simulation can work without a value, which means outdated
+    // now, or with a value that must be a well formed date/time string that
+    // overrides the build date.
+    // Also note that to test with a given time/date, until the network time
+    // tracking moves off of the VariationsService, the "variations-server-url"
+    // command line switch must also be specified for the service to be
+    // available on non GOOGLE_CHROME_BUILD.
+    std::string switch_name;
+    if (command_line.HasSwitch(switches::kSimulateOutdatedNoAU)) {
+      switch_name = switches::kSimulateOutdatedNoAU;
+    } else {
+      switch_name = switches::kSimulateOutdated;
+    }
+    std::string build_date = command_line.GetSwitchValueASCII(switch_name);
+    base::Time maybe_build_time;
+    bool result = base::Time::FromString(build_date.c_str(), &maybe_build_time);
+    if (result && !maybe_build_time.is_null()) {
+      // We got a valid build date simulation so use it and check for upgrades.
+      build_date_ = maybe_build_time;
+      StartTimerForUpgradeCheck();
+    } else {
+      // Without a valid date, we simulate that we are already outdated...
+      ReceivedNotification(kOutdatedInstall);
+    }
+    return;
+  }
+
+  // Register for experiment notifications. Note that since this class is a
+  // singleton, it does not need to unregister for notifications when destroyed,
+  // since it outlives the VariationsService.
+  variations::VariationsService* variations_service =
+      g_browser_process->variations_service();
+  if (variations_service)
+    variations_service->AddObserver(this);
+
+#if defined(OS_MACOSX)
+  // It's not possible to check for a newer version if Keystone is not enabled.
+  if (!keystone_glue::KeystoneEnabled())
+    return;
+#endif
+
+  // Start polling for in-use updates.
+  StartTimerForUpgradeCheck();
 }
 
 void UpgradeDetectorImpl::StartTimerForUpgradeCheck() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  detect_upgrade_timer_.Start(FROM_HERE,
-      base::TimeDelta::FromMilliseconds(GetCheckForUpgradeEveryMs()),
-      this, &UpgradeDetectorImpl::CheckForUpgrade);
-}
-
-void UpgradeDetectorImpl::StartUpgradeNotificationTimer() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  // The timer may already be running (e.g. due to both a software upgrade and
-  // experiment updates being available).
-  if (upgrade_notification_timer_.IsRunning())
-    return;
-
-  upgrade_detected_time_ = base::TimeTicks::Now();
-
-  // Start the repeating timer for notifying the user after a certain period.
-  // The called function will eventually figure out that enough time has passed
-  // and stop the timer.
-  const int cycle_time_ms = IsTesting() ?
-      kNotifyCycleTimeForTestingMs : kNotifyCycleTimeMs;
-  upgrade_notification_timer_.Start(FROM_HERE,
-      base::TimeDelta::FromMilliseconds(cycle_time_ms),
-      this, &UpgradeDetectorImpl::NotifyOnUpgrade);
+  detect_upgrade_timer_.Start(FROM_HERE, GetCheckForUpgradeDelta(), this,
+                              &UpgradeDetectorImpl::CheckForUpgrade);
 }
 
 void UpgradeDetectorImpl::CheckForUpgrade() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  // Interrupt any (unlikely) unfinished execution of DetectUpgradeTask, or at
-  // least prevent the callback from being executed, because we will potentially
-  // call it from within DetectOutdatedInstall() or will post
-  // DetectUpgradeTask again below anyway.
+  // Ignore the results from an unfinished execution of DetectUpgradeTask. It is
+  // unlikely that there is one given the low polling frequency.
   weak_factory_.InvalidateWeakPtrs();
 
   // No need to look for upgrades if the install is outdated.
@@ -328,9 +301,8 @@ void UpgradeDetectorImpl::CheckForUpgrade() {
 
   blocking_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&UpgradeDetectorImpl::DetectUpgradeTask,
-                     base::SequencedTaskRunnerHandle::Get(),
-                     base::BindOnce(&UpgradeDetectorImpl::UpgradeDetected,
+      base::BindOnce(&DetectUpgradeTask, base::SequencedTaskRunnerHandle::Get(),
+                     base::BindOnce(&UpgradeDetectorImpl::OnUpgradeDetected,
                                     weak_factory_.GetWeakPtr())));
 }
 
@@ -375,9 +347,7 @@ bool UpgradeDetectorImpl::DetectOutdatedInstall() {
 
   if (network_time - build_date_ >
       base::TimeDelta::FromDays(kOutdatedBuildAgeInDays)) {
-    UpgradeDetected(is_auto_update_enabled_ ?
-        UPGRADE_NEEDED_OUTDATED_INSTALL :
-        UPGRADE_NEEDED_OUTDATED_INSTALL_NO_AU);
+    ReceivedNotification(kOutdatedInstall);
     return true;
   }
   // If we simlated an outdated install with a date, we don't want to keep
@@ -385,30 +355,61 @@ bool UpgradeDetectorImpl::DetectOutdatedInstall() {
   return simulate_outdated;
 }
 
+void UpgradeDetectorImpl::OnUpgradeDetected(bool is_critical) {
+  ReceivedNotification(is_critical ? kCriticalUpdateAvailable
+                                   : kRegularUpdateAvailable);
+}
+
 void UpgradeDetectorImpl::OnExperimentChangesDetected(Severity severity) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  set_best_effort_experiment_updates_available(severity == BEST_EFFORT);
-  set_critical_experiment_updates_available(severity == CRITICAL);
+  switch (severity) {
+    case BEST_EFFORT:
+      ReceivedNotification(kExperimentKillBestEffort);
+      break;
+    case CRITICAL:
+      ReceivedNotification(kExperimentKillCritical);
+      break;
+  }
+}
+
+void UpgradeDetectorImpl::ReceivedNotification(NotificationType notification) {
+  DCHECK_NE(notification, 0U);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  add_notifications(notification);
+
+  // Stop polling for outdated builds if a critical notification has arrived.
+  if (has_critical_notifications())
+    detect_upgrade_timer_.Stop();
+
+  set_critical_update_acknowledged(false);
   StartUpgradeNotificationTimer();
 }
 
-void UpgradeDetectorImpl::UpgradeDetected(UpgradeAvailable upgrade_available) {
+void UpgradeDetectorImpl::StartUpgradeNotificationTimer() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  set_upgrade_available(upgrade_available);
+  // The timer may already be running (e.g. due to both a software upgrade and
+  // experiment updates being available).
+  if (upgrade_notification_timer_.IsRunning())
+    return;
 
-  // Stop the recurring timer (that is checking for changes).
-  detect_upgrade_timer_.Stop();
-  set_critical_update_acknowledged(false);
+  upgrade_detected_time_ = base::TimeTicks::Now();
 
-  StartUpgradeNotificationTimer();
+  // Start the repeating timer for notifying the user after a certain period.
+  // The called function will eventually figure out that enough time has passed
+  // and stop the timer.
+  const int cycle_time_ms =
+      IsTesting() ? kNotifyCycleTimeForTestingMs : kNotifyCycleTimeMs;
+  upgrade_notification_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromMilliseconds(cycle_time_ms), this,
+      &UpgradeDetectorImpl::NotifyOnUpgrade);
 }
 
 void UpgradeDetectorImpl::NotifyOnUpgradeWithTimePassed(
     base::TimeDelta time_passed) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  const bool is_critical_or_outdated =
-      upgrade_available() > UPGRADE_AVAILABLE_REGULAR ||
-      critical_experiment_updates_available();
+  const bool is_critical_or_outdated = has_critical_notifications();
+  UpgradeNotificationAnnoyanceLevel level = upgrade_notification_stage();
   if (is_unstable_channel_) {
     // There's only one threat level for unstable channels like dev and
     // canary, and it hits after one hour. During testing, it hits after one
@@ -417,9 +418,9 @@ void UpgradeDetectorImpl::NotifyOnUpgradeWithTimePassed(
         base::TimeDelta::FromSeconds(1) : base::TimeDelta::FromHours(1);
 
     if (is_critical_or_outdated) {
-      set_upgrade_notification_stage(UPGRADE_ANNOYANCE_CRITICAL);
+      level = UPGRADE_ANNOYANCE_CRITICAL;
     } else if (time_passed >= unstable_threshold) {
-      set_upgrade_notification_stage(UPGRADE_ANNOYANCE_LOW);
+      level = UPGRADE_ANNOYANCE_LOW;
 
       // That's as high as it goes.
       upgrade_notification_timer_.Stop();
@@ -438,34 +439,24 @@ void UpgradeDetectorImpl::NotifyOnUpgradeWithTimePassed(
 
     // These if statements must be sorted (highest interval first).
     if (time_passed >= severe_threshold || is_critical_or_outdated) {
-      set_upgrade_notification_stage(
-          is_critical_or_outdated ? UPGRADE_ANNOYANCE_CRITICAL :
-                                    UPGRADE_ANNOYANCE_SEVERE);
+      level = is_critical_or_outdated ? UPGRADE_ANNOYANCE_CRITICAL
+                                      : UPGRADE_ANNOYANCE_SEVERE;
 
       // We can't get any higher, baby.
       upgrade_notification_timer_.Stop();
     } else if (time_passed >= high_threshold) {
-      set_upgrade_notification_stage(UPGRADE_ANNOYANCE_HIGH);
+      level = UPGRADE_ANNOYANCE_HIGH;
     } else if (time_passed >= elevated_threshold) {
-      set_upgrade_notification_stage(UPGRADE_ANNOYANCE_ELEVATED);
+      level = UPGRADE_ANNOYANCE_ELEVATED;
     } else if (time_passed >= low_threshold) {
-      set_upgrade_notification_stage(UPGRADE_ANNOYANCE_LOW);
+      level = UPGRADE_ANNOYANCE_LOW;
     } else {
       return;  // Not ready to recommend upgrade.
     }
   }
 
-  NotifyUpgrade();
+  NotifyUpgrade(level);
 }
-
-#if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
-void UpgradeDetectorImpl::OnAutoupdatesEnabledResult(
-    bool auto_updates_enabled) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  is_auto_update_enabled_ = auto_updates_enabled;
-  StartTimerForUpgradeCheck();
-}
-#endif  // defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
 
 void UpgradeDetectorImpl::NotifyOnUpgrade() {
   const base::TimeDelta time_passed =
@@ -475,12 +466,6 @@ void UpgradeDetectorImpl::NotifyOnUpgrade() {
 }
 
 // static
-UpgradeDetectorImpl* UpgradeDetectorImpl::GetInstance() {
-  static auto* const instance = new UpgradeDetectorImpl();
-  return instance;
-}
-
-// static
-UpgradeDetector* UpgradeDetector::GetInstance() {
-  return UpgradeDetectorImpl::GetInstance();
+std::unique_ptr<UpgradeDetector> UpgradeDetector::Create() {
+  return base::WrapUnique(new UpgradeDetectorImpl());
 }

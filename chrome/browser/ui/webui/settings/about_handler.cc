@@ -267,11 +267,13 @@ namespace settings {
 
 AboutHandler::AboutHandler()
     : apply_changes_from_upgrade_observer_(false), weak_factory_(this) {
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->AddObserver(this);
 }
 
 AboutHandler::~AboutHandler() {
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->RemoveObserver(this);
 }
 
 AboutHandler* AboutHandler::Create(content::WebUIDataSource* html_source,

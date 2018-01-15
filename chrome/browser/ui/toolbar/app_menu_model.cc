@@ -100,12 +100,12 @@ const int kEmptyMenuItemCommand = 0;
 // Conditionally return the update app menu item title based on upgrade detector
 // state.
 base::string16 GetUpgradeDialogMenuItemName() {
-  if (UpgradeDetector::GetInstance()->is_outdated_install() ||
-      UpgradeDetector::GetInstance()->is_outdated_install_no_au()) {
-    return l10n_util::GetStringUTF16(IDS_UPGRADE_BUBBLE_MENU_ITEM);
-  } else {
-    return l10n_util::GetStringUTF16(IDS_UPDATE_NOW);
-  }
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  const int message_id =
+      upgrade_detector && upgrade_detector->is_outdated_install()
+          ? IDS_UPGRADE_BUBBLE_MENU_ITEM
+          : IDS_UPDATE_NOW;
+  return l10n_util::GetStringUTF16(message_id);
 }
 
 // Returns the appropriate menu label for the IDC_CREATE_HOSTED_APP command.
@@ -304,9 +304,10 @@ base::string16 AppMenuModel::GetLabelForCommandId(int command_id) const {
 }
 
 bool AppMenuModel::GetIconForCommandId(int command_id, gfx::Image* icon) const {
-  if (command_id == IDC_UPGRADE_DIALOG &&
-      UpgradeDetector::GetInstance()->notify_upgrade()) {
-    *icon = UpgradeDetector::GetInstance()->GetIcon();
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  if (command_id == IDC_UPGRADE_DIALOG && upgrade_detector &&
+      upgrade_detector->notify_upgrade()) {
+    *icon = upgrade_detector->GetIcon();
     return true;
   }
   return false;
@@ -667,7 +668,8 @@ bool AppMenuModel::IsCommandIdVisible(int command_id) const {
       return false;
     case IDC_UPGRADE_DIALOG:
       return browser_defaults::kShowUpgradeMenuItem &&
-          UpgradeDetector::GetInstance()->notify_upgrade();
+             g_browser_process->upgrade_detector() &&
+             g_browser_process->upgrade_detector()->notify_upgrade();
 #if !defined(OS_LINUX) || defined(USE_AURA)
     case IDC_BOOKMARK_PAGE:
       return !chrome::ShouldRemoveBookmarkThisPageUI(browser_->profile());

@@ -1116,10 +1116,13 @@ void ShowAvatarMenu(Browser* browser) {
 }
 
 void OpenUpdateChromeDialog(Browser* browser) {
-  if (UpgradeDetector::GetInstance()->is_outdated_install()) {
-    UpgradeDetector::GetInstance()->NotifyOutdatedInstall();
-  } else if (UpgradeDetector::GetInstance()->is_outdated_install_no_au()) {
-    UpgradeDetector::GetInstance()->NotifyOutdatedInstallNoAutoUpdate();
+  UpgradeDetector* const upgrade_detector =
+      g_browser_process->upgrade_detector();
+  if (upgrade_detector && upgrade_detector->is_outdated_install()) {
+    if (upgrade_detector->auto_updates_disabled())
+      upgrade_detector->NotifyOutdatedInstallNoAutoUpdate();
+    else
+      upgrade_detector->NotifyOutdatedInstall();
   } else {
     base::RecordAction(UserMetricsAction("UpdateChrome"));
     browser->window()->ShowUpdateChromeDialog();

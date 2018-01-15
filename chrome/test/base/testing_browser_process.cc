@@ -102,6 +102,7 @@ TestingBrowserProcess::TestingBrowserProcess()
       io_thread_(nullptr),
       system_request_context_(nullptr),
       rappor_service_(nullptr),
+      upgrade_detector_(nullptr),
       platform_part_(new TestingBrowserProcessPlatformPart()) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions_browser_client_.reset(
@@ -456,6 +457,10 @@ TestingBrowserProcess::pref_service_factory() const {
   return nullptr;
 }
 
+UpgradeDetector* TestingBrowserProcess::upgrade_detector() {
+  return upgrade_detector_;
+}
+
 void TestingBrowserProcess::SetSystemRequestContext(
     net::URLRequestContextGetter* context_getter) {
   system_request_context_ = context_getter;
@@ -525,6 +530,11 @@ void TestingBrowserProcess::SetOptimizationGuideService(
 void TestingBrowserProcess::SetRapporServiceImpl(
     rappor::RapporServiceImpl* rappor_service) {
   rappor_service_ = rappor_service;
+}
+
+void TestingBrowserProcess::SetUpgradeDetector(
+    UpgradeDetector* upgrade_detector) {
+  upgrade_detector_ = upgrade_detector;
 }
 
 void TestingBrowserProcess::SetShuttingDown(bool is_shutting_down) {

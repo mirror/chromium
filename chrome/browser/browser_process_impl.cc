@@ -145,6 +145,7 @@
 #if !defined(OS_ANDROID)
 #include "chrome/browser/gcm/gcm_product_util.h"
 #include "chrome/browser/ui/user_manager.h"
+#include "chrome/browser/upgrade_detector.h"
 #include "components/gcm_driver/gcm_client_factory.h"
 #include "components/gcm_driver/gcm_desktop_utils.h"
 #include "components/keep_alive_registry/keep_alive_registry.h"
@@ -227,7 +228,8 @@ BrowserProcessImpl::BrowserProcessImpl(
       local_state_task_runner_(local_state_task_runner),
       cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT),
       pref_service_factory_(
-          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
+          base::MakeUnique<prefs::InProcessPrefServiceFactory>()),
+      created_upgrade_detector_(false) {
   g_browser_process = this;
   rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
   platform_part_ = base::MakeUnique<BrowserProcessPlatformPart>();
@@ -850,6 +852,13 @@ prefs::InProcessPrefServiceFactory* BrowserProcessImpl::pref_service_factory()
   return pref_service_factory_.get();
 }
 
+UpgradeDetector* BrowserProcessImpl::upgrade_detector() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (!created_upgrade_detector_)
+    CreateUpgradeDetector();
+  return upgrade_detector_.get();
+}
+
 // static
 void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kDefaultBrowserSettingEnabled,
@@ -1317,6 +1326,19 @@ void BrowserProcessImpl::CreatePhysicalWebDataSource() {
   physical_web_data_source_ = base::MakeUnique<PhysicalWebDataSourceAndroid>();
 #else
   NOTIMPLEMENTED();
+#endif
+}
+
+void BrowserProcessImpl::CreateUpgradeDetector() {
+  DCHECK(!created_upgrade_detector_);
+  DCHECK(!upgrade_detector_);
+
+  created_upgrade_detector_ = true;
+
+#if defined(OS_ANDROID)
+  NOTIMPLEMENTED();
+#else
+  upgrade_detector_ = UpgradeDetector::Create();
 #endif
 }
 

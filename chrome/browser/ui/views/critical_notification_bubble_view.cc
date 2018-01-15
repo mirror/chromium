@@ -55,8 +55,8 @@ int CriticalNotificationBubbleView::GetRemainingTime() const {
 }
 
 void CriticalNotificationBubbleView::OnCountdown() {
-  UpgradeDetector* upgrade_detector = UpgradeDetector::GetInstance();
-  if (upgrade_detector->critical_update_acknowledged()) {
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  if (upgrade_detector && upgrade_detector->critical_update_acknowledged()) {
     // The user has already interacted with the bubble and chosen a path.
     GetWidget()->Close();
     return;
@@ -65,7 +65,8 @@ void CriticalNotificationBubbleView::OnCountdown() {
   int seconds = GetRemainingTime();
   if (seconds <= 0) {
     // Time's up!
-    upgrade_detector->acknowledge_critical_update();
+    if (upgrade_detector)
+      upgrade_detector->acknowledge_critical_update();
 
     base::RecordAction(UserMetricsAction("CriticalNotification_AutoRestart"));
     refresh_timer_.Stop();
@@ -92,7 +93,8 @@ void CriticalNotificationBubbleView::WindowClosing() {
 }
 
 bool CriticalNotificationBubbleView::Cancel() {
-  UpgradeDetector::GetInstance()->acknowledge_critical_update();
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->acknowledge_critical_update();
   base::RecordAction(UserMetricsAction("CriticalNotification_Ignore"));
   // If the counter reaches 0, we set a restart flag that must be cleared if
   // the user selects, for example, "Stay on this page" during an
@@ -104,7 +106,8 @@ bool CriticalNotificationBubbleView::Cancel() {
 }
 
 bool CriticalNotificationBubbleView::Accept() {
-  UpgradeDetector::GetInstance()->acknowledge_critical_update();
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->acknowledge_critical_update();
   base::RecordAction(UserMetricsAction("CriticalNotification_Restart"));
   chrome::AttemptRestart();
   return true;

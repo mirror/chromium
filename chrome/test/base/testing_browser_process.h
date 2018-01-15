@@ -135,6 +135,7 @@ class TestingBrowserProcess : public BrowserProcess {
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
+  UpgradeDetector* upgrade_detector() override;
 
   // Set the local state for tests. Consumer is responsible for cleaning it up
   // afterwards (using ScopedTestingLocalState, for example).
@@ -156,6 +157,7 @@ class TestingBrowserProcess : public BrowserProcess {
   void SetNotificationPlatformBridge(
       std::unique_ptr<NotificationPlatformBridge> notification_platform_bridge);
   void SetRapporServiceImpl(rappor::RapporServiceImpl* rappor_service);
+  void SetUpgradeDetector(UpgradeDetector* upgrade_detector);
   void SetShuttingDown(bool is_shutting_down);
   void ShutdownBrowserPolicyConnector();
 
@@ -206,6 +208,7 @@ class TestingBrowserProcess : public BrowserProcess {
   IOThread* io_thread_;
   net::URLRequestContextGetter* system_request_context_;
   rappor::RapporServiceImpl* rappor_service_;
+  UpgradeDetector* upgrade_detector_;
 
   std::unique_ptr<BrowserProcessPlatformPart> platform_part_;
 

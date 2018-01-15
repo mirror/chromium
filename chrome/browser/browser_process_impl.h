@@ -163,6 +163,7 @@ class BrowserProcessImpl : public BrowserProcess,
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
+  UpgradeDetector* upgrade_detector() override;
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
@@ -190,6 +191,7 @@ class BrowserProcessImpl : public BrowserProcess,
   void CreateBackgroundModeManager();
   void CreateGCMDriver();
   void CreatePhysicalWebDataSource();
+  void CreateUpgradeDetector();
 
   void ApplyAllowCrossOriginAuthPromptPolicy();
   void ApplyDefaultBrowserPolicy();
@@ -367,6 +369,9 @@ class BrowserProcessImpl : public BrowserProcess,
       physical_web_data_source_;
 
   std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
+
+  bool created_upgrade_detector_;
+  std::unique_ptr<UpgradeDetector> upgrade_detector_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
