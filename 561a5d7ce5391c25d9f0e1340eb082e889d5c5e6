@@ -16,6 +16,24 @@
       "revId": "561a5d7ce5391c25d9f0e1340eb082e889d5c5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d53fd02_50f4301f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5918,
+      "author": {
+        "id": 1181784
+      },
+      "writtenOn": "2018-01-15T03:43:57Z",
+      "side": 1,
+      "message": "Not sure if I understand correctly. Do you mean someone happened to resize WebContentsView during emulation? This should rarely happen, I guess.\nIf this happens, RWHV would be resized to the WebContentsView size. Shall we just assume that the user want the new size and don\u0027t reset it back to view_size_before_emulation_? I did the changes, let me know if it makes sense, thanks!",
+      "parentUuid": "88109324_6e9dffc2",
+      "revId": "561a5d7ce5391c25d9f0e1340eb082e889d5c5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
