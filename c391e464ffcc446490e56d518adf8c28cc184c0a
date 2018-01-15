@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "914f4f95_07545086",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 1,
+      "message": "Thanks.  Added a TODO to move the ivars.",
+      "parentUuid": "01cb76ed_89000020",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc19931_642ccee8",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f3054d1c_668b78b5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "1dc19931_642ccee8",
+      "range": {
+        "startLine": 195,
+        "startChar": 45,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4231b07_d880e670",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
         "patchSetId": 13
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2238c4c1_eafe4798",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4231b07_d880e670",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b0b57c7_707757d1",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
         "patchSetId": 13
@@ -73,6 +133,24 @@
       "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2e58d0_c4cac4e7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0b57c7_707757d1",
+      "revId": "c391e464ffcc446490e56d518adf8c28cc184c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

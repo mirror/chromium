@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ad59af8_545be8ea",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_navigation_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 0,
+      "message": "Yes, the TODO was wrong.\nBookmarkNavigationController is still needed for opening folder picker and bookmark edit page.",
+      "parentUuid": "a2e642aa_ddc2e270",
+      "revId": "ae42d324d6e2f1921b70c9f0a26f124d0207b198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a7089c_e9350dca",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
         "patchSetId": 13
@@ -39,6 +57,30 @@
       "revId": "ae42d324d6e2f1921b70c9f0a26f124d0207b198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73529f31_258a07f8",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-15T03:34:33Z",
+      "side": 0,
+      "message": "Oh. My bad. I overdone it.\nI undone the removal of the bookmarksItem.",
+      "parentUuid": "e1a7089c_e9350dca",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 44
+      },
+      "revId": "ae42d324d6e2f1921b70c9f0a26f124d0207b198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
