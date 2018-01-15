@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69f5774_a404cc44",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-15T00:41:42Z",
+      "side": 1,
+      "message": "|kOther| instead of |blocked_reason|?",
+      "range": {
+        "startLine": 735,
+        "startChar": 56,
+        "endLine": 735,
+        "endChar": 70
+      },
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
