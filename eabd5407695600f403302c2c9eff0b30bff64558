@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "b994c375_4b92fc44",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T06:17:34Z",
+      "side": 1,
+      "message": "I think that we may be guaranteed another main frame after rAF is canceled as it schedules an animation update if needed immediately after servicing rAF: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/ScriptedAnimationController.cpp?type\u003dcs\u0026l\u003d172",
+      "parentUuid": "93be0d39_aa849f64",
+      "range": {
+        "startLine": 930,
+        "startChar": 44,
+        "endLine": 930,
+        "endChar": 65
+      },
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10152f77_fbdf0060",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 8
