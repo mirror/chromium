@@ -38,7 +38,8 @@ class PLATFORM_EXPORT CompositorWorkerScheduler
   void OnTaskCompleted(WorkerTaskQueue* worker_task_queue,
                        const TaskQueue::Task& task,
                        base::TimeTicks start,
-                       base::TimeTicks end) override;
+                       base::TimeTicks end,
+                       base::Optional<base::TimeDelta> cpu_time) override;
 
   // ChildScheduler:
   scoped_refptr<base::SingleThreadTaskRunner> DefaultTaskRunner() override;

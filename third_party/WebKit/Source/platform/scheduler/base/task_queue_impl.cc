@@ -964,9 +964,11 @@ void TaskQueueImpl::SetOnTaskCompletedHandler(
 
 void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
                                     base::TimeTicks start,
-                                    base::TimeTicks end) {
+                                    base::TimeTicks end,
+                                    base::Optional<base::TimeDelta> cpu_time) {
   if (!main_thread_only().on_task_completed_handler.is_null())
-    main_thread_only().on_task_completed_handler.Run(task, start, end);
+    main_thread_only().on_task_completed_handler.Run(task, start, end,
+                                                     cpu_time);
 }
 
 bool TaskQueueImpl::RequiresTaskTiming() const {

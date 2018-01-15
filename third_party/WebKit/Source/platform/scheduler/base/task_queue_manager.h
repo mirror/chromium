@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_BASE_TASK_QUEUE_MANAGER_H_
 
 #include <map>
+#include <random>
 
 #include "base/atomic_sequence_num.h"
 #include "base/cancelable_callback.h"
@@ -243,6 +244,8 @@ class PLATFORM_EXPORT TaskQueueManager
 
   size_t QueuesToDeleteCount() { return queues_to_delete_.size(); }
 
+  void SetRandomSeed(uint64_t seed);
+
  private:
   // Represents a scheduled delayed DoWork (if any). Only public for testing.
   class NextDelayedDoWork {
@@ -336,6 +339,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   void NotifyDidProcessTaskObservers(const internal::TaskQueueImpl::Task& task,
                                      internal::TaskQueueImpl* queue,
+                                     base::Optional<base::TimeDelta> cpu_time,
                                      base::TimeTicks task_start_time,
                                      base::TimeTicks* time_after_task);
 
@@ -377,6 +381,8 @@ class PLATFORM_EXPORT TaskQueueManager
   // Deletes queues marked for deletion and empty queues marked for shutdown.
   void CleanUpQueues();
 
+  bool ShouldRecordCPUTimeForTask();
+
   std::set<TimeDomain*> time_domains_;
   std::unique_ptr<RealTimeDomain> real_time_domain_;
 
@@ -405,6 +411,8 @@ class PLATFORM_EXPORT TaskQueueManager
   THREAD_CHECKER(main_thread_checker_);
   std::unique_ptr<internal::ThreadController> controller_;
   internal::TaskQueueSelector selector_;
+
+  std::mt19937_64 random_generator_;
 
   bool task_was_run_on_quiescence_monitored_queue_ = false;
 
