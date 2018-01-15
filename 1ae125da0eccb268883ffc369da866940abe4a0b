@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f49686a6_1ca196af",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-15T20:39:54Z",
+      "side": 1,
+      "message": "Seems that several tests call here when client_id hasn\u0027t yet been set.  Will require some investigation to correct that -- best on a different CL so as to not hold up this and follow-on CLs.",
+      "parentUuid": "d109f9e9_419eb284",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5c7dea_66785d49",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 6
