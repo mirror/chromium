@@ -14,6 +14,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/feature_list.h"
 #include "base/macros.h"
@@ -32,7 +33,7 @@ class SequencedTaskRunner;
 namespace net {
 class URLRequest;
 class NetworkQualityEstimator;
-}
+}  // namespace net
 
 namespace content {
 
@@ -66,6 +67,20 @@ class ResourceThrottle;
 // the URLRequest.
 class CONTENT_EXPORT ResourceScheduler {
  public:
+  class ScheduledResourceRequest {
+   public:
+    ScheduledResourceRequest();
+    virtual ~ScheduledResourceRequest();
+    virtual void WillStartRequest(bool* defer) = 0;
+
+    void set_resume_callback(base::RepeatingClosure callback) {
+      resume_callback_ = callback;
+    }
+    void RunResumeCallback();
+
+   private:
+    base::RepeatingClosure resume_callback_;
+  };
   // A struct that stores the Network Quality values and loading parameters when
   // the observed Network Quality matches the specified network quality value.
   struct ParamsForNetworkQuality {
@@ -87,7 +102,7 @@ class CONTENT_EXPORT ResourceScheduler {
   // Requests that this ResourceScheduler schedule, and eventually loads, the
   // specified |url_request|. Caller should delete the returned ResourceThrottle
   // when the load completes or is canceled, before |url_request| is deleted.
-  std::unique_ptr<ResourceThrottle> ScheduleRequest(
+  std::unique_ptr<ScheduledResourceRequest> ScheduleRequest(
       int child_id,
       int route_id,
       bool is_async,
@@ -178,11 +193,11 @@ class CONTENT_EXPORT ResourceScheduler {
  private:
   class Client;
   class RequestQueue;
-  class ScheduledResourceRequest;
+  class ScheduledResourceRequestImpl;
   struct RequestPriorityParams;
   struct ScheduledResourceSorter {
-    bool operator()(const ScheduledResourceRequest* a,
-                    const ScheduledResourceRequest* b) const;
+    bool operator()(const ScheduledResourceRequestImpl* a,
+                    const ScheduledResourceRequestImpl* b) const;
   };
 
   // Experiment parameters and helper functions for varying the maximum number
@@ -231,10 +246,10 @@ class CONTENT_EXPORT ResourceScheduler {
 
   typedef int64_t ClientId;
   typedef std::map<ClientId, Client*> ClientMap;
-  typedef std::set<ScheduledResourceRequest*> RequestSet;
+  typedef std::set<ScheduledResourceRequestImpl*> RequestSet;
 
   // Called when a ScheduledResourceRequest is destroyed.
-  void RemoveRequest(ScheduledResourceRequest* request);
+  void RemoveRequest(ScheduledResourceRequestImpl* request);
 
   // Returns the client ID for the given |child_id| and |route_id| combo.
   ClientId MakeClientId(int child_id, int route_id);
