@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9ec6a9a_ac90cd5b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-15T13:43:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76f2ba25_7ecc5122",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc73c40_9e28a69e",
         "filename": "ios/chrome/browser/ui/key_commands_provider.h",
         "patchSetId": 4
@@ -378,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "09742f47_c334b0a4",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-15T13:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0782de8_a59b5fed",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "793a66ea_dd00e974",
         "filename": "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h",
         "patchSetId": 4
@@ -436,6 +484,30 @@
       "writtenOn": "2018-01-15T13:12:04Z",
       "side": 1,
       "message": "\\o/",
+      "range": {
+        "startLine": 152,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1073057e_168a5a74",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-15T13:43:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fe21703_4d67ae96",
       "range": {
         "startLine": 152,
         "startChar": 15,
