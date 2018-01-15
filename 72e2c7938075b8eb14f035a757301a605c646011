@@ -79,6 +79,24 @@
       "revId": "72e2c7938075b8eb14f035a757301a605c646011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994e41e1_5057cf59",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-15T11:46:07Z",
+      "side": 1,
+      "message": "Yup. I was just wrong here. My bad!",
+      "parentUuid": "9eb23e34_7ffff945",
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
