@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a439ed66_c71f587d",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-15T13:10:39Z",
+      "side": 1,
+      "message": "nit: Apologies, but I think the diff here will be even more clear if you put DoAttachStorage() directly *below* OnRemovableStorageAttached() rather than above. Then we should get to see pretty much exactly only the code that you\u0027re changing show up as diff.",
+      "range": {
+        "startLine": 905,
+        "startChar": 20,
+        "endLine": 905,
+        "endChar": 46
+      },
+      "revId": "523e6f3de5b6085098e43da7cb00f42f23b8eb75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

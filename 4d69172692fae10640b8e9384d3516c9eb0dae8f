@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f6dcffa_63b15f40",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-15T13:10:39Z",
+      "side": 0,
+      "message": "The change that you made in the preparation CL has already made the situation here much more clear, thanks! Can you do one more preparation CL that will make this situation really crystal-clear:\n\nChange StorageChanged() to flip the condition:\n\nif (!is_attached) {\n  // Code to handle this situation\n  return;\n}\n\n// code to handle attached situation\n\nThat way in this CL when you move the code to handle the attached situation into DoAttachStorage() and insert it right below StorageChanged() the diff will be limited to basically exactly the code changes that you\u0027re making.",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "4d69172692fae10640b8e9384d3516c9eb0dae8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
