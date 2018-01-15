@@ -17,6 +17,10 @@ namespace blink {
 
 class CrossThreadPersistentRegion;
 
+using PersistentTraceCallback = void (*)(Visitor*,
+                                         BlinkGC::TraceOption,
+                                         void* self);
+
 class PersistentNode final {
   DISALLOW_NEW();
 
@@ -44,13 +48,13 @@ class PersistentNode final {
   // Instead we call the constructor with a TraceCallback which knows the
   // type of the most specific child and calls trace directly. See
   // TraceMethodDelegate in Visitor.h for how this is done.
-  void TracePersistentNode(Visitor* visitor) {
+  void TracePersistentNode(Visitor* visitor, BlinkGC::TraceOption option) {
     DCHECK(!IsUnused());
     DCHECK(trace_);
-    trace_(visitor, self_);
+    trace_(visitor, option, self_);
   }
 
-  void Initialize(void* self, TraceCallback trace) {
+  void Initialize(void* self, PersistentTraceCallback trace) {
     DCHECK(IsUnused());
     self_ = self;
     trace_ = trace;
@@ -82,7 +86,7 @@ class PersistentNode final {
   //   - m_self points to the next freed PersistentNode.
   //   - m_trace is nullptr.
   void* self_;
-  TraceCallback trace_;
+  PersistentTraceCallback trace_;
 };
 
 struct PersistentNodeSlots final {
@@ -115,7 +119,8 @@ class PLATFORM_EXPORT PersistentRegion final {
   }
   ~PersistentRegion();
 
-  PersistentNode* AllocatePersistentNode(void* self, TraceCallback trace) {
+  PersistentNode* AllocatePersistentNode(void* self,
+                                         PersistentTraceCallback trace) {
 #if DCHECK_IS_ON()
     ++persistent_count_;
 #endif
@@ -147,15 +152,17 @@ class PLATFORM_EXPORT PersistentRegion final {
   void ReleasePersistentNode(PersistentNode*,
                              ThreadState::PersistentClearCallback);
   using ShouldTraceCallback = bool (*)(Visitor*, PersistentNode*);
-  void TracePersistentNodes(
+  bool TracePersistentNodes(
       Visitor*,
+      BlinkGC::TraceOption,
+      double deadline_seconds,
       ShouldTraceCallback = PersistentRegion::ShouldTracePersistentNode);
   int NumberOfPersistents();
 
  private:
   friend CrossThreadPersistentRegion;
 
-  void EnsurePersistentNodeSlots(void*, TraceCallback);
+  void EnsurePersistentNodeSlots(void*, PersistentTraceCallback);
 
   PersistentNode* free_list_head_;
   PersistentNodeSlots* slots_;
@@ -173,7 +180,7 @@ class CrossThreadPersistentRegion final {
 
   void AllocatePersistentNode(PersistentNode*& persistent_node,
                               void* self,
-                              TraceCallback trace) {
+                              PersistentTraceCallback trace) {
     MutexLocker lock(mutex_);
     PersistentNode* node =
         persistent_region_->AllocatePersistentNode(self, trace);
@@ -225,13 +232,22 @@ class CrossThreadPersistentRegion final {
     bool locked_;
   };
 
-  void TracePersistentNodes(Visitor* visitor) {
+  bool TracePersistentNodes(Visitor* visitor,
+                            BlinkGC::TraceOption option,
+                            double deadline_seconds) {
+    // Access to the CrossThreadPersistentRegion has to be prevented
+    // while in the marking phase because otherwise other threads may
+    // allocate or free PersistentNodes and we can't handle
+    // that. Grabbing this lock also prevents non-attached threads
+    // from accessing any GCed heap while a GC runs.
+    LockScope lock(*this);
 // If this assert triggers, you're tracing without being in a LockScope.
 #if DCHECK_IS_ON()
     DCHECK(mutex_.Locked());
 #endif
-    persistent_region_->TracePersistentNodes(
-        visitor, CrossThreadPersistentRegion::ShouldTracePersistentNode);
+    return persistent_region_->TracePersistentNodes(
+        visitor, option, deadline_seconds,
+        CrossThreadPersistentRegion::ShouldTracePersistentNode);
   }
 
   void PrepareForThreadStateTermination(ThreadState*);

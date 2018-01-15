@@ -297,12 +297,16 @@ void ThreadState::VisitStack(Visitor* visitor) {
   }
 }
 
-void ThreadState::VisitPersistents(Visitor* visitor) {
-  persistent_region_->TracePersistentNodes(visitor);
-  if (trace_dom_wrappers_) {
+bool ThreadState::VisitPersistents(Visitor* visitor,
+                                   BlinkGC::TraceOption option,
+                                   double deadline_seconds) {
+  bool complete = persistent_region_->TracePersistentNodes(visitor, option,
+                                                           deadline_seconds);
+  if (complete && trace_dom_wrappers_) {
     TRACE_EVENT0("blink_gc", "V8GCController::traceDOMWrappers");
     trace_dom_wrappers_(isolate_, visitor);
   }
+  return complete;
 }
 
 ThreadState::GCSnapshotInfo::GCSnapshotInfo(size_t num_object_types)
@@ -1265,23 +1269,39 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
   GCForbiddenScope gc_forbidden_scope(this);
 
   {
-    // Access to the CrossThreadPersistentRegion has to be prevented
-    // while in the marking phase because otherwise other threads may
-    // allocate or free PersistentNodes and we can't handle
-    // that. Grabbing this lock also prevents non-attached threads
-    // from accessing any GCed heap while a GC runs.
-    CrossThreadPersistentRegion::LockScope persistent_lock(
-        ProcessHeap::GetCrossThreadPersistentRegion());
-
+    TRACE_EVENT2("blink_gc,devtools.timeline", "BlinkGCMarking", "lazySweeping",
+                 gc_type == BlinkGC::kGCWithoutSweep, "gcReason",
+                 GcReasonString(reason));
+    MarkPhasePrologue(stack_state, gc_type, reason);
     {
-      TRACE_EVENT2("blink_gc,devtools.timeline", "BlinkGCMarking",
-                   "lazySweeping", gc_type == BlinkGC::kGCWithoutSweep,
-                   "gcReason", GcReasonString(reason));
-      MarkPhasePrologue(stack_state, gc_type, reason);
-      MarkPhaseVisitRoots();
-      CHECK(MarkPhaseAdvanceMarking(std::numeric_limits<double>::infinity()));
-      MarkPhaseEpilogue();
+      double start_time = WTF::CurrentTimeTicksInMilliseconds();
+
+      ScriptForbiddenScope script_forbidden;
+      // Disallow allocation during garbage collection (but not during the
+      // finalization that happens when the visitorScope is torn down).
+      NoAllocationScope no_allocation_scope(this);
+      StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
+
+      bool complete =
+          ProcessHeap::GetCrossThreadPersistentRegion().TracePersistentNodes(
+              current_gc_data_.visitor.get(),
+              BlinkGC::TraceOption::kRegisterPersistentWeakCallbacks,
+              std::numeric_limits<double>::infinity());
+      CHECK(complete);
+
+      // Trace objects reachable from the stack.
+      {
+        SafePointScope safe_point_scope(current_gc_data_.stack_state, this);
+        Heap().VisitStackRoots(current_gc_data_.visitor.get());
+      }
+      current_gc_data_.marking_time_in_milliseconds +=
+          WTF::CurrentTimeTicksInMilliseconds() - start_time;
     }
+    bool complete = MarkPhaseAdvanceMarking(
+        std::numeric_limits<double>::infinity(),
+        BlinkGC::TraceOption::kRegisterPersistentWeakCallbacks);
+    CHECK(complete);
+    MarkPhaseEpilogue();
   }
 
   PreSweep(gc_type);
@@ -1343,7 +1363,8 @@ void ThreadState::MarkPhasePrologue(BlinkGC::StackState stack_state,
     Heap().ResetHeapCounters();
 }
 
-void ThreadState::MarkPhaseVisitRoots() {
+bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds,
+                                          BlinkGC::TraceOption option) {
   double start_time = WTF::CurrentTimeTicksInMilliseconds();
 
   ScriptForbiddenScope script_forbidden;
@@ -1352,30 +1373,15 @@ void ThreadState::MarkPhaseVisitRoots() {
   NoAllocationScope no_allocation_scope(this);
   StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
 
-  // 1. Trace persistent roots.
-  Heap().VisitPersistentRoots(current_gc_data_.visitor.get());
+  bool complete = false;
+  complete = Heap().VisitPersistentRoots(current_gc_data_.visitor.get(), option,
+                                         deadline_seconds);
 
-  // 2. Trace objects reachable from the stack.
-  {
-    SafePointScope safe_point_scope(current_gc_data_.stack_state, this);
-    Heap().VisitStackRoots(current_gc_data_.visitor.get());
+  if (complete) {
+    // 3. Transitive closure to trace objects including ephemerons.
+    complete = Heap().AdvanceMarkingStackProcessing(
+        current_gc_data_.visitor.get(), deadline_seconds);
   }
-  current_gc_data_.marking_time_in_milliseconds +=
-      WTF::CurrentTimeTicksInMilliseconds() - start_time;
-}
-
-bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds) {
-  double start_time = WTF::CurrentTimeTicksInMilliseconds();
-
-  ScriptForbiddenScope script_forbidden;
-  // Disallow allocation during garbage collection (but not during the
-  // finalization that happens when the visitorScope is torn down).
-  NoAllocationScope no_allocation_scope(this);
-  StackFrameDepthScope stack_depth_scope(&Heap().GetStackFrameDepth());
-
-  // 3. Transitive closure to trace objects including ephemerons.
-  bool complete = Heap().AdvanceMarkingStackProcessing(
-      current_gc_data_.visitor.get(), deadline_seconds);
 
   current_gc_data_.marking_time_in_milliseconds +=
       WTF::CurrentTimeTicksInMilliseconds() - start_time;

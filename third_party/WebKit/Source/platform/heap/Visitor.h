@@ -68,6 +68,16 @@ struct TraceMethodDelegate {
   }
 };
 
+template <typename T, void (T::*method)(Visitor*, BlinkGC::TraceOption)>
+struct PersistentTraceMethodDelegate {
+  STATIC_ONLY(PersistentTraceMethodDelegate);
+  static void Trampoline(Visitor* visitor,
+                         BlinkGC::TraceOption option,
+                         void* self) {
+    (reinterpret_cast<T*>(self)->*method)(visitor, option);
+  }
+};
+
 // Visitor is used to traverse the Blink object graph. Used for the
 // marking phase of the mark-sweep garbage collector.
 //
