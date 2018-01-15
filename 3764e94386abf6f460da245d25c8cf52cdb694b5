@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e66699_e8c710cb",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-15T19:29:48Z",
+      "side": 1,
+      "message": "@kinuko, just to confirm. I am not quite certain about the different-world scenario actually. Should we just return a clone like this or return empty or behave differently when it\u0027s in different world?",
+      "revId": "3764e94386abf6f460da245d25c8cf52cdb694b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
