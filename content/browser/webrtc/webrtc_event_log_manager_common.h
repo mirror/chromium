@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// TODO: !!! All of these.
 #ifndef CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_COMMON_H_
 #define CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_COMMON_H_
 
 #include <tuple>
 
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
@@ -46,6 +48,29 @@ class WebRtcLocalEventLogsObserver {
   virtual void OnLocalLogStarted(WebRtcEventLogPeerConnectionKey pc_key,
                                  base::FilePath file_path) = 0;
   virtual void OnLocalLogStopped(WebRtcEventLogPeerConnectionKey pc_key) = 0;
+};
+
+// An observer for notifications of remote-bound log files being stopped.
+// They may be stopped because either:
+// 1. The PeerConnection has become inactive.
+// 2. The file's maximum size has been reached.
+// 3. Any type of error while writing to the file.
+class WebRtcRemoteEventLogsObserver {
+ public:
+  virtual ~WebRtcRemoteEventLogsObserver() = default;
+  virtual void OnRemoteLogStopped(WebRtcEventLogPeerConnectionKey pc_key) = 0;
+};
+
+struct LogFile {
+  LogFile(base::FilePath path, base::File file, size_t max_file_size_bytes)
+      : path(path),
+        file(std::move(file)),
+        max_file_size_bytes(max_file_size_bytes),
+        file_size_bytes(0) {}
+  const base::FilePath path;
+  base::File file;
+  const size_t max_file_size_bytes;
+  size_t file_size_bytes;
 };
 
 }  // namespace content
