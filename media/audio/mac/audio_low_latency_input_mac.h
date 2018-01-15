@@ -95,6 +95,7 @@ class MEDIA_EXPORT AUAudioInputStream
   size_t requested_buffer_size() const {
     return input_params_.frames_per_buffer();
   }
+  AudioUnit audio_unit() const { return audio_unit_; }
 
  private:
   static const AudioObjectPropertyAddress kDeviceChangePropertyAddress;
@@ -281,6 +282,11 @@ class MEDIA_EXPORT AUAudioInputStream
   // Set to true when we've successfully called SuppressNoiseReduction to
   // disable ambient noise reduction.
   bool noise_reduction_suppressed_;
+
+  // Controls whether or not we use the kAudioUnitSubType_VoiceProcessingIO
+  // voice processing component that provides echo cancellation, ducking
+  // and gain control on Sierra and later.
+  const bool voice_processing_;
 
   // Stores the timestamp of the previous audio buffer provided by the OS.
   // We use this in combination with |last_number_of_frames_| to detect when

@@ -10742,7 +10742,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_DEFAULT_AUDIO_DEVICE_NAME" desc="System default audio device (microphone or loudspeaker). This is typically presented to users in a drop-down list of device choices.">
         Default
     </message>
-    <if expr="is_win">
+    <if expr="is_win or is_macosx">
       <message name="IDS_COMMUNICATIONS_AUDIO_DEVICE_NAME" desc="System default communications audio device (microphone or loudspeaker). This is typically presented to users in a drop-down list of device choices.">
         Communications
       </message>

@@ -53,7 +53,7 @@ std::string AudioDeviceDescription::GetDefaultDeviceName() {
 
 // static
 std::string AudioDeviceDescription::GetCommunicationsDeviceName() {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_MACOSX)
   return GetLocalizedStringUTF8(COMMUNICATIONS_AUDIO_DEVICE_NAME);
 #else
   NOTREACHED();

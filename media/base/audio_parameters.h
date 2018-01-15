@@ -139,6 +139,7 @@ class MEDIA_SHMEM_EXPORT AudioParameters {
     KEYBOARD_MIC = 0x4,
     HOTWORD = 0x8,
     NOISE_SUPPRESSION = 0x10
+    AUTOMATIC_GAIN_CONTROL = 0x11,
   };
 
   AudioParameters();
