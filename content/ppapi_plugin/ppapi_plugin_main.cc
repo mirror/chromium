@@ -127,6 +127,11 @@ int PpapiPluginMain(const MainFunctionParams& parameters) {
       service_manager::SandboxLinux::Options());
 #endif
 
+#if defined(OS_WIN)
+  // Must be before the PpapiThread is created.
+  InitializeDWriteFontProxy();
+#endif
+
   ChildProcess ppapi_process;
   ppapi_process.set_main_thread(
       new PpapiThread(parameters.command_line, false));  // Not a broker.
@@ -134,7 +139,6 @@ int PpapiPluginMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN)
   if (!base::win::IsUser32AndGdi32Available())
     gfx::win::MaybeInitializeDirectWrite();
-  InitializeDWriteFontProxy();
 
   double device_scale_factor = 1.0;
   base::StringToDouble(
