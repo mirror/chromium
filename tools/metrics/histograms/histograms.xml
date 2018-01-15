@@ -32867,6 +32867,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Audio.Capture.InputStreamDuration">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    This histogram measures the duration of every input stream, as measured from
+    the renderer. It counts from when it has been successfully started, until it
+    is stopped. Streams that fail to start are not logged.
+  </summary>
+</histogram>
+
 <histogram name="Media.Audio.Capture.LargestGlitchMs" units="ms">
   <owner>grunell@chromium.org</owner>
   <summary>
@@ -33022,6 +33031,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Audio.InputStreamsCanceledByBrowser">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    When a stream factory is destructed, the streams it created are also
+    destructed. This histograms measures how many input streams are destructed
+    each time an input stream factory is destructed.
+  </summary>
+</histogram>
+
 <histogram name="Media.Audio.IsOnBatteryPowerMac" enum="BooleanOnBattery">
   <owner>henrika@chromium.org</owner>
   <summary>
@@ -33068,6 +33086,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Time delta between the moment output device authorization request is
     received by the browser and the moment its processessing is finished (and
     reply is to be sent back to the renderer if IPC is not closed yet).
+  </summary>
+</histogram>
+
+<histogram name="Media.Audio.OutputStreamsCanceledByBrowser">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    When a stream factory is destructed, the streams it created are also
+    destructed. This histograms measures how many output streams are destructed
+    each time an output stream factory is destructed.
   </summary>
 </histogram>
 
@@ -33247,6 +33274,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>dalecurtis@chromium.org</owner>
   <summary>
     Device status received in response to device authorization request.
+  </summary>
+</histogram>
+
+<histogram name="Media.Audio.Render.OutputStreamDuration">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    This histogram measures the duration of every output stream, as measured
+    from the renderer. It counts from when it has been successfully started,
+    until it is stopped. Streams that fail to start are not logged.
   </summary>
 </histogram>
 
@@ -34937,6 +34973,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>zqzhang@chromium.org</owner>
   <summary>
     The type of media notification the user clicked to go back to Chrome.
+  </summary>
+</histogram>
+
+<histogram name="Media.OutputStreamDuration" units="ms">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    Duration of an audio output stream. Measured in AudioOutputController from
+    when a stream is started until it is paused or closed.
   </summary>
 </histogram>
 
