@@ -415,7 +415,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     ManageAccountsDelegate,
                                     MFMailComposeViewControllerDelegate,
                                     NetExportTabHelperDelegate,
-                                    NewTabPageControllerObserver,
                                     OverscrollActionsControllerDelegate,
                                     PageInfoPresentation,
                                     PassKitDialogProvider,
@@ -3734,12 +3733,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return self.headerHeight + StatusBarHeight();
 }
 
-#pragma mark - NewTabPageControllerObserver methods.
-
-- (void)selectedPanelDidChange {
-  [self updateToolbar];
-}
-
 #pragma mark - CRWNativeContentProvider methods
 
 // TODO(crbug.com/725241): This method is deprecated and should be removed by
@@ -3786,7 +3779,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
                                           focuser:self.primaryToolbarCoordinator
-                                      ntpObserver:self
                                      browserState:_browserState
                                        colorCache:_dominantColorCache
                                   toolbarDelegate:self.toolbarInterface
@@ -3795,11 +3787,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
                                        dispatcher:self.dispatcher
                                     safeAreaInset:safeAreaInset];
     pageController.swipeRecognizerProvider = self.sideSwipeController;
-
-    // Panel is always NTP for iPhone.
-    ntp_home::PanelIdentifier panelType = ntp_home::HOME_PANEL;
-
-    [pageController selectPanel:panelType];
     nativeController = pageController;
   } else if (url_host == kChromeUIOfflineHost &&
              [self hasControllerForURL:url]) {

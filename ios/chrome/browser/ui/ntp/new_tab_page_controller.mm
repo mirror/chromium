@@ -106,7 +106,6 @@ enum {
 @interface NewTabPageController () {
   ios::ChromeBrowserState* _browserState;  // weak.
   __weak id<UrlLoader> _loader;
-  __weak id<NewTabPageControllerObserver> _newTabPageObserver;
   IncognitoViewController* _incognitoController;
   // The currently visible controller, one of the above.
   __weak id<NewTabPagePanelProtocol> _currentController;
@@ -127,29 +126,12 @@ enum {
   TabModel* _tabModel;
 }
 
-// Load and bring panel into view.
-- (void)showPanel:(NewTabPageBarItem*)item;
 // Load panel on demand.
 - (BOOL)loadPanel:(NewTabPageBarItem*)item;
 // After a panel changes, update metrics and prefs information.
 - (void)panelChanged:(NewTabPageBarItem*)item;
-// Update current controller and tab bar index.  Used to call reload.
-- (void)updateCurrentController:(NewTabPageBarItem*)item
-                          index:(NSUInteger)index;
-// Bring panel into scroll view.
-- (void)scrollToPanel:(NewTabPageBarItem*)item animate:(BOOL)animate;
-// Returns index of item in tab bar.
-- (NSUInteger)tabBarItemIndex:(NewTabPageBarItem*)item;
 // Call loadPanel by item index.
 - (void)loadControllerWithIndex:(NSUInteger)index;
-// Initialize scroll view.
-- (void)setUpScrollView;
-// Update overlay scroll view value.
-- (void)updateOverlayScrollPosition;
-// Disable the horizontal scroll view.
-- (void)disableScroll;
-// Enable the horizontal scroll view.
-- (void)enableScroll;
 // Returns the ID for the currently selected panel.
 - (ntp_home::PanelIdentifier)selectedPanelID;
 
@@ -199,7 +181,6 @@ enum {
 - (id)initWithUrl:(const GURL&)url
                   loader:(id<UrlLoader>)loader
                  focuser:(id<OmniboxFocuser>)focuser
-             ntpObserver:(id<NewTabPageControllerObserver>)ntpObserver
             browserState:(ios::ChromeBrowserState*)browserState
               colorCache:(NSMutableDictionary*)colorCache
          toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate
@@ -217,7 +198,6 @@ enum {
     DCHECK(browserState);
     _browserState = browserState;
     _loader = loader;
-    _newTabPageObserver = ntpObserver;
     _parentViewController = parentViewController;
     _dispatcher = dispatcher;
     _focuser = focuser;
@@ -227,17 +207,9 @@ enum {
     self.title = l10n_util::GetNSString(IDS_NEW_TAB_TITLE);
     _scrollInitialized = NO;
 
-    // It is necessary to initialize the view with a non-empty frame so the NTP
-    // can be scrolled when the Bookmarks/Recent Tabs are opened from the
-    // toolmenu.
-    UIScrollView* scrollView =
-        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 412)];
-    [scrollView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
-                                     UIViewAutoresizingFlexibleHeight)];
     NewTabPageBar* tabBar =
         [[NewTabPageBar alloc] initWithFrame:CGRectMake(0, 412, 320, 48)];
     _view = [[NewTabPageView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)
-                                    andScrollView:scrollView
                                         andTabBar:tabBar];
     _view.safeAreaInsetForToolbar = safeAreaInset;
     [tabBar setDelegate:self];
@@ -275,20 +247,15 @@ enum {
       [tabBarItems addObject:openTabsItem];
       self.view.tabBar.items = tabBarItems;
       itemToDisplay = homeItem;
+      base::RecordAction(UserMetricsAction("MobileNTPShowMostVisited"));
     }
     DCHECK(itemToDisplay);
-    [self setUpScrollView];
-    [self showPanel:itemToDisplay];
-    [self updateOverlayScrollPosition];
+    [self loadPanel:itemToDisplay];
   }
   return self;
 }
 
 - (void)dealloc {
-  // Animations can last past the life of the NTP controller, nil out the
-  // delegate.
-  self.view.scrollView.delegate = nil;
-
   // This is not an ideal place to put view controller contaimnent, rather a
   // //web -wasDismissed method on CRWNativeContent would be more accurate. If
   // CRWNativeContent leaks, this will not be called.
@@ -386,85 +353,16 @@ enum {
 
 #pragma mark -
 
-- (void)setSwipeRecognizerProvider:(id<CRWSwipeRecognizerProvider>)provider {
-  _swipeRecognizerProvider = provider;
-  NSSet* recognizers = [_swipeRecognizerProvider swipeRecognizers];
-  for (UISwipeGestureRecognizer* swipeRecognizer in recognizers) {
-    [self.view.scrollView.panGestureRecognizer
-        requireGestureRecognizerToFail:swipeRecognizer];
-  }
-}
-
-- (void)setUpScrollView {
-  NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter addObserver:self
-                    selector:@selector(disableScroll)
-                        name:UIKeyboardWillShowNotification
-                      object:nil];
-  [defaultCenter addObserver:self
-                    selector:@selector(enableScroll)
-                        name:UIKeyboardWillHideNotification
-                      object:nil];
-
-  UIScrollView* scrollView = self.view.scrollView;
-  scrollView.pagingEnabled = YES;
-  scrollView.showsHorizontalScrollIndicator = NO;
-  scrollView.showsVerticalScrollIndicator = NO;
-  scrollView.contentMode = UIViewContentModeScaleAspectFit;
-  scrollView.bounces = YES;
-  scrollView.delegate = self;
-  scrollView.scrollsToTop = NO;
-
-  [self.view updateScrollViewContentSize];
-
-  _scrollInitialized = YES;
-}
-
-- (void)disableScroll {
-  [self.view.scrollView setScrollEnabled:NO];
-}
-
-- (void)enableScroll {
-  [self.view.scrollView setScrollEnabled:YES];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView*)scrollView {
-  NSUInteger index = self.view.tabBar.selectedIndex;
-  NewTabPageBarItem* item = [self.view.tabBar.items objectAtIndex:index];
-  DCHECK(item);
-  [self updateCurrentController:item index:index];
-}
-
 // Called when the user presses a segment that's not currently selected.
 // Pressing a segment that's already selected does not trigger this action.
 - (void)newTabBarItemDidChange:(NewTabPageBarItem*)selectedItem
                    changePanel:(BOOL)changePanel {
   [self panelChanged:selectedItem];
-  if (changePanel) {
-    [self scrollToPanel:selectedItem animate:YES];
-  }
-
-  [_newTabPageObserver selectedPanelDidChange];
-}
-
-- (void)selectPanel:(ntp_home::PanelIdentifier)panelType {
-  for (NewTabPageBarItem* item in self.view.tabBar.items) {
-    if (item.identifier == panelType) {
-      [self showPanel:item];
-      return;  // Early return after finding the first match.
+  if (selectedItem.identifier == ntp_home::BOOKMARKS_PANEL) {
+    [self.dispatcher showBookmarksManager];
+  } else if (selectedItem.identifier == ntp_home::RECENT_TABS_PANEL) {
+    [self.dispatcher showRecentTabs];
     }
-  }
-}
-
-- (void)showPanel:(NewTabPageBarItem*)item {
-  if ([self loadPanel:item]) {
-    // Intentionally omitting a metric for the Incognito panel.
-    if (item.identifier == ntp_home::HOME_PANEL)
-      base::RecordAction(UserMetricsAction("MobileNTPShowMostVisited"));
-    else if (item.identifier == ntp_home::RECENT_TABS_PANEL)
-      base::RecordAction(UserMetricsAction("MobileNTPShowOpenTabs"));
-  }
-  [self scrollToPanel:item animate:NO];
 }
 
 - (void)loadControllerWithIndex:(NSUInteger)index {
@@ -522,12 +420,9 @@ enum {
     [self.view.tabBar setShadowAlpha:[self.homePanel alphaForBottomShadow]];
   }
 
-  // Add the panel views to the scroll view in the proper location.
-  NSUInteger index = [self tabBarItemIndex:item];
   BOOL created = NO;
   if (view.superview == nil) {
     created = YES;
-    view.frame = [self.view panelFrameForItemAtIndex:index];
     item.view = view;
 
     // To ease modernizing the NTP only the internal panels are being converted
@@ -539,64 +434,15 @@ enum {
     // is initiated, and when WebController calls -willBeDismissed.
     DCHECK(panelController);
     [self.parentViewController addChildViewController:panelController];
-    [self.view.scrollView addSubview:view];
+    [self.view addSubview:view];
+    self.view.contentView = view;
     [panelController didMoveToParentViewController:self.parentViewController];
   }
   return created;
 }
 
-- (void)scrollToPanel:(NewTabPageBarItem*)item animate:(BOOL)animate {
-  NSUInteger index = [self tabBarItemIndex:item];
-  if (item.identifier == ntp_home::BOOKMARKS_PANEL) {
-    [self.dispatcher showBookmarksManager];
-  } else if (item.identifier == ntp_home::RECENT_TABS_PANEL) {
-    [self.dispatcher showRecentTabs];
-  }
-
-  if (_currentController == nil) {
-    [self updateCurrentController:item index:index];
-  }
-}
-
-// Return the index of the tab item.  Aways return 0 since the returned index is
-// used to update the visible controller and scroll the NTP scroll view. None of
-// this is applicable after NTP is shown modally.
-- (NSUInteger)tabBarItemIndex:(NewTabPageBarItem*)item {
-  return 0;
-}
-
 - (ntp_home::PanelIdentifier)selectedPanelID {
   return ntp_home::HOME_PANEL;
-}
-
-- (void)updateCurrentController:(NewTabPageBarItem*)item
-                          index:(NSUInteger)index {
-  if ((item.identifier == ntp_home::RECENT_TABS_PANEL)) {
-    // Don't update |_currentController| for iPhone since Bookmarks and Recent
-    // Tabs are presented in a modal view controller.
-    return;
-  }
-
-  id<NewTabPagePanelProtocol> oldController = _currentController;
-  self.view.tabBar.selectedIndex = index;
-  if (item.identifier == ntp_home::HOME_PANEL)
-    _currentController = self.homePanel;
-  else if (item.identifier == ntp_home::RECENT_TABS_PANEL)
-    _currentController = _openTabsCoordinator;
-  else if (item.identifier == ntp_home::INCOGNITO_PANEL)
-    _currentController = _incognitoController;
-
-  [self.homePanel setScrollsToTop:(_currentController == self.homePanel)];
-  [_openTabsCoordinator
-      setScrollsToTop:(_currentController == _openTabsCoordinator)];
-  if (oldController) {
-    [self.view.tabBar setShadowAlpha:[_currentController alphaForBottomShadow]];
-  }
-
-  if (oldController != _currentController) {
-    [_currentController wasShown];
-    [oldController wasHidden];
-  }
 }
 
 - (void)panelChanged:(NewTabPageBarItem*)item {
@@ -613,15 +459,6 @@ enum {
     base::RecordAction(UserMetricsAction("MobileNTPSwitchToOpenTabs"));
     prefs->SetInteger(prefs::kNtpShownPage, OPEN_TABS_PAGE_ID);
   }
-}
-
-- (void)updateOverlayScrollPosition {
-  // Update overlay position. This moves the overlay animation on the tab bar.
-  UIScrollView* scrollView = self.view.scrollView;
-  if (!scrollView || scrollView.contentSize.width == 0.0)
-    return;
-  self.view.tabBar.overlayPercentage =
-      scrollView.contentOffset.x / scrollView.contentSize.width;
 }
 
 #pragma mark - LogoAnimationControllerOwnerOwner
