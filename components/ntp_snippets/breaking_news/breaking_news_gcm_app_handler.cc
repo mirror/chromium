@@ -112,6 +112,8 @@ BreakingNewsGCMAppHandler::BreakingNewsGCMAppHandler(
 #endif  // !OS_ANDROID
   DCHECK(token_validation_timer_);
   DCHECK(!token_validation_timer_->IsRunning());
+  DCHECK(forced_subscription_timer);
+  DCHECK(!forced_subscription_timer->IsRunning());
 }
 
 BreakingNewsGCMAppHandler::~BreakingNewsGCMAppHandler() {
@@ -180,6 +182,12 @@ void BreakingNewsGCMAppHandler::Subscribe(bool force_token_retrieval) {
 void BreakingNewsGCMAppHandler::DidRetrieveToken(
     const std::string& subscription_token,
     InstanceID::Result result) {
+  if (!IsListening()) {
+    // After we requested the token, |StopListening| has been called. Thus,
+    // ignore the token.
+    return;
+  }
+
   metrics::OnTokenRetrieved(result);
 
   switch (result) {
@@ -226,6 +234,12 @@ void BreakingNewsGCMAppHandler::ResubscribeIfInvalidToken() {
 void BreakingNewsGCMAppHandler::DidReceiveTokenForValidation(
     const std::string& new_token,
     InstanceID::Result result) {
+  if (!IsListening()) {
+    // After we requested the token, |StopListening| has been called. Thus,
+    // ignore the token.
+    return;
+  }
+
   metrics::OnTokenRetrieved(result);
 
   base::Optional<base::TimeDelta> time_since_last_validation;
