@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<script>
+</script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+async_test(function(t) {
+  const connectStart = performance.timing.connectStart;
+  const navigationStart = performance.timing.navigationStart;
+  const secureConnectionStart = performance.timing.secureConnectionStart;
+  const connectEnd = performance.timing.connectEnd;
+  assert_greater_equal(connectStart, navigationStart,
+    'performance.timing.connectStart >= performance.timing.navigationStart');
+  assert_greater_equal(secureConnectionStart, connectStart,
+    'performance.timing.secureConnectionStart >= performance.timing.connectStart');
+  assert_greater_equal(connectEnd, secureConnectionStart,
+    'performance.timing.connectEnd >= performance.timing.secureConnectionStart');
+}, 'Check that performance.timing has reasonable values for secureConnectionStart and other attributes');
+</script>
+</body>
+</html>
