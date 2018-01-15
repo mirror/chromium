@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b39db3a3_a60f7c8a",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-15T01:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5797402_c14a725b",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f3fc2ea_5aefe840",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8a92b6_77b37765",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-15T01:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f3fc2ea_5aefe840",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "418caae0_82a8162c",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-15T01:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35325cae_1d84e64e",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cc8f6b0_a3ec72a8",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
         "patchSetId": 16
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b84a003e_051c6729",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-15T01:01:18Z",
+      "side": 1,
+      "message": "Hmm, tough... Ok renamed to just Send(), for lack of a better name :)",
+      "parentUuid": "4cc8f6b0_a3ec72a8",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01dddafa_3fcd5fbc",
         "filename": "content/common/speech_recognizer.mojom",
         "patchSetId": 16
@@ -84,6 +156,24 @@
       "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d2684b_be7db341",
+        "filename": "content/common/speech_recognizer.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-15T01:01:18Z",
+      "side": 1,
+      "message": "Yup, sgtm. Added a TODO to remove |request_id| from the interface in the meantime.",
+      "parentUuid": "01dddafa_3fcd5fbc",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
