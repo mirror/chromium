@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74cd66d2_95d7268d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T11:07:30Z",
+      "side": 1,
+      "message": "Sorry for changing my position so many times on this, but on third thought I would just remove this and just use GetLastCommmitedOrigin everywhere.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adb8ff3_a432b92f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T11:07:30Z",
+      "side": 1,
+      "message": "Hang on, is this actually a requirement?",
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c26422_9177af39",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T11:07:30Z",
+      "side": 1,
+      "message": "Hmm, I think it might be impossible for this check to ever fail?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb23e34_7ffff945",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-15T11:07:30Z",
+      "side": 1,
+      "message": "Suppose we renamed Domain() to EffectiveDomain(). Would we get equivalent behavior? If not, can you please add unit tests that highlight the differences?",
+      "revId": "72e2c7938075b8eb14f035a757301a605c646011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
