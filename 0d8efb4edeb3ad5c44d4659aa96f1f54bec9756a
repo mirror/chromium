@@ -34,6 +34,24 @@
       "revId": "0d8efb4edeb3ad5c44d4659aa96f1f54bec9756a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeac579f_3db66ecc",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-15T09:34:51Z",
+      "side": 1,
+      "message": "SG. Thanks.",
+      "parentUuid": "c2b68035_929687ba",
+      "revId": "0d8efb4edeb3ad5c44d4659aa96f1f54bec9756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
