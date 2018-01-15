@@ -307,8 +307,7 @@ bool IsScrollableNode(const Node* node) {
   return false;
 }
 
-Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
-                                                            Node* node) {
+Node* ScrollableEnclosingBoxOrParentFrameForNode(Node* node) {
   DCHECK(node);
   Node* parent = node;
   do {
@@ -317,9 +316,19 @@ Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
       parent = ToDocument(parent)->GetFrame()->DeprecatedLocalOwner();
     else
       parent = parent->ParentOrShadowHostNode();
-  } while (parent && !IsNavigableContainer(parent, type));
+  } while (parent && !IsContainer(parent));
 
   return parent;
+}
+
+bool IsContainer(const Node* node) {
+  if (!node)
+    return false;
+
+  return node->IsDocumentNode() ||
+         (node->IsFrameOwnerElement() &&
+          ToHTMLFrameOwnerElement(node)->ContentFrame()) ||
+         CanScroll(node);
 }
 
 bool IsNavigableContainer(const Node* node, WebFocusType type) {
@@ -365,6 +374,14 @@ bool CanScrollInDirection(const Node* container, WebFocusType type) {
       NOTREACHED();
       return false;
   }
+}
+
+bool CanScroll(const Node* container) {
+  DCHECK(container);
+  if (container->IsDocumentNode())
+    return CanScroll(ToDocument(container)->GetFrame()->DeprecatedLocalOwner());
+
+  return IsScrollableNode(container);
 }
 
 bool CanScrollInDirection(const LocalFrame* frame, WebFocusType type) {
