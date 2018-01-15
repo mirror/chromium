@@ -281,6 +281,11 @@ class CONTENT_EXPORT FrameTreeNode {
 
   NavigationRequest* navigation_request() { return navigation_request_.get(); }
 
+  // Returns ownership of the navigation request.
+  std::unique_ptr<NavigationRequest> TakeNavigationRequest() {
+    return std::move(navigation_request_);
+  }
+
   // PlzNavigate
   // Takes ownership of |navigation_request| and makes it the current
   // NavigationRequest of this frame. This corresponds to the start of a new

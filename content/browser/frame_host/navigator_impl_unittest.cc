@@ -181,7 +181,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   navigation->ReadyToCommit();
   EXPECT_TRUE(main_test_rfh()->GetProcess()->did_frame_commit_navigation());
   EXPECT_TRUE(main_test_rfh()->is_loading());
-  EXPECT_FALSE(node->navigation_request());
+  EXPECT_TRUE(node->navigation_request());
 
   // Commit the navigation.
   navigation->Commit();
