@@ -44,7 +44,8 @@ bool RenderingWindowManager::RegisterChild(HWND parent, HWND child) {
   if (info.call_set_parent) {
     base::PostTaskWithTraits(
         FROM_HERE, {base::TaskPriority::USER_BLOCKING},
-        base::BindOnce(base::IgnoreResult(&::SetParent), child, parent));
+        base::BindOnce(&RenderingWindowManager::SetParent,
+                       base::Unretained(this), child, parent));
   }
 
   return true;
@@ -71,7 +72,13 @@ void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
     child = info.child;
   }
 
+  SetParent(child, parent);
+}
+
+void RenderingWindowManager::SetParent(HWND child, HWND parent) {
   ::SetParent(child, parent);
+  ::SetWindowPos(child, HWND_BOTTOM, 0, 0, 0, 0,
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
 }
 
 void RenderingWindowManager::UnregisterParent(HWND parent) {

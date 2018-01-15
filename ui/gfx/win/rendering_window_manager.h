@@ -33,6 +33,8 @@ class GFX_EXPORT RenderingWindowManager {
  private:
   friend struct base::DefaultSingletonTraits<RenderingWindowManager>;
 
+  void SetParent(HWND child, HWND parent);
+
   struct EmeddingInfo {
     // The child window.
     HWND child = nullptr;
