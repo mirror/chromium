@@ -16,6 +16,24 @@
       "revId": "e772b713353bef1368d583904e9d00803afa2c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8340cd_e4865a81",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-15T15:16:58Z",
+      "side": 1,
+      "message": "+1, something similar to how symbol_level works would make sense to me:\n\nassert(blink_symbol_level \u003d\u003d -1 || !remove_webcore_debug_symbols,\n       \"blink_symbol_level and remove_webcore_debug_symbols cannot both be set.\");\nif (blink_symbol_level \u003d\u003d -1 \u0026\u0026 remove_webcore_debug_symbols) {\n  if (is_win) {\n    blink_symbol_level \u003d 1\n  } else {\n    blink_symbol_level \u003d 0\n  }\n}",
+      "parentUuid": "f4c982a7_b05ac81a",
+      "revId": "e772b713353bef1368d583904e9d00803afa2c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
