@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b2f6e7_6015461d",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T17:31:49Z",
+      "side": 1,
+      "message": "Remove newline?",
+      "range": {
+        "startLine": 2089,
+        "startChar": 18,
+        "endLine": 2089,
+        "endChar": 0
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3e938f_c89232dd",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T17:31:49Z",
+      "side": 1,
+      "message": "We are blocking on four surfaces from kChildFrameSink1? When does this actually happen?",
+      "range": {
+        "startLine": 2094,
+        "startChar": 11,
+        "endLine": 2094,
+        "endChar": 57
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190df280_52cc014e",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T17:31:49Z",
+      "side": 1,
+      "message": "Why do we take max? What\u0027s the scenario in which parent_sequence_number is greater than surface_id.local_surface_id().parent_sequence_number()?",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 75
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd0037b_847fb44b",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T17:31:49Z",
+      "side": 1,
+      "message": "Also here.",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 74
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
