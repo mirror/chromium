@@ -74,12 +74,21 @@ void DataDevice::StartDrag(const DataSource* source_resource,
                            Surface* icon_resource,
                            uint32_t serial) {
   // TODO(hirono): Check if serial is valid. crbug.com/746111
+  LOG(ERROR) << "----------- StartDrag:" << serial;
   NOTIMPLEMENTED();
 }
 
 void DataDevice::SetSelection(DataSource* source, uint32_t serial) {
-  // TODO(hirono): Check if serial is valid. crbug.com/746111
-  seat_->SetSelection(source);
+  uint32_t current_display_serial = delegate_->GetCurrentDisplaySerial();
+  LOG(ERROR) << "----------- SetSelection:" << serial;
+  LOG(ERROR) << "-----------  last_serial:" << current_display_serial;
+  if (current_display_serial < serial) {
+    DLOG(ERROR) << "Invalid serial is passed. serial (" << serial
+                << ") should not be bigger than current_display_serial ("
+                << current_display_serial << ")";
+    return;
+  }
+  seat_->SetSelection(source, serial);
 }
 
 void DataDevice::OnDragEntered(const ui::DropTargetEvent& event) {

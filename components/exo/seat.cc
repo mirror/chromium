@@ -61,12 +61,22 @@ Surface* Seat::GetFocusedSurface() {
   return GetEffectiveFocus(WMHelper::GetInstance()->GetFocusedWindow());
 }
 
-void Seat::SetSelection(DataSource* source) {
+void Seat::SetSelection(DataSource* source, uint32_t serial) {
   if (!source) {
     ui::Clipboard::GetForCurrentThread()->Clear(ui::CLIPBOARD_TYPE_COPY_PASTE);
     // selection_source_ is Cancelled() and reset() in OnClipboardDataChanged().
     return;
   }
+
+  LOG(ERROR) << "----------- Seat SetSelection:" << serial;
+  LOG(ERROR) << "-----------  Seat last_serial:" << last_serial_;
+  if (serial <= last_serial_ && last_serial_ != 0) {
+    DLOG(ERROR) << "Invalid serial is passed. serial (" << serial
+                << ") should be bigger than last_serial (" << last_serial_
+                << ")";
+    return;
+  }
+  last_serial_ = serial;
 
   if (selection_source_) {
     if (selection_source_->get() == source)
