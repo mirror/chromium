@@ -4197,6 +4197,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
       DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
   NavigationStateImpl* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  DCHECK(!navigation_state->WasWithinSameDocument());
   const WebURLResponse& web_url_response =
       frame_->GetDocumentLoader()->GetResponse();
   WebURLResponseExtraDataImpl* extra_data =
@@ -4204,7 +4205,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // Only update the PreviewsState and effective connection type states for new
   // main frame documents. Subframes inherit from the main frame and should not
   // change at commit time.
-  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
+  if (is_main_frame_) {
     previews_state_ = PREVIEWS_OFF;
     if (extra_data) {
       previews_state_ = extra_data->previews_state();
@@ -4225,7 +4226,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // Navigations that change the document represent a new content source.  Keep
   // track of that on the widget to help the browser process detect when stale
   // compositor frames are being shown after a commit.
-  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
+  if (is_main_frame_) {
     GetRenderWidget()->IncrementContentSourceId();
 
     // Update the URL used to key Ukm metrics in the compositor if the
@@ -4237,16 +4238,10 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
       GetRenderWidget()->compositor()->SetURLForUkm(GetLoadingUrl());
   }
 
-  // When we perform a new navigation, we need to update the last committed
-  // session history entry with state for the page we are leaving. Do this
-  // before updating the current history item.
-  SendUpdateState();
-
   service_manager::mojom::InterfaceProviderRequest
       remote_interface_provider_request;
-  if (!navigation_state->WasWithinSameDocument() &&
-      global_object_reuse_policy !=
-          blink::WebGlobalObjectReusePolicy::kUseExisting) {
+  if (global_object_reuse_policy !=
+      blink::WebGlobalObjectReusePolicy::kUseExisting) {
     // If we're navigating to a new document, bind |remote_interfaces_| to a new
     // message pipe. The request end of the new InterfaceProvider interface will
     // be sent over as part of DidCommitProvisionalLoad. After the RFHI receives
@@ -4281,10 +4276,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
 
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
-  if (media_permission_dispatcher_ &&
-      !navigation_state->WasWithinSameDocument()) {
+  if (media_permission_dispatcher_)
     media_permission_dispatcher_->OnNavigation();
-  }
 
   UpdateStateForCommit(item, commit_type);
 
@@ -4532,11 +4525,18 @@ void RenderFrameImpl::DidNavigateWithinPage(
       DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
   UpdateNavigationState(document_state, true /* was_within_same_document */,
                         content_initiated);
-  static_cast<NavigationStateImpl*>(document_state->navigation_state())
-      ->set_was_within_same_document(true);
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  navigation_state->set_was_within_same_document(true);
 
-  DidCommitProvisionalLoad(item, commit_type,
-                           blink::WebGlobalObjectReusePolicy::kUseExisting);
+  UpdateStateForCommit(item, commit_type);
+
+  // This invocation must precede any calls to allowScripts(), allowImages(), or
+  // allowPlugins() for the new page. This ensures that when these functions
+  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
+  // process has already been informed of the provisional load committing.
+  GetFrameHost()->DidCommitSameDocumentNavigation(
+      MakeDidCommitProvisionalLoadParams(commit_type));
 }
 
 void RenderFrameImpl::DidUpdateCurrentHistoryItem() {
@@ -5348,7 +5348,6 @@ RenderFrameImpl::MakeDidCommitProvisionalLoadParams(
   // are unwound or moved to RenderFrameHost (crbug.com/304341) we can move the
   // client to be based on the routing_id of the RenderFrameHost.
   params->render_view_routing_id = render_view_->routing_id();
-  params->was_within_same_document = navigation_state->WasWithinSameDocument();
 
   // "Standard" commits from Blink create new NavigationEntries. We also treat
   // main frame "inert" commits as creating new NavigationEntries if they
@@ -5588,6 +5587,10 @@ void RenderFrameImpl::UpdateStateForCommit(
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
+
+  // We need to update the last committed session history entry with state for
+  // the previous page. Do this before updating the current history item.
+  SendUpdateState();
 
   bool is_new_navigation = UpdateNavigationHistory(item, commit_type);
   NotifyObserversOfNavigationCommit(is_new_navigation,
