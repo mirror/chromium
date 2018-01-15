@@ -346,6 +346,17 @@ source_set("feature_h264_with_openh264_ffmpeg") {
   ]
 }
 
+source_set("feature_webrtc_dual_stream_mode") {
+  deps = [
+    ":features",
+    "//base",
+  ]
+  sources = [
+    "feature_webrtc_dual_stream_mode.cc",
+    "feature_webrtc_dual_stream_mode.h",
+  ]
+}
+
 mojom("interfaces") {
   # Must depend on //content/public/common/ instead, for component build.
   visibility = [
