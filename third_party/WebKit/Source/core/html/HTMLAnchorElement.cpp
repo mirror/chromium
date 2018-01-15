@@ -388,6 +388,16 @@ void HTMLAnchorElement::HandleClick(Event* event) {
               : WebFeature::
                     kHTMLAnchorElementDownloadInSandboxWithoutUserGesture);
     }
+    // Don't bother navigating if we already know here that this will be a
+    // download.
+    if (completed_url.ProtocolIsAbout() || completed_url.ProtocolIsData() ||
+        completed_url.ProtocolIs("blob") ||
+        completed_url.ProtocolIs("filesystem")) {
+      request.SetRequestContext(WebURLRequest::kRequestContextDownload);
+      request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
+      frame->Client()->DownloadURL(request, FastGetAttribute(downloadAttr));
+      return;
+    }
     request.SetSuggestedFilename(
         static_cast<String>(FastGetAttribute(downloadAttr)));
   }
