@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a43ee1de_561048d2",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-15T13:19:32Z",
+      "side": 1,
+      "message": "Yuzhu outlined on crbug.com/801497 that this (good) suggestion isn\u0027t possible to implement.",
+      "parentUuid": "662f3696_f6da910c",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "060cdcd2_3dada5fd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
         "patchSetId": 4
