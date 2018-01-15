@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dbdf671_c78c569c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-15T19:26:18Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "10004a36edd5155595f3a7e83147baa8687d0a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daae579f_d7ff1bd9",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-15T19:26:18Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer tracing_category_",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "10004a36edd5155595f3a7e83147baa8687d0a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
