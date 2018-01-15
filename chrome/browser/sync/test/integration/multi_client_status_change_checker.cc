@@ -20,3 +20,7 @@ MultiClientStatusChangeChecker::~MultiClientStatusChangeChecker() {}
 void MultiClientStatusChangeChecker::OnStateChanged(syncer::SyncService* sync) {
   CheckExitCondition();
 }
+
+base::TimeDelta MultiClientStatusChangeChecker::GetTimeoutDuration() {
+  return base::TimeDelta::FromSeconds(90);
+}
