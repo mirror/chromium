@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d467df08_bf3b2cb9",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T16:17:13Z",
+      "side": 1,
+      "message": "nit: TODO(hirono) so there\u0027s a point of contact to find out what this todo is about",
+      "range": {
+        "startLine": 118,
+        "startChar": 11,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "3727808b69bc1eccd9e5c33fdd45128a8542c591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9148a6_cfe464f7",
+        "filename": "components/exo/file_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T16:17:13Z",
+      "side": 1,
+      "message": "by application with |app_id|?",
+      "range": {
+        "startLine": 26,
+        "startChar": 56,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "3727808b69bc1eccd9e5c33fdd45128a8542c591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed34e1c9_c4157aaf",
+        "filename": "components/exo/file_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T16:17:13Z",
+      "side": 1,
+      "message": "that containers can understand\n\nor maybe \"that applications can understand\"?",
+      "range": {
+        "startLine": 36,
+        "startChar": 45,
+        "endLine": 36,
+        "endChar": 76
+      },
+      "revId": "3727808b69bc1eccd9e5c33fdd45128a8542c591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8d0c2a_370db206",
+        "filename": "components/exo/file_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T16:17:13Z",
+      "side": 1,
+      "message": "Android apps?",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "3727808b69bc1eccd9e5c33fdd45128a8542c591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
