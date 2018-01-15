@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d0e7347_c8e6c77d",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "Use PostTask. At least in Bluetooth code, we try to make it so that callback based functions always run their callback in the next cycle.",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2d5a5a_b1e7bdc4",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "Curious as to when this comes up. Seems strange for a client to be deleting the bluetooth adapter in a callback.",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb90c7a3_788ffc90",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem robust enough e.g.:\n\n1. Power is on.\n2. Call SetPowered(false);\n3. This function immediately runs before mac gets a chance to turn off the controller.\n4. Since the controller is still on, we would call the error callback.\n\nIf this is only going to be used for Low Energy devices, then we could wait for the didUpdateState event in [1] and process the queue there.\n\nOtherwise, move this inside the if statement on line 467 and run it only if the power state changes.\n\n[1] https://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_adapter_mac.mm?type\u003dcs\u0026q\u003ddidupdatestate+file:%5Esrc/device/bluetooth/+package:%5Echromium$\u0026l\u003d601",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5227f6_d7c0aa05",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "Assuming you only need the new function for BLE, you could change the fake to dispatch a didUpdateState event and then enable this test [1] on mac as well. Then we wouldn\u0027t need these tests here.\n\n[1] https://cs.chromium.org/chromium/src/device/bluetooth/bluetooth_adapter_unittest.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d688",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63049e1_4b3d8501",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "Since we are adding a queue, we are going to need more tests:\n\n1. While off, two pending requests to turn on.\n2. While on, two pending requests to turn off.\n3. While on, a request to turn on during pending off request.\netc.\n\nAlso a test for what happens when the adapter is destroyed with pending requests.\n\nAll of these should be in bluetooth_adapter_unittest.cc\n\n(We might need to add a function to bluetooth_test.h to dispatch the state changed event in order to write some of these tests. This is OK and we do it for a bunch of tests already.)",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37ce3c4_afa8a802",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "More comments please.",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267d7a09_5ece558d",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T06:48:30Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with mac but I\u0027ve seen uses of undocumented APIs guarded by respondsToSelector. Would that be appropriate here?\n\nAlso a unit test to make sure we find out if the function disappears e.g.\n\nEXPECT_TRUE([SomeClass class], instancesRespondToSelector:@selector(privateApiThing:));",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
