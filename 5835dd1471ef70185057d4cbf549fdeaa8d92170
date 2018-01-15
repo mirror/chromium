@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "0e944b5e_9f0e78bc",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-15T18:02:34Z",
+      "side": 1,
+      "message": "Okay I\u0027ve added some verification in this Read function to match the guarantees the VibrationController should have already enforced in its Sanitize step here:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/vibration/VibrationController.cpp?l\u003d38\n\nHowever I notice that this means that the behaviour of my mojo service now deviates slightly from that of the corresponding legacy-ipc message filter, which would clamp the vibration durations to both a max *and a min* if they lie outside the expected values, whereas mine will now simply fail if any duration is \u003c1:\n\nhttps://cs.chromium.org/chromium/src/content/browser/notifications/notification_message_filter.cc?sq\u003dpackage:chromium\u0026l\u003d36\n\n@Peter is this okay? Or should I be clamping it before/after it gets to this point? (from Daniel\u0027s comment sounds like it would be nonstandard to normalize within the struct traits file here)\n\nI have also added a check that actions are \u003c MaxNumberOfActions, whereas the message filter would have truncated the actions to 2 and carried on merrily. So maybe I\u0027m now being too strict here? (But this gets truncated in CreateWebNotificationData(), so it should never be \u003e 2 by this point right?)",
+      "parentUuid": "66104378_d0c4ea1f",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47792af9_2d352c9c",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
@@ -113,6 +131,24 @@
       "writtenOn": "2018-01-09T10:11:26Z",
       "side": 1,
       "message": "Similarly, I think there\u0027s a max length to how much data this can contain; can we do an explicit check for that here?",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60770f5_6f74dbf4",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-15T18:02:34Z",
+      "side": 1,
+      "message": "Done - I\u0027m now validating the data, vibration and actions of the p_n_d at the end of the Read function. Is this fine, or should I ideally be validating each property *before* reading it into the \u0027out\u0027 parameter?",
+      "parentUuid": "47792af9_2d352c9c",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -204,6 +240,24 @@
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef8cda2_6cd1efd7",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-15T18:02:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f01588a_a84a5b57",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
