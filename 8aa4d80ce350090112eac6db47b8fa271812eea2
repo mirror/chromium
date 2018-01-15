@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69a828e8_c363eedf",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-15T17:51:42Z",
+      "side": 1,
+      "message": "i hate the amount of duplication in this file. :-(\n\ni\u0027ll probably try to make a followup change that at least stores all of these (signal name, callback) pairs in an array that this function can iterate over.",
+      "revId": "8aa4d80ce350090112eac6db47b8fa271812eea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15295081_e678aea8",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-15T17:51:42Z",
+      "side": 1,
+      "message": "this file has a disgusting mix of:\n\na) individual d-bus args,\nb) protobufs that get passed directly to observers, and\nc) protobufs that are passed to observers as individual args.\n\nit\u0027d probably be possible to use a template for b), but i don\u0027t think that there are enough uses of it to justify doing so.",
+      "revId": "8aa4d80ce350090112eac6db47b8fa271812eea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
