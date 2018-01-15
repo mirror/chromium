@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9350b738_6e1442a1",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-15T10:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e9bf8d_2f031f0f",
+      "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e77de7d0_999e48cf",
         "filename": "services/device/public/interfaces/BUILD.gn",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c92f64_cc29550d",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-15T10:37:51Z",
+      "side": 1,
+      "message": "All blink variant mojoms have an implicit dependency on blink platform for the WTF types. For ODR-correctness, this should only end up the blink platform component too.",
+      "parentUuid": "4e9b1a52_40c4df4f",
+      "revId": "66fc0404fdbae51c3c5310bd949361bfc20efe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

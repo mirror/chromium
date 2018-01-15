@@ -16,6 +16,24 @@
       "revId": "23982e31ae6b6467e19e8a4fba6ce74fc307ea35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf1230c_42af4d16",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-15T10:37:51Z",
+      "side": 0,
+      "message": "This one should, but the rest receive their platform deps via the special target type (blink_modules_sources).",
+      "parentUuid": "fb8c7f48_b5c91ba7",
+      "revId": "23982e31ae6b6467e19e8a4fba6ce74fc307ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
