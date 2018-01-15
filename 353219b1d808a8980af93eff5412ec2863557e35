@@ -46,6 +46,30 @@
       "revId": "353219b1d808a8980af93eff5412ec2863557e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a815af68_cfe71726",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-15T14:17:32Z",
+      "side": 0,
+      "message": "The question was: when the app is backgrounded, is there a state where the tools menu shouldn\u0027t be dismissed (and you answered it).\n\nFor now, even on stable, if you background the app while the tools menu is displayed from the toolbar (not the stack view), it won\u0027t be closed.\n\nWith this CL, backgrounding the app will close it and I wanted to make sure it was OK.",
+      "parentUuid": "e2af62c8_b8b52db3",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "353219b1d808a8980af93eff5412ec2863557e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
