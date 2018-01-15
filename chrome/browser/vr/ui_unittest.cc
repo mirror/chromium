@@ -311,14 +311,14 @@ TEST_F(UiTest, UiModeOmniboxEditing) {
   EXPECT_EQ(NumVisibleInTree(kOmniboxRoot), 0);
   VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
 
-  ui_->SetOmniboxEditingEnabled(true);
+  model_->push_mode(kModeEditingOmnibox);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 2u);
   EXPECT_EQ(model_->ui_modes[1], kModeEditingOmnibox);
   EXPECT_EQ(model_->ui_modes[0], kModeBrowsing);
   EXPECT_GT(NumVisibleInTree(kOmniboxRoot), 0);
 
-  ui_->SetOmniboxEditingEnabled(false);
+  model_->pop_mode(kModeEditingOmnibox);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 1u);
   EXPECT_EQ(model_->ui_modes.back(), kModeBrowsing);
@@ -333,7 +333,7 @@ TEST_F(UiTest, UiModeVoiceSearchFromOmnibox) {
   EXPECT_EQ(NumVisibleInTree(kOmniboxRoot), 0);
   VerifyOnlyElementsVisible("Initial", kElementsVisibleInBrowsing);
 
-  ui_->SetOmniboxEditingEnabled(true);
+  model_->push_mode(kModeEditingOmnibox);
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_EQ(model_->ui_modes.size(), 2u);
   EXPECT_EQ(model_->ui_modes[1], kModeEditingOmnibox);
@@ -356,7 +356,7 @@ TEST_F(UiTest, UiModeVoiceSearchFromOmnibox) {
   EXPECT_TRUE(RunFor(MsToDelta(1000)));
   EXPECT_GT(NumVisibleInTree(kOmniboxRoot), 0);
 
-  ui_->SetOmniboxEditingEnabled(false);
+  model_->pop_mode(kModeEditingOmnibox);
   EXPECT_EQ(model_->ui_modes.size(), 1u);
   EXPECT_EQ(model_->ui_modes.back(), kModeBrowsing);
   EXPECT_TRUE(RunFor(MsToDelta(10)));
@@ -892,7 +892,7 @@ TEST_F(UiTest, OmniboxSuggestionBindings) {
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 0u);
 
-  ui_->SetOmniboxEditingEnabled(true);
+  model_->push_mode(kModeEditingOmnibox);
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 0u);
   EXPECT_EQ(NumVisibleInTree(kOmniboxSuggestions), 1);
