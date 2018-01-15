@@ -12,7 +12,6 @@
 // Container view for the new tab page so that the subviews don't get directly
 // accessed from the view controller.
 @interface NewTabPageView : UIView
-@property(nonatomic, weak, readonly) UIScrollView* scrollView;
 @property(nonatomic, weak, readonly) NewTabPageBar* tabBar;
 // Safe area to be used for toolbar. Once the view is part of the view hierarchy
 // and has its own safe area set, this is equal to safeAreaInsets. But as a
@@ -22,20 +21,12 @@
 @property(nonatomic, assign) UIEdgeInsets safeAreaInsetForToolbar;
 
 - (instancetype)initWithFrame:(CGRect)frame
-                andScrollView:(UIScrollView*)scrollView
                     andTabBar:(NewTabPageBar*)tabBar NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 // initWithCoder would only be needed for building this view through .xib files.
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
-
-// Updates scrollView's content size to accommodate its panels.
-- (void)updateScrollViewContentSize;
-
-// Returns the frame of the item's view within the scrollView's content.
-// |index| must be a valid index for tabBar's |items|.
-- (CGRect)panelFrameForItemAtIndex:(NSUInteger)index;
 
 @end
 
