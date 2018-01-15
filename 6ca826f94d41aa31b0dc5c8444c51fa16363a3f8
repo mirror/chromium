@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "35b3e3de_10f53488",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T12:11:36Z",
+      "side": 1,
+      "message": "Hi. The linked guidelines start with \"Generally avoid unordered_set\". Since you have a movable value type and you already have a vector, did you consider:\n\n  const base::flat_set\u003cstd::string\u003e locale_set(l10n_util::GetAvailableLocales());\n\n?",
+      "parentUuid": "b0f4e26b_57a58b75",
+      "range": {
+        "startLine": 184,
+        "startChar": 73,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b30f5f6_5562ff75",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T12:11:36Z",
+      "side": 1,
+      "message": "likewise:\n  const base::flat_set\u003cstd::string\u003e spellcheck_languages_set(std::move(spellcheck_languages));\nseems like the most efficient thing to do here",
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aba8b4fc_8958f577",
         "filename": "chrome/browser/ui/app_list/start_page_service.cc",
         "patchSetId": 11

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09930a0_3f489ef3",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T12:11:36Z",
+      "side": 1,
+      "message": "nit:\n\n#include \"base/stl_util.h\"\n\nbase::ContainsKey(locale_set, entry.code)\n\n(on line 203 as well)",
+      "range": {
+        "startLine": 214,
+        "startChar": 15,
+        "endLine": 214,
+        "endChar": 47
+      },
+      "revId": "ecfae52125266fe898fccd1907059cd26494bf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
