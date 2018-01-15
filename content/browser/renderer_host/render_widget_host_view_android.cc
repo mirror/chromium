@@ -772,7 +772,7 @@ void RenderWidgetHostViewAndroid::OnUpdateTextInputStateCalled(
           ? *GetTextInputManager()->GetTextInputState()
           : TextInputState();
 
-  if (!ime_adapter_android_ || is_in_vr_)
+  if (!ime_adapter_android_)
     return;
 
   ime_adapter_android_->UpdateState(state);

@@ -74,13 +74,13 @@ final class CursorAnchorInfoController {
             new CursorAnchorInfo.Builder();
 
     @Nullable
-    private InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private ChromiumInputMethodManager mInputMethodManagerWrapper;
     @Nullable
     private final ComposingTextDelegate mComposingTextDelegate;
     @Nonnull
     private final ViewDelegate mViewDelegate;
 
-    private CursorAnchorInfoController(InputMethodManagerWrapper inputMethodManagerWrapper,
+    private CursorAnchorInfoController(ChromiumInputMethodManager inputMethodManagerWrapper,
             ComposingTextDelegate composingTextDelegate, ViewDelegate viewDelegate) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
         mComposingTextDelegate = composingTextDelegate;
@@ -88,7 +88,7 @@ final class CursorAnchorInfoController {
     }
 
     public static CursorAnchorInfoController create(
-            InputMethodManagerWrapper inputMethodManagerWrapper,
+            ChromiumInputMethodManager inputMethodManagerWrapper,
             ComposingTextDelegate composingTextDelegate) {
         return new CursorAnchorInfoController(inputMethodManagerWrapper,
                 composingTextDelegate, new ViewDelegate() {
@@ -100,8 +100,7 @@ final class CursorAnchorInfoController {
     }
 
     @VisibleForTesting
-    public void setInputMethodManagerWrapperForTest(
-            InputMethodManagerWrapper inputMethodManagerWrapper) {
+    public void setInputMethodManagerWrapper(ChromiumInputMethodManager inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
     }
 

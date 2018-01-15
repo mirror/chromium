@@ -5,6 +5,7 @@
 package org.chromium.content.browser.input;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -73,7 +74,7 @@ import java.util.List;
 @JNINamespace("content")
 public class ImeAdapter {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final float SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY = 0.4f;
 
@@ -84,7 +85,7 @@ public class ImeAdapter {
     private static final int DEFAULT_SUGGESTION_SPAN_COLOR = 0x88C8C8C8;
 
     private long mNativeImeAdapterAndroid;
-    private InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private ChromiumInputMethodManager mInputMethodManagerWrapper;
     private ChromiumBaseInputConnection mInputConnection;
     private ChromiumBaseInputConnection.Factory mInputConnectionFactory;
 
@@ -159,7 +160,7 @@ public class ImeAdapter {
      *                InputMethodManager.
      */
     public ImeAdapter(
-            WebContents webContents, View containerView, InputMethodManagerWrapper wrapper) {
+            WebContents webContents, View containerView, ChromiumInputMethodManager wrapper) {
         mWebContents = webContents;
         mContainerView = containerView;
         mInputMethodManagerWrapper = wrapper;
@@ -210,9 +211,20 @@ public class ImeAdapter {
         mEventObservers.add(eventObserver);
     }
 
-    private void createInputConnectionFactory() {
-        if (mInputConnectionFactory != null) return;
-        mInputConnectionFactory = new ThreadedInputConnectionFactory(mInputMethodManagerWrapper);
+    /**
+     * Returns an instance of the default {@link InputMethodManagerWrapper}
+     */
+    public static InputMethodManagerWrapper createDefaultInputMethodManagerWrapper(
+            Context context) {
+        return new InputMethodManagerWrapper(context);
+    }
+
+    /**
+     * Returns an instance of the default {@link ChromiumBaseInputConnection.Factory}
+     */
+    public static ChromiumBaseInputConnection.Factory createDefaultInputConnectionFactory(
+            ChromiumInputMethodManager wrapper) {
+        return new ThreadedInputConnectionFactory(wrapper);
     }
 
     // Tells if the ImeAdapter in valid state (i.e. not in destroyed state), and is
@@ -228,6 +240,7 @@ public class ImeAdapter {
      */
     public ChromiumBaseInputConnection onCreateInputConnection(
             EditorInfo outAttrs, boolean allowKeyboardLearning) {
+        Log.e(TAG, "onCreateInputConnection");
         // InputMethodService evaluates fullscreen mode even when the new input connection is
         // null. This makes sure IME doesn't enter fullscreen mode or open custom UI.
         outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
@@ -274,15 +287,15 @@ public class ImeAdapter {
      * @param immw InputMethodManagerWrapper that should be used to call InputMethodManager.
      */
     @VisibleForTesting
-    public void setInputMethodManagerWrapperForTest(InputMethodManagerWrapper immw) {
+    public void setInputMethodManagerWrapper(ChromiumInputMethodManager immw) {
         mInputMethodManagerWrapper = immw;
         if (mCursorAnchorInfoController != null) {
-            mCursorAnchorInfoController.setInputMethodManagerWrapperForTest(immw);
+            mCursorAnchorInfoController.setInputMethodManagerWrapper(immw);
         }
     }
 
     @VisibleForTesting
-    void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
+    public void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
         mInputConnectionFactory = factory;
     }
 
@@ -615,7 +628,7 @@ public class ImeAdapter {
      * @param compositionStart The composition start.
      * @param compositionEnd   The composition end.
      */
-    void updateSelection(
+    public void updateSelection(
             int selectionStart, int selectionEnd, int compositionStart, int compositionEnd) {
         mInputMethodManagerWrapper.updateSelection(
                 mContainerView, selectionStart, selectionEnd, compositionStart, compositionEnd);
@@ -624,7 +637,7 @@ public class ImeAdapter {
     /**
      * Update extracted text to input method manager.
      */
-    void updateExtractedText(int token, ExtractedText extractedText) {
+    public void updateExtractedText(int token, ExtractedText extractedText) {
         mInputMethodManagerWrapper.updateExtractedText(mContainerView, token, extractedText);
     }
 
@@ -709,7 +722,7 @@ public class ImeAdapter {
         if (mNodeEditable) mWebContents.dismissTextHandles();
     }
 
-    boolean sendCompositionToNative(
+    public boolean sendCompositionToNative(
             CharSequence text, int newCursorPosition, boolean isCommit, int unicodeFromKeyEvent) {
         if (!isValid()) return false;
 
@@ -731,7 +744,7 @@ public class ImeAdapter {
     }
 
     @VisibleForTesting
-    boolean finishComposingText() {
+    public boolean finishComposingText() {
         if (!isValid()) return false;
         nativeFinishComposingText(mNativeImeAdapterAndroid);
         return true;
@@ -770,7 +783,7 @@ public class ImeAdapter {
      *                    selection.
      * @return Whether the native counterpart of ImeAdapter received the call.
      */
-    boolean deleteSurroundingText(int beforeLength, int afterLength) {
+    public boolean deleteSurroundingText(int beforeLength, int afterLength) {
         onImeEvent();
         if (!isValid()) return false;
         nativeSendKeyEvent(mNativeImeAdapterAndroid, null, WebInputEventType.RAW_KEY_DOWN, 0,
@@ -807,7 +820,7 @@ public class ImeAdapter {
      * @param end Selection end index.
      * @return Whether the native counterpart of ImeAdapter received the call.
      */
-    boolean setEditableSelectionOffsets(int start, int end) {
+    public boolean setEditableSelectionOffsets(int start, int end) {
         if (!isValid()) return false;
         nativeSetEditableSelectionOffsets(mNativeImeAdapterAndroid, start, end);
         return true;
@@ -819,7 +832,7 @@ public class ImeAdapter {
      * @param end The end of the composition.
      * @return Whether the native counterpart of ImeAdapter received the call.
      */
-    boolean setComposingRegion(int start, int end) {
+    public boolean setComposingRegion(int start, int end) {
         if (!isValid()) return false;
         if (start <= end) {
             nativeSetComposingRegion(mNativeImeAdapterAndroid, start, end);
@@ -974,7 +987,10 @@ public class ImeAdapter {
     private void onConnectedToRenderProcess() {
         if (DEBUG_LOGS) Log.i(TAG, "onConnectedToRenderProcess");
         mIsConnected = true;
-        createInputConnectionFactory();
+        if (mInputConnectionFactory == null) {
+            mInputConnectionFactory =
+                    createDefaultInputConnectionFactory(mInputMethodManagerWrapper);
+        }
         resetAndHideKeyboard();
     }
 

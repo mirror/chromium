@@ -19,8 +19,8 @@ import org.chromium.base.VisibleForTesting;
 // TODO(changwan): add unit tests once Robolectric supports Android API level >= 21.
 // See crbug.com/588547 for details.
 public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnection.Factory {
-    private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final String TAG = "cr_ImeFact";
+    private static final boolean DEBUG_LOGS = true;
 
     // Most of the time we do not need to retry. But if we have lost window focus while triggering
     // delayed creation, then there is a chance that detection may fail in the following scenario:
@@ -30,7 +30,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     // UI message loop until View#hasWindowFocus() is aligned with what IMMS sees.
     private static final int CHECK_REGISTER_RETRY = 1;
 
-    private final InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private final ChromiumInputMethodManager mInputMethodManagerWrapper;
     private final InputMethodUma mInputMethodUma;
     private ThreadedInputConnectionProxyView mProxyView;
     private ThreadedInputConnection mThreadedInputConnection;
@@ -65,7 +65,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
         }
     }
 
-    ThreadedInputConnectionFactory(InputMethodManagerWrapper inputMethodManagerWrapper) {
+    ThreadedInputConnectionFactory(ChromiumInputMethodManager inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
         mInputMethodUma = createInputMethodUma();
     }
