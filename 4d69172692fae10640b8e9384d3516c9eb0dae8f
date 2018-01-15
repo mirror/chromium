@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb574cdb_bf02eb7f",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-15T12:58:22Z",
+      "side": 1,
+      "message": "nit: you could just bind device::MediaTransferProtocolManager directly, passing base::Unertained(mtp_manager_). The old code already directly calls into |mtp_manager| when invoked, so it\u0027s assuming that |mtp_manager_| is valid when the observer function is invoked (which makes sense).",
+      "range": {
+        "startLine": 112,
+        "startChar": 31,
+        "endLine": 112,
+        "endChar": 48
+      },
+      "revId": "4d69172692fae10640b8e9384d3516c9eb0dae8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
