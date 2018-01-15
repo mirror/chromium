@@ -57,14 +57,18 @@ base::Optional<mojom::CORSError> CheckAccess(
       return mojom::CORSError::kWildcardOriginNotAllowed;
   } else if (!allow_origin_header) {
     return mojom::CORSError::kMissingAllowOriginHeader;
-  } else if (!origin.IsSameOriginWith(
-                 url::Origin::Create(GURL(*allow_origin_header)))) {
+  } else if (origin.Serialize() != *allow_origin_header) {
+    // Do not use url::Origin::IsSameOriginWith() intentionally to allow
+    // "null" match.
+
     // Does not allow to have multiple origins in the allow origin header.
     // See https://fetch.spec.whatwg.org/#http-access-control-allow-origin.
     if (allow_origin_header->find_first_of(" ,") != std::string::npos)
       return mojom::CORSError::kMultipleAllowOriginValues;
+
+    // "null" is not valid in GURL, but valid as a header value.
     GURL header_origin(*allow_origin_header);
-    if (!header_origin.is_valid())
+    if (!header_origin.is_valid() && *allow_origin_header != "null")
       return mojom::CORSError::kInvalidAllowOriginValue;
     return mojom::CORSError::kAllowOriginMismatch;
   }
