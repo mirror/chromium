@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e028c1_d8472e79",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-15T16:00:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the conditional logic below in DispatchEvent() be done here instead? That way, you wouldn\u0027t need a recursive call to DispatchEvent().",
+      "revId": "be904a0022711fe8f2452dd01c22cde32370432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
