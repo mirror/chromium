@@ -1397,4 +1397,47 @@ TEST_F(WindowOcclusionTrackerTest,
   window->layer()->GetAnimator()->StopAnimating();
 }
 
+namespace {
+
+class WindowDelegateChangingWindowVisibility : public MockWindowDelegate {
+ public:
+  WindowDelegateChangingWindowVisibility(Window* other_window)
+      : other_window_(other_window) {}
+
+  // MockWindowDelegate:
+  void OnWindowOcclusionChanged(
+      Window::OcclusionState occlusion_state) override {
+    MockWindowDelegate::OnWindowOcclusionChanged(occlusion_state);
+    if (occlusion_state == Window::OcclusionState::OCCLUDED)
+      other_window_->Hide();
+  }
+
+ private:
+  Window* other_window_;
+
+  DISALLOW_COPY_AND_ASSIGN(WindowDelegateChangingWindowVisibility);
+};
+
+}  // namespace
+
+// Verify that a window delegate can change the visibility of another window
+// when it is notified that its occlusion changed.
+TEST_F(WindowOcclusionTrackerTest, HideFromOnWindowOcclusionChanged) {
+  Window* untracked_window = CreateUntrackedWindow(gfx::Rect(0, 0, 10, 10));
+
+  // Create a tracked window. Expect it to be visible.
+  MockWindowDelegate* delegate =
+      new WindowDelegateChangingWindowVisibility(untracked_window);
+  delegate->set_expectation(WindowOcclusionChangedExpectation::VISIBLE);
+  Window* tracked_window =
+      CreateTrackedWindow(delegate, gfx::Rect(5, 5, 10, 10));
+  EXPECT_FALSE(delegate->is_expecting_call());
+
+  // Hide the tracked window. It should be able to hide |untracked_window|.
+  delegate->set_expectation(WindowOcclusionChangedExpectation::OCCLUDED);
+  tracked_window->Hide();
+  EXPECT_FALSE(delegate->is_expecting_call());
+  EXPECT_FALSE(untracked_window->IsVisible());
+}
+
 }  // namespace aura

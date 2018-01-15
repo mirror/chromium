@@ -360,6 +360,9 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       monitoring_composition_info_(false),
       compositor_frame_sink_binding_(this),
       weak_factory_(this) {
+  LOG(ERROR) << "Create host " << this
+             << " with hidden = " << static_cast<int>(hidden);
+
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
   DCHECK(base::TaskScheduler::GetInstance())
@@ -660,6 +663,8 @@ void RenderWidgetHostImpl::WasHidden() {
   if (is_hidden_)
     return;
 
+  LOG(ERROR) << "Host " << this << " was hidden";
+
   TRACE_EVENT0("renderer_host", "RenderWidgetHostImpl::WasHidden");
   is_hidden_ = true;
 
@@ -683,6 +688,8 @@ void RenderWidgetHostImpl::WasHidden() {
 void RenderWidgetHostImpl::WasShown(const ui::LatencyInfo& latency_info) {
   if (!is_hidden_)
     return;
+
+  LOG(ERROR) << "Host " << this << " was shown";
 
   TRACE_EVENT0("renderer_host", "RenderWidgetHostImpl::WasShown");
   is_hidden_ = false;
