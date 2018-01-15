@@ -169,12 +169,16 @@ void SensorProxy::HandleSensorError() {
   }
 }
 
-void SensorProxy::OnSensorCreated(SensorInitParamsPtr params) {
+void SensorProxy::OnSensorCreated(SensorInitParamsPtr params,
+                                  SensorCreationError error) {
   DCHECK_EQ(kInitializing, state_);
   if (!params) {
+    // TODO(Mikhail): Handle error codes.
     HandleSensorError();
     return;
   }
+
+  DCHECK_EQ(SensorCreationError::NO_ERRORS, error);
   const size_t kReadBufferSize = sizeof(ReadingBuffer);
 
   DCHECK_EQ(0u, params->buffer_offset % kReadBufferSize);

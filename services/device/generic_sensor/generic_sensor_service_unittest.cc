@@ -61,8 +61,10 @@ class TestSensorClient : public mojom::SensorClient {
 
   // Sensor mojo interfaces callbacks:
   void OnSensorCreated(base::OnceClosure quit_closure,
-                       mojom::SensorInitParamsPtr params) {
+                       mojom::SensorInitParamsPtr params,
+                       mojom::SensorCreationError error) {
     ASSERT_TRUE(params);
+    ASSERT_EQ(mojom::SensorCreationError::NO_ERRORS, error);
     EXPECT_TRUE(params->memory.is_valid());
     const double expected_default_frequency =
         std::min(30.0, GetSensorMaxAllowedFrequency(type_));

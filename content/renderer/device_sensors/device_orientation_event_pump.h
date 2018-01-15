@@ -32,7 +32,9 @@ class CONTENT_EXPORT DeviceOrientationEventPump
  protected:
   // DeviceSensorEventPump:
   void FireEvent() override;
-  void DidStartIfPossible() override;
+  void DidStartIfPossible(
+      device::mojom::SensorCreationError error =
+          device::mojom::SensorCreationError::NO_ERRORS) override;
 
   void SendStartMessageImpl();
 

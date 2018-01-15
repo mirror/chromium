@@ -151,7 +151,8 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
 
         mojo::MakeStrongBinding(std::move(sensor),
                                 mojo::MakeRequest(&init_params->sensor));
-        std::move(callback).Run(std::move(init_params));
+        std::move(callback).Run(std::move(init_params),
+                                device::mojom::SensorCreationError::NO_ERRORS);
         break;
       }
       default:
