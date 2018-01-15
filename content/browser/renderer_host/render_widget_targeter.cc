@@ -4,6 +4,8 @@
 
 #include "content/browser/renderer_host/render_widget_targeter.h"
 
+#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -23,6 +25,37 @@ bool MergeEventIfPossible(const blink::WebInputEvent& event,
 }
 
 }  // namespace
+
+class TracingUmaTracker {
+ public:
+  TracingUmaTracker(const char* metric_name, const char* tracing_category)
+      : id_(next_id_++),
+        start_time_(base::TimeTicks::Now()),
+        metric_name_(metric_name),
+        tracing_cat_(tracing_category) {
+    TRACE_EVENT_ASYNC_BEGIN0(tracing_cat_, metric_name_, id_);
+  }
+  ~TracingUmaTracker() = default;
+  TracingUmaTracker(TracingUmaTracker&& tracker) = default;
+  TracingUmaTracker& operator=(TracingUmaTracker&& tracker) = default;
+
+  void Stop() {
+    TRACE_EVENT_ASYNC_END0(tracing_cat_, metric_name_, id_);
+    UmaHistogramTimes(metric_name_, base::TimeTicks::Now() - start_time_);
+  }
+
+ private:
+  const int id_;
+  const base::TimeTicks start_time_;
+  const char* metric_name_;
+  const char* tracing_cat_;
+
+  static int next_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(TracingUmaTracker);
+};
+
+int TracingUmaTracker::next_id_ = 1;
 
 RenderWidgetTargetResult::RenderWidgetTargetResult() = default;
 
@@ -70,6 +103,8 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
     request.root_view = root_view->GetWeakPtr();
     request.event = ui::WebInputEventTraits::Clone(event);
     request.latency = latency;
+    request.tracker = std::make_unique<TracingUmaTracker>(
+        "Event.AsyncTargeting.TimeInQueue", "input,latency");
     requests_.push(std::move(request));
     return;
   }
@@ -96,6 +131,8 @@ void RenderWidgetTargeter::QueryClient(
   request_in_flight_ = true;
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
+  TracingUmaTracker tracker("Event.AsyncTargeting.ResponseTime",
+                            "input,latency");
   if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
       event.GetType() == blink::WebInputEvent::kMouseWheel ||
       event.GetType() == blink::WebInputEvent::kTouchStart ||
@@ -110,7 +147,7 @@ void RenderWidgetTargeter::QueryClient(
                        weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
                        target->GetWeakPtr(),
                        ui::WebInputEventTraits::Clone(event), latency,
-                       target_location));
+                       target_location, std::move(tracker)));
     return;
   }
 
@@ -127,6 +164,7 @@ void RenderWidgetTargeter::FlushEventQueue() {
     if (!request.root_view) {
       continue;
     }
+    request.tracker->Stop();
     FindTargetAndDispatch(request.root_view.get(), *request.event,
                           request.latency);
   }
@@ -138,7 +176,9 @@ void RenderWidgetTargeter::FoundFrameSinkId(
     ui::WebScopedInputEvent event,
     const ui::LatencyInfo& latency,
     const base::Optional<gfx::PointF>& target_location,
+    TracingUmaTracker tracker,
     const viz::FrameSinkId& frame_sink_id) {
+  tracker.Stop();
   request_in_flight_ = false;
   auto* view = delegate_->FindViewFromFrameSinkId(frame_sink_id);
   if (!view)
