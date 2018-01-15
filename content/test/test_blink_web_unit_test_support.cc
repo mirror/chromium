@@ -131,13 +131,14 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport()
   mock_clipboard_.reset(new MockWebClipboardImpl());
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
+  gin::V8Initializer::LoadV8ContextSnapshot();
+#else
   gin::V8Initializer::LoadV8Snapshot();
+#endif
   gin::V8Initializer::LoadV8Natives();
 #endif
 
-#if defined(USE_V8_CONTEXT_SNAPSHOT)
-  gin::V8Initializer::LoadV8ContextSnapshot();
-#endif
 
   scoped_refptr<base::SingleThreadTaskRunner> dummy_task_runner;
   std::unique_ptr<base::ThreadTaskRunnerHandle> dummy_task_runner_handle;
