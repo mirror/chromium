@@ -38,6 +38,12 @@
 #include "components/search_provider_logos/google_logo_api.h"
 #include "components/search_provider_logos/logo_cache.h"
 #include "components/search_provider_logos/logo_tracker.h"
+#include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
+#include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/test_signin_client.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "net/base/url_util.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
@@ -62,6 +68,15 @@ using ::testing::NotNull;
 using ::testing::Pointee;
 using ::testing::StrictMock;
 using ::testing::Return;
+
+using sync_preferences::TestingPrefServiceSyncable;
+
+#if defined(OS_CHROMEOS)
+// ChromeOS doesn't have SigninManager, only *Base.
+using SigninManagerForTest = FakeSigninManagerBase;
+#else
+using SigninManagerForTest = FakeSigninManager;
+#endif  // OS_CHROMEOS
 
 namespace search_provider_logos {
 
@@ -271,6 +286,60 @@ class FakeImageDecoder : public image_fetcher::ImageDecoder {
   }
 };
 
+// A helper class that wraps around all the dependencies required to simulate
+// signing in/out.
+class SigninHelper {
+ public:
+  SigninHelper() : signin_client_(&pref_service_) {
+    // Register required prefs.
+    AccountTrackerService::RegisterPrefs(pref_service_.registry());
+#if defined(OS_CHROMEOS)
+    SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
+    SigninManagerBase::RegisterPrefs(pref_service_.registry());
+#else
+    SigninManager::RegisterProfilePrefs(pref_service_.registry());
+    SigninManager::RegisterPrefs(pref_service_.registry());
+#endif  // OS_CHROMEOS
+    signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
+    signin::SetGaiaOriginIsolatedCallback(
+        base::BindRepeating([] { return true; }));
+
+    // Instantiate objects.
+    account_tracker_ = std::make_unique<AccountTrackerService>();
+    account_tracker_->Initialize(&signin_client_);
+
+#if defined(OS_CHROMEOS)
+    signin_manager_ = std::make_unique<FakeSigninManagerBase>(
+        &signin_client_, account_tracker_.get());
+#else
+    signin_manager_ = std::make_unique<FakeSigninManager>(
+        &signin_client_, &token_service_, account_tracker_.get(),
+        /*cookie_manager_service=*/nullptr);
+#endif  // OS_CHROMEOS
+  }
+
+  SigninManagerForTest* signin_manager() { return signin_manager_.get(); }
+
+  void SignIn() {
+#if defined(OS_CHROMEOS)
+    signin_manager_->SignIn("account_id");
+#else
+    signin_manager_->SignIn("gaia_id", "username", "password");
+#endif  // OS_CHROMEOS
+  }
+
+#if !defined(OS_CHROMEOS)
+  void SignOut() { signin_manager_->ForceSignOut(); }
+#endif  // !OS_CHROMEOS
+
+ private:
+  TestingPrefServiceSyncable pref_service_;
+  TestSigninClient signin_client_;
+  FakeProfileOAuth2TokenService token_service_;
+  std::unique_ptr<AccountTrackerService> account_tracker_;
+  std::unique_ptr<SigninManagerForTest> signin_manager_;
+};
+
 class LogoServiceImplTest : public ::testing::Test {
  protected:
   LogoServiceImplTest()
@@ -292,8 +361,8 @@ class LogoServiceImplTest : public ::testing::Test {
 
     test_clock_->SetNow(base::Time::FromJsTime(INT64_C(1388686828000)));
     logo_service_ = std::make_unique<LogoServiceImpl>(
-        base::FilePath(), &template_url_service_,
-        std::make_unique<FakeImageDecoder>(),
+        base::FilePath(), signin_helper_.signin_manager(),
+        &template_url_service_, std::make_unique<FakeImageDecoder>(),
         new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get()),
         base::BindRepeating(&LogoServiceImplTest::use_gray_background,
@@ -358,6 +427,8 @@ class LogoServiceImplTest : public ::testing::Test {
   NiceMock<MockLogoCache>* logo_cache_;
   net::FakeURLFetcherFactory fake_url_fetcher_factory_;
   std::unique_ptr<LogoServiceImpl> logo_service_;
+  SigninHelper signin_helper_;
+
   GURL latest_url_;
   bool use_gray_background_;
 };
@@ -859,6 +930,27 @@ TEST_F(LogoServiceImplTest, DeleteExpiredCachedLogo) {
 
   GetDecodedLogo(cached.Get(), fresh.Get());
 }
+
+#if !defined(OS_CHROMEOS)
+TEST_F(LogoServiceImplTest, ClearLogoOnSignOut) {
+  // Sign in and setup a logo response.
+  signin_helper_.SignIn();
+  Logo logo = GetSampleLogo(DoodleURL(), test_clock_->Now());
+  SetServerResponse(ServerResponse(logo));
+
+  // Request the logo so it gets fetched and cached.
+  logo_cache_->ExpectSetCachedLogo(&logo);
+  StrictMock<MockLogoCallback> cached;
+  StrictMock<MockLogoCallback> fresh;
+  EXPECT_CALL(cached, Run(LogoCallbackReason::DETERMINED, Eq(base::nullopt)));
+  EXPECT_CALL(fresh, Run(LogoCallbackReason::DETERMINED, Eq(logo)));
+  GetDecodedLogo(cached.Get(), fresh.Get());
+
+  // Signing out should clear the cached logo immediately.
+  logo_cache_->ExpectSetCachedLogo(nullptr);
+  signin_helper_.SignOut();
+}
+#endif  // !OS_CHROMEOS
 
 // Tests that deal with multiple listeners.
 

@@ -23,6 +23,7 @@
 class GoogleLogoService : public search_provider_logos::LogoServiceImpl {
  public:
   explicit GoogleLogoService(
+      SigninManagerBase* signin_manager,
       TemplateURLService* template_url_service,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter);
   ~GoogleLogoService() override;
