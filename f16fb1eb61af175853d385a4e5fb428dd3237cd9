@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9df0fb59_7164ec7c",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-15T00:29:19Z",
+      "side": 1,
+      "message": "The type is already checked in base_predictor.\n\nBut still, changed to return bool in case this function is called at other places.",
+      "parentUuid": "bc451fa3_e51890a3",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7ef9417_d08226bc",
         "filename": "components/assist_ranker/ranker_example_util.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c757a569_b98ac9c7",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-15T00:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ef9417_d08226bc",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e25d589_740c9d86",
         "filename": "components/assist_ranker/ranker_example_util.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f949443d_35ecffc8",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-15T00:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e25d589_740c9d86",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "f16fb1eb61af175853d385a4e5fb428dd3237cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
