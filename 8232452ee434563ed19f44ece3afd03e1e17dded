@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "294f3801_a295c1f5",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-15T07:59:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure why we can\u0027t simply add paste-into-folder in gear menu.\nWhat kind of problem will happen?",
+      "parentUuid": "65d935ed_fc9ff47e",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29672a9_740dc341",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I think we should always show this item, grayed out when not available.\nThe context menu by right-click is made in that way.",
       "parentUuid": "f29672a9_740dc341",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6de735ae_2a274f96",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-15T07:59:30Z",
+      "side": 1,
+      "message": "If one folder is selected and we open the gear menu, only a separator will be shown, which doesn\u0027t look nice.\n\nI have an additional question: are we going to copy other menu items from context menu to gear menu? If so, I think we should be careful to put disabled item on the gear menu. The gear menu will be longer and bottom of the menu will be less accessible.",
+      "parentUuid": "6329d72a_db232127",
       "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
