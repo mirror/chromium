@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19ab8bb7_b1a7b01a",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "Oops. Sorry, I just forgot to implement this before requesting a review. Let me implement it in this CL. Actually, we do not need such detach interface if we use the TaskService in all places (and I forget to replace some).",
+      "parentUuid": "8d71a39d_61dc03be",
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab568af7_8f73fe73",
         "filename": "media/midi/midi_manager_winrt.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce75281_ef6b03af",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab568af7_8f73fe73",
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f13dda6_f94480d5",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "This was a quick workaround to avoid undefined symbol error of kDefaultRunnerId.\nLet me have a right fix, having a definition in this implementation file.",
+      "parentUuid": "0dc07a84_a5da3069",
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f744f5_a64527a6",
         "filename": "media/midi/task_service.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5da93b_8b0e7acf",
+        "filename": "media/midi/task_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f744f5_a64527a6",
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "bd3afb34_cf15efb3",
+        "filename": "media/midi/task_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb125c65_6dd8fac6",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d1a3480_619ed7e1",
         "filename": "media/midi/task_service.h",
         "patchSetId": 3
@@ -113,6 +209,30 @@
       "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3cfa7b_42885511",
+        "filename": "media/midi/task_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T07:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d1a3480_619ed7e1",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "f452bb2616f6c4f42219d911d3c01571181f9387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
