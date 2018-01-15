@@ -2058,6 +2058,21 @@ void WebLocalFrameImpl::Load(
       history_item, static_cast<HistoryLoadType>(web_history_load_type));
 }
 
+blink::mojom::CommitResult WebLocalFrameImpl::CommitSameDocumentNavigation(
+    const WebURL& url,
+    WebFrameLoadType web_frame_load_type,
+    const WebHistoryItem& item,
+    bool is_client_redirect) {
+  DCHECK(GetFrame());
+  DCHECK(!url.ProtocolIs("javascript"));
+
+  HistoryItem* history_item = item;
+  return GetFrame()->Loader().CommitSameDocumentNavigation(
+      url, static_cast<FrameLoadType>(web_frame_load_type), history_item,
+      is_client_redirect ? ClientRedirectPolicy::kClientRedirect
+                         : ClientRedirectPolicy::kNotClientRedirect);
+}
+
 void WebLocalFrameImpl::LoadData(const WebData& data,
                                  const WebString& mime_type,
                                  const WebString& text_encoding,

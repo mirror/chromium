@@ -38,6 +38,7 @@
 #include "build/build_config.h"
 #include "cc/input/touch_action.h"
 #include "components/network_session_configurator/common/network_switches.h"
+#include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 #include "content/browser/frame_host/frame_navigation_entry.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -13037,6 +13038,102 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
     content::RunThisRunLoop(&run_loop);
     // |point_in_nested_child| should hit test to |rwhv_grandchild|.
     ASSERT_EQ(rwhv_grandchild->GetFrameSinkId(), received_frame_sink_id);
+  }
+}
+
+// Test that a renderer locked to origin A will be killed if it tries to commit
+// a navigation to origin B.  See also https://crbug.com/770239.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       CommittedOriginIncompatibleWithOriginLock) {
+  GURL start_url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), start_url));
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Setup an URL which will never commit, allowing this test to send its own,
+  // malformed, commit message.
+  GURL another_url(embedded_test_server()->GetURL("b.com", "/hung"));
+
+  // Use LoadURL, as the test shouldn't wait for navigation commit.
+  NavigationController& controller = shell()->web_contents()->GetController();
+  controller.LoadURL(another_url, Referrer(), ui::PAGE_TRANSITION_LINK,
+                     std::string());
+  EXPECT_NE(nullptr, controller.GetPendingEntry());
+  EXPECT_EQ(another_url, controller.GetPendingEntry()->GetURL());
+
+  RenderProcessHostKillWaiter kill_waiter(
+      root->current_frame_host()->GetProcess());
+
+  // Create commit params with a different origin than the origin lock
+  // of the process.
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
+      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = another_url;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->was_within_same_document = false;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(another_url);
+  // Use an origin mismatched with the origin lock.
+  params->origin = url::Origin::Create(another_url);
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  int process_id = root->current_frame_host()->GetProcess()->GetID();
+  EXPECT_EQ(start_url.host(), policy->GetOriginLock(process_id).host());
+  EXPECT_NE(another_url.host(), policy->GetOriginLock(process_id).host());
+  // Simulate a commit IPC.
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  static_cast<mojom::FrameHost*>(root->current_frame_host())
+      ->DidCommitProvisionalLoad(std::move(params),
+                                 mojo::MakeRequest(&interface_provider));
+
+  // When the IPC message is received and validation fails, the process is
+  // terminated. However, the notification for that should be processed in a
+  // separate task of the message loop, so ensure that the process is still
+  // considered alive.
+  EXPECT_TRUE(root->current_frame_host()->GetProcess()->HasConnection());
+
+  EXPECT_EQ(bad_message::RFH_INVALID_ORIGIN_ON_COMMIT, kill_waiter.Wait());
+}
+
+// Tests that a cross-process iframe asked to navigate to the same URL will
+// successfully commit the navigation.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       IFrameSameDocumentNavigation) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "foo.com", "/cross_site_iframe_factory.html?foo(bar)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  FrameTreeNode* iframe = root->child_at(0);
+
+  EXPECT_NE(root->current_frame_host()->GetSiteInstance(),
+            iframe->current_frame_host()->GetSiteInstance());
+
+  // The iframe navigates same-document to a fragment.
+  GURL iframe_fragment_url = GURL(iframe->current_url().spec() + "#foo");
+  {
+    TestNavigationObserver observer(shell()->web_contents());
+    EXPECT_TRUE(
+        ExecuteScript(iframe->current_frame_host(),
+                      "location.href=\"" + iframe_fragment_url.spec() + "\";"));
+    observer.Wait();
+    EXPECT_TRUE(observer.last_navigation_succeeded());
+  }
+
+  // The parent frame wants the iframe do a navigation to the same URL. Because
+  // the URL has a fragment, this will be treated as a same-document navigation,
+  // and not as a normal load of the same URL. This should succeed.
+  {
+    TestNavigationObserver observer(shell()->web_contents());
+    EXPECT_TRUE(ExecuteScript(root->current_frame_host(),
+                              "document.getElementById('child-0').src=\"" +
+                                  iframe_fragment_url.spec() + "\";"));
+    observer.Wait();
+    EXPECT_TRUE(observer.last_navigation_succeeded());
   }
 }
 

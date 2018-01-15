@@ -87,6 +87,7 @@
 #include "third_party/WebKit/public/web/WebMeaningfulLayout.h"
 #include "third_party/WebKit/public/web/WebScriptExecutionCallback.h"
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
+#include "third_party/WebKit/public/web/commit_result.mojom.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/gfx/range/range.h"
 #include "url/gurl.h"
@@ -531,6 +532,10 @@ class CONTENT_EXPORT RenderFrameImpl
       int error_code,
       const base::Optional<std::string>& error_page_content,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
+  void CommitSameDocumentNavigation(
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      CommitSameDocumentNavigationCallback callback) override;
 
   // mojom::FullscreenVideoElementHandler implementation:
   void RequestFullscreenVideoElement() override;
@@ -1095,8 +1100,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       const ResourceResponseHead& head,
-      const GURL& body_url,
-      bool is_same_document_navigation);
+      const GURL& body_url);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources
   // for this frame. Only valid to call when the Network Service is enabled.
@@ -1285,6 +1289,19 @@ class CONTENT_EXPORT RenderFrameImpl
   // called before notifying the FrameHost of the commit.
   void UpdateStateForCommit(const blink::WebHistoryItem& item,
                             blink::WebHistoryCommitType commit_type);
+
+  // Updates the state when asked to commit a history navigation.  Sets
+  // |item_for_history_navigation| and |load_type| to the appropriate values for
+  // commit.
+  //
+  // The function will also return whether to proceed with the commit of a
+  // history navigation or not.  This can return false when the state of the
+  // history in the browser process goes out of sync with the renderer process.
+  blink::mojom::CommitResult PrepareForHistoryNavigationCommit(
+      FrameMsg_Navigate_Type::Value navigation_type,
+      const RequestNavigationParams& request_params,
+      blink::WebHistoryItem* item_for_history_navigation,
+      blink::WebFrameLoadType* load_type);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after

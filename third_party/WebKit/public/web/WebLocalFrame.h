@@ -21,6 +21,7 @@
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/site_engagement.mojom-shared.h"
 #include "public/web/WebTextDirection.h"
+#include "public/web/commit_result.mojom-shared.h"
 #include "public/web/selection_menu_behavior.mojom-shared.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
@@ -195,6 +196,15 @@ class WebLocalFrame : public WebFrame {
       WebHistoryLoadType,
       bool is_client_redirect,
       const base::UnguessableToken& devtools_navigation_token) = 0;
+
+  // Commits a same-document navigation in the frame. For history navigations, a
+  // valid WebHistoryItem should be provided. Returns true if the load started,
+  // false otherwise.
+  virtual mojom::CommitResult CommitSameDocumentNavigation(
+      const WebURL&,
+      WebFrameLoadType,
+      const WebHistoryItem&,
+      bool is_client_redirect) = 0;
 
   // This method is short-hand for calling LoadData, where mime_type is
   // "text/html" and text_encoding is "UTF-8".
