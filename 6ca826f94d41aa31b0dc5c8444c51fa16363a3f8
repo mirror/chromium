@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2561c5_d8295c91",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Why switch to ordered here? Also, why use an ordered set in ConvertToActualUILocale?",
+      "range": {
+        "startLine": 184,
+        "startChar": 73,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba8b4fc_8958f577",
+        "filename": "chrome/browser/ui/app_list/start_page_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "What\u0027s this addition?",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f45be608_0d4c6a1f",
+        "filename": "chrome/service/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "core/common ?",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bfb974b_6331eefd",
+        "filename": "components/language/core/common/locale_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Why not put the anonymous namespace inside language? It will let you avoid the language:: qualifiers below.",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d12f92c_043e1d7c",
+        "filename": "components/language/core/common/locale_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Nitpick: could you please be more explicit here? I don\u0027t think anyone except you will know what this means.",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8abeb2da_38134f16",
+        "filename": "components/language/core/common/locale_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Why not ExtractBaseLanguage (here and below)?",
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e65397_95c1a099",
+        "filename": "components/language/core/common/locale_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Should this become a no-op if the experiment is disabled? In the best case it will perform a bunch of unnecessary processing in this case.",
+      "range": {
+        "startLine": 95,
+        "startChar": 57,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa17972_40e38671",
+        "filename": "components/language/core/common/locale_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary, right? When there\u0027s no fallback found, fallback is assigned *input_locale anyway.",
+      "range": {
+        "startLine": 102,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49f93d4_cfc296b0",
+        "filename": "components/language/core/common/locale_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Nitpick: \"at least one\" is idiomatic.",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 60
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e7d5e0f_f53d1e00",
+        "filename": "components/language/core/common/locale_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2018-01-15T04:52:45Z",
+      "side": 1,
+      "message": "Is something like \"en-AU-2009\" possible? If so, it might be worth testing.",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
