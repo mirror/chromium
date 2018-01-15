@@ -48,12 +48,14 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id,
 CompositorFrame MakeCompositorFrame(
     std::vector<SurfaceId> activation_dependencies,
     std::vector<SurfaceId> referenced_surfaces,
-    std::vector<TransferableResource> resource_list) {
+    std::vector<TransferableResource> resource_list,
+    base::Optional<uint32_t> deadline_in_frames) {
   return CompositorFrameBuilder()
       .AddDefaultRenderPass()
       .SetActivationDependencies(std::move(activation_dependencies))
       .SetReferencedSurfaces(std::move(referenced_surfaces))
       .SetTransferableResources(std::move(resource_list))
+      .SetDeadlineInFrames(deadline_in_frames)
       .Build();
 }
 
@@ -295,7 +297,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedOnTwo) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1, child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // parent_support is blocked on |child_id1| and |child_id2|.
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -336,7 +338,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // parent_support is blocked on |child_id1|.
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -350,7 +352,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // child_support1 should now be blocked on |child_id2|.
   EXPECT_TRUE(child_surface1()->has_deadline());
@@ -371,7 +373,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
   child_support2().SubmitCompositorFrame(
       child_id2.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_FALSE(child_surface2()->has_deadline());
 
@@ -401,7 +403,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // parent_support is blocked on |child_id2|.
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -414,7 +416,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(child_surface1()->has_deadline());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
@@ -454,7 +456,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // parent_support is blocked on |child_id1|.
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -466,7 +468,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // child_support1 should now be blocked on |child_id2|.
   EXPECT_TRUE(child_surface1()->has_deadline());
@@ -523,7 +525,7 @@ TEST_F(SurfaceSynchronizationTest, NewFrameOverridesOldDependencies) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the CompositorFrame is blocked on |arbitrary_id|.
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -576,7 +578,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyActiveFramesAffectSurfaceReferences) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, {child_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(),
@@ -628,7 +630,8 @@ TEST_F(SurfaceSynchronizationTest, ResourcesOnlyReturnedOnce) {
   std::vector<TransferableResource> resource_list = {resource};
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
-      MakeCompositorFrame({child_id}, empty_surface_ids(), resource_list));
+      MakeCompositorFrame({child_id}, empty_surface_ids(), resource_list,
+                          base::nullopt));
 
   // Verify that the CompositorFrame is blocked on |child_id|.
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -639,7 +642,7 @@ TEST_F(SurfaceSynchronizationTest, ResourcesOnlyReturnedOnce) {
   child_support1().SubmitCompositorFrame(
       child_id.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the child CompositorFrame activates immediately.
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
@@ -662,7 +665,7 @@ TEST_F(SurfaceSynchronizationTest, ResourcesOnlyReturnedOnce) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({empty_surface_ids()}, {empty_surface_ids()},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
@@ -684,7 +687,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the CompositorFrame is blocked on |child_id|.
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -718,7 +721,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), {child_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the parent Surface has activated.
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -737,7 +740,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   testing::Mock::VerifyAndClearExpectations(&support_client_);
 
   // The parent surface should now have both a pending and activate
@@ -868,8 +871,9 @@ TEST_F(SurfaceSynchronizationTest,
   ui::LatencyInfo info2;
   info2.AddLatencyNumber(latency_type2, latency_id2, latency_sequence_number2);
 
-  CompositorFrame frame2 = MakeCompositorFrame(
-      {child_id}, empty_surface_ids(), std::vector<TransferableResource>());
+  CompositorFrame frame2 =
+      MakeCompositorFrame({child_id}, empty_surface_ids(),
+                          std::vector<TransferableResource>(), base::nullopt);
   frame2.metadata.latency_info.push_back(info2);
 
   parent_support().SubmitCompositorFrame(parent_id1.local_surface_id(),
@@ -953,8 +957,9 @@ TEST_F(SurfaceSynchronizationTest,
   ui::LatencyInfo info2;
   info2.AddLatencyNumber(latency_type2, latency_id2, latency_sequence_number2);
 
-  CompositorFrame frame2 = MakeCompositorFrame(
-      {child_id}, empty_surface_ids(), std::vector<TransferableResource>());
+  CompositorFrame frame2 =
+      MakeCompositorFrame({child_id}, empty_surface_ids(),
+                          std::vector<TransferableResource>(), base::nullopt);
   frame2.metadata.latency_info.push_back(info2);
 
   parent_support().SubmitCompositorFrame(parent_id2.local_surface_id(),
@@ -1003,8 +1008,8 @@ TEST_F(SurfaceSynchronizationTest, ReturnResourcesWithAck) {
   resource.id = 1234;
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
-      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          {resource}));
+      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(), {resource},
+                          base::nullopt));
   std::vector<ReturnedResource> returned_resources =
       TransferableResource::ReturnResources({resource});
   EXPECT_CALL(support_client_, ReclaimResources(_)).Times(0);
@@ -1026,8 +1031,8 @@ TEST_F(SurfaceSynchronizationTest, SurfaceResurrection) {
   resource.id = 1234;
   child_support1().SubmitCompositorFrame(
       child_id.local_surface_id(),
-      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          {resource}));
+      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(), {resource},
+                          base::nullopt));
   // Verify that the child surface is created.
   Surface* surface = GetSurfaceForId(child_id);
   EXPECT_NE(nullptr, surface);
@@ -1036,7 +1041,7 @@ TEST_F(SurfaceSynchronizationTest, SurfaceResurrection) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, {child_id},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Attempt to destroy the child surface. The surface must still exist since
   // the parent needs it but it will be marked as destroyed.
@@ -1086,7 +1091,7 @@ TEST_F(SurfaceSynchronizationTest, SurfaceResurrectionAfterDestruction) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, {child_id},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Attempt to destroy the child surface. The surface must still exist since
   // the parent needs it but it will be marked as destroyed.
@@ -1126,7 +1131,7 @@ TEST_F(SurfaceSynchronizationTest, LocalSurfaceIdIsReusable) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, {child_id},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Remove the reference from parant. This allows us to destroy the surface.
   parent_support().SubmitCompositorFrame(parent_id.local_surface_id(),
@@ -1161,11 +1166,11 @@ TEST_F(SurfaceSynchronizationTest, DependencyTrackingGarbageCollection) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(parent_surface()->has_deadline());
 
@@ -1185,11 +1190,11 @@ TEST_F(SurfaceSynchronizationTest, DependencyTrackingGarbageCollection) {
   parent_support().SubmitCompositorFrame(
       parent_id2.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // The display surface now has two CompositorFrames. One that is pending,
   // indirectly blocked on child_id and one that is active, also indirectly
@@ -1221,12 +1226,12 @@ TEST_F(SurfaceSynchronizationTest, GarbageCollectionOnDeadline) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id1}, {parent_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(display_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -1252,14 +1257,14 @@ TEST_F(SurfaceSynchronizationTest, GarbageCollectionOnDeadline) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(display_surface()->has_deadline());
 
   // Now |parent_id1| is only kept alive by the active |display_id| frame.
   parent_support().SubmitCompositorFrame(
       parent_id2.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(display_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->has_deadline());
 
@@ -1291,7 +1296,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyBlockOnEmbeddedSurfaces) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id2}, {parent_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
@@ -1326,7 +1331,7 @@ TEST_F(SurfaceSynchronizationTest, LateArrivingDependency) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
@@ -1348,7 +1353,7 @@ TEST_F(SurfaceSynchronizationTest, LateArrivingDependency) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->has_deadline());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -1365,7 +1370,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelLateArrivingDependency) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
   EXPECT_TRUE(display_surface()->has_deadline());
@@ -1386,7 +1391,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelLateArrivingDependency) {
   child_support1().SubmitCompositorFrame(
       child_id.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->has_deadline());
@@ -1398,7 +1403,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelLateArrivingDependency) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->has_deadline());
@@ -1421,7 +1426,7 @@ TEST_F(SurfaceSynchronizationTest, MissingActiveFrameWithLateDependencies) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
@@ -1442,14 +1447,14 @@ TEST_F(SurfaceSynchronizationTest, MissingActiveFrameWithLateDependencies) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // A late arriving CompositorFrame will not activate immediately if the
   // dependent CompositorFrame has been evicted.
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(parent_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -1481,8 +1486,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
                                    Eq(std::vector<ReturnedResource>())));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
-      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          {resource}));
+      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(), {resource},
+                          base::nullopt));
   EXPECT_FALSE(child_surface1()->has_deadline());
   testing::Mock::VerifyAndClearExpectations(&support_client_);
 
@@ -1492,7 +1497,7 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id2}, {child_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(parent_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -1510,8 +1515,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
               DidReceiveCompositorFrameAck(Eq(returned_resources2)));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
-      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          {resource2}));
+      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(), {resource2},
+                          base::nullopt));
   testing::Mock::VerifyAndClearExpectations(&support_client_);
 
   // Advance BeginFrames to trigger a deadline. This activates the
@@ -1531,8 +1536,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
               DidReceiveCompositorFrameAck(Eq(returned_resources2)));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
-      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          {resource2}));
+      MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(), {resource2},
+                          base::nullopt));
   testing::Mock::VerifyAndClearExpectations(&support_client_);
 }
 
@@ -1556,7 +1561,7 @@ TEST_F(SurfaceSynchronizationTest, IndependentDeadlines) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1, child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -1567,13 +1572,13 @@ TEST_F(SurfaceSynchronizationTest, IndependentDeadlines) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), 3));
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->has_deadline());
 
   // Advance to the next BeginFrame. |child_id1|'s pending Frame should activate
-  // after 3 frames.
+  // after 2 frames.
   SendNextBeginFrame();
 
   // Submit another CompositorFrame to |child_id2| that blocks on
@@ -1581,26 +1586,28 @@ TEST_F(SurfaceSynchronizationTest, IndependentDeadlines) {
   child_support2().SubmitCompositorFrame(
       child_id2.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(child_surface2()->HasPendingFrame());
   EXPECT_TRUE(child_surface2()->HasActiveFrame());
   EXPECT_TRUE(child_surface2()->has_deadline());
 
   // If we issue another two BeginFrames both children should remain blocked.
-  for (int i = 0; i < 2; ++i) {
-    SendNextBeginFrame();
-    EXPECT_TRUE(child_surface1()->has_deadline());
-    EXPECT_TRUE(child_surface2()->has_deadline());
-  }
+  SendNextBeginFrame();
+  EXPECT_TRUE(child_surface1()->has_deadline());
+  EXPECT_TRUE(child_surface2()->has_deadline());
 
   // Issuing another BeginFrame should activate the frame in |child_id1| but not
   // |child_id2|. This verifies that |child_id1| and |child_id2| have different
   // deadlines.
   SendNextBeginFrame();
 
+  EXPECT_TRUE(child_surface2()->has_deadline());
+
   EXPECT_FALSE(child_surface1()->has_deadline());
   EXPECT_FALSE(child_surface1()->HasPendingFrame());
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
+
+  SendNextBeginFrame();
 
   EXPECT_TRUE(child_surface2()->has_deadline());
   EXPECT_TRUE(child_surface2()->HasPendingFrame());
@@ -1624,7 +1631,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineInheritance) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -1637,7 +1644,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineInheritance) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->has_deadline());
@@ -1673,7 +1680,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelDeadlineInheritance) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame({parent_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
   EXPECT_TRUE(display_surface()->has_deadline());
@@ -1686,7 +1693,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelDeadlineInheritance) {
   child_support1().SubmitCompositorFrame(
       child_id.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->has_deadline());
@@ -1697,7 +1704,7 @@ TEST_F(SurfaceSynchronizationTest, MultiLevelDeadlineInheritance) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->has_deadline());
@@ -1742,7 +1749,7 @@ TEST_F(SurfaceSynchronizationTest, FrameActivationAfterFrameSinkDestruction) {
   display_support().SubmitCompositorFrame(
       display_id.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), {parent_id},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_FALSE(display_surface()->has_deadline());
   EXPECT_FALSE(display_surface()->HasPendingFrame());
@@ -1754,7 +1761,7 @@ TEST_F(SurfaceSynchronizationTest, FrameActivationAfterFrameSinkDestruction) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   EXPECT_TRUE(parent_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -1801,7 +1808,7 @@ TEST_F(SurfaceSynchronizationTest, PreviousFrameSurfaceId) {
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Submit a frame with unresolved dependencies to |parent_id2|. The frame
   // should become pending and previous_frame_surface_id() should return
@@ -1809,7 +1816,7 @@ TEST_F(SurfaceSynchronizationTest, PreviousFrameSurfaceId) {
   parent_support().SubmitCompositorFrame(
       parent_id2.local_surface_id(),
       MakeCompositorFrame({child_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   Surface* parent_surface2 =
       frame_sink_manager().surface_manager()->GetSurfaceForId(parent_id2);
   EXPECT_FALSE(parent_surface2->HasActiveFrame());
@@ -1834,7 +1841,7 @@ TEST_F(SurfaceSynchronizationTest, FrameIndexWithPendingFrames) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   Surface* parent_surface =
       frame_sink_manager().surface_manager()->GetSurfaceForId(parent_id);
   uint64_t initial_frame_index = parent_surface->GetActiveFrameIndex();
@@ -1845,7 +1852,8 @@ TEST_F(SurfaceSynchronizationTest, FrameIndexWithPendingFrames) {
     parent_support().SubmitCompositorFrame(
         parent_id.local_surface_id(),
         MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                            std::vector<TransferableResource>()));
+                            std::vector<TransferableResource>(),
+                            base::nullopt));
     EXPECT_EQ(initial_frame_index, parent_surface->GetActiveFrameIndex());
   }
 
@@ -1869,7 +1877,7 @@ TEST_F(SurfaceSynchronizationTest, PendingSurfaceKeptAlive) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(HasTemporaryReference(parent_id));
@@ -1884,7 +1892,7 @@ TEST_F(SurfaceSynchronizationTest, ActiveFrameIndex) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1, child_id2}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // parent_support is blocked on |child_id1| and |child_id2|.
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -1918,7 +1926,7 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the child CompositorFrame activates immediately.
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
@@ -1940,7 +1948,7 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), {child_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the parent Surface has activated.
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -2023,7 +2031,7 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurfaceWithBogusFallback) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Verify that the parent and child CompositorFrames are active.
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
@@ -2056,7 +2064,7 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurfaceDifferentFrameSinkIds) {
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, {child_id1},
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
 
   // Submit a child CompositorFrame without a different FrameSinkId and verify
   // that if the fallback and primary differ in FrameSinkId then
@@ -2089,7 +2097,7 @@ TEST_F(SurfaceSynchronizationTest, DropDependenciesThatWillNeverArrive) {
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id11, child_id12, child_id21},
                           empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
 
@@ -2098,7 +2106,7 @@ TEST_F(SurfaceSynchronizationTest, DropDependenciesThatWillNeverArrive) {
   child_support1().SubmitCompositorFrame(
       child_id11.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(),
@@ -2112,7 +2120,7 @@ TEST_F(SurfaceSynchronizationTest, DropDependenciesThatWillNeverArrive) {
   child_support1().SubmitCompositorFrame(
       child_id12.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(),
@@ -2123,7 +2131,7 @@ TEST_F(SurfaceSynchronizationTest, DropDependenciesThatWillNeverArrive) {
   child_support2().SubmitCompositorFrame(
       child_id21.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(), base::nullopt));
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
