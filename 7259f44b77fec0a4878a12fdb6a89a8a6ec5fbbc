@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b14d39d_1cae11fa",
+        "filename": "chrome/browser/sessions/session_restore_stats_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-15T19:55:00Z",
+      "side": 0,
+      "message": "Not if their window is not visible.",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 48
+      },
+      "revId": "7259f44b77fec0a4878a12fdb6a89a8a6ec5fbbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
