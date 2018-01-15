@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/feature_list.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_runner_util.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
@@ -70,6 +71,8 @@ RenderFrameAudioInputStreamFactory::RenderFrameAudioInputStreamFactory(
 
 RenderFrameAudioInputStreamFactory::~RenderFrameAudioInputStreamFactory() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  UMA_HISTOGRAM_EXACT_LINEAR("Media.Audio.InputStreamsCanceledByBrowser",
+                             streams_.size(), 50);
 }
 
 // static
