@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d31154_80a82352",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-15T17:22:32Z",
+      "side": 1,
+      "message": "What about e.g. CrOS?  I tested there and get a vertical stick, which could be either I or l.  Should we prefer one or the other of these for that case?",
+      "revId": "9e13d4a3e2a33af28edaddd34bb5ce6cee5187dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
