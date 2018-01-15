@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32ee77f_303aee2d",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-15T16:33:27Z",
+      "side": 1,
+      "message": "can we make these two a part of switch statement below for kModeWebVr?",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 26
+      },
+      "revId": "0b7867eca44ca8ab7f0c0061bc74093fe469b322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
