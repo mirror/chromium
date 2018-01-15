@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6648524c_0c8aea02",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T17:45:39Z",
+      "side": 1,
+      "message": "There\u0027s nothing technically preventing a single parent CompositorFrame from blocking on different versions of a surfaces from a child FrameSink. You can imagine maybe this can be used for navigation gesture to slides across pages of the same origin or something.\n\nHere I just use it for convenience in order to verify when dependencies are dropped.",
+      "parentUuid": "bc3e938f_c89232dd",
+      "range": {
+        "startLine": 2094,
+        "startChar": 11,
+        "endLine": 2094,
+        "endChar": 57
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "190df280_52cc014e",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "506780c4_cb5a78b3",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T17:45:39Z",
+      "side": 1,
+      "message": "Nothing is technically preventing a parent from embedding multiple surfaces from a single child FrameSink so we have to support that. It\u0027s not used in practice but might be in the future. The API allows for it: e.g. two SurfaceLayers that embeds two different versions of surface IDs of the same FrameSink.",
+      "parentUuid": "190df280_52cc014e",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 75
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acd0037b_847fb44b",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 5
@@ -82,6 +130,30 @@
       "writtenOn": "2018-01-15T17:31:49Z",
       "side": 1,
       "message": "Also here.",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 74
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1872d00e_734ebe4a",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T17:45:39Z",
+      "side": 1,
+      "message": "See above. There\u0027s nothing in the API that explicitly prevents us from getting into this state so we must support this state. Trying to change the API to avoid this state seems very limiting and awkward.",
+      "parentUuid": "acd0037b_847fb44b",
       "range": {
         "startLine": 345,
         "startChar": 0,
