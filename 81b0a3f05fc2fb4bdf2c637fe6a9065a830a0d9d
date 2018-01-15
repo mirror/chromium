@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd97ff5_b4d05351",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-15T16:12:57Z",
+      "side": 1,
+      "message": "This comment is in more than one place. Can we place it only next to code that will have to be changed when the bug is fixed?\nIn this case, I think the code will stay the same when it\u0027s possible to reconfigure audio tracks, so the comment isn\u0027t needed here.",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3473d4_f2cd819a",
+        "filename": "content/renderer/media/local_media_stream_audio_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-15T16:12:57Z",
+      "side": 1,
+      "message": "Comment: We have a bug open for removing the hotword_enabled thingy - it\u0027s really a complete architectural violation. It\u0027s sad to see it infect the codebase further in this way - but a man\u0027s gotta do what a man\u0027s gotta do...",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec1b9ba_dd362a6e",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-15T16:12:57Z",
+      "side": 1,
+      "message": "Do you want a \"This constructor is intended for\" comment on this one too?",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f578ff_812e6ad8",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-15T16:12:57Z",
+      "side": 1,
+      "message": "Nit: Use https:// in URLs",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8f7a20_58c8ea4f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-15T16:12:57Z",
+      "side": 1,
+      "message": "The \"pointer to structure member\" is one of the weirdest pieces of syntax I\u0027ve encountered in C++. You might want to add a comment when you use it.\n\nWould it be more readable to put a space before \"constraint\"?",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
