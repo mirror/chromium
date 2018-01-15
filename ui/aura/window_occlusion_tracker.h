@@ -175,7 +175,7 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   };
 
   // Windows whose occlusion state is tracked.
-  base::flat_set<Window*> tracked_windows_;
+  base::flat_map<Window*, Window::OcclusionState> tracked_windows_;
 
   // Windows whose bounds or transform are animated.
   //
@@ -188,6 +188,9 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
 
   // Root Windows of Windows in |tracked_windows_|.
   base::flat_map<Window*, RootWindowState> root_windows_;
+
+  // Indicates whether MaybeRecomputeOcclusion() is being called.
+  bool is_in_maybe_recompute_occlusion_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WindowOcclusionTracker);
 };
