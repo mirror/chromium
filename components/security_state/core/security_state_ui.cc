@@ -18,6 +18,9 @@ bool ShouldAlwaysShowIcon(SecurityLevel security_level) {
     case SECURE_WITH_POLICY_INSTALLED_CERT:
     case DANGEROUS:
       return true;
+    case SECURITY_LEVEL_MAX:
+      NOTREACHED();
+      return false;
   }
   NOTREACHED();
   return false;
