@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -15,7 +15,7 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
@@ -29,8 +29,8 @@
 #error "This file requires ARC support."
 #endif
 
-@interface PrimaryToolbarCoordinator ()<LocationBarDelegate,
-                                        OmniboxPopupPositioner> {
+@interface AdaptiveToolbarCoordinator ()<LocationBarDelegate,
+                                         OmniboxPopupPositioner> {
   std::unique_ptr<LocationBarControllerImpl> _locationBar;
 }
 
@@ -38,60 +38,58 @@
 @property(nonatomic, assign) BOOL started;
 // The Toolbar view controller owned by this coordinator.
 @property(nonatomic, strong)
-    PrimaryToolbarViewController* toolbarViewController;
+    AdaptiveToolbarViewController* toolbarViewController;
 // The coordinator for the location bar in the toolbar.
 @property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 // Coordinator for the omnibox popup.
 @property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
+// Type of this instance of the toolbar.
+@property(nonatomic, assign) ToolbarType type;
 
 @end
 
-@implementation PrimaryToolbarCoordinator
+@implementation AdaptiveToolbarCoordinator
 @synthesize delegate = _delegate;
 @synthesize dispatcher = _dispatcher;
 @synthesize locationBarCoordinator = _locationBarCoordinator;
 @synthesize omniboxPopupCoordinator = _omniboxPopupCoordinator;
 @synthesize started = _started;
 @synthesize toolbarViewController = _toolbarViewController;
+@synthesize type = _type;
 @synthesize URLLoader = _URLLoader;
 @synthesize webStateList = _webStateList;
 
 #pragma mark - ChromeCoordinator
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
-  return [super initWithBaseViewController:nil browserState:browserState];
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                                type:(ToolbarType)type {
+  self = [super initWithBaseViewController:nil browserState:browserState];
+  if (self) {
+    _type = type;
+  }
+  return self;
 }
 
 - (void)start {
   if (self.started)
     return;
 
+  if (self.type == PRIMARY)
+    [self setUpLocationBar];
+
   self.started = YES;
   BOOL isIncognito = self.browserState->IsOffTheRecord();
-
-  self.locationBarCoordinator = [[LocationBarCoordinator alloc] init];
-  self.locationBarCoordinator.browserState = self.browserState;
-  self.locationBarCoordinator.dispatcher = self.dispatcher;
-  [self.locationBarCoordinator start];
-
-  // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
-  // created.
-  _locationBar = std::make_unique<LocationBarControllerImpl>(
-      self.locationBarCoordinator.locationBarView, self.browserState, self,
-      self.dispatcher);
-  self.omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
-  [self.omniboxPopupCoordinator start];
-  // End of TODO(crbug.com/785253):.
 
   ToolbarStyle style = isIncognito ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
   buttonFactory.dispatcher = self.dispatcher;
   buttonFactory.visibilityConfiguration =
-      [[ToolbarButtonVisibilityConfiguration alloc] initWithType:PRIMARY];
+      [[ToolbarButtonVisibilityConfiguration alloc] initWithType:self.type];
 
-  self.toolbarViewController = [[PrimaryToolbarViewController alloc]
-      initWithButtonFactory:buttonFactory];
+  self.toolbarViewController =
+      [[AdaptiveToolbarViewController alloc] initWithButtonFactory:buttonFactory
+                                                              type:self.type];
   self.toolbarViewController.dispatcher = self.dispatcher;
   self.toolbarViewController.locationBarView =
       self.locationBarCoordinator.locationBarView;
@@ -268,6 +266,24 @@
 - (ToolbarModel*)toolbarModel {
   ToolbarModelIOS* toolbarModelIOS = [self.delegate toolbarModelIOS];
   return toolbarModelIOS ? toolbarModelIOS->GetToolbarModel() : nullptr;
+}
+
+#pragma mark - Private
+
+- (void)setUpLocationBar {
+  self.locationBarCoordinator = [[LocationBarCoordinator alloc] init];
+  self.locationBarCoordinator.browserState = self.browserState;
+  self.locationBarCoordinator.dispatcher = self.dispatcher;
+  [self.locationBarCoordinator start];
+
+  // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
+  // created.
+  _locationBar = std::make_unique<LocationBarControllerImpl>(
+      self.locationBarCoordinator.locationBarView, self.browserState, self,
+      self.dispatcher);
+  self.omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
+  [self.omniboxPopupCoordinator start];
+  // End of TODO(crbug.com/785253):.
 }
 
 @end

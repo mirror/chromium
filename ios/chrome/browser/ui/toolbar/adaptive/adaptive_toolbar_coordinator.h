@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_COORDINATOR_H_
-#define IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_COORDINATOR_H_
+#ifndef IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_ADAPTIVE_TOOLBAR_COORDINATOR_H_
+#define IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_ADAPTIVE_TOOLBAR_COORDINATOR_H_
 
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/coordinators/chrome_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_type.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
 
 @protocol ApplicationCommands;
@@ -19,12 +20,15 @@
 @protocol UrlLoader;
 class WebStateList;
 
-// Coordinator for the primary toolbar. In an adaptive toolbar paradigm, this is
-// the toolbar always displayed.
-@interface PrimaryToolbarCoordinator
+// Coordinator for the adaptive toolbar. This Coordinator is the same for all
+// toolbar sub-implementation (primary and secondary).
+@interface AdaptiveToolbarCoordinator
     : ChromeCoordinator<PrimaryToolbarCoordinator, ToolbarCommands>
 
+// Initializes this Coordinator with its |browserState| and its |type|, PRIMARY
+// or SECONDARY.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                                type:(ToolbarType)type
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
     NS_UNAVAILABLE;
@@ -48,4 +52,4 @@ class WebStateList;
 
 @end
 
-#endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_COORDINATOR_H_
+#endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_ADAPTIVE_TOOLBAR_COORDINATOR_H_
