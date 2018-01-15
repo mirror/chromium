@@ -3501,6 +3501,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kImprovedLanguageSettingsDescription, kOsAll,
      FEATURE_VALUE_TYPE(translate::kImprovedLanguageSettings)},
 
+    {"enable-regional-locales-as-display-ui",
+     flag_descriptions::kRegionalLocalesAsDisplayUIName,
+     flag_descriptions::kRegionalLocalesAsDisplayUIDescription, kOsAll,
+     FEATURE_VALUE_TYPE(translate::kRegionalLocalesAsDisplayUI)},
+
     {"enable-module-scripts-dynamic-import",
      flag_descriptions::kModuleScriptsDynamicImportName,
      flag_descriptions::kModuleScriptsDynamicImportDescription, kOsAll,
