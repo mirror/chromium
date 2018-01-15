@@ -1,0 +1,15 @@
+CONSOLE ERROR: Error with Feature-Policy header: Unrecognized feature: 'unsized-image'.
+This is a testharness.js-based test.
+FAIL Test image size (default) on src resources/image.jpg assert_equals: width expected 300 but got 64
+FAIL Test image size (500 x 150) on src resources/image.jpg assert_equals: height expected 150 but got 500
+FAIL Test image size (300 x 800) on src resources/image.jpg assert_equals: width expected 300 but got 800
+FAIL Test image size (default) on src resources/image.png assert_equals: width expected 300 but got 32
+FAIL Test image size (500 x 150) on src resources/image.png assert_equals: height expected 150 but got 500
+FAIL Test image size (300 x 800) on src resources/image.png assert_equals: width expected 300 but got 800
+FAIL Test image size (default) on src resources/image.svg assert_equals: width expected 300 but got 769
+FAIL Test image size (500 x 150) on src resources/image.svg assert_equals: height expected 150 but got 375
+FAIL Test image size (300 x 800) on src resources/image.svg assert_equals: width expected 300 but got 1067
+FAIL Test image size is correctly rendered in iframe of src resources/feature-policy-image.html assert_equals: width expected 300 but got 64
+FAIL Test image size is correctly rendered in iframe of src http://localhost:8000/feature-policy-experimental-features/resources/feature-policy-image.html assert_equals: width expected 300 but got 64
+Harness: the test ran to completion.
+
