@@ -4,8 +4,9 @@
 
 #include "components/reading_list/core/reading_list_model.h"
 
+#include <memory>
+
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 
 ReadingListModel::ReadingListModel() : current_batch_updates_count_(0) {}
 
@@ -39,7 +40,7 @@ bool ReadingListModel::IsPerformingBatchUpdates() const {
 
 std::unique_ptr<ReadingListModel::ScopedReadingListBatchUpdate>
 ReadingListModel::CreateBatchToken() {
-  return base::MakeUnique<ReadingListModel::ScopedReadingListBatchUpdate>(this);
+  return std::make_unique<ReadingListModel::ScopedReadingListBatchUpdate>(this);
 }
 
 std::unique_ptr<ReadingListModel::ScopedReadingListBatchUpdate>

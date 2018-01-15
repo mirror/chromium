@@ -5,6 +5,7 @@
 #include "components/ntp_tiles/popular_sites_impl.h"
 
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -113,9 +114,9 @@ class PopularSitesTest : public ::testing::Test {
 
   std::unique_ptr<base::ListValue> CreateListFromTestSites(
       const TestPopularSiteVector& sites) {
-    auto sites_value = base::MakeUnique<base::ListValue>();
+    auto sites_value = std::make_unique<base::ListValue>();
     for (const TestPopularSite& site : sites) {
-      auto site_value = base::MakeUnique<base::DictionaryValue>();
+      auto site_value = std::make_unique<base::DictionaryValue>();
       for (const std::pair<std::string, std::string>& kv : site) {
         if (kv.first == kTitleSource) {
           int source;
@@ -143,7 +144,7 @@ class PopularSitesTest : public ::testing::Test {
                          const TestPopularSectionVector& sections) {
     base::ListValue sections_value;
     for (const TestPopularSection& section : sections) {
-      auto section_value = base::MakeUnique<base::DictionaryValue>();
+      auto section_value = std::make_unique<base::DictionaryValue>();
       section_value->SetInteger(kSection, static_cast<int>(section.first));
       section_value->SetList(kSites, CreateListFromTestSites(section.second));
       sections_value.Append(std::move(section_value));
@@ -165,7 +166,7 @@ class PopularSitesTest : public ::testing::Test {
   }
 
   void ReregisterProfilePrefs() {
-    prefs_ = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
+    prefs_ = std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
     PopularSitesImpl::RegisterProfilePrefs(prefs_->registry());
   }
 
@@ -209,7 +210,7 @@ class PopularSitesTest : public ::testing::Test {
 
   std::unique_ptr<PopularSites> CreatePopularSites(
       net::URLRequestContextGetter* context) {
-    return base::MakeUnique<PopularSitesImpl>(
+    return std::make_unique<PopularSitesImpl>(
         prefs_.get(),
         /*template_url_service=*/nullptr,
         /*variations_service=*/nullptr, context,

@@ -6,13 +6,13 @@
 
 #include <algorithm>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <sstream>
 #include <tuple>
 #include <utility>
 
 #include "base/lazy_instance.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -347,7 +347,7 @@ bool Configuration::operator!=(const Configuration& rhs) const {
 
 std::unique_ptr<base::trace_event::TracedValue>
 Configuration::ActivationConditions::ToTracedValue() const {
-  auto value = base::MakeUnique<base::trace_event::TracedValue>();
+  auto value = std::make_unique<base::trace_event::TracedValue>();
   value->SetString("activation_scope", StreamToString(activation_scope));
   value->SetString("activation_list", StreamToString(activation_list));
   value->SetInteger("priority", priority);
@@ -357,7 +357,7 @@ Configuration::ActivationConditions::ToTracedValue() const {
 
 std::unique_ptr<base::trace_event::TracedValue> Configuration::ToTracedValue()
     const {
-  auto value = base::MakeUnique<base::trace_event::TracedValue>();
+  auto value = std::make_unique<base::trace_event::TracedValue>();
   auto traced_conditions = activation_conditions.ToTracedValue();
   value->SetValue("activation_conditions", *traced_conditions);
   value->SetString("activation_level",
