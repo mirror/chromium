@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affb78a7_4103264d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-15T07:10:01Z",
+      "side": 1,
+      "message": "Please use |visible_selection.IsNone()|;",
+      "revId": "c67cdab959ebc47b0b44e94f3a968893aee6ccf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded4ffd4_c9a0de2a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-15T07:10:01Z",
+      "side": 1,
+      "message": "Please use |const EphemeralRange\u0026 range \u003d visible_selection.AsSelection().ComputeRange();|",
+      "revId": "c67cdab959ebc47b0b44e94f3a968893aee6ccf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
