@@ -82,7 +82,7 @@ mojom("test_interfaces") {
 
 component("test_export_component") {
   testonly = true
-  deps = [
+  public_deps = [
     ":test_export",
   ]
 }
