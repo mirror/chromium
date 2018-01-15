@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa28ab9_e0e4ba1b",
+        "filename": "services/audio/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:16:32Z",
+      "side": 1,
+      "message": "Not sure if \u0027work in progress\u0027 gives useful information...\n\nAlso: looks like there\u0027s public doc for audio service, the doc can be probably linked from here.",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e24c858_366fc9ce",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:16:32Z",
+      "side": 1,
+      "message": "nit: \u0027an input audio device\u0027 or \u0027input audio devices\u0027",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a00345_f84eb50c",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:16:32Z",
+      "side": 1,
+      "message": "Could we use enum for input/output instead of bool?\nAlso: we use different methods for input/output for other methods like GetInputStreamParameters and GetOutputStreamParameters. Why do we take different approach here and there?",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ff2de3_b81d0ca5",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:16:32Z",
+      "side": 1,
+      "message": "nit: a give input one -\u003e with the given |input_device_id| (or \u0027with a specified ...\u0027 for consistency)",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a33f82_5ad30e74",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:16:32Z",
+      "side": 1,
+      "message": "This one is basically a conjunction of GetAssociatedOutputDeviceID and GetInputStreamParameters, is that right?  Do we need both of these?  If so could we also add a brief comment about the relationship of these methods?",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
