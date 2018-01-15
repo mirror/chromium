@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e02f506_f5778911",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:45:46Z",
+      "side": 1,
+      "message": "nit: Perform -\u003e Performs",
+      "revId": "5437089e729fca0452c823334b9e77ace8956537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66a3e9f_9fea9443",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:45:46Z",
+      "side": 1,
+      "message": "Is this line not about what this method does, but about what the callsite should do?  If this is about blink::WebCORS::GetErrorString() this file shouldn\u0027t probably refer to it, and maybe it is also not necessary to comment about it here?",
+      "revId": "5437089e729fca0452c823334b9e77ace8956537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
