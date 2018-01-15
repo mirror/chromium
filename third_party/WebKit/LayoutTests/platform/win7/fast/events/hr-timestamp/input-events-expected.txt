@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Event timestamp should be equal to the timestamp provided by the platform for mousedown
+FAIL Event timestamp should be equal to the timestamp provided by the platform for keydown assert_approx_equals: expected 11.700000000000001 +/- 0.100001 but got 11.800006031990051
+PASS Event timestamp should be equal to the timestamp provided by the platform for touchstart
+FAIL Event timestamp should be equal to the timestamp provided by the platform for click assert_approx_equals: expected 15.100000000000001 +/- 0.100001 but got 15.200003981590271
+PASS Event timestamp should be equal to the timestamp provided by the platform for contextmenu
+FAIL Event timestamp should be equal to the timestamp provided by the platform for wheel assert_approx_equals: expected 16.6 +/- 0.100001 but got 16.700007021427155
+Harness: the test ran to completion.
+
