@@ -10,12 +10,18 @@
 #include <psapi.h>
 #include <stddef.h>
 
+// This global constructor is trivial and non-racy (per being const).
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+
 // malloc_unchecked is required to implement UncheckedMalloc properly.
 // It's provided by allocator_shim_win.cc but since that's not always present,
 // we provide a default that falls back to regular malloc.
 typedef void* (*MallocFn)(size_t);
 extern "C" void* (*const malloc_unchecked)(size_t);
 extern "C" void* (*const malloc_default)(size_t) = &malloc;
+
+#pragma clang diagnostic pop  // -Wglobal-constructors
 
 #if defined(_M_IX86)
 #pragma comment(linker, "/alternatename:_malloc_unchecked=_malloc_default")
