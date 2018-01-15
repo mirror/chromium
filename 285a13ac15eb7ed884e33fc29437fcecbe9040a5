@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cbdd13b_a89bf1d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5d471b_305f4672",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3b1cb4_65406f4b",
         "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080632f1_bc97783d",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "Thanks for catching this! Comment removed.",
+      "parentUuid": "bf3b1cb4_65406f4b",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2768b8c_0de693d3",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "Yes, this is intentional. \nthe !SBNavigationEventsEnabled() case will only be triggered in tests or if user disables safe browsing service (\u003c5% of users).  Since the referrer chain is mostly for attribution purpose (a.k.a webstore won\u0027t behave differently with or without referrer chain when user install extensions.), it is OK to send less information for a small portion of users.",
+      "parentUuid": "fe473901_6fdde1be",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f0d4c77_12f516a7",
         "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fd49a0a4_4f140eaf",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "Shrink these to 2 function calls, since SafeBrowsingNavigationEventsEnabled() checks the availability of SB service and navigation observer manager already.\nAnd since |navigation_observer_manager| is used below, cannot put these 8 lines in a helper function.",
+      "parentUuid": "3f0d4c77_12f516a7",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c9fc27c_9c435f94",
         "filename": "chrome/browser/extensions/webstore_standalone_installer.cc",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcf14d3_cfbb0908",
+        "filename": "chrome/browser/extensions/webstore_standalone_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "GetPostData will return an empty string for some corner cases, which is the same as the default value of |post_data_|. No need for special treatment for these. Otherwise, it always returns valid string.",
+      "parentUuid": "5c9fc27c_9c435f94",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c59d10_b8a091e2",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-15T23:21:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c555013a_80e0fee7",
+      "range": {
+        "startLine": 1152,
+        "startChar": 42,
+        "endLine": 1152,
+        "endChar": 47
+      },
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
