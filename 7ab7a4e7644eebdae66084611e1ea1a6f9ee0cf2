@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "088217c0_ffdf1c27",
+        "filename": "content/renderer/media/audio_repetition_detector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T16:19:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ccba4df6_7a882c18",
+      "revId": "7ab7a4e7644eebdae66084611e1ea1a6f9ee0cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f34c6b5_59e0cc0a",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-15T16:10:28Z",
       "side": 0,
       "message": "Does this need to be marked as obsolete in histograms.xml?",
+      "revId": "7ab7a4e7644eebdae66084611e1ea1a6f9ee0cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcce177a_8884e1d5",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T16:19:01Z",
+      "side": 0,
+      "message": "Oh, yes. Done.",
+      "parentUuid": "8f34c6b5_59e0cc0a",
       "revId": "7ab7a4e7644eebdae66084611e1ea1a6f9ee0cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
