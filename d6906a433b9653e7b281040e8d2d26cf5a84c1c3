@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a787c6_62fadc42",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 7614,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-15T16:12:34Z",
+      "side": 1,
+      "message": "aside: this function is essentially\n\nstd::rotate(resource_providers_.begin(),\n            resource_providers_.begin() + i,\n            resource_providers_.begin() + i + 1);\n\nright?",
+      "revId": "d6906a433b9653e7b281040e8d2d26cf5a84c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0feaa27_4259abea",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-15T16:12:34Z",
+      "side": 1,
+      "message": "nit: elsewhere we just write \"Vector\" instead of \"WTF::Vector\"; do so for consistency?",
+      "revId": "d6906a433b9653e7b281040e8d2d26cf5a84c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
