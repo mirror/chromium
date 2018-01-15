@@ -22,6 +22,30 @@
       "revId": "9a5463121df462574e231a6994bd710be1b2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f50d36_0f724ff3",
+        "filename": "components/signin/core/browser/webdata/token_service_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-15T12:31:40Z",
+      "side": 1,
+      "message": "Good catch. Thanks for flagging.",
+      "parentUuid": "709da3fd_276feac9",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "9a5463121df462574e231a6994bd710be1b2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
