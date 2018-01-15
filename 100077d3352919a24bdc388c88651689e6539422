@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fadc11c1_26030628",
+        "filename": "content/renderer/accessibility/aom_content_ax_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Ooop. Can\u0027t even pretend this one was because of the new year. Done.",
+      "parentUuid": "283bcade_b4c57ecb",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d60176b4_20d69baa",
         "filename": "content/renderer/accessibility/aom_content_ax_node.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T21:51:05Z",
       "side": 1,
       "message": "This is a raw pointer, who owns it? Comment on its lifecycle.\nHow does this pointer get cleared if the tree changes and the\nAXNode goes away?\n\nI think I was imagining that we wouldn\u0027t even need an object for\nevery node. One object for the tree would suffice. To access the\nname, call GetName(id). Or we could have an object like this but\nit could store a pointer to the AXTree and the node id instead of a\npointer to the AXNode instead, that might make the lifecycle easier.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cca397_10125422",
+        "filename": "content/renderer/accessibility/aom_content_ax_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "It also avoids me having to write and implement another interface to access the nodes themselves, and instead delegating it to the ComputedAXTree interface and implementation entirely, especially considering AomContentAxNode is basically just a wrapper for the AXNode, which is something the tree can provide.",
+      "parentUuid": "d60176b4_20d69baa",
       "revId": "100077d3352919a24bdc388c88651689e6539422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "50f3771b_9e31f606",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Done. As a point of interest, does the DOMWindow::GetFrame method return the same frame as Element-\u003eGetDocument()-\u003eGetFrame()? Not sure if its better to just get the frame directly from LocalDOMWindow and pass it through from there rather than going through a few extra calls on the element itself, or if it even matters.",
+      "parentUuid": "94f6078a_5b5a8806",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68c821f_89227bed",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ae5d75fd_f28da352",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68c821f_89227bed",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be08b54e_8425d13d",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-09T21:51:05Z",
       "side": 1,
       "message": "Calling Unserialize() will delete AXNodes from the tree that are\nno longer there, which will leave some dangling pointers.\n\nPlease add a test for this, something like:\n\n* Get an element\u0027s computed role\n* Hide the element (e.g. display:none)\n* Trigger ReqeustTreeSnapshot a second time with the changed tree\n* Try to access that computed node\u0027s role again - that node should not be\n  in the accessibility tree anymore, so it will crash if it tries to access\n  the old AXNode*.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e366c1d_7a6913d6",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "At the moment, this doesn\u0027t actually happen I don\u0027t think because we basically only ever call SnapshotAccessibilityTree once, when the first ComputedAcccessibleNode is requested.",
+      "parentUuid": "be08b54e_8425d13d",
       "revId": "100077d3352919a24bdc388c88651689e6539422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5c415675_10ab20e7",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Hmmm, I guess it depends. Is it the callers responsibility to handle a null value? I have it set to return null for the sake of this patch, but only because I\u0027m not sure on what is the better option in this case. Happy to hear ideas!",
+      "parentUuid": "e9b518b3_26996ad0",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833b2032_885145c1",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 7
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5c470a35_efb20da2",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833b2032_885145c1",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d59a670_3e899a85",
         "filename": "third_party/WebKit/public/BUILD.gn",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "100077d3352919a24bdc388c88651689e6539422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54028b5_581c3cfb",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d59a670_3e899a85",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

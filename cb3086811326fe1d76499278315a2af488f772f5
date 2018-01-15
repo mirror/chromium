@@ -16,6 +16,24 @@
       "revId": "cb3086811326fe1d76499278315a2af488f772f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934df223_c328a60f",
+        "filename": "third_party/WebKit/Source/core/dom/ElementRareData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-15T06:16:23Z",
+      "side": 1,
+      "message": "To clarify, the tests currently fail because the AXID that the Node object has does not match the ones available in the accessibility tree in content.",
+      "parentUuid": "4019bfe7_2e10b34b",
+      "revId": "cb3086811326fe1d76499278315a2af488f772f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
