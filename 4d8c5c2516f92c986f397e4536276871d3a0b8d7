@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb54f9a_f1d6628f",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LegacyLinker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-15T19:24:14Z",
+      "side": 1,
+      "message": "I\u0027m not keen on this being synchronous if we are calling from the UI thread but asynchronous if called from another thread, this has been a source of bugs elsewhere before.",
+      "range": {
+        "startLine": 570,
+        "startChar": 11,
+        "endLine": 570,
+        "endChar": 42
+      },
+      "revId": "4d8c5c2516f92c986f397e4536276871d3a0b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35159225_2f4bc8f6",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_api.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-15T19:24:14Z",
+      "side": 1,
+      "message": "Could you make this more specific (or remove)",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "4d8c5c2516f92c986f397e4536276871d3a0b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2005bc_4e7734e7",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_api.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-15T19:24:14Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "4d8c5c2516f92c986f397e4536276871d3a0b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
