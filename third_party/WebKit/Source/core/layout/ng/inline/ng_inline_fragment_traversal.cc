@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 
+#include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
@@ -51,6 +52,37 @@ class AddAllFilter {
  public:
   bool AddOnEnter(const NGPhysicalFragment*) const { return true; }
   bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+};
+
+// The filter for CollectInlineFragments() collecting fragments generated from
+// the given LayoutInline with supporting culled inline boxes.
+class LayoutInlineFilter {
+ public:
+  explicit LayoutInlineFilter(const LayoutInline& container) {
+    nodes_.insert(&container);
+    for (const LayoutObject* node = container.FirstChild(); node;
+         node = node->NextInPreOrder(&container)) {
+      if (!ShouldAdd(*node))
+        continue;
+      nodes_.insert(node);
+    }
+  }
+
+  bool AddOnEnter(const NGPhysicalFragment* fragment) const {
+    if (fragment->IsLineBox())
+      return false;
+    return nodes_.Contains(fragment->GetLayoutObject());
+  }
+  bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+
+ private:
+  static bool ShouldAdd(const LayoutObject& node) {
+    if (!node.IsFloatingOrOutOfFlowPositioned())
+      return false;
+    return node.IsBox() || node.IsLayoutInline() || node.IsText();
+  }
+
+  HashSet<const LayoutObject*> nodes_;
 };
 
 // The filter for CollectInlineFragments() collecting fragments generated from
@@ -116,6 +148,12 @@ class InclusiveAncestorFilter {
 Vector<Result, 1> NGInlineFragmentTraversal::SelfFragmentsOf(
     const NGPhysicalContainerFragment& container,
     const LayoutObject* layout_object) {
+  if (layout_object->IsLayoutInline()) {
+    LayoutInlineFilter filter(*ToLayoutInline(layout_object));
+    Vector<Result, 1> results;
+    CollectInlineFragments(container, {}, filter, &results);
+    return results;
+  }
   LayoutObjectFilter filter(layout_object);
   Vector<Result, 1> results;
   CollectInlineFragments(container, {}, filter, &results);
