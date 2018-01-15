@@ -13,8 +13,8 @@ import org.chromium.base.annotations.CalledByNative;
 public final class PasswordUIView implements PasswordManagerHandler {
     @CalledByNative
     private static SavedPasswordEntry createSavedPasswordEntry(
-            String url, String name, String password) {
-        return new SavedPasswordEntry(url, name, password);
+            String id, String url, String name, String password) {
+        return new SavedPasswordEntry(id, url, name, password);
     }
 
     // Pointer to native implementation, set to 0 in destroy().
@@ -70,6 +70,12 @@ public final class PasswordUIView implements PasswordManagerHandler {
         nativeHandleRemoveSavedPasswordException(mNativePasswordUIViewAndroid, index);
     }
 
+    @Override
+    public void addPasswordEntry(String site, String username, String password, String origin) {
+        nativeHandleAddPasswordEntry(
+                mNativePasswordUIViewAndroid, site, username, password, origin);
+    }
+
     /**
      * Returns the URL for the website for managing one's passwords without the need to use Chrome
      * with the user's profile signed in.
@@ -106,6 +112,9 @@ public final class PasswordUIView implements PasswordManagerHandler {
     private native void nativeHandleRemoveSavedPasswordException(
             long nativePasswordUIViewAndroid,
             int index);
+
+    private native void nativeHandleAddPasswordEntry(long nativePasswordUIViewAndroid, String site,
+            String username, String password, String origin);
 
     private static native String nativeGetAccountDashboardURL();
 
