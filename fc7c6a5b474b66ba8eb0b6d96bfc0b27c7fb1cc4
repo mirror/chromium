@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e398b8d6_b608d7a9",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-15T05:08:30Z",
+      "side": 1,
+      "message": "Should these fall through to NOTREACHED?",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53a8d55_6dbea7e1",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-15T05:08:30Z",
+      "side": 1,
+      "message": "Nit: I haven\u0027t seen this format of comment before. What I have seen is \"false /* is_api */\".\n\nDoes this new format have precendent?",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8080734_f73edfde",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-15T05:08:30Z",
+      "side": 1,
+      "message": "Optional nit: Use ternary operator here and below.",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
