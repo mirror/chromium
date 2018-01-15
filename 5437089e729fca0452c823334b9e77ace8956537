@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb20a621_f8dc007b",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T08:23:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e02f506_f5778911",
+      "revId": "5437089e729fca0452c823334b9e77ace8956537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d66a3e9f_9fea9443",
         "filename": "services/network/public/cpp/cors/cors.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "5437089e729fca0452c823334b9e77ace8956537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36921af_396b6005",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-15T08:23:09Z",
+      "side": 1,
+      "message": "Ah, good point. In my local patch that follow this has a network::cors version of GetErrorString(), but actually we do not need it because only Blink needs stringifying it, and probably we would have platform/loader/cors/CORS.h to provide it. OK, let me remove this comment and TODO.",
+      "parentUuid": "d66a3e9f_9fea9443",
+      "revId": "5437089e729fca0452c823334b9e77ace8956537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
