@@ -40,7 +40,6 @@
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/common/pref_names.h"
-#include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/component_updater/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/version_info/version_info.h"
@@ -823,6 +822,11 @@ class ReporterRunner {
         invocation_type_ ==
         SwReporterInvocationType::kUserInitiatedWithLogsAllowed);
 
+    finished_invocation.set_chrome_prompt(
+        IsUserInitiated(invocation_type_)
+            ? chrome_cleaner::ChromePromptValue::kUserInitiated
+            : chrome_cleaner::ChromePromptValue::kPrompted);
+
     invocations_.NotifySequenceDone(
         SwReporterInvocationResult::kCleanupToBeOffered);
     cleaner_controller->Scan(finished_invocation);
@@ -1041,6 +1045,15 @@ bool SwReporterInvocation::cleaner_logs_upload_enabled() const {
 void SwReporterInvocation::set_cleaner_logs_upload_enabled(
     bool cleaner_logs_upload_enabled) {
   cleaner_logs_upload_enabled_ = cleaner_logs_upload_enabled;
+}
+
+chrome_cleaner::ChromePromptValue SwReporterInvocation::chrome_prompt() const {
+  return chrome_prompt_;
+}
+
+void SwReporterInvocation::set_chrome_prompt(
+    chrome_cleaner::ChromePromptValue chrome_prompt) {
+  chrome_prompt_ = chrome_prompt;
 }
 
 SwReporterInvocationSequence::SwReporterInvocationSequence(
