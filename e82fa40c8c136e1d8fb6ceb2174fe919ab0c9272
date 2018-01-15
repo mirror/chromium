@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0688647c_9873b035",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/test_performance_attributes.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-15T20:40:51Z",
+      "side": 1,
+      "message": "Might be worth mentioning \"if secureConnectionStart is supported\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 60,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "e82fa40c8c136e1d8fb6ceb2174fe919ab0c9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d8d39e_862b02fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/webtiming-resolution.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-15T20:40:51Z",
+      "side": 1,
+      "message": "Why async?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "e82fa40c8c136e1d8fb6ceb2174fe919ab0c9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
