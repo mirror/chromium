@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feb46a5e_c656e332",
+        "filename": "third_party/WebKit/Source/core/layout/BaselineAlignment.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-15T11:23:05Z",
+      "side": 1,
+      "message": "I don\u0027t like it either. I just followed the same approach that we were using in the GirdTrackSizingAlgorithm class with the LayoutGrid and Grid instances. Anyway, I\u0027ll try to avoid this reference to the algorithm in the new BaselineAlignment class.",
+      "parentUuid": "72da4448_574ce7db",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf688cec_d7e663ec",
         "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a930a2d6_58e79db8",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-15T11:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf688cec_d7e663ec",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e4571fd9_02b602b8",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-15T11:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32250f6_a8416f17",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a9f5f34_22295316",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3689f116_3943e424",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-15T11:23:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a9f5f34_22295316",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6c9f481_27203501",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-12T10:23:53Z",
       "side": 1,
       "message": "I don\u0027t see where these last two are used.",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5af340_9e76d106",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-15T11:23:05Z",
+      "side": 1,
+      "message": "They are used by the LayoutGrid class.",
+      "parentUuid": "c6c9f481_27203501",
       "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
