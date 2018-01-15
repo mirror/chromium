@@ -46,6 +46,30 @@
       "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938639a0_d5e64e22",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-15T15:50:50Z",
+      "side": 1,
+      "message": "Thanks. I have a patch that I was rebasing and ran into conflict here due to other changes, but just wanted to double check if we might have a regression.\n\nNot related to this change though, I\u0027m wondering if it\u0027s a good idea to globally change the current device just when using/constructing ScopedAudioUnit. Specifically, we create a ScopedAudioUnit inside of GetDeviceChannels, which can be called when just enumerating devices. How does this affect currently open devices?",
+      "parentUuid": "35734eb7_b7321e27",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
