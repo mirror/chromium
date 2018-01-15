@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5fed808_ee391ebf",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T19:23:24Z",
+      "side": 1,
+      "message": "Looks like you need to create transformed_event at the very beginning, because the code above expects the location to be in target\u0027s coord-space.",
+      "revId": "99188c73d8ae58441bcee63df29cb9cd7559e90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc37528_4456d15a",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T19:23:24Z",
+      "side": 1,
+      "message": "I think we can remove this too now?",
+      "revId": "99188c73d8ae58441bcee63df29cb9cd7559e90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592a8fb7_78d6be7b",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T19:23:24Z",
+      "side": 1,
+      "message": "Maybe we can move all of this into a separate function, and use a DCHECK() here instead. For example:\n\n  if (!root_view)\n    return;\n  DCHECK(IsSupportedEvent(event));\n  delegate_-\u003eDispatchEventToTarget(root_view, target, event, latency);\n  FlushEventQueue();",
+      "revId": "99188c73d8ae58441bcee63df29cb9cd7559e90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
