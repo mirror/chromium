@@ -9,9 +9,9 @@ include_rules = [
   "+components/viz/client",
   "+components/viz/common",
   "+cc/blink",
+  "+content/child",
   "+content/public/child",
   "+content/public/renderer",
-  "+content/child",
   "+device/base/synchronization",
   "+device/gamepad/public/cpp",
   "+device/gamepad/public/interfaces",
@@ -34,6 +34,10 @@ specific_include_rules = {
   '.*_[a-z]*browsertest.*': [
     "+content/public/browser",
     "+content/shell",
+  ],
+  # TODO(crbug.com/736308): Temporary dependency during the file moving.
+  "cors_url_loader_factory\.cc": [
+    "+content/network/cors/cors_url_loader.h",
   ],
   "render_thread_impl_browsertest\.cc": [
     "+content/app/mojo/mojo_init.h",
