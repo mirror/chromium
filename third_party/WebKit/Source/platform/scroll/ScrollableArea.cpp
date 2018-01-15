@@ -269,12 +269,9 @@ void ScrollableArea::UserScrollHelper(const ScrollOffset& offset,
   GetScrollAnimator().ScrollToOffsetWithoutAnimation(ScrollOffset(x, y));
 }
 
-LayoutRect ScrollableArea::ScrollIntoView(const LayoutRect& rect_in_content,
-                                          const ScrollAlignment& align_x,
-                                          const ScrollAlignment& align_y,
-                                          bool is_smooth,
-                                          ScrollType,
-                                          bool is_for_scroll_sequence) {
+LayoutRect ScrollableArea::ScrollIntoView(
+    const LayoutRect& rect_in_content,
+    const WebScrollIntoViewParams& params) {
   // TODO(bokan): This should really be implemented here but ScrollAlignment is
   // in Core which is a dependency violation.
   NOTREACHED();
