@@ -34,6 +34,24 @@
       "revId": "4c7347f77289875b698ac98e13024ce0ccc47c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15810570_3f92d632",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkIntegrationTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-15T19:01:45Z",
+      "side": 1,
+      "message": "ChromeActivityTestRule#startActivityCompletely() calls ChromeActivityTestRule#setActivity(). To get the WebApkActivity, you just need to call ChromeActivityTestRule#getActivity()",
+      "parentUuid": "cf09f4b1_4982026d",
+      "revId": "4c7347f77289875b698ac98e13024ce0ccc47c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
