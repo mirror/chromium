@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<body>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<iframe></iframe>
+<script>
+'use strict';
+const default_width = 300;
+const default_height = 150;
+const srcs = [
+  "/feature-policy/experimental-features/resources/image.jpg",
+  "/feature-policy/experimental-features/resources/image.png",
+  "/feature-policy/experimental-features/resources/image.svg"
+];
+
+for (var src of srcs) {
+  // Test when no size is specified, image is layed out by default size.
+  async_test(t=> {
+    var img = document.createElement('IMG');
+    img.setAttribute("src", src);
+    img.addEventListener('load', t.step_func(function() {
+      assert_equals(img.width, default_width, 'width');
+      assert_equals(img.height, default_height, 'height');
+      t.done();
+    }));
+    document.body.appendChild(img);
+  }, 'Test image size (default) on src ' + src);
+
+  // Test when width is specified, image is layed out by default height.
+  async_test(t=> {
+    var img = document.createElement('IMG');
+    var width = 500;
+    img.setAttribute("src", src);
+    img.setAttribute("width", width);
+    img.addEventListener('load', t.step_func(function() {
+      assert_equals(img.width, width, 'width');
+      assert_equals(img.height, default_height, 'height');
+      t.done();
+    }));
+    document.body.appendChild(img);
+  }, 'Test image size (500 x 150) on src ' + src);
+
+  // Test when style height is specified, image is layed out by the default width.
+  async_test(t=> {
+    var img = document.createElement('IMG');
+    var height = 800;
+    img.setAttribute("src", src);
+    img.setAttribute("style", "height:800px;");
+    img.addEventListener('load', t.step_func(function() {
+      assert_equals(img.width, default_width, 'width');
+      assert_equals(img.height, height, 'height');
+      t.done();
+    }));
+    document.body.appendChild(img);
+  }, 'Test image size (300 x 800) on src ' + src);
+}
+
+// Test unsized-image works in local and remote iframes.
+var iframe = document.querySelector('iframe');
+var iframe_srcs = [
+  "/feature-policy/experimental-features/resources/feature-policy-image.html",
+  "https://{{domains[www]}}:{{ports[https][0]}}/feature-policy/experimental-features/resources/feature-policy-image.html"];
+for (var src of iframe_srcs) {
+  promise_test(function() {
+    iframe.src = src;
+    return new Promise(function(resolve, reject) {
+      window.addEventListener('message', function(e) {
+        resolve(e.data);
+      });
+    }).then(function(data) {
+      assert_equals(data.width, default_width, 'width');
+      assert_equals(data.height, default_height, 'height');
+    });
+  }, 'Test image size is correctly rendered in iframe of src ' + src);
+}
+</script>
+</body>

@@ -59,7 +59,8 @@ enum class FeaturePolicyFeature {
   kAmbientLightSensor,
   kGyroscope,
   kMagnetometer,
-  LAST_FEATURE = kMagnetometer
+  kUnsizedImage,
+  LAST_FEATURE = kUnsizedImage
 };
 
 }  // namespace blink
