@@ -33,6 +33,9 @@ extern const base::Feature kHttpFormWarningFeature;
 
 // Describes the overall security state of the page.
 //
+// This enum is histogrammed, so do not remove or reorder values, and add new
+// ones at the end.
+//
 // If you change this enum, you may need to update the UI icons in
 // ToolbarModelImpl::GetVectorIcon and GetIconForSecurityState.
 //
@@ -41,7 +44,7 @@ extern const base::Feature kHttpFormWarningFeature;
 // GENERATED_JAVA_CLASS_NAME_OVERRIDE: ConnectionSecurityLevel
 enum SecurityLevel {
   // HTTP/no URL/HTTPS but with insecure passive content on the page.
-  NONE,
+  NONE = 0,
 
   // HTTP, in a case where we want to show a visible warning about the page's
   // lack of security.
@@ -68,6 +71,8 @@ enum SecurityLevel {
   // insecure active content on the page, malware, phishing, or any other
   // serious security issue that could be dangerous.
   DANGEROUS,
+
+  SECURITY_LEVEL_MAX
 };
 
 // The ContentStatus enum is used to describe content on the page that
