@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h"
+#import "ios/chrome/browser/ui/util/named_guide.h"
 
 // UIButton subclass used as a Toolbar component.
 @interface ToolbarButton : UIButton
@@ -19,6 +20,8 @@
 // Returns true if the ToolbarButton should be hidden due to a current UI state
 // or WebState.
 @property(nonatomic, assign) BOOL hiddenInCurrentState;
+// Named of the layout guide this button should be constrained to, if not nil.
+@property(nonatomic, strong) GuideName* guideName;
 // Returns a ToolbarButton using the three images parameters for their
 // respective state.
 + (instancetype)toolbarButtonWithImageForNormalState:(UIImage*)normalImage

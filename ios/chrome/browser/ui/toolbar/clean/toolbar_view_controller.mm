@@ -408,14 +408,13 @@
 
 - (void)didMoveToParentViewController:(UIViewController*)parent {
   ConstrainNamedGuideToView(kOmniboxGuide, self.view.locationBarContainer);
-  ConstrainNamedGuideToView(kBackButtonGuide, self.view.backButton.imageView);
-  ConstrainNamedGuideToView(kForwardButtonGuide,
-                            self.view.forwardButton.imageView);
-  ConstrainNamedGuideToView(kToolsMenuGuide, self.view.toolsMenuButton);
+  self.view.backButton.guideName = kBackButtonGuide;
+  self.view.forwardButton.guideName = kForwardButtonGuide;
+  self.view.toolsMenuButton.guideName = kToolsMenuGuide;
   if (!IsIPadIdiom()) {
-    ConstrainNamedGuideToView(kTabSwitcherGuide,
-                              self.view.tabSwitchStripButton.imageView);
+    self.view.tabSwitchStripButton.guideName = kTabSwitcherGuide;
   }
+  [self updateAllButtonsVisibility];
 }
 
 #pragma mark - Trait Collection Changes
