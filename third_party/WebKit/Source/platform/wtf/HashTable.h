@@ -1585,10 +1585,10 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
   if (Traits::kEmptyValueIsZero) {
     result = Allocator::template AllocateZeroedHashTableBacking<ValueType,
                                                                 HashTable>(
-        alloc_size);
+        alloc_size, Traits::kWeakHandlingFlag == kWeakHandlingInCollections);
   } else {
     result = Allocator::template AllocateHashTableBacking<ValueType, HashTable>(
-        alloc_size);
+        alloc_size, Traits::kWeakHandlingFlag == kWeakHandlingInCollections);
     for (unsigned i = 0; i < size; i++)
       InitializeBucket(result[i]);
   }
@@ -1629,7 +1629,8 @@ void HashTable<Key,
       }
     }
   }
-  Allocator::FreeHashTableBacking(table);
+  Allocator::FreeHashTableBacking(
+      table, Traits::kWeakHandlingFlag == kWeakHandlingInCollections);
 }
 
 template <typename Key,

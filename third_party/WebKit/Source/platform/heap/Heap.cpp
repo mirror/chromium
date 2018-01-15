@@ -746,6 +746,7 @@ void ThreadHeap::TakeSnapshot(SnapshotType type) {
   SNAPSHOT_HEAP(Vector3);
   SNAPSHOT_HEAP(Vector4);
   SNAPSHOT_HEAP(InlineVector);
+  SNAPSHOT_HEAP(WeakHashTable);
   SNAPSHOT_HEAP(HashTable);
   SNAPSHOT_HEAP(LargeObject);
   FOR_EACH_TYPED_ARENA(SNAPSHOT_HEAP);

@@ -72,17 +72,17 @@ class WTF_EXPORT PartitionAllocator {
   }
 
   template <typename T, typename HashTable>
-  static T* AllocateHashTableBacking(size_t size) {
+  static T* AllocateHashTableBacking(size_t size, bool) {
     return reinterpret_cast<T*>(
         AllocateBacking(size, WTF_HEAP_PROFILER_TYPE_NAME(T)));
   }
   template <typename T, typename HashTable>
-  static T* AllocateZeroedHashTableBacking(size_t size) {
+  static T* AllocateZeroedHashTableBacking(size_t size, bool) {
     void* result = AllocateBacking(size, WTF_HEAP_PROFILER_TYPE_NAME(T));
     memset(result, 0, size);
     return reinterpret_cast<T*>(result);
   }
-  static void FreeHashTableBacking(void* address);
+  static void FreeHashTableBacking(void* address, bool is_weak_table);
 
   template <typename Return, typename Metadata>
   static Return Malloc(size_t size, const char* type_name) {

@@ -110,7 +110,7 @@ class PLATFORM_EXPORT HeapAllocator {
                                         size_t quantized_shrunk_size);
 
   template <typename T, typename HashTable>
-  static T* AllocateHashTableBacking(size_t size) {
+  static T* AllocateHashTableBacking(size_t size, bool is_weak_table) {
     size_t gc_info_index =
         GCInfoTrait<HeapHashTableBacking<HashTable>>::Index();
     ThreadState* state =
@@ -118,13 +118,16 @@ class PLATFORM_EXPORT HeapAllocator {
     const char* type_name =
         WTF_HEAP_PROFILER_TYPE_NAME(HeapHashTableBacking<HashTable>);
     return reinterpret_cast<T*>(state->Heap().AllocateOnArenaIndex(
-        state, size, BlinkGC::kHashTableArenaIndex, gc_info_index, type_name));
+        state, size,
+        is_weak_table ? BlinkGC::kWeakHashTableArenaIndex
+                      : BlinkGC::kHashTableArenaIndex,
+        gc_info_index, type_name));
   }
   template <typename T, typename HashTable>
-  static T* AllocateZeroedHashTableBacking(size_t size) {
-    return AllocateHashTableBacking<T, HashTable>(size);
+  static T* AllocateZeroedHashTableBacking(size_t size, bool is_weak_table) {
+    return AllocateHashTableBacking<T, HashTable>(size, is_weak_table);
   }
-  static void FreeHashTableBacking(void* address);
+  static void FreeHashTableBacking(void* address, bool is_weak_table);
   static bool ExpandHashTableBacking(void*, size_t);
 
   template <typename Return, typename Metadata>

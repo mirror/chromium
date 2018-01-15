@@ -271,7 +271,10 @@ HeapCompact::HeapCompact()
       BlinkGC::kVector4ArenaIndex + 1 == BlinkGC::kInlineVectorArenaIndex,
       "unexpected ArenaIndices ordering");
   static_assert(
-      BlinkGC::kInlineVectorArenaIndex + 1 == BlinkGC::kHashTableArenaIndex,
+      BlinkGC::kInlineVectorArenaIndex + 1 == BlinkGC::kWeakHashTableArenaIndex,
+      "unexpected ArenaIndices ordering");
+  static_assert(
+      BlinkGC::kWeakHashTableArenaIndex + 1 == BlinkGC::kHashTableArenaIndex,
       "unexpected ArenaIndices ordering");
 }
 

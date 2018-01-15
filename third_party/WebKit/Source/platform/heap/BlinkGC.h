@@ -96,6 +96,7 @@ class PLATFORM_EXPORT BlinkGC final {
     kVector3ArenaIndex,
     kVector4ArenaIndex,
     kInlineVectorArenaIndex,
+    kWeakHashTableArenaIndex,
     kHashTableArenaIndex,
     FOR_EACH_TYPED_ARENA(TypedArenaEnumName) kLargeObjectArenaIndex,
     // Values used for iteration of heap segments.
