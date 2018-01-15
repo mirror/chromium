@@ -16,11 +16,15 @@ namespace web {
 class WebState;
 }
 
-// Delegate for LocationBarController objects.  Used to provide the location bar
-// a way to open URLs and otherwise interact with the browser.
-@protocol LocationBarDelegate
+// To be implemented by LocationBar
+@protocol LocationBarURLLoader
 - (void)loadGURLFromLocationBar:(const GURL&)url
                      transition:(ui::PageTransition)transition;
+@end
+
+// Delegate for LocationBarController objects.  Used to provide the location bar
+// a way to open URLs and otherwise interact with the browser.
+@protocol LocationBarDelegate<LocationBarURLLoader>
 - (void)locationBarHasBecomeFirstResponder;
 - (void)locationBarHasResignedFirstResponder;
 - (void)locationBarBeganEdit;
