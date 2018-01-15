@@ -23,7 +23,7 @@ class WorkerScheduler;
 // Unless stated otherwise, all methods must be called on the worker thread.
 class PLATFORM_EXPORT WorkerGlobalScopeScheduler {
  public:
-  explicit WorkerGlobalScopeScheduler(WorkerScheduler* worker_scheduler);
+  WorkerGlobalScopeScheduler(WorkerScheduler* worker_scheduler);
   ~WorkerGlobalScopeScheduler();
 
   // Unregisters the task queues and cancels tasks in them.

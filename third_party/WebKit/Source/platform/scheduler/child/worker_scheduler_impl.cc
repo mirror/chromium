@@ -171,5 +171,10 @@ void WorkerSchedulerImpl::DidProcessTask(double start_time, double end_time) {
   load_tracker_.RecordTaskTime(start_time_ticks, end_time_ticks);
 }
 
+void WorkerSchedulerImpl::SetThreadType(ThreadType thread_type) {
+  DCHECK_NE(thread_type, ThreadType::kMainThread);
+  worker_metrics_helper_.SetThreadType(thread_type);
+}
+
 }  // namespace scheduler
 }  // namespace blink
