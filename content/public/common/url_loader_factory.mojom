@@ -22,6 +22,7 @@ const uint32 kURLLoadOptionSendSSLInfoForCertificateError = 8;
 // TODO(arthursonzogni): This is a temporary feature. Remove this as soon as
 // the InterceptingResourceHandler is removed. See https://crbug.com/791049.
 const uint32 kURLLoadOptionPauseOnResponseStarted = 16;
+const uint32 kURLLoadOptionResponseBodyInlining = 32;
 
 interface URLLoaderFactory {
   // Creats a URLLoader and starts loading with the given |request|. |client|'s

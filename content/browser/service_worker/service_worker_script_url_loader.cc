@@ -239,6 +239,11 @@ void ServiceWorkerScriptURLLoader::OnReceiveCachedMetadata(
   client_->OnReceiveCachedMetadata(data);
 }
 
+void ServiceWorkerScriptURLLoader::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  client_->OnReceiveInlinedDataChunk(data);
+}
+
 void ServiceWorkerScriptURLLoader::OnTransferSizeUpdated(
     int32_t transfer_size_diff) {
   client_->OnTransferSizeUpdated(transfer_size_diff);
