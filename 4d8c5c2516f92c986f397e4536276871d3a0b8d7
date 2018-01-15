@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03558661_132f7720",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LegacyLinker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-15T19:32:26Z",
+      "side": 1,
+      "message": "The code is always synchronous (i.e. this method will not return until the native method has been run), which is why runOnUiThreadBlocking() is used below. The latter performs the exact same check, this is here only to avoid creating a Runnable() when not needed.",
+      "parentUuid": "5fb54f9a_f1d6628f",
+      "range": {
+        "startLine": 570,
+        "startChar": 11,
+        "endLine": 570,
+        "endChar": 42
+      },
+      "revId": "4d8c5c2516f92c986f397e4536276871d3a0b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35159225_2f4bc8f6",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_api.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-15T19:24:14Z",
       "side": 1,
       "message": "Could you make this more specific (or remove)",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "4d8c5c2516f92c986f397e4536276871d3a0b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3106ed6c_8c3a4fc5",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_api.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-15T19:32:26Z",
+      "side": 1,
+      "message": "I can remove this, they were introduced to debug some dead-locks during experimentation.\nNote that all log lignes are prefixed with the name of the function, so this really prints as:\n\n  crazy_apply_pending_tasks: Entered\n\nand\n\n  crazy_apply_pending_tasks: Exited",
+      "parentUuid": "35159225_2f4bc8f6",
       "range": {
         "startLine": 70,
         "startChar": 2,
