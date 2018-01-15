@@ -182,7 +182,10 @@ mojom_component("mojom") {
   ]
   public_deps = [
     "//mojo/common:read_only_buffer",
+    "//mojo/public/interfaces/bindings:bindings",
   ]
+  overridden_deps = [ "//mojo/public/interfaces/bindings:bindings" ]
+  component_deps = [ "//mojo/public/cpp/bindings" ]
 
   # Don't generate a variant sources since we depend on generated internal
   # bindings types and we don't generate or build variants of those.
