@@ -13,8 +13,7 @@ import perf_device_trigger
 
 
 class FakeArgs(object):
-  def __init__(self, shards, bot_id, dump_json):
-    self.shards = shards
+  def __init__(self, bot_id, dump_json):
     self.bot_id = bot_id
     self.dump_json = dump_json
 
@@ -32,7 +31,7 @@ class PerfDeviceTriggerUnittest(unittest.TestCase):
               prefix='perf_device_trigger_unittest')
           try:
             perf_device_trigger.trigger_tasks(
-                FakeArgs(1, ['build1'], json_temp),
+                FakeArgs(['build1'], json_temp),
                 ['trigger', '--some', '--test', '--', 'args'])
 
             call_mock.assert_called_once()

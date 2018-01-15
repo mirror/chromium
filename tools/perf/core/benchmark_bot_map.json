@@ -1,0 +1,8 @@
+{
+  "swarm823-c4": [
+    "dummy_benchmark.stable_benchmark_1"
+  ],
+  "swarm846-c4": [
+    "dummy_benchmark.histogram_benchmark_1"
+  ]
+}
