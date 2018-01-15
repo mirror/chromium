@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c083fa_eac47c38",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-15T12:36:58Z",
+      "side": 0,
+      "message": "Reasking this question as it was on an other patch:\nI don\u0027t know what is the expected behavior when you background the app with the tools menu displayed on the stack view and on a web page.\n\nIt used to be for the stack view only (in the current implementation and current stable), as the other clients are using the other init.\nBut it seems weird to have it in a non-designated init (the designated init is the other one). I have changed it so the toolbar\u0027s tools menu is dismissed when the app is backgrounded.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "353219b1d808a8980af93eff5412ec2863557e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
