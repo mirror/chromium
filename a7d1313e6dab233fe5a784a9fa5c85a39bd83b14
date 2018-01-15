@@ -222,6 +222,30 @@
       "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e870bffd_4237517d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T22:58:59Z",
+      "side": 1,
+      "message": "An unset optional should be fine to return a reference to. The only time you need a copy is when pushing the snap container data to the web layer but the copy can happen in the calling code. In cases where you\u0027re just accessing it it doesn\u0027t need to copy.",
+      "parentUuid": "2de5d58e_34ee3a76",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
