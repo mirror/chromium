@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aad33d26_923ecac7",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-15T18:08:40Z",
+      "side": 1,
+      "message": "Please, add \u0027TODO(isandrk):\u0027 in the beginning.",
+      "range": {
+        "startLine": 303,
+        "startChar": 5,
+        "endLine": 303,
+        "endChar": 10
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197b9688_6106d7d8",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-15T18:08:40Z",
+      "side": 1,
+      "message": "Extract as:\nconstexpr char kAssessmentAssistantExtensionId[] \u003d \"gndmhdcefbhlchkhipcnnbkcmicncehk\";",
+      "range": {
+        "startLine": 306,
+        "startChar": 26,
+        "endLine": 306,
+        "endChar": 58
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330cbd19_023aca32",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-15T18:08:40Z",
+      "side": 1,
+      "message": "Add a TODO(isandrk):",
+      "range": {
+        "startLine": 355,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 3
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85daaca7_cdff4bc4",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-15T18:08:40Z",
+      "side": 1,
+      "message": "Extract as:\nconstexpr char kAssessmentAssistantExtensionId[] \u003d \"gndmhdcefbhlchkhipcnnbkcmicncehk\";",
+      "range": {
+        "startLine": 358,
+        "startChar": 15,
+        "endLine": 358,
+        "endChar": 47
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
