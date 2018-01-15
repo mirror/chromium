@@ -22,6 +22,30 @@
       "revId": "353219b1d808a8980af93eff5412ec2863557e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2af62c8_b8b52db3",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T13:58:30Z",
+      "side": 0,
+      "message": "I don\u0027t understand the question, I think.\n\nIf the tools menu is open on a web page, it should dismiss when the stack view is triggered.\n\nIn any circumstance when the tools menu is open and the app is backgrounded, the tools menu should dismiss.",
+      "parentUuid": "55c083fa_eac47c38",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "353219b1d808a8980af93eff5412ec2863557e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
