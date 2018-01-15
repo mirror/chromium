@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3558bfb_5754c63f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-15T06:26:46Z",
+      "side": 1,
+      "message": ", respectively.",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82684ced_9173bf2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-15T06:26:46Z",
+      "side": 1,
+      "message": "Is it too late to change this to WebApp globally? The name \"Webapp\" is hard to read since they are two words. Please change it, unless \"Webapp\" already exists in metrics. Then you should still use \"WebApp\" in source code, but not the metrics name (i.e., don\u0027t call it WebappInstallSource in the code).",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e398b8d6_b608d7a9",
         "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
         "patchSetId": 4
@@ -30,6 +76,24 @@
       "writtenOn": "2018-01-15T05:08:30Z",
       "side": 1,
       "message": "Nit: I haven\u0027t seen this format of comment before. What I have seen is \"false /* is_api */\".\n\nDoes this new format have precendent?",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12897591_8cde771d",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-15T06:26:46Z",
+      "side": 1,
+      "message": "+1 to \"false /* is_api */ unless there is a new ruling.",
+      "parentUuid": "a53a8d55_6dbea7e1",
       "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
