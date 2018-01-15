@@ -352,6 +352,12 @@ bool Extension::ShouldDisplayInExtensionSettings() const {
     return false;
   }
 
+  // crbug.com/801215 - treating "Assessment Assistant" temporarily as a
+  // component extension for purposes of displaying in extension settings (until
+  // M66 when it will really be packaged as a component extension).
+  if (id() == "gndmhdcefbhlchkhipcnnbkcmicncehk")
+    return false;
+
   // Unless they are unpacked, never show hosted apps. Note: We intentionally
   // show packaged apps and platform apps because there are some pieces of
   // functionality that are only available in chrome://extensions/ but which
