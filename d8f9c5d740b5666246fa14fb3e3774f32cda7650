@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "76f2ba25_7ecc5122",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T13:12:04Z",
+      "side": 1,
+      "message": "Not for this CL, but at some point I\u0027d like to have all (and only) the protocols that the dispatcher conforms to in ui/commands/.",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc73c40_9e28a69e",
         "filename": "ios/chrome/browser/ui/key_commands_provider.h",
         "patchSetId": 4
@@ -163,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "1b05b2e6_778b0642",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T13:12:04Z",
+      "side": 1,
+      "message": "Yes, please do this.",
+      "parentUuid": "71070f88_407667e8",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "793a66ea_dd00e974",
         "filename": "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h",
         "patchSetId": 4
@@ -183,6 +230,29 @@
       "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe21703_4d67ae96",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T13:12:04Z",
+      "side": 1,
+      "message": "\\o/",
+      "range": {
+        "startLine": 152,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "d8f9c5d740b5666246fa14fb3e3774f32cda7650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
