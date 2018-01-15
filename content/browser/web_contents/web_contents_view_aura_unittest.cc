@@ -9,6 +9,7 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/aura/window.h"
 #include "ui/display/display_switches.h"
 
 namespace content {
@@ -39,6 +40,14 @@ TEST_F(WebContentsViewAuraTest, ScreenInfoColorDepth) {
   web_contents_view->GetScreenInfo(&screen_info);
   EXPECT_EQ(24u, screen_info.depth);
   EXPECT_EQ(8u, screen_info.depth_per_component);
+}
+
+TEST_F(WebContentsViewAuraTest, ShowHideParent) {
+  EXPECT_TRUE(web_contents()->IsVisible());
+  root_window()->Hide();
+  EXPECT_FALSE(web_contents()->IsVisible());
+  root_window()->Show();
+  EXPECT_TRUE(web_contents()->IsVisible());
 }
 
 }  // namespace content
