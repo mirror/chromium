@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "25284a07_70930302",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest having this in #if BUILDFLAG(ENABLE_PLUGINS) instead of OS_ANDROID",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186ef927_d2121a13",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "nit: may want to check that these values exist before CBD too",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470db12f_21140a5b",
+        "filename": "chrome/browser/plugins/plugin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "I think we should probably only ever need to use the top_level_url here (and use it for both top_level and requesting in the .cc file)",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763e4aa2_340c1132",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "I think this should be #if BUILGDFLAG(ENABLE_PLUGINS)",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef60b9f2_a3560adc",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "To avoid special casing here (and any unintended consequences of a non-dictionary type) I think we should just use a dictionary with one field even though it\u0027s a bit redundant/unfortunate. The other benefit is that we can extend it with other data later if needed.",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda36b26_21c5c714",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "#if BUILDFLAG(ENABLE_PLUGINS)",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78961321_6f65f548",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "I *think* the secondary pattern should always be a wildcard. It\u0027s also kind of weird to set this value in cases where it\u0027s not wildcard. So I would DCHECK instead and just use the primary.\n\nI\u0027m also surprised that secondary.is_valid() returns false if it\u0027s a wildcard pattern.. perhaps the else branch is unnecessary anyway?",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c0bfc9f_9867c4ac",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 6
@@ -13,6 +132,40 @@
       "writtenOn": "2018-01-11T06:07:21Z",
       "side": 1,
       "message": "I\u0027ve duplicated the method body of PluginUtils::RememberFlashChangedForSite() here, but not sure if it\u0027s better to move that method to somewhere inside components/content_settings so we can re-use it here instead?",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87aa64ff_526b6cac",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "nit: please move this section into a function called something like InitializePluginsDataSettings. Also please add a test for that new function",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b77229a_4228f83d",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-15T02:09:38Z",
+      "side": 1,
+      "message": "We sync plugin settings across platforms. I wonder if we should sync this too?",
       "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
