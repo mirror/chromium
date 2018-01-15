@@ -24,6 +24,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/editing/SelectionTemplate.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Optional.h"
 
@@ -34,6 +35,8 @@ class LayoutObject;
 class NGPhysicalTextFragment;
 class FrameSelection;
 
+// TODO(yoichio): Move this class to the cpp file or delete.
+// At least we don't use Iterator anymore.
 // This class represents a selection range in layout tree for painting and
 // paint invalidation.
 // The current selection to be painted is represented as 2 pairs of
@@ -122,7 +125,9 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   Member<FrameSelection> frame_selection_;
   bool has_pending_selection_ : 1;
 
-  SelectionPaintRange paint_range_;
+  SelectionInFlatTree paint_range_;
+  WTF::Optional<unsigned> start_offset_ = WTF::nullopt;
+  WTF::Optional<unsigned> end_offset_ = WTF::nullopt;
 };
 
 void CORE_EXPORT PrintLayoutObjectForSelection(std::ostream&, LayoutObject*);
