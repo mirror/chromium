@@ -4,13 +4,13 @@
 
 #include "components/cryptauth/device_to_device_authenticator.h"
 
+#include <memory>
 #include <utility>
 #include <vector>
 
 #include "base/base64url.h"
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/timer/mock_timer.h"
 #include "components/cryptauth/authenticator.h"
@@ -350,10 +350,10 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest,
   // completes.
   WireMessage wire_message(base::RandBytesAsString(300u),
                            Authenticator::kAuthenticationFeature);
-  connection_.SendMessage(base::MakeUnique<WireMessage>(
+  connection_.SendMessage(std::make_unique<WireMessage>(
       base::RandBytesAsString(300u), Authenticator::kAuthenticationFeature));
   connection_.OnBytesReceived(wire_message.Serialize());
-  connection_.SendMessage(base::MakeUnique<WireMessage>(
+  connection_.SendMessage(std::make_unique<WireMessage>(
       base::RandBytesAsString(300u), Authenticator::kAuthenticationFeature));
   connection_.OnBytesReceived(wire_message.Serialize());
 }

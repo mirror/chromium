@@ -4,12 +4,12 @@
 
 #include "components/signin/core/browser/profile_management_switches.h"
 
+#include <memory>
 #include <string>
 
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "build/build_config.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -179,7 +179,7 @@ std::unique_ptr<BooleanPrefMember> CreateDicePrefMember(
     PrefService* user_prefs) {
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   std::unique_ptr<BooleanPrefMember> pref_member =
-      base::MakeUnique<BooleanPrefMember>();
+      std::make_unique<BooleanPrefMember>();
   pref_member->Init(kDiceMigrationCompletePref, user_prefs);
   return pref_member;
 #else
