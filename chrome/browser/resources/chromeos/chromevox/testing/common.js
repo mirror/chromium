@@ -50,9 +50,10 @@ TestUtils.extractHtmlFromCommentEncodedString = function(
  */
 TestUtils.createUrlForDoc = function(doc) {
   var docString = TestUtils.extractHtmlFromCommentEncodedString(doc);
+  // Data URIs require that '#' be encoded as '%23'.
   return TestUtils.collapseWhitespace(
       'data:text/html,<!doctype html>' +
-      docString.replace(/[\n\r]/g, '').trim());
+      docString.replace(/[\n\r]/g, '').replace(/#/g, '%23').trim());
 };
 
 /**
