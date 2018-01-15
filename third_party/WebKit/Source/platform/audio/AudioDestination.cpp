@@ -101,9 +101,9 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
                               double delay,
                               double delay_timestamp,
                               size_t prior_frames_skipped) {
-  TRACE_EVENT1("webaudio", "AudioDestination::Render",
-               "callback_buffer_size", number_of_frames);
-
+  TRACE_EVENT_BEGIN2("webaudio", "AudioDestination::Render",
+                     "callback_buffer_size", number_of_frames, "frames skipped",
+                     prior_frames_skipped);
   DCHECK(
       !(worklet_backing_thread_ && worklet_backing_thread_->IsCurrentThread()));
 
@@ -136,6 +136,8 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
     RequestRender(number_of_frames, frames_to_render, delay,
                   delay_timestamp, prior_frames_skipped);
   }
+  TRACE_EVENT_END2("webaudio", "AudioDestination::Render", "timestamp (s)",
+                   delay_timestamp, "delay (s)", delay);
 }
 
 void AudioDestination::RequestRender(size_t frames_requested,
