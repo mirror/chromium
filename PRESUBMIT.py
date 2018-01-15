@@ -466,6 +466,15 @@ _BANNED_CPP_FUNCTIONS = (
       False,
       (),
     ),
+    (
+      r'/\bbase::MakeUnique<',
+      (
+          'Please consider using std::make_unique in C++ 14 instead '
+          'of base::MakeUnique. (crbug.com/755727)',
+      ),
+      False,
+      (),
+    ),
 )
 
 
