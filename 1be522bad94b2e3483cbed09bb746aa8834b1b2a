@@ -104,6 +104,24 @@
       "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f65df431_bba34509",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T16:56:45Z",
+      "side": 1,
+      "message": "That\u0027s OK for some cases, yes. But ultimately, we would need to make DesktopWindowTreeHostX11 use an X11Window* instance, and let it handle most of the x11-integration (with some overrides where/if needed).",
+      "parentUuid": "5098ac35_e9573717",
+      "revId": "1be522bad94b2e3483cbed09bb746aa8834b1b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
