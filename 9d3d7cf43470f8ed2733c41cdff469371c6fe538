@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0987aae5_1964c220",
+        "filename": "chrome/browser/sync/test/integration/sync_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T12:07:31Z",
+      "side": 0,
+      "message": "This didn\u0027t seem to cause any issues in practice, but it seems very odd to me to have the feature enabled only during the setup phase. IMO that\u0027s just asking for trouble, so I\u0027ve changed it to stay enabled.",
+      "range": {
+        "startLine": 247,
+        "startChar": 10,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "9d3d7cf43470f8ed2733c41cdff469371c6fe538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
