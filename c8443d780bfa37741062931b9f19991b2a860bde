@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd6da9c_ddc9f1ab",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-15T14:39:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d say something like \"100ms intervals using fences\" to highlight the link to the variable below.",
+      "range": {
+        "startLine": 88,
+        "startChar": 47,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "c8443d780bfa37741062931b9f19991b2a860bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
