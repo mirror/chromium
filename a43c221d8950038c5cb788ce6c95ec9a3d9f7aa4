@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77b1912_1adbd567",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 202,
+        "startChar": 24,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16bf134_eb0b5a21",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "I think style guide disallows non-const references outside of local vars.\n\nMaybe Blink style is different - but if not, suggest using a pointer instead. (Even if Blink allows it, imho I think pointer would be clearer.)",
+      "range": {
+        "startLine": 203,
+        "startChar": 33,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7ffbea_0ab624da",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48ea466_da77212b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "It\u0027s kind of unfortunate that the timings to the two metrics might be different, since each construct gets its own start time - which might differ.\n\nHave you considered a structure that would allow sharing the same start time? Not only would ensure the two are consistent, but it would be a bit more efficient since the time only needs to be queried once.",
+      "range": {
+        "startLine": 210,
+        "startChar": 72,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cc54e2_992d5783",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 5784,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "Nit: Keep an empty line above this like the previous code.",
+      "range": {
+        "startLine": 5784,
+        "startChar": 16,
+        "endLine": 5784,
+        "endChar": 21
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0b3d34_a3cef1fe",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "Nit: Add a short comment. In particular, document that the metric name should be documented in ukm.xml and the units of value.\n\nAlso, maybe name metric -\u003e metric_name so it\u0027s clearer?",
+      "range": {
+        "startLine": 970,
+        "startChar": 69,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b516d7f3_6b175b16",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T20:47:30Z",
+      "side": 1,
+      "message": "For all of these:\n\nMention units. (I know you have it in the event, but better to mention here too in case a person doesn\u0027t look at the event.)\n\nAlso terminate with a .",
+      "range": {
+        "startLine": 2362,
+        "startChar": 41,
+        "endLine": 2362,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
