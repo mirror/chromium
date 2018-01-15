@@ -231,6 +231,7 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
     CHECK(it != resources_.end());
     viz::internal::Resource& resource = it->second;
 
+    // TODO(xing.xu): remove locked_for_write.
     DCHECK(!resource.locked_for_write);
 
     viz::ResourceId child_id = resource.id_in_child;
@@ -436,6 +437,7 @@ GLenum DisplayResourceProvider::BindForSampling(viz::ResourceId resource_id,
   DCHECK(it != resources_.end());
   viz::internal::Resource* resource = &it->second;
   DCHECK(resource->lock_for_read_count);
+  // TODO(xing.xu): remove locked_for_write.
   DCHECK(!resource->locked_for_write);
 
   ScopedSetActiveTexture scoped_active_tex(gl, unit);
@@ -492,6 +494,7 @@ DisplayResourceProvider::ScopedReadLockGL::ScopedReadLockGL(
 const viz::internal::Resource* DisplayResourceProvider::LockForRead(
     viz::ResourceId id) {
   viz::internal::Resource* resource = GetResource(id);
+  // TODO(xing.xu): remove locked_for_write.
   DCHECK(!resource->locked_for_write)
       << "locked for write: " << resource->locked_for_write;
   DCHECK_EQ(resource->exported_count, 0);
@@ -637,6 +640,33 @@ DisplayResourceProvider::ScopedReadLockSoftware::ScopedReadLockSoftware(
 
 DisplayResourceProvider::ScopedReadLockSoftware::~ScopedReadLockSoftware() {
   resource_provider_->UnlockForRead(resource_id_);
+}
+
+DisplayResourceProvider::SynchronousFence::SynchronousFence(
+    gpu::gles2::GLES2Interface* gl)
+    : gl_(gl), has_synchronized_(true) {}
+
+DisplayResourceProvider::SynchronousFence::~SynchronousFence() = default;
+
+void DisplayResourceProvider::SynchronousFence::Set() {
+  has_synchronized_ = false;
+}
+
+bool DisplayResourceProvider::SynchronousFence::HasPassed() {
+  if (!has_synchronized_) {
+    has_synchronized_ = true;
+    Synchronize();
+  }
+  return true;
+}
+
+void DisplayResourceProvider::SynchronousFence::Wait() {
+  HasPassed();
+}
+
+void DisplayResourceProvider::SynchronousFence::Synchronize() {
+  TRACE_EVENT0("cc", "DisplayResourceProvider::SynchronousFence::Synchronize");
+  gl_->Finish();
 }
 
 }  // namespace cc
