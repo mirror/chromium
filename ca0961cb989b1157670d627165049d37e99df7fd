@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f10895d_ecd6cbe9",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:32:56Z",
+      "side": 0,
+      "message": "Can we get rid of this in the mojo struct?",
+      "revId": "ca0961cb989b1157670d627165049d37e99df7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

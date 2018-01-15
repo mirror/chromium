@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a765b782_4063c032",
+        "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:32:56Z",
+      "side": 1,
+      "message": "Not asking for any changes here, but  I think it\u0027s a little confusing that shared worker and service worker are very similar, but that the service worker one doesn\u0027t need to deal with EnsureAgent, since it doesn\u0027t need to go through WorkerHost.",
+      "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9b56c1_dd5bf50a",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:32:56Z",
+      "side": 1,
+      "message": "I think it would be more accurate to call this BindXYZ(): it\u0027s not really \u0027getting\u0027 anything; rather we create the Ptr on the sender side and send the request to bind it to the other end.",
+      "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a92cc1_9a674253",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:32:56Z",
+      "side": 1,
+      "message": "Nit: it kind of feels like a more descriptive name would be \"BindDevToolsAgent()\", since this doesn\u0027t actually return anything. Sorry for not noting this earlier.",
+      "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
