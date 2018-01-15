@@ -22,6 +22,30 @@
       "revId": "c8443d780bfa37741062931b9f19991b2a860bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3031891a_32425ad7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/auto_advancing_virtual_time_domain.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-15T15:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bd6da9c_ddc9f1ab",
+      "range": {
+        "startLine": 88,
+        "startChar": 47,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "c8443d780bfa37741062931b9f19991b2a860bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
