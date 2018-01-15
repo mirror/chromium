@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a0b33af_ae43b9b8",
+        "filename": "services/audio/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-15T16:02:43Z",
+      "side": 1,
+      "message": "It was requested by one of the reviewers. And I think it is useful: if someone would be looking into this service trying to understand what it does, they will be confused: at this point, for example, there is no client using it.\nI appreciated comments like this in other services.\n\nAdded links to the tracking bug and to the design doc.",
+      "parentUuid": "1fa28ab9_e0e4ba1b",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e24c858_366fc9ce",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13a5567_2ebde87b",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-15T16:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e24c858_366fc9ce",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c009df3_459d3bd6",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-15T16:02:43Z",
+      "side": 1,
+      "message": "Right, it\u0027s historically like that. I now switched to input/output version for consistency.",
+      "parentUuid": "66a00345_f84eb50c",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ff2de3_b81d0ca5",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "02054fa0_5b14de75",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-15T16:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ff2de3_b81d0ca5",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a33f82_5ad30e74",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12211434_214caa91",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-15T16:02:43Z",
+      "side": 1,
+      "message": "Updated the comment. Unfortunately yes, it\u0027s a conjunction.\nWe had a discussion around it in a previous CL [1]: getting rid of this method requires a a bit of refactoring on the client side which we don\u0027t want to depend on here.\nI added a TODO.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/799791/17/services/audio/public/interfaces/system_info.mojom#36",
+      "parentUuid": "a6a33f82_5ad30e74",
+      "revId": "f8b349e40ec4b3fde48990ce17ddfeb7b289ebbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
