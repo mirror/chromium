@@ -9,6 +9,7 @@
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "ui/aura/aura_export.h"
+#include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
 #include "ui/compositor/layer_animation_observer.h"
 
@@ -21,15 +22,13 @@ class Transform;
 
 namespace aura {
 
-class Window;
-
 // Notifies tracked Windows when their occlusion state change.
 //
 // To start tracking the occlusion state of a Window, call
 // WindowOcclusionTracker::Track().
 //
 // A Window is occluded if its bounds and transform are not animated and one of
-// these conditions is true:
+// these conditions is true:window_delegate.h
 // - The Window is hidden (Window::IsVisible() is true).
 // - The bounds of the Window are completely covered by opaque and axis-aligned
 //   Windows whose bounds and transform are not animated.
@@ -67,8 +66,9 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   // |parent_transform_relative_to_root| is the transform of |window->parent()|
   // relative to the root window. |clipped_bounds| is an optional mask for the
   // bounds of |window| and its descendants. |occluded_region| is a region
-  // covered by windows which are on top of |window|.
-  void RecomputeOcclusionImpl(
+  // covered by windows which are on top of |window|. Returns true if at least
+  // one window in the hierarchy starting at |window| is VISIBLE.
+  bool RecomputeOcclusionImpl(
       Window* window,
       const gfx::Transform& parent_transform_relative_to_root,
       const SkIRect* clipped_bounds,
@@ -82,13 +82,16 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   // |animated_windows_|, adds |window| to |animated_windows_| and returns true.
   bool MaybeObserveAnimatedWindow(Window* window);
 
-  // Calls SetOccluded(|is_occluded|) on |window| and its descendants if they
-  // are in |tracked_windows_|.
-  void SetWindowAndDescendantsAreOccluded(Window* window, bool is_occluded);
+  // Sets the occlusion state of |window| and its descendants if they are in
+  // |tracked_windows_|. The occlusion state is set to |occlusion_state| if
+  // IsVisible() is true for the target and its ancestors,
+  // OcclusionState::OCCLUDED otherwise.
+  void SetWindowAndDescendantsOcclusion(Window* window,
+                                        Window::OcclusionState occlusion_state);
 
-  // Calls SetOccluded() on |window| with |occluded| as argument if |window| is
-  // in |tracked_windows_|.
-  void SetOccluded(Window* window, bool occluded);
+  // Calls SetOcclusion(|occlusion_state|) on |window| if it is in
+  // |tracked_windows_|.
+  void SetOcclusion(Window* window, Window::OcclusionState occlusion_state);
 
   // Returns true if |window| is in |tracked_windows_|.
   bool WindowIsTracked(Window* window) const;
