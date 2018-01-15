@@ -963,6 +963,38 @@ static CSSValue* TouchActionFlagsToCSSValue(TouchAction touch_action) {
   return list;
 }
 
+static CSSValue* ScrollCustomizationFlagsToCSSValue(
+    scroll_customization::ScrollDirection scroll_customization) {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (scroll_customization == scroll_customization::kScrollDirectionAuto) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
+  } else if (scroll_customization ==
+             scroll_customization::kScrollDirectionNone) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueNone));
+  } else {
+    if ((scroll_customization & scroll_customization::kScrollDirectionPanX) ==
+        scroll_customization::kScrollDirectionPanX)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanX));
+    else if (scroll_customization &
+             scroll_customization::kScrollDirectionPanLeft)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanLeft));
+    else if (scroll_customization &
+             scroll_customization::kScrollDirectionPanRight)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanRight));
+    if ((scroll_customization & scroll_customization::kScrollDirectionPanY) ==
+        scroll_customization::kScrollDirectionPanY)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanY));
+    else if (scroll_customization & scroll_customization::kScrollDirectionPanUp)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanUp));
+    else if (scroll_customization &
+             scroll_customization::kScrollDirectionPanDown)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanDown));
+  }
+
+  DCHECK(list->length());
+  return list;
+}
+
 static CSSValue* ValueForWillChange(
     const Vector<CSSPropertyID>& will_change_properties,
     bool will_change_contents,
@@ -2321,6 +2353,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(CSSValueNone);
     case CSSPropertyRight:
       return ValueForPositionOffset(style, resolved_property, layout_object);
+    case CSSPropertyScrollCustomization:
+      return ScrollCustomizationFlagsToCSSValue(style.ScrollCustomization());
     case CSSPropertyTextDecoration:
       return ValuesForShorthandProperty(textDecorationShorthand(), style,
                                         layout_object, styled_node,
