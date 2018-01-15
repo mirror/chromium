@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315f8158_cb382665",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-15T16:46:37Z",
+      "side": 1,
+      "message": "I believe the root cause here is the fact that movementX/T attributes are exposed as int instead of double. Here is the issue for following that up:\nhttps://github.com/w3c/pointerlock/issues/24\nCan you add a TODO here to fix this later and store them again as float when we fix that issue?",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a73395_5d8c604f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerlock/movementX_Y_basic-manual.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-15T16:46:37Z",
+      "side": 1,
+      "message": "Is this still a valid comment? Are there situations that we might produce different deltas after this change?",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975ae0ab_5788c1cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/pointerlock/movementX_Y_basic-manual-automation.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-15T16:46:37Z",
+      "side": 1,
+      "message": "You are doing a click here. Right? How about sendMouseClick?",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
