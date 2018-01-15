@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "504c2bbe_e82e0a3c",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T15:16:06Z",
+      "side": 1,
+      "message": "nit: ProcessAcceleratorIfReserved maybe? and a comment to explain that it returns false if accelerator is not reserved..",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 31
+      },
+      "revId": "765db326bd414d1b2c444096ee0ca0095001d574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ad8668_dc771c3d",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-15T15:16:06Z",
+      "side": 1,
+      "message": "hm, this was broken before and I think it\u0027s a bit broken still.\n\nwe need to send all keys to the client for keyboard state to be tracked reliably. so either we always send keys or we need to generate enter/leave events when the keyboard state has changed and client key events could not be used to track the change.\n\nie. tracked pressed keys for the focus surface and do \"OnKeyboardLeave/OnKeyboardEnter(focus_, seat_-\u003epressed_keys())\" above where OnKeyboardModifiers is called.",
+      "revId": "765db326bd414d1b2c444096ee0ca0095001d574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
