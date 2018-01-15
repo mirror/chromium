@@ -22,6 +22,30 @@
       "revId": "b8f55574c412611ea772c632a06ec3793e9a423a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f563d3_e56a6095",
+        "filename": "chrome/browser/sync/test/integration/multi_client_status_change_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-15T12:44:28Z",
+      "side": 1,
+      "message": "Added TODO pointing to newly-filed crbug.com/802025",
+      "parentUuid": "f009f6f5_3accd33c",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "b8f55574c412611ea772c632a06ec3793e9a423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
