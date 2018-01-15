@@ -2267,6 +2267,7 @@ void WebViewImpl::WillCloseLayerTreeView() {
   SetRootLayer(nullptr);
   animation_host_ = nullptr;
 
+  // CompositorMutatorImple lost here before deletes/stops
   mutator_ = nullptr;
   layer_tree_view_ = nullptr;
 }

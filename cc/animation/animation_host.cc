@@ -274,7 +274,7 @@ bool AnimationHost::NeedsTickAnimations() const {
 }
 
 bool AnimationHost::NeedsTickMutator() const {
-  return mutator_ && mutator_->HasAnimators();
+  return mutator_ != nullptr;
 }
 
 bool AnimationHost::NeedsTickAnimationPlayers() const {
