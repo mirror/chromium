@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4e83048_5426291b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "True, but I think it\u0027s the price worth paying, for the benefit of clear isolation of a11y implementation from CVC.",
+      "parentUuid": "ad1dbc0a_22b3c108",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced7e27e_a379c280",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T20:37:05Z",
       "side": 1,
       "message": "Should we also do \"mWebContentsAccessibility \u003d null;\" to ensure garbage collection? (It doesn\u0027t seem to matter right now because most places nulls CVC after destroying it, but just in case.)",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386095de_9345c390",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "Like you said it doesn\u0027t matter right now. It has not been nulled out before this change either and gc works fine without leak - CVC is going away soon, together with the reference. Nulling it out may be better to make sure about it, but then another question will follow \"should all mWebContentsAccessibility needs null check?\" Just the fact that there is a method that nulls the value makes people feel like there should be null check everywhere even though it\u0027s not necessary. Let me add a comment here instead, saying nulling out is not necessary.",
+      "parentUuid": "ced7e27e_a379c280",
       "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c365b6eb_d3cc6669",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "I updated |isAccessibilityEnabled()| so that it makes sure to check the native pointer. Added |isNativeInitialized()| only to the methods where there was no check.",
+      "parentUuid": "7f89a596_d3881f26",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d14ed10_3b6ffac7",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-12T19:48:15Z",
       "side": 1,
       "message": "just inline this, and you don\u0027t need isNativeInit check anymore",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1e14f5_8ecfa64a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6d14ed10_3b6ffac7",
       "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4b335001_9450f7be",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "But I don\u0027t think the changes made here would introduce a new problem. |enable| (or nativeEnable) was not being called by client directly so the native is guaranteed to be initialized before is it enabled.\n\nSame goes for broadcast receiver. The receiver is necessary only when the native a11y is enabled. The call sequence is native init -\u003e register receiver -\u003e enable, which hasn\u0027t changed.",
+      "parentUuid": "acb3e389_d6728eb0",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "132a0dcb_8834b3c5",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "6aa6ee5c_597a4ba0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "132a0dcb_8834b3c5",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe381da_0b527179",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2018-01-12T19:48:15Z",
       "side": 1,
       "message": "is are null checks needed everywhere now?",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6becf1b2_a772e5c3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "In theory yes, but in practice not all have to be. Before this patch, |mWebContents| in CVC could be null too but not all of them have null checks. In this class, what matter is the one in |getAccessibilityNodeProvider| only, and it is null-checked there.",
+      "parentUuid": "bbe381da_0b527179",
       "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "9e8cd61d_d70c1ddb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "Now |isAccessibilityEnabled| does check mNativeObj as expected.",
+      "parentUuid": "a58c7d27_f83c4fa7",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed3a50b6_245760cf",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
@@ -158,6 +308,24 @@
       "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e615110c_51c61b57",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-15T04:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3a50b6_245760cf",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
