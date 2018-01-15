@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd7e43b9_9db70fdd",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-15T14:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3045255b_7afadf3f",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96590845_846e573a",
         "filename": "chrome/browser/devtools/device/android_web_socket.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255480ee_31d9b2d4",
+        "filename": "chrome/browser/devtools/device/android_web_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-15T14:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96590845_846e573a",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "376cd1d5_b8c454fa",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-15T14:06:29Z",
+      "side": 1,
+      "message": "If you don\u0027t have a separate cookie store, it should be \u0027user\u0027.",
+      "parentUuid": "9898f39c_8bc7ec4e",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a36507_0d3b3b04",
         "filename": "content/browser/devtools/protocol/tethering_handler.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-12T15:18:47Z",
       "side": 1,
       "message": "Same here.",
+      "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b60df3_59280a1f",
+        "filename": "content/browser/devtools/protocol/tethering_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-15T14:06:29Z",
+      "side": 1,
+      "message": "If you don\u0027t have a separate cookie store, it should be \u0027user\u0027.",
+      "parentUuid": "f5a36507_0d3b3b04",
       "revId": "8ce4f9aecc84de99a25f8e7d39c9f292976863a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
