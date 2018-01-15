@@ -34,6 +34,24 @@
       "revId": "419579e1a6c11cb11d24125a365102ce4080001e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dda0b9_9d60af16",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-15T09:42:05Z",
+      "side": 1,
+      "message": "Oh, this is a slightly different case. I will change to the type\u003d style",
+      "parentUuid": "fce9e09b_62044feb",
+      "revId": "419579e1a6c11cb11d24125a365102ce4080001e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
