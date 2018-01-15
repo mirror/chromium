@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+#target { }
+</style>
+<body>
+<script>
+'use strict';
+
+test(() => {
+  const CSSTypedOMStylePropertyMap = 2334; // From UseCounter.h
+
+  assert_false(internals.isUseCounted(document, CSSTypedOMStylePropertyMap));
+
+  document.styleSheets[0].cssRules[0].attributeStyleMap;
+
+  assert_true(internals.isUseCounted(document, CSSTypedOMStylePropertyMap));
+}, 'We UseCount when we obtain a declared style property map');
+
+</script>
