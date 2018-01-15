@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "634b29e6_36946689",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-15T20:07:28Z",
+      "side": 1,
+      "message": "It looks like this is firing for tests that use OffscreenCanvas in a worker.  You need to make changes to the way SharedGpuContext creates off-main-thread contexts.  It currently creates these contexts the same way as WebGL contexts, right here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp?l\u003d67",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 8
+      },
+      "revId": "9c9aae22b9a8705d73cad275f787d18ce3571ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
