@@ -486,6 +486,16 @@ template("mojom") {
       full_name = get_label_info("$d", "label_no_toolchain")
       public_deps += [ "${full_name}_shared" ]
     }
+    if (defined(invoker.overridden_deps)) {
+      foreach(d, invoker.overridden_deps) {
+        # Resolve the name, so that a target //mojo/something becomes
+        # //mojo/something:something and we can append _shared
+        # to get the cpp dependency name.
+        full_name = get_label_info("$d", "label_no_toolchain")
+        public_deps -= [ "${full_name}_shared" ]
+      }
+      public_deps += invoker.component_deps
+    }
     if (defined(shared_component_impl_macro)) {
       defines = [ shared_component_impl_macro ]
     }
