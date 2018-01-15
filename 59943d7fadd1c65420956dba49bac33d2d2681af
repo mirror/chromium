@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4820b297_f05b2112",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T05:39:16Z",
+      "side": 1,
+      "message": "I see. Remove this DCHECK()",
+      "parentUuid": "c3bcfbd6_181f7b70",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab16966a_92a1210d",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
         "patchSetId": 4
@@ -87,6 +105,24 @@
       "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd43d48_88751b4e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T05:39:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01253e22_dc5b396c",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
