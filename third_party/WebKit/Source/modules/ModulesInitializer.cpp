@@ -57,6 +57,7 @@
 #include "modules/indexeddb/InspectorIndexedDBAgent.h"
 #include "modules/installation/InstallationServiceImpl.h"
 #include "modules/installedapp/InstalledAppController.h"
+#include "modules/manifest/ManifestManager.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/mediastream/UserMediaClient.h"
 #include "modules/mediastream/UserMediaController.h"
@@ -152,6 +153,8 @@ void ModulesInitializer::InitLocalFrame(LocalFrame& frame) const {
       &AppBannerController::BindMojoRequest, WrapWeakPersistent(&frame)));
   frame.GetInterfaceRegistry()->AddInterface(WTF::BindRepeating(
       &TextSuggestionBackendImpl::Create, WrapWeakPersistent(&frame)));
+  frame.GetInterfaceRegistry()->AddInterface(WTF::BindRepeating(
+      &ManifestManager::BindMojoRequest, WrapWeakPersistent(&frame)));
 }
 
 void ModulesInitializer::InstallSupplements(LocalFrame& frame) const {
@@ -165,6 +168,7 @@ void ModulesInitializer::InstallSupplements(LocalFrame& frame) const {
   NavigatorContentUtils::ProvideTo(
       *frame.DomWindow()->navigator(),
       NavigatorContentUtilsClient::Create(web_frame));
+  ManifestManager::ProvideTo(*frame.GetDocument());
 
   ScreenOrientationControllerImpl::ProvideTo(
       frame, client->GetWebScreenOrientationClient());
