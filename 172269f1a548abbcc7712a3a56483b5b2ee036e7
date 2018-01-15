@@ -253,6 +253,24 @@
       "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813359dd_568bf0b0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T21:57:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf9276c7_aae471a0",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

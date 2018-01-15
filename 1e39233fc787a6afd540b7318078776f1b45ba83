@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3c6040bb_59c106e8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T21:57:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2ebb455_e2a81a69",
+      "revId": "1e39233fc787a6afd540b7318078776f1b45ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288063a0_3ac627af",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 45
@@ -51,6 +69,24 @@
       "revId": "1e39233fc787a6afd540b7318078776f1b45ba83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9718252b_fe130dd3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T21:57:09Z",
+      "side": 1,
+      "message": "Adding the Seal method allows us to make sure we don\u0027t keep an extra pointer, nor use a bad one.  In the usual case the worklet goes away before the compositor, Unregister is called first, and Seal is not called.",
+      "parentUuid": "288063a0_3ac627af",
+      "revId": "1e39233fc787a6afd540b7318078776f1b45ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

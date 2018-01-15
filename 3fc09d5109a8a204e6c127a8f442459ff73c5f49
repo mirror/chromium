@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "140c2887_0da543b5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T21:57:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2694b6e8_b7d40f44",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b50144c_9f434895",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 8
@@ -423,6 +441,30 @@
       "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e37127b_02a4b1aa",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T21:57:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf18405d_e39bca54",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
