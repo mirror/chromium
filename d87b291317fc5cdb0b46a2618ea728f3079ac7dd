@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02d4e69b_754808d1",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Yes. Thread hop is required as interface is associated and lives on the IO thread now.",
+      "parentUuid": "4aa7ce5d_809163a4",
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd13ead_ff711d03",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 17
@@ -57,6 +75,30 @@
       "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4c8040_e55d0b0c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd13ead_ff711d03",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "ec29e9df_4cb0189c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756d6e1_a91b4ab3",
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "657fbab4_1a46a535",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 17
@@ -118,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "2195792f_13d6d4a2",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "657fbab4_1a46a535",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4688a3f_6a2fcf2f",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 17
@@ -138,6 +222,30 @@
       "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4d9a74_2f229593",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4688a3f_6a2fcf2f",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +341,30 @@
       "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d650eaca_63169112",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2018-01-15T06:47:35Z",
+      "side": 1,
+      "message": "Created a bug for the same.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d801955\n\n@guidou,\nPlease change the owner and additional fields as I do not have privileges to the same.",
+      "parentUuid": "461ddb4a_5ebd299d",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "d87b291317fc5cdb0b46a2618ea728f3079ac7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
