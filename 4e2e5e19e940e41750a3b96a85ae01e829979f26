@@ -22,6 +22,30 @@
       "revId": "4e2e5e19e940e41750a3b96a85ae01e829979f26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549cbff8_0d170fe2",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T19:57:37Z",
+      "side": 1,
+      "message": "The arbitrary_id part isn\u0027t really necessary to test what this unit test is hoping to test. Removed.",
+      "parentUuid": "26c43585_9957df26",
+      "range": {
+        "startLine": 2108,
+        "startChar": 39,
+        "endLine": 2108,
+        "endChar": 76
+      },
+      "revId": "4e2e5e19e940e41750a3b96a85ae01e829979f26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
