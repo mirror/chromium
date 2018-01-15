@@ -180,6 +180,7 @@ void CopyImageAtAndCapturePixels(
     int x,
     int y,
     base::OnceCallback<void(const SkBitmap&)> callback) {
+  LOG(INFO) << __PRETTY_FUNCTION__;
   DCHECK(!callback.is_null());
   uint64_t sequence_number =
       blink::Platform::Current()->Clipboard()->SequenceNumber(

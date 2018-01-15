@@ -13,6 +13,7 @@ namespace content {
 
 class LayoutTestRenderThreadObserver;
 class MockWebClipboardImpl;
+class MockClipboardHost;
 
 class LayoutTestContentRendererClient : public ShellContentRendererClient {
  public:
@@ -38,6 +39,7 @@ class LayoutTestContentRendererClient : public ShellContentRendererClient {
  private:
   std::unique_ptr<LayoutTestRenderThreadObserver> shell_observer_;
   std::unique_ptr<MockWebClipboardImpl> clipboard_;
+  std::unique_ptr<MockClipboardHost> clipboard_host_;
 };
 
 }  // namespace content

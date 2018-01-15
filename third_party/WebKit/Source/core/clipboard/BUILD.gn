@@ -6,6 +6,8 @@ import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("clipboard") {
   sources = [
+    "ClipboardClient.cpp",
+    "ClipboardClient.h",
     "DataObject.cpp",
     "DataObject.h",
     "DataObjectItem.cpp",

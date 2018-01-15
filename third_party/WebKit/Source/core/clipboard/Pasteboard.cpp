@@ -38,6 +38,7 @@
 #include "platform/weborigin/KURL.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebDragData.h"
+#include "public/platform/WebImage.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 
@@ -64,9 +65,9 @@ void Pasteboard::WritePlainText(const String& text, SmartReplaceOption) {
 #if defined(OS_WIN)
   String plain_text(text);
   ReplaceNewlinesWithWindowsStyleNewlines(plain_text);
-  Platform::Current()->Clipboard()->WritePlainText(plain_text);
+  clipboard_client_.WritePlainText(plain_text);
 #else
-  Platform::Current()->Clipboard()->WritePlainText(text);
+  clipboard_client_.WritePlainText(text);
 #endif
 }
 
@@ -79,39 +80,34 @@ void Pasteboard::WriteImage(Image* image,
   if (web_image.IsNull())
     return;
 
-  Platform::Current()->Clipboard()->WriteImage(web_image, WebURL(url),
-                                               WebString(title));
+  clipboard_client_.WriteImage(web_image.GetSkBitmap(), url, title);
 }
 
 void Pasteboard::WriteDataObject(DataObject* data_object) {
-  Platform::Current()->Clipboard()->WriteDataObject(
-      data_object->ToWebDragData());
+  DCHECK(data_object);
+  clipboard_client_.WriteDataObject(*data_object);
 }
 
 bool Pasteboard::CanSmartReplace() {
-  return Platform::Current()->Clipboard()->IsFormatAvailable(
+  return clipboard_client_.IsFormatAvailable(
       mojom::ClipboardFormat::kSmartPaste, buffer_);
 }
 
 bool Pasteboard::IsHTMLAvailable() {
-  return Platform::Current()->Clipboard()->IsFormatAvailable(
-      mojom::ClipboardFormat::kHtml, buffer_);
+  return clipboard_client_.IsFormatAvailable(mojom::ClipboardFormat::kHtml,
+                                             buffer_);
 }
 
 String Pasteboard::PlainText() {
-  return Platform::Current()->Clipboard()->ReadPlainText(buffer_);
+  return clipboard_client_.ReadPlainText(buffer_);
 }
 
 String Pasteboard::ReadHTML(KURL& url,
                             unsigned& fragment_start,
                             unsigned& fragment_end) {
-  WebURL web_url;
-  WebString markup = Platform::Current()->Clipboard()->ReadHTML(
-      buffer_, &web_url, &fragment_start, &fragment_end);
-  if (!markup.IsEmpty()) {
-    url = web_url;
-    // fragmentStart and fragmentEnd are populated by WebClipboard::readHTML.
-  } else {
+  String markup =
+      clipboard_client_.ReadHTML(buffer_, &url, &fragment_start, &fragment_end);
+  if (markup.IsEmpty()) {
     url = KURL();
     fragment_start = 0;
     fragment_end = 0;
@@ -129,8 +125,8 @@ void Pasteboard::WriteHTML(const String& markup,
 #endif
   ReplaceNBSPWithSpace(text);
 
-  Platform::Current()->Clipboard()->WriteHTML(markup, document_url, text,
-                                              can_smart_copy_or_delete);
+  clipboard_client_.WriteHTML(markup, document_url, text,
+                              can_smart_copy_or_delete);
 }
 
 }  // namespace blink
