@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d6e67a_6b4303fc",
+        "filename": "components/webrtc_logging/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-15T15:22:12Z",
+      "side": 1,
+      "message": "please move this to a DEPS file in the browser subdir",
+      "revId": "90d0ed519437a76500ffdf9b850f208824c77ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
