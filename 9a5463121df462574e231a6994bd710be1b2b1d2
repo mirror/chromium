@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709da3fd_276feac9",
+        "filename": "components/signin/core/browser/webdata/token_service_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-15T12:27:25Z",
+      "side": 1,
+      "message": "I believe this should be:\n!result\n\n(same everywhere)",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "9a5463121df462574e231a6994bd710be1b2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
