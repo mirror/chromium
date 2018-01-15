@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4606186e_84a440f7",
+        "filename": "build/config/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-15T14:12:28Z",
+      "side": 1,
+      "message": "I wonder if we can get rid of these too...",
+      "revId": "8fff7185411d8a200a7f29dd78d655aba2916cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
