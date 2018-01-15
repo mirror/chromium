@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834c66ec_27bdc3fe",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-15T18:24:07Z",
+      "side": 1,
+      "message": "Move this inside the test body, so that a different instance is used every time the test runs.",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ef2c35_e870537a",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-15T18:24:07Z",
+      "side": 1,
+      "message": "Optional: Instead of sleeping, you could use a WaitableEvent.\n\n- Create a local WaitableEvent in the test body.\n- Put a pointer to it in a global variable before creating |background_getter|.\n- |background_getter| can signal the WaitableEvent via the global pointer.\n- Here, you can use constructor_called_.Wait().\n\nYou could do the same for WasConstructorCalled/complete_constructor_.",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 70
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ce7504_130031fc",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-15T18:24:07Z",
+      "side": 1,
+      "message": "\u0026BlockingConstructor::CompleteConstructionNow",
+      "range": {
+        "startLine": 301,
+        "startChar": 65,
+        "endLine": 303,
+        "endChar": 28
+      },
+      "revId": "75bbbbde4915d8106d2cc40e55ffaa97bed4dfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
