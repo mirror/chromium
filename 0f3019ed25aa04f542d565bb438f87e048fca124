@@ -22,6 +22,30 @@
       "revId": "0f3019ed25aa04f542d565bb438f87e048fca124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a3a8ca_6d5bfa88",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T21:24:20Z",
+      "side": 1,
+      "message": "The global_mouse_position_ is only used for calculating movement. Since movementX/Y are interger, the difference here is \"floor(cur_pos - last_pos)\" and \"floor(cur_pos) - floor(last_pos)\".\nIf we store the float here, it will be \"floor(cur_pos - last_pos)\", so we lose float part of the movement. (eg. floor(1.8) is 1, or use round to round(1.8) \u003d 2)\nIf we store floored position, we\u0027ll not lose the fraction part movement.\nHere is an example:\nIf we have mouse move like: 0 -\u003e 1.4 -\u003e 2.8 -\u003e 4.2\n\"floor(cur_pos - last_pos)\" will get movement: 0-\u003e1.4\u003d1; 1.4-\u003e2.8\u003d1; 2.8-\u003e4.2\u003d1 in total is 3.\n\"floor(cur_pos) - floor(last_pos)\" will get 0-\u003e1.4\u003d1; 1.4-\u003e2.8\u003d1; 2.8-\u003e4.2\u003d2, in total is 4.\nSo the second one get correct movement.",
+      "parentUuid": "636280fe_af46dbc1",
+      "range": {
+        "startLine": 240,
+        "startChar": 11,
+        "endLine": 240,
+        "endChar": 12
+      },
+      "revId": "0f3019ed25aa04f542d565bb438f87e048fca124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
