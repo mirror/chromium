@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa476842_545ba658",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T05:54:12Z",
+      "side": 1,
+      "message": "This seems wrong. If we call add and remove multiple times (i.e. for each AnimationTicker which is ticking) we will add the player to the ticking_players_ list once and then think that the player is no longer ticking after the first ticker stops ticking and calls RemoveFromTicking.",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806deacc_0fcd5097",
+        "filename": "cc/animation/animation_id_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T05:54:12Z",
+      "side": 1,
+      "message": "It seems to me that since we always get tickers from players that the ticker id\u0027s don\u0027t need to be globally unique. I also assume that we rarely delete tickers without also deleting players and often there will only be one ticker so perhaps it would probably make more sense to save a ticker index and use a flat array of tickers on the player to reduce memory consumption and lookup time.",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc307037_672573f1",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T05:54:12Z",
+      "side": 1,
+      "message": "Why can the timeline be NULL now?",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0e9b9e_4ac627a3",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T05:54:12Z",
+      "side": 1,
+      "message": "nit: \"but the reverse is not possible\", as is the otherwise is confusing as it seems to refer to some state other than one which has not been stated.",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 57
+      },
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c88aaa_8dbc79f6",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T05:54:12Z",
+      "side": 1,
+      "message": "Need animation_player_(NULL) ?",
+      "revId": "a2620daed7deba4abc7bdedab7df4e3c478b9be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
