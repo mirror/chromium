@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f3485e2c_76054cb0",
+        "filename": "components/webrtc_logging/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T12:08:58Z",
+      "side": 1,
+      "message": "OK. Go ahead and land if you can\u0027t easily disable the broken part to be able to test your change.",
+      "parentUuid": "852305db_ea14641a",
+      "revId": "a3319c9afdd97cc61f2c68a6c8407131f7f2e6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58d8b58c_e6c4d4b7",
         "filename": "components/webrtc_logging/common/partial_circular_buffer.cc",
         "patchSetId": 10
