@@ -150,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "f4cb2321_47e7bb12",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/screen-orientation/resources/sandboxed-iframe-locking.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-15T04:10:13Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "46e2d0f3_b4ee46db",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a17995d_806e79c6",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 4
@@ -233,6 +251,24 @@
       "side": 1,
       "message": "MediaControlsOrientationLockDelegate can use ScreenOrientationControllerImpl because it is in modules/. Though, it\u0027s besides the point and it should still allow lazy init. Happy to have this out of this CL though.",
       "parentUuid": "b83e4f90_9549cab6",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7346f4b_b840da33",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-15T04:10:13Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t describe  clearly. My questions are:\n\n1) Will the MediaControlsOrientationLockDelegate be broken if the ScreenOrientationController is created too late? Seems the MediaControlsOrientationLockDelegate assumes the ScreenOrientationController has been created already.\n\n2) See comments at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/screen_orientation/ScreenOrientation.cpp?rcl\u003d4522efba74e35026b0f62cb1c97d793a92a0d5da\u0026l\u003d99\nIt says that not all the frames are supported to have a ScreenOrientationController. \nSo, for a given frame in \"ScreenOrientation::Create(LocalFrame* frame)\", it is hard to know whether to create a ScreenOrientationController for it or not. Based on the old logic, if the given frame is a detached frame, we shouldn\u0027t create a new Controller here.",
+      "parentUuid": "fcfcbf35_9ad71c6b",
       "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
