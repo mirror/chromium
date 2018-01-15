@@ -37,8 +37,13 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
   std::unique_ptr<BooleanPrefMember> dice_pref_member =
       CreateDicePrefMember(&pref_service);
 
-  // By default account consistency is disabled.
+// Check the default account consistency method.
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  EXPECT_EQ(AccountConsistencyMethod::kDiceFixAuthErrors,
+            GetAccountConsistencyMethod());
+#else
   EXPECT_EQ(AccountConsistencyMethod::kDisabled, GetAccountConsistencyMethod());
+#endif
 
   struct TestCase {
     AccountConsistencyMethod method;
@@ -49,18 +54,17 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
     bool expect_dice_migration;
     bool expect_dice_enabled_for_profile;
   } test_cases[] = {
-    {AccountConsistencyMethod::kDisabled, false, false, false, false, false,
-     false},
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
     {AccountConsistencyMethod::kDiceFixAuthErrors, false, true, false, false,
      false, false},
-    {AccountConsistencyMethod::kDicePrepareMigration, false, true, true, false,
+    {AccountConsistencyMethod::kDicePrepareMigration, false, true, true, true,
      false, false},
-    {AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint, false,
-     true, true, true, false, false},
     {AccountConsistencyMethod::kDiceMigration, false, true, true, true, true,
      false},
     {AccountConsistencyMethod::kDice, false, true, true, true, true, true},
+#else
+    {AccountConsistencyMethod::kDisabled, false, false, false, false, false,
+     false},
 #endif
     {AccountConsistencyMethod::kMirror, true, false, false, false, false, false}
   };
@@ -73,10 +77,8 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
     EXPECT_EQ(test_case.expect_dice_fix_auth_errors,
               IsDiceFixAuthErrorsEnabled());
     EXPECT_EQ(test_case.expect_dice_migration, IsDiceMigrationEnabled());
-    EXPECT_EQ(test_case.expect_dice_prepare_migration,
-              IsDicePrepareMigrationEnabled());
     EXPECT_EQ(test_case.expect_dice_prepare_migration_new_endpoint,
-              IsDicePrepareMigrationChromeSyncEndpointEnabled());
+              IsDicePrepareMigrationEnabled());
     EXPECT_EQ(test_case.expect_dice_enabled_for_profile,
               IsDiceEnabledForProfile(&pref_service));
     EXPECT_EQ(test_case.expect_dice_enabled_for_profile,
@@ -100,15 +102,11 @@ TEST(ProfileManagementSwitchesTest, DiceMigration) {
   struct TestCase {
     AccountConsistencyMethod method;
     bool expect_dice_enabled_for_profile;
-  } test_cases[] = {
-      {AccountConsistencyMethod::kDisabled, false},
-      {AccountConsistencyMethod::kDiceFixAuthErrors, false},
-      {AccountConsistencyMethod::kDicePrepareMigration, false},
-      {AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint,
-       false},
-      {AccountConsistencyMethod::kDiceMigration, true},
-      {AccountConsistencyMethod::kDice, true},
-      {AccountConsistencyMethod::kMirror, false}};
+  } test_cases[] = {{AccountConsistencyMethod::kDiceFixAuthErrors, false},
+                    {AccountConsistencyMethod::kDicePrepareMigration, false},
+                    {AccountConsistencyMethod::kDiceMigration, true},
+                    {AccountConsistencyMethod::kDice, true},
+                    {AccountConsistencyMethod::kMirror, false}};
 
   for (const TestCase& test_case : test_cases) {
     ScopedAccountConsistency scoped_method(test_case.method);
