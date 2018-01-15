@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c9d726_eeedbc58",
+        "filename": "ui/file_manager/file_manager/background/js/device_handler.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-15T02:59:40Z",
+      "side": 0,
+      "message": "In addition to the incognito context in regular sessions, this will also prevent taking actions in the Guest mode, where we only have the incognito profile but don\u0027t have a regular profile. So I\u0027m reverting the changes.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "e9b2e312171933e64ed390c7b369ae37c98ab219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
