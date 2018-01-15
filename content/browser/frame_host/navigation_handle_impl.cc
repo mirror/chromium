@@ -79,14 +79,16 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     ui::PageTransition transition,
     bool is_external_protocol,
     RequestContextType request_context_type,
-    blink::WebMixedContentContextType mixed_content_context_type) {
+    blink::WebMixedContentContextType mixed_content_context_type,
+    std::unique_ptr<NavigationUIData> navigation_ui_data) {
   return std::unique_ptr<NavigationHandleImpl>(new NavigationHandleImpl(
       url, redirect_chain, frame_tree_node, is_renderer_initiated,
       is_same_document, navigation_start, pending_nav_entry_id,
       started_from_context_menu, should_check_main_world_csp,
       is_form_submission, suggested_filename, method, resource_request_body,
       sanitized_referrer, has_user_gesture, transition, is_external_protocol,
-      request_context_type, mixed_content_context_type));
+      request_context_type, mixed_content_context_type,
+      std::move(navigation_ui_data)));
 }
 
 NavigationHandleImpl::NavigationHandleImpl(
@@ -108,7 +110,8 @@ NavigationHandleImpl::NavigationHandleImpl(
     ui::PageTransition transition,
     bool is_external_protocol,
     RequestContextType request_context_type,
-    blink::WebMixedContentContextType mixed_content_context_type)
+    blink::WebMixedContentContextType mixed_content_context_type,
+    std::unique_ptr<NavigationUIData> navigation_ui_data)
     : url_(url),
       has_user_gesture_(has_user_gesture),
       transition_(transition),
@@ -132,6 +135,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       pending_nav_entry_id_(pending_nav_entry_id),
       request_context_type_(request_context_type),
       mixed_content_context_type_(mixed_content_context_type),
+      navigation_ui_data_(std::move(navigation_ui_data)),
       navigation_id_(CreateUniqueHandleID()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
@@ -314,6 +318,12 @@ bool NavigationHandleImpl::HasUserGesture() {
 
 ui::PageTransition NavigationHandleImpl::GetPageTransition() {
   return transition_;
+}
+
+const NavigationUIData* NavigationHandleImpl::GetNavigationUIData() {
+  CHECK_NE(INITIAL, state_)
+      << "This accessor should not be called before the request is started.";
+  return navigation_ui_data_.get();
 }
 
 bool NavigationHandleImpl::IsExternalProtocol() {
@@ -568,7 +578,10 @@ void NavigationHandleImpl::WillStartRequest(
   if (!IsRendererDebugURL(url_))
     RegisterNavigationThrottles();
 
-  navigation_ui_data_ = GetDelegate()->GetNavigationUIData(this);
+  // If the content/ embedder did not pass the NavigationUIData at the beginning
+  // of the navigation, ask for it now.
+  if (!navigation_ui_data_)
+    navigation_ui_data_ = GetDelegate()->GetNavigationUIData(this);
 
   // Notify each throttle of the request.
   base::Closure on_defer_callback_copy = on_defer_callback_for_testing_;

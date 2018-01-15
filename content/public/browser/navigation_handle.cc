@@ -52,7 +52,8 @@ NavigationHandle::CreateNavigationHandleForTesting(
           base::nullopt,          // suggested_filename
           method, resource_request_body, Referrer(),
           false,  // has_user_gesture
-          transition);
+          transition,
+          nullptr);  // navigation_ui_data
   handle_impl->set_render_frame_host(rfhi);
   if (error != net::OK)
     handle_impl->set_net_error_code(error);

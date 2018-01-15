@@ -18,6 +18,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/task_manager/web_contents_tags.h"
 #include "chrome/browser/ui/browser.h"
@@ -304,6 +305,12 @@ void LoadURLInContents(WebContents* target_contents,
   load_url_params.started_from_context_menu = params->started_from_context_menu;
   load_url_params.suggested_filename = params->suggested_filename;
 
+  if (params->frame_tree_node_id == -1) {
+    load_url_params.navigation_ui_data =
+        ChromeNavigationUIData::CreateForMainFrameNavigation(
+            target_contents, params->disposition);
+  }
+
   if (params->uses_post) {
     load_url_params.load_type = NavigationController::LOAD_TYPE_HTTP_POST;
     load_url_params.post_data = params->post_data;
@@ -442,8 +449,11 @@ bool SwapInPrerender(const GURL& url, NavigateParams* params) {
 
 void Navigate(NavigateParams* params) {
   Browser* source_browser = params->browser;
-  if (source_browser)
+  bool is_source_browser_app = false;
+  if (source_browser) {
     params->initiating_profile = source_browser->profile();
+    is_source_browser_app = source_browser->is_app();
+  }
   DCHECK(params->initiating_profile);
 
   if (!AdjustNavigateParamsForURL(params))
@@ -469,7 +479,7 @@ void Navigate(NavigateParams* params) {
   // focusing a regular browser window an opening a tab in the background
   // of that window. Change the disposition to NEW_FOREGROUND_TAB so that
   // the new tab is focused.
-  if (source_browser && source_browser->is_app() &&
+  if (is_source_browser_app &&
       params->disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
@@ -572,7 +582,8 @@ void Navigate(NavigateParams* params) {
   // If no target WebContents was specified (and we didn't seek and find a
   // singleton), we need to construct one if we are supposed to target a new
   // tab.
-  if (!params->target_contents) {
+  bool had_target_contents = params->target_contents;
+  if (!had_target_contents) {
     DCHECK(!params->url.is_empty());
     if (params->disposition != WindowOpenDisposition::CURRENT_TAB) {
       params->target_contents = CreateTargetContents(*params, params->url);

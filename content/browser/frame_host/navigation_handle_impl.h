@@ -77,7 +77,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       RequestContextType request_context_type =
           REQUEST_CONTEXT_TYPE_UNSPECIFIED,
       blink::WebMixedContentContextType mixed_content_context_type =
-          blink::WebMixedContentContextType::kBlockable);
+          blink::WebMixedContentContextType::kBlockable,
+      std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   ~NavigationHandleImpl() override;
 
@@ -116,6 +117,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const Referrer& GetReferrer() override;
   bool HasUserGesture() override;
   ui::PageTransition GetPageTransition() override;
+  const NavigationUIData* GetNavigationUIData() override;
   bool IsExternalProtocol() override;
   net::Error GetNetErrorCode() override;
   RenderFrameHostImpl* GetRenderFrameHost() override;
@@ -385,7 +387,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       ui::PageTransition transition,
       bool is_external_protocol,
       RequestContextType request_context_type,
-      blink::WebMixedContentContextType mixed_content_context_type);
+      blink::WebMixedContentContextType mixed_content_context_type,
+      std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
