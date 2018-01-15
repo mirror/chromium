@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -246,7 +249,7 @@ class PwsClientImpl implements PwsClient {
     @VisibleForTesting
     static String prependToAcceptLanguagesIfNecessary(String locales, String acceptLanguages) {
         String localeStrings = locales + "," + acceptLanguages;
-        String[] localeList = localeStrings.split(",");
+        List<String> localeList = Splitter.on(",").splitToList(localeStrings);
 
         ArrayList<Locale> uniqueList = new ArrayList<>();
         for (String localeString : localeList) {
@@ -295,7 +298,7 @@ class PwsClientImpl implements PwsClient {
         // values to avoid a problem with comparing two floating point numbers.
         int kQvalueDecrement10 = 2;
         int qvalue10 = 10;
-        String[] parts = languageList.split(",");
+        List<String> parts = Splitter.on(",").splitToList(languageList);
         Formatter langListWithQ = new Formatter();
         for (String language : parts) {
             if (qvalue10 == 10) {
