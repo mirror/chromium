@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c43585_9957df26",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T19:37:07Z",
+      "side": 1,
+      "message": "Is this really true? Technically |child_id11| has already arrived, it\u0027s just blocked on |arbitrary_id|. So once |arbitrary_id| comes too we can use it to unblock |parent_id|.",
+      "range": {
+        "startLine": 2108,
+        "startChar": 39,
+        "endLine": 2108,
+        "endChar": 76
+      },
+      "revId": "4e2e5e19e940e41750a3b96a85ae01e829979f26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
