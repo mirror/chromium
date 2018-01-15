@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3049e30_88f64adc",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-15T05:47:50Z",
+      "side": 1,
+      "message": "I think this fix is suffice, but did you have any formula to give this value besides manual test?\n(also, did it work well with Japanese characters?)",
+      "revId": "0d8efb4edeb3ad5c44d4659aa96f1f54bec9756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
