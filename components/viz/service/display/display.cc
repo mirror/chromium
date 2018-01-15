@@ -35,6 +35,7 @@
 #include "ui/gfx/presentation_feedback.h"
 
 namespace viz {
+const gfx::Size kMinimumDrawOcclusionSize = gfx::Size(160, 160);
 
 Display::Display(
     SharedBitmapManager* bitmap_manager,
@@ -561,6 +562,10 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
   const SharedQuadState* last_sqs = nullptr;
   cc::SimpleEnclosedRegion occlusion_in_target_space;
   bool current_sqs_intersects_occlusion = false;
+  int minimum_draw_occlusion_height =
+      kMinimumDrawOcclusionSize.height() * device_scale_factor_;
+  int minimum_draw_occlusion_width =
+      kMinimumDrawOcclusionSize.width() * device_scale_factor_;
   for (const auto& pass : frame->render_pass_list) {
     // TODO(yiyix): Add filter effects to draw occlusion calculation and perform
     // draw occlusion on render pass.
@@ -577,7 +582,9 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
     for (auto quad = pass->quad_list.begin(); quad != quad_list_end;) {
       // RenderPassDrawQuad is a special type of DrawQuad where the visible_rect
       // of shared quad state is not entirely covered by draw quads in it.
-      if (quad->material == ContentDrawQuadBase::Material::RENDER_PASS) {
+      if (quad->material == ContentDrawQuadBase::Material::RENDER_PASS ||
+          (quad->visible_rect.width() <= minimum_draw_occlusion_width &&
+           quad->visible_rect.height() <= minimum_draw_occlusion_height)) {
         ++quad;
         continue;
       }
