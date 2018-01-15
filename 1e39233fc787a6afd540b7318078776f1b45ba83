@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2ebb455_e2a81a69",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-15T16:06:37Z",
+      "side": 1,
+      "message": "Turns out this is observed when not using threaded compositing, so ... a different hole to plug.  We should gracefully not do this under non-threaded compositing. Any suggestions as to where to cut the cord from reviewers?",
+      "parentUuid": "30bd6d73_36426ffd",
+      "revId": "1e39233fc787a6afd540b7318078776f1b45ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "288063a0_3ac627af",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 45
