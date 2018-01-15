@@ -13,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.blink_public.platform.WebDisplayMode;
@@ -25,6 +27,7 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -324,13 +327,13 @@ public class WebApkInfo extends WebappInfo {
         // create a hash map.
         // TODO(hanxi): crbug.com/666349. Add a test to verify that the icon URLs in WebAPKs'
         // AndroidManifest.xml don't contain space.
-        String[] urlsAndHashes = iconUrlsAndIconMurmur2Hashes.split("[ ]+");
-        if (urlsAndHashes.length % 2 != 0) {
+        List<String> urlsAndHashes = Splitter.on("[ ]+").splitToList(iconUrlsAndIconMurmur2Hashes);
+        if (urlsAndHashes.size() % 2 != 0) {
             Log.e(TAG, "The icon URLs and icon murmur2 hashes don't come in pairs.");
             return iconUrlAndIconMurmur2HashMap;
         }
-        for (int i = 0; i < urlsAndHashes.length; i += 2) {
-            iconUrlAndIconMurmur2HashMap.put(urlsAndHashes[i], urlsAndHashes[i + 1]);
+        for (int i = 0; i < urlsAndHashes.size(); i += 2) {
+            iconUrlAndIconMurmur2HashMap.put(urlsAndHashes.get(i), urlsAndHashes.get(i + 1));
         }
         return iconUrlAndIconMurmur2HashMap;
     }

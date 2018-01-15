@@ -10,9 +10,13 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbInterface;
 import android.os.Build;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+
+import java.util.List;
 
 /**
  * Exposes android.hardware.usb.UsbDevice as necessary for C++
@@ -78,9 +82,9 @@ final class ChromeUsbDevice {
         //
         // This is not technically correct because the low nibble is actually
         // two separate version components (per spec). This undoes it at least.
-        String[] parts = mDevice.getVersion().split("\\.");
-        assert parts.length == 2;
-        return Integer.parseInt(parts[0]) << 8 | Integer.parseInt(parts[1]);
+        List<String> parts = Splitter.on("\\.").splitToList(mDevice.getVersion());
+        assert parts.size() == 2;
+        return Integer.parseInt(parts.get(0)) << 8 | Integer.parseInt(parts.get(1));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

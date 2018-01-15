@@ -15,6 +15,8 @@ import android.util.Base64;
 import android.util.Base64InputStream;
 import android.view.Surface;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.StreamUtil;
@@ -29,6 +31,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 
 /**
 * A wrapper around android.media.MediaPlayer that allows the native code to use it.
@@ -219,9 +222,9 @@ public class MediaPlayerBridge {
         final String data = url.substring(headerStop + 1);
 
         String headerContent = header.substring(5);
-        String headerInfo[] = headerContent.split(";");
-        if (headerInfo.length != 2) return false;
-        if (!"base64".equals(headerInfo[1])) return false;
+        List<String> headerInfo = Splitter.on(";").splitToList(headerContent);
+        if (headerInfo.size() != 2) return false;
+        if (!"base64".equals(headerInfo.get(1))) return false;
 
         mLoadDataUriTask = new LoadDataUriTask(data);
         mLoadDataUriTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
