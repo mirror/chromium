@@ -1,0 +1,9 @@
+CONSOLE MESSAGE: line 15: got stream
+CONSOLE MESSAGE: line 31: got stream
+This is a testharness.js-based test.
+PASS plan B create offer creates only one media section
+PASS Unified plan create offer creates two media sections
+FAIL Unified plan with one video track can connect to Plan B promise_test: Unhandled rejection with value: object "OperationError: Failed to set remote answer sdp: Unified Plan SDP should have exactly one track per media section for audio and video."
+FAIL Plan B with one video track can connect to Unified Plan promise_test: Unhandled rejection with value: object "OperationError: Failed to set remote answer sdp: Unified Plan SDP should have exactly one track per media section for audio and video."
+Harness: the test ran to completion.
+
