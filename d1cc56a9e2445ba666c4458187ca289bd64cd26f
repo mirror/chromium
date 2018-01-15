@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163a36a0_90276655",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintRenderingContext2D.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-15T21:20:38Z",
+      "side": 1,
+      "message": "This should return false. Returning flase won\u0027t actually affect behavior at any of the current call sites in the css paint case, but we still should be correct. CSS paint does not ever allocate a pixel buffer in the renderer.",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "d1cc56a9e2445ba666c4458187ca289bd64cd26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
