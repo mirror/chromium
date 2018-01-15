@@ -34,6 +34,24 @@
       "revId": "319283bec93c914fc307bb882e81af2fd66cb9fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7f0bc2_69b7ad03",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/aggregated_metric_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-15T11:25:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "011cb4b9_612b71e7",
+      "revId": "319283bec93c914fc307bb882e81af2fd66cb9fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
