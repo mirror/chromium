@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c60a9e1_513b7196",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T15:47:16Z",
+      "side": 1,
+      "message": "Can you add a comment above this mentioning that the expected normal code path is for to be still set via LoadSeed()?\n\nWe should still preserve this when changing that code to support safe mode. (So that in the case it is loading the latest seed, we still preserve updating the serial number).\n\nThis is because ParseFromString() can be expensive. See:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d761684#c2",
+      "range": {
+        "startLine": 283,
+        "startChar": 38,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "3d1623133e43e7295ba5a7d44fc1cce4a7eea394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
