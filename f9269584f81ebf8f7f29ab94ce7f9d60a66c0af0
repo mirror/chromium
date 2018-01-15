@@ -34,6 +34,24 @@
       "revId": "f9269584f81ebf8f7f29ab94ce7f9d60a66c0af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6106b017_ffef8420",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTraits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-15T10:26:07Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/865908",
+      "parentUuid": "971192ba_ca7676bb",
+      "revId": "f9269584f81ebf8f7f29ab94ce7f9d60a66c0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
