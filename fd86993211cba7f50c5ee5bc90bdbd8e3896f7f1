@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4a8049_bb559273",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T16:20:54Z",
+      "side": 1,
+      "message": "We should check unresponsive_views_ here too? ... although, maybe we should just check it inside QueryClient() instead?",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31d53cf_b55a0984",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T16:20:54Z",
+      "side": 1,
+      "message": "Set it to null instead (i.e. destroy immediately)?",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bff67e_e838705b",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T16:20:54Z",
+      "side": 1,
+      "message": "Instead of maintaining current_request_* and last_target_*, can we instead bind these to the callback (using GetWeakPtr() for the RWHVBase)? That way, there are fewer internal states to maintain.",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a6c9f4_3cfccaf1",
+        "filename": "content/common/content_constants_internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-15T16:20:54Z",
+      "side": 1,
+      "message": "(in milliseconds)",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
