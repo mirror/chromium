@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e36c95a4_9836066b",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-15T14:25:17Z",
+      "side": 1,
+      "message": "Over subclassing the coordinator?\nThe differences based on the type should be very small (probably 3 or 4 if{}else{} blocks). In my opinion, having subclasses would create clutter as I would need to create subclasses for the coordinators and the view controllers (8 additional files).",
+      "parentUuid": "db5d05c3_bda503f2",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54520d8f_1d67e072",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
         "patchSetId": 2
@@ -126,6 +150,24 @@
       "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92178376_333d1f28",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-15T14:25:17Z",
+      "side": 1,
+      "message": "Not directly but before the refactor the visibility mask of this button wasn\u0027t used.\nWith the refactor I realized that I need to set it. (This button is only used in the adaptive toolbar.)",
+      "parentUuid": "932f9668_0ab01ffa",
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
