@@ -30,6 +30,12 @@ void ManifestManagerHost::RenderFrameDeleted(
     OnConnectionError();
 }
 
+void ManifestManagerHost::NavigationEntryCommitted(
+    const LoadCommittedDetails& load_details) {
+  if (load_details.is_main_frame && !load_details.is_same_document)
+    OnConnectionError();
+}
+
 void ManifestManagerHost::GetManifest(const GetManifestCallback& callback) {
   auto& manifest_manager = GetManifestManager();
   int request_id =

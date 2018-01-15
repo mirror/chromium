@@ -147,7 +147,6 @@ class CompositorDependencies;
 class DocumentState;
 class ExternalPopupMenu;
 class HistoryEntry;
-class ManifestManager;
 class MediaPermissionDispatcher;
 class MediaStreamDeviceObserver;
 class NavigationState;
@@ -1449,9 +1448,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // initialized.
   ScreenOrientationDispatcher* screen_orientation_dispatcher_;
 
-  // The Manifest Manager handles the manifest requests from the browser
-  // process.
-  std::unique_ptr<ManifestManager> manifest_manager_;
+  blink::mojom::ManifestManagerPtr manifest_manager_;
 
   // The current accessibility mode.
   ui::AXMode accessibility_mode_;
