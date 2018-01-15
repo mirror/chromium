@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea63700a_ec756d64",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "Generally we prefer not to coordinate the positions of UI by passing rects, and instead use named layout guides. Rects are better than views, however; in any case, if you use a rect, it should be in UIWindow coordinates (and documented as such).",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722e5e63_54a663d5",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "I don\u0027t usually expect to see subviews or controls as part of the public API of a view controller. Conceptually nothing should depend on the view controller\u0027s appearance or what controls it presents the user.",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9b9b23_d71bd31d",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "element",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d24f596_ec8865dc",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "Dot notation for properties?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ee356e_c15762c5",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "The preferred mechanism for sizing/positioning view controllers is to leave that up to the embedding view controller. Ideally in a case like this where the content size is driven by the size of a subview, the view controller\u0027s view should have an appropriate -intrinsicContentSize property.\n\nIt might be useful to have a simple UIView subclass with a writeable -intrinsicContentSize property.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7cc0c8_eb7a86df",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "nit: left/right or leading/trailing work the same here, but as a reviewer I have to carefully check each left or right constraint to make sure it shouldn\u0027t actually be leading/trailing. So I\u0027d recommend always using leading/trailing, and only using left/right when the constraint really needs to be RTL-invariant (and then supplying a clear comment to that effect).",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800f1a38_710f9960",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed, as the shadow should have an inherent content size.",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997ecf35_9897a44a",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "If the background is just going to be white, we should suet set self.view.backgroundColor instead of adding another view.",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cbf7bc_1dcb6c8c",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "If |shadow|\u0027s image has an alpha of less than 1.0, then the background (however it is implemented) should extend under the image.",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 56
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bf2bbb_c5c8ad4d",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "Buttons also have intrinsic content sizes, so you shouldn\u0027t need these constraints.\n\n(Generally I\u0027ve found the best approach with constraints is to start with fewer constraints than you think you need, and then add more as necessary. It\u0027s much easier to fix a system with too few constraints than one with too many).",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257ee170_912b42b8",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "UIViews have a layout margins guide for positioning content a useful amount of space inside the edges of a view. This is worth using because on iOS11, it interacts with safe area insets. \n\nI\u0027ll have to check how/if we\u0027re doing this elsewhere but I think the way to approach this is to do this on iOS 10:\n\nself.layoutMargins \u003d UIEdgeInsetsMake(kElementMargin, kElementMargin, kElementMargin, kElementMargin);\n\nand this on iOS 11:\n\nself.directionalLayoutMargins \u003d NSDirectionalEdgeInsetsMake(kElementMargin, kElementMargin, kElementMargin, kElementMargin);\n\nand then in constraints (in both iOS10 and 11) do this:\n\n[something.trailingAnchor constraintEqualToAnchor:view.layoutMarginsGuide.trailingAnchor]\n\non iOS 11, if the margins we supply aren\u0027t enough to keep content inside the safe area, UIKit should adjust layoutMarginsGuide so it works correctly. But I haven\u0027t verified this.",
+      "range": {
+        "startLine": 102,
+        "startChar": 61,
+        "endLine": 102,
+        "endChar": 75
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34c3be5_ac674194",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:46:24Z",
+      "side": 1,
+      "message": "Seems like this should be declared as a property, as the others are.",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 22
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
