@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d0362d_35562347",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-15T15:31:40Z",
+      "side": 1,
+      "message": "I\u0027d rather we separate the change of API calls (i.e. FromInternalValue() -\u003e this stuff) into a separate CL and have the refactoring CL be just code reorganization. Mainly, because it\u0027s not obvious to me that the two behaviors are equivalent from a quick glance - and so let\u0027s have a separate CL for that - where that CL\u0027s description can explain why the two are equivalent.",
+      "range": {
+        "startLine": 346,
+        "startChar": 69,
+        "endLine": 346,
+        "endChar": 0
+      },
+      "revId": "778c13ca51848f7429736d2f2dddb6b3d560fc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
