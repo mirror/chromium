@@ -82,6 +82,11 @@ BluetoothRemoteGattServiceWin::GetCharacteristics() const {
   return has_characteristics;
 }
 
+bool BluetoothRemoteGattServiceWin::IsDiscoveryComplete() const {
+  return discovery_completed_included_characteristics_.size() ==
+         included_characteristics_.size();
+}
+
 std::vector<BluetoothRemoteGattService*>
 BluetoothRemoteGattServiceWin::GetIncludedServices() const {
   NOTIMPLEMENTED();
@@ -131,10 +136,8 @@ void BluetoothRemoteGattServiceWin::OnGetIncludedCharacteristics(
     return;
 
   // Report discovery complete.
-  SetDiscoveryComplete(true);
   UpdateIncludedCharacteristics(characteristics.get(), num);
   NotifyGattDiscoveryCompleteForServiceIfNecessary();
-  device_->GattServiceDiscoveryComplete(this);
 }
 
 void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
@@ -186,11 +189,18 @@ void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
 
 void BluetoothRemoteGattServiceWin::
     NotifyGattDiscoveryCompleteForServiceIfNecessary() {
-  if (discovery_completed_included_characteristics_.size() ==
-          included_characteristics_.size() &&
-      IsDiscoveryComplete() && !discovery_complete_notified_) {
-    adapter_->NotifyGattDiscoveryComplete(this);
+  // Resetting the discovery completed flag allows us to send notifications
+  // multiple times. This is useful in case the list of characteristics gets
+  // updated.
+  if (!IsDiscoveryComplete()) {
+    discovery_complete_notified_ = false;
+    return;
+  }
+
+  if (!discovery_complete_notified_) {
     discovery_complete_notified_ = true;
+    device_->GattServiceDiscoveryComplete(this);
+    adapter_->NotifyGattDiscoveryComplete(this);
   }
 }
 

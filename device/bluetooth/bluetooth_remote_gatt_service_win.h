@@ -44,6 +44,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattServiceWin
   BluetoothDevice* GetDevice() const override;
   std::vector<BluetoothRemoteGattCharacteristic*> GetCharacteristics()
       const override;
+  bool IsDiscoveryComplete() const override;
   std::vector<BluetoothRemoteGattService*> GetIncludedServices() const override;
   BluetoothRemoteGattCharacteristic* GetCharacteristic(
       const std::string& identifier) const override;
