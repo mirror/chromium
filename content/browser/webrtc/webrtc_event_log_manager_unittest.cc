@@ -61,7 +61,8 @@ auto SaveKeyAndFilePathTo(base::Optional<PeerConnectionKey>* key_output,
 
 }  // namespace
 
-class WebRtcEventLogManagerTest : public ::testing::Test {
+class WebRtcEventLogManagerTest : public ::testing::Test,
+                                  public PeerConnectionTrackerProxy {
  protected:
   WebRtcEventLogManagerTest()
       : run_loop_(std::make_unique<base::RunLoop>()),
@@ -163,6 +164,16 @@ class WebRtcEventLogManagerTest : public ::testing::Test {
                                     BoolReplyClosure(&result));
     WaitForReply();
     return result;
+  }
+
+  // From PeerConnectionTrackerProxy.
+  void StartEventLogOutput(PeerConnectionKey pc_key) override {
+
+  }
+
+  // From PeerConnectionTrackerProxy.
+  void StopEventLogOutput(PeerConnectionKey pc_key) override {
+
   }
 
   void FreezeClockAt(const base::Time::Exploded& frozen_time_exploded) {
@@ -939,5 +950,15 @@ TEST_F(WebRtcEventLogManagerTest,
   // with an expected new filename.
   ASSERT_EQ(file_path_2, expected_path_2);
 }
+
+TEST_F(WebRtcEventLogManagerTest,
+       InstructWebRtcToStartSendingEventLogsWhenLocalLoggingStarted) {
+
+}
+
+TEST_F(WebRtcEventLogManagerTest,
+       InstructWebRtcToStopSendingEventLogsWhenLocalLoggingStopped) {
+}
+
 
 }  // namespace content
