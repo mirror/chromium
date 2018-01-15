@@ -22,6 +22,30 @@
       "revId": "01e36e6338b24fb3bfbc5a28bc345325c262f4b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc6f6e1_be896465",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T18:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2576931f_3b92e315",
+      "range": {
+        "startLine": 2139,
+        "startChar": 28,
+        "endLine": 2139,
+        "endChar": 42
+      },
+      "revId": "01e36e6338b24fb3bfbc5a28bc345325c262f4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
