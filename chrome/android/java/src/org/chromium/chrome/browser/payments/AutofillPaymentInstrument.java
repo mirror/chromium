@@ -9,6 +9,8 @@ import android.support.v7.content.res.AppCompatResources;
 import android.text.TextUtils;
 import android.util.JsonWriter;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.autofill.CardType;
@@ -235,9 +237,9 @@ public class AutofillPaymentInstrument extends PaymentInstrument
             json.name("addressLine").beginArray();
             String multipleLines = ensureNotNull(mBillingAddress.getStreetAddress());
             if (!TextUtils.isEmpty(multipleLines)) {
-                String[] lines = multipleLines.split("\n");
-                for (int i = 0; i < lines.length; i++) {
-                    json.value(lines[i]);
+                List<String> lines = Splitter.on("\n").splitToList(multipleLines);
+                for (int i = 0; i < lines.size(); i++) {
+                    json.value(lines.get(i));
                 }
             }
             json.endArray();
