@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1baf43fa_64f0f38b",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-15T21:04:32Z",
+      "side": 1,
+      "message": "Could you confirm that we don\u0027t see a brightness flicker when entering VR mode? IIRC, activity-alias didn\u0027t inherit the target activity\u0027s \"enableVrMode\" property and you\u0027d be kicked out of VR mode in the middle of the transition. See b/65271215.",
+      "range": {
+        "startLine": 367,
+        "startChar": 18,
+        "endLine": 367,
+        "endChar": 23
+      },
+      "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
