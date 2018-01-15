@@ -444,8 +444,8 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SecondaryPassphraseCheck) {
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
-// Make sure that UKM is disabled when user signs out of Sync.
-IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SyncSignoutCheck) {
+// Make sure that UKM is disabled when the profile signs out of Sync.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SingleSyncSignoutCheck) {
   // Enable metrics recording and update MetricsServicesManager.
   bool metrics_enabled = true;
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
@@ -458,12 +458,50 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SyncSignoutCheck) {
 
   Browser* sync_browser = CreateBrowser(profile);
   EXPECT_TRUE(ukm_enabled());
+  uint64_t original_client_id = client_id();
 
   harness->SignoutSyncService();
   EXPECT_FALSE(ukm_enabled());
+  EXPECT_NE(original_client_id, client_id());
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+}
+
+// Make sure that UKM is disabled when any profile signs out of Sync.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MultiSyncSignoutCheck) {
+  // Enable metrics recording and update MetricsServicesManager.
+  bool metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      &metrics_enabled);
+  g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
+
+  Profile* profile1 = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness1 =
+      EnableSyncForProfile(profile1);
+
+  Browser* browser1 = CreateBrowser(profile1);
+  EXPECT_TRUE(ukm_enabled());
+  uint64_t original_client_id = client_id();
+
+  Profile* profile2 = CreateNonSyncProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness2 =
+      EnableSyncForProfile(profile2);
+  Browser* browser2 = CreateBrowser(profile2);
+  EXPECT_TRUE(ukm_enabled());
+  EXPECT_EQ(original_client_id, client_id());
+
+  harness2->SignoutSyncService();
+  EXPECT_FALSE(ukm_enabled());
+  EXPECT_NE(original_client_id, client_id());
+
+  harness2->service()->RequestStop(
+      browser_sync::ProfileSyncService::CLEAR_DATA);
+  harness1->service()->RequestStop(
+      browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(browser2);
+  CloseBrowserSynchronously(browser1);
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
