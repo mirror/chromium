@@ -193,19 +193,10 @@ void RenderWidgetTargeter::FoundTarget(
     const base::Optional<gfx::PointF>& target_location) {
   if (!root_view)
     return;
-  // TODO: Unify position conversion for all event types.
-  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
-    blink::WebMouseEvent mouse_event =
-        static_cast<const blink::WebMouseEvent&>(event);
-    if (target_location.has_value()) {
-      mouse_event.SetPositionInWidget(target_location->x(),
-                                      target_location->y());
-    }
-    if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
-      delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
-  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel ||
-             blink::WebInputEvent::IsTouchEventType(event.GetType()) ||
-             blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
+      event.GetType() == blink::WebInputEvent::kMouseWheel ||
+      blink::WebInputEvent::IsTouchEventType(event.GetType()) ||
+      blink::WebInputEvent::IsGestureEventType(event.GetType())) {
     DCHECK(!blink::WebInputEvent::IsGestureEventType(event.GetType()) ||
            (static_cast<const blink::WebGestureEvent&>(event).source_device ==
                 blink::WebGestureDevice::kWebGestureDeviceTouchscreen ||

@@ -372,7 +372,14 @@ void RenderWidgetHostInputEventRouter::DispatchMouseEvent(
       root_view->GetCursorManager()->UpdateViewUnderCursor(target);
   }
 
-  target->ProcessMouseEvent(mouse_event, latency);
+  blink::WebMouseEvent transformed_event(mouse_event);
+  gfx::PointF location_in_target;
+  if (root_view->TransformPointToCoordSpaceForView(
+          mouse_event.PositionInWidget(), target, &location_in_target)) {
+    transformed_event.SetPositionInWidget(location_in_target.x(),
+                                          location_in_target.y());
+  }
+  target->ProcessMouseEvent(transformed_event, latency);
 }
 
 void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
