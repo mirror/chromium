@@ -22,6 +22,30 @@
       "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651e431d_193dfc6c",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-15T21:11:47Z",
+      "side": 1,
+      "message": "I don\u0027t see any brightness flicker launching from DD home using this. At any rate if I did there\u0027s not much I could have done about it :P",
+      "parentUuid": "1baf43fa_64f0f38b",
+      "range": {
+        "startLine": 367,
+        "startChar": 18,
+        "endLine": 367,
+        "endChar": 23
+      },
+      "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
