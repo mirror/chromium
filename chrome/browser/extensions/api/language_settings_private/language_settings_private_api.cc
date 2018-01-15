@@ -33,6 +33,7 @@
 #include "chrome/common/extensions/api/language_settings_private.h"
 #include "chrome/common/pref_names.h"
 #include "components/language/core/browser/language_model.h"
+#include "components/language/core/common/locale_util.h"
 #include "components/spellcheck/common/spellcheck_common.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
@@ -199,14 +200,19 @@ LanguageSettingsPrivateGetLanguageListFunction::Run() {
     language.native_display_name = entry.native_display_name;
 
     // Set optional fields only if they differ from the default.
-    if (locale_set.count(entry.code) > 0) {
-      language.supports_ui.reset(new bool(true));
-    }
     if (spellcheck_language_set.count(entry.code) > 0) {
       language.supports_spellcheck.reset(new bool(true));
     }
     if (entry.supports_translate) {
       language.supports_translate.reset(new bool(true));
+    }
+    if (base::FeatureList::IsEnabled(translate::kRegionalLocalesAsDisplayUI)) {
+      std::string temp_locale = entry.code;
+      if (language::ConvertToActualUILocale(&temp_locale)) {
+        language.supports_ui.reset(new bool(true));
+      }
+    } else if (locale_set.count(entry.code) > 0) {
+      language.supports_ui.reset(new bool(true));
     }
 
     language_list->Append(language.ToValue());
