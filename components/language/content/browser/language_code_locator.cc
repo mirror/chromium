@@ -10,12 +10,23 @@
 
 namespace language {
 namespace internal {
-extern std::vector<std::pair<uint64_t, std::string>>
-GenerateDistrictLanguageMapping();
+extern std::vector<uint32_t> GenerateDistricts();
+extern std::vector<uint16_t> GenerateLanguageCodeCounts();
+extern std::vector<std::string> GenerateLanguageEnumCodeMapping();
 }  // namespace internal
 
 LanguageCodeLocator::LanguageCodeLocator()
-    : district_languages_(internal::GenerateDistrictLanguageMapping()) {}
+    : language_code_enums_(internal::GenerateLanguageEnumCodeMapping()) {
+  int pos = 0;
+  int index = 0;
+  const auto& cell_ids = internal::GenerateDistricts();
+  for (const uint16_t language_count : internal::GenerateLanguageCodeCounts()) {
+    for (int i = 0; i < language_count; ++i) {
+      district_languages_[cell_ids[++pos]] = index;
+    }
+    ++index;
+  }
+}
 
 LanguageCodeLocator::~LanguageCodeLocator() {}
 
@@ -24,10 +35,10 @@ std::vector<std::string> LanguageCodeLocator::GetLanguageCode(
     double longitude) const {
   S2CellId current_cell(S2LatLng::FromDegrees(latitude, longitude));
   while (current_cell.level() > 0) {
-    auto search = district_languages_.find(current_cell.id());
+    auto search = district_languages_.find(current_cell.id() >> 32);
     if (search != district_languages_.end()) {
-      return base::SplitString(search->second, ";", base::KEEP_WHITESPACE,
-                               base::SPLIT_WANT_ALL);
+      return base::SplitString(language_code_enums_[search->second], ";",
+                               base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
     }
     current_cell = current_cell.parent();
   }
