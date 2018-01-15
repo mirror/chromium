@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "623bfd7d_4206a990",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-15T18:12:13Z",
+      "side": 1,
+      "message": "I appreciate the feedback! Unit tests kinda serve as API documentation so it\u0027s important to highlight usage. I\u0027ve added a new unit test that better represents how this issue might manifest in regular usage.",
+      "parentUuid": "44b85f98_5bedbaa5",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 75
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acd0037b_847fb44b",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 5
