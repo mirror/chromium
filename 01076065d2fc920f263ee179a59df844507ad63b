@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13cca55b_ceffa08f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-15T02:47:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f12aa5_0f465265",
+      "range": {
+        "startLine": 17,
+        "startChar": 56,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf030fb7_9c98cb6d",
         "filename": "android_webview/browser/browser_view_renderer.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T20:22:53Z",
       "side": 1,
       "message": "Is the comment on this member in the .h wrong? It says it\u0027s in CSS pixels.",
+      "range": {
+        "startLine": 366,
+        "startChar": 33,
+        "endLine": 366,
+        "endChar": 51
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a68faf_ae151a94",
+        "filename": "android_webview/browser/browser_view_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-15T02:47:43Z",
+      "side": 1,
+      "message": "In my personal understanding, it is because Android does not actually use page zoom (i.e., ctrl +-) except the device scale factor. In other words, in Android, DIP scaled value is the same with CSS pixel scaled value. This causes a confusion, so we might need refactoring for this ..",
+      "parentUuid": "cf030fb7_9c98cb6d",
       "range": {
         "startLine": 366,
         "startChar": 33,
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "\u003e We can\u0027t get rid of the scroll offset truncation in Blink like this. It\u0027s something we\u0027ve wanted to do for a while but it\u0027s not quite this simple. Doing this will break various other things inside Blink.\n\nRight :p the original question was how close is this.\n\nWe were only toggling things in the CL to see if it fixes webview tests.\n\n\u003e \n\u003e Can you help me understand why this change is needed in Blink? Blink offsets have always been integers and you\u0027re doing the DIP adjustment above Blink in AndroidWebView code so I don\u0027t understand why we need to make this change.\n\nCame from me not wanting to relax webview scroll test constraints:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/844266/5/android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java#265\n\nApps in webview can set scroll directly in physical pixels from browser side. My concern is that app try to set scroll to X, but then bubble up as scrolled to X-1 or X+1 due to rounding.\n\nJaebaek did all the investigation here, and honestly, I don\u0027t really understand how things work currently. But webview has this weird way to do scale to avoid issues at end points: https://cs.chromium.org/chromium/src/android_webview/browser/browser_view_renderer.cc?rcl\u003dffb5de3934abd4e16399b2f79e7100823c6076fd\u0026l\u003d576\n\nand that\u0027s going to be skipped over in the new code path, so Jaebaek was trying to find where rounding was happening.\n\n\u003e \n\u003e It might be helpful if you show me the path from how LocalDOMWindow::scrollX|Y gets to SynchronousCompositor::DidChangeRootLayerScrollOffset. My assumption was that these values will all come from CC which has all the fractional parts of the scroll offset.\n\nDidChangeRootLayerScrollOffset happens when app directly sets webview scroll, so shouldn\u0027t come from LocalDOMWindow::scrollX|Y. Otherwise than that, your assumption is correct, scroll in SynchronousCompositorHost comes from cc.",
       "parentUuid": "bf64ecf2_2eda4ef9",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 42
+      },
+      "revId": "01076065d2fc920f263ee179a59df844507ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89056771_7b3849a3",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-15T02:47:43Z",
+      "side": 1,
+      "message": "boliu@, thank you for explanation.\n\nIn summary, the issue I am facing is:\nWhen enabling --use-zoom-for-dsf, some tests in AndroidScrollIntegrationTest (e.g., testTouchScrollCanBeAlteredByUi) fail because scrollX|Y return float values (i.e., not integer values). For example, the --use-zoom-for-dsf disabled one returns 38,80 but the enabled one returns 38.4754, 80.3793.\n\nThere are three places that intentionally convert those float values of scroll delta (e.g., 38.4754, 80.3793) to integer values (e.g., 38, 80) when --use-zoom-for-dsf is disabled:\nR1. ScrollTree::PullDeltaForMainThread()\nR2. ScrollTree::CollectScrollDeltas()\nR3. ScrollableArea::ScrollOffsetChanged()\n\nHowever, when --use-zoom-for-dsf is enabled, in R1 ~ R3, the scroll delta is already integer in physical pixel scale (e.g., 38.4754 * DSF \u003d 101, 80.3793 * DSF \u003d 211). LocalDOMWindow::scrollX|Y finally divides them by DSF.\n\nI tried to remove those three conversions (R1 ~ R3) to make it behave as the same regardless of --use-zoom-for-dsf. However, as bokan@ mentioned, if we cannot get rid of the scroll offset truncation (R3), then I think we have two options:\n\n1. Add conversion from float to integer at the end of LocalDOMWindow::scrollX|Y\n2. Modify AndroidScrollIntegrationTest to allow small rounding error (for the --use-zoom-for-dsf enabled one).\n\nWhich option would be correct? Are there other options?",
+      "parentUuid": "e92577ed_70795d44",
       "range": {
         "startLine": 291,
         "startChar": 2,
