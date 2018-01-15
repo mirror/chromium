@@ -1830,6 +1830,7 @@ enum WebFeature {
   kDispatchMouseUpDownEventOnDisabledFormControl = 2321,
   kCSSSelectorPseudoMatches = 2322,
   kV8RTCRtpSender_ReplaceTrack_Method = 2323,
+  kCSSTypedOM = 2324,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
