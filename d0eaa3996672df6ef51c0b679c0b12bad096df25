@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d1aef4f_1678d059",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-15T13:38:52Z",
+      "side": 1,
+      "message": "Done. Thanks, I did not know about this organization described in the top-of-the-file comment.",
+      "parentUuid": "835b6d8d_71ce57e0",
+      "range": {
+        "startLine": 1698,
+        "startChar": 0,
+        "endLine": 1700,
+        "endChar": 3
+      },
+      "revId": "d0eaa3996672df6ef51c0b679c0b12bad096df25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a91f937b_69c430a8",
         "filename": "base/time/time_android.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T23:41:36Z",
       "side": 1,
       "message": "This looks good to me, but how about we also add a unit test? It would be good for our build waterfalls to detect if this assumption is ever violated (on specific models, in VMs, or on future models). Something like:\n\nTEST(TimeTicks, Android_FromUptimeMillis_ClocksMatch) {\n  // Run the loop up to 50 times until the test passes, to avoid false-negatives caused\n  // by a possible thread context switch between the two samplings of the clock.\n  for (int i \u003d 0; i \u003c 50; ++i) {\n    const TimeTicks ticks \u003d TimeTicks::Now();\n    // Thread context switch may occur here.\n    const jlong uptime_millis \u003d ...jni call here...;\n    if ((ticks - TimeTicks::FromUptimeMillis(uptime_millis)).magnitude() \u003c\n        base::TimeDelta::FromMilliseconds(100)) {\n      SUCCEED();\n      return;\n    }\n  }\n  FAIL();\n}",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "d0eaa3996672df6ef51c0b679c0b12bad096df25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05d2650_b676f8fa",
+        "filename": "base/time/time_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-15T13:38:52Z",
+      "side": 1,
+      "message": "I think only the \u0027instrumentation tests\u0027 allow having both native and JNI parts. It is sad because those tests aim at testing Android UI, which is irrelevant for this test, and would create verbosity.\n\nI cannot find any existing instrumentation tests for base/. Creating a new suite of instrumentation tests and making sure it runs on all bots. There could be other use-cases that I do not know about, let me know.\n\nWe could add something like chrome/android/javatests/src/base/TimeTest.java, create some non-essential Activity there, package it within the usual runs of chrome_test_apk (which AFAIR only runs downstream). Seems like an additional new directory for base owners to care about, and perhaps android manifest(s) to care about too, and a new waterfall. Not ideal :)\n\nAs for the mechanics for the test itself, we start running tests on low end devices, where 100ms random delays are not that non-typical, so perhaps checking we should better check that one uptimeMillis() call measures in the bounds of two TimeTicks::Now() calls.\n\nAlternatively, I could add this check somewhere in Chrome Tracing, and if tracing is enabled on start, put a trace event with TimeTicks::Now() skew from uptimeMillis() and vice versa. If one of them gets negative, it should fail telemetry unittests. This spreads the check quite a bit across the codebase/repositories, and splits ownership, which would make it eventually forgotten IMO.\n\nWDYT?",
+      "parentUuid": "a91f937b_69c430a8",
       "range": {
         "startLine": 11,
         "startChar": 0,
