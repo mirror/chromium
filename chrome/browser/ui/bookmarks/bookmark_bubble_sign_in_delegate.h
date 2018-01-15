@@ -16,6 +16,7 @@ class Profile;
 // Delegate of the bookmark bubble to load the sign in page in a browser
 // when the sign in link is clicked.
 class BookmarkBubbleSignInDelegate : public BubbleSyncPromoDelegate,
+                                     public DiceBubbleSyncPromoViewDelegate,
                                      public BrowserListObserver {
  public:
   explicit BookmarkBubbleSignInDelegate(Browser* browser);
@@ -25,6 +26,10 @@ class BookmarkBubbleSignInDelegate : public BubbleSyncPromoDelegate,
 
   // BubbleSyncPromoDelegate:
   void OnSignInLinkClicked() override;
+
+  // DiceBubbleSyncPromoViewDelegate
+  void ShowSignin() override;
+  void EnableSync(const AccountInfo& account) override;
 
   // BrowserListObserver:
   void OnBrowserRemoved(Browser* browser) override;
