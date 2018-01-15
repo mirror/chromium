@@ -13,10 +13,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/sequence_checker.h"
 #include "chrome/browser/chromeos/policy/network_configuration_updater.h"
+#include "chromeos/network/onc/onc_certificate_importer.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "content/public/browser/notification_observer.h"
-#include "content/public/browser/notification_registrar.h"
 #include "net/cert/scoped_nss_types.h"
 
 class Profile;
@@ -27,13 +27,6 @@ class ListValue;
 
 namespace user_manager {
 class User;
-}
-
-namespace chromeos {
-
-namespace onc {
-class CertificateImporter;
-}
 }
 
 namespace net {
@@ -50,8 +43,7 @@ class PolicyService;
 // expansion with the user's name (or email address, etc.) and handling of "Web"
 // trust of certificates.
 class UserNetworkConfigurationUpdater : public NetworkConfigurationUpdater,
-                                        public KeyedService,
-                                        public content::NotificationObserver {
+                                        public KeyedService {
  public:
   class WebTrustedCertsObserver {
    public:
@@ -82,9 +74,27 @@ class UserNetworkConfigurationUpdater : public NetworkConfigurationUpdater,
   // last received policy.
   void GetWebTrustedCertificates(net::CertificateList* certs) const;
 
-  // Helper method to expose |SetCertificateImporter| for usage in tests.
-  void SetCertificateImporterForTest(
-      std::unique_ptr<chromeos::onc::CertificateImporter> certificate_importer);
+  // Sets the certificate database to be used when importing certificates from
+  // user policy. If user policy is already available and has certificates to be
+  // imported, this triggers the import.
+  void SetCertificateDatabase(net::NSSCertDatabase* certificate_database);
+
+  // Returns true if certificates from ONC policy which will be used as trust
+  // anchors are pending import.
+  bool HasPendingTrustedCerts();
+
+  // Waits until certificates which will be used as trust anchors are imported
+  // and have been made available through
+  // WebTrustedCertsObserver::OnTrustAnchorsChanged.
+  // If no certificates that should be used as trust anchors are pending import
+  // (either because no web trust certs are allowed, or because no ONC policy
+  // has been given yet, or because a previous import was successful), calls
+  // |done_callback| immediately.
+  void WaitForPendingTrustedCertsImported(base::OnceClosure done_callback);
+
+  static void SetCertficateImporterFactoryForTest(
+      chromeos::onc::CertificateImporter::Factory*
+          certificate_importer_factory);
 
  private:
   class CrosTrustAnchorProvider;
@@ -107,22 +117,26 @@ class UserNetworkConfigurationUpdater : public NetworkConfigurationUpdater,
       base::ListValue* network_configs_onc,
       base::DictionaryValue* global_network_config) override;
 
-  // content::NotificationObserver implementation. Observes the profile to which
-  // |this| belongs to for PROFILE_ADDED notification.
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override;
-
-  // Creates onc::CertImporter with |database| and passes it to
-  // |SetCertificateImporter|.
-  void CreateAndSetCertificateImporter(net::NSSCertDatabase* database);
-
   // Sets the certificate importer that should be used to import certificate
   // policies. If there is |pending_certificates_onc_|, it gets imported.
   void SetCertificateImporter(
       std::unique_ptr<chromeos::onc::CertificateImporter> certificate_importer);
 
-  void NotifyTrustAnchorsChanged();
+  // Sets certificates that requested web trust and notifies observers.
+  // |new_web_trust_certs| must be empty if Web trust from policy is not
+  // allowed.
+  void SetTrustedCertsAndNotify(
+      const net::CertificateList& new_web_trust_certs);
+
+  void GotTrustedCertificatesStatus(
+      base::OnceClosure done_callback,
+      net::ScopedCERTCertificateList onc_trusted_certificates,
+      bool has_pending_trusted_certs);
+
+  chromeos::onc::CertificateImporter::Factory* GetCertificateImporterFactory();
+
+  std::unique_ptr<chromeos::onc::CertificateImporter::Factory>
+      certificate_importer_factory_;
 
   // Whether Web trust is allowed or not.
   bool allow_trusted_certificates_from_policy_;
@@ -141,11 +155,15 @@ class UserNetworkConfigurationUpdater : public NetworkConfigurationUpdater,
   // The policy will be processed when the certificate importer is set.
   std::unique_ptr<base::ListValue> pending_certificates_onc_;
 
+  // Callbacks which should be executed when the current certificate import
+  // finishes.
+  std::vector<base::OnceClosure> trusted_certs_imported_callbacks_;
+
   // Certificate importer to be used for importing policy defined certificates.
   // Set by |SetCertificateImporter|.
   std::unique_ptr<chromeos::onc::CertificateImporter> certificate_importer_;
 
-  content::NotificationRegistrar registrar_;
+  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<UserNetworkConfigurationUpdater> weak_factory_;
 

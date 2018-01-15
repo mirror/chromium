@@ -42,7 +42,12 @@ class CommandLine;
 }
 
 namespace net {
+class NSSCertDatabase;
 class URLRequestContextGetter;
+}
+
+namespace policy {
+class UserNetworkConfigurationUpdater;
 }
 
 namespace user_manager {
@@ -173,7 +178,13 @@ class UserSessionManager
 
   // Get the NSS cert database for the user represented with |profile|
   // and start certificate loader with it.
-  void InitializeCerts(Profile* profile);
+  void InitializeNSSDependenciesAsync(Profile* profile,
+                                      base::OnceClosure callback);
+
+  void InitializeNSSDependenciesWithDatabase(
+      policy::UserNetworkConfigurationUpdater*
+          user_network_configuration_updater,
+      net::NSSCertDatabase* database);
 
   // Starts loading CRL set.
   void InitializeCRLSetFetcher(const user_manager::User* user);
@@ -333,6 +344,8 @@ class UserSessionManager
 
   // Called on UI thread once Cryptohome operation completes.
   void OnCryptohomeOperationCompleted(Profile* profile, bool result);
+
+  void OnTpmDevicePrepared(Profile* profile);
 
   // Finalized profile preparation.
   void FinalizePrepareProfile(Profile* profile);

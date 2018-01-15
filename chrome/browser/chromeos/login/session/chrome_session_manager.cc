@@ -104,7 +104,8 @@ void StartUserSession(Profile* user_profile, const std::string& login_user_id) {
       return;
     }
     user_session_mgr->InitRlz(user_profile);
-    user_session_mgr->InitializeCerts(user_profile);
+    user_session_mgr->InitializeNSSDependenciesAsync(
+        user_profile, base::BindOnce(&base::DoNothing));
     user_session_mgr->InitializeCRLSetFetcher(user);
     user_session_mgr->InitializeCertificateTransparencyComponents(user);
     if (lock_screen_apps::StateController::IsEnabled())

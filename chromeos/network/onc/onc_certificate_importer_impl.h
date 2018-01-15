@@ -38,6 +38,24 @@ namespace onc {
 // certificates. http://crbug.com/252119
 class CHROMEOS_EXPORT CertificateImporterImpl : public CertificateImporter {
  public:
+  class Factory : public CertificateImporter::Factory {
+   public:
+    explicit Factory(
+        const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
+    ~Factory() override;
+
+    std::unique_ptr<chromeos::onc::CertificateImporter>
+    CreateCertificateImporter(net::NSSCertDatabase* database) override;
+
+    void GetTrustedCertificatesStatus(
+        base::Value onc_certificates,
+        ::onc::ONCSource source,
+        GotTrustedCertificatesStatusCallback callback) override;
+
+   private:
+    const scoped_refptr<base::SequencedTaskRunner> io_task_runner_;
+  };
+
   // |io_task_runner| will be used for NSSCertDatabase accesses.
   CertificateImporterImpl(
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,

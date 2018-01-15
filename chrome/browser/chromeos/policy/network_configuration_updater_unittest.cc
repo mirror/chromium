@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/device_network_configuration_updater.h"
 #include "chrome/browser/chromeos/policy/user_network_configuration_updater.h"
@@ -130,6 +131,19 @@ class FakeCertificateImporter : public chromeos::onc::CertificateImporter {
     expected_onc_source_ = source;
   }
 
+  void SetHoldBackImportCertificatesResult(
+      bool hold_back_import_certificates_result) {
+    hold_back_import_certificates_result_ =
+        hold_back_import_certificates_result;
+  }
+
+  void NotifyImportCertificatesResult() {
+    EXPECT_TRUE(hold_back_import_certificates_result_);
+    EXPECT_TRUE(pending_import_certificates_result_callback_);
+
+    std::move(pending_import_certificates_result_callback_).Run();
+  }
+
   unsigned int GetAndResetImportCount() {
     unsigned int count = call_count_;
     call_count_ = 0;
@@ -146,17 +160,57 @@ class FakeCertificateImporter : public chromeos::onc::CertificateImporter {
           expected_onc_certificates_.get(), &certificates));
     }
     ++call_count_;
-    done_callback.Run(true, net::x509_util::DupCERTCertificateList(
-                                onc_trusted_certificates_));
+
+    base::OnceClosure report_result_closure = base::BindOnce(
+        done_callback, true,
+        net::x509_util::DupCERTCertificateList(onc_trusted_certificates_));
+    if (hold_back_import_certificates_result_)
+      pending_import_certificates_result_callback_ =
+          std::move(report_result_closure);
+    else
+      std::move(report_result_closure).Run();
   }
 
  private:
+  bool hold_back_import_certificates_result_ = false;
+  base::OnceClosure pending_import_certificates_result_callback_;
   ::onc::ONCSource expected_onc_source_;
   std::unique_ptr<base::ListValue> expected_onc_certificates_;
   net::ScopedCERTCertificateList onc_trusted_certificates_;
   unsigned int call_count_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeCertificateImporter);
+};
+
+// Utility for testing the WaitForPendingTrustedCertsImported function.
+class PendingTrustedCertsImportedWaiter {
+ public:
+  PendingTrustedCertsImportedWaiter(
+      UserNetworkConfigurationUpdater* user_network_configuration_updater)
+      : user_network_configuration_updater_(
+            user_network_configuration_updater) {}
+
+  void StartWaiting() {
+    user_network_configuration_updater_->WaitForPendingTrustedCertsImported(
+        base::BindOnce(
+            &PendingTrustedCertsImportedWaiter ::OnPendingTrustedCertsImported,
+            base::Unretained(this)));
+    base::RunLoop().RunUntilIdle();
+  }
+
+  bool IsPendingTrustedCertsImportedCalled() {
+    return pending_trusted_certs_imported_;
+  }
+
+ private:
+  void OnPendingTrustedCertsImported() {
+    pending_trusted_certs_imported_ = true;
+  }
+
+  UserNetworkConfigurationUpdater* user_network_configuration_updater_;
+  bool pending_trusted_certs_imported_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(PendingTrustedCertsImportedWaiter);
 };
 
 const char kFakeONC[] =
@@ -190,6 +244,46 @@ void AppendAll(const base::ListValue& from, base::ListValue* to) {
   for (const auto& value : from)
     to->Append(value.CreateDeepCopy());
 }
+
+class FakeCertificateImporterFactory
+    : public chromeos::onc::CertificateImporter::Factory {
+ public:
+  FakeCertificateImporterFactory() {}
+
+  std::unique_ptr<chromeos::onc::CertificateImporter> CreateCertificateImporter(
+      net::NSSCertDatabase* database) override {
+    EXPECT_TRUE(certificate_importer_);
+    return std::move(certificate_importer_);
+  }
+
+  void GetTrustedCertificatesStatus(
+      base::Value onc_certificates,
+      ::onc::ONCSource source,
+      GotTrustedCertificatesStatusCallback callback) override {
+    base::PostTask(
+        FROM_HERE,
+        base::BindOnce(std::move(callback), std::move(available_trusted_certs_),
+                       has_missing_trusted_certs_));
+  }
+
+  void SetCertificateImporter(
+      std::unique_ptr<chromeos::onc::CertificateImporter>
+          certificate_importer) {
+    certificate_importer_ = std::move(certificate_importer);
+  }
+
+  void SetTrustedCertificatesStatus(
+      net::ScopedCERTCertificateList available_trusted_certs,
+      bool has_missing_trusted_certs) {
+    available_trusted_certs_ = std::move(available_trusted_certs);
+    has_missing_trusted_certs_ = has_missing_trusted_certs;
+  }
+
+ private:
+  std::unique_ptr<chromeos::onc::CertificateImporter> certificate_importer_;
+  net::ScopedCERTCertificateList available_trusted_certs_;
+  bool has_missing_trusted_certs_ = false;
+};
 
 // Matcher to match base::Value.
 MATCHER_P(IsEqualTo,
@@ -241,8 +335,13 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
         onc::toplevel_config::kCertificates, &certs);
     AppendAll(*certs, &fake_certificates_);
 
-    certificate_importer_ = new FakeCertificateImporter;
-    certificate_importer_owned_.reset(certificate_importer_);
+    certificate_importer_owned_ = std::make_unique<FakeCertificateImporter>();
+    certificate_importer_ = certificate_importer_owned_.get();
+
+    fake_certificate_importer_factory_ =
+        std::make_unique<FakeCertificateImporterFactory>();
+    UserNetworkConfigurationUpdater::SetCertficateImporterFactoryForTest(
+        fake_certificate_importer_factory_.get());
   }
 
   void TearDown() override {
@@ -278,8 +377,8 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
             &network_config_handler_).release();
     if (set_cert_importer) {
       EXPECT_TRUE(certificate_importer_owned_);
-      updater->SetCertificateImporterForTest(
-          std::move(certificate_importer_owned_));
+      SetCertificateImporterForTest(updater,
+                                    std::move(certificate_importer_owned_));
     }
     network_configuration_updater_.reset(updater);
     return updater;
@@ -292,6 +391,18 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
             &network_config_handler_,
             &network_device_handler_,
             chromeos::CrosSettings::Get());
+  }
+
+  void SetCertificateImporterForTest(
+      UserNetworkConfigurationUpdater* updater,
+      std::unique_ptr<chromeos::onc::CertificateImporter>
+          certificate_importer) {
+    fake_certificate_importer_factory_->SetCertificateImporter(
+        std::move(certificate_importer));
+    // We're passing nullptr, because this will be forwarded to the
+    // CertificateImporter::Factory, factory, and our
+    // FakeCertificateImporterFactory doesn't care about the database.
+    updater->SetCertificateDatabase(nullptr);
   }
 
   content::TestBrowserThreadBundle thread_bundle_;
@@ -309,8 +420,7 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
   // continues to point to that instance but |certificate_importer_owned_| is
   // released.
   FakeCertificateImporter* certificate_importer_;
-  std::unique_ptr<chromeos::onc::CertificateImporter>
-      certificate_importer_owned_;
+  std::unique_ptr<FakeCertificateImporter> certificate_importer_owned_;
 
   StrictMock<MockConfigurationPolicyProvider> provider_;
   std::unique_ptr<PolicyServiceImpl> policy_service_;
@@ -318,6 +428,8 @@ class NetworkConfigurationUpdaterTest : public testing::Test {
 
   TestingProfile profile_;
 
+  std::unique_ptr<FakeCertificateImporterFactory>
+      fake_certificate_importer_factory_;
   std::unique_ptr<NetworkConfigurationUpdater> network_configuration_updater_;
 };
 
@@ -520,9 +632,104 @@ TEST_F(NetworkConfigurationUpdaterTest,
   certificate_importer_->SetExpectedONCSource(onc::ONC_SOURCE_USER_POLICY);
 
   ASSERT_TRUE(certificate_importer_owned_);
-  updater->SetCertificateImporterForTest(
-      std::move(certificate_importer_owned_));
+  SetCertificateImporterForTest(updater,
+                                std::move(certificate_importer_owned_));
   EXPECT_EQ(1u, certificate_importer_->GetAndResetImportCount());
+}
+
+TEST_F(NetworkConfigurationUpdaterTest, WaitForPendingTrustedCertsImported) {
+  PolicyMap policy;
+  policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
+             POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+             base::MakeUnique<base::Value>(kFakeONC), nullptr);
+  UpdateProviderPolicy(policy);
+
+  EXPECT_CALL(network_config_handler_,
+              SetPolicy(onc::ONC_SOURCE_USER_POLICY, kFakeUsernameHash,
+                        IsEqualTo(&fake_network_configs_),
+                        IsEqualTo(&fake_global_network_config_)));
+
+  // Make sure that the factory will report that trusted certs are pending
+  // import.
+  fake_certificate_importer_factory_->SetTrustedCertificatesStatus(
+      net::ScopedCERTCertificateList(), true /* has_missing_trusted_certs */);
+
+  UserNetworkConfigurationUpdater* updater =
+      CreateNetworkConfigurationUpdaterForUserPolicy(
+          true /* allow trusted certs from policy */,
+          false /* do not set certificate importer */);
+  MarkPolicyProviderInitialized();
+
+  Mock::VerifyAndClearExpectations(&network_config_handler_);
+  PendingTrustedCertsImportedWaiter trusted_certs_imported_waiter(updater);
+  trusted_certs_imported_waiter.StartWaiting();
+  EXPECT_FALSE(
+      trusted_certs_imported_waiter.IsPendingTrustedCertsImportedCalled());
+
+  certificate_importer_->SetHoldBackImportCertificatesResult(true);
+  certificate_importer_->SetExpectedONCCertificates(fake_certificates_);
+  certificate_importer_->SetExpectedONCSource(onc::ONC_SOURCE_USER_POLICY);
+
+  ASSERT_TRUE(certificate_importer_owned_);
+  SetCertificateImporterForTest(updater,
+                                std::move(certificate_importer_owned_));
+
+  // Setting the certificate importer doesn't trigger the callback that trusted
+  // certs have been imported
+  EXPECT_FALSE(
+      trusted_certs_imported_waiter.IsPendingTrustedCertsImportedCalled());
+
+  certificate_importer_->NotifyImportCertificatesResult();
+  EXPECT_TRUE(
+      trusted_certs_imported_waiter.IsPendingTrustedCertsImportedCalled());
+
+  // On a WaitForTrustedCertsImported call, the callback should be invoked
+  // immediately.
+  PendingTrustedCertsImportedWaiter second_trusted_certs_imported_waiter(
+      updater);
+  second_trusted_certs_imported_waiter.StartWaiting();
+  EXPECT_TRUE(second_trusted_certs_imported_waiter
+                  .IsPendingTrustedCertsImportedCalled());
+}
+
+TEST_F(NetworkConfigurationUpdaterTest, NoPendingTrustedCerts) {
+  PolicyMap policy;
+  policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
+             POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+             base::MakeUnique<base::Value>(kFakeONC), nullptr);
+  UpdateProviderPolicy(policy);
+
+  EXPECT_CALL(network_config_handler_,
+              SetPolicy(onc::ONC_SOURCE_USER_POLICY, kFakeUsernameHash,
+                        IsEqualTo(&fake_network_configs_),
+                        IsEqualTo(&fake_global_network_config_)));
+
+  UserNetworkConfigurationUpdater* updater =
+      CreateNetworkConfigurationUpdaterForUserPolicy(
+          true /* allow trusted certs from policy */,
+          false /* do not set certificate importer */);
+
+  // Before setting the policy, waiting for pending trusted certs finishes
+  // immediately (as there are no trusted certs yet).
+  PendingTrustedCertsImportedWaiter pre_policy_trusted_certs_imported_waiter(
+      updater);
+  pre_policy_trusted_certs_imported_waiter.StartWaiting();
+  EXPECT_TRUE(pre_policy_trusted_certs_imported_waiter
+                  .IsPendingTrustedCertsImportedCalled());
+
+  // Make sure that the factory will report that no trusted certs are pending
+  // import.
+  fake_certificate_importer_factory_->SetTrustedCertificatesStatus(
+      net::ScopedCERTCertificateList(), false /* has_missing_trusted_certs */);
+  MarkPolicyProviderInitialized();
+
+  Mock::VerifyAndClearExpectations(&network_config_handler_);
+
+  PendingTrustedCertsImportedWaiter post_policy_trusted_certs_imported_waiter(
+      updater);
+  post_policy_trusted_certs_imported_waiter.StartWaiting();
+  EXPECT_TRUE(post_policy_trusted_certs_imported_waiter
+                  .IsPendingTrustedCertsImportedCalled());
 }
 
 class NetworkConfigurationUpdaterTestWithParam

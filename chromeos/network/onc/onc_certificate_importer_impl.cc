@@ -17,6 +17,7 @@
 #include "base/logging.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chromeos/network/network_event_log.h"
@@ -41,7 +42,132 @@ void CallBackOnOriginLoop(
       base::BindOnce(callback, success, std::move(onc_trusted_certificates)));
 }
 
+// Returns true if the certificate described by |onc_certificate| requests web
+// trust.
+bool HasWebTrustFlag(const base::Value* onc_certificate) {
+  DCHECK(onc_certificate && onc_certificate->is_dict());
+
+  bool web_trust_flag = false;
+  const base::Value* trust_list = onc_certificate->FindKeyOfType(
+      ::onc::certificate::kTrustBits, base::Value::Type::LIST);
+  if (trust_list) {
+    for (base::ListValue::const_iterator it = trust_list->GetList().begin();
+         it != trust_list->GetList().end(); ++it) {
+      std::string trust_type;
+      if (!it->GetAsString(&trust_type))
+        NOTREACHED();
+
+      if (trust_type == ::onc::certificate::kWeb) {
+        // "Web" implies that the certificate is to be trusted for SSL
+        // identification.
+        web_trust_flag = true;
+      } else {
+        // Trust bits should only increase trust and never restrict. Thus,
+        // ignoring unknown bits should be safe.
+        LOG(WARNING) << "Certificate contains unknown trust type "
+                     << trust_type;
+      }
+    }
+  }
+
+  return web_trust_flag;
+}
+
+// If the certificate described by |onc_certificate| has already been imported
+// (it is stored permanently in a NSS database), returns it. Otherwise, returns
+// nullptr.
+net::ScopedCERTCertificate GetAlreadyImportedCertificate(
+    const base::Value* onc_certificate) {
+  DCHECK(onc_certificate && onc_certificate->is_dict());
+
+  const base::Value* x509_data = onc_certificate->FindKeyOfType(
+      ::onc::certificate::kX509, base::Value::Type::STRING);
+  if (!x509_data || x509_data->GetString().empty()) {
+    return nullptr;
+  }
+
+  net::ScopedCERTCertificate x509_cert =
+      DecodePEMCertificate(x509_data->GetString());
+  if (!x509_cert.get())
+    return nullptr;
+
+  // Skip certificates which have not been permanently imported.
+  if (!x509_cert.get()->isperm)
+    return nullptr;
+
+  return x509_cert;
+}
+
+void GetTrustedCertificatesStatusOnIOThread(
+    base::Value onc_certificates,
+    ::onc::ONCSource source,
+    const scoped_refptr<base::SequencedTaskRunner>& origin_task_runner_,
+    CertificateImporter::Factory::GotTrustedCertificatesStatusCallback
+        callback) {
+  bool has_missing_trusted_certs = false;
+  net::ScopedCERTCertificateList available_trusted_certs;
+
+  // Trusted certificates are only accepted from user policy.
+  if (source != ::onc::ONC_SOURCE_USER_POLICY)
+    return;
+
+  for (base::Value& certificate : onc_certificates.GetList()) {
+    if (!certificate.is_dict())
+      continue;
+    // We only care for server or authority certificates, as only these can have
+    // web trust.
+    base::Value* cert_type = certificate.FindKeyOfType(
+        ::onc::certificate::kType, base::Value::Type::STRING);
+    if (!cert_type)
+      continue;
+    if (cert_type->GetString() != ::onc::certificate::kServer &&
+        cert_type->GetString() != ::onc::certificate::kAuthority) {
+      continue;
+    }
+
+    if (!HasWebTrustFlag(&certificate))
+      continue;
+
+    net::ScopedCERTCertificate x509_cert =
+        GetAlreadyImportedCertificate(&certificate);
+    if (x509_cert)
+      available_trusted_certs.emplace_back(std::move(x509_cert));
+    else
+      has_missing_trusted_certs = true;
+  }
+
+  origin_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(std::move(callback), std::move(available_trusted_certs),
+                     has_missing_trusted_certs));
+}
+
 }  // namespace
+
+CertificateImporterImpl::Factory::Factory(
+    const scoped_refptr<base::SequencedTaskRunner>& io_task_runner)
+    : io_task_runner_(io_task_runner) {}
+
+CertificateImporterImpl::Factory::~Factory() {}
+
+std::unique_ptr<chromeos::onc::CertificateImporter>
+CertificateImporterImpl::Factory::CreateCertificateImporter(
+    net::NSSCertDatabase* database) {
+  DCHECK(database);
+  return std::make_unique<chromeos::onc::CertificateImporterImpl>(
+      io_task_runner_, database);
+}
+
+void CertificateImporterImpl::Factory::GetTrustedCertificatesStatus(
+    base::Value onc_certificates,
+    ::onc::ONCSource source,
+    GotTrustedCertificatesStatusCallback callback) {
+  io_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&GetTrustedCertificatesStatusOnIOThread,
+                                std::move(onc_certificates), source,
+                                base::SequencedTaskRunnerHandle::Get(),
+                                std::move(callback)));
+}
 
 CertificateImporterImpl::CertificateImporterImpl(
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,
@@ -165,28 +291,7 @@ bool CertificateImporterImpl::ParseServerOrCaCertificate(
     return true;
   }
 
-  bool web_trust_flag = false;
-  const base::ListValue* trust_list = NULL;
-  if (certificate.GetListWithoutPathExpansion(::onc::certificate::kTrustBits,
-                                              &trust_list)) {
-    for (base::ListValue::const_iterator it = trust_list->begin();
-         it != trust_list->end(); ++it) {
-      std::string trust_type;
-      if (!it->GetAsString(&trust_type))
-        NOTREACHED();
-
-      if (trust_type == ::onc::certificate::kWeb) {
-        // "Web" implies that the certificate is to be trusted for SSL
-        // identification.
-        web_trust_flag = true;
-      } else {
-        // Trust bits should only increase trust and never restrict. Thus,
-        // ignoring unknown bits should be safe.
-        LOG(WARNING) << "Certificate contains unknown trust type "
-                     << trust_type;
-      }
-    }
-  }
+  bool web_trust_flag = HasWebTrustFlag(&certificate);
 
   bool import_with_ssl_trust = false;
   if (web_trust_flag) {

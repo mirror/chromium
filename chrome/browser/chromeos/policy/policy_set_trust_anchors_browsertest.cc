@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/device_policy_cros_browser_test.h"
+#include "chrome/browser/chromeos/policy/login_policy_test_base.h"
 #include "chrome/browser/chromeos/policy/user_network_configuration_updater.h"
 #include "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.h"
 #include "chrome/browser/policy/test/local_policy_test_server.h"
@@ -26,6 +27,8 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/chromeos_test_utils.h"
+#include "chromeos/network/onc/onc_certificate_importer.h"
+#include "chromeos/network/onc/onc_certificate_importer_impl.h"
 #include "chromeos/network/onc/onc_test_utils.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
@@ -34,6 +37,9 @@
 #include "components/policy/policy_constants.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/notification_observer.h"
+#include "content/public/browser/notification_registrar.h"
+#include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/test_utils.h"
 #include "net/base/test_completion_callback.h"
@@ -43,6 +49,8 @@
 #include "net/url_request/url_request_context_getter.h"
 
 namespace em = enterprise_management;
+
+namespace policy {
 
 namespace {
 
@@ -57,7 +65,7 @@ constexpr char kDeviceLocalAccountId[] = "dla1@example.com";
 // Allows waiting until the list of policy-pushed web-trusted certificates
 // changes.
 class WebTrustedCertsChangedObserver
-    : public policy::UserNetworkConfigurationUpdater::WebTrustedCertsObserver {
+    : public UserNetworkConfigurationUpdater::WebTrustedCertsObserver {
  public:
   WebTrustedCertsChangedObserver() {}
 
@@ -73,6 +81,146 @@ class WebTrustedCertsChangedObserver
   base::RunLoop run_loop;
 
   DISALLOW_COPY_AND_ASSIGN(WebTrustedCertsChangedObserver);
+};
+
+// A CertificateImporter which delegates actual importing of certificates to a
+// passed CertificateImporter, but makes it possible to delay certificate
+// import.
+class SlowCertificateImporter : public chromeos::onc::CertificateImporter {
+ public:
+  // This SlowCertificateImporter will delegate importing of certificates to
+  // |real_certificate_importer|.
+  SlowCertificateImporter(std::unique_ptr<chromeos::onc::CertificateImporter>
+                              real_certificate_importer)
+      : real_certificate_importer_(std::move(real_certificate_importer)) {}
+
+  void ImportCertificates(const base::ListValue& certificates,
+                          ::onc::ONCSource source,
+                          const DoneCallback& done_callback) override {
+    cached_certificates_ = base::ListValue::From(
+        std::make_unique<base::Value>(certificates.Clone()));
+    cached_source_ = source;
+    import_done_callback_ = done_callback;
+    import_request_had_certificates_ = !certificates.empty();
+    if (on_import_triggered_)
+      std::move(on_import_triggered_).Run();
+  }
+
+  // Blocks until a ImportCertificates is called. If it was called previously,
+  // returns immediately.
+  void WaitCertImportTriggered() {
+    if (!import_done_callback_) {
+      base::RunLoop run_loop;
+      on_import_triggered_ = run_loop.QuitClosure();
+      run_loop.Run();
+    }
+  }
+
+  // Completes a pending certificate import initiated by ImportCertitificates by
+  // delegating to |real_certificate_importer|.
+  void CompleteCertImport(
+      bool success,
+      net::ScopedCERTCertificateList onc_trusted_certificates) {
+    EXPECT_TRUE(import_done_callback_);
+    real_certificate_importer_->ImportCertificates(
+        *cached_certificates_, cached_source_,
+        std::move(import_done_callback_));
+  }
+
+  // Returns true if ImportCertificates was previously called with a non-empty
+  // list of certificates.
+  bool IsNonEmptyCertImportTriggered() {
+    return !import_done_callback_.is_null() && import_request_had_certificates_;
+  }
+
+ private:
+  std::unique_ptr<chromeos::onc::CertificateImporter>
+      real_certificate_importer_;
+
+  std::unique_ptr<base::ListValue> cached_certificates_;
+  ::onc::ONCSource cached_source_ = ::onc::ONCSource::ONC_SOURCE_NONE;
+  DoneCallback import_done_callback_;
+  bool import_request_had_certificates_ = false;
+  base::OnceClosure on_import_triggered_;
+};
+
+// A factory which creates SlowCertificateImporter instances.
+class SlowCertificateImporterFactory
+    : public chromeos::onc::CertificateImporter::Factory {
+ public:
+  SlowCertificateImporterFactory()
+      : real_certificate_importer_factory_(
+            std::make_unique<chromeos::onc::CertificateImporterImpl::Factory>(
+                content::BrowserThread::GetTaskRunnerForThread(
+                    content::BrowserThread::IO))) {}
+
+  std::unique_ptr<chromeos::onc::CertificateImporter> CreateCertificateImporter(
+      net::NSSCertDatabase* database) override {
+    // Only a single CertificateImporter should be created during the tests -
+    // SlowCertificateImporterFactory currentl doesn't support handling multiple
+    // CertificateIpmorter instances.
+    EXPECT_FALSE(certificate_importer_);
+
+    auto certificate_importer = std::make_unique<SlowCertificateImporter>(
+        real_certificate_importer_factory_->CreateCertificateImporter(
+            database));
+    certificate_importer_ = certificate_importer.get();
+    if (on_certificate_importer_created_) {
+      std::move(on_certificate_importer_created_).Run();
+    }
+    return std::move(certificate_importer);
+  }
+
+  void GetTrustedCertificatesStatus(
+      base::Value onc_certificates,
+      ::onc::ONCSource source,
+      GotTrustedCertificatesStatusCallback callback) override {
+    real_certificate_importer_factory_->GetTrustedCertificatesStatus(
+        std::move(onc_certificates), source, std::move(callback));
+  }
+
+  // Blocks until a CertificateImporter has been created and ImportCertificates
+  // was called on it.
+  void WaitCertImportTriggered() {
+    WaitCertImporterCreated();
+
+    certificate_importer_->WaitCertImportTriggered();
+  }
+
+  // Returns true if a CertificateImporter has been created and
+  // ImportCertificates was called on it with a non-empty certificate list.
+  bool IsNonEmptyCertImportTriggered() {
+    return certificate_importer_ &&
+           certificate_importer_->IsNonEmptyCertImportTriggered();
+  }
+
+  // Completes a pending certificate import.
+  void CompleteCertImport(
+      bool success,
+      net::ScopedCERTCertificateList onc_trusted_certificates) {
+    EXPECT_TRUE(certificate_importer_);
+    certificate_importer_->CompleteCertImport(
+        success, std::move(onc_trusted_certificates));
+  }
+
+ private:
+  // Waits until the code under test requests a CertificateImporter. If a
+  // CertificateImporter has been issued previously, returns immediately.
+  void WaitCertImporterCreated() {
+    if (!certificate_importer_) {
+      base::RunLoop run_loop;
+      on_certificate_importer_created_ = run_loop.QuitClosure();
+      run_loop.Run();
+    }
+  }
+
+  std::unique_ptr<chromeos::onc::CertificateImporterImpl::Factory>
+      real_certificate_importer_factory_;
+  // Unowned pointer - owned by the UserNetworkConfigurationUpdater for the user
+  // profile.
+  SlowCertificateImporter* certificate_importer_;
+
+  base::OnceClosure on_certificate_importer_created_;
 };
 
 // Called on the IO thread to verify the |test_server_cert| using the
@@ -108,8 +256,6 @@ bool IsSessionStarted() {
 
 }  // namespace
 
-namespace policy {
-
 // Base class for testing if policy-provided trust roots take effect.
 class PolicyProvidedTrustRootsTestBase : public DevicePolicyCrosBrowserTest {
  protected:
@@ -143,20 +289,17 @@ class PolicyProvidedTrustRootsTestBase : public DevicePolicyCrosBrowserTest {
   // the notification that policy-provided trust roots have changed is sent from
   // |profile|'s UserNetworkConfigurationUpdater.
   void SetRootCertONCPolicy(Profile* profile) {
-    policy::UserNetworkConfigurationUpdater*
-        user_network_configuration_updater =
-            policy::UserNetworkConfigurationUpdaterFactory::GetForProfile(
-                profile);
+    UserNetworkConfigurationUpdater* user_network_configuration_updater =
+        UserNetworkConfigurationUpdaterFactory::GetForProfile(profile);
     WebTrustedCertsChangedObserver trust_roots_changed_observer;
     user_network_configuration_updater->AddTrustedCertsObserver(
         &trust_roots_changed_observer);
 
     const std::string& user_policy_blob =
         chromeos::onc::test_utils::ReadTestData(kRootCertOnc);
-    policy::PolicyMap policy;
-    policy.Set(policy::key::kOpenNetworkConfiguration,
-               policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
-               policy::POLICY_SOURCE_CLOUD,
+    PolicyMap policy;
+    policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(user_policy_blob), nullptr);
     provider_.UpdateChromePolicy(policy);
     // Note that this relies on the implementation detail that the notification
@@ -241,7 +384,7 @@ class PolicyProvidedTrustRootsDeviceLocalAccountTest
     command_line->AppendSwitch(chromeos::switches::kForceLoginManagerInTests);
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile, "user");
     command_line->AppendSwitch(chromeos::switches::kOobeSkipPostLogin);
-    command_line->AppendSwitchASCII(policy::switches::kDeviceManagementUrl,
+    command_line->AppendSwitchASCII(switches::kDeviceManagementUrl,
                                     policy_server_.GetServiceURL().spec());
   }
 
@@ -249,7 +392,7 @@ class PolicyProvidedTrustRootsDeviceLocalAccountTest
     if (IsSessionStarted())
       return;
     content::WindowedNotificationObserver(chrome::NOTIFICATION_SESSION_STARTED,
-                                          base::Bind(IsSessionStarted))
+                                          base::BindRepeating(IsSessionStarted))
         .Wait();
   }
 
@@ -315,6 +458,142 @@ IN_PROC_BROWSER_TEST_F(PolicyProvidedTrustRootsPublicSessionTest,
   SetRootCertONCPolicy(browser->profile());
   EXPECT_EQ(net::ERR_CERT_AUTHORITY_INVALID,
             VerifyTestServerCert(browser->profile()));
+}
+
+class UserSessionInitTestBase : public LoginPolicyTestBase,
+                                content::NotificationObserver {
+ protected:
+  UserSessionInitTestBase() {}
+
+  void SetUpOnMainThread() override {
+    LoginPolicyTestBase::SetUpOnMainThread();
+
+    slow_certificate_importer_factory_ =
+        std::make_unique<SlowCertificateImporterFactory>();
+    UserNetworkConfigurationUpdater::SetCertficateImporterFactoryForTest(
+        slow_certificate_importer_factory_.get());
+
+    session_started_notification_registrar_ =
+        std::make_unique<content::NotificationRegistrar>();
+    session_started_notification_registrar_->Add(
+        this, chrome::NOTIFICATION_SESSION_STARTED,
+        content::NotificationService::AllSources());
+  }
+
+  void TearDownOnMainThread() override {
+    session_started_notification_registrar_.reset();
+
+    UserNetworkConfigurationUpdater::SetCertficateImporterFactoryForTest(
+        nullptr);
+    slow_certificate_importer_factory_.reset();
+
+    LoginPolicyTestBase::TearDownOnMainThread();
+  }
+
+  bool user_session_started() { return user_session_started_; }
+
+  void WaitSessionStart() {
+    if (user_session_started())
+      return;
+
+    content::WindowedNotificationObserver(
+        chrome::NOTIFICATION_SESSION_STARTED,
+        content::NotificationService::AllSources())
+        .Wait();
+  }
+
+  void TriggerLogIn() {
+    GetLoginDisplay()->ShowSigninScreenForCreds(kAccountId, kAccountPassword);
+  }
+
+ protected:
+  std::unique_ptr<SlowCertificateImporterFactory>
+      slow_certificate_importer_factory_;
+
+ private:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override {
+    EXPECT_EQ(chrome::NOTIFICATION_SESSION_STARTED, type);
+    user_session_started_ = true;
+  }
+
+  bool user_session_started_ = false;
+
+  std::unique_ptr<content::NotificationRegistrar>
+      session_started_notification_registrar_;
+
+  DISALLOW_COPY_AND_ASSIGN(UserSessionInitTestBase);
+};
+
+class UserSessionInitTestWithoutPolicyTrustedCerts
+    : public UserSessionInitTestBase {
+ protected:
+  UserSessionInitTestWithoutPolicyTrustedCerts() {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(UserSessionInitTestWithoutPolicyTrustedCerts);
+};
+
+class UserSessionInitTestWithPolicyTrustedCerts
+    : public UserSessionInitTestBase {
+ protected:
+  UserSessionInitTestWithPolicyTrustedCerts() {}
+
+  void GetMandatoryPoliciesValue(base::DictionaryValue* policy) const override {
+    const std::string& user_policy_blob =
+        chromeos::onc::test_utils::ReadTestData(kRootCertOnc);
+    policy->SetKey(key::kOpenNetworkConfiguration,
+                   base::Value(user_policy_blob));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(UserSessionInitTestWithPolicyTrustedCerts);
+};
+
+IN_PROC_BROWSER_TEST_F(UserSessionInitTestWithPolicyTrustedCerts,
+                       PRE_SessionStartsWaitsForPolicyCertsImported) {
+  SkipToLoginScreen();
+  TriggerLogIn();
+
+  slow_certificate_importer_factory_->WaitCertImportTriggered();
+
+  EXPECT_FALSE(user_session_started());
+  EXPECT_TRUE(
+      slow_certificate_importer_factory_->IsNonEmptyCertImportTriggered());
+
+  slow_certificate_importer_factory_->CompleteCertImport(
+      true, net::ScopedCERTCertificateList());
+
+  WaitSessionStart();
+}
+
+IN_PROC_BROWSER_TEST_F(UserSessionInitTestWithPolicyTrustedCerts,
+                       SessionStartsWaitsForPolicyCertsImported) {
+  content::WindowedNotificationObserver(
+      chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
+      content::NotificationService::AllSources())
+      .Wait();
+  TriggerLogIn();
+
+  slow_certificate_importer_factory_->WaitCertImportTriggered();
+
+  EXPECT_FALSE(user_session_started());
+  EXPECT_TRUE(
+      slow_certificate_importer_factory_->IsNonEmptyCertImportTriggered());
+
+  WaitSessionStart();
+}
+
+IN_PROC_BROWSER_TEST_F(UserSessionInitTestWithoutPolicyTrustedCerts,
+                       SessionStartsImmediatelyWithoutPolicyCerts) {
+  SkipToLoginScreen();
+  TriggerLogIn();
+
+  WaitSessionStart();
+
+  EXPECT_FALSE(
+      slow_certificate_importer_factory_->IsNonEmptyCertImportTriggered());
 }
 
 }  // namespace policy

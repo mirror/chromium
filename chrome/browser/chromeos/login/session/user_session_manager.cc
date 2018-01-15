@@ -62,6 +62,8 @@
 #include "chrome/browser/chromeos/login/users/supervised_user_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/policy/user_network_configuration_updater.h"
+#include "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/tether/tether_service.h"
@@ -259,15 +261,6 @@ base::FilePath GetRlzDisabledFlagPath() {
   return homedir.Append(kRLZDisabledFlagName);
 }
 #endif
-
-// Callback to GetNSSCertDatabaseForProfile. It passes the user-specific NSS
-// database to CertLoader. It must be called for primary user only.
-void OnGetNSSCertDatabaseForUser(net::NSSCertDatabase* database) {
-  if (!CertLoader::IsInitialized())
-    return;
-
-  CertLoader::Get()->SetUserNSSDB(database);
-}
 
 // Returns new CommandLine with per-user flags.
 base::CommandLine CreatePerSessionCommandLine(Profile* profile) {
@@ -1264,7 +1257,7 @@ void UserSessionManager::PrepareTpmDeviceAndFinalizeProfile(Profile* profile) {
   BootTimesRecorder::Get()->AddLoginTimeMarker("TPMOwn-Start", false);
 
   if (!tpm_util::TpmIsEnabled() || tpm_util::TpmIsBeingOwned()) {
-    FinalizePrepareProfile(profile);
+    OnTpmDevicePrepared(profile);
     return;
   }
 
@@ -1291,12 +1284,19 @@ void UserSessionManager::PrepareTpmDeviceAndFinalizeProfile(Profile* profile) {
 void UserSessionManager::OnCryptohomeOperationCompleted(Profile* profile,
                                                         bool result) {
   DCHECK(result);
-  FinalizePrepareProfile(profile);
+  OnTpmDevicePrepared(profile);
+}
+
+void UserSessionManager::OnTpmDevicePrepared(Profile* profile) {
+  BootTimesRecorder::Get()->AddLoginTimeMarker("TPMOwn-End", false);
+
+  // Now that  the TPM is prepared, the user's NSS database can be used.
+  InitializeNSSDependenciesAsync(
+      profile, base::BindOnce(&UserSessionManager::FinalizePrepareProfile,
+                              weak_factory_.GetWeakPtr(), profile));
 }
 
 void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
-  BootTimesRecorder::Get()->AddLoginTimeMarker("TPMOwn-End", false);
-
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (user_manager->IsLoggedInAsUserWithGaiaAccount()) {
     if (user_context_.GetAuthFlow() == UserContext::AUTH_FLOW_GAIA_WITH_SAML)
@@ -1322,7 +1322,6 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
       ProfileHelper::Get()->GetUserByProfile(profile);
   if (user_manager->GetPrimaryUser() == user) {
     InitRlz(profile);
-    InitializeCerts(profile);
     InitializeCRLSetFetcher(user);
     InitializeCertificateTransparencyComponents(user);
     if (lock_screen_apps::StateController::IsEnabled())
@@ -1578,13 +1577,39 @@ void UserSessionManager::InitRlzImpl(Profile* profile, bool disabled) {
 #endif
 }
 
-void UserSessionManager::InitializeCerts(Profile* profile) {
+void UserSessionManager::InitializeNSSDependenciesAsync(
+    Profile* profile,
+    base::OnceClosure callback) {
   // Now that the user profile has been initialized
   // |GetNSSCertDatabaseForProfile| is safe to be used.
-  if (CertLoader::IsInitialized() && base::SysInfo::IsRunningOnChromeOS()) {
-    GetNSSCertDatabaseForProfile(profile,
-                                 base::Bind(&OnGetNSSCertDatabaseForUser));
-  }
+  policy::UserNetworkConfigurationUpdater* user_network_configuration_updater =
+      policy::UserNetworkConfigurationUpdaterFactory::GetForProfile(profile);
+
+  // Trigger the initialization of the NSS importer, but don't wait
+  // for the result.
+  GetNSSCertDatabaseForProfile(
+      profile,
+      base::AdaptCallbackForRepeating(base::BindOnce(
+          &UserSessionManager::InitializeNSSDependenciesWithDatabase,
+          weak_factory_.GetWeakPtr(), user_network_configuration_updater)));
+
+  // Instead, wait for the trusted certs to be available. This can happen before
+  // the user's NSSDatabase has been retrieved, because the user's NSSDatabase
+  // depends on the availablility of the user's private slot, while trusted
+  // certs only need the user's public slot to be loaded.
+  user_network_configuration_updater->WaitForPendingTrustedCertsImported(
+      std::move(callback));
+}
+
+// Callback to GetNSSCertDatabaseForProfile. It passes the user-specific NSS
+// database to CertLoader. It must be called for primary user only.
+void UserSessionManager::InitializeNSSDependenciesWithDatabase(
+    policy::UserNetworkConfigurationUpdater* user_network_configuration_updater,
+    net::NSSCertDatabase* database) {
+  if (CertLoader::IsInitialized() && base::SysInfo::IsRunningOnChromeOS())
+    CertLoader::Get()->SetUserNSSDB(database);
+
+  user_network_configuration_updater->SetCertificateDatabase(database);
 }
 
 void UserSessionManager::InitializeCRLSetFetcher(
