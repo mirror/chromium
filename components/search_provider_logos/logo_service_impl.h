@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/search_provider_logos/logo_common.h"
 #include "components/search_provider_logos/logo_service.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 
 class TemplateURLService;
 
@@ -32,10 +33,11 @@ class LogoCache;
 class LogoTracker;
 class LogoObserver;
 
-class LogoServiceImpl : public LogoService {
+class LogoServiceImpl : public LogoService, public SigninManagerBase::Observer {
  public:
   LogoServiceImpl(
       const base::FilePath& cache_directory,
+      SigninManagerBase* signin_manager,
       TemplateURLService* template_url_service,
       std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -43,9 +45,12 @@ class LogoServiceImpl : public LogoService {
 
   ~LogoServiceImpl() override;
 
-  // LogoService
+  // LogoService implementation.
   void GetLogo(LogoCallbacks callbacks) override;
   void GetLogo(LogoObserver* observer) override;
+
+  // SigninManagerBase::Observer implementation.
+  void GoogleSignedOut(const AccountInfo& account_info) override;
 
   // Overrides the cache used to store logos.
   void SetLogoCacheForTests(std::unique_ptr<LogoCache> cache);
@@ -54,8 +59,11 @@ class LogoServiceImpl : public LogoService {
   void SetClockForTests(std::unique_ptr<base::Clock> clock);
 
  private:
+  void InitializeLogoTrackerIfNecessary();
+
   // Constructor arguments.
   const base::FilePath cache_directory_;
+  SigninManagerBase* const signin_manager_;
   TemplateURLService* const template_url_service_;
   const scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
 
