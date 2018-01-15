@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1574d7d_d4aa610b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-15T19:27:23Z",
+      "side": 1,
+      "message": "code would be clearer if this were called webgl_resource_provider_",
+      "range": {
+        "startLine": 347,
+        "startChar": 42,
+        "endLine": 347,
+        "endChar": 60
+      },
+      "revId": "1e7a6e049837a38dfa2cf033627e04e951405571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
