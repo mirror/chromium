@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44b85f98_5bedbaa5",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T18:02:25Z",
+      "side": 1,
+      "message": "Usually we only embed the latest version of the child, but I guess there might be some super weird case in the future that requires us to do this? I think this CL looks goodgiven the current design decisions. We can leave the discussion on whether we should support that scenario or not for a later time.",
+      "parentUuid": "506780c4_cb5a78b3",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 75
+      },
+      "revId": "64168659bedb9b3a28b9b23d62d275bf80661ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acd0037b_847fb44b",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 5
