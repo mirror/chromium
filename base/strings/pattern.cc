@@ -16,119 +16,118 @@ static bool IsWildcard(base_icu::UChar32 character) {
 
 // Move the strings pointers to the point where they start to differ.
 template <typename CHAR, typename NEXT>
-static void EatSameChars(const CHAR** pattern, const CHAR* pattern_end,
-                         const CHAR** string, const CHAR* string_end,
-                         NEXT next) {
-  const CHAR* escape = nullptr;
-  while (*pattern != pattern_end && *string != string_end) {
-    if (!escape && IsWildcard(**pattern)) {
-      // We don't want to match wildcard here, except if it's escaped.
-      return;
-    }
+bool SearchForChars(const CHAR** pattern,
+                    const CHAR* pattern_end,
+                    const CHAR** string,
+                    const CHAR* string_end,
+                    int maximum_distance,
+                    NEXT next) {
+  const CHAR* pattern_start = *pattern;
+  const CHAR* string_start = *string;
+  bool escape = false;
+  while (true) {
+    if (*pattern != pattern_end) {
+      // If we have found a wildcard, we're done.
+      if (!escape && IsWildcard(**pattern))
+        break;
 
-    // Check if the escapement char is found. If so, skip it and move to the
-    // next character.
-    if (!escape && **pattern == '\\') {
-      escape = *pattern;
-      next(pattern, pattern_end);
-      continue;
-    }
-
-    // Check if the chars match, if so, increment the ptrs.
-    const CHAR* pattern_next = *pattern;
-    const CHAR* string_next = *string;
-    base_icu::UChar32 pattern_char = next(&pattern_next, pattern_end);
-    if (pattern_char == next(&string_next, string_end) &&
-        pattern_char != CBU_SENTINEL) {
-      *pattern = pattern_next;
-      *string = string_next;
-    } else {
-      // Uh oh, it did not match, we are done. If the last char was an
-      // escapement, that means that it was an error to advance the ptr here,
-      // let's put it back where it was. This also mean that the MatchPattern
-      // function will return false because if we can't match an escape char
-      // here, then no one will.
-      if (escape) {
-        *pattern = escape;
+      // Check if the escape character is found. If so, skip it and move to the
+      // next character.
+      if (!escape && **pattern == '\\') {
+        escape = true;
+        next(pattern, pattern_end);
+        continue;
       }
-      return;
+
+      escape = false;
+
+      if (*string == string_end)
+        return false;
+
+      // Check if the chars match, if so, increment the ptrs.
+      const CHAR* pattern_next = *pattern;
+      const CHAR* string_next = *string;
+      base_icu::UChar32 pattern_char = next(&pattern_next, pattern_end);
+      if (pattern_char == next(&string_next, string_end) &&
+          pattern_char != CBU_SENTINEL) {
+        *pattern = pattern_next;
+        *string = string_next;
+        continue;
+      }
+    } else {
+      if (*string == string_end)
+        return true;
     }
 
-    escape = nullptr;
+    if (maximum_distance == 0)
+      return false;
+
+    // Restart at the beginning of the pattern with the next character in the
+    // string.
+    maximum_distance--;
+    *pattern = pattern_start;
+    next(&string_start, string_end);
+    *string = string_start;
   }
+  return true;
 }
 
+// Consumes consecutive wildcard characters (? or *). Returns the maximum number
+// of characters matched by the sequence of wildcards, or -1 if the wildcards
+// match an arbitrary number of characters (which is the case if it contains at
+// least one *).
 template <typename CHAR, typename NEXT>
-static void EatWildcard(const CHAR** pattern, const CHAR* end, NEXT next) {
+int EatWildcards(const CHAR** pattern, const CHAR* end, NEXT next) {
+  int num_question_marks = 0;
+  bool has_asterisk = false;
   while (*pattern != end) {
-    if (!IsWildcard(**pattern))
-      return;
+    if (**pattern == '?') {
+      num_question_marks++;
+    } else if (**pattern == '*') {
+      has_asterisk = true;
+    } else {
+      break;
+    }
+
     next(pattern, end);
   }
+  return has_asterisk ? -1 : num_question_marks;
 }
 
 template <typename CHAR, typename NEXT>
-static bool MatchPatternT(const CHAR* eval, const CHAR* eval_end,
-                          const CHAR* pattern, const CHAR* pattern_end,
-                          int depth,
-                          NEXT next) {
-  const int kMaxDepth = 16;
-  if (depth > kMaxDepth)
-    return false;
+bool SearchForEnd(const CHAR** string,
+                  const CHAR* string_end,
+                  int maximum_distance,
+                  NEXT next) {
+  if (maximum_distance < 0)
+    return true;
 
-  // Eat all the matching chars.
-  EatSameChars(&pattern, pattern_end, &eval, eval_end, next);
+  while (*string != string_end) {
+    if (maximum_distance == 0)
+      return false;
 
-  // If the string is empty, then the pattern must be empty too, or contains
-  // only wildcards.
-  if (eval == eval_end) {
-    EatWildcard(&pattern, pattern_end, next);
-    return pattern == pattern_end;
+    maximum_distance--;
+    next(string, string_end);
   }
+  return true;
+}
 
-  // Pattern is empty but not string, this is not a match.
-  if (pattern == pattern_end)
-    return false;
+template <typename CHAR, typename NEXT>
+bool MatchPatternT(const CHAR* eval,
+                   const CHAR* eval_end,
+                   const CHAR* pattern,
+                   const CHAR* pattern_end,
+                   NEXT next) {
+  while (true) {
+    int maximum_wildcard_length = EatWildcards(&pattern, pattern_end, next);
+    if (pattern == pattern_end)
+      return SearchForEnd(&eval, eval_end, maximum_wildcard_length, next);
 
-  // If this is a question mark, then we need to compare the rest with
-  // the current string or the string with one character eaten.
-  const CHAR* next_pattern = pattern;
-  next(&next_pattern, pattern_end);
-  if (pattern[0] == '?') {
-    if (MatchPatternT(eval, eval_end, next_pattern, pattern_end,
-                      depth + 1, next))
-      return true;
-    const CHAR* next_eval = eval;
-    next(&next_eval, eval_end);
-    if (MatchPatternT(next_eval, eval_end, next_pattern, pattern_end,
-                      depth + 1, next))
-      return true;
-  }
-
-  // This is a *, try to match all the possible substrings with the remainder
-  // of the pattern.
-  if (pattern[0] == '*') {
-    // Collapse duplicate wild cards (********** into *) so that the
-    // method does not recurse unnecessarily. http://crbug.com/52839
-    EatWildcard(&next_pattern, pattern_end, next);
-
-    while (eval != eval_end) {
-      if (MatchPatternT(eval, eval_end, next_pattern, pattern_end,
-                        depth + 1, next))
-        return true;
-      eval++;
-    }
-
-    // We reached the end of the string, let see if the pattern contains only
-    // wildcards.
-    if (eval == eval_end) {
-      EatWildcard(&pattern, pattern_end, next);
-      if (pattern != pattern_end)
-        return false;
-      return true;
+    if (!SearchForChars(&pattern, pattern_end, &eval, eval_end,
+                        maximum_wildcard_length, next)) {
+      break;
     }
   }
-
   return false;
 }
 
@@ -155,15 +154,13 @@ struct NextCharUTF16 {
 }  // namespace
 
 bool MatchPattern(StringPiece eval, StringPiece pattern) {
-  return MatchPatternT(eval.data(), eval.data() + eval.size(),
-                       pattern.data(), pattern.data() + pattern.size(),
-                       0, NextCharUTF8());
+  return MatchPatternT(eval.data(), eval.data() + eval.size(), pattern.data(),
+                       pattern.data() + pattern.size(), NextCharUTF8());
 }
 
 bool MatchPattern(StringPiece16 eval, StringPiece16 pattern) {
-  return MatchPatternT(eval.data(), eval.data() + eval.size(),
-                       pattern.data(), pattern.data() + pattern.size(),
-                       0, NextCharUTF16());
+  return MatchPatternT(eval.data(), eval.data() + eval.size(), pattern.data(),
+                       pattern.data() + pattern.size(), NextCharUTF16());
 }
 
 }  // namespace base
