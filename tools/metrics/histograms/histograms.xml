@@ -80476,6 +80476,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="SettingsResetPrompt.NumberOfExtensionsToDisable"
     units="extensions">
+  <obsolete>
+    Deprecated on 2018-01-16.
+  </obsolete>
   <owner>alito@chromium.org</owner>
   <summary>
     The number of extensions that will be disabled if the user accepts the
