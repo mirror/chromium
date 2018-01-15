@@ -102,11 +102,19 @@ HeadlessBrowserContextImpl::~HeadlessBrowserContextImpl() {
   // Destroy all web contents before shutting down storage partitions.
   web_contents_map_.clear();
 
-  ShutdownStoragePartitions();
-
   if (resource_context_) {
     content::BrowserThread::DeleteSoon(content::BrowserThread::IO, FROM_HERE,
                                        resource_context_.release());
+  }
+
+  ShutdownStoragePartitions();
+
+  if (url_request_getter_) {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &HeadlessURLRequestContextGetter::NotifyContextShuttingDown,
+            url_request_getter_));
   }
 }
 
