@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d98115c7_9024c33d",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-15T06:20:56Z",
+      "side": 1,
+      "message": "As mentioned by the comment,\nhttps://cs.chromium.org/chromium/src/chrome/browser/chrome_browser_main.cc?l\u003d895\nSeems IO thread can only be created when parts_ has been initialized.\nCurrently parts is initialized in BrowserMainLoop::PreCreateThreads(). By local testing, initializing IO thread before BrowserMainLoop::PreCreateThreads() will fail.",
+      "range": {
+        "startLine": 117,
+        "startChar": 17,
+        "endLine": 117,
+        "endChar": 35
+      },
+      "revId": "1a54948d8dd06edd19a544f4e67a02752a769416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
