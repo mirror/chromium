@@ -51,6 +51,12 @@ NET_EXPORT std::string EscapeNonASCII(base::StringPiece input);
 // chracters (;/?:@&=+$,#[]) and a valid percent escape sequence (%XX).
 NET_EXPORT std::string EscapeExternalHandlerValue(base::StringPiece text);
 
+// Escapes characters in text suitable for use as an custom protocol handler
+// command.
+// We %XX everything except alphanumerics and $&'()*+,-./" and a valid percent
+// escape sequence (%XX).
+NET_EXPORT std::string EscapeCustomHandlerValue(base::StringPiece text);
+
 // Appends the given character to the output string, escaping the character if
 // the character would be interpretted as an HTML delimiter.
 NET_EXPORT void AppendEscapedCharForHTML(char c, std::string* output);

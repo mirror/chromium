@@ -1002,5 +1002,45 @@ TEST_F(ProtocolHandlerRegistryTest, TestMultiplePlaceholders) {
   // When URL contains multiple placeholders, only the first placeholder should
   // be changed to the given URL.
   ASSERT_EQ(translated_url,
-            GURL("http://example.com/test%3Aduplicated_placeholders/url=%s"));
+            GURL("http://example.com/test:duplicated_placeholders/url=%s"));
+}
+
+TEST_F(ProtocolHandlerRegistryTest, TestURIPercentEncoded) {
+  ProtocolHandler ph =
+      CreateProtocolHandler("web+example", GURL("https://example.org/url=%s"));
+  registry()->OnAcceptRegisterProtocolHandler(ph);
+
+  GURL translated_url = ph.TranslateUrl(GURL(
+      "web+example://custom/protocol+handler/something%20else/chicken-kïwi"));
+  ASSERT_EQ(translated_url,
+            GURL("https://example.org/url=web+example://custom/"
+                 "protocol+handler/something%20else/chicken-k%C3%AFwi"));
+
+  translated_url = ph.TranslateUrl(GURL("web+example://bar/%3Fxyz"));
+  ASSERT_EQ(translated_url,
+            GURL("https://example.org/url=web+example://bar/%3Fxyz"));
+
+  // Alphanumerics and $&'()*+,-./ and a valid percent escape sequence (%XX).
+  std::vector<std::pair<std::string, std::string>> non_escaped_entries = {
+      {"web+example://non_escaped_char=$&'()*+,-./:",
+       "https://example.org/url=web+example://non_escaped_char=$&'()*+,-./:"},
+      {"web+example://non_escaped_char=%20",
+       "https://example.org/url=web+example://non_escaped_char=%20"},
+      {"web+example://non_escaped_char=%20with%20%25%20percent",
+       "https://example.org/url=web+example://"
+       "non_escaped_char=%20with%20%25%20percent"},
+  };
+
+  for (const auto& entry : non_escaped_entries)
+    ASSERT_EQ(ph.TranslateUrl(GURL(entry.first)), entry.second);
+
+  // !"#$%`{}?<> and non-alphanumerics should be escaped.
+  std::vector<std::pair<std::string, std::string>> escaped_entries = {
+      {"web+example://escaped_char=<>`{}\x7F#?\"' '😂 ",
+       "https://example.org/url=web+example://"
+       "escaped_char=%3C%3E%60%7B%7D%7F%23%3F%22'%20'%F0%9F%98%82"},
+  };
+
+  for (const auto& entry : escaped_entries)
+    ASSERT_EQ(ph.TranslateUrl(GURL(entry.first)), entry.second);
 }
