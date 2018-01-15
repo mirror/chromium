@@ -273,6 +273,10 @@ jumbo_component("base") {
     "cpu.h",
     "critical_closure.h",
     "critical_closure_internal_ios.mm",
+    "promise/promise.h",
+    "promise/promise_forward.h",
+    "promise/promise_internal.h",
+    "promise/promise_internal.cc",
 
     # This file depends on files from the "debug/allocator" target,
     # but this target does not depend on "debug/allocator".
@@ -2200,6 +2204,7 @@ test("base_unittests") {
     "process/process_unittest.cc",
     "process/process_util_unittest.cc",
     "profiler/stack_sampling_profiler_unittest.cc",
+    "promise/promise_unittest.cc",
     "rand_util_unittest.cc",
     "run_loop_unittest.cc",
     "safe_numerics_unittest.cc",
