@@ -2,7 +2,7 @@
 # Copyright 2017 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-"""Custom swarming triggering script.
+"""Custom swarming performance test triggering script.
 
 This script does custom swarming triggering logic, to enable device affinity
 for our bots, while lumping all trigger calls under one logical step.
@@ -88,6 +88,9 @@ def trigger_tasks(args, remaining):
     finally:
       os.close(temp_fd)
       os.remove(json_temp)
+
+  # After all the tasks have been triggered, combine the results for one
+  # buildbot trigger step.
   with open(args.dump_json, 'w') as f:
     json.dump(merged_json, f)
   return 0
@@ -104,18 +107,11 @@ def main():
                       help='(Swarming Trigger Script API) Where to dump the'
                       ' resulting json which indicates which tasks were'
                       ' triggered for which shards.')
-  parser.add_argument('--shards',
-                      help='How many shards to trigger. Duplicated from the'
-                      ' `swarming.py trigger` command. If passed, will be'
-                      ' checked to ensure there are as many shards as bots'
-                      ' specified by the --bot-id argument. If omitted,'
-                      ' --bot-id will be used to determine the number of shards'
-                      ' to create.')
+  parser.add_argument('--swarming-py-path', action='append', required=False,
+                      help='Removing this from passed in recipe args'
+                      ' since we only need the relative pass on src side')
   args, remaining = parser.parse_known_args()
 
-  if args.shards and args.shards != len(args.bot_id):
-    raise parser.error(
-        'Number of bots to use must equal number of shards (--shards)')
   return trigger_tasks(args, remaining)
 
 
