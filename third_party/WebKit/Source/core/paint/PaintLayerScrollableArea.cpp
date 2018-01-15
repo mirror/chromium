@@ -1492,6 +1492,7 @@ int PaintLayerScrollableArea::VerticalScrollbarWidth(
       VerticalScrollbar()->IsOverlayScrollbar()) {
     return 0;
   }
+  LOG(ERROR) << "thickness: " << VerticalScrollbar()->ScrollbarThickness();
   return VerticalScrollbar()->ScrollbarThickness();
 }
 

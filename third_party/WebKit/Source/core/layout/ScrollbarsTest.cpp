@@ -593,6 +593,7 @@ TEST_P(ScrollbarsTest, MouseOverLinkAndOverlayScrollbar) {
 
   HandleMouseReleaseEvent(18, a_tag->OffsetTop());
 
+  LOG(ERROR) << "set hidden";
   // Mouse over disabled overlay scrollbar. Mouse cursor should be hand and has
   // active hover element.
   WebView()
@@ -601,8 +602,10 @@ TEST_P(ScrollbarsTest, MouseOverLinkAndOverlayScrollbar) {
       ->LayoutViewportScrollableArea()
       ->SetScrollbarsHidden(true);
 
+  LOG(ERROR) << "hit test";
   // Ensure hittest only has link
   hit_test_result = HitTest(18, a_tag->OffsetTop());
+  LOG(ERROR) << "done";
 
   EXPECT_TRUE(hit_test_result.URLElement());
   EXPECT_TRUE(hit_test_result.InnerElement());

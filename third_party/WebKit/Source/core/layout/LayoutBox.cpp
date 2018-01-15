@@ -1973,8 +1973,10 @@ LayoutRect LayoutBox::OverflowClipRect(
   clip_rect.SetSize(clip_rect.Size() -
                     LayoutSize(BorderWidth(), BorderHeight()));
 
+  //  LOG(ERROR) << "clip rect: " << clip_rect.ToString();
   if (HasOverflowClip())
     ExcludeScrollbars(clip_rect, overlay_scrollbar_clip_behavior);
+  // LOG(ERROR) << "clip rect: " << clip_rect.ToString();
 
   if (HasControlClip())
     clip_rect.Intersect(ControlClipRect(location));
