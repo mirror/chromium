@@ -16,6 +16,24 @@
       "revId": "0d8efb4edeb3ad5c44d4659aa96f1f54bec9756a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b68035_929687ba",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-15T08:06:29Z",
+      "side": 1,
+      "message": "I don\u0027t have a formula to get the maximum width of any letters in a given language.\nFor the same reason, this change does not intend to cover all languages.\nThis intend to make the volume names look nicer in the major environment (i.e. English) and leave other languages out of scope.",
+      "parentUuid": "c3049e30_88f64adc",
+      "revId": "0d8efb4edeb3ad5c44d4659aa96f1f54bec9756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
