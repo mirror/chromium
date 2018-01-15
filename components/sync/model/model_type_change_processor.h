@@ -98,11 +98,12 @@ class ModelTypeChangeProcessor {
   // returning a ModelError directly. Outstanding callbacks are not expected to
   // be called after an error. This will result in sync being temporarily
   // disabled for the model type (generally until the next restart).
-  virtual void ReportError(const ModelError& error) = 0;
-
-  // A convenience form of the above.
+  // TODO(mastiz): Remove once all callbacks support reporting an error.
   virtual void ReportError(const base::Location& location,
                            const std::string& message) = 0;
+
+  // Convenience form of the above.
+  void ReportModelError(const ModelError& error);
 };
 
 }  // namespace syncer

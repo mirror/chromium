@@ -210,7 +210,7 @@ void UserEventSyncBridge::OnReadAllMetadata(
     base::Optional<ModelError> error,
     std::unique_ptr<MetadataBatch> metadata_batch) {
   if (error) {
-    change_processor()->ReportError(error.value());
+    change_processor()->ReportModelError(error.value());
   } else {
     if (!metadata_batch->GetModelTypeState().initial_sync_done()) {
       // We have never initialized before, force it to true. We are not going to

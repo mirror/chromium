@@ -20,4 +20,8 @@ std::unique_ptr<ModelTypeChangeProcessor> ModelTypeChangeProcessor::Create(
 ModelTypeChangeProcessor::ModelTypeChangeProcessor() {}
 ModelTypeChangeProcessor::~ModelTypeChangeProcessor() {}
 
+void ModelTypeChangeProcessor::ReportModelError(const ModelError& error) {
+  ReportError(error.location(), error.message());
+}
+
 }  // namespace syncer

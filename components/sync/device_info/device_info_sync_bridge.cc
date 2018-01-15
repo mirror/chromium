@@ -112,9 +112,10 @@ DeviceInfoSyncBridge::CreateMetadataChangeList() {
   return WriteBatch::CreateMetadataChangeList();
 }
 
-base::Optional<ModelError> DeviceInfoSyncBridge::MergeSyncData(
+void DeviceInfoSyncBridge::MergeSyncData2(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
-    EntityChangeList entity_data) {
+    EntityChangeList entity_data,
+    OptionalErrorCallback callback) {
   DCHECK(has_provider_initialized_);
   DCHECK(change_processor()->IsTrackingMetadata());
   const DeviceInfo* local_info =
@@ -122,7 +123,8 @@ base::Optional<ModelError> DeviceInfoSyncBridge::MergeSyncData(
   // If our dependency was yanked out from beneath us, we cannot correctly
   // handle this request, and all our data will be deleted soon.
   if (local_info == nullptr) {
-    return {};
+    std::move(callback).Run(base::nullopt);
+    return;
   }
 
   // Local data should typically be near empty, with the only possible value
@@ -162,20 +164,21 @@ base::Optional<ModelError> DeviceInfoSyncBridge::MergeSyncData(
   }
 
   batch->TransferMetadataChanges(std::move(metadata_change_list));
-  CommitAndNotify(std::move(batch), has_changes);
-  return {};
+  CommitAndNotify(std::move(batch), has_changes, std::move(callback));
 }
 
-base::Optional<ModelError> DeviceInfoSyncBridge::ApplySyncChanges(
+void DeviceInfoSyncBridge::ApplySyncChanges2(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
-    EntityChangeList entity_changes) {
+    EntityChangeList entity_changes,
+    OptionalErrorCallback callback) {
   DCHECK(has_provider_initialized_);
   const DeviceInfo* local_info =
       local_device_info_provider_->GetLocalDeviceInfo();
   // If our dependency was yanked out from beneath us, we cannot correctly
   // handle this request, and all our data will be deleted soon.
   if (local_info == nullptr) {
-    return {};
+    std::move(callback).Run(base::nullopt);
+    return;
   }
 
   std::unique_ptr<WriteBatch> batch = store_->CreateWriteBatch();
@@ -201,8 +204,7 @@ base::Optional<ModelError> DeviceInfoSyncBridge::ApplySyncChanges(
   }
 
   batch->TransferMetadataChanges(std::move(metadata_change_list));
-  CommitAndNotify(std::move(batch), has_changes);
-  return {};
+  CommitAndNotify(std::move(batch), has_changes, std::move(callback));
 }
 
 void DeviceInfoSyncBridge::GetData(StorageKeyList storage_keys,
@@ -252,9 +254,11 @@ void DeviceInfoSyncBridge::DisableSync() {
     for (const auto& kv : all_data_) {
       batch->DeleteData(kv.first);
     }
+    // TODO/DONOTSUBMIT: Prior code called ReportError() here.
     store_->CommitWriteBatch(
         std::move(batch),
-        base::Bind(&DeviceInfoSyncBridge::OnCommit, base::AsWeakPtr(this)));
+        base::Bind(&DeviceInfoSyncBridge::OnCommit, base::AsWeakPtr(this),
+                   base::Bind([](const base::Optional<ModelError>&) {})));
 
     all_data_.clear();
     NotifyObservers();
@@ -382,7 +386,7 @@ void DeviceInfoSyncBridge::OnReadAllMetadata(
     base::Optional<ModelError> error,
     std::unique_ptr<MetadataBatch> metadata_batch) {
   if (error) {
-    change_processor()->ReportError(error.value());
+    change_processor()->ReportModelError(error.value());
     return;
   }
 
@@ -390,9 +394,12 @@ void DeviceInfoSyncBridge::OnReadAllMetadata(
   ReconcileLocalAndStored();
 }
 
-void DeviceInfoSyncBridge::OnCommit(Result result) {
-  if (result != Result::SUCCESS) {
-    change_processor()->ReportError(FROM_HERE, "Failed a write to store.");
+void DeviceInfoSyncBridge::OnCommit(OptionalErrorCallback callback,
+                                    Result result) {
+  if (result == Result::SUCCESS) {
+    callback.Run(base::nullopt);
+  } else {
+    callback.Run(ModelError(FROM_HERE, "Failed a write to store."));
   }
 }
 
@@ -452,7 +459,9 @@ void DeviceInfoSyncBridge::SendLocalData() {
     }
 
     StoreSpecifics(std::move(specifics), batch.get());
-    CommitAndNotify(std::move(batch), true);
+    // TODO/DONOTSUBMIT: Prior code called ReportError() here.
+    CommitAndNotify(std::move(batch), true,
+                    base::Bind([](const base::Optional<ModelError>&) {}));
   }
 
   pulse_timer_.Start(
@@ -461,10 +470,11 @@ void DeviceInfoSyncBridge::SendLocalData() {
 }
 
 void DeviceInfoSyncBridge::CommitAndNotify(std::unique_ptr<WriteBatch> batch,
-                                           bool should_notify) {
-  store_->CommitWriteBatch(
-      std::move(batch),
-      base::Bind(&DeviceInfoSyncBridge::OnCommit, base::AsWeakPtr(this)));
+                                           bool should_notify,
+                                           OptionalErrorCallback callback) {
+  store_->CommitWriteBatch(std::move(batch),
+                           base::Bind(&DeviceInfoSyncBridge::OnCommit,
+                                      base::AsWeakPtr(this), callback));
   if (should_notify) {
     NotifyObservers();
   }
@@ -476,6 +486,13 @@ int DeviceInfoSyncBridge::CountActiveDevices(const Time now) const {
                          return DeviceInfoUtil::IsActive(
                              GetLastUpdateTime(*pair.second), now);
                        });
+}
+
+// static
+std::unique_ptr<ModelTypeStore>
+DeviceInfoSyncBridge::DestroyAndStealStoreForTest(
+    std::unique_ptr<DeviceInfoSyncBridge> bridge) {
+  return std::move(bridge->store_);
 }
 
 }  // namespace syncer

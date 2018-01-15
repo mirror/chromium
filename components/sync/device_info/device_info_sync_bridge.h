@@ -41,12 +41,13 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
 
   // ModelTypeSyncBridge implementation.
   std::unique_ptr<MetadataChangeList> CreateMetadataChangeList() override;
-  base::Optional<ModelError> MergeSyncData(
+  void MergeSyncData2(std::unique_ptr<MetadataChangeList> metadata_change_list,
+                      EntityChangeList entity_data,
+                      OptionalErrorCallback callback) override;
+  void ApplySyncChanges2(
       std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_data) override;
-  base::Optional<ModelError> ApplySyncChanges(
-      std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_changes) override;
+      EntityChangeList entity_changes,
+      OptionalErrorCallback callback) override;
   void GetData(StorageKeyList storage_keys, DataCallback callback) override;
   void GetAllData(DataCallback callback) override;
   std::string GetClientTag(const EntityData& entity_data) override;
@@ -61,6 +62,9 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
   int CountActiveDevices() const override;
+
+  static std::unique_ptr<ModelTypeStore> DestroyAndStealStoreForTest(
+      std::unique_ptr<DeviceInfoSyncBridge> bridge);
 
  private:
   friend class DeviceInfoSyncBridgeTest;
@@ -90,7 +94,7 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
                      std::unique_ptr<ModelTypeStore::RecordList> record_list);
   void OnReadAllMetadata(base::Optional<ModelError> error,
                          std::unique_ptr<MetadataBatch> metadata_batch);
-  void OnCommit(ModelTypeStore::Result result);
+  void OnCommit(OptionalErrorCallback callback, ModelTypeStore::Result result);
 
   // Load metadata if the data is loaded and the provider is initialized.
   void LoadMetadataIfReady();
@@ -108,7 +112,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
   // Persists the changes in the given aggregators and notifies observers if
   // indicated to do as such.
   void CommitAndNotify(std::unique_ptr<ModelTypeStore::WriteBatch> batch,
-                       bool should_notify);
+                       bool should_notify,
+                       OptionalErrorCallback callback);
 
   // Counts the number of active devices relative to |now|. The activeness of a
   // device depends on the amount of time since it was updated, which means

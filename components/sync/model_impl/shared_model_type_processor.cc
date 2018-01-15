@@ -171,14 +171,15 @@ bool SharedModelTypeProcessor::IsTrackingMetadata() {
   return model_type_state_.initial_sync_done();
 }
 
-void SharedModelTypeProcessor::ReportError(const ModelError& error) {
+void SharedModelTypeProcessor::ReportError(const base::Location& location,
+                                           const std::string& message) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Ignore all errors after the first.
   if (model_error_)
     return;
 
-  model_error_ = error;
+  model_error_ = ModelError(location, message);
 
   if (dump_stack_) {
     // Upload a stack trace if possible.
@@ -191,13 +192,8 @@ void SharedModelTypeProcessor::ReportError(const ModelError& error) {
   } else if (error_handler_) {
     // Connecting was already initiated; just tell sync about the error instead
     // of going through ConnectIfReady().
-    error_handler_.Run(error);
+    error_handler_.Run(*model_error_);
   }
-}
-
-void SharedModelTypeProcessor::ReportError(const base::Location& location,
-                                           const std::string& message) {
-  ReportError(ModelError(location, message));
 }
 
 void SharedModelTypeProcessor::ConnectSync(
@@ -413,7 +409,7 @@ void SharedModelTypeProcessor::OnCommitCompleted(
   base::Optional<ModelError> error = bridge_->ApplySyncChanges(
       std::move(metadata_change_list), entity_change_list);
   if (error) {
-    ReportError(error.value());
+    ReportModelError(error.value());
   }
 }
 
@@ -478,7 +474,7 @@ void SharedModelTypeProcessor::OnUpdateReceived(
   base::Optional<ModelError> error =
       bridge_->ApplySyncChanges(std::move(metadata_changes), entity_changes);
   if (error) {
-    ReportError(error.value());
+    ReportModelError(error.value());
     return;
   }
 
@@ -690,7 +686,7 @@ void SharedModelTypeProcessor::OnInitialUpdateReceived(
   base::Optional<ModelError> error =
       bridge_->MergeSyncData(std::move(metadata_changes), entity_data);
   if (error) {
-    ReportError(error.value());
+    ReportModelError(error.value());
     return;
   }
 
