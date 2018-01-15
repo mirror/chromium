@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef280fae_0e76ef99",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 7614,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T23:49:46Z",
+      "side": 1,
+      "message": "Seems like it, but I think this is more readable personally.",
+      "parentUuid": "51a787c6_62fadc42",
+      "revId": "d6906a433b9653e7b281040e8d2d26cf5a84c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0feaa27_4259abea",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d6906a433b9653e7b281040e8d2d26cf5a84c1c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e191e8b2_aabec02b",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T23:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0feaa27_4259abea",
+      "revId": "d6906a433b9653e7b281040e8d2d26cf5a84c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
