@@ -16,6 +16,24 @@
       "revId": "c1e4de0ab890a68a64f42effba682aa21636b2ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8e3c3f_4bd67971",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-15T18:29:28Z",
+      "side": 1,
+      "message": "Ya, I could see that being useful for desktop ozone work. This is blocked on https://crbug.com/800779 so I\u0027m going to abandon again but you could probably land that change somewhere.",
+      "parentUuid": "05e155d6_976f8b86",
+      "revId": "c1e4de0ab890a68a64f42effba682aa21636b2ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
