@@ -22,6 +22,30 @@
       "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35734eb7_b7321e27",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T15:42:36Z",
+      "side": 1,
+      "message": "No, for the global scope the element should always be 0 (I guess it will actually be ignored, so it probably doesn\u0027t matter in practice), so in the CL I changed it from |element| to 0. Yeah, sure AUElement::OUTPUT could have been used. I can create a follow-up to fix if you like.",
+      "parentUuid": "cfc201e4_3ab68f24",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
