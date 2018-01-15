@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517fdb78_1401fa5f",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-15T13:36:40Z",
+      "side": 1,
+      "message": "My preference would be to use enums rather than bools to avoid the need to comment the parameters, but since the existing code is like this, you might as well match it.",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "4e429a75a1ff39790f2faf35ef233803d969c70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
