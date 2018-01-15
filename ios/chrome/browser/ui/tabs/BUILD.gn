@@ -52,6 +52,7 @@ source_set("tabs") {
     "//ios/chrome/browser/ui/image_util",
     "//ios/chrome/browser/ui/tabs/requirements",
     "//ios/chrome/browser/ui/util",
+    "//ios/chrome/browser/web_state_list",
     "//ios/third_party/material_components_ios",
     "//ios/web",
     "//third_party/google_toolbox_for_mac",
