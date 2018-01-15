@@ -250,8 +250,6 @@ BrowserProcessImpl::BrowserProcessImpl(
   extensions::ExtensionsBrowserClient::Set(extensions_browser_client_.get());
 #endif
 
-  message_center::MessageCenter::Initialize();
-
   update_client::UpdateQueryParams::SetDelegate(
       ChromeUpdateQueryParamsDelegate::GetInstance());
 
@@ -1136,6 +1134,10 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
       base::MakeUnique<PluginsResourceService>(local_state());
   plugins_resource_service_->Init();
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
+
+  // TODO(estade): don't initialize if kNativeNotifications are enabled.
+  // if (!base::FeatureList::IsEnabled(features::kNativeNotifications))
+  message_center::MessageCenter::Initialize();
 
 #if !defined(OS_ANDROID)
   storage_monitor::StorageMonitor::Create();
