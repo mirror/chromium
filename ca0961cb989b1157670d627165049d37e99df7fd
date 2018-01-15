@@ -16,6 +16,24 @@
       "revId": "ca0961cb989b1157670d627165049d37e99df7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d9b680_f87f3157",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-15T14:02:27Z",
+      "side": 0,
+      "message": "Not yet. I left a TODO somewhere in this patch to investigate the removal. It is still used as some kind of id throughout the code.",
+      "parentUuid": "9f10895d_ecd6cbe9",
+      "revId": "ca0961cb989b1157670d627165049d37e99df7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

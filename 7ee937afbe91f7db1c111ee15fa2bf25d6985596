@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "193f49f2_49c08c0a",
+        "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-15T14:02:27Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I\u0027ll get rid of EnsureAgent in the next cleanup CLs. However, I like the shared worker way of binding DevToolsAgent lazily more, while service worker has to do it all the time (due to IO thread being involved).",
+      "parentUuid": "a765b782_4063c032",
+      "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c9b56c1_dd5bf50a",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-15T08:32:56Z",
       "side": 1,
       "message": "I think it would be more accurate to call this BindXYZ(): it\u0027s not really \u0027getting\u0027 anything; rather we create the Ptr on the sender side and send the request to bind it to the other end.",
+      "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193d6a34_b2441312",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-15T14:02:27Z",
+      "side": 1,
+      "message": "Let me follow up with a TBR\u0027ed rename. I will do it in both shared and service workers then.",
+      "parentUuid": "7c9b56c1_dd5bf50a",
       "revId": "7ee937afbe91f7db1c111ee15fa2bf25d6985596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
