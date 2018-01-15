@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959b02cc_97567078",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-15T19:03:09Z",
+      "side": 1,
+      "message": "hmm this makes me a little nervous because the docs carefully avoid to say if this is valid or UB when the collection is empty.\n\nCan this become:\n\nit \u003d begin()\nfor (...) {\n it \u003d emplace_after(it, ...)\n}\n\n?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7f43b4_915d8ed7",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-15T19:03:09Z",
+      "side": 1,
+      "message": "Just GetMetric, given that the dump_name is the 1st arg.\nAlso plz add a comment with one real example, will make this waaay clearer.",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26da0c2f_ebfe798f",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-15T19:03:09Z",
+      "side": 1,
+      "message": "s/mojo/raw/, I first thought this was some mojo-specific dump.",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "09d70179fb68eb6888493b4244fea78b2bd1b6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
