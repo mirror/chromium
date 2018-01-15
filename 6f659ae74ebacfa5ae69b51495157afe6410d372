@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "633010c7_3502d6f2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T04:21:00Z",
+      "side": 1,
+      "message": "How about pass |NGPhysicalFragmentWithOffset|? If so, we can use |return|\nstatement here. I think it is better even if we have |DCHECK(IsText())|\nand |ToNGPhysicalTextFragment()| in |TryResolveCaretPositionInTextFragment()|.",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "6f659ae74ebacfa5ae69b51495157afe6410d372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
