@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0441148f_8f2bfd7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T08:13:15Z",
+      "side": 1,
+      "message": "has -\u003e have",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "31462dd45bee02feffca00c2b138a53eb3e6f2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7609678e_94a9eb02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T08:13:15Z",
+      "side": 1,
+      "message": "\"are fixed,\" -\u003e \"have been fixed;\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 61,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "31462dd45bee02feffca00c2b138a53eb3e6f2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2d4857_e29b8452",
+        "filename": "build/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-15T08:13:15Z",
+      "side": 1,
+      "message": "no \"(c) \" in copyright notices; see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "31462dd45bee02feffca00c2b138a53eb3e6f2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
