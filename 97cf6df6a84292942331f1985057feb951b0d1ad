@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f29f2d1_411b6a48",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T14:08:19Z",
+      "side": 1,
+      "message": "nit: parentheses not needed around |stream|, but up to you. Also applies to other functions.",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "97cf6df6a84292942331f1985057feb951b0d1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fca4c96_9a3f0fd0",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T14:08:19Z",
+      "side": 1,
+      "message": "nit: Why keep this comment in the test?",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "97cf6df6a84292942331f1985057feb951b0d1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c82a28_dbac27ab",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T14:08:19Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 81,
+        "startChar": 58,
+        "endLine": 81,
+        "endChar": 59
+      },
+      "revId": "97cf6df6a84292942331f1985057feb951b0d1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
