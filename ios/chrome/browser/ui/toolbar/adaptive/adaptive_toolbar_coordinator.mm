@@ -9,6 +9,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
+#include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
@@ -19,10 +20,12 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
+#include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/web/public/referrer.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -45,6 +48,8 @@
 @property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
 // Type of this instance of the toolbar.
 @property(nonatomic, assign) ToolbarType type;
+// Mediator for updating the toolbar when the WebState changes.
+@property(nonatomic, strong) ToolbarMediator* mediator;
 
 @end
 
@@ -52,6 +57,7 @@
 @synthesize delegate = _delegate;
 @synthesize dispatcher = _dispatcher;
 @synthesize locationBarCoordinator = _locationBarCoordinator;
+@synthesize mediator = _mediator;
 @synthesize omniboxPopupCoordinator = _omniboxPopupCoordinator;
 @synthesize started = _started;
 @synthesize toolbarViewController = _toolbarViewController;
@@ -93,6 +99,14 @@
   self.toolbarViewController.dispatcher = self.dispatcher;
   self.toolbarViewController.locationBarView =
       self.locationBarCoordinator.locationBarView;
+
+  self.mediator = [[ToolbarMediator alloc] init];
+  self.mediator.voiceSearchProvider =
+      ios::GetChromeBrowserProvider()->GetVoiceSearchProvider();
+  self.mediator.consumer = self.toolbarViewController;
+  self.mediator.webStateList = self.webStateList;
+  self.mediator.bookmarkModel =
+      ios::BookmarkModelFactory::GetForBrowserState(self.browserState);
 }
 
 #pragma mark - Property Accessors
