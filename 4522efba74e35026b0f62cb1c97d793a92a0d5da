@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165d33a9_56b09359",
+        "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 0,
+      "message": "For future reference, legacy IPC routing IDs are 32 bits.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "4522efba74e35026b0f62cb1c97d793a92a0d5da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

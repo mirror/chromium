@@ -33,6 +33,126 @@
       "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7291313_1201cd34",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "I think we should also check that origin is not opaque here and report a bad message otherwise.",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b103f77f_4bedf456",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "Is this necessary? The only time this will get dropped is if the renderer is going away, in which case, running the callback shouldn\u0027t matter at all.\n\nI\u0027d strongly prefer we avoid use of this.",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36cc473_d5382d7c",
+        "filename": "third_party/WebKit/Source/modules/quota/QuotaUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "Nit: newline before } for consistency",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10b4749_c13d2ec2",
+        "filename": "third_party/WebKit/Source/modules/quota/StorageManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "Ditto about not using the callback wrapper here.",
+      "range": {
+        "startLine": 119,
+        "startChar": 10,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9e477d_15b0cf43",
+        "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "It\u0027s not clear what this variable is referring to (also it\u0027s not following Chrome naming conventions)",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9133fa_a5932caa",
+        "filename": "third_party/WebKit/common/quota/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-15T08:53:11Z",
+      "side": 1,
+      "message": "Nit: requested",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
