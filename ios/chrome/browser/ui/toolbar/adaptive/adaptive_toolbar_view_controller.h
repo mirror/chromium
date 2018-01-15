@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_type.h"
 
 @protocol ApplicationCommands;
@@ -15,7 +16,7 @@
 
 // ViewController for the adaptive toolbar. This ViewController is the same for
 // all toolbar sub-implementation (primary and secondary).
-@interface AdaptiveToolbarViewController : UIViewController
+@interface AdaptiveToolbarViewController : UIViewController<ToolbarConsumer>
 
 // Initializes the toolbar with the |buttonFactory| and its |type|, PRIMARY or
 // SECONDARY.
