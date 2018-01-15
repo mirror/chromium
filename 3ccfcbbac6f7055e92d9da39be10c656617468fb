@@ -70,6 +70,30 @@
       "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec77c217_80f77f96",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T16:22:16Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I wondered too when making this fix. I don\u0027t know, and think we should follow up on this at some point.",
+      "parentUuid": "938639a0_d5e64e22",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "3ccfcbbac6f7055e92d9da39be10c656617468fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
