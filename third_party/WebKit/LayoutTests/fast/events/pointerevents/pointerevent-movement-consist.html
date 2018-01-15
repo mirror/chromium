@@ -1,0 +1,61 @@
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<body>
+<p>This test if movementX/Y can provide the change in position of the pointer, as if movementX/Y = eNow.screenX/Y-ePrevious.screenX/Y</p>
+</body>
+<script>
+    const floatPrecision = 0.00001;
+    const start = {x:100, y:100}
+    var movementSum_x = 0;
+    var movementSum_y = 0;
+
+
+    function moveMouseTo(x, y) {
+        return new Promise(function(resolve, reject) {
+            if (window.chrome && chrome.gpuBenchmarking) {
+              var pointerActions =
+                  [{source: "mouse",
+                    actions: [
+                      { name: "pointerMove", x: x, y: y },
+                  ]}];
+              chrome.gpuBenchmarking.pointerActionSequence(pointerActions, resolve);
+            }
+            else {
+                reject();
+            }
+        });
+    }
+
+    function moveRightDown() {
+        return moveMouseTo(x + 3.2, y + 2.8).then(function(){
+            return moveMouseTo(x + 5, y + 5).
+        })
+    }
+    function moveLeftUp() {
+        return moveMouseTo(x - 3.2, y - 2.8).then(function(){
+            return moveMouseTo(x - 5, y - 5).
+        })
+    }
+
+
+    function PointerMove(event) {
+        eventCount ++;
+        movementSum_x += event.move
+    }
+
+    promise_test(async () => {
+        eventFired = false;
+        await moveMouseTo(start.x, start.y);
+        window.addEventListener("pointermove", PointerMove);
+        await moveMouseTo(start.x + 3.2, start.y + 2.8).;
+        await moveMouseTo(start.x, start.y);
+        await moveMouseTo(start.x, start.y);
+        await moveMouseTo(start.x, start.y);
+        
+        assert_equals(lastEvent.clientX, 100);
+        assert_equals(lastEvent.clientY, 100);
+        assert_equals(lastEvent.pageX, 100);
+        assert_equals(lastEvent.pageY, 100);
+    }, 'Pointer event movement data should be consist in different direction');
+
+</script>
