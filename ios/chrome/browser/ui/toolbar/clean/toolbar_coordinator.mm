@@ -367,6 +367,8 @@
   [self updateToolbarState];
 }
 
+#pragma mark - FakeboxFocuser
+
 - (void)focusFakebox {
   if (IsIPadIdiom()) {
     OmniboxEditModel* model = _locationBar->GetLocationEntry()->model();

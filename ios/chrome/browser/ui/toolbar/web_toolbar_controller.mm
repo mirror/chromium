@@ -978,6 +978,9 @@ using ios::material::TimingFunction;
   [self updateToolbarState];
 }
 
+#pragma mark -
+#pragma mark FakeboxFocuser methods.
+
 - (void)focusFakebox {
   if (IsIPadIdiom()) {
     OmniboxEditModel* model = _locationBar->GetLocationEntry()->model();
