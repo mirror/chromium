@@ -1548,6 +1548,14 @@ void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
 }
 #endif
 
+Visibility WebContentsImpl::GetVisibility() const {
+  if (!should_normally_be_visible_)
+    return Visibility::HIDDEN;
+  if (should_normally_be_occluded_)
+    return Visibility::OCCLUDED;
+  return Visibility::VISIBLE;
+}
+
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }
