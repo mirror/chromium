@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9da561be_1e82fb5d",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-15T00:51:06Z",
+      "side": 1,
+      "message": "It looks a bit strange that we need a different logic between worklets and others.\n\nCan we reorganize code so that we just need to check context-\u003eIsSecureContext()?",
+      "revId": "3a2de7db268cf2c53cf0dcca4e597f40ca6d4554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4991b122_1d635f21",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
         "patchSetId": 1
