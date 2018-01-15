@@ -961,6 +961,12 @@ class CC_EXPORT LayerTreeHostImpl
   // to zero when no more presentation tokens are in flight.
   uint32_t last_presentation_token_ = 0u;
 
+  bool calc_empty_frame_ = false;
+  int calc_empty_frame_counter_ = 0;
+
+  bool send_empty_frame_ = false;
+  int send_empty_frame_counter_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHostImpl);
 };
 

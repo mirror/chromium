@@ -331,7 +331,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
     DrawRenderPassAndExecuteCopyRequests(root_render_pass);
 
   FinishDrawingFrame();
-  render_passes_in_draw_order->clear();
+  // render_passes_in_draw_order->clear();
   render_pass_filters_.clear();
   render_pass_background_filters_.clear();
 

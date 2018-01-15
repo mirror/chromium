@@ -2669,6 +2669,8 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsHideThreshold,
     cc::switches::kBrowserControlsShowThreshold,
     cc::switches::kRunAllCompositorStagesBeforeDraw,
+    cc::switches::kCalcEmptyFrameCounter,
+    cc::switches::kSendEmptyFrameCounter,
     switches::kDisableSurfaceReferences,
     switches::kEnableSurfaceSynchronization,
     switches::kEnableViz,
