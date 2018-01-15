@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2fbd5d_552078ec",
+        "filename": "device/bluetooth/bluetooth_socket_net.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T01:46:22Z",
+      "side": 1,
+      "message": "Wouldn\u0027t OTHER be more appropriate? The data is not being sent to a website but it isn\u0027t being sent locally either.",
+      "revId": "7b11dfd9a44d0d963a4f13d4460bf053666b8788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
