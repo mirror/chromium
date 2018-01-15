@@ -7,9 +7,13 @@ package org.chromium.chrome.browser.omaha;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+
+import java.util.List;
 
 /**
  * Stubbed class for getting version numbers from the rest of Chrome.  Override the functions for
@@ -78,13 +82,13 @@ public class VersionNumberGetter {
         version = version.replaceAll("[^\\d.]", "");
 
         // Parse out the version numbers.
-        String[] pieces = version.split("\\.");
-        if (pieces.length != 4) {
+        List<String> pieces = Splitter.on("\\.").splitToList(version);
+        if (pieces.size() != 4) {
             throw new IllegalArgumentException("Application version incorrectly formatted");
         }
 
         try {
-            return Integer.parseInt(pieces[0]);
+            return Integer.parseInt(pieces.get(0));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Application version incorrectly formatted");
         }
