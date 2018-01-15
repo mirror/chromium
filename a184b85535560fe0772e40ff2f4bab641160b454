@@ -22,6 +22,30 @@
       "revId": "a184b85535560fe0772e40ff2f4bab641160b454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0592befa_ec414fbd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/infrastructure/common-dom-interfaces/collections/htmlallcollection-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-15T14:44:07Z",
+      "side": 1,
+      "message": "Yes, if we comment, it works well. Also Firefox throws same error as above for \"collections are new live HTMLCollection instances\".\nhttp://w3c-test.org/html/infrastructure/common-dom-interfaces/collections/htmlallcollection.html",
+      "parentUuid": "c76407a6_49c4bd50",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "a184b85535560fe0772e40ff2f4bab641160b454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
