@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9ed8da1_8bc6ff30",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T23:21:55Z",
+      "side": 1,
+      "message": "for the record, I confirmed these dates:\n\n[~]$ date -u --date\u003d@1341100800\nSun Jul  1 00:00:00 UTC 2012\n[~]$ date -u --date\u003d@1427846400\nWed Apr  1 00:00:00 UTC 2015\n[~]$ date -u --date\u003d@1519862400\nThu Mar  1 00:00:00 UTC 2018\n[~]$ date -u --date\u003d@1561939200\nMon Jul  1 00:00:00 UTC 2019",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eda45b_8b09c002",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T23:21:55Z",
+      "side": 1,
+      "message": "Can you add more documentation to this function? In particular, identify the document version and section where each requirement comes from.\n\nSection 6.3.2. of versions 1.4.4. removed the description of 60 month limit, and also explains the 39-month limit in terms of different date ranges.\n\nThe check itself seems fine and is consistent with the versions of BR prior to 1.4.3. But we should document where these dates come from, and perhaps that the intent is to choose the most restrictive of the current and historical ranges?",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec5b6dd_0f7ab1a9",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-15T23:21:55Z",
+      "side": 1,
+      "message": "Same comment as above. v1.4.4 describes the start date as July 2016, which makes this confusing when reading against the latest version.",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
