@@ -345,6 +345,27 @@ for (size_t i = 0; i < request->element_size(); ++i) {
 ## C++ Best Practices
 
 
+### Avoid use of mojo::WrapCallbackWithDefaultInvokeIfNotRun and
+### mojo::WrapCallbackWithDropHandler
+
+Mojo provides several convenience helpers to automatically invoke a callback if
+the callback has not already been invoked in some other way when destroyed,
+i.e.:
+
+```
+  {
+    base::Callback<int> cb = base::WrapCallbackWithDefaultInvokeIfNotRun(
+        base::Bind([](int) { ... }), -1);
+  }  // |cb| is automatically invoked with an argument of -1.
+```
+
+Unfortunately, the fact that this callback is guaranteed to always run is hidden
+from the type system and can propagate in surprising ways. Avoid unless there is
+absolutely no other alternative. Uses of this must be well-commented to describe
+and describe why this behavior is required.
+
+Note that using this from the renderer is almost always unnecessary.
+
 ### Use StructTraits
 
 Creating a typemap and defining a `StructTraits` specialization moves the
