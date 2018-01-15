@@ -136,6 +136,9 @@ crbug.com/788390 http/tests/media/autoplay/document-user-activation-feature-poli
 # www1.web-platform.test, www2.web-platform.test, etc).
 Bug(none) external/wpt/html/browsers/origin/relaxing-the-same-origin-restriction [ Skip ]
 
+# iframe-script-modify-attr.html fails with site-per-process. Check failed: 0 != snapshot.info().width()
+Bug(801338) http/tests/misc/iframe-script-modify-attr.html [ Crash ]
+
 # TODO(lukasza, alexmos): Triage these failures.
 Bug(none) external/wpt/FileAPI/url/multi-global-origin-serialization.sub.html [ Failure ]
 Bug(none) external/wpt/IndexedDB/interleaved-cursors.html [ Timeout ]
