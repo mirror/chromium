@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21195ded_ee3c518a",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T04:47:48Z",
+      "side": 1,
+      "message": "nit: Could you add comment for about meaning of |bool| return value?",
+      "revId": "9bb0b9cd956f1f0194ab12a548c6bc76d77736ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63bd9d7_195410a1",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-15T04:47:48Z",
+      "side": 1,
+      "message": "It is better to doing this in |InvalidateNGPaintFragmentsIfNeeded()| instead\nof returning |bool|.",
+      "range": {
+        "startLine": 574,
+        "startChar": 2,
+        "endLine": 574,
+        "endChar": 75
+      },
+      "revId": "9bb0b9cd956f1f0194ab12a548c6bc76d77736ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
