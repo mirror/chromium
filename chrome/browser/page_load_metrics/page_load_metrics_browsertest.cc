@@ -35,6 +35,7 @@
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/prerender/prerender_histograms.h"
+#include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_origin.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_restore.h"
@@ -1343,6 +1344,23 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, LoadingMetricsFailed) {
   // load timing metrics come before the commit, but because the
   // PageLoadMetricsWaiter is registered on tracker creation, it is able to
   // catch the events.
+  waiter->Wait();
+}
+
+// Regression test for crbug.com/801908, where a null PrerenderManager causes a
+// crash.
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoPrerenderManager) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  prerender::PrerenderManager::SetMode(
+      prerender::PrerenderManager::PRERENDER_MODE_DISABLED);
+  prerender::PrerenderManager::SetOmniboxMode(
+      prerender::PrerenderManager::PRERENDER_MODE_DISABLED);
+  EXPECT_FALSE(prerender::PrerenderManager::IsAnyPrerenderingPossible());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::FIRST_PAINT);
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/title1.html"));
   waiter->Wait();
 }
 
