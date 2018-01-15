@@ -17,10 +17,12 @@
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/textfield_layout.h"
 #include "chrome/browser/ui/views/sync/bubble_sync_promo_view.h"
+#include "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -193,9 +195,15 @@ views::View* BookmarkBubbleView::CreateFootnoteView() {
 
   base::RecordAction(UserMetricsAction("Signin_Impression_FromBookmarkBubble"));
 
-  footnote_view_ =
-      new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
-                              IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
+  if (signin::IsDiceEnabledForProfile(profile_->GetPrefs())) {
+    footnote_view_ = new DiceBubbleSyncPromoView(profile_, delegate_.get(),
+                                                 IDS_BOOKMARK_SYNC_PROMO_LINK,
+                                                 IDS_BOOKMARK_SYNC_PROMO_LINK);
+  } else {
+    footnote_view_ =
+        new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
+                                IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
+  }
   return footnote_view_;
 }
 
