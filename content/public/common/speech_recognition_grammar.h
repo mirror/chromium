@@ -5,6 +5,7 @@
 #ifndef CONTENT_PUBLIC_COMMON_SPEECH_RECOGNITION_GRAMMAR_H_
 #define CONTENT_PUBLIC_COMMON_SPEECH_RECOGNITION_GRAMMAR_H_
 
+#include <string>
 #include <vector>
 
 #include "content/common/content_export.h"
