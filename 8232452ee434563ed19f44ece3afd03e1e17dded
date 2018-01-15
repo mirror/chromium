@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65d935ed_fc9ff47e",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-15T07:08:52Z",
+      "side": 1,
+      "message": "I have a pending change for that, but I\u0027d like to have it a separate change to make the focus clearer.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/839040\nThat\u0027d need to handle the context menu in addition to the gear menu as well.",
+      "parentUuid": "98a82011_e8c8f0ab",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29672a9_740dc341",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6329d72a_db232127",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-15T07:08:52Z",
+      "side": 1,
+      "message": "I think we should always show this item, grayed out when not available.\nThe context menu by right-click is made in that way.",
+      "parentUuid": "f29672a9_740dc341",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
