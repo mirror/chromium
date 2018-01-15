@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8f6b1d3_bd10daa8",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2efc11_cec6d57b",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b834b75a_57c0bf89",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-12T08:44:59Z",
       "side": 1,
       "message": "As discussed, we\u0027d want to do this in a new window so you can control the top level origin. Something like the following in this file:\n\n```\nconst test_cases \u003d [\n  {\n    \u0027origin\u0027: \u0027http://127.0.0.1/\u0027,\n    \u0027rpId\u0027: \u0027\n  },\n];\n\nfor (let test of test_cases) {\n  promise_test((t) \u003d\u003e {\n    return new Promise((resolve, reject) \u003d\u003e {\n      window.addEventListener(\u0027message\u0027, e \u003d\u003e {\n        if (e.source !\u003d w)\n          return;\n        assert_equals(e.data, \"SUCCESS\");\n        resolve();    \n      });\n      var w \u003d window.open(test.origin + \"/whatever/directory/this/test/lives/in/helper.html\";\n    });\n  }, \"navigator.credentials.create([publicKey]) in \" + test.origin + \" with invalid |rp.id| \" + test.rpId + \" should reject.\");\n}\n```\n\nAnd something like the following in the helper file:\n\n```\n\u003cscript\u003e\n  navigator.credentials.create({publicKey: whatever})\n    .then(_ \u003d\u003e window.opener.postMessage(\"SUCCESS\"))\n    .catch(_ \u003d\u003e window.opener.postMessage(\"CRUSHING FAILURE\"));\n\u003c/script\u003e\n```\n\nWDYT?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b931d87_e31b5673",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "b834b75a_57c0bf89",
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5b7b068_7ec193f5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d236fe34_67ddd2f5",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5194a797_81bc17a7",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424fb3ab_cea84b06",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5194a797_81bc17a7",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e35253d1_d363db83",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674165f9_6c5ec77f",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c865d00d_dfbb90ce",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -119,6 +209,24 @@
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1490637f_c3c2786c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c865d00d_dfbb90ce",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "2f59fc72_23516f2d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0506fd1a_6f406eee",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "250132bc_a2d87f35",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -168,6 +294,24 @@
       "writtenOn": "2018-01-12T08:05:02Z",
       "side": 1,
       "message": "I don\u0027t understand this block. Why are we checking the origin\u0027s `domain` value (e.g. whatever `document.domain` was set to)? Does that matter for the purposes of WebAuthN?",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f309810_0c816e30",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Noting that we discussed this morning that this is for step 6 of both https://w3c.github.io/webauthn/#dictionary-makecredentialoption and https://w3c.github.io/webauthn/#dictionary-makecredentialoption.",
+      "parentUuid": "250132bc_a2d87f35",
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "8383cf37_4671d6d6",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "yeahhh",
+      "parentUuid": "a4d64af5_dca74a03",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0152ea_b469a979",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -205,6 +367,24 @@
       "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b4e4a4_693df010",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-15T08:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0152ea_b469a979",
+      "revId": "5aa1ba3e6fa2ce1453f8c403fdb4a54e06a57860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
