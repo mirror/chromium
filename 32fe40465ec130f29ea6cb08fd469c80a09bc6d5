@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23a0ba4f_ad8b493b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "No. Because we insert container into already_checked before using it(at line 1454).",
+      "parentUuid": "445fbe2f_7819838a",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33c75fe6_d4b7e77d",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "64da4c5c_1b01377a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c75fe6_d4b7e77d",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "870c4736_f7bc14de",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-12T23:39:55Z",
       "side": 1,
       "message": "This seems like very odd behavior.  If the scrolling container does not have a focus candidate, why do we scroll it?  And why return here; why not continue looking for a focus candidate outside the current scrolling container?",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb05c2a_d0e590cb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "\u003e If the scrolling container does not have a focus candidate, why do we scroll it?\n\nImagine following scenario:\n\u003cfocused element\u003e\n\u003cscrolling container\u003e\n  valuable contents inside,\n  but not have focusable element,\n  quite long length.\n\u003c/scrolling container\u003e\n\u003cnext focus candidate\u003e\n\nIn above scenario, spatial navigation try to scroll first to show content inside scrolling container.\n\n\u003e And why return here;\n\nBecause current implementation allows only one action(scroll or focus move) for a input.\n\n\u003e why not continue looking for a focus candidate outside the current scrolling container?\n\nBecause we want to find candidate outside after reaching to edge of current container(fully scroll in direction).",
+      "parentUuid": "870c4736_f7bc14de",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4843840c_7ef02f8e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "I just added these code to don\u0027t break existing tests.\n\nThe origin of this code is from: https://chromium.googlesource.com/chromium/blink/+/a9562bacebd076981df5eec2d0380cc62d91f566\n\nHonestly, I also cannot understand why this condition must exist. But at least, if we remove is_offscreen_after_scrolling, 5 tests break. For example:\nsnav-iframe-with-offscreen-focusable-element.html\nexpected:\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"end\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"start\"\n\nactual:\nTEST COMPLETE\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"1\"\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was 2.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was end.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was end.\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"end\"\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"2\"\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was 1.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 2. Was start.\nFAIL gFocusedDocument.activeElement.getAttribute(\"id\") should be 1. Was start.\nPASS gFocusedDocument.activeElement.getAttribute(\"id\") is \"start\"\n\n\nI also hope make this condition more clear. But I think that is outside of this CL\u0027s scope.",
+      "parentUuid": "f1ad7d7d_85ea2f51",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ff7d65_28083c47",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-12T23:39:55Z",
       "side": 1,
       "message": "Same question.",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5555e2_eb1a7d4d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "Please see above answer.",
+      "parentUuid": "c0ff7d65_28083c47",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7ff2dd70_0a4cb764",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "Please see above answer.",
+      "parentUuid": "efb6434f_9e0f1606",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c8776af_258bb185",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -118,6 +226,24 @@
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f265bca_9252300e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-15T12:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8776af_258bb185",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
