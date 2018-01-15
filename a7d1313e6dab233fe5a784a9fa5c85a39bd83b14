@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "929c977d_f55ffad3",
+        "filename": "cc/input/scroll_snap_data.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-15T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8aba3e_5a9333bd",
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb139931_4532721a",
         "filename": "cc/input/scroll_snap_data.h",
         "patchSetId": 26
@@ -39,6 +57,30 @@
       "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772f65fe_8eb76ab7",
+        "filename": "cc/input/scroll_snap_data.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-15T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb139931_4532721a",
+      "range": {
+        "startLine": 151,
+        "startChar": 59,
+        "endLine": 151,
+        "endChar": 60
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c7f3fc06_821d99a9",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 3803,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-15T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7e468b_14489004",
+      "range": {
+        "startLine": 3803,
+        "startChar": 2,
+        "endLine": 3803,
+        "endChar": 19
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0866037_4015b6cb",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 26
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9ec7d1e4_7bfc6a6a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-15T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0866037_4015b6cb",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 19
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b3b774_713b89ff",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
         "patchSetId": 26
@@ -99,6 +189,30 @@
       "writtenOn": "2018-01-15T10:40:19Z",
       "side": 1,
       "message": "nit: const Optional\u003cSnapContainerData\u003e\u0026",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de5d58e_34ee3a76",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-15T20:44:47Z",
+      "side": 1,
+      "message": "This will return a nullopt if the |snap_container| doesn\u0027t have SnapContainerData. Plus, we need a copy from the one stored in SnapContainer anyway, so I think it should be fine to make the copy here.",
+      "parentUuid": "76b3b774_713b89ff",
       "range": {
         "startLine": 41,
         "startChar": 2,
