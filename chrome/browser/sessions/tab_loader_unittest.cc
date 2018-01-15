@@ -4,12 +4,16 @@
 
 #include "chrome/browser/sessions/tab_loader.h"
 
+#include <vector>
+
 #include "base/memory/memory_coordinator_client_registry.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/memory_coordinator_delegate.h"
+#include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
@@ -62,6 +66,10 @@ TEST_F(TabLoaderTest, MAYBE_OnMemoryStateChange) {
   std::vector<RestoredTab> restored_tabs;
   content::WebContents* contents =
       test_web_contents_factory_->CreateWebContents(&testing_profile_);
+  std::vector<std::unique_ptr<content::NavigationEntry>> entries;
+  entries.push_back(content::NavigationEntry::Create());
+  contents->GetController().Restore(
+      0, content::RestoreType::LAST_SESSION_EXITED_CLEANLY, &entries);
   restored_tabs.push_back(RestoredTab(contents, false, false, false));
 
   TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());

@@ -1387,7 +1387,7 @@ void WebContentsViewAura::OnWindowVisibilityChanged(aura::Window* window,
   if (window != window_.get() && window_->Contains(window))
     return;
 
-  web_contents_->UpdateWebContentsVisibility(visible);
+  web_contents_->UpdateWebContentsVisibility(window_->IsVisible());
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
