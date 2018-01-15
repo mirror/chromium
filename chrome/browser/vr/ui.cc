@@ -54,8 +54,8 @@ Ui::Ui(UiBrowserInterface* browser,
   UiSceneCreator(browser, scene_.get(), this, content_input_delegate_.get(),
                  keyboard_delegate, text_input_delegate, model_.get())
       .CreateScene();
+  content_input_delegate_->SetTextInputDelegate(text_input_delegate);
 }
-
 Ui::~Ui() = default;
 
 base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
@@ -199,6 +199,29 @@ void Ui::OnSpeechRecognitionStateChanged(int new_state) {
 void Ui::SetOmniboxSuggestions(
     std::unique_ptr<OmniboxSuggestions> suggestions) {
   model_->omnibox_suggestions = suggestions->suggestions;
+}
+
+void Ui::ShowSoftInput() {
+  model_->web_input_text_field_info = TextInputInfo();
+  content_input_delegate_->ShowSoftInput();
+}
+
+void Ui::HideSoftInput() {
+  content_input_delegate_->HideSoftInput();
+}
+
+void Ui::UpdateSelection(int selection_start, int selection_end) {
+  model_->web_input_text_field_info.selection_start = selection_start;
+  model_->web_input_text_field_info.selection_end = selection_end;
+}
+
+void Ui::UpdateComposition(int composition_start, int composition_end) {
+  model_->web_input_text_field_info.composition_start = composition_start;
+  model_->web_input_text_field_info.composition_end = composition_end;
+}
+
+void Ui::UpdateText(const base::string16& text) {
+  model_->web_input_text_field_info.text = text;
 }
 
 bool Ui::ShouldRenderWebVr() {

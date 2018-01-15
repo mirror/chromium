@@ -6,7 +6,9 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/platform_controller.h"
+#include "chrome/browser/vr/text_input_delegate.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
 
@@ -55,6 +57,38 @@ void ContentInputDelegate::OnContentUp(
     const gfx::PointF& normalized_hit_point) {
   SendGestureToContent(
       MakeMouseEvent(blink::WebInputEvent::kMouseUp, normalized_hit_point));
+}
+
+void ContentInputDelegate::SetTextInputDelegate(
+    TextInputDelegate* text_input_delegate) {
+  text_input_delegate_ = text_input_delegate;
+}
+
+void ContentInputDelegate::ShowSoftInput() {
+  if (!text_input_delegate_)
+    return;
+
+  text_input_delegate_->RequestFocus(content_element_id_);
+}
+
+void ContentInputDelegate::HideSoftInput() {
+  if (!text_input_delegate_)
+    return;
+
+  text_input_delegate_->RequestUnfocus(content_element_id_);
+}
+
+void ContentInputDelegate::OnTextInputEdited(const TextInputInfo& info) {
+  if (!content_)
+    return;
+  content_->OnTextInputEdited(info);
+}
+
+void ContentInputDelegate::OnTextInputCommitted(const TextInputInfo& info) {
+  if (!content_)
+    return;
+
+  content_->OnTextInputCommitted(info);
 }
 
 void ContentInputDelegate::OnContentFlingStart(

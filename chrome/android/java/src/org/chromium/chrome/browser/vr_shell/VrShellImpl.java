@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import com.google.vr.ndk.base.AndroidCompat;
 import com.google.vr.ndk.base.GvrLayout;
 
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -45,7 +46,12 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
+import org.chromium.chrome.browser.vr_shell.keyboard.VrInputMethodManager;
+import org.chromium.chrome.browser.vr_shell.keyboard.VrInputConnection;
+import org.chromium.chrome.browser.vr_shell.keyboard.VrInputConnectionFactory;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.input.ImeAdapter;
+import org.chromium.content.browser.input.InputMethodManagerWrapper;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
@@ -60,7 +66,8 @@ import org.chromium.ui.display.VirtualDisplayAndroid;
  */
 @JNINamespace("vr_shell")
 public class VrShellImpl
-        extends GvrLayout implements VrShell, SurfaceHolder.Callback, FullscreenListener {
+        extends GvrLayout implements VrShell, SurfaceHolder.Callback, FullscreenListener,
+                                     VrInputMethodManager.BrowserKeyboardInterface {
     private static final String TAG = "VrShellImpl";
     private static final float INCHES_TO_METERS = 0.0254f;
 
@@ -104,6 +111,8 @@ public class VrShellImpl
     private AndroidUiGestureTarget mAndroidUiGestureTarget;
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
+
+    private VrInputConnectionFactory mInputConnectionFactory;
 
     public VrShellImpl(
             ChromeActivity activity, VrShellDelegate delegate, TabModelSelector tabModelSelector) {
@@ -396,6 +405,37 @@ public class VrShellImpl
         mNonVrTabRedirectHandler = mTab.getTabRedirectHandler();
         mTab.setTabRedirectHandler(mTabRedirectHandler);
         assert mTab.getWindowAndroid() == mContentVrWindowAndroid;
+        initializeImeForVr();
+    }
+
+    private void initializeImeForVr() {
+        assert mTab != null;
+        // Note that we get the active content view core so that we can set the VR-specific IME
+        // classes when we're entering VR on a native page.
+        ContentViewCore cvc = mTab.getActiveContentViewCore();
+        if (cvc != null) {
+            cvc.getImeAdapter().setInputMethodManagerWrapper(
+                    new VrInputMethodManager(mActivity, this));
+            if (mInputConnectionFactory == null) {
+                mInputConnectionFactory = new VrInputConnectionFactory();
+            }
+            cvc.getImeAdapter().setInputConnectionFactory(mInputConnectionFactory);
+        }
+    }
+
+    private void uninitializeImeForVr() {
+        assert mTab != null;
+        mInputConnectionFactory = null;
+        // Note that we get the active content view core so that we can remove the VR-specific IME
+        // classes when we're exiting VR on a native page.
+        ContentViewCore cvc = mTab.getActiveContentViewCore();
+        if (cvc != null) {
+            InputMethodManagerWrapper wrapper =
+                    ImeAdapter.createDefaultInputMethodManagerWrapper(mActivity);
+            cvc.getImeAdapter().setInputMethodManagerWrapper(wrapper);
+            cvc.getImeAdapter().setInputConnectionFactory(
+                    ImeAdapter.createDefaultInputConnectionFactory(wrapper));
+        }
     }
 
     private void restoreTabFromVR() {
@@ -599,6 +639,7 @@ public class VrShellImpl
         restoreTabFromVR();
 
         assert mTab != null;
+        uninitializeImeForVr();
         if (mTab.getContentViewCore() != null) {
             View parent = mTab.getContentViewCore().getContainerView();
             mTab.getWebContents().setSize(parent.getWidth(), parent.getHeight());
@@ -861,6 +902,56 @@ public class VrShellImpl
         return mPresentationView;
     }
 
+    @Override
+    public void showSoftInput() {
+        assert mNativeVrShell != 0;
+        nativeShowSoftInput(mNativeVrShell);
+    }
+
+    @Override
+    public void hideSoftInput() {
+        assert mNativeVrShell != 0;
+        nativeHideSoftInput(mNativeVrShell);
+    }
+
+    @Override
+    public void updateSelection(int selectionStart, int selectionEnd) {
+        assert mNativeVrShell != 0;
+        nativeUpdateSelection(mNativeVrShell, selectionStart, selectionEnd);
+    }
+
+    @Override
+    public void updateComposition(int compositionStart, int compositionEnd) {
+        assert mNativeVrShell != 0;
+        nativeUpdateComposition(mNativeVrShell, compositionStart, compositionEnd);
+    }
+
+    @Override
+    public void updateText(String text) {
+        assert mNativeVrShell != 0;
+        nativeUpdateText(mNativeVrShell, text);
+    }
+
+    @CalledByNative
+    public void onTextInputEdited(String text, int selectionStart, int selectionEnd,
+            int compositionStart, int compositionEnd) {
+        VrInputConnection ic = mInputConnectionFactory.getInputConnection();
+        if (ic != null) {
+            ic.onTextInputEdited(
+                    text, selectionStart, selectionEnd, compositionStart, compositionEnd);
+        }
+    }
+
+    @CalledByNative
+    public void onTextInputCommitted(String text, int selectionStart, int selectionEnd,
+            int compositionStart, int compositionEnd) {
+        VrInputConnection ic = mInputConnectionFactory.getInputConnection();
+        if (ic != null) {
+            ic.onTextInputCommitted(
+                    text, selectionStart, selectionEnd, compositionStart, compositionEnd);
+        }
+    }
+
     private native long nativeInit(VrShellDelegate delegate, long nativeWindowAndroid,
             boolean forWebVR, boolean webVrAutopresentationExpected, boolean inCct,
             boolean browsingDisabled, boolean hasOrCanRequestAudioPermission, long gvrApi,
@@ -893,4 +984,11 @@ public class VrShellImpl
     private native void nativeRequestToExitVr(long nativeVrShell, @UiUnsupportedMode int reason);
     private native void nativeLogUnsupportedModeUserMetric(
             long nativeVrShell, @UiUnsupportedMode int mode);
+    private native void nativeShowSoftInput(long nativeVrShell);
+    private native void nativeHideSoftInput(long nativeVrShell);
+    private native void nativeUpdateSelection(
+            long nativeVrShell, int selectionStart, int selectionEnd);
+    private native void nativeUpdateComposition(
+            long nativeVrShell, int compositionStart, int compositionEnd);
+    private native void nativeUpdateText(long nativeVrShell, String text);
 }

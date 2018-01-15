@@ -82,6 +82,7 @@ struct Model {
   // Focused text state.
   bool editing_input = false;
   TextInputInfo omnibox_text_field_info;
+  TextInputInfo web_input_text_field_info;
 
   // Controller state.
   ControllerModel controller;

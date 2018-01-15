@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/content_element.h"
 
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
@@ -25,9 +26,13 @@ static constexpr float kContentAspectRatioPropagationThreshold = 0.01f;
 
 ContentElement::ContentElement(
     ContentInputDelegate* delegate,
-    ContentElement::ScreenBoundsChangedCallback bounds_changed_callback)
-    : delegate_(delegate), bounds_changed_callback_(bounds_changed_callback) {
+    ContentElement::ScreenBoundsChangedCallback bounds_changed_callback,
+    OnFocusChangedCallback focus_changed_callback)
+    : delegate_(delegate),
+      bounds_changed_callback_(bounds_changed_callback),
+      focus_changed_callback_(focus_changed_callback) {
   DCHECK(delegate);
+  delegate_->set_content_element_id(id());
   set_scrollable(true);
 }
 
@@ -42,6 +47,21 @@ void ContentElement::Render(UiElementRenderer* renderer,
                              model.view_proj_matrix * world_space_transform(),
                              copy_rect, computed_opacity(), size(),
                              corner_radius());
+}
+
+void ContentElement::OnFocusChanged(bool focused) {
+  focused_ = focused;
+  // Calls a callback that'll set editing mode and show the keyboard.
+  if (focus_changed_callback_)
+    focus_changed_callback_.Run(focused);
+}
+
+void ContentElement::OnInputEdited(const TextInputInfo& info) {
+  delegate_->OnTextInputEdited(info);
+}
+
+void ContentElement::OnInputCommitted(const TextInputInfo& info) {
+  delegate_->OnTextInputCommitted(info);
 }
 
 void ContentElement::OnHoverEnter(const gfx::PointF& position) {
@@ -101,6 +121,17 @@ void ContentElement::SetTextureLocation(
 
 void ContentElement::SetProjectionMatrix(const gfx::Transform& matrix) {
   projection_matrix_ = matrix;
+}
+
+void ContentElement::SetTextInputDelegate(
+    TextInputDelegate* text_input_delegate) {
+  text_input_delegate_ = text_input_delegate;
+}
+
+void ContentElement::UpdateInput(const TextInputInfo& info) {
+  if (text_input_delegate_ && focused_) {
+    text_input_delegate_->UpdateInput(info);
+  }
 }
 
 bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
