@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1012b116_131b8f9f",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-15T21:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66e698a_d3b6dee4",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6e0b12_7c7ee296",
         "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c16e6759_c66d7241",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-15T21:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6e0b12_7c7ee296",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d96d0f05_70abca60",
         "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8ec977_4c3c43af",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-15T21:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96d0f05_70abca60",
+      "range": {
+        "startLine": 31,
+        "startChar": 44,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
