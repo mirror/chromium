@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c982a7_b05ac81a",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-15T05:29:02Z",
+      "side": 1,
+      "message": "How about setting blink_symbol_level here so that all \"remove_webcore_debug_symbols || blink_symbol_level !\u003d -1\" checks in other files can be simplified to \"blink_symbol_level !\u003d -1\"?",
+      "revId": "e772b713353bef1368d583904e9d00803afa2c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
