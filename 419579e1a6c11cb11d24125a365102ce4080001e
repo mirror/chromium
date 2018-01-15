@@ -16,6 +16,24 @@
       "revId": "419579e1a6c11cb11d24125a365102ce4080001e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce9e09b_62044feb",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-15T09:40:12Z",
+      "side": 1,
+      "message": "I think both styles are fine. The page you linked has this example:\nvoid Circle::Rotate(double /*radians*/) {}",
+      "parentUuid": "7fa5a96b_c457845f",
+      "revId": "419579e1a6c11cb11d24125a365102ce4080001e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
