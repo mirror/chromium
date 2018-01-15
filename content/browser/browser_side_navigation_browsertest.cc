@@ -801,4 +801,81 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
   EXPECT_EQ("#foo", reference_fragment);
 }
 
+// The set of tests...
+// * BrowserSideNavigationBrowserTest.DownloadControl
+// * BrowserSideNavigationBrowserTest.DownloadAllowed
+// * BrowserSideNavigationBrowserTest.DownloadDisallowed.
+//
+// ...covers every combinaison of possible states for:
+// * CommonNavigationParams::allow_download
+// * NavigationHandle::IsDownload()
+//
+// |allow_download| is false only when the URL is a view-source URL. In this
+// case, downloads are prohibited (i.e. |is_download| is false in
+// NavigationURLLoaderDelegate::OnResponseStarted()).
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, DownloadControl) {
+  GURL simple_url(embedded_test_server()->GetURL("/simple_page.html"));
+
+  TestNavigationManager manager(shell()->web_contents(), simple_url);
+  NavigationHandleObserver handle_observer(shell()->web_contents(), simple_url);
+
+  // Download is allowed.
+  shell()->LoadURL(simple_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_TRUE(root->navigation_request()->common_params().allow_download);
+
+  // The response is not handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_FALSE(handle_observer.is_download());
+}
+
+// See BrowserSideNavigationBrowserTest.DownloadControl.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, DownloadAllowed) {
+  GURL download_url(embedded_test_server()->GetURL("/download-test1.lib"));
+
+  TestNavigationManager manager(shell()->web_contents(), download_url);
+  NavigationHandleObserver handle_observer(shell()->web_contents(),
+                                           download_url);
+
+  // Download is allowed.
+  shell()->LoadURL(download_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_TRUE(root->navigation_request()->common_params().allow_download);
+
+  // The response is handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_TRUE(handle_observer.is_download());
+}
+
+// See BrowserSideNavigationBrowserTest.DownloadControl.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, DownloadDisallowed) {
+  GURL download_url(embedded_test_server()->GetURL("/download-test1.lib"));
+
+  // An URL is allowed to be a download iff it is not a view-source URL.
+  GURL view_source_url =
+      GURL(content::kViewSourceScheme + std::string(":") + download_url.spec());
+
+  NavigationHandleObserver handle_observer(shell()->web_contents(),
+                                           download_url);
+  TestNavigationManager manager(shell()->web_contents(), download_url);
+
+  // Download is not allowed.
+  shell()->LoadURL(view_source_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_FALSE(root->navigation_request()->common_params().allow_download);
+
+  // The response is not handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_FALSE(handle_observer.is_download());
+}
+
 }  // namespace content
