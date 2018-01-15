@@ -16,6 +16,7 @@
 #include "base/strings/string_piece.h"
 #include "base/synchronization/lock.h"
 #include "tools/gn/err.h"
+#include "tools/gn/source_dir.h"
 
 class BuildSettings;
 class InputFile;
@@ -24,6 +25,7 @@ class SourceFile;
 class Target;
 
 namespace base {
+class FilePath;
 class MessageLoop;
 }
 
@@ -67,6 +69,9 @@ class HeaderChecker : public base::RefCountedThreadSafe<HeaderChecker> {
   FRIEND_TEST_ALL_PREFIXES(HeaderCheckerTest, CheckInclude);
   FRIEND_TEST_ALL_PREFIXES(HeaderCheckerTest, PublicFirst);
   FRIEND_TEST_ALL_PREFIXES(HeaderCheckerTest, CheckIncludeAllowCircular);
+  FRIEND_TEST_ALL_PREFIXES(HeaderCheckerTest, SourceFileForInclude);
+  FRIEND_TEST_ALL_PREFIXES(HeaderCheckerTest,
+                           SourceFileForInclude_FileNotFound);
   ~HeaderChecker();
 
   struct TargetInfo {
@@ -88,6 +93,8 @@ class HeaderChecker : public base::RefCountedThreadSafe<HeaderChecker> {
 
   typedef std::vector<TargetInfo> TargetVector;
   typedef std::map<SourceFile, TargetVector> FileMap;
+  typedef base::RepeatingCallback<bool(const base::FilePath& path)>
+      PathExistsCallback;
 
   // Backend for Run() that takes the list of files to check. The errors_ list
   // will be populate on failure.
@@ -102,7 +109,11 @@ class HeaderChecker : public base::RefCountedThreadSafe<HeaderChecker> {
   bool IsFileInOuputDir(const SourceFile& file) const;
 
   // Resolves the contents of an include to a SourceFile.
-  SourceFile SourceFileForInclude(const base::StringPiece& input) const;
+  SourceFile SourceFileForInclude(const base::StringPiece& relative_file_path,
+                                  const std::vector<SourceDir>& include_dirs,
+                                  const InputFile& source_file,
+                                  const LocationRange& range,
+                                  Err* err) const;
 
   // from_target is the target the file was defined from. It will be used in
   // error messages.
