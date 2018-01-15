@@ -16,6 +16,24 @@
       "revId": "3e459b31297692b16721fb489eb370fdb8534629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55562130_499dead7",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-15T23:06:33Z",
+      "side": 1,
+      "message": "Regarding 2, I see CustomEvent was modified to work the same way, probably for TraceWrapper reasons. We should probably clean this up, but it\u0027s understandable if you don\u0027t want to do that in this CL, then.",
+      "parentUuid": "5e893384_67586fa6",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
