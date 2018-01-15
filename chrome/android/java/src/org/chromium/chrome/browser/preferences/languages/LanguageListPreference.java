@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -92,7 +92,7 @@ public class LanguageListPreference extends Preference {
     }
 
     private View mView;
-    private Button mAddLanguageButton;
+    private TextView mAddLanguageButton;
     private RecyclerView mRecyclerView;
     private LanguageListAdapter mAdapter;
 
@@ -111,7 +111,7 @@ public class LanguageListPreference extends Preference {
 
         mView = super.onCreateView(parent);
 
-        mAddLanguageButton = (Button) mView.findViewById(R.id.add_language);
+        mAddLanguageButton = (TextView) mView.findViewById(R.id.add_language);
         ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(mAddLanguageButton,
                 TintedDrawable.constructTintedDrawable(
                         getContext().getResources(), R.drawable.plus, R.color.pref_accent_color),
