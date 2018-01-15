@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b54f16_bd887e2e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-15T13:11:07Z",
+      "side": 1,
+      "message": "I\u0027ve seen it more than once already. Is it possible to move it somewhere else (potentially LocationBarBubbleDelegateView or BubbleDialogDelegateView?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 1
+      },
+      "revId": "504802abd4bb172c59dbd63ed2d4ef806da7e4fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
