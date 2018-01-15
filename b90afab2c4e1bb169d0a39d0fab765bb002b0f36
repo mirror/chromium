@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "28dab682_f9333c70",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2018-01-15T20:18:03Z",
+      "side": 0,
+      "message": "This histogram can be marked as obsolete now (in histograms.xml)",
+      "range": {
+        "startLine": 142,
+        "startChar": 76,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "b90afab2c4e1bb169d0a39d0fab765bb002b0f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee96d2cb_7b3a299b",
         "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
         "patchSetId": 2
