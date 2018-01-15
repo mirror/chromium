@@ -93,8 +93,6 @@ jumbo_component("wtf") {
     "Noncopyable.h",
     "NotFound.h",
     "Optional.h",
-    "PrintStream.cpp",
-    "PrintStream.h",
     "ProcessMetrics.h",
     "PtrUtil.h",
     "RefCounted.h",
