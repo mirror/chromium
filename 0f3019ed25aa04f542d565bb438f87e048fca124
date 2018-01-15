@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636280fe_af46dbc1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-15T20:44:48Z",
+      "side": 1,
+      "message": "I think it would be a bit clearer to store this as a gfx::PointF, for consistency\u0027s sake.\n\nThe bug says that you can\u0027t but I\u0027m not sure why. Can you elaborate?",
+      "range": {
+        "startLine": 240,
+        "startChar": 11,
+        "endLine": 240,
+        "endChar": 12
+      },
+      "revId": "0f3019ed25aa04f542d565bb438f87e048fca124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
