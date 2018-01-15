@@ -578,8 +578,8 @@ void AccessibilityManager::OnTwoFingerTouchStart() {
       extensions::EventRouter::Get(profile());
   CHECK(event_router);
 
-  auto event_args = base::MakeUnique<base::ListValue>();
-  auto event = base::MakeUnique<extensions::Event>(
+  auto event_args = std::make_unique<base::ListValue>();
+  auto event = std::make_unique<extensions::Event>(
       extensions::events::ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_START,
       extensions::api::accessibility_private::OnTwoFingerTouchStart::kEventName,
       std::move(event_args));
@@ -594,8 +594,8 @@ void AccessibilityManager::OnTwoFingerTouchStop() {
       extensions::EventRouter::Get(profile());
   CHECK(event_router);
 
-  auto event_args = base::MakeUnique<base::ListValue>();
-  auto event = base::MakeUnique<extensions::Event>(
+  auto event_args = std::make_unique<base::ListValue>();
+  auto event = std::make_unique<extensions::Event>(
       extensions::events::ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_STOP,
       extensions::api::accessibility_private::OnTwoFingerTouchStop::kEventName,
       std::move(event_args));
