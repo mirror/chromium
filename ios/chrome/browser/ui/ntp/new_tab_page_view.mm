@@ -16,18 +16,14 @@
 
 @implementation NewTabPageView
 
-@synthesize scrollView = scrollView_;
 @synthesize tabBar = tabBar_;
 @synthesize safeAreaInsetForToolbar = _safeAreaInsetForToolbar;
 
 - (instancetype)initWithFrame:(CGRect)frame
-                andScrollView:(UIScrollView*)scrollView
                     andTabBar:(NewTabPageBar*)tabBar {
   self = [super initWithFrame:frame];
   if (self) {
-    [self addSubview:scrollView];
     [self addSubview:tabBar];
-    scrollView_ = scrollView;
     tabBar_ = tabBar;
   }
   return self;
@@ -56,13 +52,7 @@
 }
 
 - (void)setFrame:(CGRect)frame {
-  id<UIScrollViewDelegate> delegate = self.scrollView.delegate;
-  self.scrollView.delegate = nil;
   [super setFrame:frame];
-  self.scrollView.delegate = delegate;
-
-  // Set the scrollView content size.
-  [self updateScrollViewContentSize];
 
   // This should never be needed in autolayout.
   if (self.translatesAutoresizingMaskIntoConstraints) {
@@ -73,46 +63,6 @@
     [self setNeedsLayout];
     [self layoutIfNeeded];
   }
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  self.tabBar.hidden = !self.tabBar.items.count;
-  if (self.tabBar.hidden) {
-    self.scrollView.frame = self.bounds;
-  } else {
-    CGSize barSize = [self.tabBar sizeThatFits:self.bounds.size];
-    self.tabBar.frame = CGRectMake(CGRectGetMinX(self.bounds),
-                                   CGRectGetMaxY(self.bounds) - barSize.height,
-                                   barSize.width, barSize.height);
-    self.scrollView.frame = CGRectMake(
-        CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds),
-        CGRectGetWidth(self.bounds), CGRectGetMinY(self.tabBar.frame));
-  }
-  [self updateScrollViewContentSize];
-
-  // When using a new_tab_page_view in autolayout -setFrame is never called,
-  // which means all the logic to keep the selected scroll index set is never
-  // called.  Rather than refactor away all of this, just make sure -setFrame is
-  // called when loaded in autolayout.
-  if (!self.translatesAutoresizingMaskIntoConstraints) {
-    [self setFrame:self.frame];
-  }
-}
-
-- (void)updateScrollViewContentSize {
-  CGSize contentSize = self.scrollView.bounds.size;
-  self.scrollView.contentSize = contentSize;
-}
-
-- (CGRect)panelFrameForItemAtIndex:(NSUInteger)index {
-  CGRect contentBounds = CGRectMake(0, 0, self.scrollView.contentSize.width,
-                                    self.scrollView.contentSize.height);
-  LayoutRect layout =
-      LayoutRectForRectInBoundingRect(self.scrollView.bounds, contentBounds);
-  layout.position.leading = layout.size.width * index;
-  return LayoutRectGetRect(layout);
 }
 
 @end
