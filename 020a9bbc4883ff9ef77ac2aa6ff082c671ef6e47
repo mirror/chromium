@@ -163,6 +163,30 @@
       "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5650258_2f9c3b6d",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-15T11:41:48Z",
+      "side": 1,
+      "message": "This is still not resolved, I still think it would be better to have a single LoadV8Snapshot which is passed an enum to decide which snapshot should be loaded (and DCHECK if a previous call tried to load the other snapshot).",
+      "parentUuid": "b9e17425_ba112994",
+      "range": {
+        "startLine": 308,
+        "startChar": 20,
+        "endLine": 308,
+        "endChar": 41
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
