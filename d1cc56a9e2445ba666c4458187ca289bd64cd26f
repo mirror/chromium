@@ -22,6 +22,30 @@
       "revId": "d1cc56a9e2445ba666c4458187ca289bd64cd26f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e669923e_b478838b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintRenderingContext2D.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-15T21:29:40Z",
+      "side": 1,
+      "message": "You are right, it is a recording canvas. Fixed in the new patch.",
+      "parentUuid": "163a36a0_90276655",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "d1cc56a9e2445ba666c4458187ca289bd64cd26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
