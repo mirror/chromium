@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2c4beb5_f065d418",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2172,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-15T22:49:14Z",
+      "side": 1,
+      "message": "This test is very much based on WebViewTest.DOMStorageIsolation test (and chrome/test/data/extensions/platform_apps/web_view/findability_isolation is based on chrome/test/data/extensions/platform_apps/web_view/dom_storage_isolation)",
+      "range": {
+        "startLine": 2172,
+        "startChar": 23,
+        "endLine": 2172,
+        "endChar": 56
+      },
+      "revId": "1b83178b3145478a8865e3824f201258560af3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86dccd13_c8d23f0f",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-15T22:49:14Z",
+      "side": 1,
+      "message": "Changes here are a fix for a memory leak that got exposed by the new tests.  I tried to gather my notes about the memory leak in comments https://crbug.com/718489#c30 to #c35 (please note that in these comments I might have confused/swapped the semantics of /0 vs /1 tests).\n\nAFAICT, it is okay/legitimate to have a RenderFrameProxyHost without an associated RenderViewHostImpl.  I think in such case, RenderFrameHostManager::CreateRenderFrameProxy should return the already existing proxy (*without* creating and leaking a RenderViewHostImpl).\n\nI\u0027ll probably need to also discuss this with Alex and/or Charlie on Tuesday.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1933,
+        "endChar": 33
+      },
+      "revId": "1b83178b3145478a8865e3824f201258560af3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
