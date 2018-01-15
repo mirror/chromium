@@ -5,11 +5,15 @@
 #ifndef BaselineAlignment_h
 #define BaselineAlignment_h
 
+#include "core/layout/GridLayoutUtils.h"
 #include "core/layout/LayoutBox.h"
 
 namespace blink {
 
-// These classes are used to implement the Baseline Alignment logica, as
+class GridTrackSizingAlgorithm;
+class Grid;
+
+// These classes are used to implement the Baseline Alignment logic, as
 // described in the CSS Box Alignment specification.
 // https://drafts.csswg.org/css-align/#baseline-terms
 
@@ -78,6 +82,53 @@ static inline bool IsBaselinePosition(ItemPosition position) {
   return position == ItemPosition::kBaseline ||
          position == ItemPosition::kLastBaseline;
 }
+
+class BaselineAlignment {
+ public:
+  void UpdateBaselineAlignmentContextIfNeeded(const LayoutGrid&,
+                                              const Grid&,
+                                              LayoutBox&,
+                                              GridAxis);
+  LayoutUnit BaselineOffsetForChild(const LayoutGrid&,
+                                    const Grid&,
+                                    const LayoutBox&,
+                                    GridAxis) const;
+  const BaselineGroup& GetBaselineGroupForChild(const LayoutGrid&,
+                                                const Grid&,
+                                                const LayoutBox&,
+                                                GridAxis) const;
+  Optional<LayoutUnit> ExtentForBaselineAlignment(const LayoutGrid&,
+                                                  const Grid&,
+                                                  const LayoutBox&) const;
+  bool BaselineMayAffectIntrinsicSize(const GridTrackSizingAlgorithm&,
+                                      GridTrackSizingDirection) const;
+  void Clear();
+
+ private:
+  LayoutUnit LogicalAscentForChild(const LayoutGrid&,
+                                   const LayoutBox&,
+                                   GridAxis) const;
+  LayoutUnit AscentForChild(const LayoutGrid&,
+                            const LayoutBox&,
+                            GridAxis) const;
+  LayoutUnit DescentForChild(const LayoutGrid&,
+                             const LayoutBox&,
+                             LayoutUnit,
+                             GridAxis) const;
+  bool IsDescentBaselineForChild(const LayoutGrid&,
+                                 const LayoutBox&,
+                                 GridAxis) const;
+  bool IsBaselineContextComputed(GridAxis) const;
+
+  typedef HashMap<unsigned,
+                  std::unique_ptr<BaselineContext>,
+                  DefaultHash<unsigned>::Hash,
+                  WTF::UnsignedWithZeroKeyHashTraits<unsigned>>
+      BaselineContextsMap;
+
+  BaselineContextsMap row_axis_alignment_context_;
+  BaselineContextsMap col_axis_alignment_context_;
+};
 
 }  // namespace blink
 

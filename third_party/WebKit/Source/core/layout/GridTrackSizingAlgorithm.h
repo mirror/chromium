@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "base/macros.h"
+#include "core/layout/BaselineAlignment.h"
 #include "core/layout/LayoutBox.h"
 #include "core/style/GridPositionsResolver.h"
 #include "core/style/GridTrackSize.h"
@@ -79,7 +80,8 @@ class GridTrackSizingAlgorithm final {
   GridTrackSizingAlgorithm(const LayoutGrid* layout_grid, Grid& grid)
       : grid_(grid),
         layout_grid_(layout_grid),
-        sizing_state_(kColumnSizingFirstIteration) {}
+        sizing_state_(kColumnSizingFirstIteration),
+        baseline_alignment_() {}
 
   // setup() must be run before calling run() as it configures the behaviour of
   // the algorithm.
@@ -95,6 +97,22 @@ class GridTrackSizingAlgorithm final {
                                  size_t translated_index) const;
   LayoutUnit MinContentSize() const { return min_content_size_; };
   LayoutUnit MaxContentSize() const { return max_content_size_; };
+
+  LayoutUnit BaselineOffsetForChild(const LayoutBox& child,
+                                    GridAxis baseline_axis) const {
+    return baseline_alignment_.BaselineOffsetForChild(*layout_grid_, grid_,
+                                                      child, baseline_axis);
+  }
+  bool BaselineMayAffectIntrinsicSize(
+      GridTrackSizingDirection direction) const {
+    return baseline_alignment_.BaselineMayAffectIntrinsicSize(*this, direction);
+  }
+  void UpdateBaselineAlignmentContextIfNeeded(LayoutBox& child,
+                                              GridAxis baseline_axis) {
+    baseline_alignment_.UpdateBaselineAlignmentContextIfNeeded(
+        *layout_grid_, grid_, child, baseline_axis);
+  }
+  void ClearBaselineAlignment() { baseline_alignment_.Clear(); }
 
   Vector<GridTrack>& Tracks(GridTrackSizingDirection);
   const Vector<GridTrack>& Tracks(GridTrackSizingDirection) const;
@@ -212,6 +230,8 @@ class GridTrackSizingAlgorithm final {
   };
   SizingState sizing_state_;
 
+  BaselineAlignment baseline_alignment_;
+
   // This is a RAII class used to ensure that the track sizing algorithm is
   // executed as it is suppossed to be, i.e., first resolve columns and then
   // rows. Only if required a second iteration is run following the same order,
@@ -268,7 +288,11 @@ class GridTrackSizingAlgorithmStrategy {
       GridTrackSizingDirection,
       Optional<LayoutUnit> = WTF::nullopt) const;
   LayoutUnit ComputeTrackBasedSize() const;
-  Optional<LayoutUnit> ExtentForBaselineAlignment(LayoutBox&) const;
+
+  Optional<LayoutUnit> ExtentForBaselineAlignment(LayoutBox& child) const {
+    return algorithm_.baseline_alignment_.ExtentForBaselineAlignment(
+        *GetLayoutGrid(), algorithm_.GetGrid(), child);
+  };
 
   GridTrackSizingDirection Direction() const { return algorithm_.direction_; }
   double FindFrUnitSize(const GridSpan& tracks_span,

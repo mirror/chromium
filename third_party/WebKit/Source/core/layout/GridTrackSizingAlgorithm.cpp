@@ -356,21 +356,6 @@ void GridTrackSizingAlgorithmStrategy::DistributeSpaceToTracks(
                                                       available_logical_space);
 }
 
-Optional<LayoutUnit>
-GridTrackSizingAlgorithmStrategy::ExtentForBaselineAlignment(
-    LayoutBox& child) const {
-  auto* grid = algorithm_.layout_grid_;
-  GridAxis baseline_axis = GridLayoutUtils::IsOrthogonalChild(*grid, child)
-                               ? kGridRowAxis
-                               : kGridColumnAxis;
-  if (!grid->IsBaselineAlignmentForChild(child, baseline_axis) ||
-      !grid->IsBaselineContextComputed(baseline_axis))
-    return WTF::nullopt;
-
-  auto& group = grid->GetBaselineGroupForChild(child, baseline_axis);
-  return group.MaxAscent() + group.MaxDescent();
-}
-
 LayoutUnit DefiniteSizeStrategy::MinLogicalWidthForChild(
     LayoutBox& child,
     Length child_min_size,

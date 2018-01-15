@@ -5,10 +5,14 @@
 #ifndef GridLayoutUtils_h
 #define GridLayoutUtils_h
 
-#include "core/layout/LayoutGrid.h"
+#include "core/layout/LayoutBox.h"
 #include "platform/LayoutUnit.h"
 
 namespace blink {
+
+enum GridAxis { kGridRowAxis, kGridColumnAxis };
+
+class LayoutGrid;
 
 class GridLayoutUtils {
  public:
@@ -16,6 +20,12 @@ class GridLayoutUtils {
                                                const LayoutBox&);
   static LayoutUnit MarginLogicalHeightForChild(const LayoutGrid&,
                                                 const LayoutBox&);
+  static LayoutUnit MarginOverForChild(const LayoutGrid&,
+                                       const LayoutBox&,
+                                       GridAxis);
+  static LayoutUnit MarginUnderForChild(const LayoutGrid&,
+                                        const LayoutBox&,
+                                        GridAxis);
   static bool IsOrthogonalChild(const LayoutGrid&, const LayoutBox&);
   static GridTrackSizingDirection FlowAwareDirectionForChild(
       const LayoutGrid&,
@@ -27,7 +37,12 @@ class GridLayoutUtils {
   static LayoutUnit OverrideContainingBlockContentSizeForChild(
       const LayoutBox&,
       GridTrackSizingDirection);
+  static bool IsHorizontalGridAxis(const LayoutGrid&, GridAxis);
+  static bool IsParallelToBlockAxisForChild(const LayoutGrid&,
+                                            const LayoutBox&,
+                                            GridAxis);
 };
+
 }  // namespace blink
 
 #endif  // GridLayoutUtils_h
