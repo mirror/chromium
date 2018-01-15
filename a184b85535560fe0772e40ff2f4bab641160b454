@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76407a6_49c4bd50",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/infrastructure/common-dom-interfaces/collections/htmlallcollection-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-15T13:44:30Z",
+      "side": 1,
+      "message": "This is now failing the \"a new HTMLCollection is created for each call\" part of the test. If you comment that out, does the rest of it pass? In other words, is the collection still live?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "a184b85535560fe0772e40ff2f4bab641160b454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
