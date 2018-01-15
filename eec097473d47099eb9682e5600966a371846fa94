@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "a363f8ca_99189129",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-15T16:00:18Z",
+      "side": 1,
+      "message": "nit: it looks like in most of Objective-C files the memory management policy for properties is explicit; please add \"copy\"/\"strong\"/\"assign\" as necessary for consistency with the rest of the project",
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3fa8aa_77cbfd9f",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-15T16:00:18Z",
+      "side": 1,
+      "message": "nit: \"readwrite\" is the default, and usually omitted, remove (it is omitted from other properties)",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "722e5e63_54a663d5",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
         "patchSetId": 3
