@@ -111,6 +111,25 @@ config("zlib_crc32_simd_config") {
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     defines = [ "CRC32_SIMD_SSE42_PCLMUL" ]
   }
+
+  armv8_crc32 = !is_ios
+  if (is_chromeos && current_cpu == "arm") {
+    armv8_crc32 = (arm_version >= 8)
+  }
+
+  if (armv8_crc32 && (current_cpu == "arm" || current_cpu == "arm64")) {
+    defines = [ "CRC32_SIMD_ARMV8_NEON_LE" ]
+
+    if (is_android) {
+      defines += [ "ARMV8_OS_ANDROID" ]
+    } else if (is_linux || is_chromeos) {
+      defines += [ "ARMV8_OS_LINUX" ]
+    } else if (is_fuchsia) {
+      defines += [ "ARMV8_OS_ZIRCON" ]
+    } else {
+      assert(false, "Unsupported ARM OS")
+    }
+  }
 }
 
 source_set("zlib_crc32_simd") {
@@ -127,6 +146,44 @@ source_set("zlib_crc32_simd") {
         "-msse4.2",
         "-mpclmul",
       ]
+    }
+  }
+
+  armv8_crc32 = !is_ios
+  if (is_chromeos && current_cpu == "arm") {
+    armv8_crc32 = (arm_version >= 8)
+  }
+
+  if (armv8_crc32 && (current_cpu == "arm" || current_cpu == "arm64")) {
+    sources = [
+      "crc32_simd.c",
+      "crc32_simd.h",
+    ]
+
+    if (!is_win || is_clang) {
+      cflags_c = [
+        "-march=armv8-a+crc",
+      ]
+    }
+
+    if (is_android) {
+      import("//build/config/android/config.gni")
+
+      if (defined(android_ndk_root) && android_ndk_root != "") {
+        deps = [ "//third_party/android_tools:cpu_features" ]
+      } else {
+        assert(false, "CPU detection requires an Android NDK")
+      }
+    }
+
+    sources += [
+      "arm.c",
+    ]
+
+    if (!is_debug) {
+      # Use optimize_speed (-O3) to output the _smallest_ code.
+      configs -= [ "//build/config/compiler:default_optimization" ]
+      configs += [ "//build/config/compiler:optimize_speed" ]
     }
   }
 
@@ -172,6 +229,7 @@ static_library("zlib") {
 
   sources = [
     "adler32.c",
+    "arm.h",
     "compress.c",
     "crc32.c",
     "crc32.h",
@@ -216,6 +274,8 @@ static_library("zlib") {
 
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
+      deps += [ ":zlib_crc32_simd" ]
+
       deps += [ ":zlib_adler32_simd" ]
 
       deps += [ ":zlib_inflate_chunk_simd" ]
