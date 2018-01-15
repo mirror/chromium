@@ -195,6 +195,11 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
                 }
                 mUma.onTabCrashed(tab.getId());
             }
+
+            @Override
+            public void onNavigationListPruned(Tab tab) {
+                mTabSaver.addTabToSaveQueue(tab);
+            }
         };
     }
 
