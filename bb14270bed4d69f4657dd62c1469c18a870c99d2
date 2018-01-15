@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "db5d05c3_bda503f2",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-15T14:08:51Z",
+      "side": 1,
+      "message": "What\u0027s the merit of this pattern over subclasses?",
+      "parentUuid": "65f32f66_e4b0f4e3",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "bb14270bed4d69f4657dd62c1469c18a870c99d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54520d8f_1d67e072",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
         "patchSetId": 2
