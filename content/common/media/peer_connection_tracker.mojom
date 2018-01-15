@@ -1,0 +1,39 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// This interface allows forwarding PeerConnection events to WebRTCInternals in
+// the browser process.
+interface PeerConnectionTrackerHost {
+  // PeerConnectionTrackerHost forwards these events to WebRTCInternals.
+  // TODO(vm.arjun): Migrate rest of the messages,
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=792801
+
+  // Notifies WebRTCInternals about the removal of the peer connection
+  // identified with local id |lid|.
+  // |lid| is the renderer local id
+  RemovePeerConnection(int32 lid);
+
+  // This method is called to update PeerConnection.
+  // |lid| is the renderer local id
+  // |type| is the update type
+  // |value| is the detail of the update
+  UpdatePeerConnection(int32 lid, string type, string value);
+
+  // Notifies WebRTCInternals about |GetUserMedia()| has been made.
+  // |origin| is the security origin of getusermedia call
+  // |audio| is true if audio stream is requested
+  // |video| is true if video stream is requested
+  // |audio_constraints| is constraints for audio like audio source device id
+  // |video_constraints| is constraints for video like audio source device id
+  // The constraint strings are for display only and should not be parsed
+  // by the browser for security reasons.
+  // TODO(crbug.com/801955) Associate |Origin| with |RenderFrameHost| object.
+  GetUserMedia(string origin, bool audio, bool video, string
+               audio_constraints, string video_constraints);
+
+  // Logs WebRtc log for the connection id.
+  WebRtcEventLogWrite(int32 lid, string output);
+};
