@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee96d2cb_7b3a299b",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2018-01-15T19:40:41Z",
+      "side": 0,
+      "message": "Should this histogram be marked as deprecated now?",
+      "revId": "b90afab2c4e1bb169d0a39d0fab765bb002b0f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

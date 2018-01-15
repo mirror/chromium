@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c97782a_7b000fad",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2018-01-15T19:40:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this adds any more value than the case on line 256",
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ef20b5_fe23dcd4",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2018-01-15T19:40:41Z",
+      "side": 1,
+      "message": "This comment is slightly wrong, it was set to a domain that didn\u0027t require a reset",
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605285f5_53a93ae1",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2018-01-15T19:40:41Z",
+      "side": 1,
+      "message": "Not sure if this add much over the case on line 325",
+      "revId": "2f2c52d6a88af58b199fb300a6cc37b68a18db98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
