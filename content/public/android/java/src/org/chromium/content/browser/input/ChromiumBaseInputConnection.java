@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.VisibleForTesting;
@@ -27,10 +28,10 @@ public interface ChromiumBaseInputConnection extends InputConnection {
         @VisibleForTesting
         Handler getHandler();
 
-        void onWindowFocusChanged(boolean gainFocus);
-        void onViewFocusChanged(boolean gainFocus);
-        void onViewAttachedToWindow();
-        void onViewDetachedFromWindow();
+        public void onWindowFocusChanged(boolean gainFocus);
+        public void onViewFocusChanged(boolean gainFocus);
+        public void onViewAttachedToWindow();
+        public void onViewDetachedFromWindow();
     }
 
     /**
@@ -48,30 +49,48 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      *                       selection.
      * @param replyToRequest True when the update was made in a reply to IME's request.
      */
-    void updateStateOnUiThread(String text, int selectionStart, int selectionEnd,
+    public void updateStateOnUiThread(String text, int selectionStart, int selectionEnd,
             int compositionStart, int compositionEnd, boolean singleLine, boolean replyToRequest);
 
     /**
      * Send key event on UI thread.
      * @param event A key event.
      */
-    boolean sendKeyEventOnUiThread(KeyEvent event);
+    public boolean sendKeyEventOnUiThread(KeyEvent event);
 
     /**
      * Call this when restartInput() is called.
      */
-    void onRestartInputOnUiThread();
+    public void onRestartInputOnUiThread();
 
     /**
      * @return The {@link Handler} used for this InputConnection.
      */
     @Override
     @VisibleForTesting
-    Handler getHandler();
+    public Handler getHandler();
 
     /**
      * Unblock thread function if needed, e.g. we found that we will
      * never get state update.
      */
-    void unblockOnUiThread();
+    public void unblockOnUiThread();
+
+    /**
+     * @return The given {@link TextInputState} converted into {@link
+     *         android.view.inputmethod.ExtractedText}
+     */
+    static ExtractedText convertToExtractedText(TextInputState textInputState) {
+        if (textInputState == null) return null;
+        ExtractedText extractedText = new ExtractedText();
+        extractedText.text = textInputState.text();
+        extractedText.partialEndOffset = textInputState.text().length();
+        // Set the partial start offset to -1 because the content is the full text.
+        // See: Android documentation for ExtractedText#partialStartOffset
+        extractedText.partialStartOffset = -1;
+        extractedText.selectionStart = textInputState.selection().start();
+        extractedText.selectionEnd = textInputState.selection().end();
+        extractedText.flags = textInputState.singleLine() ? ExtractedText.FLAG_SINGLE_LINE : 0;
+        return extractedText;
+    }
 }

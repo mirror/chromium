@@ -351,6 +351,11 @@ public class ContentViewCoreImpl
         return mImeAdapter;
     }
 
+    @Override
+    public ImeAdapter getImeAdapter() {
+        return mImeAdapter;
+    }
+
     // Perform important post-construction set up of the ContentViewCore.
     // We do not require the containing view in the constructor to allow embedders to create a
     // ContentViewCore without having fully created its containing view. The containing view
@@ -380,8 +385,8 @@ public class ContentViewCoreImpl
         setContainerViewInternals(internalDispatcher);
 
         mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
-        mImeAdapter = new ImeAdapter(
-                mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
+        mImeAdapter = new ImeAdapter(mWebContents, mContainerView,
+                ImeAdapter.createDefaultInputMethodManagerWrapper(mContext));
         mImeAdapter.addEventObserver(this);
         mTextSuggestionHost = new TextSuggestionHost(this);
 

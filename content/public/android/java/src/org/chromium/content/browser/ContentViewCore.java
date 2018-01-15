@@ -593,6 +593,8 @@ public interface ContentViewCore {
     @VisibleForTesting
     ImeAdapter getImeAdapterForTest();
 
+    ImeAdapter getImeAdapter();
+
     @VisibleForTesting
     void setPopupZoomerForTest(PopupZoomer popupZoomer);
 

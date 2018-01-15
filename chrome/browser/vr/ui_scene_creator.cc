@@ -525,12 +525,25 @@ void UiSceneCreator::CreateContentQuad() {
   auto main_content = base::MakeUnique<ContentElement>(
       content_input_delegate_,
       base::BindRepeating(&UiBrowserInterface::OnContentScreenBoundsChanged,
-                          base::Unretained(browser_)));
+                          base::Unretained(browser_)),
+      base::BindRepeating(
+          [](Model* model, UiScene* scene, bool focused) {
+            model->editing_input = focused;
+            Keyboard* keyboard =
+                static_cast<Keyboard*>(scene->GetUiElementByName(kKeyboard));
+            if (focused) {
+              keyboard->UpdateInput(model->web_input_text_field_info);
+            } else {
+              keyboard->UpdateInput(TextInputInfo());
+            }
+          },
+          base::Unretained(model_), base::Unretained(scene_)));
   main_content->SetName(kContentQuad);
   main_content->SetDrawPhase(kPhaseForeground);
   main_content->SetSize(kContentWidth, kContentHeight);
   main_content->set_corner_radius(kContentCornerRadius);
   main_content->SetTransitionedProperties({BOUNDS});
+  main_content->SetTextInputDelegate(text_input_delegate_);
   main_content->AddBinding(VR_BIND(
       bool, Model, model_, fullscreen_enabled(), UiElement, main_content.get(),
       SetSize(value ? kFullscreenWidth : kContentWidth,
@@ -544,6 +557,12 @@ void UiSceneCreator::CreateContentQuad() {
   main_content->AddBinding(VR_BIND_FUNC(
       UiElementRenderer::TextureLocation, Model, model_, content_location,
       ContentElement, main_content.get(), SetTextureLocation));
+  main_content->AddBinding(base::MakeUnique<Binding<TextInputInfo>>(
+      VR_BIND_LAMBDA([](TextInputInfo* info) { return *info; },
+                     base::Unretained(&model_->web_input_text_field_info)),
+      VR_BIND_LAMBDA([](ContentElement* e,
+                        const TextInputInfo& value) { e->UpdateInput(value); },
+                     base::Unretained(main_content.get()))));
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
   // Limit reticle distance to a sphere based on content distance.
