@@ -233,7 +233,8 @@ function sensorMocks() {
     // Returns initialized Sensor proxy to the client.
     async getSensor(type) {
       if (this.getSensorShouldFail_) {
-        return {initParams: null};
+        return {initParams: null,
+                error: device.mojom.SensorCreationError.NOT_READABLE_ERROR};
       }
 
       let offset = (device.mojom.SensorType.LAST - type) *
@@ -280,7 +281,7 @@ function sensorMocks() {
         this.resolveFunc_(this.activeSensor_);
       }
 
-      return {initParams};
+      return {initParams: initParams, error: device.mojom.SensorCreationError.NO_ERROR};
     }
 
     // Binds object to mojo message pipe
