@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc93c15_383e330d",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T22:34:13Z",
+      "side": 1,
+      "message": "Please add tests for all permutations of READ, WRITE i.e. read with pending read, read with pending write, etc.",
+      "revId": "f11dc0d004c9aa12800c74c00ee1f6c0ce4ae3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306d0b85_803af6ad",
+        "filename": "device/bluetooth/bluez/bluetooth_gatt_bluez_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-15T22:34:13Z",
+      "side": 1,
+      "message": "Thanks for testing BlueZ code! Could you do it in a separate test though? This test is pretty big already and it\u0027s really easy to make a mistake.",
+      "revId": "f11dc0d004c9aa12800c74c00ee1f6c0ce4ae3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
