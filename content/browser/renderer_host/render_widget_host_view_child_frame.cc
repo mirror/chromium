@@ -20,7 +20,6 @@
 #include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
@@ -70,7 +69,6 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       frame_sink_id_(
           base::checked_cast<uint32_t>(widget_host->GetProcess()->GetID()),
           base::checked_cast<uint32_t>(widget_host->GetRoutingID())),
-      next_surface_sequence_(1u),
       current_surface_scale_factor_(1.f),
       frame_connector_(nullptr),
       enable_viz_(base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -587,26 +585,16 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   if (switches::IsMusHostingViz())
     return;
-  // TODO(kylechar): Remove sequence generation and only send surface info.
-  // See https://crbug.com/676384.
-  viz::SurfaceSequence sequence =
-      viz::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
-  viz::SurfaceManager* manager = GetFrameSinkManager()->surface_manager();
   viz::SurfaceId surface_id(frame_sink_id_, last_received_local_surface_id_);
-  // The renderer process will satisfy this dependency when it creates a
-  // SurfaceLayer.
-  if (!manager->using_surface_references())
-    manager->RequireSequence(surface_id, sequence);
   viz::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
                                 current_surface_size_);
-  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
+  SendSurfaceInfoToEmbedderImpl(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedderImpl(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const viz::SurfaceInfo& surface_info) {
   if (frame_connector_)
-    frame_connector_->SetChildFrameSurface(surface_info, sequence);
+    frame_connector_->SetChildFrameSurface(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::SubmitCompositorFrame(
@@ -907,8 +895,7 @@ void RenderWidgetHostViewChildFrame::OnBeginFramePausedChanged(bool paused) {
 
 void RenderWidgetHostViewChildFrame::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  viz::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
-  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
+  SendSurfaceInfoToEmbedderImpl(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::OnFrameTokenChanged(uint32_t frame_token) {
