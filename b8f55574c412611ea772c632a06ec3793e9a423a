@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f009f6f5_3accd33c",
+        "filename": "chrome/browser/sync/test/integration/multi_client_status_change_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-15T12:36:21Z",
+      "side": 1,
+      "message": "Should we add a TODO to decrease the timeout back once we figure out why USS is slow? I would also file a separate bug for typed URL USS being slow and mention it in the TODO. We don\u0027t have an owner on our side, so I would cc gangwu@.\n\nI don\u0027t have any immediate concerns with the increase, but if there is some kind of quota on the trybots, I feel like this may backfire.\n\nI agree that this is the best we can do and in worst case the tests will just continue failing :)",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "b8f55574c412611ea772c632a06ec3793e9a423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
