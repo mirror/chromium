@@ -23,12 +23,14 @@
     TestRunner.addResult('Fetch in worker result: ' + result);
 
     var requests = NetworkTestRunner.networkRequests();
-    requests.forEach((request) => {
-      TestRunner.addResult(request.url());
-      TestRunner.addResult('resource.type: ' + request.resourceType());
-      TestRunner.addResult('request.failed: ' + !!request.failed);
-    });
+    Promise.all(requests.map(r => NetworkTestRunner.waitForFinishedLoading(r))).then(() => {
+      requests.forEach((request) => {
+        TestRunner.addResult(request.url());
+        TestRunner.addResult('resource.type: ' + request.resourceType());
+        TestRunner.addResult('request.failed: ' + !!request.failed);
+      });
 
-    TestRunner.completeTest();
+      TestRunner.completeTest();
+    });
   }
 })();
