@@ -13,7 +13,7 @@ namespace crazy {
 TEST(Globals, Get) {
   SystemMock sys;
   ASSERT_TRUE(Globals::Get());
-  ASSERT_TRUE(Globals::GetLibraries());
+  ASSERT_TRUE(Globals::Get()->libraries());
   ASSERT_TRUE(Globals::GetSearchPaths());
   ASSERT_TRUE(Globals::GetRDebug());
 }

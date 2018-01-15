@@ -86,21 +86,17 @@ char* WrapDlerror() {
 }
 
 void* WrapDlopen(const char* path, int mode) {
-  ScopedGlobalLock lock;
+  ScopedLockedGlobals globals;
 
   // NOTE: If |path| is NULL, the wrapper should return a handle
   // corresponding to the current executable. This can't be a crazy
   // library, so don't try to handle it with the crazy linker.
   if (path) {
-    LibraryList* lib_list = Globals::GetLibraries();
+    LibraryList* lib_list = globals->libraries();
     Error error;
-    LibraryView* wrap = lib_list->LoadLibrary(path,
-                                              mode,
-                                              0U /* load_address */,
-                                              0U /* file_offset */,
-                                              Globals::GetSearchPaths(),
-                                              false,
-                                              &error);
+    LibraryView* wrap = lib_list->LoadLibrary(
+        path, mode, 0U /* load_address */, 0U /* file_offset */,
+        globals->GetSearchPaths(), false, &error);
     if (wrap)
       return wrap;
   }
@@ -115,7 +111,7 @@ void* WrapDlopen(const char* path, int mode) {
 
   LibraryView* wrap_lib = new LibraryView();
   wrap_lib->SetSystem(system_lib, path ? path : "<executable>");
-  Globals::GetLibraries()->AddLibrary(wrap_lib);
+  globals->libraries()->AddLibrary(wrap_lib);
   return wrap_lib;
 }
 
@@ -163,8 +159,8 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
   }
 
   if (wrap_lib->IsCrazy()) {
-    ScopedGlobalLock lock;
-    LibraryList* lib_list = Globals::GetLibraries();
+    ScopedLockedGlobals globals;
+    LibraryList* lib_list = globals->libraries();
     void* addr = lib_list->FindSymbolFrom(symbol_name, wrap_lib);
     if (addr)
       return addr;
@@ -184,8 +180,8 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
 int WrapDladdr(void* address, Dl_info* info) {
   // First, perform search in crazy libraries.
   {
-    ScopedGlobalLock lock;
-    LibraryList* lib_list = Globals::GetLibraries();
+    ScopedLockedGlobals globals;
+    LibraryList* lib_list = globals->libraries();
     LibraryView* wrap = lib_list->FindLibraryForAddress(address);
     if (wrap && wrap->IsCrazy()) {
       size_t sym_size = 0;
@@ -217,8 +213,8 @@ int WrapDlclose(void* lib_handle) {
   }
 
   if (wrap_lib->IsSystem() || wrap_lib->IsCrazy()) {
-    ScopedGlobalLock lock;
-    LibraryList* lib_list = Globals::GetLibraries();
+    ScopedLockedGlobals globals;
+    LibraryList* lib_list = globals->libraries();
     lib_list->UnloadLibrary(wrap_lib);
     return 0;
   }
@@ -232,8 +228,8 @@ int WrapDlclose(void* lib_handle) {
 _Unwind_Ptr WrapDl_unwind_find_exidx(_Unwind_Ptr pc, int* pcount) {
   // First lookup in crazy libraries.
   {
-    ScopedGlobalLock lock;
-    LibraryList* list = Globals::GetLibraries();
+    ScopedLockedGlobals globals;
+    LibraryList* list = globals->libraries();
     _Unwind_Ptr result =
         list->FindArmExIdx(reinterpret_cast<void*>(pc), pcount);
     if (result)
@@ -246,8 +242,8 @@ _Unwind_Ptr WrapDl_unwind_find_exidx(_Unwind_Ptr pc, int* pcount) {
 int WrapDl_iterate_phdr(int (*cb)(dl_phdr_info*, size_t, void*), void* data) {
   // First, iterate over crazy libraries.
   {
-    ScopedGlobalLock lock;
-    LibraryList* list = Globals::GetLibraries();
+    ScopedLockedGlobals globals;
+    LibraryList* list = globals->libraries();
     int result = list->IteratePhdr(cb, data);
     if (result)
       return result;

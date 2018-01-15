@@ -19,7 +19,7 @@ void CreateGlobalsInstance() { g_globals = new Globals(); }
 
 }  // namespace
 
-Globals::Globals() : search_paths_(), rdebug_() {
+Globals::Globals() : search_paths_(), rdebug_(), libraries_(&rdebug_) {
   pthread_mutexattr_t attr;
   pthread_mutexattr_init(&attr);
   pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
