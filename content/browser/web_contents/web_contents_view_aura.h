@@ -20,7 +20,6 @@
 #include "content/common/features.h"
 #include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window_delegate.h"
-#include "ui/aura/window_observer.h"
 
 namespace aura {
 class Window;
@@ -46,8 +45,7 @@ class CONTENT_EXPORT WebContentsViewAura
       public RenderViewHostDelegateView,
       public OverscrollControllerDelegate,
       public aura::WindowDelegate,
-      public aura::client::DragDropDelegate,
-      public aura::WindowObserver {
+      public aura::client::DragDropDelegate {
  public:
   WebContentsViewAura(WebContentsImpl* web_contents,
                       WebContentsViewDelegate* delegate);
@@ -182,6 +180,8 @@ class CONTENT_EXPORT WebContentsViewAura
   void OnWindowDestroying(aura::Window* window) override;
   void OnWindowDestroyed(aura::Window* window) override;
   void OnWindowTargetVisibilityChanged(bool visible) override;
+  void OnWindowOcclusionChanged(
+      aura::Window::OcclusionState occlusion_state) override;
   bool HasHitTestMask() const override;
   void GetHitTestMask(gfx::Path* mask) const override;
 
@@ -194,9 +194,6 @@ class CONTENT_EXPORT WebContentsViewAura
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
-
-  // Overridden from aura::WindowObserver:
-  void OnWindowVisibilityChanged(aura::Window* window, bool visible) override;
 
   FRIEND_TEST_ALL_PREFIXES(WebContentsViewAuraTest, EnableDisableOverscroll);
 
