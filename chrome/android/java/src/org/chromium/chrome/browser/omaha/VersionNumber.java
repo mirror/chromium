@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.omaha;
 
+import com.google.common.base.Splitter;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -23,15 +26,15 @@ public class VersionNumber {
         }
 
         // Parse out the version numbers.
-        String[] pieces = str.split("\\.");
-        if (pieces.length != 4) {
+        List<String> pieces = Splitter.on("\\.").splitToList(str);
+        if (pieces.size() != 4) {
             return null;
         }
 
         VersionNumber version = new VersionNumber();
         try {
             for (int i = 0; i < 4; ++i) {
-                version.mVersion[i] = Integer.parseInt(pieces[i]);
+                version.mVersion[i] = Integer.parseInt(pieces.get(i));
             }
         } catch (NumberFormatException e) {
             return null;

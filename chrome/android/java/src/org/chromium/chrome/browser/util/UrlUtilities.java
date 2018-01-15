@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
@@ -19,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +68,7 @@ public class UrlUtilities {
      *         guaranteed.
      */
     public static String getTelNumber(String uri) {
-        return uri.split(":")[1];
+        return Splitter.on(":").splitToList(uri).get(1);
     }
 
     /**
@@ -262,10 +265,9 @@ public class UrlUtilities {
         }
 
         // Now lex and parse the correctly-encoded fragment.
-        String[] parts = fragment.split(";");
-        if (parts.length < 3
-                || !parts[0].equals("Intent")
-                || !parts[parts.length - 1].equals("end")) {
+        List<String> parts = Splitter.on(";").splitToList(fragment);
+        if (parts.size() < 3 || !parts.get(0).equals("Intent")
+                || !parts.get(parts.size() - 1).equals("end")) {
             Log.d(TAG, "Invalid fragment (not enough parts, lacking Intent, or lacking end)");
             return false;
         }
@@ -276,46 +278,46 @@ public class UrlUtilities {
         boolean seenComponent = false;
         boolean seenScheme = false;
 
-        for (int i = 1; i < parts.length - 1; ++i) {
+        for (int i = 1; i < parts.size() - 1; ++i) {
             // This is OK *only* because no valid package, action, category,
             // component, or scheme contains (unencoded) "=".
-            String[] pair = parts[i].split("=");
-            if (2 != pair.length) {
-                Log.d(TAG, "Invalid key=value pair '%s'", parts[i]);
+            List<String> pair = Splitter.on("=").splitToList(parts.get(i));
+            if (2 != pair.size()) {
+                Log.d(TAG, "Invalid key=value pair '%s'", parts.get(i));
                 return false;
             }
 
-            m = JAVA_PACKAGE_NAME_PATTERN.matcher(pair[1]);
-            if (pair[0].equals("package")) {
+            m = JAVA_PACKAGE_NAME_PATTERN.matcher(pair.get(1));
+            if (pair.get(0).equals("package")) {
                 if (seenPackage || !m.matches()) {
-                    Log.d(TAG, "Invalid package '%s'", pair[1]);
+                    Log.d(TAG, "Invalid package '%s'", pair.get(1));
                     return false;
                 }
                 seenPackage = true;
-            } else if (pair[0].equals("action")) {
+            } else if (pair.get(0).equals("action")) {
                 if (seenAction || !m.matches()) {
-                    Log.d(TAG, "Invalid action '%s'", pair[1]);
+                    Log.d(TAG, "Invalid action '%s'", pair.get(1));
                     return false;
                 }
                 seenAction = true;
-            } else if (pair[0].equals("category")) {
+            } else if (pair.get(0).equals("category")) {
                 if (seenCategory || !m.matches()) {
-                    Log.d(TAG, "Invalid category '%s'", pair[1]);
+                    Log.d(TAG, "Invalid category '%s'", pair.get(1));
                     return false;
                 }
                 seenCategory = true;
-            } else if (pair[0].equals("component")) {
-                Matcher componentMatcher = ANDROID_COMPONENT_NAME_PATTERN.matcher(pair[1]);
+            } else if (pair.get(0).equals("component")) {
+                Matcher componentMatcher = ANDROID_COMPONENT_NAME_PATTERN.matcher(pair.get(1));
                 if (seenComponent || !componentMatcher.matches()) {
-                    Log.d(TAG, "Invalid component '%s'", pair[1]);
+                    Log.d(TAG, "Invalid component '%s'", pair.get(1));
                     return false;
                 }
                 seenComponent = true;
-            } else if (pair[0].equals("scheme")) {
+            } else if (pair.get(0).equals("scheme")) {
                 if (seenScheme) return false;
-                Matcher schemeMatcher = URL_SCHEME_PATTERN.matcher(pair[1]);
+                Matcher schemeMatcher = URL_SCHEME_PATTERN.matcher(pair.get(1));
                 if (!schemeMatcher.matches()) {
-                    Log.d(TAG, "Invalid scheme '%s'", pair[1]);
+                    Log.d(TAG, "Invalid scheme '%s'", pair.get(1));
                     return false;
                 }
                 seenScheme = true;

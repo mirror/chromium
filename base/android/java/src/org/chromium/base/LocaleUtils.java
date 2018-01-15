@@ -9,11 +9,14 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.annotations.CalledByNative;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -105,18 +108,18 @@ public class LocaleUtils {
      * @return the locale that best represents the language tag.
      */
     public static Locale forLanguageTagCompat(String languageTag) {
-        String[] tag = languageTag.split("-");
-        if (tag.length == 0) {
+        List<String> tag = Splitter.on("-").splitToList(languageTag);
+        if (tag.size() == 0) {
             return new Locale("");
         }
-        String language = getUpdatedLanguageForAndroid(tag[0]);
+        String language = getUpdatedLanguageForAndroid(tag.get(0));
         if ((language.length() != 2 && language.length() != 3) || language.equals("und")) {
             return new Locale("");
         }
-        if (tag.length == 1) {
+        if (tag.size() == 1) {
             return new Locale(language);
         }
-        String country = tag[1];
+        String country = tag.get(1);
         if (country.length() != 2 && country.length() != 3) {
             return new Locale(language);
         }
