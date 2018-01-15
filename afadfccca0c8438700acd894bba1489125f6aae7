@@ -52,6 +52,24 @@
       "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27635bb8_212af8fd",
+        "filename": "third_party/WebKit/public/web/WebWidget.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-15T15:13:38Z",
+      "side": 1,
+      "message": "Thanks Chris, that makes sense. Updated the enum, impls and comments.",
+      "parentUuid": "87d8c0e5_0ea1b02c",
+      "revId": "afadfccca0c8438700acd894bba1489125f6aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
