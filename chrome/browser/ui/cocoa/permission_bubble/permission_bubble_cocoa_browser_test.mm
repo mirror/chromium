@@ -15,6 +15,8 @@
 #import "testing/gtest_mac.h"
 #include "ui/base/test/scoped_fake_nswindow_fullscreen.h"
 
+// TODO(tapted): Port this?
+
 IN_PROC_BROWSER_TEST_F(PermissionBubbleBrowserTest, HasLocationBarByDefault) {
   PermissionBubbleCocoa bubble(browser(), test_delegate());
   EXPECT_TRUE([bubble.bubbleController_ hasVisibleLocationBar]);
