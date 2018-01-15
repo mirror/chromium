@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb5a2895_8353a2c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-15T00:19:02Z",
+      "side": 1,
+      "message": "BUG: 800917  ?",
+      "revId": "762525a7ce10e930a1b7a60e07621af0a7e26818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6192817b_4cbc977c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-15T00:19:02Z",
+      "side": 1,
+      "message": "note this will leave the bubble open - calling OnLearnMoreClicked() directly means the GetWidget()-\u003eClose() is skipped in ContentSettingBubbleContents::ButtonPressed(). This is probably OK. Ideally, a bit more plumbing needs to be added to ContentSettingBubbleDialogTest so that it can do something like\n\n ContentSettingBubbleContents* dialog \u003d bubble-\u003ewidget_delegate();\n dialog-\u003eButtonPressed(dialog-\u003elearn_more_button_, dummy_event);\n\n\n(there can sometimes be weird interactions if dialogs do stuff when they are closed, but I think the content settings bubbles are not affected, so this small difference in code coverage should be fine).",
+      "revId": "762525a7ce10e930a1b7a60e07621af0a7e26818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c2a0136_dbeb3be7",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
         "patchSetId": 3
