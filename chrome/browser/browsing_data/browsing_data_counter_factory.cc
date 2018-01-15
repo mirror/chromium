@@ -69,10 +69,10 @@ BrowsingDataCounterFactory::GetForProfileAndPref(Profile* profile,
     return base::MakeUnique<CacheCounter>(profile);
   }
 
-  if (pref_name == browsing_data::prefs::kDeleteCookies &&
-      IsSiteDataCounterEnabled()) {
+  if (pref_name == browsing_data::prefs::kDeleteCookies) {
     return base::MakeUnique<SiteDataCounter>(profile);
   }
+
   if (pref_name == browsing_data::prefs::kDeleteCookiesBasic) {
     // The cookies option on the basic tab doesn't use a counter.
     return nullptr;
@@ -92,11 +92,13 @@ BrowsingDataCounterFactory::GetForProfileAndPref(Profile* profile,
         ProfileSyncServiceFactory::GetForProfile(profile));
   }
 
-  if (pref_name == browsing_data::prefs::kDeleteDownloadHistory)
+  if (pref_name == browsing_data::prefs::kDeleteDownloadHistory) {
     return base::MakeUnique<DownloadsCounter>(profile);
+  }
 
-  if (pref_name == browsing_data::prefs::kDeleteMediaLicenses)
+  if (pref_name == browsing_data::prefs::kDeleteMediaLicenses) {
     return MediaLicensesCounter::Create(profile);
+  }
 
   if (pref_name == browsing_data::prefs::kDeleteSiteSettings) {
     return base::MakeUnique<browsing_data::SiteSettingsCounter>(
@@ -110,8 +112,9 @@ BrowsingDataCounterFactory::GetForProfileAndPref(Profile* profile,
   }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  if (pref_name == browsing_data::prefs::kDeleteHostedAppsData)
+  if (pref_name == browsing_data::prefs::kDeleteHostedAppsData) {
     return base::MakeUnique<HostedAppsCounter>(profile);
+  }
 #endif
 
   return nullptr;
