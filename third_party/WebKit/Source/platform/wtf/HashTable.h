@@ -48,7 +48,6 @@
 #endif
 
 #if DUMP_HASHTABLE_STATS_PER_TABLE
-#include "platform/wtf/DataLog.h"
 #include <type_traits>
 #endif
 
