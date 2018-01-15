@@ -30,9 +30,12 @@
   (define iokit-registry-entry-class iokit-user-client-class))
 
 ; --enable-sandbox-logging causes the sandbox to log failures to the syslog.
-(if (param-true? disable-sandbox-denial-logging)
-  (deny default (with no-log))
-  (deny default))
+;(if (param-true? disable-sandbox-denial-logging)
+;  (deny default (with no-log))
+;  (deny default))
+
+(deny default)
+(debug deny)
 
 (if (param-true? enable-logging) (debug deny))
 
