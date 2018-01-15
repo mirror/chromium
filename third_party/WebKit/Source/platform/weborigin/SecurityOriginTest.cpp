@@ -615,4 +615,48 @@ TEST_F(SecurityOriginTest, UrlOriginConversions) {
   }
 }
 
+TEST_F(SecurityOriginTest, EffectiveDomain) {
+  struct TestCase {
+    const char* effective_domain;
+    const char* origin;
+  } cases[] = {
+      {NULL, ""},
+      {NULL, "null"},
+      {NULL, "data:text/plain,hello_world"},
+      {NULL, "about:blank"},
+      {"", "file://"},
+      {"example.com", "http://example.com"},
+      {"example.com", "http://example.com:80"},
+      {"example.com", "https://example.com"},
+      {"suborigin.example.com", "https://suborigin.example.com"},
+  };
+
+  for (const auto& test : cases) {
+    scoped_refptr<const SecurityOrigin> origin =
+        SecurityOrigin::CreateFromString(test.origin);
+    if (test.effective_domain && origin->EffectiveDomain()) {
+      EXPECT_EQ(test.effective_domain, origin->EffectiveDomain());
+    } else {
+      EXPECT_EQ(NULL, test.effective_domain);
+      EXPECT_EQ(NULL, origin->EffectiveDomain());
+    }
+  }
+
+  struct SetDomainTestCase {
+    const char* set_domain;
+    const char* effective_domain;
+    const char* origin;
+  } set_domain_cases[] = {
+      {"example.com", "example.com", "http-so://suborigin.example.com"},
+      {"example.com", "example.com", "http://www.suborigin.example.com"},
+  };
+
+  for (const auto& test : set_domain_cases) {
+    scoped_refptr<SecurityOrigin> origin =
+        SecurityOrigin::CreateFromString(test.origin);
+    origin->SetDomainFromDOM(test.set_domain);
+    EXPECT_EQ(test.effective_domain, origin->EffectiveDomain());
+  }
+}
+
 }  // namespace blink

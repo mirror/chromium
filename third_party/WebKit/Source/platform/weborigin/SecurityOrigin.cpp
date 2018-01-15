@@ -233,6 +233,14 @@ void SecurityOrigin::SetDomainFromDOM(const String& new_domain) {
   domain_ = new_domain;
 }
 
+String SecurityOrigin::EffectiveDomain() const {
+  if (IsUnique())
+    return String();
+  if (domain_)
+    return domain_;
+  return host_;
+}
+
 bool SecurityOrigin::IsSecure(const KURL& url) {
   if (SchemeRegistry::ShouldTreatURLSchemeAsSecure(url.Protocol()))
     return true;

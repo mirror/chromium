@@ -1,0 +1,9 @@
+<script src="resources/credential-helpers.js"></script>
+<script>
+  let u = new URLSearchParams(window.location.search);
+  let custom_public_key = publicKey;
+  custom_public_key.rp.id = u.get('rpId');
+  navigator.credentials.create({publicKey: custom_public_key})
+    .then(_ => window.opener.postMessage("SUCCESS"))
+    .catch(_ => window.opener.postMessage("CRUSHING FAILURE"));
+</script>

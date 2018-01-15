@@ -91,6 +91,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   String Protocol() const { return protocol_; }
   String Host() const { return host_; }
   String Domain() const { return domain_; }
+  String EffectiveDomain() const;
 
   // Returns 0 if the effective port of this origin is the default for its
   // scheme.
