@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ce3a35_0317802b",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-15T02:24:48Z",
+      "side": 1,
+      "message": "add computedStyleMap -\u003e more specific the better",
+      "revId": "64ad2322611e50dc58b98208041c701ca56d2c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
