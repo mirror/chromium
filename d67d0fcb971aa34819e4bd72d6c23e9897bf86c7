@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82863c8c_9c937ac0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T23:46:32Z",
+      "side": 1,
+      "message": "Oops, Sorry about the typo. Done",
+      "parentUuid": "445f33c0_203dd963",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "d67d0fcb971aa34819e4bd72d6c23e9897bf86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dae1199_29012e74",
         "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "806a18f6_ee8a0e16",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T23:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dae1199_29012e74",
+      "range": {
+        "startLine": 832,
+        "startChar": 22,
+        "endLine": 832,
+        "endChar": 31
+      },
+      "revId": "d67d0fcb971aa34819e4bd72d6c23e9897bf86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eb59875_66f129b4",
         "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "d67d0fcb971aa34819e4bd72d6c23e9897bf86c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e314c0f_5599a8dc",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T23:46:32Z",
+      "side": 1,
+      "message": "Yep, sure we can do that. Done.",
+      "parentUuid": "4eb59875_66f129b4",
+      "range": {
+        "startLine": 835,
+        "startChar": 22,
+        "endLine": 835,
+        "endChar": 48
+      },
+      "revId": "d67d0fcb971aa34819e4bd72d6c23e9897bf86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
