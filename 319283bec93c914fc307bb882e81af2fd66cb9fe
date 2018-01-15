@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f09b5c9_78ea34d9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/aggregated_metric_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:24:10Z",
+      "side": 1,
+      "message": "Would something like this instead work?\n\nstd::array\u003c...\u003e unreported_values_ \u003d {};\n\n(or unreported_values_({}) in ctor initializer)",
+      "revId": "319283bec93c914fc307bb882e81af2fd66cb9fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
