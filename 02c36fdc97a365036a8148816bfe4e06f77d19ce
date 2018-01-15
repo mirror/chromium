@@ -70,6 +70,30 @@
       "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c08686_be84936c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-15T09:46:32Z",
+      "side": 1,
+      "message": "Tweaked message a bit and added that this is akin to std::unique_ptr/std::shared_ptr having a constexpr default constructor.",
+      "parentUuid": "957be075_f16af4b9",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "02c36fdc97a365036a8148816bfe4e06f77d19ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
