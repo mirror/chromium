@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb21ac53_8c8cf692",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T21:39:43Z",
+      "side": 1,
+      "message": "Please add fallback_child_local_surface_id \u003d allocator_.GenerateId(); before this line and the error should be gone.",
+      "revId": "0b7b07d4fa0442b2ca50236eb6f85f2d5fe2c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc82464e_48c8b756",
+        "filename": "components/viz/service/surfaces/surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-15T21:39:43Z",
+      "side": 1,
+      "message": "I think we can just remove this part. We don\u0027t need to honor presentation tokens if the client is misbehaving. If it turns out we need to keep these lines (based on other reviewers\u0027 feedback) we can just use the submit method that doesn\u0027t dcheck.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 3
+      },
+      "revId": "0b7b07d4fa0442b2ca50236eb6f85f2d5fe2c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
