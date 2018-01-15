@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e4fd16f_b7e12123",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-bottom.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-15T06:58:33Z",
+      "side": 1,
+      "message": "FWIW, I think we could simplify all of these with a function which constructs the appropriate test case, e.g.:\n\n// Construct a 20x20 sticky position element stuck to the given edge with given offset within a 100x100 container\n// within a 200x200 viewport scroller within a 500x500 scrollable area.\nconst elements \u003d setupStickyTest(\u0027bottom\u0027, 10 /* sticky offset */);\nelements.scroller.scrollTop \u003d ##;\nassert_equals(elements.sticky.offsetTop, ##); // default offsettop is known to be 240 (centered within container).\n\nDoes this make sense? I think it might make the tests more readable to be based on the same known geometry.",
+      "revId": "da7b22a601e88eebeb8f6e71d8b5db7eab90117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
