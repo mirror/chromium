@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85096e5_0bb65d7c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T11:59:29Z",
+      "side": 1,
+      "message": "Remove the final line since it\u0027s inaccurate(it\u0027s an ID of the peer connection, not of the renderer) and redundant (the main comment already says what it is).",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "1baf51d52ddc5bc4319e105b6c0223761a685b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00002a01_0866702b",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T11:59:29Z",
+      "side": 1,
+      "message": "Rephrase this comment. |lid| is not the renderer ID. It\u0027s the ID of the peer connection.",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "1baf51d52ddc5bc4319e105b6c0223761a685b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19874b3f_211df61c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T11:59:29Z",
+      "side": 1,
+      "message": "If possible, indicate sample values for |type| and |value| in their respective comments.",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "1baf51d52ddc5bc4319e105b6c0223761a685b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6031c1c4_20c49cf1",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T11:59:29Z",
+      "side": 1,
+      "message": "Grammar is not right. Possible alternatives:\nLets WebRTCInternals know that a getUserMedia() call has been made.\nNotifies WebRTCInternals about a getUserMedia() call.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "1baf51d52ddc5bc4319e105b6c0223761a685b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3af476c_88a7eb57",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-15T11:59:29Z",
+      "side": 1,
+      "message": "Rephrase the comment as:\nRemove the |origin| parameter.",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "1baf51d52ddc5bc4319e105b6c0223761a685b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
