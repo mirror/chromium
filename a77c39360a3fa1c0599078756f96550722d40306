@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f65eca71_015fc1f5",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-15T11:05:42Z",
+      "side": 1,
+      "message": "This was a copy/paste error; we skip `about:` for frames and objects for reasons that I can\u0027t easily justify right now. I think something to do with the initial navigation to `about:blank`? Maybe we can remove them? Idunno. Something to poke at in a future CL. :)",
+      "parentUuid": "d59bfbc4_fdedcf11",
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11db74e1_faf03489",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "24920043_1dd3e0d4",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-15T11:05:42Z",
+      "side": 1,
+      "message": "Yup. That was dumb. Happily, layout tests caught it! :)",
+      "parentUuid": "11db74e1_faf03489",
+      "range": {
+        "startLine": 1400,
+        "startChar": 5,
+        "endLine": 1400,
+        "endChar": 0
+      },
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d532a457_3f54286c",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-12T14:57:25Z",
       "side": 1,
       "message": "I assume this was left in by mistake?",
+      "revId": "a77c39360a3fa1c0599078756f96550722d40306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b148f1_1ebd2661",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-15T11:05:42Z",
+      "side": 1,
+      "message": "Ah. *cough* Yes. I was trying to figure out where prefetches came from. ;)",
+      "parentUuid": "d532a457_3f54286c",
       "revId": "a77c39360a3fa1c0599078756f96550722d40306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
