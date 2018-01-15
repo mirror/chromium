@@ -16,6 +16,24 @@
       "revId": "525027af5b039c0e027e212dd721349e900aaf24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b22012_6ca2c16c",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-01-15T06:01:44Z",
+      "side": 1,
+      "message": "\u003e However, it can\u0027t change the control characters yet. BTW, I don\u0027t know if we MUST convert them \u003e to the percent-encoding. Please take a look again.\n\nAs I mentioned in previous comment, I don\u0027t know how to change the control characters. Now EscapeCustomHandlerValue just returned empty characters when input were the control characters. \n\nIf we\u0027ve expected that empty characters were returned, current implementation is correct.",
+      "parentUuid": "1a0671dc_b1cb6e1c",
+      "revId": "525027af5b039c0e027e212dd721349e900aaf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
