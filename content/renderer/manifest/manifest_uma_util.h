@@ -13,6 +13,7 @@ class ManifestUmaUtil {
  public:
   enum FetchFailureReason {
     FETCH_EMPTY_URL = 0,
+    FETCH_ACCESS_NOT_ALLOWED,
     FETCH_UNSPECIFIED_REASON
   };
 
