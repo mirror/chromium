@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9cce9ff_64866406",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T19:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "315f8158_cb382665",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60a73395_5d8c604f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerlock/movementX_Y_basic-manual.html",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "64f3d2b4_5bfe23bb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerlock/movementX_Y_basic-manual.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T19:42:51Z",
+      "side": 1,
+      "message": "Hmmm, I guess this comment doesn\u0027t apply to the previous assert either. It looks like a \"TODO\" the original author left. \nI think there shouldn\u0027t be any difference. I removed the comment.",
+      "parentUuid": "60a73395_5d8c604f",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975ae0ab_5788c1cb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/pointerlock/movementX_Y_basic-manual-automation.js",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bef67d_fab221e9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt_automation/pointerlock/movementX_Y_basic-manual-automation.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-15T19:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "975ae0ab_5788c1cb",
+      "revId": "a8cf2f96b02a63eaa88a7b9f9f3200cfa6022dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
