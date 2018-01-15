@@ -22,6 +22,30 @@
       "revId": "b556009b229d9e32cc31b71f9456ff239d16f8d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e4dcf67_68a39e41",
+        "filename": "chrome/browser/ui/browser_view_prefs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-15T06:16:59Z",
+      "side": 1,
+      "message": "I think (somewhat uneducatedly) it\u0027s probably best to leave this for all platforms and let it just be blank on those platforms. In theory it makes sense everywhere, even if it isn\u0027t exactly doing anything right now, so it\u0027s cleaner to not require callers to compile it out.",
+      "parentUuid": "df23e8a3_0d8453fb",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "b556009b229d9e32cc31b71f9456ff239d16f8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
