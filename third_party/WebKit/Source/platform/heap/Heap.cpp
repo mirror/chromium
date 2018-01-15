@@ -532,12 +532,12 @@ bool ThreadHeap::IsAddressInHeapDoesNotContainCache(Address address) {
   return heap_does_not_contain_cache_->Lookup(address);
 }
 
-void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
+bool ThreadHeap::VisitPersistentRoots(Visitor* visitor,
+                                      BlinkGC::TraceOption option,
+                                      double deadline_seconds) {
   DCHECK(thread_state_->IsInGC());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitPersistentRoots");
-  ProcessHeap::GetCrossThreadPersistentRegion().TracePersistentNodes(visitor);
-
-  thread_state_->VisitPersistents(visitor);
+  return thread_state_->VisitPersistents(visitor, option, deadline_seconds);
 }
 
 void ThreadHeap::VisitStackRoots(Visitor* visitor) {

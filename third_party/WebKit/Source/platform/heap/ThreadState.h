@@ -294,7 +294,7 @@ class PLATFORM_EXPORT ThreadState {
                          BlinkGC::GCType,
                          BlinkGC::GCReason);
   void MarkPhaseVisitRoots();
-  bool MarkPhaseAdvanceMarking(double deadline_seconds);
+  bool MarkPhaseAdvanceMarking(double deadline_seconds, BlinkGC::TraceOption);
   void MarkPhaseEpilogue();
   void CompleteSweep();
   void PreSweep(BlinkGC::GCType);
@@ -417,7 +417,9 @@ class PLATFORM_EXPORT ThreadState {
   void VisitAsanFakeStackForPointer(Visitor*, Address);
 
   // Visit all persistents allocated on this thread.
-  void VisitPersistents(Visitor*);
+  bool VisitPersistents(Visitor*,
+                        BlinkGC::TraceOption,
+                        double deadline_seconds);
 
   struct GCSnapshotInfo {
     STACK_ALLOCATED();

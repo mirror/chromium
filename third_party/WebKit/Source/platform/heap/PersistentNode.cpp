@@ -6,6 +6,7 @@
 
 #include "base/debug/alias.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -40,8 +41,9 @@ int PersistentRegion::NumberOfPersistents() {
   return persistent_count;
 }
 
-void PersistentRegion::EnsurePersistentNodeSlots(void* self,
-                                                 TraceCallback trace) {
+void PersistentRegion::EnsurePersistentNodeSlots(
+    void* self,
+    PersistentTraceCallback trace) {
   DCHECK(!free_list_head_);
   PersistentNodeSlots* slots = new PersistentNodeSlots;
   for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
@@ -75,7 +77,9 @@ void PersistentRegion::ReleasePersistentNode(
 // a PersistentNodeSlot that contains only freed PersistentNodes,
 // we delete the PersistentNodeSlot. This function rebuilds the free
 // list of PersistentNodes.
-void PersistentRegion::TracePersistentNodes(Visitor* visitor,
+bool PersistentRegion::TracePersistentNodes(Visitor* visitor,
+                                            BlinkGC::TraceOption option,
+                                            double deadline_seconds,
                                             ShouldTraceCallback should_trace) {
   size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
   base::debug::Alias(&debug_marked_object_size);
@@ -100,7 +104,7 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
         ++persistent_count;
         if (!should_trace(visitor, node))
           continue;
-        node->TracePersistentNode(visitor);
+        node->TracePersistentNode(visitor, option);
         debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
       }
     }
@@ -119,10 +123,14 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
       prev_next = &slots->next_;
       slots = slots->next_;
     }
+    if (deadline_seconds <= WTF::CurrentTimeTicksInSeconds()) {
+      return false;
+    }
   }
 #if DCHECK_IS_ON()
   DCHECK_EQ(persistent_count, persistent_count_);
 #endif
+  return true;
 }
 
 bool CrossThreadPersistentRegion::ShouldTracePersistentNode(

@@ -271,7 +271,9 @@ class PLATFORM_EXPORT ThreadHeap {
   }
   CallbackStack* EphemeronStack() const { return ephemeron_stack_.get(); }
 
-  void VisitPersistentRoots(Visitor*);
+  bool VisitPersistentRoots(Visitor*,
+                            BlinkGC::TraceOption,
+                            double deadline_seconds);
   void VisitStackRoots(Visitor*);
   void EnterSafePoint(ThreadState*);
   void LeaveSafePoint();

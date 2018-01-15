@@ -201,14 +201,16 @@ class PersistentBase {
   }
 
   template <typename VisitorDispatcher>
-  void TracePersistent(VisitorDispatcher visitor) {
+  void TracePersistent(VisitorDispatcher visitor, BlinkGC::TraceOption option) {
     static_assert(sizeof(T), "T must be fully defined");
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
-    if (weaknessConfiguration == kWeakPersistentConfiguration) {
-      visitor->RegisterWeakCallback(this, HandleWeakPersistent);
-    } else {
+
+    if (weaknessConfiguration == kNonWeakPersistentConfiguration) {
       visitor->Mark(raw_);
+    } else if (option ==
+               BlinkGC::TraceOption::kRegisterPersistentWeakCallbacks) {
+      visitor->RegisterWeakCallback(this, HandleWeakPersistent);
     }
   }
 
@@ -218,9 +220,8 @@ class PersistentBase {
     if (!raw_ || IsHashTableDeletedValue())
       return;
 
-    TraceCallback trace_callback =
-        TraceMethodDelegate<PersistentBase,
-                            &PersistentBase::TracePersistent>::Trampoline;
+    PersistentTraceCallback trace_callback = PersistentTraceMethodDelegate<
+        PersistentBase, &PersistentBase::TracePersistent>::Trampoline;
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
       ProcessHeap::GetCrossThreadPersistentRegion().AllocatePersistentNode(
           persistent_node_, this, trace_callback);
@@ -580,7 +581,7 @@ class PersistentHeapCollectionBase : public Collection {
 
  private:
   template <typename VisitorDispatcher>
-  void TracePersistent(VisitorDispatcher visitor) {
+  void TracePersistent(VisitorDispatcher visitor, BlinkGC::TraceOption) {
     static_assert(sizeof(Collection), "Collection must be fully defined");
     visitor->Trace(*static_cast<Collection*>(this));
   }
@@ -600,10 +601,10 @@ class PersistentHeapCollectionBase : public Collection {
     ThreadState* state = ThreadState::Current();
     DCHECK(state->CheckThread());
     persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
-        this,
-        TraceMethodDelegate<PersistentHeapCollectionBase<Collection>,
-                            &PersistentHeapCollectionBase<
-                                Collection>::TracePersistent>::Trampoline);
+        this, PersistentTraceMethodDelegate<
+                  PersistentHeapCollectionBase<Collection>,
+                  &PersistentHeapCollectionBase<Collection>::TracePersistent>::
+                  Trampoline);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
