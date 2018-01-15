@@ -69,6 +69,24 @@
       "revId": "f6c6421efc42733fe978d53d4cbde0ed1c0ee839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba619242_dbb48a82",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-15T09:04:05Z",
+      "side": 1,
+      "message": "Sounds good, hopefully the next version will be good to go then!",
+      "parentUuid": "ccdecd9c_686d2ded",
+      "revId": "f6c6421efc42733fe978d53d4cbde0ed1c0ee839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
