@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24db568d_595cc917",
+        "filename": "content/public/common/feature_webrtc_dual_stream_mode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T14:57:55Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949a82bd_3ccd979d",
+        "filename": "third_party/webrtc_overrides/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T14:57:55Z",
+      "side": 1,
+      "message": "Now that\u0027s a cliffhanger! :) To where?",
+      "range": {
+        "startLine": 81,
+        "startChar": 47,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ccf2c2_464f0190",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T14:57:55Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf0af7a_8a9bfcbd",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T14:57:55Z",
+      "side": 1,
+      "message": "Empty line around each namespace line (and same for closing brackets).",
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9febf7_4ce7f212",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-15T14:57:55Z",
+      "side": 1,
+      "message": "This string should be defined somewhere in WebRTC. Use that constant instead.",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
