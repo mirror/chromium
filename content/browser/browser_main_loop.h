@@ -108,6 +108,8 @@ class SpeechRecognitionManagerImpl;
 class StartupTaskRunner;
 class SwapMetricsDriver;
 class TracingControllerImpl;
+class WebRTCInternals;
+class WebRtcEventLogManager;
 struct MainFunctionParams;
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -378,6 +380,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 #endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
+  std::unique_ptr<WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<WebRTCInternals> webrtc_internals_;
 #endif
 
