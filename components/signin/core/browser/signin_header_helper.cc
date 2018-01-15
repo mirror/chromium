@@ -171,11 +171,17 @@ bool AppendOrRemoveDiceRequestHeader(
     BooleanPrefMember* dice_pref_member,
     const content_settings::CookieSettings* cookie_settings) {
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  LOG(ERROR) << "AppendOrRemoveDiceRequestHeader "
+             << request->url().spec().substr(0, 100) << " "
+             << redirect_url.spec().substr(0, 100) << " " << sync_enabled << " "
+             << sync_has_auth_error;
+
   const GURL& url = redirect_url.is_empty() ? request->url() : redirect_url;
   DiceHeaderHelper dice_helper(!account_id.empty() && sync_has_auth_error &&
                                sync_enabled);
   std::string dice_header_value;
   if (dice_helper.ShouldBuildRequestHeader(url, cookie_settings)) {
+    LOG(ERROR) << "ShouldBuildRequestHeader";
     DiceHeaderHelper::SignoutMode signout_mode =
         IsDiceEnabled(dice_pref_member)
             ? DiceHeaderHelper::SignoutMode::kShowSignoutConfirmation

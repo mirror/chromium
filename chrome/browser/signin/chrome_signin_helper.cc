@@ -459,6 +459,8 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
       io_data->SyncHasAuthError(), io_data->dice_enabled(),
       io_data->GetCookieSettings());
 
+  LOG(ERROR) << "dice_header_added: " << dice_header_added;
+
   // Block the AccountReconcilor while the Dice requests are in flight. This
   // allows the DiceReponseHandler to process the response before the reconcilor
   // starts.
