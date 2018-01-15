@@ -22,6 +22,30 @@
       "revId": "0b7867eca44ca8ab7f0c0061bc74093fe469b322",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb11017_78901933",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-15T19:44:12Z",
+      "side": 1,
+      "message": "I wanted to, but I don\u0027t think these are as easy to tamper with.  Fullscreen can be a mode under presentation/webvr, and as the code is today, we need to unconditionally bail out of fullscreen no matter where it is in the mode stack.  That isn\u0027t the same for the two new ones added below.  Therefore, I wanted to leave this functionality untouched.\n\nLet me know if you think we should retool this, and I can make a follow-up change after some discussion.",
+      "parentUuid": "f32ee77f_303aee2d",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 26
+      },
+      "revId": "0b7867eca44ca8ab7f0c0061bc74093fe469b322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
