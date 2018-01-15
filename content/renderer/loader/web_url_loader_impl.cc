@@ -718,7 +718,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     DCHECK(defers_loading_ == NOT_DEFERRING);
 
     resource_dispatcher_->StartSync(
-        std::move(resource_request), request.RequestorID(),
+        std::move(resource_request), request.RequestorID(), task_runner_,
         extra_data->frame_origin(), GetTrafficAnnotationTag(request),
         sync_load_response, url_loader_factory_,
         extra_data->TakeURLLoaderThrottles());

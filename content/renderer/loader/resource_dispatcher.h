@@ -86,6 +86,7 @@ class CONTENT_EXPORT ResourceDispatcher {
   virtual void StartSync(
       std::unique_ptr<network::ResourceRequest> request,
       int routing_id,
+      scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SyncLoadResponse* response,
