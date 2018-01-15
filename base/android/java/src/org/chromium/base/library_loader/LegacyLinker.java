@@ -564,22 +564,27 @@ class LegacyLinker extends Linker {
      * @param opaque Opaque argument.
      */
     @CalledByNative
-    public static void postCallbackOnMainThread(final long opaque) {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeRunCallbackOnUiThread(opaque);
-            }
-        });
+    public static void runPendingLinkerTasksOnMainThread() {
+        if (ThreadUtils.runningOnUiThread()) {
+            // Avoid allocating memory if we're already in the main thread.
+            nativeRunPendingLinkerTasks();
+        } else {
+            // Block until the native method has been run in the main thread.
+            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                @Override
+                public void run() {
+                    nativeRunPendingLinkerTasks();
+                }
+            });
+        }
     }
 
     /**
-     * Native method to run callbacks on the main UI thread.
-     * Supplied by the crazy linker and called by postCallbackOnMainThread.
-     *
-     * @param opaque Opaque crazy linker arguments.
+     * Native method to run pending linker tasks on the main UI thread.
+     * Supplied by the crazy linker and called from
+     * runPendingLinkerTasksOnMainThread().
      */
-    private static native void nativeRunCallbackOnUiThread(long opaque);
+    private static native void nativeRunPendingLinkerTasks();
 
     /**
      * Native method used to load a library.

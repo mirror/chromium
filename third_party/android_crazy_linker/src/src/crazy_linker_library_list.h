@@ -8,6 +8,7 @@
 #include <link.h>
 
 #include "crazy_linker_error.h"
+#include "crazy_linker_library_task_list.h"
 #include "crazy_linker_search_path_list.h"
 #include "elf_traits.h"
 
@@ -103,6 +104,9 @@ class LibraryList {
   // Used internally by the wrappers only.
   void AddLibrary(LibraryView* lib);
 
+  // Return a pointer to the list of pending tasks.
+  LibraryTaskList* task_list() { return &task_list_; }
+
  private:
   LibraryList(const LibraryList&);
   LibraryList& operator=(const LibraryList&);
@@ -113,6 +117,18 @@ class LibraryList {
   void LoadPreloads();
 
   void ClearError();
+
+  // Internal implementation of LoadLibrary().
+  LibraryView* LoadLibraryInternal(const char* path,
+                                   int dlopen_flags,
+                                   uintptr_t load_address,
+                                   off_t file_offset,
+                                   SearchPathList* search_path_list,
+                                   bool is_dependency_or_preload,
+                                   Error* error);
+
+  // Internal implementation of UnloadLibrary().
+  void UnloadLibraryInternal(LibraryView* lib);
 
   // The list of all preloaded libraries.
   Vector<LibraryView*> preloaded_libraries_;
@@ -125,6 +141,9 @@ class LibraryList {
   // The list of all libraries loaded by the crazy linker.
   // This does _not_ include system libraries present in known_libraries_.
   SharedLibrary* head_;
+
+  // The list of pending tasks, if any.
+  LibraryTaskList task_list_;
 
   bool has_error_;
   char error_buffer_[512];

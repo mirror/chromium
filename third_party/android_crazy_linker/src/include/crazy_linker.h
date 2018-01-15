@@ -20,7 +20,6 @@
 //   - It can share the RELRO section between two libraries
 //     loaded at the same address in two distinct processes.
 //
-#include <dlfcn.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -34,6 +33,53 @@ extern "C" {
 
 // Maximum path length of a file in a zip file.
 const size_t kMaxFilePathLengthInZip = 256;
+
+// Pass the platform's SDK build version to the crazy linker. The value is
+// from android.os.Build.VERSION.SDK_INT. This should be called early
+// before calling other functions to create context of load libraries.
+void crazy_set_sdk_build_version(int sdk_build_version) _CRAZY_PUBLIC;
+
+// Some tasks, related to debug support, require modifying a global |_r_debug|
+// variable holding the list of all libraries loaded in the system. This is
+// how GDB, breakpad and the stack unwinder / C++ exception mechanism can
+// work properly.
+//
+// Unfortunately, this variable can also be modified by the system linker,
+// and this operation is racy by design (!), which can result in runtime
+// crashes in some rare cases. To alleviate the problem, it is possible to
+// defer these operations to a later time and even a different thread. This
+// works as follows:
+//
+//   1) Client code calls crazy_set_pending_task_notification() to provide
+//      the address of a function that will be called during library load
+//      operations, to indicate that a deferred global modification task
+//      has been queued.
+//
+//   2) When the notification is received by the client, it can apply the
+//      changes directly by using crazy_apply_pending_tasks(), or decide to
+//      do that later. For example, Chromium typically posts a Java Async task
+//      from the current thread to ensure that this function is called through
+//      JNI from the UI thread.
+//
+// |notify_func| is the address of a function that will be called by the
+// crazy linker to indicate that at least one pending modification task
+// has been queue (and thus that a call to crazy_apply_pending_tasks() is
+// required to apply them). |notify_opaque| will be the parameter that will
+// be passed to |notify_func| during this call, and is otherwise ignored
+// by the crazy linker.
+//
+// Using a NULL value for |notify_func| disables deferred operations
+// (and will implicitly call crazy_apply_pending_tasks() too).
+void crazy_set_pending_task_notification(void (*notify_func)(void*),
+                                         void* notify_opaque) _CRAZY_PUBLIC;
+
+// Apply any pending global modification tasks, if needed. See the comment
+// for crazy_set_pending_task_notification() above for details. This doesn't
+// do anything if there are no pending tasks.
+//
+// This function can be called from any thread, and even directly from the
+// notification callback, if needed by the client.
+void crazy_apply_pending_tasks(void) _CRAZY_PUBLIC;
 
 // Status values returned by crazy linker functions to indicate
 // success or failure. They were chosen to match boolean values,
@@ -87,7 +133,7 @@ void crazy_context_set_file_offset(crazy_context_t* context,
                                    size_t file_offset) _CRAZY_PUBLIC;
 
 // Return the current file offset in a context object.
-size_t crazy_context_get_file_offset(crazy_context_t* context);
+size_t crazy_context_get_file_offset(crazy_context_t* context) _CRAZY_PUBLIC;
 
 // Add one or more paths to the list of library search paths held
 // by a given context. |path| is a string using a column (:) as a
@@ -126,85 +172,16 @@ void crazy_context_reset_search_paths(crazy_context_t* context) _CRAZY_PUBLIC;
 // used at unload time to call JNI_OnUnload() if it exists.
 void crazy_context_set_java_vm(crazy_context_t* context,
                                void* java_vm,
-                               int minimum_jni_version);
+                               int minimum_jni_version) _CRAZY_PUBLIC;
 
 // Retrieves the last values set with crazy_context_set_java_vm().
 // A value of NUMM in |*java_vm| means the feature is disabled.
 void crazy_context_get_java_vm(crazy_context_t* context,
                                void** java_vm,
-                               int* minimum_jni_version);
+                               int* minimum_jni_version) _CRAZY_PUBLIC;
 
 // Destroy a given context object.
 void crazy_context_destroy(crazy_context_t* context) _CRAZY_PUBLIC;
-
-// Some operations performed by the crazy linker might conflict with the
-// system linker if they are used concurrently in different threads
-// (e.g. modifying the list of shared libraries seen by GDB). To work
-// around this, the crazy linker provides a way to delay these conflicting
-// operations for a later time.
-//
-// This works by wrapping each of these operations in a small data structure
-// (crazy_callback_t), which can later be passed to crazy_callback_run()
-// to execute it.
-//
-// The user must provide a function to record these callbacks during
-// library loading, by calling crazy_linker_set_callback_poster().
-//
-// Once all libraries are loaded, the callbacks can be later called either
-// in a different thread, or when it is safe to assume the system linker
-// cannot be running in parallel.
-
-// Callback handler.
-typedef void (*crazy_callback_handler_t)(void* opaque);
-
-// A small structure used to model a callback provided by the crazy linker.
-// Use crazy_callback_run() to run the callback.
-typedef struct {
-  crazy_callback_handler_t handler;
-  void* opaque;
-} crazy_callback_t;
-
-// Function to call to enable a callback into the crazy linker when delayed
-// operations are enabled (see crazy_context_set_callback_poster). A call
-// to crazy_callback_poster_t returns true if the callback was successfully
-// set up and will occur later, false if callback could not be set up (and
-// so will never occur).
-typedef bool (*crazy_callback_poster_t)(
-    crazy_callback_t* callback, void* poster_opaque);
-
-// Enable delayed operation, by passing the address of a
-// |crazy_callback_poster_t| function, that will be called during library
-// loading to let the user record callbacks for delayed operations.
-// Callers must copy the |crazy_callback_t| passed to |poster|.
-//
-// Note: If client code calls this function to supply a callback poster,
-// it must guarantee to invoke any callback requested through the poster.
-// The call will be (typically) on another thread, but may instead be
-// immediate from the poster. However, the callback must be invoked,
-// otherwise if it is a blocking callback the crazy linker will deadlock
-// waiting for it.
-//
-// |poster_opaque| is an opaque value for client code use, passed back
-// on each call to |poster|.
-// |poster| can be NULL to disable the feature.
-void crazy_context_set_callback_poster(crazy_context_t* context,
-                                       crazy_callback_poster_t poster,
-                                       void* poster_opaque);
-
-// Return the address of the function that the crazy linker can use to
-// request callbacks, and the |poster_opaque| passed back on each call
-// to |poster|. |poster| is NULL if the feature is disabled.
-void crazy_context_get_callback_poster(crazy_context_t* context,
-                                       crazy_callback_poster_t* poster,
-                                       void** poster_opaque);
-
-// Run a given |callback| in the current thread. Must only be called once
-// per callback.
-void crazy_callback_run(crazy_callback_t* callback);
-
-// Pass the platform's SDK build version to the crazy linker. The value is
-// from android.os.Build.VERSION.SDK_INT.
-void crazy_set_sdk_build_version(int sdk_build_version);
 
 // Opaque handle to a library as seen/loaded by the crazy linker.
 typedef struct crazy_library_t crazy_library_t;
@@ -265,7 +242,7 @@ typedef struct {
 // Note that this function will fail for system libraries.
 crazy_status_t crazy_library_get_info(crazy_library_t* library,
                                       crazy_context_t* context,
-                                      crazy_library_info_t* info);
+                                      crazy_library_info_t* info) _CRAZY_PUBLIC;
 
 // Create an ashmem region containing a copy of the RELRO section for a given
 // |library|. This can be used with crazy_library_use_shared_relro().
@@ -307,7 +284,8 @@ crazy_status_t crazy_library_use_shared_relro(crazy_library_t* library,
 // Note that this increments the reference count on the library, thus
 // the caller shall call crazy_library_close() when it's done with it.
 crazy_status_t crazy_library_find_by_name(const char* library_name,
-                                          crazy_library_t** library);
+                                          crazy_library_t** library)
+    _CRAZY_PUBLIC;
 
 // Find the library that contains a given |address| in memory.
 // On success, return CRAZY_STATUS_SUCCESS and sets |*library|.
@@ -345,10 +323,6 @@ crazy_status_t crazy_library_find_from_address(
 // Close a library. This decrements its reference count. If it reaches
 // zero, the library be unloaded from the process.
 void crazy_library_close(crazy_library_t* library) _CRAZY_PUBLIC;
-
-// Close a library, with associated context to support delayed operations.
-void crazy_library_close_with_context(crazy_library_t* library,
-                                      crazy_context_t* context) _CRAZY_PUBLIC;
 
 #ifdef __cplusplus
 } /* extern "C" */

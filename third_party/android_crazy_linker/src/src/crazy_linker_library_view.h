@@ -51,6 +51,19 @@ class LibraryView {
 
   SharedLibrary* GetCrazy() { return IsCrazy() ? crazy_ : NULL; }
 
+  // If this is a view into a crazy::SharedLibrary, release the instance
+  // from the view and return it. Otherwise return nullptr.
+  // Once this is called, the only valid operation on this LibraryView
+  // instance is deleting it, which will *not* delete the SharedLibrary.
+  SharedLibrary* ReleaseCrazy() {
+    if (crazy_) {
+      SharedLibrary* result = crazy_;
+      crazy_ = nullptr;
+      return result;
+    }
+    return nullptr;
+  }
+
   void* GetSystem() { return IsSystem() ? system_ : NULL; }
 
   void AddRef() { ref_count_++; }

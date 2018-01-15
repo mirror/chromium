@@ -167,6 +167,7 @@ class SharedLibrary {
 
  private:
   friend class LibraryList;
+  friend class LibraryTaskList;
 
   ElfView view_;
   ElfSymbols symbols_;

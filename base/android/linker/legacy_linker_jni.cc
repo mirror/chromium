@@ -59,20 +59,27 @@ crazy_context_t* GetCrazyContext() {
 }
 
 // A scoped crazy_library_t that automatically closes the handle
-// on scope exit, unless Release() has been called.
+// on scope exit, unless Release() has been called. The main difference
+// with std::unique_ptr is the GetPtr() method that returns the address
+// of the pointed-to object within the ScopedLibrary instance.
 class ScopedLibrary {
  public:
   ScopedLibrary() : lib_(nullptr) {}
 
   ~ScopedLibrary() {
     if (lib_)
-      crazy_library_close_with_context(lib_, GetCrazyContext());
+      crazy_library_close(lib_);
   }
 
+  // Return crazy library instance.
   crazy_library_t* Get() { return lib_; }
 
+  // Return address of crazy library instance within the ScopedLibrary
+  // instance. This is useful to pass as an argument to functions that
+  // want to write a new crazy_library_t* value there.
   crazy_library_t** GetPtr() { return &lib_; }
 
+  // Release the crazy_library_t* value and return it.
   crazy_library_t* Release() {
     crazy_library_t* ret = lib_;
     lib_ = nullptr;
@@ -83,13 +90,28 @@ class ScopedLibrary {
   crazy_library_t* lib_;
 };
 
-template <class LibraryOpener>
+// Generic library loading library. |env| should be a valid JNIEnv* value
+// for the current thread, |library_name| is the library name and/or path,
+// while |optional_zip_file_name| is an optional zip file path.
+// |load_address| is the desired load address, and |lib_info_obj| is a
+// Java reference to LibInfo Java object.
+//
+// If |optional_zip_file_name| is not nullptr, it must point to a zip file
+// which will be searched for the library and its dependencies. Otherwise
+// the loader looks up the current file system.
+//
+// On success, return true, and sets the fields of |lib_info_obj|
+// appropriately. On failure, return false.
+//
+// NOTE: The corresponding crazy_library_t instance is leaked since it will
+//       never be unloaded.
 bool GenericLoadLibrary(JNIEnv* env,
                         const char* library_name,
-                        jlong load_address,
-                        jobject lib_info_obj,
-                        const LibraryOpener& opener) {
-  LOG_INFO("Called for %s, at address 0x%llx", library_name, load_address);
+                        const char* optional_zip_file_name,
+                        size_t load_address,
+                        jobject lib_info_obj) {
+  LOG_INFO("Called for %s, at address 0x%llx", library_name,
+           (unsigned long long)load_address);
   crazy_context_t* context = GetCrazyContext();
 
   if (!IsValidAddress(load_address)) {
@@ -99,11 +121,24 @@ bool GenericLoadLibrary(JNIEnv* env,
   }
 
   // Set the desired load address (0 means randomize it).
-  crazy_context_set_load_address(context, static_cast<size_t>(load_address));
+  crazy_context_set_load_address(context, load_address);
 
   ScopedLibrary library;
-  if (!opener.Open(library.GetPtr(), library_name, context)) {
-    return false;
+  if (optional_zip_file_name) {
+    // Open from a zip file.
+    if (!crazy_library_open_in_zip_file(
+            library.GetPtr(), optional_zip_file_name, library_name, context)) {
+      LOG_ERROR("Could not open %s in zip file %s: %s", library_name,
+                optional_zip_file_name, crazy_context_get_error(context));
+      return false;
+    }
+  } else {
+    // Open directly from a file or library name.
+    if (!crazy_library_open(library.GetPtr(), library_name, context)) {
+      LOG_ERROR("Could not open %s: %s", library_name,
+                crazy_context_get_error(context));
+      return false;
+    }
   }
 
   crazy_library_info_t info;
@@ -120,50 +155,6 @@ bool GenericLoadLibrary(JNIEnv* env,
                                 lib_info_obj,
                                 info.load_address, info.load_size);
   LOG_INFO("Success loading library %s", library_name);
-  return true;
-}
-
-// Used for opening the library in a regular file.
-class FileLibraryOpener {
- public:
-  bool Open(crazy_library_t** library,
-            const char* library_name,
-            crazy_context_t* context) const;
-};
-
-bool FileLibraryOpener::Open(crazy_library_t** library,
-                             const char* library_name,
-                             crazy_context_t* context) const {
-  if (!crazy_library_open(library, library_name, context)) {
-    LOG_ERROR("Could not open %s: %s",
-              library_name, crazy_context_get_error(context));
-    return false;
-  }
-  return true;
-}
-
-// Used for opening the library in a zip file.
-class ZipLibraryOpener {
- public:
-  explicit ZipLibraryOpener(const char* zip_file) : zip_file_(zip_file) { }
-  bool Open(crazy_library_t** library,
-            const char* library_name,
-            crazy_context_t* context) const;
- private:
-  const char* zip_file_;
-};
-
-bool ZipLibraryOpener::Open(crazy_library_t** library,
-                            const char* library_name,
-                            crazy_context_t* context) const {
-  if (!crazy_library_open_in_zip_file(library,
-                                      zip_file_,
-                                      library_name,
-                                      context)) {
-     LOG_ERROR("Could not open %s in zip file %s: %s",
-               library_name, zip_file_, crazy_context_get_error(context));
-     return false;
-  }
   return true;
 }
 
@@ -187,13 +178,10 @@ jboolean LoadLibrary(JNIEnv* env,
                      jlong load_address,
                      jobject lib_info_obj) {
   String lib_name(env, library_name);
-  FileLibraryOpener opener;
 
-  return GenericLoadLibrary(env,
-                            lib_name.c_str(),
-                            static_cast<size_t>(load_address),
-                            lib_info_obj,
-                            opener);
+  return GenericLoadLibrary(env, lib_name.c_str(),
+                            nullptr /* optional_zip_file_name */,
+                            static_cast<size_t>(load_address), lib_info_obj);
 }
 
 // Load a library from a zipfile with the chromium linker. The
@@ -226,97 +214,73 @@ jboolean LoadLibraryInZipFile(JNIEnv* env,
                               jobject lib_info_obj) {
   String zipfile_name_str(env, zipfile_name);
   String lib_name(env, library_name);
-  ZipLibraryOpener opener(zipfile_name_str.c_str());
 
-  return GenericLoadLibrary(env,
-                            lib_name.c_str(),
-                            static_cast<size_t>(load_address),
-                            lib_info_obj,
-                            opener);
+  return GenericLoadLibrary(env, lib_name.c_str(), zipfile_name_str.c_str(),
+                            static_cast<size_t>(load_address), lib_info_obj);
 }
 
-// Class holding the Java class and method ID for the Java side Linker
-// postCallbackOnMainThread method.
-struct JavaCallbackBindings_class {
+// Class holding the Java class and method ID for the Java side
+// LegacyLinker.runPendingLinkerTasksOnMainThread() method.
+struct JavaCallbackBindings {
   jclass clazz;
   jmethodID method_id;
 
   // Initialize an instance.
   bool Init(JNIEnv* env, jclass linker_class) {
     clazz = reinterpret_cast<jclass>(env->NewGlobalRef(linker_class));
-    return InitStaticMethodId(env,
-                              linker_class,
-                              "postCallbackOnMainThread",
-                              "(J)V",
+    return InitStaticMethodId(env, linker_class,
+                              "runPendingLinkerTasksOnMainThread", "()V",
                               &method_id);
+  }
+
+  // Invoke the Java method through JNI. |env| must be valid for the
+  // current thread.
+  void Invoke(JNIEnv* env) {
+    env->CallStaticVoidMethod(clazz, method_id);
+
+    // Back out if we encounter a JNI exception.
+    if (env->ExceptionCheck() == JNI_TRUE) {
+      env->ExceptionDescribe();
+      env->ExceptionClear();
+    }
   }
 };
 
-static JavaCallbackBindings_class s_java_callback_bindings;
+static JavaCallbackBindings s_java_callback_bindings;
 
-// Designated receiver function for callbacks from Java. Its name is known
-// to the Java side.
-// |env| is the current JNI environment handle and is ignored here.
-// |clazz| is the static class handle for org.chromium.base.Linker,
-// and is ignored here.
-// |arg| is a pointer to an allocated crazy_callback_t, deleted after use.
-void RunCallbackOnUiThread(JNIEnv* env, jclass clazz, jlong arg) {
-  crazy_callback_t* callback = reinterpret_cast<crazy_callback_t*>(arg);
-
-  LOG_INFO("Called back from java with handler %p, opaque %p",
-           callback->handler, callback->opaque);
-
-  crazy_callback_run(callback);
-  delete callback;
+// Called from Java to apply pending linker tasks. This shall happen
+// inside the main/UI thread, after an AsyncTask was posted from
+// PendingLinkerTasksNotification() below.
+void nativeRunPendingLinkerTasks(JNIEnv*, jclass) {
+  LOG_INFO("Called back from java to apply pending linker tasks");
+  crazy_apply_pending_tasks();
 }
 
-// Request a callback from Java. The supplied crazy_callback_t is valid only
-// for the duration of this call, so we copy it to a newly allocated
-// crazy_callback_t and then call the Java side's postCallbackOnMainThread.
-// This will call back to to our RunCallbackOnUiThread some time
-// later on the UI thread.
-// |callback_request| is a crazy_callback_t.
-// |poster_opaque| is unused.
-// Returns true if the callback request succeeds.
-static bool PostForLaterExecution(crazy_callback_t* callback_request,
-                                  void* poster_opaque UNUSED) {
-  crazy_context_t* context = GetCrazyContext();
+// Called by the crazy linker during library load/unload operations to notify
+// the client that there are pending tasks to be performed. This is normally
+// done by calling crazy_linker_apply_pending_tasks().
+//
+// The goal of this function is to determine if this code is running on the
+// main thread. If so, crazy_linker_apply_pending_tasks() can be called
+// immediately. Otherwise, an AsyncTask should be posted to it, through
+// the method referenced by |s_java_callback_bindings|.
+//
+// The AsyncTask will invoke nativeRunPendingLinkerTasks() above later on the
+// main thread's context.
+//
+// |opaque| must be the JavaVM* value that was created during
+// LegacyLinkerJNIInit().
+static void PendingLinkerTasksNotification(void* opaque) {
+  auto* vm = static_cast<JavaVM*>(opaque);
 
-  JavaVM* vm;
-  int minimum_jni_version;
-  crazy_context_get_java_vm(context,
-                            reinterpret_cast<void**>(&vm),
-                            &minimum_jni_version);
-
-  // Do not reuse JNIEnv from JNI_OnLoad, but retrieve our own.
+  // This can run on any thread, so create a new JNIEnv for it.
   JNIEnv* env;
-  if (JNI_OK != vm->GetEnv(
-      reinterpret_cast<void**>(&env), minimum_jni_version)) {
+  if (JNI_OK != vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_4)) {
     LOG_ERROR("Could not create JNIEnv");
-    return false;
+    return;
   }
 
-  // Copy the callback; the one passed as an argument may be temporary.
-  crazy_callback_t* callback = new crazy_callback_t();
-  *callback = *callback_request;
-
-  LOG_INFO("Calling back to java with handler %p, opaque %p",
-           callback->handler, callback->opaque);
-
-  jlong arg = static_cast<jlong>(reinterpret_cast<uintptr_t>(callback));
-
-  env->CallStaticVoidMethod(
-      s_java_callback_bindings.clazz, s_java_callback_bindings.method_id, arg);
-
-  // Back out and return false if we encounter a JNI exception.
-  if (env->ExceptionCheck() == JNI_TRUE) {
-    env->ExceptionDescribe();
-    env->ExceptionClear();
-    delete callback;
-    return false;
-  }
-
-  return true;
+  s_java_callback_bindings.Invoke(env);
 }
 
 jboolean CreateSharedRelro(JNIEnv* env,
@@ -418,12 +382,11 @@ const JNINativeMethod kNativeMethods[] = {
      ")"
      "Z",
      reinterpret_cast<void*>(&LoadLibraryInZipFile)},
-    {"nativeRunCallbackOnUiThread",
+    {"nativeRunPendingLinkerTasks",
      "("
-     "J"
      ")"
      "V",
-     reinterpret_cast<void*>(&RunCallbackOnUiThread)},
+     reinterpret_cast<void*>(&nativeRunPendingLinkerTasks)},
     {"nativeCreateSharedRelro",
      "("
      "Ljava/lang/String;"
@@ -477,7 +440,7 @@ bool LegacyLinkerJNIInit(JavaVM* vm, JNIEnv* env) {
 
   // Register the function that the crazy linker can call to post code
   // for later execution.
-  crazy_context_set_callback_poster(context, &PostForLaterExecution, nullptr);
+  crazy_set_pending_task_notification(&PendingLinkerTasksNotification, vm);
 
   return true;
 }

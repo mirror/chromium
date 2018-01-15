@@ -128,13 +128,11 @@ void LibraryList::LoadPreloads() {
     }
 
     Error error;
-    LibraryView* preload = LoadLibrary(lib_name.c_str(),
-                                       RTLD_NOW | RTLD_GLOBAL,
-                                       0U /* load address */,
-                                       0U /* file offset */,
-                                       &search_path_list,
-                                       true /* is_dependency_or_preload */,
-                                       &error);
+    LibraryView* preload = LoadLibraryInternal(
+        lib_name.c_str(), RTLD_NOW | RTLD_GLOBAL, 0U /* load address */,
+        0U /* file offset */, &search_path_list,
+        true /* is_dependency_or_preload */, &error);
+
     if (!preload) {
       LOG("'%s' cannot be preloaded: ignored\n", lib_name.c_str());
       continue;
@@ -142,6 +140,8 @@ void LibraryList::LoadPreloads() {
 
     preloaded_libraries_.PushBack(preload);
   }
+
+  task_list_.NotifyIfPendingTasks();
 
   if (CRAZY_DEBUG) {
     LOG("%s: Preloads loaded\n", __FUNCTION__);
@@ -261,6 +261,11 @@ int LibraryList::IteratePhdr(PhdrIterationCallback callback, void* data) {
 #endif  // !__arm__
 
 void LibraryList::UnloadLibrary(LibraryView* wrap) {
+  UnloadLibraryInternal(wrap);
+  task_list_.NotifyIfPendingTasks();
+}
+
+void LibraryList::UnloadLibraryInternal(LibraryView* wrap) {
   // Sanity check.
   LOG("%s: for %s (ref_count=%d)\n",
       __FUNCTION__,
@@ -294,11 +299,17 @@ void LibraryList::UnloadLibrary(LibraryView* wrap) {
     while (iter.GetNext()) {
       LibraryView* dependency = FindKnownLibrary(iter.GetName());
       if (dependency)
-        UnloadLibrary(dependency);
+        UnloadLibraryInternal(dependency);
     }
 
     // Tell GDB of this removal.
-    Globals::GetRDebug()->DelEntry(&lib->link_map_);
+    if (task_list_.IsActive()) {
+      wrap->ReleaseCrazy();  // prevent immediate deletion of |lib|.
+      task_list_.DelRDebug(lib);
+    } else {
+      // Immediate removal from |_r_debug| list.
+      Globals::GetRDebug()->DelEntry(&lib->link_map_);
+    }
   }
 
   known_libraries_.Remove(wrap);
@@ -315,6 +326,20 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
                                       SearchPathList* search_path_list,
                                       bool is_dependency_or_preload,
                                       Error* error) {
+  auto* result =
+      LoadLibraryInternal(lib_name, dlopen_mode, load_address, file_offset,
+                          search_path_list, is_dependency_or_preload, error);
+  task_list_.NotifyIfPendingTasks();
+  return result;
+}
+
+LibraryView* LibraryList::LoadLibraryInternal(const char* lib_name,
+                                              int dlopen_mode,
+                                              uintptr_t load_address,
+                                              off_t file_offset,
+                                              SearchPathList* search_path_list,
+                                              bool is_dependency_or_preload,
+                                              Error* error) {
   const char* base_name = GetBaseNamePtr(lib_name);
 
   LOG("%s: lib_name='%s'\n", __FUNCTION__, lib_name);
@@ -405,13 +430,11 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
   Vector<LibraryView*> dependencies;
   while (iter.GetNext()) {
     Error dep_error;
-    LibraryView* dependency = LoadLibrary(iter.GetName(),
-                                          dlopen_mode,
-                                          0U /* load address */,
-                                          0U /* file offset */,
-                                          search_path_list,
-                                          true /* is_dependency_or_preload */,
-                                          &dep_error);
+    LibraryView* dependency =
+        LoadLibraryInternal(iter.GetName(), dlopen_mode, 0U /* load address */,
+                            0U /* file offset */, search_path_list,
+                            true /* is_dependency_or_preload */, &dep_error);
+
     if (!dependency) {
       error->Format("When loading %s: %s", base_name, dep_error.c_str());
       return NULL;
@@ -434,7 +457,11 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
   lib->link_map_.l_addr = lib->load_bias();
   lib->link_map_.l_name = const_cast<char*>(lib->base_name_);
   lib->link_map_.l_ld = reinterpret_cast<uintptr_t>(lib->view_.dynamic());
-  Globals::GetRDebug()->AddEntry(&lib->link_map_);
+  if (task_list_.IsActive()) {
+    task_list_.AddRDebug(lib.Get());
+  } else {
+    Globals::GetRDebug()->AddEntry(&lib->link_map_);
+  }
 
   // The library was properly loaded, add it to the list of crazy
   // libraries. IMPORTANT: Do this _before_ calling the constructors
