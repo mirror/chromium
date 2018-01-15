@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9971d005_5925dbf1",
+        "filename": "third_party/WebKit/Source/core/page/PageAnimator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-15T18:51:39Z",
+      "side": 1,
+      "message": "PrePaintClean",
+      "revId": "1c40c69f20bdfe10629602074933044c4ff6ae32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
