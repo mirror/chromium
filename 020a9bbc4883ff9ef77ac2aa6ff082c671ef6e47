@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ff8f8ba_7bbbdf6b",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-15T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6beb7b18_80b728f6",
+      "range": {
+        "startLine": 200,
+        "startChar": 40,
+        "endLine": 200,
+        "endChar": 65
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d76cf0a2_28e54481",
         "filename": "gin/public/isolate_holder.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6ecafcc_5a16c018",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-15T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76cf0a2_28e54481",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 4
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09b67f0_a3648c6b",
         "filename": "gin/v8_initializer.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cd46b2_6b4fabf1",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-15T03:03:08Z",
+      "side": 1,
+      "message": "You are correct. I thought Chrome would crash in v8::IsolateNewImpl() without SetSnapshotDataBlob(), but it should go well.\nI reverted it, but did a small trivial refactoring.",
+      "parentUuid": "f09b67f0_a3648c6b",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 28
+      },
+      "revId": "020a9bbc4883ff9ef77ac2aa6ff082c671ef6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
