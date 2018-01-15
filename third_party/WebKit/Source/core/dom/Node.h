@@ -718,7 +718,6 @@ class CORE_EXPORT Node : public EventTarget {
   // Tracing--rename it to something indicative.
   String DebugName() const;
 
-#ifndef NDEBUG
   String ToString() const;
   String ToTreeStringForThis() const;
   String ToFlatTreeStringForThis() const;
@@ -732,7 +731,6 @@ class CORE_EXPORT Node : public EventTarget {
                                 const Node* marked_node2 = nullptr,
                                 const char* marked_label2 = nullptr) const;
   void ShowTreeForThisAcrossFrame() const;
-#endif
 
   NodeListsNodeData* NodeLists();
   void ClearNodeLists();

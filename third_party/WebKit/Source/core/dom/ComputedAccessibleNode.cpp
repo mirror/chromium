@@ -3,47 +3,62 @@
 // found in the LICENSE file.
 
 #include "core/dom/ComputedAccessibleNode.h"
-#include "bindings/core/v8/ScriptPromise.h"
+
+#include <stdint.h>
+
+#include "base/logging.h"
+#include "core/dom/DOMException.h"
 #include "core/dom/Element.h"
+#include "core/frame/Settings.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/platform/Platform.h"
+#include "third_party/WebKit/Source/bindings/core/v8/ScriptPromiseResolver.h"
+#include "third_party/WebKit/Source/core/page/Page.h"
+#include "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h"
+#include "third_party/WebKit/public/platform/ComputedAXTree.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace blink {
 
-ComputedAccessibleNode* ComputedAccessibleNode::Create(Element* element) {
-  return new ComputedAccessibleNode(element);
+ComputedAccessibleNode* ComputedAccessibleNode::Create(AXID id) {
+  return new ComputedAccessibleNode(id);
 }
 
-ComputedAccessibleNode::ComputedAccessibleNode(Element* element)
-    : element_(element) {
+ComputedAccessibleNode::ComputedAccessibleNode(AXID id)
+    : id_(id), tree_(Platform::Current()->GetOrCreateComputedAXTree()) {
+  LOG(ERROR) << "constructing computed ax node with id = " << id;
   DCHECK(RuntimeEnabledFeatures::AccessibilityObjectModelEnabled());
 }
 
 ComputedAccessibleNode::~ComputedAccessibleNode() {}
 
-ScriptPromise ComputedAccessibleNode::ComputePromiseProperty(
-    ScriptState* script_state) {
-  if (!computed_property_) {
-    computed_property_ =
-        new ComputedPromiseProperty(ExecutionContext::From(script_state), this,
-                                    ComputedPromiseProperty::kReady);
-    computed_property_->Resolve(this);
+ScriptPromise ComputedAccessibleNode::ComputeAccessibleProperties(
+    ScriptState* script_state,
+    WebFrame* frame) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  // TODO(meredithl): Post this task asynchronously, with a callback into
+  // this->OnSnapshotResponse.
+  if (!tree_->ComputeAccessibilityTree(frame)) {
+    resolver->Reject(DOMException::Create(kUnknownError));
+  } else {
+    OnSnapshotResponse(resolver);
   }
 
-  return computed_property_->Promise(script_state->World());
-}
-
-const AtomicString& ComputedAccessibleNode::role() const {
-  return element_->computedRole();
+  return promise;
 }
 
 const String ComputedAccessibleNode::name() const {
-  return element_->computedName();
+  return String(tree_->GetNameFromId(id_).c_str());
 }
 
-void ComputedAccessibleNode::Trace(blink::Visitor* visitor) {
-  ScriptWrappable::Trace(visitor);
-  visitor->Trace(computed_property_);
-  visitor->Trace(element_);
+const AtomicString ComputedAccessibleNode::role() const {
+  return AtomicString(tree_->GetRoleFromId(id_).c_str());
+}
+
+void ComputedAccessibleNode::OnSnapshotResponse(
+    ScriptPromiseResolver* resolver) {
+  resolver->Resolve(this);
 }
 
 }  // namespace blink

@@ -648,8 +648,12 @@ void Node::SetLayoutObject(LayoutObject* layout_object) {
     return;
   }
 
-  if (!layout_object)
+  if (!layout_object) {
+    LOG(ERROR) << "Null layout obj :" << this;
     return;
+  }
+
+  LOG(ERROR) << "not null layout obj :" << this;
 
   // Swap the NodeRenderingData to point to a new NodeRenderingData instead of
   // the static SharedEmptyData instance.
@@ -700,7 +704,6 @@ LayoutRect Node::BoundingBox() const {
   return LayoutRect();
 }
 
-#ifndef NDEBUG
 inline static ShadowRoot* OldestShadowRootFor(const Node* node) {
   if (!node->IsElementNode())
     return nullptr;
@@ -708,7 +711,6 @@ inline static ShadowRoot* OldestShadowRootFor(const Node* node) {
     return &shadow->OldestShadowRoot();
   return nullptr;
 }
-#endif
 
 Node& Node::ShadowIncludingRoot() const {
   if (isConnected())
@@ -1720,7 +1722,6 @@ std::ostream& operator<<(std::ostream& ostream, const Node* node) {
   return ostream << *node;
 }
 
-#ifndef NDEBUG
 
 String Node::ToString() const {
   // TODO(tkent): We implemented toString() with operator<<.  We should
@@ -1945,7 +1946,6 @@ void Node::ShowTreeForThisAcrossFrame() const {
   LOG(INFO) << "\n" << stream.str();
 }
 
-#endif
 
 // --------
 

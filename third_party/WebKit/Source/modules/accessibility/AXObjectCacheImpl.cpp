@@ -226,8 +226,9 @@ static bool IsMenuListOption(const Node* node) {
 }
 
 AXObject* AXObjectCacheImpl::Get(const Node* node) {
-  if (!node)
+  if (!node) {
     return nullptr;
+  }
 
   // Menu list option and HTML area elements are indexed by DOM node, never by
   // layout object.
@@ -252,8 +253,9 @@ AXObject* AXObjectCacheImpl::Get(const Node* node) {
   if (layout_id)
     return objects_.at(layout_id);
 
-  if (!node_id)
+  if (!node_id) {
     return nullptr;
+  }
 
   return objects_.at(node_id);
 }
@@ -411,9 +413,12 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   // If the node has a layout object, prefer using that as the primary key for
   // the AXObject, with the exception of an HTMLAreaElement, which is
   // created based on its node.
-  if (node->GetLayoutObject() && !IsHTMLAreaElement(node))
+  if (node->GetLayoutObject() && !IsHTMLAreaElement(node)) {
+    LOG(ERROR) << "banana";
     return GetOrCreate(node->GetLayoutObject());
-
+  }
+  LOG(ERROR) << "element is not a layout object";
+  LOG(ERROR) << node;
   if (!node->parentElement())
     return nullptr;
 
@@ -436,9 +441,22 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   return new_obj;
 }
 
+AXID AXObjectCacheImpl::GetAXID(Node* node) {
+  AXObject* ax_object = GetOrCreate(node);
+  if (!ax_object)
+    return 0;
+  return ax_object->AXObjectID();
+}
+
 AXObject* AXObjectCacheImpl::GetOrCreate(LayoutObject* layout_object) {
   if (!layout_object)
     return nullptr;
+
+  Node* node = layout_object->GetNode();
+  if (node) {
+    LOG(ERROR) << node;
+    LOG(ERROR) << node->GetLayoutObject();
+  }
 
   if (AXObject* obj = Get(layout_object))
     return obj;

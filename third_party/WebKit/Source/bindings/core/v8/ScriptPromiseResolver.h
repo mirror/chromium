@@ -5,6 +5,7 @@
 #ifndef ScriptPromiseResolver_h
 #define ScriptPromiseResolver_h
 
+#include "base/logging.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "core/CoreExport.h"

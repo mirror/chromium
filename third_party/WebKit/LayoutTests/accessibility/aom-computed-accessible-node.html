@@ -62,16 +62,18 @@ promise_test(() => {
     });
 }, "Multiple calls to getComputedAccessibleNode will return the same node.");
 
-// This tests the current behaviour where the returned ComputedAccessibleNode
-// always contains the most up to date state of the Element it corresponds to.
-// This behaviour may change in future as the API is further developed.
-promise_test(() => {
-    var element = document.getElementById("button2");
-    return window.getComputedAccessibleNode(element).then(computedAXNode => {
-      assert_equals(computedAXNode.name, "axButton");
-      element.accessibleNode.label = "new-accessible-label";
-      assert_equals(computedAXNode.name, "new-accessible-label");
-    });
-}, "ComputedAccessibleNode always returns the current accessible name of an element.")
+
+// promise_test(() => {
+//     var button1 = document.getElementById("button1");
+//     var button2 = document.getElementById("button2");
+//     return window.getComputedAccessibleNode(button1).then(computedAXNode1 => {
+//       button2.style.display = 'none';
+//       window.getComputedAccessibleNode(button1).then(computedAXNode2 => {
+//         console.log(computedAXNode2);
+//       })
+//     });
+
+// }, "Deleting nodes from the accessibility tree will cause a crash.");
 
 </script>
+
