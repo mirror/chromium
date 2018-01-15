@@ -4,11 +4,11 @@
 
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 
+#include <memory>
 #include <ostream>
 #include <utility>
 
 #include "base/json/json_writer.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_util.h"
 #include "base/trace_event/trace_event_argument.h"
@@ -81,7 +81,7 @@ void ScopedSubresourceFilterFeatureToggle::ResetSubresourceFilterState(
   }
 
   scoped_configuration_.ResetConfiguration();
-  scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+  scoped_feature_list_ = std::make_unique<base::test::ScopedFeatureList>();
   scoped_feature_list_->InitFromCommandLine(enabled_features,
                                             disabled_features);
 }

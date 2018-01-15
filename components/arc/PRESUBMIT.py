@@ -13,7 +13,7 @@ def CheckMakeUnique(input_api, output_api):
                                       input_api.DEFAULT_BLACK_LIST)
   for f in input_api.AffectedSourceFiles(SourceFilter):
     for line_number, line in f.ChangedContents():
-      if input_api.re.search(r'\bbase::MakeUnique<', line):
+      if input_api.re.search(r'\bstd::make_unique<', line):
         errors.append(output_api.PresubmitError(
             '%s:%d uses base::MakeUnique. Use std::make_unique instead.' %
             (f.LocalPath(), line_number)))

@@ -4,9 +4,9 @@
 
 #include "components/proxy_config/ios/proxy_service_factory.h"
 
+#include <memory>
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "components/proxy_config/pref_proxy_config_tracker_impl.h"
 #include "ios/web/public/web_thread.h"
 #include "net/proxy/proxy_config_service.h"
@@ -26,7 +26,7 @@ std::unique_ptr<PrefProxyConfigTracker>
 ProxyServiceFactory::CreatePrefProxyConfigTrackerOfProfile(
     PrefService* browser_state_prefs,
     PrefService* local_state_prefs) {
-  return base::MakeUnique<PrefProxyConfigTrackerImpl>(
+  return std::make_unique<PrefProxyConfigTrackerImpl>(
       browser_state_prefs,
       web::WebThread::GetTaskRunnerForThread(web::WebThread::IO));
 }
@@ -35,7 +35,7 @@ ProxyServiceFactory::CreatePrefProxyConfigTrackerOfProfile(
 std::unique_ptr<PrefProxyConfigTracker>
 ProxyServiceFactory::CreatePrefProxyConfigTrackerOfLocalState(
     PrefService* local_state_prefs) {
-  return base::MakeUnique<PrefProxyConfigTrackerImpl>(
+  return std::make_unique<PrefProxyConfigTrackerImpl>(
       local_state_prefs,
       web::WebThread::GetTaskRunnerForThread(web::WebThread::IO));
 }

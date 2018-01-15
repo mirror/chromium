@@ -4,6 +4,8 @@
 
 #include "components/previews/core/previews_black_list.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
@@ -65,7 +67,7 @@ PreviewsBlackList::PreviewsBlackList(
     opt_out_store_->LoadBlackList(base::Bind(
         &PreviewsBlackList::LoadBlackListDone, weak_factory_.GetWeakPtr()));
   } else {
-    LoadBlackListDone(base::MakeUnique<BlackListItemMap>(),
+    LoadBlackListDone(std::make_unique<BlackListItemMap>(),
                       CreateHostIndifferentBlackListItem());
   }
 }
@@ -213,7 +215,7 @@ void PreviewsBlackList::ClearBlackListSync(base::Time begin_time,
     opt_out_store_->LoadBlackList(base::Bind(
         &PreviewsBlackList::LoadBlackListDone, weak_factory_.GetWeakPtr()));
   } else {
-    LoadBlackListDone(base::MakeUnique<BlackListItemMap>(),
+    LoadBlackListDone(std::make_unique<BlackListItemMap>(),
                       CreateHostIndifferentBlackListItem());
   }
 }
@@ -279,7 +281,7 @@ PreviewsBlackListItem* PreviewsBlackList::GetOrCreateBlackListItemForMap(
 // static
 std::unique_ptr<PreviewsBlackListItem>
 PreviewsBlackList::CreateHostIndifferentBlackListItem() {
-  return base::MakeUnique<PreviewsBlackListItem>(
+  return std::make_unique<PreviewsBlackListItem>(
       params::MaxStoredHistoryLengthForHostIndifferentBlackList(),
       params::HostIndifferentBlackListOptOutThreshold(),
       params::HostIndifferentBlackListPerHostDuration());

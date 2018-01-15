@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -92,7 +93,7 @@ ActivationStateComputingNavigationThrottle::WillProcessResponse() {
     params.parent_document_origin = parent->GetLastCommittedOrigin();
   }
 
-  async_filter_ = base::MakeUnique<AsyncDocumentSubresourceFilter>(
+  async_filter_ = std::make_unique<AsyncDocumentSubresourceFilter>(
       ruleset_handle_, std::move(params),
       base::Bind(&ActivationStateComputingNavigationThrottle::
                      OnActivationStateComputed,
