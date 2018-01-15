@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7ef347e_948d0366",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-15T07:55:02Z",
+      "side": 1,
+      "message": "Can\u0027t this function return an incorrect value in the following scenarios:\nScenario #1: The user is using iOS or Android and the page only has a 16x16 favicon\nScenario #2: The favicon was added to the database via HistoryBackend::SetImportedFavicons()\n\nI suggest allowing setting on demand icons on a per-icon-type basis. Thus it would be allowable to set an on-demand icon if the page has no mapping of a specific icon type.\nIt would be possible to set an on demand icon of type kTouchIcon if there is an icon of type kFavicon mapped to the page URL but no icon of type kTouchIcon mapped to the page URL.\nIt would not be allowable to set an an on demand icon of type kTouchIcon if there is an icon of type kTouchIcon mapped to the page URL.\n\nNote that the icon types kTouchIcon, kTouchPrecomposedIcon and kWebManifestIcon are equivalent from the database\u0027s point of view",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
