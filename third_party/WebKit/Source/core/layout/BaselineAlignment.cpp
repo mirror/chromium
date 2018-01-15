@@ -4,7 +4,195 @@
 
 #include "core/layout/BaselineAlignment.h"
 
+#include "core/layout/LayoutGrid.h"
+#include "core/style/ComputedStyle.h"
+
 namespace blink {
+
+LayoutUnit BaselineAlignment::MarginOverForChild(const LayoutBox& child,
+                                                 GridAxis axis) const {
+  return IsHorizontalBaselineAxis(axis) ? child.MarginRight()
+                                        : child.MarginTop();
+}
+
+LayoutUnit BaselineAlignment::MarginUnderForChild(const LayoutBox& child,
+                                                  GridAxis axis) const {
+  return IsHorizontalBaselineAxis(axis) ? child.MarginLeft()
+                                        : child.MarginBottom();
+}
+
+LayoutUnit BaselineAlignment::LogicalAscentForChild(
+    const LayoutBox& child,
+    GridAxis baseline_axis) const {
+  LayoutUnit ascent = AscentForChild(child, baseline_axis);
+  return IsDescentBaselineForChild(child, baseline_axis)
+             ? DescentForChild(child, ascent, baseline_axis)
+             : ascent;
+}
+
+LayoutUnit BaselineAlignment::AscentForChild(const LayoutBox& child,
+                                             GridAxis baseline_axis) const {
+  LayoutUnit margin = IsDescentBaselineForChild(child, baseline_axis)
+                          ? MarginUnderForChild(child, baseline_axis)
+                          : MarginOverForChild(child, baseline_axis);
+  LayoutUnit baseline = IsParallelToBaselineAxisForChild(child, baseline_axis)
+                            ? child.FirstLineBoxBaseline()
+                            : LayoutUnit(-1);
+  // We take border-box's under edge if no valid baseline.
+  if (baseline == -1) {
+    if (IsHorizontalBaselineAxis(baseline_axis)) {
+      return IsFlippedBlocksWritingMode(block_flow_)
+                 ? child.Size().Width().ToInt() + margin
+                 : margin;
+    }
+    return child.Size().Height() + margin;
+  }
+  return baseline + margin;
+}
+
+LayoutUnit BaselineAlignment::DescentForChild(const LayoutBox& child,
+                                              LayoutUnit ascent,
+                                              GridAxis baseline_axis) const {
+  if (IsParallelToBaselineAxisForChild(child, baseline_axis))
+    return child.MarginLogicalHeight() + child.LogicalHeight() - ascent;
+  return child.MarginLogicalWidth() + child.LogicalWidth() - ascent;
+}
+
+bool BaselineAlignment::IsDescentBaselineForChild(
+    const LayoutBox& child,
+    GridAxis baseline_axis) const {
+  return IsHorizontalBaselineAxis(baseline_axis) &&
+         ((child.StyleRef().IsFlippedBlocksWritingMode() &&
+           !IsFlippedBlocksWritingMode(block_flow_)) ||
+          (child.StyleRef().IsFlippedLinesWritingMode() &&
+           IsFlippedBlocksWritingMode(block_flow_)));
+}
+
+bool BaselineAlignment::IsBaselineContextComputed(
+    GridAxis baseline_axis) const {
+  return baseline_axis == kGridColumnAxis
+             ? !row_axis_alignment_context_.IsEmpty()
+             : !col_axis_alignment_context_.IsEmpty();
+}
+
+bool BaselineAlignment::IsHorizontalBaselineAxis(GridAxis axis) const {
+  return axis == kGridRowAxis ? IsHorizontalWritingMode(block_flow_)
+                              : !IsHorizontalWritingMode(block_flow_);
+}
+
+bool BaselineAlignment::IsOrthogonalChildForBaseline(
+    const LayoutBox& child) const {
+  return IsHorizontalWritingMode(block_flow_) !=
+         child.IsHorizontalWritingMode();
+}
+
+bool BaselineAlignment::IsParallelToBaselineAxisForChild(const LayoutBox& child,
+                                                         GridAxis axis) const {
+  return axis == kGridColumnAxis ? !IsOrthogonalChildForBaseline(child)
+                                 : IsOrthogonalChildForBaseline(child);
+}
+
+const BaselineGroup& BaselineAlignment::GetBaselineGroupForChild(
+    ItemPosition preference,
+    unsigned shared_context,
+    const LayoutBox& child,
+    GridAxis baseline_axis) const {
+  DCHECK(IsBaselinePosition(preference));
+  bool is_row_axis_context = baseline_axis == kGridColumnAxis;
+  auto& contexts_map = is_row_axis_context ? row_axis_alignment_context_
+                                           : col_axis_alignment_context_;
+  auto* context = contexts_map.at(shared_context);
+  DCHECK(context);
+  return context->GetSharedGroup(child, preference);
+}
+
+void BaselineAlignment::UpdateBaselineAlignmentContextIfNeeded(
+    ItemPosition preference,
+    unsigned shared_context,
+    LayoutBox& child,
+    GridAxis baseline_axis) {
+  DCHECK(IsBaselinePosition(preference));
+  DCHECK(!child.NeedsLayout());
+
+  // Determine Ascent and Descent values of this child with respect to
+  // its grid container.
+  LayoutUnit ascent = AscentForChild(child, baseline_axis);
+  LayoutUnit descent = DescentForChild(child, ascent, baseline_axis);
+  if (IsDescentBaselineForChild(child, baseline_axis))
+    std::swap(ascent, descent);
+
+  // Looking up for a shared alignment context perpendicular to the
+  // baseline axis.
+  bool is_row_axis_context = baseline_axis == kGridColumnAxis;
+  auto& contexts_map = is_row_axis_context ? row_axis_alignment_context_
+                                           : col_axis_alignment_context_;
+  auto add_result = contexts_map.insert(shared_context, nullptr);
+
+  // Looking for a compatible baseline-sharing group.
+  if (add_result.is_new_entry) {
+    add_result.stored_value->value =
+        std::make_unique<BaselineContext>(child, preference, ascent, descent);
+  } else {
+    auto* context = add_result.stored_value->value.get();
+    context->UpdateSharedGroup(child, preference, ascent, descent);
+  }
+}
+
+LayoutUnit BaselineAlignment::BaselineOffsetForChild(
+    ItemPosition preference,
+    unsigned shared_context,
+    const LayoutBox& child,
+    GridAxis baseline_axis) const {
+  DCHECK(IsBaselinePosition(preference));
+  auto& group = GetBaselineGroupForChild(preference, shared_context, child,
+                                         baseline_axis);
+  if (group.size() > 1) {
+    return group.MaxAscent() - LogicalAscentForChild(child, baseline_axis);
+  }
+  return LayoutUnit();
+}
+
+Optional<LayoutUnit> BaselineAlignment::ExtentForBaselineAlignment(
+    ItemPosition preference,
+    unsigned shared_context,
+    const LayoutBox& child,
+    GridAxis baseline_axis) const {
+  DCHECK(IsBaselinePosition(preference));
+  if (!IsBaselineContextComputed(baseline_axis))
+    return WTF::nullopt;
+
+  auto& group = GetBaselineGroupForChild(preference, shared_context, child,
+                                         baseline_axis);
+  return group.MaxAscent() + group.MaxDescent();
+}
+
+bool BaselineAlignment::BaselineMayAffectIntrinsicSize(
+    const GridTrackSizingAlgorithm& algorithm,
+    GridTrackSizingDirection direction) const {
+  const auto& contexts_map = direction == kForColumns
+                                 ? col_axis_alignment_context_
+                                 : row_axis_alignment_context_;
+  for (const auto& context : contexts_map) {
+    auto track_size = algorithm.GetGridTrackSize(direction, context.key);
+    // TODO(lajava): Should we consider flexible tracks as well ?
+    if (!track_size.IsContentSized())
+      continue;
+    for (const auto& group : context.value->SharedGroups()) {
+      if (group.size() > 1) {
+        auto grid_area_size =
+            algorithm.Tracks(direction)[context.key].BaseSize();
+        if (group.MaxAscent() + group.MaxDescent() > grid_area_size)
+          return true;
+      }
+    }
+  }
+  return false;
+}
+
+void BaselineAlignment::Clear() {
+  row_axis_alignment_context_.clear();
+  col_axis_alignment_context_.clear();
+}
 
 BaselineGroup::BaselineGroup(WritingMode block_flow,
                              ItemPosition child_preference)
