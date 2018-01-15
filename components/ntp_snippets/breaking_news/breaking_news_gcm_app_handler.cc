@@ -112,6 +112,8 @@ BreakingNewsGCMAppHandler::BreakingNewsGCMAppHandler(
 #endif  // !OS_ANDROID
   DCHECK(token_validation_timer_);
   DCHECK(!token_validation_timer_->IsRunning());
+  DCHECK(forced_subscription_timer);
+  DCHECK(!forced_subscription_timer->IsRunning());
 }
 
 BreakingNewsGCMAppHandler::~BreakingNewsGCMAppHandler() {
@@ -170,6 +172,7 @@ void BreakingNewsGCMAppHandler::Subscribe(bool force_token_retrieval) {
     return;
   }
 
+  // TODO(vitaliii): Make this OnceCallback.
   instance_id_driver_->GetInstanceID(kBreakingNewsGCMAppID)
       ->GetToken(kBreakingNewsGCMSenderId, kGCMScope,
                  /*options=*/std::map<std::string, std::string>(),
@@ -180,6 +183,12 @@ void BreakingNewsGCMAppHandler::Subscribe(bool force_token_retrieval) {
 void BreakingNewsGCMAppHandler::DidRetrieveToken(
     const std::string& subscription_token,
     InstanceID::Result result) {
+  if (!IsListening()) {
+    // After we requested the token, |StopListening| has been called. Thus,
+    // ignore the token.
+    return;
+  }
+
   metrics::OnTokenRetrieved(result);
 
   switch (result) {
@@ -215,6 +224,7 @@ void BreakingNewsGCMAppHandler::ResubscribeIfInvalidToken() {
 
   // InstanceIDAndroid::ValidateToken just returns |true| on Android. Instead it
   // is ok to retrieve a token, because it is cached.
+  // TODO(vitaliii): Make this OnceCallback.
   instance_id_driver_->GetInstanceID(kBreakingNewsGCMAppID)
       ->GetToken(
           kBreakingNewsGCMSenderId, kGCMScope,
@@ -226,6 +236,12 @@ void BreakingNewsGCMAppHandler::ResubscribeIfInvalidToken() {
 void BreakingNewsGCMAppHandler::DidReceiveTokenForValidation(
     const std::string& new_token,
     InstanceID::Result result) {
+  if (!IsListening()) {
+    // After we requested the token, |StopListening| has been called. Thus,
+    // ignore the token.
+    return;
+  }
+
   metrics::OnTokenRetrieved(result);
 
   base::Optional<base::TimeDelta> time_since_last_validation;
