@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a05fb6_99dc62e9",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-15T16:04:57Z",
+      "side": 0,
+      "message": "I\u0027ve removed this TODO since the corresponding bug is marked as Fixed.",
+      "revId": "e73967a0699e1e8af0554735822abb2985c52a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
