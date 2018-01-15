@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f2fd21a_a53a6f78",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-15T09:14:05Z",
+      "side": 1,
+      "message": "Have you figured out how to avoid this one?",
+      "revId": "fd2f9245ad25f103273f329b243fd47f6e9e7fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

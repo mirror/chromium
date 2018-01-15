@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "125fce6f_72adc4b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-15T09:14:05Z",
+      "side": 1,
+      "message": "Thanks for the explanation, but the wording will still seem strange to anyone just seeing the git commit. Something like \"VDA/VEA/VJA unittests and autotests still working\" would be more to the point IMHO.",
+      "parentUuid": "dd347063_66191016",
+      "revId": "f6c6421efc42733fe978d53d4cbde0ed1c0ee839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27daa3b3_77e63a27",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 6
