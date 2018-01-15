@@ -73,6 +73,10 @@ const base::Feature kPasswordExport = {"PasswordExport",
 const base::Feature kPasswordImport = {"PasswordImport",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Allows searching for saved passwords in the Android Settings UI.
+const base::Feature kPasswordSearch = {"PasswordSearch",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Control whether users can view and copy passwords. This is only used for
 // mobile, the desktop version of Chrome always allows users to view
 // passwords.
