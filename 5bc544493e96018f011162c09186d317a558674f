@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d5fe7b_43edef99",
+        "filename": "ios/chrome/browser/pref_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-15T16:47:01Z",
+      "side": 0,
+      "message": "I don\u0027t know if I can delete the pref like that or if there is a special way to do (because I guess the previous value will be kept and it might mess things up if we reuse the key).",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "5bc544493e96018f011162c09186d317a558674f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
