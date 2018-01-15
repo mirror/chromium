@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 
 BookmarkBubbleSignInDelegate::BookmarkBubbleSignInDelegate(Browser* browser)
     : browser_(browser),
@@ -23,9 +24,23 @@ BookmarkBubbleSignInDelegate::~BookmarkBubbleSignInDelegate() {
 }
 
 void BookmarkBubbleSignInDelegate::OnSignInLinkClicked() {
+  ShowSignin();
+}
+
+void BookmarkBubbleSignInDelegate::ShowSignin() {
   EnsureBrowser();
   chrome::ShowBrowserSignin(
       browser_, signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_BUBBLE);
+}
+
+void BookmarkBubbleSignInDelegate::EnableSync(const AccountInfo& account) {
+  // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
+  // enabling sync).
+  new DiceTurnSyncOnHelper(
+      profile_, browser_,
+      signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_BUBBLE,
+      signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT, account.account_id,
+      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
 }
 
 void BookmarkBubbleSignInDelegate::OnBrowserRemoved(Browser* browser) {

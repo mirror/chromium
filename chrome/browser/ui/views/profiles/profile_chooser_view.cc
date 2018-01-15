@@ -24,7 +24,6 @@
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
-#include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -58,7 +57,6 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
-#include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_error_controller.h"
@@ -183,41 +181,6 @@ BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   }
   return profile->IsChild() ? BadgedProfilePhoto::BADGE_TYPE_CHILD
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
-}
-
-// Returns the list of all accounts that have a token. The default account in
-// the Gaia cookies will be the first account in the list.
-// TODO(tangltom): Move this code to chrome/browser/ui/signin and add a unit
-// test.
-std::vector<AccountInfo> GetAccountsForProfile(Profile* profile) {
-  // Fetch account ids for accounts that have a token.
-  ProfileOAuth2TokenService* token_service =
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
-  std::vector<std::string> account_ids = token_service->GetAccounts();
-  // Fetch accounts in the Gaia cookies.
-  GaiaCookieManagerService* cookie_manager_service =
-      GaiaCookieManagerServiceFactory::GetForProfile(profile);
-  std::vector<gaia::ListedAccount> cookie_accounts;
-  bool gaia_accounts_stale = !cookie_manager_service->ListAccounts(
-      &cookie_accounts, nullptr, "ProfileChooserView");
-  UMA_HISTOGRAM_BOOLEAN("Profile.DiceUI.GaiaAccountsStale",
-                        gaia_accounts_stale);
-  // Fetch account information for each id and make sure that the first account
-  // in the list matches the first account in the Gaia cookies (if available).
-  AccountTrackerService* account_tracker_service =
-      AccountTrackerServiceFactory::GetForProfile(profile);
-  std::string gaia_default_account_id =
-      cookie_accounts.empty() ? "" : cookie_accounts[0].id;
-  std::vector<AccountInfo> accounts;
-  for (const std::string& account_id : account_ids) {
-    AccountInfo account_info =
-        account_tracker_service->GetAccountInfo(account_id);
-    if (account_id == cookie_accounts[0].id)
-      accounts.insert(accounts.begin(), account_info);
-    else
-      accounts.push_back(account_info);
-  }
-  return accounts;
 }
 
 }  // namespace
@@ -1039,9 +1002,8 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 }
 
 views::View* ProfileChooserView::CreateDiceSigninView() {
-  // Fetch signed in GAIA web accounts.
   std::vector<AccountInfo> accounts =
-      GetAccountsForProfile(browser_->profile());
+      signin_ui_util::GetAccountsForDicePromos(browser_->profile());
 
   // Create a view that holds an illustration and a promo, which includes a
   // button. The illustration should slightly overlap with the promo at the
