@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_WEBRTC_WEBRTC_EVENT_LOG_MANAGER_H_
 
 #include <map>
+#include <memory>
 #include <type_traits>
 
 #include "base/callback.h"
@@ -18,6 +19,18 @@
 #include "content/common/content_export.h"
 
 namespace content {
+
+// To turn WebRTC on and off, we go through PeerConnectionTrackerProxy. In order
+// to make this easily testable, PeerConnectionTrackerProxyImpl will send real
+// messages to PeerConnectionTracker, whereas
+// PeerConnectionTrackerProxyForTesting will be a mock that just makes sure
+// the correct messages were attempted to be sent.
+class PeerConnectionTrackerProxy {
+ public:
+  virtual ~PeerConnectionTrackerProxy() = default;
+  virtual void StartEventLogOutput(WebRtcEventLogPeerConnectionKey pc_key) = 0;
+  virtual void StopEventLogOutput(WebRtcEventLogPeerConnectionKey pc_key) = 0;
+};
 
 // This is a singleton class running in the browser UI thread.
 // It is in charge of writing RTC event logs to temporary files, then uploading
@@ -171,6 +184,9 @@ class CONTENT_EXPORT WebRtcEventLogManager
 
   void InjectClockForTesting(base::Clock* clock);
 
+  void InjectPeerConnectionTrackerProxy(
+      std::unique_ptr<PeerConnectionTrackerProxy> pc_tracker_proxy);
+
   // Observer which will be informed whenever a local log file is started or
   // stopped. Its callbacks are called synchronously from |task_runner_|,
   // so the observer needs to be able to either run from any (sequenced) runner.
@@ -184,6 +200,11 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // in WebRTC, and for which client(s).
   std::map<PeerConnectionKey, LoggingTargetBitmap>
       peer_connections_with_event_logging_enabled_;
+
+  // In production, this holds a small object that just tells WebRTC (via
+  // PeerConnectionTracker) to start/stop producing event logs for a specific
+  // peer connection. In (relevant) unit tests, a mock will be injected.
+  std::unique_ptr<PeerConnectionTrackerProxy> pc_tracker_proxy_;
 
   // The main logic will run sequentially on this runner, on which blocking
   // tasks are allowed.
