@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df981599_3b7718cc",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-15T19:14:44Z",
+      "side": 1,
+      "message": "\u003e\u003e You\u0027d need ScopedAllowBaseSyncPrimitivesOutsideBlockingScope to do these two combined.\n\nRe: Sure, I will switch to it.\n\n\u003e\u003e 1) The allowance should be put at the callsite (not implicitly added to every caller -- even \u003e\u003e if only one here in practice)\n\nRe: The callsite in this case is in ChromeBrowserMainParts. If we put the allowance there, we need to make ChromeBrowserMainParts a friend class of ScopedAllowBaseSyncPrimitivesOutsideBlockingScope, which I doubt is something we want. \n\n\u003e\u003e 2) Why do you need this wait in the first place? We should reallllly try to avoid it. Why can \u003e\u003e it already be active? Is this strictly for unit tests? If so, try to turn it into a \u003e\u003e ForTesting() method and use base::ScopedAllowBaseSyncPrimitivesForTesting.\n\nRe: I will defer to wittman@, the profiler code owener on this question.",
+      "parentUuid": "a83679e4_771ce424",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a74434c6_685397ed",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-15T19:14:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "23e649ea_a83e0428",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 55
+      },
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaecce70_73524bb2",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 18
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-15T11:31:06Z",
       "side": 1,
       "message": "I\u0027d like to avoid adding this:\n\nCan we hook BrowserMainLoop::BrowserThreadsStarted() in //content instead?",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17d3260_b3691997",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-15T19:14:44Z",
+      "side": 1,
+      "message": "Hi Gab, do you mean adding a virtual function BrowserThreadsStarted() here in browser_main_parts.h and call it from BrowserMainLoop::BrowserThreadsStarted()? \n\nWe want to start the profiler right after the thread is created in BrowserMainLoop::CreateThreads. So I think starting the profiler in CreateThreads is preferred here.\n\nwittman@, any thoughts here please?",
+      "parentUuid": "eaecce70_73524bb2",
       "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
