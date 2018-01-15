@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cc5d75_ea125fce",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 4886,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-15T02:02:12Z",
+      "side": 1,
+      "message": "This ScrollBehavior adjustment code appears three times (here, RootFrameViewport.cpp, and PaintLayerScrollableArea.cpp).\nWe should introduce a helper function for it.",
+      "revId": "44b9d838eaaa99265b522a532fd773b9e2e62664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
