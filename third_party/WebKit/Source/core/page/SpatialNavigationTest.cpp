@@ -23,8 +23,7 @@ TEST_F(SpatialNavigationTest, FindContainerWhenEnclosingContainerIsDocument) {
   Element* child_element = GetDocument().getElementById("child");
 
   Node* enclosing_container =
-      ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-          WebFocusType::kWebFocusTypeDown, child_element);
+      ScrollableEnclosingBoxOrParentFrameForNode(child_element);
 
   EXPECT_EQ(enclosing_container, GetDocument());
 }
@@ -53,8 +52,7 @@ TEST_F(SpatialNavigationTest, FindContainerWhenEnclosingContainerIsIframe) {
   Element* child_element = ChildDocument().getElementById("child");
 
   Node* enclosing_container =
-      ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-          WebFocusType::kWebFocusTypeDown, child_element);
+      ScrollableEnclosingBoxOrParentFrameForNode(child_element);
 
   EXPECT_EQ(enclosing_container, ChildDocument());
 }
@@ -64,49 +62,24 @@ TEST_F(SpatialNavigationTest,
   SetBodyInnerHTML(
       "<!DOCTYPE html>"
       "<style>"
-      "  #child {"
-      "    height: 1000px;"
+      "  #content {"
+      "    padding-top: 600px;"
       "  }"
       "  #container {"
-      "    width: 100%;"
-      "    height: 100%;"
+      "    height: 100px;"
       "    overflow-y: scroll;"
       "  }"
       "</style>"
       "<div id='container'>"
-      "  <div id='child'></div>"
+      "  <div id='content'>some text here</div>"
       "</div>");
 
-  {
-    // <div id='container'> should be selected as container because
-    // it is scrollable in direction.
-    Element* child_element = GetDocument().getElementById("child");
-    Element* container_element = GetDocument().getElementById("container");
+  Element* content_element = GetDocument().getElementById("content");
+  Element* container_element = GetDocument().getElementById("container");
 
-    Node* enclosing_container =
-        ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-            WebFocusType::kWebFocusTypeDown, child_element);
-    EXPECT_EQ(enclosing_container, container_element);
-  }
-
-  {
-    // In following cases(up, left, right), <div id='container'> cannot be
-    // container because it is not scrollable in direction.
-    Element* child_element = GetDocument().getElementById("child");
-
-    Node* enclosing_container =
-        ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-            WebFocusType::kWebFocusTypeUp, child_element);
-    EXPECT_EQ(enclosing_container, GetDocument());
-
-    enclosing_container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-        WebFocusType::kWebFocusTypeLeft, child_element);
-    EXPECT_EQ(enclosing_container, GetDocument());
-
-    enclosing_container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-        WebFocusType::kWebFocusTypeRight, child_element);
-    EXPECT_EQ(enclosing_container, GetDocument());
-  }
+  Node* enclosing_container =
+      ScrollableEnclosingBoxOrParentFrameForNode(content_element);
+  EXPECT_EQ(enclosing_container, container_element);
 }
 
 }  // namespace blink

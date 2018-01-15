@@ -1404,7 +1404,7 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
     return ScrollInDirection(container, type);
   }
 
-  if (IsNavigableContainer(focus_candidate.visible_node, type)) {
+  if (IsContainer(focus_candidate.visible_node)) {
     HTMLFrameOwnerElement* frame_element = FrameOwnerElement(focus_candidate);
     if (frame_element && frame_element->ContentFrame()->IsLocalFrame()) {
       if (focus_candidate.is_offscreen_after_scrolling) {
@@ -1491,8 +1491,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
         starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
       }
     }
-    container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-        type, focused_element);
+    container = ScrollableEnclosingBoxOrParentFrameForNode(focused_element);
   }
 
   bool consumed = false;
@@ -1501,8 +1500,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
         AdvanceFocusDirectionallyInContainer(container, starting_rect, type);
     starting_rect =
         NodeRectInAbsoluteCoordinates(container, true /* ignore border */);
-    container =
-        ScrollableEnclosingBoxOrParentFrameForNodeInDirection(type, container);
+    container = ScrollableEnclosingBoxOrParentFrameForNode(container);
     if (container && container->IsDocumentNode())
       ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
   }
