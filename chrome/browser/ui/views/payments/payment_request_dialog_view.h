@@ -110,7 +110,9 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   void ShowErrorMessage() override;
   void ShowProcessingSpinner() override;
   bool IsInteractive() const override;
-  void ShowPaymentHandlerScreen(const GURL& url) override;
+  void ShowPaymentHandlerScreen(
+      const GURL& url,
+      base::OnceCallback<void(bool)> callback) override;
 
   // PaymentRequestSpec::Observer:
   void OnStartUpdating(PaymentRequestSpec::UpdateReason reason) override;

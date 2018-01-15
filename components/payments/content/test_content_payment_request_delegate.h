@@ -43,7 +43,9 @@ class TestContentPaymentRequestDelegate : public ContentPaymentRequestDelegate {
   ukm::UkmRecorder* GetUkmRecorder() override;
   std::string GetAuthenticatedEmail() const override;
   PrefService* GetPrefService() override;
-  void EmbedPaymentHandlerWindow(const GURL& url) override;
+  void EmbedPaymentHandlerWindow(
+      const GURL& url,
+      base::OnceCallback<void(bool)> callback) override;
 
   autofill::TestAddressNormalizer* test_address_normalizer();
   void DelayFullCardRequestCompletion();

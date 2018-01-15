@@ -39,7 +39,11 @@ class PaymentRequestDialog {
           result_delegate,
       content::WebContents* web_contents) = 0;
 
-  virtual void ShowPaymentHandlerScreen(const GURL& url) = 0;
+  // Display |url| in a new screen and run |callback| after navigation is
+  // completed, passing true/false to indicate success/failure.
+  virtual void ShowPaymentHandlerScreen(
+      const GURL& url,
+      base::OnceCallback<void(bool)> callback) = 0;
 };
 
 }  // namespace payments
