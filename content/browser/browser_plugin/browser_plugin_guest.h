@@ -34,6 +34,7 @@
 #include "content/public/browser/browser_plugin_guest_delegate.h"
 #include "content/public/browser/guest_host.h"
 #include "content/public/browser/readback_types.h"
+#include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "content/public/common/screen_info.h"
@@ -136,9 +137,6 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
 
   // Return true if the mouse is locked.
   bool mouse_locked() const { return mouse_locked_; }
-
-  // Called when the embedder WebContents changes visibility.
-  void EmbedderVisibilityChanged(bool visible);
 
   // Creates a new guest WebContentsImpl with the provided |params| with |this|
   // as the |opener|.
@@ -429,7 +427,7 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   bool mouse_locked_;
   bool pending_lock_request_;
   bool guest_visible_;
-  bool embedder_visible_;
+  Visibility embedder_visibility_ = Visibility::VISIBLE;
   // Whether the browser plugin is inside a plugin document.
   bool is_full_page_plugin_;
 

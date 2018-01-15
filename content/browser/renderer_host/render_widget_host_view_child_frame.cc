@@ -66,7 +66,9 @@ RenderWidgetHostViewChildFrame* RenderWidgetHostViewChildFrame::Create(
 
 RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
     RenderWidgetHost* widget_host)
-    : host_(RenderWidgetHostImpl::From(widget_host)),
+    : RenderWidgetHostViewBase(
+          RenderWidgetHostImpl::From(widget_host)->delegate()->IsHidden()),
+      host_(RenderWidgetHostImpl::From(widget_host)),
       frame_sink_id_(
           base::checked_cast<uint32_t>(widget_host->GetProcess()->GetID()),
           base::checked_cast<uint32_t>(widget_host->GetRoutingID())),
@@ -229,29 +231,18 @@ bool RenderWidgetHostViewChildFrame::IsSurfaceAvailableForCopy() const {
 }
 
 void RenderWidgetHostViewChildFrame::Show() {
-  if (!host_->is_hidden())
-    return;
-
-  if (!CanBecomeVisible())
-    return;
-
-  host_->WasShown(ui::LatencyInfo());
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(true);
+  is_visible_in_parent_ = true;
+  if (IsShowing())
+    WasShown();
 }
 
 void RenderWidgetHostViewChildFrame::Hide() {
-  if (host_->is_hidden())
-    return;
-  host_->WasHidden();
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(false);
+  is_visible_in_parent_ = false;
+  WasHidden();
 }
 
 bool RenderWidgetHostViewChildFrame::IsShowing() {
-  return !host_->is_hidden();
+  return is_visible_in_parent_ && !parent_is_hidden();
 }
 
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
@@ -1085,21 +1076,20 @@ RenderWidgetHostViewChildFrame::GetRootRenderWidgetHostView() const {
                           : nullptr;
 }
 
-bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
-  if (!frame_connector_)
-    return true;
+void RenderWidgetHostViewChildFrame::WasShown() {
+  if (host_->is_hidden())
+    host_->WasShown(ui::LatencyInfo());
 
-  if (frame_connector_->IsHidden())
-    return false;
+  if (frame_connector_)
+    frame_connector_->SetParentIsHiddenForChildViews(false);
+}
 
-  RenderWidgetHostViewBase* parent_view = GetParentView();
-  if (!parent_view || !parent_view->IsRenderWidgetHostViewChildFrame()) {
-    // Root frame does not have a CSS visibility property.
-    return true;
-  }
+void RenderWidgetHostViewChildFrame::WasHidden() {
+  if (!host_->is_hidden())
+    host_->WasHidden();
 
-  return static_cast<RenderWidgetHostViewChildFrame*>(parent_view)
-      ->CanBecomeVisible();
+  if (frame_connector_)
+    frame_connector_->SetParentIsHiddenForChildViews(true);
 }
 
 }  // namespace content

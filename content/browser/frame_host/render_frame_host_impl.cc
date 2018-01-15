@@ -4556,13 +4556,14 @@ void RenderFrameHostImpl::ForEachImmediateLocalRoot(
   }
 }
 
-void RenderFrameHostImpl::SetVisibilityForChildViews(bool visible) {
+void RenderFrameHostImpl::SetParentIsHiddenForChildViews(
+    bool parent_is_hidden) {
   ForEachImmediateLocalRoot(base::Bind(
-      [](bool is_visible, RenderFrameHostImpl* frame_host) {
+      [](bool parent_is_hidden, RenderFrameHostImpl* frame_host) {
         if (auto* view = frame_host->GetView())
-          return is_visible ? view->Show() : view->Hide();
+          view->SetParentIsHidden(parent_is_hidden);
       },
-      visible));
+      parent_is_hidden));
 }
 
 mojom::FrameNavigationControl* RenderFrameHostImpl::GetNavigationControl() {

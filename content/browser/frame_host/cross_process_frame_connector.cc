@@ -333,11 +333,10 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
     return;
   }
 
-  if (visible && !view_->GetRenderWidgetHostImpl()->delegate()->IsHidden()) {
+  if (visible)
     view_->Show();
-  } else if (!visible) {
+  else
     view_->Hide();
-  }
 }
 
 void CrossProcessFrameConnector::OnSetIsInert(bool inert) {
@@ -419,11 +418,11 @@ void CrossProcessFrameConnector::ResizeDueToAutoResize(
       frame_proxy_in_parent_renderer_->GetRoutingID(), sequence_number));
 }
 
-void CrossProcessFrameConnector::SetVisibilityForChildViews(
-    bool visible) const {
+void CrossProcessFrameConnector::SetParentIsHiddenForChildViews(
+    bool parent_is_hidden) const {
   frame_proxy_in_parent_renderer_->frame_tree_node()
       ->current_frame_host()
-      ->SetVisibilityForChildViews(visible);
+      ->SetParentIsHiddenForChildViews(parent_is_hidden);
 }
 
 void CrossProcessFrameConnector::SetRect(

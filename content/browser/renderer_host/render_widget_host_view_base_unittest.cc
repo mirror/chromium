@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/renderer_host/render_widget_host_view_base_unittest.h"
 
+#include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "ui/display/display.h"
@@ -20,7 +22,7 @@ display::Display CreateDisplay(int width, int height, int angle) {
   return display;
 }
 
-} // anonymous namespace
+}  // namespace
 
 TEST(RenderWidgetHostViewBaseTest, OrientationTypeForMobile) {
   // Square display (width == height).
@@ -119,6 +121,51 @@ TEST(RenderWidgetHostViewBaseTest, OrientationTypeForDesktop) {
     EXPECT_NE(portrait_1, portrait_2);
 
   }
+}
+
+void RenderWidgetHostViewBase_ShowHideSetParentIsHiddenTest(
+    RenderWidgetHostViewBase* view) {
+  RenderWidgetHostImpl* host = view->GetRenderWidgetHostImpl();
+
+  view->Show();
+  EXPECT_TRUE(view->IsShowing());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_FALSE(host->is_hidden());
+
+  view->SetParentIsHidden(true);
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
+
+  view->SetParentIsHidden(false);
+  EXPECT_TRUE(view->IsShowing());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_FALSE(host->is_hidden());
+
+  view->Hide();
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
+
+  view->SetParentIsHidden(true);
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
+
+  view->SetParentIsHidden(false);
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
+
+  view->SetParentIsHidden(true);
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
+
+  view->Show();
+  EXPECT_FALSE(view->IsShowing());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_TRUE(host->is_hidden());
 }
 
 } // namespace content
