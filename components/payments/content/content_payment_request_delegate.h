@@ -30,8 +30,11 @@ class ContentPaymentRequestDelegate : public PaymentRequestDelegate {
 
   // Embed the content of the web page at |url| passed through
   // PaymentRequestEvent.openWindow inside the current Payment Request UI
-  // surface.
-  virtual void EmbedPaymentHandlerWindow(const GURL& url) = 0;
+  // surface. |callback| is invoked after navigation is completed, passing
+  // true/false to indicate success/failure.
+  virtual void EmbedPaymentHandlerWindow(
+      const GURL& url,
+      base::OnceCallback<void(bool)> callback) = 0;
 };
 
 }  // namespace payments
