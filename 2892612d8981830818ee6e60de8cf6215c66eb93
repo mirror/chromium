@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c1097e8_34b47cdc",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:36:58Z",
+      "side": 1,
+      "message": "RenderProcessHost and StoragePartition are residents of UI thread, I think we should get GetID() and GetStoragePartition()-\u003eGetQuotaManager() before we cross threads.",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab8cf0f_79e9d3a3",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-15T07:36:58Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "2892612d8981830818ee6e60de8cf6215c66eb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
