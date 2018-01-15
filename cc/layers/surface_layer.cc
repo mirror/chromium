@@ -65,10 +65,13 @@ SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
 }
 
-void SurfaceLayer::SetPrimarySurfaceId(const viz::SurfaceId& surface_id) {
+void SurfaceLayer::SetPrimarySurfaceId(
+    const viz::SurfaceId& surface_id,
+    base::Optional<uint32_t> deadline_in_frames) {
   if (primary_surface_id_ == surface_id)
     return;
   primary_surface_id_ = surface_id;
+  deadline_in_frames_ = deadline_in_frames;
   UpdateDrawsContent(HasDrawableContent());
   SetNeedsCommit();
 }
@@ -130,7 +133,9 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   Layer::PushPropertiesTo(layer);
   TRACE_EVENT0("cc", "SurfaceLayer::PushPropertiesTo");
   SurfaceLayerImpl* layer_impl = static_cast<SurfaceLayerImpl*>(layer);
-  layer_impl->SetPrimarySurfaceId(primary_surface_id_);
+  layer_impl->SetPrimarySurfaceId(primary_surface_id_,
+                                  std::move(deadline_in_frames_));
+  deadline_in_frames_.reset();
   layer_impl->SetFallbackSurfaceId(fallback_surface_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
 }

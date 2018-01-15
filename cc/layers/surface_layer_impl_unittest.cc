@@ -32,7 +32,7 @@ TEST(SurfaceLayerImplTest, Occlusion) {
   surface_layer_impl->SetBounds(layer_size);
   surface_layer_impl->SetDrawsContent(true);
   viz::SurfaceId surface_id(kArbitraryFrameSinkId, kArbitraryLocalSurfaceId);
-  surface_layer_impl->SetPrimarySurfaceId(surface_id);
+  surface_layer_impl->SetPrimarySurfaceId(surface_id, base::nullopt);
 
   impl.CalcDrawProps(viewport_size);
 
@@ -92,7 +92,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplWithTwoDifferentSurfaces) {
   // SurfaceInfos are different.
   surface_layer_impl->SetBounds(layer_size);
   surface_layer_impl->SetDrawsContent(true);
-  surface_layer_impl->SetPrimarySurfaceId(surface_id1);
+  surface_layer_impl->SetPrimarySurfaceId(surface_id1, base::nullopt);
   surface_layer_impl->SetFallbackSurfaceId(surface_id2);
   surface_layer_impl->SetBackgroundColor(SK_ColorBLUE);
 
@@ -176,7 +176,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplWithMatchingPrimaryAndFallback) {
   // SurfaceInfos are the same.
   surface_layer_impl->SetBounds(layer_size);
   surface_layer_impl->SetDrawsContent(true);
-  surface_layer_impl->SetPrimarySurfaceId(surface_id1);
+  surface_layer_impl->SetPrimarySurfaceId(surface_id1, base::nullopt);
   surface_layer_impl->SetFallbackSurfaceId(surface_id1);
   surface_layer_impl->SetBackgroundColor(SK_ColorBLUE);
 
