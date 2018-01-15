@@ -10,9 +10,11 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/suggestions/image_decoder_impl.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/search_provider_logos/logo_service.h"
 #include "components/search_provider_logos/logo_service_impl.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "net/url_request/url_request_context_getter.h"
 
 #if defined(OS_ANDROID)
@@ -52,6 +54,7 @@ LogoServiceFactory::LogoServiceFactory()
     : BrowserContextKeyedServiceFactory(
           "LogoService",
           BrowserContextDependencyManager::GetInstance()) {
+  DependsOn(SigninManagerFactory::GetInstance());
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
@@ -62,6 +65,7 @@ KeyedService* LogoServiceFactory::BuildServiceInstanceFor(
   Profile* profile = static_cast<Profile*>(context);
   DCHECK(!profile->IsOffTheRecord());
   return new LogoServiceImpl(profile->GetPath().Append(kCachedLogoDirectory),
+                             SigninManagerFactory::GetForProfile(profile),
                              TemplateURLServiceFactory::GetForProfile(profile),
                              base::MakeUnique<suggestions::ImageDecoderImpl>(),
                              profile->GetRequestContext(),

@@ -143,18 +143,23 @@ void RunCallbacksWithDisabled(LogoCallbacks callbacks) {
 
 LogoServiceImpl::LogoServiceImpl(
     const base::FilePath& cache_directory,
+    SigninManagerBase* signin_manager,
     TemplateURLService* template_url_service,
     std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
     base::RepeatingCallback<bool()> want_gray_logo_getter)
-    : LogoService(),
-      cache_directory_(cache_directory),
+    : cache_directory_(cache_directory),
+      signin_manager_(signin_manager),
       template_url_service_(template_url_service),
       request_context_getter_(request_context_getter),
       want_gray_logo_getter_(std::move(want_gray_logo_getter)),
-      image_decoder_(std::move(image_decoder)) {}
+      image_decoder_(std::move(image_decoder)) {
+  signin_manager_->AddObserver(this);
+}
 
-LogoServiceImpl::~LogoServiceImpl() = default;
+LogoServiceImpl::~LogoServiceImpl() {
+  signin_manager_->RemoveObserver(this);
+}
 
 void LogoServiceImpl::GetLogo(search_provider_logos::LogoObserver* observer) {
   LogoCallbacks callbacks;
@@ -226,25 +231,9 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
     return;
   }
 
+  InitializeLogoTrackerIfNecessary();
+
   const bool use_fixed_logo = !doodle_url.is_valid();
-
-  if (!logo_tracker_) {
-    std::unique_ptr<LogoCache> logo_cache = std::move(logo_cache_for_test_);
-    if (!logo_cache) {
-      logo_cache = std::make_unique<LogoCache>(cache_directory_);
-    }
-
-    std::unique_ptr<base::Clock> clock = std::move(clock_for_test_);
-    if (!clock) {
-      clock = std::make_unique<base::DefaultClock>();
-    }
-
-    logo_tracker_ = std::make_unique<LogoTracker>(
-        request_context_getter_,
-        std::make_unique<LogoDelegateImpl>(std::move(image_decoder_)),
-        std::move(logo_cache), std::move(clock));
-  }
-
   if (use_fixed_logo) {
     logo_tracker_->SetServerAPI(
         logo_url, base::Bind(&search_provider_logos::ParseFixedLogoResponse),
@@ -263,12 +252,39 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
   logo_tracker_->GetLogo(std::move(callbacks));
 }
 
+void LogoServiceImpl::GoogleSignedOut(const AccountInfo& account_info) {
+  // Clear any cached logo, since it may be personalized (e.g. birthday Doodle).
+  InitializeLogoTrackerIfNecessary();
+  logo_tracker_->ClearCachedLogo();
+}
+
 void LogoServiceImpl::SetLogoCacheForTests(std::unique_ptr<LogoCache> cache) {
   logo_cache_for_test_ = std::move(cache);
 }
 
 void LogoServiceImpl::SetClockForTests(std::unique_ptr<base::Clock> clock) {
   clock_for_test_ = std::move(clock);
+}
+
+void LogoServiceImpl::InitializeLogoTrackerIfNecessary() {
+  if (logo_tracker_) {
+    return;
+  }
+
+  std::unique_ptr<LogoCache> logo_cache = std::move(logo_cache_for_test_);
+  if (!logo_cache) {
+    logo_cache = std::make_unique<LogoCache>(cache_directory_);
+  }
+
+  std::unique_ptr<base::Clock> clock = std::move(clock_for_test_);
+  if (!clock) {
+    clock = std::make_unique<base::DefaultClock>();
+  }
+
+  logo_tracker_ = std::make_unique<LogoTracker>(
+      request_context_getter_,
+      std::make_unique<LogoDelegateImpl>(std::move(image_decoder_)),
+      std::move(logo_cache), std::move(clock));
 }
 
 }  // namespace search_provider_logos

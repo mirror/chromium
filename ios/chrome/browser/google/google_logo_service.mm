@@ -34,10 +34,12 @@ base::FilePath DoodleDirectory() {
 }  // namespace
 
 GoogleLogoService::GoogleLogoService(
+    SigninManagerBase* signin_manager,
     TemplateURLService* template_url_service,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter)
     : LogoServiceImpl(
           DoodleDirectory(),
+          signin_manager,
           template_url_service,
           image_fetcher::CreateIOSImageDecoder(),
           request_context_getter,
