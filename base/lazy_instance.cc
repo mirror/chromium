@@ -29,7 +29,8 @@ bool NeedsLazyInstance(subtle::AtomicWord* state) {
   // state_ == STATE_CREATED needs to acquire visibility over
   // the associated data (buf_). Pairing Release_Store is in
   // CompleteLazyInstance().
-  if (subtle::Acquire_Load(state) == kLazyInstanceStateCreating) {
+  while (subtle::Acquire_Load(state) == kLazyInstanceStateCreating) {
+    PlatformThread::YieldCurrentThread();
     const base::Time start = base::Time::Now();
     do {
       const base::TimeDelta elapsed = base::Time::Now() - start;
