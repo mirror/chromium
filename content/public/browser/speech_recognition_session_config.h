@@ -29,6 +29,7 @@ struct CONTENT_EXPORT SpeechRecognitionSessionConfig {
 
   std::string language;
   SpeechRecognitionGrammarArray grammars;
+  // TODO(sashab): Change this to a url::Origin.
   std::string origin_url;
   bool filter_profanities;
   bool continuous;
