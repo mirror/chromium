@@ -131,7 +131,8 @@ ExtensionFunction::ResponseAction SystemPrivateGetUpdateStatusFunction::Run() {
       break;
   }
 #else
-  if (UpgradeDetector::GetInstance()->notify_upgrade()) {
+  if (g_browser_process->upgrade_detector() &&
+      g_browser_process->upgrade_detector()->notify_upgrade()) {
     state = kNeedRestartState;
     download_progress = 1;
   } else {

@@ -14,6 +14,7 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -115,11 +116,13 @@ ToolbarView::ToolbarView(Browser* browser)
   chrome::AddCommandObserver(browser_, IDC_HOME, this);
   chrome::AddCommandObserver(browser_, IDC_LOAD_NEW_TAB_PAGE, this);
 
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->AddObserver(this);
 }
 
 ToolbarView::~ToolbarView() {
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->RemoveObserver(this);
 
   chrome::RemoveCommandObserver(browser_, IDC_BACK, this);
   chrome::RemoveCommandObserver(browser_, IDC_FORWARD, this);

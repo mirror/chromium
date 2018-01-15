@@ -58,15 +58,11 @@ gfx::Image UpgradeDetector::GetIcon() {
   return gfx::Image(gfx::CreateVectorIcon(kBrowserToolsUpdateIcon, color));
 }
 
-UpgradeDetector::UpgradeDetector()
-    : upgrade_available_(UPGRADE_AVAILABLE_NONE),
-      best_effort_experiment_updates_available_(false),
-      critical_experiment_updates_available_(false),
+UpgradeDetector::UpgradeDetector(bool auto_updates_disabled)
+    : notifications_(0U),
+      auto_updates_disabled_(auto_updates_disabled),
       critical_update_acknowledged_(false),
-      is_factory_reset_required_(false),
-      upgrade_notification_stage_(UPGRADE_ANNOYANCE_NONE),
-      notify_upgrade_(false) {
-}
+      upgrade_notification_stage_(UPGRADE_ANNOYANCE_NONE) {}
 
 UpgradeDetector::~UpgradeDetector() {
 }
@@ -81,16 +77,17 @@ void UpgradeDetector::NotifyOutdatedInstallNoAutoUpdate() {
     observer.OnOutdatedInstallNoAutoUpdate();
 }
 
-void UpgradeDetector::NotifyUpgrade() {
-  notify_upgrade_ = true;
+void UpgradeDetector::NotifyUpgrade(UpgradeNotificationAnnoyanceLevel level) {
+  upgrade_notification_stage_ = level;
 
   NotifyUpgradeRecommended();
-  if (upgrade_available_ == UPGRADE_NEEDED_OUTDATED_INSTALL) {
-    NotifyOutdatedInstall();
-  } else if (upgrade_available_ == UPGRADE_NEEDED_OUTDATED_INSTALL_NO_AU) {
-    NotifyOutdatedInstallNoAutoUpdate();
-  } else if (upgrade_available_ == UPGRADE_AVAILABLE_CRITICAL ||
-             critical_experiment_updates_available_) {
+  if (is_outdated_install()) {
+    if (auto_updates_disabled()) {
+      NotifyOutdatedInstallNoAutoUpdate();
+    } else {
+      NotifyOutdatedInstall();
+    }
+  } else if (has_critical_notifications()) {
     TriggerCriticalUpdate();
   }
 }

@@ -392,10 +392,6 @@ class DBusServices {
     network_connect_delegate_.reset(new NetworkConnectDelegateChromeOS);
     NetworkConnect::Initialize(network_connect_delegate_.get());
 
-    // Likewise, initialize the upgrade detector for Chrome OS. The upgrade
-    // detector starts to monitor changes from the update engine.
-    UpgradeDetectorChromeos::GetInstance()->Init();
-
     // Initialize the device settings service so that we'll take actions per
     // signals sent from the session manager. This needs to happen before
     // g_browser_process initializes BrowserPolicyConnector.
@@ -649,6 +645,11 @@ void ChromeBrowserMainPartsChromeos::ServiceManagerConnectionStarted(
 // Threads are initialized between MainMessageLoopStart and MainMessageLoopRun.
 // about_flags settings are applied in ChromeBrowserMainParts::PreCreateThreads.
 void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
+  // Initialize the upgrade detector for Chrome OS. The upgrade detector starts
+  // to monitor changes from the update engine.
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->Init();
+
   // Set the crypto thread after the IO thread has been created/started.
   TPMTokenLoader::Get()->SetCryptoTaskRunner(
       content::BrowserThread::GetTaskRunnerForThread(
@@ -1083,8 +1084,8 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
 
   // Shutdown the upgrade detector for Chrome OS. The upgrade detector
   // stops monitoring changes from the update engine.
-  if (UpgradeDetectorChromeos::GetInstance())
-    UpgradeDetectorChromeos::GetInstance()->Shutdown();
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->Shutdown();
 
   // Shutdown the network change notifier for Chrome OS. The network
   // change notifier stops monitoring changes from the power manager and

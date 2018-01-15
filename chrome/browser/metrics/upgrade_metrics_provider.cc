@@ -5,6 +5,7 @@
 #include "chrome/browser/metrics/upgrade_metrics_provider.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/upgrade_detector.h"
 
 UpgradeMetricsProvider::UpgradeMetricsProvider() {}
@@ -13,9 +14,11 @@ UpgradeMetricsProvider::~UpgradeMetricsProvider() {}
 
 void UpgradeMetricsProvider::ProvideCurrentSessionData(
     metrics::ChromeUserMetricsExtension* uma_proto) {
-  UpgradeDetector* upgrade_detector = UpgradeDetector::GetInstance();
-  UMA_HISTOGRAM_ENUMERATION(
-      "UpgradeDetector.NotificationStage",
-      upgrade_detector->upgrade_notification_stage(),
-      UpgradeDetector::kUpgradeNotificationAnnoyanceLevelCount);
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  if (upgrade_detector) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "UpgradeDetector.NotificationStage",
+        upgrade_detector->upgrade_notification_stage(),
+        UpgradeDetector::kUpgradeNotificationAnnoyanceLevelCount);
+  }
 }

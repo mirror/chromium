@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UPGRADE_DETECTOR_H_
 #define CHROME_BROWSER_UPGRADE_DETECTOR_H_
 
+#include <memory>
+
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
@@ -19,13 +21,10 @@ class UpgradeObserver;
 ///////////////////////////////////////////////////////////////////////////////
 // UpgradeDetector
 //
-// This class is a singleton class that monitors when an upgrade happens in the
-// background. We basically ask Omaha what it thinks the latest version is and
-// if our version is lower we send out a notification upon:
-//   a) Detecting an upgrade and...
-//   b) When we think the user should be notified about the upgrade.
-// The latter happens much later, since we don't want to be too annoying.
-//
+// An object that detects when a browser/machine restart is needed (e.g., when
+// a newer version has been installed and is ready to become current). Once such
+// a restart is needed, observers are periodically notified to draw the user's
+// attention to this fact with increasing pizzazz.
 class UpgradeDetector {
  public:
   // The Homeland Security Upgrade Advisory System.
@@ -45,30 +44,31 @@ class UpgradeDetector {
   static constexpr int kUpgradeNotificationAnnoyanceLevelCount =
       UPGRADE_ANNOYANCE_LAST + 1;
 
-  // Returns the singleton implementation instance.
-  static UpgradeDetector* GetInstance();
-
+  static std::unique_ptr<UpgradeDetector> Create();
   virtual ~UpgradeDetector();
+
+  virtual void Init() {}
+  virtual void Shutdown() {}
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
   // Whether the user should be notified about an upgrade.
-  bool notify_upgrade() const { return notify_upgrade_; }
+  bool notify_upgrade() const {
+    return upgrade_notification_stage_ != UPGRADE_ANNOYANCE_NONE;
+  }
 
   // Whether the upgrade recommendation is due to Chrome being outdated.
   bool is_outdated_install() const {
-    return upgrade_available_ == UPGRADE_NEEDED_OUTDATED_INSTALL;
+    return (notifications_ & kOutdatedInstall) != 0;
   }
 
-  // Whether the upgrade recommendation is due to Chrome being outdated AND
-  // auto-update is turned off.
-  bool is_outdated_install_no_au() const {
-    return upgrade_available_ == UPGRADE_NEEDED_OUTDATED_INSTALL_NO_AU;
-  }
+  // Returns true if auto-updates are supported but disabled.
+  bool auto_updates_disabled() const { return auto_updates_disabled_; }
 
   // Notifify this object that the user has acknowledged the critical update
   // so we don't need to complain about it for now.
   void acknowledge_critical_update() {
+    // TODO(grt): noop if policy 2 (recurring prompt).
     critical_update_acknowledged_ = true;
   }
 
@@ -77,7 +77,9 @@ class UpgradeDetector {
     return critical_update_acknowledged_;
   }
 
-  bool is_factory_reset_required() const { return is_factory_reset_required_; }
+  bool is_factory_reset_required() const {
+    return (notifications_ & kFactoryResetRequired) != 0;
+  }
 
   // Retrieves the right icon based on the degree of severity (see
   // UpgradeNotificationAnnoyanceLevel, each level has an an accompanying icon
@@ -89,7 +91,6 @@ class UpgradeDetector {
   }
 
   void AddObserver(UpgradeObserver* observer);
-
   void RemoveObserver(UpgradeObserver* observer);
 
   // Notifies that the current install is outdated. No details are expected.
@@ -100,27 +101,40 @@ class UpgradeDetector {
   void NotifyOutdatedInstallNoAutoUpdate();
 
  protected:
-  enum UpgradeAvailable {
-    // If no update is available and current install is recent enough.
-    UPGRADE_AVAILABLE_NONE,
-    // If a regular update is available.
-    UPGRADE_AVAILABLE_REGULAR,
-    // If a critical update to Chrome has been installed, such as a zero-day
-    // fix.
-    UPGRADE_AVAILABLE_CRITICAL,
-    // If no update to Chrome has been installed for more than the recommended
-    // time.
-    UPGRADE_NEEDED_OUTDATED_INSTALL,
-    // If no update to Chrome has been installed for more than the recommended
-    // time AND auto-update is turned off.
-    UPGRADE_NEEDED_OUTDATED_INSTALL_NO_AU,
+  using NotificationType = uint32_t;
+  enum : NotificationType {
+    // A regular update is available.
+    kRegularUpdateAvailable = 0x01,
+
+    // A critical update is available.
+    kCriticalUpdateAvailable = 0x02,
+
+    // The install is outdated.
+    kOutdatedInstall = 0x04,
+
+    // An experiment has been killed and a best-effort should be made to
+    // restart.
+    kExperimentKillBestEffort = 0x08,
+
+    // An experiment has been killed and a critical effort should be made to
+    // restart.
+    kExperimentKillCritical = 0x10,
+
+    // A factory reset is required (Chrome OS only).
+    kFactoryResetRequired = 0x20,
+
+    // A mask of types that warrant an immediate jump to critial annoyance.
+    kCriticalMask =
+        (kCriticalUpdateAvailable | kOutdatedInstall | kExperimentKillCritical),
   };
 
-  UpgradeDetector();
+  // |auto_updates_disabled| true if auto updates are supported but disabled and
+  // the user should be prompted to re-enable them.
+  explicit UpgradeDetector(bool auto_updates_disabled);
 
   // Notifies that update is recommended and triggers different actions based
   // on the update availability.
-  void NotifyUpgrade();
+  void NotifyUpgrade(UpgradeNotificationAnnoyanceLevel level);
 
   // Notifies that update is recommended.
   void NotifyUpgradeRecommended();
@@ -142,32 +156,27 @@ class UpgradeDetector {
   // idle state. Protected and virtual so that it could be overridden by tests.
   virtual void TriggerCriticalUpdate();
 
-  UpgradeAvailable upgrade_available() const { return upgrade_available_; }
-  void set_upgrade_available(UpgradeAvailable available) {
-    upgrade_available_ = available;
-  }
-
-  void set_best_effort_experiment_updates_available(bool available) {
-    best_effort_experiment_updates_available_ = available;
+  bool has_critical_notifications() const {
+    return (notifications_ & kCriticalMask) != 0;
   }
 
   bool critical_experiment_updates_available() const {
-    return critical_experiment_updates_available_;
-  }
-  void set_critical_experiment_updates_available(bool available) {
-    critical_experiment_updates_available_ = available;
+    return (notifications_ & kExperimentKillCritical) != 0;
   }
 
   void set_critical_update_acknowledged(bool acknowledged) {
     critical_update_acknowledged_ = acknowledged;
   }
 
-  void set_upgrade_notification_stage(UpgradeNotificationAnnoyanceLevel stage) {
-    upgrade_notification_stage_ = stage;
+  void set_is_factory_reset_required(bool is_factory_reset_required) {
+    if (is_factory_reset_required)
+      notifications_ |= kFactoryResetRequired;
+    else
+      notifications_ &= ~kFactoryResetRequired;
   }
 
-  void set_is_factory_reset_required(bool is_factory_reset_required) {
-    is_factory_reset_required_ = is_factory_reset_required;
+  void add_notifications(NotificationType notifications) {
+    notifications_ |= notifications;
   }
 
  private:
@@ -184,19 +193,14 @@ class UpgradeDetector {
 
   // Whether any software updates are available (experiment updates are tracked
   // separately via additional member variables below).
-  UpgradeAvailable upgrade_available_;
+  NotificationType notifications_;
 
-  // Whether "best effort" experiment updates are available.
-  bool best_effort_experiment_updates_available_;
-
-  // Whether "critical" experiment updates are available.
-  bool critical_experiment_updates_available_;
+  // True if this browser is integrated with an auto-updater but such updates
+  // are disabled.
+  const bool auto_updates_disabled_;
 
   // Whether the user has acknowledged the critical update.
   bool critical_update_acknowledged_;
-
-  // Whether a factory reset is needed to complete an update.
-  bool is_factory_reset_required_;
 
   // A timer to check to see if we've been idle for long enough to show the
   // critical warning. Should only be set if |upgrade_available_| is
@@ -205,10 +209,6 @@ class UpgradeDetector {
 
   // The stage at which the annoyance level for upgrade notifications is at.
   UpgradeNotificationAnnoyanceLevel upgrade_notification_stage_;
-
-  // Whether we have waited long enough after detecting an upgrade (to see
-  // is we should start nagging about upgrading).
-  bool notify_upgrade_;
 
   base::ObserverList<UpgradeObserver> observer_list_;
 

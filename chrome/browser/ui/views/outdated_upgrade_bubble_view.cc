@@ -91,11 +91,12 @@ bool OutdatedUpgradeBubbleView::ShouldShowCloseButton() const {
 }
 
 bool OutdatedUpgradeBubbleView::Accept() {
+  DCHECK(g_browser_process->upgrade_detector()->is_outdated_install());
   uma_recorded_ = true;
   // Offset the +1 in the dtor.
   --g_num_ignored_bubbles;
   if (auto_update_enabled_) {
-    DCHECK(UpgradeDetector::GetInstance()->is_outdated_install());
+    DCHECK(!g_browser_process->upgrade_detector()->auto_updates_disabled());
     UMA_HISTOGRAM_CUSTOM_COUNTS("OutdatedUpgradeBubble.NumLaterPerReinstall",
                                 g_num_ignored_bubbles, 1, kMaxIgnored,
                                 kNumIgnoredBuckets);
@@ -107,7 +108,7 @@ bool OutdatedUpgradeBubbleView::Accept() {
                                ui::PAGE_TRANSITION_LINK, false));
 #if defined(OS_WIN)
   } else {
-    DCHECK(UpgradeDetector::GetInstance()->is_outdated_install_no_au());
+    DCHECK(g_browser_process->upgrade_detector()->auto_updates_disabled());
     UMA_HISTOGRAM_CUSTOM_COUNTS("OutdatedUpgradeBubble.NumLaterPerEnableAU",
                                 g_num_ignored_bubbles, 1, kMaxIgnored,
                                 kNumIgnoredBuckets);
