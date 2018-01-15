@@ -89,6 +89,8 @@ class TestRenderFrameHost::NavigationInterceptor
       base::Optional<content::URLLoaderFactoryBundle>
           subresource_loader_factories) override {}
 
+  void HandleRendererDebugURL(const GURL& url) override {}
+
  private:
   TestRenderFrameHost* const frame_host_;
 

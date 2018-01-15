@@ -113,6 +113,9 @@ interface FrameNavigationControl {
       CommonNavigationParams common_params,
       RequestNavigationParams request_params)
       => (blink.mojom.CommitResult commit_result);
+
+  // Asks the renderer to handle a renderer-debug URL.
+  HandleRendererDebugURL(url.mojom.Url url);
 };
 
 // Implemented by the frame (e.g. renderer processes).

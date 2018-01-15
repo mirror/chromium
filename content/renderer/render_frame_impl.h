@@ -536,6 +536,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       CommitSameDocumentNavigationCallback callback) override;
+  void HandleRendererDebugURL(const GURL& url) override;
 
   // mojom::FullscreenVideoElementHandler implementation:
   void RequestFullscreenVideoElement() override;
