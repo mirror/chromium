@@ -26,7 +26,8 @@ class PaymentRequestDisplayManager : public KeyedService {
                            ContentPaymentRequestDelegate* delegate);
     ~DisplayHandle();
     void Show(PaymentRequest* request);
-    void DisplayPaymentHandlerWindow(const GURL& url);
+    void DisplayPaymentHandlerWindow(const GURL& url,
+                                     base::OnceCallback<void(bool)> callback);
 
    private:
     PaymentRequestDisplayManager* display_manager_;

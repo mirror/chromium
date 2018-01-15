@@ -17,10 +17,12 @@ PaymentHandlerWebFlowViewController::PaymentHandlerWebFlowViewController(
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog,
     Profile* profile,
-    GURL target)
+    GURL target,
+    base::OnceCallback<void(bool)> callback)
     : PaymentRequestSheetController(spec, state, dialog),
       profile_(profile),
-      target_(target) {}
+      target_(target),
+      callback_(std::move(callback)) {}
 
 PaymentHandlerWebFlowViewController::~PaymentHandlerWebFlowViewController() {}
 
@@ -38,6 +40,11 @@ void PaymentHandlerWebFlowViewController::FillContentView(
   // TODO(anthonyvd): Size to the actual available size in the dialog.
   web_view->SetPreferredSize(gfx::Size(100, 300));
   content_view->AddChildView(web_view.release());
+}
+
+void PaymentHandlerWebFlowViewController::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  std::move(callback_).Run(true);
 }
 
 }  // namespace payments

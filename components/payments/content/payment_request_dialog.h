@@ -39,7 +39,9 @@ class PaymentRequestDialog {
           result_delegate,
       content::WebContents* web_contents) = 0;
 
-  virtual void ShowPaymentHandlerScreen(const GURL& url) = 0;
+  virtual void ShowPaymentHandlerScreen(
+      const GURL& url,
+      base::OnceCallback<void(bool)> callback) = 0;
 };
 
 }  // namespace payments
