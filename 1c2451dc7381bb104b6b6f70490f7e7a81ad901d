@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6b780cbf_b7f87628",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-15T08:51:34Z",
+      "side": 1,
+      "message": "Ok. The problem is the following: even though the check [1] is false (there is an internal check called IsCMTDeviceEvent, which always returns false, btw. AFAIK, cmt driver is used only in ChromeOS), the EventTypeFromXEvent method calls DeviceDataManagerX11::GetInstance()-\u003eHasEventData(xievent, DeviceDataManagerX11::DT_CMT_SCROLL_X), which seems to be incorrect, because the event wasn\u0027t from cmt device, actually. And thus it goes through that path [2], which then triggers a check (IsLocatedEvent) to fail, because the type of the event is unknown.\n\nAdding a \"IsCMTDeviceEvent\" to [1] resolves the issue as well.\n\n[1] https://cs.chromium.org/chromium/src/ui/base/x/x11_util.cc?l\u003d351\n[2] https://cs.chromium.org/chromium/src/ui/events/x/events_x_utils.cc?q\u003devents_x_util\u0026dr\u003dC\u0026l\u003d435",
+      "parentUuid": "4ad8e685_fd935b53",
+      "revId": "1c2451dc7381bb104b6b6f70490f7e7a81ad901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ac0d37_155021c4",
         "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
         "patchSetId": 4
