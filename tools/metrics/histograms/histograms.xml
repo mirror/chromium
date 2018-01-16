@@ -15469,10 +15469,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DisplayManager.MirroringDisplayCountRanges"
+    enum="DisplayMirroringDisplayCountRanges">
+  <owner>weidongg@chromium.org</owner>
+  <summary>
+    The number of displays connected to the device that are in mirror mode. This
+    is emitted once when the user enables normal mirror mode, or an API caller
+    requests mixed mirror mode, or display configuration changes (e.g. adding or
+    removing a display) when mirror mode is on.
+  </summary>
+</histogram>
+
+<histogram name="DisplayManager.MirrorModeTypes" enum="DisplayMirrorModeTypes">
+  <owner>weidongg@chromium.org</owner>
+  <summary>
+    The types of mirror mode in which the displays connected to the device are
+    in. This is emitted once when the user enables normal mirror mode, or an API
+    caller requests mixed mirror mode, or display configuration changes ( e.g.
+    adding or removing a display) when mirror mode is on.
+  </summary>
+</histogram>
+
 <histogram name="DisplayManager.MultiDisplayMode" enum="MultiDisplayModes">
   <owner>afakhry@chromium.org</owner>
   <summary>
-    The mode in which the connected displays to the device is in. This is
+    The mode in which the connected displays to the device are in. This is
     emitted once when displays are added or removed, or when the user changes
     the mode by e.g. enabling mirror or unified modes.
   </summary>
@@ -15482,9 +15503,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="UnifiedDesktopDisplayCountRanges">
   <owner>afakhry@chromium.org</owner>
   <summary>
-    The the number of displays connected to the device when Unified Desktop mode
-    is on. This is emitted when Unified Desktop mode is turned on, or the
-    displays are added or removed while in Unified Mode.
+    The number of displays connected to the device when Unified Desktop mode is
+    on. This is emitted when Unified Desktop mode is turned on, or the displays
+    are added or removed while in Unified Mode.
   </summary>
 </histogram>
 
@@ -88383,6 +88404,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Shows actions taken on the &quot;Not signed in? You're misssing out&quot;
     link on the top right of chrome://apps. Logged once per visit of
     chrome://apps as well as on each click of the sync promo.
+  </summary>
+</histogram>
+
+<histogram name="SystemDisplayApi.SetMirrorModeTime" units="ms">
+  <owner>weidongg@chromium.org</owner>
+  <summary>
+    The amount of time it takes to process API call SetMirrorMode(). This is
+    logged each time the API is called.
   </summary>
 </histogram>
 

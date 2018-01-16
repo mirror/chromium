@@ -9041,6 +9041,24 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="7.2 or later"/>
 </enum>
 
+<enum name="DisplayMirroringDisplayCountRanges">
+  <summary>
+    Defines the ranges in which the number of connected displays in mirror mode
+    may reside.
+  </summary>
+  <int value="0" label="2 displays"/>
+  <int value="1" label="More than 2 displays"/>
+</enum>
+
+<enum name="DisplayMirrorModeTypes">
+  <summary>
+    Defines the types of mirror mode in which displays connected to the device
+    are in.
+  </summary>
+  <int value="0" label="Normal mirror mode"/>
+  <int value="1" label="Mixed mirror mode"/>
+</enum>
+
 <enum name="DistillableType">
   <int value="0" label="Not distillable"/>
   <int value="1" label="Non-mobile-friendly distillable"/>

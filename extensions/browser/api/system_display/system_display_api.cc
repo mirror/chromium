@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -34,6 +35,10 @@ const char SystemDisplayFunction::kKioskOnlyError[] =
 const char
     SystemDisplayShowNativeTouchCalibrationFunction::kTouchCalibrationError[] =
         "Touch calibration failed";
+
+// The UMA histogram that logs the processing time of the API SetMirrorMode.
+constexpr char kSetMirrorModeTimeHistogram[] =
+    "SystemDisplayApi.SetMirrorModeTime";
 
 namespace {
 
@@ -355,6 +360,7 @@ SystemDisplayClearTouchCalibrationFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction SystemDisplaySetMirrorModeFunction::Run() {
+  base::Time start_time = base::Time::Now();
   std::unique_ptr<display::SetMirrorMode::Params> params(
       display::SetMirrorMode::Params::Create(*args_));
 
@@ -363,6 +369,8 @@ ExtensionFunction::ResponseAction SystemDisplaySetMirrorModeFunction::Run() {
     return RespondNow(Error(error));
   }
 
+  UMA_HISTOGRAM_TIMES(kSetMirrorModeTimeHistogram,
+                      base::Time::Now() - start_time);
   return RespondNow(NoArguments());
 }
 
