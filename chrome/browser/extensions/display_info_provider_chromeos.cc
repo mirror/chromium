@@ -385,6 +385,12 @@ bool ValidateParamsForDisplay(const system_display::DisplayProperties& info,
     }
   }
 
+  // Update the display zoom.
+  if (info.display_zoom) {
+    // Convert the percentage value to a fraction and update the zoom factor.
+    display_manager->UpdateZoomFactor(id, *info.display_zoom);
+  }
+
   // Set the display mode.
   if (info.display_mode) {
     display::ManagedDisplayMode current_mode;
@@ -735,14 +741,17 @@ void DisplayInfoProviderChromeOS::UpdateDisplayUnitInfoForPlatform(
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
   unit->name = display_manager->GetDisplayNameForId(display.id());
-  if (display_manager->IsInMirrorMode()) {
-    unit->mirroring_source_id =
-        base::Int64ToString(display_manager->mirroring_source_id());
-    unit->mirroring_destination_ids.clear();
-    for (int64_t id : display_manager->GetCurrentDisplayIdList()) {
+
+  for (int64_t id : display_manager->GetCurrentDisplayIdList()) {
+    if (display_manager->IsInMirrorMode()) {
+      unit->mirroring_source_id =
+          base::Int64ToString(display_manager->mirroring_source_id());
+      unit->mirroring_destination_ids.clear();
       if (id != display_manager->mirroring_source_id())
         unit->mirroring_destination_ids.emplace_back(base::Int64ToString(id));
     }
+
+    unit->display_zoom = display_manager->GetZoomFactorForDisplay(id);
   }
 
   const display::ManagedDisplayInfo& display_info =
