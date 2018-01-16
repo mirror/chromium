@@ -17,6 +17,7 @@
 #include "content/common/content_export.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/service_worker/service_worker_error_type.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
 
@@ -94,10 +95,6 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   void AttachForServiceWorkerClient(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
 
-  void SetInstalling(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
-  void SetWaiting(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
-  void SetActive(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
-
   // blink::WebServiceWorkerRegistration overrides.
   void SetProxy(blink::WebServiceWorkerRegistrationProxy* proxy) override;
   blink::WebServiceWorkerRegistrationProxy* Proxy() override;
@@ -130,6 +127,13 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
       base::WeakPtr<ServiceWorkerProviderContext> provider_context);
   ~WebServiceWorkerRegistrationImpl() override;
+
+  void SetInstalling(blink::mojom::ServiceWorkerObjectInfoPtr info);
+  void SetWaiting(blink::mojom::ServiceWorkerObjectInfoPtr info);
+  void SetActive(blink::mojom::ServiceWorkerObjectInfoPtr info);
+  // Takes {installing,waiting,active} service worker object info from |info_|
+  // to refresh corresponding attributes of this registration object.
+  void RefreshVersionAttributes();
 
   // Implements blink::mojom::ServiceWorkerRegistrationObject.
   void SetVersionAttributes(
