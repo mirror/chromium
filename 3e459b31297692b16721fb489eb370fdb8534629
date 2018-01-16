@@ -34,6 +34,29 @@
       "revId": "3e459b31297692b16721fb489eb370fdb8534629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a9d3b1_ef5fa5f6",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserverTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-16T01:28:21Z",
+      "side": 1,
+      "message": "nit: empty_value",
+      "range": {
+        "startLine": 68,
+        "startChar": 14,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
