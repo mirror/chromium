@@ -22,6 +22,29 @@
       "revId": "bdc5b426b7cd49b76a48c229e1ffcc185656dd50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea135f8_c933621a",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-16T23:22:02Z",
+      "side": 1,
+      "message": "Does this \"11\" mean buckets 1~10 and out-of-range?",
+      "range": {
+        "startLine": 104,
+        "startChar": 37,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "bdc5b426b7cd49b76a48c229e1ffcc185656dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
