@@ -22,6 +22,30 @@
       "revId": "035aa8b1420eb8336a3c8e15ae776d530cdb0f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa837ff3_af7e1eca",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-16T21:31:48Z",
+      "side": 1,
+      "message": "\u003e Not a great name? \n\u003e \n\u003e - OnFormSubmissionDone?\n\u003e - OnFormIsDefunct?\n\u003e - OnFormNoLongerSubmittable?\n\u003e \n\nI am fine with OnNoMoreSubmission, OnFormSubmissionDone or OnFormNoLongerSubmittable, \n\nSebastien, what do you prefer? \n\n\u003e Actually, is this always called after ResetLastInteractedElements()? Should this just be a part of that method? Or merged with that message with a new name?\n\u003e \n\u003e - OnFormContextChanged()\n\u003e - OnNewFormContext()\n\u003e - ResetFormIntereactions()\n\nNo, it is not always called after ResetLastInteractedElements(), see WILL_SEND_SUBMIT_EVENT case in OnProvisionallySaveForm().",
+      "parentUuid": "07600dac_7e684565",
+      "range": {
+        "startLine": 255,
+        "startChar": 7,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "035aa8b1420eb8336a3c8e15ae776d530cdb0f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
