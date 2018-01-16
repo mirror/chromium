@@ -269,10 +269,14 @@ RenderWidgetHostInputEventRouter::FindMouseWheelEventTarget(
     if (event.phase == blink::WebMouseWheelEvent::kPhaseBegan) {
       auto result = FindViewAtLocation(
           root_view, event.PositionInWidget(), event.PositionInScreen(),
-          viz::EventSource::MOUSE, &transformed_point);
-      return {result.view, result.should_query_view, transformed_point};
+          viz::EventSource::MOUSE, transformed_point, true);
+      // TODO(crbug.com/796656): Do not ignore |result.should_query_view|.
+      target = result.view;
+    } else if (wheel_target_.target) {
+      target = wheel_target_.target;
+      *transformed_point = event.PositionInWidget() + wheel_target_.delta;
     }
-    return {target, false, transformed_point};
+    return {result.view, result.should_query_view, transformed_point};
   }
 
   auto result = FindViewAtLocation(root_view, event.PositionInWidget(),
@@ -286,7 +290,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
     const gfx::PointF& point,
     const gfx::PointF& point_in_screen,
     viz::EventSource source,
-    gfx::PointF* transformed_point) const {
+    gfx::PointF* transformed_point,
+    bool print_details) const {
   viz::FrameSinkId frame_sink_id;
 
   bool query_renderer = false;
@@ -307,11 +312,19 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
     // TODO(kenrb): Add the short circuit to avoid hit testing when there is
     // only one RenderWidgetHostView in the map. It is absent right now to
     // make it easier to test the Viz hit testing code in development.
-    viz::Target target = query->FindTargetForLocation(source, point_in_root);
+    viz::Target target =
+        query->FindTargetForLocation(source, point_in_root, print_details);
     frame_sink_id = target.frame_sink_id;
     if (frame_sink_id.is_valid()) {
+      if (print_details) {
+        LOG(ERROR) << "FindTarget: location = " << point_in_root.ToString()
+                   << ", frame_sink_id = " << frame_sink_id.ToString();
+      }
       *transformed_point = gfx::PointF(target.location_in_target);
     } else {
+      if (print_details) {
+        LOG(ERROR) << "Failed: location = " << point_in_root.ToString();
+      }
       *transformed_point = point;
     }
   } else {

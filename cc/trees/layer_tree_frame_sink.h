@@ -34,6 +34,7 @@ struct BeginFrameAck;
 
 namespace cc {
 class LayerTreeFrameSinkClient;
+class LayerTreeHostImpl;
 
 // An interface for submitting CompositorFrames to a display compositor
 // which will compose frames from multiple clients to show on screen to the
@@ -117,6 +118,8 @@ class CC_EXPORT LayerTreeFrameSink : public viz::ContextLostObserver {
   viz::SharedBitmapManager* shared_bitmap_manager() const {
     return shared_bitmap_manager_;
   }
+
+  virtual void UpdateHitTestData(const LayerTreeHostImpl* host_impl) {}
 
   // If supported, this sets the viz::LocalSurfaceId the LayerTreeFrameSink will
   // use to submit a CompositorFrame.
