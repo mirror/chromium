@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c63ab180_eb6f6d8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-16T23:07:45Z",
+      "side": 1,
+      "message": "I think passing base::nullopt should mean I want the default deadline, but the way you wrote the code if another SurfaceLayer has a deadline lower than the default deadline we choose that instead?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4369a7de_b5087749",
+        "filename": "cc/layers/surface_layer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-16T23:07:45Z",
+      "side": 1,
+      "message": "Should this be an optional argument? (deadline_in_frames \u003d base::nullopt)",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "62a76800f08aa2c85f827a4566160fb33b73a27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
