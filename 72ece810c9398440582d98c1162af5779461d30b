@@ -16,6 +16,24 @@
       "revId": "72ece810c9398440582d98c1162af5779461d30b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0756a3d_1a657c84",
+        "filename": "tools/web_bluetooth/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2018-01-16T19:18:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "da21c2ec_be4b4451",
+      "revId": "72ece810c9398440582d98c1162af5779461d30b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
