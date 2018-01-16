@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3fcba30_705c0190",
+        "filename": "components/policy/core/browser/configuration_policy_pref_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-16T16:41:09Z",
+      "side": 1,
+      "message": "I would argue the PostTask in the first place is pretty ugly! But I do agree the constant is mysterious. Problem is this needs to wait until ResourceBundle is created and there isn\u0027t a good way to observe when that happens. I think it would be possible to do away with this code entirely, let me see if can accomplish this in a different way. I will most likely remove this change from this patchset.",
+      "parentUuid": "4d76ef18_87db20b8",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a52c815_b1f7a6bc",
         "filename": "components/policy/core/common/policy_service_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-16T02:32:29Z",
       "side": 1,
       "message": "The danger here is that this allows the |initialization_complete_[domain]| item to transition from the \"true\" value to the \"false\" value, which could not happen before.\nOr the assumption is that it\u0027s fine because no one should read/observe those \"early\" true values before all providers have been added?",
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccb3b81_a59bbace",
+        "filename": "components/policy/core/common/policy_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-16T16:41:09Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with this code to be able to answer that. Mattias suggested something like this. See my email to managed-devices titled \"Creating local state (PrefsService) early and Chrome OS\". If you aren\u0027t on that alias let me know and I will forward it your way.\n\nIf the scenario you mentioned is problematic one option is to make this code know that the full set of providers isn\u0027t there, so that initialization_complete_ isn\u0027t incorrect set to true. Let me know what you recommend.",
+      "parentUuid": "4a52c815_b1f7a6bc",
       "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
