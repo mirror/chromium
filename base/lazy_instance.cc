@@ -51,13 +51,13 @@ void CompleteLazyInstance(subtle::AtomicWord* state,
                           subtle::AtomicWord new_instance,
                           void (*destructor)(void*),
                           void* destructor_arg) {
-  // Instance is created, go from CREATING to CREATED.
-  // Releases visibility over private_buf_ to readers. Pairing Acquire_Load's
-  // are in NeedsInstance() and Pointer().
+  // Instance is created, go from CREATING to CREATED (or reset it if
+  // |new_instance| is null). Releases visibility over |private_buf_| to
+  // readers. Pairing Acquire_Load is in NeedsLazyInstance().
   subtle::Release_Store(state, new_instance);
 
   // Make sure that the lazily instantiated object will get destroyed at exit.
-  if (destructor)
+  if (new_instance && destructor)
     AtExitManager::RegisterCallback(destructor, destructor_arg);
 }
 
