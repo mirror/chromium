@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfb0f1df_2cc9325e",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-16T14:29:17Z",
+      "side": 1,
+      "message": "minor: I think a DCHECK would be ok here too (although CHECK isnt wrong).",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf251cf8_c37cf9d6",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-16T14:29:17Z",
+      "side": 1,
+      "message": "minor: move this within the \u0027if\u0027?",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0aea8b_9109ef2d",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-16T14:29:17Z",
+      "side": 1,
+      "message": "nit: I would remove \"extremely\" terminology here.\n\nMaybe something like:\n\n// Tells the delegate FrameSinkId has been changed\n// When mus is hosting viz, the delegate must react to FrameSinkId changes,\n// in order to avoid out of sync between XXX and YYY. RenderWidgetHostViewChildFrame\n// calls this method in order to create ...",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 13
+      },
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47000fda_c44215f0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-16T14:29:17Z",
+      "side": 1,
+      "message": "minor: I think a DCHECK would be ok here too (although CHECK isnt wrong).",
+      "revId": "3b174a1b1f0980510e8b0f5e698bf6bb3f127240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
