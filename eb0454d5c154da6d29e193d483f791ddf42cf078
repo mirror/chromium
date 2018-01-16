@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5099aca_e1bb11ba",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T19:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212a77ab_13ccdd8c",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 2
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63fc7242_4baa8114",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55597050_089564b5",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T19:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fc7242_4baa8114",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e14707e_4796fa60",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T19:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8ed63cd_c84d63ea",
+      "range": {
+        "startLine": 184,
+        "startChar": 13,
+        "endLine": 184,
+        "endChar": 20
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b541e42f_3e450094",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8e87b542_98545824",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T19:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b541e42f_3e450094",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c7bd0a_faa78f56",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2983c795_734e1fb8",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T19:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c7bd0a_faa78f56",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 67
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
