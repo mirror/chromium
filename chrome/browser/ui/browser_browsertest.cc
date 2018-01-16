@@ -1121,8 +1121,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_TabClosingWhenRemovingExtension) {
 }
 
 // Tests that when an extension is unloaded, if only one tab is opened
-// containing extenions related content, then the tab is kept opened and is
-// directed to the default NTP page.
+// containing extenions-related content, then the tab is kept open and is
+// directed to the default NTP.
 IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
   ASSERT_TRUE(embedded_test_server()->Start());
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
@@ -1152,7 +1152,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
   registry_observer.WaitForExtensionUnloaded();
   content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
 
-  // There should only be one tab now.
+  // There should only be one tab now, with the NTP loaded.
   ASSERT_EQ(1, tab_strip_model->count());
   EXPECT_EQ(
       chrome::kChromeUINewTabURL,
@@ -2413,7 +2413,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
       web_contents->GetContainerBounds().size();
   RenderViewSizeObserver observer(web_contents, browser()->window());
 
-  // Navigate to a non-NTP page, without resizing WebContentsView.
+  // Navigate to a non-NTP, without resizing WebContentsView.
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/title1.html"));
   ASSERT_EQ(BookmarkBar::HIDDEN, browser()->bookmark_bar_state());
@@ -2451,7 +2451,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
   EXPECT_EQ(wcv_commit_size0, web_contents->GetContainerBounds().size());
 #endif
 
-  // Navigate to another non-NTP page, without resizing WebContentsView.
+  // Navigate to another non-NTP, without resizing WebContentsView.
   ui_test_utils::NavigateToURL(browser(),
                                https_test_server.GetURL("/title2.html"));
   ASSERT_EQ(BookmarkBar::HIDDEN, browser()->bookmark_bar_state());
@@ -2467,7 +2467,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
             web_contents->GetRenderWidgetHostView()->GetViewBounds().size());
   EXPECT_EQ(wcv_commit_size1, web_contents->GetContainerBounds().size());
 
-  // Navigate from NTP to a non-NTP page, resizing WebContentsView while
+  // Navigate from NTP to a non-NTP, resizing WebContentsView while
   // navigation entry is pending.
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://newtab"));
   gfx::Size wcv_resize_insets(1, 1);

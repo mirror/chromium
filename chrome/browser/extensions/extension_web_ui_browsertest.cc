@@ -15,13 +15,12 @@
 #include "extensions/common/extension.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
-using extensions::Extension;
-
 using ExtensionWebUIBrowserTest = ExtensionBrowserTest;
+
+namespace extensions {
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest,
                        NavigateToDefaultChromePageOnExtensionUnload) {
-  ASSERT_TRUE(embedded_test_server()->Start());
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
 
   const Extension* extension =
@@ -36,12 +35,12 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest,
   ui_test_utils::NavigateToURL(browser(), extension_url);
   content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
 
-  // Check that the chrome://history/ page contains extensions content.
+  // Check that the chrome://history/ page contains the extension's content.
   std::string location;
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(
       browser()->tab_strip_model()->GetActiveWebContents(),
       "domAutomationController.send(location.href);\n", &location));
-  EXPECT_EQ(extension_id, GURL(location).host());  // Extension has control
+  EXPECT_EQ(extension_id, GURL(location).host());  // Extension has control.
 
   ASSERT_EQ(1, tab_strip_model->count());
 
@@ -59,13 +58,16 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest,
   // Check that the opened chrome://history/ page contains the default chrome
   // history page content.
   ASSERT_EQ(1, tab_strip_model->count());
+  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
   EXPECT_EQ(
       chrome::kChromeUIHistoryURL,
       tab_strip_model->GetActiveWebContents()->GetLastCommittedURL().spec());
-  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
 
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(
       tab_strip_model->GetActiveWebContents(),
       "domAutomationController.send(location.href);\n", &location));
+  // Default history page has control.
   EXPECT_EQ(chrome::kChromeUIHistoryURL, GURL(location).spec());
 }
+
+}  // namespace extensions
