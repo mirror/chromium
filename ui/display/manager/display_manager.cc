@@ -56,6 +56,14 @@ namespace {
 // in case that the offset value is too large.
 const int kMinimumOverlapForInvalidOffset = 100;
 
+// The UMA histogram that logs the types of mirror mode.
+const char kMirrorModeTypesHistogram[] = "DisplayManager.MirrorModeTypes";
+
+// The UMA histogram that logs the range in which the number of connected
+// displays in mirror mode can reside.
+const char kMirroringDisplayCountRangesHistogram[] =
+    "DisplayManager.MirroringDisplayCountRanges";
+
 struct DisplaySortFunctor {
   bool operator()(const Display& a, const Display& b) {
     return CompareDisplayIds(a.id(), b.id());
@@ -280,6 +288,36 @@ DisplayCountRange GetUnifiedDisplayCountRange(int display_count) {
 
   return DisplayCountRange::kGreaterThan8Displays;
 }
+
+// Defines the types of mirror mode in which the displays connected to the
+// device are in as reported by UMA.
+//
+// WARNING: These values are persisted to logs. Entries should not be renumbered
+//          and numeric values should never be reused.
+enum class MirrorModeTypes {
+  // Normal mirror mode.
+  kNormal = 0,
+  // Mixed mirror mode.
+  kMixed = 1,
+
+  // Always keep this the last item.
+  kCount,
+};
+
+// Defines the ranges in which the number of displays in mirror mode can reside
+// as reported by UMA.
+//
+// WARNING: These values are persisted to logs. Entries should not be renumbered
+//          and numeric values should never be reused.
+enum class MirroringDisplayCountRanges {
+  // Exactly 2 displays.
+  k2Displays = 0,
+  // Greater than 2 displays.
+  kGreaterThan2Displays = 1,
+
+  // Always keep this the last item.
+  kCount,
+};
 
 }  // namespace
 
@@ -1660,6 +1698,18 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
       }
 
       mirroring_source_id_ = source_id;
+
+      UMA_HISTOGRAM_ENUMERATION(
+          kMirroringDisplayCountRangesHistogram,
+          software_mirroring_display_list_.size() > 1
+              ? MirroringDisplayCountRanges::k2Displays
+              : MirroringDisplayCountRanges::kGreaterThan2Displays,
+          MirroringDisplayCountRanges::kCount);
+      UMA_HISTOGRAM_ENUMERATION(kMirrorModeTypesHistogram,
+                                mixed_mirror_mode_params_
+                                    ? MirrorModeTypes::kMixed
+                                    : MirrorModeTypes::kNormal,
+                                MirrorModeTypes::kCount);
       break;
     }
     case UNIFIED:
