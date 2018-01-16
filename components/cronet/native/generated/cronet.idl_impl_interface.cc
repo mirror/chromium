@@ -287,11 +287,11 @@ void Cronet_Engine_StartWithParams(Cronet_EnginePtr self,
   self->StartWithParams(params);
 }
 
-void Cronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
+bool Cronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
                                      CharString fileName,
                                      bool logAll) {
   DCHECK(self);
-  self->StartNetLogToFile(fileName, logAll);
+  return self->StartNetLogToFile(fileName, logAll);
 }
 
 void Cronet_Engine_StopNetLog(Cronet_EnginePtr self) {
@@ -299,14 +299,20 @@ void Cronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   self->StopNetLog();
 }
 
+void Cronet_Engine_Shutdown(Cronet_EnginePtr self) {
+  DCHECK(self);
+  self->Shutdown();
+}
+
 CharString Cronet_Engine_GetVersionString(Cronet_EnginePtr self) {
   DCHECK(self);
   return self->GetVersionString();
 }
 
-CharString Cronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self) {
+CharString Cronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self,
+                                             CharString partialUserAgent) {
   DCHECK(self);
-  return self->GetDefaultUserAgent();
+  return self->GetDefaultUserAgent(partialUserAgent);
 }
 
 // Implementation of Cronet_Engine that forwards calls to C functions
@@ -317,11 +323,13 @@ class Cronet_EngineStub : public Cronet_Engine {
       Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
       Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
       Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+      Cronet_Engine_ShutdownFunc ShutdownFunc,
       Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
       Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc)
       : StartWithParamsFunc_(StartWithParamsFunc),
         StartNetLogToFileFunc_(StartNetLogToFileFunc),
         StopNetLogFunc_(StopNetLogFunc),
+        ShutdownFunc_(ShutdownFunc),
         GetVersionStringFunc_(GetVersionStringFunc),
         GetDefaultUserAgentFunc_(GetDefaultUserAgentFunc) {}
 
@@ -336,16 +344,18 @@ class Cronet_EngineStub : public Cronet_Engine {
     StartWithParamsFunc_(this, params);
   }
 
-  void StartNetLogToFile(CharString fileName, bool logAll) override {
-    StartNetLogToFileFunc_(this, fileName, logAll);
+  bool StartNetLogToFile(CharString fileName, bool logAll) override {
+    return StartNetLogToFileFunc_(this, fileName, logAll);
   }
 
   void StopNetLog() override { StopNetLogFunc_(this); }
 
+  void Shutdown() override { ShutdownFunc_(this); }
+
   CharString GetVersionString() override { return GetVersionStringFunc_(this); }
 
-  CharString GetDefaultUserAgent() override {
-    return GetDefaultUserAgentFunc_(this);
+  CharString GetDefaultUserAgent(CharString partialUserAgent) override {
+    return GetDefaultUserAgentFunc_(this, partialUserAgent);
   }
 
  private:
@@ -353,6 +363,7 @@ class Cronet_EngineStub : public Cronet_Engine {
   const Cronet_Engine_StartWithParamsFunc StartWithParamsFunc_;
   const Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc_;
   const Cronet_Engine_StopNetLogFunc StopNetLogFunc_;
+  const Cronet_Engine_ShutdownFunc ShutdownFunc_;
   const Cronet_Engine_GetVersionStringFunc GetVersionStringFunc_;
   const Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc_;
 
@@ -363,11 +374,12 @@ Cronet_EnginePtr Cronet_Engine_CreateStub(
     Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
     Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
     Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+    Cronet_Engine_ShutdownFunc ShutdownFunc,
     Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
     Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc) {
   return new Cronet_EngineStub(StartWithParamsFunc, StartNetLogToFileFunc,
-                               StopNetLogFunc, GetVersionStringFunc,
-                               GetDefaultUserAgentFunc);
+                               StopNetLogFunc, ShutdownFunc,
+                               GetVersionStringFunc, GetDefaultUserAgentFunc);
 }
 
 // C functions of Cronet_UrlRequestStatusListener that forward calls to C++

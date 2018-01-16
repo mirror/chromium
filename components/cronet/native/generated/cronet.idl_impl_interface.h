@@ -78,10 +78,11 @@ struct Cronet_Engine {
   virtual Cronet_EngineContext GetContext() = 0;
 
   virtual void StartWithParams(Cronet_EngineParamsPtr params) = 0;
-  virtual void StartNetLogToFile(CharString fileName, bool logAll) = 0;
+  virtual bool StartNetLogToFile(CharString fileName, bool logAll) = 0;
   virtual void StopNetLog() = 0;
+  virtual void Shutdown() = 0;
   virtual CharString GetVersionString() = 0;
-  virtual CharString GetDefaultUserAgent() = 0;
+  virtual CharString GetDefaultUserAgent(CharString partialUserAgent) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_Engine);
