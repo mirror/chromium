@@ -312,6 +312,7 @@ class QuicStreamFactory::Job {
       HostResolver* host_resolver,
       const QuicSessionKey& key,
       bool was_alternative_service_recently_broken,
+      bool use_stale_dns,
       RequestPriority priority,
       int cert_verify_flags,
       const NetLogWithSource& net_log);
@@ -383,12 +384,14 @@ class QuicStreamFactory::Job {
   const RequestPriority priority_;
   const int cert_verify_flags_;
   const bool was_alternative_service_recently_broken_;
+  const bool use_stale_dns_;
   const NetLogWithSource net_log_;
   int num_sent_client_hellos_;
   QuicChromiumClientSession* session_;
   CompletionCallback host_resolution_callback_;
   CompletionCallback callback_;
   AddressList address_list_;
+  AddressList unconfirmed_address_list_;
   base::TimeTicks dns_resolution_start_time_;
   base::TimeTicks dns_resolution_end_time_;
   std::set<QuicStreamRequest*> stream_requests_;
@@ -402,6 +405,7 @@ QuicStreamFactory::Job::Job(QuicStreamFactory* factory,
                             HostResolver* host_resolver,
                             const QuicSessionKey& key,
                             bool was_alternative_service_recently_broken,
+                            bool use_stale_dns,
                             RequestPriority priority,
                             int cert_verify_flags,
                             const NetLogWithSource& net_log)
@@ -414,6 +418,7 @@ QuicStreamFactory::Job::Job(QuicStreamFactory* factory,
       cert_verify_flags_(cert_verify_flags),
       was_alternative_service_recently_broken_(
           was_alternative_service_recently_broken),
+      use_stale_dns_(use_stale_dns),
       net_log_(
           NetLogWithSource::Make(net_log.net_log(),
                                  NetLogSourceType::QUIC_STREAM_FACTORY_JOB)),
@@ -517,10 +522,21 @@ int QuicStreamFactory::Job::DoResolveHost() {
   dns_resolution_start_time_ = base::TimeTicks::Now();
 
   io_state_ = STATE_RESOLVE_HOST_COMPLETE;
-  return host_resolver_->Resolve(
+  int rv = host_resolver_->Resolve(
       HostResolver::RequestInfo(key_.destination()), priority_, &address_list_,
       base::Bind(&QuicStreamFactory::Job::OnResolveHostComplete, GetWeakPtr()),
       &request_, net_log_);
+
+  if (!use_stale_dns_ || rv != ERR_IO_PENDING)
+    return rv;
+
+  HostCache::EntryStaleness stale_info;
+  int cache_rv = host_resolver_->ResolveStaleFromCache(
+      HostResolver::RequestInfo(key_.destination()), &unconfirmed_address_list_,
+      &stale_info, net_log_);
+  if (cache_rv == ERR_DNS_CACHE_MISS)
+    return rv;
+  return cache_rv;
 }
 
 int QuicStreamFactory::Job::DoResolveHostComplete(int rv) {
@@ -740,7 +756,8 @@ QuicStreamFactory::QuicStreamFactory(
     bool headers_include_h2_stream_dependency,
     const QuicTagVector& connection_options,
     const QuicTagVector& client_connection_options,
-    bool enable_token_binding)
+    bool enable_token_binding,
+    bool use_stale_dns)
     : require_confirmation_(true),
       net_log_(net_log),
       host_resolver_(host_resolver),
@@ -801,6 +818,7 @@ QuicStreamFactory::QuicStreamFactory(
       headers_include_h2_stream_dependency_(
           headers_include_h2_stream_dependency),
       need_to_check_persisted_supports_quic_(true),
+      use_stale_dns_(use_stale_dns),
       num_push_streams_created_(0),
       task_runner_(nullptr),
       ssl_config_service_(ssl_config_service),
@@ -1033,7 +1051,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
   QuicSessionKey key(destination, server_id);
   std::unique_ptr<Job> job = std::make_unique<Job>(
       this, quic_version, host_resolver_, key, WasQuicRecentlyBroken(server_id),
-      priority, cert_verify_flags, net_log);
+      use_stale_dns_, priority, cert_verify_flags, net_log);
   int rv = job->Run(
       base::BindRepeating(&QuicStreamFactory::OnJobHostResolutionComplete,
                           base::Unretained(this), job.get()),
@@ -1494,7 +1512,6 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
         socket_performance_watcher_factory_->CreateSocketPerformanceWatcher(
             SocketPerformanceWatcherFactory::PROTOCOL_QUIC, address_list);
   }
-
   // Wait for handshake confirmation before allowing streams to be created if
   // either this session or the factory require confirmation.
   if (require_confirmation_)
