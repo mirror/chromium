@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6861dbd4_57234725",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-16T13:10:49Z",
+      "side": 1,
+      "message": "Should this architecture setting be done earlier, eg in Generate() or even __ini__? For example, symbol extraction happens in _GenerateAndProcessProfile via GetReachedSymbolsFromDumps. It doesn\u0027t seem to be a problem in practice, but keeping things consistent seems like a good idea.",
+      "range": {
+        "startLine": 582,
+        "startChar": 21,
+        "endLine": 582,
+        "endChar": 36
+      },
+      "revId": "91cd4db7f0bba452bf340aa476cfa086d251a3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35974fd4_4372ce30",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-16T13:10:49Z",
+      "side": 1,
+      "message": ":) I was starting to assemble a list myself of places where we could easily move from running subprocesses to just call methods. Thanks!",
+      "range": {
+        "startLine": 583,
+        "startChar": 4,
+        "endLine": 583,
+        "endChar": 19
+      },
+      "revId": "91cd4db7f0bba452bf340aa476cfa086d251a3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d307c18_42dae7e3",
+        "filename": "tools/cygprofile/patch_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-16T13:10:49Z",
+      "side": 1,
+      "message": "put -\u003e puts",
+      "range": {
+        "startLine": 30,
+        "startChar": 63,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "91cd4db7f0bba452bf340aa476cfa086d251a3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120379b0_9200dc34",
+        "filename": "tools/cygprofile/patch_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-16T13:10:49Z",
+      "side": 1,
+      "message": "This sounds a little scarier than it actually is--should probably say the assert will fire only if the experimental ResidencyDumping is used.\n\n\u003caside\u003e\nI guess this also means we need to figure out how to patch lld, or if we really need an end-of-text anchor? Since our long-term plan, IIUC, is to only prefetch the commonly-used part of the binary, as long as we\u0027re happy with roughly over-estimating the total binary size for instrumentation we don\u0027t really need the end? Unless your rodata work needs it.\n\u003c/aside\u003e",
+      "revId": "91cd4db7f0bba452bf340aa476cfa086d251a3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
