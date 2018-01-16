@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ac9e65_2a918348",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/xhr/xmlhttprequest-sync-default-feature-policy.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-16T21:48:01Z",
+      "side": 1,
+      "message": "Optional nit: If this were not a promise_test it would be natural and more clear to assert that xhr.send() specifically is what throws NetworkError, and nothing else. Is there some (simple) way of restructuring this test to do that? (I had some doubt when looking at the test whether it would catch the bug of open() throwing instead.)",
+      "revId": "b4461fee62e2bc76dd314640f126cdcb1e2f2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
