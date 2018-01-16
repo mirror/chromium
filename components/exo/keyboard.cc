@@ -134,6 +134,11 @@ bool IsReservedAccelerator(const ui::KeyEvent* event) {
   return false;
 }
 
+// Returns false if an accelerator is not reserved or it's not enabled.
+bool ProcessAcceleratorIfReserved(Surface* surface, ui::KeyEvent* event) {
+  return IsReservedAccelerator(event) && ProcessAccelerator(surface, event);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -211,6 +216,21 @@ void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
 // ui::EventHandler overrides:
 
 void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
+  // Process reserved accelerators before sending it to client.
+  if (focus_ && ProcessAcceleratorIfReserved(focus_, event)) {
+    if (event->type() == ui::ET_KEY_PRESSED) {
+      // Discard a key press event if it's a reserved accelerator and it's
+      // enabled.
+      event->SetHandled();
+      // Generate keyboard leave/enter event to keep consistency of pressed keys
+      // set in client.
+      // This code relies on pressed keys to be already updated by
+      // |Seat::OnKeyEvent()|.
+      delegate_->OnKeyboardLeave(focus_);
+      delegate_->OnKeyboardEnter(focus_, seat_->pressed_keys());
+    }
+  }
+
   int modifier_flags = event->flags() & kModifierMask;
   if (modifier_flags != modifier_flags_) {
     modifier_flags_ = modifier_flags;
@@ -225,7 +245,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
 
   switch (event->type()) {
     case ui::ET_KEY_PRESSED:
-      if (focus_ && !consumed_by_ime && !IsReservedAccelerator(event)) {
+      if (focus_ && !consumed_by_ime && !event->handled()) {
         uint32_t serial =
             delegate_->OnKeyboardKey(event->time_stamp(), event->code(), true);
         if (are_keyboard_key_acks_needed_) {
@@ -238,7 +258,7 @@ void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
       }
       break;
     case ui::ET_KEY_RELEASED:
-      if (focus_ && !consumed_by_ime && !IsReservedAccelerator(event)) {
+      if (focus_ && !consumed_by_ime && !event->handled()) {
         uint32_t serial =
             delegate_->OnKeyboardKey(event->time_stamp(), event->code(), false);
         if (are_keyboard_key_acks_needed_) {
