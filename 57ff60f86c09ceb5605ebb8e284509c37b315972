@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e746dc7_6b5039c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-16T14:05:36Z",
+      "side": 1,
+      "message": "s/Proxy//",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6117e4_2dd5a8aa",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-16T14:05:36Z",
+      "side": 1,
+      "message": "Why DETACH? Is DialAppDiscoveryService now created on a different thread?",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558cb78a_5152f2d1",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-16T14:05:36Z",
+      "side": 1,
+      "message": "Seems it is only used once below. I would just get rid of it.",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e42853_c0d02d0b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-16T14:05:36Z",
+      "side": 1,
+      "message": "I think this is something that can go into media_sink_service_util.h. The cast sink query prototype I am working on also uses this.",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
