@@ -57,6 +57,7 @@
 #include "components/toolbar/toolbar_model_impl.h"
 #include "ios/chrome/app/tests_hook.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "ios/chrome/browser/broadercaster.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
@@ -392,6 +393,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
     _behaviour = behaviour;
     _heightAdjustement = heightAdjustment;
     _inset = inset;
+    @broadcastify(self);
   }
   return self;
 }
