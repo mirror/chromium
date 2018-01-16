@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f646404_b13392de",
+        "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "Android should automatically convert TextView to AppCompatTextView for inflated XML. From the AppCompatTextView - \"This will automatically be used when you use TextView in your layouts and the top-level activity / dialog is provided by appcompat. You should only need to manually use this class when writing custom views.\"\n\nhttps://developer.android.com/reference/android/support/v7/widget/AppCompatTextView.html",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfba4aaf_1309da41",
+        "filename": "chrome/android/java/res/xml/download_preferences.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "This include is for chrome: pre-fixed attributes. I don\u0027t believe you need it for this file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fadab30_6e0ddf0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "I believe we have Chrome versions of these as well. I\u0027d recommend using the Chrome versions, but it looks like the Android and Chrome strings are used a bit inconsistently in our UI.",
+      "range": {
+        "startLine": 49,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf6c32e_f4deb40f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "You can get the LayoutInflater from the Context passed in via LayoutInflater.from(context).",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 91
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cc53e1_4c9fe468",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "We usually call classes that communicate between native and Java \"Bridge.java\", e.g. this would be DownloadLocationDialogBridge",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1bcb95_2bcaf3a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T23:44:13Z",
+      "side": 1,
+      "message": "Can these use nativeGetBoolean and nativeSetBoolean?",
+      "range": {
+        "startLine": 1057,
+        "startChar": 2,
+        "endLine": 1069,
+        "endChar": 5
+      },
+      "revId": "9d8f162566c04aed70c18d6d10ccfa1b9da1c873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
