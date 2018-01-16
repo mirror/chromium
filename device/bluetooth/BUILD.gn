@@ -155,6 +155,8 @@ component("bluetooth") {
     "bluetooth_low_energy_peripheral_delegate.mm",
     "bluetooth_low_energy_win.cc",
     "bluetooth_low_energy_win.h",
+    "bluetooth_preferences_mac.h",
+    "bluetooth_preferences_mac.mm",
     "bluetooth_remote_gatt_characteristic.cc",
     "bluetooth_remote_gatt_characteristic.h",
     "bluetooth_remote_gatt_characteristic_android.cc",

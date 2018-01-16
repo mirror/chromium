@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/test/bind_test_util.h"
 #include "build/build_config.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "device/bluetooth/bluetooth_device.h"
@@ -685,7 +686,8 @@ TEST_F(BluetoothTest, DiscoverMultipleLowEnergyDevices) {
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
-#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_LINUX) || \
+    defined(OS_CHROMEOS)
 TEST_F(BluetoothTest, TogglePowerFakeAdapter) {
   InitWithFakeAdapter();
   TestBluetoothAdapterObserver observer(adapter_);
@@ -697,16 +699,114 @@ TEST_F(BluetoothTest, TogglePowerFakeAdapter) {
   // Check if power can be turned off.
   adapter_->SetPowered(false, GetCallback(Call::EXPECTED),
                        GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
   EXPECT_FALSE(adapter_->IsPowered());
   EXPECT_EQ(1, observer.powered_changed_count());
 
   // Check if power can be turned on again.
   adapter_->SetPowered(true, GetCallback(Call::EXPECTED),
                        GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
   EXPECT_TRUE(adapter_->IsPowered());
   EXPECT_EQ(2, observer.powered_changed_count());
 }
-#endif  // defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) ||defined(OS_LINUX) ||
+        // defined(OS_CHROMEOS)
+
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_LINUX) || \
+    defined(OS_CHROMEOS)
+TEST_F(BluetoothTest, TogglePowerFakeAdapter_Twice) {
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  ASSERT_TRUE(adapter_->IsPresent());
+  ASSERT_TRUE(adapter_->IsPowered());
+  EXPECT_EQ(0, observer.powered_changed_count());
+
+  // Post two pending turn off requests.
+  adapter_->SetPowered(false, GetCallback(Call::EXPECTED),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  adapter_->SetPowered(false, GetCallback(Call::EXPECTED),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
+  EXPECT_FALSE(adapter_->IsPowered());
+  EXPECT_EQ(1, observer.powered_changed_count());
+
+  // Post two pending turn on requests.
+  adapter_->SetPowered(true, GetCallback(Call::EXPECTED),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  adapter_->SetPowered(true, GetCallback(Call::EXPECTED),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
+  EXPECT_TRUE(adapter_->IsPowered());
+  EXPECT_EQ(2, observer.powered_changed_count());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) ||defined(OS_LINUX) ||
+        // defined(OS_CHROMEOS)
+
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_LINUX) || \
+    defined(OS_CHROMEOS)
+TEST_F(BluetoothTest, TogglePowerFakeAdapter_WithinCallback) {
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  ASSERT_TRUE(adapter_->IsPresent());
+  ASSERT_TRUE(adapter_->IsPowered());
+  EXPECT_EQ(0, observer.powered_changed_count());
+
+  // Turn adapter off, while powering it on in the callback.
+  adapter_->SetPowered(false, base::BindLambdaForTesting([&] {
+                         adapter_->SetPowered(
+                             true, GetCallback(Call::EXPECTED),
+                             GetErrorCallback(Call::NOT_EXPECTED));
+                       }),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
+  EXPECT_TRUE(adapter_->IsPowered());
+  EXPECT_EQ(2, observer.powered_changed_count());
+
+  // Turn power off.
+  adapter_->SetPowered(false, GetCallback(Call::EXPECTED),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
+  EXPECT_FALSE(adapter_->IsPowered());
+  EXPECT_EQ(3, observer.powered_changed_count());
+
+  // Turn adapter on, while powering it off in the callback.
+  adapter_->SetPowered(true, base::BindLambdaForTesting([&] {
+                         adapter_->SetPowered(
+                             false, GetCallback(Call::EXPECTED),
+                             GetErrorCallback(Call::NOT_EXPECTED));
+                       }),
+                       GetErrorCallback(Call::NOT_EXPECTED));
+  scoped_task_environment_.RunUntilIdle();
+  EXPECT_FALSE(adapter_->IsPowered());
+  EXPECT_EQ(5, observer.powered_changed_count());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) ||defined(OS_LINUX) ||
+        // defined(OS_CHROMEOS)
+
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_LINUX) || \
+    defined(OS_CHROMEOS)
+TEST_F(BluetoothTest, TogglePowerFakeAdapter_DestroyWithPending) {
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  ASSERT_TRUE(adapter_->IsPresent());
+  ASSERT_TRUE(adapter_->IsPowered());
+  EXPECT_EQ(0, observer.powered_changed_count());
+
+  // Schedule pending power off requests and destroy the adapter.
+  adapter_->SetPowered(false, GetCallback(Call::NOT_EXPECTED),
+                       GetErrorCallback(Call::EXPECTED));
+  adapter_->SetPowered(false, GetCallback(Call::NOT_EXPECTED),
+                       GetErrorCallback(Call::EXPECTED));
+  adapter_ = nullptr;
+
+  EXPECT_EQ(0, observer.powered_changed_count());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) ||defined(OS_LINUX) ||
+        // defined(OS_CHROMEOS)
 
 #if defined(OS_ANDROID)
 TEST_F(BluetoothTest, TogglePowerBeforeScan) {

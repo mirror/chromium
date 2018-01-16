@@ -20,6 +20,7 @@
 #import "device/bluetooth/bluetooth_low_energy_device_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_cbperipheral_mac.h"
 #import "device/bluetooth/test/mock_bluetooth_central_manager_mac.h"
+#include "device/bluetooth/test/mock_bluetooth_preferences_mac.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
