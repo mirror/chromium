@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46ecc6cb_5c1d2ace",
+        "filename": "base/guid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T18:54:56Z",
+      "side": 1,
+      "message": "nit: Why divide here, as opposed to where the breaks are in the GUID format? i.e.\n\n  sixteen_bytes[0] \u0026\u003d 0xffffffff\u0027ffff\u00270fffULL;\n  sixteen_bytes[0] |\u003d 0x00000000\u00270000\u00274000ULL;\n\n  sixteen_bytes[1] \u0026\u003d 0x3fff\u0027ffffffffffffULL;\n  sixteen_bytes[1] |\u003d 0x8000\u0027000000000000ULL;",
+      "revId": "3c970145a1d56b002b586ecf4f203994e8e2963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
