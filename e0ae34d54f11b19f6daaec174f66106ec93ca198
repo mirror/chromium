@@ -188,6 +188,30 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e51d782_d647af3f",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-16T17:26:26Z",
+      "side": 1,
+      "message": "Actually I was barking at the wrong tree here, because\nof [1]. After offline conversation it seems like alpha\nis used and needed and we should change the BGRX_1010102\nto be BGRA_1010102 (which is also supported in CrOs, the\nother impl). Will prepare a CL.\n\n\n[1] https://cs.chromium.org/chromium/src/ui/gl/test/gl_image_test_support.cc?type\u003dcs\u0026q\u003d%22//+Alpha+channel+is+unused%22\u0026sq\u003dpackage:chromium\u0026l\u003d123",
+      "parentUuid": "9668f9e8_4acf1aa3",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
