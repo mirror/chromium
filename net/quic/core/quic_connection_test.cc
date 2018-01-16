@@ -5287,15 +5287,6 @@ TEST_P(QuicConnectionTest, BlockedFrameInstigateAcks) {
   EXPECT_TRUE(ack_alarm->IsSet());
 }
 
-TEST_P(QuicConnectionTest, DoNotSendGoAwayTwice) {
-  EXPECT_FALSE(connection_.goaway_sent());
-  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(1);
-  connection_.SendGoAway(QUIC_PEER_GOING_AWAY, kHeadersStreamId, "Going Away.");
-  EXPECT_TRUE(connection_.goaway_sent());
-  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(0);
-  connection_.SendGoAway(QUIC_PEER_GOING_AWAY, kHeadersStreamId, "Going Away.");
-}
-
 TEST_P(QuicConnectionTest, ReevaluateTimeUntilSendOnAck) {
   // Enable pacing.
   EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));

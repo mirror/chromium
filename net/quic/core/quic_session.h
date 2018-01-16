@@ -240,9 +240,9 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // connection, or in a write-blocked stream.
   bool HasDataToWrite() const;
 
-  bool goaway_sent() const;
+  bool goaway_sent() const { return goaway_sent_; }
 
-  bool goaway_received() const;
+  bool goaway_received() const { return goaway_received_; }
 
   QuicErrorCode error() const { return error_; }
 
@@ -501,6 +501,12 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // The stream id which was last popped in OnCanWrite, or 0, if not under the
   // call stack of OnCanWrite.
   QuicStreamId currently_writing_stream_id_;
+
+  // Whether a GoAway has been sent.
+  bool goaway_sent_;
+
+  // Whether a GoAway has been received.
+  bool goaway_received_;
 
   // QUIC stream can take ownership of application data provided in reference
   // counted memory to avoid data copy.
