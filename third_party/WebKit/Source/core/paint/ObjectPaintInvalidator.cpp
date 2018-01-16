@@ -650,8 +650,7 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
   }
 
   context_.painting_layer->SetNeedsRepaint();
-  // TODO(yoichio) Use InvalidateDisplayItemClients(object_, reason);
-  object_.InvalidateDisplayItemClients(reason);
+  InvalidateDisplayItemClients(object_, reason);
   return reason;
 }
 
