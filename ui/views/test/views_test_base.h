@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/at_exit.h"
 #include "base/macros.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
@@ -63,6 +64,7 @@ class ViewsTestBase : public PlatformTest {
   gfx::NativeWindow GetContext();
 
  private:
+  base::ShadowingAtExitManager at_exit_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<TestViewsDelegate> views_delegate_for_setup_;
   std::unique_ptr<ScopedViewsTestHelper> test_helper_;
