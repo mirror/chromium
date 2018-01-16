@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06eeab71_861f3464",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-16T08:31:13Z",
+      "side": 1,
+      "message": "initalize the struct to all zeros?\n(WAVEFORMATEX new_format \u003d {};)\n\nThen explicitly setting properties such as cbSize to 0 (and other potentially unset members), isn\u0027t necessary.",
+      "range": {
+        "startLine": 651,
+        "startChar": 17,
+        "endLine": 651,
+        "endChar": 27
+      },
+      "revId": "df29180f72ffacbf4a0cb8aabb83a92ff1721f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42929ea_2bd15e6d",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-16T08:31:13Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "df29180f72ffacbf4a0cb8aabb83a92ff1721f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
