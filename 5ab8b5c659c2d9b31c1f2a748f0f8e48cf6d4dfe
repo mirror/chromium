@@ -16,6 +16,29 @@
       "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e32ed2e_469cfaec",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/thread_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-16T07:25:19Z",
+      "side": 1,
+      "message": "kUnspecifiedWorkerThread?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
