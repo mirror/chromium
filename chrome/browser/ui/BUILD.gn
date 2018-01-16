@@ -3182,6 +3182,15 @@ split_static_library("ui") {
         ]
       }
 
+      if (enable_dice_support) {
+        sources += [
+          "views/sync/dice_bubble_sync_promo_view.cc",
+          "views/sync/dice_bubble_sync_promo_view.h",
+          "views/sync/dice_signin_button.cc",
+          "views/sync/dice_signin_button.h",
+        ]
+      }
+
       if (use_aura) {
         deps += [
           "//services/ui/public/cpp",
