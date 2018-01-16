@@ -2262,11 +2262,12 @@ LayoutRect LayoutText::DebugRect() const {
   if (const NGPhysicalBoxFragment* box_fragment =
           EnclosingBlockFlowFragment()) {
     NGPhysicalOffsetRect bounding_box;
-    for (const auto& child :
-         NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this)) {
+    const auto fragments =
+        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
+    if (fragments.size()) {
+      const auto& child = fragments[0];
       first_run_offset = {child.offset_to_container_box.left.ToFloat(),
                           child.offset_to_container_box.top.ToFloat()};
-      break;
     }
   } else {
     first_run_offset = {FirstRunX(), FirstRunY()};
