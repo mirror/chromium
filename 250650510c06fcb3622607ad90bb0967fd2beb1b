@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1c7678a_8bf141cc",
+        "filename": "components/language/content/browser/convert_s2_cell.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T01:27:08Z",
+      "side": 1,
+      "message": "nit: say why (to save binary size)",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642fa31d_aa9e2bf4",
+        "filename": "components/language/content/browser/language_code_locator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T01:27:08Z",
+      "side": 1,
+      "message": "nit: flat_map is a sorted list, so inserting one-by-one is O(n^2). However, it exposes an O(nlogn) constructor, which takes a vector and then sorts it. This seems like an appropriate place to do that\n\nhttps://cs.chromium.org/chromium/src/base/containers/flat_map.h?rcl\u003d1b803e9b20dd2e7a2ceec4be7e9ab49cd1978c8d\u0026l\u003d52\n\nE.g.:\nstd::vector\u003cstd::pair\u003cuint32_t, char\u003e\u003e items(cell_ids.size());\nfor ()\n  for ()\n    items[pos] \u003d std::make_pair(...)\n\ndistrict_languages_ \u003d base::flat_map\u003cuint32, char\u003e(items);",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8d4852_d216133b",
+        "filename": "components/language/content/browser/template/language_code_locator_helper.cc.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T01:27:08Z",
+      "side": 1,
+      "message": "One last guess as to what\u0027s still taking up space (and this should give better performance as well): Rather than use vectors, which require generating somre runtime logic, use arrays.\n\nIt may also be more convenient to #include this .cc file directly into language_code_locator.cc rather than have it as a separate translation unit so that you can use arraysize(kDistricts) to get the length, and use an anonymous namespace rather than an internal one.\n\nnamespace {\nconst uint32_t kDistrictPositions[] \u003d { ... };\nconst uint16_t kLanguageCodeCounts[] \u003d { ... };\nconst char* const kLanguageEnumCodeMapping[] \u003d { ... };\n}",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
