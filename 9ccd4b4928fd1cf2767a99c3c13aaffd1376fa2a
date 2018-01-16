@@ -16,6 +16,24 @@
       "revId": "9ccd4b4928fd1cf2767a99c3c13aaffd1376fa2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0111f900_41189602",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-16T21:00:11Z",
+      "side": 1,
+      "message": "Please refer to the reply to the previous comment.",
+      "parentUuid": "7a33e2bb_989f0e45",
+      "revId": "9ccd4b4928fd1cf2767a99c3c13aaffd1376fa2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

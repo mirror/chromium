@@ -16,6 +16,24 @@
       "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0c4784_0a660485",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-16T21:00:11Z",
+      "side": 0,
+      "message": "When I tried to open the lid very quickly, the angle readings directly jump into stable zone (e.g.open lid-\u003e100.1-\u003e102.5). Also when I rotate the lid very quickly, there\u0027s no angle readings in the middle. (e.g. the angle readings directly jumps from 160 to 60).\n\nThe angle readings look like \"120-\u003e30-\u003e17-\u003e2-\u003e358\" when closing the lid at the normal speed. While the readings look like \"120-\u003e358\" when closing the lid very quickly. The latter could also be interpreted as rotating the lid to fully opened very quickly. In this case, I think it is difficult to check erroneous reading based on recent rate of change in readings.\n\nAnother solution would be set a small range (e.g. [355,360]) as the delay zone. The tablet mode will be triggered if the readings continuously fall into the zone more than 1 or 2 seconds. I tested several times and found that the readings only stay in [355,360] for less than 1 seconds before \u0027close\u0027 event is received no matter I close the lid quickly or slowly. Also, this solution does not add delay for other unstable angles. How do you think about this solution?",
+      "parentUuid": "98d96183_933e7409",
+      "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
