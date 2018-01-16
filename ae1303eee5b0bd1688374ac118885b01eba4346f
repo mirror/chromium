@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0e031d_d69cda0b",
+        "filename": "chrome/browser/ui/ash/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-16T23:16:12Z",
+      "side": 1,
+      "message": "notification-\u003eaccent_color()",
+      "range": {
+        "startLine": 135,
+        "startChar": 35,
+        "endLine": 135,
+        "endChar": 54
+      },
+      "revId": "ae1303eee5b0bd1688374ac118885b01eba4346f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6593e281_97f35e8b",
+        "filename": "chrome/browser/ui/ash/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-16T23:16:12Z",
+      "side": 1,
+      "message": "and then remove this line",
+      "range": {
+        "startLine": 137,
+        "startChar": 1,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "ae1303eee5b0bd1688374ac118885b01eba4346f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
