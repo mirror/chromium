@@ -22,6 +22,30 @@
       "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d976e3_0d238cef",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-16T08:33:11Z",
+      "side": 1,
+      "message": "yes. HomedirMethods never logged, but it was added in https://chromium-review.googlesource.com/c/chromium/src/+/823583 from some comments during review.\n\nI could remove the logging now? I\u0027m not sure what value it adds.\n\nAlternatively we could take the command name out of the log statement but it still seems to be low-value to me.",
+      "parentUuid": "910c4d0b_d21c91a8",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 72
+      },
+      "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
