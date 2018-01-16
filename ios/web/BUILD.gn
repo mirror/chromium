@@ -446,6 +446,7 @@ source_set("ios_web_web_state_js_unittests") {
     "web_state/js/crw_js_post_request_loader_unittest.mm",
     "web_state/js/crw_js_window_id_manager_unittest.mm",
     "web_state/js/page_script_util_unittest.mm",
+    "web_state/js/plugin_placeholder_js_unittest.mm",
   ]
 }
 
@@ -609,6 +610,16 @@ js_compile_bundle("all_frames_web_bundle") {
   ]
 }
 
+js_compile_bundle("all_frames_late_web_bundle") {
+  visibility = [ ":js_resources" ]
+  closure_entry_point = "__crWeb.allFramesLateWebBundle"
+
+  sources = [
+    "web_state/js/resources/all_frames_late_web_bundle.js",
+    "web_state/js/resources/plugin_placeholder.js",
+  ]
+}
+
 js_compile_bundle("nav_bundle") {
   visibility = [ ":js_resources" ]
   closure_entry_point = "__crWeb.legacynavigation"
@@ -620,6 +631,7 @@ js_compile_bundle("nav_bundle") {
 
 js_compile_checked("js_resources") {
   public_deps = [
+    ":all_frames_late_web_bundle",
     ":all_frames_web_bundle",
     ":main_frame_web_bundle",
     ":nav_bundle",
@@ -627,7 +639,6 @@ js_compile_checked("js_resources") {
   ]
 
   sources = [
-    "web_state/js/resources/plugin_placeholder.js",
     "web_state/js/resources/post_request.js",
     "web_state/js/resources/window_id.js",
   ]
