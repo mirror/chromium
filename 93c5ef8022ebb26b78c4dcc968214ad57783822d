@@ -87,6 +87,24 @@
       "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfb9e4e_b66c06de",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-16T18:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d0cd399_df0e758b",
+      "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
