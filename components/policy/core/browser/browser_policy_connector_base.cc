@@ -9,6 +9,9 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
+#include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/configuration_policy_provider.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service_impl.h"
@@ -21,6 +24,18 @@ namespace {
 // Used in BrowserPolicyConnectorBase::SetPolicyProviderForTesting.
 bool g_created_policy_service = false;
 ConfigurationPolicyProvider* g_testing_provider = nullptr;
+
+// Policies are loaded early on startup, before PolicyErrorMaps are ready to
+// be retrieved. This function is posted to UI to log any errors found on
+// Refresh below.
+void LogErrors(policy::PolicyErrorMap* errors) {
+  DCHECK(errors->IsReady());
+  PolicyErrorMap::const_iterator iter;
+  for (iter = errors->begin(); iter != errors->end(); ++iter) {
+    base::string16 policy = base::ASCIIToUTF16(iter->first);
+    DLOG(WARNING) << "Policy " << policy << ": " << iter->second;
+  }
+}
 
 }  // namespace
 
@@ -131,6 +146,20 @@ void BrowserPolicyConnectorBase::SetPlatformPolicyProvider(
   CHECK(!platform_policy_provider_);
   platform_policy_provider_ = provider.get();
   AddPolicyProvider(std::move(provider));
+}
+
+void BrowserPolicyConnectorBase::LogPolicyErrors() {
+  for (auto& error_map : pending_errors_)
+    LogErrors(error_map.get());
+  pending_errors_.clear();
+}
+
+void BrowserPolicyConnectorBase::OnConfigurationPolicyErrors(
+    std::unique_ptr<policy::PolicyErrorMap> errors) {
+  if (errors->IsReady())
+    LogErrors(errors.get());
+  else
+    pending_errors_.push_back(std::move(errors));
 }
 
 }  // namespace policy

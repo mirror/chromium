@@ -17,6 +17,7 @@
 #include "components/policy/core/browser/configuration_policy_handler_parameters.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
 #include "components/policy/core/browser/configuration_policy_pref_store_test.h"
+#include "components/policy/core/browser/test_configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/policy_details.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
@@ -51,9 +52,8 @@ class DownloadDirPolicyHandlerTest
  public:
   void SetUp() override {
     recommended_store_ = new policy::ConfigurationPolicyPrefStore(
-        policy_service_.get(),
-        &handler_list_,
-        policy::POLICY_LEVEL_RECOMMENDED);
+        policy_service_.get(), &handler_list_, policy::POLICY_LEVEL_RECOMMENDED,
+        &error_handler_);
     handler_list_.AddHandler(
         base::WrapUnique<policy::ConfigurationPolicyHandler>(
             new DownloadDirPolicyHandler));
@@ -65,6 +65,7 @@ class DownloadDirPolicyHandlerTest
   }
 
  protected:
+  policy::TestConfigurationPolicyPrefStoreErrorHandler error_handler_;
   scoped_refptr<policy::ConfigurationPolicyPrefStore> recommended_store_;
 };
 

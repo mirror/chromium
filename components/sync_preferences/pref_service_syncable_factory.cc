@@ -32,7 +32,8 @@ void PrefServiceSyncableFactory::SetManagedPolicies(
     policy::BrowserPolicyConnector* connector) {
 #if !defined(OS_IOS)
   set_managed_prefs(new policy::ConfigurationPolicyPrefStore(
-      service, connector->GetHandlerList(), policy::POLICY_LEVEL_MANDATORY));
+      service, connector->GetHandlerList(), policy::POLICY_LEVEL_MANDATORY,
+      connector));
 #else
   NOTREACHED();
 #endif
@@ -43,7 +44,8 @@ void PrefServiceSyncableFactory::SetRecommendedPolicies(
     policy::BrowserPolicyConnector* connector) {
 #if !defined(OS_IOS)
   set_recommended_prefs(new policy::ConfigurationPolicyPrefStore(
-      service, connector->GetHandlerList(), policy::POLICY_LEVEL_RECOMMENDED));
+      service, connector->GetHandlerList(), policy::POLICY_LEVEL_RECOMMENDED,
+      connector));
 #else
   NOTREACHED();
 #endif

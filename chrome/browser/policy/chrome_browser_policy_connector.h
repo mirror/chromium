@@ -37,6 +37,10 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
 
   ~ChromeBrowserPolicyConnector() override;
 
+  // Called once the resource bundle has been created. This flushes any
+  // pending errors.
+  void OnResourceBundleCreated();
+
   void Init(
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
