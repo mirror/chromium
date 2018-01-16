@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53487c8d_99d3667b",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T22:35:51Z",
+      "side": 1,
+      "message": "There\u0027s a big problem here: we are trying to move ServiceManagerContext initialization to before browser-threads creation. There\u0027s a good amount of work there just to bring (only) the IO thread up sooner so that can happen. \n\nThis now adds yet another ordering dependency on another part of the browser before we can bring up Service Manager, which seems like a clear step in the wrong direction.",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
