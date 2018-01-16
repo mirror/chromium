@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1684f0a_ef75fea6",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-16T15:23:00Z",
+      "side": 1,
+      "message": "I just moved those methods as they are not CRWWebStateObserver methods nor CRWWebDelegate.",
+      "revId": "7ff4c6ae7b958e2a68df888eb79218a68a193b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
