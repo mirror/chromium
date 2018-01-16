@@ -212,6 +212,30 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f4ce29_22751c0a",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-16T21:22:14Z",
+      "side": 1,
+      "message": "Please disregard the last comment, which is some old \nwording _before_ it was investigated and confirmed\nthat alpha is not actually being used.",
+      "parentUuid": "1e51d782_d647af3f",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
