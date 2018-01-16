@@ -52,6 +52,24 @@
       "revId": "9553590e0ce17309726f2cc27942254647183894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bd18f9_719fa9b2",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-16T22:13:45Z",
+      "side": 1,
+      "message": "Oh, I see. I could prevent updating software mirroring list in suspend.",
+      "parentUuid": "7df7d99f_929e35f9",
+      "revId": "9553590e0ce17309726f2cc27942254647183894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
