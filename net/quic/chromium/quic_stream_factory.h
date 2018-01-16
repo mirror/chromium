@@ -243,7 +243,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool headers_include_h2_stream_dependency,
       const QuicTagVector& connection_options,
       const QuicTagVector& client_connection_options,
-      bool enable_token_binding);
+      bool enable_token_binding,
+      bool use_stale_dns);
   ~QuicStreamFactory() override;
 
   // Returns true if there is an existing session for |server_id| or if the
@@ -566,6 +567,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   // True if we need to check HttpServerProperties if QUIC was supported last
   // time.
   bool need_to_check_persisted_supports_quic_;
+
+  // True if connections will be speculatively started using stale DNS cache
+  // entries.
+  bool use_stale_dns_;
 
   NetworkConnection network_connection_;
 
