@@ -105,6 +105,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 #if defined(USE_AURA)
   void EmbedRendererWindowTreeClientInParent(
       ui::mojom::WindowTreeClientPtr window_tree_client) override;
+  void OnSetFrameSinkId() override;
 #endif
   void ResizeDueToAutoResize(const gfx::Size& new_size,
                              uint64_t sequence_number) override;
@@ -126,6 +127,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   // Resets the rect and the viz::LocalSurfaceId of the connector to ensure the
   // unguessable surface ID is not reused after a cross-process navigation.
   void ResetFrameRect();
+
+  void ViewChanged();
 
   // Handlers for messages received from the parent frame.
   void OnUpdateResizeParams(const gfx::Rect& frame_rect,
@@ -152,6 +155,10 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   bool is_throttled_ = false;
   bool subtree_throttled_ = false;
+
+  // Says whether |this| set a new view, and waits before the |view_| receives a
+  // valid FrameSinkId.
+  bool is_setting_view_ = false;
 
   // Visibility state of the corresponding frame owner element in parent process
   // which is set through CSS.

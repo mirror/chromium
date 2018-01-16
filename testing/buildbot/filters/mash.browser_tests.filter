@@ -14,8 +14,7 @@ BrowserLoginTest.*
 CrashRestoreComplexTest.*
 CrashRestoreSimpleTest.*
 DriveIntegrationServiceBrowserTest.*
-# crbug.com/796999
-#EnterpriseEnrollmentTest.*
+EnterpriseEnrollmentTest.*
 KioskAppManagerTest.*
 KioskAppUpdateServiceTest.*
 LoginPromptBrowserTest.*
@@ -25,16 +24,13 @@ NetworkScreenTest.*
 PowerPolicyInSessionBrowserTest.*
 PowerPolicyLoginScreenBrowserTest.*
 QuirksBrowserTest.*
-# crbug.com/796999
-#ResetTest.*
+ResetTest.*
 SAMLEnrollmentTest.*
 ShutdownPolicyLockerTest.*
 UpdateScreenTest.*
-# crbug.com/796999
-#UserImageManagerTest.*
+UserImageManagerTest.*
 UserSelectionScreenTest.*
-# crbug.com/796999
-#WebviewLoginTest.*
+WebviewLoginTest.*
 
 # Tests from //chrome/browser/ui/ash.
 AcceleratorCommandsFullscreenBrowserTest.*
@@ -72,12 +68,3 @@ PnaclHeaderTest.*
 PolicyCertVerifierTest.*
 ScriptContextTest.*
 SiteEngagementUiBrowserTest.*
-
-# Sending invalid FrameSinkIds crbug.com/796999
--BrowserLoginTest.*BrowserActive
--LoginUtilsTest.MashLogin
--PowerPolicyLoginScreenBrowserTest.SetDevicePolicy
--SystemTrayClientClockTest.*TestMultiProfile24HourClock
--UserSelectionScreenTest.*ShowDircryptoMigrationBanner
-
-
