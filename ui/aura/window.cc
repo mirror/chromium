@@ -1227,7 +1227,7 @@ std::unique_ptr<ui::Layer> Window::RecreateLayer() {
 }
 
 void Window::UpdateLayerName() {
-#if !defined(NDEBUG)
+  //#if !defined(NDEBUG)
   DCHECK(layer());
 
   std::string layer_name(GetName());
@@ -1238,7 +1238,7 @@ void Window::UpdateLayerName() {
     layer_name += " " + base::IntToString(id_);
 
   layer()->set_name(layer_name);
-#endif
+  //#endif
 }
 
 }  // namespace aura

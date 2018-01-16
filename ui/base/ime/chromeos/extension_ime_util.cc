@@ -17,6 +17,11 @@ const char kComponentExtensionIMEPrefix[] = "_comp_ime_";
 const int kComponentExtensionIMEPrefixLength =
     sizeof(kComponentExtensionIMEPrefix) /
         sizeof(kComponentExtensionIMEPrefix[0]) - 1;
+const char kContainerExtensionIMEPrefix[] = "_mojo_ime_";
+const int kContainerExtensionIMEPrefixLength =
+    sizeof(kContainerExtensionIMEPrefix) /
+        sizeof(kContainerExtensionIMEPrefix[0]) -
+    1;
 const int kExtensionIdLength = 32;
 
 }  // namespace
@@ -42,6 +47,13 @@ std::string GetComponentInputMethodID(const std::string& extension_id,
   return kComponentExtensionIMEPrefix + extension_id + engine_id;
 }
 
+std::string GetContainerInputMethodID(const std::string& extension_id,
+                                      const std::string& engine_id) {
+  DCHECK(!extension_id.empty());
+  DCHECK(!engine_id.empty());
+  return kContainerExtensionIMEPrefix + extension_id + engine_id;
+}
+
 std::string GetExtensionIDFromInputMethodID(
     const std::string& input_method_id) {
   if (IsExtensionIME(input_method_id)) {
@@ -50,6 +62,10 @@ std::string GetExtensionIDFromInputMethodID(
   }
   if (IsComponentExtensionIME(input_method_id)) {
     return input_method_id.substr(kComponentExtensionIMEPrefixLength,
+                                  kExtensionIdLength);
+  }
+  if (IsContainerExtensionIME(input_method_id)) {
+    return input_method_id.substr(kContainerExtensionIMEPrefixLength,
                                   kExtensionIdLength);
   }
   return "";
@@ -61,6 +77,9 @@ std::string GetComponentIDByInputMethodID(const std::string& input_method_id) {
                                   kExtensionIdLength);
   if (IsExtensionIME(input_method_id))
     return input_method_id.substr(kExtensionIMEPrefixLength +
+                                  kExtensionIdLength);
+  if (IsContainerExtensionIME(input_method_id))
+    return input_method_id.substr(kContainerExtensionIMEPrefixLength +
                                   kExtensionIdLength);
   return input_method_id;
 }
@@ -112,6 +131,13 @@ bool IsComponentExtensionIME(const std::string& input_method_id) {
                           base::CompareCase::SENSITIVE) &&
          input_method_id.size() >
              kComponentExtensionIMEPrefixLength + kExtensionIdLength;
+}
+
+bool IsContainerExtensionIME(const std::string& input_method_id) {
+  return base::StartsWith(input_method_id, kContainerExtensionIMEPrefix,
+                          base::CompareCase::SENSITIVE) &&
+         input_method_id.size() >
+             kContainerExtensionIMEPrefixLength + kExtensionIdLength;
 }
 
 bool IsMemberOfExtension(const std::string& input_method_id,

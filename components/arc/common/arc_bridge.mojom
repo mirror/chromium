@@ -99,6 +99,9 @@ interface ArcBridgeHost {
   // Notifies Chrome that the ImeInstance interface is ready.
   [MinVersion=3] OnImeInstanceReady@110(ImeInstance instance_ptr);
 
+  // Notifies Chrome that the ImeManagerInstance interface is ready.
+  [MinVersion=30] OnImeManagerInstanceReady@140(ImeManagerInstance instance_ptr);
+
   // Notifies Chrome that the IntentHelperInstance interface is ready.
   [MinVersion=4] OnIntentHelperInstanceReady@111(
       IntentHelperInstance instance_ptr);
