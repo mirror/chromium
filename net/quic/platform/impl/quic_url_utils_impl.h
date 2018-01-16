@@ -14,6 +14,13 @@ namespace net {
 
 class QUIC_EXPORT_PRIVATE QuicUrlUtilsImpl {
  public:
+  // Returns a canonical, valid URL for the a push promise with the specified
+  // ":scheme", ":authority", and ":path" header fields, or an empty
+  // std::string if the given URL is not valid or supported.
+  static std::string GetPushPromiseUrl(QuicStringPiece scheme,
+                                       QuicStringPiece authority,
+                                       QuicStringPiece path);
+
   // Returns hostname, or empty std::string if missing.
   static std::string HostName(QuicStringPiece url);
 
