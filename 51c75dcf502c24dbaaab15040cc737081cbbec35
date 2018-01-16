@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "86fc9e9f_038f0361",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32870,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T14:10:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6aed6f24_b2c533ec",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89782d72_79f48784",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "Did you just explain to me how the code that I just wrote works? :D\n\n\"Played\" would be confusing in this context, as it usually doesn\u0027t just refer to a single point in time. In the sentence \"we played some music\", \"played\" refers to the entire time the music was going, not just the instant it began.\n\nI changed \"paused or closed\" to \"stopped\", and added a sentence explaining what stopped means.",
       "parentUuid": "3df731f2_81c14109",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b46f0022_744fdfc2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34983,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T14:10:14Z",
+      "side": 1,
+      "message": "I referred to your code to show the difference between the histogram description and what is actually going on there :-P",
+      "parentUuid": "6de72a1a_70e64844",
       "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

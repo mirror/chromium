@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7beec97b_d8ade0e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33086,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T14:10:14Z",
+      "side": 1,
+      "message": "Replace \"When a mojo audio stream factory\" with when it actually happens (navigation?)?",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1e05c3_53ca4917",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33087,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T14:10:14Z",
+      "side": 1,
+      "message": "As opposite to the old IPC code, where ... (how it used to be)?",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e706c0b_b5810e8a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33090,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T14:10:14Z",
+      "side": 1,
+      "message": "\"output stream factory is destructed\" -\u003e an actual event which causes the destruction.",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
