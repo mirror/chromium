@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da165af2_360b69cd",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-16T13:57:34Z",
+      "side": 1,
+      "message": "I\u0027ve looked through [1] now and it looks like I should perhaps recursively walk assigned nodes of assigned slots instead?\n\n[1] https://docs.google.com/document/d/1R9J8CVaSub_nbaVQwwm3NjCoZye4feJ7ft7tVe5QerM/",
+      "revId": "dd99488326761ea35be5cedf0f614bbffc458b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
