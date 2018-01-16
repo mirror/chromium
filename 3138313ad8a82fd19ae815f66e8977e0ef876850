@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e862049b_e70a757e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T05:56:01Z",
+      "side": 1,
+      "message": "This should not happen, so shall we change this to CHECK?",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab302a5_89b789d7",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T05:56:01Z",
+      "side": 1,
+      "message": "I need to ask Michael but I think \"Traits::kWeakHandlingFlag \u003d\u003d kWeakHandlingInCollections\" is a sufficient check. i.e., it\u0027s possible that a weak hash table is traced with Traits::kWeakHandlingFlag being kNoWeakHandlingInCollections.\n\nWe should really clean up the flag...\n\nA more reliable approach would be to introduce a flag to HashTable (e.g., HashTable::weak_callback_registered).",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
