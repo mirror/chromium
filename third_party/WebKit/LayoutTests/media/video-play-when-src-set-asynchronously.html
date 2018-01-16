@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<title>Test playback after setting src on a video with preoload='none'</title>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="media-file.js"></script>
+<video preload='none' ></video>
+<script>
+async_test(function(t) {
+   var video = document.querySelector("video");
+   video.play();
+   setTimeout(function() {
+     video.onplaying =  t.step_func_done();
+     video.src = findMediaFile("video", "content/test");
+   }, 0);
+});
+</script>

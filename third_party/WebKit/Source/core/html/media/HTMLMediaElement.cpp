@@ -618,6 +618,13 @@ void HTMLMediaElement::ParseAttribute(
     if (!params.new_value.IsNull()) {
       ignore_preload_none_ = false;
       InvokeLoadAlgorithm();
+      if (pending_play_) {
+        if (!paused_ && !playing_) {
+          PlayInternal();
+        } else {
+          pending_play_ = false;
+        }
+      }
     }
   } else if (name == controlsAttr) {
     UseCounter::Count(GetDocument(),
@@ -2370,6 +2377,9 @@ Optional<ExceptionCode> HTMLMediaElement::Play() {
 
   Optional<ExceptionCode> exception_code = autoplay_policy_->RequestPlay();
 
+  if (EffectivePreloadType() == WebMediaPlayer::kPreloadNone && !src_object_)
+    pending_play_ = true;
+
   if (exception_code == kNotAllowedError) {
     // If we're already playing, then this play would do nothing anyway.
     // Call playInternal to handle scheduling the promise resolution.
@@ -3435,6 +3445,9 @@ void HTMLMediaElement::UpdatePlayState() {
 
     StartPlaybackProgressTimer();
     playing_ = true;
+    if (pending_play_)
+      pending_play_ = false;
+
   } else {  // Should not be playing right now
     if (is_playing) {
       GetWebMediaPlayer()->Pause();
