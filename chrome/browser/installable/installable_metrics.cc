@@ -6,20 +6,12 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
+#include "content/public/browser/web_contents.h"
 
-// static
-void InstallableMetrics::TrackInstallSource(WebAppInstallSource source) {
-  DCHECK(IsReportableInstallSource(source));
-  UMA_HISTOGRAM_ENUMERATION("Webapp.Install.InstallSource", source,
-                            WebAppInstallSource::COUNT);
-}
-
-// static
-bool InstallableMetrics::IsReportableInstallSource(WebAppInstallSource source) {
-  return source == WebAppInstallSource::AUTOMATIC_PROMPT ||
-         source == WebAppInstallSource::MENU ||
-         source == WebAppInstallSource::API;
-}
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/tab_android.h"
+#endif
 
 namespace {
 
@@ -223,6 +215,56 @@ class DirectRecorder : public InstallableMetrics::Recorder {
 };
 
 }  // anonymous namespace
+
+// static
+void InstallableMetrics::TrackInstallEvent(WebappInstallSource source) {
+  DCHECK(IsReportableInstallSource(source));
+  UMA_HISTOGRAM_ENUMERATION("Webapp.Install.InstallEvent", source,
+                            WebappInstallSource::COUNT);
+}
+
+// static
+bool InstallableMetrics::IsReportableInstallSource(WebappInstallSource source) {
+  return source == WebappInstallSource::MENU_BROWSER_TAB ||
+         source == WebappInstallSource::MENU_CUSTOM_TAB ||
+         source == WebappInstallSource::AUTOMATIC_PROMPT_BROWSER_TAB ||
+         source == WebappInstallSource::AUTOMATIC_PROMPT_CUSTOM_TAB ||
+         source == WebappInstallSource::API_BROWSER_TAB ||
+         source == WebappInstallSource::API_CUSTOM_TAB ||
+         source == WebappInstallSource::DEBUG;
+}
+
+// static
+WebappInstallSource InstallableMetrics::GetPromptInstallSource(
+    content::WebContents* web_contents,
+    bool is_api) {
+  bool is_custom_tab = false;
+#if defined(OS_ANDROID)
+  is_custom_tab =
+      TabAndroid::FromWebContents(web_contents)->IsCurrentlyACustomTab();
+#endif
+  if (is_custom_tab) {
+    return is_api ? WebappInstallSource::API_CUSTOM_TAB
+                  : WebappInstallSource::AUTOMATIC_PROMPT_CUSTOM_TAB;
+  } else {
+    return is_api ? WebappInstallSource::API_BROWSER_TAB
+                  : WebappInstallSource::AUTOMATIC_PROMPT_BROWSER_TAB;
+  }
+}
+
+// static
+WebappInstallSource InstallableMetrics::GetMenuInstallSource(
+    content::WebContents* web_contents) {
+  bool is_custom_tab = false;
+#if defined(OS_ANDROID)
+  is_custom_tab =
+      TabAndroid::FromWebContents(web_contents)->IsCurrentlyACustomTab();
+#endif
+  if (is_custom_tab)
+    return WebappInstallSource::MENU_CUSTOM_TAB;
+
+  return WebappInstallSource::MENU_BROWSER_TAB;
+}
 
 InstallableMetrics::InstallableMetrics()
     : recorder_(base::MakeUnique<AccumulatingRecorder>()) {}
