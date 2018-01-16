@@ -65,8 +65,6 @@ public class ChromePreferenceManager {
 
     public static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
 
-    public static final String CHROME_HOME_INFO_PROMO_SHOWN_KEY = "chrome_home_info_promo_shown";
-
     private static final String CHROME_HOME_MENU_ITEM_CLICK_COUNT_KEY =
             "chrome_home_menu_item_click_count";
 
@@ -420,61 +418,10 @@ public class ChromePreferenceManager {
     }
 
     /**
-     * Set whether or not Chrome Home is enabled by the user.
-     * @param isEnabled If Chrome Home is enabled by the user.
-     */
-    public void setChromeHomeUserEnabled(boolean isEnabled) {
-        writeBoolean(CHROME_HOME_USER_ENABLED_KEY, isEnabled);
-    }
-
-    /**
-     * Get whether or not Chrome Home is enabled by the user.
-     * @return True if Chrome Home is enabled by the user.
-     */
-    public boolean isChromeHomeUserEnabled() {
-        return mSharedPreferences.getBoolean(CHROME_HOME_USER_ENABLED_KEY, false);
-    }
-
-    /**
-     * @return Whether or not the user has set their Chrome Home preference.
-     */
-    public boolean isChromeHomeUserPreferenceSet() {
-        return mSharedPreferences.contains(CHROME_HOME_USER_ENABLED_KEY);
-    }
-
-    /**
-     * Remove the Chrome Home user preference.
-     */
-    public void clearChromeHomeUserPreference() {
-        removeKey(CHROME_HOME_USER_ENABLED_KEY);
-    }
-
-    /**
-     * Set that the Chrome Home info-promo has been shown.
-     */
-    public void setChromeHomeInfoPromoShown() {
-        writeBoolean(CHROME_HOME_INFO_PROMO_SHOWN_KEY, true);
-    }
-
-    /**
-     * @return Whether the info-only version of the Chrome Home promo has been shown.
-     */
-    public boolean hasChromeHomeInfoPromoShown() {
-        return mSharedPreferences.getBoolean(CHROME_HOME_INFO_PROMO_SHOWN_KEY, false);
-    }
-
-    /**
      * Mark that the Chrome Home opt-out snackbar has been shown.
      */
     public void setChromeHomeOptOutSnackbarShown() {
         writeBoolean(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN, true);
-    }
-
-    /**
-     * @return Whether the Chrome Home opt-out snackbar has been shown.
-     */
-    public boolean getChromeHomeOptOutSnackbarShown() {
-        return mSharedPreferences.getBoolean(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN, false);
     }
 
     /**

@@ -21,12 +21,10 @@ import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FieldTrialList;
 import org.chromium.base.Log;
-import org.chromium.base.StrictModeContext;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.library_loader.LibraryLoader;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunUtils;
@@ -281,19 +279,6 @@ public class FeatureUtilities {
         PrefServiceBridge.getInstance().setChromeHomePersonalizedOmniboxSuggestionsEnabled(
                 areChromeHomePersonalizedOmniboxSuggestionsEnabled());
 
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
-                && manager.isChromeHomeUserPreferenceSet()) {
-            // If we showed the user the old promo, set the info promo preference so that it is not
-            // presented when the opt-in/out promo is turned off.
-            manager.setChromeHomeInfoPromoShown();
-            manager.clearChromeHomeUserPreference();
-        }
-
-        if (manager.isChromeHomeUserPreferenceSet()) {
-            RecordHistogram.recordBooleanHistogram(
-                    "Android.ChromeHome.UserPreference.Enabled", manager.isChromeHomeUserEnabled());
-        }
-
         UmaSessionStats.registerSyntheticFieldTrial(SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME,
                 isChromeHomeEnabled() ? ENABLED_EXPERIMENT_GROUP : DISABLED_EXPERIMENT_GROUP);
     }
@@ -307,16 +292,6 @@ public class FeatureUtilities {
     }
 
     /**
-     * Update the user's setting for Chrome Home. This is a user-facing setting different from the
-     * one in chrome://flags. This setting will take prescience over the one in flags.
-     * @param enabled Whether or not the feature should be enabled.
-     */
-    public static void switchChromeHomeUserSetting(boolean enabled) {
-        ChromePreferenceManager.getInstance().setChromeHomeUserEnabled(enabled);
-        sChromeHomeNeedsUpdate = sChromeHomeEnabled != null && enabled != sChromeHomeEnabled;
-    }
-
-    /**
      * @return Whether or not chrome should attach the toolbar to the bottom of the screen.
      */
     @CalledByNative
@@ -324,25 +299,19 @@ public class FeatureUtilities {
         if (DeviceFormFactor.isTablet()) return false;
 
         if (sChromeHomeEnabled == null) {
-            boolean isUserPreferenceSet = false;
             ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
 
             // Allow disk access for preferences while Chrome Home is in experimentation.
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             try {
-                if (ChromePreferenceManager.getInstance().isChromeHomeUserPreferenceSet()) {
-                    isUserPreferenceSet = true;
-                    sChromeHomeEnabled = prefManager.isChromeHomeUserEnabled();
-                } else {
-                    sChromeHomeEnabled = prefManager.isChromeHomeEnabled();
-                }
+                sChromeHomeEnabled = prefManager.isChromeHomeEnabled();
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
             }
 
             // If the browser has been initialized by this point, check the experiment as well to
             // avoid the restart logic in cacheChromeHomeEnabled.
-            if (ChromeFeatureList.isInitialized() && !isUserPreferenceSet) {
+            if (ChromeFeatureList.isInitialized()) {
                 boolean chromeHomeExperimentEnabled =
                         ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
 
@@ -377,40 +346,6 @@ public class FeatureUtilities {
         }
 
         return sChromeHomeSwipeLogicType;
-    }
-
-    /**
-     * @return Whether the Chrome Home promo should be shown for cold-start.
-     */
-    public static boolean shouldShowChromeHomePromoForStartup() {
-        if (DeviceFormFactor.isTablet()) return false;
-
-        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
-
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)
-                && isChromeHomeEnabled()) {
-            prefManager.setChromeHomeInfoPromoShown();
-        }
-
-        // The preference will be set if the promo has been seen before. If that is the case, do not
-        // show it again.
-        boolean isChromeHomePrefSet = prefManager.isChromeHomeUserPreferenceSet();
-        if (isChromeHomePrefSet) return false;
-
-        if (isChromeHomeEnabled()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) {
-            boolean promoShown;
-            try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-                promoShown = ChromePreferenceManager.getInstance().hasChromeHomeInfoPromoShown();
-            }
-            return !promoShown;
-        } else if (!isChromeHomeEnabled()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_ON_STARTUP)) {
-            return true;
-        }
-
-        return false;
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);
