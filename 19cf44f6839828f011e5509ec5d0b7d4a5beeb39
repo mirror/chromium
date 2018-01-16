@@ -16,6 +16,24 @@
       "revId": "19cf44f6839828f011e5509ec5d0b7d4a5beeb39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a50b507_ded94711",
+        "filename": "components/viz/service/display/skia_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2018-01-16T20:23:54Z",
+      "side": 1,
+      "message": "For size:\nI thought maybe it\u0027s useful since it\u0027s directly accessed in GetRenderPassSize but I also think maybe that function isn\u0027t really useful, other than possible DCHECK we actually had allocated the texture for RenderPass?\nI\u0027m going to remove that function unless code search yield to its significance.\n\nFor color_space:\nOnly the isHDR is accessed right now, and it might not be a direct conversion from/to Skia\u0027s color space, so I\u0027m inclined to maybe not touch it for now.",
+      "parentUuid": "9752d36c_9ccb298f",
+      "revId": "19cf44f6839828f011e5509ec5d0b7d4a5beeb39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
