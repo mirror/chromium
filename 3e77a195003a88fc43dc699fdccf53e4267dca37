@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e9ea60_771b8ffc",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "If thread A calls GetOrCreateLazyPointer() while thread B is creating the instance, and thread B decides to store nullptr, shouldn\u0027t thread A get the chance to create the instance instead of returning nullptr?\n\nIt\u0027s probably not very important to fix this \"race\", but it would be interesting to document it.",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 3
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee650a9_a0dc1343",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "ThreadRestrictions::AssertSingletonAllowed() is a no-op on non-DCHECK builds, so I would remove this #if.\n\nhttps://cs.chromium.org/chromium/src/base/threading/thread_restrictions.h?l\u003d381\u0026rcl\u003d4d9273e282eae42eae0c5cf035490e0d53c4daa2",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 18
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ea9300_5d568b3e",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "Explain why. Shouldn\u0027t static_cast\u003cType*\u003e(void*) work fine for any Type?\n\nhttps://stackoverflow.com/questions/310451/should-i-use-static-cast-or-reinterpret-cast-when-casting-a-void-to-whatever",
+      "range": {
+        "startLine": 200,
+        "startChar": 11,
+        "endLine": 200,
+        "endChar": 27
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603b350e_1084ec44",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "Maybe create lazy_instance_internal.h, to avoid including the definition of LazyInstance?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4621a445_08d0b9e5",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "Should we recommend using CR_DEFINE_STATIC_LOCAL() instead of base::Singleton for leaky cases? https://cs.chromium.org/chromium/src/base/macros.h?l\u003d73\u0026rcl\u003d6323cb4cb8f47aa505567914adf9a05548ddadb8",
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f625d0_8c3bb8fd",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "if (p)",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a892eea9_c0c284f8",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-16T14:52:54Z",
+      "side": 1,
+      "message": "not needed, since AssertSingletonAllowed() is a no-op in non-DCHECK builds",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 18
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
