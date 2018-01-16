@@ -281,6 +281,11 @@ class CONTENT_EXPORT FrameTreeNode {
 
   NavigationRequest* navigation_request() { return navigation_request_.get(); }
 
+  // Transfers the ownership of the NavigationRequest to |render_frame_host|.
+  // From ReadyToCommit to DidCommit, the NavigationRequest is owned by the RFH.
+  void TransferNavigationRequestOwnership(
+      RenderFrameHostImpl* render_frame_host);
+
   // PlzNavigate
   // Takes ownership of |navigation_request| and makes it the current
   // NavigationRequest of this frame. This corresponds to the start of a new

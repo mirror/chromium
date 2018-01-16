@@ -453,6 +453,11 @@ bool FrameTreeNode::CommitPendingFramePolicy() {
   return did_change_flags || did_change_container_policy;
 }
 
+void FrameTreeNode::TransferNavigationRequestOwnership(
+    RenderFrameHostImpl* render_frame_host) {
+  render_frame_host->SetNavigationRequest(std::move(navigation_request_));
+}
+
 void FrameTreeNode::CreatedNavigationRequest(
     std::unique_ptr<NavigationRequest> navigation_request) {
   CHECK(IsBrowserSideNavigationEnabled());
@@ -489,19 +494,24 @@ void FrameTreeNode::CreatedNavigationRequest(
 void FrameTreeNode::ResetNavigationRequest(bool keep_state,
                                            bool inform_renderer) {
   CHECK(IsBrowserSideNavigationEnabled());
-  if (!navigation_request_)
+
+  NavigationRequest* navigation_request = nullptr;
+  if (navigation_request_)
+    navigation_request = navigation_request_.get();
+  else if (current_frame_host()->navigation_request())
+    navigation_request = current_frame_host()->navigation_request();
+  else
     return;
 
-  RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
-      navigation_request_.get());
+  RenderFrameDevToolsAgentHost::OnResetNavigationRequest(navigation_request);
 
   // The renderer should be informed if the caller allows to do so and the
   // navigation came from a BeginNavigation IPC.
   int need_to_inform_renderer =
-      inform_renderer && navigation_request_->from_begin_navigation();
+      inform_renderer && navigation_request->from_begin_navigation();
 
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
-      navigation_request_->associated_site_instance_type();
+      navigation_request->associated_site_instance_type();
   navigation_request_.reset();
 
   if (keep_state)
