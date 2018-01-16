@@ -724,6 +724,24 @@
     },
     {
       "key": {
+        "uuid": "691f3e5b_112a0847",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-16T20:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b65e3443_5258f403",
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3a0a40_d770150d",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 12
@@ -782,6 +800,30 @@
       "writtenOn": "2018-01-13T01:32:45Z",
       "side": 1,
       "message": "I think this is going to cause issues with client certs that depend on the printable_string_is_utf8 hack (crbug.com/770323). If I understand correctly, all the X509Certificates that get passed from one mojo service to another will be re-parsed with the default parsing options, which won\u0027t work for any client certs that depend on that hack.\n\nI guess one option might be to have CreateFromPickle always use the printable_string_is_utf8 hack option. For X509Certificates that were created and serialized normally setting the option wouldn\u0027t have any effect, whereas certs that were parsed with the hack and then serialized would now be de-serializable.\n\n(I\u0027m starting to wonder if maybe that hack should have been done a different way entirely..)",
+      "range": {
+        "startLine": 344,
+        "startChar": 29,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "7c29689f92c7ffdbccbc365f98f2a01ef0a6a1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14182627_c91ea3ee",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-16T20:55:32Z",
+      "side": 1,
+      "message": "Do you mean adding the \"UnsafeCreateOptions options\" as the parameter of X509Certificate::CreateFromPickle()?",
+      "parentUuid": "42b5a7e9_33d011d2",
       "range": {
         "startLine": 344,
         "startChar": 29,
