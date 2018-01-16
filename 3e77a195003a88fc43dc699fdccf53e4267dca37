@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ece48aa_3614905e",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Yeah, doesn\u0027t matter. It\u0027s up to the caller to synchronize between when it does and doesn\u0027t \"desire to create an instance at this time\". In practice this is only for StaticMemorySingletonTraits and only matters for StaticMemorySingletonTraits::ResurrectForTesting().",
+      "parentUuid": "a8e9ea60_771b8ffc",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 3
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee650a9_a0dc1343",
         "filename": "base/lazy_instance.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92b31ca_0a01cc8a",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "But Traits::kAllowedToAccessOnNonjoinableThread is DCHECK_IS_ON() only so... tidied up things some more in this regard.",
+      "parentUuid": "2ee650a9_a0dc1343",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 18
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cbd0c1ea_3960d6f2",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Yes, but singleton.h used to reinterpret_cast and lazy_instance.h was static_cast\u0027ing. Wanted to do the same in both and settled on reinterpret_cast but I guess static_cast is kind of technically better (if the pointer is virtual). Done.",
+      "parentUuid": "f3ea9300_5d568b3e",
+      "range": {
+        "startLine": 200,
+        "startChar": 11,
+        "endLine": 200,
+        "endChar": 27
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "603b350e_1084ec44",
         "filename": "base/memory/singleton.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6a7d605e_55d034c9",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Done. Not sure I like including _internal.h file from other files but I couldn\u0027t think of a better layout",
+      "parentUuid": "603b350e_1084ec44",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4621a445_08d0b9e5",
         "filename": "base/memory/singleton.h",
         "patchSetId": 2
@@ -108,6 +204,24 @@
       "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d3c08e_c1ad3320",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Hmm, mayyyyyybe idk... but it\u0027s orthogonal to this CL isn\u0027t it?",
+      "parentUuid": "4621a445_08d0b9e5",
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "52b62cdb_393e0f22",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7f625d0_8c3bb8fd",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a892eea9_c0c284f8",
         "filename": "base/memory/singleton.h",
         "patchSetId": 2
@@ -154,6 +292,30 @@
       "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c902f3_acd9ee2c",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T15:49:28Z",
+      "side": 1,
+      "message": "Ack (see other reply)",
+      "parentUuid": "a892eea9_c0c284f8",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 18
+      },
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
