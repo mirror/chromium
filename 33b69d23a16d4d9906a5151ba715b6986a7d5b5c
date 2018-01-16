@@ -22,6 +22,30 @@
       "revId": "33b69d23a16d4d9906a5151ba715b6986a7d5b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b0227c_27e28866",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-16T15:47:50Z",
+      "side": 0,
+      "message": "Yeah we have some variants of this metrics logged at the end of the page load.",
+      "parentUuid": "ba077666_aa2d6a9d",
+      "range": {
+        "startLine": 601,
+        "startChar": 26,
+        "endLine": 601,
+        "endChar": 46
+      },
+      "revId": "33b69d23a16d4d9906a5151ba715b6986a7d5b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
