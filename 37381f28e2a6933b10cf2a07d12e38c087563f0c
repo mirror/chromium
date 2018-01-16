@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cce4822_fe87042c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AdsBlockedInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T16:10:05Z",
+      "side": 1,
+      "message": "nit: doc or just include this in createContent.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "37381f28e2a6933b10cf2a07d12e38c087563f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
