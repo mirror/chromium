@@ -140,6 +140,30 @@
       "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cea2bef_15409b8f",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-16T11:17:01Z",
+      "side": 1,
+      "message": "Maybe the best behavior in that case it to clamp the iframe height to 229px? Anyway, here I\u0027d just test that the fakebox is still in the same position.",
+      "parentUuid": "ab99e4fd_0d6077ad",
+      "range": {
+        "startLine": 673,
+        "startChar": 46,
+        "endLine": 673,
+        "endChar": 0
+      },
+      "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
