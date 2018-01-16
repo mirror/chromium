@@ -11,6 +11,9 @@
 #include "base/metrics/field_trial.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "components/image_fetcher/core/image_decoder.h"
+#include "components/image_fetcher/core/image_fetcher.h"
+#include "components/image_fetcher/core/image_fetcher_impl.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_info_fetcher.h"
@@ -21,10 +24,16 @@
 #include "components/signin/core/browser/signin_switches.h"
 #include "net/url_request/url_request_context_getter.h"
 
-namespace {
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
+#include "third_party/re2/src/re2/re2.h"
 
+namespace {
+// TODO change back
 const base::TimeDelta kRefreshFromTokenServiceDelay =
-    base::TimeDelta::FromHours(24);
+    base::TimeDelta::FromSeconds(5);
+//    base::TimeDelta::FromHours(24);
 
 bool AccountSupportsUserInfo(const std::string& account_id) {
   // Supervised users use a specially scoped token which when used for general
@@ -44,7 +53,77 @@ bool IsRefreshTokenDeviceIdExperimentEnabled() {
 }
 #endif
 
+// Separator of URL path components.
+const char kURLPathSeparator[] = "/";
+
+// Constants describing image URL format.
+// See https://crbug.com/733306#c3 for details.
+const size_t kImageURLPathComponentsCount = 6;
+const size_t kImageURLPathComponentsCountWithOptions = 7;
+const size_t kImageURLPathOptionsComponentPosition = 5;
+// Various options that can be embedded in image URL.
+const char kImageURLOptionSeparator[] = "-";
+const char kImageURLOptionSizePattern[] = R"(s\d+)";
+const char kImageURLOptionSizeFormat[] = "s%d";
+const char kImageURLOptionSquareCrop[] = "c";
+// Option to disable default avatar if user doesn't have a custom one.
+const char kImageURLOptionNoSilhouette[] = "ns";
+
+std::string BuildImageURLOptionsString(int image_size,
+                                       bool no_silhouette,
+                                       const std::string& existing_options) {
+  std::vector<std::string> url_options =
+      base::SplitString(existing_options, kImageURLOptionSeparator,
+                        base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  RE2 size_pattern(kImageURLOptionSizePattern);
+  base::EraseIf(url_options, [&size_pattern](const std::string& str) {
+    return RE2::FullMatch(str, size_pattern);
+  });
+  base::Erase(url_options, kImageURLOptionSquareCrop);
+  base::Erase(url_options, kImageURLOptionNoSilhouette);
+
+  url_options.push_back(
+      base::StringPrintf(kImageURLOptionSizeFormat, image_size));
+  url_options.push_back(kImageURLOptionSquareCrop);
+  if (no_silhouette)
+    url_options.push_back(kImageURLOptionNoSilhouette);
+  return base::JoinString(url_options, kImageURLOptionSeparator);
 }
+
+GURL GetImageURLWithOptions(const GURL& old_url,
+                            int image_size,
+                            bool no_silhouette) {
+  DCHECK(old_url.is_valid());
+
+  std::vector<std::string> components =
+      base::SplitString(old_url.path(), kURLPathSeparator,
+                        base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  if (components.size() < kImageURLPathComponentsCount ||
+      components.size() > kImageURLPathComponentsCountWithOptions ||
+      components.back().empty()) {
+    return old_url;
+  }
+
+  if (components.size() == kImageURLPathComponentsCount) {
+    components.insert(
+        components.begin() + kImageURLPathOptionsComponentPosition,
+        BuildImageURLOptionsString(image_size, no_silhouette, std::string()));
+  } else {
+    DCHECK_EQ(kImageURLPathComponentsCountWithOptions, components.size());
+    std::string options = components.at(kImageURLPathOptionsComponentPosition);
+    components[kImageURLPathOptionsComponentPosition] =
+        BuildImageURLOptionsString(image_size, no_silhouette, options);
+  }
+
+  std::string new_path = base::JoinString(components, kURLPathSeparator);
+  GURL::Replacements replacement;
+  replacement.SetPathStr(new_path);
+  return old_url.ReplaceComponents(replacement);
+}
+
+}  // namespace
 
 // This pref used to be in the AccountTrackerService, hence its string value.
 const char AccountFetcherService::kLastUpdatePref[] =
@@ -61,7 +140,8 @@ AccountFetcherService::AccountFetcherService()
       refresh_tokens_loaded_(false),
       shutdown_called_(false),
       scheduled_refresh_enabled_(true),
-      child_info_request_(nullptr) {}
+      child_info_request_(nullptr),
+      image_fetcher_(nullptr) {}
 
 AccountFetcherService::~AccountFetcherService() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -77,7 +157,8 @@ void AccountFetcherService::RegisterPrefs(
 void AccountFetcherService::Initialize(
     SigninClient* signin_client,
     OAuth2TokenService* token_service,
-    AccountTrackerService* account_tracker_service) {
+    AccountTrackerService* account_tracker_service,
+    std::unique_ptr<image_fetcher::ImageDecoder> image_decoder) {
   DCHECK(signin_client);
   DCHECK(!signin_client_);
   signin_client_ = signin_client;
@@ -88,6 +169,7 @@ void AccountFetcherService::Initialize(
   DCHECK(!token_service_);
   token_service_ = token_service;
   token_service_->AddObserver(this);
+  image_decoder_ = std::move(image_decoder);
 
   last_updated_ = base::Time::FromInternalValue(
       signin_client_->GetPrefs()->GetInt64(kLastUpdatePref));
@@ -288,7 +370,52 @@ void AccountFetcherService::OnUserInfoFetchSuccess(
     std::unique_ptr<base::DictionaryValue> user_info) {
   account_tracker_service_->SetAccountStateFromUserInfo(account_id,
                                                         user_info.get());
+
+  std::string picture_url =
+      account_tracker_service_->GetAccountInfo(account_id).picture_url;
+  FetchAccountImage(account_id, picture_url);
   user_info_requests_.erase(account_id);
+}
+
+void AccountFetcherService::FetchAccountImage(const std::string& account_id,
+                                              const std::string& picture_url) {
+  if (picture_url == AccountTrackerService::kNoPictureURLFound)
+    return;
+  if (!image_fetcher_) {
+    image_fetcher_ = std::make_unique<image_fetcher::ImageFetcherImpl>(
+        std::move(image_decoder_), signin_client_->GetURLRequestContext());
+    image_fetcher_->SetImageFetcherDelegate(this);
+  }
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("accounts_user_menu", R"(
+        semantics {
+          sender: "Image fetcher for web accounts"
+          description:
+            "Signed in users use their G+ profile image as their Chrome "
+            "profile image, unless they explicitly select otherwise. This "
+            "fetcher uses the sign-in token and the image URL provided by GAIA "
+            "to fetch the image."
+          trigger: "User opens the user menu."
+          data: "Account images of signed in GAIA accounts."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification:
+            "Not implemented, considered not useful as no content is being "
+            "uploaded or saved; this request merely downloads the user's G+ "
+            "profile image."
+        })");
+
+  GURL image_url_with_size(
+      GetImageURLWithOptions(GURL(picture_url), 64, true /* no_silhouette */));
+  image_fetcher_->StartOrQueueNetworkRequest(
+      account_id, image_url_with_size,
+      base::BindRepeating(
+          [](const std::string& id, const gfx::Image& image,
+             const image_fetcher::RequestMetadata& metadata) {}),
+      traffic_annotation);
 }
 
 void AccountFetcherService::SetIsChildAccount(const std::string& account_id,
@@ -346,4 +473,9 @@ void AccountFetcherService::OnRefreshTokensLoaded() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   refresh_tokens_loaded_ = true;
   MaybeEnableNetworkFetches();
+}
+
+void AccountFetcherService::OnImageFetched(const std::string& id,
+                                           const gfx::Image& image) {
+  account_tracker_service_->SetAccountImage(id, image);
 }
