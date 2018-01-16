@@ -16,6 +16,24 @@
       "revId": "90d0ed519437a76500ffdf9b850f208824c77ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cd8552_4353d2eb",
+        "filename": "components/webrtc_logging/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-16T22:14:43Z",
+      "side": 1,
+      "message": "good catch, the whole file can be moved!",
+      "parentUuid": "04d6e67a_6b4303fc",
+      "revId": "90d0ed519437a76500ffdf9b850f208824c77ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
