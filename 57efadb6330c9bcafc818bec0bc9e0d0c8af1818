@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00988a89_a87792ee",
+        "filename": "ui/display/manager/chromeos/display_change_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T20:10:40Z",
+      "side": 1,
+      "message": "Hmm, we probably don\u0027t want to change this because the workspace will be too small. Can you double check we don\u0027t have this configuration and remove this, then add new 1.6 configuration.",
+      "revId": "57efadb6330c9bcafc818bec0bc9e0d0c8af1818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
