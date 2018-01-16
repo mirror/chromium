@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed09345_a422c1fd",
+        "filename": "base/message_loop/message_pump_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T18:20:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually seem fine, since kCFRunLoopCommonModes requires dynamic initialization as well?",
+      "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
