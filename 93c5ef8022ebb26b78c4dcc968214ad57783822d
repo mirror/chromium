@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "814019f2_d6671be5",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-16T17:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1335b3c5_df64b15d",
+      "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88aa7415_b58f0d98",
         "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T15:04:01Z",
       "side": 1,
       "message": "We can note that any policy on Android device under debug will apply here.",
+      "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180e31c5_1db31ffe",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-16T17:29:08Z",
+      "side": 1,
+      "message": "Could you please be more specific?",
+      "parentUuid": "88aa7415_b58f0d98",
       "revId": "93c5ef8022ebb26b78c4dcc968214ad57783822d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
