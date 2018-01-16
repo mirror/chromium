@@ -16,6 +16,24 @@
       "revId": "3706aee2e6a7702a4bfd1f23b94e612e37c007aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f216503c_6b8dafbd",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-16T18:50:16Z",
+      "side": 1,
+      "message": "Makes sense to me. Done.",
+      "parentUuid": "6a7ccda2_c38c2030",
+      "revId": "3706aee2e6a7702a4bfd1f23b94e612e37c007aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
