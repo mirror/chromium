@@ -70,6 +70,24 @@
       "revId": "2cc803d952a00d9447f821790f83db9fb8bf2a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f1d414_157f8241",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-16T22:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c174a961_7e9793f4",
+      "revId": "2cc803d952a00d9447f821790f83db9fb8bf2a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
