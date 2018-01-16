@@ -16,6 +16,24 @@
       "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7138d2b_10a3a746",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-16T13:48:32Z",
+      "side": 1,
+      "message": "We do, whenever possible. But when computing MinMax content size, we don\u0027t have parent constraint space, and that\u0027s where this patch fixes.",
+      "parentUuid": "030fc55c_6ed30af1",
+      "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
