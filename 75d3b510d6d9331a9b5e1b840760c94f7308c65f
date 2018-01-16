@@ -46,6 +46,30 @@
       "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42389006_ebba958d",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2018-01-16T15:44:29Z",
+      "side": 1,
+      "message": "Aren\u0027t they defined in android/hardware_buffer.h (which lives in third_party/android_ndk/sysroot/usr/include/android/)?\n\nI mean, the comment in base/android/android_hardware_buffer_abi.h says:\n// TODO(crbug.com/771171): Delete this file when third_party/android_ndk/\n// is updated to a version that contains the android/hardware_buffer.h file.\n\nThis is why I am trying to get rid of this code.",
+      "parentUuid": "59633c66_9d415709",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
