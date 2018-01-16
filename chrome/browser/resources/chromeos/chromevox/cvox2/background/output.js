@@ -845,12 +845,10 @@ Output.prototype = {
   go: function() {
     // Speech.
     var queueMode = cvox.QueueMode.FLUSH;
-    if (this.queueMode_ !== undefined) {
-      queueMode = /** @type{cvox.QueueMode} */ (this.queueMode_);
-    } else if (Output.forceModeForNextSpeechUtterance_ !== undefined) {
-      queueMode = /** @type{cvox.QueueMode} */ (
-          Output.forceModeForNextSpeechUtterance_);
-    }
+    if (Output.forceModeForNextSpeechUtterance_ !== undefined)
+      queueMode = Output.forceModeForNextSpeechUtterance_;
+    else if (this.queueMode_ !== undefined)
+      queueMode = this.queueMode_;
 
     if (this.speechBuffer_.length > 0)
       Output.forceModeForNextSpeechUtterance_ = undefined;
