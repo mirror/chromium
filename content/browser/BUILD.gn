@@ -2085,6 +2085,8 @@ jumbo_source_set("browser") {
       "renderer_host/render_widget_host_view_android.h",
       "screen_orientation/screen_orientation_delegate_android.cc",
       "screen_orientation/screen_orientation_delegate_android.h",
+      "tracing/android_tracing_agent.cc",
+      "tracing/android_tracing_agent.h",
       "web_contents/web_contents_android.cc",
       "web_contents/web_contents_android.h",
       "web_contents/web_contents_view_android.cc",
