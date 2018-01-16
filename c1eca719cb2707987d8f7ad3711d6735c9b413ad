@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04f815f6_9fb9adc9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T09:06:26Z",
+      "side": 1,
+      "message": "Can you split of the rename in a separate CL. We could instantly land it and reduce clutter here.",
+      "range": {
+        "startLine": 200,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b122e63d_70aae717",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T09:06:26Z",
+      "side": 1,
+      "message": "AllocatePersistentNode/AllocateWeakPersistentNode and FreePersistentNode/FreeWeakPersistentNode seem to be dual.\n\nCan you just defer to an internal method that takes a region. E.g.\n- AllocatePersistentNode(....) { return AllocatePersistentNodeInternal(..., persistent_region_); }\n- AllocateWeakPersistentNode(...) { return AllocatePersistentNodeInternal(..., weak_persistent_region);}",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 29
+      },
+      "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04c26ae_ede1d4be",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T09:06:26Z",
+      "side": 1,
+      "message": "(Ignore if you implement above suggestion.) Refer to comment in FreePersistentNode to minimize the chance of them getting out of sync.",
+      "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1694860_4435b495",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T09:06:26Z",
+      "side": 1,
+      "message": "My intuition is that we should not trace persistents during steps for now as it adds non-constant overhead (if I understand the linked list traversal correctly). Unless you feel differently here I would remove the deadline part and only trace (fully) during incremental marking start.",
+      "range": {
+        "startLine": 1394,
+        "startChar": 20,
+        "endLine": 1394,
+        "endChar": 40
+      },
+      "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
