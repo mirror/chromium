@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "b17b1910_29c74415",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-16T22:59:46Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s fair.  I think we\u0027ve used NUM_SECURITY_LEVELS in this sort of case elsewhere, not sure.",
+      "parentUuid": "3e4145b2_a645bfe1",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27483ab1_fc53728e",
         "filename": "components/security_state/core/security_state_ui.cc",
         "patchSetId": 4
