@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd82c338_56d4d61f",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-16T23:48:17Z",
+      "side": 1,
+      "message": "+piman, I had to add this setting for contexts created for offscreen canvases on worker threads. Does this look fine?",
+      "range": {
+        "startLine": 1137,
+        "startChar": 2,
+        "endLine": 1137,
+        "endChar": 78
+      },
+      "revId": "2071ebf729746c8458bd932898e421b7f36c36cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
