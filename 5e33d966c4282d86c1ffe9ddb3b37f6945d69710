@@ -16,6 +16,24 @@
       "revId": "5e33d966c4282d86c1ffe9ddb3b37f6945d69710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30252748_37f97d75",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-16T23:10:20Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "d14b96f5_5f7b6066",
+      "revId": "5e33d966c4282d86c1ffe9ddb3b37f6945d69710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
