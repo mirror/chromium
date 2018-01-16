@@ -1,0 +1,5 @@
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn com.google.j2objc.**
+-dontwarn java.lang.ClassValue
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn sun.misc.Unsafe
