@@ -22,6 +22,30 @@
       "revId": "3a79b41c679051caec43a9dc4e8810e6e5cca678",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d98163_2a133aa2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/PopupZoomerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 0,
+      "message": "Replaced with the method setting TestIMMW. FYI Your comment is true for the other tests but this is an exception. Test objects here are added just because CVC under test is not properly initialized - i.e. the tests are performed without cvc.initialize() called, therefore many of the objects inside remain null. Without these test objects, PopupZoomer test will stumble on lots of NPE inside CVC. I\u0027m removing these setXXXForTest\u0027s in this setUp one by one, like https://chromium-review.googlesource.com/c/chromium/src/+/850134/11/content/public/android/javatests/src/org/chromium/content/browser/PopupZoomerTest.java#b106",
+      "parentUuid": "9563e4d2_b0c13e24",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "3a79b41c679051caec43a9dc4e8810e6e5cca678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

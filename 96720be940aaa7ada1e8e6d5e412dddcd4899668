@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d74b3ab_1800485b",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwImeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "Encapsulated it in a static method.",
+      "parentUuid": "04b371d0_82e8a2b2",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f14cb9_5b31afa6",
         "filename": "content/browser/android/ime_adapter_android.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-16T19:47:48Z",
       "side": 1,
       "message": "Could we rename this to ImeAdapterImpl and the file name, too?",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e83f2fa_284d0c8d",
+        "filename": "content/browser/android/ime_adapter_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "We could, but how about just keep it (since nothing is wrong here), or give it a simpler name ImeAdapter which won\u0027t give any collision? I did that for Java GestureListenerManagerImpl - native GestureListenerManager.",
+      "parentUuid": "82f14cb9_5b31afa6",
       "range": {
         "startLine": 141,
         "startChar": 0,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f3a2ecb1_e3808a84",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "Used \u0026\u0026 because I want this to be run in a very limited case (CVC being destroyed \u0026\u0026 losing focus). In such case member variables don\u0027t need updating as they are going away soon too.\n\nmPreserveSelectionOnNextLossOfFocus\nmJoystickScrollEnabled\n\nAnd at that point mWebContents as CVC knows of is already null - many methods need not running either, including those based on WebContentsUserData such as ImeAdapter/SelectionPopupController. They will soon be destroyed/gc\u0027ed.\n\nrestoreSelectionPopupsIfNecessary()\ncancelRequestToScroll...\nnativeSetFocus()\n\nThat leaves only hidePopupsAndXXXX(), which is done in here. Maybe these needs not running either - but there was a test about popup that fails if it is not hidden upon destruction.\n\n\nWithout this if stmt, I need to put isAlive() here and there inside this method, which didn\u0027t look good.",
+      "parentUuid": "12068019_914415aa",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8084c7_ce526e04",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
         "patchSetId": 4
@@ -79,6 +139,30 @@
       "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03694ff1_21c77cf2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8084c7_ce526e04",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a4224fa8_bb29ee3f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "Yes we modeled Java WCUD after the native one which accepts only |WebContents| in its constructor but many Java classes need additional params. The convention is JavaClass.create(WebContents) and calling JavaClass.init(additional params) immediately afterwards.",
+      "parentUuid": "490f94ca_8f7e73a1",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 62
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2a680e_a31960ba",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
         "patchSetId": 4
@@ -149,6 +257,30 @@
       "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0eb7d4_d8d0d562",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2a680e_a31960ba",
+      "range": {
+        "startLine": 349,
+        "startChar": 1,
+        "endLine": 352,
+        "endChar": 22
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
