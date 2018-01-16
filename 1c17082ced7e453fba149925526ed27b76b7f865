@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eada5d04_97f75f35",
+        "filename": "ios/chrome/browser/ui/webui/web_ui_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "Should we move reload testing to a separate test?",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf18a5e_1714697d",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "This method has the same name as placeholder_navigation_util::IsPlaceholderUrl, but a different logic. So from the name it\u0027s unclear which method should be used in which case. Can we rename this method to communicate the difference? Or maybe we should just drop placeholder_navigation_util::IsPlaceholderUrl and always use NavigationManagerImpl::IsPlaceholderUrl?",
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6509967d_94eaf453",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "nit: This name does not look fully accurate. There are 2 more checks:\n - url has changed (which we should probably drop)\n - loaded_url is app specific\n\nIf the intention was to create an explanation variable, then I think we should rename this variable or create a few variable instead. WDYT?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a6b665_d6ab2687",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "Is there a reason for this change? New logic will be incorrect for cases when SSL interstitial is displayed.",
+      "range": {
+        "startLine": 1201,
+        "startChar": 34,
+        "endLine": 1201,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58e305c_e8ccd2d3",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4315,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "Can we use \"explanation variable\" for |CreatePlaceholderUrlForUrl(webViewURL) !\u003d net::GURLWithNSURL(webView.backForwardList.currentItem.URL)| ?",
+      "range": {
+        "startLine": 4315,
+        "startChar": 6,
+        "endLine": 4315,
+        "endChar": 32
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f820e513_44e1feea",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T15:54:11Z",
+      "side": 1,
+      "message": "When it is possible to have non-null |_webUIManager| when isWebUIURL true? Can we update the comment below?",
+      "range": {
+        "startLine": 4577,
+        "startChar": 25,
+        "endLine": 4577,
+        "endChar": 38
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
