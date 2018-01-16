@@ -235,6 +235,11 @@ bool GLImageIOSurface::InitializeWithCVPixelBuffer(
     CVPixelBufferRef cv_pixel_buffer,
     gfx::GenericSharedMemoryId io_surface_id,
     gfx::BufferFormat format) {
+  // Do not retain |cv_pixel_buffer| directly. If we are going to use a
+  // CVPixelBufferRef to draw this frame, we will create a new
+  // CVPixelBufferRef to wrap the IOSurface. Not doing so causes video
+  // flickering.
+  // http://crbug.com/702369
   IOSurfaceRef io_surface = CVPixelBufferGetIOSurface(cv_pixel_buffer);
   if (!io_surface) {
     LOG(ERROR) << "Can't init GLImage from CVPixelBuffer with no IOSurface";
@@ -244,7 +249,7 @@ bool GLImageIOSurface::InitializeWithCVPixelBuffer(
   if (!Initialize(io_surface, io_surface_id, format))
     return false;
 
-  cv_pixel_buffer_.reset(cv_pixel_buffer, base::scoped_policy::RETAIN);
+  initialized_from_cv_pixel_buffer_ = true;
   return true;
 }
 
@@ -398,7 +403,7 @@ void GLImageIOSurface::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
   // The process tracing id is to identify the GpuMemoryBuffer client that
   // created the allocation. For CVPixelBufferRefs, there is no corresponding
   // GpuMemoryBuffer, so use an invalid process id.
-  if (cv_pixel_buffer_) {
+  if (initialized_from_cv_pixel_buffer_) {
     process_tracing_id =
         base::trace_event::MemoryDumpManager::kInvalidTracingProcessId;
   }
@@ -414,7 +419,7 @@ bool GLImageIOSurface::EmulatingRGB() const {
 }
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {
-  return !cv_pixel_buffer_;
+  return !initialized_from_cv_pixel_buffer_;
 }
 
 void GLImageIOSurface::SetColorSpaceForYUVToRGBConversion(
@@ -426,10 +431,6 @@ void GLImageIOSurface::SetColorSpaceForYUVToRGBConversion(
 
 base::ScopedCFTypeRef<IOSurfaceRef> GLImageIOSurface::io_surface() {
   return io_surface_;
-}
-
-base::ScopedCFTypeRef<CVPixelBufferRef> GLImageIOSurface::cv_pixel_buffer() {
-  return cv_pixel_buffer_;
 }
 
 GLImage::Type GLImageIOSurface::GetType() const {
