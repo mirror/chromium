@@ -497,6 +497,8 @@ ServiceManagerContext::ServiceManagerContext() {
       base::ASCIIToUTF16("Media Service");
 #endif
 
+  out_of_process_services["mirror"] = base::ASCIIToUTF16("Mirror");
+
 #if BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
   out_of_process_services[media::mojom::kCdmServiceName] =
       base::ASCIIToUTF16("Content Decryption Module Service");

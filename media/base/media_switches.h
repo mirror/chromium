@@ -90,6 +90,8 @@ MEDIA_EXPORT extern const char kClearKeyCdmPathForTesting[];
 MEDIA_EXPORT extern const char kEnableInternalMediaSession[];
 #endif  // !defined(OS_ANDROID)
 
+MEDIA_EXPORT extern const char kDisableCastStreamingHWEncoding[];
+
 namespace autoplay {
 
 MEDIA_EXPORT extern const char kDocumentUserActivationRequiredPolicy[];

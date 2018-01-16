@@ -35,6 +35,7 @@ source_set("utility") {
     "//content/public/child:child_sources",
     "//content/public/common:common_sources",
     "//media:media_features",
+    "//media/mojo/services/mirror:mirror_service_sources",
     "//mojo/common",
     "//mojo/public/cpp/bindings",
     "//sandbox",
