@@ -93,6 +93,8 @@ blink_core_sources("inspector") {
     "NetworkResourcesData.h",
     "ResolveNode.cpp",
     "ResolveNode.h",
+    "SamplingNativeHeapProfiler.cpp",
+    "SamplingNativeHeapProfiler.h",
     "ThreadDebugger.cpp",
     "ThreadDebugger.h",
     "V8InspectorString.cpp",

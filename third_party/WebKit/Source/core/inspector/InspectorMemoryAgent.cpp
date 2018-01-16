@@ -30,11 +30,20 @@
 
 #include "core/inspector/InspectorMemoryAgent.h"
 
+#include "base/third_party/symbolize/symbolize.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/InspectedFrames.h"
+#include "core/inspector/SamplingNativeHeapProfiler.h"
 #include "platform/InstanceCounters.h"
 
 namespace blink {
+
+namespace MemoryAgentState {
+static const char samplingProfileRunning[] =
+    "memoryAgentSamplingProfileRunning";
+static const char samplingProfileInterval[] =
+    "memoryAgentSamplingProfileInterval";
+}  // namespace MemoryAgentState
 
 using PrepareForLeakDetectionCallback =
     protocol::Memory::Backend::PrepareForLeakDetectionCallback;
@@ -74,6 +83,85 @@ void InspectorMemoryAgent::OnLeakDetectionComplete() {
 void InspectorMemoryAgent::Trace(blink::Visitor* visitor) {
   visitor->Trace(frames_);
   InspectorBaseAgent::Trace(visitor);
+}
+
+void InspectorMemoryAgent::Restore() {
+  if (!state_->booleanProperty(MemoryAgentState::samplingProfileRunning, false))
+    return;
+  int sampling_interval = 128000;
+  state_->getInteger(MemoryAgentState::samplingProfileInterval,
+                     &sampling_interval);
+  InspectorMemoryAgent::SetSamplingInterval(sampling_interval);
+  startSamplingNativeHeapProfile(protocol::Maybe<int>(),
+                                 protocol::Maybe<bool>());
+}
+
+bool InspectorMemoryAgent::SetSamplingInterval(int interval) {
+  if (interval <= 0)
+    return false;
+  SamplingNativeHeapProfiler::GetInstance()->SetSamplingInterval(interval);
+  state_->setInteger(MemoryAgentState::samplingProfileInterval, interval);
+  return true;
+}
+
+Response InspectorMemoryAgent::startSamplingNativeHeapProfile(
+    protocol::Maybe<int> in_sampling_interval,
+    protocol::Maybe<bool> in_suppressRandomness) {
+  if (in_sampling_interval.isJust() &&
+      !SetSamplingInterval(in_sampling_interval.fromJust())) {
+    return Response::Error("Invalid sampling rate.");
+  }
+  SamplingNativeHeapProfiler::GetInstance()->Start();
+  state_->setBoolean(MemoryAgentState::samplingProfileRunning, true);
+  return Response::OK();
+}
+
+Response InspectorMemoryAgent::stopSamplingNativeHeapProfile() {
+  SamplingNativeHeapProfiler::GetInstance()->Stop();
+  state_->setBoolean(MemoryAgentState::samplingProfileRunning, false);
+  return Response::OK();
+}
+
+Response InspectorMemoryAgent::getSamplingNativeHeapProfile(
+    std::unique_ptr<protocol::Memory::SamplingNativeHeapProfile>* out_profile) {
+  std::unique_ptr<
+      protocol::Array<protocol::Memory::SamplingNativeHeapProfileNode>>
+      samples = protocol::Array<
+          protocol::Memory::SamplingNativeHeapProfileNode>::create();
+  std::vector<SamplingNativeHeapProfiler::Sample> raw_samples =
+      SamplingNativeHeapProfiler::GetInstance()->GetSamples();
+  // TODO(alph): Only report samples recorded within the current session.
+  for (auto it = raw_samples.begin(); it != raw_samples.end(); ++it) {
+    std::unique_ptr<protocol::Array<protocol::String>> stack =
+        protocol::Array<protocol::String>::create();
+    for (auto it2 = it->stack.begin(); it2 != it->stack.end(); ++it2)
+      stack->addItem(symbolize(*it2).c_str());
+    samples->addItem(protocol::Memory::SamplingNativeHeapProfileNode::create()
+                         .setSize(it->size)
+                         .setCount(it->count)
+                         .setStack(std::move(stack))
+                         .build());
+  }
+  std::unique_ptr<protocol::Memory::SamplingNativeHeapProfile> result =
+      protocol::Memory::SamplingNativeHeapProfile::create()
+          .setSamples(std::move(samples))
+          .build();
+  *out_profile = std::move(result);
+  return Response::OK();
+}
+
+std::string InspectorMemoryAgent::symbolize(void* address) {
+  auto it = symbols_cache_.find(address);
+  if (it != symbols_cache_.end())
+    return it->second;
+  char buf[1024] = {'\0'};
+  // TODO(alph): Move the stack symbolization to base::debug::StackTrace.
+  std::string result =
+      google::Symbolize(static_cast<char*>(address) - 1, buf, sizeof(buf))
+          ? buf
+          : "<unknown>";
+  symbols_cache_[address] = result;
+  return result;
 }
 
 }  // namespace blink
