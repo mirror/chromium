@@ -6,6 +6,8 @@ package org.chromium.components.background_task_scheduler;
 
 import android.content.SharedPreferences;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
@@ -13,6 +15,7 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.metrics.RecordHistogram;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 class BackgroundTaskSchedulerUma {
@@ -53,20 +56,20 @@ class BackgroundTaskSchedulerUma {
         public static CachedUmaEntry parseEntry(String entry) {
             if (entry == null) return null;
 
-            String[] entryParts = entry.split(SEPARATOR);
-            if (entryParts.length != 3 || entryParts[0].isEmpty() || entryParts[1].isEmpty()
-                    || entryParts[2].isEmpty()) {
+            List<String> entryParts = Splitter.on(SEPARATOR).splitToList(entry);
+            if (entryParts.size() != 3 || entryParts.get(0).isEmpty() || entryParts.get(1).isEmpty()
+                    || entryParts.get(2).isEmpty()) {
                 return null;
             }
             int value = -1;
             int count = -1;
             try {
-                value = Integer.parseInt(entryParts[1]);
-                count = Integer.parseInt(entryParts[2]);
+                value = Integer.parseInt(entryParts.get(1));
+                count = Integer.parseInt(entryParts.get(2));
             } catch (NumberFormatException e) {
                 return null;
             }
-            return new CachedUmaEntry(entryParts[0], value, count);
+            return new CachedUmaEntry(entryParts.get(0), value, count);
         }
 
         /** Returns a string for partial matching of the prefs entry. */

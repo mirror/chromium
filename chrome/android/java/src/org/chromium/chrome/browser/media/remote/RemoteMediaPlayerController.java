@@ -19,6 +19,7 @@ import android.support.v7.app.MediaRouteControllerDialogFragment;
 import android.support.v7.app.MediaRouteDialogFactory;
 
 import com.google.android.gms.cast.CastMediaControlIntent;
+import com.google.common.base.Splitter;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
@@ -140,7 +141,7 @@ public class RemoteMediaPlayerController implements MediaRouteController.UiListe
             String classNameString = bundle.getString(REMOTE_MEDIA_PLAYERS_KEY);
 
             if (classNameString != null) {
-                String[] classNames = classNameString.split(",");
+                List<String> classNames = Splitter.on(",").splitToList(classNameString);
                 for (String className : classNames) {
                     Log.d(TAG, "Adding remote media route controller %s", className.trim());
                     Class<?> mediaRouteControllerClass = Class.forName(className.trim());
