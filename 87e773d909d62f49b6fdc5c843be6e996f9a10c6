@@ -49,6 +49,120 @@
     },
     {
       "key": {
+        "uuid": "b73adca0_d3438171",
+        "filename": "chrome/browser/extensions/extension_functional_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "nit: no need for extensions:: prefix",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 18
+      },
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49746b0_018db79f",
+        "filename": "chrome/browser/extensions/extension_functional_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "s/can/would?  \"Can\" sounds non-deterministic, but if we do it correctly, it would *always* fail, right?",
+      "range": {
+        "startLine": 165,
+        "startChar": 58,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c933086_136374e0",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/embedder.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "nit: no need for parens",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82d2717_105a04ae",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/main.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "nit: no quotes around JS object keys",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5b073d_842cb3a9",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "is this different than\nObject.assign(this, content);\n?",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eec1c76_876e4fe0",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "callee is pseudo-deprecated.  How about Messaging.Handler.singletonInstance_?\n(note that JS also uses trailing underscores rather than leading underscores)",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3e597b5_bbb3fc8c",
         "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/page.html",
         "patchSetId": 10
@@ -81,6 +195,23 @@
       "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db6a780a_c3929e0a",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/testing.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T17:00:33Z",
+      "side": 1,
+      "message": "What\u0027s the benefit of this class over using the chrome.test API?",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
