@@ -9,11 +9,14 @@
 #include <limits>
 #include <string>
 
+#include "base/build_time.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/platform_thread.h"
+#include "base/time/clock.h"
+#include "base/time/tick_clock.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -746,6 +749,75 @@ TEST_F(TimeTest, FromExploded_MinMax) {
     EXPECT_FALSE(Time::FromUTCExploded(exploded, &parsed_time));
     EXPECT_TRUE(parsed_time.is_null());
   }
+}
+
+class NowOverrideClock : public Clock {
+ public:
+  NowOverrideClock() : now_time_(Time::UnixEpoch()) {}
+  ~NowOverrideClock() override {}
+
+  Time Now() override {
+    now_time_ += TimeDelta::FromSeconds(1);
+    return now_time_;
+  }
+
+ private:
+  Time now_time_;
+};
+
+TEST_F(TimeTest, NowOverride) {
+  // Choose a reference time that we know to be in the past but close to now.
+  Time build_time = GetBuildTime();
+
+  // Override is not active. All Now() methods should return a time greater than
+  // the build time.
+  EXPECT_LT(build_time, Time::Now());
+  EXPECT_GT(Time::Max(), Time::Now());
+  EXPECT_LT(build_time, Time::NowIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowIgnoringOverride());
+  EXPECT_LT(build_time, Time::NowFromSystemTime());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTime());
+  EXPECT_LT(build_time, Time::NowFromSystemTimeIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTimeIgnoringOverride());
+
+  // Set override.
+  auto override = Time::SetNowOverride(std::make_unique<NowOverrideClock>());
+  EXPECT_FALSE(override);
+
+  // Overridden time is returned and incremented when Now() or
+  // NowFromSystemTime() is called.
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(1), Time::Now());
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(2), Time::Now());
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(3),
+            Time::NowFromSystemTime());
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(4),
+            Time::NowFromSystemTime());
+
+  // NowIgnoringOverride() and NowFromSystemTimeIgnoringOverride() still return
+  // real time.
+  EXPECT_LT(build_time, Time::NowIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowIgnoringOverride());
+  EXPECT_LT(build_time, Time::NowFromSystemTimeIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTimeIgnoringOverride());
+
+  // IgnoringOverride methods didn't call NowOverrideClock::Now().
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(5), Time::Now());
+  EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(6),
+            Time::NowFromSystemTime());
+
+  // Clear override.
+  override = Time::SetNowOverride(nullptr);
+  EXPECT_TRUE(override);
+
+  // All methods return real time again.
+  EXPECT_LT(build_time, Time::Now());
+  EXPECT_GT(Time::Max(), Time::Now());
+  EXPECT_LT(build_time, Time::NowIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowIgnoringOverride());
+  EXPECT_LT(build_time, Time::NowFromSystemTime());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTime());
+  EXPECT_LT(build_time, Time::NowFromSystemTimeIgnoringOverride());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTimeIgnoringOverride());
 }
 
 TEST(TimeTicks, Deltas) {
