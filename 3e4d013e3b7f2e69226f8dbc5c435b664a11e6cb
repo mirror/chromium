@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9360496e_de619755",
+        "filename": "components/guest_view/browser/guest_view_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2018-01-16T22:12:14Z",
+      "side": 1,
+      "message": "Could there be lifetime issues with any of these like with |guest| below?\n Maybe we should add another callback arg to BrowserPluginGuestDelegate::WillAttach which will both run synchronously and run before the completion callback.",
+      "revId": "3e4d013e3b7f2e69226f8dbc5c435b664a11e6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
