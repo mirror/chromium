@@ -16,7 +16,6 @@
 #include "base/memory/weak_ptr.h"
 #include "cc/base/ring_buffer.h"
 #include "content/public/browser/arc_tracing_agent.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 
 namespace service_manager {
@@ -71,17 +70,10 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
                     base::TimeTicks coordinator_time,
                     const Agent::StartTracingCallback& callback) override;
   void StopAndFlush(tracing::mojom::RecorderPtr recorder) override;
-  void RequestClockSyncMarker(
-      const std::string& sync_id,
-      const Agent::RequestClockSyncMarkerCallback& callback) override;
-  void GetCategories(const Agent::GetCategoriesCallback& callback) override;
-  void RequestBufferStatus(
-      const Agent::RequestBufferStatusCallback& callback) override;
 
   void OnArcTracingStopped(bool success);
   void OnTracingReaderStopped(const std::string& data);
 
-  mojo::Binding<tracing::mojom::Agent> binding_;
   Delegate* delegate_ = nullptr;  // Owned by ArcServiceLauncher.
   // We use |reader_.GetWeakPtr()| when binding callbacks with its functions.
   // Notes that the weak pointer returned by it can only be deferenced or
