@@ -93,6 +93,7 @@ void UserActivityLoggerDelegateUkm::LogActivity(
   ukm::builders::UserActivity user_activity(source_id);
   user_activity.SetEventType(event.event().type())
       .SetEventReason(event.event().reason())
+      .SetEventLogDuration(event.event().log_duration_sec())
       .SetLastActivityTime(
           std::floor(event.features().last_activity_time_sec() / 360))
       .SetLastActivityDay(event.features().last_activity_day())
