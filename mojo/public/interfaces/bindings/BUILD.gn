@@ -5,7 +5,7 @@
 import("../../tools/bindings/mojom.gni")
 
 mojom("bindings") {
-  visibility = []
+  visibility = [ "//ipc:mojom" ]
   sources = [
     "interface_control_messages.mojom",
     "native_struct.mojom",
