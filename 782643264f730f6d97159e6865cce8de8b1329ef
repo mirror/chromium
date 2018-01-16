@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "42b84fd9_98431758",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4546,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T19:06:14Z",
+      "side": 1,
+      "message": "It\u0027s not.  Removed.",
+      "parentUuid": "f4b42699_6cb67f12",
+      "range": {
+        "startLine": 4546,
+        "startChar": 26,
+        "endLine": 4546,
+        "endChar": 34
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719a732f_451f7da9",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
@@ -319,6 +343,30 @@
       "writtenOn": "2018-01-16T17:22:33Z",
       "side": 1,
       "message": "nit: why is this variable named socks_trans? If I understand correctly, some of the test cases are not using SOCKS proxy, but simple HTTP(S) proxies.",
+      "range": {
+        "startLine": 4671,
+        "startChar": 44,
+        "endLine": 4671,
+        "endChar": 55
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72edbbe_b49779a3",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4671,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T19:06:14Z",
+      "side": 1,
+      "message": "Fixed, thanks!  Forgot to rename this when I switched from 4 blocks to a loop.",
+      "parentUuid": "d57f5ed7_745615db",
       "range": {
         "startLine": 4671,
         "startChar": 44,
