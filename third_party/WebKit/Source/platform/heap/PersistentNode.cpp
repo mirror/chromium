@@ -6,6 +6,7 @@
 
 #include "base/debug/alias.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -74,8 +75,9 @@ void PersistentRegion::ReleasePersistentNode(
 // This function traces all PersistentNodes. If we encounter
 // a PersistentNodeSlot that contains only freed PersistentNodes,
 // we delete the PersistentNodeSlot. This function rebuilds the free
-// list of PersistentNodes.
-void PersistentRegion::TracePersistentNodes(Visitor* visitor,
+// list of PersistentNodes. Returns true if the trace completed.
+bool PersistentRegion::TracePersistentNodes(Visitor* visitor,
+                                            double deadline_seconds,
                                             ShouldTraceCallback should_trace) {
   size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
   base::debug::Alias(&debug_marked_object_size);
@@ -119,10 +121,14 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
       prev_next = &slots->next_;
       slots = slots->next_;
     }
+    if (deadline_seconds <= WTF::CurrentTimeTicksInSeconds()) {
+      return false;
+    }
   }
 #if DCHECK_IS_ON()
   DCHECK_EQ(persistent_count, persistent_count_);
 #endif
+  return true;
 }
 
 bool CrossThreadPersistentRegion::ShouldTracePersistentNode(
@@ -191,6 +197,21 @@ void CrossThreadPersistentRegion::UnpoisonCrossThreadPersistents() {
   }
 #if DCHECK_IS_ON()
   DCHECK_EQ(persistent_count, persistent_region_->persistent_count_);
+#endif
+  persistent_count = 0;
+  for (PersistentNodeSlots* slots = weak_persistent_region_->slots_; slots;
+       slots = slots->next_) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      const PersistentNode& node = slots->slot_[i];
+      if (!node.IsUnused()) {
+        ASAN_UNPOISON_MEMORY_REGION(node.Self(),
+                                    sizeof(CrossThreadWeakPersistent<void*>));
+        ++persistent_count;
+      }
+    }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, weak_persistent_region_->persistent_count_);
 #endif
 }
 #endif

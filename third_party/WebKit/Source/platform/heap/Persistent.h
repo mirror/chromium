@@ -205,11 +205,10 @@ class PersistentBase {
     static_assert(sizeof(T), "T must be fully defined");
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
-    if (weaknessConfiguration == kWeakPersistentConfiguration) {
+    if (weaknessConfiguration == kWeakPersistentConfiguration)
       visitor->RegisterWeakCallback(this, HandleWeakPersistent);
-    } else {
+    else
       visitor->Mark(raw_);
-    }
   }
 
   NO_SANITIZE_ADDRESS
@@ -222,15 +221,23 @@ class PersistentBase {
         TraceMethodDelegate<PersistentBase,
                             &PersistentBase::TracePersistent>::Trampoline;
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      ProcessHeap::GetCrossThreadPersistentRegion().AllocatePersistentNode(
-          persistent_node_, this, trace_callback);
+      if (weaknessConfiguration == kWeakPersistentConfiguration) {
+        ProcessHeap::GetCrossThreadPersistentRegion()
+            .AllocateWeakPersistentNode(persistent_node_, this, trace_callback);
+      } else {
+        ProcessHeap::GetCrossThreadPersistentRegion().AllocatePersistentNode(
+            persistent_node_, this, trace_callback);
+      }
       return;
     }
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     DCHECK(state->CheckThread());
-    persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
-        this, trace_callback);
+    PersistentRegion* region =
+        weaknessConfiguration == kWeakPersistentConfiguration
+            ? state->GetWeakPersistentRegion()
+            : state->GetPersistentRegion();
+    persistent_node_ = region->AllocatePersistentNode(this, trace_callback);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
@@ -238,9 +245,15 @@ class PersistentBase {
 
   void Uninitialize() {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_)))
-        ProcessHeap::GetCrossThreadPersistentRegion().FreePersistentNode(
-            persistent_node_);
+      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_))) {
+        if (weaknessConfiguration == kWeakPersistentConfiguration) {
+          ProcessHeap::GetCrossThreadPersistentRegion().FreeWeakPersistentNode(
+              persistent_node_);
+        } else {
+          ProcessHeap::GetCrossThreadPersistentRegion().FreePersistentNode(
+              persistent_node_);
+        }
+      }
       return;
     }
 
@@ -253,7 +266,11 @@ class PersistentBase {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    state->FreePersistentNode(persistent_node_);
+    if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      state->GetWeakPersistentRegion()->FreePersistentNode(persistent_node_);
+    } else {
+      state->FreePersistentNode(persistent_node_);
+    }
     persistent_node_ = nullptr;
   }
 
