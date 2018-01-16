@@ -22,6 +22,30 @@
       "revId": "23533521db86394bfc3b26fd055f969fb1c22844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b608df_7b52b6c7",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-overlay-closes-overflow-menu.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-16T18:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af5557f_6d80a82a",
+      "range": {
+        "startLine": 25,
+        "startChar": 61,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "23533521db86394bfc3b26fd055f969fb1c22844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
