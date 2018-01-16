@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71f6e923_a755649f",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b2bf46_e7dcf5e4",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e637be64_7d133230",
         "filename": "components/metrics/stability_metrics_provider.cc",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "59ec0c4f_60c92174",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e637be64_7d133230",
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d91fa52_44bd3fcc",
         "filename": "components/metrics/stability_metrics_provider.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c60782_5e314cfe",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d91fa52_44bd3fcc",
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "cd3acf4e_4aab8f15",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6a276c_4df2a8f1",
+      "range": {
+        "startLine": 167,
+        "startChar": 47,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8350d491_f03378bd",
         "filename": "components/metrics/stability_metrics_provider.cc",
         "patchSetId": 9
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f0d8e684_84311b9f",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8350d491_f03378bd",
+      "range": {
+        "startLine": 196,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae49ef8_cee92c56",
         "filename": "components/metrics/stability_metrics_provider.h",
         "patchSetId": 9
@@ -125,6 +233,30 @@
       "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b801c70_ae6c8a19",
+        "filename": "components/metrics/stability_metrics_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-16T14:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae49ef8_cee92c56",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
