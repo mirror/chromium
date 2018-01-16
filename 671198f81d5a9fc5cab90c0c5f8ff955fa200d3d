@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bb72707_6b9b8ab3",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T08:14:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce596c29_55202a27",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfce39b_5b7441a3",
         "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d945d16a_b1434d77",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T08:14:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbfce39b_5b7441a3",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a539d911_faa78110",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T08:14:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe3afbf_d044cfa4",
+      "range": {
+        "startLine": 243,
+        "startChar": 65,
+        "endLine": 243,
+        "endChar": 72
+      },
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01a0e5c_a48d328c",
         "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2741613d_0b058878",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T08:14:55Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "f01a0e5c_a48d328c",
+      "range": {
+        "startLine": 253,
+        "startChar": 27,
+        "endLine": 253,
+        "endChar": 73
+      },
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaeb3465_6e9dd2e4",
         "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-16T06:14:42Z",
       "side": 1,
       "message": "Is it better to use base::IDMap?",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9921f5_6521684e",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T08:14:55Z",
+      "side": 1,
+      "message": "I suppose base::IDMap is somehow a little heavier, just (std::map\u003c\u003e, uint64_t) pair is enough for us and easy to understand. Also I found that //mojo/* is using std::map\u003c\u003e everywhere rather than IDMap.",
+      "parentUuid": "eaeb3465_6e9dd2e4",
       "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
