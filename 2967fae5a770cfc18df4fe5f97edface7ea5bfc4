@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c892ee30_f634a566",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T11:52:47Z",
+      "side": 0,
+      "message": "better yet: move it from the internal to the public histograms.xml in the process. (i think i was asked to do this the last time i had to touch the internal file.)",
+      "parentUuid": "4d68440d_0279fc9d",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 56
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ef521d5_6934114f",
         "filename": "chrome/browser/ui/browser_ui_prefs.cc",
         "patchSetId": 2
