@@ -151,7 +151,6 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   struct ContentLayer {
     ContentLayer(CARendererLayerTree* tree,
                  base::ScopedCFTypeRef<IOSurfaceRef> io_surface,
-                 base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer,
                  const gfx::RectF& contents_rect,
                  const gfx::Rect& rect,
                  unsigned background_color,
@@ -171,7 +170,6 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // When they are committed to the window server, that will also increment
     // their use count.
     const gfx::ScopedInUseIOSurface io_surface;
-    const base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer;
     scoped_refptr<SolidColorContents> solid_color_contents;
     gfx::RectF contents_rect;
     gfx::RectF rect;
