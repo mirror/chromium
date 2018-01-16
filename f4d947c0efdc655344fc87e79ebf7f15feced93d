@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0d91c17_6db02a8f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-16T13:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f317c4bf_84fe04fc",
+      "range": {
+        "startLine": 61,
+        "startChar": 66,
+        "endLine": 61,
+        "endChar": 91
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ab9d98_e680ca82",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa028b5b_60e78e3e",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-16T13:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ab9d98_e680ca82",
+      "range": {
+        "startLine": 619,
+        "startChar": 46,
+        "endLine": 619,
+        "endChar": 51
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f5b7fa_710a7255",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06e17c4_ed02ce02",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-16T13:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f5b7fa_710a7255",
+      "range": {
+        "startLine": 622,
+        "startChar": 45,
+        "endLine": 622,
+        "endChar": 52
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
