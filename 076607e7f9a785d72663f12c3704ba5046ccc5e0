@@ -16,6 +16,24 @@
       "revId": "076607e7f9a785d72663f12c3704ba5046ccc5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c59e73_cdc47f09",
+        "filename": "third_party/WebKit/Source/core/css/AbstractPropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-16T07:30:02Z",
+      "side": 0,
+      "message": "Hmm, not sure how that happened. Fixed.",
+      "parentUuid": "587b849e_bb898103",
+      "revId": "076607e7f9a785d72663f12c3704ba5046ccc5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

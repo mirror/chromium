@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4b0542f_68e82ddf",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/parser/templates/AtRuleDescriptors.cpp.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-16T07:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031200cc_bbe55c63",
+      "revId": "ff60fe7cdf41edc535bfd9a4dda49f865ebd2c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada58781_18e6fc57",
         "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.cpp",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "ff60fe7cdf41edc535bfd9a4dda49f865ebd2c6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eff2f8_1cf34429",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-16T07:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada58781_18e6fc57",
+      "revId": "ff60fe7cdf41edc535bfd9a4dda49f865ebd2c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
