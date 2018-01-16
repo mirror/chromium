@@ -10,6 +10,7 @@
 #include "base/callback_helpers.h"
 #include "base/callback_internal.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/scoped_refptr.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -39,7 +40,8 @@ namespace {
 class CallbackTest : public ::testing::Test {
  public:
   CallbackTest()
-      : callback_a_(new FakeBindState()), callback_b_(new FakeBindState()) {}
+      : callback_a_(MakeRefCounted<FakeBindState>()),
+        callback_b_(MakeRefCounted<FakeBindState>()) {}
 
   ~CallbackTest() override = default;
 
@@ -81,7 +83,7 @@ TEST_F(CallbackTest, Equals) {
   EXPECT_FALSE(callback_b_.Equals(callback_a_));
 
   // We should compare based on instance, not type.
-  Callback<void()> callback_c(new FakeBindState());
+  Callback<void()> callback_c(MakeRefCounted<FakeBindState>());
   Callback<void()> callback_a2 = callback_a_;
   EXPECT_TRUE(callback_a_.Equals(callback_a2));
   EXPECT_FALSE(callback_a_.Equals(callback_c));

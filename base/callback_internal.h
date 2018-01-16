@@ -8,6 +8,8 @@
 #ifndef BASE_CALLBACK_INTERNAL_H_
 #define BASE_CALLBACK_INTERNAL_H_
 
+#include <utility>
+
 #include "base/base_export.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
@@ -27,7 +29,7 @@ class BindStateBase;
 template <typename Functor, typename... BoundArgs>
 struct BindState;
 
-struct BindStateBaseRefCountTraits {
+struct BASE_EXPORT BindStateBaseRefCountTraits {
   static void Destruct(const BindStateBase*);
 };
 
@@ -134,9 +136,11 @@ class BASE_EXPORT CallbackBase {
   // Returns true if this callback equals |other|. |other| may be null.
   bool EqualsInternal(const CallbackBase& other) const;
 
-  // Allow initializing of |bind_state_| via the constructor to avoid default
-  // initialization of the scoped_refptr.
-  explicit CallbackBase(BindStateBase* bind_state);
+  // Constructs a null CallbackBase.
+  inline constexpr CallbackBase();
+
+  // Takes ownership of |bind_state|.
+  explicit CallbackBase(scoped_refptr<BindStateBase> bind_state);
 
   InvokeFuncStorage polymorphic_invoke() const {
     return bind_state_->polymorphic_invoke_;
@@ -150,6 +154,8 @@ class BASE_EXPORT CallbackBase {
   scoped_refptr<BindStateBase> bind_state_;
 };
 
+inline constexpr CallbackBase::CallbackBase() = default;
+
 // CallbackBase<Copyable> is a direct base class of Copyable Callbacks.
 class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
  public:
@@ -159,10 +165,16 @@ class BASE_EXPORT CallbackBaseCopyable : public CallbackBase {
   CallbackBaseCopyable& operator=(CallbackBaseCopyable&& c);
 
  protected:
-  explicit CallbackBaseCopyable(BindStateBase* bind_state)
-      : CallbackBase(bind_state) {}
+  // Constructs a null CallbackBaseCopyable.
+  inline constexpr CallbackBaseCopyable();
+
+  explicit CallbackBaseCopyable(scoped_refptr<BindStateBase> bind_state)
+      : CallbackBase(std::move(bind_state)) {}
+
   ~CallbackBaseCopyable() = default;
 };
+
+inline constexpr CallbackBaseCopyable::CallbackBaseCopyable() = default;
 
 }  // namespace internal
 }  // namespace base

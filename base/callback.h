@@ -5,6 +5,8 @@
 #ifndef BASE_CALLBACK_H_
 #define BASE_CALLBACK_H_
 
+#include <utility>
+
 #include "base/callback_forward.h"
 #include "base/callback_internal.h"
 
@@ -26,10 +28,11 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  OnceCallback() : internal::CallbackBase(nullptr) {}
+  // Constructs a null OnceCallback.
+  constexpr OnceCallback();
 
-  explicit OnceCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBase(bind_state) {}
+  explicit OnceCallback(scoped_refptr<internal::BindStateBase> bind_state)
+      : internal::CallbackBase(std::move(bind_state)) {}
 
   OnceCallback(const OnceCallback&) = delete;
   OnceCallback& operator=(const OnceCallback&) = delete;
@@ -67,16 +70,20 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
 };
 
 template <typename R, typename... Args>
+constexpr OnceCallback<R(Args...)>::OnceCallback() = default;
+
+template <typename R, typename... Args>
 class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
  public:
   using RunType = R(Args...);
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
+  // Constructs a null RepeatingCallback.
+  constexpr RepeatingCallback();
 
-  explicit RepeatingCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBaseCopyable(bind_state) {}
+  explicit RepeatingCallback(scoped_refptr<internal::BindStateBase> bind_state)
+      : internal::CallbackBaseCopyable(std::move(bind_state)) {}
 
   // Copyable and movabl.
   RepeatingCallback(const RepeatingCallback&) = default;
@@ -105,6 +112,9 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
     return f(cb.bind_state_.get(), std::forward<Args>(args)...);
   }
 };
+
+template <typename R, typename... Args>
+constexpr RepeatingCallback<R(Args...)>::RepeatingCallback() = default;
 
 }  // namespace base
 
