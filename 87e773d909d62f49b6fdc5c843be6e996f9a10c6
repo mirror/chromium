@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "459c95cd_81023131",
+        "filename": "chrome/browser/extensions/extension_functional_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "Done (in https://crrev.com/c/868313).",
+      "parentUuid": "b73adca0_d3438171",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 18
+      },
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e49746b0_018db79f",
         "filename": "chrome/browser/extensions/extension_functional_browsertest.cc",
         "patchSetId": 10
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "adb3ab2c_35152c05",
+        "filename": "chrome/browser/extensions/extension_functional_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "Done (in https://crrev.com/c/868313).",
+      "parentUuid": "e49746b0_018db79f",
+      "range": {
+        "startLine": 165,
+        "startChar": 58,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c933086_136374e0",
         "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/embedder.js",
         "patchSetId": 10
@@ -109,6 +157,24 @@
       "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f5b60f_c5096c28",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/embedder.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "Done (in https://crrev.com/c/868631).",
+      "parentUuid": "5c933086_136374e0",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "9408e8b1_313dd1a3",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/main.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "Done (in https://crrev.com/c/868631).",
+      "parentUuid": "b82d2717_105a04ae",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb5b073d_842cb3a9",
         "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
         "patchSetId": 10
@@ -146,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "101ff472_35ab3eb4",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "I am just copy chrome/test/data/extensions/platform_apps/web_view/dom_storage_isolation/message.js without making any changes.  Therefore I hope that I don\u0027t need to make any adjustments in this CL.\n\nIf this is important, then maybe I can open a separate bug for cleaning up *all* cases in extension tests?",
+      "parentUuid": "fb5b073d_842cb3a9",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7eec1c76_876e4fe0",
         "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
         "patchSetId": 10
@@ -157,6 +259,24 @@
       "writtenOn": "2018-01-16T17:00:33Z",
       "side": 1,
       "message": "callee is pseudo-deprecated.  How about Messaging.Handler.singletonInstance_?\n(note that JS also uses trailing underscores rather than leading underscores)",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425208f0_c7c2a4b3",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/message.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "I am just copy chrome/test/data/extensions/platform_apps/web_view/dom_storage_isolation/message.js without making any changes.  Therefore I hope that I don\u0027t need to make any adjustments in this CL.\n\nIf this is important, then maybe I can open a separate bug for cleaning up *all* cases in extension tests?",
+      "parentUuid": "7eec1c76_876e4fe0",
       "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +329,24 @@
       "writtenOn": "2018-01-16T17:00:33Z",
       "side": 1,
       "message": "What\u0027s the benefit of this class over using the chrome.test API?",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026dfe32_7463dd58",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/testing.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T17:43:28Z",
+      "side": 1,
+      "message": "I am just copy chrome/test/data/extensions/platform_apps/web_view/dom_storage_isolation/testing.js without making any changes.  Therefore I hope that I don\u0027t need to make any adjustments in this CL.\n\nIf this is important, then maybe I can open a separate bug for cleaning up *all* cases in extension tests?",
+      "parentUuid": "db6a780a_c3929e0a",
       "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
