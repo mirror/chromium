@@ -26,8 +26,11 @@
 #include "components/printing/common/print_messages.h"
 #include "components/printing/service/public/cpp/pdf_service_mojo_utils.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
+#include "printing/common/pdf_metafile_utils.h"
 #include "printing/page_size_margins.h"
 #include "printing/print_job_constants.h"
 #include "printing/print_settings.h"
@@ -125,6 +128,7 @@ void PrintPreviewMessageHandler::OnDidGetPreviewPageCount(
 }
 
 void PrintPreviewMessageHandler::OnDidPreviewPage(
+    content::RenderFrameHost* render_frame_host,
     const PrintHostMsg_DidPreviewPage_Params& params) {
   int page_number = params.page_number;
   if (page_number < FIRST_PAGE_INDEX || !params.data_size)
@@ -139,8 +143,11 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
     DCHECK(client);
 
     // Use utility process to convert skia metafile to pdf.
-    client->DoComposite(
-        params.metafile_data_handle, params.data_size,
+    client->DoCompositePageToPdf(
+        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
+                     render_frame_host->GetRoutingID()),
+        params.page_number, params.metafile_data_handle, params.data_size,
+        std::vector<uint32_t>(),
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfPageDone,
                        weak_ptr_factory_.GetWeakPtr(), params.page_number,
                        params.preview_request_id));
@@ -152,6 +159,7 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
 }
 
 void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
+    content::RenderFrameHost* render_frame_host,
     const PrintHostMsg_DidPreviewDocument_Params& params) {
   // Always try to stop the worker.
   StopWorker(params.document_cookie);
@@ -169,8 +177,10 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
     auto* client = PrintCompositeClient::FromWebContents(web_contents());
     DCHECK(client);
 
-    client->DoComposite(
-        params.metafile_data_handle, params.data_size,
+    client->DoCompositeDocumentToPdf(
+        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
+                     render_frame_host->GetRoutingID()),
+        params.metafile_data_handle, params.data_size, std::vector<uint32_t>(),
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfDocumentDone,
                        weak_ptr_factory_.GetWeakPtr(),
                        params.expected_pages_count, params.preview_request_id));
@@ -294,6 +304,9 @@ bool PrintPreviewMessageHandler::OnMessageReceived(
                                    render_frame_host)
     IPC_MESSAGE_HANDLER(PrintHostMsg_RequestPrintPreview,
                         OnRequestPrintPreview)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_DidPreviewPage, OnDidPreviewPage)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_MetafileReadyForPrinting,
+                        OnMetafileReadyForPrinting)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   if (handled)
@@ -303,9 +316,6 @@ bool PrintPreviewMessageHandler::OnMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(PrintPreviewMessageHandler, message)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidGetPreviewPageCount,
                         OnDidGetPreviewPageCount)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_DidPreviewPage, OnDidPreviewPage)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_MetafileReadyForPrinting,
-                        OnMetafileReadyForPrinting)
     IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewFailed,
                         OnPrintPreviewFailed)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidGetDefaultPageLayout,
