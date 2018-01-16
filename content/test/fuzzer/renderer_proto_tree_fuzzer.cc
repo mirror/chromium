@@ -94,7 +94,9 @@ DEFINE_BINARY_PROTO_FUZZER(const Document& document) {
   if (env == nullptr)
     env = new Env();
 
-  env->adapter->LoadHTML(str(document), "http://www.example.org");
+  std::string document_string(str(document));
+  env->adapter->LoadHTMLWithUrlOverride(document_string.c_str(),
+                                        "http://www.example.org");
 }
 
 }  // namespace content

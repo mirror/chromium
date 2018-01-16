@@ -155,7 +155,9 @@ GURL HttpServer::MakeUrl(const std::string& url) {
 GURL HttpServer::MakeUrlForHttpServer(const std::string& url) const {
   GURL result(url);
   DCHECK(result.is_valid());
-  return embedded_test_server_->GetURL("/" + result.GetContent());
+  const std::string url_string =
+      url.GetContent() + (url.has_ref() ? "#" + url.ref() : "")
+  return embedded_test_server_->GetURL("/" + url_string);
 }
 
 scoped_refptr<RefCountedResponseProviderWrapper>
