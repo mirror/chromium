@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b4f017c_c58efc7e",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-16T15:55:45Z",
+      "side": 1,
+      "message": "Nit: Use Title Caps, and `mojo::Wrap...`.",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd228c77_8d3fe52f",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-16T15:55:45Z",
+      "side": 1,
+      "message": "When what is destroyed?",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f2f5b9_e9aa3875",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-16T15:55:45Z",
+      "side": 1,
+      "message": "Hyper-nit ;) : I think you mean \"e.g.\" here (\"for example\").",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "859d37e6_a7b581ee",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -19,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "e25740af_b8d4c245",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-16T15:55:45Z",
+      "side": 1,
+      "message": "Nit: \"Avoid using this construction\"",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "742c9cb7_f986ca8b",
         "filename": "docs/security/mojo.md",
         "patchSetId": 2
@@ -30,6 +98,23 @@
       "writtenOn": "2018-01-16T15:00:33Z",
       "side": 1,
       "message": "Could you elaborate on this? I don\u0027t really see how process type would be a relevant detail when deciding whether or not to use this.",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a26bd76_35c7af3a",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-16T15:55:45Z",
+      "side": 1,
+      "message": "Aww, but I like emoji!",
       "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
