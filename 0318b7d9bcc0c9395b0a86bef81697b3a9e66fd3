@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59065af0_ae4be260",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContextTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T19:19:08Z",
+      "side": 0,
+      "message": "The tests in this file are explicitly about FrameFetchContext\u0027s detached state, so I deleted them rather than try to move them.",
+      "revId": "0318b7d9bcc0c9395b0a86bef81697b3a9e66fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de847199_124d482a",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T19:19:08Z",
+      "side": 0,
+      "message": "I don\u0027t see any reason to exempt these image requests from CSP, so I didn\u0027t move this line. Do whatever the default is.",
+      "revId": "0318b7d9bcc0c9395b0a86bef81697b3a9e66fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c28ad5_d521f4a5",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoaderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T19:19:08Z",
+      "side": 0,
+      "message": "Rephrased and moved to ResourceFetcherTest.",
+      "revId": "0318b7d9bcc0c9395b0a86bef81697b3a9e66fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08323830_cb2d60a8",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T19:19:08Z",
+      "side": 0,
+      "message": "CanRequest() should get called by RequestResource(), so this call can just be deleted.",
+      "revId": "0318b7d9bcc0c9395b0a86bef81697b3a9e66fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

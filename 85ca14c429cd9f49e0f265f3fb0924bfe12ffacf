@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8f4d8fc_4f97bb31",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T19:19:08Z",
+      "side": 1,
+      "message": "Moving this to ImageLoader means that it will only get called for some image requests, not all. I think that\u0027s ok, given that this is a non-standard hack and was intended to be used via \"new Image()\" in an unload handler.",
+      "revId": "85ca14c429cd9f49e0f265f3fb0924bfe12ffacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
