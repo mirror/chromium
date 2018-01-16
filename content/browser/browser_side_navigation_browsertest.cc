@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "base/command_line.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
@@ -14,6 +15,7 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/web_contents.h"
@@ -27,6 +29,7 @@
 #include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/shell/browser/shell.h"
+#include "content/shell/browser/shell_download_manager_delegate.h"
 #include "content/shell/browser/shell_network_delegate.h"
 #include "content/test/content_browser_test_utils_internal.h"
 #include "ipc/ipc_security_test_util.h"
@@ -58,6 +61,27 @@ class BrowserSideNavigationBrowserTest
     BrowserSideNavigationBaseBrowserTest::SetUpOnMainThread();
     ASSERT_TRUE(embedded_test_server()->Start());
   }
+};
+
+class BrowserSideNavigationDownloadBrowserTest
+    : public BrowserSideNavigationBrowserTest {
+ protected:
+  void SetUpOnMainThread() override {
+    BrowserSideNavigationBrowserTest::SetUpOnMainThread();
+
+    // Create a temporary directory to store downloads.
+    ASSERT_TRUE(downloads_directory_.CreateUniqueTempDir());
+    ShellDownloadManagerDelegate* delegate =
+        static_cast<ShellDownloadManagerDelegate*>(
+            shell()
+                ->web_contents()
+                ->GetBrowserContext()
+                ->GetDownloadManagerDelegate());
+    delegate->SetDownloadBehaviorForTesting(downloads_directory_.GetPath());
+  }
+
+ private:
+  base::ScopedTempDir downloads_directory_;
 };
 
 // Ensure that browser initiated basic navigations work with browser side
@@ -799,6 +823,85 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
       shell(), "window.domAutomationController.send(location.hash);",
       &reference_fragment));
   EXPECT_EQ("#foo", reference_fragment);
+}
+
+// The set of tests...
+// * BrowserSideNavigationDownloadBrowserTest.AllowedResourceDownloaded
+// * BrowserSideNavigationDownloadBrowserTest.AllowedResourceNotDownloaded
+// * BrowserSideNavigationDownloadBrowserTest.Disallowed
+//
+// ...covers every combinaison of possible states for:
+// * CommonNavigationParams::allow_download
+// * NavigationHandle::IsDownload()
+//
+// |allow_download| is false only when the URL is a view-source URL. In this
+// case, downloads are prohibited (i.e. |is_download| is false in
+// NavigationURLLoaderDelegate::OnResponseStarted()).
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationDownloadBrowserTest,
+                       AllowedResourceDownloaded) {
+  GURL simple_url(embedded_test_server()->GetURL("/simple_page.html"));
+
+  TestNavigationManager manager(shell()->web_contents(), simple_url);
+  NavigationHandleObserver handle_observer(shell()->web_contents(), simple_url);
+
+  // Download is allowed.
+  shell()->LoadURL(simple_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_TRUE(root->navigation_request()->common_params().allow_download);
+
+  // The response is not handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_FALSE(handle_observer.is_download());
+}
+
+// See BrowserSideNavigationDownloadBrowserTest.AllowedResourceNotDownloaded
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationDownloadBrowserTest,
+                       AllowedResourceNotDownloaded) {
+  GURL download_url(embedded_test_server()->GetURL("/download-test1.lib"));
+
+  TestNavigationManager manager(shell()->web_contents(), download_url);
+  NavigationHandleObserver handle_observer(shell()->web_contents(),
+                                           download_url);
+
+  // Download is allowed.
+  shell()->LoadURL(download_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_TRUE(root->navigation_request()->common_params().allow_download);
+
+  // The response is handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_TRUE(handle_observer.is_download());
+}
+
+// See BrowserSideNavigationDownloadBrowserTest.AllowedResourceNotDownloaded
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationDownloadBrowserTest, Disallowed) {
+  GURL download_url(embedded_test_server()->GetURL("/download-test1.lib"));
+
+  // An URL is allowed to be a download iff it is not a view-source URL.
+  GURL view_source_url =
+      GURL(content::kViewSourceScheme + std::string(":") + download_url.spec());
+
+  NavigationHandleObserver handle_observer(shell()->web_contents(),
+                                           download_url);
+  TestNavigationManager manager(shell()->web_contents(), download_url);
+
+  // Download is not allowed.
+  shell()->LoadURL(view_source_url);
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_FALSE(root->navigation_request()->common_params().allow_download);
+
+  // The response is not handled as a download.
+  manager.WaitForNavigationFinished();
+  EXPECT_FALSE(handle_observer.is_download());
 }
 
 }  // namespace content
