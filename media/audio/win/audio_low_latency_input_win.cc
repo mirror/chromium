@@ -650,6 +650,7 @@ bool WASAPIAudioInputStream::DesiredFormatIsSupported(HRESULT* hr) {
   if (hresult == S_FALSE &&
       IsSupportedFormatForConversion(*closest_match.get())) {
     DVLOG(1) << "Audio capture data conversion needed.";
+
     // Ideally, we want a 1:1 ratio between the buffers we get and the buffers
     // we give to OnData so that each buffer we receive from the OS can be
     // directly converted to a buffer that matches with what was asked for.
@@ -701,6 +702,8 @@ bool WASAPIAudioInputStream::DesiredFormatIsSupported(HRESULT* hr) {
         std::modf(new_frames_per_buffer, &new_frames_per_buffer) != 0.0;
     DVLOG_IF(1, imperfect_buffer_size_conversion_)
         << "Audio capture data conversion: Need to inject fifo";
+
+    using_closest_match_ = true;
 
     // Indicate that we're good to go with a close match.
     hresult = S_OK;
@@ -854,8 +857,9 @@ void WASAPIAudioInputStream::ReportOpenResult(HRESULT hr) const {
   if (open_result_ != OPEN_RESULT_OK &&
       open_result_ != OPEN_RESULT_OK_WITH_RESAMPLING) {
     log_callback_.Run(base::StringPrintf(
-        "WASAPIAIS::Open: failed, result = %d, hresult = %#lx", open_result_,
-        hr));
+        "WASAPIAIS::Open: failed, result = %d, hresult = %#lx, %susing closest "
+        "match",
+        open_result_, hr, using_closest_match_ ? "" : "not "));
   }
 }
 
