@@ -174,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "e337add9_e500b9b6",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T23:37:58Z",
+      "side": 1,
+      "message": "I think there are downsides to both approaches. I think silently clamping is weird, but I think duplicating validation code is unfortunate. I personally lean towards the latter, but wanted to leave the door open for the former (since that\u0027s what the code was doing).",
+      "parentUuid": "1cbff4d6_cf03cae0",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47792af9_2d352c9c",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
