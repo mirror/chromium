@@ -70,6 +70,30 @@
       "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e152c2e8_ef6f365d",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-16T23:17:30Z",
+      "side": 1,
+      "message": "I don\u0027t think we should guard it (but of course when the default changes base::FEATURE_DISABLED_BY_DEFAULT -\u003e base::FEATURE_ENABLED_BY_DEFAULT, that should be guarded and have an #else for other platforms where it\u0027s still disabled :).\n\nI\u0027d also say we do make it enableable - at least via command line flags. (we can hide it from chrome://flags if we want, but I wouldn\u0027t say that\u0027s necessary either - it will just be an annoyance).\n\nWindows has touch devices, and gets more regular canaries. We shouldn\u0027t go out of our way for other platforms at this stage but exposing the flag could make it easier to demo some layout/animation to UX folks.",
+      "parentUuid": "32ae4d95_28ee2550",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
