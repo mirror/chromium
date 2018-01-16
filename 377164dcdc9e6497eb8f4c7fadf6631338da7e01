@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7e1bdb8_e0ad2c95",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "You\u0027re right, the log message is weird. I don\u0027t even know how it would ever help. It may tell the reader why the key could be used for signing (resulting in SetKeyUsedForSigning being called) even though sign_once was already false.\n\nBut that\u0027s not really useful information IMO - I\u0027d be in favor of dropping this log message altogether. WDYT?",
+      "parentUuid": "ddf0f328_dabc6051",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cddff413_fc83f45a",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-11T19:09:56Z",
       "side": 1,
       "message": "optional nit: switch over the |key_id.key_location| enum could be a bit more robust against potential introduction of new enum values.",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd77e64d_a5bcb5c3",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Changed to only continuing if IsKeyOnUserSlot returns true -- as only then it makes sense to store per-user data. PTAL.",
+      "parentUuid": "cddff413_fc83f45a",
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c9129835_0f3f55b5",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "d61764c3_1b689a4d",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d3dae2a_c66f0496",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58e5a59_923a3394",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d3dae2a_c66f0496",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4ca5fcac_dbcfd470",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "514cf58d_ab9cbf03",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "239a6ed0_8dad54f1",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ace36c_f5b91002",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "239a6ed0_8dad54f1",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "81b8bc5c_41f0eb56",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af2f85b_22bc7c9e",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66782190_b600cef2",
         "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af0e22f_00f733b6",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66782190_b600cef2",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "9015770e_c7781d19",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09fcd1ad_4ce46c2c",
+      "range": {
+        "startLine": 355,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 10
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc953c7a_d81fd19a",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
         "patchSetId": 6
@@ -187,6 +361,30 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d118637_34d7a402",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Good catch, this is a remnant of trying to convert to OnceCallback. I\u0027ll run a separate CL for that because it\u0027s a pretty big change.",
+      "parentUuid": "dc953c7a_d81fd19a",
+      "range": {
+        "startLine": 436,
+        "startChar": 43,
+        "endLine": 436,
+        "endChar": 52
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "7108cb16_de640df7",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Logic changed due to multiple possible output values - PTAL.",
+      "parentUuid": "c2ee6949_0bd6e576",
+      "range": {
+        "startLine": 792,
+        "startChar": 8,
+        "endLine": 792,
+        "endChar": 32
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cbe8a20_0bae5c5c",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
         "patchSetId": 6
@@ -227,6 +449,24 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7885dd_557441c1",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cbe8a20_0bae5c5c",
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "c69278b6_1aeb4001",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05124b5e_67b2c11b",
+      "range": {
+        "startLine": 54,
+        "startChar": 13,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3333d7_388a13e0",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
         "patchSetId": 6
@@ -273,6 +537,30 @@
       "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8364886d_43bdd8dc",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-16T16:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3333d7_388a13e0",
+      "range": {
+        "startLine": 562,
+        "startChar": 4,
+        "endLine": 562,
+        "endChar": 33
+      },
+      "revId": "377164dcdc9e6497eb8f4c7fadf6631338da7e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
