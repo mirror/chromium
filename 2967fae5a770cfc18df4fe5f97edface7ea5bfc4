@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d68440d_0279fc9d",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T08:18:10Z",
+      "side": 0,
+      "message": "if you haven\u0027t already planned it, please mark this as obsolete in the internal histograms.xml",
+      "range": {
+        "startLine": 624,
+        "startChar": 29,
+        "endLine": 624,
+        "endChar": 56
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef521d5_6934114f",
+        "filename": "chrome/browser/ui/browser_ui_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T08:18:10Z",
+      "side": 0,
+      "message": "please add cleanup code to browser_prefs.cc:MigrateObsoleteBrowserPrefs to clear this old pref.",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39fda9e_52889da5",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T08:18:10Z",
+      "side": 0,
+      "message": "please mark this value as deprecated in tools/metrics/histograms/enums.xml (enum \"DialogName\").",
+      "range": {
+        "startLine": 112,
+        "startChar": 57,
+        "endLine": 112,
+        "endChar": 66
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046cdf76_5c3d4fb6",
+        "filename": "chrome/installer/util/master_preferences_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-16T08:18:10Z",
+      "side": 0,
+      "message": "please edit https://www.chromium.org/administrators/configuring-other-preferences accordingly",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 73
+      },
+      "revId": "2967fae5a770cfc18df4fe5f97edface7ea5bfc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
