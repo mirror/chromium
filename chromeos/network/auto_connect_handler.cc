@@ -76,7 +76,7 @@ AutoConnectHandler::AutoConnectHandler()
       request_best_connection_pending_(false),
       device_policy_applied_(false),
       user_policy_applied_(false),
-      client_certs_resolved_(false),
+      user_client_certs_resolved_(false),
       applied_autoconnect_policy_(false),
       connect_to_best_services_after_scan_(false),
       auto_connect_reasons_(0),
@@ -163,7 +163,7 @@ void AutoConnectHandler::PoliciesApplied(const std::string& userhash) {
     RequestBestConnection(
         AutoConnectReason::AUTO_CONNECT_REASON_POLICY_APPLIED);
   } else {
-    CheckBestConnection();
+    CheckBestConnection(AutoConnectReason::AUTO_CONNECT_REASON_POLICY_APPLIED);
   }
 }
 
@@ -181,15 +181,20 @@ void AutoConnectHandler::ScanCompleted(const DeviceState* device) {
 
 void AutoConnectHandler::ResolveRequestCompleted(
     bool network_properties_changed) {
-  client_certs_resolved_ = true;
+  bool user_client_certs_were_resolved = user_client_certs_resolved_;
+  if (LoginState::Get()->IsUserLoggedIn())
+    user_client_certs_resolved_ = true;
 
-  // Only request to connect to the best network if network properties were
-  // actually changed. Otherwise only process existing requests.
-  if (network_properties_changed) {
+  // Only request to connect to the best network if this was the first
+  // ResolveRequestCompleted call and network properties were actually changed.
+  // Otherwise only process existing requests.
+  if (user_client_certs_resolved_ && !user_client_certs_were_resolved &&
+      network_properties_changed) {
     RequestBestConnection(
         AutoConnectReason::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED);
   } else {
-    CheckBestConnection();
+    CheckBestConnection(
+        AutoConnectReason::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED);
   }
 }
 
@@ -209,11 +214,13 @@ void AutoConnectHandler::NotifyAutoConnectInitiated(int auto_connect_reasons) {
 void AutoConnectHandler::RequestBestConnection(
     AutoConnectReason auto_connect_reason) {
   request_best_connection_pending_ = true;
-  auto_connect_reasons_ |= auto_connect_reason;
-  CheckBestConnection();
+  CheckBestConnection(auto_connect_reason);
 }
 
-void AutoConnectHandler::CheckBestConnection() {
+void AutoConnectHandler::CheckBestConnection(
+    AutoConnectReason auto_connect_reason) {
+  auto_connect_reasons_ |= auto_connect_reason;
+
   // Return immediately if there is currently no request pending to change to
   // the best network.
   if (!request_best_connection_pending_)
@@ -226,7 +233,7 @@ void AutoConnectHandler::CheckBestConnection() {
   VLOG(2) << "device policy applied: " << device_policy_applied_
           << "\nuser policy applied: " << user_policy_applied_
           << "\npolicy application running: " << policy_application_running
-          << "\nclient cert patterns resolved: " << client_certs_resolved_
+          << "\nclient cert patterns resolved: " << user_client_certs_resolved_
           << "\nclient cert resolve task running: "
           << client_cert_resolve_task_running;
   if (!device_policy_applied_ || policy_application_running ||
@@ -238,7 +245,7 @@ void AutoConnectHandler::CheckBestConnection() {
     // Before changing connection after login, we wait at least for:
     //  - user policy applied at least once
     //  - client certificate patterns resolved
-    if (!user_policy_applied_ || !client_certs_resolved_)
+    if (!user_policy_applied_ || !user_client_certs_resolved_)
       return;
   }
 
@@ -321,6 +328,8 @@ void AutoConnectHandler::CallShillConnectToBestServices() {
       base::Bind(&network_handler::ShillErrorCallbackFunction,
                  "ConnectToBestServices Failed", "",
                  network_handler::ErrorCallback()));
+
+  auto_connect_reasons_ = 0;
 }
 
 }  // namespace chromeos
