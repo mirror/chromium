@@ -58,7 +58,8 @@ SynchronousCompositorHost::SynchronousCompositorHost(
       renderer_param_version_(0u),
       need_animate_scroll_(false),
       need_invalidate_count_(0u),
-      did_activate_pending_tree_count_(0u) {
+      did_activate_pending_tree_count_(0u),
+      did_request_compute_scroll_(false) {
   client_->DidInitializeCompositor(this, process_id_, routing_id_);
 }
 
@@ -87,15 +88,6 @@ SynchronousCompositorHost::DemandDrawHwAsync(
     const gfx::Rect& viewport_rect_for_tile_priority,
     const gfx::Transform& transform_for_tile_priority) {
   scoped_refptr<FrameFuture> frame_future = new FrameFuture();
-  if (compute_scroll_needs_synchronous_draw_) {
-    compute_scroll_needs_synchronous_draw_ = false;
-    auto frame_ptr = std::make_unique<Frame>();
-    *frame_ptr = DemandDrawHw(viewport_size, viewport_rect_for_tile_priority,
-                              transform_for_tile_priority);
-    frame_future->SetFrame(std::move(frame_ptr));
-    return frame_future;
-  }
-
   SyncCompositorDemandDrawHwParams params(viewport_size,
                                           viewport_rect_for_tile_priority,
                                           transform_for_tile_priority);
@@ -354,14 +346,9 @@ void SynchronousCompositorHost::SynchronouslyZoomBy(float zoom_delta,
 
 void SynchronousCompositorHost::OnComputeScroll(
     base::TimeTicks animation_time) {
-  if (!need_animate_scroll_)
-    return;
-  need_animate_scroll_ = false;
-
-  SyncCompositorCommonRendererParams common_renderer_params;
-  sender_->Send(
-      new SyncCompositorMsg_ComputeScroll(routing_id_, animation_time));
-  compute_scroll_needs_synchronous_draw_ = true;
+  // No-op. Scroll is computed in DidSendBeginFrame unless this function is
+  // overridden.
+  did_request_compute_scroll_ = true;
 }
 
 void SynchronousCompositorHost::DidOverscroll(
@@ -372,8 +359,14 @@ void SynchronousCompositorHost::DidOverscroll(
 }
 
 void SynchronousCompositorHost::DidSendBeginFrame(
-    ui::WindowAndroid* window_android) {
-  compute_scroll_needs_synchronous_draw_ = false;
+    ui::WindowAndroid* window_android,
+    const viz::BeginFrameArgs& args) {
+  if (need_animate_scroll_ && did_request_compute_scroll_) {
+    need_animate_scroll_ = false;
+    sender_->Send(
+        new SyncCompositorMsg_ComputeScroll(routing_id_, args.frame_time));
+  }
+
   if (SynchronousCompositorBrowserFilter* filter = GetFilter())
     filter->SyncStateAfterVSync(window_android, this);
 }
