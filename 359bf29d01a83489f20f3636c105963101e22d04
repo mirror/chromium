@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7554fb8_2acfafe1",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/drag-select-1.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T23:49:40Z",
+      "side": 1,
+      "message": "This test is converted to a harness test because it just expects no crash. The original test was flaky because the final active state of the input may depend on timing.",
+      "revId": "359bf29d01a83489f20f3636c105963101e22d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262fb15b_428213e0",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v175/css3/masking/mask-luminance-gradient-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T23:49:40Z",
+      "side": 1,
+      "message": "You can see the changes of these new baselines in https://storage.googleapis.com/chromium-layout-test-archives/linux_layout_tests_slimming_paint_v2/8996/layout-test-results/results.html. The difference is because we create and use mask and mask clip nodes for SPv175.",
+      "revId": "359bf29d01a83489f20f3636c105963101e22d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
