@@ -381,4 +381,14 @@ TEST(MRUCacheTest, Swap) {
   }
 }
 
+TEST(MRUCacheTest, EstimateMemory) {
+  base::MRUCache<std::string, int> cache(10);
+
+  const std::string key(100u, 'a');
+  cache.Put(key, 1);
+
+  EXPECT_GT(trace_event::EstimateMemoryUsage(cache),
+            trace_event::EstimateMemoryUsage(key));
+}
+
 }  // namespace base

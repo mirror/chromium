@@ -27,6 +27,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 namespace base {
 
@@ -166,6 +167,11 @@ class MRUCacheBase {
   void Clear() {
     index_.clear();
     ordering_.clear();
+  }
+
+  size_t EstimateMemoryUsage() const {
+    return trace_event::EstimateMemoryUsage(ordering_) +
+           trace_event::EstimateMemoryUsage(index_);
   }
 
   // Returns the number of elements in the cache.
