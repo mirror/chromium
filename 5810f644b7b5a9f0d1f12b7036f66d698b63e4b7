@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6751e7cd_3ad4e5f4",
+        "filename": "third_party/WebKit/Source/core/paint/BoxModelObjectPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-16T14:41:40Z",
+      "side": 1,
+      "message": "This isn\u0027t great (essentially repeating some code from InlineFlowBoxPainter.cpp), but anything more involved seemed to impose risk (and lots of work.) I pondered if we should compute the \"slice offsets\" in GetFillLayerInfo instead and then apply explicitly.",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "5810f644b7b5a9f0d1f12b7036f66d698b63e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
