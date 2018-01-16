@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/stl_util.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_runner.h"
@@ -62,7 +63,8 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
         forward_(forward),
         forward_with_responder_(forward_with_responder),
         associated_group_(associated_group),
-        sync_calls_(new InProgressSyncCalls()) {}
+        sync_calls_(new InProgressSyncCalls()),
+        weak_factory_(this) {}
 
   ~ThreadSafeForwarder() override {
     // If there are ongoing sync calls signal their completion now.
@@ -114,8 +116,14 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
     // Async messages are always posted (even if |task_runner_| runs tasks on
     // this sequence) to guarantee that two async calls can't be reordered.
     if (!message->has_flag(Message::kFlagIsSync)) {
-      auto reply_forwarder =
-          std::make_unique<ForwardToCallingThread>(std::move(responder));
+      uint64_t request_id = next_request_id_++;
+      // |responder| should be kept by ThreadSafeForwarder because |responder|
+      // may contain some parameters having strong thread affinity and
+      // ThreadSafeForwarder will be destroyed on the calling thread.
+      async_responders_[request_id] = std::move(responder);
+      auto reply_forwarder = std::make_unique<ForwardToCallingThread>(
+          base::BindOnce(&ThreadSafeForwarder::HandleAsyncResponseMessage,
+                         weak_factory_.GetWeakPtr(), request_id));
       task_runner_->PostTask(
           FROM_HERE, base::Bind(forward_with_responder_, base::Passed(message),
                                 base::Passed(&reply_forwarder)));
@@ -163,6 +171,18 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
       ignore_result(responder->Accept(&response->message));
 
     return true;
+  }
+
+  // Accept the |message| by the corresponding MessageReceiver in
+  // |async_responders_|.
+  // If |message| is empty, the MessageReceiver is removed from the map.
+  void HandleAsyncResponseMessage(uint64_t request_id, Message message) {
+    auto it = async_responders_.find(request_id);
+    DCHECK(it != async_responders_.end());
+    std::unique_ptr<MessageReceiver> responder = std::move(it->second);
+    async_responders_.erase(it);
+    if (!message.IsNull())
+      ignore_result(responder->Accept(&message));
   }
 
   // Data that we need to share between the sequences involved in a sync call.
@@ -214,33 +234,27 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
 
   class ForwardToCallingThread : public MessageReceiver {
    public:
-    explicit ForwardToCallingThread(std::unique_ptr<MessageReceiver> responder)
-        : responder_(std::move(responder)),
+    explicit ForwardToCallingThread(
+        base::OnceCallback<void(Message message)> response_message_handler)
+        : response_message_handler_(std::move(response_message_handler)),
           caller_task_runner_(base::SequencedTaskRunnerHandle::Get()) {}
     ~ForwardToCallingThread() override {
-      caller_task_runner_->DeleteSoon(FROM_HERE, std::move(responder_));
+      if (response_message_handler_) {
+        caller_task_runner_->PostTask(
+            FROM_HERE,
+            base::BindOnce(std::move(response_message_handler_), Message()));
+      }
     }
 
    private:
     bool Accept(Message* message) override {
-      // The current instance will be deleted when this method returns, so we
-      // have to relinquish the responder's ownership so it does not get
-      // deleted.
       caller_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&ForwardToCallingThread::CallAcceptAndDeleteResponder,
-                     base::Passed(std::move(responder_)),
-                     base::Passed(std::move(*message))));
+          FROM_HERE, base::BindOnce(std::move(response_message_handler_),
+                                    std::move(*message)));
       return true;
     }
 
-    static void CallAcceptAndDeleteResponder(
-        std::unique_ptr<MessageReceiver> responder,
-        Message message) {
-      ignore_result(responder->Accept(&message));
-    }
-
-    std::unique_ptr<MessageReceiver> responder_;
+    base::OnceCallback<void(Message message)> response_message_handler_;
     scoped_refptr<base::SequencedTaskRunner> caller_task_runner_;
   };
 
@@ -250,6 +264,10 @@ class ThreadSafeForwarder : public MessageReceiverWithResponder {
   const ForwardMessageWithResponderCallback forward_with_responder_;
   AssociatedGroup associated_group_;
   scoped_refptr<InProgressSyncCalls> sync_calls_;
+  std::map<uint64_t, std::unique_ptr<MessageReceiver>> async_responders_;
+  uint64_t next_request_id_ = 0;
+
+  base::WeakPtrFactory<ThreadSafeForwarder> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadSafeForwarder);
 };
