@@ -6,10 +6,13 @@ package org.chromium.chrome.browser.download.ui;
 
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.UrlConstants;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -102,16 +105,17 @@ public class DownloadFilter {
     public static int fromMimeType(String mimeType) {
         if (TextUtils.isEmpty(mimeType)) return DownloadFilter.FILTER_OTHER;
 
-        String[] pieces = mimeType.toLowerCase(Locale.getDefault()).split("/");
-        if (pieces.length != 2) return DownloadFilter.FILTER_OTHER;
+        List<String> pieces =
+                Splitter.on("/").splitToList(mimeType.toLowerCase(Locale.getDefault()));
+        if (pieces.size() != 2) return DownloadFilter.FILTER_OTHER;
 
-        if (MIMETYPE_VIDEO.equals(pieces[0])) {
+        if (MIMETYPE_VIDEO.equals(pieces.get(0))) {
             return DownloadFilter.FILTER_VIDEO;
-        } else if (MIMETYPE_AUDIO.equals(pieces[0])) {
+        } else if (MIMETYPE_AUDIO.equals(pieces.get(0))) {
             return DownloadFilter.FILTER_AUDIO;
-        } else if (MIMETYPE_IMAGE.equals(pieces[0])) {
+        } else if (MIMETYPE_IMAGE.equals(pieces.get(0))) {
             return DownloadFilter.FILTER_IMAGE;
-        } else if (MIMETYPE_DOCUMENT.equals(pieces[0])) {
+        } else if (MIMETYPE_DOCUMENT.equals(pieces.get(0))) {
             return DownloadFilter.FILTER_DOCUMENT;
         } else {
             return DownloadFilter.FILTER_OTHER;
