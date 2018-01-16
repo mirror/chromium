@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eaf53ce4_e6d583ec",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T16:07:35Z",
+      "side": 1,
+      "message": "Per spec explicitly passing \"undefined\" ought to be treated as though the value were absent (i.e., use the default value).\n\nQuoth https://heycam.github.io/webidl/#es-dictionary:\n\n  4. Otherwise, if value is undefined but member has a default value, then:\n    1. Let idlValue be member’s default value.\n    2. Set the dictionary member on dict with key name key to the value idlValue. This dictionary member is considered to be present.\n\n(in no case is undefined as the value of a dictionary member passed on to the value conversion step; that only happens in step 3 if value is not undefined)",
+      "parentUuid": "017354c3_987c8762",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a9d3b1_ef5fa5f6",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceObserverTest.cpp",
         "patchSetId": 16
