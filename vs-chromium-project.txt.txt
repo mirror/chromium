@@ -1,0 +1,9 @@
+[SearchableFiles.ignore]
+Binaries/
+obj/
+Debug/
+Release/
+test/
+
+[SearchableFiles.include]
+*
