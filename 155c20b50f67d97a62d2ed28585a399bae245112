@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616ca227_3d3554f3",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T16:54:39Z",
+      "side": 1,
+      "message": "Not sure if this DCHECK is good enough to land the CL.  I hope that it is :-)\n\nFWIW, I have a bit of trouble figuring out what should happen in case |proxy| exists, but wasn\u0027t returned earlier because of |!proxy-\u003eis_render_frame_proxy_live()|:\n\n- Should we create a new proxy in this case (on line 1689-1690 below)?\n\n- Should we create a new RVHI in this case (what if the old proxy didn\u0027t have an associated RVHI)?",
+      "range": {
+        "startLine": 1683,
+        "startChar": 0,
+        "endLine": 1684,
+        "endChar": 61
+      },
+      "revId": "155c20b50f67d97a62d2ed28585a399bae245112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
