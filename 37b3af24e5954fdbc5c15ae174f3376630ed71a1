@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "82134cdf_8a101fe7",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-16T07:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d754b44a_74003746",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c302b81b_a5e53c54",
         "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.h",
         "patchSetId": 4
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "f46bc851_93e9e0f6",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-16T07:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c302b81b_a5e53c54",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2483a64_b060b6cb",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
@@ -81,6 +117,24 @@
       "writtenOn": "2018-01-16T01:34:25Z",
       "side": 1,
       "message": "As commented in the other file, I\u0027d prefer having CrossThreadPersistentRegion::LockScope here.\n\nCurrently CrossThreadPersistentRegion::LockScope is used to make sure that any cross-thread access does not happen while the thread is in a marking phase. I don\u0027t think the restriction is necessary but it would be better to keep the property at the moment.",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e855d2d0_28afaec3",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-16T07:12:09Z",
+      "side": 1,
+      "message": "I am thinking of having the CrossThreadPersistentRegion::LockScope in ThreadState::CollectGarbage and ThreadState::IncrementalMarkingStart, IncrementalMarkingStep, IncrementalMarkingFinalize instead of adding it here as it will avoid nesting.",
+      "parentUuid": "a2483a64_b060b6cb",
       "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
