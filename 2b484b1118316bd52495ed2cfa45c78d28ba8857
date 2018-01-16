@@ -16,6 +16,24 @@
       "revId": "2b484b1118316bd52495ed2cfa45c78d28ba8857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4480a3b_224d90ff",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-16T12:24:23Z",
+      "side": 0,
+      "message": "Thanks for the review.\nDone.\nhttps://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/56QyD6_1wqY",
+      "parentUuid": "230520d5_befc99b9",
+      "revId": "2b484b1118316bd52495ed2cfa45c78d28ba8857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
