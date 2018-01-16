@@ -82,7 +82,7 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   // networks to autoconnect is enabled, then disconnects all such networks
   // except wired networks. It will do this only once after the user logged in
   // and the device policy and user policy was available.
-  // This is enforced once after a user logs in 1) to allow mananged networks to
+  // This is enforced once after a user logs in 1) to allow managed networks to
   // autoconnect and 2) to prevent a previous user from foisting a network on
   // the new user. Therefore, this function is called at login and when the
   // device policy is changed after user policy is fetched and applied.
@@ -96,10 +96,9 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   // CheckBestConnection().
   void RequestBestConnection(AutoConnectReason auto_connect_reason);
 
-  // If a request to connect to the best network is pending and all requirements
-  // are fulfilled (like policy loaded, certificate patterns being resolved),
-  // then this will call ConnectToBestWifiNetwork of |network_state_handler_|.
-  void CheckBestConnection();
+  // Updates |auto_connect_reasons_| and if all requirements are fulfilled calls
+  // ConnectToBestWifiNetwork.
+  void CheckBestConnection(AutoConnectReason auto_connect_reason);
 
   // Calls Shill.Manager.ConnectToBestServices().
   void CallShillConnectToBestServices();
@@ -123,10 +122,8 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   // The policy might be empty.
   bool user_policy_applied_;
 
-  // Whether at least once client certificate patterns were checked and if any
-  // existed resolved. Even if there are no certificate patterns, this will be
-  // eventually true.
-  bool client_certs_resolved_;
+  // Whether any user client certificate patterns were checked and resolved.
+  bool user_client_certs_resolved_;
 
   // Whether the autoconnect policy was applied already, see
   // DisconnectIfPolicyRequires().

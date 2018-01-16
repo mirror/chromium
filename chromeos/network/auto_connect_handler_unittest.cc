@@ -37,6 +37,11 @@ namespace chromeos {
 
 namespace {
 
+const int AUTO_CONNECT_REASONS_ALL =
+    AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN |
+    AutoConnectHandler::AUTO_CONNECT_REASON_POLICY_APPLIED |
+    AutoConnectHandler::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED;
+
 class TestAutoConnectHandlerObserver : public AutoConnectHandler::Observer {
  public:
   TestAutoConnectHandlerObserver() = default;
@@ -136,6 +141,7 @@ class AutoConnectHandlerTest : public NetworkStateTest {
     NetworkStateTest::SetUp();
 
     LoginState::Initialize();
+    LoginState::Get()->set_always_logged_in(false);
 
     network_config_handler_.reset(
         NetworkConfigurationHandler::InitializeForTest(
@@ -347,12 +353,10 @@ TEST_F(AutoConnectHandlerTest, ReconnectOnCertLoading) {
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi0"));
   EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi1"));
   EXPECT_EQ(1, test_observer_->num_auto_connect_events());
-  EXPECT_EQ(AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN |
-                AutoConnectHandler::AUTO_CONNECT_REASON_POLICY_APPLIED,
-            test_observer_->auto_connect_reasons());
+  EXPECT_EQ(AUTO_CONNECT_REASONS_ALL, test_observer_->auto_connect_reasons());
 }
 
-TEST_F(AutoConnectHandlerTest, ReconnectOnCertPatternResolved) {
+TEST_F(AutoConnectHandlerTest, NoReconnectAfterInitialCertPatternResolved) {
   EXPECT_FALSE(ConfigureService(kConfigUnmanagedSharedConnected).empty());
   EXPECT_FALSE(ConfigureService(kConfigManagedSharedConnectable).empty());
   test_manager_client()->SetBestServiceToConnect("wifi0");
@@ -361,15 +365,15 @@ TEST_F(AutoConnectHandlerTest, ReconnectOnCertPatternResolved) {
               base::DictionaryValue(),  // no global config
               false);                   // load as device policy
   LoginToRegularUser();
+  EXPECT_EQ(0, test_observer_->num_auto_connect_events());
+
   StartCertLoader();
   SetupPolicy(kPolicyCertPattern,
               base::DictionaryValue(),  // no global config
               true);                    // load as user policy
-  EXPECT_EQ(2, test_observer_->num_auto_connect_events());
-  EXPECT_EQ(AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN |
-                AutoConnectHandler::AUTO_CONNECT_REASON_POLICY_APPLIED |
-                AutoConnectHandler::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED,
-            test_observer_->auto_connect_reasons());
+  EXPECT_EQ(1, test_observer_->num_auto_connect_events());
+
+  EXPECT_EQ(AUTO_CONNECT_REASONS_ALL, test_observer_->auto_connect_reasons());
 
   EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi0"));
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi1"));
@@ -383,13 +387,10 @@ TEST_F(AutoConnectHandlerTest, ReconnectOnCertPatternResolved) {
   scoped_task_environment_.RunUntilIdle();
   EXPECT_TRUE(observer.DidNetworkPropertiesChange());
 
-  EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi0"));
-  EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi1"));
-  EXPECT_EQ(3, test_observer_->num_auto_connect_events());
-  EXPECT_EQ(AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN |
-                AutoConnectHandler::AUTO_CONNECT_REASON_POLICY_APPLIED |
-                AutoConnectHandler::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED,
-            test_observer_->auto_connect_reasons());
+  // No additional auto connect events should have occurred.
+  EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi0"));
+  EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi1"));
+  EXPECT_EQ(1, test_observer_->num_auto_connect_events());
 }
 
 // Ensure that resolving of certificate patterns only triggers a reconnect if at
@@ -422,9 +423,7 @@ TEST_F(AutoConnectHandlerTest, NoReconnectIfNoCertResolved) {
   EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi0"));
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi1"));
   EXPECT_EQ(1, test_observer_->num_auto_connect_events());
-  EXPECT_EQ(AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN |
-                AutoConnectHandler::AUTO_CONNECT_REASON_POLICY_APPLIED,
-            test_observer_->auto_connect_reasons());
+  EXPECT_EQ(AUTO_CONNECT_REASONS_ALL, test_observer_->auto_connect_reasons());
 }
 
 TEST_F(AutoConnectHandlerTest, DisconnectOnPolicyLoading) {
@@ -492,6 +491,27 @@ TEST_F(AutoConnectHandlerTest,
   EXPECT_EQ(0, test_observer_->num_auto_connect_events());
 }
 
+// Before login, loading certs and policy should not trigger auto connect.
+TEST_F(AutoConnectHandlerTest, NoReconnectBeforeLogin) {
+  EXPECT_FALSE(ConfigureService(kConfigUnmanagedSharedConnected).empty());
+  EXPECT_FALSE(ConfigureService(kConfigManagedSharedConnectable).empty());
+  test_manager_client()->SetBestServiceToConnect("wifi1");
+
+  // Certificate loading should not trigger auto connect before login.
+  StartCertLoader();
+  EXPECT_EQ(0, test_observer_->num_auto_connect_events());
+
+  // Device policy should not trigger auto connect before login.
+  SetupPolicy(std::string(),            // no network configs
+              base::DictionaryValue(),  // no global config
+              false);                   // load as device policy
+  EXPECT_EQ(0, test_observer_->num_auto_connect_events());
+
+  // Login should not trigger auto connect until certs are resolved post login.
+  LoginToRegularUser();
+  EXPECT_EQ(0, test_observer_->num_auto_connect_events());
+}
+
 // After login a reconnect is triggered even if there is no managed network.
 TEST_F(AutoConnectHandlerTest, ReconnectAfterLogin) {
   EXPECT_FALSE(ConfigureService(kConfigUnmanagedSharedConnected).empty());
@@ -521,8 +541,7 @@ TEST_F(AutoConnectHandlerTest, ReconnectAfterLogin) {
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi0"));
   EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi1"));
   EXPECT_EQ(1, test_observer_->num_auto_connect_events());
-  EXPECT_EQ(AutoConnectHandler::AUTO_CONNECT_REASON_LOGGED_IN,
-            test_observer_->auto_connect_reasons());
+  EXPECT_EQ(AUTO_CONNECT_REASONS_ALL, test_observer_->auto_connect_reasons());
 }
 
 TEST_F(AutoConnectHandlerTest, ManualConnectAbortsReconnectAfterLogin) {
