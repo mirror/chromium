@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02ec9a1_2f2273c0",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-16T13:58:11Z",
+      "side": 1,
+      "message": "influence?",
+      "range": {
+        "startLine": 1246,
+        "startChar": 34,
+        "endLine": 1246,
+        "endChar": 40
+      },
+      "revId": "0c6aebc482628b1ca2809ade559965303b7a07eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722f9d44_96fcd7b3",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-16T13:58:11Z",
+      "side": 1,
+      "message": "Can you add a disclaimer to be careful about FIFO guarantees with using two separate runners?\ne.g: \"Since the two task runners are distinct you cannot make guarantees about task ordering between them.\"",
+      "revId": "0c6aebc482628b1ca2809ade559965303b7a07eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
