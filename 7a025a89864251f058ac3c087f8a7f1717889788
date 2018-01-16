@@ -22,6 +22,30 @@
       "revId": "7a025a89864251f058ac3c087f8a7f1717889788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd0a98c_ee4d4201",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4498,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T20:15:02Z",
+      "side": 1,
+      "message": "didCommitNavigation: was never called for \"back\" navigation (step 3 in bug\u0027s steps to reproduce). First didCommitNavigation: was called for link click navigation (step 2 in bug\u0027s steps to reproduce). It\u0027s correct that didCommitNavigation: was called for the second time. The problem is that WKNavigation* object is not correct, so we just have to find correct navigation item for this navigation.",
+      "parentUuid": "e94f2d00_b0d4800e",
+      "range": {
+        "startLine": 4498,
+        "startChar": 54,
+        "endLine": 4498,
+        "endChar": 0
+      },
+      "revId": "7a025a89864251f058ac3c087f8a7f1717889788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
