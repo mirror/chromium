@@ -33,6 +33,8 @@ source_set("browser") {
     "application_context.h",
     "arch_util.cc",
     "arch_util.h",
+    "broadercaster.h",
+    "broadercaster.mm",
     "browser_about_rewriter.cc",
     "browser_about_rewriter.h",
     "chrome_browser_provider_observer_bridge.h",
