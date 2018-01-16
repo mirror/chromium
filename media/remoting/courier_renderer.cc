@@ -331,7 +331,7 @@ void CourierRenderer::OnDataPipeCreated(
       media_resource_->GetFirstStream(DemuxerStream::VIDEO);
 
   // Create audio demuxer stream adapter if audio is available.
-  if (audio_demuxer_stream && audio.is_valid() && audio_handle.is_valid() &&
+  if (audio_demuxer_stream && audio.is_valid() && audio_handle &&
       audio_rpc_handle != RpcBroker::kInvalidHandle) {
     VLOG(2) << "Initialize audio";
     audio_demuxer_stream_adapter_.reset(new DemuxerStreamAdapter(
@@ -342,7 +342,7 @@ void CourierRenderer::OnDataPipeCreated(
   }
 
   // Create video demuxer stream adapter if video is available.
-  if (video_demuxer_stream && video.is_valid() && video_handle.is_valid() &&
+  if (video_demuxer_stream && video.is_valid() && video_handle &&
       video_rpc_handle != RpcBroker::kInvalidHandle) {
     VLOG(2) << "Initialize video";
     video_demuxer_stream_adapter_.reset(new DemuxerStreamAdapter(

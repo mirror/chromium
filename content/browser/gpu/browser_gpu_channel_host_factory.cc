@@ -138,7 +138,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const gpu::GPUInfo& gpu_info,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
-  if (!channel_handle.is_valid() &&
+  if (!channel_handle &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID &&
       // Ask client every time instead of passing this down from UI thread to
       // avoid having the value be stale.
@@ -154,7 +154,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     return;
   }
 
-  if (channel_handle.is_valid()) {
+  if (channel_handle) {
     gpu_channel_ = base::MakeRefCounted<gpu::GpuChannelHost>(
         gpu_client_id_, gpu_info, gpu_feature_info, std::move(channel_handle));
   }

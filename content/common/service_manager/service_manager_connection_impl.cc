@@ -266,7 +266,7 @@ class ServiceManagerConnectionImpl::IOThreadContext
                                       &interface_pipe,
                                       service_context_->connector());
         // A filter may have bound the interface, claiming the pipe.
-        if (!interface_pipe.is_valid())
+        if (!interface_pipe)
           return;
       }
     }
