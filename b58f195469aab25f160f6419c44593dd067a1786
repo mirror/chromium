@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9bb2abf_f12cc720",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastIntents.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but ACTION_SHOW_WEB_CONTENT and ACTION_STOP_WEB_CONTENT are sent to an external app. The \"to activity\" part here kind of says that, but is kind of unclear.\n\nCan we include a note that ACTION_SHOW_WEB_CONTENT and ACTION_STOP_WEB_CONTENT are specifically meant for being sent to the host activity in an external app?",
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c41bfa0_657dba2c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastIntents.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "Could this be combined with ACTION_STOP_ACTIVITY? It\u0027s kind of the black sheep among these.",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a505ffe3_a2f38c67",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "why remove the DEBUG check here? It\u0027s still there in other places",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f20b1b_8e9e14b2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nitty nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fc74c2_6e614bc3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nitty nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddbe0ef_b2b6ccc6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d509c7_42934143",
+        "filename": "chromecast/browser/android/cast_web_contents_surface_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nitty nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2587b93b_223982bb",
+        "filename": "chromecast/browser/android/cast_web_contents_surface_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nit: Default constructor for ScopedJavaLocalRef should work here, so we don\u0027t necessarily need to explicitly initialize content_video_view_embedder_",
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c2e640_0f052e48",
+        "filename": "chromecast/browser/android/cast_web_contents_surface_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nitty nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d57d66_6883a9e6",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-16T19:41:26Z",
+      "side": 1,
+      "message": "nit: remove @ (to make it easier to search)",
+      "range": {
+        "startLine": 60,
+        "startChar": 9,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "b58f195469aab25f160f6419c44593dd067a1786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
