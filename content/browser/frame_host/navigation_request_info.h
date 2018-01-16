@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/memory/ref_counted.h"
+#include "base/unguessable_token.h"
 #include "content/common/content_export.h"
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_params.mojom.h"
@@ -21,16 +22,18 @@ namespace content {
 // ResourceDispatcherHost. It is initialized on the UI thread, and then passed
 // to the IO thread by a NavigationRequest object.
 struct CONTENT_EXPORT NavigationRequestInfo {
-  NavigationRequestInfo(const CommonNavigationParams& common_params,
-                        mojom::BeginNavigationParamsPtr begin_params,
-                        const GURL& site_for_cookies,
-                        bool is_main_frame,
-                        bool parent_is_main_frame,
-                        bool are_ancestors_secure,
-                        int frame_tree_node_id,
-                        bool is_for_guests_only,
-                        bool report_raw_headers,
-                        bool is_prerendering);
+  NavigationRequestInfo(
+      const CommonNavigationParams& common_params,
+      mojom::BeginNavigationParamsPtr begin_params,
+      const GURL& site_for_cookies,
+      bool is_main_frame,
+      bool parent_is_main_frame,
+      bool are_ancestors_secure,
+      int frame_tree_node_id,
+      bool is_for_guests_only,
+      bool report_raw_headers,
+      bool is_prerendering,
+      const base::UnguessableToken& devtools_navigation_token);
   ~NavigationRequestInfo();
 
   const CommonNavigationParams common_params;
@@ -54,6 +57,8 @@ struct CONTENT_EXPORT NavigationRequestInfo {
   const bool report_raw_headers;
 
   const bool is_prerendering;
+
+  const base::UnguessableToken devtools_navigation_token;
 };
 
 }  // namespace content

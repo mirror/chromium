@@ -749,6 +749,15 @@ bool WebDevToolsAgentImpl::CacheDisabled() {
   return false;
 }
 
+String WebDevToolsAgentImpl::NavigationInitiatorInfo(LocalFrame* frame) {
+  for (auto& it : network_agents_) {
+    String initiator = it.value->NavigationInitiatorInfo(frame);
+    if (!initiator.IsNull())
+      return initiator;
+  }
+  return String();
+}
+
 void WebDevToolsAgentImpl::FlushProtocolNotifications() {
   for (auto& it : sessions_)
     it.value->flushProtocolNotifications();
