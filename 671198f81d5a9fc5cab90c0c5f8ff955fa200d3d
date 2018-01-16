@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce596c29_55202a27",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T06:14:42Z",
+      "side": 1,
+      "message": "How about adding a comment like this?:\n\n// |responder| should be kept by ThreadSafeForwarder because |responder| may contains some parameters having strong thread affinity and ThreadSafeForwarder will be destroyed on the calling thread.",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfce39b_5b7441a3",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T06:14:42Z",
+      "side": 1,
+      "message": "// Accept the |message| by corresponding MessageReceiver in |async_responders_|. \n// If |message| is null, the MessageReceiver is removed from the map.",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe3afbf_d044cfa4",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T06:14:42Z",
+      "side": 1,
+      "message": "How about just using Message() instead of std::unique_ptr\u003c\u003e?",
+      "range": {
+        "startLine": 243,
+        "startChar": 65,
+        "endLine": 243,
+        "endChar": 72
+      },
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01a0e5c_a48d328c",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T06:14:42Z",
+      "side": 1,
+      "message": "std::move(*message) is enough?",
+      "range": {
+        "startLine": 253,
+        "startChar": 27,
+        "endLine": 253,
+        "endChar": 73
+      },
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaeb3465_6e9dd2e4",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T06:14:42Z",
+      "side": 1,
+      "message": "Is it better to use base::IDMap?",
+      "revId": "671198f81d5a9fc5cab90c0c5f8ff955fa200d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
