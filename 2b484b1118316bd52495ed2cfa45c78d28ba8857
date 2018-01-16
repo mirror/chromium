@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "230520d5_befc99b9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T11:28:10Z",
+      "side": 0,
+      "message": "Can you send out a PSA indicating that this is a bug in the HTMLLinkElement rellist implementation and that you intend to fix it. (I don\u0027t think a full \"Intent to Ship\" process is needed, but would be good to raise awareness)",
+      "revId": "2b484b1118316bd52495ed2cfa45c78d28ba8857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
