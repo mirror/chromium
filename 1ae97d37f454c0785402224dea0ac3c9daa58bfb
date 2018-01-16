@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e80501_46e4ffe9",
+        "filename": "ios/web/web_state/js/page_script_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T23:28:37Z",
+      "side": 1,
+      "message": "Can we use WKWebView terminology for distinguishing scripts? Specifically DocumentStart and DocumentEnd.",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d59ec1_20081b97",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T23:28:37Z",
+      "side": 1,
+      "message": "Is there another existing function in base for escaping which we could use?",
+      "range": {
+        "startLine": 47,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf5d0c1_775686fc",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T23:28:37Z",
+      "side": 1,
+      "message": "It does not seem right to assume that all_frames_late_web_bundle has $(PLUGIN_NOT_SUPPORTED_TEXT) text. DO we even need all_frames_late_web_bundle? Can we just grab plugins_placeholder.js here?",
+      "range": {
+        "startLine": 104,
+        "startChar": 38,
+        "endLine": 104,
+        "endChar": 64
+      },
+      "revId": "1ae97d37f454c0785402224dea0ac3c9daa58bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
