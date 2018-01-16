@@ -44,6 +44,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
     html_source->AddLocalizedString(entry.name, entry.id);
 }
 
+constexpr int kDialogHeightPsk = 320;
+
 }  // namespace
 
 // static
@@ -71,6 +73,20 @@ InternetConfigDialog::InternetConfigDialog(const std::string& network_type,
       network_id_(network_id) {}
 
 InternetConfigDialog::~InternetConfigDialog() {}
+
+void InternetConfigDialog::GetDialogSize(gfx::Size* size) const {
+  int height = InternetConfigDialog::kDialogHeight;
+  if (!network_id_.empty()) {
+    const NetworkState* network =
+        NetworkHandler::Get()->network_state_handler()->GetNetworkStateFromGuid(
+            network_id_);
+    if (network && (network->security_class() == shill::kSecurityPsk ||
+                    network->security_class() == shill::kSecurityWep)) {
+      height = kDialogHeightPsk;
+    }
+  }
+  size->SetSize(InternetConfigDialog::kDialogWidth, height);
+}
 
 std::string InternetConfigDialog::GetDialogArgs() const {
   base::DictionaryValue args;
