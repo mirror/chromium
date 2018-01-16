@@ -18,6 +18,7 @@ UnpackedSerializedScriptValue::UnpackedSerializedScriptValue(
     : value_(std::move(value)) {
   auto& array_buffer_contents = value_->array_buffer_contents_array_;
   if (!array_buffer_contents.IsEmpty()) {
+    value_->RegisterMemoryAllocatedWithCurrentScriptContext();
     array_buffers_.Grow(array_buffer_contents.size());
     std::transform(
         array_buffer_contents.begin(), array_buffer_contents.end(),

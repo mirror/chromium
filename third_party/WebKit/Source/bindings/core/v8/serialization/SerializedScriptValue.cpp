@@ -588,6 +588,7 @@ void SerializedScriptValue::RegisterMemoryAllocatedWithCurrentScriptContext() {
   // Only (re)register allocation cost for transferables if this
   // SerializedScriptValue has explicitly unregistered them before.
   if (transferables_need_external_allocation_registration_) {
+    DCHECK_GT(array_buffer_contents_array_.size(), size_t{0});
     for (auto& buffer : array_buffer_contents_array_)
       buffer.RegisterExternalAllocationWithCurrentContext();
   }
