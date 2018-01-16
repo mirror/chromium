@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5975d933_88b5a949",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a1f93a7_19c57d5f",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54b109a_d67786bd",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 48
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2e657fc0_249ba4d8",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54b109a_d67786bd",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22527f1e_328a1415",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 48
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-16T20:50:13Z",
       "side": 1,
       "message": "what state change above requires this? should it be done by the base class instead?",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fb8fc8_2c9935c1",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "You\u0027re right. Moved to base class. This will update the resizability based on min/max size change.",
+      "parentUuid": "22527f1e_328a1415",
       "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ddaa88a9_4122c33f",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9849697d_ef1c26f8",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9240db0_5be50740",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 48
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3973364c_cc493dcb",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9240db0_5be50740",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e797a80_2e9bfba9",
         "filename": "components/exo/shell_surface_base.cc",
         "patchSetId": 48
@@ -101,6 +191,24 @@
       "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506c61a3_c33028f5",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e797a80_2e9bfba9",
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dadae3_8a23c20d",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T21:46:19Z",
+      "side": 1,
+      "message": "It may return if the resizing is being handled by the ash\u0027s resizer but not resizer_. IsResizing is used for the exising way, so it can move to IsResizing. LMK if you prefer the old way.",
+      "parentUuid": "2758f4ef_8b932df5",
+      "range": {
+        "startLine": 1135,
+        "startChar": 6,
+        "endLine": 1135,
+        "endChar": 14
+      },
+      "revId": "42135dd1a8406816f0c77f4b771df9d2757051b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
