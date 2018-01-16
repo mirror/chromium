@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26ffaf7e_af829d93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80154733_bdd00743",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8e9de6_91a24ce3",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ea914f7e_7e2ee446",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13105,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8e9de6_91a24ce3",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd33ad78_703a71d9",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-11T19:10:40Z",
       "side": 1,
       "message": "Why not just change the fragment? It seems it is also same-document navigation and less of a edge case. The same URL could also be thought as a reload, so it is a bit more confusing.",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030c1a79_392722f2",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13113,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Because the specific SiteIsolation bug I\u0027m addressing requires doing a navigation to the same URL with the same fragment. And a navigation to the same URL is considered a reload if the URL has no fragment and a same-document navigation if it has.",
+      "parentUuid": "fd33ad78_703a71d9",
       "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "99e0ad82_55d3cfe0",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870973d1_ad4bab9f",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6625eb_cce27acc",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 8
@@ -90,6 +168,24 @@
       "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d39bd61_98a97fb9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3147,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d6625eb_cce27acc",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "4b40699f_e37d5c11",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "They seemed not to happen at all in the tests. I don\u0027t think that any of the reload types is valid with PlzNavigate (see line 3120) so I\u0027ve removed the conversion to reload.",
+      "parentUuid": "b7c1553a_59f66762",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4820416d_5a25d466",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 8
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "50b4d917_2401cc60",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3433,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done. Must have been a mistake when I split the code or rebased.",
+      "parentUuid": "4820416d_5a25d466",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f1f3af_235be627",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 8
@@ -141,6 +273,24 @@
       "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d269a5d3_08bb91d0",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3443,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95f1f3af_235be627",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "548b5e73_9b5f28cb",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "So I\u0027m not sure this fallback ever worked with PlzNavigate. In the latest patchset I have introduced a fallback mechanism which should work (see in RenderFrameHost).",
+      "parentUuid": "498bf0dc_5fa53b1c",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ed8340e_e385b511",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 8
@@ -193,6 +361,24 @@
       "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca53e697_4ac4a009",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed8340e_e385b511",
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "74d0169e_4aabd7cc",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6856c420_99696ce8",
+      "range": {
+        "startLine": 972,
+        "startChar": 7,
+        "endLine": 972,
+        "endChar": 39
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46c056e_b24b047b",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 8
@@ -230,6 +440,30 @@
       "writtenOn": "2018-01-11T19:10:40Z",
       "side": 1,
       "message": "This sentence doesn\u0027t seem complete. Does it mean to say that WebHistoryItem and WebHistoryLoadType are required for history navigations?",
+      "range": {
+        "startLine": 199,
+        "startChar": 54,
+        "endLine": 200,
+        "endChar": 60
+      },
+      "revId": "f357dce5cd429aabca38e2330cb8284bf17e21aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46aeaa1_1d867763",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T17:00:13Z",
+      "side": 1,
+      "message": "I meant a WebHistoryItem should be provided.",
+      "parentUuid": "e46c056e_b24b047b",
       "range": {
         "startLine": 199,
         "startChar": 54,
