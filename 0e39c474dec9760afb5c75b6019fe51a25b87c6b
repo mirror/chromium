@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a11a21_d275d3d6",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:22:39Z",
+      "side": 1,
+      "message": "nit: one space after \"this\"",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e0ab67_9c2bcc01",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:22:39Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc747b7_a0e2d73b",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:22:39Z",
+      "side": 1,
+      "message": "nit: Since this is only used in one test, I suggest using the GTEST friend-test macro and making this function private.\n\n(Alternately you could make it a helper function in an anonymous namespace in the .cc file. You would have to pass the current scale as a parameter. Then you could provide a public static GetScaleForScrollForTest to call it. Either way is fine with me.)",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e56dbb_b0119dbe",
+        "filename": "ash/magnifier/magnification_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:22:39Z",
+      "side": 1,
+      "message": "As far as I can tell there is only one subclass of this class. It\u0027s kind of weird that all the methods are virtual. Optional and definitely not for this CL would be to make this class\u0027 methods all concrete and not virtual.",
+      "revId": "0e39c474dec9760afb5c75b6019fe51a25b87c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
