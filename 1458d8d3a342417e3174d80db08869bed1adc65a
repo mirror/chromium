@@ -120,6 +120,47 @@
     },
     {
       "key": {
+        "uuid": "5df5d184_ce7d2a11",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2018-01-16T09:17:33Z",
+      "side": 1,
+      "message": "I also don\u0027t understand this TODO here.\nI would however change it to BindRepeating (in a different CL maybe) because Bind is \"deprecated\".",
+      "parentUuid": "6da1d919_7376e289",
+      "range": {
+        "startLine": 175,
+        "startChar": 44,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214f8407_8bff8e2a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2018-01-16T09:17:33Z",
+      "side": 1,
+      "message": "As discussed offline, add comment that validation isn\u0027t essential for this test and only there to make sure that the callback has no impact.",
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc435996_a0d0446f",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 2
@@ -211,6 +252,23 @@
       "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "297383ce_fe7eff3d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2018-01-16T09:17:33Z",
+      "side": 1,
+      "message": "nit: add a comment please that this time is arbitrary more or less.",
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
