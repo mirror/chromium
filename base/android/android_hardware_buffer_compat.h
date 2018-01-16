@@ -5,7 +5,8 @@
 #ifndef BASE_ANDROID_ANDROID_HARDWARE_BUFFER_COMPAT_H_
 #define BASE_ANDROID_ANDROID_HARDWARE_BUFFER_COMPAT_H_
 
-#include "base/android/android_hardware_buffer_abi.h"
+#include <android/hardware_buffer.h>
+
 #include "base/base_export.h"
 #include "base/lazy_instance.h"
 
@@ -36,14 +37,14 @@ class BASE_EXPORT AndroidHardwareBufferCompat {
   friend struct base::LazyInstanceTraitsBase<AndroidHardwareBufferCompat>;
   AndroidHardwareBufferCompat();
 
-  PFAHardwareBuffer_allocate allocate_;
-  PFAHardwareBuffer_acquire acquire_;
-  PFAHardwareBuffer_describe describe_;
-  PFAHardwareBuffer_lock lock_;
-  PFAHardwareBuffer_recvHandleFromUnixSocket recv_handle_;
-  PFAHardwareBuffer_release release_;
-  PFAHardwareBuffer_sendHandleToUnixSocket send_handle_;
-  PFAHardwareBuffer_unlock unlock_;
+  AHardwareBuffer_allocate allocate_;
+  AHardwareBuffer_acquire acquire_;
+  AHardwareBuffer_describe describe_;
+  AHardwareBuffer_lock lock_;
+  AHardwareBuffer_recvHandleFromUnixSocket recv_handle_;
+  AHardwareBuffer_release release_;
+  AHardwareBuffer_sendHandleToUnixSocket send_handle_;
+  AHardwareBuffer_unlock unlock_;
 };
 
 }  // namespace base
