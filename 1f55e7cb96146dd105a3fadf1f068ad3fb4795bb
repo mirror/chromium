@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70987dbb_302cd9ce",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T15:00:13Z",
+      "side": 1,
+      "message": "Can you call these:\nandroid32_ndk_api_level\nandroid64_ndk_api_level\n\nJust want it to be clear that it affects native code and not apk targetSdkVersion.",
+      "revId": "1f55e7cb96146dd105a3fadf1f068ad3fb4795bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
