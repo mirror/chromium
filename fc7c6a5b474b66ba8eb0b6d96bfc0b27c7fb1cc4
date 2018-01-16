@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e38ea32_f06fdf2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-16T01:29:36Z",
+      "side": 1,
+      "message": "Webapp.Install.InstallSource is meant to be both Android and desktop, so no respectively.",
+      "parentUuid": "a3558bfb_5754c63f",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82684ced_9173bf2d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "11dbd46e_06dfad9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-16T01:29:36Z",
+      "side": 1,
+      "message": "We already have\n\n- WebappActivity and many, many, many other Java classes\n- \"Webapp\" already exists in metrics as the top level namespace and the name of several metrics\n- \"Webapp\" has nearly 2x usage of \"WebApp\" in the PWA codebase, and 6x usage in metrics\n\nStandardising to Webapp makes more sense to me since it\u0027s already more prevalent and long-standing wrt PWAs.",
+      "parentUuid": "82684ced_9173bf2d",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e398b8d6_b608d7a9",
         "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-15T05:08:30Z",
       "side": 1,
       "message": "Should these fall through to NOTREACHED?",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41227ea_0774e1d8",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-16T01:29:36Z",
+      "side": 1,
+      "message": "I\u0027m confused at what you mean by \u0027these\u0027?",
+      "parentUuid": "e398b8d6_b608d7a9",
       "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "4f97ff45_09f8b533",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-16T01:29:36Z",
+      "side": 1,
+      "message": "This is the format used in permissions code and history/favicon code to name two places. More broadly, it appears thousands of times:\n\n$ git grep \"/\\*[a-zA-Z_]*\u003d\\*/[a-zA-Z]\" | wc -l\n2777",
+      "parentUuid": "12897591_8cde771d",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8080734_f73edfde",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 4
@@ -114,6 +198,24 @@
       "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e805f0ff_ab7f607b",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-16T01:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8080734_f73edfde",
+      "revId": "fc7c6a5b474b66ba8eb0b6d96bfc0b27c7fb1cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
