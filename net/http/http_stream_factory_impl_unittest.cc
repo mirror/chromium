@@ -603,7 +603,7 @@ TEST_F(HttpStreamFactoryTest, PreconnectDirectWithExistingSpdySession) {
     // Put a SpdySession in the pool.
     HostPortPair host_port_pair("www.google.com", 443);
     SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, SocketTag());
     ignore_result(CreateFakeSpdySession(session->spdy_session_pool(), key));
 
     CapturePreconnectsTransportSocketPool* transport_conn_pool =
@@ -1372,7 +1372,7 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeDisablesChannelId) {
   // Set an existing SpdySession in the pool.
   HostPortPair host_port_pair("www.google.com", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_ENABLED);
+                     PRIVACY_MODE_ENABLED, SocketTag());
 
   HttpRequestInfo request_info;
   request_info.method = "GET";
@@ -2599,6 +2599,84 @@ TEST_F(HttpStreamFactoryTest, RequestBidirectionalStreamImplFailure) {
   EXPECT_EQ(0, GetSocketPoolGroupCount(session->GetSSLSocketPool(
                    HttpNetworkSession::WEBSOCKET_SOCKET_POOL)));
 }
+
+#if defined(OS_ANDROID)
+TEST_F(HttpStreamFactoryTest, Tag) {
+  SpdySessionDependencies session_deps(ProxyService::CreateDirect());
+
+  MockRead mock_read(SYNCHRONOUS, ERR_IO_PENDING);
+  SequencedSocketData socket_data(&mock_read, 1, nullptr, 0);
+  socket_data.set_connect_data(MockConnect(ASYNC, OK));
+  session_deps.socket_factory->AddSocketDataProvider(&socket_data);
+
+  SSLSocketDataProvider ssl_socket_data(ASYNC, OK);
+  ssl_socket_data.next_proto = kProtoHTTP2;
+  session_deps.socket_factory->AddSSLSocketDataProvider(&ssl_socket_data);
+
+  HostPortPair host_port_pair("www.google.com", 443);
+  std::unique_ptr<HttpNetworkSession> session(
+      SpdySessionDependencies::SpdyCreateSession(&session_deps));
+  SocketTag tag1(SocketTag::UNSET_UID, 0x12345678);
+  SocketTag tag2(getuid(), 0x87654321);
+
+  HttpRequestInfo request_info1;
+  request_info1.method = "GET";
+  request_info1.url = GURL("https://www.google.com");
+  request_info1.load_flags = 0;
+  request_info1.socket_tag = tag1;
+  HttpRequestInfo request_info2;
+  request_info2.method = "GET";
+  request_info2.url = GURL("https://www.google.com");
+  request_info2.load_flags = 0;
+  request_info2.socket_tag = tag2;
+
+  SSLConfig ssl_config1;
+  StreamRequestWaiter waiter1;
+  std::unique_ptr<HttpStreamRequest> request1(
+      session->http_stream_factory()->RequestStream(
+          request_info1, DEFAULT_PRIORITY, ssl_config1, ssl_config1, &waiter1,
+          /* enable_ip_based_pooling = */ true,
+          /* enable_alternative_services = */ true, NetLogWithSource()));
+  waiter1.WaitForStream();
+  EXPECT_TRUE(waiter1.stream_done());
+  EXPECT_TRUE(nullptr == waiter1.websocket_stream());
+  ASSERT_TRUE(nullptr != waiter1.stream());
+
+  EXPECT_EQ(1, GetSpdySessionCount(session.get()));
+  EXPECT_EQ(1, GetSocketPoolGroupCount(session->GetTransportSocketPool(
+                   HttpNetworkSession::NORMAL_SOCKET_POOL)));
+  EXPECT_EQ(1, GetSocketPoolGroupCount(session->GetSSLSocketPool(
+                   HttpNetworkSession::NORMAL_SOCKET_POOL)));
+  EXPECT_EQ(0, GetSocketPoolGroupCount(session->GetTransportSocketPool(
+                   HttpNetworkSession::WEBSOCKET_SOCKET_POOL)));
+  EXPECT_EQ(0, GetSocketPoolGroupCount(session->GetSSLSocketPool(
+                   HttpNetworkSession::WEBSOCKET_SOCKET_POOL)));
+  EXPECT_TRUE(waiter1.used_proxy_info().is_direct());
+
+  SSLConfig ssl_config2;
+  StreamRequestWaiter waiter2;
+  std::unique_ptr<HttpStreamRequest> request2(
+      session->http_stream_factory()->RequestStream(
+          request_info2, DEFAULT_PRIORITY, ssl_config2, ssl_config2, &waiter2,
+          /* enable_ip_based_pooling = */ true,
+          /* enable_alternative_services = */ true, NetLogWithSource()));
+  waiter2.WaitForStream();
+  EXPECT_TRUE(waiter2.stream_done());
+  EXPECT_TRUE(nullptr == waiter2.websocket_stream());
+  ASSERT_TRUE(nullptr != waiter2.stream());
+
+  EXPECT_EQ(2, GetSpdySessionCount(session.get()));
+  EXPECT_EQ(2, GetSocketPoolGroupCount(session->GetTransportSocketPool(
+                   HttpNetworkSession::NORMAL_SOCKET_POOL)));
+  EXPECT_EQ(2, GetSocketPoolGroupCount(session->GetSSLSocketPool(
+                   HttpNetworkSession::NORMAL_SOCKET_POOL)));
+  EXPECT_EQ(0, GetSocketPoolGroupCount(session->GetTransportSocketPool(
+                   HttpNetworkSession::WEBSOCKET_SOCKET_POOL)));
+  EXPECT_EQ(0, GetSocketPoolGroupCount(session->GetSSLSocketPool(
+                   HttpNetworkSession::WEBSOCKET_SOCKET_POOL)));
+  EXPECT_TRUE(waiter2.used_proxy_info().is_direct());
+}
+#endif
 
 }  // namespace
 
