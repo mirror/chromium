@@ -29,4 +29,6 @@ const int kTraceEventGpuProcessSortIndex = -1;
 
 const int kTraceEventRendererMainThreadSortIndex = -1;
 
+const int64_t kAsyncHitTestTimeout = 5000;
+
 } // namespace content
