@@ -1491,8 +1491,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
         starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
       }
     }
-    container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-        type, focused_element);
+    container = ScrollableEnclosingBoxOrParentFrameForNode(focused_element);
   }
 
   bool consumed = false;
@@ -1501,8 +1500,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
         AdvanceFocusDirectionallyInContainer(container, starting_rect, type);
     starting_rect =
         NodeRectInAbsoluteCoordinates(container, true /* ignore border */);
-    container =
-        ScrollableEnclosingBoxOrParentFrameForNodeInDirection(type, container);
+    container = ScrollableEnclosingBoxOrParentFrameForNode(container);
     if (container && container->IsDocumentNode())
       ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
   }

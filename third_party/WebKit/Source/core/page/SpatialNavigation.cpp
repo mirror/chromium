@@ -299,16 +299,18 @@ bool IsScrollableNode(const Node* node) {
   if (!node)
     return false;
 
-  if (LayoutObject* layout_object = node->GetLayoutObject())
-    return layout_object->IsBox() &&
-           ToLayoutBox(layout_object)->CanBeScrolledAndHasScrollableArea() &&
-           node->hasChildren();
+  if (LayoutObject* layout_object = node->GetLayoutObject()) {
+    bool result = layout_object->IsBox() &&
+                  ToLayoutBox(layout_object)->CanBeScrolledAndHasScrollableArea() &&
+                  node->hasChildren();
+    LOG(ERROR) << "HUGO IsScrollableNode(" << node << "): " << result;
+    return result;
+  }
 
   return false;
 }
 
-Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
-                                                            Node* node) {
+Node* ScrollableEnclosingBoxOrParentFrameForNode(Node* node) {
   DCHECK(node);
   Node* parent = node;
   do {
@@ -317,9 +319,20 @@ Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
       parent = ToDocument(parent)->GetFrame()->DeprecatedLocalOwner();
     else
       parent = parent->ParentOrShadowHostNode();
-  } while (parent && !IsNavigableContainer(parent, type));
+    LOG(ERROR) << "HUGO parent: " << parent;
+  } while (parent && !IsContainer(parent));
 
   return parent;
+}
+
+bool IsContainer(const Node* node) {
+  if (!node)
+    return false;
+
+  return node->IsDocumentNode() ||
+         (node->IsFrameOwnerElement() &&
+          ToHTMLFrameOwnerElement(node)->ContentFrame()) ||
+         IsScrollableNode(node);
 }
 
 bool IsNavigableContainer(const Node* node, WebFocusType type) {
