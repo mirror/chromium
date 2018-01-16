@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f904ee_5162de18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "Technically the CHROME_HOME_MENU_HEADER_FEATURE is distinct from the promo. If this patch is intending only to excise the promo logic, then we should leave behind the check for tracker#wouldTriggerHelpUI.",
+      "range": {
+        "startLine": 1743,
+        "startChar": 27,
+        "endLine": 1744,
+        "endChar": 83
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597a9efc_647d12e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "This element and its parent can be removed from new_tab_page_layout.xml. There\u0027s also a PNG, ic_new_releases_black_24dp.png, that we should be able to remove as well.",
+      "range": {
+        "startLine": 439,
+        "startChar": 64,
+        "endLine": 439,
+        "endChar": 86
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662b7d4a_bf27acc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "We should remove the unneeded strings from the .grd file.",
+      "range": {
+        "startLine": 441,
+        "startChar": 73,
+        "endLine": 441,
+        "endChar": 94
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdfc255_9a3ac9d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "Do we want to clean up this shared preference? Or leave it for now?",
+      "range": {
+        "startLine": 445,
+        "startChar": 4,
+        "endLine": 450,
+        "endChar": 5
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46dfb13_fab38d1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "This method can be removed too",
+      "range": {
+        "startLine": 469,
+        "startChar": 16,
+        "endLine": 469,
+        "endChar": 48
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed480bb9_9f41b7c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "Same question about possibly clearing out this shared preference.",
+      "range": {
+        "startLine": 477,
+        "startChar": 16,
+        "endLine": 477,
+        "endChar": 79
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35009af_c4c1f3bd",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:59:28Z",
+      "side": 0,
+      "message": "I think this class can be removed as well, since it\u0027s only used for the opt-out snackbar. With the removal of the opt out snackbar, we should also mark the Android.ChromeHome.OptOutSnackbarClicked action as obsolete and update Snackbar.java to annotate UMA_CHROME_HOME_OPT_OUT_SURVEY as obsolete.",
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
