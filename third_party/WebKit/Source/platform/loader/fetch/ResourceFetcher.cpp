@@ -537,12 +537,11 @@ void ResourceFetcher::RemovePreload(Resource* resource) {
     preloads_.erase(it);
 }
 
-ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
+ResourceRequestBlockedReason ResourceFetcher::PrepareRequest(
     FetchParameters& params,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data,
-    unsigned long identifier,
-    ResourceRequestBlockedReason& blocked_reason) {
+    unsigned long identifier) {
   ResourceRequest& resource_request = params.MutableResourceRequest();
   Resource::Type resource_type = factory.GetType();
   const ResourceLoaderOptions& options = params.Options();
@@ -578,7 +577,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       params.GetResourceWidth(), resource_request);
 
   if (!params.Url().IsValid())
-    return kAbort;
+    return ResourceRequestBlockedReason::kOther;
 
   resource_request.SetPriority(ComputeLoadPriority(
       resource_type, params.GetResourceRequest(), ResourcePriority::kNotVisible,
@@ -604,13 +603,13 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   network_instrumentation::ResourcePrioritySet(identifier,
                                                resource_request.Priority());
 
-  blocked_reason = Context().CanRequest(
+  ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
       resource_type, resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
       reporting_policy, params.GetOriginRestriction(),
       resource_request.GetRedirectStatus());
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
-    return kBlock;
+    return blocked_reason;
 
   const scoped_refptr<const SecurityOrigin>& origin = options.security_origin;
   if (origin && !origin->IsUnique() &&
@@ -632,7 +631,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
                            FetchContext::RedirectType::kNotForRedirect);
 
   if (!params.Url().IsValid())
-    return kAbort;
+    return ResourceRequestBlockedReason::kOther;
 
   params.MutableOptions().cors_flag =
       !origin || !origin->CanRequestNoSuborigin(params.Url());
@@ -656,7 +655,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
     resource_request.SetAllowStoredCredentials(allow_stored_credentials);
   }
 
-  return kContinue;
+  return ResourceRequestBlockedReason::kNone;
 }
 
 Resource* ResourceFetcher::RequestResource(
@@ -668,13 +667,15 @@ Resource* ResourceFetcher::RequestResource(
   // shouldn't provide a client.
   DCHECK(!client ||
          params.Options().synchronous_policy == kRequestAsynchronously);
-  Resource* resource = RequestResource(params, factory, substitute_data);
+  Resource* resource =
+      RequestResourceInternal(params, factory, substitute_data);
+  DCHECK(resource);
   if (client)
     client->SetResource(resource, Context().GetLoadingTaskRunner().get());
   return resource;
 }
 
-Resource* ResourceFetcher::RequestResource(
+Resource* ResourceFetcher::RequestResourceInternal(
     FetchParameters& params,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
@@ -701,13 +702,8 @@ Resource* ResourceFetcher::RequestResource(
   }
 
   ResourceRequestBlockedReason blocked_reason =
-      ResourceRequestBlockedReason::kNone;
-
-  PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
-                                               identifier, blocked_reason);
-  if (result == kAbort)
-    return nullptr;
-  if (result == kBlock)
+      PrepareRequest(params, factory, substitute_data, identifier);
+  if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return ResourceForBlockedRequest(params, factory, blocked_reason);
 
   Resource::Type resource_type = factory.GetType();
@@ -733,7 +729,8 @@ Resource* ResourceFetcher::RequestResource(
       // in the case of data URLs which might have resources such as fonts that
       // need to be decoded only on demand. These data URLs are allowed to be
       // processed using the normal ResourceFetcher machinery.
-      return nullptr;
+      return ResourceForBlockedRequest(params, factory,
+                                       ResourceRequestBlockedReason::kOther);
     }
   }
 
@@ -804,18 +801,17 @@ Resource* ResourceFetcher::RequestResource(
   // loading immediately. If revalidation policy was determined as |Revalidate|,
   // the resource was already initialized for the revalidation here, but won't
   // start loading.
-  if (!ResourceNeedsLoad(resource, params, policy)) {
-    if (policy != kUse)
-      InsertAsPreloadIfNecessary(resource, params, resource_type);
-    return resource;
+  if (ResourceNeedsLoad(resource, params, policy)) {
+    if (StartLoad(resource)) {
+      scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
+    } else {
+      resource->FinishAsError(ResourceError::CancelledError(params.Url()),
+                              Context().GetLoadingTaskRunner().get());
+    }
   }
-
-  if (!StartLoad(resource))
-    return nullptr;
 
   if (policy != kUse)
     InsertAsPreloadIfNecessary(resource, params, resource_type);
-  scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
 
   return resource;
 }

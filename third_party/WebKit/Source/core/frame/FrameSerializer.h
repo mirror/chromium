@@ -149,7 +149,7 @@ class CORE_EXPORT FrameSerializer final {
                       scoped_refptr<const SharedBuffer>,
                       const KURL&);
   void AddImageToResources(ImageResourceContent*, const KURL&);
-  void AddFontToResources(FontResource*);
+  void AddFontToResources(FontResource&);
 
   void RetrieveResourcesForProperties(const CSSPropertyValueSet*, Document&);
   void RetrieveResourcesForCSSValue(const CSSValue&, Document&);
