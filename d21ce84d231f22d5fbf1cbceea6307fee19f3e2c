@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "f2f8860f_d9c0ea02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T23:29:52Z",
+      "side": 1,
+      "message": "I don\u0027t think that standards from other apps are relevant here, and I think there is value in having a separation between cookie names and identifiers, so please switch to dashes.",
+      "parentUuid": "dcf427c1_1c05a0df",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b91b942d_72c10d56",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
         "patchSetId": 8
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "c7731ad1_8951ba7c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T23:29:52Z",
+      "side": 1,
+      "message": "I think that ordering is a separate concern from shadowing, and should be tested separately. Tests should be as small as possible.\n\nThe test I suggested proves that ordering takes explicit domains into account in a clear way as \"name1, name3, name2\" is a clear departure from the expected alphabetical ordering.\n\nYou can have a separate test for shadowing where you write two \"same-name\" cookies with implicit / explicit domain and assert that you get 2 \u0027same-name\u0027 cookies.",
+      "parentUuid": "9bc17476_7bcd13b5",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a964c4c1_7f33ce8c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
         "patchSetId": 8
@@ -314,6 +350,24 @@
       "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da0bdc7e_d8988b5a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T23:29:52Z",
+      "side": 1,
+      "message": "I didn\u0027t intend to suggest globally unique cookie names. Names like\n\"unprefixed_getAll_domain_shadowing1_unshadowed\" are too long to remember, so they make the tests very hard to read. Please make names long enough to be clear within a test.\n\nWhile tests that cover interaction are valuable, I expect that we\u0027ll get most of the value from simple tests that cover each aspect of the spec independently. I think this is particularly true for an emerging spec -- as browsers implement, we can use the implementation bugs as hints for which interaction tests are needed.\n\nAt the very least, we should not have a test covering the interaction of A and B if we don\u0027t have separate tests for A and B. The above is then re-stated as \"also, we should not have interaction tests unless we have very good reasons to think they\u0027d hit bugs.\"",
+      "parentUuid": "e0521694_66209862",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

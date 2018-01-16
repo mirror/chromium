@@ -371,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "5f584eb3_4ce3d2b0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T23:29:52Z",
+      "side": 1,
+      "message": "I don\u0027t see the word \"brittle\" in my feedback, so I\u0027m not sure why you\u0027re asking about brittleness. I asked for a separate check for each property value, so it\u0027ll be natural to add new checks if we need to. I don\u0027t like/want to use the HTTP header (cookie string) representation unless it\u0027s absolutely necessary. The extra string manipulation is distracting, unnecessarily complex, and just adds more things we\u0027d have to reason about.",
+      "parentUuid": "a6147831_49ccde34",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c53bc536_23bff678",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
         "patchSetId": 6
@@ -403,6 +421,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5e5b5f2_e5559218",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-16T23:29:52Z",
+      "side": 1,
+      "message": "Please break down the concerns into separate small tests. Covering a lot of things at once makes the test harder to follow and debug.",
+      "parentUuid": "be7e9b72_3a2f28e8",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
