@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f90def84_4042eb49",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/external/wpt/keyboard-lock/navigator-keyboardLock-two-parallel-requests.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T23:08:18Z",
+      "side": 1,
+      "message": "rakuco@: This file should be deleted, but it\u0027s not the importer\u0027s wrongdoing. We are having capacity issues in Swarming and the Linux results were incomplete. The importer is WAI, reusing previous baselines.",
+      "revId": "0b92125dce786c26969e94db07d2a63f2bb68c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
