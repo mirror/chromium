@@ -124,6 +124,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
 
   void set_start_time_null_http_rtt(const base::TimeDelta& http_rtt) {
     start_time_null_http_rtt_ = http_rtt;
+    ComputeEffectiveConnectionType();
   }
 
   void set_recent_http_rtt(const base::TimeDelta& recent_http_rtt) {
@@ -140,6 +141,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
 
   void set_start_time_null_transport_rtt(const base::TimeDelta& transport_rtt) {
     start_time_null_transport_rtt_ = transport_rtt;
+    ComputeEffectiveConnectionType();
   }
 
   void set_recent_transport_rtt(const base::TimeDelta& recent_transport_rtt) {
