@@ -203,7 +203,12 @@ ScopedTransformOverviewWindow::ScopedTransformOverviewWindow(
       overview_started_(false),
       original_transform_(window->layer()->GetTargetTransform()),
       original_opacity_(window->layer()->GetTargetOpacity()),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (window->bounds().width() > window->bounds().height() * 2)
+    type_ = WindowDimensionsType::kTooWide;
+  else if (window->bounds().height() > window->bounds().width() * 2)
+    type_ = WindowDimensionsType::kTooTall;
+}
 
 ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() = default;
 
@@ -352,7 +357,8 @@ gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
     const gfx::Rect& rect,
     const gfx::Rect& bounds,
     int top_view_inset,
-    int title_height) {
+    int title_height,
+    ScopedTransformOverviewWindow* transform_window) {
   DCHECK(!rect.IsEmpty());
   DCHECK_LE(top_view_inset, rect.height());
   const float scale =
@@ -364,8 +370,42 @@ gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
       title_height - gfx::ToCeiledInt(scale * top_view_inset);
   const int height = std::min(gfx::ToCeiledInt(scale * rect.height()),
                               bounds.height() - vertical_offset);
-  return gfx::Rect(bounds.x() + horizontal_offset, bounds.y() + vertical_offset,
-                   width, height);
+  gfx::Rect new_bounds(bounds.x() + horizontal_offset,
+                       bounds.y() + vertical_offset, width, height);
+
+  switch (transform_window->type()) {
+    case ScopedTransformOverviewWindow::WindowDimensionsType::kTooWide: {
+      const int wide_height =
+          (rect.height() - top_view_inset) * bounds.width() / rect.width() -
+          title_height;
+      new_bounds = gfx::Rect(
+          bounds.x(),
+          bounds.y() + title_height + 0.5 * (bounds.height() - wide_height),
+          bounds.width(), wide_height);
+      gfx::Rect window_selector_bounds = bounds;
+      window_selector_bounds.set_y(bounds.y() + title_height);
+      window_selector_bounds.set_height(bounds.height() - title_height);
+      transform_window->window_selector_bounds_ = window_selector_bounds;
+      break;
+    }
+    case ScopedTransformOverviewWindow::WindowDimensionsType::kTooTall: {
+      const int tall_height = bounds.height() - title_height;
+      const int tall_width =
+          rect.width() * tall_height / (rect.height() - top_view_inset);
+      new_bounds =
+          gfx::Rect(bounds.x() + 0.5 * (bounds.width() - tall_width),
+                    bounds.y() + title_height, tall_width, tall_height);
+      gfx::Rect window_selector_bounds = bounds;
+      window_selector_bounds.set_y(bounds.y() + title_height);
+      window_selector_bounds.set_height(bounds.height() - title_height);
+      transform_window->window_selector_bounds_ = window_selector_bounds;
+      break;
+    }
+    default:
+      break;
+  }
+
+  return new_bounds;
 }
 
 gfx::Transform ScopedTransformOverviewWindow::GetTransformForRect(

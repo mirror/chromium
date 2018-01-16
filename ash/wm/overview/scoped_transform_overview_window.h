@@ -12,17 +12,15 @@
 #include "ash/wm/overview/overview_animation_type.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/events/event_handler.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/transform.h"
 
 namespace aura {
 class Window;
-}
-
-namespace gfx {
-class Rect;
 }
 
 namespace views {
@@ -44,6 +42,11 @@ class WindowSelectorItem;
 // destroyed.
 class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
  public:
+  enum class WindowDimensionsType {
+    kNormal = 0,
+    kTooWide,
+    kTooTall,
+  };
   class OverviewContentMask;
   using ShapeRects = std::vector<gfx::Rect>;
   using ScopedAnimationSettings =
@@ -60,10 +63,12 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // aspect ratio). Takes into account a window header that is |top_view_inset|
   // tall in the original window getting replaced by a window caption that is
   // |title_height| tall in the transformed window.
-  static gfx::Rect ShrinkRectToFitPreservingAspectRatio(const gfx::Rect& rect,
-                                                        const gfx::Rect& bounds,
-                                                        int top_view_inset,
-                                                        int title_height);
+  static gfx::Rect ShrinkRectToFitPreservingAspectRatio(
+      const gfx::Rect& rect,
+      const gfx::Rect& bounds,
+      int top_view_inset,
+      int title_height,
+      ScopedTransformOverviewWindow* transform_window);
 
   // Returns the transform turning |src_rect| into |dst_rect|.
   static gfx::Transform GetTransformForRect(const gfx::Rect& src_rect,
@@ -134,6 +139,12 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   aura::Window* window() const { return window_; }
 
+  WindowDimensionsType type() const { return type_; }
+
+  base::Optional<gfx::Rect> window_selector_bounds() const {
+    return window_selector_bounds_;
+  }
+
   // Closes the transient root of the window managed by |this|.
   void Close();
 
@@ -181,6 +192,10 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // The original opacity of the window before entering overview mode.
   float original_opacity_;
+
+  WindowDimensionsType type_ = WindowDimensionsType::kNormal;
+
+  base::Optional<gfx::Rect> window_selector_bounds_;
 
   // A widget that holds the content for the minimized window.
   std::unique_ptr<views::Widget> minimized_widget_;

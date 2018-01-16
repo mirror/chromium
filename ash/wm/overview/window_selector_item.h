@@ -122,6 +122,9 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   // window cannot be snapped.
   void UpdateCannotSnapWarningVisibility();
 
+  ScopedTransformOverviewWindow::WindowDimensionsType GetWindowDimensionsType()
+      const;
+
   // Sets if the item is dimmed in the overview. Changing the value will also
   // change the visibility of the transform windows.
   void SetDimmed(bool dimmed);
