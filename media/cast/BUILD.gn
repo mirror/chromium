@@ -106,6 +106,9 @@ source_set("net") {
     "net/udp_packet_pipe.h",
     "net/udp_transport.cc",
     "net/udp_transport.h",
+    "net/udp_transport_host_impl.cc",
+    "net/udp_transport_host_impl.h",
+    "net/udp_transport_interface.h",
   ]
 
   deps = [
@@ -315,6 +318,7 @@ test("cast_unittests") {
     "net/rtp/rtp_packetizer_unittest.cc",
     "net/rtp/rtp_parser_unittest.cc",
     "net/udp_packet_pipe_unittest.cc",
+    "net/udp_transport_host_impl_unittest.cc",
     "net/udp_transport_unittest.cc",
     "receiver/audio_decoder_unittest.cc",
     "receiver/frame_receiver_unittest.cc",
