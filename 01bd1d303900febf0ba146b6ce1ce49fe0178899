@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0395932b_a0279e17",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "Optional: we could avoid this dependency on ChildProcessSecurityPolicy by passing in a base::Optional\u003curl::Origin\u003e isolated_origin (which would be empty if the there were no matching origin).\n\nI\u0027m not sure if that\u0027s more or less desirable from a layering perspective; either way is fine with me.  But it would make unittesting this method potentially easier.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6a05f8_cb3c4c08",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "nitty nit: I don\u0027t think breaking these ifs into two statements has readability benefit; let\u0027s just do:\nif (is_isolated_origin \u0026\u0026 extension-\u003eid() !\u003d kWebStoreAppId \u0026\u0026\n    !DoesOriginMatchAllURLsInWebExtent(isolated_origin, extension-\u003eweb_extent()) {\n  return url;\n}",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1be7dab_674a5242",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 4
@@ -34,6 +74,121 @@
       "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64bb10e1_7fa63546",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "Great comment!  So great, that I\u0027d encourage us to duplicate it in the code for all time.*\n\n*read: until it\u0027s updated in 6 months, but in software time, that\u0027s like millennia!",
+      "parentUuid": "5ed9a0c7_4ab25da2",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35924506_6246ad0c",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "This made me nervous until I dug a bit more.  To avoid panicking once I forget what I found out, can we add a comment similar to this:\n// We allow matching subdomains here because |origin| is the precise origin\n// retrieved from the isolation policy. Thus, we\u0027ll only allow an extent\n// of foo.example.com and bar.example.com if the isolated origin was\n// example.com; if the isolated origin is foo.example.com, this will\n// correctly fail.\n\nBut on that note (out of curiosity), do we have a \"include subdomains\" toggle on isolated origins?  For instance, what if someone wanted to isolate google.com, but *not* include maps.google.com, etc in the same process?",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef034855_b0d690ec",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "nitty nit: s/set/extent",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd835ecc_38ff1bb4",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "Call HostedAppProcessModelTest::SetUpCommandLine()?  (Unless the omission was deliberate?)",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03712771_77c8c11e",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "optional: IMO this might be *slightly* more readable as:\nbase::StringPrintf(\"%s,%s\", GetURL(\"isolated.com\", \"/\").spec().c_str(),\n                            GetURL(\"very.isolated.com\", \"/\").spec().c_str());\n\nBut I don\u0027t feel strongly.",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7dde9e3_457a80ce",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T20:18:36Z",
+      "side": 1,
+      "message": "nit: maybe s/untrusted/unisolated?",
+      "range": {
+        "startLine": 1089,
+        "startChar": 64,
+        "endLine": 1089,
+        "endChar": 73
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
