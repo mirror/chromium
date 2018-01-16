@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "6d3d85c7_dec4ec83",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-16T23:38:26Z",
+      "side": 1,
+      "message": "It is registered. The registration is now done in |onNativeInit| by checking onAttachedToWindow inside it. https://chromium-review.googlesource.com/c/chromium/src/+/863082/3/content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java#54",
+      "parentUuid": "bb47c14e_eed490f5",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "132a0dcb_8834b3c5",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
