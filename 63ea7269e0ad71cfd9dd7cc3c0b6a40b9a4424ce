@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2190f34_9e0e2a72",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-16T19:03:12Z",
+      "side": 1,
+      "message": "How would that work exactly? GeometryMapper has no way to know whether there are any clips\nwhich might have a difference of clip_rect_excluding_overlay_scrollbars.",
+      "parentUuid": "465d116d_650ff24e",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3fb4e0_9deec25d",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.cpp",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7837cabe_4dd0bd53",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-16T19:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3fb4e0_9deec25d",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4277ca2_cad03d23",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-16T19:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda8c804_5f03cf76",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0844f7f0_c15dbc35",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bdbea3_913401f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-16T19:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0844f7f0_c15dbc35",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
