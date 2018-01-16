@@ -53,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "d88136f1_617a05e4",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "You can just client_.Bind(std::move(client_info)).",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5500a2_de7cb9c0",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "GetMimeTypeFromFile does not do any I/O and cannot block. No need to call it async.",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777ea1dc_0d24feb0",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "Is this logic duplicated from somewhere else?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768da59e_c28c0bb9",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -70,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "394dab18_7678750a",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "Yeah this seems like it\u0027s not used at all. The data\u0027s already written to the pipe, and there\u0027s no file to read from. I assume it\u0027s just leftover code?",
+      "parentUuid": "768da59e_c28c0bb9",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc2d0940_bfc54765",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -81,6 +150,74 @@
       "writtenOn": "2018-01-11T02:25:20Z",
       "side": 1,
       "message": "why mutable?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88e216b_32099a12",
+        "filename": "content/public/browser/file_url_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "nit: will be* set",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55217a1_80944b50",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "use a unique_ptr - you can std::move them into BindOnce, and this is definitely much more preferable compared to a raw new and base::Owned.\n\nIn general there is no reason to ever use base::Owned for anything other than the |this| argument of a Bind.",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369962b9_c456ef5d",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "I think this is unnecessary. InfoMap only exists so that the IO thread can have a mirror of extensions data from the UI thread. You\u0027re already on the UI thread here, so you can just use e.g. ExtensionRegistry to get the data you need synchronously.",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a97c04e_5f0a76e7",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T17:24:01Z",
+      "side": 1,
+      "message": "Is this all duplicated from somewhere else? Can we share code?",
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
