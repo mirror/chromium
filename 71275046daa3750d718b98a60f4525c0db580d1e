@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bccd7fe6_fde62f50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-16T15:32:46Z",
+      "side": 1,
+      "message": "Sure: https://crrev.com/c/868018",
+      "parentUuid": "a9ab5a77_556f9433",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d1e684_a0eff97d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T19:14:10Z",
       "side": 1,
       "message": "will the string of the passwords ever be \"too\" big?  Do we need to consider chunking ever or is that silly for now (i\u0027ll voting for the latter)?\n\nThe gotcha is that a huge string will be duplicated across java and C++ during the call, but I guess that is unlikely to be larger than the huge data models of bookmarks.  I\u0027ll stop my premature optimizations.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55e0d40_e83a7eaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-16T15:32:46Z",
+      "side": 1,
+      "message": "One serialised password will be about 100 bytes, and most users have few tens of them at most. So this is a few kilobytes.\n\nThere are extreme users who might have thousands of passwords, with the export string reaching a few megabytes.\n\nThe exporting itself only should take place rarely.\n\nSo for now I\u0027d go with sending it over in a single step, unless you feel differently based on the above numbers.",
+      "parentUuid": "31d1e684_a0eff97d",
       "range": {
         "startLine": 33,
         "startChar": 13,
@@ -68,6 +116,30 @@
       "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10613c58_3cf49895",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-16T15:32:46Z",
+      "side": 1,
+      "message": "Sure: https://crrev.com/c/868018",
+      "parentUuid": "02bd12f2_4a53c109",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 10
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
