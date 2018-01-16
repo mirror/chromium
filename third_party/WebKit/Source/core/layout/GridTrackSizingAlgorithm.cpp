@@ -484,8 +484,13 @@ double IndefiniteSizeStrategy::FindUsedFlexFraction(
       if (i > 0 && span.StartLine() <= flexible_sized_tracks_index[i - 1])
         continue;
 
-      flex_fraction = std::max(
-          flex_fraction, FindFrUnitSize(span, MaxContentForChild(*grid_item)));
+      LayoutUnit left_over_space =
+          MaxContentForChild(*grid_item) -
+          GetLayoutGrid()->GuttersSize(algorithm_.GetGrid(), direction,
+                                       span.StartLine(), span.IntegerSpan(),
+                                       AvailableSpace());
+      flex_fraction =
+          std::max(flex_fraction, FindFrUnitSize(span, left_over_space));
     }
   }
 
