@@ -15,6 +15,8 @@
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/third_party/nspr/prtime.h"
+#include "base/time/clock.h"
+#include "base/time/tick_clock.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -133,6 +135,31 @@ std::ostream& operator<<(std::ostream& os, TimeDelta time_delta) {
 }
 
 // Time -----------------------------------------------------------------------
+
+namespace {
+static LazyInstance<std::unique_ptr<Clock>>::Leaky g_now_override_clock =
+    LAZY_INSTANCE_INITIALIZER;
+}  // namespace
+
+// static
+Time Time::Now() {
+  if (g_now_override_clock.Get())
+    return g_now_override_clock.Get()->Now();
+  return NowIgnoringOverride();
+}
+
+// static
+Time Time::NowFromSystemTime() {
+  if (g_now_override_clock.Get())
+    return g_now_override_clock.Get()->Now();
+  return NowFromSystemTimeIgnoringOverride();
+}
+
+// static
+std::unique_ptr<Clock> Time::SetNowOverride(std::unique_ptr<Clock> override) {
+  g_now_override_clock.Get().swap(override);
+  return override;
+}
 
 // static
 Time Time::FromDeltaSinceWindowsEpoch(TimeDelta delta) {
@@ -298,6 +325,27 @@ std::ostream& operator<<(std::ostream& os, Time time) {
                             exploded.millisecond);
 }
 
+// TimeTicks ------------------------------------------------------------------
+
+namespace {
+static LazyInstance<std::unique_ptr<TickClock>>::Leaky
+    g_now_override_tick_clock = LAZY_INSTANCE_INITIALIZER;
+}  // namespace
+
+// static
+TimeTicks TimeTicks::Now() {
+  if (g_now_override_tick_clock.Get())
+    return g_now_override_tick_clock.Get()->NowTicks();
+  return NowIgnoringOverride();
+}
+
+// static
+std::unique_ptr<TickClock> TimeTicks::SetNowOverride(
+    std::unique_ptr<TickClock> override) {
+  g_now_override_tick_clock.Get().swap(override);
+  return override;
+}
+
 // Local helper class to hold the conversion from Time to TickTime at the
 // time of the Unix epoch.
 class UnixEpochSingleton {
@@ -343,6 +391,8 @@ std::ostream& operator<<(std::ostream& os, TimeTicks time_ticks) {
   const TimeDelta as_time_delta = time_ticks - TimeTicks();
   return os << as_time_delta.InMicroseconds() << " bogo-microseconds";
 }
+
+// ThreadTicks ----------------------------------------------------------------
 
 std::ostream& operator<<(std::ostream& os, ThreadTicks thread_ticks) {
   const TimeDelta as_time_delta = thread_ticks - ThreadTicks();

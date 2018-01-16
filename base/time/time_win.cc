@@ -131,7 +131,7 @@ bool SafeConvertToWord(int in, WORD* out) {
 // Time -----------------------------------------------------------------------
 
 // static
-Time Time::Now() {
+Time Time::NowIgnoringOverride() {
   if (g_initial_time == 0)
     InitializeClock();
 
@@ -146,7 +146,7 @@ Time Time::Now() {
   // To avoid any drift, we periodically resync the counters to the system
   // clock.
   while (true) {
-    TimeTicks ticks = TimeTicks::Now();
+    TimeTicks ticks = TimeTicks::NowIgnoringOverride();
 
     // Calculate the time elapsed since we started our timer
     TimeDelta elapsed = ticks - g_initial_ticks;
@@ -162,7 +162,7 @@ Time Time::Now() {
 }
 
 // static
-Time Time::NowFromSystemTime() {
+Time Time::NowFromSystemTimeIgnoringOverride() {
   // Force resync.
   InitializeClock();
   return Time(g_initial_time);
@@ -573,7 +573,7 @@ TimeTicks::TickFunctionType TimeTicks::SetMockTickFunction(
 }
 
 // static
-TimeTicks TimeTicks::Now() {
+TimeTicks TimeTicks::NowIgnoringOverride() {
   return TimeTicks() + g_now_function();
 }
 

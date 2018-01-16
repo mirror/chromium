@@ -63,7 +63,7 @@ namespace base {
 // Time -----------------------------------------------------------------------
 
 // static
-Time Time::Now() {
+Time Time::NowIgnoringOverride() {
   struct timeval tv;
   struct timezone tz = {0, 0};  // UTC
   CHECK(gettimeofday(&tv, &tz) == 0);
@@ -75,15 +75,16 @@ Time Time::Now() {
 }
 
 // static
-Time Time::NowFromSystemTime() {
-  // Just use Now() because Now() returns the system time.
-  return Now();
+Time Time::NowFromSystemTimeIgnoringOverride() {
+  // Just use NowIgnoringOverride() because NowIgnoringOverride() returns the
+  // system time.
+  return NowIgnoringOverride();
 }
 
 // TimeTicks ------------------------------------------------------------------
 
 // static
-TimeTicks TimeTicks::Now() {
+TimeTicks TimeTicks::NowIgnoringOverride() {
   return TimeTicks(ClockNow(CLOCK_MONOTONIC));
 }
 
