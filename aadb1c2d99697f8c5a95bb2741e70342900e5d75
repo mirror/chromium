@@ -34,6 +34,24 @@
       "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a320a3f4_3d8405a4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-16T14:01:05Z",
+      "side": 1,
+      "message": "I thought it\u0027d be possible to squeeze that information out of a normal constraint space for layout, but if not, what you do here is fine.",
+      "parentUuid": "c7138d2b_10a3a746",
+      "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
