@@ -34,6 +34,24 @@
       "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a443da88_22105db9",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-16T23:09:30Z",
+      "side": 0,
+      "message": "I like this idea, though this should probably be similar to the stable angle zone. A device that is fully open may appear to be almost closed at times so we shouldn\u0027t flip back to normal mode immediately in these cases either.\n\nSo to summarize, we can track how long the device has been in the current zone (open / close) and when the measured angle is in the unstable angle zone only switch if it has been in that zone for long enough?",
+      "parentUuid": "ae0c4784_0a660485",
+      "revId": "6e48de1385b1773f48ba2ffa2aa4597c0523eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
