@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575b52d3_43a40419",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-16T21:50:29Z",
+      "side": 1,
+      "message": "Ian, the way this ended up, I\u0027m doing the conversion once per frame anyway, because the formatting depends on multiple model properties.  Therefore, referring to color scheme here is essentially free, and I could pivot away from the color map.",
+      "revId": "5d524c0fd143d1fe9d1b942468d2c1960ccf0f86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
