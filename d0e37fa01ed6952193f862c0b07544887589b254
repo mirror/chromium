@@ -52,6 +52,24 @@
       "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8efe517_3d552d96",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SplitWidget.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-16T21:46:58Z",
+      "side": 1,
+      "message": "Yeah, we should do that.  Since the _applyConstraints bug is independent of the console scroll bug, I\u0027ll fix the console scroll bug another way in this CL.",
+      "parentUuid": "9725ffc7_c37c8c9b",
+      "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
