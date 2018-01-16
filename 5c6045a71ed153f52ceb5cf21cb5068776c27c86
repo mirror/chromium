@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364320d9_ee77b478",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-16T21:24:35Z",
+      "side": 1,
+      "message": "Can you add a comment explaining the alpha is always going to be sampled as 1.0?",
+      "revId": "5c6045a71ed153f52ceb5cf21cb5068776c27c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
