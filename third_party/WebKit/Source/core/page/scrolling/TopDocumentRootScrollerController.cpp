@@ -118,6 +118,9 @@ void SetNeedsCompositingUpdateOnAncestors(ScrollableArea* area) {
 
     LayoutView* layout_view = ToLocalFrame(frame)->View()->GetLayoutView();
 
+    if (!layout_view->GetDocument().Lifecycle().IsActive())
+      continue;
+
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
       PaintLayer* frame_root_layer = layout_view->Layer();
       DCHECK(frame_root_layer);

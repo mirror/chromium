@@ -74,6 +74,11 @@ class CORE_EXPORT RootScrollerController
   // rely on DidUpdateLayout.
   void DidResizeFrameView();
 
+  // Called when an iframe in this document has an updated FrameView (e.g.
+  // FrameView removed, swapped, etc.) so that we can recompute the effective
+  // root scroller and set the appropriate properties on the view.
+  void DidUpdateIFrameFrameView();
+
   // Returns the PaintLayer associated with the currently effective root
   // scroller.
   PaintLayer* RootScrollerPaintLayer() const;
