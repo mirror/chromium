@@ -1,0 +1,14 @@
+Some Text1 Some Text2
+Some Text3
+Some Text4
+Test that flickering is observed on text selection when culled inline is selected
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+
+FAIL window.getSelection().containsNode(document.getElementById('noRange')) should be false. Was true.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

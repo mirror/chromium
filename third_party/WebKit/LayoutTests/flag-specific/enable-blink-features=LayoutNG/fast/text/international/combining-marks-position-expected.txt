@@ -4,5 +4,9 @@ test проверка
 tèst провѐрка
 خانه
 خانهٔ
-PASS. The length of targets and references are the same.
+FAIL
+reference1.offsetWidth = 99
+target1.offsetWidth = 99
+reference2.offsetWidth = 22
+target2.offsetWidth = 25
 
