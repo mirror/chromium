@@ -1,0 +1,67 @@
+import("src/files.gni")
+
+group("all") {
+  deps = [
+    ":media_router",
+  ]
+}
+
+template("closure_compile_modules") {
+  action(target_name) {
+    # TODO: update to use rules in compile_js.gni
+    script = "//chrome/browser/resources/media_router/extension/compile.py"
+    outputs = []
+    inputs = invoker.inputs
+    foreach(module_name, invoker.module_names) {
+      outputs += [ "${invoker.output_prefix}/${module_name}.js" ]
+    }
+    args = [
+      "--compiler_jar=" +
+          rebase_path("//third_party/closure_compiler/compiler/compiler.jar"),
+      "-v",
+      "-m",
+      rebase_path(invoker.output_prefix + "/", root_build_dir),
+    ]
+    args += [ "-e" ] + rebase_path(invoker.externs, root_build_dir)
+    args += [ "-c" ] + invoker.closure_flags
+    args += [ "--" ] + rebase_path(invoker.inputs, root_build_dir)
+  }
+}
+
+# This rule compiles all the JS code into three modules as specificed
+# in src/files.gni: common.js, mirroring_common.js, and
+# background_script.js, but mirroring_common.js is just an empty file.
+# This appears to be a harmless side-effect of using a subset of the
+# module dependency structure as the close-source build.  The code
+# that one would expect to be in mirroring_common.js is placed in
+# common.js instead.
+closure_compile_modules("media_router_modules") {
+  output_prefix = "$target_gen_dir"
+  closure_flags = [
+                    "dependency_mode=LOOSE",
+                    "formatting=PRETTY_PRINT",
+                  ] + mr_module_specs
+  externs = [
+    "src/externs.js",
+    "src/mojo_externs.js",
+  ]
+  inputs = rebase_path(mr_module_files, ".", "src")
+  module_names = mr_module_names
+}
+
+action("media_router") {
+  script = "assemble_extension.py"
+  inputs = [
+    "manifest.yaml",
+  ]
+  outputs = [
+    "$target_gen_dir/manifest.json",
+  ]
+  deps = [
+    ":media_router_modules",
+  ]
+  args = [
+    "--manifest_in=" + rebase_path("manifest.yaml", root_build_dir),
+    "--output_dir=" + rebase_path(target_gen_dir, root_build_dir),
+  ]
+}

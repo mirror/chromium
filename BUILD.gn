@@ -92,6 +92,7 @@ group("gn_all") {
   if (!is_ios && !is_android && !is_chromecast && !is_fuchsia) {
     deps += [
       "//chrome",
+      "//chrome/browser/resources/media_router/extension:all",
       "//chrome/installer/zucchini:zucchini",
       "//chrome/installer/zucchini:zucchini_unittests",
       "//chrome/test:browser_tests",
