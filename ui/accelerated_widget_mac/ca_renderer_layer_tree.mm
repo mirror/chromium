@@ -340,7 +340,6 @@ CARendererLayerTree::TransformLayer::~TransformLayer() {
 CARendererLayerTree::ContentLayer::ContentLayer(
     CARendererLayerTree* tree,
     base::ScopedCFTypeRef<IOSurfaceRef> io_surface,
-    base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer,
     const gfx::RectF& contents_rect,
     const gfx::Rect& rect_in,
     unsigned background_color,
@@ -348,7 +347,6 @@ CARendererLayerTree::ContentLayer::ContentLayer(
     float opacity,
     unsigned filter)
     : io_surface(io_surface),
-      cv_pixel_buffer(cv_pixel_buffer),
       contents_rect(contents_rect),
       rect(rect_in),
       background_color(background_color),
@@ -409,11 +407,8 @@ CARendererLayerTree::ContentLayer::ContentLayer(
     // mismatch probably resulted from rounding the dimensions to integers.
     // This works around a macOS 10.13 bug which breaks detached fullscreen
     // playback of slightly distorted videos (https://crbug.com/792632).
-    const auto av_rect(cv_pixel_buffer
-                           ? gfx::RectF(CVPixelBufferGetWidth(cv_pixel_buffer),
-                                        CVPixelBufferGetHeight(cv_pixel_buffer))
-                           : gfx::RectF(IOSurfaceGetWidth(io_surface),
-                                        IOSurfaceGetHeight(io_surface)));
+    const gfx::RectF av_rect(IOSurfaceGetWidth(io_surface),
+                             IOSurfaceGetHeight(io_surface));
     const CGFloat av_ratio = av_rect.width() / av_rect.height();
     const CGFloat layer_ratio = rect.width() / rect.height();
     const CGFloat ratio_error = av_ratio / layer_ratio;
@@ -433,7 +428,6 @@ CARendererLayerTree::ContentLayer::ContentLayer(
 
 CARendererLayerTree::ContentLayer::ContentLayer(ContentLayer&& layer)
     : io_surface(layer.io_surface),
-      cv_pixel_buffer(layer.cv_pixel_buffer),
       solid_color_contents(layer.solid_color_contents),
       contents_rect(layer.contents_rect),
       rect(layer.rect),
@@ -510,19 +504,17 @@ void CARendererLayerTree::TransformLayer::AddContentLayer(
     CARendererLayerTree* tree,
     const CARendererLayerParams& params) {
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface;
-  base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer;
   if (params.image) {
     gl::GLImageIOSurface* io_surface_image =
         gl::GLImageIOSurface::FromGLImage(params.image);
     DCHECK(io_surface_image);
     io_surface = io_surface_image->io_surface();
-    cv_pixel_buffer = io_surface_image->cv_pixel_buffer();
   }
 
-  content_layers.push_back(
-      ContentLayer(tree, io_surface, cv_pixel_buffer, params.contents_rect,
-                   params.rect, params.background_color, params.edge_aa_mask,
-                   params.opacity, params.filter));
+  content_layers.push_back(ContentLayer(tree, io_surface, params.contents_rect,
+                                        params.rect, params.background_color,
+                                        params.edge_aa_mask, params.opacity,
+                                        params.filter));
 }
 
 void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
@@ -664,7 +656,6 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     std::swap(ca_layer, old_layer->ca_layer);
     std::swap(av_layer, old_layer->av_layer);
     update_contents = old_layer->io_surface != io_surface ||
-                      old_layer->cv_pixel_buffer != cv_pixel_buffer ||
                       old_layer->solid_color_contents != solid_color_contents;
     update_contents_rect = old_layer->contents_rect != contents_rect;
     update_rect = old_layer->rect != rect;
@@ -693,12 +684,7 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
                          update_ca_filter;
   if (use_av_layer) {
     if (update_contents) {
-      if (cv_pixel_buffer) {
-        AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(av_layer,
-                                                       cv_pixel_buffer);
-      } else {
-        AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
-      }
+      AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
     }
   } else {
     if (update_contents) {
