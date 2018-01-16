@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae752e5_9032c844",
+        "filename": "net/http/http_stream_factory_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T20:14:46Z",
+      "side": 1,
+      "message": "nit: out by",
+      "range": {
+        "startLine": 1426,
+        "startChar": 39,
+        "endLine": 1426,
+        "endChar": 40
+      },
+      "revId": "4bf08ee4ec27e7a290b8bb6cf500eaf67c19431a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
