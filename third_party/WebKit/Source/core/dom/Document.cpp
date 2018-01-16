@@ -2643,6 +2643,7 @@ void Document::Initialize() {
 
   layout_view_->SetIsInWindow(true);
   layout_view_->SetStyle(StyleResolver::StyleForViewport(*this));
+  layout_view_->SetNeedsLayout(LayoutInvalidationReason::kDomChanged);
   layout_view_->Compositor()->SetNeedsCompositingUpdate(
       kCompositingUpdateAfterCompositingInputChange);
 
