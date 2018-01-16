@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b51969f7_a8ca44d9",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-16T18:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34644bef_fdef8e43",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 51
+      },
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "303ea8cf_d4fe8ba2",
         "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659c41de_69ffec3e",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-16T18:48:42Z",
+      "side": 1,
+      "message": "Thanks for all the test cases! Clearly I lacked imagination\n\nI have the \"??\" cases assigned as valid or invalid depending of the behavior of the same checks in the renderer. \n\nFiled a bug to add webkit tests for the same pairs: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d802329",
+      "parentUuid": "303ea8cf_d4fe8ba2",
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1429143_0367c855",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-16T18:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d4a172_d241570c",
+      "range": {
+        "startLine": 155,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 25
+      },
+      "revId": "148ab89e45318570edaacefbd40d40cb638471e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
