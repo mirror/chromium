@@ -16,7 +16,7 @@
 #include "base/logging.h"
 #include "base/threading/platform_thread_internal_posix.h"
 #include "base/threading/thread_id_name_manager.h"
-#include "jni/ThreadUtils_jni.h"
+#include "jni/Process_jni.h"
 
 namespace base {
 
@@ -35,25 +35,15 @@ const ThreadPriorityToNiceValuePair kThreadPriorityToNiceValueMap[4] = {
 };
 
 bool SetCurrentThreadPriorityForPlatform(ThreadPriority priority) {
-  // On Android, we set the Audio priority through JNI as Audio priority
-  // will also allow the process to run while it is backgrounded.
-  if (priority == ThreadPriority::REALTIME_AUDIO) {
-    JNIEnv* env = base::android::AttachCurrentThread();
-    Java_ThreadUtils_setThreadPriorityAudio(env, PlatformThread::CurrentId());
-    return true;
-  }
-  return false;
+  JNIEnv* env = android::AttachCurrentThread();
+  int nice = ThreadPriorityToNiceValue(priority);
+  PlatformThreadId tid = PlatformThread::CurrentId();
+  JNI_Process::Java_Process_setThreadPriorityV_I_I(env, tid, nice);
+  return true;
 }
 
 bool GetCurrentThreadPriorityForPlatform(ThreadPriority* priority) {
-  DCHECK(priority);
-  *priority = ThreadPriority::NORMAL;
-  JNIEnv* env = base::android::AttachCurrentThread();
-  if (Java_ThreadUtils_isThreadPriorityAudio(
-      env, PlatformThread::CurrentId())) {
-    *priority = ThreadPriority::REALTIME_AUDIO;
-    return true;
-  }
+  // Posix implementation will do.
   return false;
 }
 

@@ -2585,7 +2585,6 @@ if (is_android) {
       "android/java/src/org/chromium/base/PowerMonitor.java",
       "android/java/src/org/chromium/base/SysUtils.java",
       "android/java/src/org/chromium/base/SystemMessageHandler.java",
-      "android/java/src/org/chromium/base/ThreadUtils.java",
       "android/java/src/org/chromium/base/ThrowUncaughtException.java",
       "android/java/src/org/chromium/base/TimeUtils.java",
       "android/java/src/org/chromium/base/TimezoneUtils.java",
@@ -2607,7 +2606,10 @@ if (is_android) {
 
   generate_jar_jni("android_runtime_jni_headers") {
     jni_package = "base"
-    classes = [ "java/lang/Runtime.class" ]
+    classes = [
+      "java/lang/Runtime.class",
+      "android/os/Process.class",
+    ]
   }
 
   android_library("base_java") {

@@ -6,9 +6,6 @@ package org.chromium.base;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Process;
-
-import org.chromium.base.annotations.CalledByNative;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -247,23 +244,5 @@ public class ThreadUtils {
 
     public static Looper getUiThreadLooper() {
         return getUiThreadHandler().getLooper();
-    }
-
-    /**
-     * Set thread priority to audio.
-     */
-    @CalledByNative
-    public static void setThreadPriorityAudio(int tid) {
-        Process.setThreadPriority(tid, Process.THREAD_PRIORITY_AUDIO);
-    }
-
-    /**
-     * Checks whether Thread priority is THREAD_PRIORITY_AUDIO or not.
-     * @param tid Thread id.
-     * @return true for THREAD_PRIORITY_AUDIO and false otherwise.
-     */
-    @CalledByNative
-    private static boolean isThreadPriorityAudio(int tid) {
-        return Process.getThreadPriority(tid) == Process.THREAD_PRIORITY_AUDIO;
     }
 }
