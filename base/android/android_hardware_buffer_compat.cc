@@ -29,39 +29,39 @@ AndroidHardwareBufferCompat::AndroidHardwareBufferCompat() {
   // unconditionally use dynamic loading.
 
   // cf. base/android/linker/modern_linker_jni.cc
-  void* main_dl_handle = dlopen(nullptr, RTLD_NOW);
+  // void* main_dl_handle = dlopen(nullptr, RTLD_NOW);
 
-  *reinterpret_cast<void**>(&allocate_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_allocate");
-  DCHECK(allocate_);
+  // *reinterpret_cast<void**>(&allocate_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_allocate");
+  // DCHECK(allocate_);
 
-  *reinterpret_cast<void**>(&acquire_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_acquire");
-  DCHECK(acquire_);
+  // *reinterpret_cast<void**>(&acquire_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_acquire");
+  // DCHECK(acquire_);
 
-  *reinterpret_cast<void**>(&describe_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_describe");
-  DCHECK(describe_);
+  // *reinterpret_cast<void**>(&describe_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_describe");
+  // DCHECK(describe_);
 
-  *reinterpret_cast<void**>(&lock_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_lock");
-  DCHECK(lock_);
+  // *reinterpret_cast<void**>(&lock_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_lock");
+  // DCHECK(lock_);
 
-  *reinterpret_cast<void**>(&recv_handle_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_recvHandleFromUnixSocket");
-  DCHECK(recv_handle_);
+  // *reinterpret_cast<void**>(&recv_handle_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_recvHandleFromUnixSocket");
+  // DCHECK(recv_handle_);
 
-  *reinterpret_cast<void**>(&release_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_release");
-  DCHECK(release_);
+  // *reinterpret_cast<void**>(&release_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_release");
+  // DCHECK(release_);
 
-  *reinterpret_cast<void**>(&send_handle_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_sendHandleToUnixSocket");
-  DCHECK(send_handle_);
+  // *reinterpret_cast<void**>(&send_handle_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_sendHandleToUnixSocket");
+  // DCHECK(send_handle_);
 
-  *reinterpret_cast<void**>(&unlock_) =
-      dlsym(main_dl_handle, "AHardwareBuffer_unlock");
-  DCHECK(unlock_);
+  // *reinterpret_cast<void**>(&unlock_) =
+  //     dlsym(main_dl_handle, "AHardwareBuffer_unlock");
+  // DCHECK(unlock_);
 }
 
 // static
@@ -78,18 +78,18 @@ AndroidHardwareBufferCompat AndroidHardwareBufferCompat::GetInstance() {
 void AndroidHardwareBufferCompat::Allocate(const AHardwareBuffer_Desc* desc,
                                            AHardwareBuffer** out_buffer) {
   DCHECK(IsSupportAvailable());
-  allocate_(desc, out_buffer);
+  AHardwareBuffer_allocate(desc, out_buffer);
 }
 
 void AndroidHardwareBufferCompat::Acquire(AHardwareBuffer* buffer) {
   DCHECK(IsSupportAvailable());
-  acquire_(buffer);
+  AHardwareBuffer_acquire(buffer);
 }
 
 void AndroidHardwareBufferCompat::Describe(const AHardwareBuffer* buffer,
                                            AHardwareBuffer_Desc* out_desc) {
   DCHECK(IsSupportAvailable());
-  describe_(buffer, out_desc);
+  AHardwareBuffer_describe(buffer, out_desc);
 }
 
 int AndroidHardwareBufferCompat::Lock(AHardwareBuffer* buffer,
@@ -98,32 +98,32 @@ int AndroidHardwareBufferCompat::Lock(AHardwareBuffer* buffer,
                                       const ARect* rect,
                                       void** out_virtual_address) {
   DCHECK(IsSupportAvailable());
-  return lock_(buffer, usage, fence, rect, out_virtual_address);
+  return AHardwareBuffer_lock(buffer, usage, fence, rect, out_virtual_address);
 }
 
 int AndroidHardwareBufferCompat::RecvHandleFromUnixSocket(
     int socket_fd,
     AHardwareBuffer** out_buffer) {
   DCHECK(IsSupportAvailable());
-  return recv_handle_(socket_fd, out_buffer);
+  return AHardwareBuffer_recvHandleFromUnixSocket(socket_fd, out_buffer);
 }
 
 void AndroidHardwareBufferCompat::Release(AHardwareBuffer* buffer) {
   DCHECK(IsSupportAvailable());
-  release_(buffer);
+  AHardwareBuffer_release(buffer);
 }
 
 int AndroidHardwareBufferCompat::SendHandleToUnixSocket(
     const AHardwareBuffer* buffer,
     int socket_fd) {
   DCHECK(IsSupportAvailable());
-  return send_handle_(buffer, socket_fd);
+  return AHardwareBuffer_sendHandleToUnixSocket(buffer, socket_fd);
 }
 
 int AndroidHardwareBufferCompat::Unlock(AHardwareBuffer* buffer,
                                         int32_t* fence) {
   DCHECK(IsSupportAvailable());
-  return unlock_(buffer, fence);
+  return AHardwareBuffer_unlock(buffer, fence);
 }
 
 }  // namespace base
