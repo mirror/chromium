@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadNotificationService2.getNextNotificationId;
 import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
@@ -221,15 +222,20 @@ public class DownloadForegroundServiceManager {
     }
 
     private void relaunchPinnedNotification() {
+        relaunchPinnedNotification(mPinnedNotificationId);
+    }
+
+    private void relaunchPinnedNotification(int notificationId) {
         if (mPinnedNotificationId != INVALID_NOTIFICATION_ID
+                && notificationId != INVALID_NOTIFICATION_ID
                 && mDownloadUpdateQueue.containsKey(mPinnedNotificationId)
                 && mDownloadUpdateQueue.get(mPinnedNotificationId).mDownloadStatus
                         != DownloadStatus.CANCEL) {
             NotificationManager notificationManager =
                     (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
                             Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(mPinnedNotificationId,
-                    mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
+            notificationManager.notify(
+                    notificationId, mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
 
             // Record the need to relaunch the notification.
             DownloadNotificationUmaHelper.recordNotificationFlickerCountHistogram(
@@ -244,9 +250,18 @@ public class DownloadForegroundServiceManager {
         Preconditions.checkNotNull(mBoundService);
         mIsServiceBound = false;
 
+        // In phones that are Lollipop and older, the service gets killed with the task, which might
+        // result in the notification being unable to be relaunched in the COMPLETE and FAIL cases.
+        // Pre-emptively launch a replacement notification before the service is stopped/killed.
+        boolean isCompleteAndFailAdjustedPreMarshmallow = false;
+        if (isPreMarshmallow() && downloadStatus != DownloadStatus.PAUSE) {
+            isCompleteAndFailAdjustedPreMarshmallow = true;
+            relaunchPinnedNotification(getNextNotificationId());
+        }
+
         // For pre-Lollipop phones (API < 21), we need to kill the notification in the pause case
         // because otherwise the notification gets stuck in the ongoing state.
-        boolean needAdjustNotificationPreLollipop =
+        boolean needAdjustPauseNotificationPreLollipop =
                 isPreLollipop() && downloadStatus == DownloadStatus.PAUSE;
 
         // Pause: only try to detach, do not kill notification.
@@ -258,7 +273,7 @@ public class DownloadForegroundServiceManager {
                 || downloadStatus == DownloadStatus.FAIL;
         boolean killNotification = downloadStatus == DownloadStatus.CANCEL
                 || downloadStatus == DownloadStatus.COMPLETE
-                || downloadStatus == DownloadStatus.FAIL || needAdjustNotificationPreLollipop;
+                || downloadStatus == DownloadStatus.FAIL || needAdjustPauseNotificationPreLollipop;
 
         boolean notificationHandledProperly =
                 stopAndUnbindServiceInternal(detachNotification, killNotification);
@@ -268,7 +283,8 @@ public class DownloadForegroundServiceManager {
         // download is completed/failed or if a pre-Lollipop adjustment is needed.
         if (((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
                     && Build.VERSION.SDK_INT < 24)
-                || needAdjustNotificationPreLollipop) {
+                || needAdjustPauseNotificationPreLollipop
+                        && !isCompleteAndFailAdjustedPreMarshmallow) {
             relaunchPinnedNotification();
         }
 
@@ -301,5 +317,9 @@ public class DownloadForegroundServiceManager {
     @VisibleForTesting
     boolean isPreLollipop() {
         return Build.VERSION.SDK_INT < 21;
+    }
+
+    private boolean isPreMarshmallow() {
+        return Build.VERSION.SDK_INT < 22;
     }
 }
