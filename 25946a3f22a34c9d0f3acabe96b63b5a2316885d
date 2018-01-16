@@ -16,6 +16,24 @@
       "revId": "25946a3f22a34c9d0f3acabe96b63b5a2316885d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481eb0c8_6a03797f",
+        "filename": "extensions/browser/extension_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-16T14:58:12Z",
+      "side": 1,
+      "message": "yes, mime_sniffing_resource_handler will always turn blob and filesystem (and data) URLs with a suggested filename into downloads",
+      "parentUuid": "c7542c8c_312b767e",
+      "revId": "25946a3f22a34c9d0f3acabe96b63b5a2316885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
