@@ -76,8 +76,11 @@ public class AcceptLanguageTest {
      * @param raw String containing the raw Accept-Language header
      * @return A list of languages as Strings.
      */
-    private String[] getAcceptLanguages(String raw) {
-        return COMMA_AND_OPTIONAL_Q_VALUE.split(mActivityTestRule.maybeStripDoubleQuotes(raw));
+    private List<String> getAcceptLanguages(String raw) {
+        return Splitter.onPattern(COMMA_AND_OPTIONAL_Q_VALUE)
+                .splitToArray(
+
+                        mActivityTestRule.maybeStripDoubleQuotes(raw));
     }
 
     /**
@@ -94,17 +97,18 @@ public class AcceptLanguageTest {
         String url = mTestServer.getURL("/echoheader?Accept-Language");
         mActivityTestRule.loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), url);
 
-        String[] acceptLanguages = getAcceptLanguages(
+        List<String> acceptLanguages = getAcceptLanguages(
                 mActivityTestRule.getJavaScriptResultBodyTextContent(mAwContents, mContentsClient));
-        Assert.assertEquals(LocaleUtils.getDefaultLocaleString(), acceptLanguages[0]);
+        Assert.assertEquals(LocaleUtils.getDefaultLocaleString(), acceptLanguages.get(0));
 
-        String[] acceptLanguagesJs = getAcceptLanguages(JSUtils.executeJavaScriptAndWaitForResult(
-                InstrumentationRegistry.getInstrumentation(), mAwContents,
-                mContentsClient.getOnEvaluateJavaScriptResultHelper(),
-                "navigator.languages.join(',')"));
-        Assert.assertEquals(acceptLanguagesJs.length, acceptLanguages.length);
-        for (int i = 0; i < acceptLanguagesJs.length; ++i) {
-            Assert.assertEquals(acceptLanguagesJs[i], acceptLanguages[i]);
+        List<String> acceptLanguagesJs =
+                getAcceptLanguages(JSUtils.executeJavaScriptAndWaitForResult(
+                        InstrumentationRegistry.getInstrumentation(), mAwContents,
+                        mContentsClient.getOnEvaluateJavaScriptResultHelper(),
+                        "navigator.languages.join(',')"));
+        Assert.assertEquals(acceptLanguagesJs.size(), acceptLanguages.size());
+        for (int i = 0; i < acceptLanguagesJs.size(); ++i) {
+            Assert.assertEquals(acceptLanguagesJs.get(i), acceptLanguages.get(i));
         }
 
         // Test locale change at run time
@@ -116,7 +120,7 @@ public class AcceptLanguageTest {
 
         acceptLanguages = getAcceptLanguages(
                 mActivityTestRule.getJavaScriptResultBodyTextContent(mAwContents, mContentsClient));
-        Assert.assertEquals(LocaleUtils.getDefaultLocaleString(), acceptLanguages[0]);
+        Assert.assertEquals(LocaleUtils.getDefaultLocaleString(), acceptLanguages.get(0));
     }
 
     /**
@@ -137,18 +141,19 @@ public class AcceptLanguageTest {
         String url = mTestServer.getURL("/echoheader?Accept-Language");
         mActivityTestRule.loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), url);
 
-        String[] acceptLanguages = getAcceptLanguages(
+        List<String> acceptLanguages = getAcceptLanguages(
                 mActivityTestRule.getJavaScriptResultBodyTextContent(mAwContents, mContentsClient));
         Assert.assertEquals(
                 LocaleUtils.getDefaultLocaleListString(), TextUtils.join(",", acceptLanguages));
 
-        String[] acceptLanguagesJs = getAcceptLanguages(JSUtils.executeJavaScriptAndWaitForResult(
-                InstrumentationRegistry.getInstrumentation(), mAwContents,
-                mContentsClient.getOnEvaluateJavaScriptResultHelper(),
-                "navigator.languages.join(',')"));
-        Assert.assertEquals(acceptLanguagesJs.length, acceptLanguages.length);
-        for (int i = 0; i < acceptLanguagesJs.length; ++i) {
-            Assert.assertEquals(acceptLanguagesJs[i], acceptLanguages[i]);
+        List<String> acceptLanguagesJs =
+                getAcceptLanguages(JSUtils.executeJavaScriptAndWaitForResult(
+                        InstrumentationRegistry.getInstrumentation(), mAwContents,
+                        mContentsClient.getOnEvaluateJavaScriptResultHelper(),
+                        "navigator.languages.join(',')"));
+        Assert.assertEquals(acceptLanguagesJs.size(), acceptLanguages.size());
+        for (int i = 0; i < acceptLanguagesJs.size(); ++i) {
+            Assert.assertEquals(acceptLanguagesJs.get(i), acceptLanguages.get(i));
         }
 
         // Test locales that contain "en-US" change at run time

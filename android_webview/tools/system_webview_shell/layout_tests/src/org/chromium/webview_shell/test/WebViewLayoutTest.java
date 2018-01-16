@@ -10,6 +10,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 
+import com.google.common.base.Splitter;
+
 import junit.framework.ComparisonFailure;
 
 import org.junit.After;
@@ -431,7 +433,7 @@ public class WebViewLayoutTest {
     }
 
     private HashMap<String, HashSet<String>> buildHashMap(String contents) {
-        String[] lineByLine = contents.split("\\n");
+        List<String> lineByLine = Splitter.onPattern("\\n").splitOnList(contents);
 
         HashSet<String> subset = null;
         HashMap<String, HashSet<String>> interfaces = new HashMap<String, HashSet<String>>();
@@ -464,5 +466,4 @@ public class WebViewLayoutTest {
         return s.startsWith("getter") || s.startsWith("setter")
                 || s.startsWith("method") || s.startsWith("attribute");
     }
-
 }
