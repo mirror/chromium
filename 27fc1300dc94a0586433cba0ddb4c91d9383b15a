@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bada39b_4d19d3a2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T16:04:53Z",
+      "side": 1,
+      "message": "nit: 0u also works, and I haven\u0027t yet seen size_t{} inside Blink.\n\nor you could just DCHECK(!array_buffer_contents_array_.IsEmpty()); since the extra DCHECK output won\u0027t really tell us any more (since the only unsigned integer not greater than zero is zero).",
+      "revId": "27fc1300dc94a0586433cba0ddb4c91d9383b15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fa1b58_f2f3f228",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/UnpackedSerializedScriptValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T16:04:53Z",
+      "side": 1,
+      "message": "I think we should register regardless of whether there are array buffer contents, as the size of the serialization buffer itself also needs to be taken into account.",
+      "revId": "27fc1300dc94a0586433cba0ddb4c91d9383b15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
