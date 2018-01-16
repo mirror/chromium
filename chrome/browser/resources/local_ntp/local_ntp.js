@@ -1000,6 +1000,8 @@ var applyDoodleMetadata = function(metadata) {
       logoDoodleIframe.src = metadata.fullPageUrl;
       document.body.style.setProperty(
           '--logo-iframe-initial-height', metadata.iframeHeightPx + 'px');
+      document.body.style.setProperty(
+          '--logo-iframe-height', metadata.iframeHeightPx + 'px');
       break;
   }
 };
