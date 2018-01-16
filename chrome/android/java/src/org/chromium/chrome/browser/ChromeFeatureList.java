@@ -221,6 +221,7 @@ public abstract class ChromeFeatureList {
     public static final String MATERIAL_DESIGN_INCOGNITO_NTP = "MaterialDesignIncognitoNTP";
     public static final String MODAL_PERMISSION_PROMPTS = "ModalPermissionPrompts";
     public static final String NEW_PHOTO_PICKER = "NewPhotoPicker";
+
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";
     public static final String NTP_CONDENSED_TILE_LAYOUT = "NTPCondensedTileLayout";
@@ -235,7 +236,6 @@ public abstract class ChromeFeatureList {
     public static final String PWA_PERSISTENT_NOTIFICATION = "PwaPersistentNotification";
     public static final String READER_MODE_IN_CCT = "ReaderModeInCCT";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
-    public static final String SITE_NOTIFICATION_CHANNELS = "SiteNotificationChannels";
     public static final String SOUND_CONTENT_SETTING = "SoundContentSetting";
     public static final String SPANNABLE_INLINE_AUTOCOMPLETE = "SpannableInlineAutocomplete";
     public static final String TAB_REPARENTING = "TabReparenting";

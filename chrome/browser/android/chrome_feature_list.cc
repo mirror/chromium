@@ -48,7 +48,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kImportantSitesInCbd,
     &features::kMaterialDesignIncognitoNTP,
     &features::kServiceWorkerPaymentApps,
-    &features::kSiteNotificationChannels,
     &features::kSimplifiedFullscreenUI,
     &features::kSoundContentSetting,
     &features::kVrBrowsing,
