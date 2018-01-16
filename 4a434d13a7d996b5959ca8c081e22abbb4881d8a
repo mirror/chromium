@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "463223a5_e72d509a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-16T10:56:46Z",
+      "side": 1,
+      "message": "\u003e Out of curiosity, is this change actually required?\n\nYes. For some reason, the short iframe doesn\u0027t get a large margin otherwise.",
+      "parentUuid": "51fff505_ee0313b3",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f6d3bb_db8336ca",
         "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e20b682c_5753ad60",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-16T10:56:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f6d3bb_db8336ca",
+      "range": {
+        "startLine": 86,
+        "startChar": 17,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c78e219_8d3b200e",
         "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab99e4fd_0d6077ad",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-16T10:56:46Z",
+      "side": 1,
+      "message": "\u003e optional: Should we also test what happens if the iframe requests a size \u003e 229 px?\n\nWhat’s the expected behavior there? I think presently we will get a negative margin and have the fakebox overlap the iframe (in the usual place), but I’m not sure that’s correct, or what is.",
+      "parentUuid": "6c78e219_8d3b200e",
+      "range": {
+        "startLine": 673,
+        "startChar": 46,
+        "endLine": 673,
+        "endChar": 0
+      },
+      "revId": "4a434d13a7d996b5959ca8c081e22abbb4881d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
