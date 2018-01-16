@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b573aa7_bbd41dcb",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-16T18:08:13Z",
+      "side": 1,
+      "message": "micro nit: newline after opening a new namespace, in the header too",
+      "revId": "f955985bf15a60eea19eb6b34685fc2e321854d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db79579e_724297b0",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-16T18:08:13Z",
+      "side": 1,
+      "message": "micro nits:\n  (1) drop `static`, this already is in an anonymous namespace\n  (2) use naming consistent with the other constants: kMaximumActions\n  (3) either use `const` here, or update the above to `constexpr`. I\u0027d prefer the latter.",
+      "revId": "f955985bf15a60eea19eb6b34685fc2e321854d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01299535_db1b4b21",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-16T18:08:13Z",
+      "side": 1,
+      "message": "This only has a single caller - I\u0027m fine with the individual checks having separate functions, but we can inline ValidateProperties without losing clarity.",
+      "revId": "f955985bf15a60eea19eb6b34685fc2e321854d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
