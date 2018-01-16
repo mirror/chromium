@@ -109,6 +109,7 @@ enum class SelectionMode {
   kBlockCursor,
 };
 
+
 static SelectionMode ComputeSelectionMode(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
