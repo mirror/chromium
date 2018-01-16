@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e775e307_d1816dd1",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-16T16:29:55Z",
+      "side": 1,
+      "message": "\u003e \u003e\u003e 2) Why do you need this wait in the first place? We should reallllly try to avoid it. Why can \u003e\u003e it already be active? Is this strictly for unit tests? If so, try to turn it into a \u003e\u003e ForTesting() method and use base::ScopedAllowBaseSyncPrimitivesForTesting.\n\u003e \n\u003e Re: I will defer to wittman@, the profiler code owener on this question.\n\nIt could be active if profiling was started, stopped, then immediately restarted, but the profiler thread had not yet finished taking the final sample. Waiting on this event enables us to ensure that the previous profiling occurring on the profiler thread has stopped before either starting profiling afresh from the same profiler, or destroying the profiler. We can\u0027t use task posting for this coordination because the thread owning the profiler may not have a message loop.\n\nIn this case we are not restarting the profiling, so there\u0027s guaranteed to be 0 wait here. In the restart case (which is not currently in use) the typical wait is 0 and the max wait is the time for the profiler to take one sample, which is a a couple hundred microseconds -- see the comment in the destructor.",
+      "parentUuid": "df981599_3b7718cc",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e649ea_a83e0428",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 18
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "4ad0dc11_4bb01e36",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-16T16:29:55Z",
+      "side": 1,
+      "message": "I don\u0027t see a new patch set since this comment... does this still need to be uploaded?",
+      "parentUuid": "a74434c6_685397ed",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 55
+      },
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaecce70_73524bb2",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 18
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "Hi Gab, do you mean adding a virtual function BrowserThreadsStarted() here in browser_main_parts.h and call it from BrowserMainLoop::BrowserThreadsStarted()? \n\nWe want to start the profiler right after the thread is created in BrowserMainLoop::CreateThreads. So I think starting the profiler in CreateThreads is preferred here.\n\nwittman@, any thoughts here please?",
       "parentUuid": "eaecce70_73524bb2",
+      "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836328a1_d973144e",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-16T16:29:55Z",
+      "side": 1,
+      "message": "I think hooking BrowserThreadsStarted() should work since it\u0027s called immediately after CreateThreads. We just need to ensure that the task is posted prior to the base version of the function being invoked.",
+      "parentUuid": "a17d3260_b3691997",
       "revId": "4f27081dc7a3937f312cad1ffaf935b05f3bf328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
