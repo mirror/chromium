@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "bb47c14e_eed490f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T15:12:33Z",
+      "side": 1,
+      "message": "\u003e But I don\u0027t think the changes made here would introduce a new problem. |enable| (or nativeEnable) was not being called by client directly so the native is guaranteed to be initialized before is it enabled.\n\u003e \n\u003e Same goes for broadcast receiver. The receiver is necessary only when the native a11y is enabled. The call sequence is native init -\u003e register receiver -\u003e enable, which hasn\u0027t changed.\n\nwell, enable() is no longer a method\n\nbut what if onAttachedToWindow is called first, and then getAccessibilityNodeProvide is called after. in that case, accessibility would be enabled but broadcast receiver in L+ isn\u0027t registered",
+      "parentUuid": "4b335001_9450f7be",
+      "revId": "dc9558694d883723496d9bd7659cbda5c644c170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "132a0dcb_8834b3c5",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 3
