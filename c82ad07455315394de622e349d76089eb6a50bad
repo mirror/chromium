@@ -16,6 +16,24 @@
       "revId": "c82ad07455315394de622e349d76089eb6a50bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94530a1c_772a53bc",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T16:04:22Z",
+      "side": 1,
+      "message": "\u003e Can we also ensure that the user can\u0027t transition into dev mode by opening the dev console and typing the following?\n\nThese are (somewhat) separate bits.  Disabling developer tools is done through a different profile setting (DeveloperToolsDisabled), and shouldn\u0027t really be enforced in UpdateProfileConfiguration IMO (there\u0027s no technical reason for it to be, and we rely on DeveloperToolsDisabled behaving properly in general).  Additionally, the preferences code ensures that if the preference is managed, we can\u0027t change the value (see the test at [1] that guarantees this).\n\n\u003e IIUC, currently these checks assume that when DeveloperToolsDisabled policy is enabled, the user is not in dev mode. Should we turn this assumption to an assertion or something similar?\n\nHmm... I don\u0027t think so.  The kExtensionsUIDeveloperMode preference is tied to the DeveloperToolsDisabled preference in the preferences code. [2]  I don\u0027t think there\u0027s any reason to tie that logic in here, rather than keeping this simple and avoiding the implementation details of how the kExtensionsUIDeveloperMode preference happens to be set.\n\n[1] https://chromium.googlesource.com/chromium/src/+/8b5d513a065b1efda78f7edbab0468973f276efc/chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc#1134\n[2] https://chromium.googlesource.com/chromium/src/+/8b5d513a065b1efda78f7edbab0468973f276efc/chrome/browser/policy/configuration_policy_handler_list_factory.cc#878",
+      "parentUuid": "9a956ad6_c6b39b07",
+      "revId": "c82ad07455315394de622e349d76089eb6a50bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
