@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "552dfa76_aa3072b5",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T14:41:48Z",
+      "side": 1,
+      "message": "Remove this one?",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "6829b7936b6b51ba1dc1ed2aa3f11b2ca2f1262e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
