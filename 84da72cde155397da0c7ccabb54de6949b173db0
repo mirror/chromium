@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d0219c9_ddb166d3",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not very familiar with Win32, but is calling QueryPerformanceFrequency particularly expensive? \n\nVaries with machine [1], but ...\n\n[1] https://msdn.microsoft.com/en-us/library/windows/desktop/dn553408(v\u003dvs.85).aspx\n\neven with that said, ...\n\n\u003e It might be cleaner to just call QueryPerformanceFrequency on every current_time_in_seconds invocation.\n\n.. the system frequency is set once when WIN_OS boots, and is a constant thereafter [1].  So the most we need to do is to read it once, and that\u0027s what this code does.\n\n\u003e For example, in addition to dropping the static variables above, it should let you drop the initialize_timer function.\n\nThe initialize_timer() is superfluous, it\u0027s really not needed.  The code has one goal: return the time _nearest_ to the thing you\u0027re measuring.\n\n   auto start_time \u003d current_time_in_seconds();\n   do_some_stuff();\n   auto elapsed_time \u003d current_time_in_seconds() - start_time;\n\nIn the common case the frequency is known, and the goal is meet.\n\nIf the frequency is not known, then init it (once only), and then return the time nearest the the thing you are measuring (meets the goal).\n\nErgo, the initialize_timer() thing is entirely superfluous: this code self-initializes, and still satisfies its goal.  Some readers don\u0027t grok that, so ... ¯\\(ツ)/¯",
+      "parentUuid": "21898203_a6b82b08",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7a38d2_10560d8e",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3fc237f0_14dee916",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "What you say works, but canonical use in the Chromium code base (apart from the zlib fuzzers) uses memset(), so I followed that, and just so this code was not different to everyone else.",
+      "parentUuid": "4f7a38d2_10560d8e",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 8
+      },
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3939555c_287ef34e",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
@@ -56,6 +98,24 @@
       "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917ef30e_6ee797ae",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "Done, and done.",
+      "parentUuid": "3939555c_287ef34e",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "5529168c_e5822c90",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "Nope, not really necessary; ditched.",
+      "parentUuid": "f8796e18_9ade7715",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b19fa08_157f80e4",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3fb181ff_54995f9e",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "Good question: snappy did not.  Question, why did they not use it, and so avoid questions in the reader\u0027s mind about why the difference?\n\nDunno the answer to that question myself, but making them identical works for me.  Done.",
+      "parentUuid": "2b19fa08_157f80e4",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e151db2_73e9b576",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 23
@@ -107,6 +203,24 @@
       "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e05f0bd_01f170c8",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T11:09:05Z",
+      "side": 1,
+      "message": "OK, though unsigned is enough, used that.",
+      "parentUuid": "5e151db2_73e9b576",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
