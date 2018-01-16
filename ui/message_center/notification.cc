@@ -197,7 +197,7 @@ void Notification::CopyState(Notification* base) {
   is_read_ = base->is_read_;
   if (!delegate_.get())
     delegate_ = base->delegate();
-  optional_fields_.never_timeout = base->never_timeout();
+  //optional_fields_.never_timeout = base->never_timeout();
 }
 
 void Notification::SetButtonIcon(size_t index, const gfx::Image& icon) {
