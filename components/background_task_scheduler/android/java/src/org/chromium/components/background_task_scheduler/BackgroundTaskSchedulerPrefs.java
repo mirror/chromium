@@ -7,9 +7,12 @@ package org.chromium.components.background_task_scheduler;
 import android.content.SharedPreferences;
 import android.os.Build;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ContextUtils;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,17 +47,18 @@ public class BackgroundTaskSchedulerPrefs {
         public static ScheduledTaskPreferenceEntry parseEntry(String entry) {
             if (entry == null) return null;
 
-            String[] entryParts = entry.split(ENTRY_SEPARATOR);
-            if (entryParts.length != 2 || entryParts[0].isEmpty() || entryParts[1].isEmpty()) {
+            List<String> entryParts = Splitter.on(ENTRY_SEPARATOR).splitToList(entry);
+            if (entryParts.size() != 2 || entryParts.get(0).isEmpty()
+                    || entryParts.get(1).isEmpty()) {
                 return null;
             }
             int taskId = 0;
             try {
-                taskId = Integer.parseInt(entryParts[1]);
+                taskId = Integer.parseInt(entryParts.get(1));
             } catch (NumberFormatException e) {
                 return null;
             }
-            return new ScheduledTaskPreferenceEntry(entryParts[0], taskId);
+            return new ScheduledTaskPreferenceEntry(entryParts.get(0), taskId);
         }
 
         public ScheduledTaskPreferenceEntry(String className, int taskId) {
