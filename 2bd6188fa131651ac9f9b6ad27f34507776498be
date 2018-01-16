@@ -22,6 +22,29 @@
       "revId": "2bd6188fa131651ac9f9b6ad27f34507776498be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67d1e94_1a1378a7",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:21:36Z",
+      "side": 1,
+      "message": "This needs to be ifdef\u0027d as well, actually.",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "2bd6188fa131651ac9f9b6ad27f34507776498be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
