@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ade1b6d0_9e0fa017",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Done 1.",
+      "parentUuid": "55562130_499dead7",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5a78ef5_3851209e",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
         "patchSetId": 16
@@ -51,6 +69,24 @@
       "revId": "3e459b31297692b16721fb489eb370fdb8534629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453923d6_9c07459c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a78ef5_3851209e",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "89445b2c_5c237bb5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Yes, by setting default value we can reduce the conditions to just \"if (detail.IsNull())\"\n\nBut my concern is, when other components uses performanceMark, they may pass an arbitrary |detail| to performanceMark constructor, such as PerformanceObserverTest. Checking all three conditions seem more flexible in its usages?",
+      "parentUuid": "f4606003_a24b90a5",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a9d3b1_ef5fa5f6",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceObserverTest.cpp",
         "patchSetId": 16
@@ -145,6 +199,30 @@
       "revId": "3e459b31297692b16721fb489eb370fdb8534629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7c802f_42521af5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserverTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a9d3b1_ef5fa5f6",
+      "range": {
+        "startLine": 68,
+        "startChar": 14,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
