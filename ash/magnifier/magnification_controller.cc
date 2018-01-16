@@ -35,7 +35,9 @@
 #include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/events/event_handler.h"
+#include "ui/events/event_rewriter.h"
 #include "ui/events/gesture_event_details.h"
+#include "ui/events/gestures/gesture_provider_aura.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/point_f.h"
@@ -51,6 +53,9 @@ const float kNonMagnifiedScale = 1.0f;
 
 const float kInitialMagnifiedScale = 2.0f;
 const float kScrollScaleChangeFactor = 0.00125f;
+
+const float kZoomGestureLockThreshold = 0.2f;
+const float kScrollGestureLockThreshold = 2500.0f;
 
 // Default animation parameters for redrawing the magnification window.
 const gfx::Tween::Type kDefaultAnimationTweenType = gfx::Tween::EASE_OUT;
@@ -96,7 +101,9 @@ class MagnificationControllerImpl : public MagnificationController,
                                     public ui::EventHandler,
                                     public ui::ImplicitAnimationObserver,
                                     public aura::WindowObserver,
-                                    public ui::InputMethodObserver {
+                                    public ui::InputMethodObserver,
+                                    public ui::GestureConsumer,
+                                    public ui::EventRewriter {
  public:
   MagnificationControllerImpl();
   ~MagnificationControllerImpl() override;
@@ -133,6 +140,22 @@ class MagnificationControllerImpl : public MagnificationController,
   }
 
  private:
+  class GestureProviderClient : public ui::GestureProviderAuraClient {
+   public:
+    GestureProviderClient() = default;
+    ~GestureProviderClient() = default;
+
+    // ui::GestureProviderAuraClient overrides:
+    void OnGestureEvent(GestureConsumer* consumer,
+                        ui::GestureEvent* event) override {
+      // Do nothing. OnGestureEvent is for timer based gesture events, e.g. tap.
+      // MagnificationController is interested only in pinch and scroll
+      // gestures.
+    }
+  };
+
+  enum LockedGestureType { NO_GESTURE, ZOOM, SCROLL };
+
   // ui::ImplicitAnimationObserver overrides:
   void OnImplicitAnimationsCompleted() override;
 
@@ -199,6 +222,14 @@ class MagnificationControllerImpl : public MagnificationController,
   void OnTouchEvent(ui::TouchEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
+  // ui::EventRewriter overrides:
+  ui::EventRewriteStatus RewriteEvent(
+      const ui::Event& event,
+      std::unique_ptr<ui::Event>* rewritten_event) override;
+  ui::EventRewriteStatus NextDispatchEvent(
+      const ui::Event& last_event,
+      std::unique_ptr<ui::Event>* new_event) override;
+
   // Moves the view port when |point| is located within
   // |x_panning_margin| and |y_pannin_margin| to the edge of the visible
   // window region. The view port will be moved so that the |point| will be
@@ -255,7 +286,31 @@ class MagnificationControllerImpl : public MagnificationController,
   float scale_;
   gfx::PointF origin_;
 
+  float original_scale_;
+  gfx::PointF original_origin_;
+
   ScrollDirection scroll_direction_;
+
+  LockedGestureType locked_gesture_ = NO_GESTURE;
+
+  // If true, MagnificationController consumes all touch events.
+  bool consume_touch_event_ = false;
+
+  // Number of touch points on the screen.
+  int32_t touch_points_ = 0;
+
+  // Map for holding ET_TOUCH_PRESS events. Those events are used to dispatch
+  // ET_TOUCH_CANCELLED events. Events will be removed from this map when press
+  // events are cancelled.
+  std::map<int32_t, std::unique_ptr<ui::TouchEvent>> press_event_map_;
+
+  std::unique_ptr<GestureProviderClient> gesture_provider_client_;
+
+  // MagnificationCotroller owns its GestureProvider to detect gestures with
+  // screen coordinates of touch events. As MagnificationController changes zoom
+  // level and moves viewport, logical coordinates of touches cannot be used for
+  // gesture detection as they are changed if the controller reacts to gestures.
+  std::unique_ptr<ui::GestureProviderAura> gesture_provider_;
 
   // Timer for moving magnifier window when it fires.
   base::OneShotTimer move_magnifier_timer_;
@@ -284,13 +339,28 @@ MagnificationControllerImpl::MagnificationControllerImpl()
       disable_move_magnifier_delay_(false) {
   Shell::Get()->AddPreTargetHandler(this);
   root_window_->AddObserver(this);
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kNewTouchSupportForScreenMagnification)) {
+    root_window_->GetHost()->GetEventSource()->AddEventRewriter(this);
+  }
+
   point_of_interest_ = root_window_->bounds().CenterPoint();
+
+  gesture_provider_client_.reset(new GestureProviderClient());
+  gesture_provider_.reset(
+      new ui::GestureProviderAura(this, gesture_provider_client_.get()));
 }
 
 MagnificationControllerImpl::~MagnificationControllerImpl() {
   ui::InputMethod* input_method = GetInputMethod(root_window_);
   if (input_method)
     input_method->RemoveObserver(this);
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kNewTouchSupportForScreenMagnification)) {
+    root_window_->GetHost()->GetEventSource()->RemoveEventRewriter(this);
+  }
 
   root_window_->RemoveObserver(this);
 
@@ -715,7 +785,161 @@ void MagnificationControllerImpl::OnTouchEvent(ui::TouchEvent* event) {
   }
 }
 
+ui::EventRewriteStatus MagnificationControllerImpl::RewriteEvent(
+    const ui::Event& event,
+    std::unique_ptr<ui::Event>* rewritten_event) {
+  if (!IsEnabled())
+    return ui::EVENT_REWRITE_CONTINUE;
+
+  if (!event.IsTouchEvent())
+    return ui::EVENT_REWRITE_CONTINUE;
+
+  const ui::TouchEvent* touch_event = event.AsTouchEvent();
+
+  if (touch_event->type() == ui::ET_TOUCH_PRESSED) {
+    touch_points_++;
+    press_event_map_[touch_event->pointer_details().id].reset(
+        new ui::TouchEvent(*touch_event));
+  } else if (touch_event->type() == ui::ET_TOUCH_RELEASED) {
+    touch_points_--;
+    press_event_map_.erase(touch_event->pointer_details().id);
+  }
+
+  ui::TouchEvent touch_event_copy = *touch_event;
+  if (gesture_provider_->OnTouchEvent(&touch_event_copy)) {
+    gesture_provider_->OnTouchEventAck(touch_event_copy.unique_event_id(),
+                                       false, false);
+  } else {
+    return ui::EVENT_REWRITE_DISCARD;
+  }
+
+  // User can change zoom level with two fingers pinch and pan around with two
+  // fingers scroll. Once MagnificationController detects one of those two
+  // gestures, it starts consuming all touch events with cancelling existing
+  // touches. If cancel_pressed_touches is set to true, ET_TOUCH_CANCELLED
+  // events are dispatched for existing touches after the next for-loop.
+  bool cancel_pressed_touches = false;
+
+  std::vector<std::unique_ptr<ui::GestureEvent>> gestures =
+      gesture_provider_->GetAndResetPendingGestures();
+  for (const auto& gesture : gestures) {
+    const ui::GestureEventDetails& details = gesture->details();
+
+    if (details.touch_points() != 2)
+      continue;
+
+    if (gesture->type() == ui::ET_GESTURE_PINCH_BEGIN) {
+      original_scale_ = scale_;
+
+      // Start consuming touch events with cancelling existing touches.
+      if (!consume_touch_event_)
+        cancel_pressed_touches = true;
+    } else if (gesture->type() == ui::ET_GESTURE_PINCH_UPDATE) {
+      if (locked_gesture_ == NO_GESTURE || locked_gesture_ == ZOOM) {
+        float scale = GetScale() * details.scale();
+        scale = std::max(scale, kMinMagnifiedScaleThreshold);
+        scale = std::min(scale, kMaxMagnifiedScaleThreshold);
+
+        if (locked_gesture_ == NO_GESTURE &&
+            std::abs(scale - original_scale_) > kZoomGestureLockThreshold) {
+          locked_gesture_ = MagnificationControllerImpl::ZOOM;
+        }
+
+        RedrawDIP(origin_, scale, 0, kDefaultAnimationTweenType);
+      }
+    } else if (gesture->type() == ui::ET_GESTURE_SCROLL_BEGIN) {
+      original_origin_ = origin_;
+
+      // Start consuming all touch events with cancelling existing touches.
+      if (!consume_touch_event_)
+        cancel_pressed_touches = true;
+    } else if (gesture->type() == ui::ET_GESTURE_SCROLL_UPDATE) {
+      if (locked_gesture_ == NO_GESTURE || locked_gesture_ == SCROLL) {
+        // Devide by scale to keep scroll speed same at any scale.
+        float new_x = origin_.x() + (-1.0f * details.scroll_x() / scale_);
+        float new_y = origin_.y() + (-1.0f * details.scroll_y() / scale_);
+
+        if (locked_gesture_ == NO_GESTURE) {
+          float squared_distance =
+              std::pow((new_x - original_origin_.x()) * scale_, 2) +
+              std::pow((new_y - original_origin_.y()) * scale_, 2);
+          if (squared_distance > kScrollGestureLockThreshold) {
+            locked_gesture_ = SCROLL;
+          }
+        }
+
+        RedrawDIP(gfx::PointF(new_x, new_y), scale_, 0,
+                  kDefaultAnimationTweenType);
+      }
+    }
+  }
+
+  if (cancel_pressed_touches) {
+    CHECK_EQ(2, press_event_map_.size());
+
+    // MagnificationController starts consuming all touch events after it
+    // cancells existing touches.
+    consume_touch_event_ = true;
+
+    auto it = press_event_map_.begin();
+
+    std::unique_ptr<ui::TouchEvent> rewritten_touch_event(new ui::TouchEvent(
+        ui::ET_TOUCH_CANCELLED, gfx::Point(), touch_event->time_stamp(),
+        it->second->pointer_details()));
+    rewritten_touch_event->set_location_f(it->second->location_f());
+    rewritten_touch_event->set_root_location_f(it->second->root_location_f());
+    rewritten_touch_event->set_flags(it->second->flags());
+    *rewritten_event = std::move(rewritten_touch_event);
+
+    press_event_map_.erase(it);
+
+    return ui::EVENT_REWRITE_DISPATCH_ANOTHER;
+  }
+
+  bool discard = consume_touch_event_;
+
+  // Reset state once no point is touched on the screen.
+  if (touch_points_ == 0) {
+    consume_touch_event_ = false;
+    locked_gesture_ = NO_GESTURE;
+  }
+
+  if (discard)
+    return ui::EVENT_REWRITE_DISCARD;
+
+  return ui::EVENT_REWRITE_CONTINUE;
+}
+
+ui::EventRewriteStatus MagnificationControllerImpl::NextDispatchEvent(
+    const ui::Event& last_event,
+    std::unique_ptr<ui::Event>* new_event) {
+  CHECK_EQ(1, press_event_map_.size());
+
+  auto it = press_event_map_.begin();
+
+  std::unique_ptr<ui::TouchEvent> event(new ui::TouchEvent(
+      ui::ET_TOUCH_CANCELLED, gfx::Point(), last_event.time_stamp(),
+      it->second->pointer_details()));
+  event->set_location_f(it->second->location_f());
+  event->set_root_location_f(it->second->root_location_f());
+  event->set_flags(it->second->flags());
+  *new_event = std::move(event);
+
+  press_event_map_.erase(it);
+
+  CHECK_EQ(0, press_event_map_.size());
+
+  return ui::EVENT_REWRITE_REWRITTEN;
+}
+
 void MagnificationControllerImpl::OnGestureEvent(ui::GestureEvent* event) {
+  // TODO(yawano): Remove old touch support implementation once the new one is
+  // enabled by default.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kNewTouchSupportForScreenMagnification)) {
+    return;
+  }
+
   if (!IsEnabled())
     return;
 

@@ -475,6 +475,10 @@ const char kNaturalScrollDefault[] = "enable-natural-scroll-default";
 // devices in other categories this flag must be missing.
 const char kNeedArcMigrationPolicyCheck[] = "need-arc-migration-policy-check";
 
+// Enables new implementation of touch support for screen magnification.
+const char kNewTouchSupportForScreenMagnification[] =
+    "new-touch-support-for-screen-magnification";
+
 // Uses the redesigned wallpaper picker.
 const char kNewWallpaperPicker[] = "new-wallpaper-picker";
 
