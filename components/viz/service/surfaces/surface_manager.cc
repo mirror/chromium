@@ -147,6 +147,7 @@ Surface* SurfaceManager::CreateSurface(
   DCHECK(IsMarkedForDestruction(surface_info.id()));
   surfaces_to_destroy_.erase(surface_info.id());
   SurfaceDiscarded(surface);
+  // TODO(xing.xu): implement MOVE for this.
   surface->Reset(surface_client);
   for (auto& observer : observer_list_)
     observer.OnSurfaceCreated(surface_info.id());

@@ -126,13 +126,16 @@ bool Surface::QueueFrame(
     PresentedCallback presented_callback) {
   late_activation_dependencies_.clear();
 
+  // If frame size doesn't match surface size, do not submit.
   if (frame.size_in_pixels() != surface_info_.size_in_pixels() ||
       frame.device_scale_factor() != surface_info_.device_scale_factor()) {
     TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
                          TRACE_EVENT_SCOPE_THREAD);
     if (presented_callback) {
+      LOG(INFO) << __FUNCTION__;
       std::move(presented_callback)
           .Run(base::TimeTicks(), base::TimeDelta(), 0);
+      LOG(INFO) << __FUNCTION__;
     }
     return false;
   }
@@ -143,8 +146,10 @@ bool Surface::QueueFrame(
     surface_client_->ReturnResources(resources);
     std::move(callback).Run();
     if (presented_callback) {
+      LOG(INFO) << __FUNCTION__;
       std::move(presented_callback)
           .Run(base::TimeTicks(), base::TimeDelta(), 0);
+      LOG(INFO) << __FUNCTION__;
     }
     return true;
   }
