@@ -22,6 +22,30 @@
       "revId": "69330679f26371b7df058e39ec5aaa28765c578f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76cfd98_941da35e",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-16T15:59:43Z",
+      "side": 1,
+      "message": "Just to be clear, this only affects the crazy linker itself (these symbols are not exported by the linker, and not used by the libraries that it loads).\n\nIt is true that by default operator new(size_t) cannot return nullptr, and that the compiler will explicitly remove null checks after new calls, as in:\n\n  Foo* foo \u003d new Foo(10);\n  if (!foo) {                \u003c--- this branch is removed by an optimizing compiler!!\n     // Handle memory error.\n  }\n\nThere is also \"operator new(size_t, const std::nothrow_t\u0026)\" which can return nullptr, but must be called explicitly, with \"new (std::nothrow) T\" instead of \"new T\", so nobody does it, and this does not apply to the linker.\n\nNOTE: If I add a \"return nullptr\" at the end of this function, the compiler will error with a message saying that operator new(size_t) *cannot* return nullptr :-) It compiles the following code as-is without error, even though the function doesn\u0027t end with a return.\n\nI will add a comment about this, since this is subtle :)",
+      "parentUuid": "e3758227_ae4dcbf1",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "69330679f26371b7df058e39ec5aaa28765c578f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
