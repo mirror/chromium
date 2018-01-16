@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62b3c8ab_1c9a47f1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9120c0fd_90ce5bd7",
+      "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5936eea_2fa319cf",
         "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a1e8cf_cb75cd67",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 0,
+      "message": "This is quick and easy, as this callback is only used for layout tests. One test (ping-cross-origin-from-https.html) blocks the ping, so that test gets a dump that it previously didn\u0027t. But I think it\u0027s still readable: you see the \"PingLoader dispatched\" message, then a CONSOLE ERROR indicating the request was blocked.",
+      "parentUuid": "e5936eea_2fa319cf",
+      "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

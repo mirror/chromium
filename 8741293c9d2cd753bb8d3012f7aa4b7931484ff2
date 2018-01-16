@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bc167bb_ea6832ae",
+        "filename": "third_party/WebKit/LayoutTests/mhtml/resource_not_found_in_archive-expected.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2842c35_17a9d231",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c66c435_aa747960",
         "filename": "third_party/WebKit/LayoutTests/mhtml/resource_not_found_in_archive-expected.html",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0f0498_18094d1d",
+        "filename": "third_party/WebKit/LayoutTests/mhtml/resource_not_found_in_archive-expected.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c66c435_aa747960",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2452f4c9_9d13f1ed",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSrcValue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f9ebb6c_fa0666a6",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02aa96e8_a7c9b1dd",
         "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-16T18:09:08Z",
       "side": 1,
       "message": "Can we always create StyleFetchedImageSet and remove this ErrorOccurred() check? Does it impact the behavior?\n\nThere are cases where the image becomes ErrorOccurred() asynchronously (i.e. ordinal load failures), which are handled by StyleFetchedImageSet. So also handling synchronous cases by StyleFetchedImageSet might be consistent and result in less dependency to synchronous erroring.\n\n(not so sure though; please double check)\n\nIf we can use StyleFetchedImageSet here and StyleFetchedImage in CSSImageValue, then we can also remove StyleInvalidImage.",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c4a16e_915120c9",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Changing it in CSSImageValue results in a failing test (fast/css/getComputedStyle/getComputedStyle-backgroundImage.html). I think it\u0027s a testing harness quirk (due to the behavior of WillSendRequest() rewriting urls). I think this change makes sense, but I\u0027d like to do it in a followup.",
+      "parentUuid": "02aa96e8_a7c9b1dd",
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dcd6cf5f_de4a45a7",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageValue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "See CSSImageSetValue.cpp",
+      "parentUuid": "5dc49c26_e4cdde8f",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12398680_31cc533b",
         "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-16T18:09:08Z",
       "side": 1,
       "message": "[In a Separate CL?] Can we move StartLoadingDynamicSheet() call before Fetch() and remove |if(loading_)| check?\nThis |loading_| check is for avoiding StartLoadingDynamicSheet() calls after sync load finish. \n Removing this condition results in less special handling for sync case.\n\nThis proposal causes calling StartLoadingDynamicSheet() before sync load finish (previously loading finished synchronously without StartLoadingDynamicSheet() calls). This looks safe and cleaner conceptually, but I\u0027m not so sure this doesn\u0027t cause any bad behavior changes though.",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339c845c_8147c105",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Seems reasonable, though it may be moot if I ever make CSS cache hits async :)",
+      "parentUuid": "12398680_31cc533b",
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9e1bf251_4d4020a2",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94bbfc28_7349a779",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609a8f49_4a252178",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCache.cpp",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b6a1c9_82d444ff",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCache.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609a8f49_4a252178",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6f6dd823_df745da1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCache.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec2a464_ea93f3aa",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d37de6_6fd4e0d7",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheCorrectnessTest.cpp",
         "patchSetId": 7
@@ -166,6 +328,24 @@
       "writtenOn": "2018-01-16T18:09:08Z",
       "side": 1,
       "message": "Is this expectation correct?\nPreviously the test expects that POST requests are not merged by MemoryCache, not that the second POST request fail (and thus clears MemoryCache entry).\nI suspect this CL unexpectedly causes |resource2|\u0027s failure.",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fead8af_b60f67f8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheCorrectnessTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "It\u0027s the test, not my CL. All of the test cases in this file have a subtle behavior: There are no mocked loads registered and the FetchContext blocks all resource loads. They manually create a Resource and inject it in to the cache, then merely compare whether the 2nd Resource matches the injecting Resource to see whether a cache hit occurred. In the cache miss case, the request is blocked because FetchContext::ShouldLoadNewResource() returned false, and the 2nd Resource is nullptr.\n\nThis CL somewhat violates that system in this specific case, because it\u0027s checking what the MemoryCache contains after the 2nd request, rather than simply comparing Resources. The returned Resource will be the non-null Resource generated because the Resource was blocked, and the MemoryCache will have neither Resource.\n\nWhether a Resource remains in the MemoryCache isn\u0027t really what this test cares about, so I\u0027m just dropping the MemoryCache::ResourceForURL() check.",
+      "parentUuid": "b1d37de6_6fd4e0d7",
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ef7447f3_c58ace72",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Switched to kOther",
+      "parentUuid": "e1606df9_098a7bda",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cdf241_20706947",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 7
@@ -203,6 +401,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ba056a_0372c822",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Switched to kOther",
+      "parentUuid": "42cdf241_20706947",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +442,30 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501c09a1_b7351515",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69f5774_a404cc44",
+      "range": {
+        "startLine": 735,
+        "startChar": 56,
+        "endLine": 735,
+        "endChar": 70
+      },
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +501,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd7e757_964ba3cd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-16T22:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05e1a7ba_da7f780e",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
