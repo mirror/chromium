@@ -625,15 +625,6 @@ class DicePrepareMigrationBrowserTest : public DiceBrowserTestBase {
       : DiceBrowserTestBase(AccountConsistencyMethod::kDicePrepareMigration) {}
 };
 
-class DicePrepareMigrationChromeSynEndpointBrowserTest
-    : public DiceBrowserTestBase {
- public:
-  DicePrepareMigrationChromeSynEndpointBrowserTest()
-      : DiceBrowserTestBase(
-            AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint) {
-  }
-};
-
 // Checks that signin on Gaia triggers the fetch for a refresh token.
 IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Signin) {
   EXPECT_EQ(0, reconcilor_started_count_);
@@ -891,33 +882,6 @@ IN_PROC_BROWSER_TEST_F(DiceFixAuthErrorsBrowserTest, Signout) {
   WaitForReconcilorUnblockedCount(0);
 }
 
-// Checks that signin on Gaia triggers the fetch for a refresh token.
-IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, Signin) {
-  EXPECT_EQ(0, reconcilor_started_count_);
-
-  // Navigate to Gaia and sign in.
-  NavigateToURL(kSigninURL);
-
-  // Check that the Dice request header was sent, with no signout confirmation.
-  std::string client_id = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
-  EXPECT_EQ(
-      base::StringPrintf("version=%s,client_id=%s,signin_mode=all_accounts,"
-                         "signout_mode=no_confirmation",
-                         signin::kDiceProtocolVersion, client_id.c_str()),
-      dice_request_header_);
-
-  // Check that the token was requested and added to the token service.
-  SendRefreshTokenResponse();
-  EXPECT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
-  // Sync should not be enabled.
-  EXPECT_TRUE(GetSigninManager()->GetAuthenticatedAccountId().empty());
-  EXPECT_TRUE(GetSigninManager()->GetAccountIdForAuthInProgress().empty());
-
-  EXPECT_EQ(1, reconcilor_blocked_count_);
-  WaitForReconcilorUnblockedCount(1);
-  EXPECT_EQ(1, reconcilor_started_count_);
-}
-
 IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, Signout) {
   // Start from a signed-in state.
   SetupSignedInAccounts();
@@ -940,8 +904,7 @@ IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, Signout) {
 
 // Tests that Sync is enabled if the ENABLE_SYNC response is received after the
 // refresh token.
-IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
-                       EnableSyncAfterToken) {
+IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, EnableSyncAfterToken) {
   EXPECT_EQ(0, reconcilor_started_count_);
 
   // Signin using the Chrome Sync endpoint.
@@ -985,8 +948,7 @@ IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
 
 // Tests that Sync is enabled if the ENABLE_SYNC response is received before the
 // refresh token.
-IN_PROC_BROWSER_TEST_F(DicePrepareMigrationChromeSynEndpointBrowserTest,
-                       EnableSyncBeforeToken) {
+IN_PROC_BROWSER_TEST_F(DicePrepareMigrationBrowserTest, EnableSyncBeforeToken) {
   EXPECT_EQ(0, reconcilor_started_count_);
 
   // Signin using the Chrome Sync endpoint.
