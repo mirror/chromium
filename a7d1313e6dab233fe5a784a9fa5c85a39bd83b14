@@ -246,6 +246,30 @@
       "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4569e644_5810ce4a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-16T01:06:05Z",
+      "side": 1,
+      "message": "I tried but the compiler failed with \"error: returning reference to local temporary object\".\nIn SnapCoordinator.cpp, the Optional\u003c\u003e object is created inside this getter, not originally stored as a field of the SnapCoordinator. I\u0027ve been using move() all the way through plumbing until layer.cc so I suppose there should be no copy afterwards.",
+      "parentUuid": "e870bffd_4237517d",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
