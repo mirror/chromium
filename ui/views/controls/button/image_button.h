@@ -23,18 +23,6 @@ class VIEWS_EXPORT ImageButton : public Button {
  public:
   static const char kViewClassName[];
 
-  enum HorizontalAlignment {
-    ALIGN_LEFT = 0,
-    ALIGN_CENTER,
-    ALIGN_RIGHT
-  };
-
-  enum VerticalAlignment {
-    ALIGN_TOP = 0,
-    ALIGN_MIDDLE,
-    ALIGN_BOTTOM
-  };
-
   explicit ImageButton(ButtonListener* listener);
   ~ImageButton() override;
 
