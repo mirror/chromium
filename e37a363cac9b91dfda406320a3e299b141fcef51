@@ -52,6 +52,24 @@
       "revId": "e37a363cac9b91dfda406320a3e299b141fcef51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622a6f5f_29aeed27",
+        "filename": "net/base/mime_sniffer_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T16:09:16Z",
+      "side": 1,
+      "message": "Done.  Also moved the GURL call below the check, to prevent exploring the GURL space with bad inputs.",
+      "parentUuid": "0dbec6ea_85483b8e",
+      "revId": "e37a363cac9b91dfda406320a3e299b141fcef51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
