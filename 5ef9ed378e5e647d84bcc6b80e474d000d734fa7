@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ef533767_bff10657",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-16T18:08:29Z",
+      "side": 1,
+      "message": "Nit: Might be just me, but this would read easier if we swapped the logic:\ndefined(OS_MACOSX) \u0026\u0026 !BUILDFLAG(MAC_VIEWS_BROWSER)\n\nIt would define the one situation where it should be false and everything else would default to true.",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7572173e_bbcbf46a",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
         "patchSetId": 5
@@ -13,6 +30,29 @@
       "writtenOn": "2018-01-16T18:08:21Z",
       "side": 1,
       "message": "Please file a feature request bug to \"Implement presentation receiver window for Mac Views\" and copy the rest of the text there, and change this to TODO(crbug.com/XXX).",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150ede23_27474094",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-16T18:08:29Z",
+      "side": 1,
+      "message": "Can we file a bug for this and put the bug number in the TODO?",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 17
+      },
       "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
