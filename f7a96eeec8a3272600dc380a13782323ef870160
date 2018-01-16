@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c5f0ba_f36ce1e3",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "What does this mean exactly? What is this saying will collide?",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38c696f_f3496471",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3816,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "Why does this use the aligned version? Can you explain in a comment?",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f160688f_749b167f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3819,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "it\u0027s already this type?",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fe70a1_d8bf865c",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "nit: remove \"resource\" from all these names, it seems like a misnomer here..",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed3283a_e8a05662",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3831,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "Does this apply to these?",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96024a42_2afbaaaf",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3841,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "nit: \"Dump\"",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7288df_95bbc712",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T20:54:54Z",
+      "side": 1,
+      "message": "nit: whitespace above this",
+      "revId": "f7a96eeec8a3272600dc380a13782323ef870160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
