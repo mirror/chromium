@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01706c58_887f1e11",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "Nit: \u0027laid\u0027\n\n(And I think you probably want to say that these are laid out \"with the default size\" (or width or height) or \"using the default size\")",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab45721_2356f36e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "ditto here",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f9d6c4_2915c80e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "ditto here",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92260b9_b05c31a4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "This test is substantially different than the previous one: This one tests overriding with CSS style attributes, while the other tests setting the HTML size attributes.\n\nI think that it might mean that we need a few more test cases:\n - \u003cimg\u003e\n - \u003cimg width\u003d###\u003e\n - \u003cimg height\u003d###\u003e\n - \u003cimg width\u003d### height\u003d####\u003e\n - \u003cimg style\u003d\"width: ###px\"\u003e\n - \u003cimg style\u003d\"height: ###px\"\u003e\n - \u003cimg style\u003d\"width: ###px; height: ###px\"\u003e",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f3e869_8a1ab5a9",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "Can you add a crbug link here? I\u0027m not sure if there is a separate bug for videos or not.",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1347f6b_2ca6019a",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "Can you add a comment above this line to explain what it controls?",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bc49d7_21b79e8e",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-16T17:57:30Z",
+      "side": 1,
+      "message": "Also include the comment here :)",
+      "revId": "7af5639b9ba25ac6fe4f825715a5b92f5f4b4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
