@@ -67,6 +67,8 @@ CSSPaintImageGeneratorImpl::NativeInvalidationProperties() const {
     return empty_vector;
   DocumentPaintDefinition* definition =
       paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition == kInvalidDocumentDefinition)
+    return empty_vector;
   return definition->NativeInvalidationProperties();
 }
 
@@ -77,6 +79,8 @@ CSSPaintImageGeneratorImpl::CustomInvalidationProperties() const {
     return empty_vector;
   DocumentPaintDefinition* definition =
       paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition == kInvalidDocumentDefinition)
+    return empty_vector;
   return definition->CustomInvalidationProperties();
 }
 
@@ -85,6 +89,8 @@ bool CSSPaintImageGeneratorImpl::HasAlpha() const {
     return false;
   DocumentPaintDefinition* definition =
       paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition == kInvalidDocumentDefinition)
+    return false;
   return definition->GetPaintRenderingContext2DSettings().alpha();
 }
 
@@ -95,6 +101,8 @@ CSSPaintImageGeneratorImpl::InputArgumentTypes() const {
     return empty_vector;
   DocumentPaintDefinition* definition =
       paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition == kInvalidDocumentDefinition)
+    return empty_vector;
   return definition->InputArgumentTypes();
 }
 
