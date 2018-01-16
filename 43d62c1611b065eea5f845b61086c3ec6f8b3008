@@ -16,6 +16,24 @@
       "revId": "43d62c1611b065eea5f845b61086c3ec6f8b3008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b124ab94_6c5234c9",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T21:53:33Z",
+      "side": 0,
+      "message": "It\u0027s still sent to devtools, with the change in InspectorPaintInvalidationTrackingEvent using object.ContainerForPaintInvalidation().",
+      "parentUuid": "bf524e67_a10133f7",
+      "revId": "43d62c1611b065eea5f845b61086c3ec6f8b3008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
