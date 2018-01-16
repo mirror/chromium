@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9ef054_e978a1d3",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_time_zone_pref_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T20:42:09Z",
+      "side": 1,
+      "message": "else? Document what the default behavior is.",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721cecdf_25227310",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T20:42:09Z",
+      "side": 1,
+      "message": "nit: .then(() \u003d\u003e { this.setTimeZoneList_(); })",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35c656b_44cc537d",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T20:42:09Z",
+      "side": 1,
+      "message": "\u003e on separate line",
+      "revId": "68ef7e76872c4f27fabf0b71b08c949ca27fb48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
