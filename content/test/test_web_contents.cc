@@ -268,8 +268,6 @@ void TestWebContents::CommitPendingNavigation() {
   const bool browser_side_navigation = IsBrowserSideNavigationEnabled();
   CHECK(!browser_side_navigation || rfh->is_loading() ||
         IsRendererDebugURL(entry->GetURL()));
-  CHECK(!browser_side_navigation ||
-        !rfh->frame_tree_node()->navigation_request());
 
   rfh->SendNavigateWithTransition(entry->GetUniqueID(),
                                   GetController().GetPendingEntryIndex() == -1,
