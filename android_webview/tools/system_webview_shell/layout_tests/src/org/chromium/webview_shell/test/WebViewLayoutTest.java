@@ -431,7 +431,7 @@ public class WebViewLayoutTest {
     }
 
     private HashMap<String, HashSet<String>> buildHashMap(String contents) {
-        String[] lineByLine = contents.split("\\n");
+        List<String> lineByLine = Splitter.onPattern("\\n").splitOnList(contents);
 
         HashSet<String> subset = null;
         HashMap<String, HashSet<String>> interfaces = new HashMap<String, HashSet<String>>();
