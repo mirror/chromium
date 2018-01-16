@@ -11,6 +11,7 @@
 
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
+#include "content/network/resource_scheduler.h"
 #include "content/network/upload_progress_tracker.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -92,6 +93,7 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   void OnUploadProgressACK();
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
                                      int net_error);
+  void ResumeStart();
 
   NetworkContext* context_;
   int32_t options_;
@@ -116,6 +118,9 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   // finished.
   scoped_refptr<ResourceResponse> response_;
   mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+
+  std::unique_ptr<ResourceScheduler::ScheduledResourceRequest>
+      resource_scheduler_request_handle_;
 
   bool report_raw_headers_;
   net::HttpRawRequestHeaders raw_request_headers_;
