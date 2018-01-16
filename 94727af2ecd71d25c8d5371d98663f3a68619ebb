@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1a2b1ef0_b56d22f0",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-16T17:58:38Z",
+      "side": 1,
+      "message": "Yes, this is actually used to throttle FamilyInfoFetcher requests. See also how it\u0027s used to initialize |family_fetch_backoff_| below.",
+      "parentUuid": "3bacf3ae_81fd765e",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "110ff652_e6eb9154",
         "filename": "chrome/browser/supervised_user/child_accounts/family_info_fetcher.cc",
         "patchSetId": 2
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "0f4ff18e_bb9028a5",
+        "filename": "chrome/browser/supervised_user/child_accounts/family_info_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-16T17:58:38Z",
+      "side": 1,
+      "message": "I guess kFamilyApiScope makes sense. Anyway, I don\u0027t feel strongly either way, I don\u0027t mind short names in .cc files (and if jumbo didn\u0027t reduce the build times so massively, I\u0027d probably oppose these renames ;) )",
+      "parentUuid": "f6d9fed0_0f7215df",
+      "range": {
+        "startLine": 24,
+        "startChar": 76,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf87fcbb_17a1ccb3",
         "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
         "patchSetId": 2
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Yes, and there are more code that use that string outside of chrome/browser but I just didn\u0027t know where to put it. The downside of visiting new and unknown code. I\u0027m accepting suggestions!",
       "parentUuid": "bf87fcbb_17a1ccb3",
+      "range": {
+        "startLine": 16,
+        "startChar": 47,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21b99967_9f671735",
+        "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-16T17:58:38Z",
+      "side": 1,
+      "message": "I didn\u0027t know either, hence the many duplicates :D",
+      "parentUuid": "5d928343_59a8ebde",
       "range": {
         "startLine": 16,
         "startChar": 47,
