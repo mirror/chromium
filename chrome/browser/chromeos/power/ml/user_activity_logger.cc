@@ -4,6 +4,9 @@
 
 #include "chrome/browser/chromeos/power/ml/user_activity_logger.h"
 
+#include <memory>
+
+#include "base/time/default_clock.h"
 #include "base/timer/timer.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
 #include "chromeos/system/devicetype.h"
@@ -22,7 +25,8 @@ UserActivityLogger::UserActivityLogger(
     session_manager::SessionManager* session_manager,
     viz::mojom::VideoDetectorObserverRequest request,
     const chromeos::ChromeUserManager* user_manager)
-    : logger_delegate_(delegate),
+    : clock_(std::make_unique<base::DefaultClock>()),
+      logger_delegate_(delegate),
       idle_event_observer_(this),
       user_activity_observer_(this),
       power_manager_client_observer_(this),
@@ -120,6 +124,7 @@ void UserActivityLogger::OnVideoActivityStarted() {
 void UserActivityLogger::OnIdleEventObserved(
     const IdleEventNotifier::ActivityData& activity_data) {
   idle_event_observed_ = true;
+  idle_event_start_ = clock_->Now();
   ExtractFeatures(activity_data);
 }
 
@@ -165,11 +170,11 @@ void UserActivityLogger::ExtractFeatures(
 
   if (!activity_data.last_mouse_time.is_null()) {
     features_.set_time_since_last_mouse_sec(
-        (base::Time::Now() - activity_data.last_mouse_time).InSeconds());
+        (clock_->Now() - activity_data.last_mouse_time).InSeconds());
   }
   if (!activity_data.last_key_time.is_null()) {
     features_.set_time_since_last_key_sec(
-        (base::Time::Now() - activity_data.last_key_time).InSeconds());
+        (clock_->Now() - activity_data.last_key_time).InSeconds());
   }
 
   features_.set_recent_time_active_sec(
@@ -219,22 +224,27 @@ void UserActivityLogger::MaybeLogEvent(
   if (!idle_event_observed_)
     return;
   screen_idle_timer_.Stop();
+  DCHECK(!idle_event_start_.is_null());
   UserActivityEvent activity_event;
 
   UserActivityEvent::Event* event = activity_event.mutable_event();
   event->set_type(type);
   event->set_reason(reason);
+  event->set_event_time_sec((clock_->Now() - idle_event_start_).InSeconds());
 
   *activity_event.mutable_features() = features_;
 
   // Log to metrics.
   logger_delegate_->LogActivity(activity_event);
   idle_event_observed_ = false;
+  idle_event_start_ = base::Time();
 }
 
 void UserActivityLogger::SetTaskRunnerForTesting(
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
+    std::unique_ptr<base::Clock> test_clock) {
   screen_idle_timer_.SetTaskRunner(task_runner);
+  clock_ = std::move(test_clock);
 }
 
 }  // namespace ml
