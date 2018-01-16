@@ -82,6 +82,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
             "protected_media_identifier_permission_list";
     public static final String PREF_ADS_PERMISSION = "ads_permission_list";
     public static final String PREF_SOUND_PERMISSION = "sound_permission_list";
+    public static final String PREF_CLIPBOARD_PERMISSION = "clipboard_permission_list";
 
     // All permissions from the permissions preference category must be listed here.
     // TODO(mvanouwerkerk): Use this array in more places to reduce verbosity.
@@ -89,6 +90,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
             PREF_AUTOPLAY_PERMISSION,
             PREF_BACKGROUND_SYNC_PERMISSION,
             PREF_CAMERA_CAPTURE_PERMISSION,
+            PREF_CLIPBOARD_PERMISSION,
             PREF_COOKIES_PERMISSION,
             PREF_JAVASCRIPT_PERMISSION,
             PREF_LOCATION_ACCESS,
@@ -248,6 +250,10 @@ public class SingleWebsitePreferences extends PreferenceFragment
                 if (merged.getSoundException() == null && other.getSoundException() != null) {
                     merged.setSoundException(other.getSoundException());
                 }
+                if (merged.getClipboardException() == null
+                        && other.getClipboardException() != null) {
+                    merged.setClipboardException(other.getClipboardException());
+                }
                 if (merged.getAutoplayException() == null && other.getAutoplayException() != null) {
                     merged.setAutoplayException(other.getAutoplayException());
                 }
@@ -345,6 +351,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
             setUpListPreference(preference, mSite.getProtectedMediaIdentifierPermission());
         } else if (PREF_SOUND_PERMISSION.equals(key)) {
             setUpListPreference(preference, mSite.getSoundPermission());
+        } else if (PREF_CLIPBOARD_PERMISSION.equals(key)) {
+            setUpListPreference(preference, mSite.getClipboardPermission());
         }
     }
 
@@ -733,6 +741,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
                 return ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER;
             case PREF_SOUND_PERMISSION:
                 return ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND;
+            case PREF_CLIPBOARD_PERMISSION:
+                return ContentSettingsType.CONTENT_SETTINGS_TYPE_CLIPBOARD_READ;
             default:
                 return 0;
         }
@@ -792,6 +802,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
             mSite.setProtectedMediaIdentifierPermission(permission);
         } else if (PREF_SOUND_PERMISSION.equals(preference.getKey())) {
             mSite.setSoundPermission(permission);
+        } else if (PREF_CLIPBOARD_PERMISSION.equals(preference.getKey())) {
+            mSite.setClipboardPermission(permission);
         }
 
         return true;
@@ -865,6 +877,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
         mSite.setPopupPermission(ContentSetting.DEFAULT);
         mSite.setProtectedMediaIdentifierPermission(ContentSetting.DEFAULT);
         mSite.setSoundPermission(ContentSetting.DEFAULT);
+        mSite.setClipboardPermission(ContentSetting.DEFAULT);
 
         for (UsbInfo info : mSite.getUsbInfo()) info.revoke();
 
