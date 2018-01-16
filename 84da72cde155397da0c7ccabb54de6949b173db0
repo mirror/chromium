@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21898203_a6b82b08",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with Win32, but is calling QueryPerformanceFrequency particularly expensive? It might be cleaner to just call QueryPerformanceFrequency on every current_time_in_seconds invocation. For example, in addition to dropping the static variables above, it should let you drop the initialize_timer function.",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7a38d2_10560d8e",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "FWIW, in my (non-Chromium) zlib-using C99 code, I zero-initialize the z_stream using \"aggregate initialization\":\n\nz_stream stream \u003d {0};\n\nDitto below.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 8
+      },
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3939555c_287ef34e",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "I\u0027d immediately check result \u003d\u003d Z_OK, and return early or call error_exit otherwise, after this line.\n\nDitto for inflateInit2.",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8796e18_9ade7715",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "Is the static necessary? Ditto a couple of lines down.",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b19fa08_157f80e4",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "Should you also have drate and drate_max variables??",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e151db2_73e9b576",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2018-01-16T01:52:34Z",
+      "side": 1,
+      "message": "FWIW, I think s/uint32_t/unsigned int/ would be consistent with the %u format string.",
+      "revId": "84da72cde155397da0c7ccabb54de6949b173db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
