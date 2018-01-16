@@ -27,6 +27,7 @@ import org.robolectric.annotation.Config;
 
 import org.chromium.chrome.browser.download.DownloadInfo;
 import org.chromium.chrome.browser.download.DownloadNotifier;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.OfflineContentProvider;
 import org.chromium.components.offline_items_collection.OfflineItem;
@@ -160,7 +161,7 @@ public class OfflineContentAggregatorNotificationBridgeUiTest {
                 .notifyDownloadCanceled(items.get(3).id /* OfflineItemState.CANCELLED */);
         verify(mNotifier, times(1))
                 .notifyDownloadInterrupted(argThat(new DownloadInfoIdMatcher(items.get(4).id)),
-                        ArgumentMatchers.anyBoolean());
+                        ArgumentMatchers.anyBoolean(), PendingState.PENDING_REASON_UNKNOWN);
         verify(mNotifier, times(1))
                 .notifyDownloadFailed(argThat(new DownloadInfoIdMatcher(items.get(5).id)));
         verify(mNotifier, times(1))
