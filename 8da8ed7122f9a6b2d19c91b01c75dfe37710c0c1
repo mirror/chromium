@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2054db71_3e90da3f",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T11:43:04Z",
+      "side": 1,
+      "message": "Nit: maybe name it DownloadAllowedByDefault?",
+      "revId": "8da8ed7122f9a6b2d19c91b01c75dfe37710c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
