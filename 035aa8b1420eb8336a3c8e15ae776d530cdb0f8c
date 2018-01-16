@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07600dac_7e684565",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-16T21:23:45Z",
+      "side": 1,
+      "message": "Not a great name? \n\n- OnFormSubmissionDone?\n- OnFormIsDefunct?\n- OnFormNoLongerSubmittable?\n\nActually, is this always called after ResetLastInteractedElements()? Should this just be a part of that method? Or merged with that message with a new name?\n\n- OnFormContextChanged()\n- OnNewFormContext()\n- ResetFormIntereactions()",
+      "range": {
+        "startLine": 255,
+        "startChar": 7,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "035aa8b1420eb8336a3c8e15ae776d530cdb0f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
