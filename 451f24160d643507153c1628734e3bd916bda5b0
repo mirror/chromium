@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0248ff01_7a205827",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T22:30:30Z",
+      "side": 1,
+      "message": "I just thought of a simpler way to do that test: put an invisible div over top of an OOPIF. SurfaceHitTest will say to send it to the OOPIF but the parent renderer will take it instead.",
+      "parentUuid": "2954f160_1ff88e0c",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "684bf7a1_06556a43",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
