@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "545f72a7_3feefaaa",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-16T18:59:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer we just use the super class IsDiscoveryComplete",
+      "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9191117e_547df6a6",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-16T18:59:11Z",
+      "side": 1,
+      "message": "If this is the only place discovery_complete_notified_ is reset, it\u0027s not clear to me that this will be hit each time it needs to be.",
+      "revId": "26be4cb5b565ce647867fd9e715a1d75a9f6da01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
