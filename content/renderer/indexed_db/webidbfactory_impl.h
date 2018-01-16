@@ -25,8 +25,10 @@ namespace content {
 
 class WebIDBFactoryImpl : public blink::WebIDBFactory {
  public:
-  WebIDBFactoryImpl(scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
-                    scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+  WebIDBFactoryImpl(
+      scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
+      scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> callback_runner);
   ~WebIDBFactoryImpl() override;
 
   // See WebIDBFactory.h for documentation on these functions.
@@ -48,6 +50,7 @@ class WebIDBFactoryImpl : public blink::WebIDBFactory {
 
   IOThreadHelper* io_helper_;
   scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> callback_runner_;
 };
 
 }  // namespace content
