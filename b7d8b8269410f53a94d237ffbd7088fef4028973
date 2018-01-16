@@ -124,6 +124,24 @@
       "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6666c15_9b9f2164",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-16T16:36:50Z",
+      "side": 1,
+      "message": "Thanks, Matt. I decided to do #3.  I also added a unit test for this.",
+      "parentUuid": "173939af_351809c1",
+      "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
