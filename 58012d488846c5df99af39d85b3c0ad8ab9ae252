@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859d37e6_a7b581ee",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T15:00:33Z",
+      "side": 1,
+      "message": "nit: mojo::Wrap...",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742c9cb7_f986ca8b",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T15:00:33Z",
+      "side": 1,
+      "message": "Could you elaborate on this? I don\u0027t really see how process type would be a relevant detail when deciding whether or not to use this.",
+      "revId": "58012d488846c5df99af39d85b3c0ad8ab9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
