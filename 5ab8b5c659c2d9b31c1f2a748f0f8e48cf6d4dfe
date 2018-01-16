@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "642ac885_800142b2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-16T14:05:44Z",
+      "side": 1,
+      "message": "Ooops, done.",
+      "parentUuid": "e0fa20de_a78daf8a",
+      "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e32ed2e_469cfaec",
         "filename": "third_party/WebKit/Source/platform/scheduler/util/thread_type.h",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05154b07_a20e4eb7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/thread_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-16T14:05:44Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "7e32ed2e_469cfaec",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
