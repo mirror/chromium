@@ -22,6 +22,30 @@
       "revId": "50e683cad6398a4a7be2aa95be9a0362dde4727a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3e5c4d_b66c5aff",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T17:40:52Z",
+      "side": 1,
+      "message": "\u003e where does this get used?\n\u003e is it unrelated change to added enum?\n\nDisabling the proxy if the probe fails is guarded behind this field trial:\nhttps://cs.chromium.org/chromium/src/components/data_reduction_proxy/core/browser/warmup_url_fetcher.cc?rcl\u003db12916d5ec98a2a17c4753192a8b563163b004d8\u0026l\u003d159\n\nNot totally related to this CL, but part of the same bug.",
+      "parentUuid": "ce70ea6e_d0231749",
+      "range": {
+        "startLine": 1041,
+        "startChar": 5,
+        "endLine": 1041,
+        "endChar": 39
+      },
+      "revId": "50e683cad6398a4a7be2aa95be9a0362dde4727a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
