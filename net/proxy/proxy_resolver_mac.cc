@@ -17,7 +17,7 @@
 #include "net/base/net_errors.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_resolver.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 
 #if defined(OS_IOS)
 #include <CFNetwork/CFProxySupport.h>

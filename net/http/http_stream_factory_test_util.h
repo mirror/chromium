@@ -14,7 +14,7 @@
 #include "net/http/http_stream_factory_impl_job.h"
 #include "net/http/http_stream_factory_impl_job_controller.h"
 #include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/socket/next_proto.h"
 #include "testing/gmock/include/gmock/gmock.h"
 

@@ -13,7 +13,7 @@
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_list.h"
 #include "net/proxy/proxy_retry_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {

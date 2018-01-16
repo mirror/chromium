@@ -30,7 +30,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/timer/timer.h"
 #include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 
 #if defined(USE_GIO)
 #include <gio/gio.h>

@@ -23,7 +23,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/proxy/proxy_config_service.h"
 #include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "url/gurl.h"
 
 class GURL;

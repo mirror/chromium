@@ -16,7 +16,7 @@
 #include "net/proxy/mock_proxy_resolver.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_resolver_v8_tracing.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/test/event_waiter.h"
 #include "net/test/gtest_util.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"

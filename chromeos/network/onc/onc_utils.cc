@@ -53,7 +53,7 @@
 #include "net/cert/x509_util_nss.h"
 #include "net/proxy/proxy_bypass_rules.h"
 #include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"

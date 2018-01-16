@@ -29,7 +29,7 @@
 #include "components/data_reduction_proxy/core/browser/data_store.h"
 #include "net/base/backoff_entry.h"
 #include "net/log/test_net_log.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 

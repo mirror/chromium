@@ -24,7 +24,7 @@
 #include "net/cert/cert_database.h"
 #include "net/http/http_stream_factory_impl_request.h"
 #include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/spdy/chromium/http2_push_promise_index.h"
 #include "net/spdy/chromium/server_push_delegate.h"
 #include "net/spdy/chromium/spdy_session_key.h"

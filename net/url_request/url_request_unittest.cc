@@ -89,7 +89,7 @@
 #include "net/log/test_net_log_util.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"

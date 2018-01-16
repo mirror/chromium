@@ -19,7 +19,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "net/http/http_status_code.h"
 #include "net/nqe/network_quality_estimator_test_util.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "net/socket/socket_test_util.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"

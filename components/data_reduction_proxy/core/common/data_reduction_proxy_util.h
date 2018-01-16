@@ -12,7 +12,7 @@
 #include "components/data_reduction_proxy/proto/pageload_metrics.pb.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/proxy/proxy_retry_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "url/gurl.h"
 
 namespace base {

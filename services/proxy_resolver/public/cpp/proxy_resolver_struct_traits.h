@@ -11,7 +11,7 @@
 #include "net/base/host_port_pair.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_list.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
 
 namespace net {

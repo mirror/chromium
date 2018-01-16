@@ -11,7 +11,7 @@
 #include "net/proxy/proxy_bypass_rules.h"
 #include "net/proxy/proxy_config_source.h"
 #include "net/proxy/proxy_list.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "url/gurl.h"
 
 namespace base {
