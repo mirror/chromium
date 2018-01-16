@@ -329,6 +329,22 @@ class FileSystem(object):
         """Create a symbolic link. Unix only."""
         os.symlink(source, link_name)
 
+    def sanitize_filename(self, filename, replace='_'):
+        """Replaces all illegal characters in a filename with a given character.
+
+        The list of illegal characters cover all restrictions on Linux, Mac and
+        Windows.
+
+        Args:
+            filename: A basename (or a part of the basename) of a file to
+                sanitize. It cannot be a path because slashes will be replaced.
+            replace: A character to replace all illegal characters with.
+
+        Return:
+            The sanitized filename.
+        """
+        return _sanitize_filename(filename, replace)
+
 
 # _remove_contents is implemented in terms of other FileSystem functions. To
 # allow it to be reused on the MockFileSystem object, we define it here and
@@ -391,3 +407,15 @@ def _remove_contents(fs, dirname, sleep=time.sleep):
             _log.warning('Dir %s still in output dir.', fs.join(dirpath, dname))
 
     return False
+
+
+# Same as _remove_contents, to reuse it in MockFileSystem.
+def _sanitize_filename(filename, replace):
+    # The list comes from restrictions on Windows:
+    # https://support.microsoft.com/lo-la/help/905231/information-about-the-characters-that-you-cannot-use-in-site-names--fo
+    # It also includes all illegal characters on Mac and Linux.
+    illegal_filename_chars = {'~', '#', '%', '&', '*', '{', '}', '\\', ':', '<', '>', '?', '/', '|', '"'}
+
+    for char in illegal_filename_chars:
+        filename = filename.replace(char, replace)
+    return filename
