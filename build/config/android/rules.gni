@@ -10,6 +10,7 @@ import("//build/config/clang/clang.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/dcheck_always_on.gni")
 import("//build/toolchain/toolchain.gni")
+import("//third_party/protobuf/proto_library.gni")
 
 assert(is_android)
 
