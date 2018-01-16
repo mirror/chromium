@@ -1,0 +1,56 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module network.mojom;
+
+import "net/interfaces/ip_endpoint.mojom";
+
+
+// Represents a TCP socket that is bound to a local address and port, but
+// is not yet in a listening or connected state.
+//
+// A bound socket can be used to create a server socket listening on the
+// local address, or it can be used to create a client socket by connecting to
+// a remote address. Once StartListening or Connect is called on the bound
+// socket, ownership of the underlying socket will be transferred to the
+// connected or server socket, and the bound socket may be closed.
+interface TCPBoundSocket {
+ // Puts the socket into server mode, awaiting incoming connections.
+ //
+ // Once this function is called, neither StartListening nor Connect can be
+ // used on this socket again.
+ StartListening(TCPServerSocket& server) => (NetworkError result);
+
+ // Puts this socket into client mode by connecting to a remote host. If you
+ // do not care about the local address or port, you can call
+ // NetworkService.CreateTCPConnectedSocket to connect directly and skip the
+ // "bound" state.
+ //
+ // Once this function is called, neither StartListening nor Connect can be
+ // used on this socket again.
+ Connect(net.interfaces.IPEndPoint remote_address,
+         handle<data_pipe_consumer> send_stream,
+         handle<data_pipe_producer> receive_stream,
+         TCPConnectedSocket& client_socket)
+     => (int32 result);
+};
+
+// Represents a connected TCP socket. Writes and Reads are through the data
+// pipes supplied upon construction.
+interface TCPConnectedSocket {
+  // TODO(xunjieli): Setters for controlling the connection will be added.
+};
+
+// Represents a TCP server socket that has been successfully bound to a local
+// address.
+interface TCPServerSocket {
+  // Waits for an incoming connection request. On success, |connected_socket|
+  // is the new connection established. Returns net::OK and |remote_addr|
+  // represents the peer address. On failure, |net_error| is a net error code.
+  // Only one Accept() can be pending at a time.
+  Accept(handle<data_pipe_consumer> send_stream,
+         handle<data_pipe_producer> receive_stream,
+         TCPConnectedSocket& connected_socket)
+      => (int32 net_error, net.interfaces.IPEndPoint remote_addr);
+};

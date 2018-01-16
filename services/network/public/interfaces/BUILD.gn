@@ -17,6 +17,7 @@ mojom("interfaces") {
     "network_types.mojom",
     "request_context_frame_type.mojom",
     "restricted_cookie_manager.mojom",
+    "tcp_socket.mojom",
   ]
 
   public_deps = [
