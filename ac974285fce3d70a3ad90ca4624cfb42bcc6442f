@@ -16,6 +16,24 @@
       "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1d3c46_c4ae9400",
+        "filename": "content/browser/service_manager/service_manager_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-16T23:01:12Z",
+      "side": 1,
+      "message": "Hmm, if we need to specify the task runner for an embedded service during the initialization of ServiceManagerContext (as is currently the case), then I don\u0027t see any alternative to passing it into this initialization call.\n\nIMO, this dependency on \"another part of the browser\" is not a big one. If you look at [1], all that is needed is to create an instance of AudioThreadImpl, which is essentially just a base::Thread. If creating that before the initialization of ServiceManagerContext would cause any issues, we would probably have to allow configuration of the task runner for embedded services in a stage _after_ the initialization of ServiceManagerContext. But I don\u0027t currently see any issue with creating the AudioThreadImpl first.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/759412/10/content/browser/browser_main_loop.cc",
+      "parentUuid": "53487c8d_99d3667b",
+      "revId": "ac974285fce3d70a3ad90ca4624cfb42bcc6442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
