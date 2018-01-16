@@ -45,6 +45,30 @@
       "revId": "a0a11ca5a732bf36da7ebd4da5157fc15e72fc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40225563_b878f3dd",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-16T11:46:49Z",
+      "side": 1,
+      "message": "Done\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d770147#c11",
+      "parentUuid": "fef0a1a4_a9831cd4",
+      "range": {
+        "startLine": 1511,
+        "startChar": 0,
+        "endLine": 1512,
+        "endChar": 12
+      },
+      "revId": "a0a11ca5a732bf36da7ebd4da5157fc15e72fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
