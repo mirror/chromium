@@ -30,20 +30,6 @@ URLLoaderFactoryImpl::~URLLoaderFactoryImpl() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 }
 
-void URLLoaderFactoryImpl::CreateLoaderAndStart(
-    mojom::URLLoaderRequest request,
-    int32_t routing_id,
-    int32_t request_id,
-    uint32_t options,
-    const network::ResourceRequest& url_request,
-    mojom::URLLoaderClientPtr client,
-    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
-  CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
-}
-
 void URLLoaderFactoryImpl::Clone(mojom::URLLoaderFactoryRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
@@ -84,6 +70,20 @@ void URLLoaderFactoryImpl::Create(
 void URLLoaderFactoryImpl::OnConnectionError() {
   if (bindings_.empty())
     delete this;
+}
+
+void URLLoaderFactoryImpl::CreateNoCORSLoaderAndStart(
+    mojom::URLLoaderRequest request,
+    int32_t routing_id,
+    int32_t request_id,
+    uint32_t options,
+    const network::ResourceRequest& url_request,
+    mojom::URLLoaderClientPtr client,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  CreateLoaderAndStart(
+      requester_info_.get(), std::move(request), routing_id, request_id,
+      options, url_request, std::move(client),
+      static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
 }
 
 }  // namespace content

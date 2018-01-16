@@ -121,6 +121,9 @@ class CONTENT_EXPORT ResourceMessageFilter
   // Task runner for the IO thead.
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
 
+  // URLLoaderFactory that is currently used when kOutOfBlinkCORS is enabled.
+  mojom::URLLoaderFactoryPtr url_loader_factory_impl_;
+
   // This must come last to make sure weak pointers are invalidated first.
   base::WeakPtrFactory<ResourceMessageFilter> weak_ptr_factory_;
 

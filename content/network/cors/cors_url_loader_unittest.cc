@@ -2,18 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/renderer/loader/cors_url_loader.h"
+#include "content/network/cors/cors_url_loader.h"
 
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
+#include "content/network/cors/cors_enabled_url_loader_factory.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/test_url_loader_client.h"
-#include "content/renderer/loader/cors_url_loader_factory.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -23,7 +25,7 @@ using network::mojom::FetchRequestMode;
 namespace content {
 namespace {
 
-class TestURLLoaderFactory : public mojom::URLLoaderFactory {
+class TestURLLoaderFactory : public CORSEnabledURLLoaderFactory {
  public:
   TestURLLoaderFactory() = default;
   ~TestURLLoaderFactory() override = default;
@@ -49,19 +51,20 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
   bool IsCreateLoaderAndStartCalled() { return !!client_ptr_; }
 
  private:
-  // mojom::URLLoaderFactory implementation.
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
-                            int32_t routing_id,
-                            int32_t request_id,
-                            uint32_t options,
-                            const network::ResourceRequest& url_request,
-                            mojom::URLLoaderClientPtr client,
-                            const net::MutableNetworkTrafficAnnotationTag&
-                                traffic_annotation) override {
+  // content::CORSEnabledURLLoaderFactory implementation.
+  void CreateNoCORSLoaderAndStart(mojom::URLLoaderRequest request,
+                                  int32_t routing_id,
+                                  int32_t request_id,
+                                  uint32_t options,
+                                  const network::ResourceRequest& url_request,
+                                  mojom::URLLoaderClientPtr client,
+                                  const net::MutableNetworkTrafficAnnotationTag&
+                                      traffic_annotation) override {
     DCHECK(client);
     client_ptr_ = std::move(client);
   }
 
+  // mojom::URLLoaderFactory implementation.
   void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 
   mojom::URLLoaderClientPtr client_ptr_;
@@ -72,18 +75,20 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
 class CORSURLLoaderTest : public testing::Test {
  public:
   CORSURLLoaderTest()
-      : test_network_factory_binding_(&test_network_loader_factory_) {}
+      : test_url_loader_factory_binding_(&test_url_loader_factory_) {}
 
  protected:
+  // testing::Test implementation.
+  void SetUp() override {
+    feature_list_.InitAndEnableFeature(features::kOutOfBlinkCORS);
+  }
+
   void CreateLoaderAndStart(const GURL& origin,
                             const GURL& url,
                             FetchRequestMode fetch_request_mode) {
-    mojom::URLLoaderFactoryPtr network_factory_ptr;
-    test_network_factory_binding_.Bind(mojo::MakeRequest(&network_factory_ptr));
-
-    mojom::URLLoaderFactoryPtr loader_factory_ptr;
-    CORSURLLoaderFactory::CreateAndBind(network_factory_ptr.PassInterface(),
-                                        mojo::MakeRequest(&loader_factory_ptr));
+    mojom::URLLoaderFactoryPtr url_loader_factory_ptr;
+    test_url_loader_factory_binding_.Bind(
+        mojo::MakeRequest(&url_loader_factory_ptr));
 
     network::ResourceRequest request;
     request.resource_type = RESOURCE_TYPE_IMAGE;
@@ -93,7 +98,7 @@ class CORSURLLoaderTest : public testing::Test {
     request.url = url;
     request.request_initiator = url::Origin::Create(origin);
 
-    loader_factory_ptr->CreateLoaderAndStart(
+    url_loader_factory_ptr->CreateLoaderAndStart(
         mojo::MakeRequest(&url_loader_), 0 /* routing_id */, 0 /* request_id */,
         mojom::kURLLoadOptionNone, request,
         test_cors_loader_client_.CreateInterfacePtr(),
@@ -101,20 +106,20 @@ class CORSURLLoaderTest : public testing::Test {
 
     // Flushes to ensure that the request is handled and
     // TestURLLoaderFactory::CreateLoaderAndStart() runs internally.
-    loader_factory_ptr.FlushForTesting();
+    url_loader_factory_ptr.FlushForTesting();
   }
 
   bool IsNetworkLoaderStarted() {
-    return test_network_loader_factory_.IsCreateLoaderAndStartCalled();
+    return test_url_loader_factory_.IsCreateLoaderAndStartCalled();
   }
 
   void NotifyLoaderClientOnReceiveResponse(
       const std::string& extra_header = std::string()) {
-    test_network_loader_factory_.NotifyClientOnReceiveResponse(extra_header);
+    test_url_loader_factory_.NotifyClientOnReceiveResponse(extra_header);
   }
 
   void NotifyLoaderClientOnComplete(int error_code) {
-    test_network_loader_factory_.NotifyClientOnComplete(error_code);
+    test_url_loader_factory_.NotifyClientOnComplete(error_code);
   }
 
   const TestURLLoaderClient& client() const { return test_cors_loader_client_; }
@@ -125,9 +130,12 @@ class CORSURLLoaderTest : public testing::Test {
   // Be the first member so it is destroyed last.
   base::MessageLoop message_loop_;
 
+  // Testing instance to enable kOutOfBlinkCORS feature.
+  base::test::ScopedFeatureList feature_list_;
+
   // TestURLLoaderFactory instance and mojo binding.
-  TestURLLoaderFactory test_network_loader_factory_;
-  mojo::Binding<mojom::URLLoaderFactory> test_network_factory_binding_;
+  TestURLLoaderFactory test_url_loader_factory_;
+  mojo::Binding<mojom::URLLoaderFactory> test_url_loader_factory_binding_;
 
   // Holds URLLoaderPtr that CreateLoaderAndStart() creates.
   mojom::URLLoaderPtr url_loader_;
