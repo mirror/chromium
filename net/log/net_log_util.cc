@@ -316,7 +316,7 @@ NET_EXPORT std::unique_ptr<base::DictionaryValue> GetNetInfo(
   // TODO(mmenke):  The code for most of these sources should probably be moved
   // into the sources themselves.
   if (info_sources & NET_INFO_PROXY_SETTINGS) {
-    ProxyService* proxy_service = context->proxy_service();
+    ProxyResolutionService* proxy_service = context->proxy_service();
 
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
     if (proxy_service->fetched_config().is_valid())

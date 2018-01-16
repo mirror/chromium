@@ -75,7 +75,7 @@ net::URLRequestContext*
 BasicHTTPURLRequestContextGetter::GetURLRequestContext() {
   if (!url_request_context_) {
     net::URLRequestContextBuilder builder;
-    builder.set_proxy_service(net::ProxyService::CreateDirect());
+    builder.set_proxy_service(net::ProxyResolutionService::CreateDirect());
     builder.SetSpdyAndQuicEnabled(false, false);
     url_request_context_ = builder.Build();
   }
@@ -293,7 +293,7 @@ void DataReductionProxyIOData::SetProxyPrefs(bool enabled, bool at_startup) {
 
   // If Data Saver is disabled, reset data reduction proxy state.
   if (!enabled) {
-    net::ProxyService* proxy_service =
+    net::ProxyResolutionService* proxy_service =
         url_request_context_getter_->GetURLRequestContext()->proxy_service();
     proxy_service->ClearBadProxiesCache();
     bypass_stats_->ClearRequestCounts();

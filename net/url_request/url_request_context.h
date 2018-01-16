@@ -46,7 +46,7 @@ class HttpUserAgentSettings;
 class NetLog;
 class NetworkDelegate;
 class NetworkQualityEstimator;
-class ProxyService;
+class ProxyResolutionService;
 class URLRequest;
 class URLRequestJobFactory;
 class URLRequestThrottlerManager;
@@ -132,8 +132,8 @@ class NET_EXPORT URLRequestContext
   }
 
   // Get the proxy service for this context.
-  ProxyService* proxy_service() const { return proxy_service_; }
-  void set_proxy_service(ProxyService* proxy_service) {
+  ProxyResolutionService* proxy_service() const { return proxy_service_; }
+  void set_proxy_service(ProxyResolutionService* proxy_service) {
     proxy_service_ = proxy_service;
   }
 
@@ -301,7 +301,7 @@ class NET_EXPORT URLRequestContext
   CertVerifier* cert_verifier_;
   ChannelIDService* channel_id_service_;
   HttpAuthHandlerFactory* http_auth_handler_factory_;
-  ProxyService* proxy_service_;
+  ProxyResolutionService* proxy_service_;
   scoped_refptr<SSLConfigService> ssl_config_service_;
   NetworkDelegate* network_delegate_;
   HttpServerProperties* http_server_properties_;
