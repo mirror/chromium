@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57131dce_3b0b2c6b",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-16T21:46:05Z",
+      "side": 1,
+      "message": "Bug number\u0027s wrong.",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 59
+      },
+      "revId": "941204c88113f930874d7cab2cbcd5d76f795729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bc2285_f6b9b864",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-16T21:46:05Z",
+      "side": 1,
+      "message": "Still need to increment the version number for these in pixel_test_pages.py in this directory.\n\nAlso, could remove the [\u0027mac\u0027...\u0027android\u0027] list since this applies to all platforms, so:\n  self.Fail(\u0027Pixel_OffscreenCanvasTransferBeforeStyleResize\u0027, bug\u003d777154)",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "941204c88113f930874d7cab2cbcd5d76f795729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
