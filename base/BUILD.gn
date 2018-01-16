@@ -525,7 +525,6 @@ jumbo_component("base") {
     "memory/shared_memory_helper.h",
     "memory/shared_memory_tracker.cc",
     "memory/shared_memory_tracker.h",
-    "memory/singleton.cc",
     "memory/singleton.h",
     "memory/weak_ptr.cc",
     "memory/weak_ptr.h",

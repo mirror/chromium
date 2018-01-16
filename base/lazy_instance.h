@@ -133,12 +133,17 @@ BASE_EXPORT void CompleteLazyInstance(subtle::AtomicWord* state,
 // it into |state| and registers |destructor| to be called with |destructor_arg|
 // as argument when the current AtExitManager goes out of scope. Then, returns
 // the value stored in |state|. It is safe to have concurrent calls to this
-// function with the same |state|.
+// function with the same |state|. |creator_func| may return nullptr if it
+// doesn't desire to create an instance at this time (ref.
+// StaticMemorySingletonTraits), this will reset |state| so that the next getter
+// may try again.
 template <typename CreatorFunc>
 void* GetOrCreateLazyPointer(subtle::AtomicWord* state,
                              const CreatorFunc& creator_func,
                              void (*destructor)(void*),
                              void* destructor_arg) {
+  DCHECK(state);
+
   // If any bit in the created mask is true, the instance has already been
   // fully constructed.
   constexpr subtle::AtomicWord kLazyInstanceCreatedMask =
@@ -150,11 +155,13 @@ void* GetOrCreateLazyPointer(subtle::AtomicWord* state,
   // has acquire memory ordering as a thread which sees |state| > creating needs
   // to acquire visibility over the associated data. Pairing Release_Store is in
   // CompleteLazyInstance().
-  subtle::AtomicWord value = subtle::Acquire_Load(state);
-  if (!(value & kLazyInstanceCreatedMask) && NeedsLazyInstance(state)) {
-    // Create the instance in the space provided by |private_buf_|.
-    value = reinterpret_cast<subtle::AtomicWord>(creator_func());
-    CompleteLazyInstance(state, value, destructor, destructor_arg);
+  if (!(subtle::Acquire_Load(state) & kLazyInstanceCreatedMask) &&
+      NeedsLazyInstance(state)) {
+    // This thread won the race and is now responsible for creating the instance
+    // and storing it back into |state|.
+    subtle::AtomicWord instance =
+        reinterpret_cast<subtle::AtomicWord>(creator_func());
+    CompleteLazyInstance(state, instance, destructor, destructor_arg);
   }
   return reinterpret_cast<void*>(subtle::NoBarrier_Load(state));
 }
