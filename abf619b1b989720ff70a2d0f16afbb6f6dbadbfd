@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "faeffd09_5e5d9ae5",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T22:57:36Z",
+      "side": 1,
+      "message": "\u003e This is the estimated handshake time\n\nActually, this is the HTTP RTT estimate computed by NQE. This is not specific to SSL or non-SSL connections. This is also not specific to any connection, but is computed overall across all resource fetches.",
+      "parentUuid": "9ec3d9bd_71505cdd",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa4dbce5_9f581ca5",
         "filename": "net/http/http_proxy_client_socket_pool.cc",
         "patchSetId": 6
