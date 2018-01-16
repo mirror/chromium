@@ -10,7 +10,7 @@
       function performActions()
       {
           var element = document.createElement("div");
-          element.innerHTML = "Test data";
+          element.innerHTML = "<b>Test data</b>";
           document.body.appendChild(element);
       }
   `);
