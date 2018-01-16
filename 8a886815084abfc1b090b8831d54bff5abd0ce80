@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba12bfd_ad5aa178",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "Nit: check that durations aren\u0027t negative as well.",
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aba80b3_358f1dbb",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "Nit: naming for compile time constants should be kFoo. Also consider using constexpr here to make that clear.",
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7880fe28_348eef41",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "Alternatively, I believe this can be written as std::begin(vibration_pattern) and std::end(vibration_pattern). A simpler way to write this might be:\n\nfor (size_t i \u003d 0; i \u003c kEntries; ++i)\n  notification_data.vibration_pattern.push_back(kDurationMs);\n\nSimilar comments below.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 75
+      },
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafd8bda_505e890d",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "TooMany might make it clear that this refers to too many entries rather than any individual entry being too long (in time).",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 42
+      },
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9de469b_fff693e5",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "This is somewhat confusing at first glance, because normally, sizeof(data) would be the length of the string constant + 1. But in this case, we have a fixed size, so that\u0027s not true.\n\nConsider writing this as just:\n\nnotification_data.data.resize(kExceedsMaxDataSize);\n\nsince the actual values aren\u0027t important, just the size of the data.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 54
+      },
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4afdcd_cc1d43f0",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "Consider using SerializeAndDeserialize() if possible to ease the testing here: see https://cs.chromium.org/chromium/src/mojo/public/cpp/test_support/test_utils.h?l\u003d18\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fmojo%252Fpublic%252Fcpp%252Ftest_support%252Ftest_utils.h%25235lfzAdgmo2Vt1BQ%25252FGrPBcvcH4f47vrpRgPp%25252FRlgiwhA%25253D\u0026gsn\u003dSerializeAndDeserialize\u0026ct\u003dxref_usages.",
+      "revId": "8a886815084abfc1b090b8831d54bff5abd0ce80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

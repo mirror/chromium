@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "28bebf69_7e466973",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "To clarify, this is what I meant about this pattern leading to double checking: for many things, the renderer is responsible for normalizing the data before it sends it over IPC, and the receiver (usually the browser) is responsible for double-checking that the renderer sent valid data.\n\n/If/ it\u0027s not necessary to signal to JS when it violates implementation constraints, and we can silently clamp, then one alternative is to silently clamp in IPC serialization. I don\u0027t know enough about the notification interface to say what the right approach is here, so I\u0027ll leave it to you and peter@ to make that decision.",
+      "parentUuid": "0e944b5e_9f0e78bc",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47792af9_2d352c9c",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Done - I\u0027m now validating the data, vibration and actions of the p_n_d at the end of the Read function. Is this fine, or should I ideally be validating each property *before* reading it into the \u0027out\u0027 parameter?",
       "parentUuid": "47792af9_2d352c9c",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e7d613_227319bd",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "This is fine: if Read() returns false, |out| is discarded and never even used.",
+      "parentUuid": "a60770f5_6f74dbf4",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +361,24 @@
       "side": 1,
       "message": "huh, that\u0027s weird, I thought I required that to compile at one point, but it seems fine without now.\n\nFixed.",
       "parentUuid": "2c087753_d669df9b",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10b71c86_2af7d49d",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T09:49:45Z",
+      "side": 1,
+      "message": "Ah, we changed WebVector to be default constructible. That\u0027s probably why.",
+      "parentUuid": "b151f958_405fcaac",
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
