@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d84272b2_44c6f07a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/TextPrompt.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-16T05:53:40Z",
+      "side": 1,
+      "message": "In TextPrompt, the current suggestion was being read, but only if it generated ghostText.",
+      "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
