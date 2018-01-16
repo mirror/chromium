@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ec3d9bd_71505cdd",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T22:31:59Z",
+      "side": 1,
+      "message": "No.  I\u0027m saying that just because an SSL handshake typically makes 2 or 3 rtts, that does not mean the rtt is the time it takes for 2 to 3 rtts.  This is the estimated handshake time, not the rtt time.",
+      "parentUuid": "fd4e5b96_b85a0d85",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa4dbce5_9f581ca5",
         "filename": "net/http/http_proxy_client_socket_pool.cc",
         "patchSetId": 6
