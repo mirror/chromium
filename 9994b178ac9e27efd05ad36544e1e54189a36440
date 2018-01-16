@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d0c2e48_181e5b54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-16T01:44:21Z",
+      "side": 1,
+      "message": "Wrap to 72 characters.",
+      "revId": "9994b178ac9e27efd05ad36544e1e54189a36440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df45f11_2036d32b",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-16T01:44:21Z",
+      "side": 1,
+      "message": "I don\u0027t think you can just add the chromium variant component deps to the shared mojom target. This would add those deps to the blink variant.\n\nWhile this doesn\u0027t seem to cause problems now, it could later. To do this properly, you probably need a separate set of component override options for the \"shared\" generated C++ sources.",
+      "revId": "9994b178ac9e27efd05ad36544e1e54189a36440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
