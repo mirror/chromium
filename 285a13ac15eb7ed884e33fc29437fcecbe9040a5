@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "94c48d07_7456e29e",
+        "filename": "chrome/browser/extensions/webstore_inline_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-16T07:50:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd49a0a4_4f140eaf",
+      "revId": "285a13ac15eb7ed884e33fc29437fcecbe9040a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c9fc27c_9c435f94",
         "filename": "chrome/browser/extensions/webstore_standalone_installer.cc",
         "patchSetId": 6
