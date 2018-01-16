@@ -494,13 +494,6 @@ const base::Feature kShowAllDialogsWithViewsToolkit{
     "ShowAllDialogsWithViewsToolkit", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
-#if defined(OS_ANDROID)
-// Enables separate notification channels in Android O for notifications from
-// different origins, instead of sending them all to a single 'Sites' channel.
-const base::Feature kSiteNotificationChannels{"SiteNotificationChannels",
-                                              base::FEATURE_ENABLED_BY_DEFAULT};
-#endif  // defined(OS_ANDROID)
-
 // A new user experience for transitioning into fullscreen and mouse pointer
 // lock states.
 const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
