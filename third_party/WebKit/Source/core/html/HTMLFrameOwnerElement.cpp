@@ -35,6 +35,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerController.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
@@ -259,6 +260,8 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
     DCHECK(layout_embedded_content->GetFrameView());
     embedded_content_view_->AttachToLayout();
   }
+
+  GetDocument().GetRootScrollerController().DidUpdateIFrameFrameView();
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
     cache->ChildrenChanged(layout_embedded_content);
