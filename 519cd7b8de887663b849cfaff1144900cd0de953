@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6c6072_38d769be",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v175",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T21:29:07Z",
+      "side": 0,
+      "message": "The test crashed because we sent big rect as visual rect to cc, and devtools failed to allocate a bitmap for the big rect.",
+      "revId": "519cd7b8de887663b849cfaff1144900cd0de953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

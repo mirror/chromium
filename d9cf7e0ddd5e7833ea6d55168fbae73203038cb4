@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5b984ca_1ad9806f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T21:29:07Z",
+      "side": 1,
+      "message": "This CL exposes visual some rect issues of layout_ng. Previously they were hidden because of the big visual rects sent to cc.",
+      "revId": "d9cf7e0ddd5e7833ea6d55168fbae73203038cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2359e3d0_8eeaf4eb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationCapableScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T21:29:07Z",
+      "side": 1,
+      "message": "These were needed when graphics_layer-\u003eVisualRect() was different from scrollbar\u0027s visual rect. Now they equal. And we can\u0027t call GraphicsLayer::VisualRect() now because the layer state may be not ready yet.",
+      "revId": "d9cf7e0ddd5e7833ea6d55168fbae73203038cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
