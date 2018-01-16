@@ -35,6 +35,7 @@ class UserActivityLoggerDelegateUkmTest : public TabActivityTestBase {
     UserActivityEvent::Event* event = user_activity_event_.mutable_event();
     event->set_type(UserActivityEvent::Event::REACTIVATE);
     event->set_reason(UserActivityEvent::Event::USER_ACTIVITY);
+    event->set_event_time_sec(2);
     UserActivityEvent::Features* features =
         user_activity_event_.mutable_features();
     features->set_last_activity_time_sec(730);
@@ -113,6 +114,7 @@ class UserActivityLoggerDelegateUkmTest : public TabActivityTestBase {
   const UkmMetricMap user_activity_values_ = {
       {UserActivity::kEventTypeName, 1},    // REACTIVATE
       {UserActivity::kEventReasonName, 1},  // USER_ACTIVITY
+      {UserActivity::kEventTimeName, 2},
       {UserActivity::kLastActivityTimeName, 2},
       {UserActivity::kLastUserActivityTimeName, 1},
       {UserActivity::kLastActivityDayName, 1},  // MON
