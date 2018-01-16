@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b7528cd_4edbf5e9",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-16T09:17:11Z",
+      "side": 1,
+      "message": "Done, also in render_widget.cc. Hope I got them all now.",
+      "parentUuid": "5cbdd9b1_eb286b97",
+      "revId": "00936f43b8ffb492efcd1c9cef618d8f40c87465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ccdd37_c91d8938",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "00936f43b8ffb492efcd1c9cef618d8f40c87465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40fad0c_bc59939d",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-16T09:17:11Z",
+      "side": 1,
+      "message": "I figured anything past UpdateLifecycle might break if UpdateLifecycle isn\u0027t run to completion. Sounds like that\u0027s not the case here, so I won\u0027t skip.\n\nWill also apply UpdateLayerTreeBackgroundColor() in WebViewImpl::UpdateLifecycle() before the early out - is the early out sensible there? :)",
+      "parentUuid": "27ccdd37_c91d8938",
+      "revId": "00936f43b8ffb492efcd1c9cef618d8f40c87465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
