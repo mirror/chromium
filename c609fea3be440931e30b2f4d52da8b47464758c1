@@ -22,6 +22,30 @@
       "revId": "c609fea3be440931e30b2f4d52da8b47464758c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760b90dd_05148ec1",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-16T23:03:59Z",
+      "side": 0,
+      "message": "PaintOpReader/Writer perform similar validations that SkWriteBuffer/SkReadBuffer do by default. The additional constraints on images is replicated when the setting is specified.",
+      "parentUuid": "45b322c9_07f64585",
+      "range": {
+        "startLine": 279,
+        "startChar": 28,
+        "endLine": 279,
+        "endChar": 58
+      },
+      "revId": "c609fea3be440931e30b2f4d52da8b47464758c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

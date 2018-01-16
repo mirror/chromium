@@ -22,6 +22,30 @@
       "revId": "39d5aad9475f471f497d0ba338f0387d84f807c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f81023_00bebb83",
+        "filename": "cc/paint/paint_op_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-16T23:03:59Z",
+      "side": 1,
+      "message": "cc/paint serialization is WIP for OOP raster which also uses the reader/writer and is working towards removing these constraints. In that mode, all data is serialized.",
+      "parentUuid": "09f6b9e3_3637a2b3",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 42
+      },
+      "revId": "39d5aad9475f471f497d0ba338f0387d84f807c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
