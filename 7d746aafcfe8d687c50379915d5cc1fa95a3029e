@@ -22,6 +22,30 @@
       "revId": "7d746aafcfe8d687c50379915d5cc1fa95a3029e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d614a4c8_96fe4587",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-16T19:58:52Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a bug. Oops.\n\nFixed.",
+      "parentUuid": "422dde5e_8a84c786",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "7d746aafcfe8d687c50379915d5cc1fa95a3029e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
