@@ -106,6 +106,10 @@
   return self.toolbarController;
 }
 
+- (id<OmniboxFocuser>)omniboxFocuser {
+  return self.toolbarController;
+}
+
 #pragma mark - WebToolbarController public interface
 
 - (void)setToolbarController:(id<Toolbar>)toolbarController {
@@ -168,11 +172,11 @@
 #pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
-  [self.toolbarController focusOmnibox];
+  [self.omniboxFocuser focusOmnibox];
 }
 
 - (void)cancelOmniboxEdit {
-  [self.toolbarController cancelOmniboxEdit];
+  [self.omniboxFocuser cancelOmniboxEdit];
 }
 
 #pragma mark - FakeboxFocuser

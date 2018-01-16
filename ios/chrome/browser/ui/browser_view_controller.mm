@@ -1326,7 +1326,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)shieldWasTapped:(id)sender {
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
 }
 
 - (void)userEnteredTabSwitcher {
@@ -1413,7 +1413,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // Present voice search.
   [_voiceSearchBar prepareToPresentVoiceSearch];
   _voiceSearchController->StartRecognition(self, [_model currentTab]);
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
 }
 
 - (void)clearPresentedStateWithCompletion:(ProceduralBlock)completion
@@ -1422,7 +1422,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_bookmarkInteractionController dismissBookmarkModalControllerAnimated:NO];
   [_bookmarkInteractionController dismissSnackbar];
   if (dismissOmnibox) {
-    [self.primaryToolbarCoordinator cancelOmniboxEdit];
+    [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
   }
   [_dialogPresenter cancelAllDialogs];
   [self.dispatcher hidePageInfo];
@@ -1969,8 +1969,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.sideSwipeController.toolbarInteractionHandler =
       self.primaryToolbarCoordinator;
 
-  [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
-                            forProtocol:@protocol(OmniboxFocuser)];
+  [_dispatcher
+      startDispatchingToTarget:[self.primaryToolbarCoordinator omniboxFocuser]
+                   forProtocol:@protocol(OmniboxFocuser)];
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(FakeboxFocuser)];
   [self.legacyToolbarCoordinator setTabCount:[_model count]];
@@ -3782,18 +3783,18 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     safeAreaInset.top = MAX(safeAreaInset.top - fakeStatusBarHeight, 0);
 
-    NewTabPageController* pageController =
-        [[NewTabPageController alloc] initWithUrl:url
-                                           loader:self
-                                          focuser:self.primaryToolbarCoordinator
-                                      ntpObserver:self
-                                     browserState:_browserState
-                                       colorCache:_dominantColorCache
-                                  toolbarDelegate:self.toolbarInterface
-                                         tabModel:_model
-                             parentViewController:self
-                                       dispatcher:self.dispatcher
-                                    safeAreaInset:safeAreaInset];
+    NewTabPageController* pageController = [[NewTabPageController alloc]
+                 initWithUrl:url
+                      loader:self
+                     focuser:[self.primaryToolbarCoordinator omniboxFocuser]
+                 ntpObserver:self
+                browserState:_browserState
+                  colorCache:_dominantColorCache
+             toolbarDelegate:self.toolbarInterface
+                    tabModel:_model
+        parentViewController:self
+                  dispatcher:self.dispatcher
+               safeAreaInset:safeAreaInset];
     pageController.swipeRecognizerProvider = self.sideSwipeController;
 
     // Panel is always NTP for iPhone.
@@ -4306,7 +4307,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   DCHECK(self.visible || self.dismissingModal);
 
   // Dismiss the omnibox (if open).
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
   // Dismiss the soft keyboard (if open).
   [[_model currentTab].webController dismissKeyboard];
   // Dismiss Find in Page focus.
@@ -5418,7 +5419,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)prepareForTabHistoryPresentation {
   DCHECK(self.visible || self.dismissingModal);
   [[self.tabModel currentTab].webController dismissKeyboard];
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
 }
 
 #pragma mark - CaptivePortalDetectorTabHelperDelegate
@@ -5438,7 +5439,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)prepareForPageInfoPresentation {
   // Dismiss the omnibox (if open).
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [[self.primaryToolbarCoordinator omniboxFocuser] cancelOmniboxEdit];
 }
 
 - (CGPoint)convertToPresentationCoordinatesForOrigin:(CGPoint)origin {

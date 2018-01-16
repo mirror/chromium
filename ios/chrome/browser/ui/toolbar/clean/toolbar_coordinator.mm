@@ -22,7 +22,6 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
-#import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
@@ -72,8 +71,6 @@
     ToolsMenuButtonObserverBridge* toolsMenuButtonObserverBridge;
 // Coordinator for the omnibox popup.
 @property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
-// The coordinator for the location bar in the toolbar.
-@property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 
 @end
 
@@ -152,11 +149,11 @@
 
   self.buttonUpdater = [[ToolbarButtonUpdater alloc] init];
   self.buttonUpdater.factory = factory;
-  self.toolbarViewController =
-      [[ToolbarViewController alloc] initWithDispatcher:self.dispatcher
-                                          buttonFactory:factory
-                                          buttonUpdater:self.buttonUpdater
-                                         omniboxFocuser:self];
+  self.toolbarViewController = [[ToolbarViewController alloc]
+      initWithDispatcher:self.dispatcher
+           buttonFactory:factory
+           buttonUpdater:self.buttonUpdater
+          omniboxFocuser:self.locationBarCoordinator];
   self.toolbarViewController.locationBarView =
       self.locationBarCoordinator.locationBarView;
   self.toolbarViewController.dispatcher = self.dispatcher;
@@ -329,17 +326,6 @@
   return toolbarModelIOS ? toolbarModelIOS->GetToolbarModel() : nullptr;
 }
 
-#pragma mark - OmniboxFocuser
-
-- (void)focusOmnibox {
-  [self.locationBarCoordinator.locationBarView.textField becomeFirstResponder];
-}
-
-- (void)cancelOmniboxEdit {
-  _locationBar->HideKeyboardAndEndEditing();
-  [self updateToolbarState];
-}
-
 #pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
@@ -357,7 +343,7 @@
     [self expandOmniboxAnimated:NO];
   }
 
-  [self focusOmnibox];
+  [self.locationBarCoordinator focusOmnibox];
 }
 
 - (void)onFakeboxBlur {
@@ -388,7 +374,7 @@
   if (load) {
     [self loadURLForQuery:result];
   } else {
-    [self focusOmnibox];
+    [self.locationBarCoordinator focusOmnibox];
     [self.locationBarCoordinator.locationBarView.textField
         insertTextWhileEditing:result];
     // The call to |setText| shouldn't be needed, but without it the "Go" button
