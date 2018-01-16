@@ -94,6 +94,30 @@
       "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31a53c30_6a2def94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-16T19:07:56Z",
+      "side": 1,
+      "message": "That\u0027s the issue. It\u0027s implicit or ambiguous. Someone doing code excavation could read this as thread-affine when we really mean mutually exclusive. We might as well be explicit here.",
+      "parentUuid": "8111bc74_3cec6d36",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
