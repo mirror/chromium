@@ -104,6 +104,18 @@ void RootScrollerController::DidResizeFrameView() {
   }
 }
 
+void RootScrollerController::DidUpdateIFrameFrameView() {
+  Node* old_effective_root_scroller = effective_root_scroller_;
+  RecomputeEffectiveRootScroller();
+
+  // If the root scroller changed the appropriate properties will have been
+  // set. However, if the root scroller didn't change - we'll need to apply the
+  // properties to the new FrameView so explicitly do that here.
+  if (old_effective_root_scroller &&
+      old_effective_root_scroller == effective_root_scroller_)
+    ApplyRootScrollerProperties(*effective_root_scroller_);
+}
+
 void RootScrollerController::RecomputeEffectiveRootScroller() {
   bool root_scroller_valid =
       root_scroller_ && IsValidRootScroller(*root_scroller_);
@@ -148,6 +160,10 @@ bool RootScrollerController::IsValidRootScroller(const Element& element) const {
       !element.IsFrameOwnerElement())
     return false;
 
+  if (element.IsFrameOwnerElement() &&
+      !ToHTMLFrameOwnerElement(&element)->OwnedEmbeddedContentView())
+    return false;
+
   if (!FillsViewport(element))
     return false;
 
@@ -169,7 +185,7 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
 
     if (frame_owner->ContentFrame()->IsLocalFrame()) {
       LocalFrameView* frame_view =
-          ToLocalFrame(frame_owner->ContentFrame())->View();
+          ToLocalFrameView(frame_owner->OwnedEmbeddedContentView());
 
       bool is_root_scroller = &EffectiveRootScroller() == &node;
 
