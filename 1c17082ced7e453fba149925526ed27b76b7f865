@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "734eff07_d5d118b4",
+        "filename": "ios/chrome/browser/ui/webui/web_ui_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "The main thing I want to test is that reloading in the middle of back-forward history does not destroy forward history. If we create a separate test case it\u0027ll just duplicate most of this test.",
+      "parentUuid": "eada5d04_97f75f35",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cf18a5e_1714697d",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "25349cd8_d511d2bb",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "I see your point. What made me add this method is that I didn\u0027t feel right adding placeholder_navigation_util::IsPlaceholderUrl to NavigationManagerImpl base class. It seems to leak WKBasedNavigationManager logic into the base class. Longer term, NavigationManagerImpl and WKBasedNavigationManager will be merged so this method wouldn\u0027t exist. That\u0027s also why this method is under protected scope now.\n\nI wouldn\u0027t mind dropping placeholder_navigation_util::IsPlaceholderUrl in favor of this version. However, crw_web_controller and a few unit tests would still need to include placeholder_navigation_util to use CreatePlaceholderUrlForUrl and ExtractUrlFromPlaceholderUrl. So we wouldn\u0027t fully remove the confusion because the placeholder_navigation_util::IsPlaceholderUrl symbol would still be visible.\n\nWould you like any of these alternatives better?\n1) Remove NavigationManagerImpl::IsPlaceholderUrl() and call placeholder_navigation_util::IsPlaceholderUrl directly in NavigationManagerImpl\nPro: simplest\nCon: a little bit of code smell; sets a bad example\n2) Rename NavigationManagerImpl::IsPlaceholderUrl() to ShouldRewriteUrl(original_url, rewritten_url)\nPro: reflect the reason why we need to detect placeholder url\nCon: gives the impression that there could be other reasons for subclass to bypass URL rewriting that may be added in the future. Also splits url rewriting logic in multiple places.",
+      "parentUuid": "1cf18a5e_1714697d",
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6509967d_94eaf453",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-16T15:54:11Z",
       "side": 1,
       "message": "nit: This name does not look fully accurate. There are 2 more checks:\n - url has changed (which we should probably drop)\n - loaded_url is app specific\n\nIf the intention was to create an explanation variable, then I think we should rename this variable or create a few variable instead. WDYT?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8069531d_2f1aa63d",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "I was trying to avoid a complex logical condition that may be hard to read... Changed name to also include \"loaded_url is app specific\" portion.\n\nI didn\u0027t remove the \"url has changed\" logic so this CL won\u0027t change legacy navigation manager behavior. I\u0027ll delete it in a subsequent CL.",
+      "parentUuid": "6509967d_94eaf453",
       "range": {
         "startLine": 341,
         "startChar": 7,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "af759442_a3043d2d",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "Ah I forgot about interstitials... thanks! The problem I was trying to solve is that immediately after the placeholder is loaded, a JavaScript message triggers AutofillAgent which triggers the DCHECK in WebStateImpl::GetCurrentURL():\nFATAL:web_state_impl.mm(684)] Check failed: equalOrigins. Origin mismatch. URL: chrome://chrome-urls/ Last committed: about:blank?for\u003dchrome%3A%2F%2Fchrome-urls%2F\n\nActually I don\u0027t know how this check doesn\u0027t fail for interstitials or if there is a pending item. What is the origin check for?\n\nHere\u0027s the callstack:\n\nframe #0: 0x0000000102e3f4e4 Chromium`base::debug::BreakDebugger() at debugger_posix.cc:269\n    frame #1: 0x0000000102ea0da9 Chromium`logging::LogMessage::~LogMessage(this\u003d0x00007fff5e621290) at logging.cc:844\n    frame #2: 0x0000000102e9d945 Chromium`logging::LogMessage::~LogMessage(this\u003d0x00007fff5e621290) at logging.cc:575\n  * frame #3: 0x0000000101a75f38 Chromium`web::WebStateImpl::GetCurrentURL(this\u003d0x00007fa0a1a43dc0, trust_level\u003d0x00007fff5e621488) const at web_state_impl.mm:684\n    frame #4: 0x0000000101eae034 Chromium`::-[AutofillAgent isAutofillEnabled](self\u003d0x00006140001149a0, _cmd\u003d\"isAutofillEnabled\") at autofill_agent.mm:832\n    frame #5: 0x0000000101ead39f Chromium`::-[AutofillAgent webState:didRegisterFormActivity:](self\u003d0x00006140001149a0, _cmd\u003d\"webState:didRegisterFormActivity:\", webState\u003d0x00007fa0a1a43dc0, params\u003d0x00007fff5e621908) at autofill_agent.mm:758\n    frame #6: 0x0000000101a890ff Chromium`web::WebStateObserverBridge::FormActivityRegistered(this\u003d0x0000614000205910, web_state\u003d0x00007fa0a1a43dc0, params\u003d0x00007fff5e621908) at web_state_observer_bridge.mm:146\n    frame #7: 0x0000000101a707c0 Chromium`web::WebStateImpl::OnFormActivityRegistered(this\u003d0x00007fa0a1a43dc0, params\u003d0x00007fff5e621908) at web_state_impl.mm:265\n    frame #8: 0x0000000101acc9df Chromium`::-[CRWWebController handleFormActivityMessage:context:](self\u003d0x00007fa0a1a43f60, _cmd\u003d\"handleFormActivityMessage:context:\", message\u003d0x0000614000236180, context\u003d3 key/value pairs) at crw_web_controller.mm:2494\n    frame #9: 0x0000000101ac5b9b Chromium`::-[CRWWebController respondToMessage:userIsInteracting:originURL:isMainFrame:](self\u003d0x00007fa0a1a43f60, _cmd\u003d\"respondToMessage:userIsInteracting:originURL:isMainFrame:\", message\u003d0x0000614000236180, userIsInteracting\u003dNO, originURL\u003d0x00007fff5e622100, isMainFrame\u003dYES) at crw_web_controller.mm:2236\n    frame #10: 0x0000000101ac89a1 Chromium`::-[CRWWebController respondToWKScriptMessage:](self\u003d0x00007fa0a1a43f60, _cmd\u003d\"respondToWKScriptMessage:\", scriptMessage\u003d0x000061400005e690) at crw_web_controller.mm:2318\n    frame #11: 0x0000000101ac769f Chromium`::-[CRWWebController didReceiveScriptMessage:](self\u003d0x00007fa0a1a43f60, _cmd\u003d\"didReceiveScriptMessage:\", message\u003d0x000061400005e690) at crw_web_controller.mm:2279\n    frame #12: 0x0000000101adeee1 Chromium`::__31-[CRWWebController setWebView:]_block_invoke(.block_descriptor\u003d0x000060000025bf90, message\u003d0x000061400005e690) at crw_web_controller.mm:3853\n    frame #13: 0x0000000101b11498 Chromium`::-[CRWWKScriptMessageRouter userContentController:didReceiveScriptMessage:](self\u003d0x0000600000426920, _cmd\u003d\"userContentController:didReceiveScriptMessage:\", userContentController\u003d0x000061800013be40, message\u003d0x000061400005e690) at crw_wk_script_message_router.mm:96\n\nAnother fix I can think of is to modify [CRWWebController respondToWKScriptMessage] to ignore JavaScript messages received when there\u0027s an in-progress Web UI load, which we can detect by adding some state enums to NavigationItem. Here\u0027s a diagram showing the state transition of a WebUI navigation item: https://screenshot.googleplex.com/9f7RJ1AWugS\n\nThis seems hacky to me, but is a more precise bandage that fixes the problem... What do you think?",
+      "parentUuid": "18a6b665_d6ab2687",
+      "range": {
+        "startLine": 1201,
+        "startChar": 34,
+        "endLine": 1201,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b58e305c_e8ccd2d3",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "0ed3602c_3da27286",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4315,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b58e305c_e8ccd2d3",
+      "range": {
+        "startLine": 4315,
+        "startChar": 6,
+        "endLine": 4315,
+        "endChar": 32
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f820e513_44e1feea",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-16T15:54:11Z",
       "side": 1,
       "message": "When it is possible to have non-null |_webUIManager| when isWebUIURL true? Can we update the comment below?",
+      "range": {
+        "startLine": 4577,
+        "startChar": 25,
+        "endLine": 4577,
+        "endChar": 38
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fe531a_932608fd",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:35:05Z",
+      "side": 1,
+      "message": "Done.\n\nWould it make sense to link to the state diagram from above here? We\u0027d have to host it somewhere, maybe a Google doc?",
+      "parentUuid": "f820e513_44e1feea",
       "range": {
         "startLine": 4577,
         "startChar": 25,
