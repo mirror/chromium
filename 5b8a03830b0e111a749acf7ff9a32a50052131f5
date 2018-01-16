@@ -39,6 +39,23 @@
       "revId": "5b8a03830b0e111a749acf7ff9a32a50052131f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351e4ebf_ee9cb4d4",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-16T23:12:53Z",
+      "side": 1,
+      "message": "Style guide prohibits accessing properties in the initializer; just assign directly to |_toolsMenuCoordinator| instead.",
+      "revId": "5b8a03830b0e111a749acf7ff9a32a50052131f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
