@@ -1355,7 +1355,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   SnapCoordinator* GetSnapCoordinator();
 
-  void EnforceInsecureRequestPolicy(WebInsecureRequestPolicy);
+  void EnforceInsecureRequestPolicy();
+  void EnforceInsecureNavigationsSet();
 
   bool MayContainV0Shadow() const { return may_contain_v0_shadow_; }
 
