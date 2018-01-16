@@ -373,6 +373,13 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 
   void UpdateWebViewWithDeviceScaleFactor();
 
+  // Whether lookup of frames in the created RenderView (e.g. lookup via
+  // window.open or via <a target=...>) should be renderer-wide (i.e. going
+  // beyond the usual opener-relationship-based BrowsingInstance boundaries).
+  bool renderer_wide_named_frame_lookup() {
+    return renderer_wide_named_frame_lookup_;
+  }
+
  protected:
   // RenderWidget overrides:
   blink::WebWidget* GetWebWidget() const override;
@@ -787,6 +794,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
 
   blink::WebScopedVirtualTimePauser history_navigation_virtual_time_pauser_;
+
+  bool renderer_wide_named_frame_lookup_;
 
   // ---------------------------------------------------------------------------
   // ADDING NEW DATA? Please see if it fits appropriately in one of the above
