@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb855ee_66fa8537",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "I\u0027m never sure if this should be Sync or sync (capital S or small s). It seems like this is the name of a feature here, so I would maybe use \"Sync\"?",
+      "range": {
+        "startLine": 244,
+        "startChar": 55,
+        "endLine": 244,
+        "endChar": 59
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ab1d37_57a2363b",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Do we want to exclude this from the build if !dice_support_enabled",
+      "range": {
+        "startLine": 2882,
+        "startChar": 7,
+        "endLine": 2882,
+        "endChar": 39
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ec7d78_07c47ead",
+        "filename": "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Do we need to call EnsureBrowser() here? Or abort id there is no browser? DiceTurnSyncOnHelper DCHECKs that the browser is not nulltpr.",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637744b1_9a31d057",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Do we even need Dice to be enabled for this? Could we show this promo always? or if we\u0027re in \"prepare migration\"?",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80257ea_ed13220b",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Can this be called in guest mode? Maybe it\u0027s safer to use  AccountConsistencyModeManager::IsDiceEnabledForProfile(profile_)",
+      "range": {
+        "startLine": 198,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 37
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87239869_f04fafb0",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e (for unique_ptr)\n#include \u003cutility\u003e (for move)\n#include \u003cvector\u003e\n\n#include \"base/logging.h\"",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251370b3_682b8982",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "What are the requirements for Dice here? Should we DCHECK(IsDiceEnabledForProfile(profile))?",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adfdffa_12855eed",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Should this be user action metrics instead?\nSame for other VLOG below.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 40
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6f7b0a_e7e7d31a",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e680d8bd_d9faa78a",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "This is taking the ownership, right?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb28a41_155a4fbe",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb3f411_59c8d35b",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T13:01:59Z",
+      "side": 1,
+      "message": "Should we add comments explaining what is the ownership model for these?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
