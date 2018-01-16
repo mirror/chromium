@@ -291,4 +291,22 @@
       'compositionend: data="hello"',
     ]);
   }, 'unmarkAndUnselectText, too long for input');
+
+  test(() => {
+    checkTextInputController();
+
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.value = 'hello';
+    input.focus();
+    input.setSelectionRange(2, 2);
+    resetEventLog();
+
+    textInputController.extendSelectionAndDelete(1, 1);
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=false, data="null"',
+      'input: isComposing=false, data="null", inputType=deleteContentBackward',
+    ]);
+  }, 'extendSelectionAndDelete');
 </script>
