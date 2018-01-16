@@ -100,6 +100,9 @@ TEST(SurfaceTest, SurfaceLifetime) {
                                  MakeDefaultCompositorFrame());
   EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
   support->EvictCurrentSurface();
+  // Evict surface will mark the surface as GC candiate, but it is still
+  // available.
+  EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
   frame_sink_manager.surface_manager()->GarbageCollectSurfaces();
 
   EXPECT_EQ(nullptr, surface_manager->GetSurfaceForId(surface_id));

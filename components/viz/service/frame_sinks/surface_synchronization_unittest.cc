@@ -320,7 +320,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedOnTwo) {
   child_support2().SubmitCompositorFrame(child_id2.local_surface_id(),
                                          MakeDefaultCompositorFrame());
 
-  EXPECT_FALSE(child_surface2()->has_deadline());
+  EXPECT_FALSE(parent_surface()->has_deadline());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
@@ -444,7 +444,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
   EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
 }
 
-// parent_surface is blocked on |child_id1|, and child_surface2 is blocked on
+// parent_surface is blocked on |child_id1|, and child_surface1 is blocked on
 // |child_id2| until the deadline hits.
 TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
   const SurfaceId parent_id = MakeSurfaceId(kParentFrameSink, 1);
