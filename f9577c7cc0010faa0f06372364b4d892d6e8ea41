@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8539d42_20d93f7b",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-16T15:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6708a0c2_f4b82f40",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb65f2e_d71a284e",
         "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1fc52091_dbf70dce",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-16T15:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb65f2e_d71a284e",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 13
+      },
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba5612a_5fe804e9",
         "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e25d98f9_e99cbf40",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-16T15:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba5612a_5fe804e9",
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82b505b_3ba376e4",
         "filename": "components/payments/content/content_payment_request_delegate.h",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb47e95_4d6ceccd",
+        "filename": "components/payments/content/content_payment_request_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-16T15:42:31Z",
+      "side": 1,
+      "message": "Created a type for that callback and added that comment in the type declaration.",
+      "parentUuid": "a82b505b_3ba376e4",
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
