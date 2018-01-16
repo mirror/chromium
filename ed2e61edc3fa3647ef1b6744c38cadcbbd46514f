@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e180d4_e32313c4",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T19:44:11Z",
+      "side": 1,
+      "message": "git cl format? there should be whitespace around \u0026\u0026",
+      "revId": "ed2e61edc3fa3647ef1b6744c38cadcbbd46514f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1723d8de_2cfe51b1",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T19:44:11Z",
+      "side": 1,
+      "message": "http://en.cppreference.com/w/cpp/utility/optional/optional says\n\nThe copy constructor \"is defined as deleted if std::is_copy_constructible_v\u003cT\u003e is false.\"\nAnd\nThe move constructor \"It is a constexpr constructor if std::is_trivially_move_constructible_v\u003cT\u003e is true.\"\n\nSo while this makes it possible to use deleted copy constructor, there looks like some larger fundamental problem?",
+      "revId": "ed2e61edc3fa3647ef1b6744c38cadcbbd46514f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b955f57_c3285d88",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T19:44:11Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "ed2e61edc3fa3647ef1b6744c38cadcbbd46514f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
