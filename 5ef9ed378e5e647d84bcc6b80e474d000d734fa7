@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2fe1d22_385ea09b",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-16T22:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef533767_bff10657",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7572173e_bbcbf46a",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
         "patchSetId": 5
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "b32a5759_7b7919de",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-16T22:12:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand that bug title, since the Mac Views implementation already exists and we aren\u0027t going to do a Cocoa implementation.  I added crbug.com/802332 with this text though.",
+      "parentUuid": "7572173e_bbcbf46a",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8f1dac4_d0e01b83",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-16T22:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150ede23_27474094",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8cbfef_7d770fc5",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
         "patchSetId": 5
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "db0e0afe_6d98dc81",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-16T22:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8cbfef_7d770fc5",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd05665e_f54b5689",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_factory_mac.cc",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8556a3b1_c181d246",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_factory_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-16T22:12:27Z",
+      "side": 1,
+      "message": "Unfortunately, I think this is still simpler because we would have to include other Views code in the non-Views Mac build to get the other factory method to link (even though they won\u0027t be called).",
+      "parentUuid": "fd05665e_f54b5689",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
