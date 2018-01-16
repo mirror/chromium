@@ -81,6 +81,17 @@ class IdentityManager : public SigninManagerBase::Observer,
   void AddDiagnosticsObserver(DiagnosticsObserver* observer);
   void RemoveDiagnosticsObserver(DiagnosticsObserver* observer);
 
+  // Sets the primary account info synchronously with both the IdentityManager
+  // and its backing SigninManager/ProfileOAuth2TokenService instances. For use
+  // only by tests. Even in testing contexts, use IdentityTestEnvironment if
+  // possible (and IdentityTestEnvironment::MakePrimaryAccountAvailable()). This
+  // method should be used directly only if the production code is using
+  // IdentityManager, but it is not yet feasible to convert the test code to use
+  // IdentityTestEnvironment.
+  void SetPrimaryAccountSynchronouslyForTests(std::string gaia_id,
+                                              std::string email_address,
+                                              std::string refresh_token);
+
  private:
   // SigninManagerBase::Observer:
   void GoogleSigninSucceeded(const AccountInfo& account_info) override;
