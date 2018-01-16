@@ -122,7 +122,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   std::unique_ptr<WiredDisplayMediaRouteProvider> wired_display_provider_;
 
   DualMediaSinkService* media_sink_service_;
-  DualMediaSinkService::Subscription media_sink_service_subscription_;
+  DualMediaSinkService::SinkDiscoverySubscription sink_discovery_subscription_;
 
   // A flag to ensure that we record the provider version once, during the
   // initial event page wakeup attempt.

@@ -153,8 +153,8 @@ void MediaRouterDesktop::ProvideSinksToExtension() {
 
   // If calling |ProvideSinksToExtension| for the first time, add a callback to
   // be notified of sink updates.
-  if (!media_sink_service_subscription_) {
-    media_sink_service_subscription_ =
+  if (!sink_discovery_subscription_) {
+    sink_discovery_subscription_ =
         media_sink_service_->AddSinksDiscoveredCallback(base::BindRepeating(
             &MediaRouterDesktop::ProvideSinks, base::Unretained(this)));
   }
