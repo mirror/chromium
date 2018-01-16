@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5179a0ef_93f3d451",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:10:19Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I\u0027m not sure what\u0027s going on here. xiyuan, do you have ideas?\n\n(Ash\u0027s connection to the pref service is async at startup[2]. Maybe something has to wait until it\u0027s ready? But I haven\u0027t see that before in tests.)\n\n[2] https://cs.chromium.org/chromium/src/ash/shell.cc?type\u003dcs\u0026q\u003donlocalstateprefserviceinitialized\u0026sq\u003dpackage:chromium\u0026l\u003d873",
+      "parentUuid": "58120795_e22798ca",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "done. In this patch, I removed the test EnableOnLoginScreenAndLogin. I felt it is a dup of this. WDYT?",
       "parentUuid": "de74804c_7f9c5242",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f0cdc3_895fdd61",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T23:10:19Z",
+      "side": 1,
+      "message": "I would just remove lines 611 to 620. The two tests are testing different things -- e.g. one is testing calling AccessibilityManager::SetLargeCursor() directly, the other is testing changing the pref for large cursor. While the internal implementation of SetLargeCursor() just changes the pref, that\u0027s an implementation detail.",
+      "parentUuid": "bf07cfb3_71f6f7aa",
       "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
