@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b9958cc_23b4b4d7",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T22:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75959848_2c5dfb36",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6b90d1_b264abce",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T21:53:04Z",
       "side": 1,
       "message": "I think this is the right thing to do, but if it\u0027s breaking tests, maybe we can look at this particular fix separately? Also, what would be a good test-case for catching this error?",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2954f160_1ff88e0c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T22:28:08Z",
+      "side": 1,
+      "message": "This affects the logic of falling back to the last responsive renderer if we don\u0027t make the change here. I fixed the WebView test failures in the subsequent patchset (by avoiding asynchronous hit tests for GuestView).\n\nA test case is a good idea. My first thought was a pointer-events:none OOPIF but we have a sort of hack to the quad-based system that covers that case, so maybe an OOPIF with clip-path? I\u0027d rather leave that for a follow-up CL.",
+      "parentUuid": "7f6b90d1_b264abce",
       "revId": "451f24160d643507153c1628734e3bd916bda5b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "54752e45_a8fcb12a",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T22:28:08Z",
+      "side": 1,
+      "message": "That doesn\u0027t work for the same reason I can\u0027t use TimeoutMonitor: it uses a Closure rather than a OnceClosure, and so can\u0027t take move-only types. I went through this with dtapuska@ this morning and we both thought this seemed like the best way to do it.",
+      "parentUuid": "684bf7a1_06556a43",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fae9fa82_f5dfb9e2",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "451f24160d643507153c1628734e3bd916bda5b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad5a5df_efc579f0",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T22:28:08Z",
+      "side": 1,
+      "message": "Good catch, thanks. That wouldn\u0027t work in earlier iterations when I was using TimeoutMonitor and base::Bind. Done.",
+      "parentUuid": "fae9fa82_f5dfb9e2",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
