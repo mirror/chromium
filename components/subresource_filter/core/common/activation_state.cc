@@ -8,6 +8,8 @@
 #include <sstream>
 #include <string>
 
+#include <memory>
+
 #include "base/trace_event/trace_event_argument.h"
 
 namespace subresource_filter {

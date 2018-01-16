@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"

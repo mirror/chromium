@@ -4,7 +4,8 @@
 
 #include "components/signin/core/browser/child_account_info_fetcher.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "build/build_config.h"
 
 #if defined(OS_ANDROID)
@@ -23,7 +24,7 @@ std::unique_ptr<ChildAccountInfoFetcher> ChildAccountInfoFetcher::CreateFrom(
 #if defined(OS_ANDROID)
   return ChildAccountInfoFetcherAndroid::Create(fetcher_service, account_id);
 #else
-  return base::MakeUnique<ChildAccountInfoFetcherImpl>(
+  return std::make_unique<ChildAccountInfoFetcherImpl>(
       account_id, fetcher_service, token_service, request_context_getter,
       invalidation_service);
 #endif

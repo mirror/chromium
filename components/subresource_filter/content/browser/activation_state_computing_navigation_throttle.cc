@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"

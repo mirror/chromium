@@ -4,6 +4,7 @@
 
 #include "components/proximity_auth/promotion_manager.h"
 
+#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -94,7 +95,7 @@ class ProximityAuthPromotionManagerTest
                                  task_runner_)) {
     client_factory_->AddObserver(this);
     local_device_data_provider_->SetPublicKey(
-        base::MakeUnique<std::string>(kPublicKey));
+        std::make_unique<std::string>(kPublicKey));
 
     unlock_key_.set_public_key(kPublicKey1);
     unlock_key_.set_friendly_device_name(kDeviceName1);

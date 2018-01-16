@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
