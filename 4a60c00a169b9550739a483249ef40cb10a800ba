@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58120795_e22798ca",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-16T03:03:56Z",
+      "side": 1,
+      "message": "Ack. After the change, there is test failure in BrailleWhenLoggedIn test.\n\nThe reason is ash is not connected to pref service. It is because PrefInitializationStatus is always WAITING [1]. The root cause is [1] is false (test could pass If I changed [1] to return true). So the reason is ProfileHelper::GetProfileByUserIdHashForTest is making some ConfigurationPolicyProvider not initialization complete at POLICY_DOMAIN_CHROME.\n\nI am bit unclear of what happened here. I would continue investigation. But if I can get some suggestions, that would be better here. Thanks!\n\n[1] https://cs.chromium.org/chromium/src/components/policy/core/browser/configuration_policy_pref_store.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d68",
+      "parentUuid": "67fdd3ac_cd608d63",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bf07cfb3_71f6f7aa",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-16T03:03:56Z",
+      "side": 1,
+      "message": "done. In this patch, I removed the test EnableOnLoginScreenAndLogin. I felt it is a dup of this. WDYT?",
+      "parentUuid": "de74804c_7f9c5242",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eccb5a2f_1afe0cbe",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
@@ -68,6 +104,24 @@
       "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07b4870_5b59f0f5",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-16T03:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eccb5a2f_1afe0cbe",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
