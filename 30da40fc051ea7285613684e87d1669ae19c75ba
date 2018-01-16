@@ -34,6 +34,24 @@
       "revId": "30da40fc051ea7285613684e87d1669ae19c75ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c24bc32_37dd0b6c",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-16T22:40:31Z",
+      "side": 1,
+      "message": "Done. Thanks. If it\u0027s worth merging to M64, I\u0027ll request.",
+      "parentUuid": "8aa1a429_887acec5",
+      "revId": "30da40fc051ea7285613684e87d1669ae19c75ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
