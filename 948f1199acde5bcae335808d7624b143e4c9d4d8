@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79d689d_dc687596",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 0,
+      "message": "I\u0027d prefer keeping the lock scope here at the moment. This lock ensures that GCs do not happen simultaneously on multiple threads. I don\u0027t think the restriction is necessary but for simplicity I want to keep the property at the moment.",
+      "revId": "948f1199acde5bcae335808d7624b143e4c9d4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

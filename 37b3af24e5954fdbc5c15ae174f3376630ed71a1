@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce36fead_fde0a3bb",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 1,
+      "message": "enum class PersistentTraceConfiguration {\n  kTraceOnlyStrongPersistents,\n  kTraceStrongAndWeakPersistents\n};",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91e67ef_9c6d6268",
+        "filename": "third_party/WebKit/Source/platform/heap/Persistent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 1,
+      "message": "// Weak Persistents are not traced during an incremental marking phase because.... Alternately all weak Persistents are traced during the final atomic phase.",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d754b44a_74003746",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 1,
+      "message": "Add a comment about the return value.",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c302b81b_a5e53c54",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 1,
+      "message": "I\u0027d prefer expanding this lock scope to the incremental atomic phase. I\u0027m not sure if it\u0027s really needed but just in case.",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2483a64_b060b6cb",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T01:34:25Z",
+      "side": 1,
+      "message": "As commented in the other file, I\u0027d prefer having CrossThreadPersistentRegion::LockScope here.\n\nCurrently CrossThreadPersistentRegion::LockScope is used to make sure that any cross-thread access does not happen while the thread is in a marking phase. I don\u0027t think the restriction is necessary but it would be better to keep the property at the moment.",
+      "revId": "37b3af24e5954fdbc5c15ae174f3376630ed71a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
