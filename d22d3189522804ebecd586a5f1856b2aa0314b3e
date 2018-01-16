@@ -22,6 +22,30 @@
       "revId": "d22d3189522804ebecd586a5f1856b2aa0314b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58c03b1_26a860a7",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-16T19:28:00Z",
+      "side": 1,
+      "message": "I think it needs to be strict? With this method we\u0027re taking in an arbitrary window and calling tabWindowController on its window controller. If that window controller is just an NSWindowController, the -tabWindowController call will crash. With ObjCCastString we return nil, indicating that the window does not have a tabWindowController. Are you thinking we should deliberately crash if the passed in window does not have a TabWindowControllerProxy as its windowController?",
+      "parentUuid": "acb16da4_3ffac6a6",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 33
+      },
+      "revId": "d22d3189522804ebecd586a5f1856b2aa0314b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
