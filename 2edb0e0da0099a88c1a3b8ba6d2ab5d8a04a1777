@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f9df92f_f9a439f2",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-16T22:30:15Z",
+      "side": 1,
+      "message": "auto event_value \u003d std::make_unique\u003cbase::ListValue\u003e();",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 69
+      },
+      "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691e9c9b_044132b6",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-16T22:30:15Z",
+      "side": 1,
+      "message": "auto extension_event \u003d std::make_unique\u003cEvent\u003e(",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "2edb0e0da0099a88c1a3b8ba6d2ab5d8a04a1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3ceb241_ffd805d4",
         "filename": "components/password_manager/core/browser/ui/export_flow.h",
         "patchSetId": 32
