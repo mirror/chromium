@@ -118,7 +118,7 @@ void SetNeedsCompositingUpdateOnAncestors(ScrollableArea* area) {
 
     PaintLayerCompositor* plc =
         ToLocalFrame(frame)->View()->GetLayoutView()->Compositor();
-    if (plc) {
+    if (plc && plc->Lifecycle().IsActive()) {
       plc->SetNeedsCompositingUpdate(
           kCompositingUpdateAfterCompositingInputChange);
     }
