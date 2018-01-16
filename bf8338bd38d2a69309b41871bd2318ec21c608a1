@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de29078c_f0ab0661",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T04:25:57Z",
+      "side": 1,
+      "message": "Next CL will modify all related codes to pass null ServiceWorkerObjectInfoPtr for invalid object info, thus we can remove this |?| here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "bf8338bd38d2a69309b41871bd2318ec21c608a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
