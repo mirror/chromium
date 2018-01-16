@@ -24,6 +24,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
+#include "content/public/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/public/renderer/resource_dispatcher_delegate.h"
@@ -114,7 +115,8 @@ class ResourceDispatcherTest : public testing::Test,
         new TestRequestPeer(dispatcher(), peer_context));
     int request_id = dispatcher()->StartAsync(
         std::move(request), 0, nullptr, url::Origin(),
-        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer), this,
+        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer),
+        base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(this),
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
     peer_context->request_id = request_id;

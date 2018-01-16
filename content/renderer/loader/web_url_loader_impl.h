@@ -13,8 +13,8 @@
 #include "content/common/content_export.h"
 #include "content/common/frame.mojom.h"
 #include "content/public/common/resource_response.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/public/platform/WebURLLoader.h"
@@ -77,12 +77,12 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
  public:
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory);
+                   scoped_refptr<SharedURLLoaderFactory> url_loader_factory);
   // When non-null |keep_alive_handle| is specified, this loader prolongs
   // this render process's lifetime.
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory,
+                   scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
                    mojom::KeepAliveHandlePtr keep_alive_handle);
   ~WebURLLoaderImpl() override;
 

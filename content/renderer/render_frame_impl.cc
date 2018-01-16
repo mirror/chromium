@@ -79,6 +79,7 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "content/public/common/url_utils.h"
+#include "content/public/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/renderer/browser_plugin_delegate.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -773,13 +774,17 @@ class RenderFrameImpl::FrameURLLoaderFactory
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
 
-    mojom::URLLoaderFactory* factory;
+    // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
+    // pointer into SharedURLLoaderFactory.
+    scoped_refptr<SharedURLLoaderFactory> factory;
     if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-      factory = frame_->GetSubresourceLoaderFactories().GetFactoryForRequest(
-          request.Url());
+      factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          frame_->GetSubresourceLoaderFactories().GetFactoryForRequest(
+              request.Url()));
     } else {
-      factory = frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
-          request.Url(), frame_->custom_url_loader_factory());
+      factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
+              request.Url(), frame_->custom_url_loader_factory()));
     }
     DCHECK(factory);
 
@@ -792,7 +797,9 @@ class RenderFrameImpl::FrameURLLoaderFactory
     }
     return std::make_unique<WebURLLoaderImpl>(
         RenderThreadImpl::current()->resource_dispatcher(),
-        std::move(task_runner), factory, std::move(keep_alive_handle));
+        std::move(task_runner),
+
+        std::move(factory), std::move(keep_alive_handle));
   }
 
  private:
