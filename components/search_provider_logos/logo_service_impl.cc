@@ -23,6 +23,8 @@
 #include "components/search_provider_logos/switches.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ui/gfx/image/image.h"
+#include "url/gurl.h"
+#include "url/url_constants.h"
 
 using search_provider_logos::LogoDelegate;
 using search_provider_logos::LogoTracker;
@@ -181,6 +183,7 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
+  // Determine the logo URL (if any).
   GURL logo_url;
   if (command_line->HasSwitch(switches::kSearchProviderLogoURL)) {
     logo_url = GURL(
@@ -193,31 +196,39 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
 #endif
   }
 
-  GURL base_url;
+  // Determine the doodle URL (if any). For historical reasons, there are
+  // different command line switches to override it for Google vs. third-party
+  // search engines.
   GURL doodle_url;
   const bool is_google = template_url->url_ref().HasGoogleBaseURLs(
       template_url_service_->search_terms_data());
-  if (is_google) {
-    // TODO(treib): Put the Google doodle URL into prepopulated_engines.json.
-    base_url =
-        GURL(template_url_service_->search_terms_data().GoogleBaseURLValue());
-    doodle_url = search_provider_logos::GetGoogleDoodleURL(base_url);
+  if (is_google && command_line->HasSwitch(switches::kGoogleDoodleUrl)) {
+    doodle_url =
+        GURL(command_line->GetSwitchValueASCII(switches::kGoogleDoodleUrl));
+  } else if (!is_google &&
+             command_line->HasSwitch(switches::kThirdPartyDoodleURL)) {
+    doodle_url =
+        GURL(command_line->GetSwitchValueASCII(switches::kThirdPartyDoodleURL));
   } else {
-    if (command_line->HasSwitch(switches::kThirdPartyDoodleURL)) {
-      doodle_url = GURL(
-          command_line->GetSwitchValueASCII(switches::kThirdPartyDoodleURL));
-    } else {
-      doodle_url = template_url->doodle_url();
+    doodle_url = template_url->doodle_url();
+
+    if (is_google) {
+      // Make sure we use https rather than http (except for .cn).
+      if (doodle_url.SchemeIs(url::kHttpScheme) &&
+          !base::EndsWith(doodle_url.host_piece(), ".cn",
+                          base::CompareCase::INSENSITIVE_ASCII)) {
+        GURL::Replacements replacements;
+        replacements.SetSchemeStr(url::kHttpsScheme);
+        doodle_url = doodle_url.ReplaceComponents(replacements);
+      }
     }
-    base_url = doodle_url.GetOrigin();
   }
 
+  // If neither logo nor doodle URL exists, then there is no logo at all.
   if (!logo_url.is_valid() && !doodle_url.is_valid()) {
     RunCallbacksWithDisabled(std::move(callbacks));
     return;
   }
-
-  const bool use_fixed_logo = !doodle_url.is_valid();
 
   if (!logo_tracker_) {
     std::unique_ptr<LogoCache> logo_cache = std::move(logo_cache_for_test_);
@@ -236,6 +247,7 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
         std::move(logo_cache), std::move(clock));
   }
 
+  const bool use_fixed_logo = !doodle_url.is_valid();
   if (use_fixed_logo) {
     logo_tracker_->SetServerAPI(
         logo_url, base::Bind(&search_provider_logos::ParseFixedLogoResponse),
@@ -245,6 +257,7 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
     // logo cache gets cleared when that value changes.
     GURL prefilled_url = AppendPreliminaryParamsToDoodleURL(
         want_gray_logo_getter_.Run(), doodle_url);
+    GURL base_url = doodle_url.GetOrigin();
     logo_tracker_->SetServerAPI(
         prefilled_url,
         base::Bind(&search_provider_logos::ParseDoodleLogoResponse, base_url),

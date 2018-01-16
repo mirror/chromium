@@ -441,6 +441,51 @@ void LogoServiceImplTest::AddSearchEngine(base::StringPiece keyword,
 
 // Tests -----------------------------------------------------------------------
 
+TEST_F(LogoServiceImplTest, UsesHttps) {
+  // "https://" always remains in place.
+  AddSearchEngine(
+      "https_com", "google.com", "{google:baseURL}search?q={searchTerms}",
+      GURL("https://www.google.com/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("https://www.google.com/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "https_de", "google.de", "{google:baseURL}search?q={searchTerms}",
+      GURL("https://www.google.de/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("https://www.google.de/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "https_cn", "google.cn", "{google:baseURL}search?q={searchTerms}",
+      GURL("https://www.google.cn/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("https://www.google.cn/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "https_com.cn", "google.com.cn", "{google:baseURL}search?q={searchTerms}",
+      GURL("https://www.google.com.cn/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("https://www.google.com.cn/async/ddljson"), DoodleURL());
+
+  // "http://" gets replaced by "https://", except for .cn which is allowed to
+  // keep "http://".
+  AddSearchEngine(
+      "http_com", "google.com", "{google:baseURL}search?q={searchTerms}",
+      GURL("http://www.google.com/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("http://www.google.com/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "http_de", "google.de", "{google:baseURL}search?q={searchTerms}",
+      GURL("http://www.google.de/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("http://www.google.de/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "http_cn", "google.cn", "{google:baseURL}search?q={searchTerms}",
+      GURL("http://www.google.cn/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("http://www.google.cn/async/ddljson"), DoodleURL());
+
+  AddSearchEngine(
+      "http_com.cn", "google.com.cn", "{google:baseURL}search?q={searchTerms}",
+      GURL("http://www.google.com.cn/async/ddljson"), /*make_default=*/true);
+  EXPECT_EQ(GURL("http://www.google.com.cn/async/ddljson"), DoodleURL());
+}
+
 TEST_F(LogoServiceImplTest, CTARequestedBackgroundCanUpdate) {
   std::string response =
       ServerResponse(GetSampleLogo(DoodleURL(), test_clock_->Now()));

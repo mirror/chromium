@@ -74,24 +74,6 @@ GURL AppendToAsyncQueryparam(const GURL& url, const std::string& value) {
 
 }  // namespace
 
-GURL GetGoogleDoodleURL(const GURL& google_base_url) {
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kGoogleDoodleUrl)) {
-    return GURL(command_line->GetSwitchValueASCII(switches::kGoogleDoodleUrl));
-  }
-
-  GURL::Replacements replacements;
-  replacements.SetPathStr("async/ddljson");
-  // Make sure we use https rather than http (except for .cn).
-  if (google_base_url.SchemeIs(url::kHttpScheme) &&
-      !base::EndsWith(google_base_url.host_piece(), ".cn",
-                      base::CompareCase::INSENSITIVE_ASCII)) {
-    replacements.SetSchemeStr(url::kHttpsScheme);
-  }
-  return google_base_url.ReplaceComponents(replacements);
-}
-
 GURL AppendFingerprintParamToDoodleURL(const GURL& logo_url,
                                        const std::string& fingerprint) {
   if (fingerprint.empty()) {
