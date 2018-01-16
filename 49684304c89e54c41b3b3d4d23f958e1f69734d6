@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b2bf46_e7dcf5e4",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: Move this above the anon namespace and remove the metrics:: prefixes on the pref names in the above function.",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e637be64_7d133230",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: Keep {}\u0027s on this one since if is multi-line.",
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d91fa52_44bd3fcc",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: Android",
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6a276c_4df2a8f1",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 167,
+        "startChar": 47,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8350d491_f03378bd",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: \"if (*value !\u003d 0)\" so it\u0027s a bit more explicit. Also, no need for {}\u0027s.",
+      "range": {
+        "startLine": 196,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae49ef8_cee92c56",
+        "filename": "components/metrics/stability_metrics_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T14:28:38Z",
+      "side": 1,
+      "message": "Nit: Get -\u003e Gets, reset -\u003e resets",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "49684304c89e54c41b3b3d4d23f958e1f69734d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
