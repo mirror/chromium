@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/media_router/presentation_receiver_window_delegate.h"
 #include "chrome/browser/ui/views/media_router/presentation_receiver_window_frame.h"
@@ -17,6 +18,10 @@
 PresentationReceiverWindow* PresentationReceiverWindow::Create(
     PresentationReceiverWindowDelegate* delegate,
     const gfx::Rect& bounds) {
+  if (!media_router::PresentationReceiverWindowEnabled()) {
+    NOTREACHED();
+    return nullptr;
+  }
   DCHECK(delegate);
   DCHECK(delegate->web_contents());
   auto* frame = new PresentationReceiverWindowFrame(Profile::FromBrowserContext(
