@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5b4183_2f552473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: I think you\u0027re missing the word \"not\" before \"be shown\"",
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cd2f18_1c9a0ecd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: I think there shouldn\u0027t be spaces around \u003d",
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266e936e_66c7e88d",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Sorry, I meant that we should show a warning on the page.",
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a94aa56_55db6a29",
+        "filename": "components/version_ui/version_handler_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: Add a comment.",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb3d7f6_7058cfe2",
+        "filename": "components/version_ui/version_handler_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e22ba9_b06a0e1f",
+        "filename": "components/version_ui/version_handler_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "This seems to be missing variations parameters, which we want to show as well.\n\nSee go/variations-params for some examples for how they should be associated.",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b72ca01_2d64e5a5",
+        "filename": "components/version_ui/version_handler_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "I think it would be better to have the logic to generate the command line live in the variations component and have the version_ui code just call it to get the string (and then wrap it with a base::Value).\n\nAlso, the function should have some unit tests.",
+      "range": {
+        "startLine": 72,
+        "startChar": 69,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cfa975_b3387cab",
+        "filename": "components/version_ui/version_handler_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: Can just return it directly:\n\nreturn base::Value(variations_cmd_data);",
+      "range": {
+        "startLine": 75,
+        "startChar": 24,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890d91cc_d32e0ba6",
+        "filename": "components/version_ui/version_ui_constants.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:50:06Z",
+      "side": 1,
+      "message": "Nit: Maybe kVariationsShowCmdQuery so it\u0027s sorted with the other variations ones?",
+      "revId": "d6c81aa535397b6f9bcf89be9bf4ab22ae9cccc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
