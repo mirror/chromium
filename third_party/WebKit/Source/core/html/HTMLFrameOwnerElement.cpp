@@ -282,6 +282,9 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     const KURL& url,
     const AtomicString& frame_name,
     bool replace_current_item) {
+  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
+    return false;
+
   UpdateContainerPolicy();
 
   if (ContentFrame()) {
@@ -290,9 +293,8 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     return true;
   }
 
-  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
-    return false;
-
+  // No content frame exists yet, but the page already reached the max subframe
+  // limit.
   if (GetDocument().GetFrame()->GetPage()->SubframeCount() >=
       Page::kMaxNumberOfFrames)
     return false;
@@ -318,8 +320,10 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     request.SetCacheMode(mojom::FetchCacheMode::kBypassCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  FrameLoadRequest frame_load_request(&GetDocument(), request);
+  if (url == BlankURL())
+    frame_load_request.SetIsInitialEmptyDocument(true);
+  child_frame->Loader().Load(frame_load_request, child_load_type);
   return true;
 }
 

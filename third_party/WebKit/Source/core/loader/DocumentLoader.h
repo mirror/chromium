@@ -139,6 +139,9 @@ class CORE_EXPORT DocumentLoader
   void SetIsClientRedirect(bool is_client_redirect) {
     is_client_redirect_ = is_client_redirect;
   }
+  void SetIsInitialEmptyDocument(bool is_initial_empty_document) {
+    is_initial_empty_document_ = is_initial_empty_document;
+  }
   bool ReplacesCurrentHistoryItem() const {
     return replaces_current_history_item_;
   }
@@ -344,6 +347,7 @@ class CORE_EXPORT DocumentLoader
   FrameLoadType load_type_;
 
   bool is_client_redirect_;
+  bool is_initial_empty_document_ = false;
   bool replaces_current_history_item_;
   bool data_received_;
 

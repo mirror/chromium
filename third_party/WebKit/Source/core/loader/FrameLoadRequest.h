@@ -75,6 +75,11 @@ struct CORE_EXPORT FrameLoadRequest {
 
   const SubstituteData& GetSubstituteData() const { return substitute_data_; }
 
+  bool IsInitialEmptyDocument() const { return is_initial_empty_document_; }
+  void SetIsInitialEmptyDocument(bool is_initial_empty_document) {
+    is_initial_empty_document_ = is_initial_empty_document;
+  }
+
   bool ReplacesCurrentItem() const { return replaces_current_item_; }
   void SetReplacesCurrentItem(bool replaces_current_item) {
     replaces_current_item_ = replaces_current_item;
@@ -127,6 +132,21 @@ struct CORE_EXPORT FrameLoadRequest {
   ResourceRequest resource_request_;
   AtomicString frame_name_;
   SubstituteData substitute_data_;
+  // This is a hack to work around the fact that the initial empty document is
+  // loaded twice if no URL is specified a new window / new iframe. Without
+  // tracking this bit of state, FrameLoaderStateMachine will be incorrectly
+  // advanced to mark the frame as having committed a real load.
+  // TODO(dcheng): Fix initial empty document creation to not need this hack.
+  // Unfortunately, fixing this isn't a simple matter of just removing one of
+  // the initial empty document loads: the first load never generates
+  // notifications, while the second load does. Removing the first load in
+  // FrameLoader::Init() will break code that assumes a newly constructed
+  // LocalFrame always has a Document. However, removing the second load is also
+  // currently impractical: at FrameLoader::Init() time, Blink simply doesn't
+  // have the information to determine if the initial empty document needs to
+  // generate notifications (i.e. no URL was specified when creating the new
+  // window or frame).
+  bool is_initial_empty_document_ = false;
   bool replaces_current_item_;
   ClientRedirectPolicy client_redirect_;
   Member<Event> triggering_event_;

@@ -199,9 +199,6 @@ void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
   if (!GetDocument().GetFrame())
     return;
 
-  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
-    return;
-
   // It's possible that we already have ContentFrame(). Arbitrary user code can
   // run between InsertedInto() and DidNotifySubtreeInsertionsToDocument().
   if (!ContentFrame())

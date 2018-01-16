@@ -1807,6 +1807,10 @@ DocumentLoader* FrameLoader::CreateDocumentLoader(
 
   loader->SetLoadType(load_type);
   loader->SetNavigationType(navigation_type);
+  // TODO(dcheng): See FrameLoadRequest::is_initial_empty_document_ for why this
+  // bit of state needs to plumbed through to DocumentLoader.
+  loader->SetIsInitialEmptyDocument(
+      frame_load_request.IsInitialEmptyDocument());
   // TODO(japhet): This is needed because the browser process DCHECKs if the
   // first entry we commit in a new frame has replacement set. It's unclear
   // whether the DCHECK is right, investigate removing this special case.

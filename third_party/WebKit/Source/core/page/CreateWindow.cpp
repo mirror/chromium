@@ -478,6 +478,7 @@ DOMWindow* CreateWindow(const String& url_string,
   if (created) {
     FrameLoadRequest request(calling_window.document(),
                              ResourceRequest(completed_url));
+    request.SetIsInitialEmptyDocument(true);
     request.GetResourceRequest().SetHasUserGesture(has_user_gesture);
     new_frame->Navigate(request);
   } else if (!url_string.IsEmpty()) {

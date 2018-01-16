@@ -1055,7 +1055,8 @@ void DocumentLoader::InstallNewDocument(
     const KURL& overriding_url) {
   DCHECK(!frame_->GetDocument() || !frame_->GetDocument()->IsActive());
   DCHECK_EQ(frame_->Tree().ChildCount(), 0u);
-  if (GetFrameLoader().StateMachine()->IsDisplayingInitialEmptyDocument()) {
+  if (GetFrameLoader().StateMachine()->IsDisplayingInitialEmptyDocument() &&
+      !is_initial_empty_document_) {
     GetFrameLoader().StateMachine()->AdvanceTo(
         FrameLoaderStateMachine::kCommittedFirstRealLoad);
   }
