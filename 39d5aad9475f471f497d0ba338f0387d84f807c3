@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f6b9e3_3637a2b3",
+        "filename": "cc/paint/paint_op_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-16T22:51:30Z",
+      "side": 1,
+      "message": "Why do we need to turn this off?  Can\u0027t we just have it on all the time?",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 42
+      },
+      "revId": "39d5aad9475f471f497d0ba338f0387d84f807c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
