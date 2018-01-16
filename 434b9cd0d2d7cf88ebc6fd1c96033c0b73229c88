@@ -16,6 +16,24 @@
       "revId": "434b9cd0d2d7cf88ebc6fd1c96033c0b73229c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0af3cab_bb2ff7ab",
+        "filename": "content/browser/service_worker/service_worker_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-16T02:21:58Z",
+      "side": 1,
+      "message": "Sounds reasonable.\nI uploaded patch set 3 which only propagates the header length.\nWDYT?",
+      "parentUuid": "5a0c7768_629ca754",
+      "revId": "434b9cd0d2d7cf88ebc6fd1c96033c0b73229c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
