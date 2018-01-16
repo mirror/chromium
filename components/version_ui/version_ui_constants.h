@@ -20,6 +20,7 @@ extern const char kRequestVersionInfo[];
 extern const char kReturnFilePaths[];
 extern const char kReturnFlashVersion[];
 extern const char kReturnVariationInfo[];
+extern const char kReturnVariationCmd[];
 
 // Strings.
 // Must match the constants used in the resource files.
@@ -72,10 +73,12 @@ extern const char kProfilePath[];
 extern const char kProfilePathName[];
 #endif
 extern const char kRevision[];
+extern const char kShowVariationsCmdQuery[];
 extern const char kTitle[];
 extern const char kUserAgent[];
 extern const char kUserAgentName[];
 extern const char kVariationsName[];
+extern const char kVariationsCmdName[];
 extern const char kVersion[];
 extern const char kVersionBitSize[];
 extern const char kVersionModifier[];

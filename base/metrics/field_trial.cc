@@ -743,8 +743,10 @@ bool FieldTrialList::CreateTrialsFromString(
     const std::string trial_name = entry.trial_name.as_string();
     const std::string group_name = entry.group_name.as_string();
 
-    if (ContainsKey(ignored_trial_names, trial_name))
+    if (ContainsKey(ignored_trial_names, trial_name)) {
+      LOG(WARNING) << "Field trial: " << trial_name << " cannot be forced.";
       continue;
+    }
 
     FieldTrial* trial = CreateFieldTrial(trial_name, group_name);
     if (!trial)
