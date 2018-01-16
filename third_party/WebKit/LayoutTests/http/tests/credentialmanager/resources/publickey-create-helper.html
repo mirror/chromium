@@ -1,0 +1,24 @@
+<script src="/gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
+<script src="/gen/third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom.js"></script>
+<script src="/gen/third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.js"></script>
+<script src="credential-helpers.js"></script>
+<script>
+mockAuthenticator.setRawId(raw_id);
+mockAuthenticator.setId(id);
+mockAuthenticator.setClientDataJson(client_data_json);
+mockAuthenticator.setAttestationObject(attestation_object);
+mockAuthenticator.setAuthenticatorStatus(
+    webauth.mojom.AuthenticatorStatus.SUCCESS);
+let u = new URLSearchParams(window.location.search);
+let new_id = u.get('rpId');
+var custom_public_key = {
+    challenge,
+    rp: { id: new_id, name: "Acme" },
+    user: public_key_user,
+    pubKeyCredParams: public_key_parameters,
+};
+
+navigator.credentials.create({publicKey : custom_public_key}).then(r =>
+   window.opener.postMessage("SUCCESS", "*"))
+.catch(t => window.opener.postMessage(t.name, "*"));
+</script>

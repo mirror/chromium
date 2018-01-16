@@ -4,6 +4,9 @@
 
 #include "modules/credentialmanager/CredentialManagerTypeConverters.h"
 
+#include <algorithm>
+#include <utility>
+
 #include "bindings/core/v8/array_buffer_or_array_buffer_view.h"
 #include "modules/credentialmanager/Credential.h"
 #include "modules/credentialmanager/FederatedCredential.h"
@@ -95,10 +98,12 @@ TypeConverter<CredentialManagerError, AuthenticatorStatus>::Convert(
       return CredentialManagerError::UNKNOWN;
     case webauth::mojom::blink::AuthenticatorStatus::PENDING_REQUEST:
       return CredentialManagerError::PENDING_REQUEST;
+    case webauth::mojom::blink::AuthenticatorStatus::INVALID_DOMAIN:
+      return CredentialManagerError::INVALID_DOMAIN;
     case webauth::mojom::blink::AuthenticatorStatus::SUCCESS:
       NOTREACHED();
       break;
-  };
+  }
 
   NOTREACHED();
   return CredentialManagerError::UNKNOWN;

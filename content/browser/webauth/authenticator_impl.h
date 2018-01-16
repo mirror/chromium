@@ -75,6 +75,7 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   CollectedClientData client_data_;
   std::unique_ptr<base::OneShotTimer> timer_;
   RenderFrameHost* render_frame_host_;
+  url::Origin caller_origin_;
   service_manager::Connector* connector_ = nullptr;
   base::WeakPtrFactory<AuthenticatorImpl> weak_factory_;
 

@@ -41,13 +41,17 @@ using webauth::mojom::PublicKeyCredentialParametersPtr;
 
 namespace {
 
-constexpr char kTestOrigin1[] = "https://google.com";
+typedef struct {
+  const GURL origin;
+  const std::string relying_party_id;
+} SecurityTestCases;
+
+constexpr char kTestOrigin1[] = "https://a.google.com";
+constexpr char kTestRelyingPartyId[] = "google.com";
 
 // Test data. CBOR test data can be built using the given diagnostic strings
 // and the utility at "http://cbor.me/".
 constexpr int32_t kCoseEs256 = -7;
-
-constexpr char kTestRelyingPartyId[] = "google.com";
 
 constexpr uint8_t kTestChallengeBytes[] = {
     0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xEC, 0x17, 0x20, 0x2E, 0x42,
@@ -60,6 +64,83 @@ constexpr char kTestClientDataJsonString[] =
     ":\"SHA-256\",\"origin\":\"google.com\",\"tokenBinding\":\"unused\","
     "\"type\":\"webauthn.create\"}";
 
+const SecurityTestCases kValidTestCases[] = {
+    {GURL("https://myawesomedomain"), std::string("myawesomedomain")},
+    {GURL("https://localhost"), std::string("localhost")},
+    {GURL("https://foo.bar.google.com"), std::string("foo.bar.google.com")},
+    {GURL("https://foo.bar.google.com"), std::string("bar.google.com")},
+    {GURL("https://foo.bar.google.com"), std::string("google.com")},
+    {GURL("https://earth.login.awesomecompany"),
+     std::string("login.awesomecompany")},
+    {GURL("https://google.com:1337"), std::string("google.com")},
+
+    // Hosts with trailing dot valid for rpIds with or without trailing dot.
+    // Hosts without trailing dots only matches rpIDs without trailing dot.
+    {GURL("https://google.com."), std::string("google.com")},
+    {GURL("https://google.com."), std::string("google.com.")},
+    {GURL("https://.google.com"), std::string("google.com")},
+    {GURL("https://..google.com"), std::string("google.com")},
+    {GURL("https://.google.com"), std::string(".google.com")},
+    {GURL("https://..google.com"), std::string(".google.com")},
+    {GURL("https://google.com.."), std::string("google.com..")},
+    {GURL("https://accounts.google.com"), std::string(".google.com")},
+};
+
+const SecurityTestCases kCrashingTestCases[] = {
+    {GURL("https://google.com"), std::string("com")},
+    {GURL("https://login.awesomecompany"), std::string("awesomecompany")},
+    {GURL("http://google.com"), std::string("google.com")},
+    {GURL("http://myawesomedomain"), std::string("myawesomedomain")},
+    {GURL("https://google.com"), std::string("foo.bar.google.com")},
+    {GURL("http://myawesomedomain"), std::string("randomdomain")},
+    {GURL("https://myawesomedomain"), std::string("randomdomain")},
+    {GURL("https://notgoogle.com"), std::string("google.com)")},
+    {GURL("https://not-google.com"), std::string("google.com)")},
+    {GURL("https://evil.appspot.com"), std::string("appspot.com")},
+    {GURL("https://evil.co.uk"), std::string("co.uk")},
+
+    {GURL("https://google.com"), std::string("google.com.")},
+    {GURL("https://google.com"), std::string("google.com..")},
+    {GURL("https://google.com.."), std::string("google.com")},
+    {GURL("https://google.com"), std::string(".google.com")},
+
+    {GURL("https://1.2.3"), std::string("1.2.3")},
+    {GURL("https://1.2.3"), std::string("2.3")},
+
+    {GURL("https://127.0.0.1"), std::string("127.0.0.1")},
+    {GURL("https://127.0.0.1"), std::string("27.0.0.1")},
+    {GURL("https://127.0.0.1"), std::string(".0.0.1")},
+    {GURL("https://127.0.0.1"), std::string("0.0.1")},
+
+    {GURL("https://[::127.0.0.1]"), std::string("127.0.0.1")},
+    {GURL("https://[::127.0.0.1]"), std::string("[127.0.0.1]")},
+
+    {GURL("https://[::1]"), std::string("1")},
+    {GURL("https://[::1]"), std::string("1]")},
+    {GURL("https://[::1]"), std::string("::1")},
+    {GURL("https://[::1]"), std::string("[::1]")},
+    {GURL("https://[1::1]"), std::string("::1")},
+    {GURL("https://[1::1]"), std::string("::1]")},
+    {GURL("https://[1::1]"), std::string("[::1]")},
+
+    {GURL("http://google.com:443"), std::string("google.com")},
+    {GURL("data:google.com"), std::string("google.com")},
+    {GURL("data:text/html,google.com"), std::string("google.com")},
+    {GURL("ws://google.com"), std::string("google.com")},
+    {GURL("wss:///google.com"), std::string("google.com")},
+    {GURL("gopher://google.com"), std::string("google.com")},
+    {GURL("ftp://google.com"), std::string("google.com")},
+    {GURL("file:///google.com"), std::string("google.com")},
+
+    {GURL("data:,"), std::string("")},
+    {GURL("https://google.com"), std::string("")},
+    {GURL("ws:///google.com"), std::string("")},
+    {GURL("wss:///google.com"), std::string("")},
+    {GURL("gopher://google.com"), std::string("")},
+    {GURL("ftp://google.com"), std::string("")},
+    {GURL("file:///google.com"), std::string("")},
+};
+
 std::vector<uint8_t> GetTestChallengeBytes() {
   return std::vector<uint8_t>(std::begin(kTestChallengeBytes),
                               std::end(kTestChallengeBytes));
@@ -68,7 +149,7 @@ std::vector<uint8_t> GetTestChallengeBytes() {
 
 PublicKeyCredentialRpEntityPtr GetTestPublicKeyCredentialRPEntity() {
   auto entity = PublicKeyCredentialRpEntity::New();
-  entity->id = std::string("localhost");
+  entity->id = std::string(kTestRelyingPartyId);
   entity->name = std::string("TestRP@example.com");
   return entity;
 }
@@ -179,21 +260,44 @@ class TestMakeCredentialCallback {
 
 }  // namespace
 
-// Test that service returns NOT_ALLOWED_ERROR on a call to MakeCredential with
-// an opaque origin.
-TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
-  NavigateAndCommit(GURL("data:text/html,opaque"));
-  AuthenticatorPtr authenticator = ConnectToAuthenticator();
-  MakePublicKeyCredentialOptionsPtr options =
-      GetTestMakePublicKeyCredentialOptions();
+// Verify behavior for various combinations of origins and rp id's.
+TEST_F(AuthenticatorImplTest, MakeCredentialOriginAndRpIds) {
+  // These instances should return security errors (for circumstances
+  // that would normally crash the renderer).
+  for (const SecurityTestCases& test_case : kCrashingTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+    MakePublicKeyCredentialOptionsPtr options =
+        GetTestMakePublicKeyCredentialOptions();
+    options->relying_party->id = test_case.relying_party_id;
 
-  TestMakeCredentialCallback cb;
-  authenticator->MakeCredential(std::move(options), cb.callback());
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::MakeCredentialAuthenticatorResponsePtr>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
-            response.first);
+    TestMakeCredentialCallback cb;
+    authenticator->MakeCredential(std::move(options), cb.callback());
+    std::pair<webauth::mojom::AuthenticatorStatus,
+              webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+        response = cb.WaitForCallback();
+    EXPECT_EQ(webauth::mojom::AuthenticatorStatus::INVALID_DOMAIN,
+              response.first);
+  }
+
+  // These instances pass the origin and relying party checks and return at
+  // the algorithm check.
+  for (const SecurityTestCases& test_case : kValidTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+    MakePublicKeyCredentialOptionsPtr options =
+        GetTestMakePublicKeyCredentialOptions();
+    options->relying_party->id = test_case.relying_party_id;
+    options->public_key_parameters = GetTestPublicKeyCredentialParameters(123);
+
+    TestMakeCredentialCallback cb;
+    authenticator->MakeCredential(std::move(options), cb.callback());
+    std::pair<webauth::mojom::AuthenticatorStatus,
+              webauth::mojom::MakeCredentialAuthenticatorResponsePtr>&
+        response = cb.WaitForCallback();
+    EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
+              response.first);
+  }
 }
 
 // Test that service returns NOT_IMPLEMENTED_ERROR if no parameters contain
