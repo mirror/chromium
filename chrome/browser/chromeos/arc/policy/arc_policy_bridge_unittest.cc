@@ -114,9 +114,9 @@ using testing::ReturnRef;
 
 namespace arc {
 
-class ArcPolicyBridgeTest : public testing::Test {
+class ArcPolicyBridgeTest : public testing::TestWithParam<bool> {
  public:
-  ArcPolicyBridgeTest() {}
+  ArcPolicyBridgeTest() : is_affiliated_(GetParam()) {}
 
   void SetUp() override {
     bridge_service_ = std::make_unique<ArcBridgeService>();
@@ -134,7 +134,7 @@ class ArcPolicyBridgeTest : public testing::Test {
         base::WrapUnique(fake_user_manager));
     const AccountId account_id(
         AccountId::FromUserEmailGaiaId("user@gmail.com", "1111111111"));
-    fake_user_manager->AddUser(account_id);
+    fake_user_manager->AddUserWithAffiliation(account_id, is_affiliated_);
     fake_user_manager->LoginUser(account_id);
     testing_profile_manager_ = std::make_unique<TestingProfileManager>(
         TestingBrowserProcess::GetGlobal());
@@ -158,6 +158,7 @@ class ArcPolicyBridgeTest : public testing::Test {
   }
 
  protected:
+  const bool is_affiliated_;
   ArcPolicyBridge* policy_bridge() { return policy_bridge_.get(); }
   FakePolicyInstance* policy_instance() { return policy_instance_.get(); }
   policy::PolicyMap& policy_map() { return policy_map_; }
@@ -185,17 +186,17 @@ class ArcPolicyBridgeTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(ArcPolicyBridgeTest);
 };
 
-TEST_F(ArcPolicyBridgeTest, UnmanagedTest) {
+TEST_P(ArcPolicyBridgeTest, UnmanagedTest) {
   policy_bridge()->OverrideIsManagedForTesting(false);
   policy_bridge()->GetPolicies(PolicyStringCallback(""));
 }
 
-TEST_F(ArcPolicyBridgeTest, EmptyPolicyTest) {
+TEST_P(ArcPolicyBridgeTest, EmptyPolicyTest) {
   // No policy is set, result should be empty.
   policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, ArcPolicyTest) {
+TEST_P(ArcPolicyBridgeTest, ArcPolicyTest) {
   policy_map().Set(
       policy::key::kArcPolicy, policy::POLICY_LEVEL_MANDATORY,
       policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
@@ -220,7 +221,7 @@ TEST_F(ArcPolicyBridgeTest, ArcPolicyTest) {
       "}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, HompageLocationTest) {
+TEST_P(ArcPolicyBridgeTest, HompageLocationTest) {
   // This policy will not be passed on, result should be empty.
   policy_map().Set(
       policy::key::kHomepageLocation, policy::POLICY_LEVEL_MANDATORY,
@@ -229,7 +230,7 @@ TEST_F(ArcPolicyBridgeTest, HompageLocationTest) {
   policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, DisableScreenshotsTest) {
+TEST_P(ArcPolicyBridgeTest, DisableScreenshotsTest) {
   policy_map().Set(policy::key::kDisableScreenshots,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -238,7 +239,7 @@ TEST_F(ArcPolicyBridgeTest, DisableScreenshotsTest) {
       PolicyStringCallback("{\"screenCaptureDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, VideoCaptureAllowedTest) {
+TEST_P(ArcPolicyBridgeTest, VideoCaptureAllowedTest) {
   policy_map().Set(policy::key::kVideoCaptureAllowed,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -247,7 +248,7 @@ TEST_F(ArcPolicyBridgeTest, VideoCaptureAllowedTest) {
       PolicyStringCallback("{\"cameraDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, AudioCaptureAllowedTest) {
+TEST_P(ArcPolicyBridgeTest, AudioCaptureAllowedTest) {
   policy_map().Set(policy::key::kAudioCaptureAllowed,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -256,7 +257,7 @@ TEST_F(ArcPolicyBridgeTest, AudioCaptureAllowedTest) {
       PolicyStringCallback("{\"unmuteMicrophoneDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, DefaultGeolocationSettingTest) {
+TEST_P(ArcPolicyBridgeTest, DefaultGeolocationSettingTest) {
   policy_map().Set(policy::key::kDefaultGeolocationSetting,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -277,7 +278,7 @@ TEST_F(ArcPolicyBridgeTest, DefaultGeolocationSettingTest) {
       PolicyStringCallback("{\"shareLocationDisabled\":false}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, ExternalStorageDisabledTest) {
+TEST_P(ArcPolicyBridgeTest, ExternalStorageDisabledTest) {
   policy_map().Set(policy::key::kExternalStorageDisabled,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -286,7 +287,7 @@ TEST_F(ArcPolicyBridgeTest, ExternalStorageDisabledTest) {
       PolicyStringCallback("{\"mountPhysicalMediaDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, WallpaperImageSetTest) {
+TEST_P(ArcPolicyBridgeTest, WallpaperImageSetTest) {
   base::DictionaryValue dict;
   dict.SetString("url", "https://example.com/wallpaper.jpg");
   dict.SetString("hash", "somehash");
@@ -297,7 +298,7 @@ TEST_F(ArcPolicyBridgeTest, WallpaperImageSetTest) {
       PolicyStringCallback("{\"setWallpaperDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, WallpaperImageSet_NotCompletePolicyTest) {
+TEST_P(ArcPolicyBridgeTest, WallpaperImageSet_NotCompletePolicyTest) {
   base::DictionaryValue dict;
   dict.SetString("url", "https://example.com/wallpaper.jpg");
   // "hash" attribute is missing, so the policy shouldn't be set
@@ -307,7 +308,7 @@ TEST_F(ArcPolicyBridgeTest, WallpaperImageSet_NotCompletePolicyTest) {
   policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, CaCertificateTest) {
+TEST_P(ArcPolicyBridgeTest, CaCertificateTest) {
   // Enable CA certificates sync.
   policy_map().Set(
       policy::key::kArcCertificatesSyncMode, policy::POLICY_LEVEL_MANDATORY,
@@ -335,7 +336,7 @@ TEST_F(ArcPolicyBridgeTest, CaCertificateTest) {
   policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, DeveloperToolsDisabledTest) {
+TEST_P(ArcPolicyBridgeTest, DeveloperToolsDisabledTest) {
   policy_map().Set(policy::key::kDeveloperToolsDisabled,
                    policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                    policy::POLICY_SOURCE_CLOUD,
@@ -344,7 +345,7 @@ TEST_F(ArcPolicyBridgeTest, DeveloperToolsDisabledTest) {
       PolicyStringCallback("{\"debuggingFeaturesDisabled\":true}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, MultiplePoliciesTest) {
+TEST_P(ArcPolicyBridgeTest, MultiplePoliciesTest) {
   policy_map().Set(
       policy::key::kArcPolicy, policy::POLICY_LEVEL_MANDATORY,
       policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
@@ -377,7 +378,7 @@ TEST_F(ArcPolicyBridgeTest, MultiplePoliciesTest) {
       "}"));
 }
 
-TEST_F(ArcPolicyBridgeTest, EmptyReportComplianceTest) {
+TEST_P(ArcPolicyBridgeTest, EmptyReportComplianceTest) {
   ASSERT_FALSE(
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
   policy_bridge()->ReportCompliance(
@@ -388,7 +389,7 @@ TEST_F(ArcPolicyBridgeTest, EmptyReportComplianceTest) {
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
 }
 
-TEST_F(ArcPolicyBridgeTest, ParsableReportComplianceTest) {
+TEST_P(ArcPolicyBridgeTest, ParsableReportComplianceTest) {
   ASSERT_FALSE(
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
   policy_bridge()->ReportCompliance(
@@ -400,7 +401,7 @@ TEST_F(ArcPolicyBridgeTest, ParsableReportComplianceTest) {
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
 }
 
-TEST_F(ArcPolicyBridgeTest, NonParsableReportComplianceTest) {
+TEST_P(ArcPolicyBridgeTest, NonParsableReportComplianceTest) {
   ASSERT_FALSE(
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
   policy_bridge()->ReportCompliance(
@@ -412,7 +413,7 @@ TEST_F(ArcPolicyBridgeTest, NonParsableReportComplianceTest) {
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
 }
 
-TEST_F(ArcPolicyBridgeTest, ReportComplianceTest_WithNonCompliantDetails) {
+TEST_P(ArcPolicyBridgeTest, ReportComplianceTest_WithNonCompliantDetails) {
   ASSERT_FALSE(
       profile()->GetPrefs()->GetBoolean(prefs::kArcPolicyComplianceReported));
   policy_bridge()->ReportCompliance(
@@ -428,13 +429,32 @@ TEST_F(ArcPolicyBridgeTest, ReportComplianceTest_WithNonCompliantDetails) {
 
 // This and the following test send the policies through a mojo connection
 // between a PolicyInstance and the PolicyBridge.
-TEST_F(ArcPolicyBridgeTest, PolicyInstanceUnmanagedTest) {
+TEST_P(ArcPolicyBridgeTest, PolicyInstanceUnmanagedTest) {
   policy_bridge()->OverrideIsManagedForTesting(false);
   policy_instance()->CallGetPolicies(PolicyStringCallback(""));
 }
 
-TEST_F(ArcPolicyBridgeTest, PolicyInstanceManagedTest) {
+TEST_P(ArcPolicyBridgeTest, PolicyInstanceManagedTest) {
   policy_instance()->CallGetPolicies(PolicyStringCallback("{}"));
 }
 
+TEST_P(ArcPolicyBridgeTest, ApkCacheEnabledTest) {
+  const std::string apk_cache_enabled_policy("{\"apkCacheEnabled\":true}");
+  policy_map().Set(policy::key::kArcPolicy, policy::POLICY_LEVEL_MANDATORY,
+                   policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
+                   std::make_unique<base::Value>(apk_cache_enabled_policy),
+                   nullptr);
+  if (is_affiliated_) {
+    policy_bridge()->GetPolicies(
+        PolicyStringCallback(apk_cache_enabled_policy));
+  } else {
+    policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
+  }
+}
+
+// Boolean parameter means if user is affiliated on the device. Affiliated
+// users belong to the domain that owns the device.
+INSTANTIATE_TEST_CASE_P(ArcPolicyBridgeTestInstance,
+                        ArcPolicyBridgeTest,
+                        testing::Bool());
 }  // namespace arc
