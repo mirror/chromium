@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1920c454_3c61f658",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T19:26:18Z",
+      "side": 1,
+      "message": "This if..else can be simplified as follows:\n\nlet toCompare \u003d settingName \u003d\u003d field ? stickySettingsChange : stickySettingsDefault;\nexpectEquals(JSON.stringify(toCompare[settingName]),\n             JSON.stringify(settings[settingName]));",
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0966bc2_8dca447b",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T19:26:18Z",
+      "side": 1,
+      "message": "Are we always converting to JSON, because we don\u0027t know what types of values are we comparing? Would using assertDeepEquals() also work?",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef86c97_c460758e",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T19:26:18Z",
+      "side": 1,
+      "message": "restorePromise",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
