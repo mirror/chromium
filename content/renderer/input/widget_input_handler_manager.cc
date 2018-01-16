@@ -22,6 +22,12 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "ui/events/base_event_utils.h"
 
+#if defined(OS_ANDROID)
+#include "content/public/common/content_client.h"
+#include "content/renderer/android/synchronous_compositor_proxy.h"
+#include "content/renderer/android/synchronous_compositor_registry.h"
+#endif
+
 namespace content {
 namespace {
 void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
@@ -38,6 +44,45 @@ void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
 }
 
 }  // namespace
+
+#if defined(OS_ANDROID)
+class SynchronousCompositorProxyRegistry
+    : public SynchronousCompositorRegistry {
+ public:
+  SynchronousCompositorProxyRegistry() {}
+
+  void CreateProxy(ui::SynchronousInputHandlerProxy* handler) {
+    proxy_ = std::make_unique<SynchronousCompositorProxy>(handler);
+    proxy_->Init();
+
+    if (sink_) {
+      proxy_->SetLayerTreeFrameSink(sink_);
+      sink_ = nullptr;
+    }
+  }
+
+  SynchronousCompositorProxy* proxy() { return proxy_.get(); }
+
+  void RegisterLayerTreeFrameSink(
+      int routing_id,
+      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) override {
+    if (proxy_)
+      proxy_->SetLayerTreeFrameSink(layer_tree_frame_sink);
+    else
+      sink_ = layer_tree_frame_sink;
+  }
+
+  void UnregisterLayerTreeFrameSink(
+      int routing_id,
+      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) override {
+    sink_ = nullptr;
+  }
+
+ private:
+  std::unique_ptr<SynchronousCompositorProxy> proxy_;
+  SynchronousLayerTreeFrameSink* sink_ = nullptr;
+};
+#endif
 
 scoped_refptr<WidgetInputHandlerManager> WidgetInputHandlerManager::Create(
     base::WeakPtr<RenderWidget> render_widget,
@@ -60,20 +105,37 @@ WidgetInputHandlerManager::WidgetInputHandlerManager(
       input_event_queue_(render_widget->GetInputEventQueue()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       compositor_task_runner_(compositor_task_runner) {
+#if defined(OS_ANDROID)
+  synchronous_compositor_registry_ =
+      std::make_unique<SynchronousCompositorProxyRegistry>();
+#endif
 }
 
 void WidgetInputHandlerManager::Init() {
   if (compositor_task_runner_) {
+    bool sync_compositing = false;
+#if defined(OS_ANDROID)
+    sync_compositing = GetContentClient()->UsingSynchronousCompositing();
+#endif
+
     compositor_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(
             &WidgetInputHandlerManager::InitOnCompositorThread, this,
             render_widget_->compositor()->GetInputHandler(),
-            render_widget_->compositor_deps()->IsScrollAnimatorEnabled()));
+            render_widget_->compositor_deps()->IsScrollAnimatorEnabled(),
+            sync_compositing));
   }
 }
 
-WidgetInputHandlerManager::~WidgetInputHandlerManager() {}
+WidgetInputHandlerManager::~WidgetInputHandlerManager() {
+#if defined(OS_ANDROID)
+  if (synchronous_compositor_registry_ && compositor_task_runner_) {
+    compositor_task_runner_->DeleteSoon(
+        FROM_HERE, synchronous_compositor_registry_.release());
+  }
+#endif
+}
 
 void WidgetInputHandlerManager::AddAssociatedInterface(
     mojom::WidgetInputHandlerAssociatedRequest request,
@@ -214,6 +276,16 @@ WidgetInputHandlerManager::GetWidgetInputHandlerHost() {
   return nullptr;
 }
 
+void WidgetInputHandlerManager::AttachSynchronousCompositor(
+    mojom::SynchronousCompositorControlHostPtr control_host,
+    mojom::SynchronousCompositorHostAssociatedPtrInfo host,
+    mojom::SynchronousCompositorAssociatedRequest compositor_request) {
+#if defined(OS_ANDROID)
+  synchronous_compositor_registry_->proxy()->BindChannel(
+      std::move(control_host), std::move(host), std::move(compositor_request));
+#endif
+}
+
 void WidgetInputHandlerManager::ObserveGestureEventOnMainThread(
     const blink::WebGestureEvent& gesture_event,
     const cc::InputHandlerScrollResult& scroll_result) {
@@ -272,12 +344,18 @@ void WidgetInputHandlerManager::DispatchEvent(
 
 void WidgetInputHandlerManager::InitOnCompositorThread(
     const base::WeakPtr<cc::InputHandler>& input_handler,
-    bool smooth_scroll_enabled) {
+    bool smooth_scroll_enabled,
+    bool sync_compositing) {
   input_handler_proxy_ = std::make_unique<ui::InputHandlerProxy>(
       input_handler.get(), this,
       base::FeatureList::IsEnabled(features::kTouchpadAndWheelScrollLatching),
       base::FeatureList::IsEnabled(features::kAsyncWheelEvents));
   input_handler_proxy_->set_smooth_scroll_enabled(smooth_scroll_enabled);
+
+#if defined(OS_ANDROID)
+  if (sync_compositing)
+    synchronous_compositor_registry_->CreateProxy(input_handler_proxy_.get());
+#endif
 }
 
 void WidgetInputHandlerManager::BindAssociatedChannel(
@@ -414,5 +492,12 @@ void WidgetInputHandlerManager::ObserveGestureEventOnCompositorThread(
   input_handler_proxy_->scroll_elasticity_controller()
       ->ObserveGestureEventAndResult(gesture_event, scroll_result);
 }
+
+#if defined(OS_ANDROID)
+content::SynchronousCompositorRegistry*
+WidgetInputHandlerManager::GetSynchronousCompositorRegistry() {
+  return synchronous_compositor_registry_.get();
+}
+#endif
 
 }  // namespace content
