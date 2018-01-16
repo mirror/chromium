@@ -39,6 +39,24 @@
       "revId": "10a2909c8e2cd3f9e488371c7619aeef77756f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7f443f_39b1f2e1",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-16T19:14:37Z",
+      "side": 1,
+      "message": "for oopif, i think we\u0027re just not going to get a meaningful priority. \n initially, we\u0027re planning to do resource scheduling per-renderer anyway, so the priority doesn\u0027t really matter for oopif.\n\ni can move this to the page either way.  i didn\u0027t know that\u0027s what a page did.",
+      "parentUuid": "b6c9ba8c_31c2da92",
+      "revId": "10a2909c8e2cd3f9e488371c7619aeef77756f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
