@@ -231,12 +231,27 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketPool
     base::TimeDelta ConnectionTimeout() const override;
 
    private:
+    // Returns proxy connection timeout for secure proxies if
+    // |is_secure_connection| is true. Otherwise, returns timeout for insecure
+    // proxies.
+    base::TimeDelta ConnectionTimeoutWithConnectionProperty(
+        bool is_secure_connection) const;
+
     TransportClientSocketPool* const transport_pool_;
     SSLClientSocketPool* const ssl_pool_;
     NetworkQualityProvider* network_quality_provider_;
-    const int32_t transport_rtt_multiplier_;
+
+    // For secure proxies, the connection timeout is set to
+    // |ssl_http_rtt_multiplier_| times the HTTP RTT estimate. For insecure
+    // proxies, the connection timeout is set to |non_ssl_http_rtt_multiplier_|
+    // times the HTTP RTT estimate. In either case, the connection timeout
+    // is clamped to be between |min_proxy_connection_timeout_| and
+    // |max_proxy_connection_timeout_|.
+    const int32_t ssl_http_rtt_multiplier_;
+    const int32_t non_ssl_http_rtt_multiplier_;
     const base::TimeDelta min_proxy_connection_timeout_;
     const base::TimeDelta max_proxy_connection_timeout_;
+
     NetLog* net_log_;
 
     DISALLOW_COPY_AND_ASSIGN(HttpProxyConnectJobFactory);
