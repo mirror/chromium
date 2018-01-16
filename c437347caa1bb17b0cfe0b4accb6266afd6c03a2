@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c4bf6a73_6b80339f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9558b1_b242b3ac",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8733e3_521d7a96",
         "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
         "patchSetId": 4
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "44bdf0ee_b2179418",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b390296e_15041133",
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe0b992f_827ea57a",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 4
@@ -128,6 +164,30 @@
       "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a2a7e6_13df6d6f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0b992f_827ea57a",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1ece31b0_5bf87c7d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea0f361_f00b3b00",
+      "range": {
+        "startLine": 217,
+        "startChar": 30,
+        "endLine": 217,
+        "endChar": 34
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda80b2c_d7ef1e8c",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
         "patchSetId": 4
@@ -174,6 +258,30 @@
       "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd32c95_874a2f9c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda80b2c_d7ef1e8c",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 14
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +447,30 @@
       "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe31012_7249c069",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-16T21:12:02Z",
+      "side": 1,
+      "message": "ok, changed to ReturnedDevice and ReturnedPresentationCapableDevice",
+      "parentUuid": "09529d43_1023b692",
+      "range": {
+        "startLine": 2377,
+        "startChar": 16,
+        "endLine": 2377,
+        "endChar": 19
+      },
+      "revId": "c437347caa1bb17b0cfe0b4accb6266afd6c03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
