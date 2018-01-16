@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b761ec_ed470af5",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-16T15:40:10Z",
+      "side": 1,
+      "message": "nit: custom section names (without \u0027s\u0027 in \u0027sections\u0027 .. I think)",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "c5b5d9d842908652d1987342a28f200fd09058fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b6c9fa_5a9c8811",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-16T15:40:10Z",
+      "side": 1,
+      "message": "If somewhere else an attribute section is used to do a similar trick we risk being imprecise without noticing it. Perhaps in a future change we could check with a simple script that this symbol is indeed at the end of executable segment for LLD?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "c5b5d9d842908652d1987342a28f200fd09058fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
