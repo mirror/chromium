@@ -125,6 +125,25 @@ base::Optional<mojom::CORSError> CheckRedirectLocation(const GURL& redirect_url,
   return base::nullopt;
 }
 
+base::Optional<mojom::CORSError> CheckPreflight(const int status_code) {
+  // CORS preflight with 3XX is considered network error in
+  // Fetch API Spec: https://fetch.spec.whatwg.org/#cors-preflight-fetch
+  // CORS Spec: http://www.w3.org/TR/cors/#cross-origin-request-with-preflight-0
+  // https://crbug.com/452394
+  if (200 <= status_code && status_code < 300)
+    return base::nullopt;
+  return mojom::CORSError::kPreflightInvalidStatus;
+}
+
+base::Optional<mojom::CORSError> CheckExternalPreflight(
+    const base::Optional<std::string>& allow_external) {
+  if (!allow_external)
+    return mojom::CORSError::kPreflightMissingAllowExternal;
+  if (*allow_external == "true")
+    return base::nullopt;
+  return mojom::CORSError::kPreflightInvalidAllowExternal;
+}
+
 bool IsCORSEnabledRequestMode(mojom::FetchRequestMode mode) {
   return mode == mojom::FetchRequestMode::kCORS ||
          mode == mojom::FetchRequestMode::kCORSWithForcedPreflight;
