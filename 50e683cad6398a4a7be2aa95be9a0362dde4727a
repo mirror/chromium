@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce70ea6e_d0231749",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-16T16:56:42Z",
+      "side": 1,
+      "message": "where does this get used?\nis it unrelated change to added enum?",
+      "range": {
+        "startLine": 1041,
+        "startChar": 5,
+        "endLine": 1041,
+        "endChar": 39
+      },
+      "revId": "50e683cad6398a4a7be2aa95be9a0362dde4727a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
