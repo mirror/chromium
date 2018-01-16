@@ -109,11 +109,6 @@ QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_enable_accept_random_ipn, false)
 // If true, enable QUIC v43.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_43, false)
 
-// If true, allows one address change when UDP proxying.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy,
-          true)
-
 // Explicitly send a connection close if the TLP count is greater than 0 when
 // idle timeout occurs.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, true)

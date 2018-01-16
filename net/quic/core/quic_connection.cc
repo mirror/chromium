@@ -1408,8 +1408,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     if (self_address_.port() != last_packet_destination_address_.port() ||
         self_address_.host().Normalized() !=
             last_packet_destination_address_.host().Normalized()) {
-      if (!GetQuicReloadableFlag(quic_allow_address_change_for_udp_proxy) ||
-          !visitor_->AllowSelfAddressChange()) {
+      if (!visitor_->AllowSelfAddressChange()) {
         CloseConnection(
             QUIC_ERROR_MIGRATING_ADDRESS,
             "Self address migration is not supported at the server.",
