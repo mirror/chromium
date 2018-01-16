@@ -161,8 +161,6 @@ struct DictionaryHelper {
   STATIC_ONLY(DictionaryHelper);
   template <typename T>
   static bool Get(const Dictionary&, const StringView& key, T& value);
-  template <typename T>
-  static bool Get(const Dictionary&, const StringView& key, Nullable<T>& value);
 };
 
 }  // namespace blink
