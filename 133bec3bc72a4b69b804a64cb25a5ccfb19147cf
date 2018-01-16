@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9b79ca_a083c163",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "Please group this together with the other forward button and add a comment explaining the difference between the two, for example with pseudographics:\n\n// The following 2 properties are for the two leading\n// buttons that are visible in various mutually exclusive \n// configurations of the toolbar.\n// Forward button when it\u0027s positioned near the back button\n// | \u003c \u003e [omnibox] ...|\n@property forwardLeadingButton;\n\n// Forward button when it\u0027s positioned symmetrically to the \n// back button, on the opposite side of the omnibox\n// | \u003c [omnibox] \u003e |\n@property forwardTrailingButton;",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8275b3c8_abe31833",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "Normally setters have a \nif (_ivarValue \u003d\u003d newValue) return;",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f157a55_0afe1c9a",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "s/avoir/avoid",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230f059e_e5b21c45",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "This is a really weird workaround; can this be done in some other way? Or at least can this have  a test?",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f4228f_377b41ff",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "IMO, this code ideally should be in a custom UIButton subclass, and this method should do \"[self.view.tabGridButton setTabCount:tabCount]\"",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01e923f_5d6008d2",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "at least the fonts management should move to the button subclass: the button can override the setTitle:forState: and modify the font given the titleLabel.length with a special case for the smiley face or something.",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4cab26_15a4cb6f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T10:07:48Z",
+      "side": 1,
+      "message": "nit: use lazy instantiation, replace the call site with \"[self addSubview:self.progressBar]\"",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 24
+      },
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
