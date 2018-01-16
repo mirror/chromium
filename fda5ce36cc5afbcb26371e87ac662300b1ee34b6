@@ -46,6 +46,30 @@
       "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ae4d95_28ee2550",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-16T18:50:20Z",
+      "side": 1,
+      "message": "Thanks for the details. Done.\n\nHowever, I\u0027m not sure whether to define the feature for ChromeOS only (i.e. surround with #if defined(OS_CHROMEOS)) or not. The feature has only two states enabled/disabled by defaults. I think we won\u0027t want to make it enable-able on non-ChromeOS platforms (at least in the near future?), but at the same time we won\u0027t want to litter our code with `#if defined` all over the place to check for the feature availability.\n\nFor now I made the feature visible to all platforms.",
+      "parentUuid": "bcf1c5aa_075b35bb",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "fda5ce36cc5afbcb26371e87ac662300b1ee34b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
