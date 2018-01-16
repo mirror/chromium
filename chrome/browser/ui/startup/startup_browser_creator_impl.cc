@@ -51,6 +51,7 @@
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/startup/startup_tab_provider.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/extension_metrics.h"
@@ -76,9 +77,6 @@
 #import "chrome/browser/mac/dock.h"
 #include "chrome/browser/mac/install_from_dmg.h"
 #include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
-#endif
-
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
 #include "chrome/browser/ui/startup/session_crashed_infobar_delegate.h"
 #endif
 
@@ -776,8 +774,9 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
 
   if (HasPendingUncleanExit(browser->profile()) &&
       !SessionCrashedBubble::Show(browser)) {
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
-    SessionCrashedInfoBarDelegate::Create(browser);
+#if defined(OS_MACOSX)
+    if (views_mode_controller::IsBrowserViews())
+      SessionCrashedInfoBarDelegate::Create(browser);
 #endif
   }
 

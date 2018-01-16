@@ -255,7 +255,7 @@ void SimpleMessageBoxViews::Done() {
 
 namespace chrome {
 
-#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+#if !defined(OS_MACOSX)
 void ShowWarningMessageBox(gfx::NativeWindow parent,
                            const base::string16& title,
                            const base::string16& message) {
@@ -300,6 +300,6 @@ MessageBoxResult ShowMessageBoxWithButtonText(gfx::NativeWindow parent,
                                      yes_text, no_text, base::string16());
 }
 
-#endif  // !OS_MACOSX || BUILDFLAG(MAC_VIEWS_BROWSER)
+#endif  // !OS_MACOSX
 
 }  // namespace chrome
