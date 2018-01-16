@@ -32,6 +32,10 @@ CONTENT_EXPORT extern const int kTraceEventGpuProcessSortIndex;
 // Constants used to organize content threads in about:tracing.
 CONTENT_EXPORT extern const int kTraceEventRendererMainThreadSortIndex;
 
+// Maximum wait time for an asynchronous hit test request sent to a renderer
+// process (in milliseconds).
+CONTENT_EXPORT extern const int64_t kAsyncHitTestTimeout;
+
 } // namespace content
 
 #endif  // CONTENT_COMMON_CONTENT_CONSTANTS_INTERNAL_H_
