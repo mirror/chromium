@@ -265,7 +265,8 @@ class NavigationHandleImplTest : public RenderViewHostImplTestHarness {
         false,  // has_user_gesture
         ui::PAGE_TRANSITION_LINK,
         false,  // is_external_protocol
-        REQUEST_CONTEXT_TYPE_LOCATION);
+        REQUEST_CONTEXT_TYPE_LOCATION,
+        nullptr);  // navigation_ui_data
   }
 
  private:
