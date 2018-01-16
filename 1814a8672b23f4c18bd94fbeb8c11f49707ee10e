@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa120eec_f1363b98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-16T22:38:48Z",
+      "side": 1,
+      "message": "I hear this if I move the VO cursor off of and back onto the omnibox, but not while I\u0027m typing. Here\u0027s what I hear instead:\n\n- Me: Cmd+L\n- VO: \"Open Location…, edit text, blank\"\n- Me: \u0027g\u0027\n- VO: \"oogle.com, google.com.\"\n- Me: Tab\n- VO: \"search, 1 of 6.\"\n- Me: \u0027f\u0027\n- VO: \"selection replaced f\"\n\nLet me know if I\u0027m doing something wrong?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfdcba9_131ef68b",
+        "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-16T22:38:48Z",
+      "side": 1,
+      "message": "Is it correct to use a hard-coded string here?",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31afd80_e678e024",
+        "filename": "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-16T22:38:48Z",
+      "side": 1,
+      "message": "What\u0027s this used for if IsAccessibilityIgnored() always returns true?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 1
+      },
+      "revId": "1814a8672b23f4c18bd94fbeb8c11f49707ee10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
