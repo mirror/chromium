@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9120c0fd_90ce5bd7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-16T18:09:08Z",
+      "side": 0,
+      "message": "nit: Still need this comment?",
+      "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5936eea_2fa319cf",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-16T18:09:08Z",
+      "side": 0,
+      "message": "[In a Separate CL?] This is another example of checks for synchronous load failure. If we can move DidDispatchPingLoader() to before Fetch() (and call DidDispatchPingLoader() unconditionally), then we can further simplify the code. ditto below.",
+      "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
