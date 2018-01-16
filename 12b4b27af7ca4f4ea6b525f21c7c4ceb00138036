@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90a77cb_406ed8ca",
+        "filename": "services/device/public/interfaces/sensor_provider.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-16T17:18:37Z",
+      "side": 1,
+      "message": "nit: 80 cols here, too.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "12b4b27af7ca4f4ea6b525f21c7c4ceb00138036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad984d59_c08c7b62",
+        "filename": "services/device/public/interfaces/sensor_provider.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-16T17:18:37Z",
+      "side": 1,
+      "message": "nit:  I\u0027d put the mandatory parameter first, then the optional one second.",
+      "range": {
+        "startLine": 58,
+        "startChar": 64,
+        "endLine": 58,
+        "endChar": 80
+      },
+      "revId": "12b4b27af7ca4f4ea6b525f21c7c4ceb00138036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
