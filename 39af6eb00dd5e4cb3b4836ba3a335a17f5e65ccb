@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d76ef18_87db20b8",
+        "filename": "components/policy/core/browser/configuration_policy_pref_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-16T02:32:29Z",
+      "side": 1,
+      "message": "Hmm, this hardcoded constant is a bit ugly... Couldn\u0027t there be a way to actually wait for the tasks completion?",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a52c815_b1f7a6bc",
+        "filename": "components/policy/core/common/policy_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-16T02:32:29Z",
+      "side": 1,
+      "message": "The danger here is that this allows the |initialization_complete_[domain]| item to transition from the \"true\" value to the \"false\" value, which could not happen before.\nOr the assumption is that it\u0027s fine because no one should read/observe those \"early\" true values before all providers have been added?",
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
