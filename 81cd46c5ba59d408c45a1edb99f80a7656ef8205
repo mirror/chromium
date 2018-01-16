@@ -87,6 +87,24 @@
       "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f451542c_3773aaa4",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-16T08:40:19Z",
+      "side": 1,
+      "message": "Do you mean I should do it now? \n\nBut crbug.com/646148 is not fixed yet. \nI am testing it, but it would be good to get your confirmation. Thanks.",
+      "parentUuid": "64a95a26_904ad469",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
