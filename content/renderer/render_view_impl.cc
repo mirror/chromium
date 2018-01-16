@@ -1951,12 +1951,13 @@ void RenderViewImpl::OnSetLocalSurfaceIdForAutoResize(
     const gfx::Size& min_size,
     const gfx::Size& max_size,
     const content::ScreenInfo& screen_info,
+    uint32_t content_source_id,
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
 
   SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
-                                 local_surface_id);
+                                 content_source_id, local_surface_id);
 
   if (IsUseZoomForDSFEnabled()) {
     webview()->EnableAutoResizeMode(
@@ -2059,6 +2060,7 @@ void RenderViewImpl::ResizeWebWidget() {
 
 void RenderViewImpl::OnResize(const ResizeParams& params) {
   TRACE_EVENT0("renderer", "RenderViewImpl::OnResize");
+
   if (webview()) {
     webview()->HidePopups();
     if (send_preferred_size_changes_ &&
@@ -2078,10 +2080,16 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
   top_controls_height_ = params.top_controls_height;
   bottom_controls_height_ = params.bottom_controls_height;
 
-  RenderWidget::OnResize(params);
+  if (device_scale_factor_for_testing_) {
+    ResizeParams p(params);
+    p.screen_info.device_scale_factor = *device_scale_factor_for_testing_;
+    RenderWidget::OnResize(p);
+  } else {
+    RenderWidget::OnResize(params);
 
-  if (params.scroll_focused_node_into_view)
-    webview()->ScrollFocusedEditableElementIntoView();
+    if (params.scroll_focused_node_into_view)
+      webview()->ScrollFocusedEditableElementIntoView();
+  }
 }
 
 void RenderViewImpl::OnSetBackgroundOpaque(bool opaque) {
@@ -2405,6 +2413,8 @@ void RenderViewImpl::SetFocusAndActivateForTesting(bool enable) {
 }
 
 void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
+  device_scale_factor_for_testing_ = factor;
+
   ResizeParams params;
   params.screen_info = screen_info_;
   params.screen_info.device_scale_factor = factor;
@@ -2415,6 +2425,7 @@ void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
   params.top_controls_height = 0.f;
   params.is_fullscreen_granted = is_fullscreen_granted();
   params.display_mode = display_mode_;
+  params.content_source_id = GetContentSourceId();
   OnResize(params);
 }
 
