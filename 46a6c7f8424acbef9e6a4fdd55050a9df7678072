@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "839cd7f6_64be081b",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-16T21:47:16Z",
+      "side": 1,
+      "message": "Ok, that\u0027s what I would have guessed, but the rename *and* the scope are what are surprising here. Can we have just the rename and skip the scope? Usually a scope like this has a functional purpose (releasing a lock or a scoped variable).",
+      "parentUuid": "407f02e7_d238e31c",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e014c7ae_f3608127",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "I tried fairly hard to do this (See PS13), as I see the benefit, but it doesn\u0027t work well.\n\nThis TestOmniboxEditModel overrides behavior that the MockOmniboxEditModel in the mac test specifically relies on from the base class. In other words -- the usages of the two test classes clash.\n\nI tried making the overrides conditional, but the outcome started to look like spaghetti, so I backed out those changes.",
       "parentUuid": "a0fdcb44_3be5632d",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c597890_aec03087",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-16T21:47:16Z",
+      "side": 1,
+      "message": "Ok, thanks for trying. I think just what\u0027s here would still be useful to pull out, but we can save that for if and when we need it for some other test.",
+      "parentUuid": "b3f4f13d_c4e5b757",
       "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
