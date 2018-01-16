@@ -47,6 +47,7 @@
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/frame/Settings.h"
+#include "core/html/AssignedNodesOptions.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/HTMLSlotElement.h"
@@ -971,12 +972,12 @@ void StyleEngine::ScheduleTypeRuleSetInvalidations(
 }
 
 void StyleEngine::InvalidateSlottedElements(HTMLSlotElement& slot) {
-  for (auto& node : slot.GetDistributedNodes()) {
-    if (node->IsElementNode()) {
-      node->SetNeedsStyleRecalc(kLocalStyleChange,
-                                StyleChangeReasonForTracing::Create(
-                                    StyleChangeReason::kStyleSheetChange));
-    }
+  AssignedNodesOptions flatten;
+  flatten.setFlatten(true);
+  for (auto& element : slot.assignedElements(flatten)) {
+    element->SetNeedsStyleRecalc(kLocalStyleChange,
+                                 StyleChangeReasonForTracing::Create(
+                                     StyleChangeReason::kStyleSheetChange));
   }
 }
 

@@ -11,6 +11,7 @@
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRoot.h"
+#include "core/html/AssignedNodesOptions.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/layout/LayoutObject.h"
@@ -419,16 +420,17 @@ bool StyleInvalidator::Invalidate(Element& element,
 void StyleInvalidator::InvalidateSlotDistributedElements(
     HTMLSlotElement& slot,
     const RecursionData& recursion_data) const {
-  for (auto& distributed_node : slot.GetDistributedNodes()) {
-    if (distributed_node->NeedsStyleRecalc())
-      continue;
-    if (!distributed_node->IsElementNode())
+  AssignedNodesOptions flatten;
+  flatten.setFlatten(true);
+  for (auto& distributed_element : slot.assignedElements(flatten)) {
+    if (distributed_element->NeedsStyleRecalc())
       continue;
     if (recursion_data.MatchesCurrentInvalidationSetsAsSlotted(
-            ToElement(*distributed_node)))
-      distributed_node->SetNeedsStyleRecalc(
+            *distributed_element)) {
+      distributed_element->SetNeedsStyleRecalc(
           kLocalStyleChange, StyleChangeReasonForTracing::Create(
                                  StyleChangeReason::kStyleInvalidator));
+    }
   }
 }
 
