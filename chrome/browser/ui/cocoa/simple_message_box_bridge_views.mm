@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/cocoa/simple_message_box_cocoa.h"
 #include "chrome/browser/ui/simple_message_box.h"
 #include "chrome/browser/ui/views/simple_message_box_views.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 
 namespace {
@@ -27,7 +28,7 @@ chrome::MessageBoxResult ShowMessageBoxImpl(
   if (base::MessageLoopForUI::IsCurrent() &&
       base::RunLoop::IsRunningOnCurrentThread() &&
       ui::ResourceBundle::HasSharedInstance() &&
-      chrome::ShowAllDialogsWithViewsToolkit()) {
+      views_mode_controller::AreAllDialogsViews()) {
     return SimpleMessageBoxViews::Show(parent, title, message, type, yes_text,
                                        no_text, checkbox_text);
   }

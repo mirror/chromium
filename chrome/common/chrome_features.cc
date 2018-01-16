@@ -32,6 +32,10 @@ const base::Feature kAppleScriptExecuteJavaScriptMenuItem{
 const base::Feature kFullscreenToolbarReveal{"FullscreenToolbarReveal",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Use toolkit-views browser window.
+const base::Feature kViewsBrowser{"ViewsBrowser",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Use toolkit-views for profile chooser menu.
 const base::Feature kViewsProfileChooser{"ViewsProfileChooser",
                                          base::FEATURE_ENABLED_BY_DEFAULT};

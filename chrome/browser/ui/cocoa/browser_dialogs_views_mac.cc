@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h"
 #include "chrome/browser/ui/views/task_manager_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "chrome/common/chrome_features.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -36,13 +37,11 @@
 namespace chrome {
 
 bool ShowPilotDialogsWithViewsToolkit() {
-  return ui::MaterialDesignController::IsSecondaryUiMaterial();
+  return views_mode_controller::ArePilotDialogsViews();
 }
 
 bool ShowAllDialogsWithViewsToolkit() {
-  return ShowPilotDialogsWithViewsToolkit() &&
-         base::FeatureList::IsEnabled(
-             features::kShowAllDialogsWithViewsToolkit);
+  return views_mode_controller::AreAllDialogsViews();
 }
 
 void ShowPageInfoBubbleViews(

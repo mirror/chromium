@@ -13,6 +13,8 @@
 #include "chrome/browser/ui/cocoa/renderer_context_menu/render_view_context_menu_mac.h"
 #include "chrome/browser/ui/cocoa/tab_contents/web_drag_bookmark_handler_mac.h"
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
+#include "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/focus_tracker.h"
@@ -134,11 +136,9 @@ NSWindow* ChromeWebContentsViewDelegateMac::GetNSWindowForFocusTracker() const {
   return rwhv ? [rwhv->GetNativeView() window] : nil;
 }
 
-#if !BUILDFLAG(MAC_VIEWS_BROWSER)
-
 content::WebContentsViewDelegate* CreateWebContentsViewDelegate(
     content::WebContents* web_contents) {
+  if (views_mode_controller::IsBrowserViews())
+    return new ChromeWebContentsViewDelegateViewsMac(web_contents);
   return new ChromeWebContentsViewDelegateMac(web_contents);
 }
-
-#endif  // MAC_VIEWS_BROWSER

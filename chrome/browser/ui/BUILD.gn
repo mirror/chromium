@@ -1821,6 +1821,9 @@ split_static_library("ui") {
       "cocoa/scoped_menu_bar_lock.mm",
       "cocoa/share_menu_controller.h",
       "cocoa/share_menu_controller.mm",
+      "cocoa/simple_message_box_bridge_views.mm",
+      "cocoa/simple_message_box_cocoa.h",
+      "cocoa/simple_message_box_cocoa.mm",
       "cocoa/status_icons/status_icon_mac.h",
       "cocoa/status_icons/status_icon_mac.mm",
       "cocoa/status_icons/status_tray_mac.h",
@@ -1842,6 +1845,8 @@ split_static_library("ui") {
       # manage_passwords_decoration.mm
       "passwords/manage_passwords_icon.cc",
       "passwords/manage_passwords_icon.h",
+      "views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+      "views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
       "web_contents_sizer.mm",
       "webui/help/version_updater_mac.h",
       "webui/help/version_updater_mac.mm",
@@ -1877,8 +1882,6 @@ split_static_library("ui") {
         "views/frame/browser_non_client_frame_view_mac.mm",
         "views/frame/native_browser_frame_factory_mac.mm",
         "views/infobars/legacy_infobars_mac.cc",
-        "views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
-        "views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "views/tabs/window_finder_mac.mm",
       ]
       deps += [ "//extensions/components/native_app_window" ]
@@ -2367,9 +2370,6 @@ split_static_library("ui") {
         "cocoa/separate_fullscreen_window.h",
         "cocoa/separate_fullscreen_window.mm",
         "cocoa/session_crashed_bubble.mm",
-        "cocoa/simple_message_box_bridge_views.mm",
-        "cocoa/simple_message_box_cocoa.h",
-        "cocoa/simple_message_box_cocoa.mm",
         "cocoa/single_web_contents_dialog_manager_cocoa.h",
         "cocoa/single_web_contents_dialog_manager_cocoa.mm",
         "cocoa/spinner_view.h",
@@ -2464,8 +2464,6 @@ split_static_library("ui") {
         "javascript_dialogs/javascript_dialog_cocoa.mm",
         "javascript_dialogs/javascript_dialog_mac.cc",
         "proximity_auth/proximity_auth_error_bubble_stub.cc",
-        "startup/session_crashed_infobar_delegate.cc",
-        "startup/session_crashed_infobar_delegate.h",
       ]
     }
   } else {  # non-Mac.
@@ -2678,6 +2676,8 @@ split_static_library("ui") {
       "autofill/save_card_bubble_view.h",
       "bubble_anchor_util.h",
       "desktop_ios_promotion/desktop_ios_promotion_footnote_delegate.h",
+      "startup/session_crashed_infobar_delegate.cc",
+      "startup/session_crashed_infobar_delegate.h",
 
       # This test header is included because it contains forward declarations
       # needed for "friend" statements for use in tests.
@@ -2878,6 +2878,8 @@ split_static_library("ui") {
       "views/sync/bubble_sync_promo_view.h",
       "views/sync/profile_signin_confirmation_dialog_views.cc",
       "views/sync/profile_signin_confirmation_dialog_views.h",
+      "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
+      "views/tab_contents/chrome_web_contents_view_focus_helper.h",
       "views/task_manager_view.cc",
       "views/task_manager_view.h",
       "views/toolbar/toolbar_actions_bar_bubble_views.cc",
@@ -2886,6 +2888,8 @@ split_static_library("ui") {
       "views/translate/translate_bubble_view.h",
       "views/update_recommended_message_box.cc",
       "views/update_recommended_message_box.h",
+      "views_mode_controller.cc",
+      "views_mode_controller.h",
     ]
     deps += [
       "//chrome/browser/ui/views",
@@ -3095,8 +3099,6 @@ split_static_library("ui") {
         "views/ssl_client_certificate_selector.h",
         "views/status_bubble_views.cc",
         "views/status_bubble_views.h",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/tab_dialogs_views.cc",
         "views/tab_dialogs_views.h",
         "views/tab_icon_view.cc",

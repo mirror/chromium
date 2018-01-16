@@ -49,12 +49,3 @@ void ChromeWebContentsViewDelegateViewsMac::SizeChanged(const gfx::Size& size) {
   if (sad_tab)
     sad_tab->GetWidget()->SetBounds(gfx::Rect(size));
 }
-
-#if BUILDFLAG(MAC_VIEWS_BROWSER)
-
-content::WebContentsViewDelegate* CreateWebContentsViewDelegate(
-    content::WebContents* web_contents) {
-  return new ChromeWebContentsViewDelegateViewsMac(web_contents);
-}
-
-#endif  // MAC_VIEWS_BROWSER
