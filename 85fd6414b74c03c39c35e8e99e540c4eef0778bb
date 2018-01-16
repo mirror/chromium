@@ -34,6 +34,24 @@
       "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3065643a_daee2997",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-invalid-color-values-expected.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T21:40:17Z",
+      "side": 1,
+      "message": "I see your point. However, authoring is a bit different from the engine itself. You don\u0027t want to lose information when user clicks to switch the color format - they could\u0027ve entered \"1.5\" accidentally meaning \"15\", and now that\u0027s lost.",
+      "parentUuid": "0d1367b6_98196bbc",
+      "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
