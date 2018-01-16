@@ -53,22 +53,13 @@ ArcTracingAgentImpl* ArcTracingAgentImpl::GetInstance() {
 }
 
 ArcTracingAgentImpl::ArcTracingAgentImpl(service_manager::Connector* connector)
-    : binding_(this), weak_ptr_factory_(this) {
+    : weak_ptr_factory_(this) {
   DCHECK(!g_arc_tracing_agent_impl);
-
-  // Connecto to the agent registry interface.
-  tracing::mojom::AgentRegistryPtr agent_registry;
-  connector->BindInterface(resource_coordinator::mojom::kServiceName,
-                           &agent_registry);
-
-  // Register this agent.
-  tracing::mojom::AgentPtr agent;
-  binding_.Bind(mojo::MakeRequest(&agent));
-  agent_registry->RegisterAgent(std::move(agent), kChromeTraceEventLabel,
-                                tracing::mojom::TraceDataType::ARRAY,
-                                false /* supports_explicit_clock_sync */);
-
   g_arc_tracing_agent_impl = this;
+
+  Register(connector, kChromeTraceEventLabel,
+           tracing::mojom::TraceDataType::ARRAY,
+           false /* supports_explicit_clock_sync */);
 }
 
 ArcTracingAgentImpl::~ArcTracingAgentImpl() = default;
@@ -124,22 +115,6 @@ void ArcTracingAgentImpl::StopAndFlush(tracing::mojom::RecorderPtr recorder) {
   recorder_ = std::move(recorder);
   delegate_->StopTracing(base::Bind(&ArcTracingAgentImpl::OnArcTracingStopped,
                                     weak_ptr_factory_.GetWeakPtr()));
-}
-
-void ArcTracingAgentImpl::RequestClockSyncMarker(
-    const std::string& sync_id,
-    const Agent::RequestClockSyncMarkerCallback& callback) {
-  NOTREACHED();
-}
-
-void ArcTracingAgentImpl::GetCategories(
-    const Agent::GetCategoriesCallback& callback) {
-  callback.Run("");
-}
-
-void ArcTracingAgentImpl::RequestBufferStatus(
-    const Agent::RequestBufferStatusCallback& callback) {
-  callback.Run(0, 0);
 }
 
 void ArcTracingAgentImpl::OnArcTracingStopped(bool success) {

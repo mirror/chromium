@@ -30,6 +30,8 @@ component("resource_coordinator_cpp") {
     "resource_coordinator_interface.h",
     "tracing/chrome_trace_event_agent.cc",
     "tracing/chrome_trace_event_agent.h",
+    "tracing/default_agent.cc",
+    "tracing/default_agent.h",
   ]
 
   if (is_android) {
