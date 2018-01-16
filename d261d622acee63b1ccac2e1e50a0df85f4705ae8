@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0827a722_adf9c018",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_traversal.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t needed, is this?",
+      "revId": "d261d622acee63b1ccac2e1e50a0df85f4705ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
