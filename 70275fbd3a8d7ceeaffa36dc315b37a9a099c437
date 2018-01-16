@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab79bf1_0305daff",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T22:45:57Z",
+      "side": 1,
+      "message": "don\u0027t need to check compute_scroll_needs_synchronous_draw_ is false here. it\u0027s referring to the previous frame, and this is simply resetting it (which wouldn\u0027t be even necessary if we could guarantee draw always happens after computeScroll)\n\ndid_request_compute_scroll_ check should be good enough, so can just unset compute_scroll_needs_synchronous_draw_ unconditionally just like before",
+      "revId": "70275fbd3a8d7ceeaffa36dc315b37a9a099c437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
