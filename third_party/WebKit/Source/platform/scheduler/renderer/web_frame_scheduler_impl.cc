@@ -271,6 +271,7 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     case TaskType::kUnthrottled:
     case TaskType::kInternalTest:
     case TaskType::kInternalWebCrypto:
+    case TaskType::kInternalIndexedDB:
       return WebTaskRunnerImpl::Create(UnpausableTaskQueue(), type);
     case TaskType::kCount:
       NOTREACHED();
