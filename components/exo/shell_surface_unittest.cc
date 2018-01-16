@@ -402,7 +402,6 @@ TEST_F(ShellSurfaceTest, ConfigureCallback) {
   // suggested size as a mechanims to ask the client size itself.
   surface->Commit();
   EXPECT_EQ(gfx::Size(), suggested_size);
-
   shell_surface->Maximize();
   shell_surface->AcknowledgeConfigure(0);
   EXPECT_EQ(CurrentContext()->bounds().width(), suggested_size.width());
