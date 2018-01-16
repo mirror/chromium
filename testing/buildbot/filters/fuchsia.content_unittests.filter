@@ -59,3 +59,6 @@
 
 # Flaky, https://crbug.com/784449.
 -WebContentsAudioInputStreamTest.MirroringOneStreamAfterTargetChange*
+
+# Flaky, https://crbug.com/802375.
+-RenderWidgetHostViewAuraOverscrollTest.*
