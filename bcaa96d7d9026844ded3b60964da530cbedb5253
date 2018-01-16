@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca3f3cef_c475e1a7",
+        "filename": "content/browser/frame_host/navigation_request_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T23:20:08Z",
+      "side": 1,
+      "message": "Drop this one, it\u0027s unused.",
+      "revId": "bcaa96d7d9026844ded3b60964da530cbedb5253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
