@@ -1262,8 +1262,8 @@ code_generator("make_core_generated_media_feature_names") {
   script = "../build/scripts/core/css/make_media_feature_names.py"
   json_inputs = [ "css/media_feature_names.json5" ]
   templates = [
-    "../build/scripts/templates/MakeNames.cpp.tmpl",
-    "../build/scripts/templates/MakeNames.h.tmpl",
+    "../build/scripts/templates/make_names.cc.tmpl",
+    "../build/scripts/templates/make_names.h.tmpl",
   ]
   other_inputs = make_names_files
   outputs = [
@@ -1497,10 +1497,10 @@ action("make_core_generated_origin_trials") {
 action_foreach("make_core_generated_bison") {
   script = "../build/scripts/rule_bison.py"
   sources = [
-    "xml/XPathGrammar.y",
+    "xml/xpath_grammar.y",
   ]
   outputs = [
-    "$blink_core_output_dir/{{source_name_part}}.cpp",
+    "$blink_core_output_dir/{{source_name_part}}.cc",
     "$blink_core_output_dir/{{source_name_part}}.h",
   ]
   args = [

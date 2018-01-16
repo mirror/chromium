@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/files/file_util.h"
@@ -103,7 +104,7 @@ void LogoCache::UpdateCachedLogoMetadata(const LogoMetadata& metadata) {
   DCHECK(metadata_);
   DCHECK_EQ(metadata_->fingerprint, metadata.fingerprint);
 
-  UpdateMetadata(base::MakeUnique<LogoMetadata>(metadata));
+  UpdateMetadata(std::make_unique<LogoMetadata>(metadata));
   WriteMetadata();
 }
 
@@ -117,7 +118,7 @@ void LogoCache::SetCachedLogo(const EncodedLogo* logo) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::unique_ptr<LogoMetadata> metadata;
   if (logo) {
-    metadata = base::MakeUnique<LogoMetadata>(logo->metadata);
+    metadata = std::make_unique<LogoMetadata>(logo->metadata);
     logo_num_bytes_ = static_cast<int>(logo->encoded_image->size());
   }
   UpdateMetadata(std::move(metadata));

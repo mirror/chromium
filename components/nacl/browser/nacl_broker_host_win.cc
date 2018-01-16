@@ -4,10 +4,11 @@
 
 #include "components/nacl/browser/nacl_broker_host_win.h"
 
+#include <memory>
+
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "components/nacl/browser/nacl_broker_service_win.h"
 #include "components/nacl/browser/nacl_browser.h"
 #include "components/nacl/common/nacl_cmd_line.h"
@@ -69,9 +70,8 @@ bool NaClBrokerHost::Init() {
     cmd_line->AppendSwitch(switches::kNoErrorDialogs);
 
   process_->Launch(
-      base::MakeUnique<NaClBrokerSandboxedProcessLauncherDelegate>(),
-      base::WrapUnique(cmd_line),
-      true);
+      std::make_unique<NaClBrokerSandboxedProcessLauncherDelegate>(),
+      base::WrapUnique(cmd_line), true);
   return true;
 }
 

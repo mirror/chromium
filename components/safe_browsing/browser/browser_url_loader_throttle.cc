@@ -4,6 +4,8 @@
 
 #include "components/safe_browsing/browser/browser_url_loader_throttle.h"
 
+#include <memory>
+
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
 #include "components/safe_browsing/browser/safe_browsing_url_checker_impl.h"
@@ -53,7 +55,7 @@ void BrowserURLLoaderThrottle::WillStartRequest(
 
   original_url_ = request->url;
   pending_checks_++;
-  url_checker_ = base::MakeUnique<SafeBrowsingUrlCheckerImpl>(
+  url_checker_ = std::make_unique<SafeBrowsingUrlCheckerImpl>(
       request->headers, request->load_flags,
       static_cast<content::ResourceType>(request->resource_type),
       request->has_user_gesture, std::move(url_checker_delegate_),
