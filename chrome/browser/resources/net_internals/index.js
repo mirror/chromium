@@ -43,6 +43,7 @@
 // <include src="spdy_view.js">
 // <include src="modules_view.js">
 // <include src="prerender_view.js">
+// <include src="service_discovery_view.js">
 // <include src="chromeos_view.js">
 // <include src="bandwidth_view.js">
 

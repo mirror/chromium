@@ -1,0 +1,24 @@
+<div id="service-discovery-view-tab-content" class="content-box">
+  <h4 style="margin-top: 0">Service Discovery Activity</h4>
+  <div>
+    <label>Service Name:
+      <input type="text" id="service-discovery-name-input"
+             placeholder="_ipp._tcp.local"></input>
+    </label>
+    <button id="service-discovery-start-button" disabled="true">Start</button>
+  </div>
+  <div style="margin-top: 1em; margin-left: 2em;">
+    <table id="service-discovery-events-table" width=100%>
+      <thead id="service-discovery-events-thead">
+        <td>Time (Seconds)</td>
+        <td>Event</td>
+        <td>Name</td>
+        <td>Address</td>
+        <td>IP</td>
+        <td>Last seen (Seconds)</td>
+        <td>Metadata</td>
+      </thead>
+      <tbody id="service-discovery-events-tbody"></tbody>
+    </table>
+  </div>
+</div>
