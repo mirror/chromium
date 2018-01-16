@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4b4746_81553a98",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T13:25:23Z",
+      "side": 1,
+      "message": "I remember abarth not being happy about String.append() and looking there, I found https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/text/WTFString.cpp?q\u003dWTFString\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d99\n\nMaybe we can use StringBuilder throughout this entire function? Alternatively, https://docs.google.com/document/d/1kOCUlJdh2WJMJGDf-WoEQhmnjKLaOYRbiHz5TiGJl14/edit#heading\u003dh.4itakta844s1 claims that using the `+` operator is the bestest",
+      "revId": "4d2d6312245b3f724038d6c5e885bbb467d2aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
