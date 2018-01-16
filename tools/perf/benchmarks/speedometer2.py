@@ -19,11 +19,31 @@ from telemetry.value import list_of_scalar_values
 
 _SPEEDOMETER_DIR = os.path.join(path_util.GetChromiumSrcDir(),
     'third_party', 'WebKit', 'PerformanceTests', 'Speedometer')
+_SPEEDOMETER_BASE_URL = 'file://InteractiveRunner.html?suite={0}-TodoMVC'
+_SPEEDOMETER_SUITES = [
+  'VanillaJS',
+  'Vanilla-ES2015',
+  'Vanilla-ES2015-Babel-Webpack',
+  'React',
+  'React-Redux',
+  'EmberJS',
+  'EmberJS-Debug',
+  'BackboneJS',
+  'AngularJS',
+  'Angular2-TypeScript',
+  'VueJS',
+  'jQuery',
+  'Preact',
+  'Inferno',
+  'Elm',
+  'Flight'
+]
 
 
 class Speedometer2Measurement(legacy_page_test.LegacyPageTest):
-  def __init__(self):
+  def __init__(self, should_add_total=True):
     super(Speedometer2Measurement, self).__init__()
+    self.should_add_total_ = should_add_total
 
   def ValidateAndMeasurePage(self, page, tab, results):
     tab.WaitForDocumentReadyStateToBeComplete()
@@ -62,10 +82,12 @@ class Speedometer2Measurement(legacy_page_test.LegacyPageTest):
         """,
         count=iterationCount)
     tab.WaitForJavaScriptCondition('testDone', timeout=600)
-    results.AddValue(list_of_scalar_values.ListOfScalarValues(
-        page, 'Total', 'ms',
-        tab.EvaluateJavaScript('totalValues'),
-        important=True))
+
+    if self.should_add_total_:
+      results.AddValue(list_of_scalar_values.ListOfScalarValues(
+          page, 'Total', 'ms',
+          tab.EvaluateJavaScript('totalValues'),
+          important=True))
 
     # Extract the timings for each suite
     for suite_name in enabled_suites:
@@ -81,6 +103,10 @@ class Speedometer2Measurement(legacy_page_test.LegacyPageTest):
               """,
               key=suite_name), important=False))
 
+class Speedometer2IndividualMeasurement(Speedometer2Measurement):
+  def __init__(self):
+    super(Speedometer2IndividualMeasurement, self).__init__(
+        should_add_total=False)
 
 @benchmark.Owner(emails=['hablich@chromium.org'])
 class Speedometer2(perf_benchmark.PerfBenchmark):
@@ -111,3 +137,26 @@ class V8Speedometer2Future(Speedometer2):
 
   def SetExtraBrowserOptions(self, options):
     options.AppendExtraBrowserArgs('--enable-features=V8VmFuture')
+
+@benchmark.Owner(emails=['adithyas@chromium.org'])
+class Speedometer2Individual(perf_benchmark.PerfBenchmark):
+  """Speedometer2 benchmark with each suite as a separate story.
+
+  Allows runs of particular suites as opposed to running all the suites
+  every time.
+  """
+  test = Speedometer2IndividualMeasurement
+
+  @classmethod
+  def Name(cls):
+    return 'speedometer2-individual'
+
+  def CreateStorySet(self, options):
+    ps = story.StorySet(base_dir=_SPEEDOMETER_DIR,
+        serving_dirs=[_SPEEDOMETER_DIR])
+    for suite_name in _SPEEDOMETER_SUITES:
+      ps.AddStory(page_module.Page(_SPEEDOMETER_BASE_URL.format(suite_name),
+                                   ps,
+                                   ps.base_dir,
+                                   name=suite_name))
+    return ps
