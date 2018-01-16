@@ -653,6 +653,10 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   // for requests from in-process plugins.
   resource_request->plugin_child_id = request.GetPluginChildID();
   resource_request->resource_type = WebURLRequestToResourceType(request);
+  if (resource_request->resource_type == RESOURCE_TYPE_SUB_RESOURCE ||
+    resource_request->resource_type == RESOURCE_TYPE_PLUGIN_RESOURCE) {
+  CHECK(false) << resource_request->resource_type;
+}
   resource_request->priority =
       ConvertWebKitPriorityToNetPriority(request.GetPriority());
   resource_request->appcache_host_id = request.AppCacheHostID();
