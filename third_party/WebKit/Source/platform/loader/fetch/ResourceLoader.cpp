@@ -33,6 +33,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
+#include "platform/loader/cors/CORS.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -51,6 +52,7 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
+#include "url/gurl.h"
 
 namespace blink {
 
@@ -450,12 +452,11 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
           ? resource_->GetResponse()
           : response;
 
-  base::Optional<network::mojom::CORSError> cors_error =
-      WebCORS::CheckAccess(response_for_access_control.Url(),
-                           response_for_access_control.HttpStatusCode(),
-                           response_for_access_control.HttpHeaderFields(),
-                           initial_request.GetFetchCredentialsMode(),
-                           WebSecurityOrigin(source_origin));
+  base::Optional<network::mojom::CORSError> cors_error = CORS::CheckAccess(
+      response_for_access_control.Url(),
+      response_for_access_control.HttpStatusCode(),
+      response_for_access_control.HttpHeaderFields(),
+      initial_request.GetFetchCredentialsMode(), *source_origin);
 
   if (!cors_error)
     return CORSStatus::kSuccessful;
