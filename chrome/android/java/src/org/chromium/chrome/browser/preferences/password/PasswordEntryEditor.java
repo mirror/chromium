@@ -241,6 +241,9 @@ public class PasswordEntryEditor extends Fragment {
                     getActivity().finish();
                 }
             }
+
+            @Override
+            public void serializedPasswordsAvailable(String serializedPasswords) {}
         };
 
         PasswordManagerHandlerProvider.getInstance().addObserver(passwordDeleter);
