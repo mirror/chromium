@@ -517,7 +517,7 @@ void DocumentWebSocketChannel::FlowControlIfNecessary() {
 }
 
 void DocumentWebSocketChannel::InitialFlowControl() {
-  DCHECK_EQ(received_data_size_for_flow_control_, 0u);
+  DCHECK_EQ(received_data_size_for_flow_control_, 0);
   DCHECK(handle_);
   handle_->FlowControl(kReceivedDataSizeForFlowControlHighWaterMark * 2);
 }
