@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997dbdb3_4e8200be",
+        "filename": "chrome/browser/chromeos/hats/hats_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-16T11:13:52Z",
+      "side": 1,
+      "message": "Q: I\u0027m worried that someone could introduce a read of the kApplicationLocale pref but forget to call this function. (I think derat@ had a similar comment earlier, but I\u0027m not sure was the resolution was.) Is there a way we can protect against this with tests? Provide a utility function that both reads the pref and updates it? Add docs to the pref?",
+      "revId": "d205876439da0de638069c5a522c628bdd5978f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
