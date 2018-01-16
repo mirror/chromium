@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebd44e39_fee1d02c",
+        "filename": "ui/gl/sync_control_vsync_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-16T18:51:11Z",
+      "side": 0,
+      "message": "nit: could you leave a comment about Chrome OS, that we use DRM (via Ozone) for that?\nIt might be good to leave a note that we could/should use XRandR on Linux for it as well.",
+      "revId": "69a828594a7b4e83a35eaf0b4be417434880b588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
