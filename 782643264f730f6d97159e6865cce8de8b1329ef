@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "cdb9dafc_e09964ea",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T17:46:49Z",
+      "side": 1,
+      "message": "So ProxyResolvers are created by ProxyResolverFactory.  The fact that we\u0027re apparently calling into the ProxyResolverFactory to create a ProxyResolver when using direct seems weird, and isn\u0027t something I want to rely on.",
+      "parentUuid": "6bf70a1a_5776c0d3",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57f5ed7_745615db",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
