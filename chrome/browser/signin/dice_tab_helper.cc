@@ -37,13 +37,6 @@ void DiceTabHelper::InitializeSigninFlow(
 
 void DiceTabHelper::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
-  if (signin::GetAccountConsistencyMethod() !=
-      signin::AccountConsistencyMethod::kDicePrepareMigration) {
-    // Chrome relies on a Gaia signal to enable Chrome sync for all DICE methods
-    // different than prepare migration.
-    return;
-  }
-
   if (!should_start_sync_after_web_signin_)
     return;
 
