@@ -89,7 +89,7 @@ class MessageCenterButtonBar : public views::View,
   views::ToggleImageButton* quiet_mode_button_;
   views::ToggleImageButton* collapse_button_;
 
-  bool collapse_button_visible_ = false;
+  bool collapse_button_visible_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageCenterButtonBar);
 };

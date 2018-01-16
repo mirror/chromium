@@ -194,6 +194,8 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   AddChildView(button_container_);
 
   SetCloseAllButtonEnabled(!settings_initially_visible);
+
+  collapse_button_visible_ = settings_initially_visible ? false : true;
   SetBackArrowVisible(settings_initially_visible);
 }
 
@@ -228,8 +230,8 @@ void MessageCenterButtonBar::SetBackArrowVisible(bool visible) {
 
   collapse_button_visible_ = visible;
 
-  collapse_button_->SetVisible(true);
-  button_container_->SetVisible(true);
+  collapse_button_->SetVisible(visible);
+  button_container_->SetVisible(visible);
 
   collapse_button_->layer()->SetOpacity(visible ? 0.0 : 1.0);
   button_container_->layer()->SetOpacity(visible ? 1.0 : 0.0);
