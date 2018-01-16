@@ -19,6 +19,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.android_webview.permission.AwPermissionRequest;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
@@ -26,6 +28,7 @@ import org.chromium.content_public.common.ContentUrlConstants;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Base-class that an AwContents embedder derives from to receive callbacks.
@@ -270,7 +273,8 @@ public abstract class AwContentsClient {
             if (mAcceptTypes == null) {
                 return new String[0];
             }
-            return mAcceptTypes.split(",");
+            List<String> list = Splitter.on(",").splitToList(mAcceptTypes);
+            return list.toArray(new String[list.size()]);
         }
 
         public boolean isCaptureEnabled() {
@@ -288,7 +292,7 @@ public abstract class AwContentsClient {
         public Intent createIntent() {
             String mimeType = "*/*";
             if (mAcceptTypes != null && !mAcceptTypes.trim().isEmpty()) {
-                mimeType = mAcceptTypes.split(",")[0];
+                mimeType = Splitter.on(",").splitToList(mAcceptTypes).get(0);
             }
 
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);

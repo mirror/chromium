@@ -15,6 +15,8 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
@@ -64,6 +66,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -347,7 +350,7 @@ public class DownloadUtils {
         int selectedItemsFilterType = items.get(0).getFilterType();
 
         String intentMimeType = "";
-        String[] intentMimeParts = {"", ""};
+        List<String> intentMimeParts = Arrays.asList("", "");
 
         for (int i = 0; i < items.size(); i++) {
             DownloadHistoryItemWrapper wrappedItem  = items.get(i);
@@ -384,9 +387,9 @@ public class DownloadUtils {
             if (TextUtils.isEmpty(intentMimeType)) {
                 intentMimeType = mimeType;
                 if (!TextUtils.isEmpty(intentMimeType)) {
-                    intentMimeParts = intentMimeType.split(MIME_TYPE_DELIMITER);
+                    intentMimeParts = Splitter.on(MIME_TYPE_DELIMITER).splitToList(intentMimeType);
                     // Guard against invalid mime types.
-                    if (intentMimeParts.length != 2) intentMimeType = DEFAULT_MIME_TYPE;
+                    if (intentMimeParts.size() != 2) intentMimeType = DEFAULT_MIME_TYPE;
                 }
                 continue;
             }
@@ -398,13 +401,13 @@ public class DownloadUtils {
                 continue;
             }
 
-            String[] mimeParts = mimeType.split(MIME_TYPE_DELIMITER);
-            if (!TextUtils.equals(intentMimeParts[0], mimeParts[0])) {
+            List<String> mimeParts = Splitter.on(MIME_TYPE_DELIMITER).splitToList(mimeType);
+            if (!TextUtils.equals(intentMimeParts.get(0), mimeParts.get(0))) {
                 // The top-level types don't match; fallback to the default mime type.
                 intentMimeType = DEFAULT_MIME_TYPE;
             } else {
                 // The mime type should be {top-level type}/*
-                intentMimeType = intentMimeParts[0] + MIME_TYPE_DELIMITER + "*";
+                intentMimeType = intentMimeParts.get(0) + MIME_TYPE_DELIMITER + "*";
             }
         }
 
@@ -846,10 +849,10 @@ public class DownloadUtils {
     private static boolean isMimeTypeVideo(String mimeType) {
         if (TextUtils.isEmpty(mimeType)) return false;
 
-        String[] pieces = mimeType.split(MIME_TYPE_DELIMITER);
-        if (pieces.length != 2) return false;
+        List<String> pieces = Splitter.on(MIME_TYPE_DELIMITER).splitToList(mimeType);
+        if (pieces.size() != 2) return false;
 
-        return MIME_TYPE_VIDEO.equals(pieces[0]);
+        return MIME_TYPE_VIDEO.equals(pieces.get(0));
     }
 
     /**
