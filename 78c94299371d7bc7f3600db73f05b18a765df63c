@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d22654_d084ae9b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 5925,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T14:55:50Z",
+      "side": 1,
+      "message": "You can save on this field, and just use view_-\u003eGetViewBounds() instead.",
+      "revId": "78c94299371d7bc7f3600db73f05b18a765df63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
