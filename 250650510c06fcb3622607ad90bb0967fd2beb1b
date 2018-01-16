@@ -104,6 +104,24 @@
       "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9af9b6_088e84dc",
+        "filename": "components/language/content/browser/template/language_code_locator_helper.cc.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-16T04:54:12Z",
+      "side": 1,
+      "message": "renaming the .cc into .h solve the problem.",
+      "parentUuid": "e757070f_f71ce45c",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
