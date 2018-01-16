@@ -236,7 +236,7 @@ void MockHttpStream::CompleteRead() {
 class HttpResponseBodyDrainerTest : public testing::Test {
  protected:
   HttpResponseBodyDrainerTest()
-      : proxy_service_(ProxyService::CreateDirect()),
+      : proxy_service_(ProxyResolutionService::CreateDirect()),
         ssl_config_service_(new SSLConfigServiceDefaults),
         http_server_properties_(new HttpServerPropertiesImpl()),
         session_(CreateNetworkSession()),
@@ -257,7 +257,7 @@ class HttpResponseBodyDrainerTest : public testing::Test {
     return new HttpNetworkSession(HttpNetworkSession::Params(), context);
   }
 
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
   scoped_refptr<SSLConfigService> ssl_config_service_;
   std::unique_ptr<HttpServerPropertiesImpl> http_server_properties_;
   MockCertVerifier cert_verifier_;

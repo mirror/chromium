@@ -37,10 +37,11 @@ class HttpNetworkLayerTest : public PlatformTest {
   HttpNetworkLayerTest() : ssl_config_service_(new SSLConfigServiceDefaults) {}
 
   void SetUp() override {
-    ConfigureTestDependencies(ProxyService::CreateDirect());
+    ConfigureTestDependencies(ProxyResolutionService::CreateDirect());
   }
 
-  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service) {
+  void ConfigureTestDependencies(
+      std::unique_ptr<ProxyResolutionService> proxy_service) {
     cert_verifier_.reset(new MockCertVerifier);
     transport_security_state_.reset(new TransportSecurityState);
     proxy_service_ = std::move(proxy_service);
@@ -269,7 +270,7 @@ class HttpNetworkLayerTest : public PlatformTest {
   std::unique_ptr<TransportSecurityState> transport_security_state_;
   MultiLogCTVerifier ct_verifier_;
   CTPolicyEnforcer ct_policy_enforcer_;
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
   const scoped_refptr<SSLConfigService> ssl_config_service_;
   std::unique_ptr<HttpNetworkSession> network_session_;
   std::unique_ptr<HttpNetworkLayer> factory_;

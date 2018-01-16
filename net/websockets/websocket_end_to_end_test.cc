@@ -306,8 +306,8 @@ TEST_F(WebSocketEndToEndTest, DISABLED_HttpsProxyUnauthedFails) {
   ASSERT_TRUE(ws_server.BlockUntilStarted());
   std::string proxy_config =
       "https=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
+  std::unique_ptr<ProxyResolutionService> proxy_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
   ASSERT_TRUE(proxy_service);
   context_.set_proxy_service(proxy_service.get());
   EXPECT_FALSE(ConnectAndWait(ws_server.GetURL(kEchoServer)));
@@ -336,8 +336,8 @@ TEST_F(WebSocketEndToEndTest, MAYBE_HttpsWssProxyUnauthedFails) {
   ASSERT_TRUE(wss_server.BlockUntilStarted());
   std::string proxy_config =
       "https=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
+  std::unique_ptr<ProxyResolutionService> proxy_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
   ASSERT_TRUE(proxy_service);
   context_.set_proxy_service(proxy_service.get());
   EXPECT_FALSE(ConnectAndWait(wss_server.GetURL(kEchoServer)));
@@ -358,8 +358,8 @@ TEST_F(WebSocketEndToEndTest, MAYBE_HttpsProxyUsed) {
   std::string proxy_config = "https=" +
                              proxy_server.host_port_pair().ToString() + ";" +
                              "http=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
+  std::unique_ptr<ProxyResolutionService> proxy_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
   context_.set_proxy_service(proxy_service.get());
   InitialiseContext();
 
