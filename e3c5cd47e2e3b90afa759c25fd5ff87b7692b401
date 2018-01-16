@@ -294,6 +294,30 @@
       "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d2551d_6089f3e3",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2018-01-16T12:38:09Z",
+      "side": 1,
+      "message": "No, it will still be 3 CLs. Because we need to land a constant in the webrtc first and roll it into chrome. But we can\u0027t use it in the IsFeatureEnabled() calls before it\u0027s implemented in the chrome. So it will always be:\n1) Change interface (add constant) and implement check in IsFeatureEnabled() in webrtc.\n2) Implement new interface in Chrome.\n3) Start using in webrtc.\n\nWe can\u0027t merge 1) and 3) into one CL because after roll into chrome and before 2) lands the behavior will be broken.\n\nWithout constants its:\n1) Implement new check in Chrome.\n2) Implement new check in Webrtc and start using new string in WebRTC.\n\nMost important here is that there\u0027s no need to wait for the roll before landing CLs, which sometimes may be blocked for days.",
+      "parentUuid": "5da4840a_535ed9bd",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "e3c5cd47e2e3b90afa759c25fd5ff87b7692b401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
