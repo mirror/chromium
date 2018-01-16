@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "d9f355f6_85ef2a04",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T22:26:34Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll keep as is then, given this is the minimum work path.",
+      "parentUuid": "b2c5a4c4_c8d53755",
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6509967d_94eaf453",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 2
@@ -146,6 +164,30 @@
       "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7149f1b3_c6bfb2a5",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T22:26:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8069531d_2f1aa63d",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +250,30 @@
       "side": 1,
       "message": "Interstitial integration tests (ExternalURLSSLTestCase) are only running on upstream bots. Not sure if they failed or not. \n\ncurrentURLWithTrustLevel: is deprecated, so we can put any bandages here. Which URL from DCHECK is the right one?  chrome://chrome-urls/ or about:blank?",
       "parentUuid": "af759442_a3043d2d",
+      "range": {
+        "startLine": 1201,
+        "startChar": 34,
+        "endLine": 1201,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c01daca_1f963b55",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T22:26:34Z",
+      "side": 1,
+      "message": "Why does WebStateImpl::GetCurrentURL() compares origin between [CRWWebController currentURL] and WebStateImpl::GetLastCommittedURL()? There\u0027s no guarantee that last committed URL is the same as current URL when this method is called. Are you OK with me adding the bandage to WebStateImpl::GetCurrentURL()? i.e. skip the origin check if current URL is in-progress WebUI load?",
+      "parentUuid": "a7771026_41d538a8",
       "range": {
         "startLine": 1201,
         "startChar": 34,
@@ -335,6 +401,30 @@
       "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c7cb70_9d4a3be7",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T22:26:34Z",
+      "side": 1,
+      "message": "OK I\u0027ll just throw it into the design doc so we have something to refer to.",
+      "parentUuid": "274cddf0_5e0fc59e",
+      "range": {
+        "startLine": 4577,
+        "startChar": 25,
+        "endLine": 4577,
+        "endChar": 38
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
