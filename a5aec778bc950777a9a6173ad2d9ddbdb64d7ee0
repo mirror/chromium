@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15fa6e1a_06f007b9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-16T11:52:28Z",
+      "side": 1,
+      "message": "I wonder if the internal task types really should be unpausable by default. I\u0027d imagine that only devtools-related (and maybe some other tasks which need to run during entering a breakpoint and suspending an execution context) should go there, and by default we should put internal tasks into PausableTaskQueue (or, event better, to deferrable task queue to get better input handling).",
+      "range": {
+        "startLine": 274,
+        "startChar": 19,
+        "endLine": 274,
+        "endChar": 37
+      },
+      "revId": "a5aec778bc950777a9a6173ad2d9ddbdb64d7ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
