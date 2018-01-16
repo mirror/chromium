@@ -102,9 +102,10 @@ TypedURLSyncBridge::CreateMetadataChangeList() {
       sync_metadata_database_, syncer::TYPED_URLS);
 }
 
-base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
+void TypedURLSyncBridge::MergeSyncData2(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
-    EntityChangeList entity_data) {
+    EntityChangeList entity_data,
+    OptionalErrorCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
   // Create a mapping of all local data by URLID. These will be narrowed down
@@ -116,8 +117,9 @@ base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
   URLVisitVectorMap local_visit_vectors;
 
   if (!GetValidURLsAndVisits(&local_visit_vectors, &new_db_urls)) {
-    return ModelError(
-        FROM_HERE, "Could not get the typed_url entries from HistoryBackend.");
+    std::move(callback).Run(ModelError(
+        FROM_HERE, "Could not get the typed_url entries from HistoryBackend."));
+    return;
   }
 
   // New sync data organized for different write operations to history backend.
@@ -154,8 +156,10 @@ base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
   base::Optional<ModelError> error =
       WriteToHistoryBackend(&new_synced_urls, &updated_synced_urls, nullptr,
                             &new_synced_visits, nullptr);
-  if (error)
-    return error;
+  if (error) {
+    std::move(callback).Run(error);
+    return;
+  }
 
   // Update storage key here first, and then send updated typed URL to sync
   // below, otherwise processor will have duplicate entries.
@@ -182,14 +186,15 @@ base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
                            GetErrorPercentage());
   ClearErrorStats();
 
-  return static_cast<syncer::SyncMetadataStoreChangeList*>(
-             metadata_change_list.get())
-      ->TakeError();
+  std::move(callback).Run(static_cast<syncer::SyncMetadataStoreChangeList*>(
+                              metadata_change_list.get())
+                              ->TakeError());
 }
 
-base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
+void TypedURLSyncBridge::ApplySyncChanges2(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
-    EntityChangeList entity_changes) {
+    EntityChangeList entity_changes,
+    OptionalErrorCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
   std::vector<GURL> pending_deleted_urls;
@@ -234,8 +239,10 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
   base::Optional<ModelError> error = WriteToHistoryBackend(
       &new_synced_urls, &updated_synced_urls, &pending_deleted_urls,
       &new_synced_visits, &deleted_visits);
-  if (error)
-    return error;
+  if (error) {
+    std::move(callback).Run(error);
+    return;
+  }
 
   // New entities were either ignored or written to history DB and assigned a
   // storage key. Notify processor about updated storage keys.
@@ -253,9 +260,9 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
     }
   }
 
-  return static_cast<syncer::SyncMetadataStoreChangeList*>(
-             metadata_change_list.get())
-      ->TakeError();
+  std::move(callback).Run(static_cast<syncer::SyncMetadataStoreChangeList*>(
+                              metadata_change_list.get())
+                              ->TakeError());
 }
 
 void TypedURLSyncBridge::GetData(StorageKeyList storage_keys,
@@ -356,6 +363,7 @@ void TypedURLSyncBridge::OnURLVisited(HistoryBackend* history_backend,
 
   if (!change_processor()->IsTrackingMetadata())
     return;  // Sync processor not yet ready, don't sync.
+  ;
   if (!ShouldSyncVisit(row.typed_count(), transition))
     return;
 

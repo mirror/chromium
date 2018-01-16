@@ -34,6 +34,11 @@ class MetadataChangeList;
 // ReportError() method should be called instead of ModelReadyToSync().
 class ModelTypeSyncBridge : public base::SupportsWeakPtr<ModelTypeSyncBridge> {
  public:
+  // TODO(mastiz): Migrate all to OnceCallback.
+  using OptionalErrorCallback =
+      base::Callback<void(const base::Optional<ModelError>&)>;
+  // TODO(mastiz): Add Optional<ModelError> or std::variant to all callbacks
+  // below. Also make OnceCallback.
   using DataCallback = base::Callback<void(std::unique_ptr<DataBatch>)>;
   using StorageKeyList = std::vector<std::string>;
   using ChangeProcessorFactory = base::RepeatingCallback<std::unique_ptr<
@@ -64,18 +69,28 @@ class ModelTypeSyncBridge : public base::SupportsWeakPtr<ModelTypeSyncBridge> {
   // not able to combine all change atomically, should save the metadata after
   // the data changes, so that this merge will be re-driven by sync if is not
   // completely saved during the current run.
-  virtual base::Optional<ModelError> MergeSyncData(
+  virtual void MergeSyncData2(
       std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_data) = 0;
+      EntityChangeList entity_data,
+      OptionalErrorCallback callback);
 
   // Apply changes from the sync server locally.
   // Please note that |entity_changes| might have fewer entries than
   // |metadata_change_list| in case when some of the data changes are filtered
   // out, or even be empty in case when a commit confirmation is processed and
   // only the metadata needs to persisted.
+  virtual void ApplySyncChanges2(
+      std::unique_ptr<MetadataChangeList> metadata_change_list,
+      EntityChangeList entity_changes,
+      OptionalErrorCallback callback);
+
+  // TODO/DONOTSUBMIT: Remove after migrating all and make two above pure.
+  virtual base::Optional<ModelError> MergeSyncData(
+      std::unique_ptr<MetadataChangeList> metadata_change_list,
+      EntityChangeList entity_data);
   virtual base::Optional<ModelError> ApplySyncChanges(
       std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_changes) = 0;
+      EntityChangeList entity_changes);
 
   // Asynchronously retrieve the corresponding sync data for |storage_keys|.
   // |callback| should be invoked if the operation is successful, otherwise
