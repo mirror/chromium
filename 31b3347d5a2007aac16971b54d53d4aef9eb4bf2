@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147cb3c2_0bc06908",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-16T11:33:39Z",
+      "side": 1,
+      "message": "note ElideHost takes a typesetter since it can used from secondary toolkit-views UI as well as cocoa UI. That\u0027s not necessary for ElideUrl. But of course we could pass in a typesetter arg from StatusBarMac to ElideUrl if we wanted too. (This could help if we want to transition StatusBarMac to use a views::Widget separately from flipping mac_views_browser, but I don\u0027t think there\u0027s a compelling reason to launch the status bar separately at this stage).",
+      "revId": "31b3347d5a2007aac16971b54d53d4aef9eb4bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
