@@ -143,7 +143,7 @@
   },
   {
     "prefix": "media-gpu-accelerated",
-    "base": "http/tests/media/media-source",
+    "base": "external/wpt/media-source",
     "args": ["--use-gpu-in-tests"]
   },
   {
