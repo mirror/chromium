@@ -16,6 +16,7 @@
 #include "content/network/data_pipe_element_reader.h"
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
+#include "content/network/resource_scheduler.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -266,8 +267,18 @@ URLLoader::URLLoader(NetworkContext* context,
   }
 
   AttachAcceptHeader(resource_type_, url_request_.get());
-
-  url_request_->Start();
+  resource_scheduler_request_handle_ =
+      context_->resource_scheduler()->ScheduleRequest(
+          process_id_, request.render_frame_id,
+          !(options_ & mojom::kURLLoadOptionSynchronous), url_request_.get());
+  resource_scheduler_request_handle_->set_resume_callback(
+      base::BindRepeating(&URLLoader::ResumeStart, base::Unretained(this)));
+  bool defer = false;
+  resource_scheduler_request_handle_->WillStartRequest(&defer);
+  if (defer)
+    url_request_->LogBlockedBy("URLLoader");
+  else
+    url_request_->Start();
 }
 
 URLLoader::~URLLoader() {
@@ -310,7 +321,8 @@ void URLLoader::ProceedWithResponse() {
 
 void URLLoader::SetPriority(net::RequestPriority priority,
                             int32_t intra_priority_value) {
-  NOTIMPLEMENTED();
+  context_->resource_scheduler()->ReprioritizeRequest(
+      url_request_.get(), priority, intra_priority_value);
 }
 
 void URLLoader::PauseReadingBodyFromNet() {
@@ -395,6 +407,11 @@ void URLLoader::OnSSLCertificateError(net::URLRequest* request,
                  weak_ptr_factory_.GetWeakPtr(), ssl_info));
 }
 
+void URLLoader::ResumeStart() {
+  url_request_->LogUnblocked();
+  url_request_->Start();
+}
+
 void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
   DCHECK(url_request == url_request_.get());
 
@@ -402,6 +419,13 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
     NotifyCompleted(net_error);
     // |this| may have been deleted.
     return;
+  }
+
+  if (url_request->was_fetched_via_proxy() &&
+      url_request->was_fetched_via_spdy() &&
+      url_request->url().SchemeIs(url::kHttpScheme)) {
+    context_->resource_scheduler()->OnReceivedSpdyProxiedHttpResponse(
+        process_id_, render_frame_id_);
   }
 
   if (upload_progress_tracker_) {
