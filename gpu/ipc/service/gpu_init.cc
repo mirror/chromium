@@ -125,6 +125,8 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
       gpu_info_.driver_vendor == "NVIDIA" && !CanAccessNvidiaDeviceFile())
     return false;
 #endif
+
+#if defined(OS_MACOSX)
   if (!PopGpuFeatureInfoCache(&gpu_feature_info_)) {
     // Compute blacklist and driver bug workaround decisions based on basic GPU
     // info.
@@ -137,7 +139,8 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
     gpu::InitializeSwitchableGPUs(
         gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
   }
-#endif  // OS_ANDROID
+#endif  // OS_MACOSX
+#endif  // !OS_ANDROID
   gpu_info_.in_process_gpu = false;
 
   bool enable_watchdog = !gpu_preferences.disable_gpu_watchdog &&
@@ -378,8 +381,9 @@ bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line) {
   // Don't overwrite user preference.
   if (command_line->HasSwitch(switches::kUseGL))
     return false;
-  if (gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
-      kGpuFeatureStatusEnabled) {
+  if (gpu_feature_info_.IsInitialized() &&
+      gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
+          kGpuFeatureStatusEnabled) {
     command_line->AppendSwitchASCII(
         switches::kUseGL, gl::kGLImplementationSwiftShaderForWebGLName);
     return true;
@@ -391,7 +395,13 @@ bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line) {
 }
 
 void GpuInit::AdjustInfoToSwiftShader() {
+  // Still save the applied GPU blacklist entries, so in about:gpu users can
+  // see why Chrome switches to SwiftShader.
+  std::vector<uint32_t> saved_applied_gpu_blacklist_entries(
+      gpu_feature_info_.applied_gpu_blacklist_entries);
   gpu_feature_info_ = ComputeGpuFeatureInfoForSwiftShader();
+  gpu_feature_info_.applied_gpu_blacklist_entries =
+      saved_applied_gpu_blacklist_entries;
   gpu_info_.gl_vendor = "Google Inc. (" + gpu_info_.gl_vendor + ")";
   gpu_info_.gl_renderer = "Google SwiftShader (" + gpu_info_.gl_renderer + ")";
   gpu_info_.gl_version =
