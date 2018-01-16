@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45fd9481_afde3c72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10082ff8_9c1dedc9",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d695f9ce_6fc0b13f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d33246_406abbce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d695f9ce_6fc0b13f",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "22e89ba3_6ed6c6c1",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Will do. I erred on the side of writing functions instead of in-lining things because I wanted it to be easily readable. I may have over done it!",
+      "parentUuid": "23fc3ae3_c75b1c71",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1aa386_78f1518a",
         "filename": "ash/public/cpp/shelf_model.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f3e991_797b8efd",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Refactored this line out.",
+      "parentUuid": "6b1aa386_78f1518a",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "812b0d10_24fe085f",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf1bb39_a9eab09f",
+      "range": {
+        "startLine": 323,
+        "startChar": 17,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fa50b98_af25a1b0",
         "filename": "ash/public/cpp/shelf_model.h",
         "patchSetId": 1
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "bb7bf003_d38470c3",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa50b98_af25a1b0",
+      "range": {
+        "startLine": 68,
+        "startChar": 48,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac38aea_b7eb6d4e",
         "filename": "ash/public/cpp/shelf_model.h",
         "patchSetId": 1
@@ -142,6 +268,30 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bcb737_420c5a4d",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac38aea_b7eb6d4e",
+      "range": {
+        "startLine": 121,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +335,48 @@
     },
     {
       "key": {
+        "uuid": "4d649858_9b129913",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Inlined this as per other comment.",
+      "parentUuid": "0289a65c_ca2f4d75",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0eec15_9a9219ab",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Thanks, I re-read them. Sorry! \n\nInlined this as per other comment.",
+      "parentUuid": "6b0545ba_3344b9d3",
+      "range": {
+        "startLine": 133,
+        "startChar": 34,
+        "endLine": 133,
+        "endChar": 46
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff849430_1b63c6c4",
         "filename": "ash/public/cpp/shelf_model.h",
         "patchSetId": 1
@@ -196,6 +388,24 @@
       "writtenOn": "2018-01-12T23:44:15Z",
       "side": 1,
       "message": "It might make sense to design this feature using ShelfId instead of app_id, even if the ShelfIds generally don\u0027t use launch ids yet.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ef5159_2538feb9",
+        "filename": "ash/public/cpp/shelf_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "I decided to use app id\u0027s so I can easily share/migrate this code with AppList when it is done being migrated to the ash process.\n\nWDYT?",
+      "parentUuid": "ff849430_1b63c6c4",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "9ccc04d8_636130c4",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd2f87d_9c5278e3",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba560c7_db735bfe",
         "filename": "ash/public/cpp/shelf_model_unittest.cc",
         "patchSetId": 1
@@ -233,6 +461,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723f06d9_382da99a",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba560c7_db735bfe",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "9e6579f8_c7c8f1cd",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "did EXPECT_EQ(...)",
+      "parentUuid": "b1e931f1_7cbdc261",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "692d255a_a0879b43",
         "filename": "ash/public/cpp/shelf_model_unittest.cc",
         "patchSetId": 1
@@ -270,6 +534,24 @@
     },
     {
       "key": {
+        "uuid": "7514a036_49e3cc02",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "692d255a_a0879b43",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6f84c7_3bc1b22c",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 1
@@ -281,6 +563,24 @@
       "writtenOn": "2018-01-13T00:18:33Z",
       "side": 1,
       "message": "Would this cause problems since I don\u0027t think //ash depends on //ui/app_list?\n\nI wonder whether we should add it to ash_switches.h/cc or create a ash_features.h/cc.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d163195b_1f585163",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "I haven\u0027t had issues in the past with using ui::app_list::features in ash::Shell or ash::Shelf.\n\nI can add another feature, but are you sure this will be an issue? It compiles fine on the bots/locally.",
+      "parentUuid": "8a6f84c7_3bc1b22c",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -304,6 +604,24 @@
     },
     {
       "key": {
+        "uuid": "f040ea5b_fe389fd6",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e21b419_2527803a",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c50b797_2703730b",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 1
@@ -321,6 +639,24 @@
     },
     {
       "key": {
+        "uuid": "e80ca554_86037743",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c50b797_2703730b",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf2b1d6b_3829e342",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 1
@@ -332,6 +668,24 @@
       "writtenOn": "2018-01-12T23:44:15Z",
       "side": 1,
       "message": "Why is this and the alpha needed? Can you just paint the circle and border directly onto |canvas|? I wonder if AppStatusIndicatorView can be simplified similarly.",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26abe2cc_2238388f",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "From my understanding, adding the ScopedCanvas automatically completes the transforms on the canvas\u0027s stack when the object is deleted.\n\nIt seems commonplace on other icons where we perform a transform on the canvas and intend to un-do it before releasing the canvas.\n\nAs for simplifying this, I can put everything in Button::PaintButtonContents. \n\nRefactoring the status indicator looks like a fun project. I am definitely willing to give it a shot, I can create another bug to refactor it?",
+      "parentUuid": "cf2b1d6b_3829e342",
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -355,6 +709,24 @@
     },
     {
       "key": {
+        "uuid": "a6579cfd_3e963e7d",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "I ended up moving this to PaintButtonContents and just scheduling a paint if the state updates. See above comment for my thoughts on refactoring the status indicator!",
+      "parentUuid": "f1f92888_7624d9be",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e928fa_26f9dd89",
         "filename": "ash/shelf/shelf_button.cc",
         "patchSetId": 1
@@ -369,6 +741,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcecc50_b71b5fe4",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done in PaintButtonContents!",
+      "parentUuid": "f4e928fa_26f9dd89",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +779,24 @@
     },
     {
       "key": {
+        "uuid": "461dc3ab_2618d130",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd49d1a_2b6a5993",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fdd10c8_4f8e4da6",
         "filename": "ash/shelf/shelf_button.h",
         "patchSetId": 1
@@ -403,6 +811,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ce984a_aa77711f",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdd10c8_4f8e4da6",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -423,6 +849,24 @@
     },
     {
       "key": {
+        "uuid": "1e6e72d7_3795f0a1",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce59ea1e_a2009fa2",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4666ca39_a50c93cf",
         "filename": "ash/shelf/shelf_button.h",
         "patchSetId": 1
@@ -437,6 +881,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1efeaec_3f29948f",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4666ca39_a50c93cf",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -457,6 +919,24 @@
     },
     {
       "key": {
+        "uuid": "55e5c729_2a057ad9",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece288dd_791fc3a2",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad31c1b1_912b600c",
         "filename": "ash/shelf/shelf_controller.h",
         "patchSetId": 1
@@ -471,6 +951,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5511b7_47306e7f",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad31c1b1_912b600c",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -491,6 +989,24 @@
     },
     {
       "key": {
+        "uuid": "884204fd_4fa724c9",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78300c1d_e81a3090",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f75af6e_13499906",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -505,6 +1021,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db96aa36_84809464",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Inlined!",
+      "parentUuid": "2f75af6e_13499906",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -525,6 +1059,24 @@
     },
     {
       "key": {
+        "uuid": "4bafbf88_4fbc9fbd",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Decided to make a new test class.",
+      "parentUuid": "76bb1490_fd3150e8",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fe053ae_df89da9a",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -539,6 +1091,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d468b9_680a33e6",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe053ae_df89da9a",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +1129,24 @@
     },
     {
       "key": {
+        "uuid": "f6d8b6f9_24a7bcd6",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df09757_4f1eb185",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e09b2f1d_c1d79324",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -573,6 +1161,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06114069_9cbd3c23",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Makes sense. Moving to ShelfModelTest.",
+      "parentUuid": "e09b2f1d_c1d79324",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -593,6 +1199,24 @@
     },
     {
       "key": {
+        "uuid": "0e72452b_41276bee",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "656294bc_9eb6647d",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "849e7d61_3090a903",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 1
@@ -610,6 +1234,24 @@
     },
     {
       "key": {
+        "uuid": "5323ca7e_cebb1339",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "We have to set the flag before ShelfViewTest::SetUp() here, but I\u0027ll keep that in mind.",
+      "parentUuid": "849e7d61_3090a903",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d221bc_364ea349",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 1
@@ -621,6 +1263,30 @@
       "writtenOn": "2018-01-12T23:44:15Z",
       "side": 1,
       "message": "Avoid adding GetNextAppId, just construct a new unique string id here.",
+      "range": {
+        "startLine": 2177,
+        "startChar": 20,
+        "endLine": 2177,
+        "endChar": 31
+      },
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76b6fd5_1fc8683c",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "I can\u0027t just pick an app id here because it is set by a static int which is scoped to the ShelfViewTest::AddItem function, and the next id isn\u0027t predictable for all test runs.\n\nWe need to know the app id string before the item is created, so I pulled the int out of the function, made it a member variable, and added a getter.\n\nI think my other option is to just set the item\u0027s app id after adding it, but that would not test ShelfModel::AddApp.",
+      "parentUuid": "26d221bc_364ea349",
       "range": {
         "startLine": 2177,
         "startChar": 20,
@@ -650,6 +1316,24 @@
     },
     {
       "key": {
+        "uuid": "c784f4cc_ff2b1bab",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done. Used ScopedObserver. Should I convert the rest?",
+      "parentUuid": "d6baddf5_c0fb041c",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "133e3abf_ab2a8897",
         "filename": "ui/app_list/app_list_features.h",
         "patchSetId": 1
@@ -664,6 +1348,24 @@
       "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aafb1e6_4a1f6b2f",
+        "filename": "ui/app_list/app_list_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-16T23:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133e3abf_ab2a8897",
+      "revId": "f7935da897a0d8e58a6c6dcc9ea3a2e6556bca2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
