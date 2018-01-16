@@ -150,7 +150,7 @@ MessageCenterView::MessageCenterView(
   SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
   button_bar_ = new MessageCenterButtonBar(
-      this, message_center, initially_settings_visible, GetButtonBarTitle());
+      this, message_center, mode_ == Mode::SETTINGS/*initially_settings_visible*/, GetButtonBarTitle());
   button_bar_->SetCloseAllButtonEnabled(false);
 
   const int button_height = button_bar_->GetPreferredSize().height();

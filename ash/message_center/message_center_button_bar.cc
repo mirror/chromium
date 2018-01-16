@@ -169,6 +169,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   button_container_->AddChildView(CreateVerticalSeparator());
 
   collapse_button_ = new MessageCenterButton(this);
+  collapse_button_->SetVisible(false);
   collapse_button_->SetBackground(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
   collapse_button_->SetPaintToLayer();
@@ -194,6 +195,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   AddChildView(button_container_);
 
   SetCloseAllButtonEnabled(!settings_initially_visible);
+
   SetBackArrowVisible(settings_initially_visible);
 }
 
