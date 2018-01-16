@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chromium.chrome.browser.tab.Tab;
@@ -33,6 +34,12 @@ public interface VrShell {
      * Destroys VrShell.
      */
     void teardown();
+
+    /**
+     * Sets the top View that is placed inside of a dialog. This View should be
+     * shown on as a texture on a quad in VR.
+     */
+    void setDialogView(View view);
 
     /**
      * Sets whether we're presenting WebVR content or not.

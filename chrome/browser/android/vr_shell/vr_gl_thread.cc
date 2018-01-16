@@ -93,6 +93,12 @@ void VrGLThread::ContentSurfaceChanged(jobject surface) {
       base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
 }
 
+void VrGLThread::UiSurfaceChanged(jobject surface) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::UiSurfaceChanged, weak_vr_shell_, surface));
+}
+
 void VrGLThread::GvrDelegateReady(
     gvr::ViewerType viewer_type,
     device::mojom::VRDisplayFrameTransportOptionsPtr transport_options) {
@@ -344,6 +350,21 @@ void VrGLThread::SetOmniboxSuggestions(
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetOmniboxSuggestions,
                             browser_ui_, base::Passed(std::move(suggestions))));
+}
+void VrGLThread::SetAlertDialogEnabled(bool enabled,
+                                       vr::ContentInputDelegate* delegate,
+                                       int width,
+                                       int height) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogEnabled,
+                            browser_ui_, enabled, delegate, width, height));
+}
+
+void VrGLThread::SetAlertDialogSize(int width, int height) {
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogSize,
+                            browser_ui_, width, height));
 }
 
 void VrGLThread::OnAssetsComponentReady() {
