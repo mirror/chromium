@@ -2609,6 +2609,11 @@ const char kNewKoreanImeName[] = "New Korean IME";
 const char kNewKoreanImeDescription[] =
     "New Korean IME, which is based on Google Input Tools' HMM engine.";
 
+const char kNewTouchSupportForScreenMagnificationName[] =
+    "New touch support for screen magnification";
+const char kNewTouchSupportForScreenMagnificationDescription[] =
+    "Enable new implementation of touch support for screen magnification";
+
 const char kNewZipUnpackerName[] = "New ZIP unpacker";
 const char kNewZipUnpackerDescription[] =
     "New ZIP unpacker flow, based on the File System Provider API.";
