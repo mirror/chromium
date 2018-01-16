@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96a77983_425476f1",
+        "filename": "third_party/WebKit/Source/core/editing/ImeTextSpan.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-16T02:29:52Z",
+      "side": 1,
+      "message": "I prefer to introduce |enum class DocumentMakerThickness| within\n\"DocumentMakerThickness.h\" to isolate ImeTextSpan from StylableMarker.",
+      "parentUuid": "4ea6bc23_542d0167",
+      "revId": "69ef949903f287c7343efbe8b31cdf26b0d1ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "639dfcd4_c901012f",
         "filename": "third_party/WebKit/Source/core/editing/markers/StyleableMarker.h",
         "patchSetId": 25
