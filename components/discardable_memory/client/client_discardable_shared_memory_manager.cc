@@ -393,7 +393,7 @@ void ClientDiscardableSharedMemoryManager::AllocateCompletedOnIO(
     mojo::ScopedSharedBufferHandle mojo_handle) {
   size_t memory_size = 0;
   bool read_only = false;
-  if (!mojo_handle.is_valid())
+  if (!mojo_handle)
     return;
   auto result = mojo::UnwrapSharedMemoryHandle(std::move(mojo_handle), handle,
                                                &memory_size, &read_only);

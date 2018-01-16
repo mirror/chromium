@@ -51,7 +51,7 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
                       mojo::SimpleWatcher::ArmingPolicy::MANUAL,
                       task_runner),
       task_runner_(task_runner),
-      has_seen_end_of_data_(!handle_.is_valid()) {
+      has_seen_end_of_data_(!handle_) {
   handle_watcher_.Watch(
       handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
       base::Bind(&URLResponseBodyConsumer::OnReadable, base::Unretained(this)));

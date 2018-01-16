@@ -25,13 +25,13 @@ void CursorLocationManager::OnMouseCursorLocationChanged(
 
 mojo::ScopedSharedBufferHandle
 CursorLocationManager::GetCursorLocationMemory() {
-  if (!cursor_location_handle_.is_valid()) {
+  if (!cursor_location_handle_) {
     // Create our shared memory segment to share the cursor state with our
     // window clients.
     cursor_location_handle_ =
         mojo::SharedBufferHandle::Create(sizeof(base::subtle::Atomic32));
 
-    if (!cursor_location_handle_.is_valid())
+    if (!cursor_location_handle_)
       return mojo::ScopedSharedBufferHandle();
 
     cursor_location_mapping_ =
