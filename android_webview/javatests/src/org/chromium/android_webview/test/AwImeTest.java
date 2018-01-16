@@ -7,6 +7,7 @@ package org.chromium.android_webview.test;
 import android.content.Context;
 import android.support.test.filters.SmallTest;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
@@ -24,6 +25,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
+import org.chromium.content_public.browser.ImeAdapter;
 
 /**
  * Tests for IME (input method editor) on Android WebView.
@@ -65,10 +67,11 @@ public class AwImeTest {
             mTestContainerView.getAwContents().addJavascriptInterface(
                     mTestJavascriptInterface, "test");
             // Let's not test against real input method.
+            final ImeAdapter imeAdapter =
+                    ImeAdapter.fromWebContents(mTestContainerView.getWebContents());
             mInputMethodManagerWrapper = new TestInputMethodManagerWrapper(
-                    mTestContainerView.getContentViewCore());
-            mTestContainerView.getContentViewCore().getImeAdapterForTest()
-                    .setInputMethodManagerWrapperForTest(mInputMethodManagerWrapper);
+                    (EditorInfo info) -> { return imeAdapter.onCreateInputConnection(info); });
+            imeAdapter.setInputMethodManagerWrapperForTest(mInputMethodManagerWrapper);
         });
     }
 
@@ -114,8 +117,7 @@ public class AwImeTest {
     }
 
     private InputConnection getInputConnection() {
-        return mTestContainerView.getContentViewCore()
-                .getImeAdapterForTest()
+        return ImeAdapter.fromWebContents(mTestContainerView.getWebContents())
                 .getInputConnectionForTest();
     }
 

@@ -8,6 +8,7 @@ import android.support.test.filters.MediumTest;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,6 +33,7 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content.browser.test.util.TouchCommon;
+import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.R;
 
@@ -155,9 +157,10 @@ public class AutofillPopupTest {
                 mActivityTestRule.getActivity().getCurrentContentViewCore();
         final WebContents webContents = viewCore.getWebContents();
         final ViewGroup view = viewCore.getContainerView();
-        final TestInputMethodManagerWrapper immw =
-                new TestInputMethodManagerWrapper(viewCore);
-        viewCore.getImeAdapterForTest().setInputMethodManagerWrapperForTest(immw);
+        final ImeAdapter imeAdapter = ImeAdapter.fromWebContents(webContents);
+        final TestInputMethodManagerWrapper immw = new TestInputMethodManagerWrapper(
+                (EditorInfo info) -> { return imeAdapter.onCreateInputConnection(info); });
+        imeAdapter.setInputMethodManagerWrapperForTest(immw);
 
         // Add an Autofill profile.
         AutofillProfile profile = new AutofillProfile(
@@ -176,7 +179,7 @@ public class AutofillPopupTest {
         waitForKeyboardShowRequest(immw, 1);
 
         final ChromiumBaseInputConnection inputConnection =
-                viewCore.getImeAdapterForTest().getInputConnectionForTest();
+                (ChromiumBaseInputConnection) imeAdapter.getInputConnectionForTest();
         inputConnection.getHandler().post(() -> inputConnection.setComposingText(inputText, 1));
 
         waitForAnchorViewAdd(view);
