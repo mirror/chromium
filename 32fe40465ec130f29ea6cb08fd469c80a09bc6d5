@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6fc0c9ca_07cf476b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-16T19:52:57Z",
+      "side": 1,
+      "message": "Please correct me if I\u0027m wrong:\n\nLine 454 means the container is an iframe, so it marks the iframe element as already_checked; pushes the iframe\u0027s document onto the stack; and continues. \n On the next loop iteration, FindFocusCandidateInContainer is called with the iframe document as the container (not the iframe element).  So it seems like it would be safe to return early if (already_checked.contains(container)), and it would save some unnecessary work.",
+      "parentUuid": "23a0ba4f_ad8b493b",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33c75fe6_d4b7e77d",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -125,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "3c2cd966_ad05e3ce",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-16T19:52:57Z",
+      "side": 1,
+      "message": "Thank you for the explanation, that makes sense.\n\nYou should consider, in a future patch, delegating the scrolling behavior to ScrollManager::LogicalScroll, to avoid code duplication and potential differences from the default arrow key scrolling behavior.",
+      "parentUuid": "4d0ebf95_663a8f68",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1ad7d7d_85ea2f51",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 21
@@ -172,6 +208,24 @@
       "side": 1,
       "message": "I think this also is to give mouse-less users a chance to scroll and read the document (here inside an iframe) line by line.",
       "parentUuid": "f1ad7d7d_85ea2f51",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856db518_4f1f7503",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-16T19:52:57Z",
+      "side": 1,
+      "message": "Thanks; I understand now.  I don\u0027t really have an opinion about \"correct\" behavior, since I don\u0027t use the feature; but if it\u0027s working as intended, that\u0027s good enough for me.",
+      "parentUuid": "a8f2acc7_5b50c9af",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -277,6 +331,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1c8776af_258bb185",
+      "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "192e5c60_e5bd027e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-16T19:52:57Z",
+      "side": 1,
+      "message": "I don\u0027t see any difference in the latest patch.",
+      "parentUuid": "2f265bca_9252300e",
       "revId": "32fe40465ec130f29ea6cb08fd469c80a09bc6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
