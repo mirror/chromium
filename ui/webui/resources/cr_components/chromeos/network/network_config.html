@@ -25,7 +25,8 @@
     <!-- SSID (WiFi) -->
     <template is="dom-if" if="[[isType_(NetworkType_.WI_FI, type)]]">
       <network-config-input id="ssid" label="[[i18n('OncWiFi-SSID')]]"
-          value="{{configProperties_.WiFi.SSID}}" disabled="[[hasGuid_(guid)]]">
+          value="{{configProperties_.WiFi.SSID}}"
+          autofocus disabled="[[hasGuid_(guid)]]">
       </network-config-input>
     </template>
 
@@ -42,7 +43,7 @@
     <!-- Passphrase (WiFi) -->
     <template is="dom-if" if="[[configRequiresPassphrase_(type, security_)]]">
       <network-config-input label="[[i18n('OncWiFi-Passphrase')]]"
-          value="{{configProperties_.WiFi.Passphrase}}" password>
+          value="{{configProperties_.WiFi.Passphrase}}" password autofocus>
       </network-config-input>
     </template>
 
