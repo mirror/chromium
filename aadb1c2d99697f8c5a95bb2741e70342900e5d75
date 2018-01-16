@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "030fc55c_6ed30af1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-16T11:47:36Z",
+      "side": 1,
+      "message": "Can\u0027t you just inherit the ICB size from the parent constraint space?",
+      "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
