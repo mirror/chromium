@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf9d091_67d332d8",
+        "filename": "services/audio/system_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-16T02:27:47Z",
+      "side": 1,
+      "message": "nit: true /* for_input */, ...",
+      "revId": "5825c301abb3b8de0e168b4072b4e7b94869637e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9529d8_ce7cebaf",
+        "filename": "services/audio/system_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-16T02:27:47Z",
+      "side": 1,
+      "message": "nit: false /* for_input */, ...",
+      "revId": "5825c301abb3b8de0e168b4072b4e7b94869637e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
