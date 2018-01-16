@@ -1,0 +1,55 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// TODO: Rename the file name as mirror_service.mojom.
+
+module media.mojom;
+
+import "content/common/video_capture.mojom";
+import "media/mojo/interfaces/mirror_service.mojom";
+import "media/mojo/interfaces/audio_parameters.mojom";
+import "media/mojo/interfaces/audio_input_stream.mojom";
+
+interface UdpTransportClient {
+  OnPacketReceived(array<uint8> packet);
+  OnNetworkBlocked(bool blocked);
+};
+
+interface UdpTransportHost {
+  // Provides the data pipe for the packets to be sent.
+  StartSending(handle<data_pipe_consumer>? packets_pipe);
+  StartReceiving(UdpTransportClient client);
+  StopReceiving();
+};
+
+interface AudioCaptureHost {
+  CreateStream(AudioInputStreamClient client,
+               AudioInputStream& stream)
+      => (handle<shared_buffer> memory_handle,
+          handle socket_descriptor,
+          bool initial_muted);
+  Stop();
+};
+
+// TODO: Rename as MirrorService.
+
+interface MirrorServiceController {
+  GetSupportedSenderConfigs(bool has_audio, bool has_video)
+      => (array<SenderConfig> audio_configs, array<SenderConfig> video_configs);
+  Start(SenderConfig? audio_config,
+        SenderConfig? video_config,
+        StreamingParams? streaming_param,
+        MirrorClient client,
+        AudioCaptureHost audio_host,
+        content.mojom.VideoCaptureHost video_host,
+        AudioParameters audio_params,
+        UdpTransportHost udp_host)
+      => (bool success);
+  Stop();
+};
+
+
+
+
+

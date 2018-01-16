@@ -1,0 +1,17 @@
+{
+  "name": "mirror",
+  "display_name": "Mirror Service",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "requires": {
+        "*": [ "app" ],
+        "content_browser": [ "gpu" ]
+      },
+      "provides": {
+        "media:mirror": [
+          "media::mojom::MirrorServiceController"
+        ]
+      }
+    }
+  }
+}

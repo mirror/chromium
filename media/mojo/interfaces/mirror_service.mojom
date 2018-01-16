@@ -1,0 +1,85 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+//TODO: Rename the file name as mirror_service_proxy.mojom.
+
+module media.mojom;
+
+struct SenderConfig {
+  int32 rtp_payload_type;
+  uint32 sender_ssrc;
+  uint32 receiver_ssrc;
+  uint32 min_latency_ms;
+  uint32 max_latency_ms;
+  uint32 animated_latency_ms;
+  string codec_name;
+  uint32 rtp_timebase;
+  uint32 min_bitrate;
+  uint32 max_bitrate;
+  uint32 channels;
+  double max_frame_rate;
+  string aes_key;
+  string aes_ivmask;
+};
+
+enum CaptureType {
+  TAB,
+  DESKTOP,
+  OFFSCREEN_TAB
+};
+
+struct CaptureParam {
+  CaptureType type;
+  bool has_audio;
+  bool has_video;
+  bool enable_auto_throttling;
+  uint32 min_width;
+  uint32 max_width;
+  uint32 min_height;
+  uint32 max_height;
+  double min_frame_rate;
+  double max_frame_rate;
+};
+
+struct UdpOptions {
+  bool dscp_enabled;
+  string receiver_ip_address;
+  uint32 receiver_port;
+};
+
+struct StreamingParams {
+  bool enable_logging;
+};
+
+enum MirrorError {
+  CAPTURE_START_ERROR,
+  VIDEO_CAPTURE_ERROR,
+  CAST_TRANSPORT_ERROR,
+  AUDIO_CAPTURE_ERROR
+};
+
+interface MirrorClient {
+  OnStopped();
+  OnError(MirrorError error);
+};
+
+interface MirrorServiceProxy {
+  GetSupportedSenderConfigs(bool has_audio, bool has_video)
+      => (array<SenderConfig> audio_configs, array<SenderConfig> video_configs);
+
+  // Start mirroring with given parameters. |audio_config| and |video_config|
+  // can not be both null. When |audio_config| is null, start video only
+  // mirroring. When |video_config| is null, start audio only mirroring.
+  Start(CaptureParam? capture_param,
+        UdpOptions udp_param,
+        SenderConfig? audio_config,
+        SenderConfig? video_config,
+        StreamingParams? streaming_param,
+        MirrorClient client)
+      => (bool success);
+
+  // Stop the mirroring session.
+  Stop();
+};
+

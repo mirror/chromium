@@ -160,6 +160,10 @@ const char kClearKeyCdmPathForTesting[] = "clear-key-cdm-path-for-testing";
 const char kEnableInternalMediaSession[] = "enable-internal-media-session";
 #endif  // !defined(OS_ANDROID)
 
+// Disables hardware encoding support for Cast Streaming.
+const char kDisableCastStreamingHWEncoding[] =
+    "disable-cast-streaming-hw-encoding";
+
 namespace autoplay {
 
 // Autoplay policy that requires a document user activation.
