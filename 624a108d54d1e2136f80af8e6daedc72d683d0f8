@@ -34,6 +34,24 @@
       "revId": "624a108d54d1e2136f80af8e6daedc72d683d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc82805c_b12f589d",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-16T20:02:59Z",
+      "side": 1,
+      "message": "Gotcha.",
+      "parentUuid": "e67093a8_1a2afdf9",
+      "revId": "624a108d54d1e2136f80af8e6daedc72d683d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
