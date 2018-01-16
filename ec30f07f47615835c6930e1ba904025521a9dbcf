@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a704135_cc2fed05",
+        "filename": "chrome/browser/chromeos/display/display_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-16T19:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a881945_faa80613",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db25c446_84ad177d",
         "filename": "chrome/browser/ui/ash/chrome_shell_delegate.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T15:13:00Z",
       "side": 1,
       "message": "nit: undo?",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c277138_879c3981",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-16T19:03:10Z",
+      "side": 1,
+      "message": "Sure.  I\u0027m never certain how a-r to be around the trailing comment :-}.",
+      "parentUuid": "db25c446_84ad177d",
       "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88735741_a64e3574",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-16T19:03:10Z",
+      "side": 1,
+      "message": "How the heck did that happen??  Done.",
+      "parentUuid": "3adaf076_26649856",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8783f2ba_42dd419b",
         "filename": "content/public/common/DEPS",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ca013a42_1ff9dfbc",
+        "filename": "content/public/common/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-16T19:03:10Z",
+      "side": 1,
+      "message": "Heh :-}.  Done.",
+      "parentUuid": "8783f2ba_42dd419b",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15f25161_b59c5337",
         "filename": "services/network/public/cpp/resource_response_info.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-16T15:13:00Z",
       "side": 1,
       "message": "in this file and the cc file, you can now get rid of \"network::\"",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370a97e9_7ae72ec1",
+        "filename": "services/network/public/cpp/resource_response_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-16T19:03:10Z",
+      "side": 1,
+      "message": "So here: Done.  There wasn\u0027t anything parallel to this in the .cc file that I found; the only use of network:: was before mojom::FetchResponseType, so I presumed you meant that and removed that (from the cc file and from below).  Given that it compiles, I presume that\u0027s what you meant, but wanted to call out what I did in case it wasn\u0027t.",
+      "parentUuid": "15f25161_b59c5337",
       "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
