@@ -22,6 +22,23 @@ bool MergeEventIfPossible(const blink::WebInputEvent& event,
   return false;
 }
 
+gfx::PointF ComputeEventLocation(const blink::WebInputEvent& event) {
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
+      event.GetType() == blink::WebInputEvent::kMouseWheel) {
+    return static_cast<const blink::WebMouseEvent&>(event).PositionInWidget();
+  }
+  if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
+    return static_cast<const blink::WebTouchEvent&>(event)
+        .touches[0]
+        .PositionInWidget();
+  }
+  if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    const auto& gesture = static_cast<const blink::WebGestureEvent&>(event);
+    return gfx::PointF(gesture.x, gesture.y);
+  }
+  return gfx::PointF();
+}
+
 }  // namespace
 
 RenderWidgetTargetResult::RenderWidgetTargetResult() = default;
@@ -78,13 +95,12 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
       delegate_->FindTargetSynchronously(root_view, event);
 
   RenderWidgetHostViewBase* target = result.view;
-  auto* event_ptr = &event;
   if (result.should_query_view) {
     DCHECK(target && result.target_location.has_value());
-    QueryClient(root_view, target, *event_ptr, latency,
-                result.target_location.value());
+    QueryClient(root_view, root_view, event, latency,
+                ComputeEventLocation(event));
   } else {
-    FoundTarget(root_view, target, *event_ptr, latency, result.target_location);
+    FoundTarget(root_view, target, event, latency, result.target_location);
   }
 }
 
