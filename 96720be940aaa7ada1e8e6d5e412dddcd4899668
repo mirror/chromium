@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f14cb9_5b31afa6",
+        "filename": "content/browser/android/ime_adapter_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:47:48Z",
+      "side": 1,
+      "message": "Could we rename this to ImeAdapterImpl and the file name, too?",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bf4a53_cb4becc1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:47:48Z",
+      "side": 1,
+      "message": "How is it different from initializing it in the constructor?",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 62
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2a680e_a31960ba",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:47:48Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 349,
+        "startChar": 1,
+        "endLine": 352,
+        "endChar": 22
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

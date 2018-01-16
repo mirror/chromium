@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9563e4d2_b0c13e24",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/PopupZoomerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:47:48Z",
+      "side": 0,
+      "message": "I guess that this line is meant to mock out the real IME (InputMethodManagerWrapper). Without this, there are chances that tests gets flaked. Could you add a comment and not remove this line?",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "3a79b41c679051caec43a9dc4e8810e6e5cca678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
