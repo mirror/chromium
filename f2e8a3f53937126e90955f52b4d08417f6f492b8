@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04ddbc8_23178331",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-16T12:19:59Z",
+      "side": 1,
+      "message": "FYI: this the callback for ShowModalSyncConfirmationDialog(), and this is where the sync_blocker_ is released (because the object is deleted at the end of this function)",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 387,
+        "endChar": 60
+      },
+      "revId": "f2e8a3f53937126e90955f52b4d08417f6f492b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
