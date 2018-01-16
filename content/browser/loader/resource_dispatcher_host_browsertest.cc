@@ -38,6 +38,7 @@
 #include "content/shell/browser/shell.h"
 #include "content/shell/browser/shell_content_browser_client.h"
 #include "content/shell/browser/shell_network_delegate.h"
+#include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/dns/mock_host_resolver.h"
@@ -175,6 +176,14 @@ IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
       "Content Sniffer Test 3");
   EXPECT_EQ(1u, Shell::windows().size());
   ASSERT_FALSE(got_downloads());
+}
+
+// Make sure file URLs are not sniffed as HTML when they don't end in HTML.
+IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
+                       DoNotSniffHTMLFromFileUrl) {
+  GURL file_url = net::FilePathToFileURL(
+      GetTestFilePath(nullptr, "content-sniffer-test5.html"));
+  CheckTitleTest(file_url, file_url.spec());
 }
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
