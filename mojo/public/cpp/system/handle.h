@@ -119,7 +119,7 @@ class ScopedHandleBase {
     handle_ = handle;
   }
 
-  bool is_valid() const { return handle_.is_valid(); }
+  explicit operator bool() const { return handle_.is_valid(); }
 
   bool operator==(const ScopedHandleBase& other) const {
     return handle_.value() == other.get().value();
