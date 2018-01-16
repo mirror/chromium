@@ -149,6 +149,12 @@ Document& NGLayoutInputNode::GetDocument() const {
   return box_->GetDocument();
 }
 
+NGPhysicalSize NGLayoutInputNode::InitialContainingBlockSize() const {
+  LayoutView* view = GetDocument().GetLayoutView();
+  FloatSize size = view->ViewportSizeForViewportUnits();
+  return NGPhysicalSize{LayoutUnit(size.Width()), LayoutUnit(size.Height())};
+}
+
 LayoutObject* NGLayoutInputNode::GetLayoutObject() const {
   return box_;
 }
