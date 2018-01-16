@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1555202d_ca4a549c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5c6462_be1a8be5",
+      "range": {
+        "startLine": 17,
+        "startChar": 57,
+        "endLine": 17,
+        "endChar": 61
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2267a3_b4227aae",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed83408_ae5000fc",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4497,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "Done.  Had meant to do that in the first place.",
+      "parentUuid": "aa2267a3_b4227aae",
+      "range": {
+        "startLine": 4497,
+        "startChar": 36,
+        "endLine": 4497,
+        "endChar": 54
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0bd51a4d_3cb168d0",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd08a73_87f1223c",
+      "range": {
+        "startLine": 4507,
+        "startChar": 24,
+        "endLine": 4507,
+        "endChar": 29
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719a732f_451f7da9",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8b41dc24_edf3a959",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4560,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719a732f_451f7da9",
+      "range": {
+        "startLine": 4560,
+        "startChar": 42,
+        "endLine": 4560,
+        "endChar": 51
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b66b2b_ee83ffc3",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-15T22:48:23Z",
       "side": 1,
       "message": "or just CreateAutoDetect()",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04c6b52_4d99149e",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "Not done.  That seemed too weird, and more regression prone to me.  If returning DIRECT ever makes us just bypass the ProxyResolverFactory, as I\u0027d rather expect it to, this code will still work.",
+      "parentUuid": "b3b66b2b_ee83ffc3",
       "range": {
         "startLine": 4563,
         "startChar": 23,
@@ -152,6 +272,30 @@
       "side": 1,
       "message": "Yeah, seems should be mixing in ProxyServer::ToURI() to the connection group string, as that already includes a serialization of the proxy scheme, and host:port.\n\nAlso I don\u0027t think this function should be taking ProxyInfo as its input (full fallback list of proxy servers), but rather just a single ProxyServer.",
       "parentUuid": "8a0dc993_b48a971a",
+      "range": {
+        "startLine": 157,
+        "startChar": 45,
+        "endLine": 157,
+        "endChar": 52
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe78252_47c68327",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T15:55:11Z",
+      "side": 1,
+      "message": "I\u0027d argue the pools should be different instead, each with their own independent connection limits, as it\u0027s conceptually being treated as a different proxy.\n\nI agree with you on taking a ProxyServer instead.",
+      "parentUuid": "8e924c69_d8b48681",
       "range": {
         "startLine": 157,
         "startChar": 45,
