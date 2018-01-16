@@ -10,6 +10,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 #include "crazy_linker_util.h"
 
 // Note: unit-testing support files are in crazy_linker_files_mock.cpp
@@ -49,7 +53,7 @@ void* FileDescriptor::Map(void* address,
 void FileDescriptor::Close() {
   if (fd_ != -1) {
     int old_errno = errno;
-    TEMP_FAILURE_RETRY(close(fd_));
+    close(fd_);
     errno = old_errno;
     fd_ = -1;
   }
@@ -88,3 +92,31 @@ bool PathIsFile(const char* path) {
 #endif  // !UNIT_TESTS
 
 }  // namespace crazy
+
+// Custom implementation of new and malloc, this prevents dragging
+// the libc++ implementation, which drags exception-related machine
+// code that is not needed here. This helps reduce the size of the
+// final binary considerably.
+void* operator new(size_t size) noexcept {
+  void* ptr = ::malloc(size);
+  if (ptr != nullptr)
+    return ptr;
+
+  // Don't assume it is possible to call any C library function like
+  // snprintf() here, since it might allocate heap memory and crash at
+  // runtime. Hence our fatal message does not contain the number of
+  // bytes requested by the allocation.
+  static const char kFatalMessage[] = "Out of memory!";
+#ifdef __ANDROID__
+  __android_log_write(ANDROID_LOG_FATAL, "crazy_linker", kFatalMessage);
+#else
+  ::write(2, kFatalMessage, sizeof(kFatalMessage) - 1);
+#endif
+  _exit(1);
+}
+
+void operator delete(void* ptr) noexcept {
+  // The compiler-generated code already checked that |ptr != nullptr|
+  // so don't to it a second time.
+  ::free(ptr);
+}
