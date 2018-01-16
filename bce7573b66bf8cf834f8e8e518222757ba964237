@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "e8aa4a5a_5083df13",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-16T07:19:33Z",
+      "side": 1,
+      "message": "Let\u0027s make this cros-only.",
+      "range": {
+        "startLine": 306,
+        "startChar": 17,
+        "endLine": 306,
+        "endChar": 19
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "330cbd19_023aca32",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 1
@@ -87,6 +110,29 @@
         "startChar": 15,
         "endLine": 358,
         "endChar": 47
+      },
+      "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7a3f09_91a1b800",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-16T07:19:33Z",
+      "side": 1,
+      "message": "per csharp\u0027s comment on the bug, let\u0027s make this cros-only.",
+      "range": {
+        "startLine": 358,
+        "startChar": 6,
+        "endLine": 358,
+        "endChar": 8
       },
       "revId": "bce7573b66bf8cf834f8e8e518222757ba964237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
