@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c65405_7cad7dcb",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-16T01:51:49Z",
+      "side": 1,
+      "message": "explicit\n\nChange everywhere.",
+      "revId": "f1956390d40cff7b76542f2c77ce736034d9c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
