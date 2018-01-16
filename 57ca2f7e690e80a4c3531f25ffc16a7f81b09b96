@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cec4bf5_a67151a6",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-16T17:28:31Z",
+      "side": 1,
+      "message": "2018 :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a036ccc_fe4baf87",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-16T17:28:31Z",
+      "side": 1,
+      "message": "Would you mind adding a one paragraph description of the class and what it is used for?",
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ceef1f_0112b48e",
+        "filename": "third_party/WebKit/Source/core/css/AtRuleCSSStyleDeclaration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-16T17:28:31Z",
+      "side": 1,
+      "message": "Why are some of these in camelCase and others in CapitalCase?",
+      "revId": "57ca2f7e690e80a4c3531f25ffc16a7f81b09b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
