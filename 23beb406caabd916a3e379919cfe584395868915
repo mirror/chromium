@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa2416b_b54cdcab",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T10:11:03Z",
+      "side": 1,
+      "message": "No need for the empty `else` here",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c7e07b_0df7b842",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T10:11:03Z",
+      "side": 1,
+      "message": "I you got an onload, I don\u0027t think you really need to wait until the entry is added to the PerfTimeline or fires a PerfObserver. No harm in checking that, I guess, but seems like an overkill. What you could do is declare the test `done()` in both cases independently (so if onload is not firing, you still get the event)",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda097b1_6531206e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T10:11:03Z",
+      "side": 1,
+      "message": "s/error/load/",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d081b46_8477a1b0",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-16T10:11:03Z",
+      "side": 1,
+      "message": "Unrelated nit: My DRY OCD would have made me take out the \"Refused to\" from the individual strings and set it at the top, but maybe that\u0027s just me",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
