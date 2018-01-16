@@ -116,6 +116,24 @@
       "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8d345b_fa2baeff",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-16T20:16:34Z",
+      "side": 1,
+      "message": "Trying to align using the base-line of the text would result in a different alignment behavior than the single-line case. The image is vertically centered within the bounds and not with the baseline of the text. The idea is to vertically center the image in a manner similar to the single-line case.",
+      "parentUuid": "e542c67d_c2c8c15d",
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
