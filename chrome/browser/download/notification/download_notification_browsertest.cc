@@ -14,6 +14,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
 #include "chrome/browser/download/download_core_service.h"
+#include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/profiles/profile.h"
@@ -59,12 +60,14 @@ struct TestAccountInfo {
 };
 
 // Accounts for multi profile test.
+/*
 static const TestAccountInfo kTestAccounts[] = {
     {"__dummy__@invalid.domain", "10000", "hashdummy", "Dummy Account"},
     {"alice@invalid.domain",     "10001", "hashalice", "Alice"},
     {"bob@invalid.domain",       "10002", "hashbobbo", "Bob"},
     {"charlie@invalid.domain",   "10003", "hashcharl", "Charlie"},
 };
+*/
 
 template <typename T>
 bool IsInNotifications(
@@ -265,8 +268,9 @@ message_center::MessageCenter* GetMessageCenter() {
 }
 
 // Utility method to retrieve a notification object by id.
-message_center::Notification* GetNotification(const std::string& id) {
-  return GetMessageCenter()->FindVisibleNotificationById(id);
+base::Optional<message_center::Notification> GetNotification(const std::string& id) {
+ return NotificationDisplayServiceTester::Get()->GetNotification(id);
+ // return GetMessageCenter()->FindVisibleNotificationById(id);
 }
 
 }  // anonnymous namespace
@@ -274,10 +278,14 @@ message_center::Notification* GetNotification(const std::string& id) {
 // Base class for tests
 class DownloadNotificationTestBase : public InProcessBrowserTest {
  public:
+  DownloadNotificationTestBase() {}
   ~DownloadNotificationTestBase() override {}
 
   void SetUpOnMainThread() override {
     ASSERT_TRUE(embedded_test_server()->Start());
+
+    display_service_ = std::make_unique<NotificationDisplayServiceTester>(
+        browser()->profile());
 
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
@@ -310,9 +318,13 @@ class DownloadNotificationTestBase : public InProcessBrowserTest {
     return content::BrowserContext::GetDownloadManager(browser->profile());
   }
 
- private:
+  std::unique_ptr<NotificationDisplayServiceTester> display_service_;
+
   // Location of the downloads directory for these tests
   base::ScopedTempDir downloads_directory_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DownloadNotificationTestBase);
 };
 
 //////////////////////////////////////////////////
@@ -321,6 +333,7 @@ class DownloadNotificationTestBase : public InProcessBrowserTest {
 
 class DownloadNotificationTest : public DownloadNotificationTestBase {
  public:
+  DownloadNotificationTest() {}
   ~DownloadNotificationTest() override {}
 
   void SetUpOnMainThread() override {
@@ -370,22 +383,27 @@ class DownloadNotificationTest : public DownloadNotificationTestBase {
         GURL(net::URLRequestSlowDownloadJob::kKnownSizeUrl));
   }
 
+  void WaitForDownloadNotification() {
+    base::RunLoop run_loop;
+    display_service_->SetNotificationAddedClosure(base::BindRepeating(
+        [](base::RunLoop* run_loop) { run_loop->Quit(); }, &run_loop));
+    run_loop.Run();
+    display_service_->SetNotificationAddedClosure(base::RepeatingClosure());
+  }
+
   void CreateDownloadForBrowserAndURL(Browser* browser, GURL url) {
     // Starts a download.
-    NotificationAddObserver download_start_notification_observer;
     ui_test_utils::NavigateToURL(browser, url);
-    EXPECT_TRUE(download_start_notification_observer.Wait());
 
     // Confirms that a notification is created.
-    notification_id_ = download_start_notification_observer.notification_id();
+    WaitForDownloadNotification();
+    auto download_notifications =
+        display_service_->GetDisplayedNotificationsForType(
+            NotificationHandler::Type::DOWNLOAD);
+    ASSERT_EQ(1u, download_notifications.size());
+    notification_id_ = download_notifications[0].id();
     EXPECT_FALSE(notification_id_.empty());
     ASSERT_TRUE(notification());
-
-    // Confirms that there is only one notification.
-    message_center::NotificationList::Notifications
-        visible_notifications = GetMessageCenter()->GetVisibleNotifications();
-    EXPECT_EQ(1u, visible_notifications.size());
-    EXPECT_TRUE(IsInNotifications(visible_notifications, notification_id_));
 
     // Confirms that a download is also started.
     std::vector<content::DownloadItem*> downloads;
@@ -397,7 +415,7 @@ class DownloadNotificationTest : public DownloadNotificationTestBase {
 
   content::DownloadItem* download_item() const { return download_item_; }
   std::string notification_id() const { return notification_id_; }
-  message_center::Notification* notification() const {
+  base::Optional<message_center::Notification> notification() const {
     return GetNotification(notification_id_);
   }
   Browser* incognito_browser() const { return incognito_browser_; }
@@ -410,6 +428,8 @@ class DownloadNotificationTest : public DownloadNotificationTestBase {
   content::DownloadItem* download_item_ = nullptr;
   Browser* incognito_browser_ = nullptr;
   std::string notification_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(DownloadNotificationTest);
 };
 
 IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadFile) {
@@ -423,42 +443,42 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadFile) {
             GetNotification(notification_id())->type());
 
   // Confirms that the download update is delivered to the notification.
-  NotificationUpdateObserver download_notification_periodically_update_observer;
+  EXPECT_TRUE(GetNotification(notification_id()));
+  bool notification_updated = false;
+  display_service_->SetNotificationAddedClosure(base::BindRepeating(
+      [](bool* updated) { *updated = true; }, &notification_updated));
   download_item()->UpdateObservers();
-  download_notification_periodically_update_observer.Wait();
+  EXPECT_TRUE(notification_updated);
+  display_service_->SetNotificationAddedClosure(base::RepeatingClosure());
 
-  // Requests to complete the download.
+  // Requests to complete the download and waits for download completion.
+  content::DownloadTestObserverTerminal completion_observer(
+      content::BrowserContext::GetDownloadManager(browser()->profile()), 1,
+      content::DownloadTestObserver::ON_DANGEROUS_DOWNLOAD_FAIL);
   ui_test_utils::NavigateToURL(
       browser(), GURL(net::URLRequestSlowDownloadJob::kFinishDownloadUrl));
-
-  // Waits for download completion.
-  NotificationUpdateObserver
-      download_change_notification_observer(notification_id());
-  while (download_item()->GetState() != content::DownloadItem::COMPLETE) {
-    download_change_notification_observer.Wait();
-    download_change_notification_observer.Reset();
-  }
+  completion_observer.WaitForFinished();
 
   // Checks strings.
+  ASSERT_TRUE(notification());
   EXPECT_EQ(l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_COMPLETE_TITLE),
-            GetNotification(notification_id())->title());
+            notification()->title());
   EXPECT_EQ(download_item()->GetFileNameToReportUser().LossyDisplayName(),
-            GetNotification(notification_id())->message());
+            notification()->message());
   EXPECT_EQ(message_center::NOTIFICATION_TYPE_BASE_FORMAT,
-            GetNotification(notification_id())->type());
+            notification()->type());
 
   // Confirms that there is only one notification.
-  message_center::NotificationList::Notifications
-      visible_notifications = GetMessageCenter()->GetVisibleNotifications();
-  EXPECT_EQ(1u, visible_notifications.size());
-  EXPECT_TRUE(IsInNotifications(visible_notifications, notification_id()));
-
-  // Opens the message center.
-  GetMessageCenter()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
+  ASSERT_EQ(1u, display_service_
+                    ->GetDisplayedNotificationsForType(
+                        NotificationHandler::Type::DOWNLOAD)
+                    .size());
 
   // Try to open the downloaded item by clicking the notification.
   EXPECT_FALSE(GetDownloadManagerDelegate()->opened());
-  GetMessageCenter()->ClickOnNotification(notification_id());
+  display_service_->SimulateClick(NotificationHandler::Type::DOWNLOAD,
+                                  notification_id(), base::nullopt,
+                                  base::nullopt);
   EXPECT_TRUE(GetDownloadManagerDelegate()->opened());
 
   EXPECT_FALSE(GetNotification(notification_id()));
@@ -482,22 +502,13 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadDangerousFile) {
             download_item()->GetDangerType());
   EXPECT_TRUE(download_item()->IsDangerous());
 
-  // Opens the message center.
-  GetMessageCenter()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
+  // Clicks the "keep" button.
+  display_service_->SimulateClick(NotificationHandler::Type::DOWNLOAD,
+                                  notification_id(), 1,  // 2nd button: "Keep"
+                                  base::nullopt);
 
-  NotificationRemoveObserver notification_close_observer;
-  NotificationAddObserver notification_add_observer;
-
-  // Cicks the "keep" button.
-  notification()->ButtonClick(1);  // 2nd button: "Keep"
-  // Clicking makes the message center closed.
-  GetMessageCenter()->SetVisibility(message_center::VISIBILITY_TRANSIENT);
-
-  // Confirms that the notification is closed and re-shown.
-  EXPECT_EQ(notification_id(), notification_close_observer.Wait());
-  notification_add_observer.Wait();
-  EXPECT_EQ(notification_id(), notification_add_observer.notification_id());
-  EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
+  // The notification is closed and re-shown.
+  EXPECT_TRUE(notification());
 
   // Checks the download status.
   EXPECT_EQ(content::DOWNLOAD_DANGER_TYPE_USER_VALIDATED,
@@ -533,29 +544,26 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DiscardDangerousFile) {
             download_item()->GetDangerType());
   EXPECT_TRUE(download_item()->IsDangerous());
 
-  // Opens the message center.
-  GetMessageCenter()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
   // Ensures the notification exists.
-  EXPECT_EQ(1u, GetMessageCenter()->GetVisibleNotifications().size());
-
-  NotificationRemoveObserver notification_close_observer;
+  EXPECT_TRUE(notification());
 
   // Clicks the "Discard" button.
-  notification()->ButtonClick(0);  // 1st button: "Discard"
-  // Clicking makes the message center closed.
-  GetMessageCenter()->SetVisibility(message_center::VISIBILITY_TRANSIENT);
+  display_service_->SimulateClick(NotificationHandler::Type::DOWNLOAD,
+                                  notification_id(),
+                                  0,  // 1st button: "Discard"
+                                  base::nullopt);
 
-  // Confirms that the notification is closed.
-  EXPECT_EQ(notification_id(), notification_close_observer.Wait());
-
-  // Ensures the notification has closed.
-  EXPECT_EQ(0u, GetMessageCenter()->GetVisibleNotifications().size());
+  EXPECT_FALSE(notification());
 
   // Wait for the download completion.
   download_terminal_observer.WaitForFinished();
 
   // Checks there is neither any download nor any notification.
-  EXPECT_EQ(0u, GetMessageCenter()->GetVisibleNotifications().size());
+  EXPECT_FALSE(notification());
+  EXPECT_EQ(0u, display_service_
+                    ->GetDisplayedNotificationsForType(
+                        NotificationHandler::Type::DOWNLOAD)
+                    .size());
   std::vector<content::DownloadItem*> downloads;
   GetDownloadManager(browser())->GetAllDownloads(&downloads);
   EXPECT_EQ(0u, downloads.size());
@@ -577,15 +585,11 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadImageFile) {
   // Wait for the download completion.
   download_terminal_observer.WaitForFinished();
 
-  // Waits for download completion.
-  NotificationUpdateObserver
-      download_change_notification_observer(notification_id());
-  while (GetNotification(notification_id())->image().IsEmpty()) {
-    download_change_notification_observer.Wait();
-    download_change_notification_observer.Reset();
-  }
+  WaitForDownloadNotification();
+  EXPECT_FALSE(notification()->image().IsEmpty());
 }
 
+#if 0
 IN_PROC_BROWSER_TEST_F(DownloadNotificationTest,
                        CloseNotificationAfterDownload) {
   CreateDownload();
@@ -1308,3 +1312,4 @@ IN_PROC_BROWSER_TEST_F(MultiProfileDownloadNotificationTest,
   EXPECT_EQ(message_center::NOTIFICATION_TYPE_BASE_FORMAT,
             GetNotification(notification_id_user2_2)->type());
 }
+#endif
