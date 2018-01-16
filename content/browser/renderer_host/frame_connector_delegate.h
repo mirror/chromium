@@ -181,6 +181,13 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // creating a window in the ui server so that this can render to the screen.
   virtual void EmbedRendererWindowTreeClientInParent(
       ui::mojom::WindowTreeClientPtr window_tree_client) {}
+
+  // Tells the delegate FrameSinkId has been changed. It's extremely important
+  // to know this in case when mus is hosting viz, because
+  // RenderWidgetHostViewChildFrame calls to create a MusEmbeddedFrame and
+  // receives a valid FrameSinkId, when delegate is set. Otherwise the id
+  // invalid.
+  virtual void OnSetFrameSinkId() {}
 #endif
 
   // Called by RenderWidgetHostViewChildFrame when the child frame has resized

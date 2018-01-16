@@ -185,8 +185,11 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
 #if defined(USE_AURA)
 void RenderWidgetHostViewChildFrame::SetFrameSinkId(
     const viz::FrameSinkId& frame_sink_id) {
-  if (switches::IsMusHostingViz())
+  if (switches::IsMusHostingViz()) {
     frame_sink_id_ = frame_sink_id;
+    CHECK(frame_connector_);
+    frame_connector_->OnSetFrameSinkId();
+  }
 }
 #endif  // defined(USE_AURA)
 

@@ -26,6 +26,7 @@
 #include "content/public/common/screen_info.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/gfx/geometry/dip_util.h"
 
 namespace content {
@@ -95,9 +96,11 @@ void CrossProcessFrameConnector::SetView(RenderWidgetHostViewChildFrame* view) {
     view_->SetFrameConnectorDelegate(this);
     if (is_hidden_)
       OnVisibilityChanged(false);
-    frame_proxy_in_parent_renderer_->Send(new FrameMsg_ViewChanged(
-        frame_proxy_in_parent_renderer_->GetRoutingID(),
-        view_->GetFrameSinkId()));
+    if (switches::IsMusHostingViz()) {
+      is_setting_view_ = true;
+      return;
+    }
+    ViewChanged();
   }
 }
 
@@ -410,6 +413,13 @@ void CrossProcessFrameConnector::EmbedRendererWindowTreeClientInParent(
       base::BindOnce(&RenderWidgetHostViewBase::OnChildFrameDestroyed,
                      parent->GetWeakPtr(), frame_routing_id));
 }
+
+void CrossProcessFrameConnector::OnSetFrameSinkId() {
+  CHECK(switches::IsMusHostingViz());
+  if (is_setting_view_)
+    ViewChanged();
+  is_setting_view_ = false;
+}
 #endif
 
 void CrossProcessFrameConnector::ResizeDueToAutoResize(
@@ -454,6 +464,12 @@ void CrossProcessFrameConnector::ResetFrameRect() {
   local_surface_id_ = viz::LocalSurfaceId();
   frame_rect_in_pixels_ = gfx::Rect();
   frame_rect_in_dip_ = gfx::Rect();
+}
+
+void CrossProcessFrameConnector::ViewChanged() {
+  frame_proxy_in_parent_renderer_->Send(
+      new FrameMsg_ViewChanged(frame_proxy_in_parent_renderer_->GetRoutingID(),
+                               view_->GetFrameSinkId()));
 }
 
 void CrossProcessFrameConnector::OnUpdateRenderThrottlingStatus(
