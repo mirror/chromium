@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v7.media.MediaRouteSelector;
 
 import com.google.android.gms.cast.CastMediaControlIntent;
+import com.google.common.base.Splitter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -184,11 +185,12 @@ public class CastMediaSource implements MediaSource {
         String capabilitiesList =
                 capabilitiesParameter.substring(CAST_APP_CAPABILITIES_PREFIX.length(),
                         capabilitiesParameter.length() - CAST_APP_CAPABILITIES_SUFFIX.length());
-        String[] capabilities = capabilitiesList.split(CAST_APP_CAPABILITIES_SEPARATOR);
+        List<String> capabilities =
+                Splitter.on(CAST_APP_CAPABILITIES_SEPARATOR).splitToList(capabilitiesList);
         for (String capability : capabilities) {
             if (!CAST_APP_CAPABILITIES.contains(capability)) return null;
         }
-        return capabilities;
+        return capabilities.toArray(new String[capabilities.size()]);
     }
 
     /**
@@ -213,10 +215,12 @@ public class CastMediaSource implements MediaSource {
         String[] capabilities = null;
         String capabilitiesParam = sourceUri.getQueryParameter(CAST_URL_CAPABILITIES);
         if (capabilitiesParam != null) {
-            capabilities = capabilitiesParam.split(CAST_APP_CAPABILITIES_SEPARATOR);
-            for (String capability : capabilities) {
+            List<String> capabilitiesList =
+                    Splitter.on(CAST_APP_CAPABILITIES_SEPARATOR).splitToList(capabilitiesParam);
+            for (String capability : capabilitiesList) {
                 if (!CAST_APP_CAPABILITIES.contains(capability)) return null;
             }
+            capabilities = capabilitiesList.toArray(new String[capabilitiesList.size()]);
         }
 
         return new CastMediaSource(sourceId, applicationId, clientId, autoJoinPolicy, capabilities);
@@ -237,7 +241,9 @@ public class CastMediaSource implements MediaSource {
         String uriFragment = sourceUri.getFragment();
         if (uriFragment == null) return null;
 
-        String[] parameters = uriFragment.split(CAST_SOURCE_ID_SEPARATOR);
+        List<String> parametersList =
+                Splitter.on(CAST_SOURCE_ID_SEPARATOR).splitToList(uriFragment);
+        String[] parameters = parametersList.toArray(new String[parametersList.size()]);
 
         String applicationId = extractParameter(parameters, CAST_SOURCE_ID_APPLICATION_ID);
         if (applicationId == null) return null;

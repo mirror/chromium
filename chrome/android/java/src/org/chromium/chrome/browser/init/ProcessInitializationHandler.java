@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.google.common.base.Splitter;
 import com.google.ipc.invalidation.external.client.android.service.AndroidLogger;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -630,7 +631,7 @@ public class ProcessInitializationHandler {
                     imm.getEnabledInputMethodSubtypeList(method, true);
             for (InputMethodSubtype submethod : submethods) {
                 if (submethod.getMode().equals("keyboard")) {
-                    String language = submethod.getLocale().split("_")[0];
+                    String language = Splitter.on("_").splitToList(submethod.getLocale()).get(0);
                     if (!uniqueLanguages.contains(language)) {
                         uniqueLanguages.add(language);
                     }
@@ -642,7 +643,8 @@ public class ProcessInitializationHandler {
         InputMethodSubtype currentSubtype = imm.getCurrentInputMethodSubtype();
         Locale systemLocale = Locale.getDefault();
         if (currentSubtype != null && currentSubtype.getLocale() != null && systemLocale != null) {
-            String keyboardLanguage = currentSubtype.getLocale().split("_")[0];
+            String keyboardLanguage =
+                    Splitter.on("_").splitToList(currentSubtype.getLocale()).get(0);
             boolean match = systemLocale.getLanguage().equalsIgnoreCase(keyboardLanguage);
             RecordHistogram.recordBooleanHistogram("InputMethod.MatchesSystemLanguage", match);
         }

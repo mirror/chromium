@@ -8,6 +8,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.util.Pair;
 
+import com.google.common.base.Splitter;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -801,7 +803,7 @@ public class CookieManagerTest {
     }
 
     private void validateCookies(String responseCookie, String... expectedCookieNames) {
-        String[] cookies = responseCookie.split(";");
+        List<String> cookies = Splitter.on(";").splitToList(responseCookie);
         Set<String> foundCookieNames = new HashSet<String>();
         for (String cookie : cookies) {
             foundCookieNames.add(cookie.substring(0, cookie.indexOf("=")).trim());

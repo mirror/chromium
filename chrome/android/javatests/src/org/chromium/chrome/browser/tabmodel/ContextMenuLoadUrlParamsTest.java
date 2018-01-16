@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 
+import com.google.common.base.Splitter;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -149,9 +151,10 @@ public class ContextMenuLoadUrlParamsTest {
     @Feature({"Browser"})
     public void testOpenInNewTabSanitizeReferrer() throws InterruptedException, TimeoutException {
         String testUrl = mTestServer.getURL(HTML_PATH);
-        String[] schemeAndUrl = SCHEME_SEPARATOR_RE.split(testUrl, 2);
-        Assert.assertEquals(2, schemeAndUrl.length);
-        String testUrlUserPass = schemeAndUrl[0] + "://user:pass@" + schemeAndUrl[1];
+        List<String> schemeAndUrl =
+                Splitter.onPattern(SCHEME_SEPARATOR_RE).limit(2).splitToList(testUrl);
+        Assert.assertEquals(2, schemeAndUrl.size());
+        String testUrlUserPass = schemeAndUrl.get(0) + "://user:pass@" + schemeAndUrl.get(1);
         triggerContextMenuLoad(testUrlUserPass, "testLink", R.id.contextmenu_open_in_new_tab);
         Assert.assertNotNull(mOpenNewTabLoadUrlParams);
         Assert.assertEquals(testUrl, mOpenNewTabLoadUrlParams.getReferrer().getUrl());
