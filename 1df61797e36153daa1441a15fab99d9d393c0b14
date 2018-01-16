@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "201308d6_fff0429d",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T22:27:53Z",
+      "side": 0,
+      "message": "this and the blocks on line 1131 and 1198 are now unreachable as this method is never reached for frame resources since PlzNavigate is the only navigation code path now.",
+      "revId": "1df61797e36153daa1441a15fab99d9d393c0b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
