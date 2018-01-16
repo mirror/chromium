@@ -142,3 +142,36 @@ class MockAuthenticator {
 
 var mockAuthenticator = new MockAuthenticator();
 var mockCredentialManager = new MockCredentialManager();
+
+// Common mock values for the mockAuthenticator.
+var challenge = new TextEncoder().encode("climb a mountain");
+
+var public_key_rp = {
+    id: "subdomain.example.test",
+    name: "Acme"
+};
+
+var public_key_user = {
+    id: new TextEncoder().encode("1098237235409872"),
+    name: "avery.a.jones@example.com",
+    displayName: "Avery A. Jones",
+    icon: "https://pics.acme.com/00/p/aBjjjpqPb.png"
+};
+
+var public_key_parameters =  [{
+    type: "public-key",
+    alg: -7,
+},];
+
+var publicKey = {
+    challenge,
+    rp: public_key_rp,
+    user: public_key_user,
+    pubKeyCredParams: public_key_parameters,
+    excludeCredentials: [],
+};
+
+var raw_id = new TextEncoder("utf-8").encode("rawId");
+var id = btoa("rawId");
+var client_data_json = new TextEncoder("utf-8").encode("clientDataJSON");
+var attestation_object = new TextEncoder("utf-8").encode("attestationObject");
