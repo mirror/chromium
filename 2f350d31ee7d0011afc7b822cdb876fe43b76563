@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "447abc56_215bd4bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-16T18:15:51Z",
+      "side": 1,
+      "message": "Right, but the plan is to still land it, right? So just in terms of code hygiene in the overall code base, it\u0027s good to at least document \"this should never happen\".",
+      "parentUuid": "09758317_e4c442f5",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 56
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f00c7eb9_b45f0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
