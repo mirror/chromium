@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f02fc590_cdc0d6d2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-16T22:59:26Z",
+      "side": 1,
+      "message": "Even though this is if/endif block, can we wrap at column 80?",
+      "revId": "6691fe73f4fe2569b45cfaa4d873dd72595bc452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad12ee09_133daf34",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-16T22:59:26Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 486,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 89
+      },
+      "revId": "6691fe73f4fe2569b45cfaa4d873dd72595bc452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
