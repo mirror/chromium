@@ -16,6 +16,24 @@
       "revId": "70f3d32a0b77a6214b22ccc0b4486540880373e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedeb5cd_5098a2a1",
+        "filename": "content/renderer/android/synchronous_compositor_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-16T15:12:18Z",
+      "side": 0,
+      "message": "The SynchronousComposistorProxy is the SynchronousLayerTreeFrameSinkClient and an API was added to clear it directly via that interface.",
+      "parentUuid": "4a49c445_423a620b",
+      "revId": "70f3d32a0b77a6214b22ccc0b4486540880373e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
