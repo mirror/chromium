@@ -84,8 +84,6 @@ void ExtensionActivityDataService::ClearActiveBit(const std::string& id) {
 ChromeUpdateClientConfig::ChromeUpdateClientConfig(
     content::BrowserContext* context)
     : impl_(base::CommandLine::ForCurrentProcess(),
-            content::BrowserContext::GetDefaultStoragePartition(context)
-                ->GetURLRequestContext(),
             /*require_encryption=*/true),
       pref_service_(ExtensionPrefs::Get(context)->pref_service()),
       activity_data_service_(std::make_unique<ExtensionActivityDataService>(
@@ -153,7 +151,7 @@ std::string ChromeUpdateClientConfig::GetDownloadPreference() const {
 }
 
 net::URLRequestContextGetter* ChromeUpdateClientConfig::RequestContext() const {
-  return impl_.RequestContext();
+  return nullptr;
 }
 
 std::unique_ptr<service_manager::Connector>

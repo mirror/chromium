@@ -31,7 +31,6 @@ void RegisterPrefsForChromeComponentUpdaterConfigurator(
 scoped_refptr<update_client::Configurator>
 MakeChromeComponentUpdaterConfigurator(
     const base::CommandLine* cmdline,
-    net::URLRequestContextGetter* context_getter,
     PrefService* pref_service);
 
 }  // namespace component_updater
