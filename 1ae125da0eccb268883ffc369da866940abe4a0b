@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c056d11a_14b5a8f6",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-16T18:08:43Z",
+      "side": 1,
+      "message": "With immediate execution, it was easier to trace this through.  I still have it return zero here so it doesn\u0027t break EXPECT statements but added EXPECTs to ensure it isn\u0027t zero when it shouldn\u0027t be.",
+      "parentUuid": "0a07ade4_cc4cd607",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5c7dea_66785d49",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 6
@@ -165,6 +189,30 @@
       "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263207ef_99fd9724",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-16T18:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce46d4e0_d66d41fe",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "1ae125da0eccb268883ffc369da866940abe4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
