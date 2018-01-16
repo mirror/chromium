@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6708a0c2_f4b82f40",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-16T13:32:39Z",
+      "side": 1,
+      "message": "TODO(crbug.com/xxxxxx) would be the format to remember to do this future investigation",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb65f2e_d71a284e",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-16T13:32:39Z",
+      "side": 1,
+      "message": "do you have to include base/callback or something",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 13
+      },
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba5612a_5fe804e9",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-16T13:32:39Z",
+      "side": 1,
+      "message": "can you document some of the new args?",
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82b505b_3ba376e4",
+        "filename": "components/payments/content/content_payment_request_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-16T13:32:39Z",
+      "side": 1,
+      "message": "how about base::OnceCallback\u003cvoid(/*success\u003d*/ bool)\u003e to make it clear",
+      "revId": "f9577c7cc0010faa0f06372364b4d892d6e8ea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
