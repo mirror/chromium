@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "f0db6cb7_914d543b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-16T23:37:33Z",
+      "side": 1,
+      "message": "this seems wrong - shouldn\u0027t you set the zoom factor of display |display.id()|",
+      "range": {
+        "startLine": 754,
+        "startChar": 4,
+        "endLine": 754,
+        "endChar": 5
+      },
+      "revId": "dc599343a5326cab0f62a743e6d6b641eded6a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "002fce07_c7bb3776",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 6
