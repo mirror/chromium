@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "f244edee_e37b44b9",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T09:04:30Z",
+      "side": 1,
+      "message": "Sorry, my bad, you are right of course :)",
+      "parentUuid": "39dd2800_7c741730",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "3fb41e8f7902ee95edae00718b7f788b90c1242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ffb7f84_ec80d5e9",
         "filename": "device/u2f/register_response_data.cc",
         "patchSetId": 1
