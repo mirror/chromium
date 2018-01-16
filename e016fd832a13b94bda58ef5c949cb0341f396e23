@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b539c3a_2faa5dde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c5f904ee_5162de18",
+      "range": {
+        "startLine": 1743,
+        "startChar": 27,
+        "endLine": 1744,
+        "endChar": 83
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "597a9efc_647d12e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb835fd3_bf1079ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "597a9efc_647d12e4",
+      "range": {
+        "startLine": 439,
+        "startChar": 64,
+        "endLine": 439,
+        "endChar": 86
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57b9a479_5d4b09bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "662b7d4a_bf27acc7",
+      "range": {
+        "startLine": 441,
+        "startChar": 73,
+        "endLine": 441,
+        "endChar": 94
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecdfc255_9a3ac9d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-16T16:59:28Z",
       "side": 0,
       "message": "Do we want to clean up this shared preference? Or leave it for now?",
+      "range": {
+        "startLine": 445,
+        "startChar": 4,
+        "endLine": 450,
+        "endChar": 5
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f193d8be_23a0d7b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Added a method to clean up the unused prefs.",
+      "parentUuid": "ecdfc255_9a3ac9d2",
       "range": {
         "startLine": 445,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cd8b3f47_b4f0b652",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f46dfb13_fab38d1d",
+      "range": {
+        "startLine": 469,
+        "startChar": 16,
+        "endLine": 469,
+        "endChar": 48
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed480bb9_9f41b7c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "dcdeda3b_5cbe005f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ed480bb9_9f41b7c9",
+      "range": {
+        "startLine": 477,
+        "startChar": 16,
+        "endLine": 477,
+        "endChar": 79
+      },
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35009af_c4c1f3bd",
         "filename": "chrome/android/java_sources.gni",
         "patchSetId": 2
@@ -154,6 +298,24 @@
       "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe91f08_54102d59",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-16T19:01:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c35009af_c4c1f3bd",
+      "revId": "e016fd832a13b94bda58ef5c949cb0341f396e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
