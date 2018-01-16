@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce74edf0_28d010e4",
+        "filename": "chrome/browser/extensions/chrome_app_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-16T22:58:27Z",
+      "side": 1,
+      "message": "nit: IsBadged -\u003e icon_is_badged since this looks like a getter and should follow the name style of a getter",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "bdc5b426b7cd49b76a48c229e1ffcc185656dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
