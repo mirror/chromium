@@ -142,7 +142,8 @@ void RecoveryInstallGlobalError::BubbleViewCancelButtonPressed(
 
 bool RecoveryInstallGlobalError::HasElevationNotification() const {
   // Do not show this bubble if we already have an upgrade notice.
-  return elevation_needed_ && !UpgradeDetector::GetInstance()->notify_upgrade();
+  return elevation_needed_ &&
+         !g_browser_process->upgrade_detector()->notify_upgrade();
 }
 
 void RecoveryInstallGlobalError::OnElevationRequirementChanged() {

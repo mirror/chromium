@@ -145,6 +145,7 @@
 #if !defined(OS_ANDROID)
 #include "chrome/browser/gcm/gcm_product_util.h"
 #include "chrome/browser/ui/user_manager.h"
+#include "chrome/browser/upgrade_detector.h"
 #include "components/gcm_driver/gcm_client_factory.h"
 #include "components/gcm_driver/gcm_desktop_utils.h"
 #include "components/keep_alive_registry/keep_alive_registry.h"
@@ -215,7 +216,8 @@ BrowserProcessImpl::BrowserProcessImpl(
     : download_status_updater_(std::make_unique<DownloadStatusUpdater>()),
       local_state_task_runner_(local_state_task_runner),
       pref_service_factory_(
-          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
+          base::MakeUnique<prefs::InProcessPrefServiceFactory>()),
+      created_upgrade_detector_(false) {
   g_browser_process = this;
   rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
   platform_part_ = base::MakeUnique<BrowserProcessPlatformPart>();
@@ -285,6 +287,10 @@ void BrowserProcessImpl::StartTearDown() {
 
 #if !defined(OS_ANDROID)
   KeepAliveRegistry::GetInstance()->SetIsShuttingDown();
+
+  // Take down the UpgradeDetector before the MetricsServicesManager since the
+  // former will remove its observer from the latter.
+  upgrade_detector_.reset();
 #endif  // !defined(OS_ANDROID)
 
   // We need to destroy the MetricsServicesManager, IntranetRedirectDetector,
@@ -837,6 +843,22 @@ BrowserProcessImpl::GetPhysicalWebDataSource() {
 prefs::InProcessPrefServiceFactory* BrowserProcessImpl::pref_service_factory()
     const {
   return pref_service_factory_.get();
+}
+
+UpgradeDetector* BrowserProcessImpl::upgrade_detector() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+#if defined(OS_ANDROID)
+  NOTIMPLEMENTED();
+  return nullptr;
+#else
+  if (!created_upgrade_detector_) {
+    DCHECK(!upgrade_detector_);
+    created_upgrade_detector_ = true;
+    upgrade_detector_ = UpgradeDetector::Create();
+  }
+  return upgrade_detector_.get();
+#endif
 }
 
 // static

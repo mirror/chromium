@@ -85,11 +85,13 @@ void ConnectAsyncWithBackoff(
 // ServiceProcessControl implementation.
 ServiceProcessControl::ServiceProcessControl()
     : apply_changes_from_upgrade_observer_(false), weak_factory_(this) {
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  if (g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->AddObserver(this);
 }
 
 ServiceProcessControl::~ServiceProcessControl() {
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  if (g_browser_process && g_browser_process->upgrade_detector())
+    g_browser_process->upgrade_detector()->RemoveObserver(this);
 }
 
 void ServiceProcessControl::ConnectInternal() {
@@ -239,7 +241,8 @@ void ServiceProcessControl::OnChannelConnected() {
 
   // We just established a channel with the service process. Notify it if an
   // upgrade is available.
-  if (UpgradeDetector::GetInstance()->notify_upgrade())
+  UpgradeDetector* upgrade_detector = g_browser_process->upgrade_detector();
+  if (upgrade_detector && upgrade_detector->notify_upgrade())
     service_process_->UpdateAvailable();
   else
     apply_changes_from_upgrade_observer_ = true;

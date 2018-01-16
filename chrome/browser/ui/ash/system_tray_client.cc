@@ -126,7 +126,7 @@ SystemTrayClient::SystemTrayClient() : binding_(this) {
   g_browser_process->platform_part()->GetSystemClock()->AddObserver(this);
 
   // If an upgrade is available at startup then tell ash about it.
-  if (UpgradeDetector::GetInstance()->notify_upgrade())
+  if (g_browser_process->upgrade_detector()->notify_upgrade())
     HandleUpdateAvailable();
 
   // If the device is enterprise managed then send ash the enterprise domain.
@@ -140,7 +140,7 @@ SystemTrayClient::SystemTrayClient() : binding_(this) {
 
   DCHECK(!g_system_tray_client_instance);
   g_system_tray_client_instance = this;
-  UpgradeDetector::GetInstance()->AddObserver(this);
+  g_browser_process->upgrade_detector()->AddObserver(this);
 }
 
 SystemTrayClient::~SystemTrayClient() {
@@ -155,7 +155,7 @@ SystemTrayClient::~SystemTrayClient() {
     policy_manager->core()->store()->RemoveObserver(this);
 
   g_browser_process->platform_part()->GetSystemClock()->RemoveObserver(this);
-  UpgradeDetector::GetInstance()->RemoveObserver(this);
+  g_browser_process->upgrade_detector()->RemoveObserver(this);
 }
 
 // static
@@ -440,7 +440,7 @@ void SystemTrayClient::RequestRestartForUpdate() {
 
 void SystemTrayClient::HandleUpdateAvailable() {
   // Show an update icon for Chrome updates and Flash component updates.
-  UpgradeDetector* detector = UpgradeDetector::GetInstance();
+  UpgradeDetector* detector = g_browser_process->upgrade_detector();
   bool update_available = detector->notify_upgrade() || flash_update_available_;
   DCHECK(update_available);
   if (!update_available)
