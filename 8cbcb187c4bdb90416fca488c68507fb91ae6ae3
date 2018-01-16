@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94c88e08_34bd1cf4",
+        "filename": "content/public/common/resource_request_body.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-16T03:55:38Z",
+      "side": 1,
+      "message": "[kinda repeating what was just discussed offline]\n(I started looking at this work again and am working on the end-to-end SW fallback case based on Daniel\u0027s patch here). I think S13nSW is going to need the BLOB code path when NetworkService is disabled.\n\nIt looks like we\u0027re going to want to ship S13nSW before NetworkService... so I agree we should start making the independent S13nSW flag because we might have made assumptions that S13nSW is on iff NetworkService is on.",
+      "parentUuid": "ebc8161c_fae3a00d",
+      "revId": "8cbcb187c4bdb90416fca488c68507fb91ae6ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9cd3b08_777561af",
         "filename": "content/public/common/resource_request_body_unittest.cc",
         "patchSetId": 2
