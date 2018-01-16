@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "736458ef_b4ed4769",
+        "filename": "components/language/content/browser/convert_s2_cell.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-16T04:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c7678a_8bf141cc",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "642fa31d_aa9e2bf4",
         "filename": "components/language/content/browser/language_code_locator.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cf8f36f6_9b0e6578",
+        "filename": "components/language/content/browser/language_code_locator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-16T04:49:22Z",
+      "side": 1,
+      "message": "thanks for the suggestion",
+      "parentUuid": "642fa31d_aa9e2bf4",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8d4852_d216133b",
         "filename": "components/language/content/browser/template/language_code_locator_helper.cc.tmpl",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-16T01:27:08Z",
       "side": 1,
       "message": "One last guess as to what\u0027s still taking up space (and this should give better performance as well): Rather than use vectors, which require generating somre runtime logic, use arrays.\n\nIt may also be more convenient to #include this .cc file directly into language_code_locator.cc rather than have it as a separate translation unit so that you can use arraysize(kDistricts) to get the length, and use an anonymous namespace rather than an internal one.\n\nnamespace {\nconst uint32_t kDistrictPositions[] \u003d { ... };\nconst uint16_t kLanguageCodeCounts[] \u003d { ... };\nconst char* const kLanguageEnumCodeMapping[] \u003d { ... };\n}",
+      "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e757070f_f71ce45c",
+        "filename": "components/language/content/browser/template/language_code_locator_helper.cc.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-16T04:49:22Z",
+      "side": 1,
+      "message": "thanks for the suggestion, now we\u0027re getting unused variable errors, any idea about silent the errors? thanks!",
+      "parentUuid": "7f8d4852_d216133b",
       "revId": "250650510c06fcb3622607ad90bb0967fd2beb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
