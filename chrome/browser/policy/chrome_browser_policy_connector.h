@@ -37,12 +37,21 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
 
   ~ChromeBrowserPolicyConnector() override;
 
+  // Called once the resource bundle has been created. This flushes any
+  // pending errors.
+  void OnResourceBundleCreated();
+
+  // BrowserPolicyConnector:
   void Init(
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
+  void OnConfigurationPolicyErrors(
+      std::unique_ptr<policy::PolicyErrorMap> errors) override;
 
  private:
   std::unique_ptr<ConfigurationPolicyProvider> CreatePlatformProvider();
+
+  std::vector<std::unique_ptr<policy::PolicyErrorMap>> pending_errors_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserPolicyConnector);
 };

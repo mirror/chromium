@@ -80,6 +80,7 @@
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/performance_monitor/performance_monitor.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/prefs/chrome_command_line_pref_store.h"
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
@@ -1039,6 +1040,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   const std::string loaded_locale =
       ui::ResourceBundle::InitSharedInstanceWithLocale(
           locale, NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+  browser_process_->browser_policy_connector()->OnResourceBundleCreated();
   TRACE_EVENT_END0("startup",
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitResourceBundle");
 

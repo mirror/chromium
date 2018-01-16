@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
+#include "components/policy/core/browser/configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/schema.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "components/policy/policy_export.h"
@@ -20,10 +21,11 @@ class PolicyService;
 
 // The BrowserPolicyConnectorBase keeps and initializes some core elements of
 // the policy component, mainly the PolicyProviders and the PolicyService.
-class POLICY_EXPORT BrowserPolicyConnectorBase {
+class POLICY_EXPORT BrowserPolicyConnectorBase
+    : public ConfigurationPolicyPrefStoreErrorHandler {
  public:
   // Invoke Shutdown() before deleting, see below.
-  virtual ~BrowserPolicyConnectorBase();
+  ~BrowserPolicyConnectorBase() override;
 
   // Stops the policy providers and cleans up the connector before it can be
   // safely deleted. This must be invoked before the destructor and while the
