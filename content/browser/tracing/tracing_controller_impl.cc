@@ -47,6 +47,10 @@
 #include "content/browser/tracing/power_tracing_agent.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "content/browser/tracing/android_tracing_agent.h"
+#endif
+
 #if defined(OS_CHROMEOS)
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
@@ -140,7 +144,9 @@ void TracingControllerImpl::AddAgents() {
   agents_.push_back(std::make_unique<PowerTracingAgent>(connector));
 #endif
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_ANDROID)
+  agents_.push_back(std::make_unique<AndroidTracingAgent>(connector));
+#elif defined(OS_CHROMEOS)
   agents_.push_back(std::make_unique<CrOSTracingAgent>(connector));
   agents_.push_back(std::make_unique<ArcTracingAgentImpl>(connector));
 #elif defined(CAST_TRACING_AGENT)

@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/trace_event/trace_event.h"
 #include "content/common/content_export.h"
+#include "services/resource_coordinator/public/cpp/tracing/default_agent.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 
 namespace content {
@@ -18,7 +19,7 @@ namespace content {
 // The overriden Stop/StartAgentTracing functions are implemented by the
 // Delegate object to interact with ARC bridge. All the functions are expected
 // to be called on the browser's UI thread.
-class CONTENT_EXPORT ArcTracingAgent : public tracing::mojom::Agent {
+class CONTENT_EXPORT ArcTracingAgent : public tracing::DefaultAgent {
  public:
   class Delegate {
    public:
