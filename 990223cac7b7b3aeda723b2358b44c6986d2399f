@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08730d4_c3e7677b",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-16T18:56:37Z",
+      "side": 1,
+      "message": "nit: this seems less clear than lhs to me",
+      "revId": "990223cac7b7b3aeda723b2358b44c6986d2399f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8012bdba_5b7aedcd",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-16T18:56:37Z",
+      "side": 1,
+      "message": "why reorder? i agree that the additional detail here is clearer",
+      "revId": "990223cac7b7b3aeda723b2358b44c6986d2399f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8ec415_c35c7b29",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-16T18:56:37Z",
+      "side": 1,
+      "message": "nit: what does \"if necessary\" add? nothing here explains when this is necessary, so i\u0027d drop that prefix",
+      "revId": "990223cac7b7b3aeda723b2358b44c6986d2399f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0565c647_73066fb1",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-16T18:56:37Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "990223cac7b7b3aeda723b2358b44c6986d2399f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
