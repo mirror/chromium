@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "70f031c3_7a62f14e",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-16T15:35:04Z",
+      "side": 1,
+      "message": "Spoke to Peter about this and agreed the following:\n\n- We should verify, but not sanitize, in these struct traits, to check that the sanitization has been correctly applied on the renderer side.\n\n- Where the legacy ipc route was applying further sanitization (eg clamping at 1 not 0), we should check why this was (eg maybe this is to meet platform constraints), and if it\u0027s required, move this sanitization step to closer where it\u0027s needed (eg in platform-specific code, if this is to meet platform-specific requirements).\n\nIn the case of vibration I\u0027ve followed the code through and I can\u0027t see any reason why we were clamping at 1 not 0. It\u0027s been like that since notification vibration was added, not added due to a bug. And while one might think \u0027allowing elements of length 0 will allow effectively continuous vibration to occur for 990s\u0027, actually, this is already effectively possible given we allow waits of 1ms, which is not perceivably different from \u0027waits\u0027 of 0ms (unless the platform treats these values wildly differently - and Android gives no indication that it does so in its documentation)",
+      "parentUuid": "28bebf69_7e466973",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47792af9_2d352c9c",
         "filename": "content/common/notifications/notification_struct_traits.cc",
         "patchSetId": 32
@@ -188,6 +206,24 @@
       "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23889ed2_72ddd84d",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-16T15:35:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12e7d613_227319bd",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
