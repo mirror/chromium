@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cebe4a89_dcaa412d",
+        "filename": "content/public/common/resource_request_body.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-16T03:58:21Z",
+      "side": 1,
+      "message": "Ah actually I guess S13nSW isn\u0027t going to need to clone BLOB when NetworkService is disabled. S13nSW could just check if NetworkService is enabled and if so Clone() (or check if there are any DATA_PIPEs)\n\nEither way, splitting the flags seems like a good idea.",
+      "parentUuid": "94c88e08_34bd1cf4",
+      "revId": "8cbcb187c4bdb90416fca488c68507fb91ae6ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9cd3b08_777561af",
         "filename": "content/public/common/resource_request_body_unittest.cc",
         "patchSetId": 2
