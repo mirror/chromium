@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802d7a50_e43d0ca1",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T18:53:09Z",
+      "side": 1,
+      "message": "This is a little subtle, I would use a local here and a constant for \"in-progress\":\nbool completed \u003d password_manager_porter_-\u003eStore();\n...Run(completed ? string() : kExportInProgress);",
+      "revId": "9f59d5c9837d05754e611b62060411249fdc9fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e41f854_081429f2",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T18:53:09Z",
+      "side": 1,
+      "message": "We should really move the above to a separate password_manager_proxy.js file. We don\u0027t need to do it in this CL, but maybe add a TODO at least.",
+      "revId": "9f59d5c9837d05754e611b62060411249fdc9fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34779ac0_070192c4",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T18:53:09Z",
+      "side": 1,
+      "message": "Is this part of password_manager::ExportFlow? If so it should have \u0027ovveride\u0027. If not, move it.",
+      "revId": "9f59d5c9837d05754e611b62060411249fdc9fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc45429_f443267e",
+        "filename": "components/password_manager/core/browser/ui/export_flow.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-16T18:53:09Z",
+      "side": 1,
+      "message": "virtual?",
+      "revId": "9f59d5c9837d05754e611b62060411249fdc9fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
