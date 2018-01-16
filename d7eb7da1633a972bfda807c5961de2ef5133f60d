@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23616d4a_3bf52511",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/CSSLayoutWorklet.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Not yet, this doesn\u0027t yet have any of the global scope machinery, which will be in the next patch.",
+      "parentUuid": "6cb06d2f_f42e48f0",
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "210ec687_964662b5",
         "filename": "third_party/WebKit/Source/core/layout/csslayout/LayoutWorklet.cpp",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5494de_36ebc339",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/LayoutWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210ec687_964662b5",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a359174f_f82cb5e2",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/LayoutWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a3f0d8_8be25f33",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d924b1_b77c92df",
         "filename": "third_party/WebKit/Source/core/layout/csslayout/OWNERS",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512f76f0_4470a622",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d924b1_b77c92df",
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6b3f5a4b_b5dc9ca4",
+        "filename": "third_party/WebKit/Source/core/layout/csslayout/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Ack. Chatted with emil in person, going to go for core/layout/custom instead.",
+      "parentUuid": "e0c56864_4c6a5fd0",
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8faa3aed_06bfd458",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 5
@@ -113,6 +215,24 @@
       "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865b0d1b_aefb22a7",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-16T18:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8faa3aed_06bfd458",
+      "revId": "d7eb7da1633a972bfda807c5961de2ef5133f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
