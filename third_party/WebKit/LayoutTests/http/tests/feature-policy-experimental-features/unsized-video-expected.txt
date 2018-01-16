@@ -1,0 +1,63 @@
+CONSOLE ERROR: Error with Feature-Policy header: Unrecognized feature: 'unsized-media'.
+CONSOLE ERROR: line 7: Uncaught TypeError: document.getElementByTagName is not a function
+layer at (0,0) size 800x600 clip at (0,0) size 785x585 scrollWidth 1608 scrollHeight 3901
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x3901 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutBlockFlow {HTML} at (0,0) size 785x3901
+    LayoutBlockFlow {BODY} at (8,8) size 769x3885
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 300x150
+  LayoutVideo {VIDEO} at (0,0) size 300x150
+layer at (8,163) size 500x250
+  LayoutVideo {VIDEO} at (0,155) size 500x250
+layer at (8,418) size 500x250 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutVideo {VIDEO} at (0,410) size 500x250
+layer at (8,673) size 1600x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutVideo {VIDEO} at (0,665) size 1600x800
+layer at (8,1478) size 1600x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutVideo {VIDEO} at (0,1470) size 1600x800
+layer at (8,2283) size 500x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutVideo {VIDEO} at (0,2275) size 500x800
+layer at (8,3088) size 500x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutVideo {VIDEO} at (0,3080) size 500x800
+layer at (8,8) size 300x150
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x150
+    LayoutBlockFlow {DIV} at (0,118) size 300x32
+layer at (8,8) size 300x108
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x108
+layer at (8,163) size 500x250
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x250
+    LayoutBlockFlow {DIV} at (0,218) size 500x32
+layer at (8,163) size 500x208
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x208
+layer at (8,418) size 500x250 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x250
+    LayoutBlockFlow {DIV} at (0,218) size 500x32
+layer at (8,418) size 500x208 backgroundClip at (8,418) size 500x167 clip at (8,418) size 500x167
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x208
+layer at (8,673) size 1600x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 1600x800
+    LayoutBlockFlow {DIV} at (0,768) size 1600x32
+layer at (8,673) size 1600x758 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 1600x758
+layer at (8,1478) size 1600x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 1600x800
+    LayoutBlockFlow {DIV} at (0,768) size 1600x32
+layer at (8,1478) size 1600x758 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 1600x758
+layer at (8,2283) size 500x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x800
+    LayoutBlockFlow {DIV} at (0,768) size 500x32
+layer at (8,2283) size 500x758 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x758
+layer at (8,3088) size 500x800 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x800
+    LayoutBlockFlow {DIV} at (0,768) size 500x32
+layer at (8,3088) size 500x758 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 500x758
