@@ -57,6 +57,22 @@ void AshWindowTreeHostMus::PrepareForShutdown() {
   std::unique_ptr<ui::NullEventTargeter> null_event_targeter =
       std::make_unique<ui::NullEventTargeter>();
   window()->SetEventTargeter(std::move(null_event_targeter));
+
+
+  LOG(ERROR) << "MSW AshWindowTreeHostMus::PrepareForShutdown ";
+  // TODO(msw): ReleaseAcceleratedWidget causes a crash entering unified mode: 
+  // [94772:94849:0116/103628.460743:FATAL:window_tree.cc(1511)] Check failed: display_root. 
+  // #0 0x7fda92627d2c base::debug::StackTrace::StackTrace()
+  // #1 0x7fda9264ebdc logging::LogMessage::~LogMessage()
+  // #2 0x7fda908726dd ui::ws::WindowTree::DispatchInputEventImpl()
+  // #3 0x7fda908779e8 ui::ws::WindowTree::OnWindowInputEventAck()
+  // #4 0x7fda8f677a00 ui::mojom::WindowTreeStubDispatch::Accept()
+
+  // Mus will destroy the platform display/window and its accelerated widget; 
+  // prevent the compositor from using the asynchronously destroyed surface. 
+  // OverrideAcceleratedWidget(gfx::kNullAcceleratedWidget); 
+  // compositor()->SetVisible(false); 
+  // compositor()->ReleaseAcceleratedWidget(); 
 }
 
 void AshWindowTreeHostMus::RegisterMirroringHost(

@@ -79,6 +79,8 @@ bool DisplayManager::SetDisplayConfiguration(
     int64_t primary_display_id,
     int64_t internal_display_id,
     const std::vector<display::Display>& mirrors) {
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays: " << displays.size() << " mirrors: " << mirrors.size(); 
+
   DCHECK_NE(display::kUnifiedDisplayId, internal_display_id);
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
@@ -190,7 +192,7 @@ bool DisplayManager::SetDisplayConfiguration(
     display_list.RemoveDisplay(display_id);
     // If the destroyed display still has a root window, it is orphaned here.
     // Root windows are destroyed by explicit window manager instruction.
-    DestroyDisplay(GetDisplayById(display_id));
+    // DestroyDisplay(GetDisplayById(display_id)); 
   }
 
   for (auto& pair : user_display_managers_)

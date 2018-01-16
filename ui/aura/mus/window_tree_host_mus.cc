@@ -103,6 +103,9 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
 }
 
 WindowTreeHostMus::~WindowTreeHostMus() {
+  // TODO(msw): Send a message for the WS to delete the platform window now.
+  LOG(ERROR) << "MSW WindowTreeHostMus DTOR"; 
+  
   DestroyCompositor();
   DestroyDispatcher();
 }

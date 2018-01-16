@@ -583,7 +583,26 @@ void WindowTreeHostManager::DeleteHost(AshWindowTreeHost* host_to_delete) {
   controller->Shutdown();
   if (primary_tree_host_for_replace_ == host_to_delete)
     primary_tree_host_for_replace_ = nullptr;
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, controller);
+
+  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, controller); 
+
+  LOG(ERROR) << "MSW WindowTreeHostManager::DeleteHost";
+  // Delete the AshWindowTreeHost instance immediately to prevent its compositor
+  // from using the accelerated widget that Mus will destroy asynchronously.
+  // delete host_to_delete;
+
+  // TODO(msw): One alternative (ReleaseAcceleratedWidget) causes a crash when 
+  //            entering unified mode, and I don't understand why:
+  // FATAL:window_tree.cc(1511)] Check failed: display_root.
+  // #0 0x7fda92627d2c base::debug::StackTrace::StackTrace()
+  // #1 0x7fda9264ebdc logging::LogMessage::~LogMessage()
+  // #2 0x7fda908726dd ui::ws::WindowTree::DispatchInputEventImpl()
+  // #3 0x7fda908779e8 ui::ws::WindowTree::OnWindowInputEventAck()
+  // #4 0x7fda8f677a00 ui::mojom::WindowTreeStubDispatch::Accept()
+  // Mus will destroy the platform display/window and its accelerated widget; 
+  // prevent the compositor from using the asynchronously destroyed surface. 
+  // host_to_delete->AsWindowTreeHost()->compositor()->SetVisible(false);
+  // host_to_delete->AsWindowTreeHost()->compositor()->ReleaseAcceleratedWidget();
 }
 
 void WindowTreeHostManager::OnDisplayRemoved(const display::Display& display) {

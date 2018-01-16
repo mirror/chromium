@@ -555,6 +555,7 @@ bool WindowTree::AddTransientWindow(const ClientWindowId& window_id,
 }
 
 bool WindowTree::DeleteWindow(const ClientWindowId& window_id) {
+  LOG(ERROR) << "MSW WindowTree::DeleteWindow " << window_id;
   ServerWindow* window = GetWindowByClientId(window_id);
   DVLOG(3) << "removing window from parent client=" << id_
            << " client window_id= " << window_id.ToString()
@@ -990,6 +991,7 @@ void WindowTree::ProcessWindowReorder(const ServerWindow* window,
 
 void WindowTree::ProcessWindowDeleted(ServerWindow* window,
                                       bool originated_change) {
+  // LOG(ERROR) << "MSW WindowTree::ProcessWindowDeleted " << window << " " << originated_change;
   if (window->id().client_id == id_)
     created_window_map_.erase(window->id());
 
@@ -1271,6 +1273,7 @@ bool WindowTree::RemoveWindowFromParent(
 }
 
 bool WindowTree::DeleteWindowImpl(WindowTree* source, ServerWindow* window) {
+  LOG(ERROR) << "MSW WindowTree::DeleteWindowImpl " << source << " " << window;
   DCHECK(window);
   DCHECK_EQ(window->id().client_id, id_);
   Operation op(source, window_server_, OperationType::DELETE_WINDOW);
@@ -1328,6 +1331,7 @@ void WindowTree::RemoveFromKnown(const ServerWindow* window,
 }
 
 void WindowTree::RemoveRoot(ServerWindow* window, RemoveRootReason reason) {
+  LOG(ERROR) << "MSW WindowTree::RemoveRoot " << window;// << " " << reason;
   DCHECK(roots_.count(window) > 0);
   roots_.erase(window);
 
@@ -1507,6 +1511,16 @@ void WindowTree::DispatchInputEventImpl(ServerWindow* target,
   GenerateEventAckId();
   event_ack_callback_ = std::move(callback);
   WindowManagerDisplayRoot* display_root = GetWindowManagerDisplayRoot(target);
+  if (!display_root) {
+    LOG(ERROR) << "MSW WindowTree::DispatchInputEventImpl CRASH! "
+               << " target=" << DebugWindowId(target)
+               << " eventtype=" << event.type();
+              //  << " " << event_location.ToString();
+    // window_manager_state_->HandleDebugAccelerator(
+    //    DebugAcceleratorType::PRINT_WINDOWS, 0);
+    return;
+  }
+    
   DCHECK(display_root);
   event_source_wms_ = display_root->window_manager_state();
   // Should only get events from windows attached to a host.
@@ -1638,6 +1652,7 @@ void WindowTree::NewTopLevelWindow(
 }
 
 void WindowTree::DeleteWindow(uint32_t change_id, Id transport_window_id) {
+  LOG(ERROR) << "MSW WindowTree::DeleteWindow " << transport_window_id;
   client()->OnChangeCompleted(
       change_id, DeleteWindow(MakeClientWindowId(transport_window_id)));
 }

@@ -44,6 +44,7 @@ PlatformDisplayDefault::PlatformDisplayDefault(
       widget_(gfx::kNullAcceleratedWidget) {}
 
 PlatformDisplayDefault::~PlatformDisplayDefault() {
+  LOG(ERROR) << "MSW PlatformDisplayDefault DTOR!!!!!!!!!!!!!!!!"; 
 #if defined(OS_CHROMEOS)
   ui::CursorController::GetInstance()->ClearCursorConfigForWindow(
       GetAcceleratedWidget());
