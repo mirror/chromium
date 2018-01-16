@@ -70,6 +70,30 @@
       "revId": "802d437a7dd7c8cbc46c13de89f6bf90372a17d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ab56c7_520b7841",
+        "filename": "ash/wm/fullscreen_window_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T22:42:07Z",
+      "side": 1,
+      "message": "On the second thought, probably not because they can behave quite differently, and it can cause its own bugs. I think this is ok for now. Please add a unit test, then lgtm",
+      "parentUuid": "a27168ab_a8b3e593",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "802d437a7dd7c8cbc46c13de89f6bf90372a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
