@@ -592,8 +592,7 @@ void ObjectPaintInvalidatorWithContext::InvalidatePartialRect(
   }
 
   context_.painting_layer->SetNeedsRepaint();
-  // TODO(yoichio) Use InvalidateDisplayItemClients(object_, reason);
-  object_.InvalidateDisplayItemClients(PaintInvalidationReason::kRectangle);
+  InvalidateDisplayItemClients(object_, PaintInvalidationReason::kRectangle);
 }
 
 DISABLE_CFI_PERF
