@@ -11,6 +11,7 @@ import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -33,6 +34,7 @@ import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordManagerHandler;
 import org.chromium.chrome.browser.SavedPasswordEntry;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -42,6 +44,7 @@ import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 import java.util.ArrayList;
@@ -459,5 +462,35 @@ public class SavePasswordsPreferencesTest {
         Espresso.onView(withContentDescription(R.string.password_entry_editor_view_stored_password))
                 .perform(click());
         Espresso.onView(withText("test password")).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is visible if the Feature is enabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconVisibleWithFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is not visible if the Feature is disabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @DisableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconGoneWithoutFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).check(doesNotExist());
     }
 }
