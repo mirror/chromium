@@ -19,7 +19,7 @@
 #include "net/base/net_export.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_config_service.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 
 namespace base {
 class SingleThreadTaskRunner;

@@ -12,7 +12,7 @@
 #include "net/log/net_log.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 
 using base::TimeDelta;
 using base::TimeTicks;

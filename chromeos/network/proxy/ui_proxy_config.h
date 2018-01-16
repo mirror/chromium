@@ -11,7 +11,7 @@
 #include "chromeos/chromeos_export.h"
 #include "components/proxy_config/proxy_prefs.h"
 #include "net/proxy/proxy_bypass_rules.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "url/gurl.h"
 
 namespace base {
