@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2211ad5_be13e7fa",
+        "filename": "chrome/browser/extensions/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-16T21:55:47Z",
+      "side": 1,
+      "message": "This is probably no longer necessary.",
+      "range": {
+        "startLine": 815,
+        "startChar": 7,
+        "endLine": 815,
+        "endChar": 38
+      },
+      "revId": "92f5599c6d87224d8372a9e6c5580a537ed7967c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

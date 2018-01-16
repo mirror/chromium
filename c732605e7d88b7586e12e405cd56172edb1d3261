@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b98c0ba_ad43568b",
+        "filename": "chrome/browser/extensions/extension_creator_filter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-16T21:55:47Z",
+      "side": 0,
+      "message": "Can you move this file to extensions// as well. It doesn\u0027t have any chrome dependencies.",
+      "range": {
+        "startLine": 5,
+        "startChar": 25,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "c732605e7d88b7586e12e405cd56172edb1d3261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf692e5_f2315d58",
+        "filename": "chrome/browser/extensions/pack_extension_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-16T21:55:47Z",
+      "side": 0,
+      "message": "Maybe this file can also be moved to extensions/ in a follow-up considering it no longer has any chrome dependencies?",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "c732605e7d88b7586e12e405cd56172edb1d3261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
