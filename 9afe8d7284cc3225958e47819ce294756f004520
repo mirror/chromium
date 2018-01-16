@@ -22,6 +22,30 @@
       "revId": "9afe8d7284cc3225958e47819ce294756f004520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52077960_a867a184",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-16T19:11:02Z",
+      "side": 1,
+      "message": "There are a few different options here.  \n\n* If you only care about the origin, we just associate it with either first or the most recent page in the session (I\u0027ve modified this so that uses the ID of the most recent page in the session).  This is probably simplest for now, and we could adopt some other strategy later.\n\nWe could also add a separate ID for the MediaEngagementSession, and either:\n* refer to that in all of events we record (leaving them associated with the page). This wouldn\u0027t give us all of the associated pages.\nor\n* Record a seperate event for each page opened in the session to store those relations seperately, and associate the metrics with MediaEngagementSession. (This will currently make it slightly harder to query for media-engagement by URL.)  We\u0027ll probably figure out a more canonical way of dealing with relations like this at some point.",
+      "parentUuid": "12db7767_1955fe0f",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 68
+      },
+      "revId": "9afe8d7284cc3225958e47819ce294756f004520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
