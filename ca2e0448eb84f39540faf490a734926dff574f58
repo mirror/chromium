@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3af600c4_2b72be81",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Lower case matches the mocks - I\u0027ll double check with Eli.",
+      "parentUuid": "7fb855ee_66fa8537",
+      "range": {
+        "startLine": 244,
+        "startChar": 55,
+        "endLine": 244,
+        "endChar": 59
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ab1d37_57a2363b",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bda11a88_50789259",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ab1d37_57a2363b",
+      "range": {
+        "startLine": 2882,
+        "startChar": 7,
+        "endLine": 2882,
+        "endChar": 39
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80ec7d78_07c47ead",
         "filename": "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.cc",
         "patchSetId": 13
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-16T13:01:59Z",
       "side": 1,
       "message": "Do we need to call EnsureBrowser() here? Or abort id there is no browser? DiceTurnSyncOnHelper DCHECKs that the browser is not nulltpr.",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a11083_99eaa0f7",
+        "filename": "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "The bubble view is always presented on browser window. But I am keeping the EnsureBrowser just to make sure we match the existing sign-in codepath.",
+      "parentUuid": "80ec7d78_07c47ead",
       "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +171,48 @@
     },
     {
       "key": {
+        "uuid": "466a373e_c8c6ff97",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "We only show the accounts in the Chrome UI when full DICE is enabled.",
+      "parentUuid": "637744b1_9a31d057",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84caa143_a9d7aa7a",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done (however, it is not possible to add bookmarks from guest and incognito profiles.)",
+      "parentUuid": "a80257ea_ed13220b",
+      "range": {
+        "startLine": 198,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 37
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87239869_f04fafb0",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
         "patchSetId": 13
@@ -119,6 +227,24 @@
       "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87cc88e_5fffcf5b",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87239869_f04fafb0",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "a892fe08_cd1fc6d2",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251370b3_682b8982",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adfdffa_12855eed",
         "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
         "patchSetId": 13
@@ -150,6 +294,30 @@
       "writtenOn": "2018-01-16T13:01:59Z",
       "side": 1,
       "message": "Should this be user action metrics instead?\nSame for other VLOG below.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 40
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5b1cee_504785c0",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "I\u0027ll add UMA data later to not bloat this CL.",
+      "parentUuid": "8adfdffa_12855eed",
       "range": {
         "startLine": 51,
         "startChar": 4,
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "d8905dd5_1e64feed",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f6f7b0a_e7e7d31a",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e680d8bd_d9faa78a",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
         "patchSetId": 13
@@ -190,6 +376,30 @@
       "writtenOn": "2018-01-16T13:01:59Z",
       "side": 1,
       "message": "This is taking the ownership, right?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d990082d_c2ccc85c",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Yes. This is how views framework works for views ownership.",
+      "parentUuid": "e680d8bd_d9faa78a",
       "range": {
         "startLine": 54,
         "startChar": 2,
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "b2b55638_7f4a06ac",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb28a41_155a4fbe",
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb3f411_59c8d35b",
         "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
         "patchSetId": 13
@@ -239,6 +467,30 @@
       "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186d36e4_a3a31229",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T15:58:39Z",
+      "side": 1,
+      "message": "Nope, this is pretty standard for views.",
+      "parentUuid": "fdb3f411_59c8d35b",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "ca2e0448eb84f39540faf490a734926dff574f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
