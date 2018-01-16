@@ -10,10 +10,19 @@
 #error "This file requires ARC support."
 #endif
 
+@interface ToolbarButton ()
+// Constraints for the named layout guide.
+@property(nonatomic, strong)
+    NSArray<NSLayoutConstraint*>* namedGuideConstraints;
+@end
+
 @implementation ToolbarButton
 @synthesize visibilityMask = _visibilityMask;
+@synthesize guideName = _guideName;
+@synthesize constraintPriority = _constraintPriority;
 @synthesize hiddenInCurrentSizeClass = _hiddenInCurrentSizeClass;
 @synthesize hiddenInCurrentState = _hiddenInCurrentState;
+@synthesize namedGuideConstraints = _namedGuideConstraints;
 
 + (instancetype)toolbarButtonWithImageForNormalState:(UIImage*)normalImage
                             imageForHighlightedState:(UIImage*)highlightedImage
@@ -25,6 +34,7 @@
   [button setImage:highlightedImage forState:UIControlStateSelected];
   button.titleLabel.textAlignment = NSTextAlignmentCenter;
   button.translatesAutoresizingMaskIntoConstraints = NO;
+  button.constraintPriority = UILayoutPriorityRequired;
   return button;
 }
 
@@ -40,6 +50,13 @@
     self.imageView.frame = AlignRectToPixel(self.imageView.frame);
     self.titleLabel.frame = self.bounds;
   }
+}
+
+#pragma mark - Property accessors
+
+- (void)setGuideName:(GuideName*)guideName {
+  _guideName = guideName;
+  self.namedGuideConstraints = nil;
 }
 
 #pragma mark - Public Methods
@@ -97,6 +114,23 @@
 // and hiddenInCurrentState properties, then updates its visibility accordingly.
 - (void)setHiddenForCurrentStateAndSizeClass {
   self.hidden = self.hiddenInCurrentState || self.hiddenInCurrentSizeClass;
+  if (self.guideName && !self.namedGuideConstraints) {
+    UILayoutGuide* guide = FindNamedGuide(self.guideName, self);
+    if (guide) {
+      self.namedGuideConstraints = @[
+        [guide.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [guide.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [guide.topAnchor constraintEqualToAnchor:self.topAnchor],
+        [guide.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+      ];
+      for (NSLayoutConstraint* constraint in self.namedGuideConstraints) {
+        constraint.priority = self.constraintPriority;
+      }
+    }
+  }
+  for (NSLayoutConstraint* constraint in self.namedGuideConstraints) {
+    constraint.active = !self.hidden;
+  }
 }
 
 @end
