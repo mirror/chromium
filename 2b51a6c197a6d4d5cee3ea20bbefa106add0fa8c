@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892a3197_3e2959a3",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "This fails on OSX 10.9 since IsLowEnergyAvailable is false on that platform. Would it make sense to wrap this test in \n\n  if (!PlatformSupportsLowEnergy()) {\n    LOG(WARNING) \u003c\u003c \"Low Energy Bluetooth unavailable, skipping unit test.\";\n    return;\n  }\n\nfor OSX?",
+      "range": {
+        "startLine": 696,
+        "startChar": 0,
+        "endLine": 696,
+        "endChar": 37
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51605b0_840f9b8c",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "The newly introduced tests fail on all platforms except macOS. Should I just enable them on macOS? Also would it be possible to not rely on a queue internally? I checked the implementations on other platforms and both BlueZ and Android don\u0027t do it. Is there precedent in Chrome for handling APIs that are not blocking but also don\u0027t support callbacks (i.e. similarly to IOBluetoothPreferenceSetControllerPowerState?",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 717,
+        "endChar": 24
+      },
+      "revId": "2b51a6c197a6d4d5cee3ea20bbefa106add0fa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

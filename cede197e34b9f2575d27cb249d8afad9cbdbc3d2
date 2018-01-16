@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77481b10_f1cbcb66",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d0e7347_c8e6c77d",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2d5a5a_b1e7bdc4",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bb00ef_5da57257",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Ack, this indeed seems rather unlikely. Removed now.",
+      "parentUuid": "8b2d5a5a_b1e7bdc4",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "adde9a48_d9577690",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb90c7a3_788ffc90",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5227f6_d7c0aa05",
         "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e09093_a9015e4f",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5227f6_d7c0aa05",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bf06181c_479bcc5a",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c63049e1_4b3d8501",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37ce3c4_afa8a802",
         "filename": "device/bluetooth/bluetooth_preferences_mac.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f2b0c978_1e30a969",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37ce3c4_afa8a802",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "267d7a09_5ece558d",
         "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
         "patchSetId": 5
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-15T06:48:30Z",
       "side": 1,
       "message": "I\u0027m not familiar enough with mac but I\u0027ve seen uses of undocumented APIs guarded by respondsToSelector. Would that be appropriate here?\n\nAlso a unit test to make sure we find out if the function disappears e.g.\n\nEXPECT_TRUE([SomeClass class], instancesRespondToSelector:@selector(privateApiThing:));",
+      "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec018e92_eeb79c6a",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-16T16:46:54Z",
+      "side": 1,
+      "message": "I must admit I am not very familiar with Mac either, but I don\u0027t think respondsToSelector is appropriate here. The reason being that IOBluetoothPreferenceSetControllerPowerState is a C API and thus lives in the global namespace. There is no class we could call respondsToSelector on. My usage is similar to the usage of the private API CGSSetDenyWindowServerConnections in [1].\n\nRegarding when the function disappears: Wouldn\u0027t the linker errors we would get be enough to detect this? This is what happens to me locally when I intentionally misspell the API.\n\n[1] https://codesearch.chromium.org/chromium/src/content/renderer/renderer_main_platform_delegate_mac.mm?l\u003d25\u0026rcl\u003d4d9273e282eae42eae0c5cf035490e0d53c4daa2",
+      "parentUuid": "267d7a09_5ece558d",
       "revId": "cede197e34b9f2575d27cb249d8afad9cbdbc3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
