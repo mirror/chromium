@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d4eb0af_ec101e7d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-16T22:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe8ddff_b01cda97",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea857332_9bcee4ca",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a93484_5ba78c2c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-16T22:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea857332_9bcee4ca",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4cc01409_69e9e130",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-16T22:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b85284b_05ecb6c4",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d79c84d_d5645f43",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-16T16:08:50Z",
       "side": 1,
       "message": "should you use base::TimeTicks here?\n\n- base::TimeTicks monotonically increases at the same rate but doesn\u0027t increase while the system is suspended.\n- base::Time is affected by changes to the system time (e.g. it can go backwards) but increases while the system is suspended.\n\nif you need timestamps that monotonically increase but also continue while suspended, that\u0027s probably possible too, but it\u0027s a bit more work.",
+      "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdb6d2e_6712c53c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-16T22:36:20Z",
+      "side": 1,
+      "message": "I think we need base::Time in this case, because we need the time to increase when the sys is suspended.\n\nAs you said, one problem with base::Time is the time could go backwards when the sys is suspended, and in this case the duration will be -ve. I could remove such data in the downstream processing. I suspect it wouldn\u0027t happen a lot. I\u0027ll also investigate the proper use of TimeTicks that increases while suspended, and will put it into a future cl (after M65). Does it sound ok to you?",
+      "parentUuid": "7d79c84d_d5645f43",
       "revId": "069d9d6d192680654e24bb5aa104f40ded3182dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
