@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dea44199_bd6e288f",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-16T22:02:12Z",
+      "side": 1,
+      "message": "yeah... my next iteration was to write actual instructions for how to turn that on since it\u0027s gonna be shared by 2-3 sections.\n\nAdd a TODO.",
+      "parentUuid": "2876405d_775e269c",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91c27d5b_bc890456",
         "filename": "docs/memory/tools.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191e3b7b_3861b904",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-16T22:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c27d5b_bc890456",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "032773ec_6269208a",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-16T22:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96704e7d_536b6784",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "045f73e3_543845e4",
         "filename": "docs/memory/tools.md",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c62bfb_07315e60",
+        "filename": "docs/memory/tools.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-16T22:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045f73e3_543845e4",
+      "revId": "a8e2e338301a7d602ba4c04ae7198172633ad6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
