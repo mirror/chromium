@@ -172,8 +172,8 @@ TEST(ChromeNetworkDailyDataSavingMetricsTest,
     net::MockClientSocketFactory mock_socket_factory;
     context.set_client_socket_factory(&mock_socket_factory);
     // Set the |proxy_service| to use |test_case.proxy_server| for requests.
-    std::unique_ptr<net::ProxyService> proxy_service(
-        net::ProxyService::CreateFixedFromPacResult(
+    std::unique_ptr<net::ProxyResolutionService> proxy_service(
+        net::ProxyResolutionService::CreateFixedFromPacResult(
             test_case.proxy_server.ToPacString()));
     context.set_proxy_service(proxy_service.get());
     context.Init();

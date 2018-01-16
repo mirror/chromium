@@ -732,7 +732,8 @@ class TestURLRequestContextWithProxy : public TestURLRequestContext {
   TestURLRequestContextWithProxy(const std::string& proxy,
                                  NetworkDelegate* delegate)
       : TestURLRequestContext(true) {
-    context_storage_.set_proxy_service(ProxyService::CreateFixed(proxy));
+    context_storage_.set_proxy_service(
+        ProxyResolutionService::CreateFixed(proxy));
     set_network_delegate(delegate);
     Init();
   }
