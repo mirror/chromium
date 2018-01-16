@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889dd388_fc84947b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-16T11:31:32Z",
+      "side": 1,
+      "message": "Without https://chromium-review.googlesource.com/c/chromium/src/+/781326,\nWhen if we navigate into a container, it should be deterministic because we couldn\u0027t consider other candidate in current container.\nI attached a test case at comment#10 in below issue that introduces a bug by this change.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d770103",
+      "range": {
+        "startLine": 1407,
+        "startChar": 0,
+        "endLine": 1407,
+        "endChar": 50
+      },
+      "revId": "e09b8920b9e82d2eedeac02fe84e4ca83a6be0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
