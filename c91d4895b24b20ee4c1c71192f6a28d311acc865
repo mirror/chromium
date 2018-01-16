@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76c6902_d6bfdb91",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-16T21:44:59Z",
+      "side": 1,
+      "message": "fyi: testing this on GSA and gmail, it appears that ignoring this line and always entering this branch doesn\u0027t change behavior.",
+      "revId": "c91d4895b24b20ee4c1c71192f6a28d311acc865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
