@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9a9477f2_777baba9",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-16T21:29:12Z",
+      "side": 1,
+      "message": "good catch, that is weird.\n\nIMHO it\u0027s probably better to leave the previous code alone and add a separate iteration over the display IDs for zoom factor.",
+      "parentUuid": "66c14da9_6e0a2923",
+      "revId": "1cfbd09894a471063209224321a1bc435e90fcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea56516d_d74b9001",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 4
