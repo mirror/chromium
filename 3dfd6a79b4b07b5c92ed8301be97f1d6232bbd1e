@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6c64e3_005d6b91",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T20:36:07Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd3517c_f29d3a2e",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T20:36:07Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nconst visible \u003d this.state.previewLoading || this.state.previewFailed || this.state.invalidSettings;\nhis.setOverlayVisible_(visible);",
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ba7d82_91d18705",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T20:36:07Z",
+      "side": 1,
+      "message": "Is this escaping necessary? Tried it locally and it seems it is producing the same result either way.",
+      "range": {
+        "startLine": 258,
+        "startChar": 20,
+        "endLine": 258,
+        "endChar": 21
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf0102a_b6eaa19b",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T20:36:07Z",
+      "side": 1,
+      "message": "Could this be as follows?\n\nthis.plugin_.classList.add(\u0027preview-area-plugin\u0027);",
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1f90e2_a6454d86",
+        "filename": "chrome/browser/resources/print_preview/new/preview_area.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-16T20:36:07Z",
+      "side": 1,
+      "message": "At lines 358-359 we check for |available| first, before accessing |value|. Is this not necessary here?",
+      "range": {
+        "startLine": 325,
+        "startChar": 19,
+        "endLine": 325,
+        "endChar": 51
+      },
+      "revId": "3dfd6a79b4b07b5c92ed8301be97f1d6232bbd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
