@@ -22,6 +22,30 @@
       "revId": "802d437a7dd7c8cbc46c13de89f6bf90372a17d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5ab9f0_98d6c3d5",
+        "filename": "ash/wm/fullscreen_window_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-16T20:40:36Z",
+      "side": 1,
+      "message": "Anyway if we do decide to go the route of changing IsFullscreen function, I wouldn\u0027t do it in this CL, here I would just do the simple fix.",
+      "parentUuid": "4b3af888_d6a35588",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "802d437a7dd7c8cbc46c13de89f6bf90372a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
