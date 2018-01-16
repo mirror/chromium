@@ -1356,17 +1356,6 @@ bool AXLayoutObject::AriaHasPopup() const {
          RoleValue() == kTextFieldWithComboBoxRole;
 }
 
-bool AXLayoutObject::SupportsARIADragging() const {
-  const AtomicString& grabbed = GetAttribute(aria_grabbedAttr);
-  return EqualIgnoringASCIICase(grabbed, "true") ||
-         EqualIgnoringASCIICase(grabbed, "false");
-}
-
-bool AXLayoutObject::SupportsARIADropping() const {
-  const AtomicString& drop_effect = GetAttribute(aria_dropeffectAttr);
-  return !drop_effect.IsEmpty();
-}
-
 bool AXLayoutObject::SupportsARIAFlowTo() const {
   return !GetAttribute(aria_flowtoAttr).IsEmpty();
 }

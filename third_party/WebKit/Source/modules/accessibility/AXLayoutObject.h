@@ -119,8 +119,6 @@ class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
   void AriaOwnsElements(AXObjectVector&) const override;
 
   bool AriaHasPopup() const override;
-  bool SupportsARIADragging() const override;
-  bool SupportsARIADropping() const override;
   bool SupportsARIAFlowTo() const override;
   bool SupportsARIAOwns() const override;
 

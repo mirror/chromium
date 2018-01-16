@@ -623,8 +623,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool SupportsARIAActiveDescendant() const;
   bool SupportsARIAAttributes() const;
   bool SupportsARIAExpanded() const;
-  virtual bool SupportsARIADragging() const { return false; }
-  virtual bool SupportsARIADropping() const { return false; }
   virtual bool SupportsARIAFlowTo() const { return false; }
   virtual bool SupportsARIAOwns() const { return false; }
   bool SupportsRangeValue() const;

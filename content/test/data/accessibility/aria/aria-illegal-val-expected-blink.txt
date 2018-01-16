@@ -5,9 +5,7 @@ rootWebArea
 ++treeItem selectable name='Checked illegal' checkedState=true
 ++genericContainer name='Current illegal' ariaCurrentState=true
 ++genericContainer name='Disabled illegal' restriction=disabled
-++genericContainer name='Dropeffect illegal'
 ++treeItem expanded selectable name='Expanded illegal'
-++genericContainer name='Grabbed illegal'
 ++popUpButton haspopup name='Haspopup illegal'
 ++genericContainer ariaInvalidValue='X-ILLEGAL' name='Invalid illegal' invalidState=other
 ++log containerLiveRelevant='additions text' containerLiveStatus='X-ILLEGAL' name='Live illegal' liveRelevant='additions text' liveStatus='X-ILLEGAL' containerLiveAtomic=false containerLiveBusy=false liveAtomic=false

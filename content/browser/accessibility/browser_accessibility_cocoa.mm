@@ -65,10 +65,8 @@ NSString* const NSAccessibilityARIARowIndexAttribute = @"AXARIARowIndex";
 NSString* const NSAccessibilityARIASetSizeAttribute = @"AXARIASetSize";
 NSString* const NSAccessibilityAccessKeyAttribute = @"AXAccessKey";
 NSString* const NSAccessibilityDOMIdentifierAttribute = @"AXDOMIdentifier";
-NSString* const NSAccessibilityDropEffectsAttribute = @"AXDropEffects";
 NSString* const NSAccessibilityEditableAncestorAttribute =
     @"AXEditableAncestor";
-NSString* const NSAccessibilityGrabbedAttribute = @"AXGrabbed";
 NSString* const NSAccessibilityHighestEditableAncestorAttribute =
     @"AXHighestEditableAncestor";
 NSString* const NSAccessibilityInvalidAttribute = @"AXInvalid";
@@ -574,14 +572,12 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
       {NSAccessibilityDisclosedByRowAttribute, @"disclosedByRow"},
       {NSAccessibilityDisclosureLevelAttribute, @"disclosureLevel"},
       {NSAccessibilityDisclosedRowsAttribute, @"disclosedRows"},
-      {NSAccessibilityDropEffectsAttribute, @"dropEffects"},
       {NSAccessibilityDOMIdentifierAttribute, @"domIdentifier"},
       {NSAccessibilityEditableAncestorAttribute, @"editableAncestor"},
       {NSAccessibilityEnabledAttribute, @"enabled"},
       {NSAccessibilityEndTextMarkerAttribute, @"endTextMarker"},
       {NSAccessibilityExpandedAttribute, @"expanded"},
       {NSAccessibilityFocusedAttribute, @"focused"},
-      {NSAccessibilityGrabbedAttribute, @"grabbed"},
       {NSAccessibilityHeaderAttribute, @"header"},
       {NSAccessibilityHelpAttribute, @"help"},
       {NSAccessibilityHighestEditableAncestorAttribute,
@@ -1019,17 +1015,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   return nil;
 }
 
-- (NSString*)dropEffects {
-  if (![self instanceActive])
-    return nil;
-
-  std::string dropEffects;
-  if (browserAccessibility_->GetHtmlAttribute("aria-dropeffect", &dropEffects))
-    return base::SysUTF8ToNSString(dropEffects);
-
-  return nil;
-}
-
 - (NSString*)domIdentifier {
   if (![self instanceActive])
     return nil;
@@ -1092,17 +1077,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   NSNumber* ret = [NSNumber numberWithBool:
       manager->GetFocus() == browserAccessibility_];
   return ret;
-}
-
-- (NSNumber*)grabbed {
-  if (![self instanceActive])
-    return nil;
-  std::string grabbed;
-  if (browserAccessibility_->GetHtmlAttribute("aria-grabbed", &grabbed) &&
-      grabbed == "true")
-    return [NSNumber numberWithBool:YES];
-
-  return [NSNumber numberWithBool:NO];
 }
 
 - (id)header {
@@ -2942,16 +2916,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   }
   if (browserAccessibility_->HasBoolAttribute(ui::AX_ATTR_BUSY)) {
     [ret addObjectsFromArray:@[ NSAccessibilityARIABusyAttribute ]];
-  }
-
-  std::string dropEffect;
-  if (browserAccessibility_->GetHtmlAttribute("aria-dropeffect", &dropEffect)) {
-    [ret addObjectsFromArray:@[ NSAccessibilityDropEffectsAttribute ]];
-  }
-
-  std::string grabbed;
-  if (browserAccessibility_->GetHtmlAttribute("aria-grabbed", &grabbed)) {
-    [ret addObjectsFromArray:@[ NSAccessibilityGrabbedAttribute ]];
   }
 
   // Add expanded attribute only if it has expanded or collapsed state.

@@ -1565,8 +1565,7 @@ bool AXObject::SupportsARIAExpanded() const {
 }
 
 bool AXObject::SupportsARIAAttributes() const {
-  return IsLiveRegion() || SupportsARIADragging() || SupportsARIADropping() ||
-         SupportsARIAFlowTo() || SupportsARIAOwns() ||
+  return IsLiveRegion() || SupportsARIAFlowTo() || SupportsARIAOwns() ||
          HasAttribute(aria_labelAttr) || HasAttribute(aria_currentAttr);
 }
 
