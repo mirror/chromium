@@ -16,6 +16,8 @@ import android.provider.Browser;
 import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
@@ -23,6 +25,7 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -153,9 +156,10 @@ public class MediaViewerUtils {
     private static boolean isImageType(String mimeType) {
         if (TextUtils.isEmpty(mimeType)) return false;
 
-        String[] pieces = mimeType.toLowerCase(Locale.getDefault()).split("/");
-        if (pieces.length != 2) return false;
+        List<String> pieces =
+                Splitter.on("/").splitToList(mimeType.toLowerCase(Locale.getDefault()));
+        if (pieces.size() != 2) return false;
 
-        return MIMETYPE_IMAGE.equals(pieces[0]);
+        return MIMETYPE_IMAGE.equals(pieces.get(0));
     }
 }

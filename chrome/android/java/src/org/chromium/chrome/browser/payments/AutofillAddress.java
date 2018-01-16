@@ -10,6 +10,8 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Pair;
 
+import com.google.common.base.Splitter;
+
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
@@ -307,7 +309,10 @@ public class AutofillAddress extends PaymentOption {
         PaymentAddress result = new PaymentAddress();
 
         result.country = getCountryCode(mProfile);
-        result.addressLine = mProfile.getStreetAddress().split("\n");
+        List<String> addressLineList =
+                Splitter.onPattern("\n").splitToList(mProfile.getStreetAddress());
+        result.addressLine = addressLineList.toArray(new String[addressLineList.size()]);
+
         result.region = mProfile.getRegion();
         result.city = mProfile.getLocality();
         result.dependentLocality = mProfile.getDependentLocality();
