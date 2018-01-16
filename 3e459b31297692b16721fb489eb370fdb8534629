@@ -37,6 +37,40 @@
     },
     {
       "key": {
+        "uuid": "c5a78ef5_3851209e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T14:47:37Z",
+      "side": 1,
+      "message": "no need to assign twice: remove one \"world_ \u003d\"",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cd5bc3_78c7c2f7",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-16T14:47:37Z",
+      "side": 1,
+      "message": "super-nit: it might be easier to just give it a default value of null in the IDL, like CustomEventInit; then it will always be present and have a value, and you shouldn\u0027t need to handle empty, null and undefined separately",
+      "revId": "3e459b31297692b16721fb489eb370fdb8534629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a9d3b1_ef5fa5f6",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceObserverTest.cpp",
         "patchSetId": 16
