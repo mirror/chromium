@@ -273,6 +273,8 @@ const char kPresetPerformanceTestingDryRunOnAllSites[] =
 const char kPresetLiveRunForBetterAds[] =
     "liverun_on_better_ads_violating_sites";
 
+const char kSmartUiDelayParam[] = "smart_ui_delay";
+
 // Configuration --------------------------------------------------------------
 
 // static
@@ -399,6 +401,14 @@ scoped_refptr<ConfigurationList> GetEnabledConfigurations() {
 bool HasEnabledConfiguration(const Configuration& config) {
   return base::ContainsValue(
       GetEnabledConfigurations()->configs_by_decreasing_priority(), config);
+}
+
+base::TimeDelta GetSmartUiDelay() {
+  // Seconds in 24 hours.
+  const int default_delay = 24 * 60 * 60;
+  int seconds_to_delay = base::GetFieldTrialParamByFeatureAsInt(
+      kSafeBrowsingSubresourceFilter, kSmartUiDelayParam, default_delay);
+  return base::TimeDelta::FromSeconds(seconds_to_delay);
 }
 
 namespace testing {

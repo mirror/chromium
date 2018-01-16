@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
+#include "base/time/time.h"
 #include "components/subresource_filter/core/common/activation_level.h"
 #include "components/subresource_filter/core/common/activation_list.h"
 #include "components/subresource_filter/core/common/activation_scope.h"
@@ -177,6 +178,10 @@ scoped_refptr<ConfigurationList> GetEnabledConfigurations();
 
 bool HasEnabledConfiguration(const Configuration& config);
 
+// Gets the delay in which the UI (currently Android-only) should stop
+// re-showing for. Aka "smart UI". Governed by a global variation param.
+base::TimeDelta GetSmartUiDelay();
+
 namespace testing {
 
 // Returns the currently cached enabled ConfigurationList, if any, and replaces
@@ -226,6 +231,8 @@ extern const char kDisablePresetsParameterName[];
 extern const char kPresetLiveRunOnPhishingSites[];
 extern const char kPresetPerformanceTestingDryRunOnAllSites[];
 extern const char kPresetLiveRunForBetterAds[];
+
+extern const char kSmartUiDelayParam[];
 
 }  // namespace subresource_filter
 

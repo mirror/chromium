@@ -34,19 +34,17 @@ bool ShouldUseSmartUI() {
   return base::FeatureList::IsEnabled(
       subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI);
 #endif
-  return false;
+  return true;
 }
 
 }  // namespace
-
-constexpr base::TimeDelta
-    SubresourceFilterContentSettingsManager::kDelayBeforeShowingInfobarAgain;
 
 SubresourceFilterContentSettingsManager::
     SubresourceFilterContentSettingsManager(Profile* profile)
     : history_observer_(this),
       settings_map_(HostContentSettingsMapFactory::GetForProfile(profile)),
       clock_(base::MakeUnique<base::DefaultClock>(base::DefaultClock())),
+      smart_ui_delay_(subresource_filter::GetSmartUiDelay()),
       should_use_smart_ui_(ShouldUseSmartUI()) {
   DCHECK(profile);
   DCHECK(settings_map_);
@@ -104,7 +102,7 @@ bool SubresourceFilterContentSettingsManager::ShouldShowUIForSite(
   double last_shown_time_double = 0;
   if (dict->GetDouble(kInfobarLastShownTimeKey, &last_shown_time_double)) {
     base::Time last_shown = base::Time::FromDoubleT(last_shown_time_double);
-    if (clock_->Now() - last_shown < kDelayBeforeShowingInfobarAgain)
+    if (clock_->Now() - last_shown < smart_ui_delay_)
       return false;
   }
   return true;

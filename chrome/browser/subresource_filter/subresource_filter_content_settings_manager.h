@@ -71,11 +71,6 @@ class SubresourceFilterContentSettingsManager
     clock_ = std::move(tick_clock);
   }
 
-  // Time before showing the UI again on a domain.
-  // TODO(csharrison): Consider setting this via a finch param.
-  static constexpr base::TimeDelta kDelayBeforeShowingInfobarAgain =
-      base::TimeDelta::FromHours(24);
-
  private:
   // content_settings::Observer:
   void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
@@ -105,6 +100,9 @@ class SubresourceFilterContentSettingsManager
   // A clock is injected into this class so tests can set arbitrary timestamps
   // in website settings.
   std::unique_ptr<base::Clock> clock_;
+
+  // Time to delay the UI from showing after it has already shown.
+  base::TimeDelta smart_ui_delay_;
 
   // Used internally so the class ignores changes to the settings that are not
   // user initiated through the settings UI.
