@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4c6183_6f28febf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-16T19:14:29Z",
+      "side": 1,
+      "message": "Seems a little weird that normal sections with \u003c 50 properties will have showingAll \u003d\u003d\u003d false.  Perhaps consider creating the showAllButton only when needed?",
+      "range": {
+        "startLine": 753,
+        "startChar": 9,
+        "endLine": 753,
+        "endChar": 20
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6dcd4f_2b7bd9be",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-16T19:14:29Z",
+      "side": 1,
+      "message": "When do we want maxProperties !\u003d\u003d 50?",
+      "range": {
+        "startLine": 1309,
+        "startChar": 81,
+        "endLine": 1309,
+        "endChar": 105
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab9d4a5_c18902ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-16T19:14:29Z",
+      "side": 1,
+      "message": "What does this TODO entail?  It seems like this works fine.\nnit: period.",
+      "range": {
+        "startLine": 1344,
+        "startChar": 7,
+        "endLine": 1344,
+        "endChar": 11
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b1a0a5_0dda5662",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/stylesSidebarPane.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-16T19:14:29Z",
+      "side": 1,
+      "message": "prefix as \u0027styles-show-all\u0027 to avoid possible selector conflicts?",
+      "range": {
+        "startLine": 221,
+        "startChar": 1,
+        "endLine": 221,
+        "endChar": 5
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
