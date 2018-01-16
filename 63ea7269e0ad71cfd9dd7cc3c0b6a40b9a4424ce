@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465d116d_650ff24e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T17:03:19Z",
+      "side": 1,
+      "message": "Optional optimization: use nullptr if clip_rect\u003d\u003dclip_rect_excluding_overlay_scrollbars in (common?) cases that there are no overlay scrollbars to avoid doubled length of the vector containing cached clip rects.",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3fb4e0_9deec25d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T17:03:19Z",
+      "side": 1,
+      "message": "Nit: better to be consistent with other json names (using lowerUpper format).",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda8c804_5f03cf76",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T17:03:19Z",
+      "side": 1,
+      "message": "Please combine common code at line 324-325 and line 329-330.",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0844f7f0_c15dbc35",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-16T17:03:19Z",
+      "side": 1,
+      "message": "Please add code to get clip rect with kIgnorePlatformOverlayScrollbarSize to ensure that the cached clips for different clip behaviors don\u0027t interfere.",
+      "revId": "63ea7269e0ad71cfd9dd7cc3c0b6a40b9a4424ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
