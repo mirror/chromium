@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5624fa67_19f4a4de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-16T22:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dcd0037_8f77f191",
+      "range": {
+        "startLine": 86,
+        "startChar": 70,
+        "endLine": 86,
+        "endChar": 80
+      },
+      "revId": "bb58a02830c0f0d8d0fa41eb04fd136e1215c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e83ea9b_a248596e",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "bb58a02830c0f0d8d0fa41eb04fd136e1215c680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e7fbb4_9fe32b0e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 22254,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-16T22:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e83ea9b_a248596e",
+      "range": {
+        "startLine": 22254,
+        "startChar": 24,
+        "endLine": 22254,
+        "endChar": 39
+      },
+      "revId": "bb58a02830c0f0d8d0fa41eb04fd136e1215c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
