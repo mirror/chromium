@@ -70,6 +70,24 @@
       "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a62f52_0a0c93ad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-invalid-color-values-expected.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T21:56:18Z",
+      "side": 1,
+      "message": "Yes, that would be good enough I think.",
+      "parentUuid": "13ef7b4e_233d2b12",
+      "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
