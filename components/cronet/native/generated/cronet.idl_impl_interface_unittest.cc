@@ -222,6 +222,7 @@ class Cronet_EngineTest : public ::testing::Test {
   bool StartWithParams_called_ = false;
   bool StartNetLogToFile_called_ = false;
   bool StopNetLog_called_ = false;
+  bool Shutdown_called_ = false;
   bool GetVersionString_called_ = false;
   bool GetDefaultUserAgent_called_ = false;
 
@@ -239,7 +240,7 @@ void TestCronet_Engine_StartWithParams(Cronet_EnginePtr self,
   CHECK(test);
   test->StartWithParams_called_ = true;
 }
-void TestCronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
+bool TestCronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
                                          CharString fileName,
                                          bool logAll) {
   CHECK(self);
@@ -247,6 +248,8 @@ void TestCronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
   Cronet_EngineTest* test = static_cast<Cronet_EngineTest*>(context);
   CHECK(test);
   test->StartNetLogToFile_called_ = true;
+
+  return static_cast<bool>(0);
 }
 void TestCronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   CHECK(self);
@@ -254,6 +257,13 @@ void TestCronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   Cronet_EngineTest* test = static_cast<Cronet_EngineTest*>(context);
   CHECK(test);
   test->StopNetLog_called_ = true;
+}
+void TestCronet_Engine_Shutdown(Cronet_EnginePtr self) {
+  CHECK(self);
+  Cronet_EngineContext context = Cronet_Engine_GetContext(self);
+  Cronet_EngineTest* test = static_cast<Cronet_EngineTest*>(context);
+  CHECK(test);
+  test->Shutdown_called_ = true;
 }
 CharString TestCronet_Engine_GetVersionString(Cronet_EnginePtr self) {
   CHECK(self);
@@ -264,7 +274,8 @@ CharString TestCronet_Engine_GetVersionString(Cronet_EnginePtr self) {
 
   return static_cast<CharString>(0);
 }
-CharString TestCronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self) {
+CharString TestCronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self,
+                                                 CharString partialUserAgent) {
   CHECK(self);
   Cronet_EngineContext context = Cronet_Engine_GetContext(self);
   Cronet_EngineTest* test = static_cast<Cronet_EngineTest*>(context);
@@ -279,7 +290,8 @@ CharString TestCronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self) {
 TEST_F(Cronet_EngineTest, TestCreate) {
   Cronet_EnginePtr test = Cronet_Engine_CreateStub(
       TestCronet_Engine_StartWithParams, TestCronet_Engine_StartNetLogToFile,
-      TestCronet_Engine_StopNetLog, TestCronet_Engine_GetVersionString,
+      TestCronet_Engine_StopNetLog, TestCronet_Engine_Shutdown,
+      TestCronet_Engine_GetVersionString,
       TestCronet_Engine_GetDefaultUserAgent);
   CHECK(test);
   Cronet_Engine_SetContext(test, this);
@@ -287,10 +299,11 @@ TEST_F(Cronet_EngineTest, TestCreate) {
   CHECK(!StartNetLogToFile_called_);
   Cronet_Engine_StopNetLog(test);
   CHECK(StopNetLog_called_);
+  Cronet_Engine_Shutdown(test);
+  CHECK(Shutdown_called_);
   Cronet_Engine_GetVersionString(test);
   CHECK(GetVersionString_called_);
-  Cronet_Engine_GetDefaultUserAgent(test);
-  CHECK(GetDefaultUserAgent_called_);
+  CHECK(!GetDefaultUserAgent_called_);
 
   Cronet_Engine_Destroy(test);
 }
