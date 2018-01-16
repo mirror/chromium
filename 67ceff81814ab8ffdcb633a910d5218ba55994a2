@@ -16,6 +16,24 @@
       "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df8ff2_e1f43b97",
+        "filename": "base/message_loop/message_pump_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T19:07:07Z",
+      "side": 1,
+      "message": "kCFRunLoopCommonModes is const. I just assume it can\u0027t be constexpr because its value is not known at compile-time but rather just before run-time (i.e. it\u0027s const in the scope of the program but configurable by the OS before run-time).",
+      "parentUuid": "4ed09345_a422c1fd",
+      "revId": "67ceff81814ab8ffdcb633a910d5218ba55994a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
