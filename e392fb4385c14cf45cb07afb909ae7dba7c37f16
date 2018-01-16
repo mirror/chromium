@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4effc411_f5715fa4",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-16T19:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1920c454_3c61f658",
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0966bc2_8dca447b",
         "filename": "chrome/test/data/webui/print_preview/model_test.js",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "415807be_d0ebe91c",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-16T19:54:37Z",
+      "side": 1,
+      "message": "Yes, that is why I was converting to JSON. assertDeepEquals works, thanks!",
+      "parentUuid": "b0966bc2_8dca447b",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ef86c97_c460758e",
         "filename": "chrome/test/data/webui/print_preview/model_test.js",
         "patchSetId": 14
@@ -62,6 +104,30 @@
       "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06965d1b_12ea921e",
+        "filename": "chrome/test/data/webui/print_preview/model_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-16T19:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef86c97_c460758e",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "e392fb4385c14cf45cb07afb909ae7dba7c37f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
