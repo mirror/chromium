@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "350e1856_66ce6777",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-16T10:30:15Z",
+      "side": 1,
+      "message": "ACK\n\ntreib@, true.\nmamir@, conceptually this callback should not be run more than once. Next time we need a token, we will ask again with a new callback. Thus, it should be BindOnce, but GetToken expects RepeatedCallback.",
+      "parentUuid": "5df5d184_ce7d2a11",
+      "range": {
+        "startLine": 175,
+        "startChar": 44,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214f8407_8bff8e2a",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 2
@@ -158,6 +182,24 @@
       "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48ac5b3_26e0c5d0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-16T10:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "214f8407_8bff8e2a",
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +311,24 @@
       "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962b0884_3350c82f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-16T10:30:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "297383ce_fe7eff3d",
+      "revId": "1458d8d3a342417e3174d80db08869bed1adc65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
