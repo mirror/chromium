@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488f14c9_71b126ea",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-16T16:55:22Z",
+      "side": 1,
+      "message": "Should CanHandleMoveWindowBetweenDisplays() check this too, or perhaps CanHandleMoveWindowBetweenDisplays() should have the real checks and this code should DCHECK?",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 3
+      },
+      "revId": "e4877cca4e84a11370eaa78b5d4461c5d393e58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
