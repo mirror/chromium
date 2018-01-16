@@ -171,6 +171,10 @@ class MEDIA_EXPORT WASAPIAudioInputStream
   // Contains the desired audio format which is set up at construction.
   WAVEFORMATEX format_;
 
+  // True if we have changed the audio format to the audio engine's closest
+  // match. Used for logging information.
+  bool using_closest_match_ = false;
+
   bool opened_ = false;
   bool started_ = false;
   StreamOpenResult open_result_ = OPEN_RESULT_OK;
