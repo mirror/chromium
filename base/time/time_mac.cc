@@ -136,7 +136,7 @@ namespace base {
 // Time -----------------------------------------------------------------------
 
 // static
-Time Time::Now() {
+Time Time::NowIgnoringOverride() {
   return FromCFAbsoluteTime(CFAbsoluteTimeGetCurrent());
 }
 
@@ -166,9 +166,10 @@ CFAbsoluteTime Time::ToCFAbsoluteTime() const {
 }
 
 // static
-Time Time::NowFromSystemTime() {
-  // Just use Now() because Now() returns the system time.
-  return Now();
+Time Time::NowFromSystemTimeIgnoringOverride() {
+  // Just use NowIgnoringOverride() because NowIgnoringOverride() returns the
+  // system time.
+  return NowIgnoringOverride();
 }
 
 // Note: These implementations of Time::FromExploded() and Time::Explode() are
@@ -270,7 +271,7 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
 // TimeTicks ------------------------------------------------------------------
 
 // static
-TimeTicks TimeTicks::Now() {
+TimeTicks TimeTicks::NowIgnoringOverride() {
   return TimeTicks(ComputeCurrentTicks());
 }
 
