@@ -1598,6 +1598,77 @@ TEST_P(FrameProcessorTest,
   CheckReadsThenReadStalls(video_.get(), "100 110 120 130 240 250");
 }
 
+TEST_P(FrameProcessorTest, PreciselyOverlapLastAudioFrameAppended_1) {
+  // Appends an audio frame, A, which is then immediately followed by a
+  // subsequent frame, B. Then appends a new frame, C, which precisely overlaps
+  // frame B, and verifies that there is exactly 1 buffered range resulting.
+
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  // Frame A
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(10)));
+  EXPECT_TRUE(ProcessFrames("0K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0");
+
+  // Frame B
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(20)));
+  EXPECT_TRUE(ProcessFrames("10K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0 10");
+
+  // Frame C
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(20)));
+  EXPECT_TRUE(ProcessFrames("10K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0 10");
+}
+
+TEST_P(FrameProcessorTest, PreciselyOverlapLastAudioFrameAppended_2) {
+  // Appends an audio frame, A, which is then splice-trim-truncated by a
+  // subsequent frame, B. Then appends a new frame, C, which precisely overlaps
+  // frame B, and verifies that there is exactly 1 buffered range resulting.
+
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  // Frame A
+  frame_duration_ = Milliseconds(100);
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(100)));
+  EXPECT_TRUE(ProcessFrames("0K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,100) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0");
+
+  // Frame B
+  frame_duration_ = Milliseconds(10);
+  EXPECT_MEDIA_LOG(TrimmedSpliceOverlap(60000, 0, 40000));
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(100)));
+  EXPECT_TRUE(ProcessFrames("60K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,70) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0 60");
+
+  // Frame C
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(100)));
+  EXPECT_TRUE(ProcessFrames("60K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,70) }");
+  SeekStream(audio_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(audio_.get(), "0 60");
+}
+
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
                         FrameProcessorTest,
                         Values(FrameProcessorTestParams(
