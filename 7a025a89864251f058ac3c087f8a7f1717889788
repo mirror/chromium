@@ -46,6 +46,30 @@
       "revId": "7a025a89864251f058ac3c087f8a7f1717889788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fccf1e9_5974dc76",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4498,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T21:02:27Z",
+      "side": 1,
+      "message": "Sorry I should have asked earlier. For the 2nd didCommitNavigation: callback in the repro case, were you seeing webView.URL \u003d \"SRP\" and WKNavigation* \u003d \"techrepublic.com\"?\n\nWhat if no item is found in sessionController that matches webView.URL? i.e. some other unknown edge case may lead to the same symptom. It probably wouldn\u0027t make sense to call |didStartLoading| then. Should we DCHECK that an item matching webView.URL is found in session history?",
+      "parentUuid": "ebd0a98c_ee4d4201",
+      "range": {
+        "startLine": 4498,
+        "startChar": 54,
+        "endLine": 4498,
+        "endChar": 0
+      },
+      "revId": "7a025a89864251f058ac3c087f8a7f1717889788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
