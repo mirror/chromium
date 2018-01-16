@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "f9f9ee29_6e27a51d",
+        "filename": "tools/cygprofile/patch_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T15:36:33Z",
+      "side": 1,
+      "message": "Might be worth an explicit comment about \u0027\u0027 resulting in symbol name for lld.",
+      "revId": "91cd4db7f0bba452bf340aa476cfa086d251a3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "120379b0_9200dc34",
         "filename": "tools/cygprofile/patch_orderfile.py",
         "patchSetId": 2
