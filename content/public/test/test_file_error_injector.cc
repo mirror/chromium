@@ -53,7 +53,7 @@ class DownloadFileWithError: public DownloadFileImpl {
                                           size_t data_len) override;
 
   DownloadInterruptReason HandleStreamCompletionStatus(
-      SourceStream* source_stream) override;
+      DownloadSourceStream* source_stream) override;
 
   void RenameAndUniquify(const base::FilePath& full_path,
                          const RenameCompletionCallback& callback) override;
@@ -177,7 +177,7 @@ DownloadInterruptReason DownloadFileWithError::WriteDataToFile(
 }
 
 DownloadInterruptReason DownloadFileWithError::HandleStreamCompletionStatus(
-    SourceStream* source_stream) {
+    DownloadSourceStream* source_stream) {
   DownloadInterruptReason origin_error =
       DownloadFileImpl::HandleStreamCompletionStatus(source_stream);
 
