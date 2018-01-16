@@ -16,6 +16,24 @@
       "revId": "624a108d54d1e2136f80af8e6daedc72d683d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67093a8_1a2afdf9",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T19:34:10Z",
+      "side": 1,
+      "message": "What you want *is* what is happening.\n\nBarrierClosure is a closure which executes the Closure it was given after being called \u0027n\u0027 times. In this case it binds BlockingConstructor::CompleteConstructionNow() to run after being invoked kNumForegroundThreads, once by each thread :).",
+      "parentUuid": "8789245e_6df34717",
+      "revId": "624a108d54d1e2136f80af8e6daedc72d683d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
