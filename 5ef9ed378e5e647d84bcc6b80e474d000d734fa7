@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7572173e_bbcbf46a",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:08:21Z",
+      "side": 1,
+      "message": "Please file a feature request bug to \"Implement presentation receiver window for Mac Views\" and copy the rest of the text there, and change this to TODO(crbug.com/XXX).",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8cbfef_7d770fc5",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:08:21Z",
+      "side": 1,
+      "message": "Slight preference for implementing this as a function in media_router_feature.h - e.g. media_router::IsPresentationReceiverWindowEnabled().  That is where I would look first to see if there was a feature implemented for a specific platform or not.\n\nYou can have it return \"true\" or \"false\" based on #ifdefs.",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd05665e_f54b5689",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_factory_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-16T18:08:21Z",
+      "side": 1,
+      "message": "IIUC we won\u0027t need this file at all when the Mac views implementation is available?\n\nYou could call media_router::IsPresentationReceiverWindowEnabled() in the existing factory method instead of adding a separate file.  I guess this saves a little bit of code size while the Views implementation proceeds, so I don\u0027t feel strongly.",
+      "revId": "5ef9ed378e5e647d84bcc6b80e474d000d734fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
