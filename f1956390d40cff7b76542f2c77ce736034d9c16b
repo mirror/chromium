@@ -16,6 +16,24 @@
       "revId": "f1956390d40cff7b76542f2c77ce736034d9c16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0045ada_3858cfe3",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-16T03:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c65405_7cad7dcb",
+      "revId": "f1956390d40cff7b76542f2c77ce736034d9c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
