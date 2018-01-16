@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e3f174c_c2226646",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T22:25:26Z",
+      "side": 1,
+      "message": "Thanks for spotting, fixed!",
+      "parentUuid": "8330fb01_6cf5669e",
+      "range": {
+        "startLine": 1212,
+        "startChar": 32,
+        "endLine": 1212,
+        "endChar": 40
+      },
+      "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1120ea1_7a90ab11",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-12T17:48:50Z",
       "side": 1,
       "message": "Let\u0027s do this from ResetNavigationRequest, so we can have a blocked reason.",
+      "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820e2b65_2717f3ee",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T22:25:26Z",
+      "side": 1,
+      "message": "Let\u0027s do this as a follow-up, we were already reporting navigation cancellation through the browser without detailed blocked information, so we\u0027re at least not regressing things. It appears we would have to amend all call sites for ResetNavigationRequest(), and I\u0027d rather do this as a separate CL.",
+      "parentUuid": "c1120ea1_7a90ab11",
       "revId": "f25be00c29994ceca6cef93d1b8a0301da649fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
