@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d836183_cf0fd0cf",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "It is a common pattern on ios to pass rects which are in view coordinates: \n - UIPopoverPresentationController has sourceView and sourceRect\n - UIDocumentInteractionController has presentation API which take view and rect\n\nIn this case I pass rect in view\u0027s coordinate space because UIDocumentInteractionController needs those (updated comment). However in general I\u0027m curious why you said \"it should be in UIWindow coordinates\"? Is it a common New Architecture pattern to use window coordinates?\n\nAfter getting more context, do you still think that using named layout guides is a better approach here. This is the actual implementation for the callback: \ncrrev.com/c/chromium/src/+/841462/10/ios/chrome/browser/ui/download/download_manager_coordinator.mm#123",
+      "parentUuid": "ea63700a_ec756d64",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a363f8ca_99189129",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-15T16:00:18Z",
       "side": 1,
       "message": "nit: it looks like in most of Objective-C files the memory management policy for properties is explicit; please add \"copy\"/\"strong\"/\"assign\" as necessary for consistency with the rest of the project",
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18785bf0_e6fe63b1",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Thanks for catching. This should be |copy| per Style Guide (http://go/objc-style#Setters_copy_NSStrings)\n\nAs for strong/assign, I would prefer to omit them. AFAIK, prior to ARC |assign| was a default for all properties. Under ARC |strong| is default for Objective-C pointers, and |assign| is default for everything else. So I would apply the same logic here as for |readwrite|, which is default and explicitly typing will simply clutter the interface. WDYT?",
+      "parentUuid": "a363f8ca_99189129",
       "revId": "eec097473d47099eb9682e5600966a371846fa94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "59511b81_cd04906e",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f3fa8aa_77cbfd9f",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722e5e63_54a663d5",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-15T14:46:24Z",
       "side": 1,
       "message": "I don\u0027t usually expect to see subviews or controls as part of the public API of a view controller. Conceptually nothing should depend on the view controller\u0027s appearance or what controls it presents the user.",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986b4df5_e287b81f",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "From Unit testing best practices:\n\"It can also be valuable on fields representing UI elements, which are visible to the user and part of a class\u0027s contract, but not normally exposed via its API.\"\nhttp://go/unit-test-practices#public-apis\n\nI plan to have unit tests which verify the correctness of labels, and tap on buttons to test delegate callbacks. It is possible to use accessibility labels to achieve the same results, but exposing UI elements is cleaner. WDYT?",
+      "parentUuid": "722e5e63_54a663d5",
       "range": {
         "startLine": 59,
         "startChar": 1,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "cbdf4307_59601f28",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9b9b23_d71bd31d",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d24f596_ec8865dc",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-15T14:46:24Z",
       "side": 1,
       "message": "Dot notation for properties?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb467d3c_d4ffc54f",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "These are not properties, they just methods (so per Style Guide dot notation should not be used). I was thinking to make them properties (so I can use dot notation), but decided that I don\u0027t want to add more code. I do not have a strong opinion and can totally add properties and use dot syntax here.",
+      "parentUuid": "0d24f596_ec8865dc",
       "range": {
         "startLine": 55,
         "startChar": 25,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "9dcbd35b_a7893bc6",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "The embedding view controller is BVC, so is the suggestion to set these constraints in BVC?",
+      "parentUuid": "75ee356e_c15762c5",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e7cc0c8_eb7a86df",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -177,6 +339,30 @@
       "revId": "eec097473d47099eb9682e5600966a371846fa94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0c29df_00c3d947",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7cc0c8_eb7a86df",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "5a8ff657_a7ed0288",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Background is white, but shadow image has alpha and there should be a web page under it (not white background). I don\u0027t quite understand why Toolbar does not use stretchable image for shadow (and uses @\"infobar_shadow\" as it is), but in this view controller I wanted to use existing image resources. If you have a different suggestion for drawing the shadow, I will be happy to follow it.",
+      "parentUuid": "997ecf35_9897a44a",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82cbf7bc_1dcb6c8c",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -237,6 +447,30 @@
       "writtenOn": "2018-01-15T14:46:24Z",
       "side": 1,
       "message": "If |shadow|\u0027s image has an alpha of less than 1.0, then the background (however it is implemented) should extend under the image.",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 56
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748524e1_1e83ffd6",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "shadow\u0027s alpha is less than 1.0. For that reason the background should not be under the image, because background is opaque and image is not. Did I misunderstand your comment?",
+      "parentUuid": "82cbf7bc_1dcb6c8c",
       "range": {
         "startLine": 92,
         "startChar": 26,
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "c4272240_c3bef8c2",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "Removing these constraints breaks the layout of Action button (button shrinks) and sizeToFit call does not help. Do you know how to tell actionButton, that its width should not be flexible?",
+      "parentUuid": "a0bf2bbb_c5c8ad4d",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257ee170_912b42b8",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "d95e598b_ebf78032",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "This does not work. There is no trailing margin for close button after making suggested change.",
+      "parentUuid": "257ee170_912b42b8",
+      "range": {
+        "startLine": 102,
+        "startChar": 61,
+        "endLine": 102,
+        "endChar": 75
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b34c3be5_ac674194",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 3
@@ -306,6 +588,30 @@
       "writtenOn": "2018-01-15T14:46:24Z",
       "side": 1,
       "message": "Seems like this should be declared as a property, as the others are.",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 22
+      },
+      "revId": "eec097473d47099eb9682e5600966a371846fa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20267179_44483acf",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T18:54:44Z",
+      "side": 1,
+      "message": "See the comment above. Can change if you feel strongly.",
+      "parentUuid": "b34c3be5_ac674194",
       "range": {
         "startLine": 159,
         "startChar": 16,
