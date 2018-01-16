@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a078fbca_2dc98de6",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a4f874_d64853e8",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35d9f87_75ed8b05",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "6a946cf2_3fe050c0",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "This is actually an argument setting the \"type\" of log this will be.  There may be special handling internally based on the type, but it doesn\u0027t describe one single example of special handling (duplicates).  \n\nRight now it\u0027s a boolean because there are only 2.  But it could be an enumeration type if, say, we add a third Log for load attempts that fail due to external factors (OS NtMapViewOfSection error).  Heck, if you think this really matters, I can make it a type enum now.\n\nUPDATE: I\u0027ve created a LogType enum.  Best to tear off the band-aid now.",
+      "parentUuid": "5a6f9c9e_97cd6dd2",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ef2e81_6aeb0668",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done.  Thanks - I have a really hard time remembering these special cases, I appreciate that you keep spotting them. :)",
+      "parentUuid": "f35d9f87_75ed8b05",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec19338_9254e41d",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0c1661e7_1a827899",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "8ec19338_9254e41d",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10734002_e52e9ab7",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2018-01-16T11:51:30Z",
       "side": 1,
       "message": "why does this compare only happen for blocks? will a load-\u003eunload-\u003eload result in duplicate entries?",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5d271e_36e18f07",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "It will mitigate a case where misbehaving (or intentional) products hammer failed dll load attempts.  Such a dll will have been explicitly added to our blacklist to reach this point.  At this point we don\u0027t gain anything by logging the mulit-attempt behaviour.\n\n\u0027Allow\u0027 events (either explicit or for deferred validation) are much less likely to be an issue.  The dll has been successfully injected.\n\nThere\u0027s nothing stopping me from doing this for \u0027allow\u0027 as well, but there\u0027s a performance impact that I don\u0027t think is worth it at this point.",
+      "parentUuid": "10734002_e52e9ab7",
       "range": {
         "startLine": 56,
         "startChar": 21,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "40fae0b2_e516ce76",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc97907e_c06857b5",
+      "range": {
+        "startLine": 73,
+        "startChar": 63,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a12a1c1_8739a0bf",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -154,6 +292,30 @@
       "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6016ba76_5d769042",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a12a1c1_8739a0bf",
+      "range": {
+        "startLine": 84,
+        "startChar": 49,
+        "endLine": 84,
+        "endChar": 50
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "0dece2c7_53f65776",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d2f29f_9d2a164e",
+      "range": {
+        "startLine": 96,
+        "startChar": 32,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060622fa_c4052e7a",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -200,6 +386,30 @@
       "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34717fb_74b6948b",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Sure.  Within the whitelist_log \"module\", I\u0027ll make it all uint32_t.",
+      "parentUuid": "060622fa_c4052e7a",
+      "range": {
+        "startLine": 127,
+        "startChar": 52,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "5a952dda_8b979261",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "711fe3ad_5e3bbd82",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 7
+      },
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fc2aa5_28998a67",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 4
@@ -240,6 +474,24 @@
       "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774cf1ad_7e89ce67",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done.  Good idea, thanks.  |blocked| isn\u0027t an issue here - the Log knows what its own type is, and handles anything.",
+      "parentUuid": "86fc2aa5_28998a67",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "e1550061_e8d6b5a1",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdf2d74_9828b9da",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "309e691f_1dbc57e0",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
         "patchSetId": 4
@@ -274,6 +544,24 @@
       "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1af651_3dc8ca3c",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-16T23:51:33Z",
+      "side": 1,
+      "message": "Done.  TIL: offsetof!",
+      "parentUuid": "309e691f_1dbc57e0",
+      "revId": "b1c22bad62cabc5b05588f18f95856297279dfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
