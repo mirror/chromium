@@ -45,6 +45,7 @@ source_set("ppapi_plugin_sources") {
 
   configs += [
     "//content:content_implementation",
+    "//tools/v8_context_snapshot:use_v8_context_snapshot",
     "//v8:external_startup_data",
   ]
 
@@ -66,6 +67,7 @@ source_set("ppapi_plugin_sources") {
     "//skia",
     "//third_party/WebKit/public:blink",
     "//third_party/icu",
+    "//tools/v8_context_snapshot",
     "//ui/base",
     "//ui/gfx",
     "//ui/gfx/geometry",
