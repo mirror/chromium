@@ -206,7 +206,8 @@ class QuicStreamFactoryTestBase {
  protected:
   QuicStreamFactoryTestBase(QuicTransportVersion version,
                             bool client_headers_include_h2_stream_dependency)
-      : ssl_config_service_(new MockSSLConfigService),
+      : host_resolver_(std::make_unique<MockHostResolver>()),
+        ssl_config_service_(new MockSSLConfigService),
         socket_factory_(new MockClientSocketFactory),
         random_generator_(0),
         runner_(new TestTaskRunner(&clock_)),
@@ -232,6 +233,7 @@ class QuicStreamFactoryTestBase {
         scoped_mock_network_change_notifier_(nullptr),
         factory_(nullptr),
         host_port_pair_(kDefaultServerHostName, kDefaultServerPort),
+        host_port_pair_2_(kServer2HostName, kDefaultServerPort),
         url_(kDefaultUrl),
         url2_(kServer2Url),
         url3_(kServer3Url),
@@ -257,7 +259,7 @@ class QuicStreamFactoryTestBase {
   void Initialize() {
     DCHECK(!factory_);
     factory_.reset(new QuicStreamFactory(
-        net_log_.net_log(), &host_resolver_, ssl_config_service_.get(),
+        net_log_.net_log(), host_resolver_.get(), ssl_config_service_.get(),
         socket_factory_.get(), &http_server_properties_, cert_verifier_.get(),
         &ct_policy_enforcer_, channel_id_service_.get(),
         &transport_security_state_, cert_transparency_verifier_.get(),
@@ -276,7 +278,8 @@ class QuicStreamFactoryTestBase {
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
         client_headers_include_h2_stream_dependency_, connection_options_,
-        client_connection_options_, /*enable_token_binding*/ false));
+        client_connection_options_, /*enable_token_binding*/ false,
+        use_stale_dns_));
   }
 
   void InitializeConnectionMigrationTest(
@@ -304,6 +307,22 @@ class QuicStreamFactoryTestBase {
     migrate_sessions_early_v2_ = true;
     socket_factory_.reset(new TestConnectionMigrationSocketFactory);
     Initialize();
+  }
+
+  void InitializeStaleDnsTest() {
+    use_stale_dns_ = true;
+    host_resolver_ = std::make_unique<MockCachingHostResolver>();
+    Initialize();
+
+    HostCache::Key key(kServer2HostName, ADDRESS_FAMILY_UNSPECIFIED, 0);
+    HostCache::Entry entry(
+        OK, AddressList::CreateFromIPAddress(IPAddress(192, 168, 0, 1), 0),
+        HostCache::Entry::SOURCE_UNKNOWN);
+    HostCache* cache = host_resolver_->GetHostCache();
+    cache->Set(key, entry, base::TimeTicks::Now(),
+               base::TimeDelta::FromSeconds(1));
+    // Expire the cache by simulating a network change.
+    cache->OnNetworkChange();
   }
 
   std::unique_ptr<HttpStream> CreateStream(QuicStreamRequest* request) {
@@ -564,10 +583,9 @@ class QuicStreamFactoryTestBase {
     http_server_properties_.SetAlternativeServices(
         url::SchemeHostPort(url_), alternative_service_info_vector);
 
-    HostPortPair host_port_pair2(kServer2HostName, kDefaultServerPort);
     url::SchemeHostPort server2("https", kServer2HostName, kDefaultServerPort);
     const AlternativeService alternative_service2(
-        kProtoQUIC, host_port_pair2.host(), host_port_pair2.port());
+        kProtoQUIC, host_port_pair_2_.host(), host_port_pair_2_.port());
     AlternativeServiceInfoVector alternative_service_info_vector2;
     alternative_service_info_vector2.push_back(
         AlternativeServiceInfo::CreateQuicAlternativeServiceInfo(
@@ -672,8 +690,8 @@ class QuicStreamFactoryTestBase {
     ++quic_server_info_map_it;
     EXPECT_EQ(quic_server_info_map_it->first, quic_server_id);
 
-    host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                             "192.168.0.1", "");
+    host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                              "192.168.0.1", "");
 
     // Create a session and verify that the cached state is loaded.
     MockQuicData socket_data;
@@ -711,8 +729,8 @@ class QuicStreamFactoryTestBase {
     socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
     socket_data2.AddSocketDataToFactory(socket_factory_.get());
 
-    host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                             "192.168.0.2", "");
+    host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                              "192.168.0.2", "");
 
     QuicStreamRequest request2(factory_.get());
     EXPECT_EQ(ERR_IO_PENDING,
@@ -770,7 +788,7 @@ class QuicStreamFactoryTestBase {
       bool disconnected);
 
   QuicFlagSaver flags_;  // Save/restore all QUIC flag values.
-  MockHostResolver host_resolver_;
+  std::unique_ptr<MockHostResolverBase> host_resolver_;
   scoped_refptr<SSLConfigService> ssl_config_service_;
   std::unique_ptr<MockClientSocketFactory> socket_factory_;
   MockCryptoClientStreamFactory crypto_client_stream_factory_;
@@ -791,6 +809,7 @@ class QuicStreamFactoryTestBase {
       scoped_mock_network_change_notifier_;
   std::unique_ptr<QuicStreamFactory> factory_;
   HostPortPair host_port_pair_;
+  HostPortPair host_port_pair_2_;
   GURL url_;
   GURL url2_;
   GURL url3_;
@@ -815,6 +834,7 @@ class QuicStreamFactoryTestBase {
   bool allow_server_migration_;
   bool race_cert_verification_;
   bool estimate_initial_rtt_;
+  bool use_stale_dns_;
   QuicTagVector connection_options_;
   QuicTagVector client_connection_options_;
 };
@@ -853,7 +873,7 @@ TEST_P(QuicStreamFactoryTest, Create) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream.get());
 
-  EXPECT_EQ(DEFAULT_PRIORITY, host_resolver_.last_request_priority());
+  EXPECT_EQ(DEFAULT_PRIORITY, host_resolver_->last_request_priority());
 
   QuicStreamRequest request2(factory_.get());
   EXPECT_EQ(OK, request2.Request(host_port_pair_, version_, privacy_mode_,
@@ -891,9 +911,9 @@ TEST_P(QuicStreamFactoryTest, CreateZeroRtt) {
 
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -960,9 +980,9 @@ TEST_P(QuicStreamFactoryTest, FactoryDestroyedWhenJobPending) {
 TEST_P(QuicStreamFactoryTest, RequireConfirmation) {
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
   Initialize();
   factory_->set_require_confirmation(true);
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
@@ -999,9 +1019,9 @@ TEST_P(QuicStreamFactoryTest, RequireConfirmation) {
 TEST_P(QuicStreamFactoryTest, DontRequireConfirmationFromSameIP) {
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
   Initialize();
   factory_->set_require_confirmation(true);
   http_server_properties_.SetSupportsQuic(IPAddress(192, 0, 2, 33));
@@ -1214,11 +1234,11 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
   socket_data.AddWrite(ConstructInitialSettingsPacket());
   socket_data.AddSocketDataToFactory(socket_factory_.get());
 
-  HostPortPair server2(kServer2HostName, kDefaultServerPort);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_2_.host(),
+                                            "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -1230,14 +1250,15 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
 
   TestCompletionCallback callback;
   QuicStreamRequest request2(factory_.get());
-  EXPECT_EQ(OK,
-            request2.Request(server2, version_, privacy_mode_, DEFAULT_PRIORITY,
-                             /*cert_verify_flags=*/0, url2_, net_log_,
-                             &net_error_details_, callback.callback()));
+  EXPECT_EQ(OK, request2.Request(host_port_pair_2_, version_, privacy_mode_,
+                                 DEFAULT_PRIORITY,
+                                 /*cert_verify_flags=*/0, url2_, net_log_,
+                                 &net_error_details_, callback.callback()));
   std::unique_ptr<HttpStream> stream2 = CreateStream(&request2);
   EXPECT_TRUE(stream2.get());
 
-  EXPECT_EQ(GetActiveSession(host_port_pair_), GetActiveSession(server2));
+  EXPECT_EQ(GetActiveSession(host_port_pair_),
+            GetActiveSession(host_port_pair_2_));
 
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -1245,8 +1266,8 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
 
 TEST_P(QuicStreamFactoryTest, PoolingWithServerMigration) {
   // Set up session to migrate.
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
   IPEndPoint alt_address = IPEndPoint(IPAddress(1, 2, 3, 4), 443);
   QuicConfig config;
   config.SetAlternateServerAddressToSend(
@@ -1259,8 +1280,8 @@ TEST_P(QuicStreamFactoryTest, PoolingWithServerMigration) {
   session->CloseSessionOnError(0u, QUIC_NO_ERROR);
 
   // Set up server IP, socket, proof, and config for new session.
-  HostPortPair server2(kServer2HostName, kDefaultServerPort);
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_2_.host(),
+                                            "192.168.0.1", "");
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
@@ -1281,7 +1302,8 @@ TEST_P(QuicStreamFactoryTest, PoolingWithServerMigration) {
   TestCompletionCallback callback;
   QuicStreamRequest request2(factory_.get());
   EXPECT_EQ(ERR_IO_PENDING,
-            request2.Request(server2, version_, privacy_mode_, DEFAULT_PRIORITY,
+            request2.Request(host_port_pair_2_, version_, privacy_mode_,
+                             DEFAULT_PRIORITY,
                              /*cert_verify_flags=*/0, url2_, net_log_,
                              &net_error_details_, callback.callback()));
   EXPECT_EQ(OK, callback.WaitForResult());
@@ -1308,11 +1330,11 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
   socket_data2.AddWrite(ConstructInitialSettingsPacket());
   socket_data2.AddSocketDataToFactory(socket_factory_.get());
 
-  HostPortPair server2(kServer2HostName, kDefaultServerPort);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_2_.host(),
+                                            "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -1324,27 +1346,27 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
 
   TestCompletionCallback callback;
   QuicStreamRequest request2(factory_.get());
-  EXPECT_EQ(OK,
-            request2.Request(server2, version_, privacy_mode_, DEFAULT_PRIORITY,
-                             /*cert_verify_flags=*/0, url2_, net_log_,
-                             &net_error_details_, callback.callback()));
+  EXPECT_EQ(OK, request2.Request(host_port_pair_2_, version_, privacy_mode_,
+                                 DEFAULT_PRIORITY,
+                                 /*cert_verify_flags=*/0, url2_, net_log_,
+                                 &net_error_details_, callback.callback()));
   std::unique_ptr<HttpStream> stream2 = CreateStream(&request2);
   EXPECT_TRUE(stream2.get());
 
   factory_->OnSessionGoingAway(GetActiveSession(host_port_pair_));
   EXPECT_FALSE(HasActiveSession(host_port_pair_));
-  EXPECT_FALSE(HasActiveSession(server2));
+  EXPECT_FALSE(HasActiveSession(host_port_pair_2_));
 
   TestCompletionCallback callback3;
   QuicStreamRequest request3(factory_.get());
-  EXPECT_EQ(OK,
-            request3.Request(server2, version_, privacy_mode_, DEFAULT_PRIORITY,
-                             /*cert_verify_flags=*/0, url2_, net_log_,
-                             &net_error_details_, callback3.callback()));
+  EXPECT_EQ(OK, request3.Request(host_port_pair_2_, version_, privacy_mode_,
+                                 DEFAULT_PRIORITY,
+                                 /*cert_verify_flags=*/0, url2_, net_log_,
+                                 &net_error_details_, callback3.callback()));
   std::unique_ptr<HttpStream> stream3 = CreateStream(&request3);
   EXPECT_TRUE(stream3.get());
 
-  EXPECT_TRUE(HasActiveSession(server2));
+  EXPECT_TRUE(HasActiveSession(host_port_pair_2_));
 
   EXPECT_TRUE(socket_data1.AllReadDataConsumed());
   EXPECT_TRUE(socket_data1.AllWriteDataConsumed());
@@ -1366,9 +1388,9 @@ TEST_P(QuicStreamFactoryTest, HttpsPooling) {
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(OK,
@@ -1412,9 +1434,9 @@ TEST_P(QuicStreamFactoryTest, HttpsPoolingWithMatchingPins) {
       test::GetTestHashValue(primary_pin));
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(OK,
@@ -1469,9 +1491,9 @@ TEST_P(QuicStreamFactoryTest, NoHttpsPoolingWithDifferentPins) {
       test::GetTestHashValue(primary_pin));
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details2);
 
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(OK,
@@ -1629,7 +1651,7 @@ TEST_P(QuicStreamFactoryTest, ResolutionErrorInCreate) {
   MockQuicData socket_data;
   socket_data.AddSocketDataToFactory(socket_factory_.get());
 
-  host_resolver_.rules()->AddSimulatedFailure(kDefaultServerHostName);
+  host_resolver_->rules()->AddSimulatedFailure(kDefaultServerHostName);
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -1821,9 +1843,9 @@ TEST_P(QuicStreamFactoryTest, WriteErrorInCryptoConnectWithSyncHostResolution) {
   // Use unmocked crypto stream to do crypto connect.
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::USE_DEFAULT_CRYPTO_STREAM);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
@@ -3119,9 +3141,9 @@ TEST_P(QuicStreamFactoryTest,
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.2", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(server1.host(), "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(server2.host(), "192.168.0.2", "");
 
   // Create request and QuicHttpStream to create session1.
   QuicStreamRequest request1(factory_.get());
@@ -4681,8 +4703,8 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv4) {
 
 TEST_P(QuicStreamFactoryTest, ServerMigrationIPv6ToIPv6) {
   // Add a resolver rule to make initial connection to an IPv6 address.
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "fe80::aebc:32ff:febb:1e33", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "fe80::aebc:32ff:febb:1e33", "");
   // Add alternate IPv6 server address to config.
   IPEndPoint alt_address = IPEndPoint(
       IPAddress(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), 123);
@@ -4694,8 +4716,8 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv6ToIPv6) {
 
 TEST_P(QuicStreamFactoryTest, ServerMigrationIPv6ToIPv4) {
   // Add a resolver rule to make initial connection to an IPv6 address.
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "fe80::aebc:32ff:febb:1e33", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "fe80::aebc:32ff:febb:1e33", "");
   // Add alternate IPv4 server address to config.
   IPEndPoint alt_address = IPEndPoint(IPAddress(1, 2, 3, 4), 123);
   QuicConfig config;
@@ -4711,8 +4733,8 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv6Fails) {
   Initialize();
 
   // Add a resolver rule to make initial connection to an IPv4 address.
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(), "1.2.3.4",
-                                           "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(), "1.2.3.4",
+                                            "");
   // Add alternate IPv6 server address to config.
   IPEndPoint alt_address = IPEndPoint(
       IPAddress(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), 123);
@@ -4970,9 +4992,9 @@ TEST_P(QuicStreamFactoryTest, EnableNotLoadFromDiskCache) {
 
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -5009,14 +5031,13 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   socket_data2.AddWrite(ConstructInitialSettingsPacket(1, nullptr));
   socket_data2.AddSocketDataToFactory(socket_factory_.get());
 
-  HostPortPair server2(kServer2HostName, kDefaultServerPort);
-
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::CONFIRM_HANDSHAKE);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
-  host_resolver_.rules()->AddIPLiteralRule(server2.host(), "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_2_.host(),
+                                            "192.168.0.1", "");
 
   // Quic should use default PING timeout when no previous connection times out
   // with open stream.
@@ -5056,11 +5077,11 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   DVLOG(1) << "Create 2nd session and timeout with open stream";
   TestCompletionCallback callback2;
   QuicStreamRequest request2(factory_.get());
-  EXPECT_EQ(OK,
-            request2.Request(server2, version_, privacy_mode_, DEFAULT_PRIORITY,
-                             /*cert_verify_flags=*/0, url2_, net_log_,
-                             &net_error_details_, callback2.callback()));
-  QuicChromiumClientSession* session2 = GetActiveSession(server2);
+  EXPECT_EQ(OK, request2.Request(host_port_pair_2_, version_, privacy_mode_,
+                                 DEFAULT_PRIORITY,
+                                 /*cert_verify_flags=*/0, url2_, net_log_,
+                                 &net_error_details_, callback2.callback()));
+  QuicChromiumClientSession* session2 = GetActiveSession(host_port_pair_2_);
   EXPECT_EQ(QuicTime::Delta::FromSeconds(10),
             session2->connection()->ping_timeout());
 
@@ -5159,9 +5180,9 @@ TEST_P(QuicStreamFactoryTest, YieldAfterPackets) {
 
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
 
   // Set up the TaskObserver to verify QuicChromiumPacketReader::StartReading
   // posts a task.
@@ -5206,9 +5227,9 @@ TEST_P(QuicStreamFactoryTest, YieldAfterDuration) {
 
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
-  host_resolver_.set_synchronous_mode(true);
-  host_resolver_.rules()->AddIPLiteralRule(host_port_pair_.host(),
-                                           "192.168.0.1", "");
+  host_resolver_->set_synchronous_mode(true);
+  host_resolver_->rules()->AddIPLiteralRule(host_port_pair_.host(),
+                                            "192.168.0.1", "");
 
   // Set up the TaskObserver to verify QuicChromiumPacketReader::StartReading
   // posts a task.
@@ -5806,7 +5827,7 @@ TEST_P(QuicStreamFactoryTest, HostResolverUsesRequestPriority) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream.get());
 
-  EXPECT_EQ(MAXIMUM_PRIORITY, host_resolver_.last_request_priority());
+  EXPECT_EQ(MAXIMUM_PRIORITY, host_resolver_->last_request_priority());
 
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -5835,7 +5856,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncSync) {
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_ondemand_mode(true);
+  host_resolver_->set_ondemand_mode(true);
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
@@ -5863,7 +5884,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncSync) {
   // ERR_FAILED from socket reads/writes), |host_resolution_callback| should be
   // called with ERR_QUIC_PROTOCOL_ERROR since that's the next result in
   // forming the connection.
-  host_resolver_.ResolveAllPending();
+  host_resolver_->ResolveAllPending();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(host_resolution_callback.have_result());
   EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, host_resolution_callback.WaitForResult());
@@ -5884,7 +5905,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncAsync) {
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_ondemand_mode(true);
+  host_resolver_->set_ondemand_mode(true);
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
   factory_->set_require_confirmation(true);
@@ -5914,7 +5935,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncAsync) {
   // Allow |host_resolver_| to finish host resolution. Since crypto handshake
   // will hang after host resolution, |host_resolution_callback| should run with
   // ERR_IO_PENDING since that's the next result in forming the connection.
-  host_resolver_.ResolveAllPending();
+  host_resolver_->ResolveAllPending();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(host_resolution_callback.have_result());
   EXPECT_EQ(ERR_IO_PENDING, host_resolution_callback.WaitForResult());
@@ -5938,7 +5959,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackSyncSync) {
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.set_synchronous_mode(true);
+  host_resolver_->set_synchronous_mode(true);
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
@@ -5971,7 +5992,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackSyncAsync) {
 
   // Host resolution will succeed synchronously, but Request() as a whole
   // will fail asynchronously.
-  host_resolver_.set_synchronous_mode(true);
+  host_resolver_->set_synchronous_mode(true);
   crypto_client_stream_factory_.set_handshake_mode(
       MockCryptoClientStream::ZERO_RTT);
   factory_->set_require_confirmation(true);
@@ -6012,8 +6033,8 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackFailSync) {
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
   // Host resolution will fail synchronously.
-  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
-  host_resolver_.set_synchronous_mode(true);
+  host_resolver_->rules()->AddSimulatedFailure(host_port_pair_.host());
+  host_resolver_->set_synchronous_mode(true);
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -6038,7 +6059,7 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackFailAsync) {
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
 
-  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
+  host_resolver_->rules()->AddSimulatedFailure(host_port_pair_.host());
 
   QuicStreamRequest request(factory_.get());
   EXPECT_EQ(
@@ -6060,6 +6081,122 @@ TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackFailAsync) {
 
   EXPECT_TRUE(callback_.have_result());
   EXPECT_EQ(ERR_NAME_NOT_RESOLVED, callback_.WaitForResult());
+}
+
+TEST_P(QuicStreamFactoryTest, StaleDnsSyncResolveSyncConnect) {
+  InitializeStaleDnsTest();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  host_resolver_->set_synchronous_mode(true);
+  factory_->set_require_confirmation(false);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      OK, request.Request(host_port_pair_, version_, privacy_mode_,
+                          DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_,
+                          net_log_, &net_error_details_, callback_.callback()));
+
+  std::unique_ptr<HttpStream> stream = CreateStream(&request);
+  EXPECT_TRUE(stream.get());
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicStreamFactoryTest, StaleDnsSyncResolveAsyncConnect) {
+  InitializeStaleDnsTest();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
+  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  host_resolver_->set_synchronous_mode(true);
+  factory_->set_require_confirmation(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+  crypto_client_stream_factory_.last_stream()->SendOnCryptoHandshakeEvent(
+      QuicSession::HANDSHAKE_CONFIRMED);
+  EXPECT_THAT(callback_.WaitForResult(), IsOk());
+
+  std::unique_ptr<HttpStream> stream = CreateStream(&request);
+  EXPECT_TRUE(stream.get());
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicStreamFactoryTest, StaleDnsCacheMissSyncConnect) {
+  InitializeStaleDnsTest();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  factory_->set_require_confirmation(false);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+  EXPECT_THAT(callback_.WaitForResult(), IsOk());
+
+  std::unique_ptr<HttpStream> stream = CreateStream(&request);
+  EXPECT_TRUE(stream.get());
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
+}
+
+TEST_P(QuicStreamFactoryTest, StaleDnsCacheMissAsyncConnect) {
+  InitializeStaleDnsTest();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
+  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  factory_->set_require_confirmation(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+  // Run until host resolution completes.
+  base::RunLoop().RunUntilIdle();
+  crypto_client_stream_factory_.last_stream()->SendOnCryptoHandshakeEvent(
+      QuicSession::HANDSHAKE_CONFIRMED);
+  EXPECT_THAT(callback_.WaitForResult(), IsOk());
+
+  std::unique_ptr<HttpStream> stream = CreateStream(&request);
+  EXPECT_TRUE(stream.get());
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
 }
 
 }  // namespace test
