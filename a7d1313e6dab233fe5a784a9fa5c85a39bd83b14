@@ -270,6 +270,30 @@
       "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ad0258_09529393",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-16T01:36:03Z",
+      "side": 1,
+      "message": "Acknowledged, sorry, I see now this comes from temporary locations. Disregard",
+      "parentUuid": "4569e644_5810ce4a",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "a7d1313e6dab233fe5a784a9fa5c85a39bd83b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
