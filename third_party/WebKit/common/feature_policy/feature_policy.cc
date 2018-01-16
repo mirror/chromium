@@ -277,7 +277,9 @@ const FeaturePolicy::FeatureList& FeaturePolicy::GetDefaultFeatureList() {
                            {FeaturePolicyFeature::kGyroscope,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
                            {FeaturePolicyFeature::kMagnetometer,
-                            FeaturePolicy::FeatureDefault::EnableForSelf}}));
+                            FeaturePolicy::FeatureDefault::EnableForSelf},
+                           {FeaturePolicyFeature::kUnsizedImage,
+                            FeaturePolicy::FeatureDefault::EnableForAll}}));
   return default_feature_list;
 }
 

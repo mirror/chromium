@@ -81,6 +81,7 @@ enum FeaturePolicyFeature {
   kAmbientLightSensor,
   kGyroscope,
   kMagnetometer,
+  kUnsizedImage,
 };
 
 // This struct holds feature policy whitelist data that needs to be replicated
