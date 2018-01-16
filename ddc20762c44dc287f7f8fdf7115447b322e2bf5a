@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2f498a6_2948fdc0",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-16T20:53:39Z",
+      "side": 1,
+      "message": "This code looks like a good candidate for a utility/helper.\n\n  bool ContainsHost(const container\u0026 sources, const string\u0026 host) {\n    for (const auto\u0026 kv : sources) {\n      if (host \u003d\u003d kb.second-\u003eurl().host())\n        return true;\n    }\n    return false;\n  }\n\nThen in the actual tests:\n\n  EXPECT_TRUE(ContainsHost(test_ukm_recorder_-\u003eGetSources(), main_frame_url.host()));\n  EXPECT_FALSE(ContainsHost(test_ukm_recorder_-\u003eGetSources(), iframe_url.host()));",
+      "revId": "ddc20762c44dc287f7f8fdf7115447b322e2bf5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
