@@ -530,9 +530,7 @@ class DropStreamHandleConsumedFilter : public BrowserMessageFilter {
 IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
                        StreamHandleReleasedOnRendererCrash) {
   // Disable this test when the |stream_handle_| is not used.
-  if (!IsBrowserSideNavigationEnabled() ||
-      base::FeatureList::IsEnabled(features::kNetworkService) ||
-      IsNavigationMojoResponseEnabled()) {
+  if (IsNavigationMojoResponseEnabled()) {
     return;
   }
 

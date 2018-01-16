@@ -18,11 +18,13 @@ bool IsBrowserSideNavigationEnabled() {
 // the body of the main resource to the renderer process. When enabled, the
 // NavigationMojoResponse feature replaces this mechanism by a Mojo DataPipe.
 // Design doc: https://goo.gl/Rrrc7n.
+// NetworkService feature requires NavigationMojoResponse.
 bool IsNavigationMojoResponseEnabled() {
   if (!IsBrowserSideNavigationEnabled())
     return false;
 
-  return base::FeatureList::IsEnabled(features::kNavigationMojoResponse);
+  return base::FeatureList::IsEnabled(features::kNavigationMojoResponse) ||
+         base::FeatureList::IsEnabled(features::kNetworkService);
 }
 
 }  // namespace content
