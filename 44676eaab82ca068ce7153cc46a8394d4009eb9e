@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2796a1_2408c29f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-16T20:03:45Z",
+      "side": 1,
+      "message": "Ideally, we would use main_world_wrapper_.Set() here, but ConfigureWrapper call prevents it.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 61
+      },
+      "revId": "44676eaab82ca068ce7153cc46a8394d4009eb9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
