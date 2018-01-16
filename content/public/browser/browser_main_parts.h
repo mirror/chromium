@@ -5,7 +5,9 @@
 #ifndef CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 #define CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 
+#include "base/threading/thread.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace content {
 
@@ -73,6 +75,10 @@ class CONTENT_EXPORT BrowserMainParts {
   // been run), and the toolkit has been initialized. Returns the error code
   // (or 0 if no error).
   virtual int PreCreateThreads();
+
+  // This is called right after the thread that |thread| points to is created.
+  virtual void BrowserThreadStarted(base::Thread* thread,
+                                    content::BrowserThread::ID id) {}
 
   virtual void ServiceManagerConnectionStarted(
       ServiceManagerConnection* connection) {}

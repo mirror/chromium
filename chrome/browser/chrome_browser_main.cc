@@ -22,6 +22,7 @@
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -40,6 +41,8 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/sequence_local_storage_slot.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -304,6 +307,12 @@
 using content::BrowserThread;
 
 namespace {
+
+// The profiler object is stored in a SequenceLocalStorageSlot on the IO thread
+// so that it will be destroyed when the IO thread stops.
+base::LazyInstance<base::SequenceLocalStorageSlot<
+    std::unique_ptr<base::StackSamplingProfiler>>>::Leaky
+    io_thread_sampling_profiler = LAZY_INSTANCE_INITIALIZER;
 
 // This function provides some ways to test crash and assertion handling
 // behavior of the program.
@@ -649,15 +658,16 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       result_code_(content::RESULT_CODE_NORMAL_EXIT),
       startup_watcher_(new StartupTimeBomb()),
       shutdown_watcher_(new ShutdownWatcherHelper()),
-      sampling_profiler_(base::PlatformThread::CurrentId(),
-                         StackSamplingConfiguration::Get()
-                             ->GetSamplingParamsForCurrentProcess(),
-                         metrics::CallStackProfileMetricsProvider::
-                             GetProfilerCallbackForBrowserProcessStartup()),
+      ui_thread_sampling_profiler_(
+          base::PlatformThread::CurrentId(),
+          StackSamplingConfiguration::Get()
+              ->GetSamplingParamsForCurrentProcess(),
+          metrics::CallStackProfileMetricsProvider::
+              GetProfilerCallbackForBrowserProcessUIThreadStartup()),
       profile_(NULL),
       run_message_loop_(true) {
   if (StackSamplingConfiguration::Get()->IsProfilerEnabledForCurrentProcess())
-    sampling_profiler_.Start();
+    ui_thread_sampling_profiler_.Start();
 
   // If we're running tests (ui_task is non-null).
   if (parameters.ui_task)
@@ -826,6 +836,23 @@ void ChromeBrowserMainParts::SetupOriginTrialsCommandLine(
                                         disabled_token_switch);
       }
     }
+  }
+}
+
+void ChromeBrowserMainParts::StartIOThreadProfiling() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  StackSamplingConfiguration* config = StackSamplingConfiguration::Get();
+  if (config->IsProfilerEnabledForCurrentProcess()) {
+    std::unique_ptr<base::StackSamplingProfiler> profiler =
+        std::make_unique<base::StackSamplingProfiler>(
+            base::PlatformThread::CurrentId(),
+            config->GetSamplingParamsForCurrentProcess(),
+            metrics::CallStackProfileMetricsProvider::
+                GetProfilerCallbackForBrowserProcessIOThreadStartup());
+
+    profiler->Start();
+    io_thread_sampling_profiler.Get().Set(std::move(profiler));
   }
 }
 
@@ -1191,6 +1218,17 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   SetupMetrics();
 
   return content::RESULT_CODE_NORMAL_EXIT;
+}
+
+void ChromeBrowserMainParts::BrowserThreadStarted(
+    base::Thread* thread,
+    content::BrowserThread::ID id) {
+  if (id == content::BrowserThread::IO) {
+    thread->task_runner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ChromeBrowserMainParts::StartIOThreadProfiling,
+                       base::Unretained(this)));
+  }
 }
 
 void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
