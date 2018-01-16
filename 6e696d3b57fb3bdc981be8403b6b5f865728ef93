@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18e72733_f0ffbd22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33086,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T14:23:50Z",
+      "side": 1,
+      "message": "This would be a fairly lengthy, and probably stale by the time anyone reads it (no way someone messing around with how RenderFrame works would go through all the UMA stats to see which descriptions needs to be updated).",
+      "parentUuid": "7beec97b_d8ade0e6",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc1e05c3_53ca4917",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "516bc76e_221c04dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33087,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T14:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1e05c3_53ca4917",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e706c0b_b5810e8a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411a1c76_5df8ff8c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 33090,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-16T14:23:50Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "7e706c0b_b5810e8a",
+      "revId": "6e696d3b57fb3bdc981be8403b6b5f865728ef93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
