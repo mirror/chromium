@@ -12,7 +12,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
-import android.os.PatternMatcher;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.chromium.base.Log;
@@ -43,7 +42,7 @@ public class CastWebContentsComponent {
     }
 
     private class ActivityDelegate implements Delegate {
-        private static final String TAG = "cr_CastWebComponent_AD";
+        private static final String TAG = "cr_CastWebContent_AD";
         private boolean mEnableTouchInput;
 
         public ActivityDelegate(boolean enableTouchInput) {
@@ -52,8 +51,7 @@ public class CastWebContentsComponent {
 
         @Override
         public void start(Context context, WebContents webContents) {
-            if (DEBUG) Log.d(TAG, "start");
-
+            Log.d(TAG, "start: SHOW_WEB_CONTENT in activity");
             Intent intent = new Intent(Intent.ACTION_VIEW, getInstanceUri(mInstanceId), context,
                     CastWebContentsActivity.class);
             intent.putExtra(ACTION_EXTRA_WEB_CONTENTS, webContents);
@@ -64,16 +62,44 @@ public class CastWebContentsComponent {
 
         @Override
         public void stop(Context context) {
-            if (DEBUG) Log.d(TAG, "stop");
-
+            if (DEBUG) Log.d(TAG, "Stop CastWebContentsActivity");
             Intent intent =
                     new Intent(CastIntents.ACTION_STOP_ACTIVITY, getInstanceUri(mInstanceId));
             LocalBroadcastManager.getInstance(context).sendBroadcastSync(intent);
         }
     }
 
+    private class FragmentDelegate implements Delegate {
+        private static final String TAG = "cr_CastWebContent_FD";
+        private boolean mEnableTouchInput;
+
+        public FragmentDelegate(boolean enableTouchInput) {
+            mEnableTouchInput = enableTouchInput;
+        }
+
+        @Override
+        public void start(Context context, WebContents webContents) {
+            if (DEBUG) Log.d(TAG, "state: SHOW_WEB_CONTENT in fragment");
+            Intent intent = new Intent();
+            intent.setAction(CastIntents.ACTION_SHOW_WEB_CONTENT);
+            intent.putExtra("content_uri", getInstanceUri(mInstanceId).toString());
+            intent.putExtra(ACTION_EXTRA_WEB_CONTENTS, webContents);
+            intent.putExtra(ACTION_EXTRA_TOUCH_INPUT_ENABLED, mEnableTouchInput);
+            context.sendBroadcast(intent);
+        }
+
+        @Override
+        public void stop(Context context) {
+            Intent intent = new Intent();
+            intent.setAction(CastIntents.ACTION_STOP_WEB_CONTENT_INTERNAL);
+            intent.putExtra("content_uri", getInstanceUri(mInstanceId).toString());
+            if (DEBUG) Log.d(TAG, "stop: send STOP_WEB_CONTENT_INTERNAL intent");
+            LocalBroadcastManager.getInstance(context).sendBroadcastSync(intent);
+        }
+    }
+
     private class ServiceDelegate implements Delegate {
-        private static final String TAG = "cr_CastWebComponent_SD";
+        private static final String TAG = "cr_CastWebContent_SD";
 
         private ServiceConnection mConnection = new ServiceConnection() {
             @Override
@@ -121,6 +147,8 @@ public class CastWebContentsComponent {
         }
     }
 
+    static final String INTENT_EXTRA_URI = "content_uri";
+
     static final String ACTION_DATA_SCHEME = "cast";
     static final String ACTION_DATA_AUTHORITY = "webcontents";
     static final String ACTION_EXTRA_WEB_CONTENTS =
@@ -129,7 +157,7 @@ public class CastWebContentsComponent {
             "com.google.android.apps.castshell.intent.extra.ENABLE_TOUCH";
 
     private static final String TAG = "cr_CastWebComponent";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String ACTION_EXTRA_KEY_CODE =
             "com.google.android.apps.castshell.intent.extra.KEY_CODE";
@@ -138,9 +166,9 @@ public class CastWebContentsComponent {
     private static final String ACTION_ACTIVITY_STOPPED =
             "com.google.android.apps.castshell.intent.action.ACTIVITY_STOPPED";
 
-    private Delegate mDelegate;
-    private OnComponentClosedHandler mComponentClosedHandler;
-    private OnKeyDownHandler mKeyDownHandler;
+    private final Delegate mDelegate;
+    private final OnComponentClosedHandler mComponentClosedHandler;
+    private final OnKeyDownHandler mKeyDownHandler;
     private Receiver mReceiver;
     private String mInstanceId;
     private boolean mStarted = false;
@@ -152,8 +180,13 @@ public class CastWebContentsComponent {
         mKeyDownHandler = onKeyDownHandler;
         mInstanceId = instanceId;
         if (BuildConfig.DISPLAY_WEB_CONTENTS_IN_SERVICE || isHeadless) {
+            Log.i(TAG, "Creating service delegate...");
             mDelegate = new ServiceDelegate();
+        } else if (BuildConfig.ENABLE_CAST_FRAGMENT) {
+            Log.i(TAG, "Creating fragment delegate...");
+            mDelegate = new FragmentDelegate(enableTouchInput);
         } else {
+            Log.i(TAG, "Creating activity delegate...");
             mDelegate = new ActivityDelegate(enableTouchInput);
         }
     }
@@ -164,15 +197,12 @@ public class CastWebContentsComponent {
         Uri instanceUri = getInstanceUri(mInstanceId);
         mReceiver = new Receiver();
         IntentFilter filter = new IntentFilter();
-        filter.addDataScheme(instanceUri.getScheme());
-        filter.addDataAuthority(instanceUri.getAuthority(), null);
-        filter.addDataPath(instanceUri.getPath(), PatternMatcher.PATTERN_LITERAL);
         filter.addAction(ACTION_ACTIVITY_STOPPED);
         filter.addAction(ACTION_KEY_EVENT);
+
         LocalBroadcastManager.getInstance(context).registerReceiver(mReceiver, filter);
 
         mDelegate.start(context, webContents);
-
         mStarted = true;
     }
 
@@ -200,7 +230,7 @@ public class CastWebContentsComponent {
         LocalBroadcastManager.getInstance(context).sendBroadcastSync(intent);
     }
 
-    private static Uri getInstanceUri(String instanceId) {
+    public static Uri getInstanceUri(String instanceId) {
         Uri instanceUri = new Uri.Builder()
                                   .scheme(ACTION_DATA_SCHEME)
                                   .authority(ACTION_DATA_AUTHORITY)
