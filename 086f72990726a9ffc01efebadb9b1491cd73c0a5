@@ -16,6 +16,24 @@
       "revId": "086f72990726a9ffc01efebadb9b1491cd73c0a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd30fe41_f9ce1bb3",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-16T14:48:39Z",
+      "side": 1,
+      "message": "No changes. Just had to move it because it\u0027s referenced below.",
+      "parentUuid": "1d5cb490_6ddcbd02",
+      "revId": "086f72990726a9ffc01efebadb9b1491cd73c0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
