@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "ac2c803b_70b8251f",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-16T20:03:31Z",
+      "side": 1,
+      "message": "I think the top-alignment shown in http://crbug.com/652031#c39 is kinda ugly... likely because the image isn\u0027t lined up with the baseline of the label\u0027s first line of text. This would be especially ugly if the text used a taller font. Try aligning the bottom of the radio circle with label_-\u003eGetBaseline(), hopefully that views::View override gives the right value.",
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad4b61f0_d101ab5d",
         "filename": "ui/views/controls/button/label_button.h",
         "patchSetId": 3
@@ -78,6 +95,24 @@
       "side": 1,
       "message": "What about ImageButton::HorizontalAlignment? Should they both be moved?",
       "parentUuid": "ad4b61f0_d101ab5d",
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e542c67d_c2c8c15d",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-16T20:03:31Z",
+      "side": 1,
+      "message": "My inclination is to avoid a bool/enum here and always align the image to the first line of multi-line text, as you suggested in content_setting_bubble_contents.cc.\n\nRe-using the vertical enum *might* be good for long-term bubble cleanup, but it\u0027s only marginally useful, and I\u0027m not sure what the horizontal alignment would mean when the image is paired with text that has its own gfx::HorizontalAlignment setting that currently also dictates the image placement.",
+      "parentUuid": "45e73ba1_eb85e8c1",
       "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
