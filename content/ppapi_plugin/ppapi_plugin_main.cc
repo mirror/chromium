@@ -116,7 +116,13 @@ int PpapiPluginMain(const MainFunctionParams& parameters) {
       kTraceEventPpapiProcessSortIndex);
 
 #ifdef V8_USE_EXTERNAL_STARTUP_DATA
-  gin::V8Initializer::LoadV8Snapshot();
+#ifdef USE_V8_CONTEXT_SNAPSHOT
+  gin::V8Initializer::LoadV8Snapshot(
+      gin::V8Initializer::SnapshotFileType::kV8Context);
+#else
+  gin::V8Initializer::LoadV8Snapshot(
+      gin::V8Initializer::SnapshotFileType::kDefault);
+#endif
   gin::V8Initializer::LoadV8Natives();
 #endif
 
