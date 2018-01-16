@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b93e85ba_24928bac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T21:41:47Z",
+      "side": 0,
+      "message": "Cleanup css as well.",
+      "range": {
+        "startLine": 189,
+        "startChar": 32,
+        "endLine": 189,
+        "endChar": 56
+      },
+      "revId": "dad84e3fbe16bbc74c91b4a73f8f9a0accd088f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
