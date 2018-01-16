@@ -158,21 +158,37 @@ void GuestViewMessageFilter::OnAttachToEmbedderFrame(
   manager->AttachGuest(render_process_id_, element_instance_id,
                        guest_instance_id, params);
 
-  embedder_web_contents->GetMainFrame()->Send(
-      new GuestViewMsg_AttachToEmbedderFrame_ACK(element_instance_id));
+  base::Closure perform_attach = base::Bind(
+      [](content::WebContents* guest_web_contents,
+         content::WebContents* embedder_web_contents,
+         content::RenderFrameHost* embedder_frame, int element_instance_id) {
+        // Attach this inner WebContents |guest_web_contents| to the outer
+        // WebContents |embedder_web_contents|. The outer WebContents's
+        // frame |embedder_frame| hosts the inner WebContents.
+        // NOTE: this must be called after WillAttach, because it could unblock
+        // pending requests which depend on the WebViewGuest being initialized.
+        guest_web_contents->AttachToOuterWebContentsFrame(embedder_web_contents,
+                                                          embedder_frame);
 
-  guest->WillAttach(
-      embedder_web_contents, element_instance_id, false,
-      base::Bind(&GuestViewBase::DidAttach,
-                 guest->weak_ptr_factory_.GetWeakPtr(), MSG_ROUTING_NONE));
+        // We don't ACK until after AttachToOuterWebContentsFrame, so that
+        // |embedder_frame| gets swapped before the AttachIframeGuest callback
+        // is run. We also need to send the ACK before queued events are sent in
+        // DidAttach.
+        embedder_web_contents->GetMainFrame()->Send(
+            new GuestViewMsg_AttachToEmbedderFrame_ACK(element_instance_id));
+      },
+      guest_web_contents, embedder_web_contents, embedder_frame,
+      element_instance_id);
 
-  // Attach this inner WebContents |guest_web_contents| to the outer
-  // WebContents |embedder_web_contents|. The outer WebContents's
-  // frame |embedder_frame| hosts the inner WebContents.
-  // NOTE: this must be called last, because it could unblock pending requests
-  // which depend on the WebViewGuest being initialized which happens above.
-  guest_web_contents->AttachToOuterWebContentsFrame(embedder_web_contents,
-                                                    embedder_frame);
+  guest->WillAttach(embedder_web_contents, element_instance_id, false,
+                    base::Bind(
+                        [](const base::Closure& perform_attach,
+                           base::WeakPtr<GuestViewBase> weak_guest) {
+                          perform_attach.Run();
+                          if (weak_guest)
+                            weak_guest->DidAttach(MSG_ROUTING_NONE);
+                        },
+                        perform_attach, guest->weak_ptr_factory_.GetWeakPtr()));
 }
 
 }  // namespace guest_view
