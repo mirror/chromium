@@ -3529,18 +3529,6 @@
             ]
         }
     ],
-    "TabManagementExperiment": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Elderberry"
-                }
-            ]
-        }
-    ],
     "TabSyncByRecency": [
         {
             "platforms": [
