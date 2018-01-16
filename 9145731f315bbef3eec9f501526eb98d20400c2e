@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ab110b_ceb9f181",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 101494,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-16T15:38:14Z",
+      "side": 0,
+      "message": "Instead, mark as obsolete, like this:\n\n\u003caffected-histogram name\u003d\"SoftwareReporter.Cleaner.NumberOfDownloadAttempts\"\u003e\n  \u003cobsolete\u003eRemoved Jan 2018\u003c/obsolete\u003e\n\u003c/affected-histogram\u003e",
+      "revId": "9145731f315bbef3eec9f501526eb98d20400c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
