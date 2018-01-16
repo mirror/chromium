@@ -1669,21 +1669,22 @@ int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
   CHECK(instance);
   CHECK_NE(instance, render_frame_host_->GetSiteInstance());
 
-  RenderViewHostImpl* render_view_host = nullptr;
-
-  // Ensure a RenderViewHost exists for |instance|, as it creates the page
-  // level structure in Blink.
-  render_view_host =
-      frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
-  if (!render_view_host) {
-    CHECK(frame_tree_node_->IsMainFrame());
-    render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
-        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
-  }
-
+  // Return an already existing RenderFrameProxyHost if one exists and is alive.
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);
   if (proxy && proxy->is_render_frame_proxy_live())
     return proxy->GetRoutingID();
+
+  // Before creating a new RenderFrameProxyHost, ensure a RenderViewHost exists
+  // for |instance|, as it creates the page level structure in Blink.
+  RenderViewHostImpl* render_view_host =
+      frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
+  if (!render_view_host) {
+    CHECK(frame_tree_node_->IsMainFrame());
+    DCHECK(!proxy);  // Otherwise we will leak the |render_view_host| creted
+                     // below - see https://crbug.com/802278.
+    render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
+        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
+  }
 
   if (!proxy)
     proxy = CreateRenderFrameProxyHost(instance, render_view_host);
