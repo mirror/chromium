@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa74601_a1aab346",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-16T12:07:35Z",
+      "side": 1,
+      "message": "It\u0027s my first time using ExposedForTesting.  PTAL if it\u0027s good. thx.",
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6ba8c_e0b63efc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-16T12:07:35Z",
+      "side": 1,
+      "message": "Without setting rootNode above, the following line will crash at DCHECK(rootNode) when creating bookmarkTableView.\nI spent a while and don\u0027t know why it doesn\u0027t break before this CL.",
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
