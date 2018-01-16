@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5cb490_6ddcbd02",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-16T14:30:27Z",
+      "side": 1,
+      "message": "No changes to this, just moving it?",
+      "revId": "086f72990726a9ffc01efebadb9b1491cd73c0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
