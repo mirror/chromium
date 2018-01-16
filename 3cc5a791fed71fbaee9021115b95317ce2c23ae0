@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fefb048_a74c5d68",
+        "filename": "ios/chrome/browser/broadercaster.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be:\n\nautoreleasepool{} [[Broadercaster defaultBroadercasterer] broadcast:var]; \n\n?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f41590_21b217e1",
+        "filename": "ios/chrome/browser/broadercaster.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "This should be called \u0027observificate\u0027, to match \u0027broadcastify\u0027.\n\nAlso, it could be more convenient if it took care of other annoying boilerplate:\n\n[[Broadercaster defaultBroadercasterer] observe:[klass class]   \\\n                                        selector:@selector(selector) \\\n                                        observer:self];   \\",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b37656_57b09e3b",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Can you move the retry/init cycle to another thread? I don\u0027t want this init to slow down app launch.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955b1fa7_53f7f0b7",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "We want to be sure this is actually a null pointer, so maybe you should use a more accurate floating point zero?",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bc77fc_578ea9e0",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "I think it\u0027s clearer if we just always name unused variables |___|.",
+      "range": {
+        "startLine": 50,
+        "startChar": 62,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4f29d0_dd6292f5",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Wow, that\u0027s a lot of code inside the loop, and I can tell we\u0027re going to want to do all kinds of things on that weak objects table. I think we need a method to perform an action on each key or object in the table, but we should make the name really short so it\u0027s easy to read.\n\nI suggest _: as the method to operate on keys, so obviously __: would be the method to operate on values. But to make it really easy to use, we should define these as properties where the getter alway returns nil and the setter performs the loop, like this:\n\n- (void)set_:(void(^)(id))__ {\n  for (Class _ in self.weakObjects.keyEnumerator) {\n    __(_);\n  }\n} \n\nThen we can use it in the block like this:\n\nblock:^(NSTimer* _Nonnull ___) {\n  self._ \u003d ^(id __) {\n    [[NSNotificationCenter defaultCenter] postNotificationName:\n        [Broadercaster notificationForClass:__] object:nil\n  ];};}];",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1faddb6_d455a7da",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "I\u0027m worried that the runtime concatenation might be too slow. Can you use a macro to generate this concatenation instead?",
+      "range": {
+        "startLine": 78,
+        "startChar": 35,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdb4d9b_e3a36775",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Clients might be broadcastinging on any thread, so you should use a dispatch queue for safety, and be sure to @synchronize access to that dispatch queue just in case.",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 34
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addb2edf_ef6546b0",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Method call overhead on properties is really high, and this is a private implementation, so you should use the ivar name here, since this is critical code.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84108c6b_1e3b415e",
+        "filename": "ios/chrome/browser/broadercaster.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Using \u0027klass\u0027 make this look like Java. I think just |k| is less confusing.",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bc177a_ad7c76f6",
+        "filename": "ios/chrome/browser/broadercaster_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Isn\u0027t this actually a FakeObserverTestMock?",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dbcc82_2955ac55",
+        "filename": "ios/chrome/browser/broadercaster_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "I like how this test will absolutely never be obsolete and has no dependencies on the Broadcasterer implementation.",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aa17f1_d992732d",
+        "filename": "ios/chrome/browser/broadercaster_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Maybe some of the statements should be in a different order, to test that the compiler doesn\u0027t break anything?",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b968bac2_f4712910",
+        "filename": "ios/chrome/browser/broadercaster_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "This comment is inaccurate. Maybe you should use a script to generate the comment and the test so they keep in sync?",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 43
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707c45fa_f31d02f6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-16T13:58:20Z",
+      "side": 1,
+      "message": "Major bug: this isn\u0027t the BVC init. Please add a unit test and an egtest to catch this kind of error.",
+      "range": {
+        "startLine": 396,
+        "startChar": 5,
+        "endLine": 396,
+        "endChar": 17
+      },
+      "revId": "3cc5a791fed71fbaee9021115b95317ce2c23ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
