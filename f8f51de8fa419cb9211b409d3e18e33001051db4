@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04ce4b0e_17f3d6cb",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25284a07_70930302",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186ef927_d2121a13",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1157be2e_f6a249f7",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "186ef927_d2121a13",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1675f0c0_189a5dc4",
+        "filename": "chrome/browser/plugins/plugin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "470db12f_21140a5b",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "763e4aa2_340c1132",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a5ff4139_39d7f651",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "763e4aa2_340c1132",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef60b9f2_a3560adc",
         "filename": "components/content_settings/core/browser/content_settings_pref.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-15T02:09:38Z",
       "side": 1,
       "message": "To avoid special casing here (and any unintended consequences of a non-dictionary type) I think we should just use a dictionary with one field even though it\u0027s a bit redundant/unfortunate. The other benefit is that we can extend it with other data later if needed.",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "febd9b87_1da0d272",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done - I needed a key for the boolean in the dict, so I just defined a constant for that. But is it OK to duplicate that in HCSM? Or maybe we should try using the gurl as a string as the key instead?",
+      "parentUuid": "ef60b9f2_a3560adc",
       "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6715bece_41faf04e",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "I think this would require changing the DEPS include rules - ENABLE_PLUGINS is defined in ppapi/features/features.h but only components/prefs is explicitly allowed. I left it as-is, is that OK?",
+      "parentUuid": "bda36b26_21c5c714",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78961321_6f65f548",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02dfe1e_9be2424e",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78961321_6f65f548",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "0f634aec_f2f2d009",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87aa64ff_526b6cac",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b77229a_4228f83d",
         "filename": "components/content_settings/core/browser/website_settings_registry.cc",
         "patchSetId": 6
@@ -169,6 +313,24 @@
       "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca824cfb_f17edb58",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-16T06:56:40Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure either. Updated now :)",
+      "parentUuid": "1b77229a_4228f83d",
+      "revId": "f8f51de8fa419cb9211b409d3e18e33001051db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
