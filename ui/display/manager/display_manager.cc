@@ -850,7 +850,7 @@ void DisplayManager::OnNativeDisplaysChanged(
 
   // Do not clear current mirror state before calling ShouldSetMirrorModeOn()
   // as it depends on the state.
-  software_mirroring_display_list_.clear();
+  ClearMirroringSourceAndDestination();
   hardware_mirroring_display_id_list_ = hardware_mirroring_display_id_list;
   mirroring_source_id_ = mirroring_source_id;
   num_connected_displays_ = updated_displays.size();
@@ -1478,7 +1478,6 @@ void DisplayManager::SetDefaultMultiDisplayModeForCurrentDisplays(
 
 void DisplayManager::SetMultiDisplayMode(MultiDisplayMode mode) {
   multi_display_mode_ = mode;
-  ClearMirroringSourceAndDestination();
 }
 
 void DisplayManager::ReconfigureDisplays() {
