@@ -34,8 +34,7 @@ class Simple2dStillPage(VrSamplePage):
     # Browsing Mode. Wait times are flaky.
     action_runner.Wait(2)
 
-    with action_runner.CreateInteraction('Still'):
-      action_runner.Wait(5)
+    action_runner.MeasureMemory(True)
 
 
 class VrBrowsingModePageSet(story.StorySet):
