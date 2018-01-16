@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e53803a_1f2121a7",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "1) before StartMiniInstance() is called, or 2) after OnSessionStopped() ...",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b4434a_ab065f3b",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "nit: s/Send/Sends/",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa66831_aa04a035",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "(off topic): Considering the implementation in the session_manager, I think it is an option split StartArcInstance D-Bus call into two, too. (surely, later :-)",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54048a6f_2f0e331e",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "Let\u0027s DCHECK_EQ(state_, State::RUNNING_MINI_INSTANCE);",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c70296f_45896b66",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "nit/style: two spaces before \"//\"",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944f26b9_9d619729",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "optional/suggestion: how about |upgrade_requested_| ?",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0748de17_50e64691",
+        "filename": "components/arc/test/fake_arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T14:00:06Z",
+      "side": 1,
+      "message": "This should be moved to StartMiniInstance() ?\nOr, could you change them to upgrade_failure_ ... upgrade_suspend_ etc.?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
