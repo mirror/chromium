@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "b2c5a4c4_c8d53755",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T22:01:57Z",
+      "side": 1,
+      "message": "I\u0027m ok with #1. Chromium is a big project, and on big projects code duplication sometimes is a better alternative.\n\n#2 can make an impression that it\u0027s connected somehow to BrowserURLRewriter::RewriteURLIfNecessary. \n\nAlso will not object if you keep the code as it is. It\u0027s temporary anyway.",
+      "parentUuid": "25349cd8_d511d2bb",
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6509967d_94eaf453",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 2
@@ -178,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "a7771026_41d538a8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T22:01:57Z",
+      "side": 1,
+      "message": "Interstitial integration tests (ExternalURLSSLTestCase) are only running on upstream bots. Not sure if they failed or not. \n\ncurrentURLWithTrustLevel: is deprecated, so we can put any bandages here. Which URL from DCHECK is the right one?  chrome://chrome-urls/ or about:blank?",
+      "parentUuid": "af759442_a3043d2d",
+      "range": {
+        "startLine": 1201,
+        "startChar": 34,
+        "endLine": 1201,
+        "endChar": 54
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b58e305c_e8ccd2d3",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -260,6 +302,30 @@
       "side": 1,
       "message": "Done.\n\nWould it make sense to link to the state diagram from above here? We\u0027d have to host it somewhere, maybe a Google doc?",
       "parentUuid": "f820e513_44e1feea",
+      "range": {
+        "startLine": 4577,
+        "startChar": 25,
+        "endLine": 4577,
+        "endChar": 38
+      },
+      "revId": "1c17082ced7e453fba149925526ed27b76b7f865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274cddf0_5e0fc59e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-16T22:01:57Z",
+      "side": 1,
+      "message": "We can host diagram in .md file, but I don\u0027t think it worth the trouble. Current WebUI implementation will be obsolete in a year, when we should be able to use custom URL protocols API which is available since iOS 11.",
+      "parentUuid": "28fe531a_932608fd",
       "range": {
         "startLine": 4577,
         "startChar": 25,
