@@ -22,6 +22,30 @@
       "revId": "44676eaab82ca068ce7153cc46a8394d4009eb9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ae9f98_acd5724c",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T20:40:30Z",
+      "side": 1,
+      "message": "As discussed offline: ConfigureWrapper eventually sets the class id of a persistent node. Since the write barrier does not need to iterate persistents and check class ids we can rewrite as\n\n  main_world_wrapper_.Set(isolate, wrapper);\n  wrapper_type_info-\u003eConfigureWrapper(main_world_wrapper_.Get());",
+      "parentUuid": "2f2796a1_2408c29f",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 61
+      },
+      "revId": "44676eaab82ca068ce7153cc46a8394d4009eb9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
