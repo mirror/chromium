@@ -24,8 +24,7 @@ class URLLoaderClientImplTest : public ::testing::Test,
                                 mojom::URLLoaderFactory {
  protected:
   URLLoaderClientImplTest()
-      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())),
-        mojo_binding_(this) {
+      : dispatcher_(new ResourceDispatcher()), mojo_binding_(this) {
     mojo_binding_.Bind(mojo::MakeRequest(&url_loader_factory_proxy_));
 
     request_id_ = dispatcher_->StartAsync(

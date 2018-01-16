@@ -63,8 +63,7 @@ const char kFtpDirListing[] =
 
 class TestResourceDispatcher : public ResourceDispatcher {
  public:
-  TestResourceDispatcher()
-      : ResourceDispatcher(nullptr), canceled_(false), defers_loading_(false) {}
+  TestResourceDispatcher() : canceled_(false), defers_loading_(false) {}
 
   ~TestResourceDispatcher() override {}
 

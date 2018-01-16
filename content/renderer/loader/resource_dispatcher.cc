@@ -110,11 +110,8 @@ int ResourceDispatcher::MakeRequestID() {
   return sequence.GetNext();  // We start at zero.
 }
 
-ResourceDispatcher::ResourceDispatcher(
-    scoped_refptr<base::SingleThreadTaskRunner> thread_task_runner)
-    : delegate_(nullptr),
-      thread_task_runner_(thread_task_runner),
-      weak_factory_(this) {}
+ResourceDispatcher::ResourceDispatcher()
+    : delegate_(nullptr), weak_factory_(this) {}
 
 ResourceDispatcher::~ResourceDispatcher() {
 }
@@ -282,10 +279,6 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   // process.
   it->second->url_loader_client = nullptr;
 
-  // Always delete the pending_request asyncly so that cancelling the request
-  // doesn't delete the request context info while its response is still being
-  // handled.
-  thread_task_runner_->DeleteSoon(FROM_HERE, it->second.release());
   pending_requests_.erase(it);
 
   return true;
