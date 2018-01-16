@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f5671b_1f25e1c5",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Note: The DCHECK(IsRangeListSorted()) at end of SBS::Append() failed here prior to the fix to SBS::Append() in this change, for both the sequence and segments mode versions of this test when BufferingByDts.",
+      "range": {
+        "startLine": 1628,
+        "startChar": 14,
+        "endLine": 1628,
+        "endChar": 27
+      },
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0cdd1c_0a8ef23c",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Note: With that DCHECK temporarily disabled in SBS::Append(), this check found only the buffer at time 0 in the first range (and the test failed), prior to the fix to SBS::Append() in this change, for both the sequence and segments mode versions of this test when BufferingByDts.",
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8720670_f45bf14c",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Note: This test case is very similar to _1, but is closer to the case the fuzzer found. Included for completeness.",
+      "range": {
+        "startLine": 1635,
+        "startChar": 27,
+        "endLine": 1635,
+        "endChar": 67
+      },
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167736ea_cfc5a1ef",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Ditto of similar note in _1 version.",
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640b1269_b3aec0b0",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Ditto of similar note in _1 version.",
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f607a6_e1d01daa",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-16T21:08:19Z",
+      "side": 1,
+      "message": "Note: this is just a drive-by clarification to assist others new to trying to repro CF issues with more log detail.",
+      "revId": "624b225dae97bf5fdb8f24abe5bc5144776daed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
