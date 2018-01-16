@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19cb962b_aa2cfdd6",
+        "filename": "content/public/common/feature_webrtc_dual_stream_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2018-01-16T10:56:34Z",
+      "side": 1,
+      "message": "I just done it in the similar way to another feature used by webrtc (but not propagated inside it): https://cs.chromium.org/chromium/src/content/public/common/feature_h264_with_openh264_ffmpeg.h\n\nIt\u0027s not used inside content at all. \n\nIt might be my mistake. I will simply declare the feature in the webrtc_overrides instead. This way no changes to content will be made.",
+      "parentUuid": "5e92f53f_b912c3ab",
+      "revId": "5fa2799a307cab5cd19dd914d09711a4435b3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47854410_5d188391",
         "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5fa2799a307cab5cd19dd914d09711a4435b3961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7c1cd4_68d5833d",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2018-01-16T10:56:34Z",
+      "side": 1,
+      "message": "This way if new feature will be added in the future, it will require change of the webrtc-chrome API, which will be difficult to land. I tried to do it as flexible as possible.",
+      "parentUuid": "47854410_5d188391",
+      "revId": "5fa2799a307cab5cd19dd914d09711a4435b3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
