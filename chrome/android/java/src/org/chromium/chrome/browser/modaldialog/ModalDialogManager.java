@@ -17,6 +17,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Manager for managing the display of a queue of {@link ModalDialogView}s.
@@ -90,13 +91,20 @@ public class ModalDialogManager {
     public static final int TAB_MODAL = 1;
 
     /** Mapping of the {@link Presenter}s and the type of dialogs they are showing. */
-    private final SparseArray<Presenter> mPresenters = new SparseArray<>();
+    private SparseArray<Presenter> mPresenters = new SparseArray<>();
+
+    /** Stack of the mappings of the {@link Presenter}s that is used to switch between mappings. */
+    private final Stack<SparseArray<Presenter>> mPresentersStack =
+            new Stack<SparseArray<Presenter>>();
 
     /** The list of pending dialogs */
     private final List<Pair<ModalDialogView, Integer>> mPendingDialogs = new ArrayList<>();
 
     /** The default presenter to be used if a specified type is not supported. */
-    private final Presenter mDefaultPresenter;
+    private Presenter mDefaultPresenter;
+
+    /** The stack of the default {@link Presenter}s that is used to switch between presenters. */
+    private Stack<Presenter> mDefaultPresenterStack = new Stack<Presenter>();
 
     /** The presenter of the type of the dialog that is currently showing. */
     private Presenter mCurrentPresenter;
@@ -185,6 +193,33 @@ public class ModalDialogManager {
     public void cancelDialog(ModalDialogView dialog) {
         dismissDialog(dialog);
         dialog.getController().onCancel();
+    }
+
+    /**
+     * Push a new list of {@link Presenter}s. The current set of {@link Presenter}s is stored
+     * in a stack. This will call {@link #cancelAllDialogs()} and will close all
+     * open and pending dialogs.
+     * @param defaultPresenter The default presenter to be used when no presenter specified.
+     * @param defaultType The dialog type of the default presenter.
+     */
+    public void pushPresentersList(
+            @NonNull Presenter defaultPresenter, @ModalDialogType int defaultType) {
+        cancelAllDialogs();
+        mPresentersStack.push(mPresenters);
+        mDefaultPresenterStack.push(mDefaultPresenter);
+        mPresenters = new SparseArray<Presenter>();
+        mDefaultPresenter = defaultPresenter;
+        registerPresenter(defaultPresenter, defaultType);
+    }
+
+    /**
+     * Pop the last list of {@link Presenter}s from the stack.
+     * This will call {@link #cancelAllDialogs()} and will close all open and pending dialogs.
+     */
+    public void popPresentersList() {
+        cancelAllDialogs();
+        mPresenters = mPresentersStack.pop();
+        mDefaultPresenter = mDefaultPresenterStack.pop();
     }
 
     /**
