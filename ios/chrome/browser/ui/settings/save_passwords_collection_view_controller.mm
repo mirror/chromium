@@ -410,10 +410,6 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
   // Update the cell.
   [self reconfigureCellsForItems:@[ savePasswordsItem_ ]];
-
-  // Update the edit button.
-  [self.editor setEditing:NO];
-  [self updateEditButton];
 }
 
 #pragma mark - Actions
@@ -424,10 +420,6 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
   // Update the item.
   savePasswordsItem_.on = [passwordManagerEnabled_ value];
-
-  // Update the edit button.
-  [self.editor setEditing:NO];
-  [self updateEditButton];
 }
 
 #pragma mark - Private methods
@@ -464,7 +456,7 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 }
 
 - (BOOL)shouldShowEditButton {
-  return [passwordManagerEnabled_ value];
+  return TRUE;
 }
 
 - (BOOL)editButtonEnabled {
