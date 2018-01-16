@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50b56f8_6b82f708",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-16T19:08:51Z",
+      "side": 1,
+      "message": "Maybe do:\n```\nif (!video_element_....) {\n  if (!spinner_-\u003ehasAttribute(kClassAttributeName)) {\n    spinner_-\u003esetAttribute(...);\n  }\n} else {\n  spinner_-\u003eremoveAttribute();\n}\n```\n\nThe `hasAttribute()` check will prevent setting the same attribute twice. Removing, it\u0027s probably fair to think that Blink will do a no-op if there is already no attribute :)",
+      "revId": "bd5c1d4ec8e3a91186735757f0c992a519579513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
