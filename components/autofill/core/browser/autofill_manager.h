@@ -34,6 +34,7 @@
 #include "components/autofill/core/browser/payments/payments_client.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/common/form_data.h"
+#include "components/autofill/core/common/signatures_util.h"
 
 #if defined(OS_ANDROID) || defined(OS_IOS)
 #include "components/autofill/core/browser/autofill_assistant.h"
@@ -135,7 +136,8 @@ class AutofillManager : public AutofillHandler,
   bool IsShowingUnmaskPrompt();
 
   // Returns the present form structures seen by Autofill manager.
-  const std::vector<std::unique_ptr<FormStructure>>& GetFormStructures();
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>&
+  GetFormStructures();
 
   AutofillClient* client() { return client_; }
 
@@ -255,7 +257,7 @@ class AutofillManager : public AutofillHandler,
                               const FormFieldData& field,
                               const gfx::RectF& bounding_box) override;
 
-  std::vector<std::unique_ptr<FormStructure>>* form_structures() {
+  std::map<FormSignature, std::unique_ptr<FormStructure>>* form_structures() {
     return &form_structures_;
   }
 
@@ -523,7 +525,7 @@ class AutofillManager : public AutofillHandler,
   base::TimeTicks initial_interaction_timestamp_;
 
   // Our copy of the form data.
-  std::vector<std::unique_ptr<FormStructure>> form_structures_;
+  std::map<FormSignature, std::unique_ptr<FormStructure>> form_structures_;
 
   // A copy of the currently interacted form data.
   std::unique_ptr<FormData> pending_form_data_;
