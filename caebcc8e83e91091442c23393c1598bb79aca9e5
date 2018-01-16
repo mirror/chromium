@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299afd60_377c63b1",
+        "filename": "cc/layers/append_quads_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-16T19:33:16Z",
+      "side": 1,
+      "message": "nit: typo \u0027focibly\u0027-\u003e\u0027forcibly\u0027",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8aa5fa_8d104b28",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-16T19:33:16Z",
+      "side": 1,
+      "message": "Should we skip only if deadline_in_frames is not set?\nTrying to think of the semantics if one did:\nSetPrimarySurfaceId(surface_id, 5);\nSetPrimarySurfaceId(surface_id, 10);\n\nIt seems like the latter would be expected to override the former, wdyt?",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d495fa1f_e26f1ca7",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-16T19:33:16Z",
+      "side": 1,
+      "message": "ditto wrt skipping if deadline_in_frames is set",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558de3bf_3ea9928e",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-16T19:33:16Z",
+      "side": 1,
+      "message": "nit: reset deadline_in_frames_ so that the pending tree doesn\u0027t keep a deadline that we don\u0027t want to keep using.",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
