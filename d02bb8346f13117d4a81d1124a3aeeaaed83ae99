@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e36c95a_7f4196fc",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-16T17:31:42Z",
+      "side": 1,
+      "message": "Sorry, but this looks wrong to me. Please land a fix as soon as possible.",
+      "range": {
+        "startLine": 774,
+        "startChar": 9,
+        "endLine": 774,
+        "endChar": 26
+      },
+      "revId": "d02bb8346f13117d4a81d1124a3aeeaaed83ae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
