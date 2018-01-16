@@ -543,7 +543,7 @@ void DisplayConfigurator::SetDelegateForTesting(
 
 void DisplayConfigurator::SetInitialDisplayPower(
     chromeos::DisplayPowerState power_state) {
-  DCHECK_EQ(current_display_state_, MULTIPLE_DISPLAY_STATE_INVALID);
+  // DCHECK_EQ(current_display_state_, MULTIPLE_DISPLAY_STATE_INVALID); 
   requested_power_state_ = current_power_state_ = power_state;
   NotifyPowerStateObservers();
 }
