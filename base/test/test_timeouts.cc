@@ -107,10 +107,12 @@ void TestTimeouts::Initialize() {
                     &action_timeout_ms_);
   InitializeTimeout(switches::kUiTestActionMaxTimeout, action_timeout_ms_,
                     &action_max_timeout_ms_);
+  action_max_timeout_ms_ *= 2;
 
   // Test launcher timeout is independent from anything above action timeout.
   InitializeTimeout(switches::kTestLauncherTimeout, action_timeout_ms_,
                     &test_launcher_timeout_ms_);
+  test_launcher_timeout_ms_ *= 2;
 
   // The timeout values should be increasing in the right order.
   CHECK(tiny_timeout_ms_ <= action_timeout_ms_);
