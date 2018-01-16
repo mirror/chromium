@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c0e690_c3860327",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T12:37:37Z",
+      "side": 1,
+      "message": "This constexpr applies to the \"char*[]\", so the second const is required because otherwise const char* can\u0027t be put into a \"char*[]\" (needs to be a \"const char*[]\")",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "1883107dceaf8c4f107e68bce959f856e697d9e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
