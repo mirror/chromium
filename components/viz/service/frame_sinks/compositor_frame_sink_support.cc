@@ -107,9 +107,10 @@ void CompositorFrameSinkSupport::ReturnResources(
     client_->ReclaimResources(resources);
     return;
   }
-
   std::copy(resources.begin(), resources.end(),
             std::back_inserter(surface_returned_resources_));
+  LOG(INFO) << __FUNCTION__ << "; surface_returned_resources_.size="
+            << surface_returned_resources_.size();
 }
 
 void CompositorFrameSinkSupport::ReceiveFromChild(
@@ -325,6 +326,8 @@ void CompositorFrameSinkSupport::DidReceiveCompositorFrameAck() {
     return;
 
   client_->DidReceiveCompositorFrameAck(surface_returned_resources_);
+  LOG(INFO) << __FUNCTION__ << "; surface_returned_resources_.size="
+            << surface_returned_resources_.size();
   surface_returned_resources_.clear();
 }
 

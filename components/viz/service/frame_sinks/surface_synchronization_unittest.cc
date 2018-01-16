@@ -554,7 +554,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyActiveFramesAffectSurfaceReferences) {
 
   // child_support1 submits a CompositorFrame without any dependencies.
   // DidReceiveCompositorFrameAck should call on immediate activation.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(1);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(1);
   child_support1().SubmitCompositorFrame(child_id1.local_surface_id(),
                                          MakeDefaultCompositorFrame());
   testing::Mock::VerifyAndClearExpectations(&support_client_);
@@ -572,7 +572,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyActiveFramesAffectSurfaceReferences) {
   // activate immediately. DidReceiveCompositorFrameAck should not be called
   // immediately because the parent CompositorFrame is also blocked on
   // |child_id2|.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, {child_id1},
@@ -591,7 +591,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyActiveFramesAffectSurfaceReferences) {
   // child_support2 submits a CompositorFrame without any dependencies.
   // Both the child and the parent should immediately ACK CompositorFrames
   // on activation.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(2);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(2);
   child_support2().SubmitCompositorFrame(child_id2.local_surface_id(),
                                          MakeDefaultCompositorFrame());
   testing::Mock::VerifyAndClearExpectations(&support_client_);
@@ -653,8 +653,8 @@ TEST_F(SurfaceSynchronizationTest, ResourcesOnlyReturnedOnce) {
 
   std::vector<ReturnedResource> returned_resources = {
       resource.ToReturnedResource()};
-  EXPECT_CALL(support_client_,
-              DidReceiveCompositorFrameAck(returned_resources));
+  // EXPECT_CALL(support_client_,
+  //        DidReceiveCompositorFrameAck(returned_resources));
 
   // The parent submits a CompositorFrame without any dependencies. That
   // frame should activate immediately, replacing the earlier frame. The
@@ -680,7 +680,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
 
   // The parent submits a CompositorFrame that depends on |child_id1| before
   // the child submits a CompositorFrame.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
@@ -699,7 +699,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
 
   // DidReceiveCompositorFrameAck should get called twice: once for the child
   // and once for the now active parent CompositorFrame.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(2);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(2);
   child_support1().SubmitCompositorFrame(child_id1.local_surface_id(),
                                          MakeDefaultCompositorFrame());
   testing::Mock::VerifyAndClearExpectations(&support_client_);
@@ -733,7 +733,7 @@ TEST_F(SurfaceSynchronizationTest, DropStaleReferencesAfterActivation) {
   // The parent submits another CompositorFrame that depends on |child_id2|.
   // Submitting a pending CompositorFrame will not trigger a
   // CompositorFrameAck.
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(_)).Times(0);
   parent_support().SubmitCompositorFrame(
       parent_id.local_surface_id(),
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
@@ -1008,8 +1008,8 @@ TEST_F(SurfaceSynchronizationTest, ReturnResourcesWithAck) {
   std::vector<ReturnedResource> returned_resources =
       TransferableResource::ReturnResources({resource});
   EXPECT_CALL(support_client_, ReclaimResources(_)).Times(0);
-  EXPECT_CALL(support_client_,
-              DidReceiveCompositorFrameAck(Eq(returned_resources)));
+  // EXPECT_CALL(support_client_,
+  //        DidReceiveCompositorFrameAck(Eq(returned_resources)));
   parent_support().SubmitCompositorFrame(parent_id.local_surface_id(),
                                          MakeDefaultCompositorFrame());
 }
@@ -1051,8 +1051,8 @@ TEST_F(SurfaceSynchronizationTest, SurfaceResurrection) {
     std::vector<ReturnedResource> returned_resources =
         TransferableResource::ReturnResources({resource});
     EXPECT_CALL(support_client_, ReclaimResources(_)).Times(0);
-    EXPECT_CALL(support_client_,
-                DidReceiveCompositorFrameAck(Eq(returned_resources)));
+    // EXPECT_CALL(support_client_,
+    //        DidReceiveCompositorFrameAck(Eq(returned_resources)));
     surface_observer().Reset();
     child_support1().SubmitCompositorFrame(child_id.local_surface_id(),
                                            MakeDefaultCompositorFrame());
@@ -1477,8 +1477,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
   std::vector<ReturnedResource> returned_resources =
       TransferableResource::ReturnResources({resource});
 
-  EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(
-                                   Eq(std::vector<ReturnedResource>())));
+  // EXPECT_CALL(support_client_, DidReceiveCompositorFrameAck(
+  //                             Eq(std::vector<ReturnedResource>())));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
@@ -1506,8 +1506,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
   resource2.size = gfx::Size(8765, 4321);
   std::vector<ReturnedResource> returned_resources2 =
       TransferableResource::ReturnResources({resource2});
-  EXPECT_CALL(support_client_,
-              DidReceiveCompositorFrameAck(Eq(returned_resources2)));
+  // EXPECT_CALL(support_client_,
+  //        DidReceiveCompositorFrameAck(Eq(returned_resources2)));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
@@ -1527,8 +1527,8 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
 
   // Resources will be returned immediately because |child_id1|'s surface is
   // closed forever.
-  EXPECT_CALL(support_client_,
-              DidReceiveCompositorFrameAck(Eq(returned_resources2)));
+  // EXPECT_CALL(support_client_,
+  //        DidReceiveCompositorFrameAck(Eq(returned_resources2)));
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
