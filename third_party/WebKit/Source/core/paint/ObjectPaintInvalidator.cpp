@@ -173,8 +173,7 @@ void ObjectPaintInvalidator::InvalidatePaintOfPreviousVisualRect(
     LayoutRect invalidation_rect = object_.FragmentsVisualRectBoundingBox();
     InvalidatePaintUsingContainer(paint_invalidation_container,
                                   invalidation_rect, reason);
-    // TODO(yoichio) Use InvalidateDisplayItemClients(object_, reason);
-    object_.InvalidateDisplayItemClients(reason);
+    InvalidateDisplayItemClients(object_, reason);
   }
 
   // This method may be used to invalidate paint of an object changing paint
