@@ -85,6 +85,30 @@
       "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52a9bfe_2d3b02fd",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T09:15:14Z",
+      "side": 1,
+      "message": "Then won\u0027t we have a risk of tracing most objects in the first incremental phase?\n\nIf the persistent has a reference to Document, it will visit a ton of objects.",
+      "parentUuid": "d1694860_4435b495",
+      "range": {
+        "startLine": 1394,
+        "startChar": 20,
+        "endLine": 1394,
+        "endChar": 40
+      },
+      "revId": "c1eca719cb2707987d8f7ad3711d6735c9b413ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
