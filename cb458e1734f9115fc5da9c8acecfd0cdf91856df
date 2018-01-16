@@ -186,6 +186,23 @@
     },
     {
       "key": {
+        "uuid": "5fe63dd2_bb001b13",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-16T22:02:30Z",
+      "side": 1,
+      "message": "this seems to be an additional feature. please also mention it in CL description, and add a unit test.",
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a93e770_b0ff927e",
         "filename": "third_party/zlib/google/zip_reader.h",
         "patchSetId": 1
@@ -214,6 +231,30 @@
       "writtenOn": "2018-01-12T21:58:26Z",
       "side": 1,
       "message": "nit: Mebbe document how these two member vars are used / how they differ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020c82ef_f9e6c850",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-16T22:02:30Z",
+      "side": 1,
+      "message": "+1. Is it possible to unify them into one member (and one constructor, instead of two)",
+      "parentUuid": "cb3e659a_285fe414",
       "range": {
         "startLine": 284,
         "startChar": 0,
