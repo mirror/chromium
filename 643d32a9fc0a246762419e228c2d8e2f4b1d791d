@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fbae9b4_95166664",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T16:54:29Z",
+      "side": 1,
+      "message": "Can you put the body of this in the .cc file?",
+      "revId": "643d32a9fc0a246762419e228c2d8e2f4b1d791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34dbe1a_9b8751a3",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-16T16:54:29Z",
+      "side": 1,
+      "message": "nit: no .get() needed",
+      "revId": "643d32a9fc0a246762419e228c2d8e2f4b1d791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
