@@ -3679,6 +3679,17 @@ const FeatureEntry kFeatureEntries[] = {
          kMarkHttpAsFeatureVariations,
          "MarkHttpAs")},
 
+#if defined(OS_CHROMEOS)
+    {
+        "new-touch-support-for-screen-magnification",
+        flag_descriptions::kNewTouchSupportForScreenMagnificationName,
+        flag_descriptions::kNewTouchSupportForScreenMagnificationDescription,
+        kOsCrOS,
+        SINGLE_VALUE_TYPE(
+            chromeos::switches::kNewTouchSupportForScreenMagnification),
+    }
+#endif  // OS_CHROMEOS
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
