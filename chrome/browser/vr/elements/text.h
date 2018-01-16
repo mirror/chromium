@@ -9,8 +9,12 @@
 
 #include "chrome/browser/vr/elements/textured_element.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkRect.h"
+#include "ui/gfx/font.h"
+#include "ui/gfx/range/range.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 class RenderText;
@@ -18,6 +22,7 @@ class RenderText;
 
 namespace vr {
 
+class RenderTextWrapper;
 class TextTexture;
 
 enum TextLayoutMode {
@@ -25,6 +30,38 @@ enum TextLayoutMode {
   kSingleLineFixedHeight,
   kMultiLineFixedWidth,
 };
+
+// This class describes a formatting attribute, applicable to a Text element.
+// Attributes are applied in order, and may override previous attributes.
+// Formatting may be applied only to non-wrapping text.
+class TextFormattingAttribute {
+ public:
+  enum Type {
+    COLOR,
+    WEIGHT,
+    DIRECTIONALITY,
+  };
+
+  TextFormattingAttribute(ColorId color, const gfx::Range& range);
+  TextFormattingAttribute(gfx::Font::Weight weight, const gfx::Range& range);
+  explicit TextFormattingAttribute(gfx::DirectionalityMode directionality);
+
+  void Apply(const ColorMap& color_map, RenderTextWrapper* render_text) const;
+
+  bool operator==(const TextFormattingAttribute& other) const;
+  bool operator!=(const TextFormattingAttribute& other) const;
+
+ private:
+  Type type;
+  gfx::Range range;
+  union {
+    ColorId color_id;
+    gfx::Font::Weight weight;
+    gfx::DirectionalityMode directionality;
+  };
+};
+
+typedef std::vector<TextFormattingAttribute> TextFormatting;
 
 class Text : public TexturedElement {
  public:
@@ -36,12 +73,16 @@ class Text : public TexturedElement {
 
   // TODO(vollick): should use TexturedElement::SetForegroundColor
   void SetColor(SkColor color);
+  void SetMappedColor(ColorId id, SkColor color);
+
+  // Formatting must be applied only to non-wrapping text elements.
+  void SetFormatting(const TextFormatting& formatting);
 
   void SetAlignment(UiTexture::TextAlignment alignment);
   void SetLayoutMode(TextLayoutMode mode);
 
   // This text element does not typically feature a cursor, but since the cursor
-  // position is deterined while laying out text, a parent may wish to supply
+  // position is determined while laying out text, a parent may wish to supply
   // cursor parameters and determine where the cursor was last drawn.
   void SetCursorEnabled(bool enabled);
   void SetCursorPosition(int position);

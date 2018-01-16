@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/vr/test/mock_render_text.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/render_text.h"
 
@@ -35,6 +36,31 @@ TEST(Text, MultiLine) {
   text->SetLayoutMode(kSingleLineFixedWidth);
   EXPECT_EQ(text->LayOutTextForTest().size(), 1u);
   EXPECT_LT(text->GetTextureSizeForTest().height(), initial_size.height());
+}
+
+TEST(Text, Formatting) {
+  ColorMap color_map;
+  color_map[SUGGESTION_URL_TEXT] = SK_ColorGREEN;
+
+  TextFormatting formatting;
+  formatting.push_back(
+      TextFormattingAttribute(SUGGESTION_URL_TEXT, gfx::Range(1, 2)));
+  formatting.push_back(
+      TextFormattingAttribute(gfx::Font::Weight::BOLD, gfx::Range(3, 4)));
+  formatting.push_back(
+      TextFormattingAttribute(gfx::DirectionalityMode::DIRECTIONALITY_AS_URL));
+
+  testing::InSequence in_sequence;
+  testing::StrictMock<MockRenderText> render_text;
+  EXPECT_CALL(render_text, ApplyColor(SK_ColorGREEN, gfx::Range(1, 2)));
+  EXPECT_CALL(render_text,
+              ApplyWeight(gfx::Font::Weight::BOLD, gfx::Range(3, 4)));
+  EXPECT_CALL(render_text, SetDirectionalityMode(
+                               gfx::DirectionalityMode::DIRECTIONALITY_AS_URL));
+
+  for (const auto& attribute : formatting) {
+    attribute.Apply(color_map, &render_text);
+  }
 }
 
 }  // namespace vr
