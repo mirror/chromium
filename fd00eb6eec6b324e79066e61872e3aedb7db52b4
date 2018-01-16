@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41185d91_f842bd4e",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-16T18:58:07Z",
+      "side": 1,
+      "message": "The error will stop debug execution here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 11,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "fd00eb6eec6b324e79066e61872e3aedb7db52b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ceac076_21c0d04d",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-16T18:58:07Z",
+      "side": 1,
+      "message": "nit: no need for else anymore",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "fd00eb6eec6b324e79066e61872e3aedb7db52b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c345e4_cdcf641a",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-16T18:58:07Z",
+      "side": 1,
+      "message": "nit: add a comment saying the processing was successful and did not cause a crash, so the sentinel file can be deleted.",
+      "revId": "fd00eb6eec6b324e79066e61872e3aedb7db52b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a66a319_d425a264",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35024,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-16T18:58:07Z",
+      "side": 1,
+      "message": "consider shorter labels with content in the node eg:\n\n\u003cint value\u003d\"0\" label\u003d\"No hints found\"\u003e Previews processed but no Previews hints found \u003c/int\u003e\n\nThis will make the histogram names shorter, but hovering over it with the mouse will give more info.",
+      "revId": "fd00eb6eec6b324e79066e61872e3aedb7db52b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
