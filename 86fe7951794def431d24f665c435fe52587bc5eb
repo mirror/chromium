@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fed9d1bd_62ccb4e8",
+        "filename": ".gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-16T19:22:41Z",
+      "side": 1,
+      "message": "Can you file a bug in the V8 issue tracker https://bugs.chromium.org/p/v8/issues/list and add the link here?",
+      "revId": "86fe7951794def431d24f665c435fe52587bc5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
