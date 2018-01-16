@@ -8,6 +8,7 @@
 #include "core/html/media/HTMLAudioElement.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "core/testing/DummyPageHolder.h"
+#include "platform/mediastream/MediaStreamDescriptor.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -30,6 +31,15 @@ class HTMLMediaElementTest : public ::testing::TestWithParam<MediaTestParam> {
   void SetCurrentSrc(const String& src) {
     KURL url(src);
     Media()->current_src_ = url;
+  }
+  void SetCurrentSrcObject(MediaStreamDescriptor* media_stream_descriptor) {
+    Media()->SetSrcObject(media_stream_descriptor);
+  }
+  void SetShouldDelayLoadEvent(bool state) {
+    Media()->SetShouldDelayLoadEvent(state);
+  }
+  void SetNetworkState(HTMLMediaElement::NetworkState state) {
+    Media()->SetNetworkState(state);
   }
 
  private:
@@ -139,4 +149,31 @@ TEST_P(HTMLMediaElementTest, preloadType) {
   }
 }
 
+TEST_P(HTMLMediaElementTest, EmptyMediaElement) {
+  EXPECT_FALSE(Media()->HasPendingActivity());
+}
+
+TEST_P(HTMLMediaElementTest, ActiveMediaElement) {
+  MediaStreamDescriptor* media_stream_descriptor =
+      MediaStreamDescriptor::Create(MediaStreamSourceVector(),
+                                    MediaStreamSourceVector());
+  media_stream_descriptor->SetActive(true);
+  SetCurrentSrcObject(media_stream_descriptor);
+  SetShouldDelayLoadEvent(false);
+  SetNetworkState(HTMLMediaElement::kNetworkLoading);
+
+  EXPECT_TRUE(Media()->HasPendingActivity());
+}
+
+TEST_P(HTMLMediaElementTest, InactiveMediaElement) {
+  MediaStreamDescriptor* media_stream_descriptor =
+      MediaStreamDescriptor::Create(MediaStreamSourceVector(),
+                                    MediaStreamSourceVector());
+  media_stream_descriptor->SetActive(false);
+  SetCurrentSrcObject(media_stream_descriptor);
+  SetShouldDelayLoadEvent(false);
+  SetNetworkState(HTMLMediaElement::kNetworkLoading);
+
+  EXPECT_FALSE(Media()->HasPendingActivity());
+}
 }  // namespace blink
