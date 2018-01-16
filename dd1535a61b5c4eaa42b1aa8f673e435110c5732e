@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8bbb52a_008413a6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T22:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd50db0_91abd2a1",
+      "range": {
+        "startLine": 332,
+        "startChar": 42,
+        "endLine": 332,
+        "endChar": 49
+      },
+      "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578d54e6_42acca7f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26041484_dbe6c8c4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T22:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578d54e6_42acca7f",
+      "range": {
+        "startLine": 335,
+        "startChar": 39,
+        "endLine": 335,
+        "endChar": 44
+      },
+      "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1ba22426_3de682b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T22:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81dac08e_f4fa6a94",
+      "range": {
+        "startLine": 343,
+        "startChar": 8,
+        "endLine": 343,
+        "endChar": 14
+      },
+      "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4c9939_ea6e1eaa",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c3f77713_c7976d98",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T22:53:06Z",
+      "side": 1,
+      "message": "I would normally be slightly inclined towards your suggested approach (generally dislike module-level functions), but here I\u0027d like to keep it consistent with _remove_contents and don\u0027t want to move \u0026 re-indent a big existing block for no obvious benefits.",
+      "parentUuid": "7a4c9939_ea6e1eaa",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 42
+      },
+      "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b0fc0c0_106c7283",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
         "patchSetId": 1
@@ -105,6 +201,24 @@
       "writtenOn": "2018-01-16T22:43:41Z",
       "side": 1,
       "message": "Could also be:\n\n  illegal_filename_chars \u003d r\u0027~#%\u0026*{}\\:\u003c\u003e?/|\"\u0027",
+      "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68de81ee_5e4d1a3e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-16T22:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b0fc0c0_106c7283",
       "revId": "dd1535a61b5c4eaa42b1aa8f673e435110c5732e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
