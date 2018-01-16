@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ae7f567_d6626dfc",
+        "filename": "services/device/public/interfaces/sensor_provider.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-16T17:19:13Z",
+      "side": 1,
+      "message": "nit: 80 cols.",
+      "range": {
+        "startLine": 56,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "12b4b27af7ca4f4ea6b525f21c7c4ceb00138036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d90a77cb_406ed8ca",
         "filename": "services/device/public/interfaces/sensor_provider.mojom",
         "patchSetId": 5
