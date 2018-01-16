@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c18dd554_165b64f8",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-16T22:58:55Z",
+      "side": 1,
+      "message": "nit: \u0027generators.%s\u0027 % _BUILTIN_GENERATORS[language]",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "2ac9a927060a48e987d24db8971c8f85eda647ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
