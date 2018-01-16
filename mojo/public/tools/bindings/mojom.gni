@@ -258,6 +258,10 @@ if (enable_mojom_typemapping) {
 #   overridden_deps_blink (optional)
 #   component_deps_blink (optional)
 #       These two parameters are the blink variants of the previous two.
+#   overridden_deps_shared (optional)
+#   component_deps_shared (optional)
+#       These two parameters are the shared CPP sources variants of
+#       overridden_deps and component_deps.
 template("mojom") {
   assert(
       defined(invoker.sources) || defined(invoker.deps) ||
@@ -288,6 +292,12 @@ template("mojom") {
       defined(invoker.component_deps_blink)) {
     assert(defined(invoker.overridden_deps_blink))
     assert(defined(invoker.component_deps_blink))
+  }
+
+  if (defined(invoker.overridden_deps_shared) ||
+      defined(invoker.component_deps_shared)) {
+    assert(defined(invoker.overridden_deps_shared))
+    assert(defined(invoker.component_deps_shared))
   }
 
   all_deps = []
@@ -485,6 +495,16 @@ template("mojom") {
       # to get the cpp dependency name.
       full_name = get_label_info("$d", "label_no_toolchain")
       public_deps += [ "${full_name}_shared" ]
+    }
+    if (defined(invoker.overridden_deps_shared)) {
+      foreach(d, invoker.overridden_deps_shared) {
+        # Resolve the name, so that a target //mojo/something becomes
+        # //mojo/something:something and we can append _shared
+        # to get the cpp dependency name.
+        full_name = get_label_info("$d", "label_no_toolchain")
+        public_deps -= [ "${full_name}_shared" ]
+      }
+      public_deps += invoker.component_deps_shared
     }
     if (defined(shared_component_impl_macro)) {
       defines = [ shared_component_impl_macro ]
