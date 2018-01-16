@@ -1744,8 +1744,10 @@ bool BrowserMainLoop::InitializeToolkit() {
 #endif  // defined(USE_AURA)
 
 #if BUILDFLAG(ENABLE_MUS)
-  if (parsed_command_line_.HasSwitch(switches::kMus))
+  if (parsed_command_line_.HasSwitch(switches::kMus) ||
+      parsed_command_line_.HasSwitch(switches::kMusHostingViz)) {
     image_cursors_set_ = std::make_unique<ui::ImageCursorsSet>();
+  }
 #endif
 
   if (parts_)
