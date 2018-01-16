@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a89c36_246fd272",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-16T21:47:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is a hard requirement, but I think we usually add git logs to the commit message. Could you do the same as https://chromium-review.googlesource.com/588880 to follow the convention?",
+      "revId": "f16b09e0fad277abf03c1941a5de9e8c1e2fa15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
