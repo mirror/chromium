@@ -9450,7 +9450,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Chrome.ProcessSingleton.TerminateProcessErrorCode.Posix"
-    enum="OSAgnosticErrno">
+    enum="PopularOSErrno">
   <owner>aseren@yandex-team.ru</owner>
   <owner>gab@chromium.org</owner>
   <summary>
@@ -31812,7 +31812,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="LevelDBEnv.IOError.NewLogger" enum="OSAgnosticErrno">
+<histogram name="LevelDBEnv.IOError.NewLogger" enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use LevelDBEnv.IOError.BFE.NewLogger.
   </obsolete>
@@ -31820,7 +31820,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Errno of errors encountered in NewLogger.</summary>
 </histogram>
 
-<histogram name="LevelDBEnv.IOError.NewSequentialFile" enum="OSAgnosticErrno">
+<histogram name="LevelDBEnv.IOError.NewSequentialFile" enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use LevelDBEnv.IOError.BFE.NewSequentialFile.
   </obsolete>
@@ -31838,7 +31838,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="LevelDBEnv.IOError.WritableFileAppend" enum="OSAgnosticErrno">
+<histogram name="LevelDBEnv.IOError.WritableFileAppend" enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use LevelDBEnv.IOError.BFE.WritableFileAppend.
   </obsolete>
@@ -31846,7 +31846,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Errno of errors encountered in WritableFileAppend.</summary>
 </histogram>
 
-<histogram name="LevelDBEnv.IOError.WritableFileFlush" enum="OSAgnosticErrno">
+<histogram name="LevelDBEnv.IOError.WritableFileFlush" enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use LevelDBEnv.IOError.BFE.WritableFileFlush.
   </obsolete>
@@ -63620,7 +63620,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PlatformFile.UnknownErrors.Posix" enum="OSAgnosticErrno">
+<histogram name="PlatformFile.UnknownErrors.Posix" enum="PopularOSErrno">
   <owner>dgrogan@chromium.org</owner>
   <summary>
     Errors returned by CreateFile on POSIX that PlatformFileError doesn't yet
@@ -91855,7 +91855,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="UMA.LocalPersistentMemoryAllocator.Failures.Posix"
-    enum="OSAgnosticErrno">
+    enum="PopularOSErrno">
   <owner>bcwhite@chromium.org</owner>
   <summary>
     Failures, as reported in errno, encountered while allocating local
@@ -96092,7 +96092,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebCore.IndexedDB.LevelDBOpenErrors.Errno"
-    enum="OSAgnosticErrno">
+    enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use WebCore.IndexedDB.LevelDBOpenErrors.BFE.
   </obsolete>
@@ -96148,7 +96148,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebCore.IndexedDB.LevelDBReadErrors.Errno"
-    enum="OSAgnosticErrno">
+    enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use WebCore.IndexedDB.LevelDBReadErrors.BFE.
   </obsolete>
@@ -96205,7 +96205,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebCore.IndexedDB.LevelDBWriteErrors.Errno"
-    enum="OSAgnosticErrno">
+    enum="PopularOSErrno">
   <obsolete>
     Deprecated 2015-05. As of M43 use WebCore.IndexedDB.LevelDBWriteErrors.BFE.
   </obsolete>
