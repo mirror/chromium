@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3271642_7bc52864",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-16T15:19:15Z",
+      "side": 1,
+      "message": "This needs to be guarded #if defined(OS_ANDROID)",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "2bd6188fa131651ac9f9b6ad27f34507776498be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
