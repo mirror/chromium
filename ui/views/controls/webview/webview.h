@@ -49,6 +49,9 @@ class WEBVIEW_EXPORT WebView : public View,
 
   // WebView does not assume ownership of WebContents set via this method, only
   // those it implicitly creates via GetWebContents() above.
+  // Callers should not reset focus behavior when the web contents are about
+  // to be synchronously set to something.
+  void TemporarilyClearWebContents();
   void SetWebContents(content::WebContents* web_contents);
 
   // If |mode| is true, WebView will register itself with WebContents as a
