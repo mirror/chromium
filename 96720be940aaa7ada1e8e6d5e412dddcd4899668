@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "04b371d0_82e8a2b2",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwImeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T21:51:24Z",
+      "side": 1,
+      "message": "don\u0027t use syntax sugar here, this is less readable to me at least",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f14cb9_5b31afa6",
         "filename": "content/browser/android/ime_adapter_android.cc",
         "patchSetId": 4
@@ -25,6 +42,46 @@
     },
     {
       "key": {
+        "uuid": "12068019_914415aa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T21:51:24Z",
+      "side": 1,
+      "message": "should that be or?\n\nalso this case used to do a whole bunch of other things below. is it ok to skip all of that?",
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8084c7_ce526e04",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T21:51:24Z",
+      "side": 1,
+      "message": "don\u0027t bump year when moving a file :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf4a53_cb4becc1",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
         "patchSetId": 4
@@ -36,6 +93,30 @@
       "writtenOn": "2018-01-16T19:47:48Z",
       "side": 1,
       "message": "How is it different from initializing it in the constructor?",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 62
+      },
+      "revId": "96720be940aaa7ada1e8e6d5e412dddcd4899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490f94ca_8f7e73a1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T21:51:24Z",
+      "side": 1,
+      "message": "\u003e How is it different from initializing it in the constructor?\n\nit\u0027s annoying to pass in additional parameters through WebContentsUserData to the constructor, so this is what we settled on :/",
+      "parentUuid": "79bf4a53_cb4becc1",
       "range": {
         "startLine": 177,
         "startChar": 38,
