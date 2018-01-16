@@ -4,6 +4,7 @@
 
 #include "components/variations/variations_params_manager.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/base_switches.h"

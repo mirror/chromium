@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 
+#include <memory>
 #include <ostream>
 #include <utility>
 

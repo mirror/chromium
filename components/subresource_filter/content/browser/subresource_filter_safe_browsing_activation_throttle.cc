@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.h"
 
+#include <memory>
 #include <sstream>
 #include <utility>
 #include <vector>

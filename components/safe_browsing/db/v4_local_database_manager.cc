@@ -7,6 +7,7 @@
 
 #include "components/safe_browsing/db/v4_local_database_manager.h"
 
+#include <memory>
 #include <vector>
 
 #include "base/bind_helpers.h"

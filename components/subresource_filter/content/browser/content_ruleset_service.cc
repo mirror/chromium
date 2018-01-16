@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/content_ruleset_service.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/logging.h"
