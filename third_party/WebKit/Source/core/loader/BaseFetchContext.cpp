@@ -53,10 +53,11 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
-    ResourceRequest::RedirectStatus redirect_status) const {
+    ResourceRequest::RedirectStatus redirect_status,
+    bool* is_ad_resource) const {
   ResourceRequestBlockedReason blocked_reason =
       CanRequestInternal(type, resource_request, url, options, reporting_policy,
-                         origin_restriction, redirect_status);
+                         origin_restriction, redirect_status, is_ad_resource);
   if (blocked_reason != ResourceRequestBlockedReason::kNone &&
       reporting_policy == SecurityViolationReportingPolicy::kReport) {
     DispatchDidBlockRequest(resource_request, options.initiator_info,
@@ -153,7 +154,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
-    ResourceRequest::RedirectStatus redirect_status) const {
+    ResourceRequest::RedirectStatus redirect_status,
+    bool* is_ad_resource) const {
   if (IsDetached()) {
     if (!resource_request.GetKeepalive() ||
         redirect_status == ResourceRequest::RedirectStatus::kNoRedirect) {
@@ -293,7 +295,7 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   if (GetSubresourceFilter() && type != Resource::kMainResource &&
       type != Resource::kImportResource) {
     if (!GetSubresourceFilter()->AllowLoad(url, request_context,
-                                           reporting_policy)) {
+                                           reporting_policy, is_ad_resource)) {
       return ResourceRequestBlockedReason::kSubresourceFilter;
     }
   }
