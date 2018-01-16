@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ceac5df_f666d091",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-16T15:51:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd97ff5_b4d05351",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3473d4_f2cd819a",
         "filename": "content/renderer/media/local_media_stream_audio_source.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be71e14_4750a459",
+        "filename": "content/renderer/media/local_media_stream_audio_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-16T15:51:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f3473d4_f2cd819a",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "819bbddb_3316e06f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-16T15:51:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec1b9ba_dd362a6e",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f578ff_812e6ad8",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5bc5f129_01c0a176",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-16T15:51:30Z",
+      "side": 1,
+      "message": "Leaving http for now for consistency with the rest of the file.\nAlso, http seems to be more popular for crbug.com in the codebase (9900 vs 5200 according to cs.chromium.org).",
+      "parentUuid": "20f578ff_812e6ad8",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e8f7a20_58c8ea4f",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a20a717_aa7ae7c1",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-16T15:51:30Z",
+      "side": 1,
+      "message": "Done. It was \"git cl format\"\u0027s fault :)",
+      "parentUuid": "7e8f7a20_58c8ea4f",
+      "revId": "81b0a3f05fc2fb4bdf2c637fe6a9065a830a0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
