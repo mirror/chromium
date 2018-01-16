@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "457abcf1_f6f58fbe",
+        "filename": "components/policy/core/browser/configuration_policy_pref_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-16T23:03:42Z",
+      "side": 1,
+      "message": "Yeah, I meant both this constant and the PostTask hack :)\nThanks for deferring this change to a later CL - I would be glad to help you with this part, but sadly I don\u0027t have much background on this issue yet.",
+      "parentUuid": "c3fcba30_705c0190",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a52c815_b1f7a6bc",
         "filename": "components/policy/core/common/policy_service_impl.cc",
         "patchSetId": 3
@@ -114,6 +138,24 @@
       "side": 1,
       "message": "In case you are curious this is split off from a bigger patch that gets it all working. Full patch is here: https://chromium-review.googlesource.com/c/chromium/src/+/853300",
       "parentUuid": "116deebd_7f4439d3",
+      "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3951fb7c_d6caa052",
+        "filename": "components/policy/core/common/policy_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-16T23:03:42Z",
+      "side": 1,
+      "message": "After thinking more about this, I\u0027ve come up with another idea that may allow to avoid added complexity.\n\nAFAICS, today, all policy providers are created and added during the construction of the BrowserPolicyConnectorBase leaf class. In other words, all AddPolicyProvider() calls may happen only before the BrowserPolicyConnector object\u0027s constructor completes.\n\nSo the idea is - can we switch to passing the list of ConfigurationPolicyProvider\u0027s instead of operating single objects? I.e., both BrowserPolicyConnector and PolicyServiceImpl would support only two states: a) with a void list of providers - that\u0027s the initial state, or b) the built immutable list of providers - that\u0027s the state which is triggered during PreCreateThreads.\nThe single-object methods like AddPolicyProvider() or AddProvider() will have to be removed, and so is the |providers| parameter of the PolicyServiceImpl constructor.\n\nThis approach:\n* avoids issues with the |initialization_complete_| flags, because we will start from the \"all false\" initial state and we will only allow false-\u003etrue transitions when the list of providers is added;\n* doesn\u0027t add vagueness around policy providers lifetime (i.e. the API won\u0027t allow a situation where one half of providers is added and is actively used via PolicyService, and another half isn\u0027t constructed yet).\n\nWDYT?",
+      "parentUuid": "79c6eaa4_7a71a0bd",
       "revId": "39af6eb00dd5e4cb3b4836ba3a335a17f5e65ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
