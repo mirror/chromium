@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8789245e_6df34717",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-16T19:27:20Z",
+      "side": 1,
+      "message": "If I understand this correctly you are creating 4*numThreads at normal priority that all call CompleteConstructionNow, which unblocks the BACKGROUND priority thread while simultaneously stealing all CPU time.\n\nI worry that this is slightly racy, because until all of the threads have spun up there is a window of opportunity where there may be \u003cnumThreads normal-priority threads running but one of them may have already called CompleteConstructionNow.\n\nWhat I was expecting was that the main thread would create all of these worker threads and then the main thread would call CompleteConstructionNow(). That ensures that CompleteConstructionNow() isn\u0027t called too early.",
+      "revId": "624a108d54d1e2136f80af8e6daedc72d683d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
