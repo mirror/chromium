@@ -650,6 +650,19 @@ void InputMethodController::CancelComposition() {
   DispatchCompositionEndEvent(GetFrame(), g_empty_string);
 }
 
+bool InputMethodController::DispatchCompositionStartEvent(LocalFrame& frame,
+                                                          const String& text) {
+  Element* target = frame.GetDocument()->FocusedElement();
+  if (!target)
+    IsAvailable();
+
+  CompositionEvent* event = CompositionEvent::Create(
+      EventTypeNames::compositionstart, frame.DomWindow(), text);
+  target->DispatchEvent(event);
+
+  return IsAvailable();
+}
+
 void InputMethodController::SetComposition(
     const String& text,
     const Vector<ImeTextSpan>& ime_text_spans,
@@ -723,10 +736,7 @@ void InputMethodController::SetComposition(
   // empty because this function doesn't create a composition node when the text
   // is empty.
   if (!HasComposition()) {
-    target->DispatchEvent(CompositionEvent::Create(
-        EventTypeNames::compositionstart, GetFrame().DomWindow(),
-        GetFrame().SelectedText()));
-    if (!IsAvailable())
+    if (!DispatchCompositionStartEvent(GetFrame(), GetFrame().SelectedText()))
       return;
   }
 
@@ -841,6 +851,15 @@ void InputMethodController::SetCompositionFromExistingText(
     const Vector<ImeTextSpan>& ime_text_spans,
     unsigned composition_start,
     unsigned composition_end) {
+  Element* target = GetDocument().FocusedElement();
+  if (!target)
+    return;
+
+  if (!HasComposition()) {
+    if (!DispatchCompositionStartEvent(GetFrame(), ""))
+      return;
+  }
+
   Element* editable = GetFrame()
                           .Selection()
                           .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -872,6 +891,8 @@ void InputMethodController::SetCompositionFromExistingText(
     composition_range_ = Range::Create(GetDocument());
   composition_range_->setStart(range.StartPosition());
   composition_range_->setEnd(range.EndPosition());
+
+  DispatchCompositionUpdateEvent(GetFrame(), ComposingText());
 }
 
 EphemeralRange InputMethodController::CompositionEphemeralRange() const {
