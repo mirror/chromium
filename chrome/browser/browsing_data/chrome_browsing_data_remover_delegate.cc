@@ -19,6 +19,7 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
+#include "chrome/browser/browsing_data/navigation_entry_remover.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/domain_reliability/service_factory.h"
@@ -341,7 +342,8 @@ void ChromeBrowsingDataRemoverDelegate::SubTask::CompletionCallback() {
 }
 
 ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
-    BrowserContext* browser_context)
+    BrowserContext* browser_context,
+    history::HistoryService* history_service)
     : profile_(Profile::FromBrowserContext(browser_context)),
       sub_task_forward_callback_(
           base::Bind(&ChromeBrowsingDataRemoverDelegate::NotifyIfDone,
@@ -381,7 +383,12 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
 #if defined(OS_ANDROID)
       webapp_registry_(new WebappRegistry()),
 #endif
-      weak_ptr_factory_(this) {}
+      history_observer_(this),
+      weak_ptr_factory_(this) {
+  if (history_service) {
+    history_observer_.Add(history_service);
+  }
+}
 
 ChromeBrowsingDataRemoverDelegate::~ChromeBrowsingDataRemoverDelegate() {}
 
@@ -393,6 +400,21 @@ void ChromeBrowsingDataRemoverDelegate::Shutdown() {
 content::BrowsingDataRemoverDelegate::EmbedderOriginTypeMatcher
 ChromeBrowsingDataRemoverDelegate::GetOriginTypeMatcher() const {
   return base::Bind(&DoesOriginMatchEmbedderMask);
+}
+
+void ChromeBrowsingDataRemoverDelegate::OnURLsDeleted(
+    history::HistoryService* history_service,
+    const history::DeletionTimeRange& time_range,
+    bool expired,
+    const history::URLRows& deleted_rows,
+    const std::set<GURL>& favicon_urls) {
+  if (!expired && !profile_->IsGuestSession())
+    browsing_data::RemoveNavigationEntries(profile_, time_range, deleted_rows);
+}
+
+void ChromeBrowsingDataRemoverDelegate::HistoryServiceBeingDeleted(
+    history::HistoryService* history_service) {
+  history_observer_.Remove(history_service);
 }
 
 bool ChromeBrowsingDataRemoverDelegate::MayRemoveDownloadHistory() const {
@@ -595,7 +617,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
 
     // If the caller is removing history for all hosts, then clear ancillary
     // historical information.
-    if (filter_builder.IsEmptyBlacklist()) {
+    if (filter_builder.GetMode() == BrowsingDataFilterBuilder::BLACKLIST) {
       // We also delete the list of recently closed tabs. Since these expire,
       // they can't be more than a day old, so we can simply clear them all.
       sessions::TabRestoreService* tab_service =
