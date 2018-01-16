@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04c14722_b7631217",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T19:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f35909c_92320cdf",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 8
+      },
+      "revId": "3c6df84b74962b4161f1bb28b05ad6164b102ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "338b5e15_8f37cce8",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-13T03:21:26Z",
       "side": 1,
       "message": "Won\u0027t this happen automatically in previous call?",
+      "revId": "3c6df84b74962b4161f1bb28b05ad6164b102ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229a340f_4d3699eb",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T19:49:49Z",
+      "side": 1,
+      "message": "Unfortunately not -- added a comment that elaborates on this.",
+      "parentUuid": "338b5e15_8f37cce8",
       "revId": "3c6df84b74962b4161f1bb28b05ad6164b102ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3dbb4f13_6c3381a9",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T19:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ae87530_30447121",
+      "range": {
+        "startLine": 776,
+        "startChar": 36,
+        "endLine": 776,
+        "endChar": 43
+      },
+      "revId": "3c6df84b74962b4161f1bb28b05ad6164b102ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39bf28d_729e4151",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-13T03:21:26Z",
       "side": 1,
       "message": "I feel like we should either comment why loader is not important, or pass it everywhere.\n\nOr have IdentifiersFactory::SubresourceRequestId() which does not take loader.",
+      "range": {
+        "startLine": 942,
+        "startChar": 36,
+        "endLine": 942,
+        "endChar": 43
+      },
+      "revId": "3c6df84b74962b4161f1bb28b05ad6164b102ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df1c288_a92cb952",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-16T19:49:49Z",
+      "side": 1,
+      "message": "Done (I liked the SubresourceRequestId())",
+      "parentUuid": "b39bf28d_729e4151",
       "range": {
         "startLine": 942,
         "startChar": 36,
