@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a2beea_0c77735e",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-16T17:10:33Z",
+      "side": 1,
+      "message": "Given the subtlety between visible and IsVisible() I recommend a comment.",
+      "range": {
+        "startLine": 1390,
+        "startChar": 45,
+        "endLine": 1390,
+        "endChar": 65
+      },
+      "revId": "c01727de110fc404a64004c4af885df39c355dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
