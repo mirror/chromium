@@ -2998,6 +2998,12 @@ WebSize WebViewImpl::ContentsPreferredMinimumSize() {
   int width_scaled = document->GetLayoutView()
                          ->MinPreferredLogicalWidth()
                          .Round();  // Already accounts for zoom.
+  if (Scrollbar* scrollbar =
+          MainFrameImpl()->GetFrameView()->VerticalScrollbar()) {
+    // For RLS, this occurs in LayoutBlock::ComputeIntrinsicLogicalWidths.
+    if (!scrollbar->IsOverlayScrollbar())
+      width_scaled += scrollbar->ScrollbarThickness();
+  }
   int height_scaled =
       document->documentElement()->GetLayoutBox()->ScrollHeight().Round();
   return IntSize(width_scaled, height_scaled);
