@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a881945_faa80613",
+        "filename": "chrome/browser/chromeos/display/display_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T15:13:00Z",
+      "side": 1,
+      "message": "ditto?",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db25c446_84ad177d",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T15:13:00Z",
+      "side": 1,
+      "message": "nit: undo?",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adaf076_26649856",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T15:13:00Z",
+      "side": 1,
+      "message": "nit: undo?",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8783f2ba_42dd419b",
+        "filename": "content/public/common/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T15:13:00Z",
+      "side": 1,
+      "message": "nit: not needed cause of line 2 which I just added :)",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f25161_b59c5337",
+        "filename": "services/network/public/cpp/resource_response_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-16T15:13:00Z",
+      "side": 1,
+      "message": "in this file and the cc file, you can now get rid of \"network::\"",
+      "revId": "ec30f07f47615835c6930e1ba904025521a9dbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
