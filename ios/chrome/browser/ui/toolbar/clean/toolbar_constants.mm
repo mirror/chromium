@@ -39,6 +39,10 @@ const CGFloat kBackButtonImageInset = -9;
 const CGFloat kForwardButtonImageInset = -7;
 const CGFloat kLeadingLocationBarButtonImageInset = 15;
 
+const UILayoutPriority kPrimaryToolbarButtonPriority = UILayoutPriorityRequired;
+const UILayoutPriority kSecondaryToolbarButtonPriority =
+    kPrimaryToolbarButtonPriority - 1;
+
 const NSInteger kShowTabStripButtonMaxTabCount = 99;
 
 const LayoutOffset kToolbarButtonAnimationOffset = -10.0;
