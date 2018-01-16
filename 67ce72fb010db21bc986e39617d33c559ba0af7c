@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2437775a_27b048ec",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-16T09:31:10Z",
+      "side": 1,
+      "message": "Now |loading_task_runner| cannot be null, right? Then please fix the method comment accordingly.",
+      "revId": "67ce72fb010db21bc986e39617d33c559ba0af7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
