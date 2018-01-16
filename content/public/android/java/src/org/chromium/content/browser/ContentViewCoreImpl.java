@@ -26,8 +26,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import android.view.accessibility.AccessibilityNodeProvider;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.TraceEvent;
@@ -39,7 +37,7 @@ import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.accessibility.captioning.CaptioningBridgeFactory;
 import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBridge;
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
-import org.chromium.content.browser.input.ImeAdapter;
+import org.chromium.content.browser.input.ImeAdapterImpl;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.SelectPopupDialog;
@@ -106,7 +104,7 @@ public class ContentViewCoreImpl
             resetPopupsAndInput();
             ContentViewCoreImpl contentViewCore = mWeakContentViewCore.get();
             if (contentViewCore == null) return;
-            contentViewCore.mImeAdapter.resetAndHideKeyboard();
+            contentViewCore.getImeAdapter().resetAndHideKeyboard();
         }
 
         private void resetPopupsAndInput() {
@@ -170,9 +168,6 @@ public class ContentViewCoreImpl
     private PopupZoomer mPopupZoomer;
     private SelectPopup mSelectPopup;
     private long mNativeSelectPopupSourceFrame;
-
-    // Only valid when focused on a text / password field.
-    private ImeAdapter mImeAdapter;
 
     private TextSuggestionHost mTextSuggestionHost;
 
@@ -320,23 +315,6 @@ public class ContentViewCoreImpl
         mWindowAndroidChangedObservers.removeObserver(observer);
     }
 
-    @Override
-    public void addImeEventObserver(ImeEventObserver imeEventObserver) {
-        mImeAdapter.addEventObserver(imeEventObserver);
-    }
-
-    @VisibleForTesting
-    @Override
-    public void setImeAdapterForTest(ImeAdapter imeAdapter) {
-        mImeAdapter = imeAdapter;
-    }
-
-    @VisibleForTesting
-    @Override
-    public ImeAdapter getImeAdapterForTest() {
-        return mImeAdapter;
-    }
-
     // Perform important post-construction set up of the ContentViewCore.
     // We do not require the containing view in the constructor to allow embedders to create a
     // ContentViewCore without having fully created its containing view. The containing view
@@ -368,9 +346,9 @@ public class ContentViewCoreImpl
         setContainerViewInternals(internalDispatcher);
 
         mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
-        mImeAdapter = new ImeAdapter(
+        ImeAdapterImpl imeAdapter = ImeAdapterImpl.create(
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
-        mImeAdapter.addEventObserver(this);
+        imeAdapter.addEventObserver(this);
         mTextSuggestionHost = new TextSuggestionHost(this);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
@@ -427,7 +405,7 @@ public class ContentViewCoreImpl
             if (mContainerView != null) {
                 hideSelectPopupWithCancelMessage();
                 mPopupZoomer.hide(false);
-                mImeAdapter.setContainerView(containerView);
+                getImeAdapter().setContainerView(containerView);
             }
 
             mContainerView = containerView;
@@ -444,6 +422,10 @@ public class ContentViewCoreImpl
 
     private GestureListenerManagerImpl getGestureListenerManager() {
         return GestureListenerManagerImpl.fromWebContents(mWebContents);
+    }
+
+    private ImeAdapterImpl getImeAdapter() {
+        return ImeAdapterImpl.fromWebContents(mWebContents);
     }
 
     @CalledByNative
@@ -471,7 +453,7 @@ public class ContentViewCoreImpl
         }
         mWebContentsObserver.destroy();
         mWebContentsObserver = null;
-        mImeAdapter.resetAndHideKeyboard();
+        getImeAdapter().resetAndHideKeyboard();
         hidePopupsAndPreserveSelection();
         mWebContents = null;
         mNativeContentViewCore = 0;
@@ -634,7 +616,7 @@ public class ContentViewCoreImpl
         GamepadList.onAttachedToWindow(mContext);
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
         mSystemCaptioningBridge.addListener(this);
-        mImeAdapter.onViewAttachedToWindow();
+        getImeAdapter().onViewAttachedToWindow();
         if (mWebContentsAccessibility != null) {
             mWebContentsAccessibility.onAttachedToWindow();
         }
@@ -655,7 +637,7 @@ public class ContentViewCoreImpl
     @Override
     public void onDetachedFromWindow() {
         mAttachedToWindow = false;
-        mImeAdapter.onViewDetachedFromWindow();
+        getImeAdapter().onViewDetachedFromWindow();
         removeDisplayAndroidObserver();
         GamepadList.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
@@ -672,23 +654,12 @@ public class ContentViewCoreImpl
         }
     }
 
-    @Override
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        boolean allowKeyboardLearning = getWebContents() != null && !getWebContents().isIncognito();
-        return mImeAdapter.onCreateInputConnection(outAttrs, allowKeyboardLearning);
-    }
-
-    @Override
-    public boolean onCheckIsTextEditor() {
-        return mImeAdapter.hasTextInputType();
-    }
-
     @SuppressWarnings("javadoc")
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         try {
             TraceEvent.begin("ContentViewCore.onConfigurationChanged");
-            mImeAdapter.onKeyboardConfigurationChanged(newConfig);
+            getImeAdapter().onKeyboardConfigurationChanged(newConfig);
             mContainerViewInternals.super_onConfigurationChanged(newConfig);
             // To request layout has side effect, but it seems OK as it only happen in
             // onConfigurationChange and layout has to be changed in most case.
@@ -710,7 +681,7 @@ public class ContentViewCoreImpl
 
         // Execute a delayed form focus operation because the OSK was brought
         // up earlier.
-        Rect focusPreOSKViewportRect = mImeAdapter.getFocusPreOSKViewportRect();
+        Rect focusPreOSKViewportRect = getImeAdapter().getFocusPreOSKViewportRect();
         if (!focusPreOSKViewportRect.isEmpty()) {
             Rect rect = new Rect();
             getContainerView().getWindowVisibleDisplayFrame(rect);
@@ -728,7 +699,7 @@ public class ContentViewCoreImpl
     private void cancelRequestToScrollFocusedEditableNodeIntoView() {
         // Zero-ing the rect will prevent |updateAfterSizeChanged()| from
         // issuing the delayed form focus event.
-        mImeAdapter.getFocusPreOSKViewportRect().setEmpty();
+        getImeAdapter().getFocusPreOSKViewportRect().setEmpty();
     }
 
     @Override
@@ -743,7 +714,7 @@ public class ContentViewCoreImpl
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
-        mImeAdapter.onWindowFocusChanged(hasWindowFocus);
+        getImeAdapter().onWindowFocusChanged(hasWindowFocus);
         if (!hasWindowFocus) resetGestureDetection();
         if (isAlive()) {
             getSelectionPopupController().onWindowFocusChanged(hasWindowFocus);
@@ -755,7 +726,7 @@ public class ContentViewCoreImpl
     public void onFocusChanged(boolean gainFocus, boolean hideKeyboardOnBlur) {
         if (mHasViewFocus != null && mHasViewFocus == gainFocus) return;
         mHasViewFocus = gainFocus;
-        mImeAdapter.onViewFocusChanged(gainFocus, hideKeyboardOnBlur);
+        getImeAdapter().onViewFocusChanged(gainFocus, hideKeyboardOnBlur);
 
         mJoystickScrollEnabled =
                 gainFocus && !getSelectionPopupController().isFocusedNodeEditable();
@@ -794,7 +765,7 @@ public class ContentViewCoreImpl
             return mContainerViewInternals.super_dispatchKeyEvent(event);
         }
 
-        if (mImeAdapter.dispatchKeyEvent(event)) return true;
+        if (getImeAdapter().dispatchKeyEvent(event)) return true;
 
         return mContainerViewInternals.super_dispatchKeyEvent(event);
     }
@@ -1050,9 +1021,6 @@ public class ContentViewCoreImpl
         mJoystickScrollEnabled = !editable;
         getSelectionPopupController().updateSelectionState(editable, password);
     }
-
-    @Override
-    public void onBeforeSendKeyEvent(KeyEvent event) {}
 
     /**
      * Called (from native) when the <select> popup needs to be shown.

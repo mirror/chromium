@@ -14,7 +14,6 @@ import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.UsedByReflection;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
 import org.chromium.content.browser.input.Range;
 
@@ -28,7 +27,7 @@ import java.util.List;
 public class TestInputMethodManagerWrapper extends InputMethodManagerWrapper {
     private static final String TAG = "cr_Ime";
 
-    private final ContentViewCore mContentViewCore;
+    private final InputConnectionProvider mInputConnectionProvider;
     private InputConnection mInputConnection;
     private int mRestartInputCounter;
     private int mShowSoftInputCounter;
@@ -41,10 +40,12 @@ public class TestInputMethodManagerWrapper extends InputMethodManagerWrapper {
     private CursorAnchorInfo mLastCursorAnchorInfo;
     private final ArrayList<EditorInfo> mEditorInfoList = new ArrayList<>();
 
-    public TestInputMethodManagerWrapper(ContentViewCore contentViewCore) {
+    public interface InputConnectionProvider { InputConnection get(EditorInfo info); }
+
+    public TestInputMethodManagerWrapper(InputConnectionProvider provider) {
         super(null);
         Log.d(TAG, "TestInputMethodManagerWrapper constructor");
-        mContentViewCore = contentViewCore;
+        mInputConnectionProvider = provider;
         mUpdateSelectionList = new ArrayList<>();
     }
 
@@ -53,7 +54,7 @@ public class TestInputMethodManagerWrapper extends InputMethodManagerWrapper {
         mRestartInputCounter++;
         Log.d(TAG, "restartInput: count [%d]", mRestartInputCounter);
         EditorInfo editorInfo = new EditorInfo();
-        mInputConnection = mContentViewCore.onCreateInputConnection(editorInfo);
+        mInputConnection = mInputConnectionProvider.get(editorInfo);
         mEditorInfoList.add(editorInfo);
     }
 
@@ -64,7 +65,7 @@ public class TestInputMethodManagerWrapper extends InputMethodManagerWrapper {
         Log.d(TAG, "showSoftInput: count [%d]", mShowSoftInputCounter);
         if (mInputConnection != null) return;
         EditorInfo editorInfo = new EditorInfo();
-        mInputConnection = mContentViewCore.onCreateInputConnection(editorInfo);
+        mInputConnection = mInputConnectionProvider.get(editorInfo);
         mEditorInfoList.add(editorInfo);
     }
 
