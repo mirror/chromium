@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422dde5e_8a84c786",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1250340
+      },
+      "writtenOn": "2018-01-16T19:14:57Z",
+      "side": 1,
+      "message": "It looks like this is the same test as above. Are the sdpSemantics for pc1/pc2 supposed to be swapped in this test (i.e., pc1 should be plan B)?",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "7d746aafcfe8d687c50379915d5cc1fa95a3029e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
