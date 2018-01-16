@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f65fe5_195ed596",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-16T18:02:25Z",
+      "side": 1,
+      "message": "I think it should be !resource_provider || !resource_provider-\u003eIsValid()).",
+      "revId": "9fdc9a6be52a96b86b8ec17785b56fa829019f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
