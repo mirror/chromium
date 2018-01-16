@@ -649,8 +649,8 @@ WebContentsImpl::~WebContentsImpl() {
   RenderFrameHostManager* root = GetRenderManager();
 
   root->current_frame_host()->SetRenderFrameCreated(false);
-  root->current_frame_host()->SetNavigationHandle(
-      std::unique_ptr<NavigationHandleImpl>());
+
+  // TODO(ahemery): See if this is okay to delete.
 
   // PlzNavigate: clear up state specific to browser-side navigation.
   if (IsBrowserSideNavigationEnabled()) {
@@ -658,8 +658,7 @@ WebContentsImpl::~WebContentsImpl() {
     frame_tree_.root()->ResetNavigationRequest(true, true);
     if (root->speculative_frame_host()) {
       root->speculative_frame_host()->SetRenderFrameCreated(false);
-      root->speculative_frame_host()->SetNavigationHandle(
-          std::unique_ptr<NavigationHandleImpl>());
+      // TODO(ahemery): See if this is okay to delete.
     }
   }
 
