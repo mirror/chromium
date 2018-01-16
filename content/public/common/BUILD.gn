@@ -85,6 +85,22 @@ source_set("static_switches") {
   ]
 }
 
+# This target allows you to use the content_features constants and without
+# depending on the rest of content. This is for use to avoid circular
+# dependencies in e.g. webrtc_overrides which is dependency for content:common
+source_set("content_features") {
+  public = [
+    "content_features.h",
+  ]
+  sources = [
+    "//content/common/content_export.h",
+    "content_features.cc",
+  ]
+  public_deps = [
+    "//base",
+  ]
+}
+
 # This target allows you to use the content_features constants and statically
 # link to it, without depending on the rest of content. This is only for use
 # without content, or you will get multiply defined symbols.
@@ -129,8 +145,6 @@ jumbo_source_set("common_sources") {
     "content_constants.cc",
     "content_constants.h",
     "content_descriptors.h",
-    "content_features.cc",
-    "content_features.h",
     "content_ipc_logging.h",
     "content_paths.h",
     "content_switches.cc",
@@ -261,6 +275,9 @@ jumbo_source_set("common_sources") {
   public_configs = [ "//v8:external_startup_data" ]
 
   public_deps = [
+    # content features are extracted to a separate source_set
+    # to avoid circular dependencies for downstream targets.
+    ":content_features",
     ":interfaces",
     ":service_names",
     "//content/common",

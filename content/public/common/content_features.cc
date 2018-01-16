@@ -413,6 +413,11 @@ const base::Feature kWebPayments{"WebPayments",
 const base::Feature kWebRtcEcdsaDefault {"WebRTC-EnableWebRtcEcdsa",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Makes WebRTC support dual video stream mode (one peer sending screenshare
+// and real-time video at the same time).
+const base::Feature kWebRtcDualStreamMode{"WebRTC-DualStreamMode",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Use GpuMemoryBuffer backed VideoFrames in media streams.
 const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames{
     "WebRTC-UseGpuMemoryBufferVideoFrames",
