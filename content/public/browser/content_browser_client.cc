@@ -85,6 +85,15 @@ bool ContentBrowserClient::DoesSiteRequireDedicatedProcess(
   return false;
 }
 
+bool ContentBrowserClient::GetSitePerProcessSetting() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch("site-per-process");
+}
+
+std::string ContentBrowserClient::GetIsolateOriginsList() {
+  return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+      "isolate-origins");
+}
+
 bool ContentBrowserClient::ShouldLockToOrigin(BrowserContext* browser_context,
                                               const GURL& effective_url) {
   return true;
