@@ -22,6 +22,30 @@
       "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455f8659_e25aec01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-16T18:49:48Z",
+      "side": 1,
+      "message": "Hmmm, it is non-thread-safe. Some MessagePump impls touch non-atomic member state.\n\nRequiring mutual exclusion and being \"non-thread-safe\" is the same thing, isn\u0027t it?",
+      "parentUuid": "26540610_cc4571a2",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "2b8b10d9efa5c8907111d4635f7baef8399773d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
