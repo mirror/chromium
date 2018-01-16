@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7542c8c_312b767e",
+        "filename": "extensions/browser/extension_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-16T14:30:46Z",
+      "side": 1,
+      "message": "Nasko\u0027s probably the better reviewer here, since I don\u0027t fully grok the implications of this.  Is GetSuggestedFilename() sufficient to guarantee that the navigation is going to result in a download?  Is it possible that the download would in turn cause navigation (e.g. if the mime type is handled by Chrome), and will that case be handled correctly?",
+      "revId": "25946a3f22a34c9d0f3acabe96b63b5a2316885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
