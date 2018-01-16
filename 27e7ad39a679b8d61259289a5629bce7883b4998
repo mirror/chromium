@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa2458c6_b83c6891",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "We should log if we get a body with a GET as well.  All of this logging should happen in the controller, or it won\u0027t work for different drivers.",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 58
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f925277_7c87b4d4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "What do we want to do on the resume case?",
+      "range": {
+        "startLine": 963,
+        "startChar": 6,
+        "endLine": 963,
+        "endChar": 36
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a33b07_6bb60dfb",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "Should we handle cases like Cancel, Timeout, etc..  Should we put something in the download finished/completed callpath?",
+      "range": {
+        "startLine": 970,
+        "startChar": 21,
+        "endLine": 970,
+        "endChar": 57
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bd02f4_1f974030",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "Should we log this case?",
+      "range": {
+        "startLine": 984,
+        "startChar": 2,
+        "endLine": 985,
+        "endChar": 11
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf260b2b_4b0d4d90",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "What if the criteria have changed at this point?",
+      "range": {
+        "startLine": 987,
+        "startChar": 2,
+        "endLine": 987,
+        "endChar": 75
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d330a9_3004cc64",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:00:33Z",
+      "side": 1,
+      "message": "This feels more like OnDownloadReadyToStart()?",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 31
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
