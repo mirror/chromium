@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2184d65f_a168024c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T16:35:23Z",
+      "side": 1,
+      "message": "I think I\u0027m okay with sending to the root view even when it is unresponsive. The unresponsive renderer dialog should sort things out, and we need to send it input events for that to trigger.",
+      "parentUuid": "ed4a8049_bb559273",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c31d53cf_b55a0984",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f11833_fdebdb8d",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T16:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31d53cf_b55a0984",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "efc9ad04_c58d5031",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T16:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90bff67e_e838705b",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a6c9f4_3cfccaf1",
         "filename": "content/common/content_constants_internal.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324313f1_a905a9ce",
+        "filename": "content/common/content_constants_internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-16T16:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a6c9f4_3cfccaf1",
+      "revId": "fd86993211cba7f50c5ee5bc90bdbd8e3896f7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
