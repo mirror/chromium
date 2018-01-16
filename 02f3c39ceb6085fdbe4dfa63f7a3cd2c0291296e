@@ -16,6 +16,24 @@
       "revId": "02f3c39ceb6085fdbe4dfa63f7a3cd2c0291296e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a7fa5c_d134657e",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-16T03:34:45Z",
+      "side": 0,
+      "message": "Yeah exactly, root cause of the bug is:\nBecause |caller_task_runner_| thread (worker thread) has gone away, this PostTask failed on the binding thread (IO thread) and then tried to delete the |responder_| just on the IO thread, while, our |responder_| constraints itself to be destroyed only on the original worker thread.",
+      "parentUuid": "b62c96ad_fc79afc6",
+      "revId": "02f3c39ceb6085fdbe4dfa63f7a3cd2c0291296e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
