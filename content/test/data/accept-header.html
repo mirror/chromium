@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="test.js"></script>
+<link rel="stylesheet"  href="/test.css">
+<link rel="icon" href="/test.ico" type="image/x-icon"/>
+<iframe src="/iframe.html"></iframe>
+<img src="/image.gif">
+</head>
+<style>
+@font-face {
+  font-family: "TestFontFamily";
+  src: url("/font.otf");
+}
+p.customfont { 
+    font-family: "TestFontFamily";
+}
+</style>
+<video src="/media.mp4" autoplay controls></video>
+<body>Hello World</body>
+<a ping="/ping" href="javascript:void(0)" id="ping">
+<p class="customfont">font</p>
+<link rel="prefetch" href="/prefetch">
+
+<script>
+var request = new XMLHttpRequest();
+request.open('GET', '/xhr', false);
+request.send(null);
+
+request = new XMLHttpRequest();
+request.open('GET', '/xhr_with_accept_header', false);
+request.setRequestHeader('Accept', 'custom/type');
+request.send(null);
+
+document.getElementById('ping').click();
+//document.getElementById('download').click();
+
+var worker = new Worker('/worker.js');
+var shared_worker = new SharedWorker('/shared_worker.js');
+shared_worker.port.onmessage = function(evt) {}
+shared_worker.port.postMessage('force_start');
+
+navigator.serviceWorker.register('/service_worker.js', {scope: '/sw-test/'})
+
+</script>
+</html>

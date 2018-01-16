@@ -329,8 +329,6 @@ class URLLoaderTest : public testing::Test {
       options |= mojom::kURLLoadOptionSendSSLInfoWithResponse;
     if (sniff_)
       options |= mojom::kURLLoadOptionSniffMimeType;
-    if (add_custom_accept_header_)
-      request.headers.SetHeader("accept", "custom/*");
     if (send_ssl_for_cert_error_)
       options |= mojom::kURLLoadOptionSendSSLInfoForCertificateError;
 
@@ -469,10 +467,6 @@ class URLLoaderTest : public testing::Test {
     DCHECK(!ran_);
     send_ssl_for_cert_error_ = true;
   }
-  void set_add_custom_accept_header() {
-    DCHECK(!ran_);
-    add_custom_accept_header_ = true;
-  }
   void set_expect_redirect() {
     DCHECK(!ran_);
     expect_redirect_ = true;
@@ -575,7 +569,6 @@ class URLLoaderTest : public testing::Test {
   bool sniff_ = false;
   bool send_ssl_with_response_ = false;
   bool send_ssl_for_cert_error_ = false;
-  bool add_custom_accept_header_ = false;
   bool expect_redirect_ = false;
   ResourceType resource_type_ = RESOURCE_TYPE_MAIN_FRAME;
   scoped_refptr<network::ResourceRequestBody> request_body_;
@@ -1072,37 +1065,6 @@ TEST_F(URLLoaderTest, MultiplePauseResumeReadingBodyFromNet) {
   EXPECT_EQ(std::string(kBodyContentsFirstHalf) +
                 std::string(kBodyContentsSecondHalf),
             ReadBody());
-}
-
-TEST_F(URLLoaderTest, AttachAcceptHeaderForStyleSheet) {
-  set_resource_type(RESOURCE_TYPE_STYLESHEET);
-  EXPECT_EQ(net::OK,
-            Load(test_server()->GetURL("/content-sniffer-test0.html")));
-
-  auto it = sent_request().headers.find("accept");
-  ASSERT_NE(it, sent_request().headers.end());
-  EXPECT_EQ(it->second, "text/css,*/*;q=0.1");
-}
-
-TEST_F(URLLoaderTest, AttachAcceptHeaderForXHR) {
-  set_resource_type(RESOURCE_TYPE_XHR);
-  EXPECT_EQ(net::OK,
-            Load(test_server()->GetURL("/content-sniffer-test0.html")));
-
-  auto it = sent_request().headers.find("accept");
-  ASSERT_NE(it, sent_request().headers.end());
-  EXPECT_EQ(it->second, "*/*");
-}
-
-TEST_F(URLLoaderTest, DoNotOverrideAcceptHeader) {
-  set_resource_type(RESOURCE_TYPE_XHR);
-  set_add_custom_accept_header();
-  EXPECT_EQ(net::OK,
-            Load(test_server()->GetURL("/content-sniffer-test0.html")));
-
-  auto it = sent_request().headers.find("accept");
-  ASSERT_NE(it, sent_request().headers.end());
-  EXPECT_EQ(it->second, "custom/*");
 }
 
 // Tests that a RESOURCE_TYPE_PREFETCH request sets the LOAD_PREFETCH flag.
