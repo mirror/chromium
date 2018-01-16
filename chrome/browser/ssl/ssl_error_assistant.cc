@@ -109,9 +109,15 @@ LoadDynamicInterstitialList(
       base::MakeUnique<std::vector<DynamicInterstitialInfo>>();
   for (const chrome_browser_ssl::DynamicInterstitial& entry :
        proto.dynamic_interstitial()) {
+    const chrome_browser_ssl::MITMSoftware& mitm_entry = entry.mitm_software();
+    const MITMSoftwareType& mitm_software = MITMSoftwareType(
+        mitm_entry.name(), mitm_entry.issuer_common_name_regex(),
+        mitm_entry.issuer_organization_regex());
+
     dynamic_interstitial_list.get()->push_back(DynamicInterstitialInfo(
-        HashesFromDynamicInterstitial(entry), entry.interstitial_type(),
-        MapToCertStatus(entry.cert_error()), GURL(entry.support_url())));
+        HashesFromDynamicInterstitial(entry), mitm_software,
+        entry.interstitial_type(), MapToCertStatus(entry.cert_error()),
+        GURL(entry.support_url())));
   }
 
   return dynamic_interstitial_list;
@@ -156,6 +162,55 @@ bool MatchSSLInfoWithHashes(const net::SSLInfo& ssl_info,
   return false;
 }
 
+bool MatchMITMSoftwareTypeWithCert(
+    const MITMSoftwareType mitm_software,
+    const scoped_refptr<net::X509Certificate>& cert) {
+  if (cert->issuer().common_name.empty() ||
+      cert->issuer().organization_names.size() == 0) {
+    return false;
+  }
+
+  // At least one of the common name or organization name fields should be
+  // populated on the MITM software list entry.
+  DCHECK(!(mitm_software.issuer_common_name_regex.empty() &&
+           mitm_software.issuer_organization_regex.empty()));
+
+  if (mitm_software.issuer_common_name_regex.empty() &&
+      mitm_software.issuer_organization_regex.empty()) {
+    return false;
+  }
+
+  // If both |issuer_common_name_regex| and |issuer_organization_regex| are
+  // set, the certificate should match both regexes.
+  if (!mitm_software.issuer_common_name_regex.empty() &&
+      !mitm_software.issuer_organization_regex.empty()) {
+    if (re2::RE2::FullMatch(cert->issuer().common_name,
+                            re2::RE2(mitm_software.issuer_common_name_regex)) &&
+        RegexMatchesAny(cert->issuer().organization_names,
+                        mitm_software.issuer_organization_regex)) {
+      return true;
+    }
+
+    // If only |issuer_organization_regex| is set, the certificate's issuer
+    // organization name should match.
+  } else if (!mitm_software.issuer_organization_regex.empty()) {
+    if (RegexMatchesAny(cert->issuer().organization_names,
+                        mitm_software.issuer_organization_regex)) {
+      return true;
+    }
+
+    // If only |issuer_common_name_regex| is set, the certificate's issuer
+    // common name should match.
+  } else if (!mitm_software.issuer_common_name_regex.empty()) {
+    if (re2::RE2::FullMatch(cert->issuer().common_name,
+                            re2::RE2(mitm_software.issuer_common_name_regex))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 }  // namespace
 
 MITMSoftwareType::MITMSoftwareType(const std::string& name,
@@ -165,13 +220,20 @@ MITMSoftwareType::MITMSoftwareType(const std::string& name,
       issuer_common_name_regex(issuer_common_name_regex),
       issuer_organization_regex(issuer_organization_regex) {}
 
+bool MITMSoftwareType::IsEmpty() const {
+  return name.empty() && issuer_common_name_regex.empty() &&
+         issuer_organization_regex.empty();
+}
+
 DynamicInterstitialInfo::DynamicInterstitialInfo(
     const std::unordered_set<std::string>& spki_hashes,
+    const MITMSoftwareType& mitm_software,
     chrome_browser_ssl::DynamicInterstitial::InterstitialPageType
         interstitial_type,
     int cert_error,
     const GURL& support_url)
     : spki_hashes(spki_hashes),
+      mitm_software(mitm_software),
       interstitial_type(interstitial_type),
       cert_error(cert_error),
       support_url(support_url) {}
@@ -216,8 +278,17 @@ SSLErrorAssistant::MatchDynamicInterstitial(const net::SSLInfo& ssl_info) {
     if (data.cert_error && !(ssl_info.cert_status & data.cert_error))
       continue;
 
-    if (MatchSSLInfoWithHashes(ssl_info, data.spki_hashes))
-      return data;
+    if (!data.spki_hashes.empty() &&
+        !MatchSSLInfoWithHashes(ssl_info, data.spki_hashes)) {
+      continue;
+    }
+
+    if (!data.mitm_software.IsEmpty() &&
+        !MatchMITMSoftwareTypeWithCert(data.mitm_software, ssl_info.cert)) {
+      continue;
+    }
+
+    return data;
   }
 
   return base::nullopt;
@@ -242,44 +313,8 @@ const std::string SSLErrorAssistant::MatchKnownMITMSoftware(
   }
 
   for (const MITMSoftwareType& mitm_software : *mitm_software_list_) {
-    // At least one of the common name or organization name fields should be
-    // populated on the MITM software list entry.
-    DCHECK(!(mitm_software.issuer_common_name_regex.empty() &&
-             mitm_software.issuer_organization_regex.empty()));
-    if (mitm_software.issuer_common_name_regex.empty() &&
-        mitm_software.issuer_organization_regex.empty()) {
-      continue;
-    }
-
-    // If both |issuer_common_name_regex| and |issuer_organization_regex| are
-    // set, the certificate should match both regexes.
-    if (!mitm_software.issuer_common_name_regex.empty() &&
-        !mitm_software.issuer_organization_regex.empty()) {
-      if (re2::RE2::FullMatch(
-              cert->issuer().common_name,
-              re2::RE2(mitm_software.issuer_common_name_regex)) &&
-          RegexMatchesAny(cert->issuer().organization_names,
-                          mitm_software.issuer_organization_regex)) {
-        return mitm_software.name;
-      }
-
-      // If only |issuer_organization_regex| is set, the certificate's issuer
-      // organization name should match.
-    } else if (!mitm_software.issuer_organization_regex.empty()) {
-      if (RegexMatchesAny(cert->issuer().organization_names,
-                          mitm_software.issuer_organization_regex)) {
-        return mitm_software.name;
-      }
-
-      // If only |issuer_common_name_regex| is set, the certificate's issuer
-      // common name should match.
-    } else if (!mitm_software.issuer_common_name_regex.empty()) {
-      if (re2::RE2::FullMatch(
-              cert->issuer().common_name,
-              re2::RE2(mitm_software.issuer_common_name_regex))) {
-        return mitm_software.name;
-      }
-    }
+    if (MatchMITMSoftwareTypeWithCert(mitm_software, cert))
+      return mitm_software.name;
   }
   return std::string();
 }
