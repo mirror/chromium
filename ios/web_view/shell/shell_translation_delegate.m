@@ -10,9 +10,12 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ShellTranslationDelegate ()
 // Action Sheet to prompt user whether or not the page should be translated.
-@property(nonatomic, strong) UIAlertController* beforeTranslateActionSheet;
+@property(nonatomic, strong, nullable)
+    UIAlertController* beforeTranslateActionSheet;
 @end
 
 @implementation ShellTranslationDelegate
@@ -98,3 +101,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

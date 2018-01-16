@@ -24,6 +24,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSErrorDomain const CWVTranslationErrorDomain =
     @"org.chromium.chromewebview.TranslationErrorDomain";
 
@@ -275,3 +277,5 @@ const NSInteger CWVTranslationErrorScriptLoadError =
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

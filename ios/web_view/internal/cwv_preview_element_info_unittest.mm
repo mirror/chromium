@@ -12,6 +12,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace ios_web_view {
 
 using CWVPreviewElementInfoTest = PlatformTest;
@@ -25,3 +27,5 @@ TEST_F(CWVPreviewElementInfoTest, Initialization) {
 }
 
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

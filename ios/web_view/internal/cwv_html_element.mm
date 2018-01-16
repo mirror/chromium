@@ -8,6 +8,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVHTMLElement
 @synthesize hyperlink = _hyperlink;
 @synthesize mediaSource = _mediaSource;
@@ -26,3 +28,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

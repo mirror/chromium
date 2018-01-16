@@ -49,6 +49,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace {
 // A key used in NSCoder to store the session storage object.
 NSString* const kSessionStorageKey = @"sessionStorage";
@@ -196,7 +198,7 @@ static NSString* gUserAgentProduct = nil;
                                        completionHandler:completionHandler];
 }
 
-- (void)setUIDelegate:(id<CWVUIDelegate>)UIDelegate {
+- (void)setUIDelegate:(nullable id<CWVUIDelegate>)UIDelegate {
   _UIDelegate = UIDelegate;
 
   _javaScriptDialogPresenter->SetUIDelegate(_UIDelegate);
@@ -353,7 +355,7 @@ static NSString* gUserAgentProduct = nil;
   return NO;
 }
 
-- (UIViewController*)webState:(web::WebState*)webState
+- (nullable UIViewController*)webState:(web::WebState*)webState
     previewingViewControllerForLinkWithURL:(const GURL&)linkURL {
   SEL selector = @selector(webView:previewingViewControllerForElement:);
   if ([_UIDelegate respondsToSelector:selector]) {
@@ -517,3 +519,5 @@ static NSString* gUserAgentProduct = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -14,6 +14,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVPreferences {
   PrefService* _prefService;
 }
@@ -50,5 +52,7 @@
 - (BOOL)isAutofillEnabled {
   return _prefService->GetBoolean(autofill::prefs::kAutofillEnabled);
 }
+
+NS_ASSUME_NONNULL_END
 
 @end

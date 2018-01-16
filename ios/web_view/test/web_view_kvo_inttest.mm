@@ -19,6 +19,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace ios_web_view {
 
 // Tests that the KVO compliant properties of CWVWebView correctly report
@@ -180,3 +182,5 @@ TEST_F(WebViewKvoTest, URLs) {
 }
 
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

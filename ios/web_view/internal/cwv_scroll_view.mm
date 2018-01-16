@@ -12,6 +12,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CWVScrollView ()<CRWWebViewScrollViewProxyObserver>
 
 // For KVO compliance, redefines the property as readwrite and calls its setter
@@ -173,3 +175,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

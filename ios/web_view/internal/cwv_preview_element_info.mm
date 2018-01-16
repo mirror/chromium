@@ -9,6 +9,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVPreviewElementInfo
 
 @synthesize linkURL = _linkURL;
@@ -20,5 +22,7 @@
   }
   return self;
 }
+
+NS_ASSUME_NONNULL_END
 
 @end

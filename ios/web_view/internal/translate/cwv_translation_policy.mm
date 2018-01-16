@@ -10,10 +10,12 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CWVTranslationPolicy ()
 // Internal initializer.
 - (instancetype)initWithType:(CWVTranslationPolicyType)type
-                    language:(CWVTranslationLanguage*)language
+                    language:(nullable CWVTranslationLanguage*)language
     NS_DESIGNATED_INITIALIZER;
 @end
 
@@ -23,7 +25,7 @@
 @synthesize type = _type;
 
 - (instancetype)initWithType:(CWVTranslationPolicyType)type
-                    language:(CWVTranslationLanguage*)language {
+                    language:(nullable CWVTranslationLanguage*)language {
   self = [super init];
   if (self) {
     _type = type;
@@ -49,3 +51,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

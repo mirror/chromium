@@ -18,6 +18,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CWVWebViewConfiguration () {
   // The BrowserState for this configuration.
   std::unique_ptr<ios_web_view::WebViewBrowserState> _browserState;
@@ -125,3 +127,5 @@ CWVWebViewConfiguration* gIncognitoConfiguration = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
