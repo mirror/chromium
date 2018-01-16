@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62c96ad_fc79afc6",
+        "filename": "mojo/public/cpp/bindings/thread_safe_interface_ptr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-16T03:23:02Z",
+      "side": 0,
+      "message": "Just to make sure everyone is on the same page: do you mean that this or the other post task above could fail and then responder_ could get deleted on a different thread from the one from caller_task_runner_?",
+      "revId": "02f3c39ceb6085fdbe4dfa63f7a3cd2c0291296e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
