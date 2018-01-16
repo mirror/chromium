@@ -247,6 +247,23 @@
       "revId": "018d878e2c78fda410ce38691c574f749fedade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e85819_d043aa02",
+        "filename": "third_party/WebKit/Source/devtools/front_end/dom_extension/DOMExtension.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-16T15:09:31Z",
+      "side": 1,
+      "message": "I am a bit confused here. IIUC, |node.shadowRoot.elementFromPoint(x, y)| may return |node| as a result? Isn\u0027t it supposed to return a node from the shadow tree?",
+      "revId": "018d878e2c78fda410ce38691c574f749fedade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
