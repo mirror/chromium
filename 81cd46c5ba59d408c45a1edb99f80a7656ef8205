@@ -105,6 +105,24 @@
       "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7eb1ad_4c193f6f",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-16T20:59:28Z",
+      "side": 1,
+      "message": "I\u0027d do it now in this patch.\n\nIt\u0027s true that crbug.com/646148 is not fixed, but we\u0027d still be mentioning it where we computed capabilities.image_ycbcr_420v in gpu/command_buffer/service/feature_info.cc\n at line 1062.",
+      "parentUuid": "f451542c_3773aaa4",
+      "revId": "81cd46c5ba59d408c45a1edb99f80a7656ef8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
