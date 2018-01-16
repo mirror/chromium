@@ -33,6 +33,24 @@
       "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b1c0f69_2e2bafa6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2018-01-16T22:50:11Z",
+      "side": 1,
+      "message": "Let me answer my question. :P\nbookmarkTableView was in HandsetViewController but not in HomeViewController before so there was no crash at [controller view].\nNow bookmarkTableView is moved to HomeViewController so we need to setRootNode earlier.",
+      "parentUuid": "27d6ba8c_e0b63efc",
+      "revId": "84d75eccfe0a9e6866ca45dc46a7e63ded9a3e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
