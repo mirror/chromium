@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "d405f5d5_42753e26",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "A member of DMSSImpl. It is created on UI thread and used on IO thread as DMSSImpl.",
+      "parentUuid": "9c6117e4_2dd5a8aa",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "558cb78a_5152f2d1",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 9
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "5f7773f5_914d39e8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558cb78a_5152f2d1",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e42853_c0d02d0b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 9
@@ -70,6 +106,24 @@
       "writtenOn": "2018-01-16T14:05:36Z",
       "side": 1,
       "message": "I think this is something that can go into media_sink_service_util.h. The cast sink query prototype I am working on also uses this.",
+      "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfeca2da_b764fbd8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "68e42853_c0d02d0b",
       "revId": "57ff60f86c09ceb5605ebb8e284509c37b315972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

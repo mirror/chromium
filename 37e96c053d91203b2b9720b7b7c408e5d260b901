@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39eb79d3_1174ef6e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e18208d_31b6623a",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d72c1d5_5fda66a8",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T14:05:36Z",
       "side": 1,
       "message": "I don\u0027t think you should do std::move here. It can be called more than once being in a loop, |sinks| is also used below.",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8151afee_aad7441b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Right, thanks!",
+      "parentUuid": "2d72c1d5_5fda66a8",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2ff73b9_c23e9f57",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5840c0_b4249dfd",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a101ae03_9042d759",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7f21d955_7d79a6e3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a101ae03_9042d759",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69ee5640_14a72570",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-16T14:05:36Z",
       "side": 1,
       "message": "I thought we weren\u0027t going to fetch if the status is already known?",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e0a3fd_4cfc4f93",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Only OnUserGesture() invokes this. Do we force fetch regardless of cached status?",
+      "parentUuid": "69ee5640_14a72570",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6e419cc2_3122a7b2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "If we use sink ids only, observers won\u0027t be notified when IP address, or other fields change (not sure if it is important...).",
+      "parentUuid": "14aab048_2a534ed2",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67dacc78_937bcd4f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 10
@@ -118,6 +226,24 @@
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dffa4c0_6c348c84",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67dacc78_937bcd4f",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "ec1a849c_f2bec8a7",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa0c23b_94567d77",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad193f3f_d61fbe84",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 10
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "305dc583_bfba203e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad193f3f_d61fbe84",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c565beb_eb76c515",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b553ce6a_1f3433e5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c565beb_eb76c515",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "4acf36fe_9eb1dc5d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cb48c7e_5dddb3dc",
+      "range": {
+        "startLine": 184,
+        "startChar": 45,
+        "endLine": 184,
+        "endChar": 60
+      },
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8d7a36_bcd75b4b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 10
@@ -209,6 +413,24 @@
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2bf1b0_4c6f94ec",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8d7a36_bcd75b4b",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "c53c9297_23a7c700",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0107cba8_82633a90",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b14ced7_843b05a2",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 10
@@ -240,6 +480,24 @@
       "writtenOn": "2018-01-16T14:05:36Z",
       "side": 1,
       "message": "This is ok for now, but typically we don\u0027t do MediaSource filtering at the MR level. In a future patch we will define a CastMediaRouteProvider and register it with MediaRouterDesktop. Sink queries will be handled via Start/StopObservingMediaSinks.",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d14d363_dfb39433",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Moved filtering into |media_sink_service_|.",
+      "parentUuid": "7b14ced7_843b05a2",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -263,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "d0343d49_4fffcebe",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc76800a_6352ba44",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "658a5ef0_708b2ba5",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
         "patchSetId": 10
@@ -274,6 +550,24 @@
       "writtenOn": "2018-01-16T14:05:36Z",
       "side": 1,
       "message": "Not defined?",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3693624c_5f5520ee",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Sorry, forget to remove when changing from callback to pass in MediaSinksObserver directly.",
+      "parentUuid": "658a5ef0_708b2ba5",
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -294,6 +588,24 @@
       "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f84f3e_058ae5c6",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-16T22:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ce38bc_9c6383fb",
+      "revId": "37e96c053d91203b2b9720b7b7c408e5d260b901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
