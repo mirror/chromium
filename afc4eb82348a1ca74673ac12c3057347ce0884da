@@ -46,6 +46,30 @@
       "revId": "afc4eb82348a1ca74673ac12c3057347ce0884da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36597d58_73b5eb54",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-16T13:01:12Z",
+      "side": 0,
+      "message": "But we could land these simplifications prior to this CL?",
+      "parentUuid": "62029b68_f92f4d4d",
+      "range": {
+        "startLine": 1502,
+        "startChar": 0,
+        "endLine": 1503,
+        "endChar": 75
+      },
+      "revId": "afc4eb82348a1ca74673ac12c3057347ce0884da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
