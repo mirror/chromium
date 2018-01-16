@@ -100,7 +100,10 @@ static void ClearPeformanceEntries(PerformanceEntryMap& performance_entry_map,
     performance_entry_map.erase(name);
 }
 
-PerformanceEntry* UserTiming::Mark(const String& mark_name,
+PerformanceEntry* UserTiming::Mark(ScriptState* script_state,
+                                   const String& mark_name,
+                                   const DOMHighResTimeStamp& start_time,
+                                   const ScriptValue& detail,
                                    ExceptionState& exception_state) {
   if (GetRestrictedKeyMap().Contains(mark_name)) {
     exception_state.ThrowDOMException(
@@ -111,8 +114,8 @@ PerformanceEntry* UserTiming::Mark(const String& mark_name,
   }
 
   TRACE_EVENT_COPY_MARK("blink.user_timing", mark_name.Utf8().data());
-  double start_time = performance_->now();
-  PerformanceEntry* entry = PerformanceMark::Create(mark_name, start_time);
+  PerformanceEntry* entry =
+      PerformanceMark::Create(script_state, mark_name, start_time, detail);
   InsertPerformanceEntry(marks_map_, *entry);
   DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram,
                                   user_timing_mark_histogram,
@@ -149,25 +152,42 @@ double UserTiming::FindExistingMarkStartTime(const String& mark_name,
   return 0.0;
 }
 
-PerformanceEntry* UserTiming::Measure(const String& measure_name,
-                                      const String& start_mark,
-                                      const String& end_mark,
-                                      ExceptionState& exception_state) {
+double UserTiming::FindStartMarkOrTime(
+    const StringOrDouble& startOrPerformanceMarkOptions,
+    ExceptionState& exception_state) {
+  if (startOrPerformanceMarkOptions.IsString()) {
+    return FindExistingMarkStartTime(
+        startOrPerformanceMarkOptions.GetAsString(), exception_state);
+  } else if (startOrPerformanceMarkOptions.IsDouble()) {
+    return startOrPerformanceMarkOptions.GetAsDouble();
+  } else {
+    NOTREACHED();
+    return 0;
+  }
+}
+
+PerformanceEntry* UserTiming::Measure(
+    const String& measure_name,
+    const StringOrDouble& startOrPerformanceMarkOptions,
+    const StringOrDouble& end,
+    ExceptionState& exception_state) {
   double start_time = 0.0;
   double end_time = 0.0;
 
-  if (start_mark.IsNull()) {
+  if (startOrPerformanceMarkOptions.IsNull()) {
     end_time = performance_->now();
-  } else if (end_mark.IsNull()) {
+  } else if (end.IsNull()) {
     end_time = performance_->now();
-    start_time = FindExistingMarkStartTime(start_mark, exception_state);
+    start_time =
+        FindStartMarkOrTime(startOrPerformanceMarkOptions, exception_state);
     if (exception_state.HadException())
       return nullptr;
   } else {
-    end_time = FindExistingMarkStartTime(end_mark, exception_state);
+    end_time = FindStartMarkOrTime(end, exception_state);
     if (exception_state.HadException())
       return nullptr;
-    start_time = FindExistingMarkStartTime(start_mark, exception_state);
+    start_time =
+        FindStartMarkOrTime(startOrPerformanceMarkOptions, exception_state);
     if (exception_state.HadException())
       return nullptr;
   }

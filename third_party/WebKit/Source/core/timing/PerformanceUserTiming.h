@@ -46,12 +46,16 @@ class UserTiming final : public GarbageCollected<UserTiming> {
     return new UserTiming(performance);
   }
 
-  PerformanceEntry* Mark(const String& mark_name, ExceptionState&);
+  PerformanceEntry* Mark(ScriptState*,
+                         const String& mark_name,
+                         const DOMHighResTimeStamp& start_time,
+                         const ScriptValue& detail,
+                         ExceptionState&);
   void ClearMarks(const String& mark_name);
 
   PerformanceEntry* Measure(const String& measure_name,
-                            const String& start_mark,
-                            const String& end_mark,
+                            const StringOrDouble& startOrPerformanceMarkOptions,
+                            const StringOrDouble& end,
                             ExceptionState&);
   void ClearMeasures(const String& measure_name);
 
@@ -67,6 +71,9 @@ class UserTiming final : public GarbageCollected<UserTiming> {
   explicit UserTiming(PerformanceBase&);
 
   double FindExistingMarkStartTime(const String& mark_name, ExceptionState&);
+  double FindStartMarkOrTime(
+      const StringOrDouble& startOrPerformanceMarkOptions,
+      ExceptionState&);
 
   Member<PerformanceBase> performance_;
   PerformanceEntryMap marks_map_;

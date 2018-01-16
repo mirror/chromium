@@ -32,6 +32,7 @@
 #ifndef PerformanceBase_h
 #define PerformanceBase_h
 
+#include "bindings/core/v8/string_or_double.h"
 #include "core/CoreExport.h"
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/dom/events/EventTarget.h"
@@ -49,6 +50,7 @@
 
 namespace blink {
 
+class DoubleOrPerformanceMarkOptions;
 class ExceptionState;
 class PerformanceObserver;
 class PerformanceTiming;
@@ -124,13 +126,39 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   void AddFirstContentfulPaintTiming(double start_time);
 
-  void mark(const String& mark_name, ExceptionState&);
+  void mark(ScriptState*, const String& mark_name, ExceptionState&);
+
+  void mark(ScriptState*,
+            const String& mark_name,
+            DoubleOrPerformanceMarkOptions& start_time_or_mark_options,
+            ExceptionState&);
+
   void clearMarks(const String& mark_name);
 
   void measure(const String& measure_name,
                const String& start_mark,
                const String& end_mark,
                ExceptionState&);
+
+  void measure(const String& measure_name,
+               const double& start_time,
+               const String& end_mark,
+               ExceptionState&);
+
+  void measure(const String& measure_name,
+               const String& start_mark,
+               const double& end_time,
+               ExceptionState&);
+
+  void measure(const String& measure_name,
+               const double& start_time,
+               const double& end_time,
+               ExceptionState&);
+
+  void measure(const String& measure_name,
+               const PerformanceMeasureOptions&,
+               ExceptionState&);
+
   void clearMeasures(const String& measure_name);
 
   void UnregisterPerformanceObserver(PerformanceObserver&);
@@ -160,28 +188,32 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   };
 
   static PerformanceMeasurePassedInParameterType
-  ToPerformanceMeasurePassedInParameterType(const String& s) {
-    // All passed-in objects will be stringified into this type.
-    if (s == "[object Object]")
-      return kObjectObject;
-    // The following names come from
-    // https://w3c.github.io/navigation-timing/#sec-PerformanceNavigationTiming.
-    if (s == "unloadEventStart")
-      return kUnloadEventStart;
-    if (s == "unloadEventEnd")
-      return kUnloadEventEnd;
-    if (s == "domInteractive")
-      return kDomInteractive;
-    if (s == "domContentLoadedEventStart")
-      return kDomContentLoadedEventStart;
-    if (s == "domContentLoadedEventEnd")
-      return kDomContentLoadedEventEnd;
-    if (s == "domComplete")
-      return kDomComplete;
-    if (s == "loadEventStart")
-      return kLoadEventStart;
-    if (s == "loadEventEnd")
-      return kLoadEventEnd;
+  ToPerformanceMeasurePassedInParameterType(const StringOrDouble& p) {
+    if (p.IsString()) {
+      const String& s = p.GetAsString();
+      // All passed-in objects will be stringified into this type.
+      if (s == "[object Object]")
+        return kObjectObject;
+      // The following names come from
+      // https://w3c.github.io/navigation-timing/#sec-PerformanceNavigationTiming.
+      if (s == "unloadEventStart")
+        return kUnloadEventStart;
+      if (s == "unloadEventEnd")
+        return kUnloadEventEnd;
+      if (s == "domInteractive")
+        return kDomInteractive;
+      if (s == "domContentLoadedEventStart")
+        return kDomContentLoadedEventStart;
+      if (s == "domContentLoadedEventEnd")
+        return kDomContentLoadedEventEnd;
+      if (s == "domComplete")
+        return kDomComplete;
+      if (s == "loadEventStart")
+        return kLoadEventStart;
+      if (s == "loadEventEnd")
+        return kLoadEventEnd;
+      return kOther;
+    }
     return kOther;
   }
 
@@ -202,6 +234,11 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                                      ExecutionContext*);
 
   void AddPaintTiming(PerformancePaintTiming::PaintType, double start_time);
+
+  void measure(const String& measure_name,
+               const StringOrDouble& start,
+               const StringOrDouble& end,
+               ExceptionState&);
 
  protected:
   PerformanceBase(double time_origin, scoped_refptr<WebTaskRunner>);

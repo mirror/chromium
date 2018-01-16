@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/V8ObjectBuilder.h"
+#include "bindings/core/v8/double_or_performance_mark_options.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/events/Event.h"
@@ -442,11 +443,45 @@ void PerformanceBase::AddLongTaskTiming(
   NotifyObserversOfEntry(*entry);
 }
 
-void PerformanceBase::mark(const String& mark_name,
+void PerformanceBase::mark(ScriptState* script_state,
+                           const String& mark_name,
                            ExceptionState& exception_state) {
+  DoubleOrPerformanceMarkOptions startOrOptions;
+  this->mark(script_state, mark_name, startOrOptions, exception_state);
+}
+
+void PerformanceBase::mark(
+    ScriptState* script_state,
+    const String& mark_name,
+    DoubleOrPerformanceMarkOptions& start_time_or_mark_options,
+    ExceptionState& exception_state) {
+  if (!RuntimeEnabledFeatures::CustomUserTimingEnabled()) {
+    DCHECK(start_time_or_mark_options.IsNull());
+  }
+
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
-  if (PerformanceEntry* entry = user_timing_->Mark(mark_name, exception_state))
+
+  DOMHighResTimeStamp start = 0.0;
+  if (start_time_or_mark_options.IsDouble()) {
+    start = start_time_or_mark_options.GetAsDouble();
+  } else if (start_time_or_mark_options.IsPerformanceMarkOptions() &&
+             start_time_or_mark_options.GetAsPerformanceMarkOptions()
+                 .hasStartTime()) {
+    start =
+        start_time_or_mark_options.GetAsPerformanceMarkOptions().startTime();
+  } else {
+    start = now();
+  }
+
+  ScriptValue detail;
+  if (start_time_or_mark_options.IsPerformanceMarkOptions()) {
+    detail = start_time_or_mark_options.GetAsPerformanceMarkOptions().detail();
+  }
+
+  // Pass in an empty ScriptValue if the mark's detail doesn't exist.
+  if (PerformanceEntry* entry = user_timing_->Mark(
+          script_state, mark_name, start, detail, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 
@@ -460,21 +495,74 @@ void PerformanceBase::measure(const String& measure_name,
                               const String& start_mark,
                               const String& end_mark,
                               ExceptionState& exception_state) {
+  this->measure(measure_name, StringOrDouble::FromString(start_mark),
+                StringOrDouble::FromString(end_mark));
+}
+
+void PerformanceBase::measure(const String& measure_name,
+                              const double& start_time,
+                              const String& end_mark,
+                              ExceptionState& exception_state) {
+  this->measure(measure_name, StringOrDouble::FromDouble(start_time),
+                StringOrDouble::FromString(end_mark));
+}
+
+void PerformanceBase::measure(const String& measure_name,
+                              const String& start_mark,
+                              const double& end_time,
+                              ExceptionState& exception_state) {
+  this->measure(measure_name, StringOrDouble::FromString(start_mark),
+                StringOrDouble::FromDouble(end_time));
+}
+
+void PerformanceBase::measure(const String& measure_name,
+                              const double& start_time,
+                              const double& end_time,
+                              ExceptionState& exception_state) {
+  this->measure(measure_name, StringOrDouble::FromDouble(start_time),
+                StringOrDouble::FromDouble(end_time));
+}
+
+void PerformanceBase::measure(const String& measure_name,
+                              const PerformanceMeasureOptions& options,
+                              ExceptionState& exception_state) {
+  if (options.hasStart() + options.hasEnd() + options.hasDuration() != 2) {
+    exception_state.ThrowDOMException(
+        kSyntaxError,
+        'Exactly two of |start|, |duration| and |end| may be set.');
+    return;
+  }
+  const StringOrDouble& start = options.start();
+  StringOrDouble end;
+  if (options.hasDuration()) {
+    end = StringOrDouble::FromDouble(start.GetAsDouble() +
+                                     duration.GetAsDouble());
+  } else {
+    end = options.end();
+  }
+
+  this->measure(measure_name, start, end);
+}
+
+void PerformanceBase::measure(const String& measure_name,
+                              const StringOrDouble& startOrOptions,
+                              const StringOrDouble& end,
+                              ExceptionState& exception_state) {
   UMA_HISTOGRAM_ENUMERATION(
       "Performance.PerformanceMeasurePassedInParameter.StartMark",
-      ToPerformanceMeasurePassedInParameterType(start_mark),
+      ToPerformanceMeasurePassedInParameterType(startOrOptions),
       kPerformanceMeasurePassedInParameterCount);
   UMA_HISTOGRAM_ENUMERATION(
       "Performance.PerformanceMeasurePassedInParameter.EndMark",
-      ToPerformanceMeasurePassedInParameterType(end_mark),
+      ToPerformanceMeasurePassedInParameterType(end),
       kPerformanceMeasurePassedInParameterCount);
 
   ExecutionContext* execution_context = GetExecutionContext();
   if (execution_context) {
     PerformanceMeasurePassedInParameterType start_type =
-        ToPerformanceMeasurePassedInParameterType(start_mark);
+        ToPerformanceMeasurePassedInParameterType(startOrOptions);
     PerformanceMeasurePassedInParameterType end_type =
-        ToPerformanceMeasurePassedInParameterType(end_mark);
+        ToPerformanceMeasurePassedInParameterType(end);
 
     if (start_type == kObjectObject) {
       UseCounter::Count(execution_context,
@@ -492,7 +580,7 @@ void PerformanceBase::measure(const String& measure_name,
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
   if (PerformanceEntry* entry = user_timing_->Measure(
-          measure_name, start_mark, end_mark, exception_state))
+          measure_name, startOrOptions, end, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 
