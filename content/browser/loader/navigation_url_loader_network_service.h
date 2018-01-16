@@ -60,7 +60,8 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
       bool is_stream,
       mojom::DownloadedTempFilePtr downloaded_file);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         scoped_refptr<ResourceResponse> response);
+                         scoped_refptr<ResourceResponse> response,
+                         bool is_wpk_redirection);
   void OnComplete(const network::URLLoaderCompletionStatus& status);
 
  private:
@@ -81,6 +82,7 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   // Factories to handle navigation requests for non-network resources.
   ContentBrowserClient::NonNetworkURLLoaderFactoryMap
       non_network_url_loader_factories_;
+  const int frame_tree_node_id_;
 
   base::WeakPtrFactory<NavigationURLLoaderNetworkService> weak_factory_;
 

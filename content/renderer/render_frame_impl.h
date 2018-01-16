@@ -17,6 +17,7 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
+#include "base/containers/flat_set.h"
 #include "base/containers/id_map.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
@@ -40,6 +41,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
 #include "content/common/url_loader_factory_bundle.h"
+#include "content/common/webpackage_subresource_manager.mojom.h"
 #include "content/common/widget.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/fullscreen_video_element.mojom.h"
@@ -524,7 +526,8 @@ class CONTENT_EXPORT RenderFrameImpl
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
-      const base::UnguessableToken& devtools_navigation_token) override;
+      const base::UnguessableToken& devtools_navigation_token,
+      mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info) override;
   void CommitFailedNavigation(
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
@@ -1599,6 +1602,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // URLLoaderFactory instances used for subresource loading when the Network
   // Service is enabled.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
+
+  base::flat_set<std::pair<GURL, std::string>> skip_throttler_requests_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;

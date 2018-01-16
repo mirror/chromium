@@ -51,6 +51,7 @@ const char kUnsupportedFloatingPointValue[] =
     "Floating point numbers are not supported.";
 const char kOutOfRangeIntegerValue[] =
     "Integer values must be between INT64_MIN and INT64_MAX.";
+const char kUnsupportedTagFormat[] = "Consecutive tags are not allowed.";
 
 }  // namespace
 
@@ -75,7 +76,8 @@ base::Optional<CBORValue> CBORReader::Read(const Bytes& data,
   return decoded_cbor;
 }
 
-base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
+base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level,
+                                                 uint64_t tag) {
   if (max_nesting_level < 0 || max_nesting_level > kCBORMaxDepth) {
     error_code_ = DecoderError::TOO_MUCH_NESTING;
     return base::nullopt;
@@ -96,19 +98,26 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
 
   switch (major_type) {
     case CBORValue::Type::UNSIGNED:
-      return DecodeValueToUnsigned(value);
+      return DecodeValueToUnsigned(value, tag);
     case CBORValue::Type::NEGATIVE:
-      return DecodeValueToNegative(value);
+      return DecodeValueToNegative(value, tag);
     case CBORValue::Type::BYTE_STRING:
-      return ReadBytes(value);
+      return ReadBytes(value, tag);
     case CBORValue::Type::STRING:
-      return ReadString(value);
+      return ReadString(value, tag);
     case CBORValue::Type::ARRAY:
-      return ReadCBORArray(value, max_nesting_level);
+      return ReadCBORArray(value, max_nesting_level, tag);
     case CBORValue::Type::MAP:
-      return ReadCBORMap(value, max_nesting_level);
+      return ReadCBORMap(value, max_nesting_level, tag);
     case CBORValue::Type::SIMPLE_VALUE:
-      return ReadSimpleValue(additional_info, value);
+      return ReadSimpleValue(additional_info, value, tag);
+    case CBORValue::Type::TAG: {
+      if (tag != UINT64_MAX) {
+        error_code_ = DecoderError::UNSUPPORTED_TAG_FORMAT;
+        return base::nullopt;
+      }
+      return DecodeCBOR(max_nesting_level);
+    }
     case CBORValue::Type::NONE:
       break;
   }
@@ -151,26 +160,29 @@ bool CBORReader::ReadVariadicLengthInteger(uint8_t additional_info,
   return CheckMinimalEncoding(additional_bytes, int_data);
 }
 
-base::Optional<CBORValue> CBORReader::DecodeValueToNegative(uint64_t value) {
+base::Optional<CBORValue> CBORReader::DecodeValueToNegative(uint64_t value,
+                                                            uint64_t tag) {
   auto negative_value = -base::CheckedNumeric<int64_t>(value) - 1;
   if (!negative_value.IsValid()) {
     error_code_ = DecoderError::OUT_OF_RANGE_INTEGER_VALUE;
     return base::nullopt;
   }
-  return CBORValue(negative_value.ValueOrDie());
+  return CBORValue(negative_value.ValueOrDie(), tag);
 }
 
-base::Optional<CBORValue> CBORReader::DecodeValueToUnsigned(uint64_t value) {
+base::Optional<CBORValue> CBORReader::DecodeValueToUnsigned(uint64_t value,
+                                                            uint64_t tag) {
   auto unsigned_value = base::CheckedNumeric<int64_t>(value);
   if (!unsigned_value.IsValid()) {
     error_code_ = DecoderError::OUT_OF_RANGE_INTEGER_VALUE;
     return base::nullopt;
   }
-  return CBORValue(unsigned_value.ValueOrDie());
+  return CBORValue(unsigned_value.ValueOrDie(), tag);
 }
 
 base::Optional<CBORValue> CBORReader::ReadSimpleValue(uint8_t additional_info,
-                                                      uint64_t value) {
+                                                      uint64_t value,
+                                                      uint64_t tag) {
   // Floating point numbers are not supported.
   if (additional_info > 24 && additional_info < 28) {
     error_code_ = DecoderError::UNSUPPORTED_FLOATING_POINT_VALUE;
@@ -185,14 +197,15 @@ base::Optional<CBORValue> CBORReader::ReadSimpleValue(uint8_t additional_info,
     case CBORValue::SimpleValue::TRUE_VALUE:
     case CBORValue::SimpleValue::NULL_VALUE:
     case CBORValue::SimpleValue::UNDEFINED:
-      return CBORValue(possibly_unsupported_simple_value);
+      return CBORValue(possibly_unsupported_simple_value, tag);
   }
 
   error_code_ = DecoderError::UNSUPPORTED_SIMPLE_VALUE;
   return base::nullopt;
 }
 
-base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
+base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes,
+                                                 uint64_t tag) {
   if (!CanConsume(num_bytes)) {
     error_code_ = DecoderError::INCOMPLETE_CBOR_DATA;
     return base::nullopt;
@@ -202,11 +215,13 @@ base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
   it_ += num_bytes;
 
   return HasValidUTF8Format(cbor_string)
-             ? base::make_optional<CBORValue>(CBORValue(std::move(cbor_string)))
+             ? base::make_optional<CBORValue>(
+                   CBORValue(std::move(cbor_string), tag))
              : base::nullopt;
 }
 
-base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
+base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes,
+                                                uint64_t tag) {
   if (!CanConsume(num_bytes)) {
     error_code_ = DecoderError::INCOMPLETE_CBOR_DATA;
     return base::nullopt;
@@ -215,11 +230,12 @@ base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
   Bytes cbor_byte_string(it_, it_ + num_bytes);
   it_ += num_bytes;
 
-  return CBORValue(std::move(cbor_byte_string));
+  return CBORValue(std::move(cbor_byte_string), tag);
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
-                                                    int max_nesting_level) {
+                                                    int max_nesting_level,
+                                                    uint64_t tag) {
   CBORValue::ArrayValue cbor_array;
   while (length-- > 0) {
     base::Optional<CBORValue> cbor_element = DecodeCBOR(max_nesting_level - 1);
@@ -227,14 +243,15 @@ base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
       return base::nullopt;
     cbor_array.push_back(std::move(cbor_element.value()));
   }
-  return CBORValue(std::move(cbor_array));
+  return CBORValue(std::move(cbor_array), tag);
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
-                                                  int max_nesting_level) {
+                                                  int max_nesting_level,
+                                                  uint64_t tag) {
   CBORValue::MapValue cbor_map;
   while (length-- > 0) {
-    base::Optional<CBORValue> key = DecodeCBOR(max_nesting_level - 1);
+    base::Optional<CBORValue> key = DecodeCBOR(max_nesting_level - 1, 0);
     base::Optional<CBORValue> value = DecodeCBOR(max_nesting_level - 1);
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
@@ -252,7 +269,7 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
 
     cbor_map.insert_or_assign(std::move(key.value()), std::move(value.value()));
   }
-  return CBORValue(std::move(cbor_map));
+  return CBORValue(std::move(cbor_map), tag);
 }
 
 bool CBORReader::CanConsume(uint64_t bytes) {
@@ -340,6 +357,8 @@ const char* CBORReader::ErrorCodeToString(DecoderError error) {
       return kUnsupportedFloatingPointValue;
     case DecoderError::OUT_OF_RANGE_INTEGER_VALUE:
       return kOutOfRangeIntegerValue;
+    case DecoderError::UNSUPPORTED_TAG_FORMAT:
+      return kUnsupportedTagFormat;
     default:
       NOTREACHED();
       return "Unknown error code.";

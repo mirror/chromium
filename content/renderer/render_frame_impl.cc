@@ -37,6 +37,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -112,6 +113,7 @@
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
 #include "content/renderer/loader/web_url_request_util.h"
+#include "content/renderer/loader/webpackage_subresource_manager_impl.h"
 #include "content/renderer/loader/weburlresponse_extradata_impl.h"
 #include "content/renderer/manifest/manifest_change_notifier.h"
 #include "content/renderer/manifest/manifest_manager.h"
@@ -769,6 +771,10 @@ class RenderFrameImpl::FrameURLLoaderFactory
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const WebURLRequest& request,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override {
+    /*
+    LOG(INFO) << "*** Creating URLLoader: "
+              << request.Url().GetString().Utf8();
+              */
     // This should not be called if the frame is detached.
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
@@ -3057,7 +3063,8 @@ void RenderFrameImpl::CommitNavigation(
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info) {
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3159,6 +3166,42 @@ void RenderFrameImpl::CommitNavigation(
 
   if (subresource_loader_factories)
     subresource_loader_factories_ = std::move(subresource_loader_factories);
+
+  if (webpackage_subresource_info) {
+    auto& requests = webpackage_subresource_info->requests;
+    std::vector<std::pair<GURL, std::string>> reqs(requests.size());
+    for (size_t i = 0; i < requests.size(); ++i) {
+      reqs[i] = std::make_pair(requests[i]->url,
+                               base::ToLowerASCII(requests[i]->method));
+    }
+    skip_throttler_requests_.insert(reqs.begin(), reqs.end());
+
+    if (webpackage_subresource_info->manager_request.is_pending()) {
+      auto manager_request =
+          std::move(webpackage_subresource_info->manager_request);
+      mojom::URLLoaderFactoryPtr factory_ptr;
+      auto request = mojo::MakeRequest(&factory_ptr);
+      subresource_loader_factories_->SetDefaultFactory(std::move(factory_ptr));
+
+      const bool off_main_thread = true;
+      if (off_main_thread) {
+        // Off-main-thread:
+        // (We use IO thread here, creating a new thread with
+        // base::CreateSingleThreadTaskRunnerWithTraits({}) seems
+        // a bit slower)
+        ChildThreadImpl::current()->GetIOTaskRunner()->PostTask(
+            FROM_HERE,
+            base::BindOnce(
+                &WebPackageSubresourceManagerImpl::CreateLoaderFactory,
+                std::move(request), std::move(manager_request),
+                GetDefaultURLLoaderFactoryGetter()->GetClonedInfo()));
+      } else {
+        WebPackageSubresourceManagerImpl::CreateLoaderFactory(
+            std::move(request), std::move(manager_request),
+            GetDefaultURLLoaderFactoryGetter()->GetClonedInfo());
+      }
+    }
+  }
 
   // If the Network Service is enabled, by this point the frame should always
   // have subresource loader factories, even if they're from a previous (but
@@ -4857,7 +4900,19 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   // The RenderThreadImpl or its URLLoaderThrottleProvider member may not be
   // valid in some tests.
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
-  if (render_thread && render_thread->url_loader_throttle_provider()) {
+  if (!skip_throttler_requests_.empty()) {
+    std::pair<GURL, std::string> req(
+        GURL(request.Url()), base::ToLowerASCII(request.HttpMethod().Ascii()));
+    if (skip_throttler_requests_.find(req) == skip_throttler_requests_.end() &&
+        render_thread && render_thread->url_loader_throttle_provider()) {
+      extra_data->set_url_loader_throttles(
+          render_thread->url_loader_throttle_provider()->CreateThrottles(
+              routing_id_, request.Url(), resource_type));
+    } else {
+      // Skip throttlers.
+      // LOG(ERROR) << "*** SKIPPING: " << GURL(request.Url());
+    }
+  } else if (render_thread && render_thread->url_loader_throttle_provider()) {
     extra_data->set_url_loader_throttles(
         render_thread->url_loader_throttle_provider()->CreateThrottles(
             routing_id_, request.Url(), resource_type));

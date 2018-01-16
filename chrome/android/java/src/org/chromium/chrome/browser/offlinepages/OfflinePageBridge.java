@@ -629,6 +629,10 @@ public class OfflinePageBridge {
         return nativeIsOfflinePage(mNativeOfflinePageBridge, webContents);
     }
 
+    public boolean isWPK(WebContents webContents) {
+        return nativeIsWPK(mNativeOfflinePageBridge, webContents);
+    }
+
     /**
      * Retrieves the offline page that is shown for the tab.
      * @param webContents Web contents used to find the offline page.
@@ -792,6 +796,7 @@ public class OfflinePageBridge {
             WebContents webContents, String nameSpace, String url, int uiAction, String origin);
     private native boolean nativeIsOfflinePage(
             long nativeOfflinePageBridge, WebContents webContents);
+    private native boolean nativeIsWPK(long nativeOfflinePageBridge, WebContents webContents);
     private native OfflinePageItem nativeGetOfflinePage(
             long nativeOfflinePageBridge, WebContents webContents);
     private native void nativeCheckForNewOfflineContent(

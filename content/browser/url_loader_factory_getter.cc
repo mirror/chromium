@@ -117,4 +117,14 @@ void URLLoaderFactoryGetter::HandleNetworkFactoryRequestOnUIThread(
       std::move(network_factory_request), 0);
 }
 
+WebPackageLoaderManager* URLLoaderFactoryGetter::GetWebPackageLoaderManager() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "URLLoaderFactoryGetter::GetWebPackageLoaderManager";
+  if (!webpackage_loader_manager_) {
+    webpackage_loader_manager_ =
+        base::MakeUnique<WebPackageLoaderManager>(this);
+  }
+  return webpackage_loader_manager_.get();
+}
+
 }  // namespace content
