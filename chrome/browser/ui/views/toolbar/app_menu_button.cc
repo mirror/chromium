@@ -26,6 +26,8 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/grit/chromium_strings.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -75,6 +77,12 @@ void AppMenuButton::SetSeverity(AppMenuIconController::IconType type,
                                 bool animate) {
   type_ = type;
   severity_ = severity;
+
+  SetAccessibleName(
+      severity_ == AppMenuIconController::Severity::NONE
+          ? l10n_util::GetStringUTF16(IDS_ACCNAME_APP)
+          : l10n_util::GetStringUTF16(IDS_ACCNAME_APP_UPDATE_AVAILABLE));
+
   UpdateIcon(animate);
 }
 
