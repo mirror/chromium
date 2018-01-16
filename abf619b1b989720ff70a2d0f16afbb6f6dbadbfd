@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd4e5b96_b85a0d85",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T22:25:20Z",
+      "side": 1,
+      "message": "IIUC, you are implying that SSL connections may inflate the RTT estimates?",
+      "parentUuid": "fd3b60f2_be9a5607",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa4dbce5_9f581ca5",
         "filename": "net/http/http_proxy_client_socket_pool.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "03fde656_20e5f5f6",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T22:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4dbce5_9f581ca5",
+      "range": {
+        "startLine": 243,
+        "startChar": 49,
+        "endLine": 243,
+        "endChar": 63
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c61bfa_2bb821e8",
         "filename": "net/http/http_proxy_client_socket_pool.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471ed3f9_183434bd",
+        "filename": "net/http/http_proxy_client_socket_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T22:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c61bfa_2bb821e8",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 17
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +307,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d11fb00_24340a90",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-16T22:25:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "531d1b55_47daee94",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
