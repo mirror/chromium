@@ -22,6 +22,30 @@
       "revId": "4bafcbdf12e7590c3d25ef0a5bf2301a96510653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b7da3d_90fd3e6a",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-16T07:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3597ed7a_56732095",
+      "range": {
+        "startLine": 241,
+        "startChar": 13,
+        "endLine": 241,
+        "endChar": 22
+      },
+      "revId": "4bafcbdf12e7590c3d25ef0a5bf2301a96510653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
