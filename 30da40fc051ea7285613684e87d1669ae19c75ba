@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5887d1_9f13ba38",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-16T21:46:33Z",
+      "side": 1,
+      "message": "auto submit_password \u003d []() {\n    // lines 154-165\n  };\n\n  submit_password(); // replaces 154-165\n  submit_password(); // replaces 181-185",
+      "revId": "30da40fc051ea7285613684e87d1669ae19c75ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
