@@ -22,6 +22,30 @@
       "revId": "617e032ec9edbfbc277088fda425aa03003f1e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a552e4bd_5ab71776",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-16T21:03:35Z",
+      "side": 1,
+      "message": "Good catch, thanks! I thought I had double checked but must have misread it.\n\nI\u0027ve updated this CL to comment out those expectations and mark them as failing.",
+      "parentUuid": "8893d7f6_8898dc70",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "617e032ec9edbfbc277088fda425aa03003f1e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
