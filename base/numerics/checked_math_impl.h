@@ -49,7 +49,6 @@ struct CheckedAddOp<T,
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
   static constexpr bool Do(T x, U y, V* result) {
-    // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedAddFastOp<T, U>::is_supported)
       return CheckedAddFastOp<T, U>::Do(x, y, result);
 
@@ -109,7 +108,6 @@ struct CheckedSubOp<T,
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
   static constexpr bool Do(T x, U y, V* result) {
-    // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedSubFastOp<T, U>::is_supported)
       return CheckedSubFastOp<T, U>::Do(x, y, result);
 
@@ -171,7 +169,6 @@ struct CheckedMulOp<T,
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
   static constexpr bool Do(T x, U y, V* result) {
-    // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedMulFastOp<T, U>::is_supported)
       return CheckedMulFastOp<T, U>::Do(x, y, result);
 
