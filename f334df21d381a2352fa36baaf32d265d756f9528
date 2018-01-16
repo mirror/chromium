@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7f72da46_b9feb61a",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-01-16T20:57:03Z",
+      "side": 1,
+      "message": "I did follow this advice now, so creation is separate from storage. I might revert it in the future, because this is actually the only reason that this code needs NATIVE_T (the other potential future reason is if tests start to exercise and verify the local model\u0027s API).",
+      "parentUuid": "f79ca57d_14fec6f6",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80f3891f_13dc9923",
         "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "05b37bb2_d44c7922",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-01-16T20:57:03Z",
+      "side": 1,
+      "message": "Ack. I might be overdoing it, but as you can see, I like gmock, and find it concise :-)",
+      "parentUuid": "80f3891f_13dc9923",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98db33e5_bf2e5bb8",
         "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-12T01:26:08Z",
       "side": 1,
       "message": "Yeah, visits are pretty much impossible to do generically without reproducing the model type specific logic. If you knew the remote should completely overwrite the local, that\u0027s one thing. But since the merged copy won\u0027t look like either the local or remote, you\u0027re kind of stuck.\n\nFor some types, it seems like you could use a generic version, remote wins, but maybe there\u0027s a way you can signal that this type doesn\u0027t behave like that, and then have a type specific case to handle it. Perhaps that\u0027s the way most cases could work, with potential overrides everywhere.",
+      "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1efc3b_b8e0c5a5",
+        "filename": "components/sync/test/model_type_sync_bridge_test_template.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2018-01-16T20:57:03Z",
+      "side": 1,
+      "message": "This is still WIP.",
+      "parentUuid": "98db33e5_bf2e5bb8",
       "revId": "f334df21d381a2352fa36baaf32d265d756f9528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
