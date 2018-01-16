@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e94f2d00_b0d4800e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4498,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-16T20:08:03Z",
+      "side": 1,
+      "message": "If this is a duplicate callback, why wouldn\u0027t the sessionController state be updated the first time didCommitNavigation: is called? Shouldn\u0027t we just early exit in line 4422?",
+      "range": {
+        "startLine": 4498,
+        "startChar": 54,
+        "endLine": 4498,
+        "endChar": 0
+      },
+      "revId": "7a025a89864251f058ac3c087f8a7f1717889788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
