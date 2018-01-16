@@ -30,9 +30,15 @@ namespace content {
 
 namespace {
 
-// This class need to set ChildURLLoaderFactoryGetter. CreateLoaderAndStart()
-// need to implement. todo(emim): Merge this and the one in
-// service_worker_url_loader_job_unittest.cc.
+// A URLLoaderFactory that returns 200 OK with a simple body to any request.
+// However, if the request is POST and has a request body, it echoes the body
+// in the response.
+// TODO(falken): Forward the request by making a URLLoader which connects to
+// EmbeddedTestServer instead?
+//
+// ServiceWorkerSubresourceLoaderTest sets the network loader factory to this
+// class via ChildURLLoaderFactoryGetter.
+// TODO(falken): Merge this and the one in ServiceWorkerURLLoaderJobTest.
 class FakeNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
  public:
   FakeNetworkURLLoaderFactory() = default;
@@ -56,6 +62,19 @@ class FakeNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
     client->OnReceiveResponse(response, base::nullopt, nullptr);
 
     std::string body = "this body came from the network";
+    if (url_request.request_body) {
+      const std::vector<network::DataElement>* elements =
+          url_request.request_body->elements();
+      DCHECK(!elements->empty());
+      const network::DataElement& elem = (*elements)[0];
+      if (elem.type() == network::DataElement::TYPE_BYTES) {
+        body = std::string(elem.bytes(), elem.length());
+      } else {
+        NOTREACHED();
+      }
+      LOG(ERROR) << "we have body: " << body;
+    }
+
     uint32_t bytes_written = body.size();
     mojo::DataPipe data_pipe;
     data_pipe.producer_handle->WriteData(body.data(), &bytes_written,
@@ -880,6 +899,14 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, RequestBody) {
   std::string body;
   fake_controller_.ReadRequestBody(&body);
   EXPECT_EQ(kData, body);
+
+  // Also verify the fallback network request had the request body.
+  client->RunUntilComplete();
+  std::string response;
+  EXPECT_TRUE(client->response_body().is_valid());
+  EXPECT_TRUE(mojo::common::BlockingCopyToString(
+      client->response_body_release(), &response));
+  EXPECT_EQ(kData, response);
 }
 
 }  // namespace content
