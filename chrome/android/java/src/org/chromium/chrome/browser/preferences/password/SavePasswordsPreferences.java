@@ -6,6 +6,9 @@ package org.chromium.chrome.browser.preferences.password;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -13,7 +16,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
@@ -89,10 +94,7 @@ public class SavePasswordsPreferences
         getActivity().setTitle(R.string.prefs_saved_passwords);
         setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
         PasswordManagerHandlerProvider.getInstance().addObserver(this);
-        if (ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
-                && ReauthenticationManager.isReauthenticationApiAvailable()) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(providesPasswordExport() || providesPasswordSearch());
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
             mExportRequested =
@@ -104,7 +106,25 @@ public class SavePasswordsPreferences
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.save_password_preferences_action_bar_menu, menu);
+        menu.findItem(R.id.export_passwords).setVisible(providesPasswordExport());
         menu.findItem(R.id.export_passwords).setEnabled(false);
+        MenuItem searchItem = menu.findItem(R.id.menu_id_search);
+        searchItem.setVisible(providesPasswordSearch());
+        searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
+        if (providesPasswordSearch()) {
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @java.lang.Override
+                public boolean onQueryTextSubmit(java.lang.String query) {
+                    return filterPasswords(query);
+                }
+
+                @java.lang.Override
+                public boolean onQueryTextChange(java.lang.String query) {
+                    return filterPasswords(query);
+                }
+            });
+        }
     }
 
     @Override
@@ -151,6 +171,11 @@ public class SavePasswordsPreferences
 
     private void exportAfterWarning() {
         // TODO(crbug.com/788701): Start the export.
+    }
+
+    private boolean filterPasswords(java.lang.String query) {
+        // TODO(crbug.com/794108): Filter the passwords.
+        return false; // Query has not been handled yet. Triggers SearchView default action.
     }
 
     /**
@@ -318,6 +343,17 @@ public class SavePasswordsPreferences
         return true;
     }
 
+    private static Drawable convertToPlainWhite(Drawable icon) {
+        float[] white_matrix = {
+                1, 1, 1, 0, 0, // R = 1*R + 1*G + 1*B
+                1, 1, 1, 0, 0, // G = 1*R + 1*G + 1*B
+                1, 1, 1, 0, 0, // B = 1*R + 1*G + 1*B
+                0, 0, 0, 1, 0, // A = A
+        };
+        icon.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(white_matrix)));
+        return icon;
+    }
+
     private void createSavePasswordsSwitch() {
         mSavePasswordsSwitch = new ChromeSwitchPreference(getActivity(), null);
         mSavePasswordsSwitch.setKey(PREF_SAVE_PASSWORDS_SWITCH);
@@ -389,5 +425,14 @@ public class SavePasswordsPreferences
             }
             getPreferenceScreen().addPreference(mLinkPref);
         }
+    }
+
+    private boolean providesPasswordExport() {
+        return ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
+                && ReauthenticationManager.isReauthenticationApiAvailable();
+    }
+
+    private boolean providesPasswordSearch() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.PASSWORD_SEARCH);
     }
 }
