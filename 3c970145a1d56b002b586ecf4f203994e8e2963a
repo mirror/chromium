@@ -16,6 +16,24 @@
       "revId": "3c970145a1d56b002b586ecf4f203994e8e2963a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb33e2f7_c953f89a",
+        "filename": "base/guid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-16T18:58:11Z",
+      "side": 1,
+      "message": "I was just trying to break the string into short enough segments to be countable.  I didn\u0027t even notice that the GUID has hyphens in particular nonuniform places.\n\nI don\u0027t have an opinion about which (if either) is better.  Up to the base/ OWNER.",
+      "parentUuid": "46ecc6cb_5c1d2ace",
+      "revId": "3c970145a1d56b002b586ecf4f203994e8e2963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
