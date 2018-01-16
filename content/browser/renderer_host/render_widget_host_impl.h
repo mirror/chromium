@@ -637,6 +637,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void ProgressFling(base::TimeTicks current_time);
   void StopFling();
 
+  void DidReceiveFirstFrameAfterNavigation();
+
+  uint32_t current_content_source_id() { return current_content_source_id_; }
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
