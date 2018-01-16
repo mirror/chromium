@@ -16,6 +16,24 @@
       "revId": "a44e2ce2609371218aa383bf63263bdf2e102ca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1c3f71_6089ad9a",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-16T22:30:15Z",
+      "side": 1,
+      "message": "Right. Done.",
+      "parentUuid": "9350c2c9_ee878a7f",
+      "revId": "a44e2ce2609371218aa383bf63263bdf2e102ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
