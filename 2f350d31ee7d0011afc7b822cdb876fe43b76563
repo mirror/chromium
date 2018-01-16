@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "c1f67941_0233c371",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T18:22:20Z",
+      "side": 1,
+      "message": "I added a comment to that effect.",
+      "parentUuid": "447abc56_215bd4bd",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 56
+      },
+      "revId": "2f350d31ee7d0011afc7b822cdb876fe43b76563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f00c7eb9_b45f0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
