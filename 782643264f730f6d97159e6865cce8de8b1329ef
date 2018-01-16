@@ -452,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "3e199d40_29838360",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T21:37:24Z",
+      "side": 1,
+      "message": "Thanks!  That was exactly what was confusing me.  I was thinking of \"auto-detect\" as \"detect system settings\", not as \"We should request WPAD due to system settings (Or whatever)\".  I\u0027ll switch it.",
+      "parentUuid": "a18b7f28_d1fbb365",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57f5ed7_745615db",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
