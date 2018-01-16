@@ -46,6 +46,30 @@
       "revId": "127493cf59024e75bcd66ee6df2f56723333f934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f92435d_9a33f97f",
+        "filename": "ios/web_view/internal/cwv_scroll_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-16T18:04:24Z",
+      "side": 1,
+      "message": "I see, thank you for the explanation; I don\u0027t have a better solution.",
+      "parentUuid": "acd4f868_65acfa93",
+      "range": {
+        "startLine": 183,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 26
+      },
+      "revId": "127493cf59024e75bcd66ee6df2f56723333f934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
