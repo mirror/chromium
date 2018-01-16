@@ -46,6 +46,30 @@
       "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75842ce2_20d0af97",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-16T09:03:44Z",
+      "side": 1,
+      "message": "I think it\u0027s OK to remove the logging.\nIf it\u0027s needed, the caller should do the logging.",
+      "parentUuid": "35d976e3_0d238cef",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 72
+      },
+      "revId": "a7aa586dd39557c1d9b5919b229746b4996e8b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
