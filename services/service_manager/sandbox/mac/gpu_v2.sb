@@ -7,6 +7,7 @@
 ; Allow communication between the GPU process and the UI server.
 (allow mach-lookup
   (global-name "com.apple.cvmsServ")
+  (global-name "com.apple.system.notification_center")
   (global-name "com.apple.tsm.uiserver")
   (global-name "com.apple.windowserver.active"))
 
@@ -23,6 +24,9 @@
   (iokit-user-client-class "IOSurfaceSendRight"))
   (iokit-user-client-class "RootDomainUserClient")
 
+(allow ipc-posix-shm-read-data
+  (ipc-posix-name "apple.shm.notification_center"))
+
 ; https://crbug.com/515280
 (if (>= os-version 1011)
   (allow file-read* (subpath "/System/Library/Extensions")))
@@ -33,3 +37,5 @@
 
 (if (> os-version 1009)
   (allow sysctl-read (sysctl-name "hw.model")))
+
+;(allow network-outbound (path-literal "/private/var/run/syslog"))
