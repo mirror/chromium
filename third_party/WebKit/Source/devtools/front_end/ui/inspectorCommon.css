@@ -398,3 +398,8 @@ label[is=dt-icon-label] {
     -webkit-mask-position: var(--spritesheet-position);
     background: white !important;
 }
+
+.a11y-only {
+    position: absolute;
+    left: -999em;
+}

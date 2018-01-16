@@ -127,3 +127,18 @@ UI.ARIAUtils.setPressed = function(element, value) {
 UI.ARIAUtils.setAccessibleName = function(element, name) {
   element.setAttribute('aria-label', name);
 };
+
+/**
+ * @param {string} message
+ */
+UI.ARIAUtils.alert = function(message) {
+  if (!UI.ARIAUtils.AlertElement) {
+    UI.ARIAUtils.AlertElement = UI.inspectorView.element.createChild('div', 'a11y-only');
+    UI.ARIAUtils.AlertElement.setAttribute('role', 'alert');
+    UI.ARIAUtils.AlertElement.setAttribute('aria-atomic', 'true');
+  }
+  UI.ARIAUtils.AlertElement.textContent = message;
+};
+
+/** @type {?Element} */
+UI.ARIAUtils.AlertElement = null;
