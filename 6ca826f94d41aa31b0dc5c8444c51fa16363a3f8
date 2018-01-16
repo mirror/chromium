@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d7d95c7c_362271c5",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-16T00:04:14Z",
+      "side": 1,
+      "message": "The guideline \"Generally avoid unordered_set\" does not fully match the analysis below it. The memory overhead per item is smaller than std::set and given that in this case we have 60+ items, it will be smaller overall. It doesn\u0027t specify metrics with \"insert performance is slightly worse\".\nEverything considered, I believe it\u0027s largely a personal preference.\n\nHowever, you are right that flat_set seems to be the best solution in this case. I\u0027ve changed the type.",
+      "parentUuid": "35b3e3de_10f53488",
+      "range": {
+        "startLine": 184,
+        "startChar": 73,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b30f5f6_5562ff75",
         "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
         "patchSetId": 11
@@ -87,6 +111,24 @@
       "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653e87b7_0209da68",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-16T00:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b30f5f6_5562ff75",
+      "revId": "6ca826f94d41aa31b0dc5c8444c51fa16363a3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
