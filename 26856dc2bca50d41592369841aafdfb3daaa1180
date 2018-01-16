@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03595f85_8c7d6721",
+        "filename": "content/browser/service_worker/service_worker_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-16T02:26:00Z",
+      "side": 1,
+      "message": "init header_length to 0 here and above?",
+      "revId": "26856dc2bca50d41592369841aafdfb3daaa1180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
