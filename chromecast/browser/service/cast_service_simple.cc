@@ -63,7 +63,8 @@ void CastServiceSimple::StartInternal() {
   }
 
   cast_web_view_ = web_contents_manager_->CreateWebView(
-      this, /*site_instance*/ nullptr, /*transparent*/ false,
+      /* extension */ nullptr, /* initial_url */ GURL(), this,
+      /*site_instance*/ nullptr, /*transparent*/ false,
       false /*allow_media_access*/, /*is_headless*/ false,
       /*enable_touch_input*/ false);
   cast_web_view_->LoadUrl(startup_url_);
