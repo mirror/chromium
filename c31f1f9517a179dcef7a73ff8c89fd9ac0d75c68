@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71600538_88cd553f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:02:34Z",
+      "side": 1,
+      "message": "This is somewhat not clear in a sense that we don\u0027t show keyboard on autofocus.\nHow about naming this as isFocusedNodeEditable?",
+      "range": {
+        "startLine": 225,
+        "startChar": 19,
+        "endLine": 225,
+        "endChar": 44
+      },
+      "revId": "c31f1f9517a179dcef7a73ff8c89fd9ac0d75c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72189c7d_d669b9a7",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:02:34Z",
+      "side": 1,
+      "message": "Is this really needed? We\u0027re not using internals directly...",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "c31f1f9517a179dcef7a73ff8c89fd9ac0d75c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbee4200_5a7b33c4",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:02:34Z",
+      "side": 1,
+      "message": "Could you change this name to ImeInputModeTest? I hope we can just remove commandline flag when this gets launched.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "c31f1f9517a179dcef7a73ff8c89fd9ac0d75c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c14a25e_b72682f5",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T19:02:34Z",
+      "side": 1,
+      "message": "How about INPUT_MODE_HTML to be more specific?",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 67
+      },
+      "revId": "c31f1f9517a179dcef7a73ff8c89fd9ac0d75c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
