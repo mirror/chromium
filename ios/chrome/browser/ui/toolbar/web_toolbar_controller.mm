@@ -108,6 +108,7 @@ using ios::material::TimingFunction;
 
 @interface WebToolbarController ()<DropAndNavigateDelegate,
                                    LocationBarDelegate,
+                                   LocationBarURLLoader,
                                    OmniboxPopupPositioner,
                                    ToolbarViewDelegate> {
   // Top-level view for web content.
@@ -508,6 +509,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       _locationBarView, _browserState, self, self.dispatcher);
   _omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
+  _locationBar->SetURLLoader(self);
   [_omniboxPopupCoordinator start];
 
   // Create the determinate progress bar (phone only).
@@ -912,7 +914,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 }
 
 #pragma mark -
-#pragma mark LocationBarDelegate methods.
+#pragma mark LocationBarURLLoader methods.
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
                      transition:(ui::PageTransition)transition {
@@ -942,6 +944,9 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   }
   [self cancelOmniboxEdit];
 }
+
+#pragma mark -
+#pragma mark LocationBarDelegate methods.
 
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
