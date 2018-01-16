@@ -752,7 +752,10 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   // we don't want any WebContents to be attached, so that we
   // avoid an unnecessary resize and re-layout of a WebContents.
   if (change_tab_contents) {
-    contents_web_view_->SetWebContents(nullptr);
+    // Keep focus behavior until new_contents are set, so that
+    // focus is not briefly advanced out of the empty content area,
+    // which confuses assistive technologies.
+    contents_web_view_->TemporarilyClearWebContents();
     devtools_web_view_->SetWebContents(nullptr);
   }
 
@@ -777,6 +780,7 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   if (change_tab_contents) {
     web_contents_close_handler_->ActiveTabChanged();
     contents_web_view_->SetWebContents(new_contents);
+
     // The second layout update should be no-op. It will just set the
     // DevTools WebContents.
     UpdateDevToolsForContents(new_contents, true);
