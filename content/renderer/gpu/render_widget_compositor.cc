@@ -480,6 +480,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       GetContentClient()->UsingSynchronousCompositing();
   bool using_low_memory_policy = base::SysInfo::IsLowEndDevice();
 
+  settings.enable_early_damage_check = true;
+
   settings.use_stream_video_draw_quad = true;
   settings.using_synchronous_renderer_compositor = using_synchronous_compositor;
   if (using_synchronous_compositor) {
@@ -489,9 +491,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     // on sublayers.
     settings.scrollbar_animator = cc::LayerTreeSettings::NO_ANIMATOR;
     settings.solid_color_scrollbar_color = SK_ColorTRANSPARENT;
-
-    settings.enable_early_damage_check =
-        cmd.HasSwitch(cc::switches::kCheckDamageEarly);
   }
   // Android WebView handles root layer flings itself.
   settings.ignore_root_layer_flings = using_synchronous_compositor;
