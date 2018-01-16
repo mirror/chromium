@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d89ca8b9_d4a2bce9",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "336425ba_fe06bd87",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1ece697_36719acc",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-13T02:55:12Z",
       "side": 1,
       "message": "0 values for these 2 members are valid ones, meaning \"candidates[0] is a valid page\" and \"no more bytes to read\". This initialization sets them into values not consistent with the state of the Job. For example,  OfflinePageRequestJob::GetMimeType() will serve incorrect result if called at unfortunate time. It would be okay to add sentinel values like -1 for either one to indicate \u0027out of bounds\u0027, or at least make sure all conditionals with them are not ambiguous, as in GetMimeType()...",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3255e9d_4f78bccd",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "I can change to initialize |candidate_index_| to -1, but it will be static_cast\u003csize_t\u003e(-1) since |candidate_index_| is of type size_t. Since |candidates_| is empty initially, 0 value for |candidate_index_| will do no harm. So OfflinePageRequestJob::GetMimeType() does work correctly. To make this clear, I updated GetMimeType() to add another check for non-empty |candidates_|.\n\n|remaining_bytes_| will first be computed in DidOpenForServing before accessing it.",
+      "parentUuid": "d1ece697_36719acc",
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80a688e2_e01cb0a5",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Renamed to result. Some new codes here are borrowed from url_rerequest_file_job and I already renamed rv to result, but forgetting this one.",
+      "parentUuid": "35a67a44_b8647b86",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c507b0b0_baa564bc",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-13T02:55:12Z",
       "side": 1,
       "message": "Why does this job cares about Range header? If it does, the class comment to OfflinePageRequestJob has to have a sentence about it.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc7fb77_e1805456",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "URLRequestFileJob handles Range header so I tried to do the similar things here. Updated the comment in OfflinePageRequestJob.",
+      "parentUuid": "c507b0b0_baa564bc",
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fcb90453_3a8497f7",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Yes. Added comment.",
+      "parentUuid": "f05f45fc_5832b458",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2e31e9a_33ecc086",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e1837f_adcef2df",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e31e9a_33ecc086",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c3cfe0b5_8a1d0bf3",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89bdf2ac_41fbad31",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc74885_4a5bd5e8",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2018-01-13T02:55:12Z",
       "side": 1,
       "message": "I\u0027d normalize the range here because it may come from a request header set by 3rd party code (JS or extension?) So integer overflow or negative results are possible.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaf8cd5_64845fe8",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "This is copied from url_request_file_job (https://cs.chromium.org/chromium/src/net/url_request/url_request_file_job.cc?type\u003dcs\u0026l\u003d268).\n\nI think byte_range_ code should already guarantee this.",
+      "parentUuid": "5bc74885_4a5bd5e8",
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d4bd42cd_550a06c7",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcd10cab_4171de31",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6baf4587_508c4972",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d46621_fe375dfa",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6baf4587_508c4972",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "7cdab2db_357812df",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fbf8ea_c44deea8",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2287cfa0_26cba38f",
         "filename": "components/offline_pages/core/archive_validator.cc",
         "patchSetId": 3
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "611ab9b7_cd2f7091",
+        "filename": "components/offline_pages/core/archive_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2287cfa0_26cba38f",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5b64b28_d4bcfabc",
         "filename": "components/offline_pages/core/archive_validator.cc",
         "patchSetId": 3
@@ -217,6 +433,24 @@
       "writtenOn": "2018-01-13T02:55:12Z",
       "side": 1,
       "message": "I would suggest re-implementing static helpers using the new non-static ArchiveValidator. It would at least ensure the same hash is used and in the same way.",
+      "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff4911e_3f2709aa",
+        "filename": "components/offline_pages/core/archive_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-16T23:46:42Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "b5b64b28_d4bcfabc",
       "revId": "ae28be9261ca0009c83fe8d53872317132e95e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
