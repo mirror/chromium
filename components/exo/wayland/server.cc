@@ -1908,14 +1908,14 @@ void remote_surface_set_rectangular_shadow_DEPRECATED(wl_client* client,
                                                       int32_t y,
                                                       int32_t width,
                                                       int32_t height) {
-  NOTIMPLEMENTED();
+  // NOTIMPLEMENTED();
 }
 
 void remote_surface_set_rectangular_shadow_background_opacity_DEPRECATED(
     wl_client* client,
     wl_resource* resource,
     wl_fixed_t opacity) {
-  NOTIMPLEMENTED();
+  // NOTIMPLEMENTED();
 }
 
 void remote_surface_set_title(wl_client* client,

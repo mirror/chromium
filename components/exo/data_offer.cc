@@ -15,6 +15,8 @@
 #include "ui/base/dragdrop/file_info.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "url/gurl.h"
+#include "base/pickle.h"
+
 
 namespace exo {
 namespace {
@@ -99,24 +101,86 @@ void DataOffer::SetSourceActions(
   delegate_->OnSourceActions(source_actions);
 }
 
+const ui::Clipboard::FormatType& GetFileSystemFileFormatType() {
+  static const char kFormatString[] = "chromium/x-file-system-files";
+  CR_DEFINE_STATIC_LOCAL(ui::Clipboard::FormatType,
+                         format,
+                         (ui::Clipboard::GetFormatType(kFormatString)));
+  return format;
+}
+
+bool ReadFileSystemFilesFromPickle(
+    const base::Pickle& pickle, std::string* url_string) {
+  base::PickleIterator iter(pickle);
+
+  uint32_t num_files = 0;
+  if (!iter.ReadUInt32(&num_files))
+    return false;
+  // file_system_files->resize(num_files);
+
+  for (uint32_t i = 0; i < num_files; ++i) {
+    // std::string url_string;
+    int64_t size = 0;
+    std::string filesystem_id;
+    if (!iter.ReadString(url_string) || !iter.ReadInt64(&size) ||
+        !iter.ReadString(&filesystem_id)) {
+      return false;
+    }
+
+    break;
+
+  }
+  return true;
+}
 void DataOffer::SetDropData(FileHelper* file_helper,
                             const ui::OSExchangeData& data) {
+  LOG(ERROR) << "--------------------------SetDropData";
   DCHECK_EQ(0u, data_.size());
+
+  base::Pickle pickle;
+  if (data.GetPickledData(GetFileSystemFileFormatType(), &pickle)) {
+    std::string url_string;
+    if (ReadFileSystemFilesFromPickle(pickle, &url_string)) {
+      LOG(ERROR) << "--------------------------in_url= " << url_string;
+      GURL in_url(url_string);
+      GURL out_url;
+      if (file_helper->GetUrlFromFileSystemUrl(/* app_id */ "", in_url, &out_url)) {
+        LOG(ERROR) << "--------------------------out_url= " << out_url;
+      }
+      
+    }
+  }
+
+  if (data.HasURL(ui::OSExchangeData::CONVERT_FILENAMES)) {
+    LOG(ERROR) << "--------------------------SetDropData HasUrl";
+    GURL url;
+    base::string16 title;
+    if (data.GetURLAndTitle(
+            ui::OSExchangeData::CONVERT_FILENAMES, &url, &title)) {
+       LOG(ERROR) << "-------------------------- url=" << url;
+       LOG(ERROR) << "-------------------------- title=" << title;
+    }
+  }
   if (data.HasString()) {
+    LOG(ERROR) << "--------------------------SetDropData HasString";
     base::string16 string_content;
     if (data.GetString(&string_content)) {
+      LOG(ERROR) << "--------------------------SetDropData string= " << string_content;
       data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
                     RefCountedString16::TakeString(std::move(string_content)));
     }
   }
   if (data.HasFile()) {
+    LOG(ERROR) << "--------------------------SetDropData HasFile";
     std::vector<ui::FileInfo> files;
     if (data.GetFilenames(&files)) {
       base::string16 url_list;
       for (const auto& info : files) {
         GURL url;
+        LOG(ERROR) << "------------------------------ info.path= " << info.path;
         // TODO(hirono): Need to fill the corret app_id.
         if (file_helper->GetUrlFromPath(/* app_id */ "", info.path, &url)) {
+          LOG(ERROR) << "------------------------------ url= " << url;
           if (!url_list.empty())
             url_list += base::UTF8ToUTF16(kUriListSeparator);
           url_list += base::UTF8ToUTF16(url.spec());

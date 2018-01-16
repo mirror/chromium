@@ -23,6 +23,13 @@
 #include "components/exo/wm_helper.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/arc/notification/arc_notification_surface_manager_impl.h"
+#include "storage/browser/fileapi/file_system_url.h"
+#include "storage/browser/fileapi/file_system_context.h"
+#include "chrome/browser/chromeos/file_manager/fileapi_util.h"
+#include "components/user_manager/user_manager.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/file_manager/app_id.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_url_util.h"
 
 namespace {
 
@@ -45,7 +52,36 @@ class ChromeFileHelper : public exo::FileHelper {
   bool GetUrlFromFileSystemUrl(const std::string& app_id,
                                const GURL& url,
                                GURL* out) override {
-    return false;
+    // Obtain the primary profile. This information is required because currently
+    // only the file systems for the primary profile is exposed to ARC.
+    if (!user_manager::UserManager::IsInitialized())
+      return false;
+    const user_manager::User* primary_user =
+        user_manager::UserManager::Get()->GetPrimaryUser();
+    if (!primary_user)
+      return false;
+    Profile* primary_profile =
+        chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+    if (!primary_profile)
+      return false;
+
+    // scoped_refptr<storage::FileSystemContext> file_system_context =
+    //     file_manager::util::GetFileSystemContextForRenderFrameHost(
+    //         primary_profile, render_frame_host());
+    storage::FileSystemContext* file_system_context =
+        file_manager::util::GetFileSystemContextForExtensionId(primary_profile, file_manager::kFileManagerAppId);
+
+    const storage::FileSystemURL file_system_url = file_system_context->CrackURL(url);
+    // LOG(ERROR) << "--------------------------file_system_url= " << file_system_url;
+    LOG(ERROR) << "--------------------------file_system_url.path= " << file_system_url.path();
+
+    GURL arc_url;
+    file_manager::util::ConvertPathToArcUrl(file_system_url.path(), &arc_url);
+
+    //GURL arc_url = arc::FileSystemUrlToArcUrl(file_system_url);
+    LOG(ERROR) << "--------------------------arc_url= " << arc_url.path();
+    *out = GURL(arc_url);
+    return true;
   }
 };
 
