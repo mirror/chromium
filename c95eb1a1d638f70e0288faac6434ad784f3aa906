@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84495b50_a21873e0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-16T12:24:45Z",
+      "side": 1,
+      "message": "s/Anchor/Link/\n\nCan we unify two tests?  I think that we can conceptually do something like below.\n\n    let element \u003d document.createElement(\"a\");\n    test_rellist(element);\n\n    let element \u003d document.createElement(\"link\");\n    test_rellist(element);",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 24
+      },
+      "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
