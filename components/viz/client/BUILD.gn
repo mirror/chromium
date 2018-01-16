@@ -15,6 +15,8 @@ viz_component("client") {
     "frame_evictor.cc",
     "frame_evictor.h",
     "hit_test_data_provider.h",
+    "hit_test_data_provider_content.cc",
+    "hit_test_data_provider_content.h",
     "local_surface_id_provider.cc",
     "local_surface_id_provider.h",
   ]

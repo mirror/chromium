@@ -141,7 +141,8 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
       const gfx::PointF& point,
       const gfx::PointF& point_in_screen,
       viz::EventSource source,
-      gfx::PointF* transformed_point) const;
+      gfx::PointF* transformed_point,
+      bool print_details = false) const;
 
   void RouteTouchscreenGestureEvent(RenderWidgetHostViewBase* root_view,
                                     blink::WebGestureEvent* event,

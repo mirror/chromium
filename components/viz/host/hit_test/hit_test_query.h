@@ -77,7 +77,8 @@ class VIZ_HOST_EXPORT HitTestQuery {
   // transfrom-from-e-to-c and transform-from-c-to-b then we get 3 in the
   // coordinate system of b.
   Target FindTargetForLocation(EventSource event_source,
-                               const gfx::Point& location_in_root) const;
+                               const gfx::Point& location_in_root,
+                               bool print_details = false) const;
 
   // When a target window is already known, e.g. capture/latched window, convert
   // |location_in_root| to be in the coordinate space of the target.
@@ -96,7 +97,8 @@ class VIZ_HOST_EXPORT HitTestQuery {
   bool FindTargetInRegionForLocation(EventSource event_source,
                                      const gfx::Point& location_in_parent,
                                      AggregatedHitTestRegion* region,
-                                     Target* target) const;
+                                     Target* target,
+                                     bool print_details = false) const;
 
   // Transform |location_in_target| to be in |region|'s coordinate space.
   // |location_in_target| is in the coordinate space of |region|'s parent at the

@@ -47,17 +47,20 @@ void HitTestQuery::SwitchActiveAggregatedHitTestRegionList(
   active_hit_test_list_ = static_cast<AggregatedHitTestRegion*>(
       handle_buffers_[active_handle_index].get());
   active_hit_test_list_size_ = handle_buffer_sizes_[active_handle_index];
+  // LOG(ERROR) << "active_hit_test_list_size_ = " <<
+  // active_hit_test_list_size_; LOG(ERROR) <<
+  // active_hit_test_list_->rect.ToString();
 }
 
-Target HitTestQuery::FindTargetForLocation(
-    EventSource event_source,
-    const gfx::Point& location_in_root) const {
+Target HitTestQuery::FindTargetForLocation(EventSource event_source,
+                                           const gfx::Point& location_in_root,
+                                           bool print_details) const {
   Target target;
   if (!active_hit_test_list_size_)
     return target;
 
   FindTargetInRegionForLocation(event_source, location_in_root,
-                                active_hit_test_list_, &target);
+                                active_hit_test_list_, &target, print_details);
   return target;
 }
 
@@ -86,9 +89,27 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     EventSource event_source,
     const gfx::Point& location_in_parent,
     AggregatedHitTestRegion* region,
-    Target* target) const {
+    Target* target,
+    bool print_details) const {
   gfx::Point location_transformed(location_in_parent);
   region->transform.TransformPoint(&location_transformed);
+  if (print_details) {
+    LOG(ERROR) << "Region " << region->rect.ToString()
+               << (region->rect.Contains(location_transformed)
+                       ? " contains "
+                       : " doesnt contain ")
+               << "Point " << location_transformed.ToString();
+    AggregatedHitTestRegion* region_i = active_hit_test_list_;
+    int i = 0;
+    while (region_i->child_count != -1) {
+      LOG(ERROR) << "oooo HTQ: REGION: " << i << " " << region_i->frame_sink_id
+                 << " " << region_i->rect.ToString() << " flags "
+                 << (region_i->flags & 0xF) << " child count "
+                 << region_i->child_count;
+      region_i++;
+      i++;
+    }
+  }
   if (!region->rect.Contains(location_transformed))
     return false;
 
@@ -104,7 +125,7 @@ bool HitTestQuery::FindTargetInRegionForLocation(
   location_in_target.Offset(-region->rect.x(), -region->rect.y());
   while (child_region < child_region_end) {
     if (FindTargetInRegionForLocation(event_source, location_in_target,
-                                      child_region, target)) {
+                                      child_region, target, print_details)) {
       return true;
     }
 
