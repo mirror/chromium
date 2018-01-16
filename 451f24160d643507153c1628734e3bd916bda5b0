@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75959848_2c5dfb36",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-16T21:53:04Z",
+      "side": 1,
+      "message": "Maybe split this out into a separate function? (e.g. https://chromium-review.googlesource.com/c/chromium/src/+/867653/1/content/browser/renderer_host/render_widget_targeter.cc#25)",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6b90d1_b264abce",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-16T21:53:04Z",
+      "side": 1,
+      "message": "I think this is the right thing to do, but if it\u0027s breaking tests, maybe we can look at this particular fix separately? Also, what would be a good test-case for catching this error?",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684bf7a1_06556a43",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-16T21:53:04Z",
+      "side": 1,
+      "message": "Would it be simpler to just directly use a OneShotTimer here?",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae9fa82_f5dfb9e2",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-16T21:53:04Z",
+      "side": 1,
+      "message": "(Just nullptr might work.)",
+      "revId": "451f24160d643507153c1628734e3bd916bda5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
