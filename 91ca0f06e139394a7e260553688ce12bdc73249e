@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d419b4_8551a2ab",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-16T20:06:24Z",
+      "side": 1,
+      "message": "Is this required to avoid a warning?  If not, I\u0027d leave it out.\n\nIf it is, I\u0027m weakly inclined to remove the code post-switch and add a default case in here instead, but that admittedly will downgrade from \"compile-time warning\" to \"runtime warning\" anyone in the future adding a state and forgetting to put it here.",
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
