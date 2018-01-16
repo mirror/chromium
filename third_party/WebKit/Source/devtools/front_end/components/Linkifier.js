@@ -563,6 +563,19 @@ Components.Linkifier = class {
         title: Common.UIString('Open in Sources panel'),
         handler: () => Common.Revealer.reveal(uiLocation)
       });
+
+      if (Bindings.blackboxManager.canBlackboxUISourceCode(uiLocation.uiSourceCode)) {
+        var title;
+        var handler;
+        if (Bindings.blackboxManager.isBlackboxedUISourceCode(uiLocation.uiSourceCode)) {
+          title = Common.UIString('Unblackbox script');
+          handler = () => Bindings.blackboxManager.unblackboxUISourceCode(uiLocation.uiSourceCode);
+        } else {
+          title = Common.UIString('Blackbox script');
+          handler = () => Bindings.blackboxManager.blackboxUISourceCode(uiLocation.uiSourceCode);
+        }
+        result.push({section: 'blackbox', title: title, handler: handler});
+      }
     }
 
     if (resource) {
