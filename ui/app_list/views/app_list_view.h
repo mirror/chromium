@@ -239,9 +239,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Initializes the widget for fullscreen mode.
   void InitializeFullscreen(gfx::NativeView parent, int parent_container_id);
 
-  // Initializes the widget as a bubble.
-  void InitializeBubble();
-
   // Closes the AppListView when a click or tap event propogates to the
   // AppListView.
   void HandleClickOrTap(ui::LocatedEvent* event);
@@ -369,8 +366,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // The velocity of the gesture event.
   float last_fling_velocity_ = 0;
-  // Whether the fullscreen app list feature is enabled.
-  const bool is_fullscreen_app_list_enabled_;
   // Whether the background blur is enabled.
   const bool is_background_blur_enabled_;
   // The state of the app list, controlled via SetState().
