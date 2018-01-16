@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "834633fb_b70c115a",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-16T16:24:47Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t inline it but allowed null to be passed in for inputmode checks. WDYT?",
+      "parentUuid": "c9295084_b002af36",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "ad96df199beaa397d639bf7ff4888d20431b06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba2b782_3eb72196",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ad96df199beaa397d639bf7ff4888d20431b06fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd65c7d_5c5c237f",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-16T16:24:47Z",
+      "side": 1,
+      "message": "Done (I wonder if your DOMUtils.focusNode (should call focus with scrollIntoView FocusOptions to help remove that issue)",
+      "parentUuid": "eba2b782_3eb72196",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 61
+      },
+      "revId": "ad96df199beaa397d639bf7ff4888d20431b06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
