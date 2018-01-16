@@ -2937,4 +2937,12 @@ void RenderWidgetHostImpl::OnRenderFrameMetadata(
   last_render_frame_metadata_ = metadata;
 }
 
+void RenderWidgetHostImpl::ClearStaleGraphics() {
+  if (new_content_rendering_timeout_ &&
+      new_content_rendering_timeout_->IsRunning()) {
+    new_content_rendering_timeout_->Stop();
+    ClearDisplayedGraphics();
+  }
+}
+
 }  // namespace content

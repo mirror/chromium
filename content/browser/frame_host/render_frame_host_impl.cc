@@ -2708,6 +2708,11 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  if (GetView()) {
+    RenderWidgetHostImpl::From(GetView()->GetRenderWidgetHost())
+        ->ClearStaleGraphics();
+  }
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {

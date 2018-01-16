@@ -637,6 +637,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void ProgressFling(base::TimeTicks current_time);
   void StopFling();
 
+  // Clears the page if it contains graphics that were generated before
+  // navigation.
+  void ClearStaleGraphics();
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
