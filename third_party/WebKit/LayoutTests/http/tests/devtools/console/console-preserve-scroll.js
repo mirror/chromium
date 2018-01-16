@@ -52,6 +52,18 @@
       await TestRunner.showPanel('console');
       dumpScrollTop();
       next();
+    },
+
+    async function testCloseDrawerFromConsolePanelAndOpenFromAnotherPanel(next) {
+      TestRunner.addSniffer(UI.SplitWidget.prototype, '_showFinishedForTest', async () => {
+        await TestRunner.showPanel('sources');
+        await showDrawerPromise();
+        TestRunner.addResult('Drawer panel set to ' + UI.inspectorView._drawerTabbedPane._currentTab.id);
+        dumpScrollTop();
+        next();
+      });
+      // Close the drawer with animation.
+      UI.inspectorView._drawerSplitWidget.hideSidebar(true /* animate */);
     }
   ]);
 
