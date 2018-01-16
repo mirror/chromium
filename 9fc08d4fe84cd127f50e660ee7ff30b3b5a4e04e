@@ -16,6 +16,24 @@
       "revId": "9fc08d4fe84cd127f50e660ee7ff30b3b5a4e04e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e60daeb_1c6744bc",
+        "filename": "components/language/content/browser/language_code_locator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2018-01-16T23:34:22Z",
+      "side": 1,
+      "message": "you\u0027re right! thanks",
+      "parentUuid": "53af913d_7abcdf76",
+      "revId": "9fc08d4fe84cd127f50e660ee7ff30b3b5a4e04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
