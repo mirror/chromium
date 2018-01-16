@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ec633c_1c99150b",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/hit-test-counts-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-16T16:38:52Z",
+      "side": 1,
+      "message": "It is odd that these are increasing by 2. Is it because of eviction from the cache now?\n\nWhat happens if the cache size is set to 3?",
+      "revId": "942381dd70bf866edcff610c4da637a4eb35c91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
