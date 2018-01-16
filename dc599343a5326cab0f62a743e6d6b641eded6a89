@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52505e77_3fc0fd33",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-16T23:34:47Z",
+      "side": 1,
+      "message": "nit: I think this can be removed",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 77
+      },
+      "revId": "dc599343a5326cab0f62a743e6d6b641eded6a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002fce07_c7bb3776",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-16T23:34:47Z",
+      "side": 1,
+      "message": "How about something like (feel free to reword a little):\nThe ration between the display\u0027s current and default zoom.\nFor example, value 1 is equivalent to 100% zoom, and value 1.5 is equivalent to 150% zoom.",
+      "range": {
+        "startLine": 186,
+        "startChar": 38,
+        "endLine": 186,
+        "endChar": 39
+      },
+      "revId": "dc599343a5326cab0f62a743e6d6b641eded6a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
