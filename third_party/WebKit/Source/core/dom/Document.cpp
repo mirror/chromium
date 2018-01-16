@@ -739,20 +739,6 @@ Document::~Document() {
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
 }
 
-Range* Document::CreateRangeAdjustedToTreeScope(const TreeScope& tree_scope,
-                                                const Position& position) {
-  DCHECK(position.IsNotNull());
-  // Note: Since |Position::ComputeContainerNode()| returns |nullptr| if
-  // |position| is |BeforeAnchor| or |AfterAnchor|.
-  Node* const anchor_node = position.AnchorNode();
-  if (anchor_node->GetTreeScope() == tree_scope)
-    return Range::Create(tree_scope.GetDocument(), position, position);
-  Node* const shadow_host = tree_scope.AncestorInThisScope(anchor_node);
-  return Range::Create(tree_scope.GetDocument(),
-                       Position::BeforeNode(*shadow_host),
-                       Position::BeforeNode(*shadow_host));
-}
-
 SelectorQueryCache& Document::GetSelectorQueryCache() {
   if (!selector_query_cache_)
     selector_query_cache_ = std::make_unique<SelectorQueryCache>();
@@ -1583,7 +1569,7 @@ Range* Document::caretRangeFromPoint(int x, int y) {
 
   Position range_compliant_position =
       position_with_affinity.GetPosition().ParentAnchoredEquivalent();
-  return CreateRangeAdjustedToTreeScope(*this, range_compliant_position);
+  return Range::CreateAdjustedToTreeScope(*this, range_compliant_position);
 }
 
 Element* Document::scrollingElement() {
@@ -3941,10 +3927,11 @@ void Document::DidRemoveAllPendingBodyStylesheets() {
 void Document::DidLoadAllScriptBlockingResources() {
   // Use wrapWeakPersistent because the task should not keep this Document alive
   // just for executing scripts.
-  execute_scripts_waiting_for_resources_task_handle_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kNetworking), FROM_HERE,
-      WTF::Bind(&Document::ExecuteScriptsWaitingForResources,
-                WrapWeakPersistent(this)));
+  execute_scripts_waiting_for_resources_task_handle_ =
+      GetTaskRunner(TaskType::kNetworking)
+          ->PostCancellableTask(
+              FROM_HERE, WTF::Bind(&Document::ExecuteScriptsWaitingForResources,
+                                   WrapWeakPersistent(this)));
 
   if (IsHTMLDocument() && body()) {
     // For HTML if we have no more stylesheets to load and we're past the body
@@ -4908,10 +4895,12 @@ void Document::SendSensitiveInputVisibility() {
   if (sensitive_input_visibility_task_.IsActive())
     return;
 
-  sensitive_input_visibility_task_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kUnspecedLoading), FROM_HERE,
-      WTF::Bind(&Document::SendSensitiveInputVisibilityInternal,
-                WrapWeakPersistent(this)));
+  sensitive_input_visibility_task_ =
+      GetTaskRunner(TaskType::kUnspecedLoading)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&Document::SendSensitiveInputVisibilityInternal,
+                        WrapWeakPersistent(this)));
 }
 
 void Document::SendSensitiveInputVisibilityInternal() {
@@ -5387,7 +5376,7 @@ enum QualifiedNameStatus {
 struct ParseQualifiedNameResult {
   QualifiedNameStatus status;
   UChar32 character;
-  ParseQualifiedNameResult() = default;
+  ParseQualifiedNameResult() {}
   explicit ParseQualifiedNameResult(QualifiedNameStatus status)
       : status(status) {}
   ParseQualifiedNameResult(QualifiedNameStatus status, UChar32 character)
@@ -7190,10 +7179,11 @@ void Document::MaybeQueueSendDidEditFieldInInsecureContext() {
     return;
   }
   logged_field_edit_ = true;
-  sensitive_input_edited_task_ = PostCancellableTask(
-      *GetTaskRunner(TaskType::kUserInteraction), FROM_HERE,
-      WTF::Bind(&Document::SendDidEditFieldInInsecureContext,
-                WrapWeakPersistent(this)));
+  sensitive_input_edited_task_ =
+      GetTaskRunner(TaskType::kUserInteraction)
+          ->PostCancellableTask(
+              FROM_HERE, WTF::Bind(&Document::SendDidEditFieldInInsecureContext,
+                                   WrapWeakPersistent(this)));
 }
 
 CoreProbeSink* Document::GetProbeSink() {

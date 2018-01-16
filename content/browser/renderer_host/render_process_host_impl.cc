@@ -227,6 +227,7 @@
 #if defined(OS_WIN)
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/windows_version.h"
+#include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/display/win/dpi.h"
@@ -247,10 +248,6 @@
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/browser/plugin_service_impl.h"
 #include "ppapi/shared_impl/ppapi_switches.h"  // nogncheck
-#endif
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "content/browser/media/key_system_support_impl.h"
 #endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -1776,6 +1773,8 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       base::WrapRefCounted(storage_partition_impl_->GetFileSystemContext())));
 #if defined(OS_MACOSX)
   AddFilter(new TextInputClientMessageFilter());
+#elif defined(OS_WIN)
+  AddFilter(new DWriteFontProxyMessageFilter());
 #endif
 
   scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
@@ -1971,10 +1970,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&BlobRegistryWrapper::Bind,
                    storage_partition_impl_->GetBlobRegistry(), GetID()));
   }
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  registry->AddInterface(base::BindRepeating(&KeySystemSupportImpl::Create));
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);
@@ -2622,6 +2617,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kForceVideoOverlays,
     switches::kFullMemoryCrashReport,
     switches::kIPCConnectionTimeout,
+    switches::kIsolateOrigins,
     switches::kJavaScriptFlags,
     switches::kLoggingLevel,
     switches::kMainFrameResizesAreOrientationChanges,
@@ -2675,7 +2671,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsHideThreshold,
     cc::switches::kBrowserControlsShowThreshold,
     cc::switches::kRunAllCompositorStagesBeforeDraw,
-    switches::kDisableSurfaceReferences,
+    switches::kEnableSurfaceReferences,
     switches::kEnableSurfaceSynchronization,
     switches::kEnableViz,
 

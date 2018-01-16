@@ -74,8 +74,6 @@ constexpr char kCrxCacheDir[] = "kiosk/crx";
 // its signature.
 constexpr char kCrxUnpackDir[] = "kiosk_unpack";
 
-KioskAppManager::Overrides* g_test_overrides = nullptr;
-
 std::string GenerateKioskAppAccountId(const std::string& app_id) {
   return app_id + '@' + kKioskAppAccountDomain;
 }
@@ -163,21 +161,12 @@ scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() {
 
 std::unique_ptr<ExternalCache> CreateExternalCache(
     ExternalCacheDelegate* delegate) {
-  if (g_test_overrides)
-    return g_test_overrides->CreateExternalCache(delegate, true);
-
   auto cache = std::make_unique<ExternalCacheImpl>(
       GetCrxCacheDir(), g_browser_process->system_request_context(),
       GetBackgroundTaskRunner(), delegate, true /* always_check_updates */,
       false /* wait_for_cache_initialization */);
   cache->set_flush_on_put(true);
   return cache;
-}
-
-std::unique_ptr<AppSession> CreateAppSession() {
-  if (g_test_overrides)
-    return g_test_overrides->CreateAppSession();
-  return std::make_unique<AppSession>();
 }
 
 base::Version GetPlatformVersion() {
@@ -213,19 +202,11 @@ KioskAppManager* KioskAppManager::Get() {
 }
 
 // static
-void KioskAppManager::InitializeForTesting(Overrides* overrides) {
-  DCHECK(!instance.IsCreated());
-  g_test_overrides = overrides;
-}
-
-// static
 void KioskAppManager::Shutdown() {
   if (!instance.IsCreated())
     return;
 
   instance.Pointer()->CleanUp();
-
-  g_test_overrides = nullptr;
 }
 
 // static
@@ -314,9 +295,8 @@ void KioskAppManager::InitSession(Profile* profile,
         flags);
   }
 
-  app_session_ = CreateAppSession();
-  if (app_session_)
-    app_session_->Init(profile, app_id);
+  app_session_.reset(new AppSession);
+  app_session_->Init(profile, app_id);
 }
 
 bool KioskAppManager::GetSwitchesForSessionRestore(
@@ -654,69 +634,57 @@ void KioskAppManager::RemoveObserver(KioskAppManagerObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void KioskAppManager::UpdatePrimaryAppLoaderPrefs(const std::string& id) {
-  primary_app_id_ = id;
+extensions::ExternalLoader* KioskAppManager::CreateExternalLoader() {
+  if (external_loader_created_) {
+    NOTREACHED();
+    return nullptr;
+  }
+  external_loader_created_ = true;
+  KioskAppExternalLoader* loader = new KioskAppExternalLoader();
+  external_loader_ = loader->AsWeakPtr();
 
-  if (primary_app_changed_handler_)
-    primary_app_changed_handler_.Run();
+  return loader;
 }
 
-std::unique_ptr<base::DictionaryValue>
-KioskAppManager::GetPrimaryAppLoaderPrefs() {
-  if (!primary_app_id_.has_value())
+extensions::ExternalLoader*
+KioskAppManager::CreateSecondaryAppExternalLoader() {
+  if (secondary_app_external_loader_created_) {
+    NOTREACHED();
     return nullptr;
+  }
+  secondary_app_external_loader_created_ = true;
+  KioskAppExternalLoader* secondary_loader = new KioskAppExternalLoader();
+  secondary_app_external_loader_ = secondary_loader->AsWeakPtr();
 
-  const std::string& id = primary_app_id_.value();
-  auto prefs = std::make_unique<base::DictionaryValue>();
+  return secondary_loader;
+}
 
+void KioskAppManager::InstallFromCache(const std::string& id) {
   const base::DictionaryValue* extension = nullptr;
   if (external_cache_->GetCachedExtensions()->GetDictionary(id, &extension)) {
-    prefs->SetKey(id, extension->Clone());
+    std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
+    prefs->Set(id, extension->CreateDeepCopy());
+    external_loader_->SetCurrentAppExtensions(std::move(prefs));
   } else {
     LOG(ERROR) << "Can't find app in the cached externsions"
                << " id = " << id;
   }
-  return prefs;
 }
 
-void KioskAppManager::SetPrimaryAppLoaderPrefsChangedHandler(
-    base::RepeatingClosure handler) {
-  CHECK(handler.is_null() || primary_app_changed_handler_.is_null());
-
-  primary_app_changed_handler_ = std::move(handler);
-}
-
-void KioskAppManager::UpdateSecondaryAppsLoaderPrefs(
+void KioskAppManager::InstallSecondaryApps(
     const std::vector<std::string>& ids) {
-  secondary_app_ids_ = ids;
-
-  if (secondary_apps_changed_handler_)
-    secondary_apps_changed_handler_.Run();
-}
-
-std::unique_ptr<base::DictionaryValue>
-KioskAppManager::GetSecondaryAppsLoaderPrefs() {
-  if (!secondary_app_ids_.has_value())
-    return nullptr;
-
-  auto prefs = std::make_unique<base::DictionaryValue>();
-  for (const std::string& id : secondary_app_ids_.value()) {
-    base::Value extension_entry(base::Value::Type::DICTIONARY);
-    extension_entry.SetKey(
+  std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
+  for (const std::string& id : ids) {
+    std::unique_ptr<base::DictionaryValue> extension_entry(
+        new base::DictionaryValue);
+    extension_entry->SetKey(
         extensions::ExternalProviderImpl::kExternalUpdateUrl,
         base::Value(extension_urls::GetWebstoreUpdateUrl().spec()));
-    extension_entry.SetKey(extensions::ExternalProviderImpl::kIsFromWebstore,
-                           base::Value(true));
-    prefs->SetKey(id, std::move(extension_entry));
+    extension_entry->SetBoolean(
+        extensions::ExternalProviderImpl::kIsFromWebstore, true);
+    prefs->Set(id, std::move(extension_entry));
   }
-  return prefs;
-}
-
-void KioskAppManager::SetSecondaryAppsLoaderPrefsChangedHandler(
-    base::RepeatingClosure handler) {
-  CHECK(handler.is_null() || secondary_apps_changed_handler_.is_null());
-
-  secondary_apps_changed_handler_ = std::move(handler);
+  secondary_app_external_loader_->SetCurrentAppExtensions(std::move(prefs));
 }
 
 void KioskAppManager::UpdateExternalCache() {
@@ -788,7 +756,10 @@ bool KioskAppManager::IsPlatformCompliantWithApp(
   return IsPlatformCompliant(info->required_platform_version);
 }
 
-KioskAppManager::KioskAppManager() {
+KioskAppManager::KioskAppManager()
+    : ownership_established_(false),
+      external_loader_created_(false),
+      secondary_app_external_loader_created_(false) {
   external_cache_ = CreateExternalCache(this);
 
   UpdateAppData();
@@ -815,8 +786,6 @@ void KioskAppManager::CleanUp() {
   apps_.clear();
   usb_stick_updater_.reset();
   external_cache_.reset();
-  primary_app_id_.reset();
-  secondary_app_ids_.reset();
 }
 
 const KioskAppData* KioskAppManager::GetAppData(

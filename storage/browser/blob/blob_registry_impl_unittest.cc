@@ -16,7 +16,6 @@
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_storage_context.h"
-#include "storage/browser/test/mock_blob_registry_delegate.h"
 #include "storage/browser/test/mock_bytes_provider.h"
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -63,6 +62,24 @@ class MockBlob : public blink::mojom::Blob {
   std::string uuid_;
 };
 
+class MockDelegate : public BlobRegistryImpl::Delegate {
+ public:
+  MockDelegate() = default;
+  ~MockDelegate() override = default;
+
+  bool CanReadFile(const base::FilePath& file) override {
+    return can_read_file_result;
+  }
+  bool CanReadFileSystemFile(const FileSystemURL& url) override {
+    return can_read_file_system_file_result;
+  }
+  bool CanCommitURL(const GURL& url) override { return can_commit_url_result; }
+
+  bool can_read_file_result = true;
+  bool can_read_file_system_file_result = true;
+  bool can_commit_url_result = true;
+};
+
 void BindBytesProvider(std::unique_ptr<MockBytesProvider> impl,
                        blink::mojom::BytesProviderRequest request) {
   mojo::MakeStrongBinding(std::move(impl), std::move(request));
@@ -90,7 +107,7 @@ class BlobRegistryImplTest : public testing::Test {
                           std::vector<std::string>(), nullptr));
     registry_impl_ = base::MakeUnique<BlobRegistryImpl>(context_->AsWeakPtr(),
                                                         file_system_context_);
-    auto delegate = base::MakeUnique<MockBlobRegistryDelegate>();
+    auto delegate = base::MakeUnique<MockDelegate>();
     delegate_ptr_ = delegate.get();
     registry_impl_->Bind(MakeRequest(&registry_), std::move(delegate));
 
@@ -188,6 +205,23 @@ class BlobRegistryImplTest : public testing::Test {
     return registry_impl_->BlobsUnderConstructionForTesting();
   }
 
+  void RegisterURL(blink::mojom::BlobPtr blob,
+                   const GURL& url,
+                   blink::mojom::BlobURLHandlePtr* url_handle_out) {
+    base::RunLoop loop;
+    registry_->RegisterURL(
+        std::move(blob), url,
+        base::Bind(
+            [](base::Closure quit_closure,
+               blink::mojom::BlobURLHandlePtr* url_handle_out,
+               blink::mojom::BlobURLHandlePtr url_handle) {
+              *url_handle_out = std::move(url_handle);
+              quit_closure.Run();
+            },
+            loop.QuitClosure(), url_handle_out));
+    loop.Run();
+  }
+
  protected:
   base::ScopedTempDir data_dir_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
@@ -195,7 +229,7 @@ class BlobRegistryImplTest : public testing::Test {
   scoped_refptr<storage::FileSystemContext> file_system_context_;
   std::unique_ptr<BlobRegistryImpl> registry_impl_;
   blink::mojom::BlobRegistryPtr registry_;
-  MockBlobRegistryDelegate* delegate_ptr_;
+  MockDelegate* delegate_ptr_;
   scoped_refptr<base::SequencedTaskRunner> bytes_provider_runner_;
 
   size_t reply_request_count_ = 0;
@@ -507,8 +541,7 @@ TEST_F(BlobRegistryImplTest, Register_UnreadableFile) {
   WaitForBlobCompletion(handle.get());
 
   EXPECT_TRUE(handle->IsBroken());
-  EXPECT_EQ(BlobStatus::ERR_REFERENCED_FILE_UNAVAILABLE,
-            handle->GetBlobStatus());
+  EXPECT_EQ(BlobStatus::ERR_FILE_WRITE_FAILED, handle->GetBlobStatus());
   EXPECT_EQ(0u, BlobsUnderConstruction());
 }
 
@@ -557,8 +590,7 @@ TEST_F(BlobRegistryImplTest, Register_FileSystemFile_InvalidScheme) {
   WaitForBlobCompletion(handle.get());
 
   EXPECT_TRUE(handle->IsBroken());
-  EXPECT_EQ(BlobStatus::ERR_REFERENCED_FILE_UNAVAILABLE,
-            handle->GetBlobStatus());
+  EXPECT_EQ(BlobStatus::ERR_FILE_WRITE_FAILED, handle->GetBlobStatus());
   EXPECT_EQ(0u, BlobsUnderConstruction());
 }
 
@@ -581,8 +613,7 @@ TEST_F(BlobRegistryImplTest, Register_FileSystemFile_UnreadablFile) {
   WaitForBlobCompletion(handle.get());
 
   EXPECT_TRUE(handle->IsBroken());
-  EXPECT_EQ(BlobStatus::ERR_REFERENCED_FILE_UNAVAILABLE,
-            handle->GetBlobStatus());
+  EXPECT_EQ(BlobStatus::ERR_FILE_WRITE_FAILED, handle->GetBlobStatus());
   EXPECT_EQ(0u, BlobsUnderConstruction());
 }
 
@@ -837,7 +868,7 @@ TEST_F(BlobRegistryImplTest, Register_ValidBytesAsFile) {
   EXPECT_EQ(expected_file_count, snapshot->items().size());
   size_t remaining_size = kData.size();
   for (const auto& item : snapshot->items()) {
-    EXPECT_EQ(network::DataElement::TYPE_FILE, item->type());
+    EXPECT_EQ(DataElement::TYPE_FILE, item->type());
     EXPECT_EQ(0u, item->offset());
     if (remaining_size > kTestBlobStorageMaxFileSizeBytes)
       EXPECT_EQ(kTestBlobStorageMaxFileSizeBytes, item->length());
@@ -982,6 +1013,44 @@ TEST_F(BlobRegistryImplTest,
   scoped_task_environment_.RunUntilIdle();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, BlobsUnderConstruction());
+}
+
+TEST_F(BlobRegistryImplTest, PublicBlobUrls) {
+  const std::string kId = "id";
+  std::unique_ptr<BlobDataHandle> handle =
+      CreateBlobFromString(kId, "hello world");
+
+  blink::mojom::BlobPtr blob;
+  registry_->GetBlobFromUUID(MakeRequest(&blob), kId);
+  EXPECT_EQ(kId, UUIDFromBlob(blob.get()));
+  EXPECT_FALSE(blob.encountered_error());
+
+  // Now register a url for that blob.
+  const GURL kUrl("blob:id");
+  blink::mojom::BlobURLHandlePtr url_handle;
+  RegisterURL(std::move(blob), kUrl, &url_handle);
+
+  std::unique_ptr<BlobDataHandle> blob_data_handle =
+      context_->GetBlobDataFromPublicURL(kUrl);
+  ASSERT_TRUE(blob_data_handle.get());
+  EXPECT_EQ(kId, blob_data_handle->uuid());
+
+  handle.reset();
+  base::RunLoop().RunUntilIdle();
+
+  // The url registration should keep the blob alive even after
+  // explicit references are dropped.
+  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
+  EXPECT_TRUE(blob_data_handle);
+  blob_data_handle.reset();
+
+  // Finally drop the URL handle.
+  url_handle.reset();
+  base::RunLoop().RunUntilIdle();
+
+  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
+  EXPECT_FALSE(blob_data_handle.get());
+  EXPECT_FALSE(context_->registry().HasEntry(kId));
 }
 
 }  // namespace storage

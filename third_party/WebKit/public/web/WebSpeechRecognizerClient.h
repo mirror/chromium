@@ -97,7 +97,7 @@ class WebSpeechRecognizerClient {
   virtual void DidEnd(const WebSpeechRecognitionHandle&) = 0;
 
  protected:
-  virtual ~WebSpeechRecognizerClient() = default;
+  virtual ~WebSpeechRecognizerClient() {}
 };
 
 }  // namespace blink

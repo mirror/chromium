@@ -30,8 +30,7 @@ ScrollAnimatorCompositorCoordinator::ScrollAnimatorCompositorCoordinator()
   compositor_player_->SetAnimationDelegate(this);
 }
 
-ScrollAnimatorCompositorCoordinator::~ScrollAnimatorCompositorCoordinator() =
-    default;
+ScrollAnimatorCompositorCoordinator::~ScrollAnimatorCompositorCoordinator() {}
 
 void ScrollAnimatorCompositorCoordinator::Dispose() {
   compositor_player_->SetAnimationDelegate(nullptr);

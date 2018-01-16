@@ -105,7 +105,7 @@ FrameSelection::FrameSelection(LocalFrame& frame)
                frame.GetPage()->GetFocusController().FocusedFrame() == frame),
       frame_caret_(new FrameCaret(frame, *selection_editor_)) {}
 
-FrameSelection::~FrameSelection() = default;
+FrameSelection::~FrameSelection() {}
 
 const DisplayItemClient& FrameSelection::CaretDisplayItemClientForTesting()
     const {
@@ -134,6 +134,18 @@ Element* FrameSelection::RootEditableElementOrDocumentElement() const {
   Element* selection_root =
       ComputeVisibleSelectionInDOMTreeDeprecated().RootEditableElement();
   return selection_root ? selection_root : GetDocument().documentElement();
+}
+
+// TODO(yosin): We should move |rootEditableElementOrTreeScopeRootNodeOf()| to
+// "EditingUtilities.cpp"
+ContainerNode* RootEditableElementOrTreeScopeRootNodeOf(
+    const Position& position) {
+  Element* selection_root = RootEditableElementOf(position);
+  if (selection_root)
+    return selection_root;
+
+  Node* const node = position.ComputeContainerNode();
+  return node ? &node->GetTreeScope().RootNode() : nullptr;
 }
 
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated()

@@ -10,9 +10,7 @@
 #include "chromeos/components/tether/fake_active_host.h"
 #include "chromeos/components/tether/fake_disconnect_tethering_request_sender.h"
 #include "chromeos/components/tether/fake_tether_connector.h"
-#include "chromeos/components/tether/fake_tether_session_completion_logger.h"
 #include "chromeos/components/tether/fake_wifi_hotspot_disconnector.h"
-#include "chromeos/components/tether/tether_session_completion_logger.h"
 #include "components/cryptauth/remote_device.h"
 #include "components/cryptauth/remote_device_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -43,14 +41,11 @@ class TetherDisconnectorImplTest : public testing::Test {
     fake_tether_connector_ = std::make_unique<FakeTetherConnector>();
     device_id_tether_network_guid_map_ =
         std::make_unique<DeviceIdTetherNetworkGuidMap>();
-    fake_tether_session_completion_logger_ =
-        std::make_unique<FakeTetherSessionCompletionLogger>();
 
     tether_disconnector_ = std::make_unique<TetherDisconnectorImpl>(
         fake_active_host_.get(), fake_wifi_hotspot_disconnector_.get(),
         fake_disconnect_tethering_request_sender_.get(),
-        fake_tether_connector_.get(), device_id_tether_network_guid_map_.get(),
-        fake_tether_session_completion_logger_.get());
+        fake_tether_connector_.get(), device_id_tether_network_guid_map_.get());
   }
 
   std::string GetTetherNetworkGuid(const std::string& device_id) {
@@ -64,17 +59,13 @@ class TetherDisconnectorImplTest : public testing::Test {
     disconnection_result_ = error_name;
   }
 
-  void CallDisconnect(
-      const std::string& tether_network_guid,
-      const TetherSessionCompletionLogger::SessionCompletionReason&
-          session_completion_reason) {
+  void CallDisconnect(const std::string& tether_network_guid) {
     tether_disconnector_->DisconnectFromNetwork(
         tether_network_guid,
         base::Bind(&TetherDisconnectorImplTest::SuccessCallback,
                    base::Unretained(this)),
         base::Bind(&TetherDisconnectorImplTest::ErrorCallback,
-                   base::Unretained(this)),
-        session_completion_reason);
+                   base::Unretained(this)));
   }
 
   std::string GetResultAndReset() {
@@ -94,19 +85,6 @@ class TetherDisconnectorImplTest : public testing::Test {
             .empty());
   }
 
-  void VerifySessionCompletionReasonRecorded(
-      TetherSessionCompletionLogger::SessionCompletionReason
-          expected_session_completion_reason) {
-    EXPECT_EQ(expected_session_completion_reason,
-              *fake_tether_session_completion_logger_
-                   ->last_session_completion_reason());
-  }
-
-  void VerifySessionCompletionReasonNotRecorded() {
-    EXPECT_FALSE(fake_tether_session_completion_logger_
-                     ->last_session_completion_reason());
-  }
-
   const std::vector<cryptauth::RemoteDevice> test_devices_;
 
   std::unique_ptr<FakeActiveHost> fake_active_host_;
@@ -117,8 +95,6 @@ class TetherDisconnectorImplTest : public testing::Test {
   // TODO(hansberry): Use a fake for this when a real mapping scheme is created.
   std::unique_ptr<DeviceIdTetherNetworkGuidMap>
       device_id_tether_network_guid_map_;
-  std::unique_ptr<FakeTetherSessionCompletionLogger>
-      fake_tether_session_completion_logger_;
 
   std::string disconnection_result_;
 
@@ -129,13 +105,10 @@ class TetherDisconnectorImplTest : public testing::Test {
 };
 
 TEST_F(TetherDisconnectorImplTest, DisconnectWhenAlreadyDisconnected) {
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ(NetworkConnectionHandler::kErrorNotConnected, GetResultAndReset());
 
   VerifyNoDisconnectionOccurred();
-  VerifySessionCompletionReasonNotRecorded();
 
   // Should still be disconnected.
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
@@ -151,13 +124,10 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenOtherDeviceConnected) {
 
   // Try to disconnect device 0; this should fail since the device is not
   // connected.
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ(NetworkConnectionHandler::kErrorNotConnected, GetResultAndReset());
 
   VerifyNoDisconnectionOccurred();
-  VerifySessionCompletionReasonNotRecorded();
 
   // Should still be connected to the other host.
   EXPECT_EQ(ActiveHost::ActiveHostStatus::CONNECTED,
@@ -172,16 +142,13 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnecting_CancelFails) {
       GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   fake_tether_connector_->set_should_cancel_successfully(false);
 
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ(NetworkConnectionHandler::kErrorDisconnectFailed,
             GetResultAndReset());
   EXPECT_EQ(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
             fake_tether_connector_->last_canceled_tether_network_guid());
 
   VerifyNoDisconnectionOccurred();
-  VerifySessionCompletionReasonNotRecorded();
 
   // Note: This test does not check the active host's status because it will be
   // changed by TetherConnector.
@@ -193,15 +160,12 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnecting_CancelSucceeds) {
       GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   fake_tether_connector_->set_should_cancel_successfully(true);
 
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
   EXPECT_EQ(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
             fake_tether_connector_->last_canceled_tether_network_guid());
 
   VerifyNoDisconnectionOccurred();
-  VerifySessionCompletionReasonNotRecorded();
 
   // Note: This test does not check the active host's status because it will be
   // changed by TetherConnector.
@@ -213,9 +177,7 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnected_Failure) {
       GetTetherNetworkGuid(test_devices_[0].GetDeviceId()), kWifiNetworkGuid);
   fake_wifi_hotspot_disconnector_->set_disconnection_error_name("failureName");
 
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ("failureName", GetResultAndReset());
 
   EXPECT_EQ(
@@ -226,10 +188,6 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnected_Failure) {
       fake_disconnect_tethering_request_sender_->device_ids_sent_requests());
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
             fake_active_host_->GetActiveHostStatus());
-
-  VerifySessionCompletionReasonRecorded(
-      TetherSessionCompletionLogger::SessionCompletionReason::
-          USER_DISCONNECTED);
 }
 
 TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnected_Success) {
@@ -237,9 +195,7 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnected_Success) {
       test_devices_[0].GetDeviceId(),
       GetTetherNetworkGuid(test_devices_[0].GetDeviceId()), kWifiNetworkGuid);
 
-  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()),
-                 TetherSessionCompletionLogger::SessionCompletionReason::
-                     USER_DISCONNECTED);
+  CallDisconnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
 
   EXPECT_EQ(
@@ -250,10 +206,6 @@ TEST_F(TetherDisconnectorImplTest, DisconnectWhenConnected_Success) {
       fake_disconnect_tethering_request_sender_->device_ids_sent_requests());
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
             fake_active_host_->GetActiveHostStatus());
-
-  VerifySessionCompletionReasonRecorded(
-      TetherSessionCompletionLogger::SessionCompletionReason::
-          USER_DISCONNECTED);
 }
 
 }  // namespace tether

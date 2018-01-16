@@ -11,10 +11,10 @@
  * times.
  */
 
-const HOURS_PER_DAY = 24;
-const MIN_KNOBS_DISTANCE_MINUTES = 60;
-const OFFSET_MINUTES_6PM = 18 * 60;
-const TOTAL_MINUTES_PER_DAY = 24 * 60;
+/** @const */ var HOURS_PER_DAY = 24;
+/** @const */ var MIN_KNOBS_DISTANCE_MINUTES = 60;
+/** @const */ var OFFSET_MINUTES_6PM = 18 * 60;
+/** @const */ var TOTAL_MINUTES_PER_DAY = 24 * 60;
 
 Polymer({
   is: 'night-light-slider',
@@ -72,10 +72,10 @@ Polymer({
   /** @override */
   attached: function() {
     // Build the legend markers.
-    const markersContainer = this.$.markersContainer;
-    const width = markersContainer.offsetWidth;
-    for (let i = 0; i <= HOURS_PER_DAY; ++i) {
-      const marker = document.createElement('div');
+    var markersContainer = this.$.markersContainer;
+    var width = markersContainer.offsetWidth;
+    for (var i = 0; i <= HOURS_PER_DAY; ++i) {
+      var marker = document.createElement('div');
       marker.className = 'markers';
       markersContainer.appendChild(marker);
       marker.style.left = (i * 100 / HOURS_PER_DAY) + '%';
@@ -137,8 +137,8 @@ Polymer({
    * @private
    */
   setExpanded_: function(expand) {
-    let knob = this.$.startKnob;
-    let label = this.$.startLabel;
+    var knob = this.$.startKnob;
+    var label = this.$.startLabel;
     if (this.dragObject_ == this.$.endKnob) {
       knob = this.$.endKnob;
       label = this.$.endLabel;
@@ -153,7 +153,7 @@ Polymer({
    * @private
    */
   blurAnyFocusedKnob_: function() {
-    const activeElement = this.shadowRoot.activeElement;
+    var activeElement = this.shadowRoot.activeElement;
     if (activeElement == this.$.startKnob || activeElement == this.$.endKnob)
       activeElement.blur();
   },
@@ -217,17 +217,16 @@ Polymer({
    * @private
    */
   doKnobTracking_: function(event) {
-    const deltaRatio =
-        Math.abs(event.detail.ddx) / this.$.sliderBar.offsetWidth;
-    const deltaMinutes = Math.floor(deltaRatio * TOTAL_MINUTES_PER_DAY);
+    var deltaRatio = Math.abs(event.detail.ddx) / this.$.sliderBar.offsetWidth;
+    var deltaMinutes = Math.floor(deltaRatio * TOTAL_MINUTES_PER_DAY);
     if (deltaMinutes <= 0)
       return;
 
-    const knobPref = this.dragObject_ == this.$.startKnob ?
+    var knobPref = this.dragObject_ == this.$.startKnob ?
         'ash.night_light.custom_start_time' :
         'ash.night_light.custom_end_time';
 
-    const ddx = this.isRTL_ ? event.detail.ddx * -1 : event.detail.ddx;
+    var ddx = this.isRTL_ ? event.detail.ddx * -1 : event.detail.ddx;
     if (ddx > 0) {
       // Increment the knob's pref by the amount of deltaMinutes.
       this.incrementPref_(knobPref, deltaMinutes);
@@ -268,7 +267,7 @@ Polymer({
    * @private
    */
   getLocaleTimeString_: function(hour, minutes, shouldUse24Hours) {
-    const d = new Date();
+    var d = new Date();
     d.setHours(hour);
     d.setMinutes(minutes);
     d.setSeconds(0);
@@ -288,8 +287,8 @@ Polymer({
    * @private
    */
   getTimeString_: function(offsetMinutes, shouldUse24Hours) {
-    const hour = Math.floor(offsetMinutes / 60);
-    const minute = Math.floor(offsetMinutes % 60);
+    var hour = Math.floor(offsetMinutes / 60);
+    var minute = Math.floor(offsetMinutes % 60);
 
     return this.getLocaleTimeString_(hour, minute, shouldUse24Hours);
   },
@@ -300,10 +299,10 @@ Polymer({
    * @private
    */
   updateKnobs_: function() {
-    const startOffsetMinutes = /** @type {number} */ (
+    var startOffsetMinutes = /** @type {number} */ (
         this.getPref('ash.night_light.custom_start_time').value);
     this.updateKnobLeft_(this.$.startKnob, startOffsetMinutes);
-    const endOffsetMinutes = /** @type {number} */ (
+    var endOffsetMinutes = /** @type {number} */ (
         this.getPref('ash.night_light.custom_end_time').value);
     this.updateKnobLeft_(this.$.endKnob, endOffsetMinutes);
     this.refresh_();
@@ -317,10 +316,10 @@ Polymer({
    * @private
    */
   updateKnobLeft_: function(knob, offsetMinutes) {
-    const offsetAfter6pm =
+    var offsetAfter6pm =
         (offsetMinutes + TOTAL_MINUTES_PER_DAY - OFFSET_MINUTES_6PM) %
         TOTAL_MINUTES_PER_DAY;
-    let ratio = offsetAfter6pm / TOTAL_MINUTES_PER_DAY;
+    var ratio = offsetAfter6pm / TOTAL_MINUTES_PER_DAY;
 
     if (ratio == 0) {
       // If the ratio is 0, then there are two possibilities:
@@ -328,7 +327,7 @@ Polymer({
       // - The knob time is 6:00 PM on the right side of the slider.
       // We need to check the current knob offset ratio to determine which case
       // it is.
-      const currentKnobRatio = this.getKnobRatio_(knob);
+      var currentKnobRatio = this.getKnobRatio_(knob);
       ratio = currentKnobRatio > 0.5 ? 1.0 : 0.0;
     }
     ratio = this.isRTL_ ? (1.0 - ratio) : ratio;
@@ -348,15 +347,15 @@ Polymer({
 
     // In RTL locales, the relative positions of the knobs are flipped for the
     // purpose of calculating the styles of the progress bars below.
-    const rtl = this.isRTL_;
-    const endKnob = rtl ? this.$.startKnob : this.$.endKnob;
-    const startKnob = rtl ? this.$.endKnob : this.$.startKnob;
-    const startProgress = rtl ? this.$.endProgress : this.$.startProgress;
-    const endProgress = rtl ? this.$.startProgress : this.$.endProgress;
+    var rtl = this.isRTL_;
+    var endKnob = rtl ? this.$.startKnob : this.$.endKnob;
+    var startKnob = rtl ? this.$.endKnob : this.$.startKnob;
+    var startProgress = rtl ? this.$.endProgress : this.$.startProgress;
+    var endProgress = rtl ? this.$.startProgress : this.$.endProgress;
 
     // The end progress bar starts from either the start knob or the start of
     // the slider (whichever is to its left) and ends at the end knob.
-    const endProgressLeft = startKnob.offsetLeft >= endKnob.offsetLeft ?
+    var endProgressLeft = startKnob.offsetLeft >= endKnob.offsetLeft ?
         '0px' :
         startKnob.style.left;
     endProgress.style.left = endProgressLeft;
@@ -365,7 +364,7 @@ Polymer({
 
     // The start progress bar starts at the start knob, and ends at either the
     // end knob or the end of the slider (whichever is to its right).
-    const startProgressRight = endKnob.offsetLeft < startKnob.offsetLeft ?
+    var startProgressRight = endKnob.offsetLeft < startKnob.offsetLeft ?
         this.$.sliderBar.offsetWidth :
         endKnob.style.left;
     startProgress.style.left = startKnob.style.left;
@@ -382,9 +381,9 @@ Polymer({
    * @private
    */
   fixLabelsOverlapIfAny_: function() {
-    const startLabel = this.$.startLabel;
-    const endLabel = this.$.endLabel;
-    const distance = Math.abs(
+    var startLabel = this.$.startLabel;
+    var endLabel = this.$.endLabel;
+    var distance = Math.abs(
         parseFloat(startLabel.style.left) - parseFloat(endLabel.style.left));
     // Both knobs have the same width, but the one being dragged is scaled up by
     // 125%.
@@ -421,9 +420,9 @@ Polymer({
    * @private
    */
   incrementPref_: function(prefPath, increment) {
-    let value = this.getPref(prefPath).value + increment;
+    var value = this.getPref(prefPath).value + increment;
 
-    const otherValue = this.getOtherKnobPrefValue_(prefPath);
+    var otherValue = this.getOtherKnobPrefValue_(prefPath);
     if (otherValue > value &&
         ((otherValue - value) < MIN_KNOBS_DISTANCE_MINUTES)) {
       // We are incrementing the minutes offset moving towards the other knob.
@@ -452,10 +451,10 @@ Polymer({
    * @private
    */
   decrementPref_: function(prefPath, decrement) {
-    let value =
+    var value =
         /** @type {number} */ (this.getPref(prefPath).value) - decrement;
 
-    const otherValue = this.getOtherKnobPrefValue_(prefPath);
+    var otherValue = this.getOtherKnobPrefValue_(prefPath);
     if (value > otherValue &&
         ((value - otherValue) < MIN_KNOBS_DISTANCE_MINUTES)) {
       // We are decrementing the minutes offset moving towards the other knob.
@@ -486,7 +485,7 @@ Polymer({
    * @private
    */
   getFocusedKnobPrefPathIfAny_: function() {
-    const focusedElement = this.shadowRoot.activeElement;
+    var focusedElement = this.shadowRoot.activeElement;
     if (focusedElement == this.$.startKnob)
       return 'ash.night_light.custom_start_time';
 
@@ -502,7 +501,7 @@ Polymer({
    */
   onLeftKey_: function(e) {
     e.preventDefault();
-    const knobPref = this.getFocusedKnobPrefPathIfAny_();
+    var knobPref = this.getFocusedKnobPrefPathIfAny_();
     if (!knobPref)
       return;
 
@@ -518,7 +517,7 @@ Polymer({
    */
   onRightKey_: function(e) {
     e.preventDefault();
-    const knobPref = this.getFocusedKnobPrefPathIfAny_();
+    var knobPref = this.getFocusedKnobPrefPathIfAny_();
     if (!knobPref)
       return;
 
@@ -533,7 +532,7 @@ Polymer({
    * @private
    */
   isEitherKnobFocused_: function() {
-    const activeElement = this.shadowRoot.activeElement;
+    var activeElement = this.shadowRoot.activeElement;
     return activeElement == this.$.startKnob || activeElement == this.$.endKnob;
   },
 

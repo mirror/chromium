@@ -52,12 +52,13 @@ class PLATFORM_EXPORT AcceleratedImageBufferSurface
  public:
   AcceleratedImageBufferSurface(const IntSize&,
                                 const CanvasColorParams& = CanvasColorParams());
-  ~AcceleratedImageBufferSurface() override = default;
+  ~AcceleratedImageBufferSurface() override {}
 
   PaintCanvas* Canvas() override { return canvas_.get(); }
   bool IsValid() const override;
   bool IsAccelerated() const override { return true; }
-  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint) override;
+  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
+                                                    SnapshotReason) override;
   GLuint GetBackingTextureHandleForOverwrite();
   bool WritePixels(const SkImageInfo& orig_info,
                    const void* pixels,

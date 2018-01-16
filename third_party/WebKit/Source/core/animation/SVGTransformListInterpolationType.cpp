@@ -17,7 +17,7 @@ namespace blink {
 
 class SVGTransformNonInterpolableValue : public NonInterpolableValue {
  public:
-  ~SVGTransformNonInterpolableValue() override = default;
+  ~SVGTransformNonInterpolableValue() override {}
 
   static scoped_refptr<SVGTransformNonInterpolableValue> Create(
       Vector<SVGTransformType>& transform_types) {

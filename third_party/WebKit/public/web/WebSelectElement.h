@@ -43,7 +43,8 @@ class HTMLSelectElement;
 class WebSelectElement final : public WebFormControlElement {
  public:
   WebSelectElement() : WebFormControlElement() {}
-  WebSelectElement(const WebSelectElement& element) = default;
+  WebSelectElement(const WebSelectElement& element)
+      : WebFormControlElement(element) {}
 
   WebSelectElement& operator=(const WebSelectElement& element) {
     WebFormControlElement::Assign(element);

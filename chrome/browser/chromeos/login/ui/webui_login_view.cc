@@ -22,6 +22,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_webui.h"
@@ -397,10 +398,6 @@ void WebUILoginView::AboutToRequestFocusFromTabTraversal(bool reverse) {
   web_view()->web_contents()->FocusThroughTabTraversal(reverse);
   GetWidget()->Activate();
   web_view()->web_contents()->Focus();
-
-  content::WebUI* web_ui = GetWebUI();
-  if (web_ui)
-    web_ui->CallJavascriptFunctionUnsafe("cr.ui.Oobe.focusReturned");
 }
 
 void WebUILoginView::Observe(int type,

@@ -4,7 +4,6 @@
 
 #include "media/cast/test/utility/in_process_receiver.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/bind_helpers.h"
@@ -99,7 +98,7 @@ void InProcessReceiver::StartOnMainThread() {
   transport_ = CastTransport::Create(
       cast_environment_->Clock(), base::TimeDelta(),
       base::WrapUnique(new InProcessReceiver::TransportClient(this)),
-      std::make_unique<UdpTransport>(
+      base::MakeUnique<UdpTransport>(
           nullptr, cast_environment_->GetTaskRunner(CastEnvironment::MAIN),
           local_end_point_, remote_end_point_,
           base::Bind(&InProcessReceiver::UpdateCastTransportStatus,

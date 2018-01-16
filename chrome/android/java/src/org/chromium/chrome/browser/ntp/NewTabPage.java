@@ -444,7 +444,6 @@ public class NewTabPage
      */
     public void setFakeboxDelegate(FakeboxDelegate fakeboxDelegate) {
         mFakeboxDelegate = fakeboxDelegate;
-        mNewTabPageView.setFakeboxDelegate(fakeboxDelegate);
         if (mFakeboxDelegate != null) {
             mNewTabPageView.updateVoiceSearchButtonVisibility();
 

@@ -139,9 +139,6 @@ class EncodedViewTest : public testing::Test {
 TEST_F(EncodedViewTest, Unlabeled) {
   EncodedView encoded_view(image_index_);
 
-  encoded_view.SetLabels(PoolTag(0), {0, 0, 0, 0}, 1);
-  encoded_view.SetLabels(PoolTag(1), {0, 0}, 1);
-
   std::vector<size_t> expected = {
       0,                                     // raw
       kBaseReferenceProjection + 0 + 0 * 3,  // ref 0
@@ -171,8 +168,9 @@ TEST_F(EncodedViewTest, Unlabeled) {
 TEST_F(EncodedViewTest, Labeled) {
   EncodedView encoded_view(image_index_);
 
-  encoded_view.SetLabels(PoolTag(0), {0, 2, 1, 2}, 3);
-  encoded_view.SetLabels(PoolTag(1), {0, 0}, 1);
+  OrderedLabelManager label_manager0;
+  label_manager0.InsertOffsets({0, 2});
+  image_index_.LabelTargets(PoolTag(0), label_manager0);
 
   std::vector<size_t> expected = {
       0,                                     // raw

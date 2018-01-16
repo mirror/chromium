@@ -45,23 +45,23 @@ CSSValue* StyleGeneratedImage::ComputedCSSValue() const {
   return image_generator_value_->ValueWithURLsMadeAbsolute();
 }
 
-FloatSize StyleGeneratedImage::ImageSize(
+LayoutSize StyleGeneratedImage::ImageSize(
     const Document& document,
     float multiplier,
     const LayoutSize& default_object_size) const {
   if (fixed_size_) {
     FloatSize unzoomed_default_object_size(default_object_size);
     unzoomed_default_object_size.Scale(1 / multiplier);
-    return ApplyZoom(FloatSize(image_generator_value_->FixedSize(
+    return ApplyZoom(LayoutSize(image_generator_value_->FixedSize(
                          document, unzoomed_default_object_size)),
                      multiplier);
   }
 
-  return FloatSize(default_object_size);
+  return default_object_size;
 }
 
 void StyleGeneratedImage::AddClient(ImageResourceObserver* observer) {
-  image_generator_value_->AddClient(observer, LayoutSize());
+  image_generator_value_->AddClient(observer, IntSize());
 }
 
 void StyleGeneratedImage::RemoveClient(ImageResourceObserver* observer) {
@@ -72,7 +72,7 @@ scoped_refptr<Image> StyleGeneratedImage::GetImage(
     const ImageResourceObserver& observer,
     const Document& document,
     const ComputedStyle& style,
-    const LayoutSize& container_size) const {
+    const IntSize& container_size) const {
   return image_generator_value_->GetImage(observer, document, style,
                                           container_size);
 }

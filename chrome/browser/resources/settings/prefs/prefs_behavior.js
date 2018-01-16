@@ -7,7 +7,7 @@
  */
 
 /** @polymerBehavior */
-const PrefsBehavior = {
+var PrefsBehavior = {
   properties: {
     /** Preferences state. */
     prefs: {
@@ -23,7 +23,7 @@ const PrefsBehavior = {
    * @protected
    */
   getPref: function(prefPath) {
-    const pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (
+    var pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (
         this.get(prefPath, this.prefs));
     assert(typeof pref != 'undefined', 'Pref is missing: ' + prefPath);
     return pref;
@@ -50,7 +50,7 @@ const PrefsBehavior = {
    * @protected
    */
   appendPrefListItem: function(key, item) {
-    const pref = this.getPref(key);
+    var pref = this.getPref(key);
     assert(pref && pref.type == chrome.settingsPrivate.PrefType.LIST);
     if (pref.value.indexOf(item) == -1)
       this.push('prefs.' + key + '.value', item);

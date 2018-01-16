@@ -41,7 +41,7 @@ StorageNamespace::StorageNamespace(
     std::unique_ptr<WebStorageNamespace> web_storage_namespace)
     : web_storage_namespace_(std::move(web_storage_namespace)) {}
 
-StorageNamespace::~StorageNamespace() = default;
+StorageNamespace::~StorageNamespace() {}
 
 StorageArea* StorageNamespace::LocalStorageArea(const SecurityOrigin* origin) {
   DCHECK(IsMainThread());

@@ -263,20 +263,13 @@ class RequestCoordinatorTest : public testing::Test {
 
   SavePageRequest AddRequest2();
 
-  void SavePageRequestCallback(AddRequestResult result) {
-    ASSERT_EQ(expected_add_request_result_, result);
-    add_request_callback_called_ = true;
-  }
-
   int64_t SavePageLater() {
     RequestCoordinator::SavePageLaterParams params;
     params.url = kUrl1;
     params.client_id = kClientId1;
     params.user_requested = kUserRequested;
     params.request_origin = kRequestOrigin;
-    return coordinator()->SavePageLater(
-        params, base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
-                           base::Unretained(this)));
+    return coordinator()->SavePageLater(params);
   }
 
   int64_t SavePageLaterWithAvailability(
@@ -287,9 +280,7 @@ class RequestCoordinatorTest : public testing::Test {
     params.user_requested = kUserRequested;
     params.availability = availability;
     params.request_origin = kRequestOrigin;
-    return coordinator()->SavePageLater(
-        params, base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
-                           base::Unretained(this)));
+    return coordinator()->SavePageLater(params);
   }
 
   Offliner::RequestStatus last_offlining_status() const {
@@ -327,8 +318,6 @@ class RequestCoordinatorTest : public testing::Test {
     return coordinator()->prioritized_requests_;
   }
 
-  bool add_request_callback_called() { return add_request_callback_called_; }
-
  private:
   GetRequestsResult last_get_requests_result_;
   MultipleItemStatuses last_remove_results_;
@@ -340,8 +329,6 @@ class RequestCoordinatorTest : public testing::Test {
   OfflinerStub* offliner_;
   base::WaitableEvent waiter_;
   ObserverStub observer_;
-  AddRequestResult expected_add_request_result_;
-  bool add_request_callback_called_;
   bool processing_callback_called_;
   bool processing_callback_result_;
   DeviceConditions device_conditions_;
@@ -357,8 +344,6 @@ RequestCoordinatorTest::RequestCoordinatorTest()
       offliner_(nullptr),
       waiter_(base::WaitableEvent::ResetPolicy::MANUAL,
               base::WaitableEvent::InitialState::NOT_SIGNALED),
-      expected_add_request_result_(AddRequestResult::SUCCESS),
-      add_request_callback_called_(false),
       processing_callback_called_(false),
       processing_callback_result_(false),
       device_conditions_(!kPowerRequired,
@@ -584,10 +569,7 @@ TEST_F(RequestCoordinatorTest, SavePageLater) {
   params.client_id = kClientId1;
   params.original_url = kUrl2;
   params.request_origin = kRequestOrigin;
-  EXPECT_NE(0, coordinator()->SavePageLater(
-                   params,
-                   base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
-                              base::Unretained(this))));
+  EXPECT_NE(0, coordinator()->SavePageLater(params));
 
   // Expect that a request got placed on the queue.
   coordinator()->queue()->GetRequests(base::Bind(
@@ -599,7 +581,6 @@ TEST_F(RequestCoordinatorTest, SavePageLater) {
   // Wait for callbacks to finish, both request queue and offliner.
   PumpLoop();
   EXPECT_TRUE(processing_callback_called());
-  EXPECT_TRUE(add_request_callback_called());
 
   // Check the request queue is as expected.
   ASSERT_EQ(1UL, last_requests().size());
@@ -653,7 +634,6 @@ TEST_F(RequestCoordinatorTest, SavePageLaterFailed) {
     EXPECT_TRUE(processing_callback_result());
   }
 
-  EXPECT_TRUE(add_request_callback_called());
   // Check the request queue is as expected.
   EXPECT_EQ(1UL, last_requests().size());
   EXPECT_EQ(kUrl1, last_requests().at(0)->url());
@@ -1431,10 +1411,7 @@ TEST_F(RequestCoordinatorTest,
   params.url = kUrl2;
   params.client_id = kClientId2;
   params.user_requested = kUserRequested;
-  EXPECT_NE(0, coordinator()->SavePageLater(
-                   params,
-                   base::Bind(&RequestCoordinatorTest::SavePageRequestCallback,
-                              base::Unretained(this))));
+  EXPECT_NE(0, coordinator()->SavePageLater(params));
   PumpLoop();
 
   // Verify immediate processing did start this time.

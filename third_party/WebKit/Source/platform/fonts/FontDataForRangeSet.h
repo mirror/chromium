@@ -45,8 +45,7 @@ class PLATFORM_EXPORT FontDataForRangeSet
 
   FontDataForRangeSet(const FontDataForRangeSet& other);
 
-  virtual ~FontDataForRangeSet() = default;
-  ;
+  virtual ~FontDataForRangeSet(){};
 
   bool Contains(UChar32 test_char) const {
     return !range_set_ || range_set_->Contains(test_char);

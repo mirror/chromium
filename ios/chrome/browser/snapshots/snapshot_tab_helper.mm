@@ -110,10 +110,6 @@ void SnapshotTabHelper::SetDelegate(id<SnapshotGeneratorDelegate> delegate) {
   snapshot_generator_.delegate = delegate;
 }
 
-CGSize SnapshotTabHelper::GetSnapshotSize() const {
-  return [snapshot_generator_ snapshotSize];
-}
-
 void SnapshotTabHelper::RetrieveColorSnapshot(void (^callback)(UIImage*)) {
   [snapshot_generator_ retrieveSnapshot:callback];
 }

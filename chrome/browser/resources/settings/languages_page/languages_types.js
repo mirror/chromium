@@ -17,7 +17,7 @@
  *   isManaged: boolean,
  * }}
  */
-let LanguageState;
+var LanguageState;
 
 /**
  * Settings and state for a policy-enforced spellcheck language.
@@ -26,7 +26,7 @@ let LanguageState;
  *   isManaged: boolean,
  * }}
  */
-let ForcedLanguageState;
+var ForcedLanguageState;
 
 /**
  * Input method data to expose to consumers (Chrome OS only).
@@ -39,7 +39,7 @@ let ForcedLanguageState;
  *   currentId: string,
  * }}
  */
-let InputMethodsModel;
+var InputMethodsModel;
 
 /**
  * Languages data to expose to consumers.
@@ -64,13 +64,13 @@ let InputMethodsModel;
  *   forcedSpellCheckLanguages: !Array<!chrome.languageSettingsPrivate.Language>
  * }}
  */
-let LanguagesModel;
+var LanguagesModel;
 
 /**
  * Helper methods for reading and writing language settings.
  * @interface
  */
-const LanguageHelper = function() {};
+var LanguageHelper = function() {};
 
 LanguageHelper.prototype = {
 

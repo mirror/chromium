@@ -39,7 +39,7 @@ ServiceWorkerWindowClient::ServiceWorkerWindowClient(
       page_visibility_state_(info.page_visibility_state),
       is_focused_(info.is_focused) {}
 
-ServiceWorkerWindowClient::~ServiceWorkerWindowClient() = default;
+ServiceWorkerWindowClient::~ServiceWorkerWindowClient() {}
 
 String ServiceWorkerWindowClient::visibilityState() const {
   return PageVisibilityStateString(page_visibility_state_);

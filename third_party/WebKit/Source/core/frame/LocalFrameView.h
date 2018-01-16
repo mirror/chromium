@@ -58,6 +58,7 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/ShapeProperties.h"
 #include "public/platform/WebDisplayMode.h"
@@ -96,7 +97,6 @@ class TransformState;
 class WebPluginContainerImpl;
 struct AnnotatedRegionValue;
 struct CompositedSelection;
-struct IntrinsicSizingInfo;
 
 typedef unsigned long long DOMTimeStamp;
 
@@ -204,9 +204,6 @@ class CORE_EXPORT LocalFrameView final
   void SetInitialViewportSize(const IntSize&);
   int InitialViewportWidth() const;
   int InitialViewportHeight() const;
-
-  bool GetIntrinsicSizingInfo(IntrinsicSizingInfo&) const;
-  bool HasIntrinsicSizingInfo() const;
 
   void UpdateAcceleratedCompositingSettings();
 
@@ -402,6 +399,8 @@ class CORE_EXPORT LocalFrameView final
 
   bool ShouldSuspendScrollAnimations() const override;
   void ScrollbarStyleChanged() override;
+
+  LayoutReplaced* EmbeddedReplacedContent() const;
 
   static void SetInitialTracksPaintInvalidationsForTesting(bool);
 
@@ -839,6 +838,9 @@ class CORE_EXPORT LocalFrameView final
   // e.g. when beginning or finishing printing.
   void SetSubtreeNeedsPaintPropertyUpdate();
 
+  // TODO(ojan): Merge this with IntersectionObserver once it lands.
+  IntRect ComputeVisibleArea();
+
   // Viewport size that should be used for viewport units (i.e. 'vh'/'vw').
   // May include the size of browser controls. See implementation for further
   // documentation.
@@ -1029,7 +1031,6 @@ class CORE_EXPORT LocalFrameView final
                      const CullRect&) const;
 
   LocalFrameView* ParentFrameView() const;
-  LayoutReplaced* EmbeddedReplacedContent() const;
 
   void UpdateScrollOffset(const ScrollOffset&, ScrollType) override;
 

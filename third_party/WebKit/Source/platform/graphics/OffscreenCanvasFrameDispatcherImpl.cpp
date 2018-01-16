@@ -64,8 +64,8 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
       std::make_unique<OffscreenCanvasResourceProvider>(width, height);
 }
 
-OffscreenCanvasFrameDispatcherImpl::~OffscreenCanvasFrameDispatcherImpl() =
-    default;
+OffscreenCanvasFrameDispatcherImpl::~OffscreenCanvasFrameDispatcherImpl() {
+}
 
 namespace {
 

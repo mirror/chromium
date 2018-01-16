@@ -44,7 +44,7 @@ class CORE_EXPORT InspectorApplicationCacheAgent final
       InspectedFrames* inspected_frames) {
     return new InspectorApplicationCacheAgent(inspected_frames);
   }
-  ~InspectorApplicationCacheAgent() override = default;
+  ~InspectorApplicationCacheAgent() override {}
   void Trace(blink::Visitor*) override;
 
   // InspectorBaseAgent

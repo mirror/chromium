@@ -104,7 +104,7 @@ static void RasterizeSource(
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
   {
-    LayerTreeResourceProvider::ScopedSkSurface scoped_surface(
+    ResourceProvider::ScopedSkSurface scoped_surface(
         context_provider->GrContext(), texture_id, resource_lock->target(),
         resource_lock->size(), resource_lock->format(), use_distance_field_text,
         playback_settings.use_lcd_text, msaa_sample_count);
@@ -201,8 +201,7 @@ void GpuRasterBufferProvider::OrderingBarrier() {
   TRACE_EVENT0("cc", "GpuRasterBufferProvider::OrderingBarrier");
 
   gpu::gles2::GLES2Interface* gl = compositor_context_provider_->ContextGL();
-  gpu::SyncToken sync_token =
-      LayerTreeResourceProvider::GenerateSyncTokenHelper(gl);
+  gpu::SyncToken sync_token = ResourceProvider::GenerateSyncTokenHelper(gl);
   for (RasterBufferImpl* buffer : pending_raster_buffers_)
     buffer->set_sync_token(sync_token);
   pending_raster_buffers_.clear();
@@ -329,8 +328,7 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
   }
 
   // Generate sync token for cross context synchronization.
-  resource_lock->set_sync_token(
-      LayerTreeResourceProvider::GenerateSyncTokenHelper(ri));
+  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(ri));
 }
 
 }  // namespace cc

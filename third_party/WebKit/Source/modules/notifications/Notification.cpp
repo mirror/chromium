@@ -158,7 +158,7 @@ Notification::Notification(ExecutionContext* context,
   DCHECK(GetWebNotificationManager());
 }
 
-Notification::~Notification() = default;
+Notification::~Notification() {}
 
 void Notification::SchedulePrepareShow() {
   DCHECK_EQ(state_, State::kLoading);

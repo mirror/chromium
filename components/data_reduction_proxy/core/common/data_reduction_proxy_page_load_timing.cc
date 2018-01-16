@@ -19,9 +19,7 @@ DataReductionProxyPageLoadTiming::DataReductionProxyPageLoadTiming(
     int64_t network_bytes,
     int64_t original_network_bytes,
     bool app_background_occurred,
-    bool opt_out_occurred,
-    int64_t renderer_memory_usage_kb,
-    int host_id)
+    bool opt_out_occurred)
     : navigation_start(navigation_start),
       response_start(response_start),
       load_event_start(load_event_start),
@@ -34,9 +32,7 @@ DataReductionProxyPageLoadTiming::DataReductionProxyPageLoadTiming(
       network_bytes(network_bytes),
       original_network_bytes(original_network_bytes),
       app_background_occurred(app_background_occurred),
-      opt_out_occurred(opt_out_occurred),
-      renderer_memory_usage_kb(renderer_memory_usage_kb),
-      host_id(host_id) {}
+      opt_out_occurred(opt_out_occurred) {}
 
 DataReductionProxyPageLoadTiming::DataReductionProxyPageLoadTiming(
     const DataReductionProxyPageLoadTiming& other) = default;

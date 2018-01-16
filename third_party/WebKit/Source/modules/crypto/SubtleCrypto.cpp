@@ -155,7 +155,7 @@ static bool ParseJsonWebKey(const Dictionary& dict,
   return true;
 }
 
-SubtleCrypto::SubtleCrypto() = default;
+SubtleCrypto::SubtleCrypto() {}
 
 ScriptPromise SubtleCrypto::encrypt(ScriptState* script_state,
                                     const AlgorithmIdentifier& raw_algorithm,

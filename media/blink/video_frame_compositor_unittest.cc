@@ -57,12 +57,12 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
     submitter_ = client_.get();
 
     if (!IsSurfaceLayerForVideoEnabled()) {
-      compositor_ = std::make_unique<VideoFrameCompositor>(
+      compositor_ = base::MakeUnique<VideoFrameCompositor>(
           message_loop.task_runner(), nullptr);
       compositor_->SetVideoFrameProviderClient(client_.get());
     } else {
       EXPECT_CALL(*submitter_, Initialize(_));
-      compositor_ = std::make_unique<VideoFrameCompositor>(
+      compositor_ = base::MakeUnique<VideoFrameCompositor>(
           message_loop.task_runner(), std::move(client_));
       base::RunLoop().RunUntilIdle();
       EXPECT_CALL(*submitter_, StartSubmitting(_));
@@ -80,7 +80,7 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
 
   scoped_refptr<VideoFrame> CreateOpaqueFrame() {
     gfx::Size size(8, 8);
-    return VideoFrame::CreateFrame(PIXEL_FORMAT_I420, size, gfx::Rect(size),
+    return VideoFrame::CreateFrame(PIXEL_FORMAT_YV12, size, gfx::Rect(size),
                                    size, base::TimeDelta());
   }
 

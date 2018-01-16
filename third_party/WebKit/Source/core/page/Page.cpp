@@ -738,7 +738,7 @@ ScrollbarTheme& Page::GetScrollbarTheme() const {
 
 Page::PageClients::PageClients() : chrome_client(nullptr) {}
 
-Page::PageClients::~PageClients() = default;
+Page::PageClients::~PageClients() {}
 
 template class CORE_TEMPLATE_EXPORT Supplement<Page>;
 

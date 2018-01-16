@@ -82,7 +82,6 @@ public class WebVrDeviceTest {
      */
     @Test
     @MediumTest
-    @CommandLineFlags.Add("enable-features=WebXROrientationSensorDevice")
     @VrActivityRestriction({VrActivityRestriction.SupportedActivity.ALL})
     public void testGvrlessMagicWindowCapabilities() throws InterruptedException {
         // Make Chrome think that VrCore is not installed

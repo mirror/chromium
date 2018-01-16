@@ -13,7 +13,7 @@ ServiceWorkerRegistrationPush::ServiceWorkerRegistrationPush(
     ServiceWorkerRegistration* registration)
     : registration_(registration) {}
 
-ServiceWorkerRegistrationPush::~ServiceWorkerRegistrationPush() = default;
+ServiceWorkerRegistrationPush::~ServiceWorkerRegistrationPush() {}
 
 const char* ServiceWorkerRegistrationPush::SupplementName() {
   return "ServiceWorkerRegistrationPush";

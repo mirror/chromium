@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <map>
-#include <memory>
 #include <queue>
 #include <string>
 #include <utility>
@@ -46,7 +45,6 @@ class BluetoothRemoteGattCharacteristicBlueZ
       public device::BluetoothRemoteGattCharacteristic {
  public:
   // device::BluetoothGattCharacteristic overrides.
-  ~BluetoothRemoteGattCharacteristicBlueZ() override;
   device::BluetoothUUID GetUUID() const override;
   Properties GetProperties() const override;
   Permissions GetPermissions() const override;
@@ -81,6 +79,7 @@ class BluetoothRemoteGattCharacteristicBlueZ
   BluetoothRemoteGattCharacteristicBlueZ(
       BluetoothRemoteGattServiceBlueZ* service,
       const dbus::ObjectPath& object_path);
+  ~BluetoothRemoteGattCharacteristicBlueZ() override;
 
   // bluez::BluetoothGattDescriptorClient::Observer overrides.
   void GattDescriptorAdded(const dbus::ObjectPath& object_path) override;
@@ -123,9 +122,10 @@ class BluetoothRemoteGattCharacteristicBlueZ
   // True, if there exists a Bluez notify session.
   bool has_notify_session_;
 
+  // TODO(rkc): Investigate and fix ownership of the descriptor objects in this
+  // map. See crbug.com/604166.
   using DescriptorMap =
-      std::map<dbus::ObjectPath,
-               std::unique_ptr<BluetoothRemoteGattDescriptorBlueZ>>;
+      std::map<dbus::ObjectPath, BluetoothRemoteGattDescriptorBlueZ*>;
 
   // Mapping from GATT descriptor object paths to descriptor objects owned by
   // this characteristic. Since the BlueZ implementation uses object paths

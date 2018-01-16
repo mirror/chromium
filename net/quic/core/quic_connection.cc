@@ -2594,13 +2594,8 @@ void QuicConnection::StartPeerMigration(
 
   // TODO(jri): Move these calls to OnPeerMigrationValidated. Rename
   // OnConnectionMigration methods to OnPeerMigration.
-  OnConnectionMigration(peer_migration_type);
-}
-
-void QuicConnection::OnConnectionMigration(
-    PeerAddressChangeType addr_change_type) {
-  visitor_->OnConnectionMigration(addr_change_type);
-  sent_packet_manager_.OnConnectionMigration(addr_change_type);
+  visitor_->OnConnectionMigration(peer_migration_type);
+  sent_packet_manager_.OnConnectionMigration(peer_migration_type);
 }
 
 bool QuicConnection::ack_frame_updated() const {

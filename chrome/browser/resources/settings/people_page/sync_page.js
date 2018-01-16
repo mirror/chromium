@@ -9,7 +9,7 @@
  * mechanism.
  * @enum {string}
  */
-const RadioButtonNames = {
+var RadioButtonNames = {
   ENCRYPT_WITH_GOOGLE: 'encrypt-with-google',
   ENCRYPT_WITH_PASSPHRASE: 'encrypt-with-passphrase',
 };
@@ -19,7 +19,7 @@ const RadioButtonNames = {
  * settings.SyncPrefs when the user checks 'Sync All'.
  * @type {!Array<string>}
  */
-const SyncPrefsIndividualDataTypes = [
+var SyncPrefsIndividualDataTypes = [
   'appsSynced',
   'extensionsSynced',
   'preferencesSynced',
@@ -218,7 +218,7 @@ Polymer({
     if (this.syncPrefs.passphraseRequired) {
       // Wait for the dom-if templates to render and subpage to become visible.
       listenOnce(document, 'show-container', () => {
-        const input = /** @type {!PaperInputElement} */ (
+        var input = /** @type {!PaperInputElement} */ (
             this.$$('#existingPassphraseInput'));
         input.inputElement.focus();
       });
@@ -236,7 +236,8 @@ Polymer({
 
       // Cache the previously selected preference before checking every box.
       this.cachedSyncPrefs_ = {};
-      for (const dataType of SyncPrefsIndividualDataTypes) {
+      for (var i = 0; i < SyncPrefsIndividualDataTypes.length; i++) {
+        var dataType = SyncPrefsIndividualDataTypes[i];
         // These are all booleans, so this shallow copy is sufficient.
         this.cachedSyncPrefs_[dataType] = this.syncPrefs[dataType];
 
@@ -244,7 +245,8 @@ Polymer({
       }
     } else if (this.cachedSyncPrefs_) {
       // Restore the previously selected preference.
-      for (const dataType of SyncPrefsIndividualDataTypes) {
+      for (var i = 0; i < SyncPrefsIndividualDataTypes.length; i++) {
+        var dataType = SyncPrefsIndividualDataTypes[i];
         this.set(['syncPrefs', dataType], this.cachedSyncPrefs_[dataType]);
       }
     }
@@ -419,8 +421,8 @@ Polymer({
    * @private
    */
   validateCreatedPassphrases_: function() {
-    const emptyPassphrase = !this.passphrase_;
-    const mismatchedPassphrase = this.passphrase_ != this.confirmation_;
+    var emptyPassphrase = !this.passphrase_;
+    var mismatchedPassphrase = this.passphrase_ != this.confirmation_;
 
     this.$$('#passphraseInput').invalid = emptyPassphrase;
     this.$$('#passphraseConfirmationInput').invalid =

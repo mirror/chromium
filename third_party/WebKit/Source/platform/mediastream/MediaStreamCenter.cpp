@@ -55,7 +55,7 @@ MediaStreamCenter& MediaStreamCenter::Instance() {
 MediaStreamCenter::MediaStreamCenter()
     : private_(Platform::Current()->CreateMediaStreamCenter(this)) {}
 
-MediaStreamCenter::~MediaStreamCenter() = default;
+MediaStreamCenter::~MediaStreamCenter() {}
 
 void MediaStreamCenter::DidSetMediaStreamTrackEnabled(
     MediaStreamComponent* component) {

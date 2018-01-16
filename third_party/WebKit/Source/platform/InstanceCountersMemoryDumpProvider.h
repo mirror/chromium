@@ -18,14 +18,14 @@ class PLATFORM_EXPORT InstanceCountersMemoryDumpProvider final
 
  public:
   static InstanceCountersMemoryDumpProvider* Instance();
-  ~InstanceCountersMemoryDumpProvider() override = default;
+  ~InstanceCountersMemoryDumpProvider() override {}
 
   // MemoryDumpProvider implementation.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs&,
                     base::trace_event::ProcessMemoryDump*) override;
 
  private:
-  InstanceCountersMemoryDumpProvider() = default;
+  InstanceCountersMemoryDumpProvider() {}
 
   WTF_MAKE_NONCOPYABLE(InstanceCountersMemoryDumpProvider);
 };

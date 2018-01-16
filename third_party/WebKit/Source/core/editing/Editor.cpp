@@ -148,6 +148,25 @@ bool IsInPasswordFieldWithUnrevealedPassword(const Position& position) {
   return false;
 }
 
+EphemeralRange ComputeRangeForTranspose(LocalFrame& frame) {
+  const VisibleSelection& selection =
+      frame.Selection().ComputeVisibleSelectionInDOMTree();
+  if (!selection.IsCaret())
+    return EphemeralRange();
+
+  // Make a selection that goes back one character and forward two characters.
+  const VisiblePosition& caret = selection.VisibleStart();
+  const VisiblePosition& next =
+      IsEndOfParagraph(caret) ? caret : NextPositionOf(caret);
+  const VisiblePosition& previous = PreviousPositionOf(next);
+  if (next.DeepEquivalent() == previous.DeepEquivalent())
+    return EphemeralRange();
+  const VisiblePosition& previous_of_previous = PreviousPositionOf(previous);
+  if (!InSameParagraph(next, previous_of_previous))
+    return EphemeralRange();
+  return MakeRange(previous_of_previous, next);
+}
+
 }  // anonymous namespace
 
 Editor::RevealSelectionScope::RevealSelectionScope(Editor* editor)
@@ -204,21 +223,8 @@ static bool IsCaretAtStartOfWrappedLine(const FrameSelection& selection) {
     return false;
   const Position& position =
       selection.ComputeVisibleSelectionInDOMTree().Start();
-  if (InSameLine(PositionWithAffinity(position, TextAffinity::kUpstream),
-                 PositionWithAffinity(position, TextAffinity::kDownstream)))
-    return false;
-
-  // Only when the previous character is a space to avoid undesired side
-  // effects. There are cases where a new line is desired even if the previous
-  // character is not a space, but typing another space will do.
-  Position prev =
-      PreviousPositionOf(position, PositionMoveType::kGraphemeCluster);
-  const Node* prev_node = prev.ComputeContainerNode();
-  if (!prev_node || !prev_node->IsTextNode())
-    return false;
-  int prev_offset = prev.ComputeOffsetInContainerNode();
-  UChar prev_char = ToText(prev_node)->data()[prev_offset];
-  return prev_char == kSpaceCharacter;
+  return !InSameLine(PositionWithAffinity(position, TextAffinity::kUpstream),
+                     PositionWithAffinity(position, TextAffinity::kDownstream));
 }
 
 bool Editor::HandleTextEvent(TextEvent* event) {
@@ -565,7 +571,8 @@ static scoped_refptr<Image> ImageFromNode(const Node& node) {
 
   if (layout_object->IsCanvas()) {
     return ToHTMLCanvasElement(const_cast<Node&>(node))
-        .CopiedImage(kFrontBuffer, kPreferNoAcceleration);
+        .CopiedImage(kFrontBuffer, kPreferNoAcceleration,
+                     kSnapshotReasonCopyToClipboard);
   }
 
   if (layout_object->IsImage()) {
@@ -1040,7 +1047,7 @@ Editor::Editor(LocalFrame& frame)
       default_paragraph_separator_(kEditorParagraphSeparatorIsDiv),
       overwrite_mode_enabled_(false) {}
 
-Editor::~Editor() = default;
+Editor::~Editor() {}
 
 void Editor::Clear() {
   should_style_with_css_ = false;
@@ -1410,6 +1417,68 @@ void Editor::RevealSelectionAfterEditingOperation(
   GetFrameSelection().RevealSelection(alignment, kDoNotRevealExtent);
 }
 
+// TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
+// "EditorCommand.cpp"
+void Transpose(LocalFrame& frame) {
+  Editor& editor = frame.GetEditor();
+  if (!editor.CanEdit())
+    return;
+
+  Document* const document = frame.GetDocument();
+
+  // TODO(editing-dev): The use of UpdateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  const EphemeralRange& range = ComputeRangeForTranspose(frame);
+  if (range.IsNull())
+    return;
+
+  // Transpose the two characters.
+  const String& text = PlainText(range);
+  if (text.length() != 2)
+    return;
+  const String& transposed = text.Right(1) + text.Left(1);
+
+  if (DispatchBeforeInputInsertText(
+          EventTargetNodeForDocument(document), transposed,
+          InputEvent::InputType::kInsertTranspose,
+          new StaticRangeVector(1, StaticRange::Create(range))) !=
+      DispatchEventResult::kNotCanceled)
+    return;
+
+  // 'beforeinput' event handler may destroy document->
+  if (frame.GetDocument() != document)
+    return;
+
+  // TODO(editing-dev): The use of UpdateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  // 'beforeinput' event handler may change selection, we need to re-calculate
+  // range.
+  const EphemeralRange& new_range = ComputeRangeForTranspose(frame);
+  if (new_range.IsNull())
+    return;
+
+  const String& new_text = PlainText(new_range);
+  if (new_text.length() != 2)
+    return;
+  const String& new_transposed = new_text.Right(1) + new_text.Left(1);
+
+  const SelectionInDOMTree& new_selection =
+      SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build();
+
+  // Select the two characters.
+  if (CreateVisibleSelection(new_selection) !=
+      frame.Selection().ComputeVisibleSelectionInDOMTree())
+    frame.Selection().SetSelection(new_selection);
+
+  // Insert the transposed characters.
+  editor.ReplaceSelectionWithText(new_transposed, false, false,
+                                  InputEvent::InputType::kInsertTranspose);
+}
+
 void Editor::AddToKillRing(const EphemeralRange& range) {
   if (should_start_new_kill_ring_sequence_)
     GetKillRing().StartNewSequence();
@@ -1431,7 +1500,8 @@ void Editor::ChangeSelectionAfterCommand(
   bool selection_did_not_change_dom_position =
       new_selection == GetFrameSelection().GetSelectionInDOMTree();
   const bool handle_visible =
-      GetFrameSelection().IsHandleVisible() && new_selection.IsRange();
+      GetFrameSelection().IsHandleVisible() &&
+      GetFrameSelection().GetSelectionInDOMTree().IsRange();
   GetFrameSelection().SetSelection(new_selection,
                                    SetSelectionOptions::Builder(options)
                                        .SetShouldShowHandle(handle_visible)

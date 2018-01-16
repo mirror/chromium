@@ -88,10 +88,17 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Creates a connection for a display root to viz. Provides the same
   // interfaces as CreateCompositorFramesink() plus the priviledged
-  // DisplayPrivate and (if requested) ExternalBeginFrameController interfaces.
-  // When no longer needed, call InvalidateFrameSinkId().
+  // DisplayPrivate interface. When no longer needed, call
+  // InvalidateFrameSinkId().
   void CreateRootCompositorFrameSink(
-      mojom::RootCompositorFrameSinkParamsPtr params);
+      const FrameSinkId& frame_sink_id,
+      gpu::SurfaceHandle surface_handle,
+      bool force_software_compositing,
+      const RendererSettings& renderer_settings,
+      mojom::CompositorFrameSinkAssociatedRequest request,
+      mojom::CompositorFrameSinkClientPtr client,
+      mojom::DisplayPrivateAssociatedRequest display_private_request,
+      mojom::DisplayClientPtr display_client);
 
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,

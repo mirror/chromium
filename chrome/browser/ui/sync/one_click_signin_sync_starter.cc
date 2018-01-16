@@ -19,7 +19,6 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
-#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_tracker_factory.h"
 #include "chrome/browser/signin/signin_util.h"
@@ -39,7 +38,6 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
-#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/sync/base/sync_prefs.h"
@@ -377,8 +375,6 @@ void OneClickSigninSyncStarter::CopyCredentialsToNewProfileAndFinishSignin(
   // the signin for the original profile was cancelled (must do this after
   // we have called Initialize() with the new profile, as otherwise this
   // object will get freed when the signin on the old profile is cancelled.
-  // SignoutAndRemoveAllAccounts does not actually remove the accounts. See
-  // http://crbug.com/799437.
   old_signin_manager->SignOutAndRemoveAllAccounts(
       signin_metrics::TRANSFER_CREDENTIALS,
       signin_metrics::SignoutDelete::IGNORE_METRIC);
@@ -409,20 +405,12 @@ void OneClickSigninSyncStarter::CopyCredentialsToNewProfileAndFinishSignin(
 }
 
 void OneClickSigninSyncStarter::CancelSigninAndDelete() {
-  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile_);
-  DCHECK(signin_manager->AuthInProgress());
   if (signin::IsDicePrepareMigrationEnabled()) {
-    // TODO: Do not delete the token if it existed prior this login flow. See
-    // http://crbug.com/797342.
-    ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
-        ->RevokeCredentials(signin_manager->GetAccountIdForAuthInProgress());
-    signin_manager->SignOutAndKeepAllAccounts(
+    SigninManagerFactory::GetForProfile(profile_)->SignOutAndKeepAllAccounts(
         signin_metrics::ABORT_SIGNIN,
         signin_metrics::SignoutDelete::IGNORE_METRIC);
   } else {
-    // SignoutAndRemoveAllAccounts does not actually remove the accounts if the
-    // signin is still pending. See http://crbug.com/799437.
-    signin_manager->SignOutAndRemoveAllAccounts(
+    SigninManagerFactory::GetForProfile(profile_)->SignOutAndRemoveAllAccounts(
         signin_metrics::ABORT_SIGNIN,
         signin_metrics::SignoutDelete::IGNORE_METRIC);
   }

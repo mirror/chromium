@@ -48,7 +48,7 @@ BaseRenderingContext2D::BaseRenderingContext2D()
   state_stack_.push_back(CanvasRenderingContext2DState::Create());
 }
 
-BaseRenderingContext2D::~BaseRenderingContext2D() = default;
+BaseRenderingContext2D::~BaseRenderingContext2D() {}
 
 CanvasRenderingContext2DState& BaseRenderingContext2D::ModifiableState() {
   RealizeSaves();
@@ -1204,6 +1204,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
                                 ? kPreferAcceleration
                                 : kPreferNoAcceleration;
     image = image_source->GetSourceImageForCanvas(&source_image_status, hint,
+                                                  kSnapshotReasonDrawImage,
                                                   default_object_size);
     if (source_image_status == kUndecodableSourceImageStatus) {
       exception_state.ThrowDOMException(
@@ -1380,6 +1381,7 @@ CanvasPattern* BaseRenderingContext2D::createPattern(
   FloatSize default_object_size(Width(), Height());
   scoped_refptr<Image> image_for_rendering =
       image_source->GetSourceImageForCanvas(&status, kPreferNoAcceleration,
+                                            kSnapshotReasonCreatePattern,
                                             default_object_size);
 
   switch (status) {
@@ -1589,7 +1591,8 @@ ImageData* BaseRenderingContext2D::getImageData(
   WTF::ArrayBufferContents contents;
 
   const CanvasColorParams& color_params = ColorParams();
-  scoped_refptr<StaticBitmapImage> snapshot = GetImage(kPreferNoAcceleration);
+  scoped_refptr<StaticBitmapImage> snapshot =
+      GetImage(kPreferNoAcceleration, kSnapshotReasonGetImageData);
 
   if (!StaticBitmapImage::ConvertToArrayBufferContents(
           snapshot, contents, image_data_rect, color_params, IsAccelerated())) {

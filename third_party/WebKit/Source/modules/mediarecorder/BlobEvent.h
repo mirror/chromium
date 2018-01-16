@@ -20,7 +20,7 @@ class MODULES_EXPORT BlobEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  ~BlobEvent() override = default;
+  ~BlobEvent() override {}
 
   static BlobEvent* Create(const AtomicString& type,
                            const BlobEventInit& initializer);

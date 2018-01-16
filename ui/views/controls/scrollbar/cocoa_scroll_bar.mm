@@ -68,8 +68,6 @@ class CocoaScrollBarThumb : public BaseScrollBarThumb {
   // Returns true if the thumb is in pressed state.
   bool IsStatePressed() const;
 
-  void UpdateIsMouseOverTrack(bool mouse_over_track);
-
  protected:
   // View:
   gfx::Size CalculatePreferredSize() const override;
@@ -104,15 +102,6 @@ bool CocoaScrollBarThumb::IsStateHovered() const {
 
 bool CocoaScrollBarThumb::IsStatePressed() const {
   return GetState() == Button::STATE_PRESSED;
-}
-
-void CocoaScrollBarThumb::UpdateIsMouseOverTrack(bool mouse_over_track) {
-  // The state should not change if the thumb is pressed. The thumb will be
-  // set back to its hover or normal state when the mouse is released.
-  if (IsStatePressed())
-    return;
-
-  SetState(mouse_over_track ? Button::STATE_HOVERED : Button::STATE_NORMAL);
 }
 
 gfx::Size CocoaScrollBarThumb::CalculatePreferredSize() const {
@@ -297,9 +286,7 @@ void CocoaScrollBar::OnMouseReleased(const ui::MouseEvent& event) {
 }
 
 void CocoaScrollBar::OnMouseEntered(const ui::MouseEvent& event) {
-  GetCocoaScrollBarThumb()->UpdateIsMouseOverTrack(true);
-
-  if (scroller_style_ == NSScrollerStyleLegacy)
+  if (scroller_style_ != NSScrollerStyleOverlay)
     return;
 
   // If the scrollbar thumb did not completely fade away, then reshow it when
@@ -323,7 +310,6 @@ void CocoaScrollBar::OnMouseEntered(const ui::MouseEvent& event) {
 }
 
 void CocoaScrollBar::OnMouseExited(const ui::MouseEvent& event) {
-  GetCocoaScrollBarThumb()->UpdateIsMouseOverTrack(false);
   ResetOverlayScrollbar();
 }
 

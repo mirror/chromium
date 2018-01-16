@@ -19,7 +19,7 @@ class WebString;
 class ContentDecryptionModuleResult
     : public GarbageCollectedFinalized<ContentDecryptionModuleResult> {
  public:
-  virtual ~ContentDecryptionModuleResult() = default;
+  virtual ~ContentDecryptionModuleResult() {}
 
   virtual void Complete() = 0;
   virtual void CompleteWithContentDecryptionModule(

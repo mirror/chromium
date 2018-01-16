@@ -85,7 +85,7 @@ class PLATFORM_EXPORT ResourceRequest final {
 
   class ExtraData : public RefCounted<ExtraData> {
    public:
-    virtual ~ExtraData() = default;
+    virtual ~ExtraData() {}
   };
 
   ResourceRequest();
@@ -428,7 +428,7 @@ struct CrossThreadResourceRequestData {
   USING_FAST_MALLOC(CrossThreadResourceRequestData);
 
  public:
-  CrossThreadResourceRequestData() = default;
+  CrossThreadResourceRequestData() {}
   KURL url_;
 
   mojom::FetchCacheMode cache_mode_;

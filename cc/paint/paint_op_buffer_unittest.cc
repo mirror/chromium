@@ -8,7 +8,6 @@
 #include "cc/paint/decoded_draw_image.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/image_provider.h"
-#include "cc/paint/image_transfer_cache_entry.h"
 #include "cc/paint/paint_image_builder.h"
 #include "cc/paint/paint_op_buffer_serializer.h"
 #include "cc/paint/paint_op_reader.h"
@@ -75,16 +74,14 @@ class PaintOpSerializationTestUtils {
   }
 };
 
-class TestOptionsProvider : public ImageProvider,
-                            public TransferCacheDeserializeHelper {
+class TestOptionsProvider {
  public:
   TestOptionsProvider() {
     serialize_options_.canvas = &canvas_;
-    serialize_options_.image_provider = this;
+    serialize_options_.image_provider = &image_provider_;
     serialize_options_.transfer_cache = &transfer_cache_helper_;
-    deserialize_options_.transfer_cache = this;
+    deserialize_options_.transfer_cache = &transfer_cache_helper_;
   }
-  ~TestOptionsProvider() override = default;
 
   const PaintOp::SerializeOptions& serialize_options() const {
     return serialize_options_;
@@ -98,42 +95,31 @@ class TestOptionsProvider : public ImageProvider,
   PaintOp::DeserializeOptions mutable_deserialize_options() {
     return deserialize_options_;
   }
-  ImageProvider* image_provider() { return this; }
+  ImageProvider* image_provider() { return &image_provider_; }
   TransferCacheTestHelper* transfer_cache_helper() {
     return &transfer_cache_helper_;
   }
 
  private:
-  ScopedDecodedDrawImage GetDecodedDrawImage(
-      const DrawImage& draw_image) override {
-    auto& entry = entry_map_[++transfer_cache_entry_id_];
-    SkBitmap bitmap;
-    const auto& paint_image = draw_image.paint_image();
-    bitmap.allocPixelsFlags(
-        SkImageInfo::MakeN32Premul(paint_image.width(), paint_image.height()),
-        SkBitmap::kZeroPixels_AllocFlag);
-    sk_sp<SkImage> image = SkImage::MakeFromBitmap(bitmap);
-    entry.set_image_for_testing(image);
-    return ScopedDecodedDrawImage(
-        DecodedDrawImage(transfer_cache_entry_id_, SkSize::MakeEmpty(),
-                         SkSize::Make(1u, 1u), draw_image.filter_quality()));
-  }
+  class NoOpImageProvider : public ImageProvider {
+   public:
+    ~NoOpImageProvider() override = default;
 
-  ServiceTransferCacheEntry* GetEntryInternal(TransferCacheEntryType entry_type,
-                                              uint32_t entry_id) override {
-    if (entry_type != TransferCacheEntryType::kImage)
-      return transfer_cache_helper_.GetEntryInternal(entry_type, entry_id);
-    auto it = entry_map_.find(entry_id);
-    CHECK(it != entry_map_.end());
-    return &it->second;
-  }
+    ScopedDecodedDrawImage GetDecodedDrawImage(
+        const DrawImage& draw_image) override {
+      SkBitmap bitmap;
+      bitmap.allocPixelsFlags(SkImageInfo::MakeN32Premul(10, 10),
+                              SkBitmap::kZeroPixels_AllocFlag);
+      sk_sp<SkImage> image = SkImage::MakeFromBitmap(bitmap);
+      return ScopedDecodedDrawImage(DecodedDrawImage(
+          image, SkSize::Make(0, 0), SkSize::Make(1, 1), kLow_SkFilterQuality));
+    }
+  };
 
-  uint32_t transfer_cache_entry_id_ = 0u;
-  base::flat_map<uint32_t, ServiceImageTransferCacheEntry> entry_map_;
-
-  testing::StrictMock<MockCanvas> canvas_;
   PaintOp::SerializeOptions serialize_options_;
   PaintOp::DeserializeOptions deserialize_options_;
+  NoOpImageProvider image_provider_;
+  MockCanvas canvas_;
   TransferCacheTestHelper transfer_cache_helper_;
 };
 
@@ -703,7 +689,7 @@ class PaintOpBufferOffsetsTest : public ::testing::Test {
 };
 
 TEST_F(PaintOpBufferOffsetsTest, ContiguousIndices) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -722,7 +708,7 @@ TEST_F(PaintOpBufferOffsetsTest, ContiguousIndices) {
 }
 
 TEST_F(PaintOpBufferOffsetsTest, NonContiguousIndices) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -740,7 +726,7 @@ TEST_F(PaintOpBufferOffsetsTest, NonContiguousIndices) {
 }
 
 TEST_F(PaintOpBufferOffsetsTest, FirstTwoIndices) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -756,7 +742,7 @@ TEST_F(PaintOpBufferOffsetsTest, FirstTwoIndices) {
 }
 
 TEST_F(PaintOpBufferOffsetsTest, MiddleIndex) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -771,7 +757,7 @@ TEST_F(PaintOpBufferOffsetsTest, MiddleIndex) {
 }
 
 TEST_F(PaintOpBufferOffsetsTest, LastTwoElements) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -787,7 +773,7 @@ TEST_F(PaintOpBufferOffsetsTest, LastTwoElements) {
 }
 
 TEST_F(PaintOpBufferOffsetsTest, ContiguousIndicesWithSaveLayerAlphaRestore) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -813,7 +799,7 @@ TEST_F(PaintOpBufferOffsetsTest, ContiguousIndicesWithSaveLayerAlphaRestore) {
 
 TEST_F(PaintOpBufferOffsetsTest,
        NonContiguousIndicesWithSaveLayerAlphaRestore) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -857,7 +843,7 @@ TEST_F(PaintOpBufferOffsetsTest,
 
 TEST_F(PaintOpBufferOffsetsTest,
        ContiguousIndicesWithSaveLayerAlphaDrawRestore) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   auto add_draw_rect = [this](SkColor c) {
     PaintFlags flags;
@@ -890,7 +876,7 @@ TEST_F(PaintOpBufferOffsetsTest,
 
 TEST_F(PaintOpBufferOffsetsTest,
        NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   auto add_draw_rect = [this](SkColor c) {
     PaintFlags flags;
@@ -948,7 +934,7 @@ TEST_F(PaintOpBufferOffsetsTest,
 
 TEST(PaintOpBufferTest, SaveLayerAlphaDrawRestoreWithBadBlendMode) {
   PaintOpBuffer buffer;
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   auto add_draw_rect = [](PaintOpBuffer* buffer, SkColor c) {
     PaintFlags flags;
@@ -978,7 +964,7 @@ TEST(PaintOpBufferTest, SaveLayerAlphaDrawRestoreWithBadBlendMode) {
 
 TEST(PaintOpBufferTest, UnmatchedSaveRestoreNoSideEffects) {
   PaintOpBuffer buffer;
-  testing::StrictMock<MockCanvas> canvas;
+  MockCanvas canvas;
 
   auto add_draw_rect = [](PaintOpBuffer* buffer, SkColor c) {
     PaintFlags flags;
@@ -1022,21 +1008,9 @@ std::vector<uint8_t> test_uint8s = {
     0, 255, 128, 10, 45,
 };
 
-static SkRect make_largest_skrect() {
-  const float limit = std::numeric_limits<float>::max();
-  return {-limit, -limit, limit, limit};
-}
-
-static SkIRect make_largest_skirect() {
-  // we use half the limit, so that the resulting width/height will not
-  // overflow.
-  const int32_t limit = std::numeric_limits<int32_t>::max() >> 1;
-  return {-limit, -limit, limit, limit};
-}
-
 std::vector<SkRect> test_rects = {
     SkRect::MakeXYWH(1, 2.5, 3, 4), SkRect::MakeXYWH(0, 0, 0, 0),
-    make_largest_skrect(),          SkRect::MakeXYWH(0.5f, 0.5f, 8.2f, 8.2f),
+    SkRect::MakeLargest(),          SkRect::MakeXYWH(0.5f, 0.5f, 8.2f, 8.2f),
     SkRect::MakeXYWH(-1, -1, 0, 0), SkRect::MakeXYWH(-100, -101, -102, -103),
     SkRect::MakeXYWH(0, 0, 0, 0),   SkRect::MakeXYWH(0, 0, 0, 0),
     SkRect::MakeXYWH(0, 0, 0, 0),   SkRect::MakeXYWH(0, 0, 0, 0),
@@ -1055,7 +1029,7 @@ std::vector<SkRRect> test_rrects = {
 
 std::vector<SkIRect> test_irects = {
     SkIRect::MakeXYWH(1, 2, 3, 4),   SkIRect::MakeXYWH(0, 0, 0, 0),
-    make_largest_skirect(),          SkIRect::MakeXYWH(0, 0, 10, 10),
+    SkIRect::MakeLargest(),          SkIRect::MakeXYWH(0, 0, 10, 10),
     SkIRect::MakeXYWH(-1, -1, 0, 0), SkIRect::MakeXYWH(-100, -101, -102, -103)};
 
 std::vector<SkMatrix> test_matrices = {
@@ -2831,107 +2805,6 @@ TEST(PaintOpBufferTest, ReplacesImagesFromProvider) {
                                  MatchesShader(flags, scale_adjustment[2])));
 
   buffer.Playback(&canvas, &image_provider);
-}
-
-TEST(PaintOpBufferTest, FilterSerialization) {
-  SkScalar scalars[9] = {1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f};
-  std::vector<sk_sp<PaintFilter>> filters = {
-      sk_sp<PaintFilter>{new ColorFilterPaintFilter(
-          SkColorFilter::MakeLinearToSRGBGamma(), nullptr)},
-      sk_sp<PaintFilter>{new BlurPaintFilter(
-          0.5f, 0.3f, SkBlurImageFilter::kRepeat_TileMode, nullptr)},
-      sk_sp<PaintFilter>{new DropShadowPaintFilter(
-          5.f, 10.f, 0.1f, 0.3f, SK_ColorBLUE,
-          SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode, nullptr)},
-      sk_sp<PaintFilter>{new MagnifierPaintFilter(SkRect::MakeXYWH(5, 6, 7, 8),
-                                                  10.5f, nullptr)},
-      sk_sp<PaintFilter>{new AlphaThresholdPaintFilter(
-          SkRegion(SkIRect::MakeXYWH(0, 0, 100, 200)), 10.f, 20.f, nullptr)},
-      sk_sp<PaintFilter>{new MatrixConvolutionPaintFilter(
-          SkISize::Make(3, 3), scalars, 30.f, 123.f, SkIPoint::Make(0, 0),
-          SkMatrixConvolutionImageFilter::kClampToBlack_TileMode, true,
-          nullptr)},
-      sk_sp<PaintFilter>{
-          new RecordPaintFilter(sk_sp<PaintRecord>{new PaintRecord},
-                                SkRect::MakeXYWH(10, 15, 20, 25))},
-      sk_sp<PaintFilter>{new MorphologyPaintFilter(
-          MorphologyPaintFilter::MorphType::kErode, 15, 30, nullptr)},
-      sk_sp<PaintFilter>{new OffsetPaintFilter(-1.f, -2.f, nullptr)},
-      sk_sp<PaintFilter>{new TilePaintFilter(
-          SkRect::MakeXYWH(1, 2, 3, 4), SkRect::MakeXYWH(4, 3, 2, 1), nullptr)},
-      sk_sp<PaintFilter>{new TurbulencePaintFilter(
-          TurbulencePaintFilter::TurbulenceType::kFractalNoise, 3.3f, 4.4f, 2,
-          123, nullptr)},
-      sk_sp<PaintFilter>{
-          new MatrixPaintFilter(SkMatrix::I(), kHigh_SkFilterQuality, nullptr)},
-      sk_sp<PaintFilter>{new LightingDistantPaintFilter(
-          PaintFilter::LightingType::kSpecular, SkPoint3::Make(1, 2, 3),
-          SK_ColorCYAN, 1.1f, 2.2f, 3.3f, nullptr)},
-      sk_sp<PaintFilter>{new LightingPointPaintFilter(
-          PaintFilter::LightingType::kDiffuse, SkPoint3::Make(2, 3, 4),
-          SK_ColorRED, 1.2f, 3.4f, 5.6f, nullptr)},
-      sk_sp<PaintFilter>{new LightingSpotPaintFilter(
-          PaintFilter::LightingType::kSpecular, SkPoint3::Make(100, 200, 300),
-          SkPoint3::Make(400, 500, 600), 1, 2, SK_ColorMAGENTA, 3, 4, 5,
-          nullptr)},
-      sk_sp<PaintFilter>{
-          new ImagePaintFilter(CreateDiscardablePaintImage(gfx::Size(100, 100)),
-                               SkRect::MakeWH(50, 50), SkRect::MakeWH(70, 70),
-                               kMedium_SkFilterQuality)}};
-
-  filters.emplace_back(new ComposePaintFilter(filters[0], filters[1]));
-  filters.emplace_back(
-      new XfermodePaintFilter(SkBlendMode::kDst, filters[2], filters[3]));
-  filters.emplace_back(new ArithmeticPaintFilter(
-      1.1f, 2.2f, 3.3f, 4.4f, false, filters[4], filters[5], nullptr));
-  filters.emplace_back(new DisplacementMapEffectPaintFilter(
-      SkDisplacementMapEffect::kR_ChannelSelectorType,
-      SkDisplacementMapEffect::kG_ChannelSelectorType, 10, filters[6],
-      filters[7]));
-  filters.emplace_back(new MergePaintFilter(filters.data(), filters.size()));
-
-  std::unique_ptr<char, base::AlignedFreeDeleter> memory(
-      static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
-                                            PaintOpBuffer::PaintOpAlign)));
-  TestOptionsProvider options_proivder;
-  PaintOpBufferSerializer::Preamble preamble;
-  for (size_t i = 0; i < filters.size(); ++i) {
-    SCOPED_TRACE(i);
-    auto& filter = filters[i];
-
-    PaintFlags flags;
-    flags.setImageFilter(filter);
-    PaintOpBuffer buffer;
-    buffer.push<DrawRectOp>(SkRect::MakeXYWH(1, 2, 3, 4), flags);
-
-    SimpleBufferSerializer serializer(memory.get(),
-                                      PaintOpBuffer::kInitialBufferSize,
-                                      options_proivder.image_provider(),
-                                      options_proivder.transfer_cache_helper());
-    serializer.Serialize(&buffer, nullptr, preamble);
-    ASSERT_TRUE(serializer.valid());
-    ASSERT_GT(serializer.written(), 0u);
-
-    auto deserialized_buffer =
-        PaintOpBuffer::MakeFromMemory(memory.get(), serializer.written(),
-                                      options_proivder.deserialize_options());
-    ASSERT_TRUE(deserialized_buffer);
-    PaintOpBuffer::Iterator it(deserialized_buffer.get());
-    bool rect_op_found = false;
-    for (auto* op : it) {
-      // There may be various ops serialized as a part of the preamble, but
-      // we're only really looking for the draw rect op.
-      if (op->GetType() != PaintOpType::DrawRect)
-        continue;
-      EXPECT_FALSE(rect_op_found);
-      rect_op_found = true;
-      auto* rect_op = static_cast<DrawRectOp*>(op);
-      EXPECT_FLOAT_RECT_EQ(rect_op->rect, SkRect::MakeXYWH(1, 2, 3, 4));
-      ASSERT_TRUE(rect_op->flags.getImageFilter());
-      EXPECT_TRUE(*filter == *rect_op->flags.getImageFilter());
-    }
-    EXPECT_TRUE(rect_op_found);
-  }
 }
 
 }  // namespace cc

@@ -1210,7 +1210,7 @@ void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
   // TODO(kochi): Handle UA shadows which marks multiple nodes as focused such
   // as <input type="date"> the same way as author shadow.
   if (ShadowRoot* root = ContainingShadowRoot()) {
-    if (!root->IsUserAgent())
+    if (root->GetType() != ShadowRootType::kUserAgent)
       OwnerShadowHost()->SetFocused(received, focus_type);
   }
 
@@ -1629,11 +1629,6 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
     const QualifiedName* attr_name,
     Element* attribute_owner_element,
     const ChildrenChange* change) {
-  // This is a performance optimization, NodeList cache invalidation is
-  // not necessary for a text change.
-  if (change && change->type == kTextChanged)
-    return;
-
   if (HasRareData() && (!attr_name || IsAttributeNode())) {
     if (NodeListsNodeData* lists = RareData()->NodeLists()) {
       if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
@@ -1654,8 +1649,7 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   if (!GetDocument().ShouldInvalidateNodeListCaches(attr_name))
     return;
 
-  if (isConnected())
-    GetDocument().InvalidateNodeListCaches(attr_name);
+  GetDocument().InvalidateNodeListCaches(attr_name);
 
   for (ContainerNode* node = this; node; node = node->parentNode()) {
     if (NodeListsNodeData* lists = node->NodeLists())

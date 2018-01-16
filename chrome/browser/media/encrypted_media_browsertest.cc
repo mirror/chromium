@@ -309,11 +309,17 @@ class EncryptedMediaTestBase : public MediaBrowserTest {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
     if (IsExternalClearKey(key_system)) {
-      RegisterClearKeyCdm(command_line);
+      // TODO(crbug.com/764143): Only RegisterPepperCdm() when we use pepper CDM
+      // after we update key system support query to use CdmRegistry.
+      RegisterPepperCdm(command_line, media::kClearKeyCdmBaseDirectory,
+                        media::kClearKeyCdmAdapterFileName,
+                        media::kClearKeyCdmDisplayName,
+                        media::kClearKeyCdmPepperMimeType);
 
       // TODO(xhwang): Update ScopedFeatureList::InitWithFeatures() to accept
       // vectors so that we can simplify this block.
       if (cdm_host_type == CdmHostType::kMojo) {
+        RegisterExternalClearKey(command_line);
         if (support_experimental_cdm_interface) {
           scoped_feature_list_.InitWithFeatures(
               {media::kExternalClearKeyForTesting,

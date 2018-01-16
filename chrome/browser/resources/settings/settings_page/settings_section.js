@@ -16,7 +16,7 @@
  *    </settings-section>
  */
 
-let SettingsSectionElement = Polymer({
+var SettingsSectionElement = Polymer({
   is: 'settings-section',
 
   properties: {
@@ -66,12 +66,12 @@ let SettingsSectionElement = Polymer({
    * @private
    */
   setFrozen: function(frozen) {
-    const card = this.$.card;
+    var card = this.$.card;
     if (frozen) {
       this.style.height = this.clientHeight + 'px';
 
-      const cardHeight = card.offsetHeight;
-      const cardWidth = card.offsetWidth;
+      var cardHeight = card.offsetHeight;
+      var cardWidth = card.offsetWidth;
       // If the section is not displayed yet (e.g., navigated directly to a
       // sub-page), cardHeight and cardWidth are 0, so do not set the height or
       // width explicitly.
@@ -115,7 +115,7 @@ let SettingsSectionElement = Polymer({
 
   immediateExpand: function(container) {
     // Target position is the container's top edge in the viewport.
-    const containerTop = container.getBoundingClientRect().top;
+    var containerTop = container.getBoundingClientRect().top;
 
     this.$.card.position = 'fixed';
     this.$.card.top = containerTop + 'px';
@@ -142,17 +142,17 @@ let SettingsSectionElement = Polymer({
     this.classList.add('expanding');
 
     // Start the card in place, at its distance from the container's padding.
-    const startTop = this.$.card.getBoundingClientRect().top + 'px';
-    const startHeight = this.$.card.clientHeight + 'px';
+    var startTop = this.$.card.getBoundingClientRect().top + 'px';
+    var startHeight = this.$.card.clientHeight + 'px';
 
     // Target position is the container's top edge in the viewport.
-    const containerTop = container.getBoundingClientRect().top;
-    const endTop = containerTop + 'px';
+    var containerTop = container.getBoundingClientRect().top;
+    var endTop = containerTop + 'px';
     // The card should stretch from the bottom of the toolbar to the bottom of
     // the page. calc(100% - top) lets the card resize if the window resizes.
-    const endHeight = 'calc(100% - ' + containerTop + 'px)';
+    var endHeight = 'calc(100% - ' + containerTop + 'px)';
 
-    const animation =
+    var animation =
         this.animateCard_('fixed', startTop, endTop, startHeight, endHeight);
     // The empty onRejected function prevents the promise from skipping forward
     // to the next then() with a rejection callback.
@@ -202,30 +202,30 @@ let SettingsSectionElement = Polymer({
     // Make the card position: absolute, so scrolling is less of a crapshoot.
     // First find the current distance between this section and the card using
     // fixed coordinates; the absolute distance will be the same.
-    const fixedCardTop = this.$.card.getBoundingClientRect().top;
-    const fixedSectionTop = this.getBoundingClientRect().top;
-    const distance = fixedCardTop - fixedSectionTop;
+    var fixedCardTop = this.$.card.getBoundingClientRect().top;
+    var fixedSectionTop = this.getBoundingClientRect().top;
+    var distance = fixedCardTop - fixedSectionTop;
 
     // The target position is right below our header.
-    const headerStyle = getComputedStyle(this.$.header);
-    const cardTargetTop = this.$.header.offsetHeight +
+    var headerStyle = getComputedStyle(this.$.header);
+    var cardTargetTop = this.$.header.offsetHeight +
         parseFloat(headerStyle.marginBottom) +
         parseFloat(headerStyle.marginTop);
 
     // Start the card at its current height and distance from our top.
-    const startTop = distance + 'px';
-    const startHeight = this.$.card.style.height;
+    var startTop = distance + 'px';
+    var startHeight = this.$.card.style.height;
 
     // End at the bottom of our header.
-    const endTop = cardTargetTop + 'px';
-    const endHeight = (this.collapsedHeight_ - cardTargetTop) + 'px';
+    var endTop = cardTargetTop + 'px';
+    var endHeight = (this.collapsedHeight_ - cardTargetTop) + 'px';
 
     // The card no longer needs position: fixed.
     this.$.card.style.position = '';
 
     // Collapse this section, animate the card into place, and remove its
     // other properties.
-    const animation =
+    var animation =
         this.animateCard_('absolute', startTop, endTop, startHeight, endHeight);
     this.$.card.style.width = '';
     this.$.card.style.height = '';
@@ -257,23 +257,23 @@ let SettingsSectionElement = Polymer({
    */
   animateCard_: function(position, startTop, endTop, startHeight, endHeight) {
     // Width does not change.
-    const width = this.$.card.clientWidth + 'px';
+    var width = this.$.card.clientWidth + 'px';
 
-    const startFrame = {
+    var startFrame = {
       position: position,
       width: width,
       top: startTop,
       height: startHeight,
     };
 
-    const endFrame = {
+    var endFrame = {
       position: position,
       width: width,
       top: endTop,
       height: endHeight,
     };
 
-    const options = /** @type {!KeyframeEffectOptions} */ ({
+    var options = /** @type {!KeyframeEffectOptions} */ ({
       duration: settings.animation.Timing.DURATION,
       easing: settings.animation.Timing.EASING,
     });

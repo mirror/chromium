@@ -31,9 +31,9 @@
 
 namespace blink {
 
-UserActionElementSet::UserActionElementSet() = default;
+UserActionElementSet::UserActionElementSet() {}
 
-UserActionElementSet::~UserActionElementSet() = default;
+UserActionElementSet::~UserActionElementSet() {}
 
 void UserActionElementSet::DidDetach(Element& element) {
   DCHECK(element.IsUserActionElement());

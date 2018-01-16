@@ -107,8 +107,9 @@ NonClientFrameView* BubbleDialogDelegateView::CreateNonClientFrameView(
     Widget* widget) {
   BubbleFrameView* frame = new BubbleFrameView(title_margins_, gfx::Insets());
 
+  // By default, assume the footnote only contains text.
   frame->set_footnote_margins(
-      LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_SUBSECTION));
+      LayoutProvider::Get()->GetDialogInsetsForContentType(TEXT, TEXT));
   frame->SetFootnoteView(CreateFootnoteView());
 
   BubbleBorder::Arrow adjusted_arrow = arrow();

@@ -6,7 +6,6 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 
@@ -66,8 +65,6 @@ bool TaskService::UnbindInstance() {
   // But invoked tasks might be still running here. To ensure no task runs on
   // quitting this method, wait for all tasks to complete.
   base::AutoLock tasks_in_flight_auto_lock(tasks_in_flight_lock_);
-  // TODO(https://crbug.com/796830): Remove sync operations on the I/O thread.
-  base::ScopedAllowBaseSyncPrimitives allow_wait;
   while (tasks_in_flight_ > 0)
     no_tasks_in_flight_cv_.Wait();
 
@@ -142,7 +139,7 @@ scoped_refptr<base::SingleThreadTaskRunner> TaskService::GetTaskRunner(
 
   size_t thread = runner_id - 1;
   if (!threads_[thread]) {
-    threads_[thread] = std::make_unique<base::Thread>(
+    threads_[thread] = base::MakeUnique<base::Thread>(
         base::StringPrintf("MidiService_TaskService_Thread(%zu)", runner_id));
     base::Thread::Options options;
 #if defined(OS_WIN)

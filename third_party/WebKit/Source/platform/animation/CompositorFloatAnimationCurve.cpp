@@ -19,7 +19,7 @@ CompositorFloatAnimationCurve::CompositorFloatAnimationCurve(
     std::unique_ptr<cc::KeyframedFloatAnimationCurve> curve)
     : curve_(std::move(curve)) {}
 
-CompositorFloatAnimationCurve::~CompositorFloatAnimationCurve() = default;
+CompositorFloatAnimationCurve::~CompositorFloatAnimationCurve() {}
 
 std::unique_ptr<CompositorFloatAnimationCurve>
 CompositorFloatAnimationCurve::CreateForTesting(

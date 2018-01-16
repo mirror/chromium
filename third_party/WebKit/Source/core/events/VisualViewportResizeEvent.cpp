@@ -8,7 +8,7 @@
 
 namespace blink {
 
-VisualViewportResizeEvent::~VisualViewportResizeEvent() = default;
+VisualViewportResizeEvent::~VisualViewportResizeEvent() {}
 
 VisualViewportResizeEvent::VisualViewportResizeEvent()
     : Event(EventTypeNames::resize,

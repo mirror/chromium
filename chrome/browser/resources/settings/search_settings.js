@@ -17,31 +17,31 @@ cr.exportPath('settings');
 settings.SearchResult;
 
 cr.define('settings', function() {
-  /** @type {string} */
-  const WRAPPER_CSS_CLASS = 'search-highlight-wrapper';
+  /** @const {string} */
+  var WRAPPER_CSS_CLASS = 'search-highlight-wrapper';
 
-  /** @type {string} */
-  const ORIGINAL_CONTENT_CSS_CLASS = 'search-highlight-original-content';
+  /** @const {string} */
+  var ORIGINAL_CONTENT_CSS_CLASS = 'search-highlight-original-content';
 
-  /** @type {string} */
-  const HIT_CSS_CLASS = 'search-highlight-hit';
+  /** @const {string} */
+  var HIT_CSS_CLASS = 'search-highlight-hit';
 
-  /** @type {string} */
-  const SEARCH_BUBBLE_CSS_CLASS = 'search-bubble';
+  /** @const {string} */
+  var SEARCH_BUBBLE_CSS_CLASS = 'search-bubble';
 
   /**
    * A CSS attribute indicating that a node should be ignored during searching.
-   * @type {string}
+   * @const {string}
    */
-  const SKIP_SEARCH_CSS_ATTRIBUTE = 'no-search';
+  var SKIP_SEARCH_CSS_ATTRIBUTE = 'no-search';
 
   /**
    * List of elements types that should not be searched at all.
    * The only DOM-MODULE node is in <body> which is not searched, therefore
    * DOM-MODULE is not needed in this set.
-   * @type {!Set<string>}
+   * @const {!Set<string>}
    */
-  const IGNORED_ELEMENTS = new Set([
+  var IGNORED_ELEMENTS = new Set([
     'CONTENT',
     'CR-EVENTS',
     'DIALOG',
@@ -65,18 +65,18 @@ cr.define('settings', function() {
    * @private
    */
   function findAndRemoveHighlights_(node) {
-    const wrappers = node.querySelectorAll('* /deep/ .' + WRAPPER_CSS_CLASS);
+    var wrappers = node.querySelectorAll('* /deep/ .' + WRAPPER_CSS_CLASS);
 
-    for (let i = 0; i < wrappers.length; i++) {
-      const wrapper = wrappers[i];
-      const originalNode =
+    for (var i = 0; i < wrappers.length; i++) {
+      var wrapper = wrappers[i];
+      var originalNode =
           wrapper.querySelector('.' + ORIGINAL_CONTENT_CSS_CLASS);
       wrapper.parentElement.replaceChild(originalNode.firstChild, wrapper);
     }
 
-    const searchBubbles =
+    var searchBubbles =
         node.querySelectorAll('* /deep/ .' + SEARCH_BUBBLE_CSS_CLASS);
-    for (let j = 0; j < searchBubbles.length; j++)
+    for (var j = 0; j < searchBubbles.length; j++)
       searchBubbles[j].remove();
   }
 
@@ -87,12 +87,12 @@ cr.define('settings', function() {
    * @param {!Array<string>} tokens The string tokens after splitting on the
    *     relevant regExp. Even indices hold text that doesn't need highlighting,
    *     odd indices hold the text to be highlighted. For example:
-   *     const r = new RegExp('(foo)', 'i');
+   *     var r = new RegExp('(foo)', 'i');
    *     'barfoobar foo bar'.split(r) => ['bar', 'foo', 'bar ', 'foo', ' bar']
    * @private
    */
   function highlight_(node, tokens) {
-    const wrapper = document.createElement('span');
+    var wrapper = document.createElement('span');
     wrapper.classList.add(WRAPPER_CSS_CLASS);
     // Use existing node as placeholder to determine where to insert the
     // replacement content.
@@ -101,21 +101,21 @@ cr.define('settings', function() {
     // Keep the existing node around for when the highlights are removed. The
     // existing text node might be involved in data-binding and therefore should
     // not be discarded.
-    const span = document.createElement('span');
+    var span = document.createElement('span');
     span.classList.add(ORIGINAL_CONTENT_CSS_CLASS);
     span.style.display = 'none';
     span.appendChild(node);
     wrapper.appendChild(span);
 
-    for (let i = 0; i < tokens.length; ++i) {
+    for (var i = 0; i < tokens.length; ++i) {
       if (i % 2 == 0) {
         wrapper.appendChild(document.createTextNode(tokens[i]));
       } else {
-        const hitSpan = document.createElement('span');
-        hitSpan.classList.add(HIT_CSS_CLASS);
-        hitSpan.style.backgroundColor = '#ffeb3b';  // --var(--paper-yellow-500)
-        hitSpan.textContent = tokens[i];
-        wrapper.appendChild(hitSpan);
+        var span = document.createElement('span');
+        span.classList.add(HIT_CSS_CLASS);
+        span.style.backgroundColor = '#ffeb3b';  // --var(--paper-yellow-500)
+        span.textContent = tokens[i];
+        wrapper.appendChild(span);
       }
     }
   }
@@ -131,7 +131,7 @@ cr.define('settings', function() {
    * @private
    */
   function findAndHighlightMatches_(request, root) {
-    let foundMatches = false;
+    var foundMatches = false;
     function doSearch(node) {
       if (node.nodeName == 'TEMPLATE' && node.hasAttribute('route-path') &&
           !node.if && !node.hasAttribute(SKIP_SEARCH_CSS_ATTRIBUTE)) {
@@ -143,7 +143,7 @@ cr.define('settings', function() {
         return;
 
       if (node instanceof HTMLElement) {
-        const element = /** @type {HTMLElement} */ (node);
+        var element = /** @type {HTMLElement} */ (node);
         if (element.hasAttribute(SKIP_SEARCH_CSS_ATTRIBUTE) ||
             element.hasAttribute('hidden') || element.style.display == 'none') {
           return;
@@ -151,7 +151,7 @@ cr.define('settings', function() {
       }
 
       if (node.nodeType == Node.TEXT_NODE) {
-        const textContent = node.nodeValue.trim();
+        var textContent = node.nodeValue.trim();
         if (textContent.length == 0)
           return;
 
@@ -170,16 +170,16 @@ cr.define('settings', function() {
         return;
       }
 
-      let child = node.firstChild;
+      var child = node.firstChild;
       while (child !== null) {
         // Getting a reference to the |nextSibling| before calling doSearch()
         // because |child| could be removed from the DOM within doSearch().
-        const nextSibling = child.nextSibling;
+        var nextSibling = child.nextSibling;
         doSearch(child);
         child = nextSibling;
       }
 
-      const shadowRoot = node.shadowRoot;
+      var shadowRoot = node.shadowRoot;
       if (shadowRoot)
         doSearch(shadowRoot);
     }
@@ -196,7 +196,7 @@ cr.define('settings', function() {
    * @private
    */
   function highlightAssociatedControl_(element, rawQuery) {
-    let searchBubble = element.querySelector('.' + SEARCH_BUBBLE_CSS_CLASS);
+    var searchBubble = element.querySelector('.' + SEARCH_BUBBLE_CSS_CLASS);
     // If the associated control has already been highlighted due to another
     // match on the same subpage, there is no need to do anything.
     if (searchBubble)
@@ -204,7 +204,7 @@ cr.define('settings', function() {
 
     searchBubble = document.createElement('div');
     searchBubble.classList.add(SEARCH_BUBBLE_CSS_CLASS);
-    const innards = document.createElement('div');
+    var innards = document.createElement('div');
     innards.classList.add('search-bubble-innards', 'text-elide');
     innards.textContent = rawQuery;
     searchBubble.appendChild(innards);
@@ -212,7 +212,7 @@ cr.define('settings', function() {
 
     // Dynamically position the bubble at the edge the associated control
     // element.
-    const updatePosition = function() {
+    var updatePosition = function() {
       searchBubble.style.top = element.offsetTop +
           (innards.classList.contains('above') ? -searchBubble.offsetHeight :
                                                  element.offsetHeight) +
@@ -233,9 +233,9 @@ cr.define('settings', function() {
    * @private
    */
   function revealParentSection_(node, rawQuery) {
-    let associatedControl = null;
+    var associatedControl = null;
     // Find corresponding SETTINGS-SECTION parent and make it visible.
-    let parent = node;
+    var parent = node;
     while (parent && parent.nodeName !== 'SETTINGS-SECTION') {
       parent = parent.nodeType == Node.DOCUMENT_FRAGMENT_NODE ?
           parent.host :
@@ -294,17 +294,17 @@ cr.define('settings', function() {
 
     /** @override */
     exec() {
-      const routePath = this.node.getAttribute('route-path');
-      const subpageTemplate =
+      var routePath = this.node.getAttribute('route-path');
+      var subpageTemplate =
           this.node['_content'].querySelector('settings-subpage');
       subpageTemplate.setAttribute('route-path', routePath);
       assert(!this.node.if);
       this.node.if = true;
 
       return new Promise((resolve, reject) => {
-        const parent = this.node.parentNode;
+        var parent = this.node.parentNode;
         parent.async(() => {
-          const renderedNode =
+          var renderedNode =
               parent.querySelector('[route-path="' + routePath + '"]');
           // Register a SearchAndHighlightTask for the part of the DOM that was
           // just rendered.
@@ -327,7 +327,7 @@ cr.define('settings', function() {
 
     /** @override */
     exec() {
-      const foundMatches = findAndHighlightMatches_(this.request, this.node);
+      var foundMatches = findAndHighlightMatches_(this.request, this.node);
       this.request.updateMatches(foundMatches);
       return Promise.resolve();
     }
@@ -346,10 +346,10 @@ cr.define('settings', function() {
     exec() {
       findAndRemoveHighlights_(this.node);
 
-      const shouldSearch = this.request.regExp !== null;
+      var shouldSearch = this.request.regExp !== null;
       this.setSectionsVisibility_(!shouldSearch);
       if (shouldSearch) {
-        const foundMatches = findAndHighlightMatches_(this.request, this.node);
+        var foundMatches = findAndHighlightMatches_(this.request, this.node);
         this.request.updateMatches(foundMatches);
       }
 
@@ -361,9 +361,9 @@ cr.define('settings', function() {
      * @private
      */
     setSectionsVisibility_(visible) {
-      const sections = this.node.querySelectorAll('settings-section');
+      var sections = this.node.querySelectorAll('settings-section');
 
-      for (let i = 0; i < sections.length; i++)
+      for (var i = 0; i < sections.length; i++)
         sections[i].hiddenBySearch = !visible;
     }
   }
@@ -439,7 +439,7 @@ cr.define('settings', function() {
       if (this.running_)
         return;
 
-      const task = this.popNextTask_();
+      var task = this.popNextTask_();
       if (!task) {
         this.running_ = false;
         if (this.onEmptyCallback_)
@@ -508,11 +508,11 @@ cr.define('settings', function() {
      * @private
      */
     generateRegExp_() {
-      let regExp = null;
+      var regExp = null;
 
       // Generate search text by escaping any characters that would be
       // problematic for regular expressions.
-      const searchText = this.rawQuery_.trim().replace(SANITIZE_REGEX, '\\$&');
+      var searchText = this.rawQuery_.trim().replace(SANITIZE_REGEX, '\\$&');
       if (searchText.length > 0)
         regExp = new RegExp(`(${searchText})`, 'i');
 
@@ -542,8 +542,8 @@ cr.define('settings', function() {
     }
   }
 
-  /** @type {!RegExp} */
-  const SANITIZE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
+  /** @const {!RegExp} */
+  var SANITIZE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
   /** @interface */
   class SearchManager {
@@ -579,7 +579,7 @@ cr.define('settings', function() {
       }
 
       this.lastSearchedText_ = text;
-      const request = new SearchRequest(text, page);
+      var request = new SearchRequest(text, page);
       this.activeRequests_.add(request);
       request.start();
       return request.resolver.promise.then(() => {

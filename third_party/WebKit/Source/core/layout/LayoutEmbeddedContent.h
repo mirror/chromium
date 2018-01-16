@@ -40,6 +40,8 @@ class CORE_EXPORT LayoutEmbeddedContent : public LayoutReplaced {
 
   bool RequiresAcceleratedCompositing() const;
 
+  bool NeedsPreferredWidthsRecalculation() const final;
+
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,
                    const LayoutPoint& accumulated_offset,

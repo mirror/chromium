@@ -9,7 +9,7 @@
 cr.exportPath('settings');
 
 /**
- * @type {number} Millisecond delay that can be used when closing an action
+ * @const {number} Millisecond delay that can be used when closing an action
  *      menu to keep it briefly on-screen.
  */
 settings.kMenuCloseDelay = 100;
@@ -96,7 +96,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        const map = new Map();
+        var map = new Map();
         // <if expr="not is_macosx">
         if (settings.routes.EDIT_DICTIONARY) {
           map.set(
@@ -132,7 +132,7 @@ Polymer({
     e.preventDefault();
     this.showAddLanguagesDialog_ = true;
     this.async(function() {
-      const dialog = this.$$('settings-add-languages-dialog');
+      var dialog = this.$$('settings-add-languages-dialog');
       dialog.addEventListener('close', () => {
         this.showAddLanguagesDialog_ = false;
         cr.ui.focusWithoutInk(assert(this.$.addLanguages));
@@ -150,7 +150,7 @@ Polymer({
    * @private
    */
   isNthLanguage_: function(n, language) {
-    const compareLanguage = assert(this.languages.enabled[n]);
+    var compareLanguage = assert(this.languages.enabled[n]);
     return language.language == compareLanguage.language;
   },
 
@@ -430,7 +430,7 @@ Polymer({
   getSpellCheckSecondaryText_: function() {
     if (this.getSpellCheckDisabled_())
       return loadTimeData.getString('spellCheckDisabled');
-    const enabledSpellCheckLanguages =
+    var enabledSpellCheckLanguages =
         this.getSpellCheckLanguages_().filter(function(languageState) {
           return (languageState.spellCheckEnabled || languageState.isManaged) &&
               languageState.language.supportsSpellcheck;
@@ -467,7 +467,7 @@ Polymer({
    * @private
    */
   getSpellCheckDisabled_: function() {
-    const pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (
+    var pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (
         this.get('browser.enable_spellchecking', this.prefs));
     return pref.value === false;
   },
@@ -495,7 +495,7 @@ Polymer({
     // possible to |this.linkPaths()| objects from |this.languages.enabled| to
     // |this.spellCheckLanguages_|, but that would require complex housekeeping
     // to |this.unlinkPaths()| as |this.languages.enabled| changes.
-    for (let i = 0; i < this.spellCheckLanguages_.length; i++) {
+    for (var i = 0; i < this.spellCheckLanguages_.length; i++) {
       this.notifyPath(`spellCheckLanguages_.${i}.isManaged`);
       this.notifyPath(`spellCheckLanguages_.${i}.spellCheckEnabled`);
     }
@@ -523,7 +523,7 @@ Polymer({
    * @param {!{target: Element, model: !{item: !LanguageState}}} e
    */
   onSpellCheckChange_: function(e) {
-    const item = e.model.item;
+    var item = e.model.item;
     if (!item.language.supportsSpellcheck)
       return;
 
@@ -582,7 +582,7 @@ Polymer({
 
   getInputMethodName_: function(id) {
     assert(cr.isChromeOS);
-    const inputMethod =
+    var inputMethod =
         this.languages.inputMethods.enabled.find(function(inputMethod) {
           return inputMethod.id == id;
         });
@@ -602,7 +602,7 @@ Polymer({
         /** @type {!{model: !{item: !LanguageState}}} */ (e).model.item));
 
     // Ensure the template has been stamped.
-    let menu = /** @type {?CrActionMenuElement} */ (this.$.menu.getIfExists());
+    var menu = /** @type {?CrActionMenuElement} */ (this.$.menu.getIfExists());
     if (!menu) {
       menu = /** @type {!CrActionMenuElement} */ (this.$.menu.get());
       // <if expr="chromeos">
@@ -632,7 +632,7 @@ Polymer({
    * @private
    */
   closeMenuSoon_: function() {
-    const menu = /** @type {!CrActionMenuElement} */ (this.$.menu.get());
+    var menu = /** @type {!CrActionMenuElement} */ (this.$.menu.get());
     setTimeout(function() {
       if (menu.open)
         menu.close();
@@ -661,7 +661,7 @@ Polymer({
    */
   toggleExpandButton_: function(e) {
     // The expand button handles toggling itself.
-    const expandButtonTag = 'CR-EXPAND-BUTTON';
+    var expandButtonTag = 'CR-EXPAND-BUTTON';
     if (e.target.tagName == expandButtonTag)
       return;
 
@@ -669,7 +669,7 @@ Polymer({
       return;
 
     /** @type {!CrExpandButtonElement} */
-    const expandButton = e.currentTarget.querySelector(expandButtonTag);
+    var expandButton = e.currentTarget.querySelector(expandButtonTag);
     assert(expandButton);
     expandButton.expanded = !expandButton.expanded;
   },

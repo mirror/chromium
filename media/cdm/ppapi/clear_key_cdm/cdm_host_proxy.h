@@ -15,7 +15,6 @@ class CdmHostProxy {
   virtual ~CdmHostProxy() = default;
 
   // This needs to be a superset of all Host interfaces supported.
-  virtual void OnInitialized(bool success) = 0;
   virtual cdm::Buffer* Allocate(uint32_t capacity) = 0;
   virtual void SetTimer(int64_t delay_ms, void* context) = 0;
   virtual cdm::Time GetCurrentWallTime() = 0;
@@ -54,7 +53,7 @@ class CdmHostProxy {
   virtual void OnDeferredInitializationDone(cdm::StreamType stream_type,
                                             cdm::Status decoder_status) = 0;
   virtual cdm::FileIO* CreateFileIO(cdm::FileIOClient* client) = 0;
-  virtual cdm::CdmProxy* CreateCdmProxy(cdm::CdmProxyClient* client) = 0;
+  virtual cdm::CdmProxy* CreateCdmProxy() = 0;
   virtual void RequestStorageId(uint32_t version) = 0;
 };
 

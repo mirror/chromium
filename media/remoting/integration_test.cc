@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "media/base/test_data_util.h"
 #include "media/remoting/end2end_test_renderer.h"
 #include "media/test/mock_media_source.h"
@@ -31,7 +30,7 @@ class TestRendererFactory final : public PipelineTestRendererFactory {
     std::unique_ptr<Renderer> renderer_impl =
         default_renderer_factory_->CreateRenderer(prepend_video_decoders_cb,
                                                   prepend_audio_decoders_cb);
-    return std::make_unique<End2EndTestRenderer>(std::move(renderer_impl));
+    return base::MakeUnique<End2EndTestRenderer>(std::move(renderer_impl));
   }
 
  private:

@@ -29,9 +29,9 @@
 
 namespace blink {
 
-SVGStringList::SVGStringList() = default;
+SVGStringList::SVGStringList() {}
 
-SVGStringList::~SVGStringList() = default;
+SVGStringList::~SVGStringList() {}
 
 void SVGStringList::Initialize(const String& item) {
   values_.clear();

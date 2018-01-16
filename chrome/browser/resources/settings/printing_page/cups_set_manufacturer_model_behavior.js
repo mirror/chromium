@@ -8,7 +8,7 @@
  */
 
 /** @polymerBehavior */
-const SetManufacturerModelBehavior = {
+var SetManufacturerModelBehavior = {
   properties: {
     /** @type {!CupsPrinterInfo} */
     activePrinter: {

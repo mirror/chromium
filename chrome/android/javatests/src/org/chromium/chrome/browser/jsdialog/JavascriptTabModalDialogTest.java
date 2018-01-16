@@ -26,7 +26,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.UrlUtils;
@@ -183,7 +182,6 @@ public class JavascriptTabModalDialogTest {
      */
     @Test
     @MediumTest
-    @DisabledTest(message = "crbug.com/800377")
     @Feature({"Browser", "Main"})
     public void testAlertModalDialogMessageFocus()
             throws InterruptedException, TimeoutException, ExecutionException {

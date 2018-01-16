@@ -17,7 +17,7 @@
 
 namespace blink {
 
-IDBObservation::~IDBObservation() = default;
+IDBObservation::~IDBObservation() {}
 
 ScriptValue IDBObservation::key(ScriptState* script_state) {
   if (!key_range_)
@@ -65,18 +65,16 @@ const String& IDBObservation::type() const {
   }
 }
 
-IDBObservation* IDBObservation::Create(WebIDBObservation observation,
+IDBObservation* IDBObservation::Create(const WebIDBObservation& observation,
                                        v8::Isolate* isolate) {
-  return new IDBObservation(std::move(observation), isolate);
+  return new IDBObservation(observation, isolate);
 }
 
-IDBObservation::IDBObservation(WebIDBObservation observation,
+IDBObservation::IDBObservation(const WebIDBObservation& observation,
                                v8::Isolate* isolate)
-    : key_range_(observation.key_range), operation_type_(observation.type) {
-  std::unique_ptr<IDBValue> value = observation.value.ReleaseIdbValue();
-  value->SetIsolate(isolate);
-  value_ = IDBAny::Create(std::move(value));
-}
+    : key_range_(observation.key_range),
+      value_(IDBAny::Create(IDBValue::Create(observation.value, isolate))),
+      operation_type_(observation.type) {}
 
 void IDBObservation::Trace(blink::Visitor* visitor) {
   visitor->Trace(key_range_);

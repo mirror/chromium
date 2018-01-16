@@ -71,15 +71,14 @@ Polymer({
    */
   onContextMenu_: function(e) {
     e.preventDefault();
-    e.stopPropagation();
     this.focus();
     if (!this.isSelectedItem_)
       this.selectThisItem_();
 
-    this.fire('open-command-menu', {
+    this.fire('open-item-menu', {
       x: e.clientX,
       y: e.clientY,
-      source: MenuSource.ITEM,
+      source: MenuSource.LIST,
     });
   },
 
@@ -91,9 +90,9 @@ Polymer({
     e.stopPropagation();
     e.preventDefault();
     this.selectThisItem_();
-    this.fire('open-command-menu', {
+    this.fire('open-item-menu', {
       targetElement: e.target,
-      source: MenuSource.ITEM,
+      source: MenuSource.LIST,
     });
   },
 

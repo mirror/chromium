@@ -270,7 +270,6 @@ html element a
     property protocol
     property referrerPolicy
     property rel
-    property relList
     property rev
     property search
     property shape
@@ -299,7 +298,6 @@ html element area
     property protocol
     property referrerPolicy
     property rel
-    property relList
     property search
     property shape
     property target

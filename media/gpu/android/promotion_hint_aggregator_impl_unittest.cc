@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -30,7 +31,7 @@ class PromotionHintAggregatorImplTest : public testing::Test {
   void SetUp() override {
     // Advance the clock so that time 0 isn't recent.
     tick_clock_.Advance(TimeDelta::FromSeconds(10000));
-    impl_ = std::make_unique<PromotionHintAggregatorImpl>(&tick_clock_);
+    impl_ = base::MakeUnique<PromotionHintAggregatorImpl>(&tick_clock_);
   }
 
   void TearDown() override {}

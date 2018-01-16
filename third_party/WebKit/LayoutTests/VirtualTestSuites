@@ -125,7 +125,7 @@
   },
   {
     "prefix": "android",
-    "base": "rootscroller",
+    "base": "fast/rootscroller",
     "args": ["--enable-features=OverlayScrollbar", "--enable-threaded-compositing",
              "--enable-fixed-position-compositing", "--enable-prefer-compositing-to-lcd-text",
              "--enable-composited-scrolling-for-frames", "--enable-gesture-tap-highlight", "--enable-pinch",
@@ -188,7 +188,7 @@
   },
   {
     "prefix": "rootlayerscrolls",
-    "base": "rootscroller",
+    "base": "fast/rootscroller",
     "args": ["--root-layer-scrolls"]
   },
   {
@@ -299,18 +299,6 @@
   {
     "prefix": "spv175",
     "base": "fast/pagination",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
-    "references_use_default_args": true
-  },
-  {
-    "prefix": "spv175",
-    "base": "fragmentation",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
-    "references_use_default_args": true
-  },
-  {
-    "prefix": "spv175",
-    "base": "printing",
     "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
     "references_use_default_args": true
   },

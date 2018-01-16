@@ -34,24 +34,15 @@ MediaMetricsProvider::~MediaMetricsProvider() {
   ukm::builders::Media_WebMediaPlayerState builder(source_id);
   builder.SetPlayerID(player_id_);
   builder.SetIsTopFrame(is_top_frame_);
-  builder.SetIsEME(is_eme_);
   builder.SetIsMSE(is_mse_);
   builder.SetFinalPipelineStatus(pipeline_status_);
-
-  if (time_to_metadata_ != kNoTimestamp)
-    builder.SetTimeToMetadata(time_to_metadata_.InMilliseconds());
-  if (time_to_first_frame_ != kNoTimestamp)
-    builder.SetTimeToFirstFrame(time_to_first_frame_.InMilliseconds());
-  if (time_to_play_ready_ != kNoTimestamp)
-    builder.SetTimeToPlayReady(time_to_play_ready_.InMilliseconds());
-
   builder.Record(ukm_recorder);
 }
 
 // static
 void MediaMetricsProvider::Create(VideoDecodePerfHistory* perf_history,
                                   mojom::MediaMetricsProviderRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<MediaMetricsProvider>(perf_history),
+  mojo::MakeStrongBinding(base::MakeUnique<MediaMetricsProvider>(perf_history),
                           std::move(request));
 }
 
@@ -74,29 +65,6 @@ void MediaMetricsProvider::OnError(PipelineStatus status) {
   pipeline_status_ = status;
 }
 
-void MediaMetricsProvider::SetIsEME() {
-  // This may be called before Initialize().
-  is_eme_ = true;
-}
-
-void MediaMetricsProvider::SetTimeToMetadata(base::TimeDelta elapsed) {
-  DCHECK(initialized_);
-  DCHECK_EQ(time_to_metadata_, kNoTimestamp);
-  time_to_metadata_ = elapsed;
-}
-
-void MediaMetricsProvider::SetTimeToFirstFrame(base::TimeDelta elapsed) {
-  DCHECK(initialized_);
-  DCHECK_EQ(time_to_first_frame_, kNoTimestamp);
-  time_to_first_frame_ = elapsed;
-}
-
-void MediaMetricsProvider::SetTimeToPlayReady(base::TimeDelta elapsed) {
-  DCHECK(initialized_);
-  DCHECK_EQ(time_to_play_ready_, kNoTimestamp);
-  time_to_play_ready_ = elapsed;
-}
-
 void MediaMetricsProvider::AcquireWatchTimeRecorder(
     mojom::PlaybackPropertiesPtr properties,
     mojom::WatchTimeRecorderRequest request) {
@@ -105,7 +73,7 @@ void MediaMetricsProvider::AcquireWatchTimeRecorder(
     return;
   }
 
-  mojo::MakeStrongBinding(std::make_unique<WatchTimeRecorder>(
+  mojo::MakeStrongBinding(base::MakeUnique<WatchTimeRecorder>(
                               std::move(properties), untrusted_top_origin_,
                               is_top_frame_, player_id_),
                           std::move(request));
@@ -119,7 +87,7 @@ void MediaMetricsProvider::AcquireVideoDecodeStatsRecorder(
   }
 
   mojo::MakeStrongBinding(
-      std::make_unique<VideoDecodeStatsRecorder>(
+      base::MakeUnique<VideoDecodeStatsRecorder>(
           untrusted_top_origin_, is_top_frame_, player_id_, perf_history_),
       std::move(request));
 }

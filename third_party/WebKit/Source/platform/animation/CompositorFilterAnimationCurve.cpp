@@ -14,7 +14,7 @@ namespace blink {
 CompositorFilterAnimationCurve::CompositorFilterAnimationCurve()
     : curve_(cc::KeyframedFilterAnimationCurve::Create()) {}
 
-CompositorFilterAnimationCurve::~CompositorFilterAnimationCurve() = default;
+CompositorFilterAnimationCurve::~CompositorFilterAnimationCurve() {}
 
 void CompositorFilterAnimationCurve::AddKeyframe(
     const CompositorFilterKeyframe& keyframe) {

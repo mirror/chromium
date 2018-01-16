@@ -30,7 +30,7 @@
 
 namespace WTF {
 
-TextCodec::~TextCodec() = default;
+TextCodec::~TextCodec() {}
 
 int TextCodec::GetUnencodableReplacement(
     unsigned code_point,
@@ -42,10 +42,9 @@ int TextCodec::GetUnencodableReplacement(
                code_point);
       return static_cast<int>(strlen(replacement));
     case kURLEncodedEntitiesForUnencodables:
-      snprintf(replacement, sizeof(UnencodableReplacementArray),
-               "%%26%%23%u%%3B", code_point);
+      snprintf(replacement, sizeof(UnencodableReplacementArray), "&%%23%u;",
+               code_point);
       return static_cast<int>(strlen(replacement));
-
     case kCSSEncodedEntitiesForUnencodables:
       snprintf(replacement, sizeof(UnencodableReplacementArray), "\\%x ",
                code_point);

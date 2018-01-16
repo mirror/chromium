@@ -72,7 +72,7 @@ Polymer({
   refreshNetworks_: function() {
     if (!this.networkType)
       return;
-    const filter = {
+    var filter = {
       networkType: this.networkType,
       visible: false,
       configured: true
@@ -124,7 +124,7 @@ Polymer({
    * @private
    */
   onMenuButtonTap_: function(event) {
-    const button = /** @type {!HTMLElement} */ (event.target);
+    var button = /** @type {!HTMLElement} */ (event.target);
     this.selectedGuid_ =
         /** @type {!{model: !{item: !CrOnc.NetworkStateProperties}}} */ (event)
             .model.item.GUID;
@@ -138,7 +138,7 @@ Polymer({
                 'Unexpected error: ' + chrome.runtime.lastError.message);
             return;
           }
-          const preferred = button.hasAttribute('preferred');
+          var preferred = button.hasAttribute('preferred');
           if (this.isNetworkPolicyEnforced(properties.Priority)) {
             this.showAddPreferred_ = false;
             this.showRemovePreferred_ = false;
@@ -177,7 +177,7 @@ Polymer({
    * @private
    */
   fireShowDetails_: function(event) {
-    const state =
+    var state =
         /** @type {!{model: !{item: !CrOnc.NetworkStateProperties}}} */ (event)
             .model.item;
     this.fire('show-detail', state);

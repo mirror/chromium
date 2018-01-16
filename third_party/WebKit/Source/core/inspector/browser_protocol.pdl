@@ -491,48 +491,6 @@ domain Browser
       # V8 version.
       string jsVersion
 
-  # Chrome histogram bucket.
-  experimental type Bucket extends object
-    properties
-      # Minimum value (inclusive).
-      integer low
-      # Maximum value (exclusive).
-      integer high
-      # Number of samples.
-      integer count
-
-  # Chrome histogram.
-  experimental type Histogram extends object
-    properties
-      # Name.
-      string name
-      # Sum of sample values.
-      integer sum
-      # Total number of samples.
-      integer count
-      # Buckets.
-      array of Bucket buckets
-
-  # Get Chrome histograms.
-  experimental command getHistograms
-    parameters
-      # Requested substring in name. Only histograms which have query as a
-      # substring in their name are extracted. An empty or absent query returns
-      # all histograms.
-      optional string query
-    returns
-      # Histograms.
-      array of Histogram histograms
-
-  # Get a Chrome histogram by name.
-  experimental command getHistogram
-    parameters
-      # Requested histogram name.
-      string name
-    returns
-      # Histogram.
-      Histogram histogram
-
   # Get position and size of the browser window.
   experimental command getWindowBounds
     parameters
@@ -2319,9 +2277,6 @@ domain Emulation
       # If set this specifies the maximum number of tasks that can be run before virtual is forced
       # forwards to prevent deadlock.
       optional integer maxVirtualTimeTaskStarvationCount
-      # If set the virtual time policy change should be deferred until any frame starts navigating.
-      # Note any previous deferred policy change is superseded.
-      optional boolean waitForNavigation
     returns
       # Absolute timestamp at which virtual time was first enabled (milliseconds since epoch).
       Runtime.Timestamp virtualTimeBase
@@ -3256,8 +3211,6 @@ domain Network
       Headers headers
       # HTTP POST request data.
       optional string postData
-      # True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long.
-      optional boolean hasPostData
       # The mixed content type of the request.
       optional Security.MixedContentType mixedContentType
       # Priority of the resource request at the time request is sent.
@@ -3621,8 +3574,6 @@ domain Network
       experimental optional integer maxTotalBufferSize
       # Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
       experimental optional integer maxResourceBufferSize
-      # Longest post body size (in bytes) that would be included in requestWillBeSent notification
-      optional integer maxPostDataSize
 
   # Returns all browser cookies. Depending on the backend support, will return detailed cookie
   # information in the `cookies` field.
@@ -3659,15 +3610,6 @@ domain Network
       string body
       # True, if content was sent as base64.
       boolean base64Encoded
-
-  # Returns post data sent with the request. Returns an error when no data was sent with the request.
-  command getRequestPostData
-    parameters
-      # Identifier of the network request to get content for.
-      RequestId requestId
-    returns
-      # Base64-encoded request body.
-      string postData
 
   # Returns content served for the given currently intercepted request.
   experimental command getResponseBodyForInterception
@@ -4746,9 +4688,6 @@ domain Page
   # Force the page stop all navigations and pending resource fetches.
   command stopLoading
 
-  # Crashes renderer on the IO thread, generates minidumps.
-  experimental command crash
-
   # Stops sending each frame in the `screencastFrame`.
   experimental command stopScreencast
 
@@ -4991,7 +4930,7 @@ domain Security
   # Enables tracking security state changes.
   command enable
 
-  # Enable/disable whether all certificate errors should be ignored.
+  # Enable/disable whether all certificate errors should be ignored. 
   experimental command setIgnoreCertificateErrors
     parameters
       # If true, all certificate errors will be ignored.

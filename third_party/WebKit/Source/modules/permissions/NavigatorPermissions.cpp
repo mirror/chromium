@@ -9,7 +9,7 @@
 
 namespace blink {
 
-NavigatorPermissions::NavigatorPermissions() = default;
+NavigatorPermissions::NavigatorPermissions() {}
 
 // static
 const char* NavigatorPermissions::SupplementName() {

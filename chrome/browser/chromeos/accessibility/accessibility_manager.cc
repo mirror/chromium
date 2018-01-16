@@ -15,12 +15,13 @@
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/autoclick/mus/public/interfaces/autoclick.mojom.h"
 #include "ash/public/cpp/ash_pref_names.h"
-#include "ash/public/interfaces/constants.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
+#include "ash/system/power/backlights_forced_off_setter.h"
+#include "ash/system/power/scoped_backlights_forced_off.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/callback.h"
 #include "base/callback_helpers.h"
@@ -51,12 +52,10 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/api/accessibility_private.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chromeos/audio/chromeos_sounds.h"
 #include "chromeos/chromeos_switches.h"
@@ -91,7 +90,6 @@
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_observer.h"
-#include "url/gurl.h"
 
 using content::BrowserThread;
 using extensions::api::braille_display_private::BrailleController;
@@ -236,11 +234,6 @@ AccessibilityManager* AccessibilityManager::Get() {
   return g_accessibility_manager;
 }
 
-// static
-void AccessibilityManager::ShowAccessibilityHelp(Browser* browser) {
-  ShowSingletonTab(browser, GURL(chrome::kChromeAccessibilityHelpURL));
-}
-
 AccessibilityManager::AccessibilityManager()
     : profile_(NULL),
       large_cursor_pref_handler_(ash::prefs::kAccessibilityLargeCursorEnabled),
@@ -267,6 +260,7 @@ AccessibilityManager::AccessibilityManager()
           ash::prefs::kAccessibilitySwitchAccessEnabled),
       sticky_keys_enabled_(false),
       spoken_feedback_enabled_(false),
+      autoclick_enabled_(false),
       autoclick_delay_ms_(ash::AutoclickController::GetDefaultAutoclickDelay()),
       virtual_keyboard_enabled_(false),
       caret_highlight_enabled_(false),
@@ -338,11 +332,6 @@ AccessibilityManager::AccessibilityManager()
       extension_misc::kSwitchAccessExtensionId,
       resources_path.Append(extension_misc::kSwitchAccessExtensionPath),
       base::Closure()));
-
-  // Connect to ash's AccessibilityController interface.
-  content::ServiceManagerConnection::GetForProcess()
-      ->GetConnector()
-      ->BindInterface(ash::mojom::kServiceName, &accessibility_controller_);
 }
 
 AccessibilityManager::~AccessibilityManager() {
@@ -475,7 +464,7 @@ void AccessibilityManager::EnableSpokenFeedback(
   spoken_feedback_notification_ = ash::A11Y_NOTIFICATION_NONE;
 }
 
-void AccessibilityManager::OnSpokenFeedbackChanged() {
+void AccessibilityManager::UpdateSpokenFeedbackFromPref() {
   if (!profile_)
     return;
 
@@ -513,8 +502,12 @@ void AccessibilityManager::OnSpokenFeedbackChanged() {
 }
 
 bool AccessibilityManager::IsSpokenFeedbackEnabled() const {
-  return profile_ && profile_->GetPrefs()->GetBoolean(
-                         ash::prefs::kAccessibilitySpokenFeedbackEnabled);
+  return spoken_feedback_enabled_;
+}
+
+void AccessibilityManager::ToggleSpokenFeedback(
+    ash::AccessibilityNotificationVisibility notify) {
+  EnableSpokenFeedback(!IsSpokenFeedbackEnabled(), notify);
 }
 
 void AccessibilityManager::EnableHighContrast(bool enabled) {
@@ -670,11 +663,33 @@ void AccessibilityManager::EnableAutoclick(bool enabled) {
 }
 
 bool AccessibilityManager::IsAutoclickEnabled() const {
-  return profile_ && profile_->GetPrefs()->GetBoolean(
-                         ash::prefs::kAccessibilityAutoclickEnabled);
+  return autoclick_enabled_;
 }
 
-void AccessibilityManager::OnAutoclickChanged() {}
+void AccessibilityManager::UpdateAutoclickFromPref() {
+  if (!profile_)
+    return;
+
+  bool enabled = profile_->GetPrefs()->GetBoolean(
+      ash::prefs::kAccessibilityAutoclickEnabled);
+
+  if (autoclick_enabled_ == enabled)
+    return;
+  autoclick_enabled_ = enabled;
+
+  if (GetAshConfig() == ash::Config::MASH) {
+    service_manager::Connector* connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+    mash::mojom::LaunchablePtr launchable;
+    connector->BindInterface("accessibility_autoclick", &launchable);
+    launchable->Launch(mash::mojom::kWindow, mash::mojom::LaunchMode::DEFAULT);
+    return;
+  }
+
+  ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
+      ash::A11Y_NOTIFICATION_NONE);
+  ash::Shell::Get()->autoclick_controller()->SetEnabled(enabled);
+}
 
 void AccessibilityManager::SetAutoclickDelay(int delay_ms) {
   if (!profile_)
@@ -786,7 +801,17 @@ void AccessibilityManager::OnMonoAudioChanged() {
 }
 
 void AccessibilityManager::SetDarkenScreen(bool darken) {
-  accessibility_controller_->SetDarkenScreen(darken);
+  // TODO(mash): Support forcing backlights off from within Chrome:
+  // https://crbug.com/793112
+  if (GetAshConfig() == ash::Config::MASH)
+    return;
+
+  if (darken && !scoped_backlights_forced_off_) {
+    scoped_backlights_forced_off_ =
+        ash::Shell::Get()->backlights_forced_off_setter()->ForceBacklightsOff();
+  } else if (!darken && scoped_backlights_forced_off_) {
+    scoped_backlights_forced_off_.reset();
+  }
 }
 
 void AccessibilityManager::SetCaretHighlightEnabled(bool enabled) {
@@ -1051,7 +1076,7 @@ void AccessibilityManager::UpdateBrailleImeState() {
                 extension_ime_util::kBrailleImeEngineId);
   bool is_enabled = (it != preload_engines.end());
   bool should_be_enabled =
-      (IsSpokenFeedbackEnabled() && braille_display_connected_);
+      (spoken_feedback_enabled_ && braille_display_connected_);
   if (is_enabled == should_be_enabled)
     return;
   if (should_be_enabled)
@@ -1128,7 +1153,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilitySpokenFeedbackEnabled,
-        base::Bind(&AccessibilityManager::OnSpokenFeedbackChanged,
+        base::Bind(&AccessibilityManager::UpdateSpokenFeedbackFromPref,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityHighContrastEnabled,
@@ -1136,7 +1161,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityAutoclickEnabled,
-        base::Bind(&AccessibilityManager::OnAutoclickChanged,
+        base::Bind(&AccessibilityManager::UpdateAutoclickFromPref,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityAutoclickDelayMs,
@@ -1216,6 +1241,8 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     UpdateBrailleImeState();
   UpdateAlwaysShowMenuFromPref();
   UpdateStickyKeysFromPref();
+  UpdateSpokenFeedbackFromPref();
+  UpdateAutoclickFromPref();
   UpdateAutoclickDelayFromPref();
   UpdateVirtualKeyboardFromPref();
   UpdateCaretHighlightFromPref();
@@ -1224,10 +1251,6 @@ void AccessibilityManager::SetProfile(Profile* profile) {
   UpdateTapDraggingFromPref();
   UpdateSelectToSpeakFromPref();
   UpdateSwitchAccessFromPref();
-
-  // TODO(warx): reconcile to ash once the prefs registration above is moved to
-  // ash.
-  OnSpokenFeedbackChanged();
 
   // Update the panel height in the shelf layout manager when the profile
   // changes, since the shelf layout manager doesn't exist in the login profile.
@@ -1283,8 +1306,7 @@ void AccessibilityManager::NotifyAccessibilityStatusChanged(
   if (details.notification_type != ACCESSIBILITY_MANAGER_SHUTDOWN &&
       details.notification_type != ACCESSIBILITY_TOGGLE_HIGH_CONTRAST_MODE &&
       details.notification_type != ACCESSIBILITY_TOGGLE_LARGE_CURSOR &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK) {
+      details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO) {
     ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
         details.notify);
   }
@@ -1390,13 +1412,7 @@ void AccessibilityManager::OnBrailleDisplayStateChanged(
     const DisplayState& display_state) {
   braille_display_connected_ = display_state.available;
   if (braille_display_connected_) {
-    // TODO(crbug.com/594887): Fix for mash by moving notifying accessibility
-    // status change to ash for BrailleDisplayStateChanged.
-    if (GetAshConfig() == ash::Config::MASH)
-      return;
-
-    ash::Shell::Get()->accessibility_controller()->SetSpokenFeedbackEnabled(
-        true, ash::A11Y_NOTIFICATION_SHOW);
+    EnableSpokenFeedback(true, ash::A11Y_NOTIFICATION_SHOW);
   }
   UpdateBrailleImeState();
 
@@ -1480,7 +1496,7 @@ void AccessibilityManager::PostUnloadChromeVox() {
   }
 
   // In case the user darkened the screen, undarken it now.
-  SetDarkenScreen(false);
+  scoped_backlights_forced_off_.reset();
 
   keyboard_state_setter_.reset();
 }

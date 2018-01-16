@@ -22,7 +22,7 @@ class LineLayoutRubyText : public LineLayoutBlockFlow {
 
   explicit LineLayoutRubyText(std::nullptr_t) : LineLayoutBlockFlow(nullptr) {}
 
-  LineLayoutRubyText() = default;
+  LineLayoutRubyText() {}
 
  private:
   LayoutRubyText* ToRubyText() { return ToLayoutRubyText(GetLayoutObject()); }

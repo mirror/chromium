@@ -60,8 +60,6 @@ class AuraLinuxApplication
     return platform_node_->GetNativeViewAccessible();
   }
 
-  const ui::AXUniqueId& GetUniqueId() const override { return unique_id_; }
-
   // WidgetObserver:
 
   void OnWidgetDestroying(Widget* widget) override {
@@ -161,7 +159,6 @@ class AuraLinuxApplication
 
   ui::AXPlatformNode* platform_node_;
   ui::AXNodeData data_;
-  ui::AXUniqueId unique_id_;
   std::vector<Widget*> widgets_;
 
   DISALLOW_COPY_AND_ASSIGN(AuraLinuxApplication);

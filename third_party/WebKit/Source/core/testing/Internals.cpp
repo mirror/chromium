@@ -107,6 +107,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTreeAsText.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutMenuListItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/HistoryItem.h"
@@ -735,7 +736,7 @@ CSSStyleDeclaration* Internals::computedStyleIncludingVisitedInfo(
 
 ShadowRoot* Internals::createUserAgentShadowRoot(Element* host) {
   DCHECK(host);
-  return &host->EnsureLegacyUserAgentShadowRootV0();
+  return &host->EnsureUserAgentShadowRoot();
 }
 
 void Internals::setBrowserControlsState(float top_height,
@@ -792,8 +793,7 @@ String Internals::shadowRootType(const Node* root,
   }
 
   switch (ToShadowRoot(root)->GetType()) {
-    case ShadowRootType::kLegacyUserAgentV0:
-    case ShadowRootType::kUserAgentV1:
+    case ShadowRootType::kUserAgent:
       return String("UserAgentShadowRoot");
     case ShadowRootType::V0:
       return String("V0ShadowRoot");
@@ -2988,8 +2988,9 @@ String Internals::selectMenuListText(HTMLSelectElement* select) {
   if (!layout_object || !layout_object->IsMenuList())
     return String();
 
-  LayoutMenuList* menu_list = ToLayoutMenuList(layout_object);
-  return menu_list->GetText();
+  LayoutMenuListItem menu_list_item =
+      LayoutMenuListItem(ToLayoutMenuList(layout_object));
+  return menu_list_item.GetText();
 }
 
 bool Internals::isSelectPopupVisible(Node* node) {

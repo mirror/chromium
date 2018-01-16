@@ -11,6 +11,10 @@
 #include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace device {
 
 // Implements the GeolocationConfig Mojo interface.
@@ -20,7 +24,8 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationConfig
   GeolocationConfig();
   ~GeolocationConfig() override;
 
-  static void Create(mojom::GeolocationConfigRequest request);
+  static void Create(mojom::GeolocationConfigRequest request,
+                     const service_manager::BindSourceInfo& source_info);
 
   void IsHighAccuracyLocationBeingCaptured(
       IsHighAccuracyLocationBeingCapturedCallback callback) override;

@@ -49,7 +49,7 @@ std::unique_ptr<FileSystemClient> LocalFileSystemClient::Create() {
       static_cast<FileSystemClient*>(new LocalFileSystemClient()));
 }
 
-LocalFileSystemClient::~LocalFileSystemClient() = default;
+LocalFileSystemClient::~LocalFileSystemClient() {}
 
 bool LocalFileSystemClient::RequestFileSystemAccessSync(
     ExecutionContext* context) {
@@ -80,6 +80,6 @@ void LocalFileSystemClient::RequestFileSystemAccessAsync(
       ->RequestFileSystemAccessAsync(std::move(callbacks));
 }
 
-LocalFileSystemClient::LocalFileSystemClient() = default;
+LocalFileSystemClient::LocalFileSystemClient() {}
 
 }  // namespace blink

@@ -55,12 +55,11 @@ public final class WebContentsUserData {
     }
 
     /**
-     * Looks up the generic object of the given web contents.
+     * Looks up the generic object of the given web contents. If not present, create one.
      *
      * @param webContents The web contents for which to lookup the object.
      * @param key Class instance of the object used as the key.
-     * @param userDataFactory Factory that creates an object of the generic class. Create a new
-     * instance if the object is not available and the factory is non-null.
+     * @param userDataFactory Factory that creates an object of the generic class.
      * @return The object (possibly null) of the given web contents.
      */
     @SuppressWarnings("unchecked")
@@ -74,7 +73,7 @@ public final class WebContentsUserData {
         if (userDataMap == null) return null;
 
         WebContentsUserData data = userDataMap.get(key);
-        if (data == null && userDataFactory != null) {
+        if (data == null) {
             T object = userDataFactory.create(webContents);
             assert object.getClass() == key;
             webContentsImpl.setUserData(key, new WebContentsUserData(object));

@@ -56,7 +56,7 @@ class MODULES_EXPORT IDBObjectStore final : public ScriptWrappable {
                                 IDBTransaction* transaction) {
     return new IDBObjectStore(std::move(metadata), transaction);
   }
-  ~IDBObjectStore() = default;
+  ~IDBObjectStore() {}
   void Trace(blink::Visitor*);
 
   const IDBObjectStoreMetadata& Metadata() const { return *metadata_; }
@@ -117,13 +117,13 @@ class MODULES_EXPORT IDBObjectStore final : public ScriptWrappable {
 
   IDBRequest* count(ScriptState*, const ScriptValue& range, ExceptionState&);
 
-  // Exposed for the use of IDBCursor::update().
-  IDBRequest* DoPut(ScriptState*,
-                    WebIDBPutMode,
-                    IDBAny* source,
-                    const ScriptValue&,
-                    const IDBKey*,
-                    ExceptionState&);
+  // Used by IDBCursor::update():
+  IDBRequest* put(ScriptState*,
+                  WebIDBPutMode,
+                  IDBAny* source,
+                  const ScriptValue&,
+                  IDBKey*,
+                  ExceptionState&);
 
   // Used internally and by InspectorIndexedDBAgent:
   IDBRequest* openCursor(
@@ -194,12 +194,12 @@ class MODULES_EXPORT IDBObjectStore final : public ScriptWrappable {
                         const IDBKeyPath&,
                         const IDBIndexParameters&,
                         ExceptionState&);
-  IDBRequest* DoPut(ScriptState*,
-                    WebIDBPutMode,
-                    IDBAny* source,
-                    const ScriptValue&,
-                    const ScriptValue& key_value,
-                    ExceptionState&);
+  IDBRequest* put(ScriptState*,
+                  WebIDBPutMode,
+                  IDBAny* source,
+                  const ScriptValue&,
+                  const ScriptValue& key,
+                  ExceptionState&);
 
   int64_t FindIndexId(const String& name) const;
 

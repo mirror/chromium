@@ -24,8 +24,8 @@ namespace {
 
 class MockPlatform final : public TestingPlatformSupportWithMockScheduler {
  public:
-  MockPlatform() = default;
-  ~MockPlatform() override = default;
+  MockPlatform() {}
+  ~MockPlatform() override {}
 
   // From blink::Platform:
   void CacheMetadata(const WebURL& url, Time, const char*, size_t) override {

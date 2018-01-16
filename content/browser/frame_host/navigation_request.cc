@@ -47,6 +47,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/request_context_type.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
@@ -56,7 +57,6 @@
 #include "net/base/url_util.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/redirect_info.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
@@ -213,13 +213,13 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
     PreviewsState previews_state,
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
-    const scoped_refptr<network::ResourceRequestBody>& post_body,
+    const scoped_refptr<ResourceRequestBody>& post_body,
     const base::TimeTicks& navigation_start,
     NavigationControllerImpl* controller) {
   // A form submission happens either because the navigation is a
   // renderer-initiated form submission that took the OpenURL path or a
   // back/forward/reload navigation the does a form resubmission.
-  scoped_refptr<network::ResourceRequestBody> request_body;
+  scoped_refptr<ResourceRequestBody> request_body;
   std::string post_content_type;
   if (post_body) {
     // Standard form submission from the renderer.
@@ -262,9 +262,6 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           controller->GetEntryCount());
   request_params.post_content_type = post_content_type;
 
-  // TODO(jochen): Move suggested_filename from BeginNavigationParams to
-  // CommonNavigationParams, now that it's also used here for browser initiated
-  // requests.
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       mojom::BeginNavigationParams::New(
@@ -273,7 +270,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           blink::WebMixedContentContextType::kBlockable, is_form_submission,
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
-          GURL() /* client_side_redirect_url */, entry.suggested_filename()),
+          GURL() /* client_side_redirect_url */,
+          base::nullopt /* suggested_filename */),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;

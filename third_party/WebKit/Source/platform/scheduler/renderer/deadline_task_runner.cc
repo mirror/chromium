@@ -17,7 +17,7 @@ DeadlineTaskRunner::DeadlineTaskRunner(
       base::Bind(&DeadlineTaskRunner::RunInternal, base::Unretained(this)));
 }
 
-DeadlineTaskRunner::~DeadlineTaskRunner() = default;
+DeadlineTaskRunner::~DeadlineTaskRunner() {}
 
 void DeadlineTaskRunner::SetDeadline(const base::Location& from_here,
                                      base::TimeDelta delay,

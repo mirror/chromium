@@ -84,8 +84,8 @@ TEST_F(AXTreeSourceAuraTest, Accessors) {
   AXTreeSourceAura ax_tree;
   ASSERT_TRUE(ax_tree.GetRoot());
 
-  // ID's should be > 0.
-  ASSERT_GE(ax_tree.GetRoot()->GetUniqueId().Get(), 1);
+  // ID's should start at 1 and there should be a root.
+  ASSERT_EQ(1, ax_tree.GetRoot()->GetID());
 
   // Grab the content view directly from cache to avoid walking down the tree.
   AXAuraObjWrapper* content =
@@ -104,8 +104,6 @@ TEST_F(AXTreeSourceAuraTest, Accessors) {
   ASSERT_EQ(1U, textfield_children.size());
 
   ASSERT_EQ(content, textfield->GetParent());
-
-  ASSERT_NE(textfield->GetUniqueId(), ax_tree.GetRoot()->GetUniqueId());
 
   // Try walking up the tree to the root.
   AXAuraObjWrapper* test_root = NULL;
@@ -126,7 +124,7 @@ TEST_F(AXTreeSourceAuraTest, DoDefault) {
   ASSERT_FALSE(textfield_->HasFocus());
   ui::AXActionData action_data;
   action_data.action = ui::AX_ACTION_DO_DEFAULT;
-  action_data.target_node_id = textfield_wrapper->GetUniqueId().Get();
+  action_data.target_node_id = textfield_wrapper->GetID();
   textfield_wrapper->HandleAccessibleAction(action_data);
   ASSERT_TRUE(textfield_->HasFocus());
 }
@@ -142,7 +140,7 @@ TEST_F(AXTreeSourceAuraTest, Focus) {
   ASSERT_FALSE(textfield_->HasFocus());
   ui::AXActionData action_data;
   action_data.action = ui::AX_ACTION_FOCUS;
-  action_data.target_node_id = textfield_wrapper->GetUniqueId().Get();
+  action_data.target_node_id = textfield_wrapper->GetID();
   textfield_wrapper->HandleAccessibleAction(action_data);
   ASSERT_TRUE(textfield_->HasFocus());
 }
@@ -179,7 +177,7 @@ TEST_F(AXTreeSourceAuraTest, Serialize) {
 
   int text_field_update_index = -1;
   for (size_t i = 0; i < node_count; ++i) {
-    if (textfield_wrapper->GetUniqueId().Get() == out_update2.nodes[i].id)
+    if (textfield_wrapper->GetID() == out_update2.nodes[i].id)
       text_field_update_index = i;
   }
 

@@ -127,18 +127,11 @@ class WebContentsTester {
   // Sets the return value of GetLastCommittedUrl() of TestWebContents.
   virtual void SetLastCommittedURL(const GURL& url) = 0;
 
-  // Sets the return value of GetContentsMimeType().
-  virtual void SetMainFrameMimeType(const std::string& mime_type) = 0;
-
   // Override WasRecentlyAudible for testing.
   virtual void SetWasRecentlyAudible(bool audible) = 0;
 
   // Override IsCurrentlyAudible for testing.
   virtual void SetIsCurrentlyAudible(bool audible) = 0;
-
-  // Simulates a direct user interaction.
-  // |render_widget_host| can be equal to nullptr.
-  virtual void TestOnUserInteraction(blink::WebInputEvent::Type type) = 0;
 };
 
 }  // namespace content

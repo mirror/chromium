@@ -64,8 +64,7 @@
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  id<LayoutGuideProvider> safeAreaLayoutGuide =
-      SafeAreaLayoutGuideForView(self.view);
+  UILayoutGuide* safeAreaLayoutGuide = SafeAreaLayoutGuideForView(self.view);
   UIView* contentView = self.contentViewController.view;
   UIView* headerView = self.appBar.headerViewController.headerView;
   contentView.translatesAutoresizingMaskIntoConstraints = NO;

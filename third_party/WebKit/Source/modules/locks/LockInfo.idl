@@ -6,5 +6,4 @@
 dictionary LockInfo {
     DOMString name;
     LockMode mode;
-    DOMString clientId;
 };

@@ -56,7 +56,7 @@ FESpecularLighting* FESpecularLighting::Create(
                                 std::move(light_source));
 }
 
-FESpecularLighting::~FESpecularLighting() = default;
+FESpecularLighting::~FESpecularLighting() {}
 
 Color FESpecularLighting::LightingColor() const {
   return lighting_color_;

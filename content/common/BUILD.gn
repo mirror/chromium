@@ -45,6 +45,8 @@ source_set("common") {
     "android/hash_set.h",
     "android/media_metadata_android.cc",
     "android/media_metadata_android.h",
+    "android/resource_request_body_android.cc",
+    "android/resource_request_body_android.h",
     "android/sync_compositor_statics.cc",
     "android/sync_compositor_statics.h",
     "appcache_interfaces.cc",
@@ -116,6 +118,7 @@ source_set("common") {
     "drag_event_source_info.h",
     "drag_messages.h",
     "drag_traits.h",
+    "dwrite_font_proxy_messages.h",
     "edit_command.h",
     "fileapi/file_system_messages.h",
     "fileapi/webblob_messages.h",
@@ -270,6 +273,8 @@ source_set("common") {
     "service_manager/service_manager_connection_impl.cc",
     "service_manager/service_manager_connection_impl.h",
     "service_worker/embedded_worker_messages.h",
+    "service_worker/service_worker_client_info.cc",
+    "service_worker/service_worker_client_info.h",
     "service_worker/service_worker_loader_helpers.cc",
     "service_worker/service_worker_loader_helpers.h",
     "service_worker/service_worker_messages.h",
@@ -316,7 +321,6 @@ source_set("common") {
     "//cc",
     "//gpu/command_buffer/common",
     "//ipc",
-    "//services/network/public/cpp",
     "//services/service_manager/sandbox",
     "//third_party/WebKit/common:blink_common",
     "//third_party/WebKit/public:blink_headers",
@@ -344,7 +348,6 @@ source_set("common") {
     "//gpu/command_buffer/service",
     "//gpu/ipc/client",
     "//gpu/ipc/common",
-    "//gpu/ipc/common:gpu_preferences_util",
     "//gpu/skia_bindings",
     "//ipc",
     "//media",
@@ -532,6 +535,7 @@ mojom("mojo_bindings") {
     "child.mojom",
     "child_control.mojom",
     "child_memory_coordinator.mojom",
+    "devtools.mojom",
     "field_trial_recorder.mojom",
     "file_utilities.mojom",
     "frame.mojom",
@@ -577,10 +581,7 @@ mojom("mojo_bindings") {
   ]
 
   if (is_win) {
-    sources += [
-      "dwrite_font_proxy.mojom",
-      "font_cache_win.mojom",
-    ]
+    sources += [ "font_cache_win.mojom" ]
   }
 
   import_dirs = [ "//mojo/services" ]

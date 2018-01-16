@@ -54,7 +54,7 @@ class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
   }
 
  private:
-  WorkerClients() = default;
+  WorkerClients() {}
   DISALLOW_COPY_AND_ASSIGN(WorkerClients);
 };
 

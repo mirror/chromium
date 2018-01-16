@@ -9,7 +9,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "components/storage_monitor/storage_monitor.h"
 #include "device/media_transfer_protocol/media_transfer_protocol_manager.h"
@@ -68,9 +67,6 @@ class MediaTransferProtocolDeviceObserverChromeOS
   // Enumerate existing mtp storage devices.
   void EnumerateStorages();
 
-  // The callback for EnumerateStorages().
-  void OnReceivedStorages(const std::vector<std::string>& storages);
-
   // Find the |storage_map_| key for the record with this |device_id|. Returns
   // true on success, false on failure.
   bool GetLocationForDeviceId(const std::string& device_id,
@@ -90,9 +86,6 @@ class MediaTransferProtocolDeviceObserverChromeOS
   // The notifications object to use to signal newly attached devices.
   // Guaranteed to outlive this class.
   StorageMonitor::Receiver* const notifications_;
-
-  base::WeakPtrFactory<MediaTransferProtocolDeviceObserverChromeOS>
-      weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaTransferProtocolDeviceObserverChromeOS);
 };

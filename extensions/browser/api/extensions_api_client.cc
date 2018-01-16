@@ -44,11 +44,6 @@ bool ExtensionsAPIClient::ShouldHideResponseHeader(
   return false;
 }
 
-bool ExtensionsAPIClient::ShouldHideBrowserNetworkRequest(
-    const GURL& url) const {
-  return false;
-}
-
 AppViewGuestDelegate* ExtensionsAPIClient::CreateAppViewGuestDelegate() const {
   return NULL;
 }

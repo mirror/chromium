@@ -77,22 +77,27 @@ class MockAuthenticator {
     this.interceptor_.start();
   }
 
-  // Returns a MakeCredentialResponse to the client.
+  // Mock functions:
+
   async makeCredential(options) {
-    var response = null;
+    var info = null;
     if (this.status_ == webauth.mojom.AuthenticatorStatus.SUCCESS) {
-      let info = new webauth.mojom.CommonCredentialInfo(
+      let response = new webauth.mojom.AuthenticatorResponse(
+          { attestationObject: this.attestationObject_,
+            authenticatorData: this.authenticatorData_,
+            signature: this.signature_,
+            userHandle: this.userHandle_
+          });
+      info = new webauth.mojom.PublicKeyCredentialInfo(
           { id: this.id_,
             rawId: this.rawId_,
-            clientDataJson: this.clientDataJson_,});
-      response = new webauth.mojom.MakeCredentialAuthenticatorResponse(
-          { info: info,
-            attestationObject: this.attestationObject_
+            clientDataJson: this.clientDataJson_,
+            response: response
           });
     }
     let status = this.status_;
     this.reset();
-    return {status, credential: response};
+    return {status, credential: info};
   }
 
   // Resets state of mock Authenticator.

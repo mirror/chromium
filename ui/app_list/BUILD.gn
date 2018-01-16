@@ -32,6 +32,10 @@ component("app_list") {
     "search/history_data_store.cc",
     "search/history_data_store.h",
     "search/history_types.h",
+    "search/mixer.cc",
+    "search/mixer.h",
+    "search_controller.cc",
+    "search_controller.h",
     "search_provider.cc",
     "search_provider.h",
     "views/app_list_drag_and_drop_host.h",
@@ -136,7 +140,6 @@ component("app_list") {
     "//ash/app_list/model:app_list_model",
     "//ash/app_list/model:search_model",
     "//ash/app_list/model:speech_ui_model",
-    "//ash/public/cpp:cpp",
   ]
 }
 
@@ -155,7 +158,6 @@ static_library("test_support") {
   deps = [
     ":app_list",
     "//base",
-    "//ui/base:base",
     "//ui/events",
     "//ui/gfx",
     "//ui/gfx/geometry",
@@ -196,6 +198,7 @@ test("app_list_unittests") {
     "folder_image_unittest.cc",
     "pagination_model_unittest.cc",
     "search/history_data_store_unittest.cc",
+    "search/mixer_unittest.cc",
     "search/term_break_iterator_unittest.cc",
     "search/tokenized_string_char_iterator_unittest.cc",
     "search/tokenized_string_match_unittest.cc",

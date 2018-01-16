@@ -19,8 +19,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
-#include "components/viz/common/surfaces/local_surface_id.h"
-#include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/compositor_frame_helpers.h"
 #include "content/browser/gpu/compositor_util.h"
@@ -126,7 +124,6 @@ class MockInputRouter : public InputRouter {
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override {}
   void ProgressFling(base::TimeTicks time) override {}
-  void StopFling() override {}
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& message) override {
@@ -297,11 +294,8 @@ class TestView : public TestRenderWidgetHostView {
         bottom_controls_height_(0.f) {}
 
   // Sets the bounds returned by GetViewBounds.
-  void SetBounds(const gfx::Rect& bounds) override {
-    if (bounds_ == bounds)
-      return;
+  void set_bounds(const gfx::Rect& bounds) {
     bounds_ = bounds;
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
   }
 
   void set_top_controls_height(float top_controls_height) {
@@ -346,10 +340,6 @@ class TestView : public TestRenderWidgetHostView {
   float GetBottomControlsHeight() const override {
     return bottom_controls_height_;
   }
-  viz::LocalSurfaceId GetLocalSurfaceId() const override {
-    return local_surface_id_;
-  }
-
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override {
     acked_event_ = touch.event;
@@ -389,8 +379,6 @@ class TestView : public TestRenderWidgetHostView {
   float top_controls_height_;
   float bottom_controls_height_;
   viz::BeginFrameAck last_did_not_produce_frame_ack_;
-  viz::LocalSurfaceId local_surface_id_;
-  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestView);
@@ -907,12 +895,14 @@ class RenderWidgetHostAsyncWheelEventsEnabledMojoInputDisabledTest
                              kAsyncWheelEvents) {}
 };
 
+#if GTEST_HAS_PARAM_TEST
 // RenderWidgetHostWithSourceTest ----------------------------------------------
 
 // This is for tests that are to be run for all source devices.
 class RenderWidgetHostWithSourceTest
     : public RenderWidgetHostTest,
       public testing::WithParamInterface<WebGestureDevice> {};
+#endif  // GTEST_HAS_PARAM_TEST
 
 }  // namespace
 
@@ -921,7 +911,7 @@ class RenderWidgetHostWithSourceTest
 TEST_F(RenderWidgetHostTest, Resize) {
   // The initial bounds is the empty rect, so setting it to the same thing
   // shouldn't send the resize message.
-  view_->SetBounds(gfx::Rect());
+  view_->set_bounds(gfx::Rect());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_FALSE(process_->sink().GetUniqueMessageMatching(ViewMsg_Resize::ID));
@@ -936,7 +926,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // but should not expect ack for empty physical backing size.
   gfx::Rect original_size(0, 0, 100, 100);
   process_->sink().ClearMessages();
-  view_->SetBounds(original_size);
+  view_->set_bounds(original_size);
   view_->SetMockPhysicalBackingSize(gfx::Size());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
@@ -962,7 +952,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   process_->sink().ClearMessages();
   gfx::Rect second_size(0, 0, 110, 110);
   EXPECT_FALSE(host_->resize_ack_pending_);
-  view_->SetBounds(second_size);
+  view_->set_bounds(second_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   params.flags = 0;
@@ -975,7 +965,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // a resize ACK is pending.
   gfx::Rect third_size(0, 0, 120, 120);
   process_->sink().ClearMessages();
-  view_->SetBounds(third_size);
+  view_->set_bounds(third_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   EXPECT_EQ(second_size.size(), host_->old_resize_params_->new_size);
@@ -1005,7 +995,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // expect a resize ack (since the renderer won't ack empty sizes). The message
   // should contain the new size (0x0) and not the previous one that we skipped
   process_->sink().ClearMessages();
-  view_->SetBounds(gfx::Rect());
+  view_->set_bounds(gfx::Rect());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(), host_->old_resize_params_->new_size);
@@ -1013,7 +1003,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
 
   // Send a rect that has no area but has either width or height set.
   process_->sink().ClearMessages();
-  view_->SetBounds(gfx::Rect(0, 0, 0, 30));
+  view_->set_bounds(gfx::Rect(0, 0, 0, 30));
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(0, 30), host_->old_resize_params_->new_size);
@@ -1027,7 +1017,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   EXPECT_FALSE(process_->sink().GetFirstMessageMatching(ViewMsg_Resize::ID));
 
   // A different size should be sent again, however.
-  view_->SetBounds(gfx::Rect(0, 0, 0, 31));
+  view_->set_bounds(gfx::Rect(0, 0, 0, 31));
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(0, 31), host_->old_resize_params_->new_size);
@@ -1085,7 +1075,7 @@ TEST_F(RenderWidgetHostTest, ResizeThenCrash) {
 
   // Setting the bounds to a "real" rect should send out the notification.
   gfx::Rect original_size(0, 0, 100, 100);
-  view_->SetBounds(original_size);
+  view_->set_bounds(original_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   EXPECT_EQ(original_size.size(), host_->old_resize_params_->new_size);
@@ -1849,7 +1839,7 @@ TEST_F(RenderWidgetHostMojoInputDisabledTest, TouchEmulator) {
       TouchEmulator::Mode::kEmulatingTouchFromMouse,
       ui::GestureProviderConfigType::GENERIC_MOBILE);
   process_->sink().ClearMessages();
-  view_->SetBounds(gfx::Rect(0, 0, 400, 200));
+  view_->set_bounds(gfx::Rect(0, 0, 400, 200));
   view_->Show();
 
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 10, 0, false);
@@ -2002,7 +1992,7 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
       TouchEmulator::Mode::kEmulatingTouchFromMouse,
       ui::GestureProviderConfigType::GENERIC_MOBILE);
   process_->sink().ClearMessages();
-  view_->SetBounds(gfx::Rect(0, 0, 400, 200));
+  view_->set_bounds(gfx::Rect(0, 0, 400, 200));
   view_->Show();
 
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 10, 0, false);
@@ -2603,7 +2593,7 @@ TEST_F(RenderWidgetHostTest, RendererExitedResetsIsHidden) {
 TEST_F(RenderWidgetHostTest, ResizeParams) {
   gfx::Rect bounds(0, 0, 100, 100);
   gfx::Size physical_backing_size(40, 50);
-  view_->SetBounds(bounds);
+  view_->set_bounds(bounds);
   view_->SetMockPhysicalBackingSize(physical_backing_size);
 
   ResizeParams resize_params;
@@ -2669,7 +2659,7 @@ class RenderWidgetHostInitialSizeTest : public RenderWidgetHostTest {
       : RenderWidgetHostTest(), initial_size_(200, 100) {}
 
   void ConfigureView(TestView* view) override {
-    view->SetBounds(gfx::Rect(initial_size_));
+    view->set_bounds(gfx::Rect(initial_size_));
   }
 
  protected:

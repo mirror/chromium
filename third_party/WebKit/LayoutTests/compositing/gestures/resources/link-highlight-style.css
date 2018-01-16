@@ -1,12 +1,12 @@
 /*Used for applying style to a <span> so it looks like a highlight*/
 .fauxHighlight {
   background-color: rgb(0, 255, 0);
-  color: rgb(0, 255, 0) !important;
+  color: rgb(0, 255, 0);
 }
 
 .fauxHighlightSquare {
   background-color: rgb(0, 255, 0);
-  color: rgb(0, 255, 0) !important;
+  color: rgb(0, 255, 0);
 }
 
 .opaqueHighlight {
@@ -19,14 +19,29 @@
   border: 2px solid grey;
   box-sizing: border-box;
 }
+/* touch adjustment candidate */
+.target:active {
+  border-color: red;
+}
 
 .transparentHighlight {
   -webkit-tap-highlight-color: rgba(0, 255, 0, 0.5);
 }
 
-a, a:active, a:visited {
+.activeLink {
+  color: rgb(0, 255, 0);
+}
+
+a {
   text-decoration: none;
-  color: blue;
+}
+
+a:active {
+  color: rgb(0, 255, 0);
+}
+
+a.needsFix:active {
+  color: rgb(255, 255, 255);
 }
 
 /*Used for a floating DIV simulating a highlight*/

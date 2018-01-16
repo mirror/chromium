@@ -17,6 +17,7 @@ namespace switches {
 // alongside the definition of their values in the .cc file.
 extern const char kClearTokenService[];
 extern const char kDisableSigninScopedDeviceId[];
+extern const char kEnableRefreshTokenAnnotationRequest[];
 extern const char kExtensionsMultiAccount[];
 
 #if !BUILDFLAG(ENABLE_MIRROR)

@@ -553,13 +553,14 @@ ScriptValue WebGL2RenderingContextBase::getInternalformatParameter(
 
   switch (pname) {
     case GL_SAMPLES: {
+      std::unique_ptr<GLint[]> values;
       GLint length = -1;
       ContextGL()->GetInternalformativ(target, internalformat,
                                        GL_NUM_SAMPLE_COUNTS, 1, &length);
       if (length <= 0)
         return WebGLAny(script_state, DOMInt32Array::Create(0));
 
-      auto values = std::make_unique<GLint[]>(length);
+      values = WrapArrayUnique(new GLint[length]);
       for (GLint ii = 0; ii < length; ++ii)
         values[ii] = 0;
       ContextGL()->GetInternalformativ(target, internalformat, GL_SAMPLES,
@@ -4359,7 +4360,7 @@ WebGLActiveInfo* WebGL2RenderingContextBase::getTransformFeedbackVarying(
   if (max_name_length <= 0) {
     return nullptr;
   }
-  auto name = std::make_unique<GLchar[]>(max_name_length);
+  std::unique_ptr<GLchar[]> name = WrapArrayUnique(new GLchar[max_name_length]);
   GLsizei length = 0;
   GLsizei size = 0;
   GLenum type = 0;
@@ -4704,7 +4705,7 @@ String WebGL2RenderingContextBase::getActiveUniformBlockName(
                       "invalid uniform block index");
     return String();
   }
-  auto name = std::make_unique<GLchar[]>(max_name_length);
+  std::unique_ptr<GLchar[]> name = WrapArrayUnique(new GLchar[max_name_length]);
 
   GLsizei length = 0;
   ContextGL()->GetActiveUniformBlockName(ObjectOrZero(program),

@@ -86,11 +86,7 @@ struct SimpleClassVectorTraits : VectorTraitsBase<T> {
 // work.
 template <typename P>
 struct VectorTraits<scoped_refptr<P>>
-    : SimpleClassVectorTraits<scoped_refptr<P>> {
-  // scoped_refptr cannot be copied using memcpy as the internals (e.g. ref
-  // count) depend on properly constructing the object.
-  static const bool kCanCopyWithMemcpy = false;
-};
+    : SimpleClassVectorTraits<scoped_refptr<P>> {};
 
 template <typename P>
 struct VectorTraits<std::unique_ptr<P>>

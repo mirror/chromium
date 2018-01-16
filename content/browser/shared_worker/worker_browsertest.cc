@@ -71,7 +71,10 @@ class WorkerTest : public ContentBrowserTest {
     return GetFileUrlWithQuery(test_file_path, query);
   }
 
-  void RunTest(Shell* window, const GURL& url) {
+  void RunTest(Shell* window,
+               const std::string& test_case,
+               const std::string& query) {
+    GURL url = GetTestURL(test_case, query);
     const base::string16 expected_title = base::ASCIIToUTF16("OK");
     TitleWatcher title_watcher(window->web_contents(), expected_title);
     NavigateToURL(window, url);
@@ -79,7 +82,9 @@ class WorkerTest : public ContentBrowserTest {
     EXPECT_EQ(expected_title, final_title);
   }
 
-  void RunTest(const GURL& url) { RunTest(shell(), url); }
+  void RunTest(const std::string& test_case, const std::string& query) {
+    RunTest(shell(), test_case, query);
+  }
 
   static void QuitUIMessageLoop(base::Callback<void()> callback) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, callback);
@@ -103,18 +108,18 @@ class WorkerTest : public ContentBrowserTest {
 };
 
 IN_PROC_BROWSER_TEST_F(WorkerTest, SingleWorker) {
-  RunTest(GetTestURL("single_worker.html", std::string()));
+  RunTest("single_worker.html", std::string());
 }
 
 IN_PROC_BROWSER_TEST_F(WorkerTest, MultipleWorkers) {
-  RunTest(GetTestURL("multi_worker.html", std::string()));
+  RunTest("multi_worker.html", std::string());
 }
 
 IN_PROC_BROWSER_TEST_F(WorkerTest, SingleSharedWorker) {
   if (!SupportsSharedWorker())
     return;
 
-  RunTest(GetTestURL("single_worker.html", "shared=true"));
+  RunTest("single_worker.html", "shared=true");
 }
 
 // http://crbug.com/96435
@@ -122,7 +127,7 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, MultipleSharedWorkers) {
   if (!SupportsSharedWorker())
     return;
 
-  RunTest(GetTestURL("multi_worker.html", "shared=true"));
+  RunTest("multi_worker.html", "shared=true");
 }
 
 // Incognito windows should not share workers with non-incognito windows
@@ -131,17 +136,11 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, IncognitoSharedWorkers) {
   if (!SupportsSharedWorker())
     return;
 
-  // Launch the server to host a shared worker on http environment because a
-  // local file (file://) is treated like it has an opaque origin and the
-  // shared worker on the origin cannot be shared.
-  ASSERT_TRUE(embedded_test_server()->Start());
-
   // Load a non-incognito tab and have it create a shared worker
-  RunTest(embedded_test_server()->GetURL("/workers/incognito_worker.html"));
+  RunTest("incognito_worker.html", std::string());
 
   // Incognito worker should not share with non-incognito
-  RunTest(CreateOffTheRecordBrowser(),
-          embedded_test_server()->GetURL("/workers/incognito_worker.html"));
+  RunTest(CreateOffTheRecordBrowser(), "incognito_worker.html", std::string());
 }
 
 // Make sure that auth dialog is displayed from worker context.
@@ -180,10 +179,9 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, WorkerTlsClientAuthImportScripts) {
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
   ASSERT_TRUE(https_server.Start());
 
-  RunTest(GetTestURL(
-      "worker_tls_client_auth.html",
-      "test=import&url=" +
-          net::EscapeQueryParamValue(https_server.GetURL("/").spec(), true)));
+  RunTest("worker_tls_client_auth.html",
+          "test=import&url=" + net::EscapeQueryParamValue(
+                                   https_server.GetURL("/").spec(), true));
   EXPECT_EQ(1, select_certificate_count());
 }
 
@@ -198,10 +196,9 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, WorkerTlsClientAuthFetch) {
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
   ASSERT_TRUE(https_server.Start());
 
-  RunTest(GetTestURL(
-      "worker_tls_client_auth.html",
-      "test=fetch&url=" +
-          net::EscapeQueryParamValue(https_server.GetURL("/").spec(), true)));
+  RunTest("worker_tls_client_auth.html",
+          "test=fetch&url=" + net::EscapeQueryParamValue(
+                                  https_server.GetURL("/").spec(), true));
   EXPECT_EQ(1, select_certificate_count());
 }
 
@@ -220,10 +217,10 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, SharedWorkerTlsClientAuthImportScripts) {
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
   ASSERT_TRUE(https_server.Start());
 
-  RunTest(GetTestURL(
+  RunTest(
       "worker_tls_client_auth.html",
       "test=import&shared=true&url=" +
-          net::EscapeQueryParamValue(https_server.GetURL("/").spec(), true)));
+          net::EscapeQueryParamValue(https_server.GetURL("/").spec(), true));
   EXPECT_EQ(0, select_certificate_count());
 }
 
@@ -255,7 +252,7 @@ IN_PROC_BROWSER_TEST_F(WorkerTest, PassMessagePortToSharedWorker) {
   if (!SupportsSharedWorker())
     return;
 
-  RunTest(GetTestURL("pass_messageport_to_sharedworker.html", ""));
+  RunTest("pass_messageport_to_sharedworker.html", "");
 }
 
 IN_PROC_BROWSER_TEST_F(WorkerTest,
@@ -263,8 +260,7 @@ IN_PROC_BROWSER_TEST_F(WorkerTest,
   if (!SupportsSharedWorker())
     return;
 
-  RunTest(GetTestURL(
-      "pass_messageport_to_sharedworker_dont_wait_for_connect.html", ""));
+  RunTest("pass_messageport_to_sharedworker_dont_wait_for_connect.html", "");
 }
 
 }  // namespace content

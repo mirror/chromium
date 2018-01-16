@@ -77,7 +77,7 @@ struct StubScriptFunction {
 
 class ScriptValueTest {
  public:
-  virtual ~ScriptValueTest() = default;
+  virtual ~ScriptValueTest() {}
   virtual void operator()(ScriptValue) const = 0;
 };
 
@@ -105,7 +105,7 @@ class ExpectDOMException : public ScriptValueTest {
                      const String& expected_message)
       : expected_name_(expected_name), expected_message_(expected_message) {}
 
-  ~ExpectDOMException() override = default;
+  ~ExpectDOMException() override {}
 
   void operator()(ScriptValue value) const override {
     DOMException* exception = V8DOMException::ToImplWithTypeCheck(
@@ -126,7 +126,7 @@ class ExpectDOMException : public ScriptValueTest {
 
 class NotReachedWebServiceWorkerProvider : public WebServiceWorkerProvider {
  public:
-  ~NotReachedWebServiceWorkerProvider() override = default;
+  ~NotReachedWebServiceWorkerProvider() override {}
 
   void RegisterServiceWorker(
       const WebURL& pattern,
@@ -294,7 +294,7 @@ class StubWebServiceWorkerProvider {
     WebServiceWorkerProviderImpl(StubWebServiceWorkerProvider& owner)
         : owner_(owner) {}
 
-    ~WebServiceWorkerProviderImpl() override = default;
+    ~WebServiceWorkerProviderImpl() override {}
 
     void RegisterServiceWorker(
         const WebURL& pattern,

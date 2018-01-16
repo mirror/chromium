@@ -50,7 +50,7 @@ class OffscreenCanvasTest : public PageTestBase {
   FakeGLES2Interface gl_;
 };
 
-OffscreenCanvasTest::OffscreenCanvasTest() = default;
+OffscreenCanvasTest::OffscreenCanvasTest() {}
 
 void OffscreenCanvasTest::SetUp() {
   auto factory = [](FakeGLES2Interface* gl, bool* gpu_compositing_disabled)

@@ -29,12 +29,9 @@ class NetworkDelegate;
 class URLRequest;
 }
 
-namespace network {
-class ResourceRequestBody;
-}
-
 namespace content {
 
+class ResourceRequestBody;
 class ServiceWorkerRegistration;
 class ServiceWorkerVersion;
 
@@ -58,10 +55,9 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
       ResourceType resource_type,
       RequestContextType request_context_type,
       network::mojom::RequestContextFrameType frame_type,
-      scoped_refptr<network::ResourceRequestBody> body);
+      scoped_refptr<ResourceRequestBody> body);
   ~ServiceWorkerControlleeRequestHandler() override;
 
-  // Non-S13nServiceWorker:
   // Called via custom URLRequestJobFactory.
   // Returning a nullptr indicates that the request is not handled by
   // this handler.
@@ -81,11 +77,6 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   void MaybeCreateLoader(const ResourceRequest& request,
                          ResourceContext* resource_context,
                          LoaderCallback callback) override;
-  // Returns params with the ControllerServiceWorkerPtr if we have found
-  // a matching controller service worker for the |request| that is given
-  // to MaybeCreateLoader(). Otherwise this returns base::nullopt.
-  base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
-      override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerControlleeRequestHandlerTest,
@@ -141,7 +132,7 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   const bool keepalive_;
   RequestContextType request_context_type_;
   network::mojom::RequestContextFrameType frame_type_;
-  scoped_refptr<network::ResourceRequestBody> body_;
+  scoped_refptr<ResourceRequestBody> body_;
   ResourceContext* resource_context_;
   GURL stripped_url_;
   bool force_update_started_;

@@ -41,7 +41,7 @@ SpeechSynthesisEvent* SpeechSynthesisEvent::Create(
                                   name);
 }
 
-SpeechSynthesisEvent::SpeechSynthesisEvent() = default;
+SpeechSynthesisEvent::SpeechSynthesisEvent() {}
 
 SpeechSynthesisEvent::SpeechSynthesisEvent(const AtomicString& type,
                                            SpeechSynthesisUtterance* utterance,

@@ -183,9 +183,9 @@ Polymer({
         this.browserProxy_.selectProfileImage();
         break;
       case CrPicture.SelectionTypes.OLD:
-        const imageIndex = image.dataset.imageIndex;
+        var imageIndex = image.dataset.imageIndex;
         if (imageIndex !== undefined && imageIndex >= 0 && image.src)
-          this.browserProxy_.selectDefaultImage(image.dataset.url);
+          this.browserProxy_.selectDefaultImage(image.src);
         else
           this.browserProxy_.selectOldImage();
         break;
@@ -228,7 +228,7 @@ Polymer({
    * @private
    */
   onSwitchMode_: function(event) {
-    const videomode = event.detail;
+    var videomode = event.detail;
     announceAccessibleMessage(this.i18n(
         videomode ? 'videoModeAccessibleText' : 'photoModeAccessibleText'));
   },
@@ -290,10 +290,10 @@ Polymer({
    * @private
    */
   getAuthorCredit_: function(selectedItem, defaultImages) {
-    const index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
+    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
     if (index === undefined || index < 0 || index >= defaultImages.length)
       return '';
-    const author = defaultImages[index].author;
+    var author = defaultImages[index].author;
     return author ? this.i18n('authorCreditText', author) : '';
   },
 
@@ -305,7 +305,7 @@ Polymer({
    * @private
    */
   getAuthorWebsite_: function(selectedItem, defaultImages) {
-    const index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
+    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
     if (index === undefined || index < 0 || index >= defaultImages.length)
       return '';
     return defaultImages[index].website || '';

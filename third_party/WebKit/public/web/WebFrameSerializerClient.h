@@ -59,10 +59,10 @@ class WebFrameSerializerClient {
   virtual void DidSerializeDataForFrame(const WebVector<char>&,
                                         FrameSerializationStatus) = 0;
 
-  WebFrameSerializerClient() = default;
+  WebFrameSerializerClient() {}
 
  protected:
-  virtual ~WebFrameSerializerClient() = default;
+  virtual ~WebFrameSerializerClient() {}
 };
 
 }  // namespace blink

@@ -4,11 +4,10 @@
 
 #include "media/cdm/ppapi/clear_key_cdm/clear_key_persistent_session_cdm.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "media/base/cdm_promise.h"
 
@@ -120,7 +119,7 @@ void ClearKeyPersistentSessionCdm::CreateSessionAndGenerateRequest(
   } else {
     // Since it's a persistent session, we need to save the session ID after
     // it's been created.
-    new_promise = std::make_unique<NewPersistentSessionCdmPromise>(
+    new_promise = base::MakeUnique<NewPersistentSessionCdmPromise>(
         base::Bind(&ClearKeyPersistentSessionCdm::AddPersistentSession,
                    weak_factory_.GetWeakPtr()),
         std::move(promise));

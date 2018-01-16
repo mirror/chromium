@@ -41,7 +41,7 @@ class USBIsochronousInTransferResult final : public ScriptWrappable {
       const HeapVector<Member<USBIsochronousInTransferPacket>>& packets)
       : data_(data), packets_(packets) {}
 
-  virtual ~USBIsochronousInTransferResult() = default;
+  virtual ~USBIsochronousInTransferResult() {}
 
   DOMDataView* data() const { return data_; }
   const HeapVector<Member<USBIsochronousInTransferPacket>>& packets() const {

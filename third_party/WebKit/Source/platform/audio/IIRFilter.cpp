@@ -28,7 +28,7 @@ IIRFilter::IIRFilter(const AudioDoubleArray* feedforward,
   y_buffer_.Allocate(kBufferLength);
 }
 
-IIRFilter::~IIRFilter() = default;
+IIRFilter::~IIRFilter() {}
 
 void IIRFilter::Reset() {
   x_buffer_.Zero();

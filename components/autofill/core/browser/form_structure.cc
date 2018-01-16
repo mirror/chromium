@@ -1274,11 +1274,8 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
             field->form_classifier_outcome());
       }
 
-      if (field->username_vote_type()) {
+      if (field->username_vote_type())
         added_field->set_username_vote_type(field->username_vote_type());
-      } else {
-        DCHECK(field_type != autofill::USERNAME);
-      }
 
       added_field->set_signature(field->GetFieldSignature());
 
@@ -1332,12 +1329,6 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
 
     for (const auto& field : fields_) {
       const ServerFieldType current_type = field->Type().GetStorableType();
-      // All credit card fields belong to the same section that's different
-      // from address sections.
-      if (AutofillType(current_type).group() == CREDIT_CARD) {
-        field->set_section("credit-card");
-        continue;
-      }
 
       bool already_saw_current_type = seen_types.count(current_type) > 0;
 

@@ -66,7 +66,7 @@ IDBOpenDBRequest::IDBOpenDBRequest(ScriptState* script_state,
   DCHECK(!ResultAsAny());
 }
 
-IDBOpenDBRequest::~IDBOpenDBRequest() = default;
+IDBOpenDBRequest::~IDBOpenDBRequest() {}
 
 void IDBOpenDBRequest::Trace(blink::Visitor* visitor) {
   visitor->Trace(database_callbacks_);

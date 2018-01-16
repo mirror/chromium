@@ -7,13 +7,10 @@ package org.chromium.base.test.util;
 import org.junit.Assert;
 
 import org.chromium.base.PathUtils;
-import org.chromium.base.annotations.CalledByNative;
-import org.chromium.base.annotations.MainDex;
 
 /**
  * Collection of URL utilities.
  */
-@MainDex
 public class UrlUtils {
     private static final String DATA_DIR = "/chrome/test/data/";
 
@@ -39,7 +36,6 @@ public class UrlUtils {
     /**
      * Returns the root of the test data directory.
      */
-    @CalledByNative
     public static String getIsolatedTestRoot() {
         return PathUtils.getExternalStorageDirectory() + "/chromium_tests_root";
     }

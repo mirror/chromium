@@ -9,8 +9,6 @@
 
 #include "components/arc/common/auth.mojom.h"
 
-class Profile;
-
 namespace base {
 class TimeDelta;
 }
@@ -189,15 +187,12 @@ void UpdateOptInActionUMA(OptInActionType type);
 void UpdateOptInCancelUMA(OptInCancelReason reason);
 void UpdateOptInFlowResultUMA(OptInFlowResult result);
 void UpdateEnabledStateUMA(bool enabled);
-void UpdateProvisioningResultUMA(ProvisioningResult result,
-                                 const Profile* profile);
+void UpdateProvisioningResultUMA(ProvisioningResult result, bool managed);
 void UpdateProvisioningTiming(const base::TimeDelta& elapsed_time,
                               bool success,
-                              const Profile* profile);
-void UpdateReauthorizationResultUMA(ProvisioningResult result,
-                                    const Profile* profile);
-void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time,
-                             const Profile* profile);
+                              bool managed);
+void UpdateReauthorizationResultUMA(ProvisioningResult result, bool managed);
+void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time, bool managed);
 void UpdateSilentAuthCodeUMA(OptInSilentAuthCode state);
 void UpdateReauthorizationSilentAuthCodeUMA(OptInSilentAuthCode state);
 void UpdateAuthTiming(const char* histogram_name, base::TimeDelta elapsed_time);

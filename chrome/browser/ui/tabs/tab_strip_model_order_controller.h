@@ -9,7 +9,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "ui/base/page_transition_types.h"
 
-class TabStripModel;
+class TabStripModelImpl;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModelOrderController
@@ -19,7 +19,7 @@ class TabStripModel;
 //
 class TabStripModelOrderController : public TabStripModelObserver {
  public:
-  explicit TabStripModelOrderController(TabStripModel* tabstrip);
+  explicit TabStripModelOrderController(TabStripModelImpl* tabstrip);
   ~TabStripModelOrderController() override;
 
   // Determine where to place a newly opened tab by using the supplied
@@ -42,7 +42,7 @@ class TabStripModelOrderController : public TabStripModelObserver {
   // reflect the fact that |removing_index| is going away.
   int GetValidIndex(int index, int removing_index) const;
 
-  TabStripModel* tabstrip_;
+  TabStripModelImpl* tabstrip_;
 
   DISALLOW_COPY_AND_ASSIGN(TabStripModelOrderController);
 };

@@ -99,7 +99,7 @@ WebRemoteFrameImpl* WebRemoteFrameImpl::CreateMainFrame(
   return frame;
 }
 
-WebRemoteFrameImpl::~WebRemoteFrameImpl() = default;
+WebRemoteFrameImpl::~WebRemoteFrameImpl() {}
 
 void WebRemoteFrameImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(frame_client_);

@@ -12,6 +12,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_timeouts.h"
@@ -70,7 +71,7 @@ class StubBufferHandleProvider
 
   std::unique_ptr<VideoCaptureBufferHandle> GetHandleForInProcessAccess()
       override {
-    return std::make_unique<StubBufferHandle>(mapped_size_, data_);
+    return base::MakeUnique<StubBufferHandle>(mapped_size_, data_);
   }
 
  private:
@@ -94,8 +95,8 @@ VideoCaptureDevice::Client::Buffer CreateStubBuffer(int buffer_id,
   const int arbitrary_frame_feedback_id = 0;
   return VideoCaptureDevice::Client::Buffer(
       buffer_id, arbitrary_frame_feedback_id,
-      std::make_unique<StubBufferHandleProvider>(mapped_size, buffer),
-      std::make_unique<StubReadWritePermission>(buffer));
+      base::MakeUnique<StubBufferHandleProvider>(mapped_size, buffer),
+      base::MakeUnique<StubReadWritePermission>(buffer));
 };
 
 class MockClient : public VideoCaptureDevice::Client {

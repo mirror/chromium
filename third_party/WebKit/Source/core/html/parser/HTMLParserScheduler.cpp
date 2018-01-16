@@ -39,14 +39,14 @@ namespace blink {
 PumpSession::PumpSession(unsigned& nesting_level)
     : NestingLevelIncrementer(nesting_level) {}
 
-PumpSession::~PumpSession() = default;
+PumpSession::~PumpSession() {}
 
 SpeculationsPumpSession::SpeculationsPumpSession(unsigned& nesting_level)
     : NestingLevelIncrementer(nesting_level),
       start_time_(CurrentTime()),
       processed_element_tokens_(0) {}
 
-SpeculationsPumpSession::~SpeculationsPumpSession() = default;
+SpeculationsPumpSession::~SpeculationsPumpSession() {}
 
 inline double SpeculationsPumpSession::ElapsedTime() const {
   return CurrentTime() - start_time_;
@@ -63,7 +63,7 @@ HTMLParserScheduler::HTMLParserScheduler(
       loading_task_runner_(std::move(loading_task_runner)),
       is_paused_with_active_timer_(false) {}
 
-HTMLParserScheduler::~HTMLParserScheduler() = default;
+HTMLParserScheduler::~HTMLParserScheduler() {}
 
 void HTMLParserScheduler::Trace(blink::Visitor* visitor) {
   visitor->Trace(parser_);
@@ -77,9 +77,9 @@ bool HTMLParserScheduler::IsScheduledForUnpause() const {
 void HTMLParserScheduler::ScheduleForUnpause() {
   DCHECK(!is_paused_with_active_timer_);
   cancellable_continue_parse_task_handle_ =
-      PostCancellableTask(*loading_task_runner_, FROM_HERE,
-                          WTF::Bind(&HTMLParserScheduler::ContinueParsing,
-                                    WrapWeakPersistent(this)));
+      loading_task_runner_->PostCancellableTask(
+          FROM_HERE, WTF::Bind(&HTMLParserScheduler::ContinueParsing,
+                               WrapWeakPersistent(this)));
 }
 
 void HTMLParserScheduler::Pause() {

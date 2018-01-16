@@ -192,8 +192,6 @@ void SimulateTapAt(WebContents* web_contents, const gfx::Point& point);
 #if defined(USE_AURA)
 // Generates a TouchStart at |point|.
 void SimulateTouchPressAt(WebContents* web_contents, const gfx::Point& point);
-
-void SimulateLongPressAt(WebContents* web_contents, const gfx::Point& point);
 #endif
 
 // Taps the screen with modifires at |point|.
@@ -1070,10 +1068,6 @@ class ContextMenuFilter : public content::BrowserMessageFilter {
 };
 
 WebContents* GetEmbedderForGuest(content::WebContents* guest);
-
-// Returns true if the network service is enabled and it's running in the
-// browser process.
-bool IsNetworkServiceRunningInProcess();
 
 // Crash the Network Service process. Should only be called when out-of-process
 // Network Service is enabled.

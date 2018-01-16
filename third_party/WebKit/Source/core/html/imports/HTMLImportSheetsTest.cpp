@@ -12,7 +12,7 @@ namespace blink {
 
 class HTMLImportSheetsTest : public SimTest {
  protected:
-  HTMLImportSheetsTest() = default;
+  HTMLImportSheetsTest() {}
 
   void SetUp() override {
     SimTest::SetUp();

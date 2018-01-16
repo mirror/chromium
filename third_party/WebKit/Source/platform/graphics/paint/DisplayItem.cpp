@@ -7,7 +7,7 @@
 namespace blink {
 
 struct SameSizeAsDisplayItem {
-  virtual ~SameSizeAsDisplayItem() = default;  // Allocate vtable pointer.
+  virtual ~SameSizeAsDisplayItem() {}  // Allocate vtable pointer.
   void* pointer;
   LayoutRect rect;
   LayoutUnit outset;

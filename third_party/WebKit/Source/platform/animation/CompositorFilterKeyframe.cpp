@@ -18,7 +18,7 @@ CompositorFilterKeyframe::CompositorFilterKeyframe(
                                      value.ReleaseCcFilterOperations(),
                                      timing_function.CloneToCC())) {}
 
-CompositorFilterKeyframe::~CompositorFilterKeyframe() = default;
+CompositorFilterKeyframe::~CompositorFilterKeyframe() {}
 
 double CompositorFilterKeyframe::Time() const {
   return filter_keyframe_->Time().InSecondsF();

@@ -4,10 +4,9 @@
 
 #include "media/gpu/android/content_video_view_overlay.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "gpu/ipc/common/gpu_surface_lookup.h"
 
@@ -17,7 +16,7 @@ namespace media {
 std::unique_ptr<AndroidOverlay> ContentVideoViewOverlay::Create(
     int surface_id,
     AndroidOverlayConfig config) {
-  return std::make_unique<ContentVideoViewOverlay>(surface_id,
+  return base::MakeUnique<ContentVideoViewOverlay>(surface_id,
                                                    std::move(config));
 }
 

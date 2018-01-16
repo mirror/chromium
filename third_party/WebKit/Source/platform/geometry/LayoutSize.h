@@ -48,7 +48,7 @@ class PLATFORM_EXPORT LayoutSize {
   DISALLOW_NEW();
 
  public:
-  LayoutSize() = default;
+  LayoutSize() {}
   explicit LayoutSize(const IntSize& size)
       : width_(size.Width()), height_(size.Height()) {}
   LayoutSize(LayoutUnit width, LayoutUnit height)

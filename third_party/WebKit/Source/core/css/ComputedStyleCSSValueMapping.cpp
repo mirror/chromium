@@ -386,6 +386,20 @@ static CSSValue* ValueForLineHeight(const ComputedStyle& style) {
       style);
 }
 
+static CSSValue* ValueForPosition(const LengthPoint& position,
+                                  const ComputedStyle& style) {
+  DCHECK_EQ(position.X().IsAuto(), position.Y().IsAuto());
+  if (position.X().IsAuto())
+    return CSSIdentifierValue::Create(CSSValueAuto);
+
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      position.X(), style));
+  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      position.Y(), style));
+  return list;
+}
+
 static CSSValueID IdentifierForFamily(const AtomicString& family) {
   if (family == FontFamilyNames::webkit_cursive)
     return CSSValueCursive;
@@ -1672,6 +1686,45 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForFilter(
   return list;
 }
 
+CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
+    const ComputedStyle& style,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* position = ValueForPosition(style.OffsetPosition(), style);
+    if (!position->IsIdentifierValue())
+      list->Append(*position);
+    else
+      DCHECK(ToCSSIdentifierValue(position)->GetValueID() == CSSValueAuto);
+  }
+
+  static const CSSProperty* longhands[3] = {&GetCSSPropertyOffsetPath(),
+                                            &GetCSSPropertyOffsetDistance(),
+                                            &GetCSSPropertyOffsetRotate()};
+  for (const CSSProperty* longhand : longhands) {
+    const CSSValue* value = ComputedStyleCSSValueMapping::Get(
+        *longhand, style, layout_object, styled_node, allow_visited_style);
+    DCHECK(value);
+    list->Append(*value);
+  }
+
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* anchor = ValueForPosition(style.OffsetAnchor(), style);
+    if (!anchor->IsIdentifierValue()) {
+      // Add a slash before anchor.
+      CSSValueList* result = CSSValueList::CreateSlashSeparated();
+      result->Append(*list);
+      result->Append(*anchor);
+      return result;
+    } else {
+      DCHECK(ToCSSIdentifierValue(anchor)->GetValueID() == CSSValueAuto);
+    }
+  }
+  return list;
+}
+
 CSSValue* ComputedStyleCSSValueMapping::ValueForFont(
     const ComputedStyle& style) {
   // Add a slash between size and line-height.
@@ -1889,6 +1942,15 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       if (style.BoxDecorationBreak() == EBoxDecorationBreak::kSlice)
         return CSSIdentifierValue::Create(CSSValueSlice);
       return CSSIdentifierValue::Create(CSSValueClone);
+    case CSSPropertyWebkitBoxFlex:
+      return CSSPrimitiveValue::Create(style.BoxFlex(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyWebkitBoxFlexGroup:
+      return CSSPrimitiveValue::Create(style.BoxFlexGroup(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyWebkitBoxOrdinalGroup:
+      return CSSPrimitiveValue::Create(style.BoxOrdinalGroup(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyBoxShadow:
       return ValueForShadowList(style.BoxShadow(), style, true);
     case CSSPropertyColumnCount:
@@ -1910,6 +1972,11 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       if (style.HasAutoColumnWidth())
         return CSSIdentifierValue::Create(CSSValueAuto);
       return ZoomAdjustedPixelValue(style.ColumnWidth(), style);
+    case CSSPropertyTabSize:
+      return CSSPrimitiveValue::Create(
+          style.GetTabSize().GetPixelSize(1.0),
+          style.GetTabSize().IsSpaces() ? CSSPrimitiveValue::UnitType::kNumber
+                                        : CSSPrimitiveValue::UnitType::kPixels);
     case CSSPropertyTextSizeAdjust:
       if (style.GetTextSizeAdjust().IsAuto())
         return CSSIdentifierValue::Create(CSSValueAuto);
@@ -1971,9 +2038,18 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ValuesForShorthandProperty(flexFlowShorthand(), style,
                                         layout_object, styled_node,
                                         allow_visited_style);
+    case CSSPropertyFlexGrow:
+      return CSSPrimitiveValue::Create(style.FlexGrow(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyFlexShrink:
+      return CSSPrimitiveValue::Create(style.FlexShrink(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyJustifyContent:
       return ValueForContentPositionAndDistributionWithOverflowAlignment(
           style.JustifyContent());
+    case CSSPropertyOrder:
+      return CSSPrimitiveValue::Create(style.Order(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyFloat:
       if (style.Display() != EDisplay::kNone && style.HasOutOfFlowPosition())
         return CSSIdentifierValue::Create(CSSValueNone);
@@ -2250,6 +2326,12 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
           ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
               style.ObjectPosition().Y(), style),
           CSSValuePair::kKeepIdenticalValues);
+    case CSSPropertyOpacity:
+      return CSSPrimitiveValue::Create(style.Opacity(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyOrphans:
+      return CSSPrimitiveValue::Create(style.Orphans(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyOutlineStyle:
       if (style.OutlineStyleIsAuto())
         return CSSIdentifierValue::Create(CSSValueAuto);
@@ -2428,6 +2510,9 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       }
       NOTREACHED();
       return nullptr;
+    case CSSPropertyWidows:
+      return CSSPrimitiveValue::Create(style.Widows(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyWidth:
       if (WidthOrHeightShouldReturnUsedValue(layout_object))
         return ZoomAdjustedPixelValue(SizingBox(*layout_object).Width(), style);
@@ -2450,6 +2535,9 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
         return CSSIdentifierValue::Create(CSSValueAuto);
       return CSSPrimitiveValue::Create(style.ZIndex(),
                                        CSSPrimitiveValue::UnitType::kInteger);
+    case CSSPropertyZoom:
+      return CSSPrimitiveValue::Create(style.Zoom(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyBoxSizing:
       if (style.BoxSizing() == EBoxSizing::kContentBox)
         return CSSIdentifierValue::Create(CSSValueContentBox);
@@ -2721,6 +2809,9 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(CSSValueNone);
     case CSSPropertyShapeMargin:
       return CSSValue::Create(style.ShapeMargin(), style.EffectiveZoom());
+    case CSSPropertyShapeImageThreshold:
+      return CSSPrimitiveValue::Create(style.ShapeImageThreshold(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyShapeOutside:
       return ValueForShape(style, style.ShapeOutside());
     case CSSPropertyFilter:
@@ -2805,19 +2896,57 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ValuesForInlineBlockShorthand(scrollPaddingInlineShorthand(),
                                            style, layout_object, styled_node,
                                            allow_visited_style);
-    case CSSPropertyScrollMargin:
-      return ValuesForSidesShorthand(scrollMarginShorthand(), style,
+    case CSSPropertyScrollSnapMargin:
+      return ValuesForSidesShorthand(scrollSnapMarginShorthand(), style,
                                      layout_object, styled_node,
                                      allow_visited_style);
-    case CSSPropertyScrollMarginBlock:
-      return ValuesForInlineBlockShorthand(scrollMarginBlockShorthand(), style,
-                                           layout_object, styled_node,
+    case CSSPropertyScrollSnapMarginBlock:
+      return ValuesForInlineBlockShorthand(scrollSnapMarginBlockShorthand(),
+                                           style, layout_object, styled_node,
                                            allow_visited_style);
-    case CSSPropertyScrollMarginInline:
-      return ValuesForInlineBlockShorthand(scrollMarginInlineShorthand(), style,
-                                           layout_object, styled_node,
+    case CSSPropertyScrollSnapMarginInline:
+      return ValuesForInlineBlockShorthand(scrollSnapMarginInlineShorthand(),
+                                           style, layout_object, styled_node,
                                            allow_visited_style);
+    case CSSPropertyOffset:
+      return ValueForOffset(style, layout_object, styled_node,
+                            allow_visited_style);
+
+    case CSSPropertyOffsetAnchor:
+      return ValueForPosition(style.OffsetAnchor(), style);
+
+    case CSSPropertyOffsetPosition:
+      return ValueForPosition(style.OffsetPosition(), style);
+
+    case CSSPropertyOffsetPath:
+      if (const BasicShape* style_motion_path = style.OffsetPath())
+        return ValueForBasicShape(style, style_motion_path);
+      return CSSIdentifierValue::Create(CSSValueNone);
+
+    case CSSPropertyOffsetRotate: {
+      CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+      if (style.OffsetRotate().type == kOffsetRotationAuto)
+        list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
+      list->Append(*CSSPrimitiveValue::Create(
+          style.OffsetRotate().angle, CSSPrimitiveValue::UnitType::kDegrees));
+      return list;
+    }
     // SVG properties.
+    case CSSPropertyFloodOpacity:
+      return CSSPrimitiveValue::Create(svg_style.FloodOpacity(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyStopOpacity:
+      return CSSPrimitiveValue::Create(svg_style.StopOpacity(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyFillOpacity:
+      return CSSPrimitiveValue::Create(svg_style.FillOpacity(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyStrokeMiterlimit:
+      return CSSPrimitiveValue::Create(svg_style.StrokeMiterLimit(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
+    case CSSPropertyStrokeOpacity:
+      return CSSPrimitiveValue::Create(svg_style.StrokeOpacity(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyFill:
       return AdjustSVGPaintForCurrentColor(
           svg_style.FillPaintType(), svg_style.FillPaintUri(),

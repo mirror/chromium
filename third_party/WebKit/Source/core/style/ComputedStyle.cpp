@@ -1003,11 +1003,9 @@ void ComputedStyle::ApplyMotionPathTransform(
     point.SetX(float_distance * cos(deg2rad(angle)));
     point.SetY(float_distance * sin(deg2rad(angle)));
   } else {
-    float zoom = EffectiveZoom();
     const StylePath& motion_path = ToStylePath(*path);
     float path_length = motion_path.length();
-    float float_distance =
-        FloatValueForLength(distance, path_length * zoom) / zoom;
+    float float_distance = FloatValueForLength(distance, path_length);
     float computed_distance;
     if (motion_path.IsClosed() && path_length > 0) {
       computed_distance = fmod(float_distance, path_length);
@@ -1019,11 +1017,9 @@ void ComputedStyle::ApplyMotionPathTransform(
 
     motion_path.GetPath().PointAndNormalAtLength(computed_distance, point,
                                                  angle);
-
-    point.Scale(zoom, zoom);
   }
 
-  if (rotate.type == OffsetRotationType::kFixed)
+  if (rotate.type == kOffsetRotationFixed)
     angle = 0;
 
   float origin_shift_x = 0;

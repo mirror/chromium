@@ -6,7 +6,6 @@
 
 #include <cmath>
 
-#include "base/logging.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/render_thread_impl.h"
@@ -70,7 +69,36 @@ void DeviceOrientationEventPump::SendStartMessage() {
     return;
   }
 
-  SendStartMessageImpl();
+  if (!absolute_orientation_sensor_.sensor &&
+      !relative_orientation_sensor_.sensor) {
+    if (!sensor_provider_) {
+      RenderFrame* const render_frame = GetRenderFrame();
+      if (!render_frame)
+        return;
+
+      CHECK(render_frame->GetRemoteInterfaces());
+
+      render_frame->GetRemoteInterfaces()->GetInterface(
+          mojo::MakeRequest(&sensor_provider_));
+      sensor_provider_.set_connection_error_handler(
+          base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
+                     base::Unretained(this)));
+    }
+    if (absolute_) {
+      GetSensor(&absolute_orientation_sensor_);
+    } else {
+      fall_back_to_absolute_orientation_sensor_ = true;
+      GetSensor(&relative_orientation_sensor_);
+    }
+  } else {
+    if (relative_orientation_sensor_.sensor)
+      relative_orientation_sensor_.sensor->Resume();
+
+    if (absolute_orientation_sensor_.sensor)
+      absolute_orientation_sensor_.sensor->Resume();
+
+    DidStartIfPossible();
+  }
 }
 
 void DeviceOrientationEventPump::SendStopMessage() {
@@ -78,23 +106,11 @@ void DeviceOrientationEventPump::SendStopMessage() {
   // all device orientation event listeners are unregistered. Since removing
   // the event listener is more rare than the page visibility changing,
   // Sensor::Suspend() is used to optimize this case for not doing extra work.
+  if (relative_orientation_sensor_.sensor)
+    relative_orientation_sensor_.sensor->Suspend();
 
-  relative_orientation_sensor_.Stop();
-  // This is needed in case we fallback to using the absolute orientation
-  // sensor. In this case, the relative orientation sensor is marked as
-  // SensorState::SHOULD_SUSPEND, and if the relative orientation sensor
-  // is not available, the absolute orientation sensor should also be marked as
-  // SensorState::SHOULD_SUSPEND, but only after the
-  // absolute_orientation_sensor_.Start() is called for initializing
-  // the absolute orientation sensor in
-  // DeviceOrientationEventPump::DidStartIfPossible().
-  if (relative_orientation_sensor_.sensor_state ==
-          SensorState::SHOULD_SUSPEND &&
-      fall_back_to_absolute_orientation_sensor_) {
-    should_suspend_absolute_orientation_sensor_ = true;
-  }
-
-  absolute_orientation_sensor_.Stop();
+  if (absolute_orientation_sensor_.sensor)
+    absolute_orientation_sensor_.sensor->Suspend();
 }
 
 void DeviceOrientationEventPump::SendFakeDataForTesting(void* fake_data) {
@@ -125,43 +141,20 @@ void DeviceOrientationEventPump::DidStartIfPossible() {
     // When relative orientation sensor is not available fall back to using
     // the absolute orientation sensor but only on the first failure.
     fall_back_to_absolute_orientation_sensor_ = false;
-    absolute_orientation_sensor_.Start(sensor_provider_.get());
-    if (should_suspend_absolute_orientation_sensor_) {
-      // The absolute orientation sensor needs to be marked as
-      // SensorState::SUSPENDED when it is successfully initialized.
-      absolute_orientation_sensor_.sensor_state = SensorState::SHOULD_SUSPEND;
-      should_suspend_absolute_orientation_sensor_ = false;
-    }
+    GetSensor(&absolute_orientation_sensor_);
     return;
   }
   DeviceSensorEventPump::DidStartIfPossible();
 }
 
-void DeviceOrientationEventPump::SendStartMessageImpl() {
-  if (!sensor_provider_) {
-    RenderFrame* const render_frame = GetRenderFrame();
-    if (!render_frame)
-      return;
-
-    render_frame->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&sensor_provider_));
-    sensor_provider_.set_connection_error_handler(
-        base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
-                   base::Unretained(this)));
+bool DeviceOrientationEventPump::SensorSharedBuffersReady() const {
+  if (relative_orientation_sensor_.sensor &&
+      !relative_orientation_sensor_.shared_buffer) {
+    return false;
   }
 
-  if (absolute_) {
-    absolute_orientation_sensor_.Start(sensor_provider_.get());
-  } else {
-    fall_back_to_absolute_orientation_sensor_ = true;
-    should_suspend_absolute_orientation_sensor_ = false;
-    relative_orientation_sensor_.Start(sensor_provider_.get());
-  }
-}
-
-bool DeviceOrientationEventPump::SensorsReadyOrErrored() const {
-  if (!relative_orientation_sensor_.ReadyOrErrored() ||
-      !absolute_orientation_sensor_.ReadyOrErrored()) {
+  if (absolute_orientation_sensor_.sensor &&
+      !absolute_orientation_sensor_.shared_buffer) {
     return false;
   }
 
@@ -174,14 +167,8 @@ bool DeviceOrientationEventPump::SensorsReadyOrErrored() const {
 
 void DeviceOrientationEventPump::GetDataFromSharedMemory(
     device::OrientationData* data) {
-  data->all_available_sensors_are_active = true;
-
   if (!absolute_ && relative_orientation_sensor_.SensorReadingCouldBeRead()) {
     // For DeviceOrientation Event, this provides relative orientation data.
-    data->all_available_sensors_are_active =
-        relative_orientation_sensor_.reading.timestamp() != 0.0;
-    if (!data->all_available_sensors_are_active)
-      return;
     data->alpha = relative_orientation_sensor_.reading.orientation_euler.z;
     data->beta = relative_orientation_sensor_.reading.orientation_euler.x;
     data->gamma = relative_orientation_sensor_.reading.orientation_euler.y;
@@ -198,10 +185,6 @@ void DeviceOrientationEventPump::GetDataFromSharedMemory(
     //
     // For DeviceOrientation Event, this provides absolute orientation data if
     // relative orientation data is not available.
-    data->all_available_sensors_are_active =
-        absolute_orientation_sensor_.reading.timestamp() != 0.0;
-    if (!data->all_available_sensors_are_active)
-      return;
     data->alpha = absolute_orientation_sensor_.reading.orientation_euler.z;
     data->beta = absolute_orientation_sensor_.reading.orientation_euler.x;
     data->gamma = absolute_orientation_sensor_.reading.orientation_euler.y;
@@ -219,9 +202,6 @@ void DeviceOrientationEventPump::GetDataFromSharedMemory(
 
 bool DeviceOrientationEventPump::ShouldFireEvent(
     const device::OrientationData& data) const {
-  if (!data.all_available_sensors_are_active)
-    return false;
-
   if (!data.has_alpha && !data.has_beta && !data.has_gamma) {
     // no data can be provided, this is an all-null event.
     return true;

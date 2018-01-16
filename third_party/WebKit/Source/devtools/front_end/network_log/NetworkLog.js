@@ -174,7 +174,6 @@ NetworkLog.NetworkLog = class extends Common.Object {
     var lineNumber = -Infinity;
     var columnNumber = -Infinity;
     var scriptId = null;
-    var initiatorStack = null;
     var initiator = request.initiator();
 
     var redirectSource = request.redirectSource();
@@ -203,21 +202,13 @@ NetworkLog.NetworkLog = class extends Common.Object {
           url = initiator.url;
           lineNumber = initiator.lineNumber || 0;
         }
-        if (initiator.stack && initiator.stack.callFrames && initiator.stack.callFrames.length)
-          initiatorStack = initiator.stack || null;
       } else if (initiator.type === Protocol.Network.InitiatorType.Preload) {
         type = SDK.NetworkRequest.InitiatorType.Preload;
       }
     }
 
-    request[NetworkLog.NetworkLog._initiatorDataSymbol].info = {
-      type: type,
-      url: url,
-      lineNumber: lineNumber,
-      columnNumber: columnNumber,
-      scriptId: scriptId,
-      stack: initiatorStack
-    };
+    request[NetworkLog.NetworkLog._initiatorDataSymbol].info =
+        {type: type, url: url, lineNumber: lineNumber, columnNumber: columnNumber, scriptId: scriptId};
     return request[NetworkLog.NetworkLog._initiatorDataSymbol].info;
   }
 
@@ -482,7 +473,7 @@ NetworkLog.NetworkLog.Events = {
   RequestUpdated: Symbol('RequestUpdated')
 };
 
-/** @typedef {!{type: !SDK.NetworkRequest.InitiatorType, url: string, lineNumber: number, columnNumber: number, scriptId: ?string, stack: ?Protocol.Runtime.StackTrace}} */
+/** @typedef {!{type: !SDK.NetworkRequest.InitiatorType, url: string, lineNumber: number, columnNumber: number, scriptId: ?string}} */
 NetworkLog.NetworkLog._InitiatorInfo;
 
 NetworkLog.NetworkLog._initiatorDataSymbol = Symbol('InitiatorData');

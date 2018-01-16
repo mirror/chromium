@@ -505,7 +505,8 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
   };
 
   // Contains the NULL time. Use Time::Now() to get the current time.
-  constexpr Time() : TimeBase(0) {}
+  Time() : TimeBase(0) {
+  }
 
   // Returns the time for epoch in Unix-like system (Jan 1, 1970).
   static Time UnixEpoch();

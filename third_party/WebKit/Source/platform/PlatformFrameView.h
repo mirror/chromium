@@ -14,8 +14,8 @@ namespace blink {
 // of LocalFrameView.
 class PLATFORM_EXPORT PlatformFrameView {
  public:
-  PlatformFrameView() = default;
-  virtual ~PlatformFrameView() = default;
+  PlatformFrameView() {}
+  virtual ~PlatformFrameView() {}
 
   virtual bool IsLocalFrameView() const { return false; }
 };

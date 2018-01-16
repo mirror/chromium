@@ -15,7 +15,7 @@ namespace blink {
 
 class FilteredComputedStylePropertyMapTest : public PageTestBase {
  public:
-  FilteredComputedStylePropertyMapTest() = default;
+  FilteredComputedStylePropertyMapTest() {}
 
   CSSComputedStyleDeclaration* Declaration() const {
     return declaration_.Get();

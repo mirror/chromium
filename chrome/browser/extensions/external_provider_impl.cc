@@ -6,9 +6,7 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <set>
-#include <utility>
 #include <vector>
 
 #include "base/command_line.h"
@@ -49,7 +47,7 @@
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/app_mode/kiosk_app_external_loader.h"
+#include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/customization/customization_document.h"
 #include "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
@@ -118,9 +116,12 @@ ExternalProviderImpl::ExternalProviderImpl(
     : crx_location_(crx_location),
       download_location_(download_location),
       service_(service),
+      ready_(false),
       loader_(loader),
       profile_(profile),
-      creation_flags_(creation_flags) {
+      creation_flags_(creation_flags),
+      auto_acknowledge_(false),
+      install_immediately_(false) {
   loader_->Init(this);
 }
 
@@ -162,7 +163,9 @@ void ExternalProviderImpl::SetPrefs(
 void ExternalProviderImpl::UpdatePrefs(
     std::unique_ptr<base::DictionaryValue> prefs) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  CHECK(allow_updates_);
+  // We only expect updates from windows registry or via policies on chromeos.
+  CHECK(crx_location_ == Manifest::EXTERNAL_REGISTRY ||
+        download_location_ == Manifest::EXTERNAL_POLICY_DOWNLOAD);
 
   // Check if the service is still alive. It is possible that it went
   // away while |loader_| was working on the FILE thread.
@@ -530,12 +533,10 @@ void ExternalProviderImpl::CreateExternalProviders(
     external_loader = new ExternalPolicyLoader(
         ExtensionManagementFactory::GetForBrowserContext(profile),
         ExternalPolicyLoader::FORCED);
-    auto signin_profile_provider = base::MakeUnique<ExternalProviderImpl>(
+    provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
         service, external_loader, profile, crx_location,
         Manifest::EXTERNAL_POLICY_DOWNLOAD,
-        Extension::FROM_WEBSTORE | Extension::WAS_INSTALLED_BY_DEFAULT);
-    signin_profile_provider->set_allow_updates(true);
-    provider_list->push_back(std::move(signin_profile_provider));
+        Extension::FROM_WEBSTORE | Extension::WAS_INSTALLED_BY_DEFAULT));
     return;
   }
 
@@ -578,49 +579,49 @@ void ExternalProviderImpl::CreateExternalProviders(
 
   // Policies are mandatory so they can't be skipped with command line flag.
   if (external_loader.get()) {
-    auto policy_provider = base::MakeUnique<ExternalProviderImpl>(
+    provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
         service, external_loader, profile, crx_location,
-        Manifest::EXTERNAL_POLICY_DOWNLOAD, Extension::NO_FLAGS);
-    policy_provider->set_allow_updates(true);
-    provider_list->push_back(std::move(policy_provider));
+        Manifest::EXTERNAL_POLICY_DOWNLOAD, Extension::NO_FLAGS));
   }
 
   // Load the KioskAppExternalProvider when running in kiosk mode.
   if (chrome::IsRunningInForcedAppMode()) {
 #if defined(OS_CHROMEOS)
-    // Kiosk primary app external provider.
-    // For enterprise managed kiosk apps, change the location to
-    // "force-installed by policy".
-    policy::BrowserPolicyConnectorChromeOS* const connector =
-        g_browser_process->platform_part()->browser_policy_connector_chromeos();
-    Manifest::Location location = Manifest::EXTERNAL_PREF;
-    if (connector && connector->IsEnterpriseManaged())
-      location = Manifest::EXTERNAL_POLICY;
+    chromeos::KioskAppManager* kiosk_app_manager =
+        chromeos::KioskAppManager::Get();
+    CHECK(kiosk_app_manager);
 
-    std::unique_ptr<ExternalProviderImpl> kiosk_app_provider(
-        new ExternalProviderImpl(
-            service,
-            base::MakeRefCounted<chromeos::KioskAppExternalLoader>(
-                chromeos::KioskAppExternalLoader::AppClass::kPrimary),
-            profile, location, Manifest::INVALID_LOCATION,
-            Extension::NO_FLAGS));
-    kiosk_app_provider->set_auto_acknowledge(true);
-    kiosk_app_provider->set_install_immediately(true);
-    kiosk_app_provider->set_allow_updates(true);
-    provider_list->push_back(std::move(kiosk_app_provider));
+    // Kiosk primary app external provider.
+    if (!kiosk_app_manager->external_loader_created()) {
+      // For enterprise managed kiosk apps, change the location to
+      // "force-installed by policy".
+      policy::BrowserPolicyConnectorChromeOS* const connector =
+          g_browser_process->platform_part()
+              ->browser_policy_connector_chromeos();
+      Manifest::Location location = Manifest::EXTERNAL_PREF;
+      if (connector && connector->IsEnterpriseManaged())
+        location = Manifest::EXTERNAL_POLICY;
+
+      std::unique_ptr<ExternalProviderImpl> kiosk_app_provider(
+          new ExternalProviderImpl(
+              service, kiosk_app_manager->CreateExternalLoader(), profile,
+              location, Manifest::INVALID_LOCATION, Extension::NO_FLAGS));
+      kiosk_app_provider->set_auto_acknowledge(true);
+      kiosk_app_provider->set_install_immediately(true);
+      provider_list->push_back(std::move(kiosk_app_provider));
+    }
 
     // Kiosk secondary app external provider.
-    std::unique_ptr<ExternalProviderImpl> secondary_kiosk_app_provider(
-        new ExternalProviderImpl(
-            service,
-            base::MakeRefCounted<chromeos::KioskAppExternalLoader>(
-                chromeos::KioskAppExternalLoader::AppClass::kSecondary),
-            profile, Manifest::EXTERNAL_PREF, Manifest::EXTERNAL_PREF_DOWNLOAD,
-            Extension::NO_FLAGS));
-    secondary_kiosk_app_provider->set_auto_acknowledge(true);
-    secondary_kiosk_app_provider->set_install_immediately(true);
-    secondary_kiosk_app_provider->set_allow_updates(true);
-    provider_list->push_back(std::move(secondary_kiosk_app_provider));
+    if (!kiosk_app_manager->secondary_app_external_loader_created()) {
+      std::unique_ptr<ExternalProviderImpl> secondary_kiosk_app_provider(
+          new ExternalProviderImpl(
+              service, kiosk_app_manager->CreateSecondaryAppExternalLoader(),
+              profile, Manifest::EXTERNAL_PREF,
+              Manifest::EXTERNAL_PREF_DOWNLOAD, Extension::NO_FLAGS));
+      secondary_kiosk_app_provider->set_auto_acknowledge(true);
+      secondary_kiosk_app_provider->set_install_immediately(true);
+      provider_list->push_back(std::move(secondary_kiosk_app_provider));
+    }
 #endif
     return;
   }
@@ -656,29 +657,18 @@ void ExternalProviderImpl::CreateExternalProviders(
       Extension::WAS_INSTALLED_BY_DEFAULT;
 
   if (!is_chrome_os_public_session) {
-    std::vector<int> external_apps_path_ids;
-    if (profile->IsChild()) {
-      external_apps_path_ids.push_back(chrome::DIR_CHILD_USERS_DEFAULT_APPS);
-    } else if (profile->IsSupervised()) {
-      external_apps_path_ids.push_back(
-          chrome::DIR_SUPERVISED_USERS_DEFAULT_APPS);
-    } else {
-      external_apps_path_ids.push_back(
-          chrome::DIR_STANDALONE_EXTERNAL_EXTENSIONS);
-      external_apps_path_ids.push_back(chrome::DIR_CHILD_USERS_DEFAULT_APPS);
-    }
-    const ExternalPrefLoader::Options pref_load_flags =
+    int external_apps_path_id = profile->IsSupervised() ?
+        chrome::DIR_SUPERVISED_USERS_DEFAULT_APPS :
+        chrome::DIR_STANDALONE_EXTERNAL_EXTENSIONS;
+    ExternalPrefLoader::Options pref_load_flags =
         profile->IsNewProfile()
             ? ExternalPrefLoader::DELAY_LOAD_UNTIL_PRIORITY_SYNC
             : ExternalPrefLoader::NONE;
-    for (const auto external_apps_path_id : external_apps_path_ids) {
-      provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
-          service,
-          new ExternalPrefLoader(external_apps_path_id, pref_load_flags,
-                                 profile),
-          profile, Manifest::EXTERNAL_PREF, Manifest::EXTERNAL_PREF_DOWNLOAD,
-          bundled_extension_creation_flags));
-    }
+    provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
+        service,
+        new ExternalPrefLoader(external_apps_path_id, pref_load_flags, profile),
+        profile, Manifest::EXTERNAL_PREF, Manifest::EXTERNAL_PREF_DOWNLOAD,
+        bundled_extension_creation_flags));
 
     // OEM default apps.
     int oem_extension_creation_flags =
@@ -703,12 +693,10 @@ void ExternalProviderImpl::CreateExternalProviders(
 
   if (!profile->IsLegacySupervised()) {
 #if defined(OS_WIN)
-    auto registry_provider = base::MakeUnique<ExternalProviderImpl>(
+    provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
         service, new ExternalRegistryLoader, profile,
         Manifest::EXTERNAL_REGISTRY, Manifest::EXTERNAL_PREF_DOWNLOAD,
-        Extension::NO_FLAGS);
-    registry_provider->set_allow_updates(true);
-    provider_list->push_back(std::move(registry_provider));
+        Extension::NO_FLAGS));
 #else
     provider_list->push_back(base::MakeUnique<ExternalProviderImpl>(
         service,

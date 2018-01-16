@@ -16,7 +16,7 @@ namespace blink {
 
 class PLATFORM_EXPORT MemoryCoordinatorClient : public GarbageCollectedMixin {
  public:
-  virtual ~MemoryCoordinatorClient() = default;
+  virtual ~MemoryCoordinatorClient() {}
 
   // TODO(bashi): Deprecating. Remove this when MemoryPressureListener is
   // gone.

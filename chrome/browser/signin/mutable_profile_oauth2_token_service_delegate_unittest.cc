@@ -311,8 +311,7 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_IN_PROGRESS,
             oauth2_service_delegate_->GetLoadCredentialsState());
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(OAuth2TokenServiceDelegate::
-                LOAD_CREDENTIALS_FINISHED_WITH_NO_TOKEN_FOR_PRIMARY_ACCOUNT,
+  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS,
             oauth2_service_delegate_->GetLoadCredentialsState());
   EXPECT_EQ(1, start_batch_changes_);
   EXPECT_EQ(1, end_batch_changes_);

@@ -16,6 +16,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "content/public/common/resource_request_body.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
@@ -23,7 +24,6 @@
 #include "net/base/upload_data_stream.h"
 #include "net/base/upload_file_element_reader.h"
 #include "net/log/net_log_with_source.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -40,8 +40,7 @@ namespace content {
 TEST(UploadDataStreamBuilderTest, CreateUploadDataStream) {
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   {
-    scoped_refptr<network::ResourceRequestBody> request_body =
-        new network::ResourceRequestBody;
+    scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody;
 
     const std::string kBlob = "blobuuid";
     const std::string kBlobData = "blobdata";
@@ -120,14 +119,13 @@ TEST(UploadDataStreamBuilderTest,
     std::unique_ptr<BlobDataHandle> handle =
         blob_storage_context.AddFinishedBlob(blob_data_builder.get());
 
-    scoped_refptr<network::ResourceRequestBody> request_body(
-        new network::ResourceRequestBody());
+    scoped_refptr<ResourceRequestBody> request_body(new ResourceRequestBody());
     std::unique_ptr<net::UploadDataStream> upload(
         UploadDataStreamBuilder::Build(
             request_body.get(), &blob_storage_context, nullptr,
             base::ThreadTaskRunnerHandle::Get().get()));
 
-    request_body = new network::ResourceRequestBody();
+    request_body = new ResourceRequestBody();
     request_body->AppendBlob(blob_id);
     request_body->AppendBlob(blob_id);
     request_body->AppendBlob(blob_id);
@@ -167,8 +165,7 @@ TEST(UploadDataStreamBuilderTest, ResetUploadStreamWithBlob) {
   base::test::ScopedTaskEnvironment scoped_task_environment_(
       base::test::ScopedTaskEnvironment::MainThreadType::IO);
   {
-    scoped_refptr<network::ResourceRequestBody> request_body =
-        new network::ResourceRequestBody;
+    scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody;
 
     const std::string kBlob = "blobuuid";
     const std::string kBlobData = "blobdata";

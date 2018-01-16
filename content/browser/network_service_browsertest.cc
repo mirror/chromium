@@ -35,21 +35,10 @@ class RenderProcessKilledObserver : public WebContentsObserver {
 
   void RenderProcessGone(base::TerminationStatus status) override {
     killed_ = true;
-    run_loop_.Quit();
-  }
-
-  void WaitUntilRenderProcessDied() {
-    if (killed_)
-      return;
-    run_loop_.Run();
   }
 
  private:
   bool killed_ = false;
-
-  // Used to wait for the render process being killed. Android doesn't
-  // immediately kill the render process.
-  base::RunLoop run_loop_;
 };
 
 class WebUITestWebUIControllerFactory : public WebUIControllerFactory {
@@ -157,7 +146,6 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceBrowserTest, WebUIBindingsNoHttp) {
   NavigateToURL(shell(), test_url);
   RenderProcessKilledObserver killed_observer(shell()->web_contents());
   ASSERT_FALSE(CheckCanLoadHttp());
-  killed_observer.WaitUntilRenderProcessDied();
   ASSERT_TRUE(killed_observer.killed());
 }
 

@@ -74,7 +74,7 @@ class SVGString final : public SVGPropertyBase {
   AnimatedPropertyType GetType() const override { return ClassType(); }
 
  private:
-  SVGString() = default;
+  SVGString() {}
   explicit SVGString(const String& value) : value_(value) {}
 
   String value_;

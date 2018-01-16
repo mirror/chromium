@@ -25,9 +25,9 @@
 
 namespace blink {
 
-BeforeUnloadEvent::BeforeUnloadEvent() = default;
+BeforeUnloadEvent::BeforeUnloadEvent() {}
 
-BeforeUnloadEvent::~BeforeUnloadEvent() = default;
+BeforeUnloadEvent::~BeforeUnloadEvent() {}
 
 bool BeforeUnloadEvent::IsBeforeUnloadEvent() const {
   return true;

@@ -284,9 +284,6 @@
     <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION" desc="In the settings tab, the description of an option to hold a key and click or drag a box with the mouse to speak any on-screen text out loud.">
       Press and hold Search, then click or drag to select content to be read aloud
     </message>
-    <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION_FLAGS" desc="In the settings tab, the description of an option to hold a key and click or drag a box with the mouse, or highlight a region and press a keystroke, to speak any on-screen text out loud.">
-      To read content aloud, press and hold Search, then click or drag to select content. Or highlight a region and use Search + S.
-    </message>
     <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_OPTIONS_LABEL" desc="In the settings tab, the label for the button that opens the Options page for the Select-to-Speak feature.">
       Open select-to-speak settings
     </message>
@@ -476,8 +473,8 @@
   <message name="IDS_SETTINGS_AUTOFILL" desc="Name for the autofill section and toggle.">
     Autofill settings
   </message>
-  <message name="IDS_SETTINGS_GOOGLE_PAYMENTS" desc="Label used to differentiate when an address or credit card entry comes from Google Pay. This should follow the casing of the 'Google Pay' brand. 'Google Pay' should not be translated as it is the product name.">
-    Google Pay
+  <message name="IDS_SETTINGS_GOOGLE_PAYMENTS" desc="Label used to differentiate when an address or credit card entry comes from Google Payments. This should follow the casing of the 'Google Payments' brand.">
+    Google Payments
   </message>
   <message name="IDS_SETTINGS_AUTOFILL_ADDRESSES_HEADING" desc="Title for the list of addresses that chrome has saved for use in filling in forms.">
     Addresses
@@ -1165,25 +1162,25 @@
       Searching...
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_ERROR_MESSAGE" desc="The message shown when a new printer is not set up successfully.">
-      Can&#x2019;t add printer. Restart your computer and try again.
+      Error adding printer
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_FATAL_ERROR_MESSAGE" desc="The message shown when a fatal error occurs while trying to add a new printer.">
-      Can&#x2019;t add printer. Restart your computer and try again.
+      Can't add printer. Restart and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PRINTER_UNREACHABLE_MESSAGE" desc="The message shown when the printer that is to be added is unreachable for configuration.">
-      Can&#x2019;t connect to printer. Check that the printer is turned on and is connected to your Chromebook by Wi-Fi or USB.
+      Can't connect printer. Check that the printer is turned on and is connected to your Chromebook by Wi-Fi or USB.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_TOO_LARGE_MESSAGE" desc="The message shown when the PPD provided while trying to add new printer is too large.">
-      Can&#x2019;t load large PPD. Maximum size is 250 kB.
+      Can't load large PPD. Maximum size is 250kB.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_INVALID_PPD_MESSAGE" desc="The message shown when the PPD provided while trying to add a new printer is invalid.">
-      File is the wrong format. Check the PPD file and try again.
+      Provided PPD is invalid.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_NOT_FOUND" desc="The message shown when the PPD provided while trying to add a new printer cannot be found.">
-      Can&#x2019;t find PPD. Make sure your Chromebook is online and try again.
+      Can't find PPD. Check that your Chromebook is online and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_UNRETRIEVABLE" desc="The message shown when the PPD provided while trying to add a new printer is unretrievable.">
-      Can&#x2019;t find PPD. Make sure your Chromebook is online and try again.
+      Can't find PPD. Check that your Chromebook is online and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_REQUIRE_INTERNET_MESSAGE" desc="The message shown when there is no internet access to set up a printer.">
       Connect to the internet to add a printer
@@ -2120,12 +2117,6 @@
     <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_BUTTON" desc="Button next to the 'add word' text input used to add the word typed by the user to the custom spell check dictionary.">
       Add word
     </message>
-    <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_DUPLICATE_ERROR" desc="Error message displayed to the user when the word is duplicated in the text input used to add a new word to the custom spell check dictionary.">
-      Already added
-    </message>
-    <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_LENGTH_ERROR" desc="Error message displayed to the user when the word is too long in the text input used to add a new word to the custom spell check dictionary.">
-      Cannot exceed 99 letters
-    </message>
     <message name="IDS_SETTINGS_LANGUAGES_DICTIONARY_WORDS" desc="Header for the list of custom dictionary words used for spell check.">
       Custom words
     </message>
@@ -2392,13 +2383,13 @@
     Clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_ASK" desc="The ask label for clipboard access in site settings.">
-    Ask when a site wants to see text and images copied to the clipboard
+    Ask when a site wants to see text and images you copy to the clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_ASK_RECOMMENDED" desc="The ask label for clipboard access in site settings (with the 'recommended' suffix).">
-    Ask when a site wants to see text and images copied to the clipboard (recommended)
+    Ask when a site wants to see text and images you copy to the clipboard (recommended)
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_BLOCK" desc="The block label for clipboard access in site settings.">
-    Do not allow sites to see text and images copied to the clipboard
+    Do not allow sites to see text and images you copy to the clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIES" desc="Label for the cookies site settings.">
     Cookies
@@ -3123,7 +3114,7 @@
     Passwords
   </message>
   <message name="IDS_SETTINGS_ENABLE_PAYMENTS_INTEGRATION_CHECKBOX_LABEL" desc="Label for the checkbox that controls the Autofill/Payments integration feature.">
-    Credit cards and addresses using Google Pay.
+    Credit cards and addresses using Google Payments.
   </message>
   <message name="IDS_SETTINGS_OPEN_TABS_CHECKBOX_LABEL" desc="Label for the checkbox which enables or disables syncing open tabs between multiple browser instances.">
     Open Tabs
@@ -3806,7 +3797,7 @@
       Restart computer
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_DONE" desc="Message confirming that Chrome has removed harmful software. Exclamation point is nice in EN-US but is optional in your language; please use or omit as appropriate. The UI will also display a checkmark icon to indicate the operation is done. ">
-      Done! Harmful software removed.
+      Done!
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_CANT_REMOVE" desc="An error message, appearing on the Chrome Cleanup web page, that Chrome tried to clean up unwanted software, as requested by the user, but was unsuccessful. Omits subject, i.e. Chrome can't remove harmful software.">
       Can't remove harmful software

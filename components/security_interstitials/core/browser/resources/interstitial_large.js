@@ -13,10 +13,7 @@ var keyPressState = 0;
  * @param {string} e The key that was just pressed.
  */
 function handleKeypress(e) {
-  // HTTPS errors are serious and should not be ignored. For testing purposes,
-  // other approaches are both safer and have fewer side-effects.
-  // See https://goo.gl/ZcZixP for more details.
-  var BYPASS_SEQUENCE = window.atob('dGhpc2lzdW5zYWZl');
+  var BYPASS_SEQUENCE = 'thisisnotsafe';
   if (BYPASS_SEQUENCE.charCodeAt(keyPressState) == e.keyCode) {
     keyPressState++;
     if (keyPressState == BYPASS_SEQUENCE.length) {

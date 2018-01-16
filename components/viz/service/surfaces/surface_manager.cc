@@ -156,6 +156,12 @@ void SurfaceManager::DestroySurface(const SurfaceId& surface_id) {
   surfaces_to_destroy_.insert(surface_id);
 }
 
+void SurfaceManager::SurfaceSubtreeDamaged(const SurfaceId& surface_id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  for (auto& observer : observer_list_)
+    observer.OnSurfaceSubtreeDamaged(surface_id);
+}
+
 void SurfaceManager::RequireSequence(const SurfaceId& surface_id,
                                      const SurfaceSequence& sequence) {
   DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
@@ -508,8 +514,8 @@ Surface* SurfaceManager::GetLatestInFlightSurface(
   const std::vector<LocalSurfaceId>& temp_surfaces = it->second;
   for (const LocalSurfaceId& local_surface_id : base::Reversed(temp_surfaces)) {
     // The in-flight surface cannot be newer than the primary surface ID.
-    if (local_surface_id.parent_sequence_number() >
-        primary_surface_id.local_surface_id().parent_sequence_number()) {
+    if (local_surface_id.parent_id() >
+        primary_surface_id.local_surface_id().parent_id()) {
       continue;
     }
 

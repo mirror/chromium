@@ -1229,8 +1229,7 @@ NetworkQualityEstimator::GetRecentEffectiveConnectionTypeUsingMetrics(
       *transport_rtt != nqe::internal::InvalidRTT()) {
     // Use transport RTT to clamp the HTTP RTT between lower and upper bounds.
     // To improve accuracy, the transport RTT estimate is used only when the
-    // transport RTT estimate was computed using at least
-    // |params_->http_rtt_transport_rtt_min_count()| observations.
+    // transport RTT estimate was computed using at least 5 observations.
     if (transport_rtt_observation_count_last_ect_computation_ >=
         params_->http_rtt_transport_rtt_min_count()) {
       if (params_->lower_bound_http_rtt_transport_rtt_multiplier() > 0) {

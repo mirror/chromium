@@ -27,7 +27,6 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/content_settings_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/renderer_configuration.mojom.h"
@@ -53,7 +52,6 @@
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
 #include "storage/common/fileapi/file_system_types.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "url/origin.h"
 
 using content::BrowserThread;
@@ -271,8 +269,7 @@ bool TabSpecificContentSettings::IsContentBlocked(
       content_type == CONTENT_SETTINGS_TYPE_PPAPI_BROKER ||
       content_type == CONTENT_SETTINGS_TYPE_MIDI_SYSEX ||
       content_type == CONTENT_SETTINGS_TYPE_ADS ||
-      content_type == CONTENT_SETTINGS_TYPE_SOUND ||
-      content_type == CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
+      content_type == CONTENT_SETTINGS_TYPE_SOUND) {
     const auto& it = content_settings_status_.find(content_type);
     if (it != content_settings_status_.end())
       return it->second.blocked;
@@ -300,13 +297,12 @@ bool TabSpecificContentSettings::IsContentAllowed(
       << "Automatic downloads handled by DownloadRequestLimiter";
 
   // This method currently only returns meaningful values for the content type
-  // cookies, media, PPAPI broker, downloads, MIDI sysex, and clipboard.
+  // cookies, media, PPAPI broker, downloads, and MIDI sysex.
   if (content_type != CONTENT_SETTINGS_TYPE_COOKIES &&
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC &&
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA &&
       content_type != CONTENT_SETTINGS_TYPE_PPAPI_BROKER &&
-      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX &&
-      content_type != CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
+      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX) {
     return false;
   }
 
@@ -331,13 +327,16 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
   if (!content_settings::ContentSettingsRegistry::GetInstance()->Get(type))
     return;
 
+  // TODO(robwu): Should this be restricted to cookies only?
+  // In the past, content_settings_status_[type].allowed was set to false, but
+  // this logic was inverted in https://codereview.chromium.org/13375004 to
+  // fix an issue with the cookie permission UI. This unconditional assignment
+  // seems incorrect, because the flag will now always be true after calling
+  // either OnContentBlocked or OnContentAllowed. Consequently IsContentAllowed
+  // will always return true for every supported setting that is not handled
+  // elsewhere.
   ContentSettingsStatus& status = content_settings_status_[type];
-
-  // TODO(garykac): Investigate why this is necessary for cookies.
-  // https://crbug.com/800845
-  if (type == CONTENT_SETTINGS_TYPE_COOKIES) {
-    status.allowed = true;
-  }
+  status.allowed = true;
 
 #if defined(OS_ANDROID)
   if (type == CONTENT_SETTINGS_TYPE_POPUPS) {
@@ -809,10 +808,8 @@ void TabSpecificContentSettings::RenderFrameForInterstitialPageCreated(
     content::RenderFrameHost* render_frame_host) {
   // We want to tell the renderer-side code to ignore content settings for this
   // page.
-  chrome::mojom::ContentSettingsRendererAssociatedPtr content_settings_renderer;
-  render_frame_host->GetRemoteAssociatedInterfaces()->GetInterface(
-      &content_settings_renderer);
-  content_settings_renderer->SetAsInterstitial();
+  render_frame_host->Send(new ChromeViewMsg_SetAsInterstitial(
+      render_frame_host->GetRoutingID()));
 }
 
 bool TabSpecificContentSettings::OnMessageReceived(

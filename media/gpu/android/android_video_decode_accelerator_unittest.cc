@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -96,12 +97,12 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
                                          gl::GLContextAttribs());
     context_->MakeCurrent(surface_.get());
 
-    codec_allocator_ = std::make_unique<FakeCodecAllocator>(
+    codec_allocator_ = base::MakeUnique<FakeCodecAllocator>(
         base::SequencedTaskRunnerHandle::Get());
-    device_info_ = std::make_unique<NiceMock<MockDeviceInfo>>();
+    device_info_ = base::MakeUnique<NiceMock<MockDeviceInfo>>();
 
     chooser_that_is_usually_null_ =
-        std::make_unique<NiceMock<MockAndroidVideoSurfaceChooser>>();
+        base::MakeUnique<NiceMock<MockAndroidVideoSurfaceChooser>>();
     chooser_ = chooser_that_is_usually_null_.get();
 
     feature_info_ = new gpu::gles2::FeatureInfo();
@@ -155,7 +156,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     // Have the factory provide an overlay, and verify that codec creation is
     // provided with that overlay.
     std::unique_ptr<MockAndroidOverlay> overlay =
-        std::make_unique<MockAndroidOverlay>();
+        base::MakeUnique<MockAndroidOverlay>();
     overlay_callbacks_ = overlay->GetCallbacks();
 
     // Set the expectations first, since ProvideOverlay might cause callbacks.
@@ -435,7 +436,7 @@ TEST_F(AndroidVideoDecodeAcceleratorTest,
   SetHasUnrenderedPictureBuffers(true);
   EXPECT_CALL(*codec_allocator_->most_recent_codec, SetSurface(_)).Times(0);
   std::unique_ptr<MockAndroidOverlay> overlay =
-      std::make_unique<MockAndroidOverlay>();
+      base::MakeUnique<MockAndroidOverlay>();
   // Make sure that the overlay is not destroyed too soon.
   std::unique_ptr<DestructionObserver> observer =
       overlay->CreateDestructionObserver();

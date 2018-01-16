@@ -97,14 +97,12 @@ RawResource* RawResource::FetchMedia(FetchParameters& params,
                                      RawResourceClient* client) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             network::mojom::RequestContextFrameType::kNone);
-  auto context = params.GetResourceRequest().GetRequestContext();
-  DCHECK(context == WebURLRequest::kRequestContextAudio ||
-         context == WebURLRequest::kRequestContextVideo);
-  Resource::Type type = (context == WebURLRequest::kRequestContextAudio)
-                            ? Resource::kAudio
-                            : Resource::kVideo;
-  return ToRawResource(
-      fetcher->RequestResource(params, RawResourceFactory(type), client));
+  DCHECK(params.GetResourceRequest().GetRequestContext() ==
+             WebURLRequest::kRequestContextAudio ||
+         params.GetResourceRequest().GetRequestContext() ==
+             WebURLRequest::kRequestContextVideo);
+  return ToRawResource(fetcher->RequestResource(
+      params, RawResourceFactory(Resource::kMedia), client));
 }
 
 RawResource* RawResource::FetchTextTrack(FetchParameters& params,
@@ -370,7 +368,7 @@ bool RawResource::CanReuse(const FetchParameters& new_fetch_parameters) const {
 RawResourceClientStateChecker::RawResourceClientStateChecker()
     : state_(kNotAddedAsClient) {}
 
-RawResourceClientStateChecker::~RawResourceClientStateChecker() = default;
+RawResourceClientStateChecker::~RawResourceClientStateChecker() {}
 
 NEVER_INLINE void RawResourceClientStateChecker::WillAddClient() {
   SECURITY_CHECK(state_ == kNotAddedAsClient);

@@ -43,7 +43,7 @@ ArchiveResource::ArchiveResource(scoped_refptr<SharedBuffer> data,
   DCHECK(data_);
 }
 
-ArchiveResource::~ArchiveResource() = default;
+ArchiveResource::~ArchiveResource() {}
 
 ArchiveResource* ArchiveResource::Create(scoped_refptr<SharedBuffer> data,
                                          const KURL& url,

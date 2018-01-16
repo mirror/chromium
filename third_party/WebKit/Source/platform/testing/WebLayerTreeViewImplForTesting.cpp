@@ -34,7 +34,7 @@ WebLayerTreeViewImplForTesting::WebLayerTreeViewImplForTesting(
   DCHECK(layer_tree_host_);
 }
 
-WebLayerTreeViewImplForTesting::~WebLayerTreeViewImplForTesting() = default;
+WebLayerTreeViewImplForTesting::~WebLayerTreeViewImplForTesting() {}
 
 // static
 cc::LayerTreeSettings

@@ -66,7 +66,7 @@ FetchParameters::FetchParameters(const ResourceRequest& resource_request,
       origin_restriction_(kUseDefaultOriginRestrictionForType),
       placeholder_image_request_type_(kDisallowPlaceholder) {}
 
-FetchParameters::~FetchParameters() = default;
+FetchParameters::~FetchParameters() {}
 
 void FetchParameters::SetCrossOriginAccessControl(
     const SecurityOrigin* origin,

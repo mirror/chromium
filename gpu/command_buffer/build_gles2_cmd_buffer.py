@@ -2,8 +2,7 @@
 # Copyright (c) 2012 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-#
-# pylint: disable=interface-not-implemented
+
 """code generator for GLES2 command buffers."""
 
 import itertools
@@ -3345,9 +3344,7 @@ _FUNCTION_INFO = {
     'cmd_args':
         'GLidProgram program, uint32_t name_bucket_id, GLint* location',
     'result': ['GLint'],
-
-    # http://www.opengl.org/sdk/docs/man/xhtml/glGetUniformLocation.xml
-    'error_return': -1,
+    'error_return': -1, # http://www.opengl.org/sdk/docs/man/xhtml/glGetUniformLocation.xml
   },
   'GetVertexAttribfv': {
     'type': 'GETn',
@@ -5003,7 +5000,7 @@ static_assert(offsetof(%(cmd_name)s::Result, %(field_name)s) == %(offset)d,
     f.write("  %s(%s);\n" %
                (func.GetGLFunctionName(), ", ".join(args)))
 
-  def WriteCmdSizeTest(self, _func, f):
+  def WriteCmdSizeTest(self, func, f):
     """Writes the size test for a command."""
     f.write("  EXPECT_EQ(sizeof(cmd), cmd.header.size * 4u);\n")
 
@@ -5214,19 +5211,19 @@ static_assert(offsetof(%(cmd_name)s::Result, %(field_name)s) == %(offset)d,
       for arg in func.GetOriginalArgs()
     ]
     gl_func_name = func.GetGLTestFunctionName()
-    varz = {
-      'name': name,
+    vars = {
+      'name':name,
       'gl_func_name': gl_func_name,
       'args': ", ".join(arg_strings),
       'gl_args': ", ".join(gl_arg_strings),
     }
     for extra in extras:
-      varz.update(extra)
+      vars.update(extra)
     old_test = ""
     while (old_test != test):
       old_test = test
-      test = test % varz
-    f.write(test % varz)
+      test = test % vars
+    f.write(test % vars)
 
   def WriteInvalidUnitTest(self, func, f, test, *extras):
     """Writes an invalid unit test for the service implementation."""
@@ -5260,7 +5257,7 @@ static_assert(offsetof(%(cmd_name)s::Result, %(field_name)s) == %(offset)d,
         if not gl_error == None:
           gl_error_test = '\n  EXPECT_EQ(%s, GetGLError());' % gl_error
 
-        varz = {
+        vars = {
           'name': func.name,
           'arg_index': invalid_arg_index,
           'value_index': value_index,
@@ -5272,8 +5269,8 @@ static_assert(offsetof(%(cmd_name)s::Result, %(field_name)s) == %(offset)d,
           'gl_error_test': gl_error_test,
         }
         for extra in extras:
-          varz.update(extra)
-        f.write(test % varz)
+          vars.update(extra)
+        f.write(test % vars)
 
   def WriteServiceUnitTest(self, func, f, *extras):
     """Writes the service unit test for a command."""
@@ -5500,7 +5497,7 @@ TEST_F(GLES2ImplementationTest, %(name)sInvalidConstantArg%(invalid_index)d) {
     f.write('  TRACE_EVENT0("gpu", "GLES2Implementation::%s");\n' %
                func.original_name)
 
-  def WriteImmediateCmdComputeSize(self, _func, f):
+  def WriteImmediateCmdComputeSize(self, func, f):
     """Writes the size computation code for the immediate version of a cmd."""
     f.write("  static uint32_t ComputeSize(uint32_t size_in_bytes) {\n")
     f.write("    return static_cast<uint32_t>(\n")
@@ -5509,7 +5506,7 @@ TEST_F(GLES2ImplementationTest, %(name)sInvalidConstantArg%(invalid_index)d) {
     f.write("  }\n")
     f.write("\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Writes the SetHeader function for the immediate version of a cmd."""
     f.write("  void SetHeader(uint32_t size_in_bytes) {\n")
     f.write("    header.SetCmdByTotalSize<ValueType>(size_in_bytes);\n")
@@ -5631,15 +5628,15 @@ TEST_P(%(test_name)s, %(name)sInvalidValue%(ndx)d_%(check_ndx)d) {
           ]
 
           arg_strings[ndx] = range_check['test_value']
-          varz = {
+          vars = {
             'name': name,
             'ndx': ndx,
             'check_ndx': check_ndx,
             'args': ", ".join(arg_strings),
           }
           for extra in extras:
-            varz.update(extra)
-          f.write(valid_test % varz)
+            vars.update(extra)
+          f.write(valid_test % vars)
       if 'nan_check' in item:
         valid_test = """
 TEST_P(%(test_name)s, %(name)sNaNValue%(ndx)d) {
@@ -5657,22 +5654,14 @@ TEST_P(%(test_name)s, %(name)sNaNValue%(ndx)d) {
         ]
 
         arg_strings[ndx] = 'nanf("")'
-        varz = {
+        vars = {
           'name': name,
           'ndx': ndx,
           'args': ", ".join(arg_strings),
         }
         for extra in extras:
-          varz.update(extra)
-        f.write(valid_test % varz)
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
+          vars.update(extra)
+        f.write(valid_test % vars)
 
 
 class StateSetRGBAlphaHandler(TypeHandler):
@@ -5698,14 +5687,6 @@ class StateSetRGBAlphaHandler(TypeHandler):
       f.write("    %s(%s);\n" %
                  (func.GetGLFunctionName(), func.MakeOriginalArgString("")))
       f.write("  }\n")
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
 
 
 class StateSetFrontBackSeparateHandler(TypeHandler):
@@ -5743,14 +5724,6 @@ class StateSetFrontBackSeparateHandler(TypeHandler):
                  (func.GetGLFunctionName(), func.MakeOriginalArgString("")))
     f.write("  }\n")
 
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
 
 class StateSetFrontBackHandler(TypeHandler):
   """Handler for commands that simply set state that set both front/back."""
@@ -5763,11 +5736,11 @@ class StateSetFrontBackHandler(TypeHandler):
     args = func.GetOriginalArgs()
     num_args = len(args)
     code = []
-    for group in Grouper(num_args, states):
+    for group_ndx, group in enumerate(Grouper(num_args, states)):
       for ndx, item in enumerate(group):
         code.append("state_.%s != %s" % (item['name'], args[ndx].name))
     f.write("  if (%s) {\n" % " ||\n      ".join(code))
-    for group in Grouper(num_args, states):
+    for group_ndx, group in enumerate(Grouper(num_args, states)):
       for ndx, item in enumerate(group):
         f.write("    state_.%s = %s;\n" % (item['name'], args[ndx].name))
     if 'state_flag' in state:
@@ -5776,14 +5749,6 @@ class StateSetFrontBackHandler(TypeHandler):
       f.write("    %s(%s);\n" %
                  (func.GetGLFunctionName(), func.MakeOriginalArgString("")))
     f.write("  }\n")
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
 
 
 class StateSetNamedParameter(TypeHandler):
@@ -5812,14 +5777,6 @@ class StateSetNamedParameter(TypeHandler):
     f.write("    default:\n")
     f.write("      NOTREACHED();\n")
     f.write("  }\n")
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
 
 
 class CustomHandler(TypeHandler):
@@ -5866,7 +5823,7 @@ class CustomHandler(TypeHandler):
     """Overrriden from TypeHandler."""
     pass
 
-  def WriteImmediateCmdGetTotalSize(self, _func, f):
+  def WriteImmediateCmdGetTotalSize(self, func, f):
     """Overrriden from TypeHandler."""
     f.write(
         "    uint32_t total_size = 0;  // WARNING: compute correct size.\n")
@@ -5967,15 +5924,6 @@ class DataHandler(TypeHandler):
   def WriteImmediateServiceUnitTest(self, func, f, *extras):
     """Overrriden from TypeHandler."""
     pass
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
 
 class BindHandler(TypeHandler):
   """Handler for glBind___ type functions."""
@@ -6133,14 +6081,6 @@ TEST_F(GLES2ImplementationTest, %(name)s) {
           'args': ", ".join(gl_arg_strings),
           'cmd_args': ", ".join(cmd_arg_strings),
         })
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
 
 
 class GENnHandler(TypeHandler):
@@ -6311,7 +6251,7 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs) {
           'resource_name': func.GetInfo('resource_type').lower(),
         }, *extras)
 
-  def WriteImmediateCmdComputeSize(self, _func, f):
+  def WriteImmediateCmdComputeSize(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  static uint32_t ComputeDataSize(GLsizei _n) {\n")
     f.write(
@@ -6324,7 +6264,7 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs) {
     f.write("  }\n")
     f.write("\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  void SetHeader(GLsizei _n) {\n")
     f.write("    header.SetCmdByTotalSize<ValueType>(ComputeSize(_n));\n")
@@ -6536,15 +6476,6 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs%(arg_index)d_%(value_index)d) {
     """Overrriden from TypeHandler."""
     pass
 
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-
 class DeleteHandler(TypeHandler):
   """Handler for glDelete___ single resource type functions."""
 
@@ -6553,6 +6484,7 @@ class DeleteHandler(TypeHandler):
     if func.IsES3():
       TypeHandler.WriteServiceImplementation(self, func, f)
     # HandleDeleteShader and HandleDeleteProgram are manually written.
+    pass
 
   def WriteGLES2Implementation(self, func, f):
     """Overrriden from TypeHandler."""
@@ -6577,15 +6509,6 @@ class DeleteHandler(TypeHandler):
     assert len(func.GetOriginalArgs()) == 1
     arg = func.GetOriginalArgs()[0]
     f.write("  %sHelper(%s);\n" % (func.original_name, arg.name))
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
 
 class DELnHandler(TypeHandler):
   """Handler for glDelete___ type functions."""
@@ -6737,7 +6660,7 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs) {
 """
       f.write(code % args)
 
-  def WriteImmediateCmdComputeSize(self, _func, f):
+  def WriteImmediateCmdComputeSize(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  static uint32_t ComputeDataSize(GLsizei _n) {\n")
     f.write(
@@ -6750,7 +6673,7 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs) {
     f.write("  }\n")
     f.write("\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  void SetHeader(GLsizei _n) {\n")
     f.write("    header.SetCmdByTotalSize<ValueType>(ComputeSize(_n));\n")
@@ -7119,15 +7042,6 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs%(arg_index)d_%(value_index)d) {
 """
       self.WriteInvalidUnitTest(func, f, invalid_test, *extras)
 
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-
 class ArrayArgTypeHandler(TypeHandler):
   """Base class for type handlers that handle args that are arrays"""
 
@@ -7148,15 +7062,6 @@ class ArrayArgTypeHandler(TypeHandler):
   def GetArrayCount(self, func):
     """Returns the count of the elements in the array being PUT to."""
     return func.GetInfo('count')
-
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
 
 class PUTHandler(ArrayArgTypeHandler):
   """Handler for glTexParameter_v, glVertexAttrib_v functions."""
@@ -7371,7 +7276,7 @@ TEST_F(GLES2ImplementationTest, %(name)s) {
     f.write("  }\n")
     f.write("\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  void SetHeader() {\n")
     f.write(
@@ -7717,7 +7622,7 @@ TEST_F(GLES2ImplementationTest, %(name)sInvalidConstantArg%(invalid_index)d) {
     f.write("  }\n")
     f.write("\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  void SetHeader(GLsizei _n) {\n")
     f.write(
@@ -8141,6 +8046,7 @@ class PUTXnHandler(ArrayArgTypeHandler):
     values = ""
     args = func.GetOriginalArgs()
     count = int(self.GetArrayCount(func))
+    num_args = len(args)
     for ii in range(count):
       values += "%s, " % args[len(args) - count + ii].name
 
@@ -8191,14 +8097,14 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs%(arg_index)d_%(value_index)d) {
 class GLcharHandler(CustomHandler):
   """Handler for functions that pass a single string ."""
 
-  def WriteImmediateCmdComputeSize(self, _func, f):
+  def WriteImmediateCmdComputeSize(self, func, f):
     """Overrriden from TypeHandler."""
     f.write("  static uint32_t ComputeSize(uint32_t data_size) {\n")
     f.write("    return static_cast<uint32_t>(\n")
     f.write("        sizeof(ValueType) + data_size);  // NOLINT\n")
     f.write("  }\n")
 
-  def WriteImmediateCmdSetHeader(self, _func, f):
+  def WriteImmediateCmdSetHeader(self, func, f):
     """Overrriden from TypeHandler."""
     code = """
   void SetHeader(uint32_t data_size) {
@@ -8230,6 +8136,7 @@ class GLcharHandler(CustomHandler):
 
   def WriteImmediateCmdSet(self, func, f):
     """Overrriden from TypeHandler."""
+    last_arg = func.GetLastOriginalArg()
     f.write("  void* Set(void* cmd%s, uint32_t _data_size) {\n" %
                func.MakeTypedCmdArgString("_", True))
     f.write("    static_cast<ValueType*>(cmd)->Init(%s, _data_size);\n" %
@@ -8332,6 +8239,7 @@ class GLcharNHandler(CustomHandler):
 }
 
 """ % {
+    'name': func.name,
     'gl_func_name': func.GetGLFunctionName(),
     'bucket_id': func.cmd_args[0].name,
   })
@@ -8505,14 +8413,6 @@ TEST_F(GLES2ImplementationTest, %(name)s) {
           'cmd_id_value': args[0].GetValidClientSideCmdArg(func),
           'gl_id_value': args[0].GetValidClientSideArg(func) })
 
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
 
 class STRnHandler(TypeHandler):
   """Handler for GetProgramInfoLog, GetShaderInfoLog, GetShaderSource, and
@@ -8638,15 +8538,6 @@ TEST_P(%(test_name)s, %(name)sInvalidArgs) {
     """Overrriden from TypeHandler."""
     pass
 
-  def WriteImmediateCmdInit(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-  def WriteImmediateCmdSet(self, func, f):
-    """Overrriden from TypeHandler."""
-    pass
-
-
 class NamedType(object):
   """A class that represents a type of an argument in a client function.
 
@@ -8719,15 +8610,15 @@ class Argument(object):
   }
   need_validation_ = ['GLsizei*', 'GLboolean*', 'GLenum*', 'GLint*']
 
-  def __init__(self, name, arg_type):
+  def __init__(self, name, type):
     self.name = name
-    self.optional = arg_type.endswith("Optional*")
+    self.optional = type.endswith("Optional*")
     if self.optional:
-      arg_type = arg_type[:-len("Optional*")] + "*"
-    self.type = arg_type
+      type = type[:-len("Optional*")] + "*"
+    self.type = type
 
-    if arg_type in self.cmd_type_map_:
-      self.cmd_type = self.cmd_type_map_[arg_type]
+    if type in self.cmd_type_map_:
+      self.cmd_type = self.cmd_type_map_[type]
     else:
       self.cmd_type = ['uint32_t']
 
@@ -8803,7 +8694,7 @@ class Argument(object):
       return ("reinterpret_cast<GLsync>(%s)" % value)
     return value
 
-  def GetValidNonCachedClientSideArg(self, _func):
+  def GetValidNonCachedClientSideArg(self, func):
     """Returns a valid value for this argument in a GL call.
     Using the value will produce a command buffer service invocation.
     Returns None if there is no such value."""
@@ -8812,18 +8703,18 @@ class Argument(object):
       return ("reinterpret_cast<GLsync>(%s)" % value)
     return value
 
-  def GetValidNonCachedClientSideCmdArg(self, _func):
+  def GetValidNonCachedClientSideCmdArg(self, func):
     """Returns a valid value for this argument in a command buffer command.
     Calling the GL function with the value returned by
     GetValidNonCachedClientSideArg will result in a command buffer command
     that contains the value returned by this function. """
     return '123'
 
-  def GetNumInvalidValues(self, _func):
+  def GetNumInvalidValues(self, func):
     """returns the number of invalid values to be tested."""
     return 0
 
-  def GetInvalidArg(self, _index):
+  def GetInvalidArg(self, index):
     """returns an invalid value and expected parse result by index."""
     return ("---ERROR0---", "---ERROR2---", None)
 
@@ -8871,7 +8762,7 @@ class Argument(object):
     """Writes the client side destintion initialization validation."""
     pass
 
-  def WriteDestinationInitalizationValidatationIfNeeded(self, f, _func):
+  def WriteDestinationInitalizationValidatationIfNeeded(self, f, func):
     """Writes the client side destintion initialization validation if needed."""
     parts = self.type.split(" ")
     if len(parts) > 1:
@@ -8893,7 +8784,7 @@ class Argument(object):
 class BoolArgument(Argument):
   """class for GLboolean"""
 
-  def __init__(self, name, _type):
+  def __init__(self, name, type):
     Argument.__init__(self, name, 'GLboolean')
 
   def GetValidArg(self, func):
@@ -8944,7 +8835,7 @@ class SizeArgument(Argument):
       return 0
     return 1
 
-  def GetInvalidArg(self, _index):
+  def GetInvalidArg(self, index):
     """overridden from Argument."""
     return ("-1", "kNoError", "GL_INVALID_VALUE")
 
@@ -8976,7 +8867,7 @@ class SizeArgument(Argument):
 class SizeNotNegativeArgument(SizeArgument):
   """class for GLsizeiNotNegative. It's NEVER allowed to be negative"""
 
-  def GetInvalidArg(self, _index):
+  def GetInvalidArg(self, index):
     """overridden from SizeArgument."""
     return ("-1", "kOutOfBounds", "GL_NO_ERROR")
 
@@ -8988,11 +8879,11 @@ class SizeNotNegativeArgument(SizeArgument):
 class EnumBaseArgument(Argument):
   """Base class for EnumArgument, IntArgument, and BitfieldArgument."""
 
-  def __init__(self, name, gl_type, arg_type, gl_error):
+  def __init__(self, name, gl_type, type, gl_error):
     Argument.__init__(self, name, gl_type)
 
     self.gl_error = gl_error
-    name = arg_type[len(gl_type):]
+    name = type[len(gl_type):]
     self.type_name = name
     self.named_type = NamedType(_NAMED_TYPE_INFO[name])
 
@@ -9069,7 +8960,7 @@ class EnumBaseArgument(Argument):
     """Gets a valid value for this argument."""
     return self.GetValidArg(func)
 
-  def GetNumInvalidValues(self, _func):
+  def GetNumInvalidValues(self, func):
     """returns the number of invalid values to be tested."""
     return len(self.named_type.GetInvalidValues())
 
@@ -9087,8 +8978,8 @@ class EnumBaseArgument(Argument):
 class EnumArgument(EnumBaseArgument):
   """A class that represents a GLenum argument"""
 
-  def __init__(self, name, arg_type):
-    EnumBaseArgument.__init__(self, name, "GLenum", arg_type, "GL_INVALID_ENUM")
+  def __init__(self, name, type):
+    EnumBaseArgument.__init__(self, name, "GLenum", type, "GL_INVALID_ENUM")
 
   def GetLogArg(self):
     """Overridden from Argument."""
@@ -9102,8 +8993,8 @@ class IntArgument(EnumBaseArgument):
   argument instead of a GLenum.
   """
 
-  def __init__(self, name, arg_type):
-    EnumBaseArgument.__init__(self, name, "GLint", arg_type, "GL_INVALID_VALUE")
+  def __init__(self, name, type):
+    EnumBaseArgument.__init__(self, name, "GLint", type, "GL_INVALID_VALUE")
 
 
 class BitFieldArgument(EnumBaseArgument):
@@ -9113,8 +9004,8 @@ class BitFieldArgument(EnumBaseArgument):
   must be 0.
   """
 
-  def __init__(self, name, arg_type):
-    EnumBaseArgument.__init__(self, name, "GLbitfield", arg_type,
+  def __init__(self, name, type):
+    EnumBaseArgument.__init__(self, name, "GLbitfield", type,
                               "GL_INVALID_VALUE")
 
 
@@ -9195,7 +9086,7 @@ class PointerArgument(Argument):
     """Overridden from Argument."""
     return "reinterpret_cast<%s>(shared_memory_address_)" % self.type
 
-  def GetNumInvalidValues(self, _func):
+  def GetNumInvalidValues(self, func):
     """Overridden from Argument."""
     return 2
 
@@ -9283,7 +9174,7 @@ class BucketPointerArgument(PointerArgument):
 class InputStringBucketArgument(Argument):
   """A string input argument where the string is passed in a bucket."""
 
-  def __init__(self, name, _type):
+  def __init__(self, name, type):
     Argument.__init__(self, name + "_bucket_id", "uint32_t")
 
   def IsPointer(self):
@@ -9298,7 +9189,7 @@ class InputStringBucketArgument(Argument):
 class InputStringArrayBucketArgument(Argument):
   """A string array input argument where the strings are passed in a bucket."""
 
-  def __init__(self, name, _type):
+  def __init__(self, name, type):
     Argument.__init__(self, name + "_bucket_id", "uint32_t")
     self._original_name = name
 
@@ -9344,14 +9235,14 @@ class InputStringArrayBucketArgument(Argument):
 class ResourceIdArgument(Argument):
   """A class that represents a resource id argument to a function."""
 
-  def __init__(self, name, arg_type):
-    match = re.match("(GLid\w+)", arg_type)
+  def __init__(self, name, type):
+    match = re.match("(GLid\w+)", type)
     self.resource_type = match.group(1)[4:]
     if self.resource_type == "Sync":
-      arg_type = arg_type.replace(match.group(1), "GLsync")
+      type = type.replace(match.group(1), "GLsync")
     else:
-      arg_type = arg_type.replace(match.group(1), "GLuint")
-    Argument.__init__(self, name, arg_type)
+      type = type.replace(match.group(1), "GLuint")
+    Argument.__init__(self, name, type)
 
   def WriteGetCode(self, f):
     """Overridden from Argument."""
@@ -9373,11 +9264,11 @@ class ResourceIdArgument(Argument):
 class ResourceIdBindArgument(Argument):
   """Represents a resource id argument to a bind function."""
 
-  def __init__(self, name, arg_type):
-    match = re.match("(GLidBind\w+)", arg_type)
+  def __init__(self, name, type):
+    match = re.match("(GLidBind\w+)", type)
     self.resource_type = match.group(1)[8:]
-    arg_type = arg_type.replace(match.group(1), "GLuint")
-    Argument.__init__(self, name, arg_type)
+    type = type.replace(match.group(1), "GLuint")
+    Argument.__init__(self, name, type)
 
   def WriteGetCode(self, f):
     """Overridden from Argument."""
@@ -9395,11 +9286,11 @@ class ResourceIdBindArgument(Argument):
 class ResourceIdZeroArgument(Argument):
   """Represents a resource id argument to a function that can be zero."""
 
-  def __init__(self, name, arg_type):
-    match = re.match("(GLidZero\w+)", arg_type)
+  def __init__(self, name, type):
+    match = re.match("(GLidZero\w+)", type)
     self.resource_type = match.group(1)[8:]
-    arg_type = arg_type.replace(match.group(1), "GLuint")
-    Argument.__init__(self, name, arg_type)
+    type = type.replace(match.group(1), "GLuint")
+    Argument.__init__(self, name, type)
 
   def WriteGetCode(self, f):
     """Overridden from Argument."""
@@ -9411,11 +9302,11 @@ class ResourceIdZeroArgument(Argument):
   def GetValidGLArg(self, func):
     return "kService%sId" % self.resource_type
 
-  def GetNumInvalidValues(self, _func):
+  def GetNumInvalidValues(self, func):
     """returns the number of invalid values to be tested."""
     return 1
 
-  def GetInvalidArg(self, _index):
+  def GetInvalidArg(self, index):
     """returns an invalid value by index."""
     return ("kInvalidClientId", "kNoError", "GL_INVALID_VALUE")
 
@@ -9423,8 +9314,8 @@ class ResourceIdZeroArgument(Argument):
 class Int64Argument(Argument):
   """Represents a GLuint64 argument which splits up into 2 uint32_t items."""
 
-  def __init__(self, name, arg_type):
-    Argument.__init__(self, name, arg_type)
+  def __init__(self, name, type):
+    Argument.__init__(self, name, type)
 
   def GetArgAccessor(self):
     return "%s()" % self.name
@@ -9513,12 +9404,6 @@ class Function(object):
     self.type_handler = self.type_handlers[info['type']]
     self.can_auto_generate = (self.num_pointer_args == 0 and
                               info['return_type'] == "void")
-
-    # Satisfy pylint warning attribute-defined-outside-init.
-    #
-    # self.cmd_args is typically set in InitFunction, but that method may be
-    # overriden.
-    self.cmd_args = []
     self.InitFunction()
 
   def ParseArgs(self, arg_string):
@@ -10260,11 +10145,11 @@ class GLGenerator(object):
     """Writes the command buffer format"""
     with CHeaderWriter(filename) as f:
       f.write("#define GLES2_COMMAND_LIST(OP) \\\n")
-      cmd_id = 256
+      id = 256
       for func in self.functions:
         f.write("  %-60s /* %d */ \\\n" %
-                   ("OP(%s)" % func.name, cmd_id))
-        cmd_id += 1
+                   ("OP(%s)" % func.name, id))
+        id += 1
       f.write("\n")
 
       f.write("enum CommandId {\n")
@@ -11083,7 +10968,7 @@ extern const NameToFunc g_gles2_function_table[] = {
           f.write("\n")
       f.write("Validators::Validators()")
       pre = '    : '
-      for name in names:
+      for count, name in enumerate(names):
         named_type = NamedType(_NAMED_TYPE_INFO[name])
         if not named_type.CreateValidator() or named_type.IsComplete():
           continue
@@ -11151,7 +11036,7 @@ extern const NameToFunc g_gles2_function_table[] = {
   def WriteCommonUtilsImpl(self, filename):
     """Writes the gles2 common utility header."""
     enum_re = re.compile(r'\#define\s+(GL_[a-zA-Z0-9_]+)\s+([0-9A-Fa-fx]+)')
-    define_dict = {}
+    dict = {}
     for fname in ['third_party/khronos/GLES2/gl2.h',
                   'third_party/khronos/GLES2/gl2ext.h',
                   'third_party/khronos/GLES3/gl3.h',
@@ -11164,18 +11049,18 @@ extern const NameToFunc g_gles2_function_table[] = {
           name = m.group(1)
           value = m.group(2)
           if len(value) <= 10:
-            if not value in define_dict:
-              define_dict[value] = name
+            if not value in dict:
+              dict[value] = name
             # check our own _CHROMIUM macro conflicts with khronos GL headers.
-            elif EnumsConflict(define_dict[value], name):
+            elif EnumsConflict(dict[value], name):
               self.Error("code collision: %s and %s have the same code %s" %
-                         (define_dict[value], name, value))
+                         (dict[value], name, value))
 
     with CHeaderWriter(filename) as f:
       f.write("static const GLES2Util::EnumToString "
                  "enum_to_string_table[] = {\n")
-      for value in sorted(define_dict):
-        f.write('  { %s, "%s", },\n' % (value, define_dict[value]))
+      for value in sorted(dict):
+        f.write('  { %s, "%s", },\n' % (value, dict[value]))
       f.write("""};
 
 const GLES2Util::EnumToString* const GLES2Util::enum_to_string_table_ =
@@ -11406,7 +11291,7 @@ def main(argv):
       "-v", "--verbose", action="store_true",
       help="prints more output.")
 
-  (options, _) = parser.parse_args(args=argv)
+  (options, args) = parser.parse_args(args=argv)
 
   # Add in states and capabilites to GLState
   gl_state_valid = _NAMED_TYPE_INFO['GLState']['valid']
@@ -11504,6 +11389,7 @@ def main(argv):
   gen.WriteCommonUtilsImpl(
     "gpu/command_buffer/common/gles2_cmd_utils_implementation_autogen.h")
   gen.WriteGLES2Header("gpu/GLES2/gl2chromium_autogen.h")
+  mojo_gles2_prefix = ("mojo/public/c/gles2/gles2_call_visitor")
 
   Format(gen.generated_cpp_filenames)
 

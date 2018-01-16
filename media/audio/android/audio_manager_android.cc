@@ -4,14 +4,13 @@
 
 #include "media/audio/android/audio_manager_android.h"
 
-#include <memory>
-
 #include "base/android/build_info.h"
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "jni/AudioManagerAndroid_jni.h"
@@ -52,7 +51,7 @@ const int kDefaultOutputBufferSize = 2048;
 std::unique_ptr<AudioManager> CreateAudioManager(
     std::unique_ptr<AudioThread> audio_thread,
     AudioLogFactory* audio_log_factory) {
-  return std::make_unique<AudioManagerAndroid>(std::move(audio_thread),
+  return base::MakeUnique<AudioManagerAndroid>(std::move(audio_thread),
                                                audio_log_factory);
 }
 

@@ -672,7 +672,6 @@ public class VrShellDelegate
         assert mActivity != null;
         if (mActivity == activity) return;
         mActivity = activity;
-        if (mVrDaydreamApi != null) mVrDaydreamApi.close();
         mVrDaydreamApi = mVrClassesWrapper.createVrDaydreamApi(mActivity);
     }
 
@@ -1762,7 +1761,6 @@ public class VrShellDelegate
         if (sInstance == null) return;
         shutdownVr(false /* disableVrMode */, false /* stayingInChrome */);
         if (mNativeVrShellDelegate != 0) nativeDestroy(mNativeVrShellDelegate);
-        if (mVrDaydreamApi != null) mVrDaydreamApi.close();
         mNativeVrShellDelegate = 0;
         ApplicationStatus.unregisterActivityStateListener(this);
         sInstance = null;

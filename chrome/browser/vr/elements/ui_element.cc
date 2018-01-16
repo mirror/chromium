@@ -101,7 +101,7 @@ void UiElement::Render(UiElementRenderer* renderer,
   // draw phase set to kPhaseNone and should, consequently, be filtered out when
   // the UiRenderer collects elements to draw. Therefore, if we invoke this
   // function, it is an error.
-  NOTREACHED() << "element: " << DebugName();
+  NOTREACHED();
 }
 
 void UiElement::Initialize(SkiaSurfaceProvider* provider) {}

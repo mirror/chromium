@@ -103,7 +103,6 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/disable_reason.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -113,10 +112,10 @@
 #include "extensions/browser/install_flag.h"
 #include "extensions/browser/management_policy.h"
 #include "extensions/browser/mock_external_provider.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/test_management_policy.h"
 #include "extensions/browser/uninstall_reason.h"
+#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -388,8 +387,6 @@ class MockProviderVisitor
     provider_.reset(new extensions::ExternalProviderImpl(
         this, new extensions::ExternalTestingLoader(json_data, fake_base_path_),
         profile_.get(), crx_location, download_location, Extension::NO_FLAGS));
-    if (crx_location == Manifest::EXTERNAL_REGISTRY)
-      provider_->set_allow_updates(true);
 
     // We also parse the file into a dictionary to compare what we get back
     // from the provider.
@@ -588,42 +585,6 @@ class MockUpdateProviderVisitor : public MockProviderVisitor {
   DISALLOW_COPY_AND_ASSIGN(MockUpdateProviderVisitor);
 };
 
-struct MockExtensionRegistryObserver
-    : public extensions::ExtensionRegistryObserver {
-  MockExtensionRegistryObserver() = default;
-  ~MockExtensionRegistryObserver() override = default;
-
-  // extensions::ExtensionRegistryObserver:
-  void OnExtensionLoaded(content::BrowserContext* browser_context,
-                         const Extension* extension) override {
-    last_extension_loaded = extension->id();
-  }
-  void OnExtensionUnloaded(content::BrowserContext* browser_context,
-                           const Extension* extension,
-                           UnloadedExtensionReason reason) override {
-    last_extension_unloaded = extension->id();
-  }
-  void OnExtensionWillBeInstalled(content::BrowserContext* browser_context,
-                                  const Extension* extension,
-                                  bool is_update,
-                                  const std::string& old_name) override {
-    last_extension_installed = extension->id();
-  }
-  void OnExtensionUninstalled(content::BrowserContext* browser_context,
-                              const Extension* extension,
-                              extensions::UninstallReason reason) override {
-    last_extension_uninstalled = extension->id();
-  }
-
-  std::string last_extension_loaded;
-  std::string last_extension_unloaded;
-  std::string last_extension_installed;
-  std::string last_extension_uninstalled;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MockExtensionRegistryObserver);
-};
-
 class ExtensionServiceTest
     : public extensions::ExtensionServiceTestWithInstall {
  public:
@@ -694,8 +655,8 @@ class ExtensionServiceTest
 
   bool IsPrefExist(const std::string& extension_id,
                    const std::string& pref_path) {
-    const base::DictionaryValue* dict = profile()->GetPrefs()->GetDictionary(
-        extensions::pref_names::kExtensions);
+    const base::DictionaryValue* dict =
+        profile()->GetPrefs()->GetDictionary("extensions.settings");
     if (dict == NULL) return false;
     const base::DictionaryValue* pref = NULL;
     if (!dict->GetDictionary(extension_id, &pref)) {
@@ -715,8 +676,7 @@ class ExtensionServiceTest
                const std::string& pref_path,
                std::unique_ptr<base::Value> value,
                const std::string& msg) {
-    DictionaryPrefUpdate update(profile()->GetPrefs(),
-                                extensions::pref_names::kExtensions);
+    DictionaryPrefUpdate update(profile()->GetPrefs(), "extensions.settings");
     base::DictionaryValue* dict = update.Get();
     ASSERT_TRUE(dict != NULL) << msg;
     base::DictionaryValue* pref = NULL;
@@ -754,8 +714,7 @@ class ExtensionServiceTest
     std::string msg = " while clearing: ";
     msg += extension_id + " " + pref_path;
 
-    DictionaryPrefUpdate update(profile()->GetPrefs(),
-                                extensions::pref_names::kExtensions);
+    DictionaryPrefUpdate update(profile()->GetPrefs(), "extensions.settings");
     base::DictionaryValue* dict = update.Get();
     ASSERT_TRUE(dict != NULL) << msg;
     base::DictionaryValue* pref = NULL;
@@ -1040,105 +999,6 @@ TEST_F(ExtensionServiceTest, PendingImports) {
   EXPECT_TRUE(service()->pending_extension_manager()->Remove(pending_id));
 }
 
-// Tests that reloading extension with a install delayed due to pending imports
-// reloads currently installed extension version, rather than installing the
-// delayed install.
-TEST_F(ExtensionServiceTest, ReloadExtensionWithPendingImports) {
-  InitializeEmptyExtensionService();
-
-  // Wait for GarbageCollectExtensions task to complete.
-  content::RunAllTasksUntilIdle();
-
-  const base::FilePath base_path =
-      data_dir()
-          .AppendASCII("pending_updates_with_imports")
-          .AppendASCII("updated_with_imports");
-
-  const base::FilePath pem_path = base_path.AppendASCII("update.pem");
-
-  // Initially installed version - the version with no imports.
-  const base::FilePath installed_path = base_path.AppendASCII("1.0.0");
-
-  // The updated version - has import that is not satisfied (due to the imported
-  // extension not being installed).
-  const base::FilePath updated_path = base_path.AppendASCII("2.0.0");
-
-  ASSERT_TRUE(base::PathExists(pem_path));
-  ASSERT_TRUE(base::PathExists(installed_path));
-  ASSERT_TRUE(base::PathExists(updated_path));
-
-  ExtensionPrefs* prefs = ExtensionPrefs::Get(profile());
-
-  // Install version 1.
-  const Extension* extension =
-      PackAndInstallCRX(installed_path, pem_path, INSTALL_NEW,
-                        Extension::FROM_WEBSTORE, Manifest::Location::INTERNAL);
-  content::RunAllTasksUntilIdle();
-  ASSERT_TRUE(extension);
-  const std::string id = extension->id();
-
-  ASSERT_TRUE(registry()->enabled_extensions().Contains(id));
-  EXPECT_EQ("1.0.0", extension->VersionString());
-
-  // No pending extensions at this point.
-  EXPECT_FALSE(service()->pending_extension_manager()->HasPendingExtensions());
-
-  // Update to version 2 that adds an unsatisfied import.
-  PackCRXAndUpdateExtension(id, updated_path, pem_path, ENABLED);
-  content::RunAllTasksUntilIdle();
-
-  EXPECT_TRUE(registry()->enabled_extensions().Contains(id));
-  extension = service()->GetInstalledExtension(id);
-  ASSERT_TRUE(extension);
-
-  // The extension update should be delayed at this point - the old version
-  // should still be installed.
-  EXPECT_EQ("1.0.0", extension->VersionString());
-
-  // Make sure the import started for the extension with a dependency.
-  EXPECT_TRUE(prefs->GetDelayedInstallInfo(id));
-  EXPECT_EQ(ExtensionPrefs::DELAY_REASON_WAIT_FOR_IMPORTS,
-            prefs->GetDelayedInstallReason(id));
-
-  const std::string pending_id(32, 'e');
-  EXPECT_TRUE(service()->pending_extension_manager()->IsIdPending(pending_id));
-
-  MockExtensionRegistryObserver reload_observer;
-  registry()->AddObserver(&reload_observer);
-
-  // Reload the extension, and verify that the installed version does not
-  // change.
-  service()->ReloadExtension(id);
-  EXPECT_TRUE(registry()->enabled_extensions().Contains(id));
-  EXPECT_EQ(id, reload_observer.last_extension_loaded);
-  EXPECT_EQ(id, reload_observer.last_extension_unloaded);
-  registry()->RemoveObserver(&reload_observer);
-
-  extension = service()->GetInstalledExtension(id);
-  ASSERT_TRUE(extension);
-  EXPECT_EQ("1.0.0", extension->VersionString());
-
-  // The update should remain delayed, with the import pending.
-  EXPECT_TRUE(prefs->GetDelayedInstallInfo(id));
-  EXPECT_EQ(ExtensionPrefs::DELAY_REASON_WAIT_FOR_IMPORTS,
-            prefs->GetDelayedInstallReason(id));
-
-  // Attempt delayed installed - similar to reloading the extension, the update
-  // should remain delayed.
-  EXPECT_FALSE(service()->FinishDelayedInstallationIfReady(id, true));
-
-  extension = service()->GetInstalledExtension(id);
-  ASSERT_TRUE(extension);
-  EXPECT_EQ("1.0.0", extension->VersionString());
-  EXPECT_EQ(ExtensionPrefs::DELAY_REASON_WAIT_FOR_IMPORTS,
-            prefs->GetDelayedInstallReason(id));
-  EXPECT_TRUE(service()->pending_extension_manager()->IsIdPending(pending_id));
-
-  // Remove the pending install because the pending extension manager's
-  // ability to download and install extensions is not important for this test.
-  EXPECT_TRUE(service()->pending_extension_manager()->Remove(pending_id));
-}
-
 // Tests that installation fails with extensions disabled.
 TEST_F(ExtensionServiceTest, InstallExtensionsWithExtensionsDisabled) {
   InitializeExtensionServiceWithExtensionsDisabled();
@@ -1201,6 +1061,25 @@ TEST_F(ExtensionServiceTest, InstallExtension) {
   // TODO(erikkay): add more tests for many of the failure cases.
   // TODO(erikkay): add tests for upgrade cases.
 }
+
+struct MockExtensionRegistryObserver
+    : public extensions::ExtensionRegistryObserver {
+  void OnExtensionWillBeInstalled(content::BrowserContext* browser_context,
+                                  const Extension* extension,
+                                  bool is_update,
+                                  const std::string& old_name) override {
+    last_extension_installed = extension->id();
+  }
+
+  void OnExtensionUninstalled(content::BrowserContext* browser_context,
+                              const Extension* extension,
+                              extensions::UninstallReason reason) override {
+    last_extension_uninstalled = extension->id();
+  }
+
+  std::string last_extension_installed;
+  std::string last_extension_uninstalled;
+};
 
 // Test that correct notifications are sent to ExtensionRegistryObserver on
 // extension install and uninstall.
@@ -6452,31 +6331,6 @@ TEST_F(ExtensionSourcePriorityTest, InstallExternalBlocksSyncRequest) {
   // Now that the extension is installed, sync request should fail
   // because the extension is already installed.
   ASSERT_FALSE(AddPendingSyncInstall());
-}
-
-// Test that the blocked pending external extension should be ignored until
-// it's unblocked. (crbug.com/797369)
-TEST_F(ExtensionServiceTest, BlockedExternalExtension) {
-  FeatureSwitch::ScopedOverride prompt(
-      FeatureSwitch::prompt_for_external_extensions(), true);
-
-  InitializeEmptyExtensionService();
-  MockExternalProvider* provider =
-      AddMockExternalProvider(Manifest::EXTERNAL_PREF);
-
-  service()->external_install_manager()->UpdateExternalExtensionAlert();
-  EXPECT_FALSE(HasExternalInstallErrors(service()));
-
-  service()->BlockAllExtensions();
-
-  provider->UpdateOrAddExtension(page_action, "1.0.0.0",
-                                 data_dir().AppendASCII("page_action.crx"));
-
-  WaitForExternalExtensionInstalled();
-  EXPECT_FALSE(HasExternalInstallErrors(service()));
-
-  service()->UnblockAllExtensions();
-  EXPECT_TRUE(HasExternalInstallErrors(service()));
 }
 
 // Test that installing an external extension displays a GlobalError.

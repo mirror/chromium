@@ -13,7 +13,6 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
@@ -30,9 +29,6 @@ import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
-import org.chromium.content.browser.BrowserStartupController;
-
-import java.util.ArrayDeque;
 
 /** A controller used to display various in-product help bubbles related to Chrome Home. */
 public class ChromeHomeIphBubbleController {
@@ -48,9 +44,6 @@ public class ChromeHomeIphBubbleController {
      */
     private static final String HELP_BUBBLE_TIMEOUT_PARAM_NAME = "x_iph-timeout-duration-ms";
 
-    /** Cache the events before native is initialized. */
-    private final ArrayDeque<Integer> mEvents = new ArrayDeque<>();
-
     private TextBubble mHelpBubble;
     private LayoutManagerChrome mLayoutManager;
     private BottomToolbarPhone mToolbar;
@@ -58,8 +51,6 @@ public class ChromeHomeIphBubbleController {
     private ChromeFullscreenManager mFullscreenManager;
     private BottomSheet mBottomSheet;
     private Context mContext;
-
-    private boolean mNativeInitialized;
 
     /**
      * Create a new ChromeHomeIphBubbleController.
@@ -76,28 +67,20 @@ public class ChromeHomeIphBubbleController {
         mControlContainer = controlContainer;
         mBottomSheet = bottomSheet;
 
-        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
-                    @Override
-                    public void onSuccess(boolean alreadyStarted) {
-                        mNativeInitialized = true;
-                        while (!mEvents.isEmpty()) {
-                            trackEvent(mEvents.poll());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {}
-                });
-
         mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
             @Override
             public void onSheetOpened(@StateChangeReason int reason) {
                 dismissHelpBubble();
-                if (mNativeInitialized) {
-                    trackEvent(reason);
-                } else {
-                    mEvents.add(reason);
+
+                Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+                tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
+
+                if (reason == StateChangeReason.SWIPE) {
+                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
+                } else if (reason == StateChangeReason.EXPAND_BUTTON) {
+                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
+                } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
+                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
                 }
             }
 
@@ -127,7 +110,6 @@ public class ChromeHomeIphBubbleController {
      * This method must be called after the toolbar has had at least one layout pass.
      */
     public void showColdStartHelpBubble() {
-        if (!mNativeInitialized) return;
         // If FRE is not complete, the FRE screen is likely covering ChromeTabbedActivity so the
         // help bubble should not be shown.
         if (!FirstRunStatus.getFirstRunFlowComplete()) return;
@@ -296,18 +278,5 @@ public class ChromeHomeIphBubbleController {
         topAnchorView.getLocationInWindow(locationInWindow);
         int centerPoint = locationInWindow[0] + topAnchorView.getWidth() / 2;
         return new Rect(centerPoint, locationInWindow[1], centerPoint, locationInWindow[1]);
-    }
-
-    private void trackEvent(@StateChangeReason int reason) {
-        Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-        tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
-
-        if (reason == StateChangeReason.SWIPE) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
-        } else if (reason == StateChangeReason.EXPAND_BUTTON) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
-        } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
-        }
     }
 }

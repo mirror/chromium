@@ -36,7 +36,7 @@ class PendingScript;
 
 class CORE_EXPORT HTMLParserScriptRunnerHost : public GarbageCollectedMixin {
  public:
-  virtual ~HTMLParserScriptRunnerHost() = default;
+  virtual ~HTMLParserScriptRunnerHost() {}
   void Trace(blink::Visitor* visitor) override {}
 
   virtual void NotifyScriptLoaded(PendingScript*) = 0;

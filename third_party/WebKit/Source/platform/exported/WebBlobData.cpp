@@ -36,9 +36,9 @@
 
 namespace blink {
 
-WebBlobData::WebBlobData() = default;
+WebBlobData::WebBlobData() {}
 
-WebBlobData::~WebBlobData() = default;
+WebBlobData::~WebBlobData() {}
 
 size_t WebBlobData::ItemCount() const {
   DCHECK(!IsNull());

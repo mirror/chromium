@@ -36,7 +36,7 @@ AXTableHeaderContainer::AXTableHeaderContainer(
     AXObjectCacheImpl& ax_object_cache)
     : AXMockObject(ax_object_cache) {}
 
-AXTableHeaderContainer::~AXTableHeaderContainer() = default;
+AXTableHeaderContainer::~AXTableHeaderContainer() {}
 
 AXTableHeaderContainer* AXTableHeaderContainer::Create(
     AXObjectCacheImpl& ax_object_cache) {

@@ -39,7 +39,12 @@ namespace blink {
 StyleRuleKeyframes::StyleRuleKeyframes()
     : StyleRuleBase(kKeyframes), version_(0) {}
 
-StyleRuleKeyframes::StyleRuleKeyframes(const StyleRuleKeyframes& o) = default;
+StyleRuleKeyframes::StyleRuleKeyframes(const StyleRuleKeyframes& o)
+    : StyleRuleBase(o),
+      keyframes_(o.keyframes_),
+      name_(o.name_),
+      version_(o.version_),
+      is_prefixed_(o.is_prefixed_) {}
 
 StyleRuleKeyframes::~StyleRuleKeyframes() = default;
 

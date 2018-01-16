@@ -26,7 +26,6 @@ class TrafficAnnotationIDChecker {
   void CheckIDs(std::vector<AuditorResult>* errors);
 
  private:
-  // TODO(https://crbug.com/690323): Merge struct with AnnotationInstance.
   struct AnnotationItem {
     struct {
       std::string text;
@@ -36,7 +35,6 @@ class TrafficAnnotationIDChecker {
     AnnotationInstance::Type type;
     std::string file_path;
     int line_number;
-    bool loaded_from_archive;
   };
 
   // Checks if the ids in |invalid_set| are not used in annotations. If found,

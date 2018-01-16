@@ -51,15 +51,15 @@ Polymer({
    * @return {!Array<!cr.ui.FocusRow>}
    */
   createFocusRows: function() {
-    const titleRow = new cr.ui.FocusRow(this.$['card-heading'], null);
+    var titleRow = new cr.ui.FocusRow(this.$['card-heading'], null);
     titleRow.addItem('menu', '#menu-button');
     titleRow.addItem('collapse', '#collapse-button');
-    const rows = [titleRow];
+    var rows = [titleRow];
     if (this.opened) {
       Polymer.dom(this.root)
           .querySelectorAll('.item-container')
           .forEach(function(el) {
-            const row = new cr.ui.FocusRow(el, null);
+            var row = new cr.ui.FocusRow(el, null);
             row.addItem('title', '.website-title');
             rows.push(row);
           });
@@ -74,8 +74,8 @@ Polymer({
    * @private
    */
   openTab_: function(e) {
-    const tab = /** @type {ForeignSessionTab} */ (e.model.tab);
-    const browserService = md_history.BrowserService.getInstance();
+    var tab = /** @type {ForeignSessionTab} */ (e.model.tab);
+    var browserService = md_history.BrowserService.getInstance();
     browserService.recordHistogram(
         SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.LINK_CLICKED,
         SyncedTabsHistogram.LIMIT);
@@ -88,7 +88,7 @@ Polymer({
    * Toggles the dropdown display of synced tabs for each device card.
    */
   toggleTabCard: function() {
-    const histogramValue = this.$.collapse.opened ?
+    var histogramValue = this.$.collapse.opened ?
         SyncedTabsHistogram.COLLAPSE_SESSION :
         SyncedTabsHistogram.EXPAND_SESSION;
 
@@ -115,9 +115,9 @@ Polymer({
    */
   updateIcons_: function() {
     this.async(function() {
-      const icons = Polymer.dom(this.root).querySelectorAll('.website-icon');
+      var icons = Polymer.dom(this.root).querySelectorAll('.website-icon');
 
-      for (let i = 0; i < this.tabs.length; i++) {
+      for (var i = 0; i < this.tabs.length; i++) {
         icons[i].style.backgroundImage = cr.icon.getFavicon(this.tabs[i].url);
       }
     });

@@ -6,8 +6,7 @@
 
 namespace blink {
 
-WebRTCPeerConnectionHandlerClient::~WebRTCPeerConnectionHandlerClient() =
-    default;
+WebRTCPeerConnectionHandlerClient::~WebRTCPeerConnectionHandlerClient() {}
 
 void WebRTCPeerConnectionHandlerClient::ClosePeerConnection() {}
 

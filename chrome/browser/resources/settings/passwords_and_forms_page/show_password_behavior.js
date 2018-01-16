@@ -8,7 +8,7 @@
  *
  * @polymerBehavior
  */
-const ShowPasswordBehavior = {
+var ShowPasswordBehavior = {
 
   properties: {
     /**

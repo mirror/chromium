@@ -55,8 +55,7 @@ class PLATFORM_EXPORT Panner {
                                         float sample_rate,
                                         HRTFDatabaseLoader*);
 
-  virtual ~Panner() = default;
-  ;
+  virtual ~Panner(){};
 
   virtual void Pan(double azimuth,
                    double elevation,

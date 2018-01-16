@@ -30,7 +30,7 @@ class TestCustomElementDefinitionBuilder
   STACK_ALLOCATED();
 
  public:
-  TestCustomElementDefinitionBuilder() = default;
+  TestCustomElementDefinitionBuilder() {}
   bool CheckConstructorIntrinsics() override { return true; }
   bool CheckConstructorNotRegistered() override { return true; }
   bool CheckPrototype() override { return true; }

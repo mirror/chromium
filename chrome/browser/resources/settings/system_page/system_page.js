@@ -28,7 +28,7 @@ Polymer({
    * @private
    */
   computeIsProxyEnforcedByPolicy_: function() {
-    const pref = this.get('prefs.proxy');
+    var pref = this.get('prefs.proxy');
     // TODO(dbeam): do types of policy other than USER apply on ChromeOS?
     return pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED &&
         pref.controlledBy == chrome.settingsPrivate.ControlledBy.USER_POLICY;
@@ -64,7 +64,7 @@ Polymer({
    * @private
    */
   shouldShowRestart_: function(enabled) {
-    const proxy = settings.SystemPageBrowserProxyImpl.getInstance();
+    var proxy = settings.SystemPageBrowserProxyImpl.getInstance();
     return enabled != proxy.wasHardwareAccelerationEnabledAtStartup();
   },
 });

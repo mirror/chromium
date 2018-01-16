@@ -66,9 +66,6 @@ namespace printing {
 
 namespace {
 
-using PrintSettingsCallback =
-    base::OnceCallback<void(scoped_refptr<PrinterQuery>)>;
-
 void ShowWarningMessageBox(const base::string16& message) {
   // Runs always on the UI thread.
   static bool is_dialog_shown = false;
@@ -79,31 +76,6 @@ void ShowWarningMessageBox(const base::string16& message) {
 
   chrome::ShowWarningMessageBox(nullptr, base::string16(), message);
 }
-
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-void CreateQueryWithSettings(
-    std::unique_ptr<base::DictionaryValue> job_settings,
-    content::RenderFrameHost* rfh,
-    scoped_refptr<PrintQueriesQueue> queue,
-    PrintSettingsCallback callback) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  scoped_refptr<printing::PrinterQuery> printer_query =
-      queue->CreatePrinterQuery(rfh->GetProcess()->GetID(),
-                                rfh->GetRoutingID());
-  printer_query->SetSettings(
-      std::move(job_settings),
-      base::BindOnce(std::move(callback), printer_query));
-}
-
-void OnPrintSettingsDoneWrapper(PrintSettingsCallback settings_callback,
-                                scoped_refptr<PrinterQuery> query) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(std::move(settings_callback), query));
-}
-#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 }  // namespace
 
@@ -120,7 +92,7 @@ PrintViewManagerBase::PrintViewManagerBase(content::WebContents* web_contents)
   printing_enabled_.Init(
       prefs::kPrintingEnabled, profile->GetPrefs(),
       base::Bind(&PrintViewManagerBase::UpdatePrintingEnabled,
-                 weak_ptr_factory_.GetWeakPtr()));
+                 base::Unretained(this)));
 }
 
 PrintViewManagerBase::~PrintViewManagerBase() {
@@ -147,16 +119,26 @@ void PrintViewManagerBase::PrintForPrintPreview(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   int page_count;
   job_settings->GetInteger(kSettingPreviewPageCount, &page_count);
-  PrintSettingsCallback settings_callback =
-      base::BindOnce(&PrintViewManagerBase::OnPrintSettingsDone,
-                     weak_ptr_factory_.GetWeakPtr(), print_data, page_count,
-                     std::move(callback));
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(CreateQueryWithSettings, std::move(job_settings), rfh,
-                     queue_,
-                     base::BindOnce(OnPrintSettingsDoneWrapper,
-                                    std::move(settings_callback))));
+      base::BindOnce(&PrintViewManagerBase::CreateQueryWithSettings,
+                     base::Unretained(this), std::move(job_settings), rfh,
+                     base::BindOnce(&PrintViewManagerBase::OnPrintSettingsDone,
+                                    base::Unretained(this), print_data,
+                                    page_count, std::move(callback))));
+}
+
+void PrintViewManagerBase::CreateQueryWithSettings(
+    std::unique_ptr<base::DictionaryValue> job_settings,
+    content::RenderFrameHost* rfh,
+    base::OnceCallback<void(scoped_refptr<printing::PrinterQuery>)> callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  scoped_refptr<printing::PrinterQuery> printer_query =
+      queue_->CreatePrinterQuery(rfh->GetProcess()->GetID(),
+                                 rfh->GetRoutingID());
+  printer_query->SetSettings(
+      std::move(job_settings),
+      base::BindOnce(std::move(callback), printer_query));
 }
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
@@ -212,7 +194,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     int page_count,
     PrinterHandler::PrintCallback callback,
     scoped_refptr<printing::PrinterQuery> printer_query) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
   // Check if the job was cancelled. This should only happen on Windows when
   // the system dialog is cancelled.
   if (printer_query &&
@@ -222,7 +204,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::BindOnce(&PrintViewManagerBase::SystemDialogCancelled,
-                       weak_ptr_factory_.GetWeakPtr()));
+                       base::Unretained(this)));
 #endif
     std::move(callback).Run(base::Value());
     return;
@@ -242,7 +224,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(&PrintViewManagerBase::StartLocalPrintJob,
-                     weak_ptr_factory_.GetWeakPtr(), print_data, page_count,
+                     base::Unretained(this), print_data, page_count,
                      printer_query, std::move(callback)));
 }
 
@@ -251,7 +233,6 @@ void PrintViewManagerBase::StartLocalPrintJob(
     int page_count,
     scoped_refptr<printing::PrinterQuery> printer_query,
     PrinterHandler::PrintCallback callback) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   const printing::PrintSettings& settings = printer_query->settings();
   OnDidGetPrintedPagesCount(printer_query->cookie(), page_count);
 
@@ -273,11 +254,9 @@ void PrintViewManagerBase::StartLocalPrintJob(
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 void PrintViewManagerBase::UpdatePrintingEnabled() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  // The Unretained() is safe because ForEachFrame() is synchronous.
-  web_contents()->ForEachFrame(base::BindRepeating(
-      &PrintViewManagerBase::SendPrintingEnabled, base::Unretained(this),
-      printing_enabled_.GetValue()));
+  web_contents()->ForEachFrame(
+      base::Bind(&PrintViewManagerBase::SendPrintingEnabled,
+                 base::Unretained(this), printing_enabled_.GetValue()));
 }
 
 void PrintViewManagerBase::NavigationStopped() {

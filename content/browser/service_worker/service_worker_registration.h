@@ -38,8 +38,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
     : public base::RefCounted<ServiceWorkerRegistration>,
       public ServiceWorkerVersion::Listener {
  public:
-  using StatusCallback =
-      base::OnceCallback<void(ServiceWorkerStatusCode status)>;
+  typedef base::Callback<void(ServiceWorkerStatusCode status)> StatusCallback;
 
   class CONTENT_EXPORT Listener {
    public:
@@ -146,7 +145,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
 
   // Restores this registration in storage and cancels the pending
   // [[ClearRegistration]] algorithm.
-  void AbortPendingClear(StatusCallback callback);
+  void AbortPendingClear(const StatusCallback& callback);
 
   // The time of the most recent update check.
   base::Time last_update_check() const { return last_update_check_; }
@@ -193,8 +192,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   void ContinueActivation(
       scoped_refptr<ServiceWorkerVersion> activating_version);
   void DispatchActivateEvent(
-      scoped_refptr<ServiceWorkerVersion> activating_version,
-      ServiceWorkerStatusCode start_worker_status);
+      scoped_refptr<ServiceWorkerVersion> activating_version);
   void OnActivateEventFinished(
       scoped_refptr<ServiceWorkerVersion> activating_version,
       ServiceWorkerStatusCode status);
@@ -204,7 +202,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   // This method corresponds to the [[ClearRegistration]] algorithm.
   void Clear();
 
-  void OnRestoreFinished(StatusCallback callback,
+  void OnRestoreFinished(const StatusCallback& callback,
                          scoped_refptr<ServiceWorkerVersion> version,
                          ServiceWorkerStatusCode status);
 

@@ -14,7 +14,7 @@ namespace blink {
 
 class PLATFORM_EXPORT CompositorAnimationDelegate {
  public:
-  virtual ~CompositorAnimationDelegate() = default;
+  virtual ~CompositorAnimationDelegate() {}
 
   virtual void NotifyAnimationStarted(double monotonic_time, int group) = 0;
   virtual void NotifyAnimationFinished(double monotonic_time, int group) = 0;

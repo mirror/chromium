@@ -132,9 +132,9 @@ std::unique_ptr<AudioSourceCallback> FakeAudioInputStream::ChooseSource() {
           << switches::kUseFileForFakeAudioCapture << ".";
       looping = false;
     }
-    return std::make_unique<FileSource>(params_, path_to_wav_file, looping);
+    return base::MakeUnique<FileSource>(params_, path_to_wav_file, looping);
   }
-  return std::make_unique<BeepingSource>(params_);
+  return base::MakeUnique<BeepingSource>(params_);
 }
 
 void FakeAudioInputStream::BeepOnce() {

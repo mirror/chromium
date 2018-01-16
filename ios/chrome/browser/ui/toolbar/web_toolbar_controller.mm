@@ -226,12 +226,11 @@ using ios::material::TimingFunction;
 @synthesize animatingStop = _animatingStop;
 @synthesize animatingPrerender = _animatingPrerender;
 
-- (instancetype)
-initWithDelegate:(id<WebToolbarDelegate>)delegate
-       urlLoader:(id<UrlLoader>)urlLoader
-    browserState:(ios::ChromeBrowserState*)browserState
-      dispatcher:(id<ApplicationCommands, BrowserCommands, ToolbarCommands>)
-                     dispatcher {
+- (instancetype)initWithDelegate:(id<WebToolbarDelegate>)delegate
+                       urlLoader:(id<UrlLoader>)urlLoader
+                    browserState:(ios::ChromeBrowserState*)browserState
+                      dispatcher:
+                          (id<ApplicationCommands, BrowserCommands>)dispatcher {
   DCHECK(delegate);
   DCHECK(urlLoader);
   DCHECK(browserState);
@@ -1916,17 +1915,12 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   [self.dispatcher preloadVoiceSearch];
 }
 
-- (void)navigateToMemexTabSwitcher {
-  // no-op since WTC won't support the memex Tab Switcher.
-}
-
 #pragma mark - UIViewController
 
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
-  if (IsSafeAreaCompatibleToolbarEnabled()) {
-    [self adjustToolbarHeight];
-    if (!IsIPadIdiom()) {
+  if (!IsIPadIdiom()) {
+    if (IsSafeAreaCompatibleToolbarEnabled()) {
       // The clipping view's height is supposed to match the toolbar's height.
       // The clipping view can't match the toolbar's height with autoresizing
       // masks because the clipping view is not a direct child of the toolbar.

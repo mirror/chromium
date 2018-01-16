@@ -22,6 +22,7 @@
 #include "net/http/http_response_info.h"
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
@@ -125,7 +126,10 @@ class SpdyHttpStreamTest : public testing::Test {
   SpdyHttpStreamTest()
       : url_(kDefaultUrl),
         host_port_pair_(HostPortPair::FromURL(url_)),
-        key_(host_port_pair_, ProxyServer::Direct(), PRIVACY_MODE_DISABLED),
+        key_(host_port_pair_,
+             ProxyServer::Direct(),
+             PRIVACY_MODE_DISABLED,
+             SocketTag()),
         ssl_(SYNCHRONOUS, OK) {
     session_deps_.net_log = &net_log_;
   }
@@ -1119,6 +1123,80 @@ TEST_F(SpdyHttpStreamTest, RequestCallbackCancelsStream) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(HasSpdySession(http_session_->spdy_session_pool(), key_));
+}
+
+// A SpdyHttpStream should use a matching pushed stream, even if it is
+// constructed with |pushed_stream_id == kNoPushedStreamFound|.
+TEST_F(SpdyHttpStreamTest, UsePushedStreamEvenWithKNoPushedStreamFound) {
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, LOWEST, true));
+  SpdySerializedFrame priority(
+      spdy_util_.ConstructSpdyPriority(2, 1, IDLE, true));
+  MockWrite writes[] = {CreateMockWrite(req, 0), CreateMockWrite(priority, 2)};
+  SpdySerializedFrame push(spdy_util_.ConstructSpdyPush(
+      nullptr, 0, 2, 1, "https://www.example.org/foo.dat"));
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
+  MockRead reads[] = {CreateMockRead(push, 1), CreateMockRead(resp, 3),
+                      MockRead(ASYNC, 0, 4)};
+  InitSession(reads, arraysize(reads), writes, arraysize(writes));
+
+  // Create and initialize first stream.
+  NetLogWithSource net_log;
+  auto stream1 = std::make_unique<SpdyHttpStream>(
+      session_, kNoPushedStreamFound, true, net_log.source());
+
+  HttpRequestInfo request1;
+  request1.method = "GET";
+  request1.url = url_;
+  int rv = stream1->InitializeStream(&request1, DEFAULT_PRIORITY, net_log,
+                                     CompletionCallback());
+  EXPECT_THAT(rv, IsOk());
+
+  // Send request.
+  HttpResponseInfo response1;
+  TestCompletionCallback callback1;
+  rv = stream1->SendRequest(HttpRequestHeaders(), &response1,
+                            callback1.callback());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  rv = callback1.WaitForResult();
+  EXPECT_THAT(rv, IsOk());
+
+  // Create and initialize second stream.
+  // This request must bind to the pushed stream, even though SpdyHttpStream
+  // constructor is called with kNoPushedStreamFound.
+  auto stream2 = std::make_unique<SpdyHttpStream>(
+      session_, kNoPushedStreamFound /* pushed_stream_id */, true,
+      net_log.source());
+
+  HttpRequestInfo request2;
+  request2.method = "GET";
+  request2.url = GURL("https://www.example.org/foo.dat");
+  rv = stream2->InitializeStream(&request2, DEFAULT_PRIORITY, net_log,
+                                 CompletionCallback());
+  EXPECT_THAT(rv, IsOk());
+
+  // Send request.  This should not send out any frames on the wire, because the
+  // request is served by a pushed stream.
+  HttpResponseInfo response2;
+  TestCompletionCallback callback2;
+  rv = stream2->SendRequest(HttpRequestHeaders(), &response2,
+                            callback2.callback());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  rv = callback2.WaitForResult();
+  EXPECT_THAT(rv, IsOk());
+
+  // Read response headers for the second request.
+  rv = stream2->ReadResponseHeaders(callback2.callback());
+  EXPECT_THAT(rv, IsOk());
+
+  // Read response headers for the first request.
+  rv = stream1->ReadResponseHeaders(callback1.callback());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  rv = callback1.WaitForResult();
+  EXPECT_THAT(rv, IsOk());
+
+  // Read EOF.
+  base::RunLoop().RunUntilIdle();
 }
 
 // TODO(willchan): Write a longer test for SpdyStream that exercises all

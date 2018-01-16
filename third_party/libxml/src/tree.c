@@ -27,7 +27,7 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#ifdef LIBXML_ZLIB_ENABLED
+#ifdef HAVE_ZLIB_H
 #include <zlib.h>
 #endif
 

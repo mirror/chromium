@@ -11,24 +11,24 @@
 
 namespace {
 
-ChromeShellContentState* g_chrome_shell_content_state_instance = nullptr;
+ChromeShellContentState* g_instance = nullptr;
 
 }  // namespace
 
 // static
 ChromeShellContentState* ChromeShellContentState::GetInstance() {
-  DCHECK(g_chrome_shell_content_state_instance);
-  return g_chrome_shell_content_state_instance;
+  DCHECK(g_instance);
+  return g_instance;
 }
 
 ChromeShellContentState::ChromeShellContentState() {
-  DCHECK(!g_chrome_shell_content_state_instance);
-  g_chrome_shell_content_state_instance = this;
+  DCHECK(!g_instance);
+  g_instance = this;
 }
 
 ChromeShellContentState::~ChromeShellContentState() {
-  DCHECK_EQ(this, g_chrome_shell_content_state_instance);
-  g_chrome_shell_content_state_instance = nullptr;
+  DCHECK_EQ(this, g_instance);
+  g_instance = nullptr;
 }
 
 content::BrowserContext* ChromeShellContentState::GetActiveBrowserContext() {

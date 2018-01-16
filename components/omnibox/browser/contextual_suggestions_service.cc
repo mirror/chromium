@@ -302,8 +302,7 @@ void ContextualSuggestionsService::CreateExperimentalRequest(
       "contextual_suggestions_service", signin_manager_, token_service_, scopes,
       base::BindOnce(&ContextualSuggestionsService::AccessTokenAvailable,
                      base::Unretained(this), std::move(fetcher),
-                     std::move(callback)),
-      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+                     std::move(callback)));
 }
 
 void ContextualSuggestionsService::AccessTokenAvailable(

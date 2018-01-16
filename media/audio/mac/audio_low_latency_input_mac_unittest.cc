@@ -113,7 +113,7 @@ class MacAudioInputTest : public testing::Test {
   MacAudioInputTest()
       : message_loop_(base::MessageLoop::TYPE_UI),
         audio_manager_(AudioManager::CreateForTesting(
-            std::make_unique<TestAudioThread>())) {
+            base::MakeUnique<TestAudioThread>())) {
     // Wait for the AudioManager to finish any initialization on the audio loop.
     base::RunLoop().RunUntilIdle();
   }

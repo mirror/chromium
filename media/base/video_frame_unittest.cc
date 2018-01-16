@@ -6,13 +6,13 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <memory>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/memory/aligned_memory.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -208,7 +208,7 @@ TEST(VideoFrame, CreateBlackFrame) {
       frame->metadata()->IsTrue(VideoFrameMetadata::END_OF_STREAM));
 
   // Test |frame| properties.
-  EXPECT_EQ(PIXEL_FORMAT_I420, frame->format());
+  EXPECT_EQ(PIXEL_FORMAT_YV12, frame->format());
   EXPECT_EQ(kWidth, frame->coded_size().width());
   EXPECT_EQ(kHeight, frame->coded_size().height());
 
@@ -555,7 +555,7 @@ TEST(VideoFrameMetadata, SetAndThenGetAllKeysForAllTypes) {
     metadata.Clear();
 
     EXPECT_FALSE(metadata.HasKey(key));
-    metadata.SetValue(key, std::make_unique<base::Value>());
+    metadata.SetValue(key, base::MakeUnique<base::Value>());
     EXPECT_TRUE(metadata.HasKey(key));
     const base::Value* const null_value = metadata.GetValue(key);
     EXPECT_TRUE(null_value);

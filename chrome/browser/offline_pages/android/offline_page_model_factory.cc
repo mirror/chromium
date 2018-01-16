@@ -12,7 +12,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/time/default_clock.h"
-#include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/offline_pages/android/cct_origin_observer.h"
 #include "chrome/browser/offline_pages/fresh_offline_content_observer.h"
 #include "chrome/browser/profiles/profile.h"
@@ -62,8 +61,7 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
         temporary_archives_dir.Append(chrome::kOfflinePageArchivesDirname);
   }
   std::unique_ptr<ArchiveManager> archive_manager(new ArchiveManager(
-      temporary_archives_dir, persistent_archives_dir,
-      DownloadPrefs::GetDefaultDownloadDirectory(), background_task_runner));
+      temporary_archives_dir, persistent_archives_dir, background_task_runner));
   auto clock = base::MakeUnique<base::DefaultClock>();
 
   OfflinePageModelTaskified* model = new OfflinePageModelTaskified(

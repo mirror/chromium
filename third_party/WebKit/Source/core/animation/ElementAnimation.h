@@ -40,6 +40,7 @@
 namespace blink {
 
 class Animation;
+class DictionarySequenceOrDictionary;
 class ExceptionState;
 class Element;
 class KeyframeEffectModelBase;
@@ -54,13 +55,13 @@ class CORE_EXPORT ElementAnimation {
  public:
   static Animation* animate(ScriptState*,
                             Element&,
-                            const ScriptValue&,
+                            const DictionarySequenceOrDictionary&,
                             UnrestrictedDoubleOrKeyframeAnimationOptions,
                             ExceptionState&);
 
   static Animation* animate(ScriptState*,
                             Element&,
-                            const ScriptValue&,
+                            const DictionarySequenceOrDictionary&,
                             ExceptionState&);
 
   static HeapVector<Member<Animation>> getAnimations(Element&);

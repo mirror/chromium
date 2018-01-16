@@ -49,7 +49,7 @@ function arraysEqual(arr1, arr2) {
   if (arr1.length != arr2.length)
     return false;
 
-  for (let i = 0; i < arr1.length; i++) {
+  for (var i = 0; i < arr1.length; i++) {
     if (!deepEqual(arr1[i], arr2[i]))
       return false;
   }
@@ -63,13 +63,13 @@ function arraysEqual(arr1, arr2) {
  * @return {boolean} True if the objects are recursively equal.
  */
 function objectsEqual(obj1, obj2) {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
+  var keys1 = Object.keys(obj1);
+  var keys2 = Object.keys(obj2);
   if (keys1.length != keys2.length)
     return false;
 
-  for (let i = 0; i < keys1.length; i++) {
-    const key = keys1[i];
+  for (var i = 0; i < keys1.length; i++) {
+    var key = keys1[i];
     if (!deepEqual(obj1[key], obj2[key]))
       return false;
   }
@@ -96,8 +96,8 @@ function deepCopy(val) {
  * @return {!Array} Deep copy of the array.
  */
 function deepCopyArray(arr) {
-  const copy = [];
-  for (let i = 0; i < arr.length; i++)
+  var copy = [];
+  for (var i = 0; i < arr.length; i++)
     copy.push(deepCopy(arr[i]));
   return copy;
 }
@@ -107,10 +107,10 @@ function deepCopyArray(arr) {
  * @return {!Object} Deep copy of the object.
  */
 function deepCopyObject(obj) {
-  const copy = {};
-  const keys = Object.keys(obj);
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
+  var copy = {};
+  var keys = Object.keys(obj);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
     copy[key] = deepCopy(obj[key]);
   }
   return copy;
@@ -190,10 +190,10 @@ Polymer({
     if (!CrSettingsPrefs.isInitialized || e.path == 'prefs')
       return;
 
-    const key = this.getPrefKeyFromPath_(e.path);
-    const prefStoreValue = this.lastPrefValues_[key];
+    var key = this.getPrefKeyFromPath_(e.path);
+    var prefStoreValue = this.lastPrefValues_[key];
 
-    const prefObj = /** @type {chrome.settingsPrivate.PrefObject} */ (
+    var prefObj = /** @type {chrome.settingsPrivate.PrefObject} */ (
         this.get(key, this.prefs));
 
     // If settingsPrivate already has this value, ignore it. (Otherwise,
@@ -257,7 +257,7 @@ Polymer({
    */
   updatePrefs_: function(newPrefs) {
     // Use the existing prefs object or create it.
-    const prefs = this.prefs || {};
+    var prefs = this.prefs || {};
     newPrefs.forEach(function(newPrefObj) {
       // Use the PrefObject from settingsPrivate to create a copy in
       // lastPrefValues_ at the pref's key.
@@ -286,11 +286,11 @@ Polymer({
    */
   getPrefKeyFromPath_: function(path) {
     // Skip the first token, which refers to the member variable (this.prefs).
-    const parts = path.split('.');
+    var parts = path.split('.');
     assert(parts.shift() == 'prefs', 'Path doesn\'t begin with \'prefs\'');
 
-    for (let i = 1; i <= parts.length; i++) {
-      const key = parts.slice(0, i).join('.');
+    for (var i = 1; i <= parts.length; i++) {
+      var key = parts.slice(0, i).join('.');
       // The lastPrefValues_ keys match the pref keys.
       if (this.lastPrefValues_.hasOwnProperty(key))
         return key;

@@ -4,8 +4,7 @@
 
 #include "media/gpu/android/android_video_surface_chooser_impl.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/time/default_tick_clock.h"
 
 namespace media {
@@ -23,7 +22,7 @@ AndroidVideoSurfaceChooserImpl::AndroidVideoSurfaceChooserImpl(
       weak_factory_(this) {
   // Use a DefaultTickClock if one wasn't provided.
   if (!tick_clock_) {
-    optional_tick_clock_ = std::make_unique<base::DefaultTickClock>();
+    optional_tick_clock_ = base::MakeUnique<base::DefaultTickClock>();
     tick_clock_ = optional_tick_clock_.get();
   }
 }

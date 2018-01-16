@@ -71,7 +71,7 @@ ContiguousContainerBase::ContiguousContainerBase(
   Swap(source);
 }
 
-ContiguousContainerBase::~ContiguousContainerBase() = default;
+ContiguousContainerBase::~ContiguousContainerBase() {}
 
 ContiguousContainerBase& ContiguousContainerBase::operator=(
     ContiguousContainerBase&& source) {

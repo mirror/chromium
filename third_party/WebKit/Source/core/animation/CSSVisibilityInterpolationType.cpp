@@ -14,7 +14,7 @@ namespace blink {
 
 class CSSVisibilityNonInterpolableValue : public NonInterpolableValue {
  public:
-  ~CSSVisibilityNonInterpolableValue() final = default;
+  ~CSSVisibilityNonInterpolableValue() final {}
 
   static scoped_refptr<CSSVisibilityNonInterpolableValue> Create(
       EVisibility start,
@@ -53,7 +53,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSVisibilityNonInterpolableValue);
 class UnderlyingVisibilityChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
-  ~UnderlyingVisibilityChecker() final = default;
+  ~UnderlyingVisibilityChecker() final {}
 
   static std::unique_ptr<UnderlyingVisibilityChecker> Create(
       EVisibility visibility) {

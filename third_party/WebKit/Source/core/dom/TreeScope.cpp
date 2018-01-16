@@ -74,7 +74,7 @@ TreeScope::TreeScope(Document& document)
   root_node_->SetTreeScope(this);
 }
 
-TreeScope::~TreeScope() = default;
+TreeScope::~TreeScope() {}
 
 void TreeScope::ResetTreeScope() {
   selection_ = nullptr;

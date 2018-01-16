@@ -10,12 +10,9 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "base/process/process_handle.h"
 #include "base/sequence_checker.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
 #include "components/ukm/ukm_source.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 
 namespace content {
 class BrowserContext;
@@ -111,18 +108,6 @@ class DataReductionProxyMetricsObserver
   // Gets the default DataReductionProxyPingbackClient. Overridden in testing.
   virtual DataReductionProxyPingbackClient* GetPingbackClient() const;
 
-  // Used as a callback to getting a memory dump of the related renderer
-  // process.
-  void ProcessMemoryDump(
-      bool success,
-      memory_instrumentation::mojom::GlobalMemoryDumpPtr memory_dump);
-
-  // Gets the memory coordinator for Chrome. Virtual for testing.
-  virtual void RequestProcessDump(
-      base::ProcessId pid,
-      memory_instrumentation::MemoryInstrumentation::RequestGlobalDumpCallback
-          callback);
-
   // Data related to this navigation.
   std::unique_ptr<DataReductionProxyData> data_;
 
@@ -148,21 +133,7 @@ class DataReductionProxyMetricsObserver
   // The total network bytes used.
   int64_t network_bytes_;
 
-  // The process ID of the main frame renderer during OnCommit.
-  base::ProcessId process_id_;
-
-  // The memory usage of the main frame renderer shortly after OnLoadEventStart.
-  // Available after ProcessMemoryDump is called. 0 before that point.
-  int64_t renderer_memory_usage_kb_;
-
-  // A unique identifier to the child process of the render frame, stored in
-  // case of a renderer crash.
-  // Set at navigation commit time.
-  int render_process_host_id_;
-
   SEQUENCE_CHECKER(sequence_checker_);
-
-  base::WeakPtrFactory<DataReductionProxyMetricsObserver> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DataReductionProxyMetricsObserver);
 };

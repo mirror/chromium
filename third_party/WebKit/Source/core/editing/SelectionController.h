@@ -149,8 +149,7 @@ class CORE_EXPORT SelectionController final
 
 bool IsLinkSelection(const MouseEventWithHitTestResults&);
 bool IsExtendingSelection(const MouseEventWithHitTestResults&);
-CORE_EXPORT SelectionInFlatTree
-AdjustSelectionWithTrailingWhitespace(const SelectionInFlatTree&);
+
 }  // namespace blink
 
 #endif  // SelectionController_h

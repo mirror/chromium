@@ -139,7 +139,7 @@ const AtomicString& InputType::NormalizeTypeName(
   return it == FactoryMap()->end() ? InputTypeNames::text : it->key;
 }
 
-InputType::~InputType() = default;
+InputType::~InputType() {}
 
 void InputType::Trace(blink::Visitor* visitor) {
   visitor->Trace(element_);

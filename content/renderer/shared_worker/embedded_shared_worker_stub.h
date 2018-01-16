@@ -22,7 +22,6 @@
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 #include "third_party/WebKit/public/web/worker_content_settings_proxy.mojom.h"
 #include "url/gurl.h"
 
@@ -38,6 +37,7 @@ class MessagePortChannel;
 }
 
 namespace content {
+class SharedWorkerDevToolsAgent;
 class WebApplicationCacheHostImpl;
 
 // A stub class to receive IPC from browser process and talk to
@@ -50,18 +50,24 @@ class WebApplicationCacheHostImpl;
 //
 // In either case the corresponding blink::WebSharedWorker also deletes
 // itself.
-class EmbeddedSharedWorkerStub : public blink::WebSharedWorkerClient,
+class EmbeddedSharedWorkerStub : public IPC::Listener,
+                                 public blink::WebSharedWorkerClient,
                                  public mojom::SharedWorker {
  public:
   EmbeddedSharedWorkerStub(
       mojom::SharedWorkerInfoPtr info,
       bool pause_on_start,
       const base::UnguessableToken& devtools_worker_token,
+      int route_id,
       blink::mojom::WorkerContentSettingsProxyPtr content_settings,
       mojom::SharedWorkerHostPtr host,
       mojom::SharedWorkerRequest request,
       service_manager::mojom::InterfaceProviderPtr interface_provider);
   ~EmbeddedSharedWorkerStub() override;
+
+  // IPC::Listener implementation.
+  bool OnMessageReceived(const IPC::Message& message) override;
+  void OnChannelError() override;
 
   // blink::WebSharedWorkerClient implementation.
   void CountFeature(blink::mojom::WebFeature feature) override;
@@ -76,6 +82,10 @@ class EmbeddedSharedWorkerStub : public blink::WebSharedWorkerClient,
       blink::WebApplicationCacheHostClient*) override;
   std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
   CreateServiceWorkerNetworkProvider() override;
+  void SendDevToolsMessage(int session_id,
+                           int call_id,
+                           const blink::WebString& message,
+                           const blink::WebString& state) override;
   std::unique_ptr<blink::WebWorkerFetchContext> CreateWorkerFetchContext(
       blink::WebServiceWorkerNetworkProvider*) override;
 
@@ -90,15 +100,15 @@ class EmbeddedSharedWorkerStub : public blink::WebSharedWorkerClient,
   void Connect(int connection_request_id,
                mojo::ScopedMessagePipeHandle port) override;
   void Terminate() override;
-  void GetDevToolsAgent(
-      blink::mojom::DevToolsAgentAssociatedRequest request) override;
 
   mojo::Binding<mojom::SharedWorker> binding_;
   mojom::SharedWorkerHostPtr host_;
+  const int route_id_;
   const std::string name_;
   bool running_ = false;
   GURL url_;
   blink::WebSharedWorker* impl_ = nullptr;
+  std::unique_ptr<SharedWorkerDevToolsAgent> worker_devtools_agent_;
 
   using PendingChannel =
       std::pair<int /* connection_request_id */, blink::MessagePortChannel>;

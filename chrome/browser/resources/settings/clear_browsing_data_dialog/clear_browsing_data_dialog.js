@@ -145,7 +145,7 @@ Polymer({
   updateCounterText_: function(prefName, text) {
     // Data type deletion preferences are named "browser.clear_data.<datatype>".
     // Strip the common prefix, i.e. use only "<datatype>".
-    const matches = prefName.match(/^browser\.clear_data\.(\w+)$/);
+    var matches = prefName.match(/^browser\.clear_data\.(\w+)$/);
     this.set('counters_.' + assert(matches[1]), text);
   },
 
@@ -159,7 +159,7 @@ Polymer({
     if (!this.$.cookiesCheckbox.checked)
       return false;
 
-    const haveImportantSites = this.importantSites_.length > 0;
+    var haveImportantSites = this.importantSites_.length > 0;
     chrome.send(
         'metricsHandler:recordBooleanHistogram',
         ['History.ClearBrowsingData.ImportantDialogShown', haveImportantSites]);
@@ -201,14 +201,14 @@ Polymer({
   clearBrowsingData_: function() {
     this.clearingInProgress_ = true;
 
-    const checkboxes = this.root.querySelectorAll('.browsing-data-checkbox');
-    const dataTypes = [];
+    var checkboxes = this.root.querySelectorAll('.browsing-data-checkbox');
+    var dataTypes = [];
     checkboxes.forEach((checkbox) => {
       if (checkbox.checked)
         dataTypes.push(checkbox.pref.key);
     });
 
-    const timePeriod = this.$.clearFrom.pref.value;
+    var timePeriod = this.$.clearFrom.pref.value;
 
     this.browserProxy_
         .clearBrowsingData(dataTypes, timePeriod, this.importantSites_)

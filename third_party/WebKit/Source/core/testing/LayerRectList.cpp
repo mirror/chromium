@@ -36,7 +36,7 @@
 
 namespace blink {
 
-LayerRectList::LayerRectList() = default;
+LayerRectList::LayerRectList() {}
 
 unsigned LayerRectList::length() const {
   return list_.size();

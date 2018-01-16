@@ -1069,13 +1069,6 @@ std::string DownloadItemImpl::DebugString(bool verbose) const {
   return description;
 }
 
-void DownloadItemImpl::SimulateErrorForTesting(DownloadInterruptReason reason) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  InterruptWithPartialState(GetReceivedBytes(), nullptr, reason);
-  UpdateObservers();
-}
-
 DownloadItemImpl::ResumeMode DownloadItemImpl::GetResumeMode() const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -1292,12 +1285,10 @@ void DownloadItemImpl::DestinationUpdate(
   // results in a call to ReleaseDownloadFile which invalidates the weak
   // reference held by the DownloadFile and hence cuts off any pending
   // callbacks.
-  DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL ||
-         state_ == INTERRUPTED_TARGET_PENDING_INTERNAL);
+  DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL);
 
   // There must be no pending deferred_interrupt_reason_.
-  DCHECK(deferred_interrupt_reason_ == DOWNLOAD_INTERRUPT_REASON_NONE ||
-         state_ == INTERRUPTED_TARGET_PENDING_INTERNAL);
+  DCHECK_EQ(deferred_interrupt_reason_, DOWNLOAD_INTERRUPT_REASON_NONE);
 
   DVLOG(20) << __func__ << "() so_far=" << bytes_so_far
             << " per_sec=" << bytes_per_sec
@@ -1340,8 +1331,7 @@ void DownloadItemImpl::DestinationCompleted(
   // results in a call to ReleaseDownloadFile which invalidates the weak
   // reference held by the DownloadFile and hence cuts off any pending
   // callbacks.
-  DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL ||
-         state_ == INTERRUPTED_TARGET_PENDING_INTERNAL);
+  DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL);
   DVLOG(20) << __func__ << "() download=" << DebugString(true);
 
   OnAllDataSaved(total_bytes, std::move(secure_hash));

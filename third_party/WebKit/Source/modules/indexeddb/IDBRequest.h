@@ -95,7 +95,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
     // This is used for internal requests that should not show up in an
     // application's trace. Examples of internal requests are the requests
     // issued by DevTools, and the requests used to populate indexes.
-    explicit AsyncTraceState() = default;
+    explicit AsyncTraceState() {}
 
     // Creates an instance that produces begin/end events with the given name.
     //
@@ -238,14 +238,12 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   // EnqueueBlocked(), or EnqueueUpgradeNeeded().
 
   void HandleResponse(DOMException*);
-  void HandleResponse(std::unique_ptr<IDBKey>);
+  void HandleResponse(IDBKey*);
   void HandleResponse(std::unique_ptr<WebIDBCursor>,
-                      std::unique_ptr<IDBKey>,
-                      std::unique_ptr<IDBKey> primary_key,
+                      IDBKey*,
+                      IDBKey* primary_key,
                       std::unique_ptr<IDBValue>);
-  void HandleResponse(std::unique_ptr<IDBKey>,
-                      std::unique_ptr<IDBKey> primary_key,
-                      std::unique_ptr<IDBValue>);
+  void HandleResponse(IDBKey*, IDBKey* primary_key, std::unique_ptr<IDBValue>);
   void HandleResponse(std::unique_ptr<IDBValue>);
   void HandleResponse(Vector<std::unique_ptr<IDBValue>>);
   void HandleResponse(int64_t);
@@ -349,21 +347,19 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   friend class IDBRequestQueueItem;
 
   void SetResultCursor(IDBCursor*,
-                       std::unique_ptr<IDBKey>,
-                       std::unique_ptr<IDBKey> primary_key,
+                       IDBKey*,
+                       IDBKey* primary_key,
                        std::unique_ptr<IDBValue>);
   void AckReceivedBlobs(const IDBValue&);
   void AckReceivedBlobs(const Vector<std::unique_ptr<IDBValue>>&);
 
   void EnqueueResponse(DOMException*);
-  void EnqueueResponse(std::unique_ptr<IDBKey>);
+  void EnqueueResponse(IDBKey*);
   void EnqueueResponse(std::unique_ptr<WebIDBCursor>,
-                       std::unique_ptr<IDBKey>,
-                       std::unique_ptr<IDBKey> primary_key,
+                       IDBKey*,
+                       IDBKey* primary_key,
                        std::unique_ptr<IDBValue>);
-  void EnqueueResponse(std::unique_ptr<IDBKey>,
-                       std::unique_ptr<IDBKey> primary_key,
-                       std::unique_ptr<IDBValue>);
+  void EnqueueResponse(IDBKey*, IDBKey* primary_key, std::unique_ptr<IDBValue>);
   void EnqueueResponse(std::unique_ptr<IDBValue>);
   void EnqueueResponse(Vector<std::unique_ptr<IDBValue>>);
   void EnqueueResponse();
@@ -385,8 +381,8 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   Member<IDBCursor> pending_cursor_;
   // New state is not applied to the cursor object until the event is
   // dispatched.
-  std::unique_ptr<IDBKey> cursor_key_;
-  std::unique_ptr<IDBKey> cursor_primary_key_;
+  Member<IDBKey> cursor_key_;
+  Member<IDBKey> cursor_primary_key_;
   std::unique_ptr<IDBValue> cursor_value_;
 
   Vector<scoped_refptr<BlobDataHandle>> transit_blob_handles_;

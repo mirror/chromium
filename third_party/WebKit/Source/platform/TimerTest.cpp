@@ -526,7 +526,7 @@ class TimerForTest : public TaskRunnerTimer<TimerFiredClass> {
   using TimerFiredFunction =
       typename TaskRunnerTimer<TimerFiredClass>::TimerFiredFunction;
 
-  ~TimerForTest() override = default;
+  ~TimerForTest() override {}
 
   TimerForTest(scoped_refptr<WebTaskRunner> web_task_runner,
                TimerFiredClass* timer_fired_class,

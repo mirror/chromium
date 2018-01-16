@@ -21,6 +21,7 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     getter downloaded
 [Worker]     getter id
 [Worker]     getter onprogress
+[Worker]     getter totalDownloadSize
 [Worker]     getter uploadTotal
 [Worker]     getter uploaded
 [Worker]     method abort
@@ -2462,7 +2463,6 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     getter appVersion
 [Worker]     getter budget
 [Worker]     getter connection
-[Worker]     getter deviceMemory
 [Worker]     getter hardwareConcurrency
 [Worker]     getter locks
 [Worker]     getter onLine

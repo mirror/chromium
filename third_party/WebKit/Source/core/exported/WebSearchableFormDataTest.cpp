@@ -57,7 +57,7 @@ void RegisterMockedURLLoadFromBaseURL(const std::string& base_url,
 
 class WebSearchableFormDataTest : public ::testing::Test {
  protected:
-  WebSearchableFormDataTest() = default;
+  WebSearchableFormDataTest() {}
 
   ~WebSearchableFormDataTest() override {
     Platform::Current()

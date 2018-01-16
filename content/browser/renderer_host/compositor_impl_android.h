@@ -80,7 +80,6 @@ class CONTENT_EXPORT CompositorImpl
 
  private:
   // Compositor implementation.
-  void SetRootWindow(gfx::NativeWindow root_window) override;
   void SetRootLayer(scoped_refptr<cc::Layer> root) override;
   void SetSurface(jobject surface) override;
   void SetBackgroundColor(int color) override;
@@ -129,7 +128,6 @@ class CONTENT_EXPORT CompositorImpl
   std::unique_ptr<ui::CompositorLock> GetCompositorLock(
       ui::CompositorLockClient* client,
       base::TimeDelta timeout) override;
-  bool IsDrawingFirstVisibleFrame() const override;
 
   // viz::HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
@@ -160,8 +158,6 @@ class CONTENT_EXPORT CompositorImpl
 
   bool HavePendingReadbacks();
 
-  void DetachRootWindow();
-
   viz::FrameSinkId frame_sink_id_;
 
   // root_layer_ is the persistent internal root layer, while subroot_layer_
@@ -187,7 +183,7 @@ class CONTENT_EXPORT CompositorImpl
 
   CompositorClient* client_;
 
-  gfx::NativeWindow root_window_ = nullptr;
+  gfx::NativeWindow root_window_;
 
   // Whether we need to update animations on the next composite.
   bool needs_animate_;
@@ -207,7 +203,6 @@ class CONTENT_EXPORT CompositorImpl
   std::unordered_set<viz::FrameSinkId, viz::FrameSinkIdHash>
       pending_child_frame_sink_ids_;
   ui::CompositorLockManager lock_manager_;
-  bool has_submitted_frame_since_became_visible_ = false;
   base::WeakPtrFactory<CompositorImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CompositorImpl);

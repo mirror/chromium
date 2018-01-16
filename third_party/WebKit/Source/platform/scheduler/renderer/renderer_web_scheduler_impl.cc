@@ -21,13 +21,13 @@ RendererWebSchedulerImpl::RendererWebSchedulerImpl(
                        renderer_scheduler->IdleTaskRunner(),
                        renderer_scheduler->LoadingTaskQueue(),
                        renderer_scheduler->TimerTaskQueue(),
-                       renderer_scheduler->V8TaskQueue()),
+                       renderer_scheduler->kV8TaskQueue()),
       renderer_scheduler_(renderer_scheduler),
       compositor_task_runner_(
           WebTaskRunnerImpl::Create(renderer_scheduler_->CompositorTaskQueue(),
                                     base::nullopt)) {}
 
-RendererWebSchedulerImpl::~RendererWebSchedulerImpl() = default;
+RendererWebSchedulerImpl::~RendererWebSchedulerImpl() {}
 
 WebTaskRunner* RendererWebSchedulerImpl::CompositorTaskRunner() {
   return compositor_task_runner_.get();

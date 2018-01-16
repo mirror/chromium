@@ -26,7 +26,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef LIBXML_ZLIB_ENABLED
+#ifdef HAVE_ZLIB_H
 #include <zlib.h>
 #endif
 
@@ -6674,7 +6674,7 @@ htmlCtxtReset(htmlParserCtxtPtr ctxt)
     xmlInitNodeInfoSeq(&ctxt->node_seq);
 
     if (ctxt->attsDefault != NULL) {
-        xmlHashFree(ctxt->attsDefault, xmlHashDefaultDeallocator);
+        xmlHashFree(ctxt->attsDefault, (xmlHashDeallocator) xmlFree);
         ctxt->attsDefault = NULL;
     }
     if (ctxt->attsSpecial != NULL) {

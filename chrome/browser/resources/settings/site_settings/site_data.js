@@ -14,7 +14,7 @@
  *   localData: string,
  * }}
  */
-let CookieDataSummaryItem;
+var CookieDataSummaryItem;
 
 /**
  * @typedef {{
@@ -23,7 +23,7 @@ let CookieDataSummaryItem;
  *   count: number,
  * }}
  */
-let CookieRemovePacket;
+var CookieRemovePacket;
 
 /**
  * TODO(dbeam): upstream to polymer externs?
@@ -115,7 +115,7 @@ Polymer({
   favicon_: function(url) {
     // If the url doesn't have a scheme, inject HTTP as the scheme. Otherwise,
     // the URL isn't valid and no icon will be returned.
-    const urlWithScheme = url.includes('://') ? url : 'http://' + url;
+    var urlWithScheme = url.includes('://') ? url : 'http://' + url;
     return cr.icon.getFavicon(urlWithScheme);
   },
 

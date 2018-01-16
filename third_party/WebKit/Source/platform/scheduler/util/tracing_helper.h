@@ -6,9 +6,6 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_TRACING_HELPER_H_
 
 #include <string>
-#include <unordered_set>
-
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -38,59 +35,20 @@ PLATFORM_EXPORT std::string PointerToString(const void* pointer);
 
 PLATFORM_EXPORT double TimeDeltaToMilliseconds(const base::TimeDelta& value);
 
-class TraceableVariable;
-
-// Unfortunately, using |base::trace_event::TraceLog::EnabledStateObserver|
-// wouldn't be helpful in our case because removing one takes linear time
-// and tracers may be created and disposed frequently.
-class PLATFORM_EXPORT TraceableVariableController {
- public:
-  TraceableVariableController();
-  ~TraceableVariableController();
-
-  // Not thread safe.
-  void RegisterTraceableVariable(TraceableVariable* traceable_variable);
-  void DeregisterTraceableVariable(TraceableVariable* traceable_variable);
-
-  void OnTraceLogEnabled();
-
- private:
-  std::unordered_set<TraceableVariable*> traceable_variables_;
-};
-
-class TraceableVariable {
- public:
-  TraceableVariable(TraceableVariableController* controller)
-      : controller_(controller) {
-    controller_->RegisterTraceableVariable(this);
-  }
-
-  virtual ~TraceableVariable() {
-    controller_->DeregisterTraceableVariable(this);
-  }
-
-  virtual void OnTraceLogEnabled() = 0;
-
- private:
-  TraceableVariableController* const controller_;  // Not owned.
-};
-
 // TRACE_EVENT macros define static variable to cache a pointer to the state
 // of category. Hence, we need distinct version for each category in order to
 // prevent unintended leak of state.
 
 template <typename T, const char* category>
-class TraceableState : public TraceableVariable {
+class TraceableState {
  public:
   using ConverterFuncPtr = const char* (*)(T);
 
   TraceableState(T initial_state,
                  const char* name,
                  const void* object,
-                 TraceableVariableController* controller,
                  ConverterFuncPtr converter)
-      : TraceableVariable(controller),
-        name_(name),
+      : name_(name),
         object_(object),
         converter_(converter),
         state_(initial_state),
@@ -99,7 +57,7 @@ class TraceableState : public TraceableVariable {
     Trace();
   }
 
-  ~TraceableState() override {
+  ~TraceableState() {
     if (slice_is_open_)
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
   }
@@ -120,11 +78,11 @@ class TraceableState : public TraceableVariable {
     return state_;
   }
 
-  void OnTraceLogEnabled() final {
+  void OnTraceLogEnabled() {
     Trace();
   }
 
- protected:
+ private:
   void Assign(T new_state) {
     if (state_ != new_state) {
       state_ = new_state;
@@ -132,15 +90,7 @@ class TraceableState : public TraceableVariable {
     }
   }
 
-  void (*mock_trace_for_test_)(const char*) = nullptr;
-
- private:
   void Trace() {
-    if (UNLIKELY(mock_trace_for_test_)) {
-      mock_trace_for_test_(converter_(state_));
-      return;
-    }
-
     if (slice_is_open_) {
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
       slice_is_open_ = false;
@@ -180,17 +130,15 @@ class TraceableState : public TraceableVariable {
 };
 
 template <typename T, const char* category>
-class TraceableCounter : public TraceableVariable {
+class TraceableCounter {
  public:
   using ConverterFuncPtr = double (*)(const T&);
 
   TraceableCounter(T initial_value,
                    const char* name,
                    const void* object,
-                   TraceableVariableController* controller,
                    ConverterFuncPtr converter)
-      : TraceableVariable(controller),
-        name_(name),
+      : name_(name),
         object_(object),
         converter_(converter),
         value_(initial_value) {
@@ -200,10 +148,8 @@ class TraceableCounter : public TraceableVariable {
 
   TraceableCounter(T initial_value,
                    const char* name,
-                   const void* object,
-                   TraceableVariableController* controller)
-      : TraceableVariable(controller),
-        name_(name),
+                   const void* object)
+      : name_(name),
         object_(object),
         converter_([](const T& value) { return static_cast<double>(value); }),
         value_(initial_value) {
@@ -241,10 +187,6 @@ class TraceableCounter : public TraceableVariable {
   }
   operator T() const {
     return value_;
-  }
-
-  void OnTraceLogEnabled() final {
-    Trace();
   }
 
   void Trace() const {

@@ -38,16 +38,9 @@ class ClearKeyCdm : public cdm::ContentDecryptionModule_9,
   ClearKeyCdm(HostInterface* host, const std::string& key_system);
   ~ClearKeyCdm() override;
 
-  // cdm::ContentDecryptionModule_9 implementation.
+  // cdm::ContentDecryptionModule implementation.
   void Initialize(bool allow_distinctive_identifier,
                   bool allow_persistent_state) override;
-
-  // cdm::ContentDecryptionModule_10 implementation.
-  void Initialize(bool allow_distinctive_identifier,
-                  bool allow_persistent_state,
-                  bool use_hw_secure_codecs) override;
-
-  // Common cdm::ContentDecryptionModule_* implementation.
   void GetStatusForPolicy(uint32_t promise_id,
                           const cdm::Policy& policy) override;
   void CreateSessionAndGenerateRequest(uint32_t promise_id,
@@ -142,12 +135,11 @@ class ClearKeyCdm : public cdm::ContentDecryptionModule_9,
 
   void StartOutputProtectionTest();
   void StartPlatformVerificationTest();
-  void ReportVerifyCdmHostTestResult();
+  void VerifyCdmHostTest();
   void StartStorageIdTest();
 
   void StartCdmProxyTest();
   void OnCdmProxyTestComplete(bool success);
-  void ReportCdmProxyTestResult();
 
   int host_interface_version_ = 0;
 
@@ -174,13 +166,13 @@ class ClearKeyCdm : public cdm::ContentDecryptionModule_9,
 #endif  // CLEAR_KEY_CDM_USE_FFMPEG_DECODER
 
   std::unique_ptr<CdmVideoDecoder> video_decoder_;
+
   std::unique_ptr<FileIOTestRunner> file_io_test_runner_;
   std::unique_ptr<CdmProxyTest> cdm_proxy_test_;
 
   bool is_running_output_protection_test_ = false;
   bool is_running_platform_verification_test_ = false;
   bool is_running_storage_id_test_ = false;
-  bool has_cdm_proxy_test_passed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ClearKeyCdm);
 };

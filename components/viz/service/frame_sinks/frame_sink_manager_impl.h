@@ -65,7 +65,14 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                               const std::string& debug_label) override;
   void CreateRootCompositorFrameSink(
-      mojom::RootCompositorFrameSinkParamsPtr params) override;
+      const FrameSinkId& frame_sink_id,
+      gpu::SurfaceHandle surface_handle,
+      bool force_software_compositing,
+      const RendererSettings& renderer_settings,
+      mojom::CompositorFrameSinkAssociatedRequest request,
+      mojom::CompositorFrameSinkClientPtr client,
+      mojom::DisplayPrivateAssociatedRequest display_private_request,
+      mojom::DisplayClientPtr display_client) override;
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       mojom::CompositorFrameSinkRequest request,
@@ -123,6 +130,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void OnSurfaceDestroyed(const SurfaceId& surface_id) override;
   void OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                const BeginFrameArgs& args) override;
+  void OnSurfaceSubtreeDamaged(const SurfaceId& surface_id) override;
 
   void OnClientConnectionLost(const FrameSinkId& frame_sink_id);
 

@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "chromeos/components/tether/tether_component.h"
-#include "chromeos/components/tether/tether_disconnector.h"
 
 namespace chromeos {
 
@@ -23,17 +22,14 @@ class FakeTetherComponent : public TetherComponent {
     has_asynchronous_shutdown_ = has_asynchronous_shutdown;
   }
 
-  ShutdownReason* last_shutdown_reason() { return last_shutdown_reason_.get(); }
-
   // Should only be called when status() == SHUTTING_DOWN.
   void FinishAsynchronousShutdown();
 
   // Initializer:
-  void RequestShutdown(const ShutdownReason& shutdown_reason) override;
+  void RequestShutdown() override;
 
  private:
   bool has_asynchronous_shutdown_;
-  std::unique_ptr<ShutdownReason> last_shutdown_reason_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeTetherComponent);
 };

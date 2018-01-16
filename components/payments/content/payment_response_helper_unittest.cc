@@ -248,29 +248,10 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_ContactDetails_Some) {
   EXPECT_FALSE(response()->payer_email.has_value());
 }
 
-// Tests the the generated PaymentResponse has phone number formatted to E.164
-// if the number is valid.
+// Tests the the generated PaymentResponse has the correct values for the
+// contact details when all values are requested.
 TEST_F(PaymentResponseHelperTest,
-       GeneratePaymentResponse_ContactPhoneIsFormattedWhenValid) {
-  // Request one contact detail value.
-  mojom::PaymentOptionsPtr options = mojom::PaymentOptions::New();
-  options->request_payer_phone = true;
-  test_address()->SetRawInfo(autofill::PHONE_HOME_WHOLE_NUMBER,
-                             base::UTF8ToUTF16("(515) 223-1234"));
-  RecreateSpecWithOptions(std::move(options));
-
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
-
-  // Check that the phone was formatted.
-  EXPECT_EQ("+15152231234", response()->payer_phone.value());
-}
-
-// Tests the the generated PaymentResponse has phone number minimumly formatted
-// (removing non-digit letters), if the number is invalid
-TEST_F(PaymentResponseHelperTest,
-       GeneratePaymentResponse_ContactPhoneIsMinimumlyFormattedWhenInvalid) {
+       GeneratePaymentResponse_ContactPhoneIsFormatted) {
   // Request one contact detail value.
   mojom::PaymentOptionsPtr options = mojom::PaymentOptions::New();
   options->request_payer_phone = true;
@@ -283,7 +264,7 @@ TEST_F(PaymentResponseHelperTest,
                                test_address(), this);
 
   // Check that the phone was formatted.
-  EXPECT_EQ("5151231234", response()->payer_phone.value());
+  EXPECT_EQ("+15151231234", response()->payer_phone.value());
 }
 
 }  // namespace payments

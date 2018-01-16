@@ -97,7 +97,7 @@ void ChromeBrowserMainPartsAndroid::PostProfileInit() {
   backup_watcher_.reset(new android::ChromeBackupWatcher(profile()));
 }
 
-int ChromeBrowserMainPartsAndroid::PreEarlyInitialization() {
+void ChromeBrowserMainPartsAndroid::PreEarlyInitialization() {
   TRACE_EVENT0("startup",
     "ChromeBrowserMainPartsAndroid::PreEarlyInitialization")
   net::NetworkChangeNotifier::SetFactory(
@@ -123,7 +123,7 @@ int ChromeBrowserMainPartsAndroid::PreEarlyInitialization() {
     base::MessageLoopForUI::current()->Start();
   }
 
-  return ChromeBrowserMainParts::PreEarlyInitialization();
+  ChromeBrowserMainParts::PreEarlyInitialization();
 }
 
 void ChromeBrowserMainPartsAndroid::PostBrowserStart() {

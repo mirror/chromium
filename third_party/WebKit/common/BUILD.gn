@@ -111,7 +111,6 @@ mojom("mojo_platform_bindings") {
   sources = [
     "blob/blob.mojom",
     "blob/blob_registry.mojom",
-    "blob/blob_url_store.mojom",
     "clipboard/clipboard.mojom",
     "color_chooser/color_chooser.mojom",
     "feature_policy/feature_policy.mojom",
@@ -134,7 +133,6 @@ mojom("mojo_platform_bindings") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
-    "//services/network/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",

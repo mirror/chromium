@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
-#include "base/test/scoped_task_environment.h"
 #include "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h"
 #include "content/test/dwrite_font_fake_sender_win.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -37,20 +36,19 @@ class FontFallbackUnitTest : public testing::Test {
     font_path.resize(MAX_PATH);
     SHGetSpecialFolderPath(nullptr /* hwndOwner - reserved */, font_path.data(),
                            CSIDL_FONTS, FALSE /* fCreate*/);
-    base::FilePath segoe_path = base::FilePath(base::string16(font_path.data()))
-                                    .Append(L"\\seguisym.ttf");
+    base::string16 segoe_path;
+    segoe_path.append(font_path.data()).append(L"\\seguisym.ttf");
 
-    fake_collection_ = std::make_unique<FakeFontCollection>();
+    fake_collection_ = new FakeFontCollection();
     fake_collection_->AddFont(L"Segoe UI Symbol")
         .AddFamilyName(L"en-us", L"Segoe UI Symbol")
         .AddFilePath(segoe_path);
 
     DWriteFontCollectionProxy::Create(&collection_, factory_.Get(),
-                                      fake_collection_->CreatePtr());
+                                      fake_collection_->GetSender());
   }
 
-  base::test::ScopedTaskEnvironment task_environment;
-  std::unique_ptr<FakeFontCollection> fake_collection_;
+  scoped_refptr<FakeFontCollection> fake_collection_;
   mswr::ComPtr<IDWriteFactory> factory_;
   mswr::ComPtr<DWriteFontCollectionProxy> collection_;
   mswr::ComPtr<IDWriteNumberSubstitution> number_substitution_;
@@ -58,7 +56,8 @@ class FontFallbackUnitTest : public testing::Test {
 
 TEST_F(FontFallbackUnitTest, MapCharacters) {
   mswr::ComPtr<FontFallback> fallback;
-  FontFallback::Create(&fallback, collection_.Get());
+  FontFallback::Create(&fallback, collection_.Get(),
+                       fake_collection_->GetSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
@@ -79,7 +78,8 @@ TEST_F(FontFallbackUnitTest, MapCharacters) {
 
 TEST_F(FontFallbackUnitTest, DuplicateCallsShouldNotRepeatIPC) {
   mswr::ComPtr<FontFallback> fallback;
-  FontFallback::Create(&fallback, collection_.Get());
+  FontFallback::Create(&fallback, collection_.Get(),
+                       fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
@@ -99,20 +99,14 @@ TEST_F(FontFallbackUnitTest, DuplicateCallsShouldNotRepeatIPC) {
                           DWRITE_FONT_STRETCH_NORMAL, &mapped_length, &font,
                           &scale);
 
-  EXPECT_EQ(3u, fake_collection_->MessageCount());
-
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(0));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(1));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(2));
+  EXPECT_EQ(1u, fake_collection_->MessageCount());
   EXPECT_EQ(5u, mapped_length);
 }
 
 TEST_F(FontFallbackUnitTest, DifferentFamilyShouldNotReuseCache) {
   mswr::ComPtr<FontFallback> fallback;
-  FontFallback::Create(&fallback, collection_.Get());
+  FontFallback::Create(&fallback, collection_.Get(),
+                       fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
@@ -131,20 +125,13 @@ TEST_F(FontFallbackUnitTest, DifferentFamilyShouldNotReuseCache) {
                           DWRITE_FONT_STRETCH_NORMAL, &mapped_length, &font,
                           &scale);
 
-  EXPECT_EQ(4u, fake_collection_->MessageCount());
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(0));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(1));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(2));
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(3));
+  EXPECT_EQ(2u, fake_collection_->MessageCount());
 }
 
 TEST_F(FontFallbackUnitTest, CacheMissShouldRepeatIPC) {
   mswr::ComPtr<FontFallback> fallback;
-  FontFallback::Create(&fallback, collection_.Get());
+  FontFallback::Create(&fallback, collection_.Get(),
+                       fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
@@ -167,20 +154,13 @@ TEST_F(FontFallbackUnitTest, CacheMissShouldRepeatIPC) {
                           DWRITE_FONT_STRETCH_NORMAL, &mapped_length, &font,
                           &scale);
 
-  EXPECT_EQ(4u, fake_collection_->MessageCount());
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(0));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(1));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(2));
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(3));
+  EXPECT_EQ(2u, fake_collection_->MessageCount());
 }
 
 TEST_F(FontFallbackUnitTest, SurrogatePairCacheHit) {
   mswr::ComPtr<FontFallback> fallback;
-  FontFallback::Create(&fallback, collection_.Get());
+  FontFallback::Create(&fallback, collection_.Get(),
+                       fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
@@ -203,13 +183,7 @@ TEST_F(FontFallbackUnitTest, SurrogatePairCacheHit) {
                           DWRITE_FONT_STRETCH_NORMAL, &mapped_length, &font,
                           &scale);
 
-  EXPECT_EQ(3u, fake_collection_->MessageCount());
-  EXPECT_EQ(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(0));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(1));
-  EXPECT_NE(FakeFontCollection::MessageType::kMapCharacters,
-            fake_collection_->GetMessageType(2));
+  EXPECT_EQ(1u, fake_collection_->MessageCount());
   EXPECT_EQ(2u, mapped_length);
 }
 

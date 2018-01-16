@@ -6,7 +6,6 @@ include_rules = [
   "+media/cast/constants.h",
   "+media/cast/logging",
   "+media/cast/net",
-  "+media/mojo/common",
   "+net",
 ]
 

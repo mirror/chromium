@@ -22,24 +22,8 @@ namespace service_manager {
 
 namespace {
 
-// TestBImpl and TestCImpl are simple test interfaces whose methods invokes
-// their callback when called without doing anything.
-class TestBImpl : public TestB {
- public:
-  explicit TestBImpl(std::unique_ptr<ServiceContextRef> service_ref)
-      : service_ref_(std::move(service_ref)) {}
-  ~TestBImpl() override = default;
-
- private:
-  // TestB:
-  void B(BCallback callback) override { std::move(callback).Run(); }
-  void CallC(CallCCallback callback) override { std::move(callback).Run(); }
-
-  const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestBImpl);
-};
-
+// A simple test interface on the service, which can be pinged by test code to
+// verify a working service connection.
 class TestCImpl : public TestC {
  public:
   explicit TestCImpl(std::unique_ptr<ServiceContextRef> service_ref)
@@ -55,12 +39,6 @@ class TestCImpl : public TestC {
   DISALLOW_COPY_AND_ASSIGN(TestCImpl);
 };
 
-void OnTestBRequest(service_manager::ServiceContextRefFactory* ref_factory,
-                    TestBRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<TestBImpl>(ref_factory->CreateRef()),
-                          std::move(request));
-}
-
 void OnTestCRequest(service_manager::ServiceContextRefFactory* ref_factory,
                     TestCRequest request) {
   mojo::MakeStrongBinding(std::make_unique<TestCImpl>(ref_factory->CreateRef()),
@@ -69,66 +47,49 @@ void OnTestCRequest(service_manager::ServiceContextRefFactory* ref_factory,
 
 // This is a test service used to demonstrate usage of TestConnectorFactory.
 // See documentation on TestConnectorFactory for more details about usage.
-class TestServiceImplBase : public Service {
+class TestServiceImpl : public Service {
  public:
-  TestServiceImplBase() = default;
-  ~TestServiceImplBase() override = default;
+  using OnBindInterfaceCallback = base::Callback<void(const Identity&)>;
 
- private:
+  TestServiceImpl() = default;
+  ~TestServiceImpl() override = default;
+
+  void set_on_bind_interface_callback(const OnBindInterfaceCallback& callback) {
+    on_bind_interface_callback_ = callback;
+  }
+
   // Service:
   void OnStart() override {
     ref_factory_.reset(
         new ServiceContextRefFactory(base::Bind(&base::DoNothing)));
-    RegisterInterfaces(&registry_, ref_factory_.get());
+    registry_.AddInterface(base::Bind(&OnTestCRequest, ref_factory_.get()));
   }
 
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
     registry_.BindInterface(interface_name, std::move(interface_pipe));
+    if (on_bind_interface_callback_)
+      on_bind_interface_callback_.Run(source_info.identity);
   }
 
-  virtual void RegisterInterfaces(
-      service_manager::BinderRegistry* registry,
-      service_manager::ServiceContextRefFactory* ref_factory) = 0;
-
+ private:
   // State needed to manage service lifecycle and lifecycle of bound clients.
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   service_manager::BinderRegistry registry_;
 
-  DISALLOW_COPY_AND_ASSIGN(TestServiceImplBase);
-};
+  OnBindInterfaceCallback on_bind_interface_callback_;
 
-class TestBServiceImpl : public TestServiceImplBase {
- private:
-  void RegisterInterfaces(
-      service_manager::BinderRegistry* registry,
-      service_manager::ServiceContextRefFactory* ref_factory) override {
-    registry->AddInterface(base::Bind(&OnTestBRequest, ref_factory));
-  }
+  DISALLOW_COPY_AND_ASSIGN(TestServiceImpl);
 };
-
-class TestCServiceImpl : public TestServiceImplBase {
- private:
-  void RegisterInterfaces(
-      service_manager::BinderRegistry* registry,
-      service_manager::ServiceContextRefFactory* ref_factory) override {
-    registry->AddInterface(base::Bind(&OnTestCRequest, ref_factory));
-  }
-};
-
-constexpr char kServiceBName[] = "ServiceB";
-constexpr char kServiceCName[] = "ServiceC";
 
 }  // namespace
 
-TEST(ServiceManagerTestSupport, TestConnectorFactoryUniqueService) {
+TEST(ServiceManagerTestSupport, TestConnectorFactory) {
   base::test::ScopedTaskEnvironment task_environment;
 
-  std::unique_ptr<TestConnectorFactory> factory =
-      TestConnectorFactory::CreateForUniqueService(
-          std::make_unique<TestCServiceImpl>());
-  std::unique_ptr<Connector> connector = factory->CreateConnector();
+  TestConnectorFactory factory(std::make_unique<TestServiceImpl>());
+  std::unique_ptr<Connector> connector = factory.CreateConnector();
   TestCPtr c;
   connector->BindInterface(TestC::Name_, &c);
   base::RunLoop loop;
@@ -136,33 +97,30 @@ TEST(ServiceManagerTestSupport, TestConnectorFactoryUniqueService) {
   loop.Run();
 }
 
-TEST(ServiceManagerTestSupport, TestConnectorFactoryMultipleServices) {
+TEST(ServiceManagerTestSupport, TestConnectorFactoryOverrideSourceIdentity) {
   base::test::ScopedTaskEnvironment task_environment;
 
-  TestConnectorFactory::NameToServiceMap services;
-  services.insert(
-      std::make_pair(kServiceBName, std::make_unique<TestBServiceImpl>()));
-  services.insert(
-      std::make_pair(kServiceCName, std::make_unique<TestCServiceImpl>()));
-  std::unique_ptr<TestConnectorFactory> factory =
-      TestConnectorFactory::CreateForServices(std::move(services));
-  std::unique_ptr<Connector> connector = factory->CreateConnector();
+  static const std::string kTestSourceIdentity = "worst. service. ever.";
+  // Verify that the test service sees our overridden source identity.
+  auto bind_identity = std::make_unique<Identity>();
+  auto service = std::make_unique<TestServiceImpl>();
+  service->set_on_bind_interface_callback(base::Bind(
+      [](std::unique_ptr<Identity>* identity, const Identity& source_identity) {
+        *identity = std::make_unique<Identity>(source_identity);
+      },
+      &bind_identity));
 
-  {
-    TestBPtr b;
-    connector->BindInterface(kServiceBName, &b);
-    base::RunLoop loop;
-    b->B(loop.QuitClosure());
-    loop.Run();
-  }
+  TestConnectorFactory factory(std::move(service));
+  factory.set_source_identity(Identity(kTestSourceIdentity));
+  std::unique_ptr<Connector> connector = factory.CreateConnector();
 
-  {
-    TestCPtr c;
-    connector->BindInterface(kServiceCName, &c);
-    base::RunLoop loop;
-    c->C(loop.QuitClosure());
-    loop.Run();
-  }
+  TestCPtr c;
+  connector->BindInterface(TestC::Name_, &c);
+
+  base::RunLoop loop;
+  c->C(loop.QuitClosure());
+  loop.Run();
+  EXPECT_EQ(kTestSourceIdentity, bind_identity->name());
 }
 
 }  // namespace service_manager

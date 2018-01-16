@@ -47,7 +47,7 @@ class WebCustomElement {
   BLINK_EXPORT static void AddEmbedderCustomElementName(const WebString& name);
 
  private:
-  WebCustomElement() = delete;
+  WebCustomElement();
 };
 
 }  // namespace blink

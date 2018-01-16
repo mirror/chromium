@@ -15,6 +15,7 @@
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
@@ -62,7 +63,7 @@ static std::unique_ptr<base::DictionaryValue> CreateJSONDictionary(
       base::StringPiece(reinterpret_cast<const char*>(key_id), key_id_length),
       base::Base64UrlEncodePolicy::OMIT_PADDING, &key_id_string);
 
-  auto jwk = std::make_unique<base::DictionaryValue>();
+  auto jwk = base::MakeUnique<base::DictionaryValue>();
   jwk->SetString(kKeyTypeTag, kKeyTypeOct);
   jwk->SetString(kKeyTag, key_string);
   jwk->SetString(kKeyIdTag, key_id_string);
@@ -74,7 +75,7 @@ std::string GenerateJWKSet(const uint8_t* key,
                            const uint8_t* key_id,
                            int key_id_length) {
   // Create the JWK, and wrap it into a JWK Set.
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   list->Append(CreateJSONDictionary(key, key_length, key_id, key_id_length));
   base::DictionaryValue jwk_set;
   jwk_set.Set(kKeysTag, std::move(list));
@@ -88,7 +89,7 @@ std::string GenerateJWKSet(const uint8_t* key,
 
 std::string GenerateJWKSet(const KeyIdAndKeyPairs& keys,
                            CdmSessionType session_type) {
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   for (const auto& key_pair : keys) {
     list->Append(CreateJSONDictionary(
         reinterpret_cast<const uint8_t*>(key_pair.second.data()),
@@ -303,8 +304,8 @@ void CreateLicenseRequest(const KeyIdList& key_ids,
                           CdmSessionType session_type,
                           std::vector<uint8_t>* license) {
   // Create the license request.
-  auto request = std::make_unique<base::DictionaryValue>();
-  auto list = std::make_unique<base::ListValue>();
+  auto request = base::MakeUnique<base::DictionaryValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   for (const auto& key_id : key_ids) {
     std::string key_id_string;
     base::Base64UrlEncode(
@@ -341,8 +342,8 @@ void CreateLicenseRequest(const KeyIdList& key_ids,
 void CreateKeyIdsInitData(const KeyIdList& key_ids,
                           std::vector<uint8_t>* init_data) {
   // Create the init_data.
-  auto dictionary = std::make_unique<base::DictionaryValue>();
-  auto list = std::make_unique<base::ListValue>();
+  auto dictionary = base::MakeUnique<base::DictionaryValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   for (const auto& key_id : key_ids) {
     std::string key_id_string;
     base::Base64UrlEncode(

@@ -62,7 +62,7 @@ class WebLeakDetectorClient {
 // for the kinds of objects supported.
 class WebLeakDetector {
  public:
-  virtual ~WebLeakDetector() = default;
+  virtual ~WebLeakDetector() {}
 
   BLINK_EXPORT static WebLeakDetector* Create(WebLeakDetectorClient*);
 

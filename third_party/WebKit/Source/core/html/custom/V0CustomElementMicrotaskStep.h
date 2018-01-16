@@ -39,8 +39,8 @@ namespace blink {
 class V0CustomElementMicrotaskStep
     : public GarbageCollectedFinalized<V0CustomElementMicrotaskStep> {
  public:
-  V0CustomElementMicrotaskStep() = default;
-  virtual ~V0CustomElementMicrotaskStep() = default;
+  V0CustomElementMicrotaskStep() {}
+  virtual ~V0CustomElementMicrotaskStep() {}
 
   enum Result { kProcessing, kFinishedProcessing };
 

@@ -15,8 +15,6 @@
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
 #include "base/environment.h"
-#include "base/memory/protected_memory.h"
-#include "base/memory/protected_memory_cfi.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
@@ -55,14 +53,6 @@ void CommonInitFromCommandLine(const base::CommandLine& command_line,
     free(argv[i]);
   }
 }
-
-using GtkSetState = void (*)(GtkWidgetPath*, gint, GtkStateFlags);
-PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetState>
-    _gtk_widget_path_iter_set_state;
-
-using GtkSetObjectName = void (*)(GtkWidgetPath*, gint, const char*);
-PROTECTED_MEMORY_SECTION base::ProtectedMemory<GtkSetObjectName>
-    _gtk_widget_path_iter_set_object_name;
 
 }  // namespace
 
@@ -401,15 +391,13 @@ ScopedStyleContext AppendCssNodeToStyleContext(GtkStyleContext* context,
           NOTREACHED();
       }
     } else {
-      static base::ProtectedMemory<GtkSetObjectName>::Initializer init(
-          &_gtk_widget_path_iter_set_object_name,
-          reinterpret_cast<GtkSetObjectName>(dlsym(
-              GetGtkSharedLibrary(), "gtk_widget_path_iter_set_object_name")));
+      static auto* _gtk_widget_path_iter_set_object_name =
+          reinterpret_cast<void (*)(GtkWidgetPath*, gint, const char*)>(dlsym(
+              GetGtkSharedLibrary(), "gtk_widget_path_iter_set_object_name"));
       switch (part_type) {
         case CSS_NAME: {
           if (GtkVersionCheck(3, 20)) {
-            base::UnsanitizedCfiCall(_gtk_widget_path_iter_set_object_name)(
-                path, -1, t.token().c_str());
+            _gtk_widget_path_iter_set_object_name(path, -1, t.token().c_str());
           } else {
             gtk_widget_path_iter_add_class(path, -1, t.token().c_str());
           }
@@ -421,8 +409,7 @@ ScopedStyleContext AppendCssNodeToStyleContext(GtkStyleContext* context,
           gtk_widget_path_append_type(path, type);
           if (GtkVersionCheck(3, 20)) {
             if (t.token() == "GtkLabel")
-              base::UnsanitizedCfiCall(_gtk_widget_path_iter_set_object_name)(
-                  path, -1, "label");
+              _gtk_widget_path_iter_set_object_name(path, -1, "label");
           }
           break;
         }
@@ -450,12 +437,11 @@ ScopedStyleContext AppendCssNodeToStyleContext(GtkStyleContext* context,
   gtk_widget_path_iter_add_class(path, -1, "chromium");
 
   if (GtkVersionCheck(3, 14)) {
-    static base::ProtectedMemory<GtkSetState>::Initializer init(
-        &_gtk_widget_path_iter_set_state,
-        reinterpret_cast<GtkSetState>(
-            dlsym(GetGtkSharedLibrary(), "gtk_widget_path_iter_set_state")));
-    DCHECK(*_gtk_widget_path_iter_set_state);
-    base::UnsanitizedCfiCall(_gtk_widget_path_iter_set_state)(path, -1, state);
+    static auto* _gtk_widget_path_iter_set_state =
+        reinterpret_cast<void (*)(GtkWidgetPath*, gint, GtkStateFlags)>(
+            dlsym(GetGtkSharedLibrary(), "gtk_widget_path_iter_set_state"));
+    DCHECK(_gtk_widget_path_iter_set_state);
+    _gtk_widget_path_iter_set_state(path, -1, state);
   }
 
   ScopedStyleContext child_context(gtk_style_context_new());

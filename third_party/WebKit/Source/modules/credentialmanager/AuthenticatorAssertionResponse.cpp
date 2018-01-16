@@ -25,7 +25,7 @@ AuthenticatorAssertionResponse::AuthenticatorAssertionResponse(
       signature_(signature),
       user_handle_(user_handle) {}
 
-AuthenticatorAssertionResponse::~AuthenticatorAssertionResponse() = default;
+AuthenticatorAssertionResponse::~AuthenticatorAssertionResponse() {}
 
 void AuthenticatorAssertionResponse::Trace(blink::Visitor* visitor) {
   visitor->Trace(authenticator_data_);

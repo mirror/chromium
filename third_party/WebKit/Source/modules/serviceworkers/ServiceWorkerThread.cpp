@@ -31,7 +31,6 @@
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 
 #include <memory>
-
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
@@ -61,11 +60,6 @@ void ServiceWorkerThread::ClearWorkerBackingThread() {
 
 InstalledScriptsManager* ServiceWorkerThread::GetInstalledScriptsManager() {
   return installed_scripts_manager_.get();
-}
-
-void ServiceWorkerThread::TerminateForTesting() {
-  global_scope_proxy_->TerminateWorkerContext();
-  WorkerThread::TerminateForTesting();
 }
 
 WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(

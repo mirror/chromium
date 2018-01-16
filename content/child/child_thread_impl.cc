@@ -588,10 +588,7 @@ void ChildThreadImpl::Init(const Options& options) {
   }
 
 #if defined(OS_WIN)
-  mojom::DWriteFontProxyPtrInfo dwrite_font_proxy;
-  ChildThread::Get()->GetConnector()->BindInterface(
-      mojom::kBrowserServiceName, mojo::MakeRequest(&dwrite_font_proxy));
-  UpdateDWriteFontProxySender(std::move(dwrite_font_proxy));
+  UpdateDWriteFontProxySender(thread_safe_sender());
 #endif
 }
 

@@ -91,8 +91,6 @@
       prepareTestTree(step2);
 
       function step2() {
-        var treeOutline = ElementsTestRunner.firstElementsTreeOutline();
-        treeOutline.runPendingUpdates();
         TestRunner.addResult('Selecting node...');
         selectNode('child2', step3);
       }
@@ -128,11 +126,11 @@
     },
 
     function testExternalDelete(next) {
-      prepareTestTree(step2);
+      // We should wait for container node to be updated since it is already populated.
+      TestRunner.addSniffer(Elements.ElementsTreeOutline.prototype, '_updateModifiedNodes', step2);
+      prepareTestTree();
 
       function step2() {
-        var treeOutline = ElementsTestRunner.firstElementsTreeOutline();
-        treeOutline.runPendingUpdates();
         TestRunner.addResult('Selecting node...');
         selectNode('child2', step3);
       }

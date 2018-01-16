@@ -149,7 +149,7 @@ Polymer({
    * @private
    */
   computeIdleOptions_: function(idleControlled) {
-    const options = [
+    var options = [
       {
         value: settings.IdleBehavior.DISPLAY_OFF_SLEEP,
         name: loadTimeData.getString('powerIdleDisplayOffSleep'),
@@ -180,7 +180,7 @@ Polymer({
 
   /** @private */
   onIdleSelectChange_: function() {
-    const behavior = /** @type {settings.IdleBehavior} */
+    var behavior = /** @type {settings.IdleBehavior} */
         (parseInt(this.$.idleSelect.value, 10));
     settings.DevicePageBrowserProxyImpl.getInstance().setIdleBehavior(behavior);
   },
@@ -213,7 +213,7 @@ Polymer({
    * @private
    */
   updateLidClosedLabelAndPref_: function(behavior, isControlled) {
-    const pref = {
+    var pref = {
       key: '',
       type: chrome.settingsPrivate.PrefType.BOOLEAN,
       // Most behaviors get a dedicated label and appear as checked.

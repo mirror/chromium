@@ -19,7 +19,7 @@ HistoryFocusRow.prototype = {
 
   /** @override */
   getCustomEquivalent: function(sampleElement) {
-    let equivalent;
+    var equivalent;
 
     if (this.getTypeForElement(sampleElement) == 'star')
       equivalent = this.getFirstFocusable('title');
@@ -78,7 +78,7 @@ cr.define('md_history', function() {
     },
   };
 
-  const HistoryItem = Polymer({
+  var HistoryItem = Polymer({
     is: 'history-item',
 
     properties: {
@@ -196,8 +196,8 @@ cr.define('md_history', function() {
      * @private
      */
     onItemClick_: function(e) {
-      for (let i = 0; i < e.path.length; i++) {
-        const elem = e.path[i];
+      for (var i = 0; i < e.path.length; i++) {
+        var elem = e.path[i];
         if (elem.id != 'checkbox' &&
             (elem.nodeName == 'A' || elem.nodeName == 'BUTTON')) {
           return;
@@ -233,7 +233,7 @@ cr.define('md_history', function() {
      * @return {string}
      */
     getEntrySummary_: function() {
-      const item = this.item;
+      var item = this.item;
       return loadTimeData.getStringF(
           'entrySummary', item.dateTimeOfDay,
           item.starred ? loadTimeData.getString('bookmarked') : '', item.title,
@@ -260,7 +260,7 @@ cr.define('md_history', function() {
       if (this.$$('#bookmark-star') == this.root.activeElement)
         this.$['menu-button'].focus();
 
-      const browserService = md_history.BrowserService.getInstance();
+      var browserService = md_history.BrowserService.getInstance();
       browserService.removeBookmark(this.item.url);
       browserService.recordAction('BookmarkStarClicked');
 
@@ -287,7 +287,7 @@ cr.define('md_history', function() {
      * on-click rather than on-tap, as on-click triggers from middle clicks.
      */
     onLinkClick_: function() {
-      const browserService = md_history.BrowserService.getInstance();
+      var browserService = md_history.BrowserService.getInstance();
       browserService.recordAction('EntryLinkClick');
 
       if (this.searchTerm)
@@ -336,7 +336,7 @@ cr.define('md_history', function() {
 
     /** @private */
     addTimeTitle_: function() {
-      const el = this.$['time-accessed'];
+      var el = this.$['time-accessed'];
       el.setAttribute('title', new Date(this.item.time).toString());
       this.unlisten(el, 'mouseover', 'addTimeTitle_');
     },
@@ -348,7 +348,7 @@ cr.define('md_history', function() {
    * @return {string} The title for a page of search results.
    */
   HistoryItem.searchResultsTitle = function(numberOfResults, searchTerm) {
-    const resultId = numberOfResults == 1 ? 'searchResult' : 'searchResults';
+    var resultId = numberOfResults == 1 ? 'searchResult' : 'searchResults';
     return loadTimeData.getStringF(
         'foundSearchResults', numberOfResults, loadTimeData.getString(resultId),
         searchTerm);

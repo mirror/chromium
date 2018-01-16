@@ -17,8 +17,7 @@ PositionWithAffinityTemplate<Strategy>::PositionWithAffinityTemplate()
     : affinity_(TextAffinity::kDownstream) {}
 
 template <typename Strategy>
-PositionWithAffinityTemplate<Strategy>::~PositionWithAffinityTemplate() =
-    default;
+PositionWithAffinityTemplate<Strategy>::~PositionWithAffinityTemplate() {}
 
 template <typename Strategy>
 void PositionWithAffinityTemplate<Strategy>::Trace(blink::Visitor* visitor) {

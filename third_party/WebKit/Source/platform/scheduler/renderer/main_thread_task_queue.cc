@@ -15,39 +15,39 @@ const char* MainThreadTaskQueue::NameForQueueType(
     MainThreadTaskQueue::QueueType queue_type) {
   switch (queue_type) {
     case MainThreadTaskQueue::QueueType::kControl:
-      return "control_tq";
+      return "ControlTQ";
     case MainThreadTaskQueue::QueueType::kDefault:
-      return "default_tq";
+      return "DefaultTQ";
     case MainThreadTaskQueue::QueueType::kDefaultLoading:
-      return "default_loading_tq";
+      return "DefaultLoadingTQ";
     case MainThreadTaskQueue::QueueType::kDefaultTimer:
-      return "default_timer_tq";
+      return "DefaultTimerTQ";
     case MainThreadTaskQueue::QueueType::kUnthrottled:
-      return "unthrottled_tq";
+      return "UnthrottledTQ";
     case MainThreadTaskQueue::QueueType::kFrameLoading:
-      return "frame_loading_tq";
+      return "FrameLoadingTQ";
     case MainThreadTaskQueue::QueueType::kFrameThrottleable:
-      return "frame_throttleable_tq";
+      return "FrameThrottleableTQ";
     case MainThreadTaskQueue::QueueType::kFrameDeferrable:
-      return "frame_deferrable_tq";
+      return "FrameDeferrableTQ";
     case MainThreadTaskQueue::QueueType::kFramePausable:
-      return "frame_pausable_tq";
+      return "FramePausableTQ";
     case MainThreadTaskQueue::QueueType::kFrameUnpausable:
-      return "frame_unpausable_tq";
+      return "FrameUnpausableTQ";
     case MainThreadTaskQueue::QueueType::kCompositor:
-      return "compositor_tq";
+      return "CompositorTQ";
     case MainThreadTaskQueue::QueueType::kIdle:
-      return "idle_tq";
+      return "IdleTQ";
     case MainThreadTaskQueue::QueueType::kTest:
-      return "test_tq";
+      return "TestTQ";
     case MainThreadTaskQueue::QueueType::kFrameLoading_kControl:
-      return "frame_loading_control_tq";
+      return "FrameLoadingControlTQ";
     case MainThreadTaskQueue::QueueType::kV8:
-      return "v8_tq";
+      return "V8TQ";
     case MainThreadTaskQueue::QueueType::kIPC:
-      return "ipc_tq";
+      return "IPCTQ";
     case MainThreadTaskQueue::QueueType::kOther:
-      return "other_tq";
+      return "OtherTQ";
     case MainThreadTaskQueue::QueueType::kCount:
       NOTREACHED();
       return nullptr;
@@ -112,7 +112,7 @@ MainThreadTaskQueue::MainThreadTaskQueue(
   }
 }
 
-MainThreadTaskQueue::~MainThreadTaskQueue() = default;
+MainThreadTaskQueue::~MainThreadTaskQueue() {}
 
 void MainThreadTaskQueue::OnTaskStarted(const TaskQueue::Task& task,
                                         base::TimeTicks start) {

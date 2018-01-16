@@ -72,7 +72,7 @@ typedef unsigned LayerTreeFlags;
 
 class PLATFORM_EXPORT GraphicsLayerClient {
  public:
-  virtual ~GraphicsLayerClient() = default;
+  virtual ~GraphicsLayerClient() {}
 
   virtual void InvalidateTargetElementForTesting() {}
 

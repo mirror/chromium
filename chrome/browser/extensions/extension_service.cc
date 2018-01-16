@@ -700,9 +700,8 @@ void ExtensionService::ReloadExtensionImpl(
 
   transient_current_extension = nullptr;
 
-  if (delayed_installs_.Contains(extension_id) &&
-      FinishDelayedInstallationIfReady(extension_id,
-                                       true /*install_immediately*/)) {
+  if (delayed_installs_.Contains(extension_id)) {
+    FinishDelayedInstallation(extension_id);
     return;
   }
 
@@ -924,9 +923,6 @@ void ExtensionService::UnblockAllExtensions() {
     registry_->RemoveBlocked(extension->id());
     AddExtension(extension.get());
   }
-  // While extensions are blocked, we won't display any external install
-  // warnings. Now that they are unblocked, we should update the error.
-  external_install_manager_->UpdateExternalExtensionAlert();
 }
 
 void ExtensionService::GrantPermissionsAndEnableExtension(
@@ -1723,42 +1719,45 @@ void ExtensionService::AddNewOrUpdatedExtension(
   FinishInstallation(extension);
 }
 
-bool ExtensionService::FinishDelayedInstallationIfReady(
-    const std::string& extension_id,
-    bool install_immediately) {
+void ExtensionService::MaybeFinishDelayedInstallation(
+    const std::string& extension_id) {
   // Check if the extension already got installed.
   const Extension* extension = delayed_installs_.GetByID(extension_id);
   if (!extension)
-    return false;
+    return;
 
   extensions::ExtensionPrefs::DelayReason reason;
-  const extensions::InstallGate::Action action =
-      ShouldDelayExtensionInstall(extension, install_immediately, &reason);
+  const extensions::InstallGate::Action action = ShouldDelayExtensionInstall(
+      extension, false /* install_immediately*/, &reason);
   switch (action) {
     case extensions::InstallGate::INSTALL:
       break;
     case extensions::InstallGate::DELAY:
       // Bail out and continue to delay the install.
-      return false;
+      return;
     case extensions::InstallGate::ABORT:
       delayed_installs_.Remove(extension_id);
       // Make sure no version of the extension is actually installed, (i.e.,
       // that this delayed install was not an update).
       CHECK(!extension_prefs_->GetInstalledExtensionInfo(extension_id).get());
       extension_prefs_->DeleteExtensionPrefs(extension_id);
-      return false;
+      return;
   }
 
-  scoped_refptr<const Extension> delayed_install =
-      GetPendingExtensionUpdate(extension_id);
-  CHECK(delayed_install.get());
+  FinishDelayedInstallation(extension_id);
+}
+
+void ExtensionService::FinishDelayedInstallation(
+    const std::string& extension_id) {
+  scoped_refptr<const Extension> extension(
+      GetPendingExtensionUpdate(extension_id));
+  CHECK(extension.get());
   delayed_installs_.Remove(extension_id);
 
   if (!extension_prefs_->FinishDelayedInstallInfo(extension_id))
     NOTREACHED();
 
-  FinishInstallation(delayed_install.get());
-  return true;
+  FinishInstallation(extension.get());
 }
 
 void ExtensionService::FinishInstallation(
@@ -1980,9 +1979,8 @@ void ExtensionService::Observe(int type,
             base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
                 FROM_HERE,
                 base::BindOnce(
-                    base::IgnoreResult(
-                        &ExtensionService::FinishDelayedInstallationIfReady),
-                    AsWeakPtr(), *it, false /*install_immediately*/),
+                    &ExtensionService::MaybeFinishDelayedInstallation,
+                    AsWeakPtr(), *it),
                 base::TimeDelta::FromSeconds(kUpdateIdleDelay));
           }
         }
@@ -2091,8 +2089,7 @@ void ExtensionService::MaybeFinishDelayedInstallations() {
     to_be_installed.push_back(extension->id());
   }
   for (const auto& extension_id : to_be_installed) {
-    FinishDelayedInstallationIfReady(extension_id,
-                                     false /*install_immediately*/);
+    MaybeFinishDelayedInstallation(extension_id);
   }
 }
 

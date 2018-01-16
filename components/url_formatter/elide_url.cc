@@ -405,15 +405,13 @@ base::string16 ElideUrl(const GURL& url,
 
 base::string16 ElideHost(const GURL& url,
                          const gfx::FontList& font_list,
-                         float available_pixel_width,
-                         gfx::Typesetter typesetter) {
+                         float available_pixel_width) {
   base::string16 url_host;
   base::string16 url_domain;
   base::string16 url_subdomain;
   SplitHost(url, &url_host, &url_domain, &url_subdomain);
 
-  const float pixel_width_url_host =
-      gfx::GetStringWidthF(url_host, font_list, typesetter);
+  const float pixel_width_url_host = gfx::GetStringWidthF(url_host, font_list);
   if (available_pixel_width >= pixel_width_url_host)
     return url_host;
 
@@ -421,13 +419,13 @@ base::string16 ElideHost(const GURL& url,
     return url_domain;
 
   const float pixel_width_url_domain =
-      gfx::GetStringWidthF(url_domain, font_list, typesetter);
+      gfx::GetStringWidthF(url_domain, font_list);
   float subdomain_width = available_pixel_width - pixel_width_url_domain;
   if (subdomain_width <= 0)
     return base::string16(gfx::kEllipsisUTF16) + kDot + url_domain;
 
   return gfx::ElideText(url_host, font_list, available_pixel_width,
-                        gfx::ELIDE_HEAD, typesetter);
+                        gfx::ELIDE_HEAD);
 }
 
 #endif  // !defined(OS_ANDROID)

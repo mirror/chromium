@@ -22,6 +22,7 @@ namespace {
 using content::SocketPermissionRequest;
 using extensions::SocketPermissionData;
 
+const char kColon = ':';
 const char kInvalid[] = "invalid";
 const char kTCPConnect[] = "tcp-connect";
 const char kTCPListen[] = "tcp-listen";
@@ -123,8 +124,9 @@ SocketPermissionEntry& SocketPermissionData::entry() {
 bool SocketPermissionData::Parse(const std::string& permission) {
   Reset();
 
-  std::vector<std::string> tokens = base::SplitString(
-      permission, ":", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::vector<std::string> tokens =
+      base::SplitString(permission, std::string(1, kColon),
+                        base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
   if (tokens.empty())
     return false;
 
@@ -144,7 +146,7 @@ const std::string& SocketPermissionData::GetAsString() const {
   spec_.append(TypeToString(entry_.pattern().type));
   std::string pattern = entry_.GetHostPatternAsString();
   if (!pattern.empty()) {
-    spec_.append(1, ':').append(pattern);
+    spec_.append(1, kColon).append(pattern);
   }
   return spec_;
 }

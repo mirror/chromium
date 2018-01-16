@@ -28,7 +28,7 @@ NotificationEvent::NotificationEvent(const AtomicString& type,
     notification_ = initializer.notification();
 }
 
-NotificationEvent::~NotificationEvent() = default;
+NotificationEvent::~NotificationEvent() {}
 
 const AtomicString& NotificationEvent::InterfaceName() const {
   return EventNames::NotificationEvent;

@@ -54,7 +54,7 @@ HTMLImportChild::HTMLImportChild(const KURL& url,
   DCHECK(client_);
 }
 
-HTMLImportChild::~HTMLImportChild() = default;
+HTMLImportChild::~HTMLImportChild() {}
 
 void HTMLImportChild::OwnerInserted() {
   if (!loader_->IsDone())

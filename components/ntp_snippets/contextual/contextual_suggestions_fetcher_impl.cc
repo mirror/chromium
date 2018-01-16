@@ -174,8 +174,7 @@ void ContextualSuggestionsFetcherImpl::StartTokenRequest() {
       "ntp_snippets", signin_manager_, token_service_, scopes,
       base::BindOnce(
           &ContextualSuggestionsFetcherImpl::AccessTokenFetchFinished,
-          base::Unretained(this)),
-      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+          base::Unretained(this)));
 }
 
 void ContextualSuggestionsFetcherImpl::AccessTokenFetchFinished(

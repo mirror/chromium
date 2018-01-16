@@ -18,7 +18,7 @@ class ChromeBrowserMainPartsAndroid : public ChromeBrowserMainParts {
   // content::BrowserMainParts overrides.
   int PreCreateThreads() override;
   void PostProfileInit() override;
-  int PreEarlyInitialization() override;
+  void PreEarlyInitialization() override;
 
   // ChromeBrowserMainParts overrides.
   void PostBrowserStart() override;

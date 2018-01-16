@@ -78,19 +78,7 @@ class CustomEventHandler : public ui::test::TestEventHandler {
 
 namespace ash {
 
-class WindowManagerTest : public AshTestBase {
- public:
-  WindowManagerTest() = default;
-
-  void SetUp() override {
-    AshTestBase::SetUp();
-
-    // Shell hides the cursor by default; show it for these tests.
-    Shell::Get()->cursor_manager()->ShowCursor();
-  }
-
-  DISALLOW_COPY_AND_ASSIGN(WindowManagerTest);
-};
+using WindowManagerTest = AshTestBase;
 
 class NonFocusableDelegate : public aura::test::TestWindowDelegate {
  public:

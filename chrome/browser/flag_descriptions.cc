@@ -281,12 +281,6 @@ const char kEnableAutofillCreditCardUploadCvcPromptDescription[] =
     "If enabled, requests missing CVC when offering to upload credit cards to "
     "Google Payments.";
 
-const char kEnableAutofillCreditCardUploadGooglePayBrandingName[] =
-    "Show the Google Pay logo when offering credit card upload";
-const char kEnableAutofillCreditCardUploadGooglePayBrandingDescription[] =
-    "If enabled, shows the Google Pay logo and a shorter header message when "
-    "credit card upload to Google Payments is offered.";
-
 const char kEnableAutofillCreditCardUploadSendDetectedValuesName[] =
     "Always send metadata on detected form values for Autofill credit card "
     "upload";
@@ -520,21 +514,6 @@ const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[] =
     "automatically uploaded traces will always be pruned. This only affects "
     "manually taken memory-infra traces.";
 
-const char kOOPHPStackModeName[] =
-    "The type of stack to record for memlog heap dumps";
-const char kOOPHPStackModeDescription[] =
-    "By default, memlog heap dumps record a native stack, which requires "
-    "symbolization. It's also possible to record a pseudo stack using trace "
-    "events as identifiers. It's also possible to do a mix of both.";
-const char kOOPHPStackModeMixed[] =
-    "Record a mix of pseudo and native stack frames";
-const char kOOPHPStackModeNative[] =
-    "Record instruction addresses from unwinding the stack. The result "
-    "requires symbolization. Does not produce valid results on Android on "
-    "official arm32 builds. Requires a custom build with frame pointers "
-    "enabled.";
-const char kOOPHPStackModePseudo[] = "Uses trace events as identifiers";
-
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 const char kEnablePictureInPictureDescription[] =
     "Enable the picture in picture feature for videos.";
@@ -553,6 +532,11 @@ extern const char kEnableTouchpadAndWheelScrollLatchingName[] =
 extern const char kEnableTouchpadAndWheelScrollLatchingDescription[] =
     "Wheel scroll latching enforces latching to a single element for the "
     "duration of a scroll sequence.";
+
+const char kEnableUsernameCorrectionName[] = "Enable username correction";
+const char kEnableUsernameCorrectionDescription[] =
+    "While on the pending password state, add an edit button to the bubble so "
+    "that user can edit the username.";
 
 const char kEnableUseZoomForDsfName[] =
     "Use Blink's zoom for device scale factor.";
@@ -719,6 +703,12 @@ const char kGamepadExtensionsName[] = "Gamepad Extensions";
 const char kGamepadExtensionsDescription[] =
     "Enabling this option allows web applications to access experimental "
     "extensions to the Gamepad APIs.";
+
+const char kGlCompositedOverlayCandidateQuadBordersName[] =
+    "GL composited overlay candidate quad borders";
+const char kGlCompositedOverlayCandidateQuadBordersDescription[] =
+    "Renders a border around GL composited overlay candidate quads to help "
+    "debug and study overlay support.";
 
 const char kGpuRasterizationMsaaSampleCountName[] =
     "GPU rasterization MSAA sample count.";
@@ -1106,6 +1096,11 @@ const char kPasswordImportName[] = "Password import";
 const char kPasswordImportDescription[] =
     "Import functionality in password settings.";
 
+const char kPasswordSelectionName[] =
+    "Password selection and eye icon in prompt";
+const char kPasswordSelectionDescription[] =
+    "Show a password selector and an eye icon in prompt";
+
 const char kPermissionActionReportingName[] = "Permission Action Reporting";
 const char kPermissionActionReportingDescription[] =
     "Enables permission action reporting to Safe Browsing servers for opted in "
@@ -1406,11 +1401,6 @@ const char kTcpFastOpenDescription[] =
     "SYN packet for a previously connected client, allowing faster data send "
     "start.";
 
-const char kTintGlCompositedContentName[] = "Tint GL-composited content";
-const char kTintGlCompositedContentDescription[] =
-    "Tint contents composited using GL with a shade of red to help debug and "
-    "study overlay support.";
-
 const char kTopChromeMd[] = "UI Layout for the browser's top chrome";
 const char kTopChromeMdDescription[] =
     R"*(Toggles between normal and touch (formerly "hybrid") layouts.)*";
@@ -1430,7 +1420,6 @@ const char kTLS13VariantDescription[] = "Sets the TLS 1.3 variant used.";
 const char kTLS13VariantDisabled[] = "Disabled";
 const char kTLS13VariantDeprecated[] = "Disabled (Deprecated Setting)";
 const char kTLS13VariantDraft22[] = "Enabled (Draft 22)";
-const char kTLS13VariantDraft23[] = "Enabled (Draft 23)";
 const char kTLS13VariantExperiment2[] = "Enabled (Experiment 2)";
 
 const char kTopDocumentIsolationName[] = "Top document isolation";
@@ -1642,12 +1631,6 @@ const char kWebXrDescription[] =
     "Allow web applications to access experimental APIs to interact with "
     "Virtual Reality (VR) and Augmented Reality (AR) devices.";
 
-const char kWebXrOrientationSensorDeviceName[] =
-    "WebXR orientation sensor device";
-const char kWebXrOrientationSensorDeviceDescription[] =
-    "When no VR platform device is available, expose a non-presenting device "
-    "based on the device's orientation sensors, if available.";
-
 const char kWifiCredentialSyncName[] = "WiFi credential sync";
 const char kWifiCredentialSyncDescription[] =
     "Enables synchronizing WiFi network settings across devices. When enabled, "
@@ -1800,23 +1783,11 @@ const char kContextualSearchMlTapSuppressionName[] =
     "Contextual Search ML tap suppression";
 const char kContextualSearchMlTapSuppressionDescription[] =
     "Enables tap gestures to be suppressed to improve CTR by applying machine "
-    "learning.  The \"Contextual Search Ranker prediction\" flag must also be "
-    "enabled!";
+    "learning.";
 
 const char kContextualSearchName[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";
-
-const char kContextualSearchRankerQueryName[] =
-    "Contextual Search Ranker prediction";
-const char kContextualSearchRankerQueryDescription[] =
-    "Enables prediction of tap gestures using Assist-Ranker machine learning.";
-
-const char kContextualSearchSecondTapName[] =
-    "Contextual Search second tap triggering";
-const char kContextualSearchSecondTapDescription[] =
-    "Enables triggering on a second tap gesture even when Ranker would "
-    "normally suppress that tap.";
 
 const char kDontPrefetchLibrariesName[] = "Don't Prefetch Libraries";
 const char kDontPrefetchLibrariesDescription[] =
@@ -1882,6 +1853,11 @@ const char kEnableDataReductionProxyMainMenuName[] =
     "Enable Data Saver main menu item";
 const char kEnableDataReductionProxyMainMenuDescription[] =
     "Enables the Data Saver menu item in the main menu";
+
+const char kEnableDataReductionProxySiteBreakdownName[] =
+    "Data Saver Site Breakdown";
+const char kEnableDataReductionProxySiteBreakdownDescription[] =
+    "Enable the site breakdown on the Data Saver settings page.";
 
 const char kEnableOmniboxClipboardProviderName[] =
     "Omnibox clipboard URL suggestions";
@@ -2449,10 +2425,6 @@ const char kArcNativeBridgeExperimentName[] =
 const char kArcNativeBridgeExperimentDescription[] =
     "Enables experimental native bridge feature.";
 
-const char kArcUsbHostName[] = "Enable ARC USB host integration";
-const char kArcUsbHostDescription[] =
-    "Allow Android apps to use USB host feature on ChromeOS devices.";
-
 const char kArcVpnName[] = "Enable ARC VPN integration";
 const char kArcVpnDescription[] =
     "Allow Android VPN clients to tunnel Chrome traffic.";
@@ -2945,6 +2917,14 @@ const char kUiSlowAnimationsName[] = "Slow UI animations";
 const char kUiSlowAnimationsDescription[] = "Makes all UI animations slow.";
 
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(TOOLKIT_VIEWS)
+
+const char kExperimentalTabControllerName[] = "Experimental tab controller.";
+const char kExperimentalTabControllerDescription[] =
+    "Enable controller for highly experimental tab policies.";
+
+#endif  // defined(TOOLKIT_VIEWS)
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 

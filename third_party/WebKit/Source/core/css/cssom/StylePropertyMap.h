@@ -28,11 +28,13 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadOnly {
               const HeapVector<CSSStyleValueOrString>& values,
               ExceptionState&);
   void remove(const String& property_name, ExceptionState&);
-  void update(const String&, V8UpdateFunction*, ExceptionState&);
+  void update(const ExecutionContext*,
+              const String&,
+              V8UpdateFunction*,
+              ExceptionState&);
 
  protected:
   virtual void SetProperty(CSSPropertyID, const CSSValue&) = 0;
-  virtual void SetCustomProperty(const AtomicString&, const CSSValue&) = 0;
   virtual void RemoveProperty(CSSPropertyID) = 0;
   virtual void RemoveCustomProperty(const AtomicString&) = 0;
 

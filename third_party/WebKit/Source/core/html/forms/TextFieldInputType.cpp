@@ -107,7 +107,7 @@ class DataListIndicatorElement final : public HTMLDivElement {
 TextFieldInputType::TextFieldInputType(HTMLInputElement& element)
     : InputType(element), InputTypeView(element) {}
 
-TextFieldInputType::~TextFieldInputType() = default;
+TextFieldInputType::~TextFieldInputType() {}
 
 void TextFieldInputType::Trace(blink::Visitor* visitor) {
   InputTypeView::Trace(visitor);

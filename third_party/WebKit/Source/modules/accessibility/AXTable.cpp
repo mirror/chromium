@@ -55,7 +55,7 @@ AXTable::AXTable(LayoutObject* layout_object,
       header_container_(nullptr),
       is_ax_table_(true) {}
 
-AXTable::~AXTable() = default;
+AXTable::~AXTable() {}
 
 void AXTable::Init() {
   AXLayoutObject::Init();

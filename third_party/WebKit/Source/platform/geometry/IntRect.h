@@ -57,7 +57,7 @@ class PLATFORM_EXPORT IntRect {
   USING_FAST_MALLOC(IntRect);
 
  public:
-  IntRect() = default;
+  IntRect() {}
   IntRect(const IntPoint& location, const IntSize& size)
       : location_(location), size_(size) {}
   IntRect(int x, int y, int width, int height)

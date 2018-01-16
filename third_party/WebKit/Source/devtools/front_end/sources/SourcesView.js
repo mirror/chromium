@@ -297,9 +297,6 @@ Sources.SourcesView = class extends UI.VBox {
   _addUISourceCode(uiSourceCode) {
     if (uiSourceCode.project().isServiceProject())
       return;
-    if (uiSourceCode.project().type() === Workspace.projectTypes.FileSystem &&
-        Persistence.FileSystemWorkspaceBinding.fileSystemType(uiSourceCode.project()) === 'overrides')
-      return;
     this._editorContainer.addUISourceCode(uiSourceCode);
   }
 

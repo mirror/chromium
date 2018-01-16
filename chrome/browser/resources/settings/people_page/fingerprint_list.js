@@ -8,9 +8,9 @@
 /**
  * The duration in ms of a background flash when a user touches the fingerprint
  * sensor on this page.
- * @type {number}
+ * @const {number}
  */
-const FLASH_DURATION_MS = 500;
+var FLASH_DURATION_MS = 500;
 
 Polymer({
   is: 'settings-fingerprint-list',
@@ -78,9 +78,9 @@ Polymer({
    * @private
    */
   onAttemptReceived_: function(fingerprintAttempt) {
-    /** @type {NodeList<!HTMLElement>} */ const listItems =
+    /** @type {NodeList<!HTMLElement>} */ var listItems =
         this.$.fingerprintsList.querySelectorAll('.list-item');
-    /** @type {Array<number>} */ const filteredIndexes =
+    /** @type {Array<number>} */ var filteredIndexes =
         fingerprintAttempt.indexes.filter(function(index) {
           return index >= 0 && index < listItems.length;
         });
@@ -88,8 +88,8 @@ Polymer({
     // Flash the background and produce a ripple for each list item that
     // corresponds to the attempted finger.
     filteredIndexes.forEach(function(index) {
-      const listItem = listItems[index];
-      const ripple = listItem.querySelector('paper-ripple');
+      var listItem = listItems[index];
+      var ripple = listItem.querySelector('paper-ripple');
 
       // Activate the ripple.
       if (ripple)

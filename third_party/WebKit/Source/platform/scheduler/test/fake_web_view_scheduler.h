@@ -18,7 +18,7 @@ class FakeWebViewScheduler : public WebViewScheduler {
 
   class Builder {
    public:
-    Builder() = default;
+    Builder() {}
 
     Builder& SetIsPlayingAudio(bool is_playing_audio) {
       is_playing_audio_ = is_playing_audio;

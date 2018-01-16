@@ -17,7 +17,6 @@ import org.chromium.chrome.browser.ChromeStringConstants;
 import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
-import org.chromium.chrome.browser.payments.SettingsAutofillAndPaymentsObserver;
 
 /**
  * Server credit card settings.
@@ -98,7 +97,6 @@ public class AutofillServerCardEditor extends AutofillCreditCardEditor {
             mCard.setBillingAddressId(
                     ((AutofillProfile) mBillingAddress.getSelectedItem()).getGUID());
             PersonalDataManager.getInstance().updateServerCardBillingAddress(mCard);
-            SettingsAutofillAndPaymentsObserver.getInstance().notifyOnCreditCardUpdated(mCard);
         }
         return true;
     }

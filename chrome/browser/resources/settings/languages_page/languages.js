@@ -15,27 +15,28 @@
 
 cr.exportPath('settings');
 
-const MoveType = chrome.languageSettingsPrivate.MoveType;
+var MoveType = chrome.languageSettingsPrivate.MoveType;
 
 // Translate server treats some language codes the same.
 // See also: components/translate/core/common/translate_util.cc.
-const kLanguageCodeToTranslateCode = {
+var kLanguageCodeToTranslateCode = {
   'nb': 'no',
   'fil': 'tl',
   'zh-HK': 'zh-TW',
   'zh-MO': 'zh-TW',
   'zh-SG': 'zh-CN',
+  'zh': 'zh-CH',
 };
 
 // Some ISO 639 language codes have been renamed, e.g. "he" to "iw", but
 // Translate still uses the old versions. TODO(michaelpg): Chrome does too.
 // Follow up with Translate owners to understand the right thing to do.
-const kTranslateLanguageSynonyms = {
+var kTranslateLanguageSynonyms = {
   'he': 'iw',
   'jv': 'jw',
 };
 
-const preferredLanguagesPrefName = cr.isChromeOS ?
+var preferredLanguagesPrefName = cr.isChromeOS ?
     'settings.language.preferred_languages' :
     'intl.accept_languages';
 
@@ -176,7 +177,7 @@ Polymer({
     this.inputMethodPrivate_ = this.browserProxy_.getInputMethodPrivate();
     // </if>
 
-    const promises = [];
+    var promises = [];
 
     // Wait until prefs are initialized before creating the model, so we can
     // include information about enabled languages.
@@ -260,12 +261,12 @@ Polymer({
    * @private
    */
   preferredLanguagesPrefChanged_: function() {
-    const enabledLanguageStates = this.getEnabledLanguageStates_(
+    var enabledLanguageStates = this.getEnabledLanguageStates_(
         this.languages.translateTarget, this.languages.prospectiveUILanguage);
 
     // Recreate the enabled language set before updating languages.enabled.
     this.enabledLanguageSet_.clear();
-    for (let i = 0; i < enabledLanguageStates.length; i++)
+    for (var i = 0; i < enabledLanguageStates.length; i++)
       this.enabledLanguageSet_.add(enabledLanguageStates[i].language.code);
 
     this.set('languages.enabled', enabledLanguageStates);
@@ -276,13 +277,13 @@ Polymer({
    * @private
    */
   spellCheckDictionariesPrefChanged_: function() {
-    const spellCheckSet = this.makeSetFromArray_(/** @type {!Array<string>} */ (
+    var spellCheckSet = this.makeSetFromArray_(/** @type {!Array<string>} */ (
         this.getPref('spellcheck.dictionaries').value));
-    const spellCheckForcedSet =
+    var spellCheckForcedSet =
         this.makeSetFromArray_(/** @type {!Array<string>} */ (
             this.getPref('spellcheck.forced_dictionaries').value));
-    for (let i = 0; i < this.languages.enabled.length; i++) {
-      const languageState = this.languages.enabled[i];
+    for (var i = 0; i < this.languages.enabled.length; i++) {
+      var languageState = this.languages.enabled[i];
       this.set(
           `languages.enabled.${i}.spellCheckEnabled`,
           !!spellCheckSet.has(languageState.language.code));
@@ -305,14 +306,14 @@ Polymer({
    * @private
    */
   getForcedSpellCheckLanguages_: function(enabledLanguages) {
-    const enabledSet = this.makeSetFromArray_(/** @type {!Array<string>} */ (
+    var enabledSet = this.makeSetFromArray_(/** @type {!Array<string>} */ (
         enabledLanguages.map(x => x.language.code)));
-    const spellCheckForcedDictionaries = /** @type {!Array<string>} */ (
+    var spellCheckForcedDictionaries = /** @type {!Array<string>} */ (
         this.getPref('spellcheck.forced_dictionaries').value);
 
-    const forcedLanguages = [];
-    for (let i = 0; i < spellCheckForcedDictionaries.length; i++) {
-      const code = spellCheckForcedDictionaries[i];
+    var forcedLanguages = [];
+    for (var i = 0; i < spellCheckForcedDictionaries.length; i++) {
+      var code = spellCheckForcedDictionaries[i];
       if (!enabledSet.has(code) && this.supportedLanguageMap_.has(code)) {
         forcedLanguages.push(this.supportedLanguageMap_.get(code));
       }
@@ -322,18 +323,18 @@ Polymer({
 
   /** @private */
   translateLanguagesPrefChanged_: function() {
-    const translateBlockedPref = this.getPref('translate_blocked_languages');
-    const translateBlockedSet = this.makeSetFromArray_(
+    var translateBlockedPref = this.getPref('translate_blocked_languages');
+    var translateBlockedSet = this.makeSetFromArray_(
         /** @type {!Array<string>} */ (translateBlockedPref.value));
 
-    for (let i = 0; i < this.languages.enabled.length; i++) {
+    for (var i = 0; i < this.languages.enabled.length; i++) {
       if (this.languages.enabled[i].language.code ==
           this.languages.prospectiveUILanguage) {
         continue;
       }
       // This conversion primarily strips away the region part.
       // For example "fr-CA" --> "fr".
-      const translateCode = this.convertLanguageCodeForTranslate(
+      var translateCode = this.convertLanguageCodeForTranslate(
           this.languages.enabled[i].language.code);
       this.set(
           'languages.enabled.' + i + '.translateEnabled',
@@ -357,8 +358,8 @@ Polymer({
       supportedLanguages, translateTarget, supportedInputMethods,
       currentInputMethodId) {
     // Populate the hash map of supported languages.
-    for (let i = 0; i < supportedLanguages.length; i++) {
-      const language = supportedLanguages[i];
+    for (var i = 0; i < supportedLanguages.length; i++) {
+      var language = supportedLanguages[i];
       language.supportsUI = !!language.supportsUI;
       language.supportsTranslate = !!language.supportsTranslate;
       language.supportsSpellcheck = !!language.supportsSpellcheck;
@@ -367,15 +368,15 @@ Polymer({
 
     if (supportedInputMethods) {
       // Populate the hash map of supported input methods.
-      for (let j = 0; j < supportedInputMethods.length; j++) {
-        const inputMethod = supportedInputMethods[j];
+      for (var j = 0; j < supportedInputMethods.length; j++) {
+        var inputMethod = supportedInputMethods[j];
         inputMethod.enabled = !!inputMethod.enabled;
         // Add the input method to the map of IDs.
         this.supportedInputMethodMap_.set(inputMethod.id, inputMethod);
         // Add the input method to the list of input methods for each language
         // it supports.
-        for (let k = 0; k < inputMethod.languageCodes.length; k++) {
-          const languageCode = inputMethod.languageCodes[k];
+        for (var k = 0; k < inputMethod.languageCodes.length; k++) {
+          var languageCode = inputMethod.languageCodes[k];
           if (!this.supportedLanguageMap_.has(languageCode))
             continue;
           if (!this.languageInputMethods_.has(languageCode))
@@ -386,7 +387,7 @@ Polymer({
       }
     }
 
-    let prospectiveUILanguage;
+    var prospectiveUILanguage;
     if (cr.isChromeOS || cr.isWindows) {
       prospectiveUILanguage =
           /** @type {string} */ (this.getPref('intl.app_locale').value) ||
@@ -394,16 +395,16 @@ Polymer({
     }
 
     // Create a list of enabled languages from the supported languages.
-    const enabledLanguageStates =
+    var enabledLanguageStates =
         this.getEnabledLanguageStates_(translateTarget, prospectiveUILanguage);
     // Populate the hash set of enabled languages.
-    for (let l = 0; l < enabledLanguageStates.length; l++)
+    for (var l = 0; l < enabledLanguageStates.length; l++)
       this.enabledLanguageSet_.add(enabledLanguageStates[l].language.code);
 
-    const forcedSpellCheckLanguages =
+    var forcedSpellCheckLanguages =
         this.getForcedSpellCheckLanguages_(enabledLanguageStates);
 
-    const model = /** @type {!LanguagesModel} */ ({
+    var model = /** @type {!LanguagesModel} */ ({
       supported: supportedLanguages,
       enabled: enabledLanguageStates,
       translateTarget: translateTarget,
@@ -438,33 +439,33 @@ Polymer({
   getEnabledLanguageStates_: function(translateTarget, prospectiveUILanguage) {
     assert(CrSettingsPrefs.isInitialized);
 
-    const pref = this.getPref(preferredLanguagesPrefName);
-    const enabledLanguageCodes = pref.value.split(',');
-    const spellCheckPref = this.getPref('spellcheck.dictionaries');
-    const spellCheckForcedPref = this.getPref('spellcheck.forced_dictionaries');
-    const spellCheckSet = this.makeSetFromArray_(
+    var pref = this.getPref(preferredLanguagesPrefName);
+    var enabledLanguageCodes = pref.value.split(',');
+    var spellCheckPref = this.getPref('spellcheck.dictionaries');
+    var spellCheckForcedPref = this.getPref('spellcheck.forced_dictionaries');
+    var spellCheckSet = this.makeSetFromArray_(
         /** @type {!Array<string>} */ (
             spellCheckPref.value.concat(spellCheckForcedPref.value)));
-    const spellCheckForcedSet = this.makeSetFromArray_(
+    var spellCheckForcedSet = this.makeSetFromArray_(
         /** @type {!Array<string>} */ (spellCheckForcedPref.value));
 
-    const translateBlockedPref = this.getPref('translate_blocked_languages');
-    const translateBlockedSet = this.makeSetFromArray_(
+    var translateBlockedPref = this.getPref('translate_blocked_languages');
+    var translateBlockedSet = this.makeSetFromArray_(
         /** @type {!Array<string>} */ (translateBlockedPref.value));
 
-    const enabledLanguageStates = [];
-    for (let i = 0; i < enabledLanguageCodes.length; i++) {
-      const code = enabledLanguageCodes[i];
-      const language = this.supportedLanguageMap_.get(code);
+    var enabledLanguageStates = [];
+    for (var i = 0; i < enabledLanguageCodes.length; i++) {
+      var code = enabledLanguageCodes[i];
+      var language = this.supportedLanguageMap_.get(code);
       // Skip unsupported languages.
       if (!language)
         continue;
-      const languageState = /** @type {LanguageState} */ ({});
+      var languageState = /** @type {LanguageState} */ ({});
       languageState.language = language;
       languageState.spellCheckEnabled = !!spellCheckSet.has(code);
       // Translate is considered disabled if this language maps to any translate
       // language that is blocked.
-      const translateCode = this.convertLanguageCodeForTranslate(code);
+      var translateCode = this.convertLanguageCodeForTranslate(code);
       languageState.translateEnabled = !!language.supportsTranslate &&
           !translateBlockedSet.has(translateCode) &&
           translateCode != translateTarget &&
@@ -484,7 +485,7 @@ Polymer({
     assert(cr.isChromeOS);
     assert(CrSettingsPrefs.isInitialized);
 
-    let enabledInputMethodIds =
+    var enabledInputMethodIds =
         this.getPref('settings.language.preload_engines').value.split(',');
     enabledInputMethodIds = enabledInputMethodIds.concat(
         this.getPref('settings.language.enabled_extension_imes')
@@ -501,10 +502,10 @@ Polymer({
   /** @private */
   updateEnabledInputMethods_: function() {
     assert(cr.isChromeOS);
-    const enabledInputMethods = this.getEnabledInputMethods_();
-    const enabledInputMethodSet = this.makeSetFromArray_(enabledInputMethods);
+    var enabledInputMethods = this.getEnabledInputMethods_();
+    var enabledInputMethodSet = this.makeSetFromArray_(enabledInputMethods);
 
-    for (let i = 0; i < this.languages.inputMethods.supported.length; i++) {
+    for (var i = 0; i < this.languages.inputMethods.supported.length; i++) {
       this.set(
           'languages.inputMethods.supported.' + i + '.enabled',
           enabledInputMethodSet.has(this.languages.inputMethods.supported[i]));
@@ -525,8 +526,8 @@ Polymer({
     if (cr.isChromeOS)
       this.updateEnabledInputMethods_();
 
-    for (let i = 0; i < this.languages.enabled.length; i++) {
-      const languageState = this.languages.enabled[i];
+    for (var i = 0; i < this.languages.enabled.length; i++) {
+      var languageState = this.languages.enabled[i];
       this.set(
           'languages.enabled.' + i + '.removable',
           this.canDisableLanguage(languageState.language.code));
@@ -607,10 +608,10 @@ Polymer({
 
     if (cr.isChromeOS) {
       // Remove input methods that don't support any other enabled language.
-      const inputMethods = this.languageInputMethods_.get(languageCode) || [];
-      for (let i = 0; i < inputMethods.length; i++) {
-        const inputMethod = inputMethods[i];
-        const supportsOtherEnabledLanguages = inputMethod.languageCodes.some(
+      var inputMethods = this.languageInputMethods_.get(languageCode) || [];
+      for (var i = 0; i < inputMethods.length; i++) {
+        var inputMethod = inputMethods[i];
+        var supportsOtherEnabledLanguages = inputMethod.languageCodes.some(
             otherLanguageCode => otherLanguageCode != languageCode &&
                 this.isLanguageEnabled(otherLanguageCode));
         if (!supportsOtherEnabledLanguages)
@@ -640,13 +641,12 @@ Polymer({
 
     // If this is the only enabled language that is supported by all enabled
     // component IMEs, it cannot be disabled because we need those IMEs.
-    const otherInputMethodsEnabled =
+    var otherInputMethodsEnabled =
         this.languages.enabled.some(function(languageState) {
-          const otherLanguageCode = languageState.language.code;
+          var otherLanguageCode = languageState.language.code;
           if (otherLanguageCode == languageCode)
             return false;
-          const inputMethods =
-              this.languageInputMethods_.get(otherLanguageCode);
+          var inputMethods = this.languageInputMethods_.get(otherLanguageCode);
           return inputMethods && inputMethods.some(function(inputMethod) {
             return this.isComponentIme(inputMethod) &&
                 this.supportedInputMethodMap_.get(inputMethod.id).enabled;
@@ -715,7 +715,7 @@ Polymer({
       return;
 
     if (enable) {
-      const spellCheckPref = this.getPref('spellcheck.dictionaries');
+      var spellCheckPref = this.getPref('spellcheck.dictionaries');
       this.appendPrefListItem('spellcheck.dictionaries', languageCode);
     } else {
       this.deletePrefListItem('spellcheck.dictionaries', languageCode);
@@ -733,7 +733,7 @@ Polymer({
     if (languageCode in kLanguageCodeToTranslateCode)
       return kLanguageCodeToTranslateCode[languageCode];
 
-    const main = languageCode.split('-')[0];
+    var main = languageCode.split('-')[0];
     if (main == 'zh') {
       // In Translate, general Chinese is not used, and the sub code is
       // necessary as a language code for the Translate server.
@@ -757,7 +757,7 @@ Polymer({
       return 'no';
 
     // Match the characters before the hyphen.
-    const result = languageCode.match(/^([^-]+)-?/);
+    var result = languageCode.match(/^([^-]+)-?/);
     assert(result.length == 2);
     return result[1];
   },

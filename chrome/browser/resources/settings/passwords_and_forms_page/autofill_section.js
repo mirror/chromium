@@ -213,12 +213,12 @@ Polymer({
   attached: function() {
     // Create listener functions.
     /** @type {function(!Array<!AutofillManager.AddressEntry>)} */
-    const setAddressesListener = list => {
+    var setAddressesListener = list => {
       this.addresses = list;
     };
 
     /** @type {function(!Array<!AutofillManager.CreditCardEntry>)} */
-    const setCreditCardsListener = list => {
+    var setCreditCardsListener = list => {
       this.creditCards = list;
     };
 
@@ -265,17 +265,17 @@ Polymer({
    * @private
    */
   onAddressMenuTap_: function(e) {
-    const menuEvent = /** @type {!{model: !{item: !Object}}} */ (e);
+    var menuEvent = /** @type {!{model: !{item: !Object}}} */ (e);
 
     /* TODO(scottchen): drop the [dataHost][dataHost] once this bug is fixed:
      https://github.com/Polymer/polymer/issues/2574 */
-    const item = menuEvent.model['dataHost']['dataHost'].item;
+    var item = menuEvent.model['dataHost']['dataHost'].item;
 
     // Copy item so dialog won't update model on cancel.
     this.activeAddress = /** @type {!chrome.autofillPrivate.AddressEntry} */ (
         Object.assign({}, item));
 
-    const dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
+    var dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
     /** @type {!CrActionMenuElement} */ (this.$.addressSharedMenu)
         .showAt(dotsButton);
     this.activeDialogAnchor_ = dotsButton;
@@ -332,18 +332,18 @@ Polymer({
    * @private
    */
   onCreditCardMenuTap_: function(e) {
-    const menuEvent = /** @type {!{model: !{item: !Object}}} */ (e);
+    var menuEvent = /** @type {!{model: !{item: !Object}}} */ (e);
 
     /* TODO(scottchen): drop the [dataHost][dataHost] once this bug is fixed:
      https://github.com/Polymer/polymer/issues/2574 */
-    const item = menuEvent.model['dataHost']['dataHost'].item;
+    var item = menuEvent.model['dataHost']['dataHost'].item;
 
     // Copy item so dialog won't update model on cancel.
     this.activeCreditCard =
         /** @type {!chrome.autofillPrivate.CreditCardEntry} */ (
             Object.assign({}, item));
 
-    const dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
+    var dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
     /** @type {!CrActionMenuElement} */ (this.$.creditCardSharedMenu)
         .showAt(dotsButton);
     this.activeDialogAnchor_ = dotsButton;
@@ -356,8 +356,8 @@ Polymer({
    */
   onAddCreditCardTap_: function(e) {
     e.preventDefault();
-    const date = new Date();  // Default to current month/year.
-    const expirationMonth = date.getMonth() + 1;  // Months are 0 based.
+    var date = new Date();  // Default to current month/year.
+    var expirationMonth = date.getMonth() + 1;  // Months are 0 based.
     this.activeCreditCard = {
       expirationMonth: expirationMonth.toString(),
       expirationYear: date.getFullYear().toString(),

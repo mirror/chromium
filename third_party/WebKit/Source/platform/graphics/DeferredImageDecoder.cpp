@@ -86,7 +86,7 @@ DeferredImageDecoder::DeferredImageDecoder(
       has_hot_spot_(false),
       complete_frame_content_id_(PaintImage::GetNextContentId()) {}
 
-DeferredImageDecoder::~DeferredImageDecoder() = default;
+DeferredImageDecoder::~DeferredImageDecoder() {}
 
 String DeferredImageDecoder::FilenameExtension() const {
   return metadata_decoder_ ? metadata_decoder_->FilenameExtension()

@@ -6,6 +6,6 @@
 
 namespace blink {
 
-WebRTCRtpContributingSource::~WebRTCRtpContributingSource() = default;
+WebRTCRtpContributingSource::~WebRTCRtpContributingSource() {}
 
 }  // namespace blink

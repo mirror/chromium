@@ -115,7 +115,7 @@ class AudioOutputControllerTest : public testing::Test {
  public:
   AudioOutputControllerTest()
       : audio_manager_(AudioManager::CreateForTesting(
-            std::make_unique<TestAudioThread>())) {
+            base::MakeUnique<TestAudioThread>())) {
     EXPECT_CALL(mock_event_handler_, OnLog(_)).Times(testing::AnyNumber());
     base::RunLoop().RunUntilIdle();
   }

@@ -45,7 +45,7 @@ SVGTransformTearOff::SVGTransformTearOff(
                                        property_is_anim_val,
                                        attribute_name) {}
 
-SVGTransformTearOff::~SVGTransformTearOff() = default;
+SVGTransformTearOff::~SVGTransformTearOff() {}
 
 void SVGTransformTearOff::Trace(blink::Visitor* visitor) {
   visitor->Trace(matrix_tearoff_);

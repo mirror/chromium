@@ -94,7 +94,7 @@ PopupMenuCSSFontSelector::PopupMenuCSSFontSelector(
   owner_font_selector_->RegisterForInvalidationCallbacks(this);
 }
 
-PopupMenuCSSFontSelector::~PopupMenuCSSFontSelector() = default;
+PopupMenuCSSFontSelector::~PopupMenuCSSFontSelector() {}
 
 scoped_refptr<FontData> PopupMenuCSSFontSelector::GetFontData(
     const FontDescription& description,

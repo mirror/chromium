@@ -10,6 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "cc/raster/single_thread_task_graph_runner.h"
 #include "components/viz/client/client_layer_tree_frame_sink.h"
+#include "components/viz/client/client_shared_bitmap_manager.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/gpu/context_provider.h"
@@ -17,10 +18,8 @@
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/host/renderer_settings_creation.h"
-#include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_thread_impl.h"
-#include "content/browser/compositor/external_begin_frame_controller_client_impl.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/gpu_stream_constants.h"
@@ -306,13 +305,8 @@ void VizProcessTransportFactory::SetDisplayVSyncParameters(
 void VizProcessTransportFactory::IssueExternalBeginFrame(
     ui::Compositor* compositor,
     const viz::BeginFrameArgs& args) {
-  auto iter = compositor_data_map_.find(compositor);
-  if (iter == compositor_data_map_.end() || !iter->second.display_private)
-    return;
-
-  DCHECK(iter->second.external_begin_frame_controller_client);
-  iter->second.external_begin_frame_controller_client->GetController()
-      ->IssueExternalBeginFrame(args);
+  // TODO(crbug.com/772524): Deal with vsync later.
+  NOTIMPLEMENTED();
 }
 
 void VizProcessTransportFactory::SetOutputIsSecure(ui::Compositor* compositor,
@@ -448,21 +442,19 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
       compositor->widget());
 #endif
 
-  auto& compositor_data = compositor_data_map_[compositor];
-
-  auto root_params = viz::mojom::RootCompositorFrameSinkParams::New();
-
   // Create interfaces for a root CompositorFrameSink.
   viz::mojom::CompositorFrameSinkAssociatedPtrInfo sink_info;
-  root_params->compositor_frame_sink = mojo::MakeRequest(&sink_info);
+  viz::mojom::CompositorFrameSinkAssociatedRequest sink_request =
+      mojo::MakeRequest(&sink_info);
+  viz::mojom::CompositorFrameSinkClientPtr client;
   viz::mojom::CompositorFrameSinkClientRequest client_request =
-      mojo::MakeRequest(&root_params->compositor_frame_sink_client);
-  root_params->display_private =
-      mojo::MakeRequest(&compositor_data.display_private);
-  compositor_data.display_client =
+      mojo::MakeRequest(&client);
+  viz::mojom::DisplayPrivateAssociatedRequest display_private_request =
+      mojo::MakeRequest(&compositor_data_map_[compositor].display_private);
+  compositor_data_map_[compositor].display_client =
       std::make_unique<InProcessDisplayClient>(compositor->widget());
-  root_params->display_client =
-      compositor_data.display_client->GetBoundPtr().PassInterface();
+  viz::mojom::DisplayClientPtr display_client =
+      compositor_data_map_[compositor].display_client->GetBoundPtr();
 
 #if defined(GPU_SURFACE_HANDLE_IS_ACCELERATED_WINDOW)
   gpu::SurfaceHandle surface_handle = compositor->widget();
@@ -471,38 +463,19 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
   gpu::SurfaceHandle surface_handle = gpu::kNullSurfaceHandle;
 #endif
 
-  // Initialize ExternalBeginFrameController client if enabled.
-  compositor_data.external_begin_frame_controller_client.reset();
-  if (compositor->external_begin_frames_enabled()) {
-    compositor_data.external_begin_frame_controller_client =
-        std::make_unique<ExternalBeginFrameControllerClientImpl>(compositor);
-    root_params->external_begin_frame_controller =
-        compositor_data.external_begin_frame_controller_client
-            ->GetControllerRequest();
-    root_params->external_begin_frame_controller_client =
-        compositor_data.external_begin_frame_controller_client->GetBoundPtr()
-            .PassInterface();
-  }
-
-  root_params->frame_sink_id = compositor->frame_sink_id();
-  root_params->widget = surface_handle;
-  root_params->force_software_compositing =
-      compositor->force_software_compositor();
-  root_params->renderer_settings = renderer_settings_;
-
   // Creates the viz end of the root CompositorFrameSink.
   GetHostFrameSinkManager()->CreateRootCompositorFrameSink(
-      std::move(root_params));
+      compositor->frame_sink_id(), surface_handle,
+      compositor->force_software_compositor(), renderer_settings_,
+      std::move(sink_request), std::move(client),
+      std::move(display_private_request), std::move(display_client));
 
   // Create LayerTreeFrameSink with the browser end of CompositorFrameSink.
   viz::ClientLayerTreeFrameSink::InitParams params;
   params.compositor_task_runner = compositor->task_runner();
   params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
-  // TODO(crbug.com/730660): Adding ServerSharedBitmapManager here is just to
-  // stop software compositing from crashing the browser process. Software
-  // composited areas will be blank since the ShareBitmaps aren't shared with
-  // the viz process. This mechanism is being rewritten currently.
-  params.shared_bitmap_manager = viz::ServerSharedBitmapManager::current();
+  // TODO(crbug.com/730660): Make a ClientSharedBitmapManager to pass here.
+  params.shared_bitmap_manager = shared_bitmap_manager_.get();
   params.pipes.compositor_frame_sink_associated_info = std::move(sink_info);
   params.pipes.client_request = std::move(client_request);
   params.local_surface_id_provider =

@@ -422,7 +422,7 @@ void AppListSyncableService::SetOemFolderName(const std::string& name) {
   model_updater_->SetItemName(kOemFolderId, oem_folder_name_);
 }
 
-ChromeAppListModelUpdater* AppListSyncableService::GetModelUpdater() {
+AppListModelUpdater* AppListSyncableService::GetModelUpdater() {
   DCHECK(IsInitialized());
   return model_updater_.get();
 }

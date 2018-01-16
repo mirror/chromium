@@ -88,18 +88,6 @@ gfx::Rect SafeIntersectRects(const gfx::Rect& one, const gfx::Rect& two) {
                    static_cast<int>(rb - ry));
 }
 
-// This function converts the given |device_pixels_size| to the expected size
-// of content which was generated to fill it at 100%.  This takes into account
-// the ceil operations that occur as device pixels are converted to/from DIPs
-// (content size must be a whole number of DIPs).
-gfx::Size ApplyDsfAdjustment(gfx::Size device_pixels_size, float dsf) {
-  gfx::Size content_size_in_dips =
-      gfx::ScaleToCeiledSize(device_pixels_size, 1.0f / dsf);
-  gfx::Size content_size_in_dps =
-      gfx::ScaleToCeiledSize(content_size_in_dips, dsf);
-  return content_size_in_dps;
-}
-
 }  // namespace
 
 namespace cc {
@@ -224,18 +212,11 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       render_pass->CreateAndAppendSharedQuadState();
 
   if (raster_source_->IsSolidColor()) {
-    // TODO(sunxd): Solid color non-mask layers are forced to have contents
-    // scale = 1. This is a workaround to temperarily fix
-    // https://crbug.com/796558.
-    // We need to investigate into the ca layers logic and remove this
-    // workaround after fixing the bug.
-    float max_contents_scale =
-        !(mask_type_ == Layer::LayerMaskType::MULTI_TEXTURE_MASK)
-            ? 1
-            : CanHaveTilings() ? ideal_contents_scale_
-                               : std::min(kMaxIdealContentsScale,
-                                          std::max(GetIdealContentsScale(),
-                                                   MinimumContentsScale()));
+    float max_contents_scale = CanHaveTilings()
+                                   ? ideal_contents_scale_
+                                   : std::min(kMaxIdealContentsScale,
+                                              std::max(GetIdealContentsScale(),
+                                                       MinimumContentsScale()));
 
     // The downstream CA layers use shared_quad_state to generate resources of
     // the right size even if it is a solid color picture layer.
@@ -907,13 +888,8 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     // For GPU rasterization, we pick an ideal tile size using the viewport
     // so we don't need any settings. The current approach uses 4 tiles
     // to cover the viewport vertically.
-
-    // Calculate the viewport based on |gpu_raster_max_texture_size_|, adjusting
-    // for ceil operations that may occur due to DSF.
-    gfx::Size viewport_size = ApplyDsfAdjustment(
-        gpu_raster_max_texture_size_, layer_tree_impl()->device_scale_factor());
-    int viewport_width = viewport_size.width();
-    int viewport_height = viewport_size.height();
+    int viewport_width = gpu_raster_max_texture_size_.width();
+    int viewport_height = gpu_raster_max_texture_size_.height();
     default_tile_width = viewport_width;
 
     // Also, increase the height proportionally as the width decreases, and

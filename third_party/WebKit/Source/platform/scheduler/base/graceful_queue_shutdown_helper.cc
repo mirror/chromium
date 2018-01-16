@@ -11,7 +11,7 @@ namespace internal {
 GracefulQueueShutdownHelper::GracefulQueueShutdownHelper()
     : task_queue_manager_deleted_(false) {}
 
-GracefulQueueShutdownHelper::~GracefulQueueShutdownHelper() = default;
+GracefulQueueShutdownHelper::~GracefulQueueShutdownHelper() {}
 
 void GracefulQueueShutdownHelper::GracefullyShutdownTaskQueue(
     std::unique_ptr<internal::TaskQueueImpl> task_queue) {

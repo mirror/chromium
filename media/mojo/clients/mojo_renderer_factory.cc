@@ -4,8 +4,7 @@
 
 #include "media/mojo/clients/mojo_renderer_factory.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "media/mojo/clients/mojo_renderer.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
@@ -49,7 +48,7 @@ std::unique_ptr<Renderer> MojoRendererFactory::CreateRenderer(
   // when we do not need to create video overlays.
   if (!get_gpu_factories_cb_.is_null()) {
     overlay_factory =
-        std::make_unique<VideoOverlayFactory>(get_gpu_factories_cb_.Run());
+        base::MakeUnique<VideoOverlayFactory>(get_gpu_factories_cb_.Run());
   }
 
   return std::unique_ptr<Renderer>(

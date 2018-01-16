@@ -68,8 +68,8 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
+#include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
-#include "public/web/devtools_agent.mojom-blink.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace blink {
@@ -142,14 +142,12 @@ void WebSharedWorkerImpl::OnShadowPageInitialized() {
   // invoked and |this| might have been deleted at this point.
 }
 
-bool WebSharedWorkerImpl::SendProtocolMessage(int session_id,
+void WebSharedWorkerImpl::SendProtocolMessage(int session_id,
                                               int call_id,
-                                              const String& message,
-                                              const String& state) {
+                                              const WebString& message,
+                                              const WebString& state) {
   DCHECK(IsMainThread());
-  // Returning false makes WebDevToolsAgentImpl send the message over
-  // mojo channel instead.
-  return false;
+  client_->SendDevToolsMessage(session_id, call_id, message, state);
 }
 
 void WebSharedWorkerImpl::ResumeStartup() {
@@ -360,10 +358,37 @@ void WebSharedWorkerImpl::PauseWorkerContextOnStart() {
   pause_worker_context_on_start_ = true;
 }
 
-void WebSharedWorkerImpl::GetDevToolsAgent(
-    mojo::ScopedInterfaceEndpointHandle devtools_agent_request) {
-  shadow_page_->GetDevToolsAgent(mojom::blink::DevToolsAgentAssociatedRequest(
-      std::move(devtools_agent_request)));
+void WebSharedWorkerImpl::AttachDevTools(int session_id) {
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Attach(session_id);
+}
+
+void WebSharedWorkerImpl::ReattachDevTools(int session_id,
+                                           const WebString& saved_state) {
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Reattach(session_id, saved_state);
+  ResumeStartup();
+}
+
+void WebSharedWorkerImpl::DetachDevTools(int session_id) {
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent)
+    devtools_agent->Detach(session_id);
+}
+
+void WebSharedWorkerImpl::DispatchDevToolsMessage(int session_id,
+                                                  int call_id,
+                                                  const WebString& method,
+                                                  const WebString& message) {
+  if (asked_to_terminate_)
+    return;
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
+  if (devtools_agent) {
+    devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
+                                               message);
+  }
 }
 
 WebSharedWorker* WebSharedWorker::Create(WebSharedWorkerClient* client) {

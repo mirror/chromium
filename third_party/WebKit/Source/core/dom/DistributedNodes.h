@@ -41,7 +41,7 @@ class DistributedNodes final {
   DISALLOW_NEW();
 
  public:
-  DistributedNodes() = default;
+  DistributedNodes() {}
 
   Node* First() const { return nodes_.front(); }
   Node* Last() const { return nodes_.back(); }

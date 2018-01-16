@@ -56,7 +56,7 @@ ProcessingInstruction* ProcessingInstruction::Create(Document& document,
   return new ProcessingInstruction(document, target, data);
 }
 
-ProcessingInstruction::~ProcessingInstruction() = default;
+ProcessingInstruction::~ProcessingInstruction() {}
 
 EventListener* ProcessingInstruction::EventListenerForXSLT() {
   if (!listener_for_xslt_)

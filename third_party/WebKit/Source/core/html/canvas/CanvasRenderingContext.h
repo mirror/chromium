@@ -61,7 +61,7 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
   USING_PRE_FINALIZER(CanvasRenderingContext, Dispose);
 
  public:
-  virtual ~CanvasRenderingContext() = default;
+  virtual ~CanvasRenderingContext() {}
 
   // A Canvas can either be "2D" or "webgl" but never both. If you request a 2D
   // canvas and the existing context is already 2D, just return that. If the
@@ -89,7 +89,8 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
 
   const CanvasColorParams& ColorParams() const { return color_params_; }
 
-  virtual scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint) const = 0;
+  virtual scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
+                                                    SnapshotReason) const = 0;
   virtual ContextType GetContextType() const = 0;
   virtual bool IsComposited() const = 0;
   virtual bool IsAccelerated() const = 0;

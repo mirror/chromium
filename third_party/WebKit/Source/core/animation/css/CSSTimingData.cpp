@@ -14,7 +14,10 @@ CSSTimingData::CSSTimingData() {
   timing_function_list_.push_back(InitialTimingFunction());
 }
 
-CSSTimingData::CSSTimingData(const CSSTimingData& other) = default;
+CSSTimingData::CSSTimingData(const CSSTimingData& other)
+    : delay_list_(other.delay_list_),
+      duration_list_(other.duration_list_),
+      timing_function_list_(other.timing_function_list_) {}
 
 Timing CSSTimingData::ConvertToTiming(size_t index) const {
   Timing timing;

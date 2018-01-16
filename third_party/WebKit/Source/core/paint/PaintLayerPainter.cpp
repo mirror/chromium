@@ -488,18 +488,20 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       // PaintLayerWithTransform() path.
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
           layer_fragments, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect,
-          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
-          &offset_from_root, local_painting_info.sub_pixel_accumulation);
+          local_painting_info.paint_dirty_rect, kUncachedClipRects,
+          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
+          respect_overflow_clip, &offset_from_root,
+          local_painting_info.sub_pixel_accumulation);
       layer_fragments[0].fragment_data = fragment->fragment_data;
     } else if (paint_layer_.GetLayoutObject()
                    .IsFixedPositionObjectInPagedMedia()) {
       PaintLayerFragments single_fragment;
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
           single_fragment, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect,
-          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
-          &offset_from_root, local_painting_info.sub_pixel_accumulation);
+          local_painting_info.paint_dirty_rect, kUncachedClipRects,
+          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
+          respect_overflow_clip, &offset_from_root,
+          local_painting_info.sub_pixel_accumulation);
       RepeatFixedPositionObjectInPages(single_fragment[0], painting_info,
                                        layer_fragments);
     } else if (image_filter && !paint_layer_.EnclosingPaginationLayer()) {
@@ -530,11 +532,12 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     } else {
       paint_layer_for_fragments->CollectFragments(
           layer_fragments, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect,
-          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
-          &offset_from_root, local_painting_info.sub_pixel_accumulation);
+          local_painting_info.paint_dirty_rect, kUncachedClipRects,
+          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
+          respect_overflow_clip, &offset_from_root,
+          local_painting_info.sub_pixel_accumulation);
 
-      // PaintLayer::CollectFragments depends on the paint dirty rect in
+      // PaintLayer::CollectFragmentsForPaint depends on the paint dirty rect in
       // complicated ways. For now, always assume a partially painted output
       // for fragmented content.
       if (layer_fragments.size() > 1)
@@ -570,9 +573,10 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       PaintLayerFragments filter_fragments;
       paint_layer_.AppendSingleFragmentIgnoringPagination(
           filter_fragments, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect,
-          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
-          &offset_from_root, local_painting_info.sub_pixel_accumulation);
+          local_painting_info.paint_dirty_rect, kUncachedClipRects,
+          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
+          respect_overflow_clip, &offset_from_root,
+          local_painting_info.sub_pixel_accumulation);
 
       filter_painter.emplace(paint_layer_, context, offset_from_root,
                              filter_fragments.IsEmpty()
@@ -803,9 +807,10 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
         ShouldRespectOverflowClip(paint_flags, paint_layer_.GetLayoutObject());
     paint_layer_.CollectFragments(
         layer_fragments, painting_info.root_layer,
-        painting_info.paint_dirty_rect, kIgnorePlatformOverlayScrollbarSize,
+        painting_info.paint_dirty_rect, kUncachedClipRects,
+        PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
         respect_overflow_clip, nullptr, painting_info.sub_pixel_accumulation);
-    // PaintLayer::CollectFragments depends on the paint dirty rect in
+    // PaintLayer::CollectFragmentsForPaint depends on the paint dirty rect in
     // complicated ways. For now, always assume a partially painted output
     // for fragmented content.
     if (layer_fragments.size() > 1)
@@ -1084,20 +1089,15 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   Optional<ScrollRecorder> scroll_recorder;
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    if (paint_layer_.GetLayoutObject().IsFixedPositionObjectInPagedMedia()) {
-      // TODO(wangxianzhu): Use full SPv175 path here.
-      paint_offset += ToSize(fragment.layer_bounds.Location());
-    } else {
-      paint_offset += fragment.fragment_data->PaintOffset();
-      // For SPv175+, we paint in the containing transform node's space. Now
-      // |new_cull_rect| is in the pixel-snapped border box space of
-      // |painting_info.root_layer|. Adjust it to the correct space.
-      // |paint_offset| is already in the correct space.
-      new_cull_rect.MoveBy(
-          RoundedIntPoint(painting_info.root_layer->GetLayoutObject()
-                              .FirstFragment()
-                              .PaintOffset()));
-    }
+    paint_offset += fragment.fragment_data->PaintOffset();
+    // For SPv175+, we paint in the containing transform node's space. Now
+    // |new_cull_rect| is in the pixel-snapped border box space of
+    // |painting_info.root_layer|. Adjust it to the correct space.
+    // |paint_offset| is already in the correct space.
+    new_cull_rect.MoveBy(
+        RoundedIntPoint(painting_info.root_layer->GetLayoutObject()
+                            .FirstFragment()
+                            .PaintOffset()));
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
     if (!painting_info.scroll_offset_accumulation.IsZero()) {
@@ -1118,8 +1118,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
                        painting_info.GetGlobalPaintFlags(), paint_flags,
                        &painting_info.root_layer->GetLayoutObject(),
                        fragment.fragment_data
-                           ? fragment.fragment_data->LogicalTopInFlowThread()
-                           : LayoutUnit());
+                           ? fragment.fragment_data->PaginationOffset()
+                           : LayoutPoint());
 
   paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset);
 }

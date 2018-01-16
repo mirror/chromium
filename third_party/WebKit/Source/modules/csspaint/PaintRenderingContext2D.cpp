@@ -16,8 +16,7 @@ PaintRenderingContext2D::PaintRenderingContext2D(
     float zoom)
     : container_size_(container_size),
       color_params_(color_params),
-      context_settings_(context_settings),
-      effective_zoom_(zoom) {
+      context_settings_(context_settings) {
   InitializePaintRecorder();
 
   clip_antialiasing_ = kAntiAliased;
@@ -67,10 +66,6 @@ bool PaintRenderingContext2D::ParseColorOrCurrentColor(
   // property for the css-paint-api.
   // https://github.com/w3c/css-houdini-drafts/issues/133
   return ::blink::ParseColorOrCurrentColor(color, color_string, nullptr);
-}
-
-void PaintRenderingContext2D::setShadowBlur(double blur) {
-  BaseRenderingContext2D::setShadowBlur(blur * effective_zoom_);
 }
 
 PaintCanvas* PaintRenderingContext2D::DrawingCanvas() const {

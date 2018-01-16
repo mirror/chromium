@@ -441,7 +441,7 @@ class WebView : protected WebWidget {
   WebWidget* GetWidget() { return this; }
 
  protected:
-  ~WebView() = default;
+  ~WebView() {}
 };
 
 }  // namespace blink

@@ -57,7 +57,7 @@ RTCVoidRequestImpl::RTCVoidRequestImpl(
   DCHECK(requester_);
 }
 
-RTCVoidRequestImpl::~RTCVoidRequestImpl() = default;
+RTCVoidRequestImpl::~RTCVoidRequestImpl() {}
 
 void RTCVoidRequestImpl::RequestSucceeded() {
   bool should_fire_callback =

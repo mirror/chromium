@@ -38,8 +38,7 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   // always pass it a hostname. This means the DNS resolving is done
   // proxy side.
   SOCKS5ClientSocket(std::unique_ptr<ClientSocketHandle> transport_socket,
-                     const HostResolver::RequestInfo& req_info,
-                     const NetworkTrafficAnnotationTag& traffic_annotation);
+                     const HostResolver::RequestInfo& req_info);
 
   // On destruction Disconnect() is called.
   ~SOCKS5ClientSocket() override;
@@ -158,9 +157,6 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   HostResolver::RequestInfo host_request_info_;
 
   NetLogWithSource net_log_;
-
-  // Traffic annotation for socket control.
-  NetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SOCKS5ClientSocket);
 };

@@ -373,10 +373,6 @@ TEST_F(ExtensionProtocolsTest, ComponentResourceRequest) {
     StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
     EXPECT_EQ(net::OK, test_delegate_.request_status());
     CheckForContentLengthHeader(request.get());
-    std::string mime_type;
-    request->GetResponseHeaderByName(net::HttpRequestHeaders::kContentType,
-                                     &mime_type);
-    EXPECT_EQ("image/png", mime_type);
   }
 
   // And then test it with the extension disabled.
@@ -391,10 +387,6 @@ TEST_F(ExtensionProtocolsTest, ComponentResourceRequest) {
     StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
     EXPECT_EQ(net::OK, test_delegate_.request_status());
     CheckForContentLengthHeader(request.get());
-    std::string mime_type;
-    request->GetResponseHeaderByName(net::HttpRequestHeaders::kContentType,
-                                     &mime_type);
-    EXPECT_EQ("image/png", mime_type);
   }
 }
 

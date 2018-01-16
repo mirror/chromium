@@ -433,8 +433,7 @@ TEST(PaymentRequestTest, RejectShowPromiseOnInvalidPaymentDetailsUpdate) {
 
   request->OnUpdatePaymentDetails(ScriptValue::From(
       scope.GetScriptState(),
-      FromJSONString(scope.GetScriptState()->GetIsolate(),
-                     scope.GetScriptState()->GetContext(), "{\"total\": {}}",
+      FromJSONString(scope.GetScriptState()->GetIsolate(), "{\"total\": {}}",
                      scope.GetExceptionState())));
   EXPECT_FALSE(scope.GetExceptionState().HadException());
 }
@@ -464,7 +463,6 @@ TEST(PaymentRequestTest,
   request->OnUpdatePaymentDetails(ScriptValue::From(
       scope.GetScriptState(),
       FromJSONString(scope.GetScriptState()->GetIsolate(),
-                     scope.GetScriptState()->GetContext(),
                      detail_with_shipping_options, scope.GetExceptionState())));
   EXPECT_FALSE(scope.GetExceptionState().HadException());
   EXPECT_EQ("standardShippingOption", request->shippingOption());
@@ -475,7 +473,6 @@ TEST(PaymentRequestTest,
   request->OnUpdatePaymentDetails(
       ScriptValue::From(scope.GetScriptState(),
                         FromJSONString(scope.GetScriptState()->GetIsolate(),
-                                       scope.GetScriptState()->GetContext(),
                                        detail_without_shipping_options,
                                        scope.GetExceptionState())));
 
@@ -508,7 +505,6 @@ TEST(
   request->OnUpdatePaymentDetails(
       ScriptValue::From(scope.GetScriptState(),
                         FromJSONString(scope.GetScriptState()->GetIsolate(),
-                                       scope.GetScriptState()->GetContext(),
                                        detail, scope.GetExceptionState())));
   EXPECT_FALSE(scope.GetExceptionState().HadException());
 
@@ -538,7 +534,6 @@ TEST(PaymentRequestTest, UseTheSelectedShippingOptionFromPaymentDetailsUpdate) {
   request->OnUpdatePaymentDetails(
       ScriptValue::From(scope.GetScriptState(),
                         FromJSONString(scope.GetScriptState()->GetIsolate(),
-                                       scope.GetScriptState()->GetContext(),
                                        detail, scope.GetExceptionState())));
   EXPECT_FALSE(scope.GetExceptionState().HadException());
 
@@ -564,7 +559,6 @@ TEST(PaymentRequestTest, NoExceptionWithErrorMessageInUpdate) {
   request->OnUpdatePaymentDetails(ScriptValue::From(
       scope.GetScriptState(),
       FromJSONString(scope.GetScriptState()->GetIsolate(),
-                     scope.GetScriptState()->GetContext(),
                      detail_with_error_msg, scope.GetExceptionState())));
   EXPECT_FALSE(scope.GetExceptionState().HadException());
 }

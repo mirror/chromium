@@ -40,7 +40,7 @@ HTMLAllCollection* HTMLAllCollection::Create(ContainerNode& node,
 HTMLAllCollection::HTMLAllCollection(ContainerNode& node)
     : HTMLCollection(node, kDocAll, kDoesNotOverrideItemAfter) {}
 
-HTMLAllCollection::~HTMLAllCollection() = default;
+HTMLAllCollection::~HTMLAllCollection() {}
 
 Element* HTMLAllCollection::NamedItemWithIndex(const AtomicString& name,
                                                unsigned index) const {

@@ -52,7 +52,7 @@ class CORE_EXPORT ContextLifecycleNotifier
   // 'blink::ExecutionContext' must explicitly initialize the base class
   // 'blink::ContextLifecycleNotifier' which does not have a default
   // constructor ExecutionContext::ExecutionContext()".
-  ContextLifecycleNotifier() = default;
+  ContextLifecycleNotifier() {}
 
 #if DCHECK_IS_ON()
   bool Contains(PausableObject*) const;

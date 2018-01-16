@@ -18,6 +18,13 @@
 
 namespace app_list {
 
+namespace {
+
+constexpr int kVerticalPadding = 11;
+constexpr int kHorizontalPadding = 16;
+
+}  // namespace
+
 // Container of the search answer view.
 class SearchResultAnswerCardView::SearchAnswerContainerView
     : public views::Button,
@@ -27,10 +34,10 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   explicit SearchAnswerContainerView(AppListViewDelegate* view_delegate)
       : Button(this), view_delegate_(view_delegate) {
     SetFocusBehavior(FocusBehavior::ALWAYS);
-    // Center the card horizontally in the container. Padding is set on the
-    // server.
-    auto answer_container_layout =
-        std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+    // Center the card horizontally in the container.
+    auto answer_container_layout = std::make_unique<views::BoxLayout>(
+        views::BoxLayout::kHorizontal,
+        gfx::Insets(kVerticalPadding, kHorizontalPadding));
     answer_container_layout->set_main_axis_alignment(
         views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
     SetLayoutManager(std::move(answer_container_layout));

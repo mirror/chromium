@@ -8,10 +8,9 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "chrome/browser/resource_coordinator/lifecycle_unit_base.h"
+#include "chrome/browser/resource_coordinator/lifecycle_unit.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_external.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h"
-#include "chrome/browser/resource_coordinator/time.h"
 #include "content/public/browser/web_contents_observer.h"
 
 class TabStripModel;
@@ -35,7 +34,7 @@ static constexpr base::TimeDelta kTabFocusedProtectionTime =
 
 // Represents a tab.
 class TabLifecycleUnitSource::TabLifecycleUnit
-    : public LifecycleUnitBase,
+    : public LifecycleUnit,
       public TabLifecycleUnitExternal,
       public content::WebContentsObserver {
  public:
@@ -70,26 +69,28 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   void SetRecentlyAudible(bool recently_audible);
 
   // LifecycleUnit:
-  TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() override;
   base::string16 GetTitle() const override;
   std::string GetIconURL() const override;
   SortKey GetSortKey() const override;
+  State GetState() const override;
   int GetEstimatedMemoryFreedOnDiscardKB() const override;
   bool CanDiscard(DiscardReason reason) const override;
   bool Discard(DiscardReason discard_reason) override;
 
   // TabLifecycleUnitExternal:
   content::WebContents* GetWebContents() const override;
-  bool IsMediaTab() const override;
   bool IsAutoDiscardable() const override;
   void SetAutoDiscardable(bool auto_discardable) override;
-  bool DiscardTab() override;
+  void DiscardTab() override;
   bool IsDiscarded() const override;
-  int GetDiscardCount() const override;
 
  private:
   // Invoked when the state goes from DISCARDED to non-DISCARDED and vice-versa.
   void OnDiscardedStateChange();
+
+  // Whether the tab is playing audio, has played audio recently, is accessing
+  // the microphone, is accessing the camera or is being mirrored.
+  bool IsMediaTab() const;
 
   // Returns the RenderProcessHost associated with this tab.
   content::RenderProcessHost* GetRenderProcessHost() const;
@@ -104,17 +105,15 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   // TabStripModel to which this tab belongs.
   TabStripModel* tab_strip_model_;
 
+  // Current state of this tab.
+  State state_ = State::LOADED;
+
   // The number of times that this tab has been discarded.
   int discard_count_ = 0;
 
   // Last time at which this tab was focused, or TimeTicks::Max() if it is
   // currently focused.
-  //
-  // TODO(fdoray): To keep old behavior (sort order and protection of recently
-  // focused tabs), this is initialized with NowTicks(). Consider initializing
-  // this with a null TimeTicks when the tab isn't initially focused.
-  // https://crbug.com/800885
-  base::TimeTicks last_focused_time_ = NowTicks();
+  base::TimeTicks last_focused_time_;
 
   // When this is false, CanDiscard() always returns false.
   bool auto_discardable_ = true;

@@ -5,7 +5,6 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_number_conversions.h"
-#include "gpu/command_buffer/service/decoder_client.h"
 #include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -4050,7 +4049,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
     InsertError(GL_INVALID_OPERATION, "Failed to create begin trace");
     return error::kNoError;
   }
-  debug_marker_manager_.PushGroup(trace_name);
   return error::kNoError;
 }
 
@@ -4059,7 +4057,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
     InsertError(GL_INVALID_OPERATION, "No trace to end");
     return error::kNoError;
   }
-  debug_marker_manager_.PopGroup();
   return error::kNoError;
 }
 

@@ -362,12 +362,9 @@ void surface_set_opaque_region(wl_client* client,
 void surface_set_input_region(wl_client* client,
                               wl_resource* resource,
                               wl_resource* region_resource) {
-  Surface* surface = GetUserDataAs<Surface>(resource);
-  if (region_resource) {
-    surface->SetInputRegion(
-        cc::Region(*GetUserDataAs<SkRegion>(region_resource)));
-  } else
-    surface->ResetInputRegion();
+  SkRegion region = region_resource ? *GetUserDataAs<SkRegion>(region_resource)
+                                    : SkRegion(SkIRect::MakeLargest());
+  GetUserDataAs<Surface>(resource)->SetInputRegion(cc::Region(region));
 }
 
 void surface_commit(wl_client* client, wl_resource* resource) {

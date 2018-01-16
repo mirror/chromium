@@ -42,14 +42,14 @@ class StringBuffer {
   DISALLOW_NEW();
 
  public:
-  StringBuffer() = default;
+  StringBuffer() {}
 
   explicit StringBuffer(unsigned length) {
     CharType* characters;
     data_ = StringImpl::CreateUninitialized(length, characters);
   }
 
-  ~StringBuffer() = default;
+  ~StringBuffer() {}
 
   void Shrink(unsigned new_length);
 

@@ -256,8 +256,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // MediaObserverClient implementation.
   void SwitchToRemoteRenderer(
       const std::string& remote_device_friendly_name) override;
-  void SwitchToLocalRenderer(
-      MediaObserverClient::ReasonToSwitchToLocal reason) override;
+  void SwitchToLocalRenderer() override;
   void ActivateViewportIntersectionMonitoring(bool activate) override;
   void UpdateRemotePlaybackCompatibility(bool is_compatible) override;
 
@@ -318,8 +317,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnVideoNaturalSizeChange(const gfx::Size& size) override;
   void OnVideoOpacityChange(bool opaque) override;
   void OnVideoAverageKeyframeDistanceUpdate() override;
-  void OnAudioDecoderChange(const std::string& name) override;
-  void OnVideoDecoderChange(const std::string& name) override;
 
   // Actually seek. Avoids causing |should_notify_time_changed_| to be set when
   // |time_updated| is false.
@@ -534,14 +531,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // negative or kInfiniteDuration value. See http://crbug.com/409280,
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
-
-  // Called by the compositor the very first time a frame is received.
-  void OnFirstFrame(base::TimeTicks frame_time);
-
-  // Records timing metrics for three UMA metrics: #key.SRC, #key.MSE, and
-  // #key.EME. The SRC and MSE ones are mutually exclusive based on the presence
-  // of |chunk_demuxer_|, while the EME one is only recorded if |is_encrypted_|.
-  void RecordTimingUMA(const std::string& key, base::TimeDelta elapsed);
 
   blink::WebLocalFrame* frame_;
 
@@ -764,12 +753,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Monitors the watch time of the played content.
   std::unique_ptr<WatchTimeReporter> watch_time_reporter_;
   bool is_encrypted_;
-  std::string audio_decoder_name_;
-  std::string video_decoder_name_;
-
-  // The time at which DoLoad() is executed.
-  base::TimeTicks load_start_time_;
-  bool have_reported_time_to_play_ready_ = false;
 
   // Records pipeline statistics for describing media capabilities.
   std::unique_ptr<VideoDecodeStatsReporter> video_decode_stats_reporter_;
@@ -830,7 +813,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Whether the use of a surface layer instead of a video layer is enabled.
   bool surface_layer_for_video_enabled_ = false;
 
-  base::CancelableOnceCallback<void(base::TimeTicks)> frame_time_report_cb_;
+  base::CancelableCallback<void(base::TimeTicks)> frame_time_report_cb_;
 
   bool initial_video_height_recorded_ = false;
 

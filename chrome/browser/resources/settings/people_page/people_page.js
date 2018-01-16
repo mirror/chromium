@@ -92,7 +92,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        const map = new Map();
+        var map = new Map();
         if (settings.routes.SYNC)
           map.set(settings.routes.SYNC.path, '#sync-status .subpage-arrow');
         // <if expr="not chromeos">
@@ -129,7 +129,7 @@ Polymer({
 
   /** @override */
   attached: function() {
-    const profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
+    var profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
     profileInfoProxy.getProfileInfo().then(this.handleProfileInfo_.bind(this));
     this.addWebUIListener(
         'profile-info-changed', this.handleProfileInfo_.bind(this));
@@ -294,7 +294,7 @@ Polymer({
 
   /** @private */
   onDisconnectConfirm_: function() {
-    const deleteProfile = !!this.syncStatus.domain || this.deleteProfile_;
+    var deleteProfile = !!this.syncStatus.domain || this.deleteProfile_;
     // Trigger the sign out event after the navigateToPreviousRoute().
     // So that the navigation to the setting page could be finished before the
     // sign out if navigateToPreviousRoute() returns synchronously even the
@@ -377,7 +377,7 @@ Polymer({
    * @return {string}
    */
   getDomainHtml_: function(domain) {
-    const innerSpan = '<span id="managed-by-domain-name">' + domain + '</span>';
+    var innerSpan = '<span id="managed-by-domain-name">' + domain + '</span>';
     return loadTimeData.getStringF('domainManagedProfile', innerSpan);
   },
 
@@ -441,7 +441,7 @@ Polymer({
     if (!syncStatus)
       return '';
 
-    let syncIcon = 'settings:sync';
+    var syncIcon = 'settings:sync';
 
     if (syncStatus.hasError)
       syncIcon = 'settings:sync-problem';

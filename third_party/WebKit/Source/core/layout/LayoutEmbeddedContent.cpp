@@ -35,6 +35,7 @@
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/paint/EmbeddedContentPainter.h"
 
@@ -139,6 +140,12 @@ bool LayoutEmbeddedContent::RequiresAcceleratedCompositing() const {
   }
 
   return false;
+}
+
+bool LayoutEmbeddedContent::NeedsPreferredWidthsRecalculation() const {
+  if (LayoutReplaced::NeedsPreferredWidthsRecalculation())
+    return true;
+  return EmbeddedReplacedContent();
 }
 
 bool LayoutEmbeddedContent::NodeAtPointOverEmbeddedContentView(

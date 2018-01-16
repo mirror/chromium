@@ -70,14 +70,13 @@ class NetErrorHelper
   // RenderThreadObserver implementation.
   void NetworkStateChanged(bool online) override;
 
-  // Sets values in |pending_error_page_info_|. If |error_html| is not null, it
-  // initializes |error_html| with the HTML of an error page in response to
+  // Initializes |error_html| with the HTML of an error page in response to
   // |error|.  Updates internals state with the assumption the page will be
   // loaded immediately.
-  void PrepareErrorPage(const error_page::Error& error,
-                        bool is_failed_post,
-                        bool is_ignoring_cache,
-                        std::string* error_html);
+  void GetErrorHTML(const error_page::Error& error,
+                    bool is_failed_post,
+                    bool is_ignoring_cache,
+                    std::string* error_html);
 
   // Returns whether a load for |url| in the |frame| the NetErrorHelper is
   // attached to should have its error page suppressed.

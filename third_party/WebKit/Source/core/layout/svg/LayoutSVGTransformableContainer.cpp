@@ -45,21 +45,19 @@ bool LayoutSVGTransformableContainer::IsChildAllowed(
     LayoutObject* child,
     const ComputedStyle& style) const {
   DCHECK(GetElement());
-  Node* child_node = child->GetNode();
   if (IsSVGSwitchElement(*GetElement())) {
+    Node* node = child->GetNode();
     // Reject non-SVG/non-valid elements.
-    if (!child_node || !child_node->IsSVGElement() ||
-        !ToSVGElement(child_node)->IsValid()) {
+    if (!node->IsSVGElement() || !ToSVGElement(node)->IsValid())
       return false;
-    }
     // Reject this child if it isn't the first valid node.
-    if (HasValidPredecessor(child_node))
+    if (HasValidPredecessor(node))
       return false;
   } else if (IsSVGAElement(*GetElement())) {
     // http://www.w3.org/2003/01/REC-SVG11-20030114-errata#linking-text-environment
     // The 'a' element may contain any element that its parent may contain,
     // except itself.
-    if (child_node && IsSVGAElement(*child_node))
+    if (IsSVGAElement(*child->GetNode()))
       return false;
     if (Parent() && Parent()->IsSVG())
       return Parent()->IsChildAllowed(child, style);

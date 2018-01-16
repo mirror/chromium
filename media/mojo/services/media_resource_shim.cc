@@ -41,6 +41,7 @@ std::vector<DemuxerStream*> MediaResourceShim::GetAllStreams() {
 
 void MediaResourceShim::SetStreamStatusChangeCB(
     const StreamStatusChangeCB& cb) {
+  NOTIMPLEMENTED();
 }
 
 void MediaResourceShim::OnStreamReady() {

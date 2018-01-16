@@ -74,8 +74,8 @@ class MODULES_EXPORT CanvasRenderingContext2D final
     WTF_MAKE_NONCOPYABLE(Factory);
 
    public:
-    Factory() = default;
-    ~Factory() override = default;
+    Factory() {}
+    ~Factory() override {}
 
     CanvasRenderingContext* Create(
         CanvasRenderingContextHost* host,
@@ -181,7 +181,8 @@ class MODULES_EXPORT CanvasRenderingContext2D final
   void DisableDeferral(DisableDeferralReason) final;
 
   void DidDraw(const SkIRect& dirty_rect) final;
-  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint) const final;
+  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
+                                            SnapshotReason) const final;
 
   bool StateHasFilter() final;
   sk_sp<PaintFilter> StateGetFilter() final;

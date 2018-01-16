@@ -44,7 +44,7 @@ Polymer({
 
   /** @private */
   useSharedProxiesChanged_: function() {
-    const pref = this.getPref('settings.use_shared_proxies');
+    var pref = this.getPref('settings.use_shared_proxies');
     this.useSharedProxies_ = !!pref && !!pref.value;
   },
 
@@ -82,7 +82,7 @@ Polymer({
    * @private
    */
   shouldShowNetworkPolicyIndicator_: function() {
-    const property = this.getProxySettingsTypeProperty_();
+    var property = this.getProxySettingsTypeProperty_();
     return !!property && !this.isExtensionControlled(property) &&
         this.isNetworkPolicyEnforced(property);
   },
@@ -92,7 +92,7 @@ Polymer({
    * @private
    */
   shouldShowExtensionIndicator_: function() {
-    const property = this.getProxySettingsTypeProperty_();
+    var property = this.getProxySettingsTypeProperty_();
     return !!property && this.isExtensionControlled(property);
   },
 

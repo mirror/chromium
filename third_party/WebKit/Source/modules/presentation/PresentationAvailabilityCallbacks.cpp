@@ -21,7 +21,7 @@ PresentationAvailabilityCallbacksImpl::PresentationAvailabilityCallbacksImpl(
 }
 
 PresentationAvailabilityCallbacksImpl::
-    ~PresentationAvailabilityCallbacksImpl() = default;
+    ~PresentationAvailabilityCallbacksImpl() {}
 
 void PresentationAvailabilityCallbacksImpl::OnSuccess(bool value) {
   if (!resolver_->GetExecutionContext() ||

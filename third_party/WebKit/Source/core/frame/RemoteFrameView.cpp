@@ -21,7 +21,7 @@ RemoteFrameView::RemoteFrameView(RemoteFrame* remote_frame)
   DCHECK(remote_frame);
 }
 
-RemoteFrameView::~RemoteFrameView() = default;
+RemoteFrameView::~RemoteFrameView() {}
 
 LocalFrameView* RemoteFrameView::ParentFrameView() const {
   if (!is_attached_)

@@ -60,7 +60,7 @@ const NGPhysicalBoxFragment* EnclosingBlockFlowFragmentOf(
 }  // anonymous namespace
 
 struct SameSizeAsLayoutInline : public LayoutBoxModelObject {
-  ~SameSizeAsLayoutInline() override = default;
+  ~SameSizeAsLayoutInline() override {}
   LayoutObjectChildList children_;
   LineBoxList line_boxes_;
 };

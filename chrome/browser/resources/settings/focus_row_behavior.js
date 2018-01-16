@@ -68,7 +68,7 @@ VirtualFocusRow.prototype = {
  *
  * @polymerBehavior
  */
-const FocusRowBehavior = {
+var FocusRowBehavior = {
   properties: {
     /** @private {VirtualFocusRow} */
     row_: Object,
@@ -100,7 +100,7 @@ const FocusRowBehavior = {
     this.classList.add('no-outline');
 
     Polymer.RenderStatus.afterNextRender(this, function() {
-      const rowContainer = this.root.querySelector('[focus-row-container]');
+      var rowContainer = this.root.querySelector('[focus-row-container]');
       assert(!!rowContainer);
       this.row_ = new VirtualFocusRow(rowContainer, new FocusRowDelegate(this));
       this.ironListTabIndexChanged_();
@@ -130,9 +130,9 @@ const FocusRowBehavior = {
     if (this.row_) {
       this.row_.destroy();
 
-      const controls = this.root.querySelectorAll('[focus-row-control]');
+      var controls = this.root.querySelectorAll('[focus-row-control]');
 
-      for (let i = 0; i < controls.length; i++) {
+      for (var i = 0; i < controls.length; i++) {
         this.row_.addItem(
             controls[i].getAttribute('focus-type'),
             /** @type {HTMLElement} */ (controls[i]));
@@ -153,7 +153,7 @@ const FocusRowBehavior = {
     if (this.lastFocused) {
       this.row_.getEquivalentElement(this.lastFocused).focus();
     } else {
-      const firstFocusable = assert(this.row_.getFirstFocusable());
+      var firstFocusable = assert(this.row_.getFirstFocusable());
       firstFocusable.focus();
     }
 

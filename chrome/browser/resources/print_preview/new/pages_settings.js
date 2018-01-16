@@ -51,12 +51,6 @@ Polymer({
           'inputString_, allSelected_, allPagesArray_)',
     },
 
-    /** @private {!Array<{to: number, from: number}>} */
-    rangesToPrint_: {
-      type: Array,
-      computed: 'computeRangesToPrint_(pagesToPrint_, allPagesArray_)',
-    },
-
     /** @private {!PagesInputErrorState} */
     errorState_: {
       type: Number,
@@ -66,7 +60,7 @@ Polymer({
   },
 
   observers: [
-    'onRangeChange_(errorState_, rangesToPrint_)',
+    'onRangeChange_(errorState_, pagesToPrint_)',
     'onRadioChange_(allSelected_, customSelected_)'
   ],
 
@@ -135,33 +129,6 @@ Polymer({
   },
 
   /**
-   * Updates ranges to print.
-   * @return {!Array<{to: number, from: number}>}
-   * @private
-   */
-  computeRangesToPrint_: function() {
-    let lastPage = 0;
-    if (this.pagesToPrint_.length == 0 || this.pagesToPrint_[0] == -1 ||
-        this.pagesToPrint_ == this.allPagesArray_)
-      return [];
-
-    let from = this.pagesToPrint_[0];
-    let to = this.pagesToPrint_[0];
-    let ranges = [];
-    for (let page of this.pagesToPrint_.slice(1)) {
-      if (page == to + 1) {
-        to = page;
-        continue;
-      }
-      ranges.push({from: from, to: to});
-      from = page;
-      to = page;
-    }
-    ranges.push({from: from, to: to});
-    return ranges;
-  },
-
-  /**
    * @return {!PagesInputErrorState}
    * @private
    */
@@ -188,7 +155,7 @@ Polymer({
     }
     this.$$('.user-value').classList.remove('invalid');
     this.setSettingValid('pages', true);
-    this.setSetting('pages', this.rangesToPrint_);
+    this.setSetting('pages', this.pagesToPrint_);
   },
 
   /** @private */

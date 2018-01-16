@@ -87,7 +87,16 @@ class EmbeddedWorkerInstanceClientImpl
       mojom::EmbeddedWorkerInstanceClientAssociatedRequest request);
 
   // mojom::EmbeddedWorkerInstanceClient implementation
-  void StartWorker(mojom::EmbeddedWorkerStartParamsPtr params) override;
+  void StartWorker(
+      mojom::EmbeddedWorkerStartParamsPtr params,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
+      blink::mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+      blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
+      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)
+      override;
   void StopWorker() override;
   void ResumeAfterDownload() override;
   void AddMessageToConsole(blink::WebConsoleMessage::Level level,
@@ -98,7 +107,9 @@ class EmbeddedWorkerInstanceClientImpl
 
   std::unique_ptr<WorkerWrapper> StartWorkerContext(
       mojom::EmbeddedWorkerStartParamsPtr params,
+      blink::mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
       std::unique_ptr<ServiceWorkerContextClient> context_client,
+      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy,
       service_manager::mojom::InterfaceProviderPtr interface_provider);
 
   mojo::AssociatedBinding<mojom::EmbeddedWorkerInstanceClient> binding_;

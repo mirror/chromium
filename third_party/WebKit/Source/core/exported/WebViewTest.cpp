@@ -3173,7 +3173,7 @@ class MockAutofillClient : public WebAutofillClient {
         text_changes_from_user_gesture_(0),
         user_gesture_notifications_count_(0) {}
 
-  ~MockAutofillClient() override = default;
+  ~MockAutofillClient() override {}
 
   void TextFieldDidChange(const WebFormControlElement&) override {
     ++text_changes_;
@@ -4543,31 +4543,6 @@ TEST_P(WebViewTest, PasswordFieldEditingIsUserGesture) {
           empty_ime_text_spans, WebRange(), 0));
   EXPECT_EQ(1, client.TextChangesFromUserGesture());
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
-  frame->SetAutofillClient(nullptr);
-}
-
-TEST_P(WebViewTest, FieldValueChangeNotifiesAutofillClient) {
-  RegisterMockedHttpURLLoad("input_field_password.html");
-  MockAutofillClient client;
-  WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + "input_field_password.html");
-  WebLocalFrameImpl* frame = web_view->MainFrameImpl();
-  frame->SetAutofillClient(&client);
-  web_view->SetInitialFocus(false);
-  Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-
-  HTMLInputElement* input_element =
-      ToHTMLInputElement(document->getElementById("psw"));
-  ASSERT_TRUE(input_element);
-
-  // Any value change should trigger |WebAutofillClient::TextFieldDidChange|.
-  input_element->setValue("secret");
-  EXPECT_EQ(1, client.TextChanges());
-  input_element->setValue("secret");
-  EXPECT_EQ(1, client.TextChanges());
-  input_element->setValue("new_secret");
-  EXPECT_EQ(2, client.TextChanges());
-
   frame->SetAutofillClient(nullptr);
 }
 

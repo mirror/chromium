@@ -41,7 +41,7 @@ EntryBase::EntryBase(DOMFileSystemBase* file_system, const String& full_path)
       full_path_(full_path),
       name_(DOMFilePath::GetName(full_path)) {}
 
-EntryBase::~EntryBase() = default;
+EntryBase::~EntryBase() {}
 
 String EntryBase::toURL() const {
   if (!cached_url_.IsNull())

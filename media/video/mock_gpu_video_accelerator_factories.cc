@@ -4,8 +4,6 @@
 
 #include "media/video/mock_gpu_video_accelerator_factories.h"
 
-#include <memory>
-
 #include "base/memory/ptr_util.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -97,7 +95,7 @@ MockGpuVideoAcceleratorFactories::CreateGpuMemoryBuffer(
     gfx::BufferUsage /* usage */) {
   if (fail_to_allocate_gpu_memory_buffer_)
     return nullptr;
-  return std::make_unique<GpuMemoryBufferImpl>(size, format);
+  return base::MakeUnique<GpuMemoryBufferImpl>(size, format);
 }
 
 std::unique_ptr<base::SharedMemory>
@@ -146,7 +144,7 @@ class ScopedGLContextLockImpl
 std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock>
 MockGpuVideoAcceleratorFactories::GetGLContextLock() {
   DCHECK(gles2_);
-  return std::make_unique<ScopedGLContextLockImpl>(this);
+  return base::MakeUnique<ScopedGLContextLockImpl>(this);
 }
 
 }  // namespace media

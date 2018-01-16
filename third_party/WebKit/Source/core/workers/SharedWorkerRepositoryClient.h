@@ -47,8 +47,8 @@ class CORE_EXPORT SharedWorkerRepositoryClient {
   DISALLOW_NEW();
 
  public:
-  SharedWorkerRepositoryClient() = default;
-  virtual ~SharedWorkerRepositoryClient() = default;
+  SharedWorkerRepositoryClient() {}
+  virtual ~SharedWorkerRepositoryClient() {}
 
   virtual void Connect(SharedWorker*,
                        MessagePortChannel,

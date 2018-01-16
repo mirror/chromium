@@ -99,7 +99,7 @@ ServiceWorkerGlobalScope::ServiceWorkerGlobalScope(
     double time_origin)
     : WorkerGlobalScope(std::move(creation_params), thread, time_origin) {}
 
-ServiceWorkerGlobalScope::~ServiceWorkerGlobalScope() = default;
+ServiceWorkerGlobalScope::~ServiceWorkerGlobalScope() {}
 
 void ServiceWorkerGlobalScope::EvaluateClassicScript(
     const KURL& script_url,

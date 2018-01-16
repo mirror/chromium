@@ -9,6 +9,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -77,7 +78,7 @@ IntersectionGeometry::IntersectionGeometry(Element* root,
     InitializeGeometry();
 }
 
-IntersectionGeometry::~IntersectionGeometry() = default;
+IntersectionGeometry::~IntersectionGeometry() {}
 
 bool IntersectionGeometry::InitializeCanComputeGeometry(Element* root,
                                                         Element& target) const {

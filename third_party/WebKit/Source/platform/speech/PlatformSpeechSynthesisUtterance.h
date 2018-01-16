@@ -38,7 +38,7 @@ class PlatformSpeechSynthesisUtteranceClient : public GarbageCollectedMixin {
  public:
   // Implement methods as needed.
  protected:
-  virtual ~PlatformSpeechSynthesisUtteranceClient() = default;
+  virtual ~PlatformSpeechSynthesisUtteranceClient() {}
 };
 
 class PLATFORM_EXPORT PlatformSpeechSynthesisUtterance final

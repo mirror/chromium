@@ -603,7 +603,7 @@ TEST_F(HttpStreamFactoryTest, PreconnectDirectWithExistingSpdySession) {
     // Put a SpdySession in the pool.
     HostPortPair host_port_pair("www.google.com", 443);
     SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, SocketTag());
     ignore_result(CreateFakeSpdySession(session->spdy_session_pool(), key));
 
     CapturePreconnectsTransportSocketPool* transport_conn_pool =
@@ -1372,7 +1372,7 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeDisablesChannelId) {
   // Set an existing SpdySession in the pool.
   HostPortPair host_port_pair("www.google.com", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_ENABLED);
+                     PRIVACY_MODE_ENABLED, SocketTag());
 
   HttpRequestInfo request_info;
   request_info.method = "GET";
@@ -2224,25 +2224,20 @@ TEST_F(HttpStreamFactoryTest, RequestBidirectionalStreamImpl) {
 
 class HttpStreamFactoryBidirectionalQuicTest
     : public ::testing::Test,
-      public ::testing::WithParamInterface<
-          std::tuple<QuicTransportVersion, bool>> {
+      public ::testing::WithParamInterface<QuicTransportVersion> {
  protected:
   HttpStreamFactoryBidirectionalQuicTest()
       : default_url_(kDefaultUrl),
-        version_(std::get<0>(GetParam())),
-        client_headers_include_h2_stream_dependency_(std::get<1>(GetParam())),
-        client_packet_maker_(version_,
+        client_packet_maker_(GetParam(),
                              0,
                              &clock_,
                              "www.example.org",
-                             Perspective::IS_CLIENT,
-                             client_headers_include_h2_stream_dependency_),
-        server_packet_maker_(version_,
+                             Perspective::IS_CLIENT),
+        server_packet_maker_(GetParam(),
                              0,
                              &clock_,
                              "www.example.org",
-                             Perspective::IS_SERVER,
-                             false),
+                             Perspective::IS_SERVER),
         random_generator_(0),
         proxy_service_(ProxyService::CreateDirect()),
         ssl_config_service_(new SSLConfigServiceDefaults) {
@@ -2260,9 +2255,7 @@ class HttpStreamFactoryBidirectionalQuicTest
   void Initialize() {
     params_.enable_quic = true;
     params_.quic_supported_versions =
-        test::SupportedTransportVersions(version_);
-    params_.quic_headers_include_h2_stream_dependency =
-        client_headers_include_h2_stream_dependency_;
+        test::SupportedTransportVersions(GetParam());
 
     HttpNetworkSession::Context session_context;
     session_context.http_server_properties = &http_server_properties_;
@@ -2315,12 +2308,10 @@ class HttpStreamFactoryBidirectionalQuicTest
   const GURL default_url_;
 
   QuicStreamId GetNthClientInitiatedStreamId(int n) {
-    return test::GetNthClientInitiatedStreamId(version_, n);
+    return test::GetNthClientInitiatedStreamId(GetParam(), n);
   }
 
  private:
-  const QuicTransportVersion version_;
-  const bool client_headers_include_h2_stream_dependency_;
   MockClock clock_;
   test::QuicTestPacketMaker client_packet_maker_;
   test::QuicTestPacketMaker server_packet_maker_;
@@ -2340,11 +2331,9 @@ class HttpStreamFactoryBidirectionalQuicTest
   HttpNetworkSession::Params params_;
 };
 
-INSTANTIATE_TEST_CASE_P(
-    VersionIncludeStreamDependencySequnece,
-    HttpStreamFactoryBidirectionalQuicTest,
-    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
-                       ::testing::Bool()));
+INSTANTIATE_TEST_CASE_P(Version,
+                        HttpStreamFactoryBidirectionalQuicTest,
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(HttpStreamFactoryBidirectionalQuicTest,
        RequestBidirectionalStreamImplQuicAlternative) {

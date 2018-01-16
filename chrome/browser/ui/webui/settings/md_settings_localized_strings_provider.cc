@@ -135,18 +135,6 @@ void AddCommonStrings(content::WebUIDataSource* html_source, Profile* profile) {
 }
 
 void AddA11yStrings(content::WebUIDataSource* html_source) {
-#if defined(OS_CHROMEOS)
-  // The content description for select to speak is dependent on a flag
-  // until a feature launch.
-  // TODO(katie): When the feature is approved, remove this variable and
-  // callback. The feature will be always enabled.
-  int selectToSpeakDescription =
-      (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableExperimentalAccessibilityFeatures))
-          ? IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION_FLAGS
-          : IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION;
-#endif
-
   LocalizedString localized_strings[] = {
     {"a11yPageTitle", IDS_SETTINGS_ACCESSIBILITY},
     {"a11yWebStore", IDS_SETTINGS_ACCESSIBILITY_WEB_STORE},
@@ -185,7 +173,8 @@ void AddA11yStrings(content::WebUIDataSource* html_source) {
     {"focusHighlightLabel",
      IDS_SETTINGS_ACCESSIBILITY_FOCUS_HIGHLIGHT_DESCRIPTION},
     {"selectToSpeakTitle", IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_TITLE},
-    {"selectToSpeakDescription", selectToSpeakDescription},
+    {"selectToSpeakDescription",
+     IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION},
     {"selectToSpeakOptionsLabel",
      IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_OPTIONS_LABEL},
     {"switchAccessLabel", IDS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_DESCRIPTION},
@@ -781,6 +770,7 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_RESET_CLEANUP_REMOVE_BUTTON_LABEL},
       {"chromeCleanupRestartButtonLabel",
        IDS_SETTINGS_RESET_CLEANUP_RESTART_BUTTON_LABEL},
+      {"chromeCleanupTitleDone", IDS_SETTINGS_RESET_CLEANUP_TITLE_DONE},
       {"chromeCleanupTitleErrorCantRemove",
        IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_CANT_REMOVE},
       {"chromeCleanupTitleErrorPermissions",
@@ -792,10 +782,7 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
       {"chromeCleanupTitleNothingFound",
        IDS_SETTINGS_RESET_CLEANUP_TITLE_NOTHING_FOUND},
       {"chromeCleanupTitleRemove", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVE},
-      {"chromeCleanupTitleRemoved",
-       safe_browsing::UserInitiatedCleanupsEnabled()
-           ? IDS_SETTINGS_RESET_CLEANUP_TITLE_DONE
-           : IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVED},
+      {"chromeCleanupTitleRemoved", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVED},
       {"chromeCleanupTitleRemoving", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVING},
       {"chromeCleanupTitleRestart", IDS_SETTINGS_RESET_CLEANUP_TITLE_RESTART},
       {"chromeCleanupTitleScanning", IDS_SETTINGS_RESET_CLEANUP_TITLE_SCANNING},
@@ -1173,10 +1160,6 @@ void AddLanguagesStrings(content::WebUIDataSource* html_source) {
     {"addDictionaryWordLabel", IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD},
     {"addDictionaryWordButton",
      IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_BUTTON},
-    {"addDictionaryWordDuplicateError",
-     IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_DUPLICATE_ERROR},
-    {"addDictionaryWordLengthError",
-     IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_LENGTH_ERROR},
     {"customDictionaryWords", IDS_SETTINGS_LANGUAGES_DICTIONARY_WORDS},
     {"noCustomDictionaryWordsFound",
      IDS_SETTINGS_LANGUAGES_DICTIONARY_WORDS_NONE},

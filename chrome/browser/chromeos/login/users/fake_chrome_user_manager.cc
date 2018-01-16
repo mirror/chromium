@@ -628,7 +628,7 @@ void FakeChromeUserManager::LoadDeviceLocalAccounts(
 }
 
 bool FakeChromeUserManager::IsEnterpriseManaged() const {
-  return is_enterprise_managed_;
+  return false;
 }
 
 void FakeChromeUserManager::PerformPreUserListLoadingActions() {

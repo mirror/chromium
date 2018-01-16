@@ -29,13 +29,10 @@ class PaintPropertyTreeBuilderTest : public PaintControllerPaintTest {
   // The following helpers return paint property nodes associated with the main
   // LocalFrameView, accounting for differences from the RootLayerScrolls
   // setting.
-  const TransformPaintPropertyNode* FramePreTranslation(
-      const LocalFrameView* = nullptr);
-  const TransformPaintPropertyNode* FrameScrollTranslation(
-      const LocalFrameView* = nullptr);
-  const ClipPaintPropertyNode* FrameContentClip(
-      const LocalFrameView* = nullptr);
-  const ScrollPaintPropertyNode* FrameScroll(const LocalFrameView* = nullptr);
+  const TransformPaintPropertyNode* FramePreTranslation();
+  const TransformPaintPropertyNode* FrameScrollTranslation();
+  const ClipPaintPropertyNode* FrameContentClip();
+  const ScrollPaintPropertyNode* FrameScroll(LocalFrameView* = nullptr);
 
   // Return the local border box's paint offset. For more details, see
   // ObjectPaintProperties::localBorderBoxProperties().

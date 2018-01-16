@@ -16,7 +16,7 @@ class GeolocationWatchers : public TraceWrapperBase {
   DISALLOW_NEW();
 
  public:
-  GeolocationWatchers() = default;
+  GeolocationWatchers() {}
   void Trace(blink::Visitor*);
   void TraceWrappers(const ScriptWrappableVisitor*) const;
 

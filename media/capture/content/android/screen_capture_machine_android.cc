@@ -51,7 +51,8 @@ void ScreenCaptureMachineAndroid::OnRGBAFrameAvailable(
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
+         frame->format() == PIXEL_FORMAT_YV12);
 
   scoped_refptr<VideoFrame> temp_frame = frame;
   if (frame->visible_rect().width() != width ||
@@ -126,7 +127,8 @@ void ScreenCaptureMachineAndroid::OnI420FrameAvailable(
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
+         frame->format() == PIXEL_FORMAT_YV12);
 
   scoped_refptr<VideoFrame> temp_frame = frame;
   if (frame->visible_rect().width() != width ||
@@ -289,7 +291,8 @@ void ScreenCaptureMachineAndroid::MaybeCaptureForRefresh() {
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
+         frame->format() == PIXEL_FORMAT_YV12);
 
   libyuv::I420Scale(
       lastFrame_->visible_data(VideoFrame::kYPlane),

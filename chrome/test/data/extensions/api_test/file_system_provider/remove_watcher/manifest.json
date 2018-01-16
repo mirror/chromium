@@ -14,8 +14,7 @@
     "fileManagerPrivate"
   ],
   "file_system_provider_capabilities": {
-    "source": "device",
-    "watchable": true
+    "source": "device"
   },
   "app": {
     "background": {

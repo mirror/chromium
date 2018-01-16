@@ -47,10 +47,10 @@ class VideoCaptureDeviceClientTest : public ::testing::Test {
   VideoCaptureDeviceClientTest() {
     scoped_refptr<VideoCaptureBufferPoolImpl> buffer_pool(
         new VideoCaptureBufferPoolImpl(
-            std::make_unique<VideoCaptureBufferTrackerFactoryImpl>(), 1));
-    auto controller = std::make_unique<MockVideoFrameReceiver>();
+            base::MakeUnique<VideoCaptureBufferTrackerFactoryImpl>(), 1));
+    auto controller = base::MakeUnique<MockVideoFrameReceiver>();
     receiver_ = controller.get();
-    device_client_ = std::make_unique<VideoCaptureDeviceClient>(
+    device_client_ = base::MakeUnique<VideoCaptureDeviceClient>(
         std::move(controller), buffer_pool,
         base::Bind(&ReturnNullPtrAsJpecDecoder));
   }

@@ -7,7 +7,6 @@
 
 #include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
-#include "ui/events/event.h"
 #include "ui/keyboard/container_type.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/wm/core/window_animations.h"
@@ -62,7 +61,8 @@ class KEYBOARD_EXPORT ContainerBehavior {
 
   virtual void SavePosition(const gfx::Point& position) = 0;
 
-  virtual void HandlePointerEvent(const ui::LocatedEvent& event) = 0;
+  virtual void HandlePointerEvent(bool isMouseButtonPressed,
+                                  const gfx::Vector2d& kb_offset) = 0;
 
   virtual ContainerType GetType() const = 0;
 

@@ -163,7 +163,7 @@ WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
 
 class TestWebWidgetClient : public WebWidgetClient {
  public:
-  ~TestWebWidgetClient() override = default;
+  ~TestWebWidgetClient() override {}
 
   // WebWidgetClient:
   bool AllowsBrokenNullLayerTreeView() const override { return true; }
@@ -177,7 +177,7 @@ class TestWebViewWidgetClient : public TestWebWidgetClient {
  public:
   explicit TestWebViewWidgetClient(TestWebViewClient& test_web_view_client)
       : test_web_view_client_(test_web_view_client) {}
-  ~TestWebViewWidgetClient() override = default;
+  ~TestWebViewWidgetClient() override {}
 
   // TestWebViewWidgetClient:
   WebLayerTreeView* InitializeLayerTreeView() override;
@@ -190,7 +190,7 @@ class TestWebViewWidgetClient : public TestWebWidgetClient {
 
 class TestWebViewClient : public WebViewClient {
  public:
-  ~TestWebViewClient() override = default;
+  ~TestWebViewClient() override {}
 
   WebLayerTreeViewImplForTesting* GetLayerTreeViewForTesting();
 
@@ -287,7 +287,7 @@ class WebViewHelper {
 class TestWebFrameClient : public WebFrameClient {
  public:
   TestWebFrameClient();
-  ~TestWebFrameClient() override = default;
+  ~TestWebFrameClient() override {}
 
   static bool IsLoading() { return loads_in_progress_ > 0; }
 
@@ -343,7 +343,7 @@ class TestWebFrameClient : public WebFrameClient {
 class TestWebRemoteFrameClient : public WebRemoteFrameClient {
  public:
   TestWebRemoteFrameClient();
-  ~TestWebRemoteFrameClient() override = default;
+  ~TestWebRemoteFrameClient() override {}
 
   WebRemoteFrame* Frame() const { return frame_; }
   // Pass ownership of the TestWebFrameClient to |self_owned| here if the

@@ -212,9 +212,6 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   // determined that we're unable to fulfill the widows request.
   bool fit_all_lines_ = false;
 
-  // Set if we're resuming layout of a node that has already produced fragments.
-  bool is_resuming_;
-
   bool abort_when_bfc_resolved_;
   bool has_processed_first_child_ = false;
 

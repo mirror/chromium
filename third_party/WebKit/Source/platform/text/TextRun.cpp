@@ -68,7 +68,7 @@ std::unique_ptr<UChar[]> TextRun::NormalizedUTF16(
     source = Characters16();
   }
 
-  auto buffer = std::make_unique<UChar[]>(len_ + 1);
+  UChar* buffer = new UChar[len_ + 1];
   *result_length = 0;
 
   bool error = false;
@@ -97,7 +97,7 @@ std::unique_ptr<UChar[]> TextRun::NormalizedUTF16(
   }
 
   DCHECK(*result_length <= len_);
-  return buffer;
+  return WrapArrayUnique(buffer);
 }
 
 unsigned TextRun::IndexOfSubRun(const TextRun& sub_run) const {

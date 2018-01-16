@@ -563,7 +563,7 @@ int main(int argc, char** argv) {
 
   // Start up Chromium audio system.
   auto audio_manager = media::AudioManager::CreateForTesting(
-      std::make_unique<media::TestAudioThread>());
+      base::MakeUnique<media::TestAudioThread>());
   CHECK(media::AudioManager::Get());
 
   media::cast::FrameReceiverConfig audio_config =

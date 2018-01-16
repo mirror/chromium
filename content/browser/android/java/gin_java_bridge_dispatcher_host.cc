@@ -52,10 +52,10 @@ void GinJavaBridgeDispatcherHost::InstallFilterAndRegisterAllRoutingIds() {
   }
 
   auto filter = GinJavaBridgeMessageFilter::FromHost(this, true);
-  // Unretained() is safe because ForEachFrame() is synchronous.
+  // ForEachFrame is synchronous.
   web_contents()->ForEachFrame(
-      base::BindRepeating(&GinJavaBridgeMessageFilter::AddRoutingIdForHost,
-                          filter, base::Unretained(this)));
+      base::Bind(&GinJavaBridgeMessageFilter::AddRoutingIdForHost, filter,
+                 base::Unretained(this)));
 }
 
 void GinJavaBridgeDispatcherHost::RenderFrameCreated(

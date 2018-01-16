@@ -6,12 +6,12 @@
 
 #include <algorithm>
 #include <map>
-#include <memory>
 #include <sstream>
 #include <string>
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/demuxer_memory_limit.h"
 #include "media/base/media_switches.h"
@@ -275,25 +275,6 @@ void SourceBufferStream<RangeClass>::OnStartOfCodedFrameGroupInternal(
              << (range_for_next_append_ == ranges_.end()
                      ? "be in a new range"
                      : "overlap an existing range");
-
-    if (range_for_next_append_ != ranges_.end()) {
-      // If this new coded frame group overlaps an existing range, preserve
-      // continuity from that range to the new group by moving the start time
-      // earlier (but not at or beyond the most recent buffered frame's time
-      // before |coded_frame_group_start_time| in the range, and not beyond the
-      // range's start time. This update helps prevent discontinuity from being
-      // introduced by the ::RemoveInternal processing during the next ::Append
-      // call.
-      DecodeTimestamp adjusted_start_time =
-          RangeFindHighestBufferedTimestampAtOrBefore(
-              range_for_next_append_->get(), coded_frame_group_start_time_);
-      if (adjusted_start_time < coded_frame_group_start_time_) {
-        // Exclude removal of that earlier frame during later Append
-        // processing by adjusting the removal range slightly forward.
-        coded_frame_group_start_time_ =
-            adjusted_start_time + base::TimeDelta::FromMicroseconds(1);
-      }
-    }
   } else if (last_range != ranges_.end()) {
     DCHECK(last_range == range_for_next_append_);
     DVLOG(3) << __func__ << " next appended buffers will continue range unless "
@@ -2348,24 +2329,6 @@ bool SourceBufferStream<SourceBufferRangeByPts>::RangeBelongsToRange(
 }
 
 template <>
-DecodeTimestamp SourceBufferStream<SourceBufferRangeByDts>::
-    RangeFindHighestBufferedTimestampAtOrBefore(
-        SourceBufferRangeByDts* range,
-        DecodeTimestamp timestamp) const {
-  return range->FindHighestBufferedTimestampAtOrBefore(timestamp);
-}
-
-template <>
-DecodeTimestamp SourceBufferStream<SourceBufferRangeByPts>::
-    RangeFindHighestBufferedTimestampAtOrBefore(
-        SourceBufferRangeByPts* range,
-        DecodeTimestamp timestamp) const {
-  return DecodeTimestamp::FromPresentationTime(
-      range->FindHighestBufferedTimestampAtOrBefore(
-          timestamp.ToPresentationTime()));
-}
-
-template <>
 void SourceBufferStream<SourceBufferRangeByDts>::RangeSeek(
     SourceBufferRangeByDts* range,
     DecodeTimestamp timestamp) {
@@ -2472,7 +2435,7 @@ std::unique_ptr<SourceBufferRangeByDts>
 SourceBufferStream<SourceBufferRangeByDts>::RangeNew(
     const BufferQueue& new_buffers,
     DecodeTimestamp range_start_time) {
-  return std::make_unique<SourceBufferRangeByDts>(
+  return base::MakeUnique<SourceBufferRangeByDts>(
       TypeToGapPolicy<SourceBufferRangeByDts>(GetType()), new_buffers,
       range_start_time,
       base::BindRepeating(
@@ -2486,7 +2449,7 @@ std::unique_ptr<SourceBufferRangeByPts>
 SourceBufferStream<SourceBufferRangeByPts>::RangeNew(
     const BufferQueue& new_buffers,
     DecodeTimestamp range_start_time) {
-  return std::make_unique<SourceBufferRangeByPts>(
+  return base::MakeUnique<SourceBufferRangeByPts>(
       TypeToGapPolicy<SourceBufferRangeByPts>(GetType()), new_buffers,
       range_start_time.ToPresentationTime(),
       base::BindRepeating(

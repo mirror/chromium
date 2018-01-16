@@ -477,66 +477,84 @@ int wrap_cmp( xmlNodePtr x, xmlNodePtr y );
  *									*
  ************************************************************************/
 
-#ifndef NAN
-#define NAN (0.0 / 0.0)
+#ifndef TRIO_REPLACE_STDIO
+#define TRIO_PUBLIC static
 #endif
+#include "trionan.c"
 
-#ifndef INFINITY
-#define INFINITY HUGE_VAL
-#endif
-
-double xmlXPathNAN = NAN;
-double xmlXPathPINF = INFINITY;
-double xmlXPathNINF = -INFINITY;
+/*
+ * The lack of portability of this section of the libc is annoying !
+ */
+double xmlXPathNAN = 0;
+double xmlXPathPINF = 1;
+double xmlXPathNINF = -1;
+static double xmlXPathNZERO = 0; /* not exported from headers */
+static int xmlXPathInitialized = 0;
 
 /**
  * xmlXPathInit:
  *
  * Initialize the XPath environment
- *
- * Does nothing but must be kept as public function.
  */
 void
 xmlXPathInit(void) {
+    if (xmlXPathInitialized) return;
+
+    xmlXPathPINF = trio_pinf();
+    xmlXPathNINF = trio_ninf();
+    xmlXPathNAN = trio_nan();
+    xmlXPathNZERO = trio_nzero();
+
+    xmlXPathInitialized = 1;
 }
 
 /**
  * xmlXPathIsNaN:
  * @val:  a double value
  *
+ * Provides a portable isnan() function to detect whether a double
+ * is a NotaNumber. Based on trio code
+ * http://sourceforge.net/projects/ctrio/
+ *
  * Returns 1 if the value is a NaN, 0 otherwise
  */
 int
 xmlXPathIsNaN(double val) {
-#ifdef isnan
-    return isnan(val);
-#else
-    return !(val == val);
-#endif
+    return(trio_isnan(val));
 }
 
 /**
  * xmlXPathIsInf:
  * @val:  a double value
  *
- * Returns 1 if the value is +Infinite, -1 if -Infinite, 0 otherwise
+ * Provides a portable isinf() function to detect whether a double
+ * is a +Infinite or -Infinite. Based on trio code
+ * http://sourceforge.net/projects/ctrio/
+ *
+ * Returns 1 vi the value is +Infinite, -1 if -Infinite, 0 otherwise
  */
 int
 xmlXPathIsInf(double val) {
-#ifdef isinf
-    return isinf(val) ? (val > 0 ? 1 : -1) : 0;
-#else
-    if (val >= HUGE_VAL)
-        return 1;
-    if (val <= -HUGE_VAL)
-        return -1;
-    return 0;
-#endif
+    return(trio_isinf(val));
 }
 
 #endif /* SCHEMAS or XPATH */
-
 #ifdef LIBXML_XPATH_ENABLED
+/**
+ * xmlXPathGetSign:
+ * @val:  a double value
+ *
+ * Provides a portable function to detect the sign of a double
+ * Modified from trio code
+ * http://sourceforge.net/projects/ctrio/
+ *
+ * Returns 1 if the value is Negative, 0 if positive
+ */
+static int
+xmlXPathGetSign(double val) {
+    return(trio_signbit(val));
+}
+
 
 /*
  * TODO: when compatibility allows remove all "fake node libxslt" strings
@@ -960,8 +978,6 @@ static int
 xmlXPathCompOpEvalToBoolean(xmlXPathParserContextPtr ctxt,
 			    xmlXPathStepOpPtr op,
 			    int isPredicate);
-static void
-xmlXPathFreeObjectEntry(void *obj, const xmlChar *name);
 
 /************************************************************************
  *									*
@@ -1405,8 +1421,7 @@ xmlXPathDebugDumpObject(FILE *output, xmlXPathObjectPtr cur, int depth) {
 	    default:
 		if (xmlXPathIsNaN(cur->floatval)) {
 		    fprintf(output, "Object is a number : NaN\n");
-		} else if (cur->floatval == 0) {
-                    /* Omit sign for negative zero. */
+		} else if (cur->floatval == 0 && xmlXPathGetSign(cur->floatval) != 0) {
 		    fprintf(output, "Object is a number : 0\n");
 		} else {
 		    fprintf(output, "Object is a number : %0g\n", cur->floatval);
@@ -3102,8 +3117,7 @@ xmlXPathFormatNumber(double number, char buffer[], int buffersize)
 	if (xmlXPathIsNaN(number)) {
 	    if (buffersize > (int)sizeof("NaN"))
 		snprintf(buffer, buffersize, "NaN");
-	} else if (number == 0) {
-            /* Omit sign for negative zero. */
+	} else if (number == 0 && xmlXPathGetSign(number) != 0) {
 	    snprintf(buffer, buffersize, "0");
 	} else if ((number > INT_MIN) && (number < INT_MAX) &&
                    (number == (int) number)) {
@@ -4568,7 +4582,7 @@ xmlXPathDistinctSorted (xmlNodeSetPtr nodes) {
 	    xmlFree(strval);
 	}
     }
-    xmlHashFree(hash, xmlHashDefaultDeallocator);
+    xmlHashFree(hash, (xmlHashDeallocator) xmlFree);
     return(ret);
 }
 
@@ -4880,9 +4894,7 @@ xmlXPathRegisterFuncNS(xmlXPathContextPtr ctxt, const xmlChar *name,
 	return(-1);
     if (f == NULL)
         return(xmlHashRemoveEntry2(ctxt->funcHash, name, ns_uri, NULL));
-XML_IGNORE_PEDANTIC_WARNINGS
-    return(xmlHashAddEntry2(ctxt->funcHash, name, ns_uri, (void *) f));
-XML_POP_WARNINGS
+    return(xmlHashAddEntry2(ctxt->funcHash, name, ns_uri, XML_CAST_FPTR(f)));
 }
 
 /**
@@ -4963,9 +4975,7 @@ xmlXPathFunctionLookupNS(xmlXPathContextPtr ctxt, const xmlChar *name,
     if (ctxt->funcHash == NULL)
 	return(NULL);
 
-XML_IGNORE_PEDANTIC_WARNINGS
-    ret = (xmlXPathFunction) xmlHashLookup2(ctxt->funcHash, name, ns_uri);
-XML_POP_WARNINGS
+    XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->funcHash, name, ns_uri);
     return(ret);
 }
 
@@ -5034,9 +5044,10 @@ xmlXPathRegisterVariableNS(xmlXPathContextPtr ctxt, const xmlChar *name,
 	return(-1);
     if (value == NULL)
         return(xmlHashRemoveEntry2(ctxt->varHash, name, ns_uri,
-	                           xmlXPathFreeObjectEntry));
+	                           (xmlHashDeallocator)xmlXPathFreeObject));
     return(xmlHashUpdateEntry2(ctxt->varHash, name, ns_uri,
-			       (void *) value, xmlXPathFreeObjectEntry));
+			       (void *) value,
+			       (xmlHashDeallocator)xmlXPathFreeObject));
 }
 
 /**
@@ -5126,7 +5137,7 @@ xmlXPathRegisteredVariablesCleanup(xmlXPathContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
 
-    xmlHashFree(ctxt->varHash, xmlXPathFreeObjectEntry);
+    xmlHashFree(ctxt->varHash, (xmlHashDeallocator)xmlXPathFreeObject);
     ctxt->varHash = NULL;
 }
 
@@ -5157,9 +5168,9 @@ xmlXPathRegisterNs(xmlXPathContextPtr ctxt, const xmlChar *prefix,
 	return(-1);
     if (ns_uri == NULL)
         return(xmlHashRemoveEntry(ctxt->nsHash, prefix,
-	                          xmlHashDefaultDeallocator));
+	                          (xmlHashDeallocator)xmlFree));
     return(xmlHashUpdateEntry(ctxt->nsHash, prefix, (void *) xmlStrdup(ns_uri),
-			      xmlHashDefaultDeallocator));
+			      (xmlHashDeallocator)xmlFree));
 }
 
 /**
@@ -5208,7 +5219,7 @@ xmlXPathRegisteredNsCleanup(xmlXPathContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
 
-    xmlHashFree(ctxt->nsHash, xmlHashDefaultDeallocator);
+    xmlHashFree(ctxt->nsHash, (xmlHashDeallocator)xmlFree);
     ctxt->nsHash = NULL;
 }
 
@@ -5522,11 +5533,6 @@ xmlXPathFreeObject(xmlXPathObjectPtr obj) {
     xmlFree(obj);
 }
 
-static void
-xmlXPathFreeObjectEntry(void *obj, const xmlChar *name ATTRIBUTE_UNUSED) {
-    xmlXPathFreeObject((xmlXPathObjectPtr) obj);
-}
-
 /**
  * xmlXPathReleaseObject:
  * @obj:  the xmlXPathObjectPtr to free or to cache
@@ -5716,8 +5722,7 @@ xmlXPathCastNumberToString (double val) {
     default:
 	if (xmlXPathIsNaN(val)) {
 	    ret = xmlStrdup((const xmlChar *) "NaN");
-	} else if (val == 0) {
-            /* Omit sign for negative zero. */
+	} else if (val == 0 && xmlXPathGetSign(val) != 0) {
 	    ret = xmlStrdup((const xmlChar *) "0");
 	} else {
 	    /* could be improved */
@@ -5899,10 +5904,10 @@ xmlXPathCastNodeToNumber (xmlNodePtr node) {
     double ret;
 
     if (node == NULL)
-	return(NAN);
+	return(xmlXPathNAN);
     strval = xmlXPathCastNodeToString(node);
     if (strval == NULL)
-	return(NAN);
+	return(xmlXPathNAN);
     ret = xmlXPathCastStringToNumber(strval);
     xmlFree(strval);
 
@@ -5923,7 +5928,7 @@ xmlXPathCastNodeSetToNumber (xmlNodeSetPtr ns) {
     double ret;
 
     if (ns == NULL)
-	return(NAN);
+	return(xmlXPathNAN);
     str = xmlXPathCastNodeSetToString(ns);
     ret = xmlXPathCastStringToNumber(str);
     xmlFree(str);
@@ -5943,13 +5948,13 @@ xmlXPathCastToNumber(xmlXPathObjectPtr val) {
     double ret = 0.0;
 
     if (val == NULL)
-	return(NAN);
+	return(xmlXPathNAN);
     switch (val->type) {
     case XPATH_UNDEFINED:
 #ifdef DEGUB_EXPR
 	xmlGenericError(xmlGenericErrorContext, "NUMBER: undefined\n");
 #endif
-	ret = NAN;
+	ret = xmlXPathNAN;
 	break;
     case XPATH_NODESET:
     case XPATH_XSLT_TREE:
@@ -5969,7 +5974,7 @@ xmlXPathCastToNumber(xmlXPathObjectPtr val) {
     case XPATH_RANGE:
     case XPATH_LOCATIONSET:
 	TODO;
-	ret = NAN;
+	ret = xmlXPathNAN;
 	break;
     }
     return(ret);
@@ -7473,7 +7478,20 @@ xmlXPathValueFlipSign(xmlXPathParserContextPtr ctxt) {
     if ((ctxt == NULL) || (ctxt->context == NULL)) return;
     CAST_TO_NUMBER;
     CHECK_TYPE(XPATH_NUMBER);
-    ctxt->value->floatval = -ctxt->value->floatval;
+    if (xmlXPathIsNaN(ctxt->value->floatval))
+        ctxt->value->floatval=xmlXPathNAN;
+    else if (xmlXPathIsInf(ctxt->value->floatval) == 1)
+        ctxt->value->floatval=xmlXPathNINF;
+    else if (xmlXPathIsInf(ctxt->value->floatval) == -1)
+        ctxt->value->floatval=xmlXPathPINF;
+    else if (ctxt->value->floatval == 0) {
+        if (xmlXPathGetSign(ctxt->value->floatval) == 0)
+	    ctxt->value->floatval = xmlXPathNZERO;
+	else
+	    ctxt->value->floatval = 0;
+    }
+    else
+        ctxt->value->floatval = - ctxt->value->floatval;
 }
 
 /**
@@ -7565,7 +7583,25 @@ xmlXPathDivValues(xmlXPathParserContextPtr ctxt) {
     xmlXPathReleaseObject(ctxt->context, arg);
     CAST_TO_NUMBER;
     CHECK_TYPE(XPATH_NUMBER);
-    ctxt->value->floatval /= val;
+    if (xmlXPathIsNaN(val) || xmlXPathIsNaN(ctxt->value->floatval))
+	ctxt->value->floatval = xmlXPathNAN;
+    else if (val == 0 && xmlXPathGetSign(val) != 0) {
+	if (ctxt->value->floatval == 0)
+	    ctxt->value->floatval = xmlXPathNAN;
+	else if (ctxt->value->floatval > 0)
+	    ctxt->value->floatval = xmlXPathNINF;
+	else if (ctxt->value->floatval < 0)
+	    ctxt->value->floatval = xmlXPathPINF;
+    }
+    else if (val == 0) {
+	if (ctxt->value->floatval == 0)
+	    ctxt->value->floatval = xmlXPathNAN;
+	else if (ctxt->value->floatval > 0)
+	    ctxt->value->floatval = xmlXPathPINF;
+	else if (ctxt->value->floatval < 0)
+	    ctxt->value->floatval = xmlXPathNINF;
+    } else
+	ctxt->value->floatval /= val;
 }
 
 /**
@@ -7590,7 +7626,7 @@ xmlXPathModValues(xmlXPathParserContextPtr ctxt) {
     CHECK_TYPE(XPATH_NUMBER);
     arg1 = ctxt->value->floatval;
     if (arg2 == 0)
-	ctxt->value->floatval = NAN;
+	ctxt->value->floatval = xmlXPathNAN;
     else {
 	ctxt->value->floatval = fmod(arg1, arg2);
     }
@@ -9709,9 +9745,13 @@ xmlXPathRoundFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 
     f = ctxt->value->floatval;
 
-    if ((f >= -0.5) && (f < 0.5)) {
-        /* Handles negative zero. */
-        ctxt->value->floatval *= 0.0;
+    /* Test for zero to keep negative zero unchanged. */
+    if ((xmlXPathIsNaN(f)) || (f == 0.0))
+	return;
+
+    if ((f >= -0.5) && (f < 0.0)) {
+        /* Negative zero. */
+        ctxt->value->floatval = xmlXPathNZERO;
     }
     else {
         double rounded = floor(f);
@@ -10058,7 +10098,7 @@ xmlXPathStringEvalNumber(const xmlChar *str) {
     if (cur == NULL) return(0);
     while (IS_BLANK_CH(*cur)) cur++;
     if ((*cur != '.') && ((*cur < '0') || (*cur > '9')) && (*cur != '-')) {
-        return(NAN);
+        return(xmlXPathNAN);
     }
     if (*cur == '-') {
 	isneg = 1;
@@ -10094,7 +10134,7 @@ xmlXPathStringEvalNumber(const xmlChar *str) {
 
         cur++;
 	if (((*cur < '0') || (*cur > '9')) && (!ok)) {
-	    return(NAN);
+	    return(xmlXPathNAN);
 	}
         while (*cur == '0') {
 	    frac = frac + 1;
@@ -10127,7 +10167,7 @@ xmlXPathStringEvalNumber(const xmlChar *str) {
       }
     }
     while (IS_BLANK_CH(*cur)) cur++;
-    if (*cur != 0) return(NAN);
+    if (*cur != 0) return(xmlXPathNAN);
     if (isneg) ret = -ret;
     if (is_exponent_negative) exponent = -exponent;
     ret *= pow(10.0, (double)exponent);
@@ -12386,7 +12426,7 @@ xmlXPathNodeCollectAndTest(xmlXPathParserContextPtr ctxt,
 			    default:
 				break;
 			}
-		    } else if (cur->type == (xmlElementType) type) {
+		    } else if (cur->type == type) {
 			if (cur->type == XML_NAMESPACE_DECL)
 			    XP_TEST_HIT_NS
 			else

@@ -39,7 +39,7 @@ class ExceptionState;
 
 class MODULES_EXPORT CanvasPath {
  public:
-  virtual ~CanvasPath() = default;
+  virtual ~CanvasPath() {}
 
   void closePath();
   void moveTo(float x, float y);

@@ -44,7 +44,7 @@ class WebFontDecoder final {
   STACK_ALLOCATED();
 
  public:
-  WebFontDecoder() = default;
+  WebFontDecoder() {}
 
   sk_sp<SkTypeface> Decode(SharedBuffer*);
   size_t DecodedSize() const { return decoded_size_; }

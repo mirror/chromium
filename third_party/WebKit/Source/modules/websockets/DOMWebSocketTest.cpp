@@ -45,7 +45,7 @@ class MockWebSocketChannel : public WebSocketChannel {
     return new ::testing::StrictMock<MockWebSocketChannel>();
   }
 
-  ~MockWebSocketChannel() override = default;
+  ~MockWebSocketChannel() override {}
 
   MOCK_METHOD2(Connect, bool(const KURL&, const String&));
   MOCK_METHOD1(Send, void(const CString&));
@@ -70,7 +70,7 @@ class MockWebSocketChannel : public WebSocketChannel {
   }
   MOCK_METHOD0(Disconnect, void());
 
-  MockWebSocketChannel() = default;
+  MockWebSocketChannel() {}
 };
 
 class DOMWebSocketWithMockChannel final : public DOMWebSocket {

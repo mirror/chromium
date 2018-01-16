@@ -6,12 +6,12 @@
 
 namespace blink {
 
-WebRTCStatsReport::~WebRTCStatsReport() = default;
+WebRTCStatsReport::~WebRTCStatsReport() {}
 
-WebRTCStats::~WebRTCStats() = default;
+WebRTCStats::~WebRTCStats() {}
 
-WebRTCStatsMember::~WebRTCStatsMember() = default;
+WebRTCStatsMember::~WebRTCStatsMember() {}
 
-WebRTCStatsReportCallback::~WebRTCStatsReportCallback() = default;
+WebRTCStatsReportCallback::~WebRTCStatsReportCallback() {}
 
 }  // namespace blink

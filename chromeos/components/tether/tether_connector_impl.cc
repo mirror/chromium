@@ -5,8 +5,6 @@
 #include "chromeos/components/tether/tether_connector_impl.h"
 
 #include "base/bind.h"
-#include "base/metrics/histogram_macros.h"
-#include "base/time/clock.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/disconnect_tethering_request_sender.h"
@@ -48,8 +46,7 @@ TetherConnectorImpl::TetherConnectorImpl(
     NotificationPresenter* notification_presenter,
     HostConnectionMetricsLogger* host_connection_metrics_logger,
     DisconnectTetheringRequestSender* disconnect_tethering_request_sender,
-    WifiHotspotDisconnector* wifi_hotspot_disconnector,
-    base::Clock* clock)
+    WifiHotspotDisconnector* wifi_hotspot_disconnector)
     : network_state_handler_(network_state_handler),
       wifi_hotspot_connector_(wifi_hotspot_connector),
       active_host_(active_host),
@@ -62,7 +59,6 @@ TetherConnectorImpl::TetherConnectorImpl(
       host_connection_metrics_logger_(host_connection_metrics_logger),
       disconnect_tethering_request_sender_(disconnect_tethering_request_sender),
       wifi_hotspot_disconnector_(wifi_hotspot_disconnector),
-      clock_(clock),
       weak_ptr_factory_(this) {}
 
 TetherConnectorImpl::~TetherConnectorImpl() {
@@ -105,7 +101,6 @@ void TetherConnectorImpl::ConnectToNetwork(
   device_id_pending_connection_ = device_id;
   success_callback_ = success_callback;
   error_callback_ = error_callback;
-  connect_to_host_start_time_ = clock_->Now();
   active_host_->SetActiveHostConnecting(device_id, tether_network_guid);
 
   tether_host_fetcher_->FetchTetherHost(
@@ -302,9 +297,6 @@ void TetherConnectorImpl::SetConnectionSucceeded(
   host_connection_metrics_logger_->RecordConnectionToHostResult(
       HostConnectionMetricsLogger::ConnectionToHostResult::
           CONNECTION_RESULT_SUCCESS);
-  UMA_HISTOGRAM_MEDIUM_TIMES(
-      "InstantTethering.Performance.ConnectToHostDuration",
-      clock_->Now() - connect_to_host_start_time_);
 
   notification_presenter_->RemoveSetupRequiredNotification();
 

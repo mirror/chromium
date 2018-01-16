@@ -28,8 +28,8 @@ namespace media_router {
 class WiredDisplayPresentationReceiver;
 
 // A MediaRouteProvider class that provides wired displays as media sinks.
-// Displays can be used as sinks when there are multiple dipslays that are not
-// mirrored.
+// A display can be used as a sink if it is secondary and does not mirror a
+// primary display.
 class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
                                        public display::DisplayObserver {
  public:
@@ -153,12 +153,11 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
   base::Optional<display::Display> GetDisplayBySinkId(
       const std::string& sink_id) const;
 
-  // Returns a list of available sinks.
+  // Returns a list of available sinks. A display can be a sink if it is
+  // secondary and does not mirror a primary display.
   std::vector<MediaSinkInternal> GetSinks() const;
 
-  // Returns a list of displays that can be used as sinks. Returns an empty list
-  // if there is only one display or if the secondary displays mirror the
-  // primary display.
+  // Returns a list of displays that can be used as sinks.
   std::vector<display::Display> GetAvailableDisplays() const;
 
   // Binds |this| to the Mojo request passed into the ctor.

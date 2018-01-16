@@ -17,7 +17,7 @@ class PaintSize : public ScriptWrappable {
 
  public:
   static PaintSize* Create(FloatSize size) { return new PaintSize(size); }
-  virtual ~PaintSize() = default;
+  virtual ~PaintSize() {}
 
   float width() const { return size_.Width(); }
   float height() const { return size_.Height(); }

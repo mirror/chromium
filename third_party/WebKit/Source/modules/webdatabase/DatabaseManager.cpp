@@ -51,9 +51,11 @@ DatabaseManager& DatabaseManager::Manager() {
   return *g_database_manager;
 }
 
-DatabaseManager::DatabaseManager() = default;
+DatabaseManager::DatabaseManager()
+{
+}
 
-DatabaseManager::~DatabaseManager() = default;
+DatabaseManager::~DatabaseManager() {}
 
 DatabaseContext* DatabaseManager::ExistingDatabaseContextFor(
     ExecutionContext* context) {

@@ -76,7 +76,6 @@ import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content.browser.test.util.UiUtils;
 import org.chromium.content.common.ContentSwitches;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.net.test.EmbeddedTestServer;
@@ -385,11 +384,10 @@ public class TabsTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                WebContents webContents =
-                        mActivityTestRule.getActivity().getActivityTab().getWebContents();
-                SelectionPopupController controller =
-                        SelectionPopupController.fromWebContents(webContents);
-                final String actualText = controller.getSelectedText();
+                final String actualText = mActivityTestRule.getActivity()
+                                                  .getActivityTab()
+                                                  .getContentViewCore()
+                                                  .getSelectedText();
                 updateFailureReason(
                         "expected selected text: [" + text + "], but got: [" + actualText + "]");
                 return text.equals(actualText);

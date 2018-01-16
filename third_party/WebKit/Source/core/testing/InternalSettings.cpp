@@ -120,7 +120,7 @@ const char* InternalSettings::SupplementName() {
   return "InternalSettings";
 }
 
-InternalSettings::~InternalSettings() = default;
+InternalSettings::~InternalSettings() {}
 
 InternalSettings::InternalSettings(Page& page)
     : InternalSettingsGenerated(&page),

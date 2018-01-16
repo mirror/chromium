@@ -19,25 +19,25 @@ settings.FingerprintSetupStep = {
 /**
  * The duration in ms of a fingerprint icon flash when a user touches the
  * fingerprint sensor during an enroll session.
- * @type {number}
+ * @const {number}
  */
-const FLASH_DURATION_MS = 300;
+var FLASH_DURATION_MS = 300;
 
 /**
  * The amount of milliseconds after a successful but not completed scan before a
  * message shows up telling the user to scan their finger again.
- * @type {number}
+ * @const {number}
  */
-const SHOW_TAP_SENSOR_MESSAGE_DELAY_MS = 2000;
+var SHOW_TAP_SENSOR_MESSAGE_DELAY_MS = 2000;
 
 /**
  * The estimated amount of complete scans needed to enroll a fingerprint. Used
  * to help us estimate the progress of an enroll session.
  * TODO(xiaoyinh@): This will be replaced by percentage of completion in the
  * future.
- * @type {number}
+ * @const {number}
  */
-const SUCCESSFUL_SCANS_TO_COMPLETE = 15;
+var SUCCESSFUL_SCANS_TO_COMPLETE = 15;
 
 Polymer({
   is: 'settings-setup-fingerprint-dialog',
@@ -158,7 +158,7 @@ Polymer({
           this.step_ = settings.FingerprintSetupStep.MOVE_FINGER;
           this.receivedScanCount_ = 0;
         }
-        const slice = 2 * Math.PI / SUCCESSFUL_SCANS_TO_COMPLETE;
+        var slice = 2 * Math.PI / SUCCESSFUL_SCANS_TO_COMPLETE;
         if (scan.isComplete) {
           this.problemMessage_ = '';
           this.step_ = settings.FingerprintSetupStep.READY;

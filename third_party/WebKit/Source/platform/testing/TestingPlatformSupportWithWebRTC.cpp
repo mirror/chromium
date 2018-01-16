@@ -13,9 +13,9 @@
 
 namespace blink {
 
-MockWebRTCPeerConnectionHandler::MockWebRTCPeerConnectionHandler() = default;
+MockWebRTCPeerConnectionHandler::MockWebRTCPeerConnectionHandler() {}
 
-MockWebRTCPeerConnectionHandler::~MockWebRTCPeerConnectionHandler() = default;
+MockWebRTCPeerConnectionHandler::~MockWebRTCPeerConnectionHandler() {}
 
 bool MockWebRTCPeerConnectionHandler::Initialize(const WebRTCConfiguration&,
                                                  const WebMediaConstraints&) {

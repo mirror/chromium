@@ -63,9 +63,6 @@ class PixelExpectations(GpuTestExpectations):
     self.Fail('Pixel_CanvasUnacceleratedLowLatency2D',
         ['mac', 'linux', 'win', 'android', 'chromeos'], bug=788439)
 
-    # Rebaseline Pixel_CSS3DBlueBox
-    self.Fail('Pixel_CSS3DBlueBox', bug=796558)
-
     # Flaky for unknown reasons only on macOS. Not planning to investigate
     # further.
     self.Flaky('Pixel_ScissorTestWithPreserveDrawingBuffer', ['mac'],
@@ -102,7 +99,5 @@ class PixelExpectations(GpuTestExpectations):
 
     # Temporary supression to rebaseline Video tests on Windows with the
     # passthrough command decoder
-    self.Fail('Pixel_Video_MP4', ['win', 'intel'], bug=602688)
-    self.Fail('Pixel_Video_VP9', ['win', 'intel'], bug=602688)
-    self.Fail('Pixel_DirectComposition_Video_VP9', ['win', 'intel'],
-        bug=602688)
+    self.Fail('Pixel_DirectComposition_Video_MP4', ['win'], bug=602688)
+    self.Fail('Pixel_DirectComposition_Video_VP9', ['win'], bug=602688)

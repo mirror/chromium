@@ -39,7 +39,7 @@ class MockTaskObserver : public blink::WebThread::TaskObserver {
 
 class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
  public:
-  WebThreadImplForRendererSchedulerTest() = default;
+  WebThreadImplForRendererSchedulerTest() {}
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
@@ -50,7 +50,7 @@ class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
     thread_ = scheduler_->CreateMainThread();
   }
 
-  ~WebThreadImplForRendererSchedulerTest() override = default;
+  ~WebThreadImplForRendererSchedulerTest() override {}
 
   void SetWorkBatchSizeForTesting(size_t work_batch_size) {
     scheduler_->GetSchedulerHelperForTesting()->SetWorkBatchSizeForTesting(

@@ -340,12 +340,12 @@ bool FillExpirationMonthSelectControl(const base::string16& value,
   }
 
   // Attempt to match with each of the options' content.
-  for (size_t i = 0; i < field->option_contents.size(); ++i) {
+  for (const base::string16& option_contents : field->option_contents) {
     int converted_contents = 0;
-    if (CreditCard::ConvertMonth(field->option_contents[i], app_locale,
+    if (CreditCard::ConvertMonth(option_contents, app_locale,
                                  &converted_contents) &&
         month == converted_contents) {
-      field->value = field->option_values[i];
+      field->value = option_contents;
       return true;
     }
   }

@@ -102,24 +102,19 @@ const char kServer4Url[] = "https://images.example.org/";
 // and enable_connection_racting.
 struct TestParams {
   friend std::ostream& operator<<(std::ostream& os, const TestParams& p) {
-    os << "{ version: " << QuicVersionToString(p.version)
-       << ", client_headers_include_h2_stream_dependency: "
-       << p.client_headers_include_h2_stream_dependency << " }";
+    os << "{ version: " << QuicVersionToString(p.version) << " }";
     return os;
   }
 
   QuicTransportVersion version;
-  bool client_headers_include_h2_stream_dependency;
 };
 
 std::vector<TestParams> GetTestParams() {
   std::vector<TestParams> params;
   QuicTransportVersionVector all_supported_versions =
       AllSupportedTransportVersions();
-  for (const auto& version : all_supported_versions) {
-    params.push_back(TestParams{version, false});
-    params.push_back(TestParams{version, true});
-  }
+  for (const auto& version : all_supported_versions)
+    params.push_back(TestParams{version});
   return params;
 }
 
@@ -141,15 +136,12 @@ struct PoolingTestParams {
         os << "DIFFERENT";
         break;
     }
-    os << ", client_headers_include_h2_stream_dependency: "
-       << p.client_headers_include_h2_stream_dependency;
     os << " }";
     return os;
   }
 
   QuicTransportVersion version;
   DestinationType destination_type;
-  bool client_headers_include_h2_stream_dependency;
 };
 
 std::vector<PoolingTestParams> GetPoolingTestParams() {
@@ -157,12 +149,9 @@ std::vector<PoolingTestParams> GetPoolingTestParams() {
   QuicTransportVersionVector all_supported_versions =
       AllSupportedTransportVersions();
   for (const QuicTransportVersion version : all_supported_versions) {
-    params.push_back(PoolingTestParams{version, SAME_AS_FIRST, false});
-    params.push_back(PoolingTestParams{version, SAME_AS_FIRST, true});
-    params.push_back(PoolingTestParams{version, SAME_AS_SECOND, false});
-    params.push_back(PoolingTestParams{version, SAME_AS_SECOND, true});
-    params.push_back(PoolingTestParams{version, DIFFERENT, false});
-    params.push_back(PoolingTestParams{version, DIFFERENT, true});
+    params.push_back(PoolingTestParams{version, SAME_AS_FIRST});
+    params.push_back(PoolingTestParams{version, SAME_AS_SECOND});
+    params.push_back(PoolingTestParams{version, DIFFERENT});
   }
   return params;
 }
@@ -204,27 +193,22 @@ class TestConnectionMigrationSocketFactory : public MockClientSocketFactory {
 
 class QuicStreamFactoryTestBase {
  protected:
-  QuicStreamFactoryTestBase(QuicTransportVersion version,
-                            bool client_headers_include_h2_stream_dependency)
+  explicit QuicStreamFactoryTestBase(QuicTransportVersion version)
       : ssl_config_service_(new MockSSLConfigService),
         socket_factory_(new MockClientSocketFactory),
         random_generator_(0),
         runner_(new TestTaskRunner(&clock_)),
         version_(version),
-        client_headers_include_h2_stream_dependency_(
-            client_headers_include_h2_stream_dependency),
         client_maker_(version_,
                       0,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_CLIENT,
-                      client_headers_include_h2_stream_dependency_),
+                      Perspective::IS_CLIENT),
         server_maker_(version_,
                       0,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_SERVER,
-                      false),
+                      Perspective::IS_SERVER),
         cert_verifier_(std::make_unique<MockCertVerifier>()),
         channel_id_service_(
             new ChannelIDService(new DefaultChannelIDStore(nullptr))),
@@ -275,8 +259,8 @@ class QuicStreamFactoryTestBase {
         base::TimeDelta::FromSeconds(kMaxTimeOnNonDefaultNetworkSecs),
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
-        client_headers_include_h2_stream_dependency_, connection_options_,
-        client_connection_options_, /*enable_token_binding*/ false));
+        connection_options_, client_connection_options_,
+        /*enable_token_binding*/ false));
   }
 
   void InitializeConnectionMigrationTest(
@@ -777,8 +761,7 @@ class QuicStreamFactoryTestBase {
   MockRandom random_generator_;
   MockClock clock_;
   scoped_refptr<TestTaskRunner> runner_;
-  const QuicTransportVersion version_;
-  const bool client_headers_include_h2_stream_dependency_;
+  QuicTransportVersion version_;
   QuicTestPacketMaker client_maker_;
   QuicTestPacketMaker server_maker_;
   HttpServerPropertiesImpl http_server_properties_;
@@ -822,13 +805,10 @@ class QuicStreamFactoryTestBase {
 class QuicStreamFactoryTest : public QuicStreamFactoryTestBase,
                               public ::testing::TestWithParam<TestParams> {
  protected:
-  QuicStreamFactoryTest()
-      : QuicStreamFactoryTestBase(
-            GetParam().version,
-            GetParam().client_headers_include_h2_stream_dependency) {}
+  QuicStreamFactoryTest() : QuicStreamFactoryTestBase(GetParam().version) {}
 };
 
-INSTANTIATE_TEST_CASE_P(VersionIncludeStreamDependencySequnece,
+INSTANTIATE_TEST_CASE_P(Version,
                         QuicStreamFactoryTest,
                         ::testing::ValuesIn(GetTestParams()));
 
@@ -5398,9 +5378,7 @@ class QuicStreamFactoryWithDestinationTest
       public ::testing::TestWithParam<PoolingTestParams> {
  protected:
   QuicStreamFactoryWithDestinationTest()
-      : QuicStreamFactoryTestBase(
-            GetParam().version,
-            GetParam().client_headers_include_h2_stream_dependency),
+      : QuicStreamFactoryTestBase(GetParam().version),
         destination_type_(GetParam().destination_type),
         hanging_read_(SYNCHRONOUS, ERR_IO_PENDING, 0) {}
 
@@ -5443,7 +5421,7 @@ class QuicStreamFactoryWithDestinationTest
       sequenced_socket_data_vector_;
 };
 
-INSTANTIATE_TEST_CASE_P(VersionIncludeStreamDependencySequnece,
+INSTANTIATE_TEST_CASE_P(Version,
                         QuicStreamFactoryWithDestinationTest,
                         ::testing::ValuesIn(GetPoolingTestParams()));
 

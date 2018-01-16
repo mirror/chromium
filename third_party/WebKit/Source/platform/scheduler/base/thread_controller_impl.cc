@@ -33,7 +33,7 @@ ThreadControllerImpl::ThreadControllerImpl(
                                                  Sequence::WorkType::kDelayed);
 }
 
-ThreadControllerImpl::~ThreadControllerImpl() = default;
+ThreadControllerImpl::~ThreadControllerImpl() {}
 
 std::unique_ptr<ThreadControllerImpl> ThreadControllerImpl::Create(
     base::MessageLoop* message_loop,

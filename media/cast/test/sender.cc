@@ -16,6 +16,7 @@
 #include "base/files/file_path.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -264,8 +265,8 @@ int main(int argc, char** argv) {
   std::unique_ptr<media::cast::CastTransport> transport_sender =
       media::cast::CastTransport::Create(
           cast_environment->Clock(), base::TimeDelta::FromSeconds(1),
-          std::make_unique<TransportClient>(cast_environment->logger()),
-          std::make_unique<media::cast::UdpTransport>(
+          base::MakeUnique<TransportClient>(cast_environment->logger()),
+          base::MakeUnique<media::cast::UdpTransport>(
               nullptr, io_message_loop.task_runner(), net::IPEndPoint(),
               remote_endpoint, base::Bind(&UpdateCastTransportStatus)),
           io_message_loop.task_runner());

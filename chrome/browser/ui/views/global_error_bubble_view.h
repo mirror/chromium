@@ -16,8 +16,7 @@ class ElevationIconSetter;
 class GlobalErrorWithStandardBubble;
 
 class GlobalErrorBubbleView : public views::BubbleDialogDelegateView,
-                              public GlobalErrorBubbleViewBase,
-                              public views::ButtonListener {
+                              public GlobalErrorBubbleViewBase {
  public:
   GlobalErrorBubbleView(
       views::View* anchor_view,
@@ -39,16 +38,12 @@ class GlobalErrorBubbleView : public views::BubbleDialogDelegateView,
   void UpdateButton(views::LabelButton* button, ui::DialogButton type) override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   int GetDialogButtons() const override;
-  views::View* CreateExtraView() override;
   bool Cancel() override;
   bool Accept() override;
   bool Close() override;
 
   // GlobalErrorBubbleViewBase implementation.
   void CloseBubbleView() override;
-
-  // ButtonListener implementation.
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
  private:
   Browser* const browser_;

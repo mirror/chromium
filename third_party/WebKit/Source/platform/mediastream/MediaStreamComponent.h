@@ -64,7 +64,7 @@ class PLATFORM_EXPORT MediaStreamComponent final
 
    public:
     virtual void GetSettings(WebMediaStreamTrack::Settings&) = 0;
-    virtual ~TrackData() = default;
+    virtual ~TrackData() {}
   };
 
   static MediaStreamComponent* Create(MediaStreamSource*);
@@ -125,7 +125,7 @@ class PLATFORM_EXPORT MediaStreamComponent final
    public:
     AudioSourceProviderImpl() : web_audio_source_provider_(nullptr) {}
 
-    ~AudioSourceProviderImpl() override = default;
+    ~AudioSourceProviderImpl() override {}
 
     // Wraps the given blink::WebAudioSourceProvider to
     // blink::AudioSourceProvider.

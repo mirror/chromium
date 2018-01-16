@@ -763,7 +763,7 @@ are declared in build/common.gypi.
             Save Password
           </message>
           <message name="IDS_CONTENT_CONTEXT_GENERATEPASSWORD" desc="In Title Case: The name of the Generate Password command in the content area context menu">
-            Generate Password...
+            Generate Password
           </message>
         </if>
       </if>
@@ -5321,37 +5321,13 @@ the Bookmarks menu.">
 
       <!-- Clipboard permission -->
       <message name="IDS_CLIPBOARD_PERMISSION_FRAGMENT" desc="Permission request shown if the user is visiting a site that wants to read data from the system clipboard. Follows a prompt: 'This site would like to:'">
-        See text and images copied to the clipboard
+        See text and images you copy to the clipboard
       </message>
       <if expr="is_android">
         <message name="IDS_CLIPBOARD_INFOBAR_TEXT" desc="Text requesting permission for a site to read data from the system clipboard">
-          <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images copied to the clipboard.
+          <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images you copy to the clipboard.
         </message>
       </if>
-      <message name="IDS_ALLOWED_CLIPBOARD_TITLE" desc="Bubble info title for when a page has been granted clipboard read access.">
-        Clipboard read access allowed
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_MESSAGE" desc="Bubble info message and location bar icon tooltip text when a page has been granted clipboard read access.">
-        This page can see text and images copied to the clipboard.
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_BLOCK" desc="Radio button to block read access to the clipboard">
-        Always block <ph name="HOST">$1<ex>example.com</ex></ph> from seeing the clipboard
-      </message>
-      <message name="IDS_ALLOWED_CLIPBOARD_NO_ACTION" desc="Radio button to keep allowing access to the clipboard">
-        Continue allowing this site to see the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_TITLE" desc="Bubble info title for when a page has been denied clipboard read access.">
-        Clipboard read access denied
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_MESSAGE" desc="Bubble info message and location bar icon tooltip text when a page had been denied clipboard read access.">
-        This page has been blocked from seeing text and images copied to the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_UNBLOCK" desc="Radio button choice to unblock a site from accessing the clipboard.">
-        Always allow <ph name="HOST">$1<ex>mail.google.com</ex></ph> to see the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_NO_ACTION" desc="Radio button choice to continue blocking a site from accessing the clipboard API.">
-        Continue blocking this site from seeing the clipboard
-      </message>
 
       <!-- Feature Engagement Tracker strings -->
       <message name="IDS_BOOKMARK_PROMO_0" desc="Text shown on promotional UI appearing next to the Bookmarks button, which encourages users to use it.">
@@ -6909,8 +6885,8 @@ I don't think this site should be blocked!
       <message name="IDS_AUTOFILL_DIALOG_PLACEHOLDER_EXPIRY_YEAR" desc="The placeholder/label text for credit card expiration year in the card unmask dialog.">
         Year
       </message>
-      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT" desc="The name of the Google product that stores user addresses or credit cards in the cloud. This should not be translated." formatter_data="android_java">
-        Google Pay
+      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT" desc="The name of the Google product that stores user addresses or credit cards in the cloud." formatter_data="android_java">
+        Google Payments
       </message>
 
       <if expr="not is_linux or chromeos">
@@ -10747,6 +10723,14 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         Communications
       </message>
     </if>
+    <if expr="chromeos">
+      <message name="IDS_BEAMFORMING_ON_DEFAULT_AUDIO_INPUT_DEVICE_NAME" desc="Default audio input device (microphone) with a narrow angle coverage. Only the user in front of the device (i.e. you) will be listened to. This is typically presented to users in a drop-down list of device choices.">
+        Default (pick up just you)
+      </message>
+      <message name="IDS_BEAMFORMING_OFF_DEFAULT_AUDIO_INPUT_DEVICE_NAME" desc="Default audio input device (microphone) with a wide angle coverage. All the sounds in the vicinity will be listend to. This is typically presented to users in a drop-down list of device choices.">
+        Default (pick up everything)
+      </message>
+    </if>
 
     <if expr="is_android">
       <!-- Data Use -->
@@ -11003,18 +10987,6 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_CONTROLLED_BY_AUTOMATION" desc="Message shown when the browser session is being controlled by an automated test.">
       Chrome is being controlled by automated test software.
     </message>
-
-    <!-- Security Key permission -->
-    <message name="IDS_SECURITY_KEY_ATTESTATION_PERMISSION_FRAGMENT" desc="Permission request shown when a site requests attestation information from a Security Key. This follows a prompt: 'This site would like to:'">
-      See the serial number of your security key
-    </message>
-    <if expr="is_android">
-      <message name="IDS_SECURITY_KEY_ATTESTATION_INFOBAR_QUESTION" desc="Wording of an info bar prompt when a site requests attestation information from a Security Key.">
-        <ph name="URL">
-          $1<ex>maps.google.com</ex>
-        </ph> wants to see the serial number of your security key
-      </message>
-    </if>
 
     <!-- Media capture notification strings -->
     <if expr="is_android or enable_vr">

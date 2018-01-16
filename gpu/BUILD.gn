@@ -11,10 +11,6 @@ config("gpu_implementation") {
   defines = [ "GPU_IMPLEMENTATION" ]
 }
 
-config("gpu_gles2_implementation") {
-  defines = [ "GPU_GLES2_IMPLEMENTATION" ]
-}
-
 config("gpu_util_implementation") {
   defines = [ "GPU_UTIL_IMPLEMENTATION" ]
 }
@@ -22,19 +18,14 @@ config("gpu_util_implementation") {
 component("gpu") {
   public_deps = [
     "//gpu/command_buffer/client:client_sources",
+    "//gpu/command_buffer/client:gles2_cmd_helper_sources",
     "//gpu/command_buffer/common:common_sources",
+    "//gpu/command_buffer/common:gles2_sources",
+    "//gpu/command_buffer/service:gles2_sources",
     "//gpu/command_buffer/service:service_sources",
     "//gpu/config:config_sources",
     "//gpu/ipc/client:ipc_client_sources",
     "//gpu/ipc/common:ipc_common_sources",
-  ]
-}
-
-component("gles2") {
-  public_deps = [
-    "//gpu/command_buffer/client:gles2_cmd_helper_sources",
-    "//gpu/command_buffer/common:gles2_sources",
-    "//gpu/command_buffer/service:gles2_sources",
   ]
 }
 
@@ -68,9 +59,7 @@ if (!use_static_angle) {
       "//base",
       "//build/config:exe_and_shlib_deps",
       "//gpu/command_buffer/client:gles2_c_lib",
-      "//gpu/command_buffer/client:gles2_cmd_helper",
       "//gpu/command_buffer/client:gles2_implementation",
-      "//gpu/command_buffer/service:gles2",
       "//ui/gl",
       "//ui/gl/init",
     ]
@@ -140,7 +129,6 @@ static_library("test_support") {
   ]
 
   public_deps = [
-    ":gles2",
     ":gpu",
     "//gpu/command_buffer/client:gles2_interface",
   ]
@@ -214,7 +202,6 @@ test("gl_tests") {
   configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   deps = [
-    ":gles2",
     ":gpu",
     ":test_support",
     "//base",
@@ -398,7 +385,6 @@ test("gpu_unittests") {
   configs += [ "//build/config:precompiled_headers" ]
 
   deps = [
-    ":gles2",
     ":gpu",
     ":test_support",
     "//base",
@@ -482,9 +468,7 @@ test("command_buffer_perftests") {
     ":gpu",
     "//base",
     "//base/test:test_support",
-    "//gpu/command_buffer/client:gles2_cmd_helper",
     "//gpu/command_buffer/client:gles2_implementation",
-    "//gpu/command_buffer/service:gles2",
     "//testing/gtest",
     "//testing/perf",
     "//ui/gfx/geometry",
@@ -510,7 +494,6 @@ fuzzer_test("gpu_fuzzer") {
   ]
 
   deps = [
-    ":gles2",
     ":gpu",
     "//base",
     "//base/third_party/dynamic_annotations",
@@ -531,7 +514,6 @@ if (is_linux) {
     defines = [ "GPU_FUZZER_USE_ANGLE" ]
 
     deps = [
-      ":gles2",
       ":gpu",
       "//base",
       "//base/third_party/dynamic_annotations",
@@ -554,7 +536,6 @@ if (is_linux) {
     ]
 
     deps = [
-      ":gles2",
       ":gpu",
       "//base",
       "//base/third_party/dynamic_annotations",
@@ -574,7 +555,6 @@ if (is_linux) {
     defines = [ "GPU_FUZZER_USE_SWIFTSHADER" ]
 
     deps = [
-      ":gles2",
       ":gpu",
       "//base",
       "//base/third_party/dynamic_annotations",

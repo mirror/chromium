@@ -678,7 +678,7 @@ class CORE_EXPORT HTMLMediaElement
     explicit AudioClientImpl(AudioSourceProviderClient* client)
         : client_(client) {}
 
-    ~AudioClientImpl() override = default;
+    ~AudioClientImpl() override {}
 
     // WebAudioSourceProviderClient
     void SetFormat(size_t number_of_channels, float sample_rate) override;
@@ -697,7 +697,7 @@ class CORE_EXPORT HTMLMediaElement
    public:
     AudioSourceProviderImpl() : web_audio_source_provider_(nullptr) {}
 
-    ~AudioSourceProviderImpl() override = default;
+    ~AudioSourceProviderImpl() override {}
 
     // Wraps the given WebAudioSourceProvider.
     void Wrap(WebAudioSourceProvider*);

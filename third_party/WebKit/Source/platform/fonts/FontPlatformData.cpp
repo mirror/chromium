@@ -166,7 +166,7 @@ FontPlatformData::FontPlatformData(const PaintTypeface& paint_tf,
 #endif
 }
 
-FontPlatformData::~FontPlatformData() = default;
+FontPlatformData::~FontPlatformData() {}
 
 #if defined(OS_MACOSX)
 CTFontRef FontPlatformData::CtFont() const {

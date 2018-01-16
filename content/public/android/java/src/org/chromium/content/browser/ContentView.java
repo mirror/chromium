@@ -268,6 +268,11 @@ public class ContentView extends FrameLayout
     }
 
     @Override
+    public boolean awakenScrollBars() {
+        return super.awakenScrollBars();
+    }
+
+    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mContentViewCore.onAttachedToWindow();

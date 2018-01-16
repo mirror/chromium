@@ -45,7 +45,6 @@ cr.define('extension_detail_view_tests', function() {
       item.set('data', extensionData);
       item.set('delegate', mockDelegate);
       item.set('inDevMode', false);
-      item.set('incognitoAvailable', true);
       document.body.appendChild(item);
     });
 
@@ -131,15 +130,6 @@ cr.define('extension_detail_view_tests', function() {
       Polymer.dom.flush();
       expectTrue(testIsVisible('#id-section'));
       expectTrue(testIsVisible('#inspectable-views'));
-
-      assertTrue(item.data.incognitoAccess.isEnabled);
-      item.set('incognitoAvailable', false);
-      Polymer.dom.flush();
-      expectFalse(testIsVisible('#allow-incognito'));
-
-      item.set('incognitoAvailable', true);
-      Polymer.dom.flush();
-      expectTrue(testIsVisible('#allow-incognito'));
 
       // Ensure that the "Extension options" button is disabled when the item
       // itself is disabled.

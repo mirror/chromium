@@ -60,9 +60,6 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
                 '--builders', default=None, action='append',
                 help=('Comma-separated-list of builders to pull new baselines '
                       'from (can also be provided multiple times).')),
-            optparse.make_option(
-                '--patchset', default=None,
-                help='Patchset number to fetch new baselines from.'),
             self.no_optimize_option,
             self.results_directory_option,
         ])
@@ -93,8 +90,7 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
                 try_builders.update(builder_names.split(','))
             self._selected_try_bots = frozenset(try_builders)
 
-        jobs = self.git_cl.latest_try_jobs(
-            self.selected_try_bots, patchset=options.patchset)
+        jobs = self.git_cl.latest_try_jobs(self.selected_try_bots)
         self._log_jobs(jobs)
         builders_with_no_jobs = self.selected_try_bots - {b.builder_name for b in jobs}
 
@@ -263,15 +259,6 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
         return test_baseline_set
 
     def _make_test_baseline_set_for_tests(self, tests, builds_to_results):
-        """Determines the set of test baselines to fetch from a list of tests.
-
-        Args:
-            tests: A list of tests.
-            builds_to_results: A dict mapping Builds to LayoutTestResults.
-
-        Returns:
-            A TestBaselineSet object.
-        """
         test_baseline_set = TestBaselineSet(self._tool)
         for test in tests:
             for build in builds_to_results:
@@ -279,10 +266,10 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
         return test_baseline_set
 
     def _make_test_baseline_set(self, builds_to_results, only_changed_tests):
-        """Determines the set of test baselines to fetch.
+        """Returns a dict which lists the set of baselines to fetch.
 
-        The list of tests are not explicitly provided, so all failing tests or
-        modified tests will be rebaselined (depending on only_changed_tests).
+        The dict that is returned is a dict of tests to Build objects
+        to baseline file extensions.
 
         Args:
             builds_to_results: A dict mapping Builds to LayoutTestResults.
@@ -291,7 +278,7 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
                tests will be downloaded, even for tests that were not modified.
 
         Returns:
-            A TestBaselineSet object.
+            A dict containing information about which new baselines to download.
         """
         builds_to_tests = {}
         for build, results in builds_to_results.iteritems():

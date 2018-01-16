@@ -1,10 +1,6 @@
 # Copyright 2016 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-#
-# TODO(509038): Delete this file once all generated script tests have been
-# migrated to wpt/. A copy of this file already exists in wpt/bluetooth that
-# generates bluetooth tests inside of wpt/.
 """Generator script for Web Bluetooth LayoutTests.
 
 For each script-tests/X.js creates the following test files depending on the

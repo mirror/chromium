@@ -20,7 +20,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        const map = new Map();
+        var map = new Map();
         if (settings.routes.CLOUD_PRINTERS) {
           map.set(
               settings.routes.CLOUD_PRINTERS.path,

@@ -373,7 +373,6 @@ source_set("ios_web_web_state_unittests") {
     "//ios/testing:ios_test_support",
     "//ios/testing:ocmock_support",
     "//ios/web",
-    "//ios/web/navigation",
     "//ios/web/public",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
@@ -587,11 +586,15 @@ js_compile_bundle("main_frame_web_bundle") {
   closure_entry_point = "__crWeb.mainFrameWebBundle"
 
   sources = [
+    "web_state/js/resources/base.js",
+    "web_state/js/resources/common.js",
     "web_state/js/resources/console.js",
     "web_state/js/resources/context_menu.js",
     "web_state/js/resources/error.js",
+    "web_state/js/resources/form.js",
     "web_state/js/resources/legacy.js",
     "web_state/js/resources/main_frame_web_bundle.js",
+    "web_state/js/resources/message.js",
     "web_state/js/resources/navigation.js",
     "web_state/js/resources/scroll_workaround.js",
   ]

@@ -72,6 +72,7 @@
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/Base64.h"
@@ -412,8 +413,7 @@ InspectorPageAgent::ResourceType InspectorPageAgent::ToResourceType(
       return InspectorPageAgent::kImageResource;
     case Resource::kFont:
       return InspectorPageAgent::kFontResource;
-    case Resource::kAudio:
-    case Resource::kVideo:
+    case Resource::kMedia:
       return InspectorPageAgent::kMediaResource;
     case Resource::kManifest:
       return InspectorPageAgent::kManifestResource;

@@ -90,9 +90,10 @@ const int kRestrictedPorts[] = {
              // KURL::port())
 };
 
-// FTP overrides the following restricted port.
+// FTP overrides the following restricted ports.
 const int kAllowedFtpPorts[] = {
     21,  // ftp data
+    22,  // ssh
 };
 
 base::LazyInstance<std::multiset<int>>::Leaky g_explicitly_allowed_ports =

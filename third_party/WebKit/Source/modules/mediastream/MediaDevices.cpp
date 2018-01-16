@@ -77,7 +77,7 @@ MediaDevices::MediaDevices(ExecutionContext* context)
                         context->GetTaskRunner(TaskType::kMediaElementEvent))
                   : nullptr) {}
 
-MediaDevices::~MediaDevices() = default;
+MediaDevices::~MediaDevices() {}
 
 ScriptPromise MediaDevices::enumerateDevices(ScriptState* script_state) {
   LocalFrame* frame =

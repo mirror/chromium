@@ -35,7 +35,7 @@
 
 namespace blink {
 
-Region::Region() = default;
+Region::Region() {}
 
 Region::Region(const IntRect& rect) : bounds_(rect), shape_(rect) {}
 
@@ -222,7 +222,7 @@ struct Region::Shape::CompareIntersectsOperation {
   }
 };
 
-Region::Shape::Shape() = default;
+Region::Shape::Shape() {}
 
 Region::Shape::Shape(const IntRect& rect) {
   AppendSpan(rect.Y());

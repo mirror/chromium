@@ -44,13 +44,11 @@
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/base/auth.h"
 #include "net/base/net_errors.h"
-#include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_status_code.h"
 #include "net/http/http_util.h"
 #include "net/ssl/client_cert_store.h"
-#include "net/ssl/ssl_info.h"
 #include "net/test/url_request/url_request_mock_data_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -208,13 +206,13 @@ class MojoAsyncResourceHandlerWithStubOperations
       ResourceDispatcherHostImpl* rdh,
       mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
-      uint32_t options)
+      bool defer_on_response_started)
       : MojoAsyncResourceHandler(request,
                                  rdh,
                                  std::move(mojo_request),
                                  std::move(url_loader_client),
                                  RESOURCE_TYPE_MAIN_FRAME,
-                                 options),
+                                 defer_on_response_started),
         task_runner_(new base::TestSimpleTaskRunner) {}
   ~MojoAsyncResourceHandlerWithStubOperations() override {}
 
@@ -322,7 +320,7 @@ class MojoAsyncResourceHandlerTestBase {
  public:
   MojoAsyncResourceHandlerTestBase(
       std::unique_ptr<net::UploadDataStream> upload_stream,
-      uint32_t options)
+      bool defer_on_response_started)
       : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
         browser_context_(new TestBrowserContext()) {
     MojoAsyncResourceHandler::SetAllocationSizeForTesting(32 * 1024);
@@ -367,7 +365,7 @@ class MojoAsyncResourceHandlerTestBase {
 
     handler_.reset(new MojoAsyncResourceHandlerWithStubOperations(
         request_.get(), &rdh_, factory_impl->PassLoaderRequest(),
-        factory_impl->PassClientPtr(), options));
+        factory_impl->PassClientPtr(), defer_on_response_started));
     mock_loader_.reset(new MockResourceLoader(handler_.get()));
   }
 
@@ -436,7 +434,9 @@ class MojoAsyncResourceHandlerTest : public MojoAsyncResourceHandlerTestBase,
                                      public ::testing::Test {
  protected:
   MojoAsyncResourceHandlerTest()
-      : MojoAsyncResourceHandlerTestBase(nullptr, mojom::kURLLoadOptionNone) {}
+      : MojoAsyncResourceHandlerTestBase(
+            nullptr,
+            false /* defer_on_response_started */) {}
 };
 
 class MojoAsyncResourceHandlerDeferOnResponseStartedTest
@@ -444,29 +444,9 @@ class MojoAsyncResourceHandlerDeferOnResponseStartedTest
       public ::testing::Test {
  protected:
   MojoAsyncResourceHandlerDeferOnResponseStartedTest()
-      : MojoAsyncResourceHandlerTestBase(
-            nullptr,
-            mojom::kURLLoadOptionPauseOnResponseStarted) {}
-};
-
-class MojoAsyncResourceHandlerSendSSLInfoWithResponseTest
-    : public MojoAsyncResourceHandlerTestBase,
-      public ::testing::Test {
- protected:
-  MojoAsyncResourceHandlerSendSSLInfoWithResponseTest()
-      : MojoAsyncResourceHandlerTestBase(
-            nullptr,
-            mojom::kURLLoadOptionSendSSLInfoWithResponse) {}
-};
-
-class MojoAsyncResourceHandlerSendSSLInfoForCertificateError
-    : public MojoAsyncResourceHandlerTestBase,
-      public ::testing::Test {
- protected:
-  MojoAsyncResourceHandlerSendSSLInfoForCertificateError()
-      : MojoAsyncResourceHandlerTestBase(
-            nullptr,
-            mojom::kURLLoadOptionSendSSLInfoForCertificateError) {}
+      : MojoAsyncResourceHandlerTestBase(nullptr,
+                                         true /* defer_on_response_started */) {
+  }
 };
 
 // This test class is parameterized with MojoAsyncResourceHandler's allocation
@@ -476,7 +456,9 @@ class MojoAsyncResourceHandlerWithAllocationSizeTest
       public ::testing::TestWithParam<size_t> {
  protected:
   MojoAsyncResourceHandlerWithAllocationSizeTest()
-      : MojoAsyncResourceHandlerTestBase(nullptr, mojom::kURLLoadOptionNone) {
+      : MojoAsyncResourceHandlerTestBase(
+            nullptr,
+            false /* defer_on_response_started */) {
     MojoAsyncResourceHandler::SetAllocationSizeForTesting(GetParam());
   }
 };
@@ -488,7 +470,7 @@ class MojoAsyncResourceHandlerUploadTest
   MojoAsyncResourceHandlerUploadTest()
       : MojoAsyncResourceHandlerTestBase(
             std::make_unique<DummyUploadDataStream>(),
-            mojom::kURLLoadOptionNone) {}
+            false /* defer_on_response_started */) {}
 };
 
 TEST_F(MojoAsyncResourceHandlerTest, InFlightRequests) {
@@ -1402,73 +1384,6 @@ TEST_F(MojoAsyncResourceHandlerDeferOnResponseStartedTest,
     EXPECT_FALSE(delegate_blocked_by);
   }
 }
-
-// Test that SSLInfo is not attached to OnResponseStarted when there is no
-// kURLLoadOptionsSendSSLInfoWithResponse option.
-TEST_F(MojoAsyncResourceHandlerTest, SSLInfoOnResponseStarted) {
-  EXPECT_TRUE(CallOnWillStartAndOnResponseStarted());
-  EXPECT_FALSE(url_loader_client_.ssl_info());
-}
-
-// Test that SSLInfo is attached to OnResponseStarted when there is a
-// kURLLoadOptionsSendSSLInfoWithResponse option.
-TEST_F(MojoAsyncResourceHandlerSendSSLInfoWithResponseTest,
-       SSLInfoOnResponseStarted) {
-  EXPECT_TRUE(CallOnWillStartAndOnResponseStarted());
-  EXPECT_TRUE(url_loader_client_.ssl_info());
-}
-
-// Test that SSLInfo is not attached to OnResponseComplete when there is no
-// kURLLoadOptionsSendSSLInfoForCertificateError option.
-TEST_F(MojoAsyncResourceHandlerTest, SSLInfoOnComplete) {
-  EXPECT_TRUE(CallOnWillStart());
-
-  // Simulates the request getting a major SSL error.
-  const_cast<net::SSLInfo&>(request_->ssl_info()).cert_status =
-      net::CERT_STATUS_AUTHORITY_INVALID;
-  ASSERT_EQ(
-      MockResourceLoader::Status::IDLE,
-      mock_loader_->OnResponseCompleted(net::URLRequestStatus(
-          net::URLRequestStatus::CANCELED, net::ERR_CERT_AUTHORITY_INVALID)));
-
-  url_loader_client_.RunUntilComplete();
-  EXPECT_FALSE(url_loader_client_.completion_status().ssl_info);
-};
-
-// Test that SSLInfo is attached to OnResponseComplete when there is the
-// kURLLoadOptionsSendSSLInfoForCertificateError option.
-TEST_F(MojoAsyncResourceHandlerSendSSLInfoForCertificateError,
-       SSLInfoOnCompleteMajorError) {
-  EXPECT_TRUE(CallOnWillStart());
-
-  // Simulates the request getting a major SSL error.
-  const_cast<net::SSLInfo&>(request_->ssl_info()).cert_status =
-      net::CERT_STATUS_AUTHORITY_INVALID;
-  ASSERT_EQ(
-      MockResourceLoader::Status::IDLE,
-      mock_loader_->OnResponseCompleted(net::URLRequestStatus(
-          net::URLRequestStatus::CANCELED, net::ERR_CERT_AUTHORITY_INVALID)));
-
-  url_loader_client_.RunUntilComplete();
-  EXPECT_TRUE(url_loader_client_.completion_status().ssl_info);
-};
-
-// Test that SSLInfo is not attached to OnResponseComplete when there is the
-// kURLLoadOptionsSendSSLInfoForCertificateError option and a minor SSL error.
-TEST_F(MojoAsyncResourceHandlerSendSSLInfoForCertificateError,
-       SSLInfoOnCompleteMinorError) {
-  EXPECT_TRUE(CallOnWillStart());
-
-  // Simulates the request getting a minor SSL error.
-  const_cast<net::SSLInfo&>(request_->ssl_info()).cert_status =
-      net::CERT_STATUS_UNABLE_TO_CHECK_REVOCATION;
-
-  EXPECT_TRUE(CallOnResponseStarted());
-  ASSERT_EQ(MockResourceLoader::Status::IDLE,
-            mock_loader_->OnResponseCompleted(net::URLRequestStatus()));
-  url_loader_client_.RunUntilComplete();
-  EXPECT_FALSE(url_loader_client_.completion_status().ssl_info);
-};
 
 INSTANTIATE_TEST_CASE_P(MojoAsyncResourceHandlerWithAllocationSizeTest,
                         MojoAsyncResourceHandlerWithAllocationSizeTest,

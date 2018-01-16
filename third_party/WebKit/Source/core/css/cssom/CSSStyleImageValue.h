@@ -39,6 +39,7 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
   FloatSize ElementSize(const FloatSize& default_object_size) const final;
   scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                AccelerationHint,
+                                               SnapshotReason,
                                                const FloatSize&) final {
     return GetImage();
   }

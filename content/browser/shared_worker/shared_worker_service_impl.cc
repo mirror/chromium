@@ -163,8 +163,12 @@ void SharedWorkerServiceImpl::CreateWorker(
   // Keep the renderer process alive that will be hosting the shared worker.
   process_host->IncrementKeepAliveRefCount();
 
-  auto host = std::make_unique<SharedWorkerHost>(this, std::move(instance),
-                                                 worker_process_id);
+  // TODO(darin): Eliminate the need for shared workers to have routing IDs.
+  // Dev Tools will need to be modified to use something else as an identifier.
+  int worker_route_id = process_host->GetNextRoutingID();
+
+  auto host = std::make_unique<SharedWorkerHost>(
+      this, std::move(instance), worker_process_id, worker_route_id);
 
   bool pause_on_start;
   base::UnguessableToken devtools_worker_token;

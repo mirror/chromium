@@ -44,7 +44,7 @@ AudioProcessingEvent* AudioProcessingEvent::Create(
   return new AudioProcessingEvent(type, initializer);
 }
 
-AudioProcessingEvent::AudioProcessingEvent() = default;
+AudioProcessingEvent::AudioProcessingEvent() {}
 
 AudioProcessingEvent::AudioProcessingEvent(AudioBuffer* input_buffer,
                                            AudioBuffer* output_buffer,
@@ -63,7 +63,7 @@ AudioProcessingEvent::AudioProcessingEvent(
   playback_time_ = initializer.playbackTime();
 }
 
-AudioProcessingEvent::~AudioProcessingEvent() = default;
+AudioProcessingEvent::~AudioProcessingEvent() {}
 
 const AtomicString& AudioProcessingEvent::InterfaceName() const {
   return EventNames::AudioProcessingEvent;

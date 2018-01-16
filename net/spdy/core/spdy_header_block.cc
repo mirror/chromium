@@ -106,26 +106,18 @@ class SpdyHeaderBlock::Storage {
 SpdyHeaderBlock::HeaderValue::HeaderValue(Storage* storage,
                                           SpdyStringPiece key,
                                           SpdyStringPiece initial_value)
-    : storage_(storage),
-      fragments_({initial_value}),
-      pair_({key, {}}),
-      size_(initial_value.size()),
-      separator_size_(SeparatorForKey(key).size()) {}
+    : storage_(storage), fragments_({initial_value}), pair_({key, {}}) {}
 
 SpdyHeaderBlock::HeaderValue::HeaderValue(HeaderValue&& other)
     : storage_(other.storage_),
       fragments_(std::move(other.fragments_)),
-      pair_(std::move(other.pair_)),
-      size_(other.size_),
-      separator_size_(other.separator_size_) {}
+      pair_(std::move(other.pair_)) {}
 
 SpdyHeaderBlock::HeaderValue& SpdyHeaderBlock::HeaderValue::operator=(
     HeaderValue&& other) {
   storage_ = other.storage_;
   fragments_ = std::move(other.fragments_);
   pair_ = std::move(other.pair_);
-  size_ = other.size_;
-  separator_size_ = other.separator_size_;
   return *this;
 }
 
@@ -143,7 +135,6 @@ SpdyStringPiece SpdyHeaderBlock::HeaderValue::ConsolidatedValue() const {
 }
 
 void SpdyHeaderBlock::HeaderValue::Append(SpdyStringPiece fragment) {
-  size_ += (fragment.size() + separator_size_);
   fragments_.push_back(fragment);
 }
 
@@ -163,13 +154,11 @@ SpdyHeaderBlock::ValueProxy::ValueProxy(
     SpdyHeaderBlock::MapType* block,
     SpdyHeaderBlock::Storage* storage,
     SpdyHeaderBlock::MapType::iterator lookup_result,
-    const SpdyStringPiece key,
-    size_t* spdy_header_block_value_size)
+    const SpdyStringPiece key)
     : block_(block),
       storage_(storage),
       lookup_result_(lookup_result),
       key_(key),
-      spdy_header_block_value_size_(spdy_header_block_value_size),
       valid_(true) {}
 
 SpdyHeaderBlock::ValueProxy::ValueProxy(ValueProxy&& other)
@@ -177,7 +166,6 @@ SpdyHeaderBlock::ValueProxy::ValueProxy(ValueProxy&& other)
       storage_(other.storage_),
       lookup_result_(other.lookup_result_),
       key_(other.key_),
-      spdy_header_block_value_size_(other.spdy_header_block_value_size_),
       valid_(true) {
   other.valid_ = false;
 }
@@ -190,7 +178,6 @@ SpdyHeaderBlock::ValueProxy& SpdyHeaderBlock::ValueProxy::operator=(
   key_ = other.key_;
   valid_ = true;
   other.valid_ = false;
-  spdy_header_block_value_size_ = other.spdy_header_block_value_size_;
   return *this;
 }
 
@@ -206,7 +193,6 @@ SpdyHeaderBlock::ValueProxy::~ValueProxy() {
 
 SpdyHeaderBlock::ValueProxy& SpdyHeaderBlock::ValueProxy::operator=(
     const SpdyStringPiece value) {
-  *spdy_header_block_value_size_ += value.size();
   if (lookup_result_ == block_->end()) {
     DVLOG(1) << "Inserting: (" << key_ << ", " << value << ")";
     lookup_result_ =
@@ -216,7 +202,6 @@ SpdyHeaderBlock::ValueProxy& SpdyHeaderBlock::ValueProxy::operator=(
             .first;
   } else {
     DVLOG(1) << "Updating key: " << key_ << " with value: " << value;
-    *spdy_header_block_value_size_ -= lookup_result_->second.SizeEstimate();
     lookup_result_->second =
         HeaderValue(storage_, key_, storage_->Write(value));
   }
@@ -240,8 +225,6 @@ SpdyHeaderBlock::~SpdyHeaderBlock() = default;
 SpdyHeaderBlock& SpdyHeaderBlock::operator=(SpdyHeaderBlock&& other) {
   block_.swap(other.block_);
   storage_.swap(other.storage_);
-  key_size_ = other.key_size_;
-  value_size_ = other.value_size_;
   return *this;
 }
 
@@ -274,26 +257,13 @@ SpdyString SpdyHeaderBlock::DebugString() const {
   return output;
 }
 
-void SpdyHeaderBlock::erase(SpdyStringPiece key) {
-  auto iter = block_.find(key);
-  if (iter != block_.end()) {
-    key_size_ -= key.size();
-    value_size_ -= iter->second.SizeEstimate();
-    block_.erase(iter);
-  }
-}
-
 void SpdyHeaderBlock::clear() {
-  key_size_ = 0;
-  value_size_ = 0;
   block_.clear();
   storage_.reset();
 }
 
 void SpdyHeaderBlock::insert(const SpdyHeaderBlock::value_type& value) {
   // TODO(birenroy): Write new value in place of old value, if it fits.
-  value_size_ += value.second.size();
-
   auto iter = block_.find(value.first);
   if (iter == block_.end()) {
     DVLOG(1) << "Inserting: (" << value.first << ", " << value.second << ")";
@@ -301,7 +271,6 @@ void SpdyHeaderBlock::insert(const SpdyHeaderBlock::value_type& value) {
   } else {
     DVLOG(1) << "Updating key: " << iter->first
              << " with value: " << value.second;
-    value_size_ -= iter->second.SizeEstimate();
     auto* storage = GetStorage();
     iter->second =
         HeaderValue(storage, iter->first, storage->Write(value.second));
@@ -316,29 +285,25 @@ SpdyHeaderBlock::ValueProxy SpdyHeaderBlock::operator[](
   if (iter == block_.end()) {
     // We write the key first, to assure that the ValueProxy has a
     // reference to a valid SpdyStringPiece in its operator=.
-    out_key = WriteKey(key);
+    out_key = GetStorage()->Write(key);
     DVLOG(2) << "Key written as: " << std::hex
              << static_cast<const void*>(key.data()) << ", " << std::dec
              << key.size();
   } else {
     out_key = iter->first;
   }
-  return ValueProxy(&block_, GetStorage(), iter, out_key, &value_size_);
+  return ValueProxy(&block_, GetStorage(), iter, out_key);
 }
 
 void SpdyHeaderBlock::AppendValueOrAddHeader(const SpdyStringPiece key,
                                              const SpdyStringPiece value) {
-  value_size_ += value.size();
-
   auto iter = block_.find(key);
   if (iter == block_.end()) {
     DVLOG(1) << "Inserting: (" << key << ", " << value << ")";
-
     AppendHeader(key, value);
     return;
   }
   DVLOG(1) << "Updating key: " << iter->first << "; appending value: " << value;
-  value_size_ += SeparatorForKey(key).size();
   iter->second.Append(GetStorage()->Write(value));
 }
 
@@ -350,8 +315,8 @@ size_t SpdyHeaderBlock::EstimateMemoryUsage() const {
 
 void SpdyHeaderBlock::AppendHeader(const SpdyStringPiece key,
                                    const SpdyStringPiece value) {
-  auto backed_key = WriteKey(key);
   auto* storage = GetStorage();
+  auto backed_key = storage->Write(key);
   block_.emplace(std::make_pair(
       backed_key, HeaderValue(storage, backed_key, storage->Write(value))));
 }
@@ -377,11 +342,6 @@ std::unique_ptr<base::Value> SpdyHeaderBlockNetLogCallback(
   }
   dict->Set("headers", std::move(headers_dict));
   return std::move(dict);
-}
-
-SpdyStringPiece SpdyHeaderBlock::WriteKey(const SpdyStringPiece key) {
-  key_size_ += key.size();
-  return GetStorage()->Write(key);
 }
 
 size_t SpdyHeaderBlock::bytes_allocated() const {

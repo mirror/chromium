@@ -7,12 +7,15 @@
  * a (optionally supervised) profile, including choosing a name, and an avatar.
  */
 
+/** @typedef {{url: string, label:string}} */
+var AvatarIcon;
+
 (function() {
 /**
  * Sentinel signed-in user's index value.
- * @type {number}
+ * @const {number}
  */
-const NO_USER_SELECTED = -1;
+var NO_USER_SELECTED = -1;
 
 Polymer({
   is: 'create-profile',
@@ -176,7 +179,7 @@ Polymer({
    * @private
    */
   onTap_: function(event) {
-    const element = Polymer.dom(event).rootTarget;
+    var element = Polymer.dom(event).rootTarget;
 
     if (element.id == 'supervised-user-import-existing') {
       this.onImportUserTap_(event);
@@ -185,7 +188,7 @@ Polymer({
       this.browserProxy_.openUrlInLastActiveProfileBrowser(element.href);
       event.preventDefault();
     } else if (element.id == 'reauth') {
-      const elementData = /** @type {{userEmail: string}} */ (element.dataset);
+      var elementData = /** @type {{userEmail: string}} */ (element.dataset);
       this.browserProxy_.authenticateCustodian(elementData.userEmail);
       this.hideMessage_();
       event.preventDefault();
@@ -239,7 +242,7 @@ Polymer({
       this.handleMessage_(
           this.i18nAdvanced('custodianAccountNotSelectedError'));
     } else {
-      const signedInUser = this.signedInUser_(this.signedInUserIndex_);
+      var signedInUser = this.signedInUser_(this.signedInUserIndex_);
       this.hideMessage_();
       this.loadingSupervisedUsers_ = true;
       this.browserProxy_.getExistingSupervisedUsers(signedInUser.profilePath)
@@ -263,7 +266,7 @@ Polymer({
       this.handleMessage_(
           this.i18nAdvanced('custodianAccountNotSelectedError'));
     } else {
-      const signedInUser = this.signedInUser_(this.signedInUserIndex_);
+      var signedInUser = this.signedInUser_(this.signedInUserIndex_);
       this.hideMessage_();
       this.loadingSupervisedUsers_ = true;
       this.browserProxy_.getExistingSupervisedUsers(signedInUser.profilePath)
@@ -299,18 +302,18 @@ Polymer({
    * @private
    */
   createProfileIfValidSupervisedUser_: function(supervisedUsers) {
-    for (let i = 0; i < supervisedUsers.length; ++i) {
+    for (var i = 0; i < supervisedUsers.length; ++i) {
       if (supervisedUsers[i].name != this.profileName_)
         continue;
       // Check if another supervised user also exists with that name.
-      let nameIsUnique = true;
+      var nameIsUnique = true;
       // Handling the case when multiple supervised users with the same
       // name exist, but not all of them are on the device.
       // If at least one is not imported, we want to offer that
       // option to the user. This could happen due to a bug that allowed
       // creating SUs with the same name (https://crbug.com/557445).
-      let allOnCurrentDevice = supervisedUsers[i].onCurrentDevice;
-      for (let j = i + 1; j < supervisedUsers.length; ++j) {
+      var allOnCurrentDevice = supervisedUsers[i].onCurrentDevice;
+      for (var j = i + 1; j < supervisedUsers.length; ++j) {
         if (supervisedUsers[j].name == this.profileName_) {
           nameIsUnique = false;
           allOnCurrentDevice =
@@ -318,7 +321,7 @@ Polymer({
         }
       }
 
-      const opts = {
+      var opts = {
         'substitutions':
             [HTMLEscape(elide(this.profileName_, /* maxLength */ 50))],
         'attrs': {
@@ -356,17 +359,17 @@ Polymer({
    * @private
    */
   createProfile_: function() {
-    let custodianProfilePath = '';
+    var custodianProfilePath = '';
     if (this.signedInUserIndex_ != NO_USER_SELECTED) {
       custodianProfilePath =
           this.signedInUser_(this.signedInUserIndex_).profilePath;
     }
     this.hideMessage_();
     this.createInProgress_ = true;
-    const createShortcut =
+    var createShortcut =
         this.isProfileShortcutsEnabled_ && this.createShortcut_;
     // Select the 1st avatar if none selected.
-    const selectedAvatar = this.selectedAvatar_ || this.availableIcons_[0];
+    var selectedAvatar = this.selectedAvatar_ || this.availableIcons_[0];
     this.browserProxy_.createProfile(
         this.profileName_, selectedAvatar.url, createShortcut,
         this.isSupervised_, '', custodianProfilePath);
@@ -389,11 +392,11 @@ Polymer({
    * @private
    */
   onImportUserPopupImport_: function(event) {
-    const supervisedUser = event.detail.supervisedUser;
-    const signedInUser = event.detail.signedInUser;
+    var supervisedUser = event.detail.supervisedUser;
+    var signedInUser = event.detail.signedInUser;
     this.hideMessage_();
     this.createInProgress_ = true;
-    const createShortcut = this.isProfileShortcutsEnabled_;
+    var createShortcut = this.isProfileShortcutsEnabled_;
     this.browserProxy_.createProfile(
         supervisedUser.name, supervisedUser.iconURL, createShortcut,
         true /* isSupervised */, supervisedUser.id, signedInUser.profilePath);
@@ -460,7 +463,7 @@ Polymer({
    * @private
    */
   i18nAllowIDAttr_: function(id) {
-    const opts = {
+    var opts = {
       'attrs': {
         'id': function(node, value) {
           return node.tagName == 'A';
@@ -495,7 +498,7 @@ Polymer({
     // TODO(mahmadi): Figure out a way to add 'paper-input-extracted' as a
     // dependency and cast to PaperInputElement instead.
     /** @type {{validate: function():boolean}} */
-    const nameInput = this.$.nameInput;
+    var nameInput = this.$.nameInput;
     return createInProgress || loadingSupervisedUsers || !profileName ||
         !nameInput.validate();
   },

@@ -18,10 +18,9 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
-import org.chromium.content_public.browser.SelectionPopupController;
-import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.NetworkChangeNotifier;
 
 /** Manages the activation and gesture listeners for ContextualSearch on a given tab. */
@@ -34,9 +33,9 @@ public class ContextualSearchTabHelper
     private TemplateUrlServiceObserver mTemplateUrlObserver;
 
     /**
-     * The WebContents associated with the Tab which this helper is monitoring, unless detached.
+     * The ContentViewCore associated with the Tab which this helper is monitoring, unless detached.
      */
-    private WebContents mWebContents;
+    private ContentViewCore mContentViewCore;
 
     /**
      * The {@link ContextualSearchManager} that's managing this tab. This may point to
@@ -44,11 +43,11 @@ public class ContextualSearchTabHelper
      */
     private ContextualSearchManager mContextualSearchManager;
 
-    /** The GestureListener used for handling events from the current WebContents. */
+    /** The GestureListener used for handling events from the current ContentViewCore. */
     private GestureStateListener mGestureStateListener;
 
     /**
-     * Manages incoming calls to Smart Select when available, for the current base WebContents.
+     * Manages incoming calls to Smart Select when available, for the current mBaseContentViewCore.
      */
     private SelectionClientManager mSelectionClientManager;
 
@@ -97,7 +96,7 @@ public class ContextualSearchTabHelper
             mTemplateUrlObserver = new TemplateUrlServiceObserver() {
                 @Override
                 public void onTemplateURLServiceChanged() {
-                    updateContextualSearchHooks(mWebContents);
+                    updateContextualSearchHooks(mContentViewCore);
                 }
             };
             TemplateUrlService.getInstance().addObserver(mTemplateUrlObserver);
@@ -122,8 +121,8 @@ public class ContextualSearchTabHelper
         if (NetworkChangeNotifier.isInitialized()) {
             NetworkChangeNotifier.removeConnectionTypeObserver(this);
         }
-        removeContextualSearchHooks(mWebContents);
-        mWebContents = null;
+        removeContextualSearchHooks(mContentViewCore);
+        mContentViewCore = null;
         mContextualSearchManager = null;
         mSelectionClientManager = null;
         mGestureStateListener = null;
@@ -142,7 +141,7 @@ public class ContextualSearchTabHelper
         if (isAttached) {
             updateHooksForTab(tab);
         } else {
-            removeContextualSearchHooks(mWebContents);
+            removeContextualSearchHooks(mContentViewCore);
             mContextualSearchManager = null;
         }
     }
@@ -161,7 +160,7 @@ public class ContextualSearchTabHelper
 
     @Override
     public void onConnectionTypeChanged(int connectionType) {
-        updateContextualSearchHooks(mWebContents);
+        updateContextualSearchHooks(mContentViewCore);
     }
 
     // ============================================================================================
@@ -169,88 +168,84 @@ public class ContextualSearchTabHelper
     // ============================================================================================
 
     /**
-     * Should be called whenever the Tab's WebContents may have changed. Removes hooks from the
-     * existing WebContents, if necessary, and then adds hooks for the new ContentViewCore.
+     * Should be called whenever the Tab's ContentViewCore may have changed. Removes hooks from the
+     * existing ContentViewCore, if necessary, and then adds hooks for the new ContentViewCore.
      * @param tab The current tab.
      */
     private void updateHooksForTab(Tab tab) {
-        WebContents currentWebContents = tab.getWebContents();
-        if (currentWebContents != mWebContents
+        ContentViewCore currentContentViewCore = tab.getActiveContentViewCore();
+        if (currentContentViewCore != mContentViewCore
                 || mContextualSearchManager != getContextualSearchManager(tab)) {
-            mWebContents = currentWebContents;
+            mContentViewCore = currentContentViewCore;
             mContextualSearchManager = getContextualSearchManager(tab);
-            if (mWebContents != null && mSelectionClientManager == null) {
-                mSelectionClientManager = new SelectionClientManager(mWebContents);
+            if (mContentViewCore != null && mSelectionClientManager == null) {
+                mSelectionClientManager = new SelectionClientManager(mContentViewCore);
             }
-            updateContextualSearchHooks(mWebContents);
+            updateContextualSearchHooks(mContentViewCore);
         }
     }
 
     /**
      * Updates the Contextual Search hooks, adding or removing them depending on whether it is
-     * currently active. If the current tab's {@link WebContents} may have changed, call {@link
+     * currently active. If the current tab's {@link ContentViewCore} may have changed, call {@link
      * #updateHooksForTab(Tab)} instead.
      *
-     * @param webContents The WebContents to attach the gesture state listener to.
+     * @param cvc The content view core to attach the gesture state listener to.
      */
-    private void updateContextualSearchHooks(WebContents webContents) {
-        if (webContents == null) return;
+    private void updateContextualSearchHooks(ContentViewCore cvc) {
+        if (cvc == null) return;
 
-        removeContextualSearchHooks(webContents);
-        if (isContextualSearchActive(webContents)) addContextualSearchHooks(webContents);
+        removeContextualSearchHooks(cvc);
+        if (isContextualSearchActive(cvc)) addContextualSearchHooks(cvc);
     }
 
     /**
-     * Adds Contextual Search hooks for its client and listener to the given WebContents.
-     * @param webContents The WebContents to attach the gesture state listener to.
+     * Adds Contextual Search hooks for its client and listener to the given content view core.
+     * @param cvc The content view core to attach the gesture state listener to.
      */
-    private void addContextualSearchHooks(WebContents webContents) {
-        assert mTab.getWebContents() == null || mTab.getWebContents() == webContents;
+    private void addContextualSearchHooks(ContentViewCore cvc) {
+        assert mTab.getContentViewCore() == null || mTab.getContentViewCore() == cvc;
         ContextualSearchManager contextualSearchManager = getContextualSearchManager(mTab);
         if (mGestureStateListener == null && contextualSearchManager != null) {
             mGestureStateListener = contextualSearchManager.getGestureStateListener();
-            GestureListenerManager.fromWebContents(webContents).addListener(mGestureStateListener);
+            GestureListenerManager.fromWebContents(cvc.getWebContents())
+                    .addListener(mGestureStateListener);
 
             // If we needed to add our listener, we also need to add our selection client.
-            SelectionPopupController controller =
-                    SelectionPopupController.fromWebContents(webContents);
-            controller.setSelectionClient(
-                    mSelectionClientManager.addContextualSearchSelectionClient(
-                            contextualSearchManager.getContextualSearchSelectionClient()));
+            cvc.setSelectionClient(mSelectionClientManager.addContextualSearchSelectionClient(
+                    contextualSearchManager.getContextualSearchSelectionClient()));
             contextualSearchManager.suppressContextualSearchForSmartSelection(
                     mSelectionClientManager.isSmartSelectionEnabledInChrome());
         }
     }
 
     /**
-     * Removes Contextual Search hooks for its client and listener from the given WebContents.
-     * @param webContents The WebContents to detach the gesture state listener from.
+     * Removes Contextual Search hooks for its client and listener from the given content view core.
+     * @param cvc The content view core to detach the gesture state listener from.
      */
-    private void removeContextualSearchHooks(WebContents webContents) {
-        if (webContents == null) return;
+    private void removeContextualSearchHooks(ContentViewCore cvc) {
+        if (cvc == null) return;
 
         if (mGestureStateListener != null) {
-            GestureListenerManager.fromWebContents(webContents)
+            GestureListenerManager.fromWebContents(cvc.getWebContents())
                     .removeListener(mGestureStateListener);
             mGestureStateListener = null;
 
             // If we needed to remove our listener, we also need to remove our selection client.
             if (mSelectionClientManager != null) {
-                SelectionPopupController controller =
-                        SelectionPopupController.fromWebContents(webContents);
-                controller.setSelectionClient(
+                cvc.setSelectionClient(
                         mSelectionClientManager.removeContextualSearchSelectionClient());
             }
         }
     }
 
     /** @return whether Contextual Search is enabled and active in this tab. */
-    private boolean isContextualSearchActive(WebContents webContents) {
-        assert mTab.getWebContents() == null || mTab.getWebContents() == webContents;
+    private boolean isContextualSearchActive(ContentViewCore cvc) {
+        assert mTab.getContentViewCore() == null || mTab.getContentViewCore() == cvc;
         ContextualSearchManager manager = getContextualSearchManager(mTab);
         if (manager == null) return false;
 
-        return !webContents.isIncognito() && FirstRunStatus.getFirstRunFlowComplete()
+        return !cvc.getWebContents().isIncognito() && FirstRunStatus.getFirstRunFlowComplete()
                 && !PrefServiceBridge.getInstance().isContextualSearchDisabled()
                 && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()
                 && !LocaleManager.getInstance().needToCheckForSearchEnginePromo()
@@ -288,7 +283,7 @@ public class ContextualSearchTabHelper
 
     @CalledByNative
     void onContextualSearchPrefChanged() {
-        updateContextualSearchHooks(mWebContents);
+        updateContextualSearchHooks(mContentViewCore);
 
         ContextualSearchManager manager = getContextualSearchManager(mTab);
         if (manager != null) {

@@ -192,8 +192,8 @@ class HashMap {
 
   static bool IsValidKey(KeyPeekInType);
 
-  template <typename VisitorDispatcher, typename A = Allocator>
-  std::enable_if_t<A::kIsGarbageCollected> Trace(VisitorDispatcher visitor) {
+  template <typename VisitorDispatcher>
+  void Trace(VisitorDispatcher visitor) {
     impl_.Trace(visitor);
   }
 
@@ -245,10 +245,11 @@ class HashMap<KeyArg,
  private:
   friend class HashMap;
 
-  HashMapKeysProxy() = delete;
-  HashMapKeysProxy(const HashMapKeysProxy&) = delete;
-  HashMapKeysProxy& operator=(const HashMapKeysProxy&) = delete;
-  ~HashMapKeysProxy() = delete;
+  // These are intentionally not implemented.
+  HashMapKeysProxy();
+  HashMapKeysProxy(const HashMapKeysProxy&);
+  HashMapKeysProxy& operator=(const HashMapKeysProxy&);
+  ~HashMapKeysProxy();
 };
 
 template <typename KeyArg,
@@ -292,10 +293,11 @@ class HashMap<KeyArg,
  private:
   friend class HashMap;
 
-  HashMapValuesProxy() = delete;
-  HashMapValuesProxy(const HashMapValuesProxy&) = delete;
-  HashMapValuesProxy& operator=(const HashMapValuesProxy&) = delete;
-  ~HashMapValuesProxy() = delete;
+  // These are intentionally not implemented.
+  HashMapValuesProxy();
+  HashMapValuesProxy(const HashMapValuesProxy&);
+  HashMapValuesProxy& operator=(const HashMapValuesProxy&);
+  ~HashMapValuesProxy();
 };
 
 template <typename KeyTraits, typename MappedTraits>

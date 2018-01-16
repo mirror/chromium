@@ -28,7 +28,6 @@
       "requires": {
         "*": [ "app" ],
         "content_browser": [
-          "dwrite_font_proxy",
           "field_trials",
           "renderer"
         ],
@@ -55,7 +54,6 @@
           "blink::mojom::TextSuggestionBackend",
           "content::mojom::ImageDownloader",
           "content::mojom::FrameInputHandler",
-          "content::mojom::FullscreenVideoElementHandler",
           "content::mojom::MediaStreamDispatcher",
           "content::mojom::Widget",
           "viz::mojom::InputTargetClient"

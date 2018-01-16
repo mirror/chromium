@@ -81,9 +81,9 @@ URLRegistry& BlobURLRegistry::Registry() {
 }  // namespace
 
 Blob::Blob(scoped_refptr<BlobDataHandle> data_handle)
-    : blob_data_handle_(std::move(data_handle)) {}
+    : blob_data_handle_(std::move(data_handle)), is_closed_(false) {}
 
-Blob::~Blob() = default;
+Blob::~Blob() {}
 
 // static
 Blob* Blob::Create(
@@ -191,10 +191,6 @@ void Blob::AppendTo(BlobData& blob_data) const {
 
 URLRegistry& Blob::Registry() const {
   return BlobURLRegistry::Registry();
-}
-
-mojom::blink::BlobPtr Blob::AsMojoBlob() {
-  return blob_data_handle_->CloneBlobPtr();
 }
 
 // static

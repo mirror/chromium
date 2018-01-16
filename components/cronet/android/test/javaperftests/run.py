@@ -42,7 +42,6 @@ Benchmark timings are output by telemetry to stdout and written to
 
 import logging
 import json
-import optparse
 import os
 import posixpath
 import shutil
@@ -206,11 +205,6 @@ class CronetPerfTestMeasurement(
       results.AddValue(scalar.ScalarValue(results.current_page, test,
           'ms', jsonResults[test]))
 
-  def DidRunStory(self, platform, results):
-    # Skip parent implementation which calls into tracing_controller which this
-    # doesn't have.
-    pass
-
 
 class CronetPerfTestBenchmark(benchmark.Benchmark):
   # Benchmark implementation spawning off Cronet perf test measurement and
@@ -312,13 +306,6 @@ def GenerateLighttpdConfig(config_file, http_server_doc_root, http_server):
 
 
 def main():
-  parser = optparse.OptionParser()
-  parser.add_option('--output-format', default='html',
-                   help='The output format of the results file.')
-  parser.add_option('--output-dir', default=None,
-                   help='The directory for the output file. Default value is '
-                        'the base directory of this script.')
-  options, _ = parser.parse_args()
   constants.SetBuildType(BUILD_TYPE)
   # Install APK
   device = GetDevice()
@@ -352,9 +339,6 @@ def main():
   sys.argv.insert(1, 'run')
   sys.argv.insert(2, 'run.CronetPerfTestBenchmark')
   sys.argv.insert(3, '--browser=any')
-  sys.argv.insert(4, '--output-format=' + options.output_format)
-  if options.output_dir:
-    sys.argv.insert(5, '--output-dir=' + options.output_dir)
   benchmark_runner.main(runner_config)
   # Shutdown.
   quic_server.ShutdownQuicServer()

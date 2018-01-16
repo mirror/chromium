@@ -67,6 +67,7 @@ struct FallbackListCompositeKey {
 
  private:
   static const unsigned kDeletedValueHash = 1;
+  FontDescription font_description_;
   Vector<FontCacheKey> font_cache_keys_;
   unsigned hash_;
 

@@ -309,7 +309,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
         std::make_unique<TestNoteTakingController>();
     test_note_taking_controller_ = test_note_taking_controller_ptr.get();
     connector_factory_ =
-        service_manager::TestConnectorFactory::CreateForUniqueService(
+        std::make_unique<service_manager::TestConnectorFactory>(
             std::move(test_note_taking_controller_ptr));
     connector_ = connector_factory_->CreateConnector();
 

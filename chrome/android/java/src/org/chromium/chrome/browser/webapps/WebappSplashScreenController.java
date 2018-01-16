@@ -283,8 +283,9 @@ class WebappSplashScreenController extends EmptyTabObserver {
             return;
         }
 
-        mCompositorViewHolder.getCompositorView().surfaceRedrawNeededAsync(
-                () -> { animateHidingSplashScreen(tab, reason); });
+        mCompositorViewHolder.getCompositorView().surfaceRedrawNeededAsync(null, () -> {
+            animateHidingSplashScreen(tab, reason);
+        });
     }
 
     /** Performs the splash screen hiding animation. */

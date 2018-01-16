@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "media/base/android/mock_media_codec_bridge.h"
 #include "media/gpu/android/avda_codec_allocator.h"
@@ -34,7 +35,7 @@ std::unique_ptr<MediaCodecBridge> FakeCodecAllocator::CreateMediaCodecSync(
 
   std::unique_ptr<MockMediaCodecBridge> codec;
   if (allow_sync_creation) {
-    codec = std::make_unique<MockMediaCodecBridge>();
+    codec = base::MakeUnique<MockMediaCodecBridge>();
     most_recent_codec = codec.get();
     most_recent_codec_destruction_observer = codec->CreateDestructionObserver();
     most_recent_codec_destruction_observer->DoNotAllowDestruction();
@@ -76,7 +77,7 @@ MockMediaCodecBridge* FakeCodecAllocator::ProvideMockCodecAsync(
     return nullptr;
 
   auto mock_codec = codec ? std::move(codec)
-                          : std::make_unique<NiceMock<MockMediaCodecBridge>>();
+                          : base::MakeUnique<NiceMock<MockMediaCodecBridge>>();
   auto* raw_codec = mock_codec.get();
   most_recent_codec = raw_codec;
   most_recent_codec_destruction_observer =
@@ -100,7 +101,7 @@ void FakeCodecAllocator::CopyCodecConfig(scoped_refptr<CodecConfig> config) {
   most_recent_surface_texture = config->surface_bundle->surface_texture.get();
   most_recent_config->media_crypto =
       config->media_crypto
-          ? std::make_unique<base::android::ScopedJavaGlobalRef<jobject>>(
+          ? base::MakeUnique<base::android::ScopedJavaGlobalRef<jobject>>(
                 *config->media_crypto)
           : nullptr;
   most_recent_config->requires_secure_codec = config->requires_secure_codec;

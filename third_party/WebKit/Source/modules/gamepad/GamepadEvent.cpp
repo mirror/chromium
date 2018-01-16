@@ -19,7 +19,7 @@ GamepadEvent::GamepadEvent(const AtomicString& type,
     gamepad_ = initializer.gamepad();
 }
 
-GamepadEvent::~GamepadEvent() = default;
+GamepadEvent::~GamepadEvent() {}
 
 const AtomicString& GamepadEvent::InterfaceName() const {
   return EventNames::GamepadEvent;

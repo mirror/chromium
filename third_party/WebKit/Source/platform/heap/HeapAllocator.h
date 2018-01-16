@@ -53,7 +53,7 @@ class PLATFORM_EXPORT HeapAllocator {
 
  public:
   using Visitor = blink::Visitor;
-  static constexpr bool kIsGarbageCollected = true;
+  static const bool kIsGarbageCollected = true;
 
   template <typename T>
   static size_t MaxElementCountInBackingStore() {
@@ -558,7 +558,6 @@ struct VectorTraits<blink::Member<T>> : VectorTraitsBase<blink::Member<T>> {
   static const bool kNeedsDestruction = false;
   static const bool kCanInitializeWithMemset = true;
   static const bool kCanClearUnusedSlotsWithMemset = true;
-  static const bool kCanCopyWithMemcpy = true;
   static const bool kCanMoveWithMemcpy = true;
 };
 
@@ -691,13 +690,6 @@ struct HashTraits<blink::Member<T>> : SimpleClassHashTraits<blink::Member<T>> {
   }
 
   static PeekOutType Peek(const blink::Member<T>& value) { return value; }
-
-  static void ConstructDeletedValue(blink::Member<T>& slot, bool) {
-    slot = WTF::kHashTableDeletedValue;
-  }
-  static bool IsDeletedValue(const blink::Member<T>& value) {
-    return value.IsHashTableDeletedValue();
-  }
 };
 
 template <typename T>

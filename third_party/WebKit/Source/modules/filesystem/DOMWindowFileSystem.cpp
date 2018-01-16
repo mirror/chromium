@@ -30,6 +30,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
 #include "modules/filesystem/DOMFileSystem.h"
+#include "modules/filesystem/EntryCallback.h"
 #include "modules/filesystem/FileSystemCallback.h"
 #include "modules/filesystem/FileSystemCallbacks.h"
 #include "modules/filesystem/LocalFileSystem.h"
@@ -83,7 +84,7 @@ void DOMWindowFileSystem::webkitRequestFileSystem(
 void DOMWindowFileSystem::webkitResolveLocalFileSystemURL(
     LocalDOMWindow& window,
     const String& url,
-    V8EntryCallback* success_callback,
+    EntryCallback* success_callback,
     V8ErrorCallback* error_callback) {
   if (!window.IsCurrentlyDisplayedInFrame())
     return;
@@ -113,9 +114,9 @@ void DOMWindowFileSystem::webkitResolveLocalFileSystemURL(
 
   LocalFileSystem::From(*document)->ResolveURL(
       document, completed_url,
-      ResolveURICallbacks::Create(
-          ResolveURICallbacks::OnDidGetEntryV8Impl::Create(success_callback),
-          ScriptErrorCallback::Wrap(error_callback), document));
+      ResolveURICallbacks::Create(success_callback,
+                                  ScriptErrorCallback::Wrap(error_callback),
+                                  document));
 }
 
 static_assert(

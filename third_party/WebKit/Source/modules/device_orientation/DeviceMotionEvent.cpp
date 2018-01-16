@@ -32,7 +32,7 @@
 
 namespace blink {
 
-DeviceMotionEvent::~DeviceMotionEvent() = default;
+DeviceMotionEvent::~DeviceMotionEvent() {}
 
 DeviceMotionEvent::DeviceMotionEvent()
     : device_motion_data_(DeviceMotionData::Create()) {}

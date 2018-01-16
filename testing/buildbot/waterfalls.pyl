@@ -942,6 +942,7 @@
           'gtest_tests': 'chromium_mac_fyi_gtests',
           'isolated_scripts': 'chromium_isolated_scripts',
         },
+        'use_swarming': False,
       },
       'Chromium Win 10 GCE Tests': {
         'test_suites': {
@@ -1722,20 +1723,6 @@
   {
     'name': 'chromium.webkit',
     'machines': {
-      'Dummy WebKit Mac10.13': {
-        'test_suites': {
-          'isolated_scripts': 'chromium_webkit_isolated_scripts',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'gpu': '8086:0a2e',
-              'hidpi': '0',
-              'os': 'Mac-10.13',
-            },
-          ],
-        },
-      },
       'WebKit Linux Trusty': {
         'test_suites': {
           'isolated_scripts': 'chromium_webkit_isolated_scripts',

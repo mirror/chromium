@@ -477,6 +477,12 @@ class ServiceWorkerBrowserTest : public ContentBrowserTest {
   ServiceWorkerContextWrapper* wrapper() { return wrapper_.get(); }
   ServiceWorkerContext* public_context() { return wrapper(); }
 
+  void AssociateRendererProcessToPattern(const GURL& pattern) {
+    wrapper_->process_manager()->AddProcessReferenceToPattern(
+        pattern,
+        shell()->web_contents()->GetMainFrame()->GetProcess()->GetID());
+  }
+
  private:
   scoped_refptr<ServiceWorkerContextWrapper> wrapper_;
 };
@@ -664,6 +670,8 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     // Make the registration findable via storage functions.
     wrapper()->context()->storage()->NotifyInstallingRegistration(
         registration_.get());
+
+    AssociateRendererProcessToPattern(pattern);
   }
 
   void TimeoutWorkerOnIOThread() {
@@ -791,15 +799,13 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     version_->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::INSTALL,
         base::BindOnce(&self::DispatchInstallEventOnIOThread,
-                       base::Unretained(this), done, result));
+                       base::Unretained(this), done, result),
+        CreateReceiver(BrowserThread::UI, done, result));
   }
 
-  void DispatchInstallEventOnIOThread(
-      const base::Closure& done,
-      ServiceWorkerStatusCode* result,
-      ServiceWorkerStatusCode start_worker_status) {
+  void DispatchInstallEventOnIOThread(const base::Closure& done,
+                                      ServiceWorkerStatusCode* result) {
     ASSERT_TRUE(BrowserThread::CurrentlyOn(BrowserThread::IO));
-    ASSERT_EQ(SERVICE_WORKER_OK, start_worker_status);
     version_->SetStatus(ServiceWorkerVersion::INSTALLING);
     int request_id =
         version_->StartRequest(ServiceWorkerMetrics::EventType::INSTALL,
@@ -846,15 +852,13 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     version_->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::ACTIVATE,
         base::BindOnce(&self::DispatchActivateEventOnIOThread,
-                       base::Unretained(this), done, result));
+                       base::Unretained(this), done, result),
+        CreateReceiver(BrowserThread::UI, done, result));
   }
 
-  void DispatchActivateEventOnIOThread(
-      const base::Closure& done,
-      ServiceWorkerStatusCode* result,
-      ServiceWorkerStatusCode start_worker_status) {
+  void DispatchActivateEventOnIOThread(const base::Closure& done,
+                                       ServiceWorkerStatusCode* result) {
     ASSERT_TRUE(BrowserThread::CurrentlyOn(BrowserThread::IO));
-    ASSERT_EQ(SERVICE_WORKER_OK, start_worker_status);
     version_->SetStatus(ServiceWorkerVersion::ACTIVATING);
     registration_->SetActiveVersion(version_.get());
     int request_id =

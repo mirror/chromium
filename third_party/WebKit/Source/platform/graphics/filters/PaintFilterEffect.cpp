@@ -15,7 +15,7 @@ PaintFilterEffect::PaintFilterEffect(Filter* filter, const PaintFlags& flags)
   SetOperatingInterpolationSpace(kInterpolationSpaceSRGB);
 }
 
-PaintFilterEffect::~PaintFilterEffect() = default;
+PaintFilterEffect::~PaintFilterEffect() {}
 
 PaintFilterEffect* PaintFilterEffect::Create(Filter* filter,
                                              const PaintFlags& flags) {

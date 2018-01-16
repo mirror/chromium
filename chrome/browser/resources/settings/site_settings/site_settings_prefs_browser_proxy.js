@@ -13,7 +13,7 @@
  * should be treated as 'default'.
  * @enum {string}
  */
-const ContentSettingProvider = {
+var ContentSettingProvider = {
   EXTENSION: 'extension',
   PREFERENCE: 'preference',
 };
@@ -28,7 +28,7 @@ const ContentSettingProvider = {
  *            setting: !settings.ContentSetting,
  *            source: !settings.SiteSettingSource}}
  */
-let RawSiteException;
+var RawSiteException;
 
 /**
  * The site exception after it has been converted/filtered for UI use.
@@ -42,25 +42,25 @@ let RawSiteException;
  *            enforcement: ?chrome.settingsPrivate.Enforcement,
  *            controlledBy: !chrome.settingsPrivate.ControlledBy}}
  */
-let SiteException;
+var SiteException;
 
 /**
  * @typedef {{setting: !settings.ContentSetting,
  *            source: !ContentSettingProvider}}
  */
-let DefaultContentSetting;
+var DefaultContentSetting;
 
 /**
  * @typedef {{name: string,
  *            id: string}}
  */
-let MediaPickerEntry;
+var MediaPickerEntry;
 
 /**
  * @typedef {{protocol: string,
  *            spec: string}}
  */
-let ProtocolHandlerEntry;
+var ProtocolHandlerEntry;
 
 /**
  * @typedef {{name: string,
@@ -68,7 +68,7 @@ let ProtocolHandlerEntry;
  *            serial-number: string,
  *            vendor-id: Number}}
  */
-let UsbDeviceDetails;
+var UsbDeviceDetails;
 
 /**
  * @typedef {{embeddingOrigin: string,
@@ -78,7 +78,7 @@ let UsbDeviceDetails;
  *            setting: string,
  *            source: string}}
  */
-let UsbDeviceEntry;
+var UsbDeviceEntry;
 
 /**
  * @typedef {{origin: string,
@@ -86,7 +86,7 @@ let UsbDeviceEntry;
  *            source: string,
  *            zoom: string}}
  */
-let ZoomLevelEntry;
+var ZoomLevelEntry;
 
 cr.define('settings', function() {
   /** @interface */

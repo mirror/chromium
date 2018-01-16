@@ -7,7 +7,6 @@
 
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/side_swipe_toolbar_interacting.h"
-#import "ios/chrome/browser/ui/toolbar/public/toolbar_coordinating.h"
 
 @protocol ActivityServicePositioner;
 @protocol QRScannerResultLoading;
@@ -18,11 +17,10 @@
 
 // Protocol defining a primary toolbar, in a paradigm where the toolbar can be
 // split between primary and secondary.
-@protocol PrimaryToolbarCoordinator<OmniboxFocuser,
-                                    SideSwipeToolbarInteracting,
-                                    ToolbarCoordinating>
+@protocol PrimaryToolbarCoordinator<OmniboxFocuser, SideSwipeToolbarInteracting>
 
-@property(nonatomic, strong, readonly) UIViewController* viewController;
+// The toolbar ViewController.
+@property(nonatomic, strong) UIViewController* toolbarViewController;
 
 // Returns the different protocols and superclass now implemented by the
 // internal ViewController.
@@ -31,9 +29,6 @@
 - (id<TabHistoryPositioner>)tabHistoryPositioner;
 - (id<TabHistoryUIUpdater>)tabHistoryUIUpdater;
 - (id<ActivityServicePositioner>)activityServicePositioner;
-
-// Stops the coordinator.
-- (void)stop;
 
 // Show the animation when transitioning to a prerendered page.
 - (void)showPrerenderingAnimation;

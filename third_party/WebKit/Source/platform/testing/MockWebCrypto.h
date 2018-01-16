@@ -15,7 +15,7 @@ namespace blink {
 
 class MockWebCrypto : public WebCrypto {
  public:
-  ~MockWebCrypto() override = default;
+  ~MockWebCrypto() override {}
 
   static std::unique_ptr<MockWebCrypto> Create() {
     return std::unique_ptr<MockWebCrypto>(
@@ -102,7 +102,7 @@ class MockWebCrypto : public WebCrypto {
                bool(const WebCryptoKey&, WebVector<unsigned char>&));
 
  protected:
-  MockWebCrypto() = default;
+  MockWebCrypto() {}
 
   std::unique_ptr<WebCryptoDigestor> CreateDigestor(
       WebCryptoAlgorithmId id) override {
@@ -114,7 +114,7 @@ class MockWebCrypto : public WebCrypto {
 
 class MockWebCryptoDigestor : public WebCryptoDigestor {
  public:
-  ~MockWebCryptoDigestor() override = default;
+  ~MockWebCryptoDigestor() override {}
 
   static MockWebCryptoDigestor* Create() {
     return new ::testing::StrictMock<MockWebCryptoDigestor>();
@@ -129,7 +129,7 @@ class MockWebCryptoDigestor : public WebCryptoDigestor {
   MOCK_METHOD2(Finish, bool(unsigned char*&, unsigned&));
 
  protected:
-  MockWebCryptoDigestor() = default;
+  MockWebCryptoDigestor() {}
 
   DISALLOW_COPY_AND_ASSIGN(MockWebCryptoDigestor);
 };

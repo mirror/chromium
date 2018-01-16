@@ -68,12 +68,7 @@ TestRunner.deprecatedInitAsync(`
   function registerServiceWorker(script, scope) {
     return navigator.serviceWorker.register(script, {
       scope: scope
-    })
-    .then(reg => registrations[scope] = reg)
-    .catch(err => {
-      return Promise.reject(new Error('Service Worker registration error: ' +
-                                      err.toString()));
-    });
+    }).then(reg => registrations[scope] = reg);
   }
 
   function waitForActivated(scope) {

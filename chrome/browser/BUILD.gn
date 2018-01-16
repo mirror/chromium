@@ -2589,22 +2589,15 @@ split_static_library("browser") {
       "repost_form_warning_controller.h",
       "resource_coordinator/background_tab_navigation_throttle.cc",
       "resource_coordinator/background_tab_navigation_throttle.h",
-      "resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
-      "resource_coordinator/discard_metrics_lifecycle_unit_observer.h",
       "resource_coordinator/discard_metrics_util.cc",
       "resource_coordinator/discard_metrics_util.h",
       "resource_coordinator/discard_reason.h",
       "resource_coordinator/lifecycle_unit.cc",
       "resource_coordinator/lifecycle_unit.h",
-      "resource_coordinator/lifecycle_unit_base.cc",
-      "resource_coordinator/lifecycle_unit_base.h",
-      "resource_coordinator/lifecycle_unit_observer.h",
       "resource_coordinator/lifecycle_unit_source.h",
       "resource_coordinator/lifecycle_unit_source_base.cc",
       "resource_coordinator/lifecycle_unit_source_base.h",
       "resource_coordinator/lifecycle_unit_source_observer.h",
-      "resource_coordinator/tab_activity_watcher.cc",
-      "resource_coordinator/tab_activity_watcher.h",
       "resource_coordinator/tab_lifecycle_observer.h",
       "resource_coordinator/tab_lifecycle_unit.cc",
       "resource_coordinator/tab_lifecycle_unit.h",
@@ -3793,8 +3786,6 @@ split_static_library("browser") {
       "plugins/flash_temporary_permission_tracker.h",
       "plugins/flash_temporary_permission_tracker_factory.cc",
       "plugins/flash_temporary_permission_tracker_factory.h",
-      "plugins/hung_plugin_infobar_delegate.cc",
-      "plugins/hung_plugin_infobar_delegate.h",
       "plugins/plugin_data_remover_helper.cc",
       "plugins/plugin_data_remover_helper.h",
       "plugins/plugin_finder.cc",
@@ -3937,8 +3928,8 @@ split_static_library("browser") {
 
   if (enable_spellcheck) {
     sources += [
-      "spellchecker/spell_check_host_chrome_impl.cc",
-      "spellchecker/spell_check_host_chrome_impl.h",
+      "spellchecker/spell_check_host_impl.cc",
+      "spellchecker/spell_check_host_impl.h",
       "spellchecker/spellcheck_custom_dictionary.cc",
       "spellchecker/spellcheck_custom_dictionary.h",
       "spellchecker/spellcheck_factory.cc",
@@ -4099,10 +4090,10 @@ split_static_library("browser") {
 
   if (enable_webrtc) {
     sources += [
-      "media/webrtc/audio_debug_recordings_handler.cc",
-      "media/webrtc/audio_debug_recordings_handler.h",
+      "media/audio_debug_recordings_handler.h",
 
       # TODO(brettw) should webrtc_log_list.cc go here?
+      "media/webrtc/audio_debug_recordings_handler.cc",
       "media/webrtc/webrtc_log_uploader.cc",
       "media/webrtc/webrtc_log_uploader.h",
       "media/webrtc/webrtc_log_util.cc",

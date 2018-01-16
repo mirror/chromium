@@ -13,8 +13,8 @@
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/protocol.h"
+#include "content/common/devtools.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 
 namespace content {
 
@@ -22,7 +22,7 @@ class DevToolsAgentHostClient;
 class RenderFrameHostImpl;
 
 class DevToolsSession : public protocol::FrontendChannel,
-                        public blink::mojom::DevToolsSessionHost {
+                        public mojom::DevToolsSessionHost {
  public:
   DevToolsSession(DevToolsAgentHostImpl* agent_host,
                   DevToolsAgentHostClient* client,
@@ -35,8 +35,8 @@ class DevToolsSession : public protocol::FrontendChannel,
   void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host);
   void SetFallThroughForNotFound(bool value);
-  void AttachToAgent(const blink::mojom::DevToolsAgentAssociatedPtr& agent);
-  void ReattachToAgent(const blink::mojom::DevToolsAgentAssociatedPtr& agent);
+  void AttachToAgent(const mojom::DevToolsAgentAssociatedPtr& agent);
+  void ReattachToAgent(const mojom::DevToolsAgentAssociatedPtr& agent);
 
   struct Message {
     std::string method;
@@ -44,7 +44,7 @@ class DevToolsSession : public protocol::FrontendChannel,
   };
   using MessageByCallId = std::map<int, Message>;
   MessageByCallId& waiting_messages() { return waiting_for_response_messages_; }
-  const std::string& state_cookie() { return state_cookie_; }
+  const std::string& state_cookie() { return chunk_processor_.state_cookie(); }
 
   protocol::Response::Status Dispatch(
       const std::string& message,
@@ -54,7 +54,7 @@ class DevToolsSession : public protocol::FrontendChannel,
                                       const std::string& method,
                                       const std::string& message);
   void InspectElement(const gfx::Point& point);
-  void ReceiveMessageChunk(const DevToolsMessageChunk& chunk);
+  bool ReceiveMessageChunk(const DevToolsMessageChunk& chunk);
 
   template <typename Handler>
   static std::vector<Handler*> HandlersForAgentHost(
@@ -72,9 +72,10 @@ class DevToolsSession : public protocol::FrontendChannel,
   }
 
  private:
+  void SendMessageFromProcessorIPC(int session_id, const std::string& message);
+  void SendMessageFromProcessor(const std::string& message);
   void SendResponse(std::unique_ptr<base::DictionaryValue> response);
   void MojoConnectionDestroyed();
-  void ReceivedBadMessage();
 
   // protocol::FrontendChannel implementation.
   void sendProtocolResponse(
@@ -84,13 +85,12 @@ class DevToolsSession : public protocol::FrontendChannel,
       std::unique_ptr<protocol::Serializable> message) override;
   void flushProtocolNotifications() override;
 
-  // blink::mojom::DevToolsSessionHost implementation.
-  void DispatchProtocolMessage(
-      blink::mojom::DevToolsMessageChunkPtr chunk) override;
+  // mojom::DevToolsSessionHost implementation.
+  void DispatchProtocolMessage(mojom::DevToolsMessageChunkPtr chunk) override;
 
-  mojo::AssociatedBinding<blink::mojom::DevToolsSessionHost> binding_;
-  blink::mojom::DevToolsSessionAssociatedPtr session_ptr_;
-  blink::mojom::DevToolsSessionPtr io_session_ptr_;
+  mojo::AssociatedBinding<mojom::DevToolsSessionHost> binding_;
+  mojom::DevToolsSessionAssociatedPtr session_ptr_;
+  mojom::DevToolsSessionPtr io_session_ptr_;
   DevToolsAgentHostImpl* agent_host_;
   DevToolsAgentHostClient* client_;
   int session_id_;
@@ -99,13 +99,10 @@ class DevToolsSession : public protocol::FrontendChannel,
   RenderProcessHost* process_;
   RenderFrameHostImpl* host_;
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
-  MessageByCallId waiting_for_response_messages_;
-
-  // |state_cookie_| always corresponds to a state before
+  // Chunk processor's state cookie always corresponds to a state before
   // any of the waiting for response messages have been handled.
-  std::string state_cookie_;
-  std::string response_message_buffer_;
-  uint32_t response_message_buffer_size_ = 0;
+  DevToolsMessageChunkProcessor chunk_processor_;
+  MessageByCallId waiting_for_response_messages_;
 
   base::WeakPtrFactory<DevToolsSession> weak_factory_;
 };

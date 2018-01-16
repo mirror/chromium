@@ -35,9 +35,7 @@ TabLifecycleUnitSource::TabLifecycleUnit::TabLifecycleUnit(
   DCHECK(tab_strip_model_);
 }
 
-TabLifecycleUnitSource::TabLifecycleUnit::~TabLifecycleUnit() {
-  OnLifecycleUnitDestroyed();
-}
+TabLifecycleUnitSource::TabLifecycleUnit::~TabLifecycleUnit() = default;
 
 void TabLifecycleUnitSource::TabLifecycleUnit::SetTabStripModel(
     TabStripModel* tab_strip_model) {
@@ -58,7 +56,7 @@ void TabLifecycleUnitSource::TabLifecycleUnit::SetFocused(bool focused) {
   last_focused_time_ = focused ? base::TimeTicks::Max() : NowTicks();
 
   if (focused && GetState() == State::DISCARDED) {
-    SetState(State::LOADED);
+    state_ = State::LOADED;
     // See comment in Discard() for an explanation of why "needs reload" is
     // false when a tab is discarded.
     // TODO(fdoray): Remove NavigationControllerImpl::needs_reload_ once session
@@ -71,15 +69,12 @@ void TabLifecycleUnitSource::TabLifecycleUnit::SetFocused(bool focused) {
 
 void TabLifecycleUnitSource::TabLifecycleUnit::SetRecentlyAudible(
     bool recently_audible) {
-  if (recently_audible)
+  if (recently_audible) {
     recently_audible_time_ = base::TimeTicks::Max();
-  else if (recently_audible_time_ == base::TimeTicks::Max())
+  } else if (recently_audible_time_.is_null() ||
+             recently_audible_time_ == base::TimeTicks::Max()) {
     recently_audible_time_ = NowTicks();
-}
-
-TabLifecycleUnitExternal*
-TabLifecycleUnitSource::TabLifecycleUnit::AsTabLifecycleUnitExternal() {
-  return this;
+  }
 }
 
 base::string16 TabLifecycleUnitSource::TabLifecycleUnit::GetTitle() const {
@@ -98,6 +93,11 @@ std::string TabLifecycleUnitSource::TabLifecycleUnit::GetIconURL() const {
 LifecycleUnit::SortKey TabLifecycleUnitSource::TabLifecycleUnit::GetSortKey()
     const {
   return SortKey(last_focused_time_);
+}
+
+LifecycleUnit::State TabLifecycleUnitSource::TabLifecycleUnit::GetState()
+    const {
+  return state_;
 }
 
 int TabLifecycleUnitSource::TabLifecycleUnit::
@@ -168,6 +168,8 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::CanDiscard(
     return false;
 
   // Do not discard a tab that has recently been focused.
+  if (last_focused_time_.is_null())
+    return true;
   const base::TimeDelta time_since_focused = NowTicks() - last_focused_time_;
   if (time_since_focused < kTabFocusedProtectionTime)
     return false;
@@ -177,7 +179,7 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::CanDiscard(
 
 bool TabLifecycleUnitSource::TabLifecycleUnit::Discard(
     DiscardReason discard_reason) {
-  if (IsDiscarded())
+  if (GetState() == State::DISCARDED)
     return false;
 
   UMA_HISTOGRAM_BOOLEAN(
@@ -237,7 +239,7 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::Discard(
   // RenderFrameProxyHosts.
   delete old_contents;
 
-  SetState(State::DISCARDED);
+  state_ = State::DISCARDED;
   ++discard_count_;
   OnDiscardedStateChange();
 
@@ -247,6 +249,32 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::Discard(
 content::WebContents* TabLifecycleUnitSource::TabLifecycleUnit::GetWebContents()
     const {
   return web_contents();
+}
+
+bool TabLifecycleUnitSource::TabLifecycleUnit::IsAutoDiscardable() const {
+  return auto_discardable_;
+}
+
+void TabLifecycleUnitSource::TabLifecycleUnit::SetAutoDiscardable(
+    bool auto_discardable) {
+  if (auto_discardable_ == auto_discardable)
+    return;
+  auto_discardable_ = auto_discardable;
+  for (auto& observer : *observers_)
+    observer.OnAutoDiscardableStateChange(GetWebContents(), auto_discardable_);
+}
+
+void TabLifecycleUnitSource::TabLifecycleUnit::DiscardTab() {
+  Discard(DiscardReason::kExternal);
+}
+
+bool TabLifecycleUnitSource::TabLifecycleUnit::IsDiscarded() const {
+  return GetState() == State::DISCARDED;
+}
+
+void TabLifecycleUnitSource::TabLifecycleUnit::OnDiscardedStateChange() {
+  for (auto& observer : *observers_)
+    observer.OnDiscardedStateChange(GetWebContents(), IsDiscarded());
 }
 
 bool TabLifecycleUnitSource::TabLifecycleUnit::IsMediaTab() const {
@@ -271,44 +299,14 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::IsMediaTab() const {
   return false;
 }
 
-bool TabLifecycleUnitSource::TabLifecycleUnit::IsAutoDiscardable() const {
-  return auto_discardable_;
-}
-
-void TabLifecycleUnitSource::TabLifecycleUnit::SetAutoDiscardable(
-    bool auto_discardable) {
-  if (auto_discardable_ == auto_discardable)
-    return;
-  auto_discardable_ = auto_discardable;
-  for (auto& observer : *observers_)
-    observer.OnAutoDiscardableStateChange(GetWebContents(), auto_discardable_);
-}
-
-bool TabLifecycleUnitSource::TabLifecycleUnit::DiscardTab() {
-  return Discard(DiscardReason::kExternal);
-}
-
-bool TabLifecycleUnitSource::TabLifecycleUnit::IsDiscarded() const {
-  return GetState() == State::DISCARDED;
-}
-
-int TabLifecycleUnitSource::TabLifecycleUnit::GetDiscardCount() const {
-  return discard_count_;
-}
-
-void TabLifecycleUnitSource::TabLifecycleUnit::OnDiscardedStateChange() {
-  for (auto& observer : *observers_)
-    observer.OnDiscardedStateChange(GetWebContents(), IsDiscarded());
-}
-
 content::RenderProcessHost*
 TabLifecycleUnitSource::TabLifecycleUnit::GetRenderProcessHost() const {
   return GetWebContents()->GetMainFrame()->GetProcess();
 }
 
 void TabLifecycleUnitSource::TabLifecycleUnit::DidStartLoading() {
-  if (GetState() == State::DISCARDED) {
-    SetState(State::LOADED);
+  if (state_ == State::DISCARDED) {
+    state_ = State::LOADED;
     OnDiscardedStateChange();
   }
 }

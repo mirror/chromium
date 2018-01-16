@@ -63,7 +63,7 @@ uint32_t GetAccessibilityState() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
   uint32_t state = A11Y_NONE;
-  if (controller->IsSpokenFeedbackEnabled())
+  if (delegate->IsSpokenFeedbackEnabled())
     state |= A11Y_SPOKEN_FEEDBACK;
   if (controller->IsHighContrastEnabled())
     state |= A11Y_HIGH_CONTRAST;
@@ -71,7 +71,7 @@ uint32_t GetAccessibilityState() {
     state |= A11Y_SCREEN_MAGNIFIER;
   if (controller->IsLargeCursorEnabled())
     state |= A11Y_LARGE_CURSOR;
-  if (controller->IsAutoclickEnabled())
+  if (delegate->IsAutoclickEnabled())
     state |= A11Y_AUTOCLICK;
   if (delegate->IsVirtualKeyboardEnabled())
     state |= A11Y_VIRTUAL_KEYBOARD;
@@ -153,7 +153,7 @@ void AccessibilityDetailedView::OnAccessibilityStatusChanged() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
 
-  spoken_feedback_enabled_ = controller->IsSpokenFeedbackEnabled();
+  spoken_feedback_enabled_ = delegate->IsSpokenFeedbackEnabled();
   TrayPopupUtils::UpdateCheckMarkVisibility(spoken_feedback_view_,
                                             spoken_feedback_enabled_);
 
@@ -165,7 +165,7 @@ void AccessibilityDetailedView::OnAccessibilityStatusChanged() {
   TrayPopupUtils::UpdateCheckMarkVisibility(screen_magnifier_view_,
                                             screen_magnifier_enabled_);
 
-  autoclick_enabled_ = controller->IsAutoclickEnabled();
+  autoclick_enabled_ = delegate->IsAutoclickEnabled();
   TrayPopupUtils::UpdateCheckMarkVisibility(autoclick_view_,
                                             autoclick_enabled_);
 
@@ -211,7 +211,7 @@ void AccessibilityDetailedView::AppendAccessibilityList() {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
 
-  spoken_feedback_enabled_ = controller->IsSpokenFeedbackEnabled();
+  spoken_feedback_enabled_ = delegate->IsSpokenFeedbackEnabled();
   spoken_feedback_view_ = AddScrollListCheckableItem(
       kSystemMenuAccessibilityChromevoxIcon,
       l10n_util::GetStringUTF16(
@@ -232,7 +232,7 @@ void AccessibilityDetailedView::AppendAccessibilityList() {
           IDS_ASH_STATUS_TRAY_ACCESSIBILITY_SCREEN_MAGNIFIER),
       screen_magnifier_enabled_);
 
-  autoclick_enabled_ = controller->IsAutoclickEnabled();
+  autoclick_enabled_ = delegate->IsAutoclickEnabled();
   autoclick_view_ = AddScrollListCheckableItem(
       kSystemMenuAccessibilityAutoClickIcon,
       l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_ACCESSIBILITY_AUTOCLICK),
@@ -300,11 +300,10 @@ void AccessibilityDetailedView::HandleViewClicked(views::View* view) {
   using base::RecordAction;
   using base::UserMetricsAction;
   if (view == spoken_feedback_view_) {
-    bool new_state = !controller->IsSpokenFeedbackEnabled();
-    RecordAction(new_state
-                     ? UserMetricsAction("StatusArea_SpokenFeedbackEnabled")
-                     : UserMetricsAction("StatusArea_SpokenFeedbackDisabled"));
-    controller->SetSpokenFeedbackEnabled(new_state, A11Y_NOTIFICATION_NONE);
+    RecordAction(delegate->IsSpokenFeedbackEnabled()
+                     ? UserMetricsAction("StatusArea_SpokenFeedbackDisabled")
+                     : UserMetricsAction("StatusArea_SpokenFeedbackEnabled"));
+    delegate->ToggleSpokenFeedback(A11Y_NOTIFICATION_NONE);
   } else if (view == high_contrast_view_) {
     bool new_state = !controller->IsHighContrastEnabled();
     RecordAction(new_state
@@ -323,10 +322,10 @@ void AccessibilityDetailedView::HandleViewClicked(views::View* view) {
                      : UserMetricsAction("StatusArea_LargeCursorDisabled"));
     controller->SetLargeCursorEnabled(new_state);
   } else if (autoclick_view_ && view == autoclick_view_) {
-    bool new_state = !controller->IsAutoclickEnabled();
-    RecordAction(new_state ? UserMetricsAction("StatusArea_AutoClickEnabled")
-                           : UserMetricsAction("StatusArea_AutoClickDisabled"));
-    controller->SetAutoclickEnabled(new_state);
+    RecordAction(delegate->IsAutoclickEnabled()
+                     ? UserMetricsAction("StatusArea_AutoClickDisabled")
+                     : UserMetricsAction("StatusArea_AutoClickEnabled"));
+    delegate->SetAutoclickEnabled(!delegate->IsAutoclickEnabled());
   } else if (virtual_keyboard_view_ && view == virtual_keyboard_view_) {
     RecordAction(delegate->IsVirtualKeyboardEnabled()
                      ? UserMetricsAction("StatusArea_VirtualKeyboardDisabled")

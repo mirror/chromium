@@ -42,7 +42,7 @@ class MODULES_EXPORT MediaRecorder final
                                const MediaRecorderOptions&,
                                ExceptionState&);
 
-  virtual ~MediaRecorder() = default;
+  virtual ~MediaRecorder() {}
 
   MediaStream* stream() const { return stream_.Get(); }
   const String& mimeType() const { return mime_type_; }

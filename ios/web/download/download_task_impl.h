@@ -48,7 +48,6 @@ class DownloadTaskImpl : public DownloadTask {
                    const std::string& content_disposition,
                    int64_t total_bytes,
                    const std::string& mime_type,
-                   ui::PageTransition page_transition,
                    NSString* identifier,
                    Delegate* delegate);
 
@@ -66,11 +65,9 @@ class DownloadTaskImpl : public DownloadTask {
   int GetErrorCode() const override;
   int GetHttpCode() const override;
   int64_t GetTotalBytes() const override;
-  int64_t GetReceivedBytes() const override;
   int GetPercentComplete() const override;
   std::string GetContentDisposition() const override;
   std::string GetMimeType() const override;
-  ui::PageTransition GetTransitionType() const override;
   base::string16 GetSuggestedFilename() const override;
   void AddObserver(DownloadTaskObserver* observer) override;
   void RemoveObserver(DownloadTaskObserver* observer) override;
@@ -110,11 +107,9 @@ class DownloadTaskImpl : public DownloadTask {
   int error_code_ = 0;
   int http_code_ = -1;
   int64_t total_bytes_ = -1;
-  int64_t received_bytes_ = 0;
   int percent_complete_ = -1;
   std::string content_disposition_;
   std::string mime_type_;
-  ui::PageTransition page_transition_ = ui::PAGE_TRANSITION_LINK;
 
   const WebState* web_state_ = nullptr;
   Delegate* delegate_ = nullptr;

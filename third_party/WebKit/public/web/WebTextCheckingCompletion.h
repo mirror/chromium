@@ -47,7 +47,7 @@ class WebTextCheckingCompletion {
   virtual void DidCancelCheckingText() {}
 
  protected:
-  ~WebTextCheckingCompletion() = default;
+  ~WebTextCheckingCompletion() {}
 };
 
 }  // namespace blink

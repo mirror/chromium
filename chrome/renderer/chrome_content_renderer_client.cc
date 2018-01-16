@@ -34,7 +34,6 @@
 #include "chrome/common/pepper_permission_util.h"
 #include "chrome/common/plugin.mojom.h"
 #include "chrome/common/prerender_types.h"
-#include "chrome/common/prerender_url_loader_throttle.h"
 #include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/secure_origin_whitelist.h"
@@ -62,7 +61,6 @@
 #include "chrome/renderer/prerender/prerenderer_client.h"
 #include "chrome/renderer/safe_browsing/phishing_classifier_delegate.h"
 #include "chrome/renderer/tts_dispatcher.h"
-#include "chrome/renderer/url_loader_throttle_provider_impl.h"
 #include "chrome/renderer/worker_content_settings_client.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
@@ -79,6 +77,7 @@
 #include "components/error_page/common/localized_error.h"
 #include "components/network_hints/renderer/prescient_networking_dispatcher.h"
 #include "components/pdf/renderer/pepper_pdf_host.h"
+#include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/threat_dom_details.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -581,16 +580,12 @@ void ChromeContentRendererClient::RenderFrameCreated(
 
   new page_load_metrics::MetricsRenderFrameObserver(render_frame);
 
-  if (!render_frame->IsMainFrame()) {
-    auto* prerender_helper = prerender::PrerenderHelper::Get(
-        render_frame->GetRenderView()->GetMainRenderFrame());
-    if (prerender_helper) {
-      // Avoid any race conditions from having the browser tell subframes that
-      // they're prerendering.
-      new prerender::PrerenderHelper(render_frame,
-                                     prerender_helper->prerender_mode(),
-                                     prerender_helper->histogram_prefix());
-    }
+  if (!render_frame->IsMainFrame() &&
+      prerender::PrerenderHelper::IsPrerendering(
+          render_frame->GetRenderView()->GetMainRenderFrame())) {
+    // Avoid any race conditions from having the browser tell subframes that
+    // they're prerendering.
+    new prerender::PrerenderHelper(render_frame);
   }
 
   // Set up a mojo service to test if this page is a distiller page.
@@ -1181,33 +1176,33 @@ bool ChromeContentRendererClient::ShouldTrackUseCounter(const GURL& url) {
   return !is_instant_ntp;
 }
 
-void ChromeContentRendererClient::PrepareErrorPage(
+void ChromeContentRendererClient::GetNavigationErrorStrings(
     content::RenderFrame* render_frame,
     const WebURLRequest& failed_request,
     const blink::WebURLError& web_error,
     std::string* error_html,
     base::string16* error_description) {
-  PrepareErrorPageInternal(
+  GetNavigationErrorStringsInternal(
       render_frame, failed_request,
       error_page::Error::NetError(web_error.url(), web_error.reason(),
                                   web_error.has_copy_in_cache()),
       error_html, error_description);
 }
 
-void ChromeContentRendererClient::PrepareErrorPageForHttpStatusError(
+void ChromeContentRendererClient::GetNavigationErrorStringsForHttpStatusError(
     content::RenderFrame* render_frame,
     const WebURLRequest& failed_request,
     const GURL& unreachable_url,
     int http_status,
     std::string* error_html,
     base::string16* error_description) {
-  PrepareErrorPageInternal(
+  GetNavigationErrorStringsInternal(
       render_frame, failed_request,
       error_page::Error::HttpError(unreachable_url, http_status), error_html,
       error_description);
 }
 
-void ChromeContentRendererClient::PrepareErrorPageInternal(
+void ChromeContentRendererClient::GetNavigationErrorStringsInternal(
     content::RenderFrame* render_frame,
     const WebURLRequest& failed_request,
     const error_page::Error& error,
@@ -1216,8 +1211,11 @@ void ChromeContentRendererClient::PrepareErrorPageInternal(
   bool is_post = failed_request.HttpMethod().Ascii() == "POST";
   bool is_ignoring_cache =
       failed_request.GetCacheMode() == FetchCacheMode::kBypassCache;
-  NetErrorHelper::Get(render_frame)
-      ->PrepareErrorPage(error, is_post, is_ignoring_cache, error_html);
+  if (error_html) {
+    NetErrorHelper::Get(render_frame)
+        ->GetErrorHTML(error, is_post, is_ignoring_cache, error_html);
+  }
+
   if (error_description) {
     *error_description = error_page::LocalizedError::GetErrorDetails(
         error.domain(), error.reason(), is_post);
@@ -1296,7 +1294,19 @@ bool ChromeContentRendererClient::WillSendRequest(
     WebLocalFrame* frame,
     ui::PageTransition transition_type,
     const blink::WebURL& url,
+    content::ResourceType resource_type,
+    std::vector<std::unique_ptr<content::URLLoaderThrottle>>* throttles,
     GURL* new_url) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    InitSafeBrowsingIfNecessary();
+    RenderFrame* render_frame = content::RenderFrame::FromWebFrame(frame);
+    int render_frame_id =
+        render_frame ? render_frame->GetRoutingID() : MSG_ROUTING_NONE;
+    throttles->push_back(
+        base::MakeUnique<safe_browsing::RendererURLLoaderThrottle>(
+            safe_browsing_.get(), render_frame_id));
+  }
+
 // Check whether the request should be allowed. If not allowed, we reset the
 // URL to something invalid to prevent the request and cause an error.
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -1711,10 +1721,4 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       "more information.",
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
-}
-
-std::unique_ptr<content::URLLoaderThrottleProvider>
-ChromeContentRendererClient::CreateURLLoaderThrottleProvider(
-    content::URLLoaderThrottleProviderType provider_type) {
-  return std::make_unique<URLLoaderThrottleProviderImpl>(provider_type, this);
 }

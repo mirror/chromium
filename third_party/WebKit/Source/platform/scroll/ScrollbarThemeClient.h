@@ -82,7 +82,7 @@ class PLATFORM_EXPORT ScrollbarThemeClient {
   virtual void SetElasticOverscroll(float) = 0;
 
  protected:
-  virtual ~ScrollbarThemeClient() = default;
+  virtual ~ScrollbarThemeClient() {}
 };
 
 }  // namespace blink

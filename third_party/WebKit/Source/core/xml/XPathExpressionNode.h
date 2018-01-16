@@ -55,7 +55,7 @@ struct CORE_EXPORT EvaluationContext {
 
 class CORE_EXPORT ParseNode : public GarbageCollectedFinalized<ParseNode> {
  public:
-  virtual ~ParseNode() = default;
+  virtual ~ParseNode() {}
   virtual void Trace(blink::Visitor* visitor) {}
 };
 

@@ -35,6 +35,9 @@ class CryptotokenPrivateCanOriginAssertAppIdFunction
   protected:
     ~CryptotokenPrivateCanOriginAssertAppIdFunction() override {}
     ResponseAction Run() override;
+
+  private:
+    ChromeExtensionFunctionDetails chrome_details_;
 };
 
 class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
@@ -48,19 +51,9 @@ class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
  protected:
   ~CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction() override {}
   ResponseAction Run() override;
-};
 
-class CryptotokenPrivateCanAppIdGetAttestationFunction
-    : public UIThreadExtensionFunction {
- public:
-  CryptotokenPrivateCanAppIdGetAttestationFunction();
-  DECLARE_EXTENSION_FUNCTION("cryptotokenPrivate.canAppIdGetAttestation",
-                             CRYPTOTOKENPRIVATE_CANAPPIDGETATTESTATION)
-
- protected:
-  ~CryptotokenPrivateCanAppIdGetAttestationFunction() override {}
-  ResponseAction Run() override;
-  void Complete(bool result);
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
 };
 
 }  // namespace api

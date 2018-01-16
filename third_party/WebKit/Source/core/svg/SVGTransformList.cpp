@@ -36,9 +36,9 @@
 
 namespace blink {
 
-SVGTransformList::SVGTransformList() = default;
+SVGTransformList::SVGTransformList() {}
 
-SVGTransformList::~SVGTransformList() = default;
+SVGTransformList::~SVGTransformList() {}
 
 SVGTransform* SVGTransformList::Consolidate() {
   AffineTransform matrix;

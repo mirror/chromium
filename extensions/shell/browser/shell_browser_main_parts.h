@@ -52,7 +52,7 @@ class ShellBrowserMainParts : public content::BrowserMainParts {
   ShellExtensionSystem* extension_system() { return extension_system_; }
 
   // BrowserMainParts overrides.
-  int PreEarlyInitialization() override;
+  void PreEarlyInitialization() override;
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;

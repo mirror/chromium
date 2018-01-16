@@ -110,11 +110,6 @@ class MemberBase {
     return *this;
   }
 
-  MemberBase& operator=(WTF::HashTableDeletedValueType) {
-    raw_ = reinterpret_cast<T*>(-1);
-    return *this;
-  }
-
   MemberBase& operator=(std::nullptr_t) {
     raw_ = nullptr;
     return *this;
@@ -232,12 +227,6 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
-  Member& operator=(const Member& other) {
-    Parent::operator=(other);
-    WriteBarrier(this->raw_);
-    return *this;
-  }
-
   template <typename U>
   Member& operator=(const Member<U>& other) {
     Parent::operator=(other);
@@ -259,11 +248,6 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
-  Member& operator=(WTF::HashTableDeletedValueType x) {
-    Parent::operator=(x);
-    return *this;
-  }
-
   Member& operator=(std::nullptr_t) {
     Parent::operator=(nullptr);
     return *this;
@@ -272,7 +256,7 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
 #if BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
-    if (LIKELY(value && !this->IsHashTableDeletedValue())) {
+    if (value) {
       // The following method for retrieving a page works as allocation of
       // mixins on large object pages is prohibited.
       BasePage* const page = PageFromObject(value);

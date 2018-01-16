@@ -46,6 +46,7 @@
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_helpers.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node.h"
@@ -70,7 +71,8 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/resource_request_body_android.h"
+#include "content/public/common/browser_controls_state.h"
+#include "content/public/common/resource_request_body.h"
 #include "jni/Tab_jni.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/escape.h"
@@ -273,10 +275,8 @@ void TabAndroid::HandlePopupNavigation(NavigateParams* params) {
     ScopedJavaLocalRef<jstring> jheaders(
         ConvertUTF8ToJavaString(env, params->extra_headers));
     ScopedJavaLocalRef<jobject> jpost_data;
-    if (params->uses_post && params->post_data) {
-      jpost_data = content::ConvertResourceRequestBodyToJavaObject(
-          env, params->post_data);
-    }
+    if (params->uses_post && params->post_data)
+      jpost_data = params->post_data->ToJavaObject(env);
     Java_Tab_openNewTab(
         env, jobj, jurl, jheaders, jpost_data, static_cast<int>(disposition),
         params->created_with_opener, params->is_renderer_initiated);
@@ -570,7 +570,7 @@ TabAndroid::TabLoadStatus TabAndroid::LoadUrl(
       load_params.load_type =
           content::NavigationController::LOAD_TYPE_HTTP_POST;
       load_params.post_data =
-          content::ExtractResourceRequestBodyFromJavaObject(env, j_post_data);
+          content::ResourceRequestBody::FromJavaObject(env, j_post_data);
     }
     load_params.transition_type =
         ui::PageTransitionFromInt(page_transition);
@@ -720,22 +720,19 @@ void TabAndroid::UpdateBrowserControlsState(JNIEnv* env,
       static_cast<content::BrowserControlsState>(constraints);
   content::BrowserControlsState current_state =
       static_cast<content::BrowserControlsState>(current);
-
-  chrome::mojom::ChromeRenderFrameAssociatedPtr renderer;
-  web_contents()->GetMainFrame()->GetRemoteAssociatedInterfaces()->GetInterface(
-      &renderer);
-  renderer->UpdateBrowserControlsState(constraints_state, current_state,
-                                       animate);
+  content::RenderViewHost* sender = web_contents()->GetRenderViewHost();
+  sender->Send(new ChromeViewMsg_UpdateBrowserControlsState(
+      sender->GetRoutingID(), constraints_state, current_state, animate));
 
   if (web_contents()->ShowingInterstitialPage()) {
-    chrome::mojom::ChromeRenderFrameAssociatedPtr interstitial_renderer;
-    web_contents()
-        ->GetInterstitialPage()
-        ->GetMainFrame()
-        ->GetRemoteAssociatedInterfaces()
-        ->GetInterface(&interstitial_renderer);
-    interstitial_renderer->UpdateBrowserControlsState(constraints_state,
-                                                      current_state, animate);
+    content::RenderViewHost* interstitial_view_host =
+        web_contents()
+            ->GetInterstitialPage()
+            ->GetMainFrame()
+            ->GetRenderViewHost();
+    interstitial_view_host->Send(new ChromeViewMsg_UpdateBrowserControlsState(
+        interstitial_view_host->GetRoutingID(), constraints_state,
+        current_state, animate));
   }
 }
 

@@ -23,7 +23,7 @@
 #define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
-#if defined(_WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
+#if defined(WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
 #include <win32config.h>
 #else
 #include "config.h"
@@ -113,12 +113,24 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
         return;
     }
     str = xmlXPathPopString(ctxt);
-    if (xmlXPathCheckError(ctxt))
-        goto cleanup;
+    if (xmlXPathCheckError(ctxt)) {
+        xmlXPathSetTypeError(ctxt);
+        return;
+    }
 
     nodeset = xmlXPathPopNodeSet(ctxt);
-    if (xmlXPathCheckError(ctxt))
-        goto cleanup;
+    if (xmlXPathCheckError(ctxt)) {
+        xmlXPathSetTypeError(ctxt);
+        return;
+    }
+    if (str == NULL || !xmlStrlen(str) || !(comp = xmlXPathCompile(str))) {
+        if (nodeset != NULL)
+            xmlXPathFreeNodeSet(nodeset);
+        if (str != NULL)
+            xmlFree(str);
+        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+        return;
+    }
 
     ret = xmlXPathNewNodeSet(NULL);
     if (ret == NULL) {
@@ -126,9 +138,6 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
                          "exsltDynMapFunction: ret == NULL\n");
         goto cleanup;
     }
-
-    if (str == NULL || !xmlStrlen(str) || !(comp = xmlXPathCompile(str)))
-        goto cleanup;
 
     oldDoc = ctxt->context->doc;
     oldNode = ctxt->context->node;

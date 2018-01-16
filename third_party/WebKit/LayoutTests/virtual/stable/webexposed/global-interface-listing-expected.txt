@@ -1550,7 +1550,6 @@ interface HTMLAnchorElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
-    getter relList
     getter rev
     getter search
     getter shape
@@ -1576,7 +1575,6 @@ interface HTMLAnchorElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
-    setter relList
     setter rev
     setter search
     setter shape
@@ -1602,7 +1600,6 @@ interface HTMLAreaElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
-    getter relList
     getter search
     getter shape
     getter target
@@ -1624,7 +1621,6 @@ interface HTMLAreaElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
-    setter relList
     setter search
     setter shape
     setter target
@@ -4104,16 +4100,8 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter responseEnd
     getter responseStart
     getter secureConnectionStart
-    getter serverTiming
     getter transferSize
     getter workerStart
-    method constructor
-    method toJSON
-interface PerformanceServerTiming
-    attribute @@toStringTag
-    getter description
-    getter duration
-    getter name
     method constructor
     method toJSON
 interface PerformanceTiming

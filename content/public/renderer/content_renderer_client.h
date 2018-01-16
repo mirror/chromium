@@ -18,7 +18,7 @@
 #include "base/task_scheduler/task_scheduler.h"
 #include "build/build_config.h"
 #include "content/public/common/content_client.h"
-#include "content/public/renderer/url_loader_throttle_provider.h"
+#include "content/public/common/resource_type.h"
 #include "media/base/decode_capabilities.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
@@ -64,6 +64,7 @@ class BrowserPluginDelegate;
 class MediaStreamRendererFactory;
 class RenderFrame;
 class RenderView;
+class URLLoaderThrottle;
 
 // Embedder API for participating in renderer logic.
 class CONTENT_EXPORT ContentRendererClient {
@@ -122,19 +123,20 @@ class CONTENT_EXPORT ContentRendererClient {
   virtual bool ShouldTrackUseCounter(const GURL& url);
 
   // Returns the information to display when a navigation error occurs.
-  // If |error_html| is not null then it may be set to a HTML page
-  // containing the details of the error and maybe links to more info.
+  // If |error_html| is not null then it may be set to a HTML page containing
+  // the details of the error and maybe links to more info.
   // If |error_description| is not null it may be set to contain a brief
   // message describing the error that has occurred.
   // Either of the out parameters may be not written to in certain cases
   // (lack of information on the error code) so the caller should take care to
   // initialize the string values with safe defaults before the call.
-  virtual void PrepareErrorPage(content::RenderFrame* render_frame,
-                                const blink::WebURLRequest& failed_request,
-                                const blink::WebURLError& error,
-                                std::string* error_html,
-                                base::string16* error_description) {}
-  virtual void PrepareErrorPageForHttpStatusError(
+  virtual void GetNavigationErrorStrings(
+      content::RenderFrame* render_frame,
+      const blink::WebURLRequest& failed_request,
+      const blink::WebURLError& error,
+      std::string* error_html,
+      base::string16* error_description) {}
+  virtual void GetNavigationErrorStringsForHttpStatusError(
       content::RenderFrame* render_frame,
       const blink::WebURLRequest& failed_request,
       const GURL& unreachable_url,
@@ -222,11 +224,15 @@ class CONTENT_EXPORT ContentRendererClient {
                           bool* send_referrer);
 
   // Notifies the embedder that the given frame is requesting the resource at
-  // |url|. If the function returns true, the url is changed to |new_url|.
+  // |url|. |throttles| is appended with URLLoaderThrottle instances that should
+  // be applied to the resource loading. It is only used when network service is
+  // enabled. If the function returns true, the url is changed to |new_url|.
   virtual bool WillSendRequest(
       blink::WebLocalFrame* frame,
       ui::PageTransition transition_type,
       const blink::WebURL& url,
+      ResourceType resource_type,
+      std::vector<std::unique_ptr<URLLoaderThrottle>>* throttles,
       GURL* new_url);
 
   // Returns true if the request is associated with a document that is in
@@ -379,9 +385,6 @@ class CONTENT_EXPORT ContentRendererClient {
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage);
-
-  virtual std::unique_ptr<URLLoaderThrottleProvider>
-  CreateURLLoaderThrottleProvider(URLLoaderThrottleProviderType provider_type);
 };
 
 }  // namespace content

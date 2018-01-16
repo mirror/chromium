@@ -360,9 +360,6 @@ const char kEnableVoiceInteraction[] = "enable-voice-interaction";
 // Enables zip archiver - packer.
 const char kEnableZipArchiverPacker[] = "enable-zip-archiver-packer";
 
-// Disables zip archiver - packer.
-const char kDisableZipArchiverPacker[] = "disable-zip-archiver-packer";
-
 // Enables zip archiver - unpacker.
 const char kEnableZipArchiverUnpacker[] = "enable-zip-archiver-unpacker";
 
@@ -474,9 +471,6 @@ const char kNaturalScrollDefault[] = "enable-natural-scroll-default";
 // initially issued with ecrypfs encryption and have ARC (N+) available. For the
 // devices in other categories this flag must be missing.
 const char kNeedArcMigrationPolicyCheck[] = "need-arc-migration-policy-check";
-
-// Uses the redesigned wallpaper picker.
-const char kNewWallpaperPicker[] = "new-wallpaper-picker";
 
 // An optional comma-separated list of IDs of apps that can be used to take
 // notes. If unset, a hardcoded list is used instead.
@@ -653,12 +647,6 @@ bool IsZipArchiverUnpackerEnabled() {
   // Enabled by default.
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
       kDisableZipArchiverUnpacker);
-}
-
-bool IsZipArchiverPackerEnabled() {
-  // Enabled by default.
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      kDisableZipArchiverPacker);
 }
 
 bool IsSigninFrameClientCertsEnabled() {

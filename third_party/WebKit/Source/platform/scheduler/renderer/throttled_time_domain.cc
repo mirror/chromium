@@ -9,7 +9,7 @@ namespace scheduler {
 
 ThrottledTimeDomain::ThrottledTimeDomain() : RealTimeDomain() {}
 
-ThrottledTimeDomain::~ThrottledTimeDomain() = default;
+ThrottledTimeDomain::~ThrottledTimeDomain() {}
 
 const char* ThrottledTimeDomain::GetName() const {
   return "ThrottledTimeDomain";

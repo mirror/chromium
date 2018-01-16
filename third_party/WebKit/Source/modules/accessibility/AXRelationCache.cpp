@@ -37,7 +37,7 @@ namespace blink {
 AXRelationCache::AXRelationCache(AXObjectCacheImpl* object_cache)
     : object_cache_(object_cache) {}
 
-AXRelationCache::~AXRelationCache() = default;
+AXRelationCache::~AXRelationCache() {}
 
 bool AXRelationCache::IsAriaOwned(const AXObject* child) const {
   return aria_owned_child_to_owner_mapping_.Contains(child->AXObjectID());

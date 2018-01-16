@@ -34,6 +34,7 @@
 
 #include <memory>
 #include "platform/graphics/StaticBitmapImage.h"
+#include "platform/graphics/UnacceleratedImageBufferSurface.h"
 #include "platform/graphics/gpu/DrawingBuffer.h"
 #include "platform/graphics/paint/PaintImage.h"
 #include "platform/image-encoders/ImageEncoder.h"
@@ -52,6 +53,19 @@ namespace blink {
 
 std::unique_ptr<ImageBuffer> ImageBuffer::Create(
     std::unique_ptr<ImageBufferSurface> surface) {
+  if (!surface->IsValid())
+    return nullptr;
+  return WTF::WrapUnique(new ImageBuffer(std::move(surface)));
+}
+
+std::unique_ptr<ImageBuffer> ImageBuffer::Create(
+    const IntSize& size,
+    ImageInitializationMode initialization_mode,
+    const CanvasColorParams& color_params) {
+  std::unique_ptr<ImageBufferSurface> surface(
+      WTF::WrapUnique(new UnacceleratedImageBufferSurface(
+          size, initialization_mode, color_params)));
+
   if (!surface->IsValid())
     return nullptr;
   return WTF::WrapUnique(new ImageBuffer(std::move(surface)));
@@ -76,10 +90,11 @@ bool ImageBuffer::IsSurfaceValid() const {
 }
 
 scoped_refptr<StaticBitmapImage> ImageBuffer::NewImageSnapshot(
-    AccelerationHint hint) const {
+    AccelerationHint hint,
+    SnapshotReason reason) const {
   if (!IsSurfaceValid())
     return nullptr;
-  return surface_->NewImageSnapshot(hint);
+  return surface_->NewImageSnapshot(hint, reason);
 }
 
 bool ImageBuffer::WritePixels(const SkImageInfo& orig_info,

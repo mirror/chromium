@@ -20,6 +20,7 @@
             "title": "Enable Local Overrides",
             "settingName": "persistenceNetworkOverridesEnabled",
             "settingType": "boolean",
+            "storageType": "session",
             "defaultValue": false,
             "tags": "interception, override, network, rewrite, request",
             "options": [

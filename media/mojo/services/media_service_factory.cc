@@ -4,9 +4,8 @@
 
 #include "media/mojo/services/media_service_factory.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "media/mojo/services/gpu_mojo_media_client.h"
 #include "media/mojo/services/media_service.h"
 #include "media/mojo/services/test_mojo_media_client.h"
@@ -22,7 +21,7 @@ std::unique_ptr<service_manager::Service> CreateMediaService() {
   return CreateMediaServiceForTesting();
 #elif defined(OS_ANDROID)
   return std::unique_ptr<service_manager::Service>(
-      new MediaService(std::make_unique<AndroidMojoMediaClient>()));
+      new MediaService(base::MakeUnique<AndroidMojoMediaClient>()));
 #else
   NOTREACHED() << "No MediaService implementation available.";
   return nullptr;
@@ -36,7 +35,7 @@ std::unique_ptr<service_manager::Service> CreateGpuMediaService(
     AndroidOverlayMojoFactoryCB android_overlay_factory_cb,
     CdmProxyFactoryCB cdm_proxy_factory_cb) {
   return std::unique_ptr<service_manager::Service>(
-      new MediaService(std::make_unique<GpuMojoMediaClient>(
+      new MediaService(base::MakeUnique<GpuMojoMediaClient>(
           gpu_preferences, task_runner, media_gpu_channel_manager,
           std::move(android_overlay_factory_cb),
           std::move(cdm_proxy_factory_cb))));
@@ -44,7 +43,7 @@ std::unique_ptr<service_manager::Service> CreateGpuMediaService(
 
 std::unique_ptr<service_manager::Service> CreateMediaServiceForTesting() {
   return std::unique_ptr<service_manager::Service>(
-      new MediaService(std::make_unique<TestMojoMediaClient>()));
+      new MediaService(base::MakeUnique<TestMojoMediaClient>()));
 }
 
 }  // namespace media

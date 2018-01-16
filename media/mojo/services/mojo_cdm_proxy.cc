@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
-#include "mojo/public/cpp/bindings/callback_helpers.h"
+#include "media/base/scoped_callback_runner.h"
 
 namespace media {
 
@@ -64,30 +64,29 @@ CdmProxy::Function ToMediaFunction(cdm::CdmProxy::Function function) {
 
 }  // namespace
 
-MojoCdmProxy::MojoCdmProxy(Delegate* delegate,
-                           mojom::CdmProxyPtr cdm_proxy_ptr,
-                           cdm::CdmProxyClient* client)
+MojoCdmProxy::MojoCdmProxy(Delegate* delegate, mojom::CdmProxyPtr cdm_proxy_ptr)
     : delegate_(delegate),
       cdm_proxy_ptr_(std::move(cdm_proxy_ptr)),
-      client_(client),
       client_binding_(this),
       weak_factory_(this) {
   DVLOG(1) << __func__;
   DCHECK(delegate_);
-  DCHECK(client);
 }
 
 MojoCdmProxy::~MojoCdmProxy() {
   DVLOG(1) << __func__;
 }
 
-void MojoCdmProxy::Initialize() {
+void MojoCdmProxy::Initialize(cdm::CdmProxyClient* client) {
   DVLOG(2) << __func__;
+
+  DCHECK(client);
+  client_ = client;
 
   mojom::CdmProxyClientAssociatedPtrInfo client_ptr_info;
   client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));
 
-  auto callback = mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+  auto callback = ScopedCallbackRunner(
       base::BindOnce(&MojoCdmProxy::OnInitialized, weak_factory_.GetWeakPtr()),
       media::CdmProxy::Status::kFail,
       media::CdmProxy::Protocol::kIntelConvergedSecurityAndManageabilityEngine,
@@ -103,7 +102,7 @@ void MojoCdmProxy::Process(Function function,
   DVLOG(3) << __func__;
   CHECK(client_) << "Initialize not called.";
 
-  auto callback = mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+  auto callback = ScopedCallbackRunner(
       base::BindOnce(&MojoCdmProxy::OnProcessed, weak_factory_.GetWeakPtr()),
       media::CdmProxy::Status::kFail, std::vector<uint8_t>());
 
@@ -118,7 +117,7 @@ void MojoCdmProxy::CreateMediaCryptoSession(const uint8_t* input_data,
   DVLOG(3) << __func__;
   CHECK(client_) << "Initialize not called.";
 
-  auto callback = mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+  auto callback = ScopedCallbackRunner(
       base::BindOnce(&MojoCdmProxy::OnMediaCryptoSessionCreated,
                      weak_factory_.GetWeakPtr()),
       media::CdmProxy::Status::kFail, 0, 0);

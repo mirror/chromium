@@ -41,7 +41,7 @@ class WebString;
 class BLINK_EXPORT WebOptionElement final : public WebElement {
  public:
   WebOptionElement() : WebElement() {}
-  WebOptionElement(const WebOptionElement& element) = default;
+  WebOptionElement(const WebOptionElement& element) : WebElement(element) {}
 
   WebOptionElement& operator=(const WebOptionElement& element) {
     WebElement::Assign(element);

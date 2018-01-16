@@ -132,7 +132,7 @@ std::unique_ptr<BitmapFetcher> BitmapFetcherService::CreateFetcher(
 
   new_fetcher->Init(
       std::string(),
-      net::URLRequest::REDUCE_REFERRER_GRANULARITY_ON_TRANSITION_CROSS_ORIGIN,
+      blink::kWebReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin,
       net::LOAD_NORMAL);
   new_fetcher->Start(
       content::BrowserContext::GetDefaultStoragePartition(context_)

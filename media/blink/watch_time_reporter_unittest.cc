@@ -177,14 +177,6 @@ class WatchTimeReporterTest
       parent_->OnUnderflowUpdate(count);
     }
 
-    void SetAudioDecoderName(const std::string& name) override {
-      parent_->OnSetAudioDecoderName(name);
-    }
-
-    void SetVideoDecoderName(const std::string& name) override {
-      parent_->OnSetVideoDecoderName(name);
-    }
-
    private:
     WatchTimeReporterTest* parent_;
 
@@ -201,7 +193,7 @@ class WatchTimeReporterTest
     void AcquireWatchTimeRecorder(
         mojom::PlaybackPropertiesPtr properties,
         mojom::WatchTimeRecorderRequest request) override {
-      mojo::MakeStrongBinding(std::make_unique<WatchTimeInterceptor>(parent_),
+      mojo::MakeStrongBinding(base::MakeUnique<WatchTimeInterceptor>(parent_),
                               std::move(request));
     }
     void AcquireVideoDecodeStatsRecorder(
@@ -212,10 +204,6 @@ class WatchTimeReporterTest
                     bool is_top_frame,
                     const url::Origin& untrusted_top_origin) override {}
     void OnError(PipelineStatus status) override {}
-    void SetIsEME() override {}
-    void SetTimeToMetadata(base::TimeDelta elapsed) override {}
-    void SetTimeToFirstFrame(base::TimeDelta elapsed) override {}
-    void SetTimeToPlayReady(base::TimeDelta elapsed) override {}
 
    private:
     WatchTimeReporterTest* parent_;
@@ -238,8 +226,8 @@ class WatchTimeReporterTest
         mojom::PlaybackProperties::New(kUnknownAudioCodec, kUnknownVideoCodec,
                                        has_audio_, has_video_, false, is_mse,
                                        is_encrypted, false, initial_video_size),
-        base::BindRepeating(&WatchTimeReporterTest::GetCurrentMediaTime,
-                            base::Unretained(this)),
+        base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
+                   base::Unretained(this)),
         &fake_metrics_provider_,
         blink::scheduler::GetSequencedTaskRunnerForTesting()));
 
@@ -534,8 +522,6 @@ class WatchTimeReporterTest
   MOCK_METHOD2(OnWatchTimeUpdate, void(WatchTimeKey, base::TimeDelta));
   MOCK_METHOD1(OnUnderflowUpdate, void(int));
   MOCK_METHOD1(OnError, void(PipelineStatus));
-  MOCK_METHOD1(OnSetAudioDecoderName, void(const std::string&));
-  MOCK_METHOD1(OnSetVideoDecoderName, void(const std::string&));
 
   const bool has_video_;
   const bool has_audio_;
@@ -672,24 +658,6 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterUnderflow) {
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
   wtr_.reset();
-}
-
-TEST_P(WatchTimeReporterTest, WatchTimeReporterDecoderNames) {
-  Initialize(true, true, kSizeJustRight);
-
-  // Setup the initial decoder names; these should be sent immediately as soon
-  // they're called. Each should be called twice, once for foreground and once
-  // for background reporting.
-  const std::string kAudioDecoderName = "FirstAudioDecoder";
-  const std::string kVideoDecoderName = "FirstVideoDecoder";
-  if (has_audio_) {
-    EXPECT_CALL(*this, OnSetAudioDecoderName(kAudioDecoderName)).Times(2);
-    wtr_->SetAudioDecoderName(kAudioDecoderName);
-  }
-  if (has_video_) {
-    EXPECT_CALL(*this, OnSetVideoDecoderName(kVideoDecoderName)).Times(2);
-    wtr_->SetVideoDecoderName(kVideoDecoderName);
-  }
 }
 
 TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {

@@ -123,7 +123,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
 
   bool HasRecordedDrawCommands() { return have_recorded_draw_commands_; }
 
-  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint);
+  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
+                                                    SnapshotReason);
   bool WasDrawnToAfterSnapshot() const {
     return snapshot_state_ == kDrawnToAfterSnapshot;
   }
@@ -151,7 +152,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
    public:
     virtual void ReportHibernationEvent(HibernationEvent);
     virtual void DidStartHibernating() {}
-    virtual ~Logger() = default;
+    virtual ~Logger() {}
   };
 
   void SetLoggerForTesting(std::unique_ptr<Logger>);

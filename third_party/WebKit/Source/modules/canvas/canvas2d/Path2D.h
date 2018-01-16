@@ -59,7 +59,7 @@ class MODULES_EXPORT Path2D final : public ScriptWrappable, public CanvasPath {
                                  : AffineTransform(1, 0, 0, 1, 0, 0));
   }
 
-  ~Path2D() override = default;
+  ~Path2D() override {}
 
  private:
   Path2D() : CanvasPath() {}

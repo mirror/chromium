@@ -15,8 +15,8 @@ namespace {
 
 class MockIdleDeadlineScheduler final : public WebScheduler {
  public:
-  MockIdleDeadlineScheduler() = default;
-  ~MockIdleDeadlineScheduler() override = default;
+  MockIdleDeadlineScheduler() {}
+  ~MockIdleDeadlineScheduler() override {}
 
   // WebScheduler implementation:
   WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
@@ -48,8 +48,8 @@ class MockIdleDeadlineScheduler final : public WebScheduler {
 
 class MockIdleDeadlineThread final : public WebThread {
  public:
-  MockIdleDeadlineThread() = default;
-  ~MockIdleDeadlineThread() override = default;
+  MockIdleDeadlineThread() {}
+  ~MockIdleDeadlineThread() override {}
   bool IsCurrentThread() const override { return true; }
   WebScheduler* Scheduler() const override { return &scheduler_; }
 
@@ -60,8 +60,8 @@ class MockIdleDeadlineThread final : public WebThread {
 
 class MockIdleDeadlinePlatform : public TestingPlatformSupport {
  public:
-  MockIdleDeadlinePlatform() = default;
-  ~MockIdleDeadlinePlatform() override = default;
+  MockIdleDeadlinePlatform() {}
+  ~MockIdleDeadlinePlatform() override {}
   WebThread* CurrentThread() override { return &thread_; }
 
  private:

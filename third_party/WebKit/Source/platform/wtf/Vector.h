@@ -487,7 +487,7 @@ class VectorBuffer<T, 0, Allocator>
  public:
   using OffsetRange = typename Base::OffsetRange;
 
-  VectorBuffer() = default;
+  VectorBuffer() {}
 
   explicit VectorBuffer(size_t capacity) {
     // Calling malloc(0) might take a lock and may actually do an allocation
@@ -1289,8 +1289,8 @@ class Vector
 
   void FinalizeGarbageCollectedObject() { Finalize(); }
 
-  template <typename VisitorDispatcher, typename A = Allocator>
-  std::enable_if_t<A::kIsGarbageCollected> Trace(VisitorDispatcher);
+  template <typename VisitorDispatcher>
+  void Trace(VisitorDispatcher);
 
   class GCForbiddenScope {
     STACK_ALLOCATED();
@@ -1959,14 +1959,13 @@ inline bool operator!=(const Vector<T, inlineCapacityA, Allocator>& a,
   return !(a == b);
 }
 
-// This is only defined if the allocator is a HeapAllocator. It is used when
+// This is only called if the allocator is a HeapAllocator. It is used when
 // visiting during a tracing GC.
 template <typename T, size_t inlineCapacity, typename Allocator>
-template <typename VisitorDispatcher, typename A>
-std::enable_if_t<A::kIsGarbageCollected>
-Vector<T, inlineCapacity, Allocator>::Trace(VisitorDispatcher visitor) {
-  static_assert(Allocator::kIsGarbageCollected,
-                "Garbage collector must be enabled.");
+template <typename VisitorDispatcher>
+void Vector<T, inlineCapacity, Allocator>::Trace(VisitorDispatcher visitor) {
+  DCHECK(Allocator::kIsGarbageCollected)
+      << "Garbage collector must be enabled.";
   if (!Buffer())
     return;
   if (this->HasOutOfLineBuffer()) {

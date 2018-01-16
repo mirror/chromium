@@ -44,8 +44,8 @@ class PLATFORM_EXPORT ScrollbarTheme {
   USING_FAST_MALLOC(ScrollbarTheme);
 
  public:
-  ScrollbarTheme() = default;
-  virtual ~ScrollbarTheme() = default;
+  ScrollbarTheme() {}
+  virtual ~ScrollbarTheme() {}
 
   // If true, then scrollbars with this theme will be painted every time
   // Scrollbar::setNeedsPaintInvalidation is called. If false, then only parts

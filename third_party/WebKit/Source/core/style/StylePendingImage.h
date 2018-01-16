@@ -72,20 +72,19 @@ class StylePendingImage final : public StyleImage {
                                      : nullptr;
   }
 
-  FloatSize ImageSize(const Document&,
-                      float /*multiplier*/,
-                      const LayoutSize& /*defaultObjectSize*/) const override {
-    return FloatSize();
+  LayoutSize ImageSize(const Document&,
+                       float /*multiplier*/,
+                       const LayoutSize& /*defaultObjectSize*/) const override {
+    return LayoutSize();
   }
   bool ImageHasRelativeSize() const override { return false; }
   bool UsesImageContainerSize() const override { return false; }
   void AddClient(ImageResourceObserver*) override {}
   void RemoveClient(ImageResourceObserver*) override {}
-  scoped_refptr<Image> GetImage(
-      const ImageResourceObserver&,
-      const Document&,
-      const ComputedStyle&,
-      const LayoutSize& container_size) const override {
+  scoped_refptr<Image> GetImage(const ImageResourceObserver&,
+                                const Document&,
+                                const ComputedStyle&,
+                                const IntSize& container_size) const override {
     NOTREACHED();
     return nullptr;
   }

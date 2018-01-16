@@ -28,6 +28,7 @@
 #include "platform/heap/HeapAllocator.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/AtomicStringHash.h"
 
@@ -48,7 +49,8 @@ class FormControlState {
   }
   static FormControlState Deserialize(const Vector<String>& state_vector,
                                       size_t& index);
-  FormControlState(const FormControlState& another) = default;
+  FormControlState(const FormControlState& another)
+      : type_(another.type_), values_(another.values_) {}
   FormControlState& operator=(const FormControlState&);
 
   bool IsFailure() const { return type_ == kTypeFailure; }
@@ -66,7 +68,11 @@ class FormControlState {
 };
 
 inline FormControlState& FormControlState::operator=(
-    const FormControlState& another) = default;
+    const FormControlState& another) {
+  type_ = another.type_;
+  values_ = another.values_;
+  return *this;
+}
 
 inline void FormControlState::Append(const String& value) {
   type_ = kTypeRestore;

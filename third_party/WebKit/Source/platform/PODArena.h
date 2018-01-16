@@ -53,7 +53,7 @@ class PODArena final : public RefCounted<PODArena> {
     virtual void Free(void* ptr) = 0;
 
    protected:
-    virtual ~Allocator() = default;
+    virtual ~Allocator() {}
     friend class WTF::RefCounted<Allocator>;
   };
 
@@ -72,7 +72,7 @@ class PODArena final : public RefCounted<PODArena> {
     void Free(void* ptr) override { WTF::Partitions::FastFree(ptr); }
 
    protected:
-    FastMallocAllocator() = default;
+    FastMallocAllocator() {}
   };
 
   // Creates a new PODArena configured with a FastMallocAllocator.

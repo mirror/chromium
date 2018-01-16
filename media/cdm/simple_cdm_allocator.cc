@@ -4,9 +4,8 @@
 
 #include "media/cdm/simple_cdm_allocator.h"
 
-#include <memory>
-
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "media/base/video_frame.h"
 #include "media/cdm/cdm_helpers.h"
 #include "media/cdm/simple_cdm_buffer.h"
@@ -31,7 +30,7 @@ class SimpleCdmVideoFrame : public VideoFrameImpl {
     gfx::Size frame_size(Size().width, Size().height);
     scoped_refptr<media::VideoFrame> frame =
         media::VideoFrame::WrapExternalYuvData(
-            PIXEL_FORMAT_I420, frame_size, gfx::Rect(frame_size), natural_size,
+            PIXEL_FORMAT_YV12, frame_size, gfx::Rect(frame_size), natural_size,
             Stride(kYPlane), Stride(kUPlane), Stride(kVPlane),
             buffer->Data() + PlaneOffset(kYPlane),
             buffer->Data() + PlaneOffset(kUPlane),
@@ -70,7 +69,7 @@ cdm::Buffer* SimpleCdmAllocator::CreateCdmBuffer(size_t capacity) {
 
 // Creates a new SimpleCdmVideoFrame on every request.
 std::unique_ptr<VideoFrameImpl> SimpleCdmAllocator::CreateCdmVideoFrame() {
-  return std::make_unique<SimpleCdmVideoFrame>();
+  return base::MakeUnique<SimpleCdmVideoFrame>();
 }
 
 }  // namespace media

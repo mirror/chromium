@@ -9,13 +9,10 @@
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
-#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/web_contents.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
-#include "ui/aura/window.h"
-#include "ui/gfx/native_widget_types.h"
 
 namespace chromeos {
 namespace power {
@@ -38,48 +35,16 @@ void UserActivityLoggerDelegateUkm::UpdateOpenTabsURLs() {
     return;
 
   source_ids_.clear();
-  bool topmost_browser_found = false;
-  BrowserList* browser_list = BrowserList::GetInstance();
-  DCHECK(browser_list);
-
-  // Go through all browsers starting from last active ones.
-  for (auto browser_iterator = browser_list->begin_last_active();
-       browser_iterator != browser_list->end_last_active();
-       ++browser_iterator) {
-    Browser* browser = *browser_iterator;
-
-    const bool is_browser_focused = browser->window()->IsActive();
-    const bool is_browser_visible =
-        browser->window()->GetNativeWindow()->IsVisible();
-
-    bool is_topmost_browser = false;
-    if (is_browser_visible && !topmost_browser_found) {
-      is_topmost_browser = true;
-      topmost_browser_found = true;
-    }
-
-    if (browser->profile()->IsOffTheRecord())
-      continue;
-
+  for (Browser* browser : *BrowserList::GetInstance()) {
     const TabStripModel* const tab_strip_model = browser->tab_strip_model();
     DCHECK(tab_strip_model);
-
-    const int active_tab_index = tab_strip_model->active_index();
-
     for (int i = 0; i < tab_strip_model->count(); ++i) {
       content::WebContents* contents = tab_strip_model->GetWebContentsAt(i);
       DCHECK(contents);
       ukm::SourceId source_id =
           ukm::GetSourceIdForWebContentsDocument(contents);
-      if (source_id == ukm::kInvalidSourceId)
-        continue;
-
-      const TabProperty tab_property = {i == active_tab_index,
-                                        is_browser_focused, is_browser_visible,
-                                        is_topmost_browser};
-
-      source_ids_.insert(
-          std::pair<ukm::SourceId, TabProperty>(source_id, tab_property));
+      if (source_id != ukm::kInvalidSourceId)
+        source_ids_.push_back(source_id);
     }
   }
 }
@@ -98,7 +63,8 @@ void UserActivityLoggerDelegateUkm::LogActivity(
       .SetLastActivityDay(event.features().last_activity_day())
       .SetRecentTimeActive(event.features().recent_time_active_sec())
       .SetDeviceType(event.features().device_type())
-      .SetDeviceMode(event.features().device_mode());
+      .SetDeviceMode(event.features().device_mode())
+      .SetOnBattery(event.features().on_battery());
 
   if (event.features().has_last_user_activity_time_sec()) {
     user_activity.SetLastUserActivityTime(
@@ -112,31 +78,14 @@ void UserActivityLoggerDelegateUkm::LogActivity(
     user_activity.SetTimeSinceLastKey(
         event.features().time_since_last_key_sec());
   }
+  user_activity.SetBatteryPercent(
+      BucketEveryFivePercents(std::floor(event.features().battery_percent())));
 
-  if (event.features().has_on_battery()) {
-    user_activity.SetOnBattery(event.features().on_battery());
-  }
-
-  if (event.features().has_battery_percent()) {
-    user_activity.SetBatteryPercent(BucketEveryFivePercents(
-        std::floor(event.features().battery_percent())));
-  }
-
-  if (event.features().has_device_management()) {
-    user_activity.SetDeviceManagement(event.features().device_management());
-  }
   user_activity.Record(ukm_recorder_);
 
-  for (const std::pair<ukm::SourceId, TabProperty>& kv : source_ids_) {
-    const ukm::SourceId& id = kv.first;
-    const TabProperty& tab_property = kv.second;
-    ukm::builders::UserActivityId(id)
-        .SetActivityId(source_id)
-        .SetIsActive(tab_property.is_active)
-        .SetIsBrowserFocused(tab_property.is_browser_focused)
-        .SetIsBrowserVisible(tab_property.is_browser_visible)
-        .SetIsTopmostBrowser(tab_property.is_topmost_browser)
-        .Record(ukm_recorder_);
+  for (const ukm::SourceId& id : source_ids_) {
+    ukm::builders::UserActivityId(id).SetActivityId(source_id).Record(
+        ukm_recorder_);
   }
 }
 

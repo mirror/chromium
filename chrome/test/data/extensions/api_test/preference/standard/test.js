@@ -24,7 +24,6 @@ var preferences_to_test = [
       thirdPartyCookiesAllowed: false,
       hyperlinkAuditingEnabled: false,
       referrersEnabled: false,
-      doNotTrackEnabled: false,
       protectedContentEnabled: true,
     }
   },

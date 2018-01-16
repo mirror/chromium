@@ -4,6 +4,7 @@ include_rules = [
     "+modules/EventTargetModules.h",
     "+modules/ModulesExport.h",
     "+modules/cachestorage",
+    "+modules/fetch",
     "+modules/serviceworkers",
     "+services/network/public/interfaces",
 ]

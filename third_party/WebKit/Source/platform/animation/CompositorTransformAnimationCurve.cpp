@@ -14,8 +14,7 @@ namespace blink {
 CompositorTransformAnimationCurve::CompositorTransformAnimationCurve()
     : curve_(cc::KeyframedTransformAnimationCurve::Create()) {}
 
-CompositorTransformAnimationCurve::~CompositorTransformAnimationCurve() =
-    default;
+CompositorTransformAnimationCurve::~CompositorTransformAnimationCurve() {}
 
 void CompositorTransformAnimationCurve::AddKeyframe(
     const CompositorTransformKeyframe& keyframe) {

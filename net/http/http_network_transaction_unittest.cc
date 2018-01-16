@@ -81,6 +81,7 @@
 #include "net/socket/connection_attempts.h"
 #include "net/socket/mock_client_socket_pool_manager.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/spdy/chromium/spdy_session.h"
@@ -4847,8 +4848,8 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyGetWithSessionRace) {
 
   // Race a session to the proxy, which completes first.
   session_deps_.host_resolver->set_ondemand_mode(false);
-  SpdySessionKey key(
-      HostPortPair("proxy", 70), ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+  SpdySessionKey key(HostPortPair("proxy", 70), ProxyServer::Direct(),
+                     PRIVACY_MODE_DISABLED, SocketTag());
   base::WeakPtr<SpdySession> spdy_session =
       CreateSpdySession(session.get(), key, log.bound());
 
@@ -6880,82 +6881,6 @@ TEST_F(HttpNetworkTransactionTest, FlushSocketPoolOnLowMemoryNotifications) {
   EXPECT_EQ(0, GetIdleSocketCountInTransportSocketPool(session.get()));
 }
 
-// Disable idle socket closing on memory pressure.
-// Grab a socket, use it, and put it back into the pool. Then, make
-// low memory notification and ensure the socket pool is NOT flushed.
-TEST_F(HttpNetworkTransactionTest, NoFlushSocketPoolOnLowMemoryNotifications) {
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-  request.load_flags = 0;
-
-  // Disable idle socket closing on memory pressure.
-  session_deps_.disable_idle_sockets_close_on_memory_pressure = true;
-  std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
-
-  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
-
-  MockRead data_reads[] = {
-      // A part of the response body is received with the response headers.
-      MockRead("HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\nhel"),
-      // The rest of the response body is received in two parts.
-      MockRead("lo"), MockRead(" world"),
-      MockRead("junk"),  // Should not be read!!
-      MockRead(SYNCHRONOUS, OK),
-  };
-
-  StaticSocketDataProvider data(data_reads, arraysize(data_reads), NULL, 0);
-  session_deps_.socket_factory->AddSocketDataProvider(&data);
-
-  TestCompletionCallback callback;
-
-  int rv = trans.Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
-
-  EXPECT_THAT(callback.GetResult(rv), IsOk());
-
-  const HttpResponseInfo* response = trans.GetResponseInfo();
-  ASSERT_TRUE(response);
-  EXPECT_TRUE(response->headers);
-  std::string status_line = response->headers->GetStatusLine();
-  EXPECT_EQ("HTTP/1.1 200 OK", status_line);
-
-  // Make memory critical notification and ensure the transaction still has been
-  // operating right.
-  base::MemoryPressureListener::NotifyMemoryPressure(
-      base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL);
-  base::RunLoop().RunUntilIdle();
-
-  // Socket should not be flushed as long as it is not idle.
-  EXPECT_EQ(0, GetIdleSocketCountInTransportSocketPool(session.get()));
-
-  std::string response_data;
-  rv = ReadTransaction(&trans, &response_data);
-  EXPECT_THAT(rv, IsOk());
-  EXPECT_EQ("hello world", response_data);
-
-  // Empty the current queue.  This is necessary because idle sockets are
-  // added to the connection pool asynchronously with a PostTask.
-  base::RunLoop().RunUntilIdle();
-
-  // We now check to make sure the socket was added back to the pool.
-  EXPECT_EQ(1, GetIdleSocketCountInTransportSocketPool(session.get()));
-
-  // Idle sockets should NOT be flushed on moderate memory pressure.
-  base::MemoryPressureListener::NotifyMemoryPressure(
-      base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(1, GetIdleSocketCountInTransportSocketPool(session.get()));
-
-  // Idle sockets should NOT be flushed on critical memory pressure.
-  base::MemoryPressureListener::NotifyMemoryPressure(
-      base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(1, GetIdleSocketCountInTransportSocketPool(session.get()));
-}
-
 // Grab an SSL socket, use it, and put it back into the pool. Then, make
 // low memory notification and ensure the socket pool is flushed.
 TEST_F(HttpNetworkTransactionTest, FlushSSLSocketPoolOnLowMemoryNotifications) {
@@ -8589,21 +8514,20 @@ TEST_F(HttpNetworkTransactionTest, CrossOriginSPDYProxyPush) {
       CreateMockWrite(stream2_priority, 3, ASYNC),
   };
 
-  SpdySerializedFrame stream2_syn(spdy_util_.ConstructSpdyPush(
-      NULL, 0, 2, 1, "http://www.another-origin.com/foo.dat"));
-
   SpdySerializedFrame stream1_reply(
       spdy_util_.ConstructSpdyGetReply(NULL, 0, 1));
 
   SpdySerializedFrame stream1_body(spdy_util_.ConstructSpdyDataFrame(1, true));
 
+  SpdySerializedFrame stream2_syn(spdy_util_.ConstructSpdyPush(
+      NULL, 0, 2, 1, "http://www.another-origin.com/foo.dat"));
   const char kPushedData[] = "pushed";
   SpdySerializedFrame stream2_body(spdy_util_.ConstructSpdyDataFrame(
       2, kPushedData, strlen(kPushedData), true));
 
   MockRead spdy_reads[] = {
-      CreateMockRead(stream2_syn, 1, ASYNC),
-      CreateMockRead(stream1_reply, 2, ASYNC),
+      CreateMockRead(stream1_reply, 1, ASYNC),
+      CreateMockRead(stream2_syn, 2, ASYNC),
       CreateMockRead(stream1_body, 4, ASYNC),
       CreateMockRead(stream2_body, 5, ASYNC),
       MockRead(SYNCHRONOUS, ERR_IO_PENDING, 6),  // Force a hang
@@ -11894,7 +11818,7 @@ TEST_F(HttpNetworkTransactionTest,
   // Set up an initial SpdySession in the pool to reuse.
   HostPortPair host_port_pair("www.example.org", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED);
+                     PRIVACY_MODE_DISABLED, SocketTag());
   base::WeakPtr<SpdySession> spdy_session =
       CreateSpdySession(session.get(), key, NetLogWithSource());
 
@@ -13544,7 +13468,7 @@ TEST_F(HttpNetworkTransactionTest, PreconnectWithExistingSpdySession) {
   // Set up an initial SpdySession in the pool to reuse.
   HostPortPair host_port_pair("www.example.org", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED);
+                     PRIVACY_MODE_DISABLED, SocketTag());
   base::WeakPtr<SpdySession> spdy_session =
       CreateSpdySession(session.get(), key, NetLogWithSource());
 
@@ -15159,8 +15083,8 @@ TEST_F(HttpNetworkTransactionTest, CloseIdleSpdySessionToOpenNewOne) {
   session_deps_.socket_factory->AddSocketDataProvider(&http_data);
 
   HostPortPair host_port_pair_a("www.a.com", 443);
-  SpdySessionKey spdy_session_key_a(
-      host_port_pair_a, ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+  SpdySessionKey spdy_session_key_a(host_port_pair_a, ProxyServer::Direct(),
+                                    PRIVACY_MODE_DISABLED, SocketTag());
   EXPECT_FALSE(
       HasSpdySession(session->spdy_session_pool(), spdy_session_key_a));
 
@@ -15191,8 +15115,8 @@ TEST_F(HttpNetworkTransactionTest, CloseIdleSpdySessionToOpenNewOne) {
       HasSpdySession(session->spdy_session_pool(), spdy_session_key_a));
 
   HostPortPair host_port_pair_b("www.b.com", 443);
-  SpdySessionKey spdy_session_key_b(
-      host_port_pair_b, ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+  SpdySessionKey spdy_session_key_b(host_port_pair_b, ProxyServer::Direct(),
+                                    PRIVACY_MODE_DISABLED, SocketTag());
   EXPECT_FALSE(
       HasSpdySession(session->spdy_session_pool(), spdy_session_key_b));
   HttpRequestInfo request2;
@@ -15220,8 +15144,8 @@ TEST_F(HttpNetworkTransactionTest, CloseIdleSpdySessionToOpenNewOne) {
       HasSpdySession(session->spdy_session_pool(), spdy_session_key_b));
 
   HostPortPair host_port_pair_a1("www.a.com", 80);
-  SpdySessionKey spdy_session_key_a1(
-      host_port_pair_a1, ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+  SpdySessionKey spdy_session_key_a1(host_port_pair_a1, ProxyServer::Direct(),
+                                     PRIVACY_MODE_DISABLED, SocketTag());
   EXPECT_FALSE(
       HasSpdySession(session->spdy_session_pool(), spdy_session_key_a1));
   HttpRequestInfo request3;

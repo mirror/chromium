@@ -22,9 +22,7 @@ constexpr float kTestRepositionDistance = 2.f;
 
 void CheckRepositionedCorrectly(size_t test_case_index,
                                 UiElement* element,
-                                const gfx::Vector3dF& head_up_vector,
-                                const gfx::Point3F& expected_center,
-                                const gfx::Vector3dF& expected_right_vector) {
+                                const gfx::Point3F& expected_center) {
   SCOPED_TRACE(base::StringPrintf("Test case index = %zd", test_case_index));
   gfx::Point3F center = element->GetCenter();
   EXPECT_NEAR(center.x(), expected_center.x(), kEpsilon);
@@ -32,7 +30,12 @@ void CheckRepositionedCorrectly(size_t test_case_index,
   EXPECT_NEAR(center.z(), expected_center.z(), kEpsilon);
   gfx::Vector3dF right_vector = {1, 0, 0};
   element->world_space_transform().TransformVector(&right_vector);
-  EXPECT_VECTOR3DF_NEAR(right_vector, expected_right_vector, kEpsilon);
+  gfx::Vector3dF expected_right =
+      gfx::CrossProduct(expected_center - kOrigin, {0, 1, 0});
+  gfx::Vector3dF normalized_expected_right_vector;
+  expected_right.GetNormalized(&normalized_expected_right_vector);
+  EXPECT_VECTOR3DF_NEAR(right_vector, normalized_expected_right_vector,
+                        kEpsilon);
 }
 
 }  // namespace
@@ -50,82 +53,36 @@ TEST(Repositioner, RepositionNegativeZWithReticle) {
   repositioner->set_laser_origin(gfx::Point3F(1, -1, 0));
 
   struct TestCase {
-    TestCase(gfx::Vector3dF v,
-             gfx::Vector3dF u,
-             gfx::Point3F p,
-             gfx::Vector3dF r)
-        : laser_direction(v),
-          head_up_vector(u),
-          expected_element_center(p),
-          expected_right_vector(r) {}
+    TestCase(gfx::Vector3dF v, gfx::Point3F p)
+        : laser_direction(v), expected_element_center(p) {}
     gfx::Vector3dF laser_direction;
-    gfx::Vector3dF head_up_vector;
     gfx::Point3F expected_element_center;
-    gfx::Vector3dF expected_right_vector;
   };
-
   std::vector<TestCase> test_cases = {
-      {{-2, 2.41421f, -1},
-       {0, 1, 0},
-       {-1, 1.41421f, -1},
-       {0.707107f, 0, -0.707107f}},
-      {{-2, 2.41421f, 1},
-       {0, 1, 0},
-       {-1, 1.41421f, 1},
-       {-0.707107f, 0, -0.707107f}},
-      {{0, 2.41421f, 1},
-       {0, 1, 0},
-       {1, 1.41421f, 1},
-       {-0.707107f, 0, 0.707107f}},
-      {{0, 2.41421f, -1},
-       {0, 1, 0},
-       {1, 1.41421f, -1},
-       {0.707107f, 0, 0.707107f}},
-      {{-2, -0.41421f, -1},
-       {0, 1, 0},
-       {-1, -1.41421f, -1},
-       {0.707107f, 0, -0.707107f}},
-      {{-2, -0.41421f, 1},
-       {0, 1, 0},
-       {-1, -1.41421f, 1},
-       {-0.707107f, 0, -0.707107f}},
-      {{0, -0.41421f, 1},
-       {0, 1, 0},
-       {1, -1.41421f, 1},
-       {-0.707107f, 0, 0.707107f}},
-      {{0, -0.41421f, -1},
-       {0, 1, 0},
-       {1, -1.41421f, -1},
-       {0.707107f, 0, 0.707107f}},
-      {{-1, 3, 0}, {0, 0, 1}, {0, kTestRepositionDistance, 0}, {1, 0, 0}},
-      {{-1, -1, 0}, {0, 0, -1}, {0, -kTestRepositionDistance, 0}, {1, 0, 0}},
-      {{-1, 1, 2}, {-1, 0, 0}, {0, 0, kTestRepositionDistance}, {0, -1, 0}},
-      {{-1, 1, -2}, {-1, 0, 0}, {0, 0, -kTestRepositionDistance}, {0, 1, 0}},
-      {{-1, 1, -2}, {-1, 0, 0}, {0, 0, -kTestRepositionDistance}, {0, 1, 0}},
+      {{-2, 2.41421f, -1}, {-1, 1.41421f, -1}},
+      {{-2, 2.41421f, 1}, {-1, 1.41421f, 1}},
+      {{0, 2.41421f, 1}, {1, 1.41421f, 1}},
+      {{0, 2.41421f, -1}, {1, 1.41421f, -1}},
+      {{-2, -0.41421f, -1}, {-1, -1.41421f, -1}},
+      {{-2, -0.41421f, 1}, {-1, -1.41421f, 1}},
+      {{0, -0.41421f, 1}, {1, -1.41421f, 1}},
+      {{0, -0.41421f, -1}, {1, -1.41421f, -1}},
   };
 
   for (size_t i = 0; i < test_cases.size(); i++) {
-    TestCase test_case = test_cases[i];
-    repositioner->set_laser_direction(test_case.laser_direction);
-    gfx::Quaternion quat{{0, 1, 0}, test_case.head_up_vector};
-    gfx::Transform head_pose(quat);
-    scene.OnBeginFrame(MsToTicks(0), head_pose);
+    repositioner->set_laser_direction(test_cases[i].laser_direction);
+    scene.OnBeginFrame(MsToTicks(0), kStartHeadPose);
     // Before enable repositioner, child element should NOT have rotation.
-    CheckRepositionedCorrectly(i, element, test_case.head_up_vector,
-                               {0, 0, -kTestRepositionDistance}, {1, 0, 0});
+    CheckRepositionedCorrectly(i, element, {0, 0, -kTestRepositionDistance});
   }
 
   repositioner->set_enable(true);
 
   for (size_t i = 0; i < test_cases.size(); i++) {
-    TestCase test_case = test_cases[i];
-    repositioner->set_laser_direction(test_case.laser_direction);
-    gfx::Quaternion quat{test_case.head_up_vector, {0, 1, 0}};
-    gfx::Transform head_pose(quat);
-    scene.OnBeginFrame(MsToTicks(0), head_pose);
-    CheckRepositionedCorrectly(i, element, test_case.head_up_vector,
-                               test_case.expected_element_center,
-                               test_case.expected_right_vector);
+    repositioner->set_laser_direction(test_cases[i].laser_direction);
+    scene.OnBeginFrame(MsToTicks(0), kStartHeadPose);
+    CheckRepositionedCorrectly(i, element,
+                               test_cases[i].expected_element_center);
   }
 }
 

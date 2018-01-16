@@ -3,27 +3,27 @@
 // found in the LICENSE file.
 
 // Globals:
-/** @type {number} */ const RESULTS_PER_PAGE = 150;
+/** @const */ var RESULTS_PER_PAGE = 150;
 
 /**
  * Amount of time between pageviews that we consider a 'break' in browsing,
  * measured in milliseconds.
- * @type {number}
+ * @const
  */
-const BROWSING_GAP_TIME = 15 * 60 * 1000;
+var BROWSING_GAP_TIME = 15 * 60 * 1000;
 
 /**
  * The largest bucket value for UMA histogram, based on entry ID. All entries
  * with IDs greater than this will be included in this bucket.
- * @type {number}
+ * @const
  */
-const UMA_MAX_BUCKET_VALUE = 1000;
+var UMA_MAX_BUCKET_VALUE = 1000;
 
 /**
  * The largest bucket value for a UMA histogram that is a subset of above.
- * @type {number}
+ * @const
  */
-const UMA_MAX_SUBSET_BUCKET_VALUE = 100;
+var UMA_MAX_SUBSET_BUCKET_VALUE = 100;
 
 /**
  * Histogram buckets for UMA tracking of which view is being shown to the user.
@@ -31,7 +31,7 @@ const UMA_MAX_SUBSET_BUCKET_VALUE = 100;
  * This enum is append-only.
  * @enum {number}
  */
-const HistoryPageViewHistogram = {
+var HistoryPageViewHistogram = {
   HISTORY: 0,
   DEPRECATED_GROUPED_WEEK: 1,
   DEPRECATED_GROUPED_MONTH: 2,
@@ -40,14 +40,16 @@ const HistoryPageViewHistogram = {
   END: 5,  // Should always be last.
 };
 
-/** @type {string} */
-const SYNCED_TABS_HISTOGRAM_NAME = 'HistoryPage.OtherDevicesMenu';
+/**
+ * @const
+ */
+var SYNCED_TABS_HISTOGRAM_NAME = 'HistoryPage.OtherDevicesMenu';
 
 /**
  * Histogram buckets for UMA tracking of synced tabs.
- * @enum {number}
+ * @const
  */
-const SyncedTabsHistogram = {
+var SyncedTabsHistogram = {
   INITIALIZED: 0,
   SHOW_MENU_DEPRECATED: 1,
   LINK_CLICKED: 2,

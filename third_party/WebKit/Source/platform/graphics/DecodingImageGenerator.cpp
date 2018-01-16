@@ -96,7 +96,7 @@ DecodingImageGenerator::DecodingImageGenerator(
       can_yuv_decode_(false),
       complete_frame_content_id_(complete_frame_content_id) {}
 
-DecodingImageGenerator::~DecodingImageGenerator() = default;
+DecodingImageGenerator::~DecodingImageGenerator() {}
 
 sk_sp<SkData> DecodingImageGenerator::GetEncodedData() const {
   TRACE_EVENT0("blink", "DecodingImageGenerator::refEncodedData");

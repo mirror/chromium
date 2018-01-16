@@ -223,17 +223,6 @@
         "test": "content_unittests"
       },
       {
-        "args": [
-          "--enable-viz",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_unittests.filter"
-        ],
-        "name": "viz_content_unittests",
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "content_unittests"
-      },
-      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -605,8 +594,7 @@
       },
       {
         "args": [
-          "--xvfb",
-          "--jobs=1"
+          "--xvfb"
         ],
         "isolate_name": "telemetry_perf_unittests",
         "name": "telemetry_perf_unittests",

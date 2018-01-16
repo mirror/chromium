@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/mock_callback.h"
@@ -28,9 +29,9 @@ class MojoDataPipeReadWrite {
       uint32_t data_pipe_capacity_bytes = kDefaultDataPipeCapacityBytes) {
     mojo::DataPipe data_pipe(data_pipe_capacity_bytes);
 
-    writer_ = std::make_unique<MojoDataPipeWriter>(
+    writer_ = base::MakeUnique<MojoDataPipeWriter>(
         std::move(data_pipe.producer_handle));
-    reader_ = std::make_unique<MojoDataPipeReader>(
+    reader_ = base::MakeUnique<MojoDataPipeReader>(
         std::move(data_pipe.consumer_handle));
   }
 

@@ -109,22 +109,11 @@ using content::RenderViewHost;
                       isValidItem:(BOOL*)valid {
   SEL action = [item action];
 
-  Profile* profile = Profile::FromBrowserContext(
-      renderWidgetHost_->GetProcess()->GetBrowserContext());
-  DCHECK(profile);
-  PrefService* pref = profile->GetPrefs();
-  const PrefService::Preference* spellCheckEnablePreference =
-      pref->FindPreference(spellcheck::prefs::kSpellCheckEnable);
-  DCHECK(spellCheckEnablePreference);
-  const bool spellCheckUserModifiable =
-      spellCheckEnablePreference->IsUserModifiable();
-
   // For now, this action is always enabled for render view;
   // this is sub-optimal.
   // TODO(suzhe): Plumb the "can*" methods up from WebCore.
   if (action == @selector(checkSpelling:)) {
-    *valid = spellCheckUserModifiable &&
-             (RenderViewHost::From(renderWidgetHost_) != nullptr);
+    *valid = RenderViewHost::From(renderWidgetHost_) != nullptr;
     return YES;
   }
 
@@ -132,18 +121,16 @@ using content::RenderViewHost;
   // is still necessary.
   if (action == @selector(toggleContinuousSpellChecking:)) {
     if ([(id)item respondsToSelector:@selector(setState:)]) {
+      content::RenderProcessHost* host = renderWidgetHost_->GetProcess();
+      Profile* profile = Profile::FromBrowserContext(host->GetBrowserContext());
+      DCHECK(profile);
       NSCellStateValue checkedState =
-          pref->GetBoolean(spellcheck::prefs::kSpellCheckEnable) ? NSOnState
-                                                                 : NSOffState;
+          profile->GetPrefs()->GetBoolean(spellcheck::prefs::kSpellCheckEnable)
+              ? NSOnState
+              : NSOffState;
       [(id)item setState:checkedState];
     }
-    *valid = spellCheckUserModifiable;
-    return YES;
-  }
-
-  if (action == @selector(showGuessPanel:) ||
-      action == @selector(toggleGrammarChecking:)) {
-    *valid = spellCheckUserModifiable;
+    *valid = YES;
     return YES;
   }
 

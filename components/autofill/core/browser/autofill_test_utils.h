@@ -21,7 +21,6 @@ class PrefRegistrySyncable;
 
 namespace autofill {
 
-class AutofillExternalDelegate;
 class AutofillProfile;
 class AutofillTable;
 struct FormData;
@@ -194,11 +193,6 @@ void FillQueryField(AutofillQueryContents::Form::Field* field,
                     unsigned signature,
                     const char* name,
                     const char* control_type);
-
-// Calls the required functions on the given external delegate to cause the
-// delegate to display a popup.
-void GenerateTestAutofillPopup(
-    AutofillExternalDelegate* autofill_external_delegate);
 
 }  // namespace test
 }  // namespace autofill

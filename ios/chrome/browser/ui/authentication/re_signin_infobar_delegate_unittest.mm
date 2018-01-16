@@ -36,92 +36,99 @@ class ReSignInInfoBarDelegateTest : public PlatformTest {
 
  protected:
   void SetUp() override {
+    mainBrowserStateBuilder_.AddTestingFactory(
+        AuthenticationServiceFactory::GetInstance(),
+        AuthenticationServiceFake::CreateAuthenticationService);
   }
 
   void SetUpMainChromeBrowserStateNotSignedIn() {
-    TestChromeBrowserState::Builder builder;
-    builder.AddTestingFactory(
-        AuthenticationServiceFactory::GetInstance(),
-        AuthenticationServiceFake::CreateAuthenticationService);
-    chrome_browser_state_ = builder.Build();
+    chrome_browser_state_ = mainBrowserStateBuilder_.Build();
   }
 
   void SetUpMainChromeBrowserStateWithSignedInUser() {
-    SetUpMainChromeBrowserStateNotSignedIn();
-
     ChromeIdentity* chrome_identity =
         [FakeChromeIdentity identityWithEmail:@"john.appleseed@gmail.com"
                                        gaiaID:@"1234"
                                          name:@"John"];
 
-    AuthenticationService* authentication_service =
+    chrome_browser_state_ = mainBrowserStateBuilder_.Build();
+    AuthenticationService* authService =
         AuthenticationServiceFactory::GetForBrowserState(
             chrome_browser_state_.get());
-    authentication_service->SignIn(chrome_identity, std::string());
+    authService->SignIn(chrome_identity, std::string());
+  }
+
+  void SetUpMainChromeBrowserStateWithIncognito() {
+    SetUpMainChromeBrowserStateNotSignedIn();
+    // Sets up an incognito ChromeBrowserState and attaches it to the main one.
+    TestChromeBrowserState::Builder test_cbs_builder;
+    chrome_browser_state_ = test_cbs_builder.Build();
   }
 
   web::TestWebThreadBundle thread_bundle_;
+
+  TestChromeBrowserState::Builder mainBrowserStateBuilder_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
 };
 
 TEST_F(ReSignInInfoBarDelegateTest, TestCreateWhenNotPrompting) {
   // User is not signed in, but the "prompt" flag is not set.
   SetUpMainChromeBrowserStateNotSignedIn();
-  AuthenticationService* authentication_service =
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(false);
+  authService->SetPromptForSignIn(false);
   std::unique_ptr<ReSignInInfoBarDelegate> infobar_delegate =
       ReSignInInfoBarDelegate::CreateInfoBarDelegate(
           chrome_browser_state_.get(), nil);
   // Infobar delegate should not be created.
   EXPECT_FALSE(infobar_delegate.get());
-  EXPECT_FALSE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_FALSE(authService->ShouldPromptForSignIn());
 }
 
 TEST_F(ReSignInInfoBarDelegateTest, TestCreateWhenNotSignedIn) {
   // User is not signed in, but the "prompt" flag is set.
   SetUpMainChromeBrowserStateNotSignedIn();
-  AuthenticationService* authentication_service =
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(true);
+  authService->SetPromptForSignIn(true);
   std::unique_ptr<ReSignInInfoBarDelegate> infobar_delegate =
       ReSignInInfoBarDelegate::CreateInfoBarDelegate(
           chrome_browser_state_.get(), nil);
   // Infobar delegate should be created.
   EXPECT_TRUE(infobar_delegate.get());
-  EXPECT_TRUE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_TRUE(authService->ShouldPromptForSignIn());
 }
 
 TEST_F(ReSignInInfoBarDelegateTest, TestCreateWhenAlreadySignedIn) {
   // User is signed in and the "prompt" flag is set.
   SetUpMainChromeBrowserStateWithSignedInUser();
-  AuthenticationService* authentication_service =
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(true);
+  authService->SetPromptForSignIn(true);
   std::unique_ptr<ReSignInInfoBarDelegate> infobar_delegate =
       ReSignInInfoBarDelegate::CreateInfoBarDelegate(
           chrome_browser_state_.get(), nil);
   // Infobar delegate should not be created.
   EXPECT_FALSE(infobar_delegate.get());
-  EXPECT_FALSE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_FALSE(authService->ShouldPromptForSignIn());
 }
 
 TEST_F(ReSignInInfoBarDelegateTest, TestCreateWhenIncognito) {
   // Tab is incognito, and the "prompt" flag is set.
-  SetUpMainChromeBrowserStateNotSignedIn();
-  AuthenticationService* authentication_service =
+  SetUpMainChromeBrowserStateWithIncognito();
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(true);
+  authService->SetPromptForSignIn(true);
   std::unique_ptr<ReSignInInfoBarDelegate> infobar_delegate =
       ReSignInInfoBarDelegate::CreateInfoBarDelegate(
           chrome_browser_state_->GetOffTheRecordChromeBrowserState(), nil);
   // Infobar delegate should not be created.
   EXPECT_FALSE(infobar_delegate.get());
-  EXPECT_TRUE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_TRUE(authService->ShouldPromptForSignIn());
 }
 
 TEST_F(ReSignInInfoBarDelegateTest, TestMessages) {
@@ -138,10 +145,10 @@ TEST_F(ReSignInInfoBarDelegateTest, TestMessages) {
 
 TEST_F(ReSignInInfoBarDelegateTest, TestAccept) {
   SetUpMainChromeBrowserStateNotSignedIn();
-  AuthenticationService* authentication_service =
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(true);
+  authService->SetPromptForSignIn(true);
 
   id presenter = OCMProtocolMock(@protocol(SigninPresenter));
   [[presenter expect]
@@ -161,15 +168,15 @@ TEST_F(ReSignInInfoBarDelegateTest, TestAccept) {
   ReSignInInfoBarDelegate* delegate =
       static_cast<ReSignInInfoBarDelegate*>(infobarIOS->delegate());
   EXPECT_TRUE(delegate->Accept());
-  EXPECT_FALSE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_FALSE(authService->ShouldPromptForSignIn());
 }
 
 TEST_F(ReSignInInfoBarDelegateTest, TestInfoBarDismissed) {
   SetUpMainChromeBrowserStateNotSignedIn();
-  AuthenticationService* authentication_service =
+  AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(
           chrome_browser_state_.get());
-  authentication_service->SetPromptForSignIn(true);
+  authService->SetPromptForSignIn(true);
 
   id presenter = OCMProtocolMock(@protocol(SigninPresenter));
   [[presenter reject] showSignin:[OCMArg any]];
@@ -183,7 +190,7 @@ TEST_F(ReSignInInfoBarDelegateTest, TestInfoBarDismissed) {
   ReSignInInfoBarDelegate* delegate =
       static_cast<ReSignInInfoBarDelegate*>(infobarIOS->delegate());
   delegate->InfoBarDismissed();
-  EXPECT_FALSE(authentication_service->ShouldPromptForSignIn());
+  EXPECT_FALSE(authService->ShouldPromptForSignIn());
 }
 
 }  // namespace

@@ -49,8 +49,8 @@ namespace {
 
 bool AreSurfaceReferencesEnabled() {
 #if defined(OS_ANDROID)
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kDisableSurfaceReferences);
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableSurfaceReferences);
 #else
   // Surface references are always enabled for non-Android platforms.
   return true;

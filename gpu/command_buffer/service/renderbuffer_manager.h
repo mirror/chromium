@@ -17,7 +17,7 @@
 #include "base/memory/ref_counted.h"
 #include "gpu/command_buffer/service/gl_utils.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
-#include "gpu/gpu_gles2_export.h"
+#include "gpu/gpu_export.h"
 
 namespace gpu {
 class GpuDriverBugWorkarounds;
@@ -29,7 +29,8 @@ class Framebuffer;
 class RenderbufferManager;
 
 // Info about a Renderbuffer.
-class GPU_GLES2_EXPORT Renderbuffer : public base::RefCounted<Renderbuffer> {
+class GPU_EXPORT Renderbuffer
+    : public base::RefCounted<Renderbuffer> {
  public:
   Renderbuffer(RenderbufferManager* manager,
                GLuint client_id,
@@ -145,7 +146,7 @@ class GPU_GLES2_EXPORT Renderbuffer : public base::RefCounted<Renderbuffer> {
 
 // This class keeps track of the renderbuffers and whether or not they have
 // been cleared.
-class GPU_GLES2_EXPORT RenderbufferManager
+class GPU_EXPORT RenderbufferManager
     : public base::trace_event::MemoryDumpProvider {
  public:
   RenderbufferManager(MemoryTracker* memory_tracker,

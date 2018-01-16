@@ -45,7 +45,7 @@ class PLATFORM_EXPORT AudioSourceProvider {
   DISALLOW_COPY_AND_ASSIGN(AudioSourceProvider);
 
  public:
-  AudioSourceProvider() = default;
+  AudioSourceProvider() {}
 
   // provideInput() gets called repeatedly to render time-slices of a continuous
   // audio stream.
@@ -55,7 +55,7 @@ class PLATFORM_EXPORT AudioSourceProvider {
   // changes.
   virtual void SetClient(AudioSourceProviderClient*){};
 
-  virtual ~AudioSourceProvider() = default;
+  virtual ~AudioSourceProvider() {}
 };
 
 }  // namespace blink

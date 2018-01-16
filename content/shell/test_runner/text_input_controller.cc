@@ -46,7 +46,6 @@ class TextInputControllerBindings
 
   void InsertText(const std::string& text);
   void UnmarkText();
-  void UnmarkAndUnselectText();
   void DoCommand(const std::string& text);
   void SetMarkedText(const std::string& text, int start, int length);
   bool HasMarkedText();
@@ -97,8 +96,6 @@ TextInputControllerBindings::GetObjectTemplateBuilder(v8::Isolate* isolate) {
              isolate)
       .SetMethod("insertText", &TextInputControllerBindings::InsertText)
       .SetMethod("unmarkText", &TextInputControllerBindings::UnmarkText)
-      .SetMethod("unmarkAndUnselectText",
-                 &TextInputControllerBindings::UnmarkAndUnselectText)
       .SetMethod("doCommand", &TextInputControllerBindings::DoCommand)
       .SetMethod("setMarkedText", &TextInputControllerBindings::SetMarkedText)
       .SetMethod("hasMarkedText", &TextInputControllerBindings::HasMarkedText)
@@ -119,11 +116,6 @@ void TextInputControllerBindings::InsertText(const std::string& text) {
 void TextInputControllerBindings::UnmarkText() {
   if (controller_)
     controller_->UnmarkText();
-}
-
-void TextInputControllerBindings::UnmarkAndUnselectText() {
-  if (controller_)
-    controller_->UnmarkAndUnselectText();
 }
 
 void TextInputControllerBindings::DoCommand(const std::string& text) {
@@ -190,13 +182,6 @@ void TextInputController::UnmarkText() {
   if (auto* controller = GetInputMethodController()) {
     controller->FinishComposingText(
         blink::WebInputMethodController::kKeepSelection);
-  }
-}
-
-void TextInputController::UnmarkAndUnselectText() {
-  if (auto* controller = GetInputMethodController()) {
-    controller->FinishComposingText(
-        blink::WebInputMethodController::kDoNotKeepSelection);
   }
 }
 

@@ -611,7 +611,7 @@ void RenderThreadImpl::SetRendererBlinkPlatformImplForTesting(
 
 // static
 scoped_refptr<base::SingleThreadTaskRunner>
-RenderThreadImpl::DeprecatedGetMainTaskRunner() {
+RenderThreadImpl::GetMainTaskRunner() {
   return g_main_task_runner.Get();
 }
 
@@ -709,9 +709,6 @@ void RenderThreadImpl::Init(
   resource_dispatcher_.reset(
       new ResourceDispatcher(message_loop()->task_runner()));
   quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
-  url_loader_throttle_provider_ =
-      GetContentClient()->renderer()->CreateURLLoaderThrottleProvider(
-          URLLoaderThrottleProviderType::kFrame);
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   InitializeWebKit(resource_task_queue, registry.get());
@@ -729,7 +726,7 @@ void RenderThreadImpl::Init(
   registry->AddInterface(
       base::BindRepeating(&AppCacheDispatcher::Bind,
                           base::Unretained(appcache_dispatcher())),
-      GetRendererScheduler()->IPCTaskRunner());
+      GetMainTaskRunner());
   dom_storage_dispatcher_.reset(new DomStorageDispatcher());
   main_thread_indexed_db_dispatcher_.reset(new IndexedDBDispatcher());
   main_thread_cache_storage_dispatcher_.reset(
@@ -1433,17 +1430,18 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     if (shared_context_provider) {
       viz::ContextProvider::ScopedContextLock lock(
           shared_context_provider.get());
-      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
+      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
         return gpu_factories_.back().get();
-
-      scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
-          GetMediaThreadTaskRunner();
-      media_task_runner->PostTask(
-          FROM_HERE,
-          base::BindOnce(
-              base::IgnoreResult(
-                  &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
-              base::Unretained(gpu_factories_.back().get())));
+      } else {
+        scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
+            GetMediaThreadTaskRunner();
+        media_task_runner->PostTask(
+            FROM_HERE,
+            base::BindOnce(
+                base::IgnoreResult(
+                    &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
+                base::Unretained(gpu_factories_.back().get())));
+      }
     }
   }
 
@@ -1497,7 +1495,6 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
       media_task_runner, std::move(media_context_provider),
       enable_gpu_memory_buffer_video_frames, enable_video_accelerator,
       vea_provider.PassInterface()));
-  gpu_factories_.back()->SetRenderingColorSpace(rendering_color_space_);
   return gpu_factories_.back().get();
 }
 
@@ -2539,17 +2536,6 @@ bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
     return false;
   base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
   return passed.InMinutes() >= 5;
-}
-
-void RenderThreadImpl::SetRenderingColorSpace(
-    const gfx::ColorSpace& color_space) {
-  DCHECK(IsMainThread());
-  rendering_color_space_ = color_space;
-
-  for (const auto& factories : gpu_factories_) {
-    if (factories)
-      factories->SetRenderingColorSpace(color_space);
-  }
 }
 
 }  // namespace content

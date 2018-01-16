@@ -376,11 +376,18 @@ def v8_set_return_value(interface_name, method, cpp_value, for_main_world=False)
 
 def v8_value_to_local_cpp_variadic_value(method, argument, index, return_promise):
     assert argument.is_variadic
-    idl_type = v8_types.native_value_traits_type_name(argument.idl_type, True)
+    idl_type = argument.idl_type
+    this_cpp_type = idl_type.cpp_type
+
+    if idl_type.is_dictionary or idl_type.is_union_type:
+        vector_type = 'HeapVector'
+    else:
+        vector_type = 'Vector'
 
     return {
-        'assign_expression': 'ToImplArguments<%s>(info, %s, exceptionState)' % (idl_type, index),
+        'assign_expression': 'ToImplArguments<%s<%s>>(info, %s, exceptionState)' % (vector_type, this_cpp_type, index),
         'check_expression': 'exceptionState.HadException()',
+        'cpp_type': this_cpp_type,
         'cpp_name': argument.name,
         'declare_variable': False,
     }

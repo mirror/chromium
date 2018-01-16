@@ -73,6 +73,10 @@ void NotificationManager::SendNotifications(
     }
 
     observer.OnKeyboardAppearanceChanging(state);
+
+    // TODO(blakeo): remove this when all consumers have migrated to one of
+    // the notifications above.
+    observer.OnKeyboardBoundsChanging(bounds);
   }
 }
 

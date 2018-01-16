@@ -147,7 +147,6 @@ import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.policy.CombinedPolicyProvider;
 import org.chromium.policy.CombinedPolicyProvider.PolicyChangeListener;
@@ -1717,25 +1716,18 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     @Override
     public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
-        // If native is not initialized, the multi-window user action will be recorded in
-        // #onDeferredStartupForMultiWindowMode() and FeatureUtilities#setIsInMultiWindowMode()
-        // will be called in #onResumeWithNative(). Both of these methods require native to be
-        // initialized, so do not call here to avoid crashing. See https://crbug.com/797921.
-        if (mNativeInitialized) {
-            recordMultiWindowModeChangedUserAction(isInMultiWindowMode);
+        recordMultiWindowModeChangedUserAction(isInMultiWindowMode);
 
-            if (!isInMultiWindowMode
-                    && ApplicationStatus.getStateForActivity(this) == ActivityState.RESUMED) {
-                // Start a new UMA session when exiting multi-window mode if the activity is
-                // currently resumed. When entering multi-window Android recents gains focus, so
-                // ChromeActivity will get a call to onPauseWithNative(), ending the current UMA
-                // session. When exiting multi-window, however, if ChromeActivity is resumed it
-                // stays in that state.
-                markSessionEnd();
-                markSessionResume();
-                FeatureUtilities.setIsInMultiWindowMode(
-                        MultiWindowUtils.getInstance().isInMultiWindowMode(this));
-            }
+        if (!isInMultiWindowMode
+                && ApplicationStatus.getStateForActivity(this) == ActivityState.RESUMED) {
+            // Start a new UMA session when exiting multi-window mode if the activity is currently
+            // resumed. When entering multi-window Android recents gains focus, so ChromeActivity
+            // will get a call to onPauseWithNative(), ending the current UMA session. When exiting
+            // multi-window, however, if ChromeActivity is resumed it stays in that state.
+            markSessionEnd();
+            markSessionResume();
+            FeatureUtilities.setIsInMultiWindowMode(
+                    MultiWindowUtils.getInstance().isInMultiWindowMode(this));
         }
 
         VrShellDelegate.onMultiWindowModeChanged(isInMultiWindowMode);
@@ -1766,9 +1758,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             if (layoutManager != null && layoutManager.onBackPressed()) return;
         }
 
-        SelectionPopupController controller = getSelectionPopupController();
-        if (controller != null && controller.isSelectActionBarShowing()) {
-            controller.clearSelection();
+        ContentViewCore contentViewCore = getContentViewCore();
+        if (contentViewCore != null && contentViewCore.isSelectActionBarShowing()) {
+            contentViewCore.clearSelection();
             return;
         }
 
@@ -1795,17 +1787,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         Tab tab = getActivityTab();
         if (tab == null) return null;
         return tab.getContentViewCore();
-    }
-
-    private WebContents getWebContents() {
-        Tab tab = getActivityTab();
-        if (tab == null) return null;
-        return tab.getWebContents();
-    }
-
-    private SelectionPopupController getSelectionPopupController() {
-        WebContents webContents = getWebContents();
-        return webContents != null ? SelectionPopupController.fromWebContents(webContents) : null;
     }
 
     @Override

@@ -253,7 +253,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
   void SetUp() override {
 #if defined(OS_CHROMEOS)
     dbus_setter_->SetPowerManagerClient(
-        std::make_unique<chromeos::FakePowerManagerClient>());
+        base::MakeUnique<chromeos::FakePowerManagerClient>());
 #endif
 #if defined(OS_ANDROID)
     static_cast<VideoCaptureDeviceFactoryAndroid*>(
@@ -290,7 +290,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
     for (const auto& descriptor : *device_descriptors_) {
       if (IsDeviceUsableForTesting(descriptor)) {
         DLOG(INFO) << "Using camera " << descriptor.GetNameAndModel();
-        return std::make_unique<VideoCaptureDeviceDescriptor>(descriptor);
+        return base::MakeUnique<VideoCaptureDeviceDescriptor>(descriptor);
       }
     }
     DLOG(WARNING) << "No usable camera found";
@@ -312,7 +312,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
                << device_descriptors_->front().GetNameAndModel();
 #endif
 
-    return std::make_unique<VideoCaptureDeviceDescriptor>(
+    return base::MakeUnique<VideoCaptureDeviceDescriptor>(
         device_descriptors_->front());
   }
 

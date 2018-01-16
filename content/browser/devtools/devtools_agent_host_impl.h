@@ -14,10 +14,10 @@
 #include "base/containers/flat_set.h"
 #include "content/browser/devtools/devtools_io_context.h"
 #include "content/common/content_export.h"
+#include "content/common/devtools.mojom.h"
 #include "content/common/devtools_messages.h"
 #include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/devtools_agent_host.h"
-#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 
 namespace content {
 
@@ -100,6 +100,30 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   DevToolsIOContext io_context_;
   static int s_force_creation_count_;
   static int s_last_session_id_;
+};
+
+class DevToolsMessageChunkProcessor {
+ public:
+  using SendMessageIPCCallback = base::Callback<void(int, const std::string&)>;
+  using SendMessageCallback = base::Callback<void(const std::string&)>;
+  DevToolsMessageChunkProcessor(const SendMessageIPCCallback& ipc_callback,
+                                const SendMessageCallback& callback);
+  ~DevToolsMessageChunkProcessor();
+
+  const std::string& state_cookie() const { return state_cookie_; }
+  void set_state_cookie(const std::string& cookie) { state_cookie_ = cookie; }
+  int last_call_id() const { return last_call_id_; }
+  bool ProcessChunkedMessageFromAgent(const DevToolsMessageChunk& chunk);
+  bool ProcessChunkedMessageFromAgent(mojom::DevToolsMessageChunkPtr chunk);
+  void Reset();
+
+ private:
+  SendMessageIPCCallback ipc_callback_;
+  SendMessageCallback callback_;
+  std::string message_buffer_;
+  uint32_t message_buffer_size_;
+  std::string state_cookie_;
+  int last_call_id_;
 };
 
 }  // namespace content

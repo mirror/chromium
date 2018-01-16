@@ -83,7 +83,7 @@ MIDIAccess::MIDIAccess(
   }
 }
 
-MIDIAccess::~MIDIAccess() = default;
+MIDIAccess::~MIDIAccess() {}
 
 void MIDIAccess::Dispose() {
   accessor_.reset();

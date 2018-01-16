@@ -233,7 +233,7 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
     execution_context_->DisableEval(disable_eval_error_message_);
 }
 
-ContentSecurityPolicy::~ContentSecurityPolicy() = default;
+ContentSecurityPolicy::~ContentSecurityPolicy() {}
 
 void ContentSecurityPolicy::Trace(blink::Visitor* visitor) {
   visitor->Trace(execution_context_);
@@ -684,13 +684,9 @@ bool ContentSecurityPolicy::AllowScriptFromSource(
     // regardless of parser state. Once we have more data via the
     // 'ScriptWithCSPBypassingScheme*' metrics, make a decision about what
     // behavior to ship. https://crbug.com/653521
-    if ((parser_disposition == kNotParserInserted ||
-         !RuntimeEnabledFeatures::
-             ExperimentalContentSecurityPolicyFeaturesEnabled()) &&
-        // The schemes where javascript:-URLs are blocked are usually privileged
-        // pages, so do not allow the CSP to be bypassed either.
-        !SchemeRegistry::ShouldTreatURLSchemeAsNotAllowingJavascriptURLs(
-            execution_context_->GetSecurityOrigin()->Protocol())) {
+    if (parser_disposition == kNotParserInserted ||
+        !RuntimeEnabledFeatures::
+            ExperimentalContentSecurityPolicyFeaturesEnabled()) {
       return true;
     }
   }

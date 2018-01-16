@@ -4,7 +4,7 @@
 
 #include "media/capture/video/video_capture_buffer_tracker_factory_impl.h"
 
-#include <memory>
+#include "base/memory/ptr_util.h"
 
 #include "media/capture/video/shared_memory_buffer_tracker.h"
 
@@ -13,7 +13,7 @@ namespace media {
 std::unique_ptr<VideoCaptureBufferTracker>
 VideoCaptureBufferTrackerFactoryImpl::CreateTracker(VideoPixelStorage storage) {
   DCHECK_EQ(VideoPixelStorage::CPU, storage);
-  return std::make_unique<SharedMemoryBufferTracker>();
+  return base::MakeUnique<SharedMemoryBufferTracker>();
 }
 
 }  // namespace media

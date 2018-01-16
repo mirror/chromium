@@ -22,7 +22,6 @@
 #include "services/network/cookie_manager.h"
 
 namespace net {
-class CertVerifier;
 class URLRequestContext;
 class HttpServerPropertiesManager;
 }
@@ -69,9 +68,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   static std::unique_ptr<NetworkContext> CreateForTesting();
 
-  // Sets a global CertVerifier to use when initializing all profiles.
-  static void SetCertVerifierForTesting(net::CertVerifier* cert_verifier);
-
   net::URLRequestContext* url_request_context() { return url_request_context_; }
 
   NetworkServiceImpl* network_service() { return network_service_; }
@@ -94,12 +90,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void ClearNetworkingHistorySince(
       base::Time time,
       base::OnceClosure completion_callback) override;
-  void SetNetworkConditions(const std::string& profile_id,
-                            mojom::NetworkConditionsPtr conditions) override;
-  void AddHSTSForTesting(const std::string& host,
-                         base::Time expiry,
-                         bool include_subdomains,
-                         AddHSTSForTestingCallback callback) override;
 
   // Called when the associated NetworkServiceImpl is going away. Guaranteed to
   // destroy NetworkContext's URLRequestContext.
@@ -108,6 +98,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   // Disables use of QUIC by the NetworkContext.
   void DisableQuic();
 
+  void SetNetworkConditions(const std::string& profile_id,
+                            mojom::NetworkConditionsPtr conditions) override;
 
   // Applies the values in |network_context_params| to |builder|, and builds
   // the URLRequestContext.

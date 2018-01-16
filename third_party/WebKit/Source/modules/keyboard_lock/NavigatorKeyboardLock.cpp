@@ -29,14 +29,15 @@ NavigatorKeyboardLock& NavigatorKeyboardLock::From(Navigator& navigator) {
 }
 
 // static
-ScriptPromise NavigatorKeyboardLock::keyboardLock(
+ScriptPromise NavigatorKeyboardLock::requestKeyboardLock(
     ScriptState* state,
     Navigator& navigator,
     const Vector<String>& keycodes) {
-  return NavigatorKeyboardLock::From(navigator).keyboardLock(state, keycodes);
+  return NavigatorKeyboardLock::From(navigator).requestKeyboardLock(
+      state, keycodes);
 }
 
-ScriptPromise NavigatorKeyboardLock::keyboardLock(
+ScriptPromise NavigatorKeyboardLock::requestKeyboardLock(
     ScriptState* state,
     const Vector<String>& keycodes) {
   DCHECK(state);
@@ -45,7 +46,7 @@ ScriptPromise NavigatorKeyboardLock::keyboardLock(
     // spec. See https://github.com/w3c/keyboard-lock/issues/18.
     return ScriptPromise::Reject(
         state, V8String(state->GetIsolate(),
-                        "Last keyboardLock() has not finished yet."));
+                        "Last requestKeyboardLock() has not finished yet."));
   }
 
   if (!EnsureServiceConnected()) {
@@ -60,7 +61,7 @@ ScriptPromise NavigatorKeyboardLock::keyboardLock(
   return request_keylock_resolver_->Promise();
 }
 
-void NavigatorKeyboardLock::keyboardUnlock() {
+void NavigatorKeyboardLock::cancelKeyboardLock() {
   if (!EnsureServiceConnected()) {
     // Current frame is detached.
     return;
@@ -70,8 +71,8 @@ void NavigatorKeyboardLock::keyboardUnlock() {
 }
 
 // static
-void NavigatorKeyboardLock::keyboardUnlock(Navigator& navigator) {
-  NavigatorKeyboardLock::From(navigator).keyboardUnlock();
+void NavigatorKeyboardLock::cancelKeyboardLock(Navigator& navigator) {
+  NavigatorKeyboardLock::From(navigator).cancelKeyboardLock();
 }
 
 bool NavigatorKeyboardLock::EnsureServiceConnected() {

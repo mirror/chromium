@@ -17,6 +17,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
@@ -365,7 +366,7 @@ class MidiManagerWin::InPort final : public Port {
         continue;
       }
       ports.push_back(
-          std::make_unique<InPort>(manager, instance_id, device_id, caps));
+          base::MakeUnique<InPort>(manager, instance_id, device_id, caps));
     }
     return ports;
   }
@@ -475,7 +476,7 @@ class MidiManagerWin::OutPort final : public Port {
         LOG(ERROR) << "midiOutGetDevCaps fails on device " << device_id;
         continue;
       }
-      ports.push_back(std::make_unique<OutPort>(device_id, caps));
+      ports.push_back(base::MakeUnique<OutPort>(device_id, caps));
     }
     return ports;
   }
@@ -688,7 +689,7 @@ MidiManagerWin::PortManager::HandleMidiOutCallback(HMIDIOUT hmo,
 MidiManagerWin::MidiManagerWin(MidiService* service)
     : MidiManager(service),
       instance_id_(IssueNextInstanceId()),
-      port_manager_(std::make_unique<PortManager>()) {
+      port_manager_(base::MakeUnique<PortManager>()) {
   base::AutoLock lock(*GetInstanceIdLock());
   CHECK_EQ(kInvalidInstanceId, g_active_instance_id);
 

@@ -8,14 +8,14 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
-#include "gpu/command_buffer/service/decoder_client.h"
+#include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 
 namespace gpu {
 namespace gles2 {
 
 Logger::Logger(const DebugMarkerManager* debug_marker_manager,
-               DecoderClient* client)
+               GLES2DecoderClient* client)
     : debug_marker_manager_(debug_marker_manager),
       client_(client),
       log_message_count_(0),
@@ -58,3 +58,4 @@ const std::string& Logger::GetLogPrefix() const {
 
 }  // namespace gles2
 }  // namespace gpu
+

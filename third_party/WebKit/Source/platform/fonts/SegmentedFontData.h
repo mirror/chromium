@@ -48,7 +48,7 @@ class PLATFORM_EXPORT SegmentedFontData : public FontData {
   bool ContainsCharacter(UChar32) const;
 
  private:
-  SegmentedFontData() = default;
+  SegmentedFontData() {}
 
   const SimpleFontData* FontDataForCharacter(UChar32) const override;
 

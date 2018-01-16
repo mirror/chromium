@@ -51,7 +51,7 @@ TimeZoneMonitorClient::TimeZoneMonitorClient() : binding_(this) {
   DCHECK(IsMainThread());
 }
 
-TimeZoneMonitorClient::~TimeZoneMonitorClient() = default;
+TimeZoneMonitorClient::~TimeZoneMonitorClient() {}
 
 void TimeZoneMonitorClient::OnTimeZoneChange(const String& time_zone_info) {
   DCHECK(IsMainThread());

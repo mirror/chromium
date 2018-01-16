@@ -20,7 +20,6 @@ UnacceleratedStaticBitmapImage::Create(sk_sp<SkImage> image) {
 
 UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(
     sk_sp<SkImage> image) {
-  CHECK(image);
   DCHECK(!image->isLazyGenerated());
 
   paint_image_ =
@@ -34,10 +33,10 @@ UnacceleratedStaticBitmapImage::Create(PaintImage image) {
 
 UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(PaintImage image)
     : paint_image_(std::move(image)) {
-  CHECK(paint_image_.GetSkImage());
+  DCHECK(paint_image_);
 }
 
-UnacceleratedStaticBitmapImage::~UnacceleratedStaticBitmapImage() = default;
+UnacceleratedStaticBitmapImage::~UnacceleratedStaticBitmapImage() {}
 
 IntSize UnacceleratedStaticBitmapImage::Size() const {
   return IntSize(paint_image_.width(), paint_image_.height());

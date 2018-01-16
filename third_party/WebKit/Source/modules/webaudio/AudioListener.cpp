@@ -89,7 +89,7 @@ AudioListener::AudioListener(BaseAudioContext& context)
   last_up_ = UpVector();
 }
 
-AudioListener::~AudioListener() = default;
+AudioListener::~AudioListener() {}
 
 void AudioListener::Trace(blink::Visitor* visitor) {
   visitor->Trace(position_x_);

@@ -18,7 +18,6 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class Tab;
-@protocol ToolbarCommands;
 @protocol UrlLoader;
 @protocol WebToolbarDelegate;
 
@@ -36,8 +35,7 @@ class ChromeBrowserState;
 
 // Mark inherited initializer as unavailable.
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
-                   dispatcher:(id<BrowserCommands, ToolbarCommands>)dispatcher
-    NS_UNAVAILABLE;
+                   dispatcher:(id<BrowserCommands>)dispatcher NS_UNAVAILABLE;
 
 // Create a new web toolbar controller whose omnibox is backed by
 // |browserState|.

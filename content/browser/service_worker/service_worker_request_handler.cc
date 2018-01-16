@@ -24,13 +24,12 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/origin_util.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/service_worker_modes.h"
-#include "content/public/common/url_constants.h"
 #include "ipc/ipc_message.h"
 #include "net/base/url_util.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_interceptor.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "storage/browser/blob/blob_storage_context.h"
 
 namespace content {
@@ -59,14 +58,6 @@ class ServiceWorkerRequestInterceptor
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerRequestInterceptor);
 };
 
-bool SchemeMaySupportRedirectingToHTTPS(const GURL& url) {
-#if defined(OS_CHROMEOS)
-  return url.SchemeIs(kExternalFileScheme);
-#else   // OS_CHROMEOS
-  return false;
-#endif  // OS_CHROMEOS
-}
-
 }  // namespace
 
 // static
@@ -83,7 +74,7 @@ void ServiceWorkerRequestHandler::InitializeForNavigation(
     RequestContextType request_context_type,
     network::mojom::RequestContextFrameType frame_type,
     bool is_parent_frame_secure,
-    scoped_refptr<network::ResourceRequestBody> body,
+    scoped_refptr<ResourceRequestBody> body,
     const base::Callback<WebContents*(void)>& web_contents_getter) {
   CHECK(IsBrowserSideNavigationEnabled());
 
@@ -95,8 +86,7 @@ void ServiceWorkerRequestHandler::InitializeForNavigation(
   // Create the handler even for insecure HTTP since it's used in the
   // case of redirect to HTTPS.
   if (!request->url().SchemeIsHTTPOrHTTPS() &&
-      !OriginCanAccessServiceWorkers(request->url()) &&
-      !SchemeMaySupportRedirectingToHTTPS(request->url())) {
+      !OriginCanAccessServiceWorkers(request->url())) {
     return;
   }
 
@@ -143,7 +133,7 @@ ServiceWorkerRequestHandler::InitializeForNavigationNetworkService(
     RequestContextType request_context_type,
     network::mojom::RequestContextFrameType frame_type,
     bool is_parent_frame_secure,
-    scoped_refptr<network::ResourceRequestBody> body,
+    scoped_refptr<ResourceRequestBody> body,
     const base::Callback<WebContents*(void)>& web_contents_getter) {
   DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
   DCHECK(navigation_handle_core);
@@ -201,7 +191,7 @@ void ServiceWorkerRequestHandler::InitializeHandler(
     ResourceType resource_type,
     RequestContextType request_context_type,
     network::mojom::RequestContextFrameType frame_type,
-    scoped_refptr<network::ResourceRequestBody> body) {
+    scoped_refptr<ResourceRequestBody> body) {
   // Create the handler even for insecure HTTP since it's used in the
   // case of redirect to HTTPS.
   if (!request->url().SchemeIsHTTPOrHTTPS() &&
@@ -271,16 +261,34 @@ void ServiceWorkerRequestHandler::MaybeCreateLoader(
 void ServiceWorkerRequestHandler::PrepareForCrossSiteTransfer(
     int old_process_id) {
   CHECK(!IsBrowserSideNavigationEnabled());
+  if (!provider_host_ || !context_)
+    return;
+  old_process_id_ = old_process_id;
+  old_provider_id_ = provider_host_->provider_id();
+  host_for_cross_site_transfer_ = context_->TransferProviderHostOut(
+      old_process_id, provider_host_->provider_id());
+  DCHECK_EQ(provider_host_.get(), host_for_cross_site_transfer_.get());
 }
 
 void ServiceWorkerRequestHandler::CompleteCrossSiteTransfer(
     int new_process_id, int new_provider_id) {
   CHECK(!IsBrowserSideNavigationEnabled());
+  if (!host_for_cross_site_transfer_.get() || !context_)
+    return;
+  DCHECK_EQ(provider_host_.get(), host_for_cross_site_transfer_.get());
+  context_->TransferProviderHostIn(new_process_id, new_provider_id,
+                                   std::move(host_for_cross_site_transfer_));
+  DCHECK_EQ(provider_host_->provider_id(), new_provider_id);
 }
 
 void ServiceWorkerRequestHandler::MaybeCompleteCrossSiteTransferInOldProcess(
     int old_process_id) {
   CHECK(!IsBrowserSideNavigationEnabled());
+  if (!host_for_cross_site_transfer_.get() || !context_ ||
+      old_process_id_ != old_process_id) {
+    return;
+  }
+  CompleteCrossSiteTransfer(old_process_id_, old_provider_id_);
 }
 
 bool ServiceWorkerRequestHandler::SanityCheckIsSameContext(
@@ -301,6 +309,9 @@ ServiceWorkerRequestHandler::ServiceWorkerRequestHandler(
     : context_(context),
       provider_host_(provider_host),
       blob_storage_context_(blob_storage_context),
-      resource_type_(resource_type) {}
+      resource_type_(resource_type),
+      old_process_id_(0),
+      old_provider_id_(kInvalidServiceWorkerProviderId) {
+}
 
 }  // namespace content

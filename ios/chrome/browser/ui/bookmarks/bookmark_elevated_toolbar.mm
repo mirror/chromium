@@ -48,8 +48,7 @@ const CGFloat kButtonHeight = 48;
   [self addSubview:button];
   button.translatesAutoresizingMaskIntoConstraints = NO;
 
-  id<LayoutGuideProvider> safeAreaLayoutGuide =
-      SafeAreaLayoutGuideForView(self);
+  UILayoutGuide* safeAreaLayoutGuide = SafeAreaLayoutGuideForView(self);
   [NSLayoutConstraint activateConstraints:@[
     [button.leadingAnchor
         constraintEqualToAnchor:safeAreaLayoutGuide.leadingAnchor],

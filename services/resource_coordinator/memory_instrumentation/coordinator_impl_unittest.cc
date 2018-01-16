@@ -129,16 +129,13 @@ class CoordinatorImplTest : public testing::Test {
 
   void RequestGlobalMemoryDump(RequestGlobalMemoryDumpCallback callback) {
     RequestGlobalMemoryDump(MemoryDumpType::SUMMARY_ONLY,
-                            MemoryDumpLevelOfDetail::BACKGROUND, {}, callback);
+                            MemoryDumpLevelOfDetail::BACKGROUND, callback);
   }
 
-  void RequestGlobalMemoryDump(
-      MemoryDumpType dump_type,
-      MemoryDumpLevelOfDetail level_of_detail,
-      const std::vector<std::string>& allocator_dump_names,
-      RequestGlobalMemoryDumpCallback callback) {
-    coordinator_->RequestGlobalMemoryDump(dump_type, level_of_detail,
-                                          allocator_dump_names, callback);
+  void RequestGlobalMemoryDump(MemoryDumpType dump_type,
+                               MemoryDumpLevelOfDetail level_of_detail,
+                               RequestGlobalMemoryDumpCallback callback) {
+    coordinator_->RequestGlobalMemoryDump(dump_type, level_of_detail, callback);
   }
 
   void RequestGlobalMemoryDumpForPid(
@@ -798,8 +795,7 @@ TEST_F(CoordinatorImplTest, DumpsArentAddedToTraceUnlessRequested) {
       TraceConfig(MemoryDumpManager::kTraceCategory, ""),
       TraceLog::RECORDING_MODE);
   RequestGlobalMemoryDump(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                          MemoryDumpLevelOfDetail::DETAILED, {},
-                          callback.Get());
+                          MemoryDumpLevelOfDetail::DETAILED, callback.Get());
   run_loop.Run();
   TraceLog::GetInstance()->SetDisabled();
 

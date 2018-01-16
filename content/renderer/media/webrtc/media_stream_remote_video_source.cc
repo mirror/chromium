@@ -18,7 +18,7 @@
 #include "media/base/video_frame.h"
 #include "media/base/video_util.h"
 #include "third_party/webrtc/api/video/i420_buffer.h"
-#include "third_party/webrtc/api/videosinkinterface.h"
+#include "third_party/webrtc/media/base/videosinkinterface.h"
 
 namespace content {
 
@@ -142,7 +142,7 @@ void MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::OnFrame(
         pixel_format = media::PIXEL_FORMAT_I444;
       } else {
         yuv_buffer = buffer->ToI420();
-        pixel_format = media::PIXEL_FORMAT_I420;
+        pixel_format = media::PIXEL_FORMAT_YV12;
       }
       // Make a shallow copy. Both |frame| and |video_frame| will share a single
       // reference counted frame buffer. Const cast and hope no one will

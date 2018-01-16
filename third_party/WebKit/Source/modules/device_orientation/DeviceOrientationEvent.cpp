@@ -30,7 +30,7 @@
 
 namespace blink {
 
-DeviceOrientationEvent::~DeviceOrientationEvent() = default;
+DeviceOrientationEvent::~DeviceOrientationEvent() {}
 
 DeviceOrientationEvent::DeviceOrientationEvent()
     : orientation_(DeviceOrientationData::Create()) {}

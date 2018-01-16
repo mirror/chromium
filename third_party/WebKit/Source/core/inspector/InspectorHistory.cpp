@@ -54,7 +54,7 @@ class UndoableStateMark final : public InspectorHistory::Action {
 
 InspectorHistory::Action::Action(const String& name) : name_(name) {}
 
-InspectorHistory::Action::~Action() = default;
+InspectorHistory::Action::~Action() {}
 
 void InspectorHistory::Action::Trace(blink::Visitor* visitor) {}
 

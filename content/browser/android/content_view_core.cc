@@ -221,9 +221,8 @@ ContentViewCore::~ContentViewCore() {
 void ContentViewCore::UpdateWindowAndroid(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& jwindow_android) {
-  ui::WindowAndroid* window =
-      ui::WindowAndroid::FromJavaWindowAndroid(jwindow_android);
+    jlong window_android) {
+  auto* window = reinterpret_cast<ui::WindowAndroid*>(window_android);
   auto* old_window = GetWindowAndroid();
   if (window == old_window)
     return;
@@ -850,7 +849,7 @@ jlong JNI_ContentViewCoreImpl_Init(
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& jweb_contents,
     const JavaParamRef<jobject>& jview_android_delegate,
-    const JavaParamRef<jobject>& jwindow_android,
+    jlong jwindow_android,
     jfloat dip_scale) {
   WebContentsImpl* web_contents = static_cast<WebContentsImpl*>(
       WebContents::FromJavaWebContents(jweb_contents));
@@ -860,7 +859,7 @@ jlong JNI_ContentViewCoreImpl_Init(
   view_android->SetDelegate(jview_android_delegate);
 
   ui::WindowAndroid* window_android =
-      ui::WindowAndroid::FromJavaWindowAndroid(jwindow_android);
+      reinterpret_cast<ui::WindowAndroid*>(jwindow_android);
   DCHECK(window_android);
   window_android->AddChild(view_android);
 

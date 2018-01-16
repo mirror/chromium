@@ -52,7 +52,8 @@ TEST(BlobDataTest, Consolidation) {
   EXPECT_EQ(12u, data.items_[0].data->length());
   EXPECT_EQ(0, memcmp(data.items_[0].data->data(), "abcdefps1ps2", 12));
 
-  auto large_data = std::make_unique<char[]>(kMaxConsolidatedItemSizeInBytes);
+  std::unique_ptr<char[]> large_data =
+      WrapArrayUnique(new char[kMaxConsolidatedItemSizeInBytes]);
   data.AppendBytes(large_data.get(), kMaxConsolidatedItemSizeInBytes);
 
   EXPECT_EQ(2u, data.items_.size());
@@ -113,9 +114,9 @@ class MockBlobRegistry : public BlobRegistry {
     std::move(callback).Run();
   }
 
-  void URLStoreForOrigin(
-      const scoped_refptr<const SecurityOrigin>& origin,
-      mojom::blink::BlobURLStoreAssociatedRequest request) override {
+  void RegisterURL(BlobPtr blob,
+                   const KURL& url,
+                   RegisterURLCallback callback) override {
     NOTREACHED();
   }
 

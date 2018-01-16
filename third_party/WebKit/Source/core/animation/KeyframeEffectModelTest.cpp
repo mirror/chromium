@@ -38,23 +38,24 @@
 #include "core/animation/animatable/AnimatableUnknown.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/dom/Element.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class AnimationKeyframeEffectModel : public PageTestBase {
+class AnimationKeyframeEffectModel : public ::testing::Test {
  protected:
   void SetUp() override {
-    PageTestBase::SetUp(IntSize());
-    element = GetDocument().createElement("foo");
+    page_holder = DummyPageHolder::Create();
+    document = &page_holder->GetDocument();
+    element = document->createElement("foo");
   }
 
   void ExpectLengthValue(double expected_value,
                          scoped_refptr<Interpolation> interpolation_value) {
     ActiveInterpolations interpolations;
     interpolations.push_back(interpolation_value);
-    EnsureInterpolatedValueCached(interpolations, GetDocument(), element);
+    EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =
         ToInvalidatableInterpolation(interpolation_value.get())
@@ -72,7 +73,7 @@ class AnimationKeyframeEffectModel : public PageTestBase {
       scoped_refptr<Interpolation> interpolation_value) {
     ActiveInterpolations interpolations;
     interpolations.push_back(interpolation_value);
-    EnsureInterpolatedValueCached(interpolations, GetDocument(), element);
+    EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =
         ToInvalidatableInterpolation(interpolation_value.get())
@@ -86,6 +87,8 @@ class AnimationKeyframeEffectModel : public PageTestBase {
     EXPECT_EQ(expected_value, css_value->CssText());
   }
 
+  std::unique_ptr<DummyPageHolder> page_holder;
+  Persistent<Document> document;
   Persistent<Element> element;
 };
 

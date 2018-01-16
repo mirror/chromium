@@ -52,7 +52,7 @@ ValidationMessageClientImpl* ValidationMessageClientImpl::Create(
   return new ValidationMessageClientImpl(web_view);
 }
 
-ValidationMessageClientImpl::~ValidationMessageClientImpl() = default;
+ValidationMessageClientImpl::~ValidationMessageClientImpl() {}
 
 LocalFrameView* ValidationMessageClientImpl::CurrentView() {
   return current_anchor_->GetDocument().View();

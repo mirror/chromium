@@ -490,14 +490,6 @@
 
     /**
      * @override
-     * @param {string} fileSystemPath
-     */
-    showItemInFolder(fileSystemPath) {
-      DevToolsAPI.sendMessageToEmbedder('showItemInFolder', [fileSystemPath], null);
-    }
-
-    /**
-     * @override
      * @param {string} url
      * @param {string} content
      * @param {boolean} forceSaveAs

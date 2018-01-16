@@ -40,20 +40,20 @@ ExtensionFunction::ResponseAction SettingsPrivateSetPrefFunction::Run() {
   if (delegate == nullptr)
     return RespondNow(Error(kDelegateIsNull));
 
-  settings_private::SetPrefResult result =
+  PrefsUtil::SetPrefResult result =
       delegate->SetPref(parameters->name, parameters->value.get());
   switch (result) {
-    case settings_private::SetPrefResult::SUCCESS:
+    case PrefsUtil::SUCCESS:
       return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
-    case settings_private::SetPrefResult::PREF_NOT_MODIFIABLE:
+    case PrefsUtil::PREF_NOT_MODIFIABLE:
       // Not an error, but return false to indicate setting the pref failed.
       return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
-    case settings_private::SetPrefResult::PREF_NOT_FOUND:
+    case PrefsUtil::PREF_NOT_FOUND:
       return RespondNow(Error("Pref not found: *", parameters->name));
-    case settings_private::SetPrefResult::PREF_TYPE_MISMATCH:
+    case PrefsUtil::PREF_TYPE_MISMATCH:
       return RespondNow(Error("Incorrect type used for value of pref *",
                               parameters->name));
-    case settings_private::SetPrefResult::PREF_TYPE_UNSUPPORTED:
+    case PrefsUtil::PREF_TYPE_UNSUPPORTED:
       return RespondNow(Error("Unsupported type used for value of pref *",
                               parameters->name));
   }

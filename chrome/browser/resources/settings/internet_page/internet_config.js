@@ -72,7 +72,7 @@ Polymer({
   },
 
   open: function() {
-    const dialog = /** @type {!CrDialogElement} */ (this.$.dialog);
+    var dialog = /** @type {!CrDialogElement} */ (this.$.dialog);
     if (!dialog.open)
       dialog.showModal();
 
@@ -88,7 +88,7 @@ Polymer({
   },
 
   close: function() {
-    const dialog = /** @type {!CrDialogElement} */ (this.$.dialog);
+    var dialog = /** @type {!CrDialogElement} */ (this.$.dialog);
     if (dialog.open)
       dialog.close();
   },
@@ -98,10 +98,10 @@ Polymer({
    * @private
    */
   getDialogTitle_: function() {
-    const name = this.networkProperties_.Name;
+    var name = this.networkProperties_.Name;
     if (name)
       return this.i18n('internetConfigName', name);
-    const type = this.i18n('OncType' + this.networkProperties_.Type);
+    var type = this.i18n('OncType' + this.networkProperties_.Type);
     return this.i18n('internetJoinType', type);
   },
 
@@ -110,7 +110,7 @@ Polymer({
    * @private
    */
   isConfigured_: function() {
-    const source = this.networkProperties_.Source;
+    var source = this.networkProperties_.Source;
     return !!this.guid && !!source && source != CrOnc.Source.NONE;
   },
 

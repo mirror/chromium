@@ -44,8 +44,8 @@
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutVideo.h"
 #include "platform/Histogram.h"
-#include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/gpu/Extensions3DUtil.h"
 #include "platform/runtime_enabled_features.h"
 #include "public/platform/WebCanvas.h"
@@ -80,7 +80,7 @@ inline HTMLVideoElement::HTMLVideoElement(Document& document)
 
 HTMLVideoElement* HTMLVideoElement::Create(Document& document) {
   HTMLVideoElement* video = new HTMLVideoElement(document);
-  video->EnsureLegacyUserAgentShadowRootV0();
+  video->EnsureUserAgentShadowRoot();
   video->PauseIfNeeded();
   return video;
 }
@@ -442,6 +442,7 @@ KURL HTMLVideoElement::PosterImageURL() const {
 scoped_refptr<Image> HTMLVideoElement::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
+    SnapshotReason,
     const FloatSize&) {
   if (!HasAvailableVideoFrame()) {
     *status = kInvalidSourceImageStatus;
@@ -450,18 +451,17 @@ scoped_refptr<Image> HTMLVideoElement::GetSourceImageForCanvas(
 
   IntSize intrinsic_size(videoWidth(), videoHeight());
   // FIXME: Not sure if we dhould we be doing anything with the AccelerationHint
-  // argument here? Currently we use unacceleration mode.
-  std::unique_ptr<CanvasResourceProvider> resource_provider =
-      CanvasResourceProvider::Create(
-          intrinsic_size, CanvasResourceProvider::kSoftwareResourceUsage);
-  if (!resource_provider) {
+  // argument here?
+  std::unique_ptr<ImageBuffer> image_buffer =
+      ImageBuffer::Create(intrinsic_size);
+  if (!image_buffer) {
     *status = kInvalidSourceImageStatus;
     return nullptr;
   }
 
-  PaintCurrentFrame(resource_provider->Canvas(),
+  PaintCurrentFrame(image_buffer->Canvas(),
                     IntRect(IntPoint(0, 0), intrinsic_size), nullptr);
-  scoped_refptr<Image> snapshot = resource_provider->Snapshot();
+  scoped_refptr<Image> snapshot = image_buffer->NewImageSnapshot();
   if (!snapshot) {
     *status = kInvalidSourceImageStatus;
     return nullptr;
@@ -514,17 +514,16 @@ void HTMLVideoElement::MediaRemotingStarted(
     const WebString& remote_device_friendly_name) {
   if (!remoting_interstitial_) {
     remoting_interstitial_ = new MediaRemotingInterstitial(*this);
-    ShadowRoot& shadow_root = EnsureLegacyUserAgentShadowRootV0();
+    ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
     shadow_root.InsertBefore(remoting_interstitial_, shadow_root.firstChild());
     HTMLMediaElement::AssertShadowRootChildren(shadow_root);
   }
   remoting_interstitial_->Show(remote_device_friendly_name);
 }
 
-void HTMLVideoElement::MediaRemotingStopped(
-    WebLocalizedString::Name error_msg) {
+void HTMLVideoElement::MediaRemotingStopped() {
   if (remoting_interstitial_)
-    remoting_interstitial_->Hide(error_msg);
+    remoting_interstitial_->Hide();
 }
 
 WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {

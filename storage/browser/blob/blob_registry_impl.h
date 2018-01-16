@@ -45,15 +45,20 @@ class STORAGE_EXPORT BlobRegistryImpl : public blink::mojom::BlobRegistry {
                        const std::string& uuid,
                        GetBlobFromUUIDCallback callback) override;
 
-  void URLStoreForOrigin(
-      const url::Origin& origin,
-      blink::mojom::BlobURLStoreAssociatedRequest url_store) override;
+  void RegisterURL(blink::mojom::BlobPtr blob,
+                   const GURL& url,
+                   RegisterURLCallback callback) override;
 
   size_t BlobsUnderConstructionForTesting() const {
     return blobs_under_construction_.size();
   }
 
  private:
+  void RegisterURLWithUUID(const GURL& url,
+                           blink::mojom::BlobPtr blob,
+                           RegisterURLCallback callback,
+                           const std::string& uuid);
+
   class BlobUnderConstruction;
 
   base::WeakPtr<BlobStorageContext> context_;

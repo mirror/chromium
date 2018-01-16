@@ -39,7 +39,7 @@ using namespace HTMLNames;
 AXTableColumn::AXTableColumn(AXObjectCacheImpl& ax_object_cache)
     : AXMockObject(ax_object_cache) {}
 
-AXTableColumn::~AXTableColumn() = default;
+AXTableColumn::~AXTableColumn() {}
 
 AXTableColumn* AXTableColumn::Create(AXObjectCacheImpl& ax_object_cache) {
   return new AXTableColumn(ax_object_cache);

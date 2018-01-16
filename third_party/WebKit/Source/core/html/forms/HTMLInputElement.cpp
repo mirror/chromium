@@ -127,7 +127,7 @@ HTMLInputElement* HTMLInputElement::Create(Document& document,
       new HTMLInputElement(document, created_by_parser);
   if (!created_by_parser) {
     DCHECK(input_element->input_type_view_->NeedsShadowSubtree());
-    input_element->CreateLegacyUserAgentShadowRootV0();
+    input_element->CreateUserAgentShadowRoot();
     input_element->CreateShadowSubtree();
   }
   return input_element;
@@ -151,7 +151,7 @@ HTMLImageLoader& HTMLInputElement::EnsureImageLoader() {
   return *image_loader_;
 }
 
-HTMLInputElement::~HTMLInputElement() = default;
+HTMLInputElement::~HTMLInputElement() {}
 
 const AtomicString& HTMLInputElement::GetName() const {
   return name_.IsNull() ? g_empty_atom : name_;
@@ -378,7 +378,7 @@ void HTMLInputElement::InitializeTypeInParsing() {
   has_been_password_field_ |= new_type_name == InputTypeNames::password;
 
   if (input_type_view_->NeedsShadowSubtree()) {
-    CreateLegacyUserAgentShadowRootV0();
+    CreateUserAgentShadowRoot();
     CreateShadowSubtree();
   }
 
@@ -437,7 +437,7 @@ void HTMLInputElement::UpdateType() {
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
   if (input_type_view_->NeedsShadowSubtree()) {
-    EnsureLegacyUserAgentShadowRootV0();
+    EnsureUserAgentShadowRoot();
     CreateShadowSubtree();
   }
 
@@ -990,9 +990,10 @@ void HTMLInputElement::setChecked(bool now_checked,
   // unchecked to match other browsers. DOM is not a useful standard for this
   // because it says only to fire change events at "lose focus" time, which is
   // definitely wrong in practice for these types of elements.
-  if (event_behavior == kDispatchInputAndChangeEvent && isConnected() &&
+  if (event_behavior != kDispatchNoEvent && isConnected() &&
       input_type_->ShouldSendChangeEventAfterCheckedChanged()) {
-    DispatchInputEvent();
+    if (event_behavior == kDispatchInputAndChangeEvent)
+      DispatchInputEvent();
   }
 
   PseudoStateChanged(CSSSelector::kPseudoChecked);
@@ -1129,11 +1130,8 @@ void HTMLInputElement::setValue(const String& value,
                         selection);
   input_type_view_->DidSetValue(sanitized_value, value_changed);
 
-  if (value_changed) {
+  if (value_changed)
     NotifyFormStateChanged();
-    if (auto* page = GetDocument().GetPage())
-      page->GetChromeClient().DidChangeValueInTextField(*this);
-  }
 }
 
 void HTMLInputElement::SetNonAttributeValue(const String& sanitized_value) {
@@ -1949,7 +1947,7 @@ void HTMLInputElement::ChildrenChanged(const ChildrenChange& change) {
   // Some input types only need shadow roots to hide any children that may
   // have been appended by script. For such types, shadow roots are lazily
   // created when children are added for the first time.
-  EnsureLegacyUserAgentShadowRootV0();
+  EnsureUserAgentShadowRoot();
   ContainerNode::ChildrenChanged(change);
 }
 

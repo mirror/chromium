@@ -70,7 +70,7 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   void setShadowOffsetY(double);
 
   double shadowBlur() const;
-  virtual void setShadowBlur(double);
+  void setShadowBlur(double);
 
   String shadowColor() const;
   void setShadowColor(const String&);
@@ -354,7 +354,8 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
     NOTREACHED();
     return false;
   }
-  virtual scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint) const {
+  virtual scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
+                                                    SnapshotReason) const {
     NOTREACHED();
     return nullptr;
   }

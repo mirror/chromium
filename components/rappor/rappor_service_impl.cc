@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/time/time.h"
 #include "components/rappor/log_uploader.h"
@@ -29,8 +30,23 @@ const char kMimeType[] = "application/vnd.chrome.rappor";
 
 const char kRapporDailyEventHistogram[] = "Rappor.DailyEvent.IntervalType";
 
+// Constants for the RAPPOR rollout field trial.
+const char kRapporRolloutFieldTrialName[] = "RapporRollout";
+
+// Constant for the finch parameter name for the server URL
+const char kRapporRolloutServerUrlParam[] = "ServerUrl";
+
 // The rappor server's URL.
 const char kDefaultServerUrl[] = "https://clients4.google.com/rappor";
+
+GURL GetServerUrl() {
+  std::string server_url = variations::GetVariationParamValue(
+      kRapporRolloutFieldTrialName, kRapporRolloutServerUrlParam);
+  if (!server_url.empty())
+    return GURL(server_url);
+  else
+    return GURL(kDefaultServerUrl);
+}
 
 }  // namespace
 
@@ -56,7 +72,7 @@ void RapporServiceImpl::Initialize(
     net::URLRequestContextGetter* request_context) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!IsInitialized());
-  const GURL server_url = GURL(kDefaultServerUrl);
+  const GURL server_url = GetServerUrl();
   if (!server_url.is_valid()) {
     DVLOG(1) << server_url.spec() << " is invalid. "
              << "RapporServiceImpl not started.";

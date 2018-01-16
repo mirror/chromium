@@ -31,8 +31,7 @@ void VulkanRenderer::BindFramebufferToOutputSurface() {
 }
 
 ResourceFormat VulkanRenderer::BackbufferFormat() const {
-  NOTIMPLEMENTED();
-  return RGBA_8888;
+  return resource_provider_->best_texture_format();
 }
 
 void VulkanRenderer::BindFramebufferToTexture(

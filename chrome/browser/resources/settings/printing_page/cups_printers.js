@@ -100,15 +100,14 @@ Polymer({
    * @private
    */
   onAddPrinter_: function(result_code, printerName) {
-    let message;
     if (result_code == PrinterSetupResult.SUCCESS) {
       this.updateCupsPrintersList_();
-      message = this.$.addPrinterDoneMessage;
+      var message = this.$.addPrinterDoneMessage;
       message.textContent =
           loadTimeData.getStringF('printerAddedSuccessfulMessage', printerName);
     } else {
-      message = this.$.addPrinterErrorMessage;
-      const messageText = this.$.addPrinterFailedMessage;
+      var message = this.$.addPrinterErrorMessage;
+      var messageText = this.$.addPrinterFailedMessage;
       switch (result_code) {
         case PrinterSetupResult.FATAL_ERROR:
           messageText.textContent =
@@ -179,7 +178,7 @@ Polymer({
   onShowCupsEditPrinterDialog_: function() {
     this.showCupsEditPrinterDialog_ = true;
     this.async(function() {
-      const dialog = this.$$('settings-cups-edit-printer-dialog');
+      var dialog = this.$$('settings-cups-edit-printer-dialog');
       dialog.addEventListener('close', function() {
         this.showCupsEditPrinterDialog_ = false;
       }.bind(this));

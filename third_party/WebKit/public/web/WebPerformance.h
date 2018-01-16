@@ -47,7 +47,7 @@ class WebPerformance {
  public:
   ~WebPerformance() { Reset(); }
 
-  WebPerformance() = default;
+  WebPerformance() {}
 
   WebPerformance(const WebPerformance& p) { Assign(p); }
 

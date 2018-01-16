@@ -9,11 +9,11 @@
 
 namespace ui {
 
-WaylandXkbKeyboardLayoutEngineImpl::WaylandXkbKeyboardLayoutEngineImpl(
+WaylandXkbKeyboardLayoutEngine::WaylandXkbKeyboardLayoutEngine(
     const XkbKeyCodeConverter& converter)
-    : WaylandXkbKeyboardLayoutEngine(converter) {}
+    : XkbKeyboardLayoutEngine(converter) {}
 
-void WaylandXkbKeyboardLayoutEngineImpl::SetKeymap(xkb_keymap* keymap) {
+void WaylandXkbKeyboardLayoutEngine::SetKeymap(xkb_keymap* keymap) {
   XkbKeyboardLayoutEngine::SetKeymap(keymap);
 
   xkb_mod_indexes_.control =
@@ -22,11 +22,10 @@ void WaylandXkbKeyboardLayoutEngineImpl::SetKeymap(xkb_keymap* keymap) {
   xkb_mod_indexes_.shift = xkb_keymap_mod_get_index(keymap, XKB_MOD_NAME_SHIFT);
 }
 
-void WaylandXkbKeyboardLayoutEngineImpl::UpdateModifiers(
-    uint32_t depressed_mods,
-    uint32_t latched_mods,
-    uint32_t locked_mods,
-    uint32_t group) {
+void WaylandXkbKeyboardLayoutEngine::UpdateModifiers(uint32_t depressed_mods,
+                                                     uint32_t latched_mods,
+                                                     uint32_t locked_mods,
+                                                     uint32_t group) {
   xkb_state_update_mask(xkb_state_.get(), depressed_mods, latched_mods,
                         locked_mods, 0, 0, group);
 
@@ -45,11 +44,6 @@ void WaylandXkbKeyboardLayoutEngineImpl::UpdateModifiers(
   if (xkb_state_mod_index_is_active(xkb_state_.get(), xkb_mod_indexes_.shift,
                                     component))
     event_modifiers_->UpdateModifier(MODIFIER_SHIFT, true);
-}
-
-void WaylandXkbKeyboardLayoutEngineImpl::SetEventModifiers(
-    EventModifiers* event_modifiers) {
-  event_modifiers_ = event_modifiers;
 }
 
 }  // namespace ui

@@ -17,7 +17,7 @@ CompositorTransformKeyframe::CompositorTransformKeyframe(
                                         value.ReleaseCcTransformOperations(),
                                         timing_function.CloneToCC())) {}
 
-CompositorTransformKeyframe::~CompositorTransformKeyframe() = default;
+CompositorTransformKeyframe::~CompositorTransformKeyframe() {}
 
 double CompositorTransformKeyframe::Time() const {
   return transform_keyframe_->Time().InSecondsF();

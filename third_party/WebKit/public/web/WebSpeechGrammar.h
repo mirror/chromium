@@ -36,7 +36,7 @@ class SpeechGrammar;
 
 class WebSpeechGrammar {
  public:
-  WebSpeechGrammar() = default;
+  WebSpeechGrammar() {}
   WebSpeechGrammar(const WebSpeechGrammar& grammar) { Assign(grammar); }
   ~WebSpeechGrammar() { Reset(); }
 

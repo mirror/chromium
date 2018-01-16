@@ -32,7 +32,7 @@ class AudioStreamHandlerTest : public testing::Test {
 
   void SetUp() override {
     audio_manager_ =
-        AudioManager::CreateForTesting(std::make_unique<TestAudioThread>());
+        AudioManager::CreateForTesting(base::MakeUnique<TestAudioThread>());
     base::RunLoop().RunUntilIdle();
 
     base::StringPiece data(kTestAudioData, arraysize(kTestAudioData));

@@ -1796,6 +1796,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest, SetOtherPossiblePasswords) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      password_manager::features::kEnablePasswordSelection);
+
   PasswordFormBuilder builder(kTestFormActionURL);
   builder.AddTextField("username1", "John", nullptr);
   builder.AddPasswordField("password1", "alpha1", nullptr);
@@ -1825,6 +1829,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, SetOtherPossiblePasswords) {
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        AllPossiblePasswordsIncludeAutofilledValue) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      password_manager::features::kEnablePasswordSelection);
+
   for (bool autofilled_value_was_modified_by_user : {false, true}) {
     PasswordFormBuilder builder(kTestFormActionURL);
     builder.AddTextField("username1", "John", nullptr);
@@ -2002,42 +2010,6 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, UsernamePredictionFromServer) {
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.UsernameDetectionMethod",
       UsernameDetectionMethod::SERVER_SIDE_PREDICTION, 1);
-}
-
-TEST_F(MAYBE_PasswordFormConversionUtilsTest,
-       UsernamePredictionFromServerToEmptyField) {
-  // Tests that if a form has user input and the username prediction by the
-  // server points to an empty field, then the prediction is ignored.
-  PasswordFormBuilder builder(kTestFormActionURL);
-  builder.AddTextField("empty-field", "", "");  // The prediction points here.
-  builder.AddTextField("full-name", "John A. Smith", nullptr);
-  builder.AddTextField("username", "JohnSmith", nullptr);
-  builder.AddPasswordField("password", "secret", nullptr);
-  builder.AddSubmitButton("submit");
-  std::string html = builder.ProduceHTML();
-
-  std::map<int, PasswordFormFieldPredictionType> predictions_positions;
-  predictions_positions[0] = PREDICTION_USERNAME;
-  FormsPredictionsMap predictions;
-  SetPredictions(html, &predictions, predictions_positions);
-
-  // The password field has user input.
-  WebFormElement form;
-  LoadWebFormFromHTML(html, &form, nullptr);
-  WebVector<WebFormControlElement> control_elements;
-  form.GetFormControlElements(control_elements);
-  FieldValueAndPropertiesMaskMap user_input;
-  WebInputElement* input_element = ToWebInputElement(&control_elements[3]);
-  const base::string16 element_value = input_element->Value().Utf16();
-  user_input[control_elements[3]] =
-      std::make_pair(base::MakeUnique<base::string16>(element_value),
-                     FieldPropertiesFlags::USER_TYPED);
-
-  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
-      form, &user_input, &predictions, &username_detector_cache_);
-  ASSERT_TRUE(password_form);
-  EXPECT_EQ(base::UTF8ToUTF16("username"), password_form->username_element);
-  EXPECT_EQ(base::UTF8ToUTF16("JohnSmith"), password_form->username_value);
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,

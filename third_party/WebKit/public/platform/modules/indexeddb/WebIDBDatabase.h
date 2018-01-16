@@ -110,14 +110,14 @@ class WebIDBDatabase {
                    long long object_store_id,
                    const WebData& value,
                    const WebVector<WebBlobInfo>&,
-                   WebIDBKeyView primary_key,
+                   const WebIDBKey&,
                    WebIDBPutMode,
                    WebIDBCallbacks*,
                    const WebVector<long long>& index_ids,
-                   WebVector<WebIndexKeys>) = 0;
+                   const WebVector<WebIndexKeys>&) = 0;
   virtual void SetIndexKeys(long long transaction_id,
                             long long object_store_id,
-                            WebIDBKeyView primary_key,
+                            const WebIDBKey&,
                             const WebVector<long long>& index_ids,
                             const WebVector<WebIndexKeys>&) = 0;
   virtual void SetIndexesReady(long long transaction_id,
@@ -136,10 +136,6 @@ class WebIDBDatabase {
                      long long index_id,
                      const WebIDBKeyRange&,
                      WebIDBCallbacks*) = 0;
-  virtual void Delete(long long transaction_id,
-                      long long object_store_id,
-                      WebIDBKeyView primary_key,
-                      WebIDBCallbacks*) = 0;
   virtual void DeleteRange(long long transaction_id,
                            long long object_store_id,
                            const WebIDBKeyRange&,

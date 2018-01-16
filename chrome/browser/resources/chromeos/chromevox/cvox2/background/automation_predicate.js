@@ -225,20 +225,11 @@ AutomationPredicate.object = function(node) {
   if (node.name && node.name.length > constants.OBJECT_MAX_CHARCOUNT)
     return false;
 
-  // Given no other information, ChromeVox wants to visit focusable
-  // (e.g. tabindex=0) nodes only when it has a name or is a control.
-  if (node.state.focusable &&
-      (node.name || node.state[State.EDITABLE] ||
-       AutomationPredicate.formField(node)))
-    return true;
-
-  // Otherwise, leaf or static text nodes that don't contain only whitespace
-  // should be visited with the exception of non-text only nodes. This covers
-  // cases where an author might make a link with a name of ' '.
-  return AutomationPredicate.leafOrStaticText(node) &&
-      (/\S+/.test(node.name) ||
-       (node.role != Role.LINE_BREAK && node.role != Role.STATIC_TEXT &&
-        node.role != Role.INLINE_TEXT_BOX));
+  return node.state.focusable ||
+      (AutomationPredicate.leafOrStaticText(node) &&
+       (/\S+/.test(node.name) ||
+        (node.role != Role.LINE_BREAK && node.role != Role.STATIC_TEXT &&
+         node.role != Role.INLINE_TEXT_BOX)));
 };
 
 /**

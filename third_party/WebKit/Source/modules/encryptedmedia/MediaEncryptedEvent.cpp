@@ -36,7 +36,7 @@ MediaEncryptedEvent::MediaEncryptedEvent(
       init_data_type_(initializer.initDataType()),
       init_data_(initializer.initData()) {}
 
-MediaEncryptedEvent::~MediaEncryptedEvent() = default;
+MediaEncryptedEvent::~MediaEncryptedEvent() {}
 
 const AtomicString& MediaEncryptedEvent::InterfaceName() const {
   return EventNames::MediaEncryptedEvent;

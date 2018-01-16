@@ -79,6 +79,7 @@
 #include "core/xml/DocumentXPathEvaluator.h"
 #include "core/xml/XPathResult.h"
 #include "platform/graphics/Color.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"
@@ -236,7 +237,7 @@ InspectorDOMAgent::InspectorDOMAgent(
       last_node_id_(1),
       suppress_attribute_modified_event_(false) {}
 
-InspectorDOMAgent::~InspectorDOMAgent() = default;
+InspectorDOMAgent::~InspectorDOMAgent() {}
 
 void InspectorDOMAgent::Restore() {
   if (!Enabled())
@@ -394,7 +395,8 @@ ShadowRoot* InspectorDOMAgent::UserAgentShadowRoot(Node* node) {
   DCHECK(candidate);
   ShadowRoot* shadow_root = ToShadowRoot(candidate);
 
-  return shadow_root->IsUserAgent() ? shadow_root : nullptr;
+  return shadow_root->GetType() == ShadowRootType::kUserAgent ? shadow_root
+                                                              : nullptr;
 }
 
 Response InspectorDOMAgent::AssertEditableNode(int node_id, Node*& node) {
@@ -928,7 +930,8 @@ static Node* NextNodeWithShadowDOMInMind(const Node& current,
     ElementShadow* element_shadow = element.Shadow();
     if (element_shadow) {
       ShadowRoot& shadow_root = element_shadow->YoungestShadowRoot();
-      if (!shadow_root.IsUserAgent() || include_user_agent_shadow_dom)
+      if (shadow_root.GetType() != ShadowRootType::kUserAgent ||
+          include_user_agent_shadow_dom)
         return &shadow_root;
     }
   }
@@ -1385,8 +1388,7 @@ String InspectorDOMAgent::DocumentBaseURLString(Document* document) {
 static protocol::DOM::ShadowRootType GetShadowRootType(
     ShadowRoot* shadow_root) {
   switch (shadow_root->GetType()) {
-    case ShadowRootType::kLegacyUserAgentV0:
-    case ShadowRootType::kUserAgentV1:
+    case ShadowRootType::kUserAgent:
       return protocol::DOM::ShadowRootTypeEnum::UserAgent;
     case ShadowRootType::V0:
     case ShadowRootType::kOpen:

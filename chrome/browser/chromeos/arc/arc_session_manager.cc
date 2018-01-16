@@ -23,6 +23,7 @@
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_default_negotiator.h"
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_oobe_negotiator.h"
 #include "chrome/browser/chromeos/arc/policy/arc_android_management_checker.h"
+#include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -74,16 +75,6 @@ void MaybeUpdateOptInCancelUMA(const ArcSupportHost* support_host) {
   }
 
   UpdateOptInCancelUMA(OptInCancelReason::USER_CANCEL);
-}
-
-chromeos::SessionManagerClient* GetSessionManagerClient() {
-  // If the DBusThreadManager or the SessionManagerClient aren't available,
-  // there isn't much we can do. This should only happen when running tests.
-  if (!chromeos::DBusThreadManager::IsInitialized() ||
-      !chromeos::DBusThreadManager::Get() ||
-      !chromeos::DBusThreadManager::Get()->GetSessionManagerClient())
-    return nullptr;
-  return chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
 }
 
 }  // namespace
@@ -153,17 +144,10 @@ ArcSessionManager::ArcSessionManager(
   DCHECK(!g_arc_session_manager);
   g_arc_session_manager = this;
   arc_session_runner_->AddObserver(this);
-  chromeos::SessionManagerClient* client = GetSessionManagerClient();
-  if (client)
-    client->AddObserver(this);
 }
 
 ArcSessionManager::~ArcSessionManager() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  chromeos::SessionManagerClient* client = GetSessionManagerClient();
-  if (client)
-    client->RemoveObserver(this);
 
   Shutdown();
   arc_session_runner_->RemoveObserver(this);
@@ -270,8 +254,10 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
     arc_sign_in_timer_.Stop();
 
     UpdateProvisioningTiming(base::Time::Now() - sign_in_start_time_,
-                             provisioning_successful, profile_);
-    UpdateProvisioningResultUMA(result, profile_);
+                             provisioning_successful,
+                             policy_util::IsAccountManaged(profile_));
+    UpdateProvisioningResultUMA(result,
+                                policy_util::IsAccountManaged(profile_));
     if (!provisioning_successful)
       UpdateOptInCancelUMA(OptInCancelReason::CLOUD_PROVISION_FLOW_FAIL);
   }
@@ -1044,10 +1030,6 @@ void ArcSessionManager::SetArcSessionRunnerForTesting(
   arc_session_runner_->AddObserver(this);
 }
 
-ArcSessionRunner* ArcSessionManager::GetArcSessionRunnerForTesting() {
-  return arc_session_runner_.get();
-}
-
 void ArcSessionManager::SetAttemptUserExitCallbackForTesting(
     const base::Closure& callback) {
   DCHECK(!callback.is_null());
@@ -1061,16 +1043,6 @@ void ArcSessionManager::ShowArcSupportHostError(
     support_host_->ShowError(error, should_show_send_feedback);
   for (auto& observer : observer_list_)
     observer.OnArcErrorShowRequested(error);
-}
-
-void ArcSessionManager::EmitLoginPromptVisibleCalled() {
-  // Since 'login-prompt-visible' Upstart signal starts all Upstart jobs the
-  // instance may depend on such as cras, EmitLoginPromptVisibleCalled() is the
-  // safe place to start a mini instance.
-  if (!IsArcAvailable())
-    return;
-
-  arc_session_runner_->RequestStart(ArcInstanceMode::MINI_INSTANCE);
 }
 
 std::ostream& operator<<(std::ostream& os,

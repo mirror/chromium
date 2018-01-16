@@ -63,7 +63,7 @@ class DOMStringMap : public ScriptWrappable {
   bool NamedPropertyQuery(const AtomicString&, ExceptionState&);
 
  protected:
-  DOMStringMap() = default;
+  DOMStringMap() {}
   DISALLOW_COPY_AND_ASSIGN(DOMStringMap);
 };
 

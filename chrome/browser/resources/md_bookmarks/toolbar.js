@@ -10,6 +10,12 @@ Polymer({
   ],
 
   properties: {
+    /** @private */
+    searchTerm_: {
+      type: String,
+      observer: 'onSearchTermChanged_',
+    },
+
     sidebarWidth: {
       type: String,
       observer: 'onSidebarWidthChanged_',
@@ -28,17 +34,31 @@ Polymer({
       reflectToAttribute: true,
     },
 
-    /** @private */
-    searchTerm_: {
-      type: String,
-      observer: 'onSearchTermChanged_',
-    },
-
     /** @private {!Set<string>} */
     selectedItems_: Object,
 
     /** @private */
     globalCanEdit_: Boolean,
+
+    /** @private */
+    selectedFolder_: String,
+
+    /** @private */
+    selectedFolderChildren_: Number,
+
+    /** @private */
+    canSortFolder_: {
+      type: Boolean,
+      computed: `computeCanSortFolder_(
+          canChangeList_, selectedFolder_, selectedFolderChildren_)`,
+    },
+
+    /** @private */
+    canChangeList_: {
+      type: Boolean,
+      computed:
+          'computeCanChangeList_(selectedFolder_, searchTerm_, globalCanEdit_)',
+    }
   },
 
   attached: function() {
@@ -50,6 +70,15 @@ Polymer({
     });
     this.watch('globalCanEdit_', function(state) {
       return state.prefs.canEdit;
+    });
+    this.watch('selectedFolder_', function(state) {
+      return state.selectedFolder;
+    });
+    this.watch('selectedFolderChildren_', (state) => {
+      if (!state.selectedFolder)
+        return 0;
+
+      return state.nodes[state.selectedFolder].children.length;
     });
     this.updateFromStore();
   },
@@ -65,10 +94,44 @@ Polymer({
    * @private
    */
   onMenuButtonOpenTap_: function(e) {
-    this.fire('open-command-menu', {
-      targetElement: e.target,
-      source: MenuSource.TOOLBAR,
-    });
+    const menu = /** @type {!CrActionMenuElement} */ (this.$.dropdown.get());
+    menu.showAt(/** @type {!Element} */ (e.target));
+  },
+
+  /** @private */
+  onSortTap_: function() {
+    chrome.bookmarkManagerPrivate.sortChildren(assert(this.selectedFolder_));
+    bookmarks.ToastManager.getInstance().show(
+        loadTimeData.getString('toastFolderSorted'), true);
+    this.closeDropdownMenu_();
+  },
+
+  /** @private */
+  onAddBookmarkTap_: function() {
+    const dialog =
+        /** @type {BookmarksEditDialogElement} */ (this.$.addDialog.get());
+    dialog.showAddDialog(false, assert(this.selectedFolder_));
+    this.closeDropdownMenu_();
+  },
+
+  /** @private */
+  onAddFolderTap_: function() {
+    const dialog =
+        /** @type {BookmarksEditDialogElement} */ (this.$.addDialog.get());
+    dialog.showAddDialog(true, assert(this.selectedFolder_));
+    this.closeDropdownMenu_();
+  },
+
+  /** @private */
+  onImportTap_: function() {
+    chrome.bookmarks.import();
+    this.closeDropdownMenu_();
+  },
+
+  /** @private */
+  onExportTap_: function() {
+    chrome.bookmarks.export();
+    this.closeDropdownMenu_();
   },
 
   /** @private */
@@ -82,6 +145,12 @@ Polymer({
   /** @private */
   onClearSelectionTap_: function() {
     this.dispatch(bookmarks.actions.deselectItems());
+  },
+
+  /** @private */
+  closeDropdownMenu_: function() {
+    const menu = /** @type {!CrActionMenuElement} */ (this.$.dropdown.get());
+    menu.close();
   },
 
   /**
@@ -102,6 +171,24 @@ Polymer({
   /** @private */
   onSearchTermChanged_: function() {
     this.searchField.setValue(this.searchTerm_ || '');
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeCanSortFolder_: function() {
+    return this.canChangeList_ && this.selectedFolderChildren_ > 1;
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeCanChangeList_: function() {
+    return !this.searchTerm_ &&
+        bookmarks.util.canReorderChildren(
+            this.getState(), this.selectedFolder_);
   },
 
   /**

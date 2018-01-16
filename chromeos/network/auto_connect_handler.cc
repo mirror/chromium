@@ -44,31 +44,6 @@ void DisconnectErrorCallback(
                  << "Error data: " << error_data_ss.str();
 }
 
-std::string AutoConnectReasonsToString(int auto_connect_reasons) {
-  std::string result;
-
-  if (auto_connect_reasons &
-      AutoConnectHandler::AutoConnectReason::AUTO_CONNECT_REASON_LOGGED_IN) {
-    result += "Logged In";
-  }
-
-  if (auto_connect_reasons & AutoConnectHandler::AutoConnectReason::
-                                 AUTO_CONNECT_REASON_POLICY_APPLIED) {
-    if (!result.empty())
-      result += ", ";
-    result += "Policy Applied";
-  }
-
-  if (auto_connect_reasons & AutoConnectHandler::AutoConnectReason::
-                                 AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED) {
-    if (!result.empty())
-      result += ", ";
-    result += "Certificate resolved";
-  }
-
-  return result;
-}
-
 }  // namespace
 
 AutoConnectHandler::AutoConnectHandler()
@@ -79,8 +54,8 @@ AutoConnectHandler::AutoConnectHandler()
       client_certs_resolved_(false),
       applied_autoconnect_policy_(false),
       connect_to_best_services_after_scan_(false),
-      auto_connect_reasons_(0),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+}
 
 AutoConnectHandler::~AutoConnectHandler() {
   if (LoginState::IsInitialized())
@@ -130,7 +105,8 @@ void AutoConnectHandler::LoggedInStateChanged() {
   // Disconnect before connecting, to ensure that we do not disconnect a network
   // that we just connected.
   DisconnectIfPolicyRequires();
-  RequestBestConnection(AutoConnectReason::AUTO_CONNECT_REASON_LOGGED_IN);
+  NET_LOG_DEBUG("RequestBestConnection", "User logged in");
+  RequestBestConnection();
 }
 
 void AutoConnectHandler::ConnectToNetworkRequested(
@@ -160,8 +136,8 @@ void AutoConnectHandler::PoliciesApplied(const std::string& userhash) {
       managed_configuration_handler_->GetNetworkConfigsFromPolicy(userhash);
   DCHECK(managed_networks);
   if (!managed_networks->empty()) {
-    RequestBestConnection(
-        AutoConnectReason::AUTO_CONNECT_REASON_POLICY_APPLIED);
+    NET_LOG_DEBUG("RequestBestConnection", "Policy applied");
+    RequestBestConnection();
   } else {
     CheckBestConnection();
   }
@@ -186,30 +162,16 @@ void AutoConnectHandler::ResolveRequestCompleted(
   // Only request to connect to the best network if network properties were
   // actually changed. Otherwise only process existing requests.
   if (network_properties_changed) {
-    RequestBestConnection(
-        AutoConnectReason::AUTO_CONNECT_REASON_CERTIFICATE_RESOLVED);
+    NET_LOG_DEBUG("RequestBestConnection",
+                  "Client certificate patterns resolved");
+    RequestBestConnection();
   } else {
     CheckBestConnection();
   }
 }
 
-void AutoConnectHandler::AddObserver(Observer* observer) {
-  observer_list_.AddObserver(observer);
-}
-
-void AutoConnectHandler::RemoveObserver(Observer* observer) {
-  observer_list_.RemoveObserver(observer);
-}
-
-void AutoConnectHandler::NotifyAutoConnectInitiated(int auto_connect_reasons) {
-  for (auto& observer : observer_list_)
-    observer.OnAutoConnectedInitiated(auto_connect_reasons);
-}
-
-void AutoConnectHandler::RequestBestConnection(
-    AutoConnectReason auto_connect_reason) {
+void AutoConnectHandler::RequestBestConnection() {
   request_best_connection_pending_ = true;
-  auto_connect_reasons_ |= auto_connect_reason;
   CheckBestConnection();
 }
 
@@ -311,16 +273,13 @@ void AutoConnectHandler::DisconnectFromUnmanagedSharedWiFiNetworks() {
   }
 }
 
-void AutoConnectHandler::CallShillConnectToBestServices() {
-  NET_LOG(EVENT) << "ConnectToBestServices ["
-                 << AutoConnectReasonsToString(auto_connect_reasons_) << "]";
-
+void AutoConnectHandler::CallShillConnectToBestServices() const {
+  NET_LOG_EVENT("ConnectToBestServices", "");
   DBusThreadManager::Get()->GetShillManagerClient()->ConnectToBestServices(
-      base::Bind(&AutoConnectHandler::NotifyAutoConnectInitiated,
-                 weak_ptr_factory_.GetWeakPtr(), auto_connect_reasons_),
+      base::Bind(&base::DoNothing),
       base::Bind(&network_handler::ShillErrorCallbackFunction,
-                 "ConnectToBestServices Failed", "",
-                 network_handler::ErrorCallback()));
+                 "ConnectToBestServices Failed",
+                 "", network_handler::ErrorCallback()));
 }
 
 }  // namespace chromeos

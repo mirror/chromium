@@ -300,7 +300,7 @@ class WebSettings {
   virtual void SetMediaDownloadInProductHelpEnabled(bool) = 0;
 
  protected:
-  ~WebSettings() = default;
+  ~WebSettings() {}
 };
 
 }  // namespace blink

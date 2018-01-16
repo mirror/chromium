@@ -50,7 +50,7 @@ class WorkerFetchContextHolder final
   explicit WorkerFetchContextHolder(
       std::unique_ptr<WebWorkerFetchContext> web_context)
       : web_context_(std::move(web_context)) {}
-  virtual ~WorkerFetchContextHolder() = default;
+  virtual ~WorkerFetchContextHolder() {}
 
   std::unique_ptr<WebWorkerFetchContext> TakeContext() {
     return std::move(web_context_);
@@ -66,7 +66,7 @@ class WorkerFetchContextHolder final
 
 }  // namespace
 
-WorkerFetchContext::~WorkerFetchContext() = default;
+WorkerFetchContext::~WorkerFetchContext() {}
 
 WorkerFetchContext* WorkerFetchContext::Create(
     WorkerOrWorkletGlobalScope& global_scope) {

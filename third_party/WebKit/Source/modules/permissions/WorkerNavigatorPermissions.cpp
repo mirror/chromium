@@ -9,7 +9,7 @@
 
 namespace blink {
 
-WorkerNavigatorPermissions::WorkerNavigatorPermissions() = default;
+WorkerNavigatorPermissions::WorkerNavigatorPermissions() {}
 
 // static
 const char* WorkerNavigatorPermissions::SupplementName() {

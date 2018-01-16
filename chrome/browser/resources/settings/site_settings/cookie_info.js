@@ -10,13 +10,13 @@
  *            totalUsage: string,
  *            type: string}}
  */
-let CookieDetails;
+var CookieDetails;
 
 /**
  * @typedef {{content: string,
  *            label: string}}
  */
-let CookieDataForDisplay;
+var CookieDataForDisplay;
 
 // This structure maps the various cookie type names from C++ (hence the
 // underscores) to arrays of the different types of data each has, along with
@@ -25,7 +25,7 @@ let CookieDataForDisplay;
 // 1) to list what subset of the cookie data we want to show in the UI.
 // 2) What order to show it in.
 // 3) What user friendly label to prefix the data with.
-const cookieInfo = {
+/** @const */ var cookieInfo = {
   'cookie': [
     ['name', 'cookieName'], ['content', 'cookieContent'],
     ['domain', 'cookieDomain'], ['path', 'cookiePath'],
@@ -79,18 +79,18 @@ const cookieInfo = {
  * @param {CookieDetails} data The contents of the cookie.
  * @return {!Array<CookieDataForDisplay>}
  */
-const getCookieData = function(data) {
+var getCookieData = function(data) {
   /** @type {!Array<CookieDataForDisplay>} */
-  const out = [];
-  const fields = cookieInfo[data.type];
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
+  var out = [];
+  var fields = cookieInfo[data.type];
+  for (var i = 0; i < fields.length; i++) {
+    var field = fields[i];
     // Iterate through the keys found in |cookieInfo| for the given |type|
     // and see if those keys are present in the data. If so, display them
     // (in the order determined by |cookieInfo|).
-    const key = field[0];
+    var key = field[0];
     if (data[key].length > 0) {
-      const entry = /** @type {CookieDataForDisplay} */ ({
+      var entry = /** @type {CookieDataForDisplay} */ ({
         label: loadTimeData.getString(field[1]),
         content: data[key],
       });

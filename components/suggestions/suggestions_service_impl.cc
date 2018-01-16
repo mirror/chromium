@@ -20,6 +20,7 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 #include "components/suggestions/blacklist_store.h"
 #include "components/suggestions/features.h"
 #include "components/suggestions/image_manager.h"
@@ -27,6 +28,7 @@
 #include "components/sync/driver/sync_service.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "google_apis/gaia/gaia_constants.h"
+#include "google_apis/gaia/oauth2_token_service.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -37,7 +39,6 @@
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
-#include "services/identity/public/cpp/identity_manager.h"
 
 using base::TimeDelta;
 
@@ -117,14 +118,16 @@ int GetMinimumSuggestionsCount() {
 }  // namespace
 
 SuggestionsServiceImpl::SuggestionsServiceImpl(
-    identity::IdentityManager* identity_manager,
+    SigninManagerBase* signin_manager,
+    OAuth2TokenService* token_service,
     syncer::SyncService* sync_service,
     net::URLRequestContextGetter* url_request_context,
     std::unique_ptr<SuggestionsStore> suggestions_store,
     std::unique_ptr<ImageManager> thumbnail_manager,
     std::unique_ptr<BlacklistStore> blacklist_store,
     std::unique_ptr<base::TickClock> tick_clock)
-    : identity_manager_(identity_manager),
+    : signin_manager_(signin_manager),
+      token_service_(token_service),
       sync_service_(sync_service),
       sync_service_observer_(this),
       sync_state_(INITIALIZED_ENABLED_HISTORY),
@@ -398,11 +401,10 @@ void SuggestionsServiceImpl::IssueRequestIfNoneOngoing(const GURL& url) {
   }
 
   OAuth2TokenService::ScopeSet scopes{GaiaConstants::kChromeSyncOAuth2Scope};
-  token_fetcher_ = identity_manager_->CreateAccessTokenFetcherForPrimaryAccount(
-      "suggestions_service", scopes,
+  token_fetcher_ = base::MakeUnique<identity::PrimaryAccountAccessTokenFetcher>(
+      "suggestions_service", signin_manager_, token_service_, scopes,
       base::BindOnce(&SuggestionsServiceImpl::AccessTokenAvailable,
-                     base::Unretained(this), url),
-      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+                     base::Unretained(this), url));
 }
 
 void SuggestionsServiceImpl::AccessTokenAvailable(

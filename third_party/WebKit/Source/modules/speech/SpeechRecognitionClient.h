@@ -47,7 +47,7 @@ class SpeechRecognitionClient {
   virtual void Stop(SpeechRecognition*) = 0;
   virtual void Abort(SpeechRecognition*) = 0;
 
-  virtual ~SpeechRecognitionClient() = default;
+  virtual ~SpeechRecognitionClient() {}
 };
 
 MODULES_EXPORT void ProvideSpeechRecognitionTo(

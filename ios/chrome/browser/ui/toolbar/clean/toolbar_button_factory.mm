@@ -4,18 +4,14 @@
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 
-#include "base/ios/ios_util.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
-#import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
-#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
-#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -46,7 +42,6 @@ const int styleCount = 2;
 @synthesize toolbarConfiguration = _toolbarConfiguration;
 @synthesize style = _style;
 @synthesize dispatcher = _dispatcher;
-@synthesize visibilityConfiguration = _visibilityConfiguration;
 
 - (instancetype)initWithStyle:(ToolbarStyle)style {
   self = [super init];
@@ -84,21 +79,35 @@ const int styleCount = 2;
   [backButton addTarget:self.dispatcher
                  action:@selector(goBack)
        forControlEvents:UIControlEventTouchUpInside];
-  backButton.visibilityMask = self.visibilityConfiguration.backButtonVisibility;
   return backButton;
 }
 
-- (ToolbarButton*)leadingForwardButton {
-  ToolbarButton* forwardButton = self.forwardButton;
-  forwardButton.visibilityMask =
-      self.visibilityConfiguration.leadingForwardButtonVisibility;
-  return forwardButton;
-}
-
-- (ToolbarButton*)trailingForwardButton {
-  ToolbarButton* forwardButton = self.forwardButton;
-  forwardButton.visibilityMask =
-      self.visibilityConfiguration.trailingForwardButtonVisibility;
+- (ToolbarButton*)forwardButton {
+  int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
+      TOOLBAR_IDR_THREE_STATE(FORWARD);
+  ToolbarButton* forwardButton = [ToolbarButton
+      toolbarButtonWithImageForNormalState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [DEFAULT],
+                                               YES)
+                  imageForHighlightedState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [PRESSED],
+                                               YES)
+                     imageForDisabledState:NativeReversableImage(
+                                               forwardButtonImages[self.style]
+                                                                  [DISABLED],
+                                               YES)];
+  forwardButton.accessibilityLabel =
+      l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
+  if (!IsIPadIdiom()) {
+    forwardButton.imageEdgeInsets =
+        UIEdgeInsetsMakeDirected(0, kForwardButtonImageInset, 0, 0);
+  }
+  [self configureButton:forwardButton width:kToolbarButtonWidth];
+  [forwardButton addTarget:self.dispatcher
+                    action:@selector(goForward)
+          forControlEvents:UIControlEventTouchUpInside];
   return forwardButton;
 }
 
@@ -123,20 +132,10 @@ const int styleCount = 2;
       setTitleColor:[self.toolbarConfiguration buttonTitleHighlightedColor]
            forState:UIControlStateHighlighted];
   [self configureButton:tabSwitcherStripButton width:kToolbarButtonWidth];
+  [tabSwitcherStripButton addTarget:self.dispatcher
+                             action:@selector(displayTabSwitcher)
+                   forControlEvents:UIControlEventTouchUpInside];
 
-  // TODO(crbug.com/799601): Delete this once its not needed.
-  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
-    [tabSwitcherStripButton addTarget:self.dispatcher
-                               action:@selector(navigateToMemexTabSwitcher)
-                     forControlEvents:UIControlEventTouchUpInside];
-  } else {
-    [tabSwitcherStripButton addTarget:self.dispatcher
-                               action:@selector(displayTabSwitcher)
-                     forControlEvents:UIControlEventTouchUpInside];
-  }
-
-  tabSwitcherStripButton.visibilityMask =
-      self.visibilityConfiguration.tabGridButtonVisibility;
   return tabSwitcherStripButton;
 }
 
@@ -164,8 +163,6 @@ const int styleCount = 2;
   [toolsMenuButton addTarget:self.dispatcher
                       action:@selector(showToolsMenu)
             forControlEvents:UIControlEventTouchUpInside];
-  toolsMenuButton.visibilityMask =
-      self.visibilityConfiguration.toolsMenuButtonVisibility;
   return toolsMenuButton;
 }
 
@@ -189,8 +186,6 @@ const int styleCount = 2;
   [shareButton addTarget:self.dispatcher
                   action:@selector(sharePage)
         forControlEvents:UIControlEventTouchUpInside];
-  shareButton.visibilityMask =
-      self.visibilityConfiguration.shareButtonVisibility;
   return shareButton;
 }
 
@@ -216,8 +211,6 @@ const int styleCount = 2;
   [reloadButton addTarget:self.dispatcher
                    action:@selector(reload)
          forControlEvents:UIControlEventTouchUpInside];
-  reloadButton.visibilityMask =
-      self.visibilityConfiguration.reloadButtonVisibility;
   return reloadButton;
 }
 
@@ -239,7 +232,6 @@ const int styleCount = 2;
   [stopButton addTarget:self.dispatcher
                  action:@selector(stopLoading)
        forControlEvents:UIControlEventTouchUpInside];
-  stopButton.visibilityMask = self.visibilityConfiguration.stopButtonVisibility;
   return stopButton;
 }
 
@@ -264,8 +256,6 @@ const int styleCount = 2;
                      action:@selector(bookmarkPage)
            forControlEvents:UIControlEventTouchUpInside];
 
-  bookmarkButton.visibilityMask =
-      self.visibilityConfiguration.bookmarkButtonVisibility;
   return bookmarkButton;
 }
 
@@ -279,8 +269,6 @@ const int styleCount = 2;
       l10n_util::GetNSString(IDS_IOS_ACCNAME_VOICE_SEARCH);
   [self configureButton:voiceSearchButton width:kToolbarButtonWidth];
   voiceSearchButton.enabled = NO;
-  voiceSearchButton.visibilityMask =
-      self.visibilityConfiguration.voiceSearchButtonVisibility;
   return voiceSearchButton;
 }
 
@@ -301,18 +289,7 @@ const int styleCount = 2;
                      action:@selector(contractToolbar)
            forControlEvents:UIControlEventTouchUpInside];
 
-  contractButton.visibilityMask =
-      self.visibilityConfiguration.contractButtonVisibility;
   return contractButton;
-}
-
-- (ToolbarButton*)omniboxButton {
-  ToolbarButton* omniboxButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(IDR_IOS_OMNIBOX_SEARCH)
-                  imageForHighlightedState:NativeImage(IDR_IOS_OMNIBOX_SEARCH)
-                     imageForDisabledState:nil];
-  [self configureButton:omniboxButton width:kToolbarButtonWidth];
-  return omniboxButton;
 }
 
 - (ToolbarButton*)locationBarLeadingButton {
@@ -330,8 +307,6 @@ const int styleCount = 2;
     locationBarLeadingButton.imageEdgeInsets =
         UIEdgeInsetsMakeDirected(0, kLeadingLocationBarButtonImageInset, 0, 0);
   }
-  locationBarLeadingButton.visibilityMask =
-      self.visibilityConfiguration.locationBarLeadingButtonVisibility;
 
   return locationBarLeadingButton;
 }
@@ -372,36 +347,6 @@ const int styleCount = 2;
   return [NSArray arrayWithObjects:NativeImage(TTSImages[self.style][DEFAULT]),
                                    NativeImage(TTSImages[self.style][PRESSED]),
                                    nil];
-}
-
-// Returns a forward button without visibility mask configured.
-- (ToolbarButton*)forwardButton {
-  int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
-      TOOLBAR_IDR_THREE_STATE(FORWARD);
-  ToolbarButton* forwardButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DEFAULT],
-                                               YES)
-                  imageForHighlightedState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [PRESSED],
-                                               YES)
-                     imageForDisabledState:NativeReversableImage(
-                                               forwardButtonImages[self.style]
-                                                                  [DISABLED],
-                                               YES)];
-  forwardButton.accessibilityLabel =
-      l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
-  if (!IsIPadIdiom()) {
-    forwardButton.imageEdgeInsets =
-        UIEdgeInsetsMakeDirected(0, kForwardButtonImageInset, 0, 0);
-  }
-  [self configureButton:forwardButton width:kToolbarButtonWidth];
-  [forwardButton addTarget:self.dispatcher
-                    action:@selector(goForward)
-          forControlEvents:UIControlEventTouchUpInside];
-  return forwardButton;
 }
 
 @end

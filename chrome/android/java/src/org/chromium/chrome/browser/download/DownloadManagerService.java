@@ -769,8 +769,7 @@ public class DownloadManagerService
             // the real file path to the user instead of a content:// download ID.
             Uri fileUri = contentUri;
             if (filePath != null) fileUri = Uri.fromFile(new File(filePath));
-            return MediaViewerUtils.getMediaViewerIntent(
-                    fileUri, contentUri, mimeType, true /* allowExternalAppHandlers */);
+            return MediaViewerUtils.getMediaViewerIntent(fileUri, contentUri, mimeType);
         }
         return MediaViewerUtils.createViewIntentForUri(contentUri, mimeType, originalUrl, referrer);
     }

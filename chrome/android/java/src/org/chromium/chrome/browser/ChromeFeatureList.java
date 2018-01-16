@@ -196,8 +196,6 @@ public abstract class ChromeFeatureList {
     public static final String CONTEXTUAL_SEARCH_ML_TAP_SUPPRESSION =
             "ContextualSearchMlTapSuppression";
     public static final String CONTEXTUAL_SEARCH_SECOND_TAP = "ContextualSearchSecondTap";
-    public static final String CONTEXTUAL_SEARCH_TAP_DISABLE_OVERRIDE =
-            "ContextualSearchTapDisableOverride";
     public static final String CONTEXTUAL_SUGGESTIONS_CAROUSEL = "ContextualSuggestionsCarousel";
     public static final String COPYLESS_PASTE = "CopylessPaste";
     public static final String CUSTOM_CONTEXT_MENU = "CustomContextMenu";
@@ -205,6 +203,7 @@ public abstract class ChromeFeatureList {
     // Enables the Data Reduction Proxy menu item in the main menu rather than under Settings on
     // Android.
     public static final String DATA_REDUCTION_MAIN_MENU = "DataReductionProxyMainMenu";
+    public static final String DATA_REDUCTION_SITE_BREAKDOWN = "DataReductionProxySiteBreakdown";
     public static final String DONT_PREFETCH_LIBRARIES = "DontPrefetchLibraries";
     public static final String DOWNLOAD_HOME_SHOW_STORAGE_INFO = "DownloadHomeShowStorageInfo";
     public static final String DOWNLOADS_FOREGROUND = "DownloadsForeground";

@@ -5,8 +5,8 @@
 #include "media/filters/source_buffer_range_by_dts.h"
 
 #include <algorithm>
-#include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "media/base/timestamp_constants.h"
 
 namespace media {
@@ -186,7 +186,7 @@ std::unique_ptr<SourceBufferRangeByDts> SourceBufferRangeByDts::SplitRange(
 
   // Create a new range with |removed_buffers|.
   std::unique_ptr<SourceBufferRangeByDts> split_range =
-      std::make_unique<SourceBufferRangeByDts>(gap_policy_, removed_buffers,
+      base::MakeUnique<SourceBufferRangeByDts>(gap_policy_, removed_buffers,
                                                new_range_start_decode_timestamp,
                                                interbuffer_distance_cb_);
 
@@ -424,51 +424,6 @@ bool SourceBufferRangeByDts::BelongsToRange(DecodeTimestamp timestamp) const {
 
   return (IsNextInDecodeSequence(timestamp) ||
           (GetStartTimestamp() <= timestamp && timestamp <= GetEndTimestamp()));
-}
-
-DecodeTimestamp SourceBufferRangeByDts::FindHighestBufferedTimestampAtOrBefore(
-    DecodeTimestamp timestamp) const {
-  DCHECK(!buffers_.empty());
-  DCHECK(BelongsToRange(timestamp));
-
-  if (keyframe_map_.begin()->first > timestamp) {
-    // If the first keyframe in the range starts after |timestamp|, then return
-    // the range start time (which could be earlier due to coded frame group
-    // signalling.)
-    DecodeTimestamp range_start = GetStartTimestamp();
-
-    DCHECK(timestamp >= range_start) << "BelongsToRange() semantics failed.";
-    return range_start;
-  }
-
-  if (keyframe_map_.begin()->first == timestamp) {
-    return timestamp;
-  }
-
-  KeyframeMap::const_iterator key_iter = GetFirstKeyframeAtOrBefore(timestamp);
-  DCHECK(key_iter != keyframe_map_.end())
-      << "BelongsToRange() semantics failed.";
-  DCHECK(key_iter->first <= timestamp);
-
-  // Scan forward in |buffers_| to find the highest frame decode timestamp <=
-  // |timestamp|.
-  size_t key_index = key_iter->second - keyframe_map_index_base_;
-  SourceBufferRange::BufferQueue::const_iterator search_iter =
-      buffers_.begin() + key_index;
-  CHECK(search_iter != buffers_.end());
-  DecodeTimestamp result = (*search_iter)->GetDecodeTimestamp();
-  while (true) {
-    search_iter++;
-    if (search_iter == buffers_.end())
-      return result;
-    DecodeTimestamp cur_frame_time = (*search_iter)->GetDecodeTimestamp();
-    if (cur_frame_time > timestamp)
-      return result;
-    result = cur_frame_time;
-  }
-
-  NOTREACHED();
-  return DecodeTimestamp();
 }
 
 DecodeTimestamp SourceBufferRangeByDts::NextKeyframeTimestamp(

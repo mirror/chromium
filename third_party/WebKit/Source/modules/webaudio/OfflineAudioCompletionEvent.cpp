@@ -42,7 +42,7 @@ OfflineAudioCompletionEvent* OfflineAudioCompletionEvent::Create(
   return new OfflineAudioCompletionEvent(event_type, event_init);
 }
 
-OfflineAudioCompletionEvent::OfflineAudioCompletionEvent() = default;
+OfflineAudioCompletionEvent::OfflineAudioCompletionEvent() {}
 
 OfflineAudioCompletionEvent::OfflineAudioCompletionEvent(
     AudioBuffer* rendered_buffer)
@@ -56,7 +56,7 @@ OfflineAudioCompletionEvent::OfflineAudioCompletionEvent(
   rendered_buffer_ = event_init.renderedBuffer();
 }
 
-OfflineAudioCompletionEvent::~OfflineAudioCompletionEvent() = default;
+OfflineAudioCompletionEvent::~OfflineAudioCompletionEvent() {}
 
 const AtomicString& OfflineAudioCompletionEvent::InterfaceName() const {
   return EventNames::OfflineAudioCompletionEvent;

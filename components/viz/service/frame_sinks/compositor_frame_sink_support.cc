@@ -146,12 +146,11 @@ void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
                ack.sequence_number);
   DCHECK_GE(ack.sequence_number, BeginFrameArgs::kStartingFrameNumber);
 
-  // Override the has_damage flag (ignoring invalid data from clients).
-  BeginFrameAck modified_ack(ack);
-  modified_ack.has_damage = false;
+  // |has_damage| is not transmitted, but false by default.
+  DCHECK(!ack.has_damage);
 
   if (current_surface_id_.is_valid())
-    surface_manager_->SurfaceModified(current_surface_id_, modified_ack);
+    surface_manager_->SurfaceModified(current_surface_id_, ack);
 
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
@@ -178,7 +177,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   uint64_t frame_index = ++last_frame_index_;
   ++ack_pending_count_;
 
-  // Override the has_damage flag (ignoring invalid data from clients).
+  // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
   BeginFrameAck ack = frame.metadata.begin_frame_ack;
   DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
@@ -208,8 +207,8 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     // LocalSurfaceIds should be monotonically increasing. This ID is used
     // to determine the freshness of a surface at aggregation time.
     bool monotonically_increasing_id =
-        local_surface_id.parent_sequence_number() >
-        current_surface_id_.local_surface_id().parent_sequence_number();
+        local_surface_id.parent_id() >
+        current_surface_id_.local_surface_id().parent_id();
 
     if (!surface_info.is_valid() || !monotonically_increasing_id) {
       TRACE_EVENT_INSTANT0("viz", "Surface Invariants Violation",

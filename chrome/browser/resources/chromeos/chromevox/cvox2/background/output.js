@@ -416,7 +416,7 @@ Output.RULES = {
     },
     paragraph: {speak: `$descendants`},
     popUpButton: {
-      speak: `$if($value, $value, $descendants) $name $role @aria_has_popup
+      speak: `$value $name $role @aria_has_popup
           $state $restriction $description`
     },
     radioButton: {
@@ -845,12 +845,10 @@ Output.prototype = {
   go: function() {
     // Speech.
     var queueMode = cvox.QueueMode.FLUSH;
-    if (this.queueMode_ !== undefined) {
-      queueMode = /** @type{cvox.QueueMode} */ (this.queueMode_);
-    } else if (Output.forceModeForNextSpeechUtterance_ !== undefined) {
-      queueMode = /** @type{cvox.QueueMode} */ (
-          Output.forceModeForNextSpeechUtterance_);
-    }
+    if (Output.forceModeForNextSpeechUtterance_ !== undefined)
+      queueMode = Output.forceModeForNextSpeechUtterance_;
+    else if (this.queueMode_ !== undefined)
+      queueMode = this.queueMode_;
 
     if (this.speechBuffer_.length > 0)
       Output.forceModeForNextSpeechUtterance_ = undefined;
@@ -1119,26 +1117,14 @@ Output.prototype = {
               this.format_(node, formatString, buff);
           }
         } else if (token == 'descendants') {
-          if (!node)
+          if (!node || AutomationPredicate.leafOrStaticText(node))
             return;
 
-          var leftmost = node;
-          var rightmost = node;
-          if (AutomationPredicate.leafOrStaticText(node)) {
-            // Find any deeper leaves, if any, by starting from one level down.
-            leftmost = node.firstChild;
-            rightmost = node.lastChild;
-            if (!leftmost || !rightmost)
-              return;
-          }
-
-          // Construct a range to the leftmost and rightmost leaves. This range
-          // gets rendered below which results in output that is the same as if
-          // a user navigated through the entire subtree of |node|.
-          leftmost = AutomationUtil.findNodePre(
-              leftmost, Dir.FORWARD, AutomationPredicate.leafOrStaticText);
-          rightmost = AutomationUtil.findNodePre(
-              rightmost, Dir.BACKWARD, AutomationPredicate.leafOrStaticText);
+          // Construct a range to the leftmost and rightmost leaves.
+          var leftmost = AutomationUtil.findNodePre(
+              node, Dir.FORWARD, AutomationPredicate.leafOrStaticText);
+          var rightmost = AutomationUtil.findNodePre(
+              node, Dir.BACKWARD, AutomationPredicate.leafOrStaticText);
           if (!leftmost || !rightmost)
             return;
 

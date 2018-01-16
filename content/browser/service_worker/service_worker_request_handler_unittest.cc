@@ -10,7 +10,6 @@
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
-#include "content/browser/service_worker/service_worker_navigation_handle_core.h"
 #include "content/browser/service_worker/service_worker_provider_host.h"
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -38,17 +37,7 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
 
   void SetUp() override {
     helper_.reset(new EmbeddedWorkerTestHelper(base::FilePath()));
-  }
 
-  void TearDown() override { helper_.reset(); }
-
-  ServiceWorkerContextCore* context() const { return helper_->context(); }
-  ServiceWorkerContextWrapper* context_wrapper() const {
-    return helper_->context_wrapper();
-  }
-
- protected:
-  void InitializeProviderHostForWindow() {
     // An empty host.
     std::unique_ptr<ServiceWorkerProviderHost> host =
         CreateProviderHostForWindow(helper_->mock_render_process_id(),
@@ -59,25 +48,13 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
     context()->AddProviderHost(std::move(host));
   }
 
-  static std::unique_ptr<ServiceWorkerNavigationHandleCore>
-  CreateNavigationHandleCore(ServiceWorkerContextWrapper* context_wrapper) {
-    std::unique_ptr<ServiceWorkerNavigationHandleCore> navigation_handle_core;
-    BrowserThread::PostTaskAndReplyWithResult(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
-            [](ServiceWorkerContextWrapper* wrapper) {
-              return std::make_unique<ServiceWorkerNavigationHandleCore>(
-                  nullptr, wrapper);
-            },
-            base::RetainedRef(context_wrapper)),
-        base::BindOnce(
-            [](std::unique_ptr<ServiceWorkerNavigationHandleCore>* dest,
-               std::unique_ptr<ServiceWorkerNavigationHandleCore> src) {
-              *dest = std::move(src);
-            },
-            &navigation_handle_core));
-    base::RunLoop().RunUntilIdle();
-    return navigation_handle_core;
+  void TearDown() override {
+    helper_.reset();
+  }
+
+  ServiceWorkerContextCore* context() const { return helper_->context(); }
+  ServiceWorkerContextWrapper* context_wrapper() const {
+    return helper_->context_wrapper();
   }
 
   std::unique_ptr<net::URLRequest> CreateRequest(const std::string& url,
@@ -118,7 +95,6 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
                                    const std::string& method,
                                    bool skip_service_worker,
                                    ResourceType resource_type) {
-    InitializeProviderHostForWindow();
     std::unique_ptr<net::URLRequest> request = CreateRequest(url, method);
     InitializeHandler(request.get(), skip_service_worker, resource_type);
     ASSERT_TRUE(GetHandler(request.get()));
@@ -126,20 +102,7 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
     EXPECT_EQ(url, provider_host_->document_url().spec());
   }
 
-  void InitializeHandlerForNavigationSimpleTest(const std::string& url,
-                                                bool expected_handler_created) {
-    std::unique_ptr<ServiceWorkerNavigationHandleCore> navigation_handle_core =
-        CreateNavigationHandleCore(helper_->context_wrapper());
-    std::unique_ptr<net::URLRequest> request = CreateRequest(url, "GET");
-    ServiceWorkerRequestHandler::InitializeForNavigation(
-        request.get(), navigation_handle_core.get(), &blob_storage_context_,
-        false /* skip_service_worker */, RESOURCE_TYPE_MAIN_FRAME,
-        REQUEST_CONTEXT_TYPE_HYPERLINK,
-        network::mojom::RequestContextFrameType::kTopLevel, true,
-        nullptr /* body */, base::RepeatingCallback<WebContents*(void)>());
-    EXPECT_EQ(expected_handler_created, !!GetHandler(request.get()));
-  }
-
+ protected:
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
@@ -150,7 +113,6 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
 };
 
 TEST_F(ServiceWorkerRequestHandlerTest, InitializeHandler_FTP) {
-  InitializeProviderHostForWindow();
   std::unique_ptr<net::URLRequest> request =
       CreateRequest("ftp://host/scope/doc", "GET");
   InitializeHandler(request.get(), false, RESOURCE_TYPE_MAIN_FRAME);
@@ -194,7 +156,6 @@ TEST_F(ServiceWorkerRequestHandlerTest, InitializeHandler_HTTPS_SKIP) {
 }
 
 TEST_F(ServiceWorkerRequestHandlerTest, InitializeHandler_IMAGE) {
-  InitializeProviderHostForWindow();
   // Check provider host's URL after initializing a handler for an image.
   provider_host_->SetDocumentUrl(GURL("https://host/scope/doc"));
   std::unique_ptr<net::URLRequest> request =
@@ -202,28 +163,6 @@ TEST_F(ServiceWorkerRequestHandlerTest, InitializeHandler_IMAGE) {
   InitializeHandler(request.get(), true, RESOURCE_TYPE_IMAGE);
   ASSERT_FALSE(GetHandler(request.get()));
   EXPECT_EQ(GURL("https://host/scope/doc"), provider_host_->document_url());
-}
-
-TEST_F(ServiceWorkerRequestHandlerTest, InitializeForNavigation_HTTP) {
-  InitializeHandlerForNavigationSimpleTest("http://host/scope/doc", true);
-}
-
-TEST_F(ServiceWorkerRequestHandlerTest, InitializeForNavigation_HTTPS) {
-  InitializeHandlerForNavigationSimpleTest("https://host/scope/doc", true);
-}
-
-TEST_F(ServiceWorkerRequestHandlerTest, InitializeForNavigation_FTP) {
-  InitializeHandlerForNavigationSimpleTest("ftp://host/scope/doc", false);
-}
-
-TEST_F(ServiceWorkerRequestHandlerTest,
-       InitializeForNavigation_ExternalFileScheme) {
-  bool expected_handler_created = false;
-#if defined(OS_CHROMEOS)
-  expected_handler_created = true;
-#endif  // OS_CHROMEOS
-  InitializeHandlerForNavigationSimpleTest("externalfile:drive/doc",
-                                           expected_handler_created);
 }
 
 }  // namespace service_worker_request_handler_unittest

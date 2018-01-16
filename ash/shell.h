@@ -93,9 +93,7 @@ class BrightnessControlDelegate;
 class CastConfigController;
 class DisplayColorManager;
 class DisplayConfigurationController;
-class DisplayConfigurationObserver;
 class DisplayErrorObserver;
-class DisplayPrefs;
 class DisplayShutdownObserver;
 class DragDropController;
 class EventClientImpl;
@@ -332,7 +330,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   ::wm::CursorManager* cursor_manager() { return cursor_manager_.get(); }
 
   display::DisplayManager* display_manager() { return display_manager_.get(); }
-  DisplayPrefs* display_prefs() { return display_prefs_.get(); }
   DisplayConfigurationController* display_configuration_controller() {
     return display_configuration_controller_.get();
   }
@@ -503,6 +500,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Returns the system tray on primary display.
   SystemTray* GetPrimarySystemTray();
 
+  static void set_initially_hide_cursor(bool hide) {
+    initially_hide_cursor_ = hide;
+  }
+
   // Starts the animation that occurs on first login.
   void DoInitialWorkspaceAnimation();
 
@@ -633,6 +634,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   static aura::WindowTreeClient* window_tree_client_;
   static aura::WindowManagerClient* window_manager_client_;
 
+  // If set before the Shell is initialized, the mouse cursor will be hidden
+  // when the screen is initially created.
+  static bool initially_hide_cursor_;
+
   std::unique_ptr<ShellPort> shell_port_;
 
   // The CompoundEventFilter owned by aura::Env object.
@@ -720,10 +725,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::AcceleratorFilter> accelerator_filter_;
 
   std::unique_ptr<display::DisplayManager> display_manager_;
-  std::unique_ptr<DisplayPrefs> display_prefs_;
   std::unique_ptr<DisplayConfigurationController>
       display_configuration_controller_;
-  std::unique_ptr<DisplayConfigurationObserver> display_configuration_observer_;
 
   std::unique_ptr<ScreenPinningController> screen_pinning_controller_;
 

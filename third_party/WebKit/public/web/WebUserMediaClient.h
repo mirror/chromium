@@ -40,7 +40,7 @@ class WebMediaDeviceChangeObserver;
 
 class WebUserMediaClient {
  public:
-  virtual ~WebUserMediaClient() = default;
+  virtual ~WebUserMediaClient() {}
 
   virtual void RequestUserMedia(const WebUserMediaRequest&) = 0;
   virtual void CancelUserMediaRequest(const WebUserMediaRequest&) = 0;

@@ -26,8 +26,8 @@ namespace scheduler {
 
 class BudgetPoolTest : public ::testing::Test {
  public:
-  BudgetPoolTest() = default;
-  ~BudgetPoolTest() override = default;
+  BudgetPoolTest() {}
+  ~BudgetPoolTest() override {}
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));

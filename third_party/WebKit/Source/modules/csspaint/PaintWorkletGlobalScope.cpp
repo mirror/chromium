@@ -200,7 +200,7 @@ PaintWorkletGlobalScope::PaintWorkletGlobalScope(
                                    reporting_proxy),
       pending_generator_registry_(pending_generator_registry) {}
 
-PaintWorkletGlobalScope::~PaintWorkletGlobalScope() = default;
+PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {}
 
 void PaintWorkletGlobalScope::Dispose() {
   MainThreadDebugger::Instance()->ContextWillBeDestroyed(

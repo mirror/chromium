@@ -19,7 +19,7 @@ class V0CustomElementSyncMicrotaskQueue
   void Enqueue(V0CustomElementMicrotaskStep*);
 
  private:
-  V0CustomElementSyncMicrotaskQueue() = default;
+  V0CustomElementSyncMicrotaskQueue() {}
   virtual void DoDispatch();
 };
 

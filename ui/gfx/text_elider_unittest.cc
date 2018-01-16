@@ -207,11 +207,8 @@ TEST(TextEliderTest, MAYBE_TestFilenameEliding) {
     base::FilePath filepath(testcases[i].input);
     base::string16 expected = UTF8ToUTF16(testcases[i].output);
     expected = base::i18n::GetDisplayStringInLTRDirectionality(expected);
-    EXPECT_EQ(expected,
-              ElideFilename(
-                  filepath, font_list,
-                  GetStringWidthF(UTF8ToUTF16(testcases[i].output), font_list),
-                  Typesetter::DEFAULT));
+    EXPECT_EQ(expected, ElideFilename(filepath, font_list,
+        GetStringWidthF(UTF8ToUTF16(testcases[i].output), font_list)));
   }
 }
 
@@ -693,8 +690,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleText) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
+#if defined(OS_ANDROID)
 #define MAYBE_ElideRectangleTextPunctuation \
     DISABLED_ElideRectangleTextPunctuation
 #else
@@ -742,8 +738,7 @@ TEST(TextEliderTest, MAYBE_ElideRectangleTextPunctuation) {
 }
 
 // TODO(crbug.com/338784): Enable this on android.
-// Disabled on Mac: fails on 10.11. http://crbug.com/801029
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
+#if defined(OS_ANDROID)
 #define MAYBE_ElideRectangleTextLongWords DISABLED_ElideRectangleTextLongWords
 #else
 #define MAYBE_ElideRectangleTextLongWords ElideRectangleTextLongWords

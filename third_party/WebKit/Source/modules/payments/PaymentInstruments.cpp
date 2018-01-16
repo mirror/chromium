@@ -272,7 +272,6 @@ void PaymentInstruments::onGetPaymentInstrument(
     instrument.setCapabilities(
         ScriptValue(resolver->GetScriptState(),
                     FromJSONString(resolver->GetScriptState()->GetIsolate(),
-                                   resolver->GetScriptState()->GetContext(),
                                    stored_instrument->stringified_capabilities,
                                    exception_state)));
     if (exception_state.HadException()) {

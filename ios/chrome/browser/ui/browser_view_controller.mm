@@ -96,8 +96,8 @@
 #import "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #include "ios/chrome/browser/signin/account_reconcilor_factory.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
-#import "ios/chrome/browser/snapshots/snapshot_generator_delegate.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
+#import "ios/chrome/browser/snapshots/snapshot_overlay_provider.h"
 #import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper_delegate.h"
@@ -109,6 +109,7 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
 #import "ios/chrome/browser/tabs/tab_private.h"
+#import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
 #import "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/translate/language_selection_handler.h"
 #import "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.h"
@@ -133,7 +134,6 @@
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
-#import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
@@ -190,9 +190,6 @@
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_constants.h"
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_presentation.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_legacy_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.h"
 #include "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
@@ -427,12 +424,13 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     SideSwipeControllerDelegate,
                                     SigninPresenter,
                                     SKStoreProductViewControllerDelegate,
-                                    SnapshotGeneratorDelegate,
+                                    SnapshotOverlayProvider,
                                     StoreKitLauncher,
                                     TabDialogDelegate,
                                     TabHeadersDelegate,
                                     TabHistoryPresentation,
                                     TabModelObserver,
+                                    TabSnapshottingDelegate,
                                     TabStripPresentation,
                                     ToolsMenuConfigurationProvider,
                                     UIGestureRecognizerDelegate,
@@ -685,15 +683,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
     BubbleViewControllerPresenter* incognitoTabTipBubblePresenter;
 
 // Primary toolbar.
-@property(nonatomic, strong) id<PrimaryToolbarCoordinator>
+@property(nonatomic, readonly) id<PrimaryToolbarCoordinator>
     primaryToolbarCoordinator;
-// Secondary toolbar.
-@property(nonatomic, strong)
-    SecondaryToolbarCoordinator* secondaryToolbarCoordinator;
-// Interface object with the toolbars.
-@property(nonatomic, strong)
-    id<ToolbarCoordinating, ToolsMenuPresentationStateProvider>
-        toolbarInterface;
 // TODO(crbug.com/788705): Removes this property and associated calls.
 // Returns the LegacyToolbarCoordinator. This property is here to separate
 // methods which will be removed during cleanup to other methods. Uses this
@@ -939,10 +930,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 @synthesize tabStripView = _tabStripView;
 @synthesize tabTipBubblePresenter = _tabTipBubblePresenter;
 @synthesize incognitoTabTipBubblePresenter = _incognitoTabTipBubblePresenter;
-@synthesize primaryToolbarCoordinator = _primaryToolbarCoordinator;
-@synthesize secondaryToolbarCoordinator = _secondaryToolbarCoordinator;
 @synthesize primaryToolbarOffsetConstraint = _primaryToolbarOffsetConstraint;
-@synthesize toolbarInterface = _toolbarInterface;
 @synthesize imageSaver = _imageSaver;
 // DialogPresenterDelegate property
 @synthesize dialogPresenterDelegateIsPresenting =
@@ -1028,12 +1016,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       BrowserCommands,
       OmniboxFocuser,
       SnackbarCommands,
-      ToolbarCommands,
       UrlLoader,
       WebToolbarDelegate>)dispatcher {
-  return static_cast<
-      id<ApplicationCommands, BrowserCommands, OmniboxFocuser, SnackbarCommands,
-         ToolbarCommands, UrlLoader, WebToolbarDelegate>>(_dispatcher);
+  return static_cast<id<ApplicationCommands, BrowserCommands, OmniboxFocuser,
+                        SnackbarCommands, UrlLoader, WebToolbarDelegate>>(
+      _dispatcher);
 }
 
 - (void)setActive:(BOOL)active {
@@ -1264,10 +1251,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return results;
 
   if (!IsIPadIdiom()) {
-    if (self.primaryToolbarCoordinator.viewController.view) {
+    if (self.primaryToolbarCoordinator.toolbarViewController.view) {
       [results addObject:[HeaderDefinition
                              definitionWithView:self.primaryToolbarCoordinator
-                                                    .viewController.view
+                                                    .toolbarViewController.view
                                 headerBehaviour:Hideable
                                heightAdjustment:0.0
                                           inset:0.0]];
@@ -1279,10 +1266,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                                              heightAdjustment:0.0
                                                         inset:0.0]];
     }
-    if (self.primaryToolbarCoordinator.viewController.view) {
+    if (self.primaryToolbarCoordinator.toolbarViewController.view) {
       [results addObject:[HeaderDefinition
                              definitionWithView:self.primaryToolbarCoordinator
-                                                    .viewController.view
+                                                    .toolbarViewController.view
                                 headerBehaviour:Hideable
                                heightAdjustment:0.0
                                           inset:0.0]];
@@ -1306,6 +1293,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (CGFloat)headerHeight {
   return [self headerHeightForTab:[_model currentTab]];
+}
+
+- (id<PrimaryToolbarCoordinator>)primaryToolbarCoordinator {
+  return _toolbarCoordinator;
 }
 
 - (LegacyToolbarCoordinator*)legacyToolbarCoordinator {
@@ -1497,11 +1488,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.tabStripCoordinator = nil;
   [_toolbarCoordinator stop];
   _toolbarCoordinator = nil;
-  [self.primaryToolbarCoordinator stop];
-  self.primaryToolbarCoordinator = nil;
-  [self.secondaryToolbarCoordinator stop];
-  self.secondaryToolbarCoordinator = nil;
-  self.toolbarInterface = nil;
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
@@ -1611,6 +1597,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (IsIPhoneX()) {
     [self setUpViewLayout:NO];
   }
+  if (IsSafeAreaCompatibleToolbarEnabled()) {
+    // TODO(crbug.com/778236): Check if this call can be removed once the
+    // Toolbar is a contained ViewController.
+    [_toolbarCoordinator.toolbarViewController viewSafeAreaInsetsDidChange];
+    [_toolbarCoordinator adjustToolbarHeight];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1708,9 +1700,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _readingListCoordinator = nil;
     self.recentTabsCoordinator = nil;
     _toolbarCoordinator = nil;
-    self.primaryToolbarCoordinator = nil;
-    self.secondaryToolbarCoordinator = nil;
-    self.toolbarInterface = nil;
     [_toolbarUIUpdater stopUpdating];
     _toolbarUIUpdater = nil;
     _toolbarModelDelegate = nil;
@@ -1926,55 +1915,25 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       new ToolbarModelDelegateIOS([_model webStateList]));
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
-
-  if (IsAdaptiveToolbarEnabled()) {
-    PrimaryToolbarCoordinator* topToolbarCoordinator =
-        [[PrimaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
-    self.primaryToolbarCoordinator = topToolbarCoordinator;
-    topToolbarCoordinator.delegate = self;
-    topToolbarCoordinator.URLLoader = self;
-    topToolbarCoordinator.webStateList = [_model webStateList];
-    topToolbarCoordinator.dispatcher = self.dispatcher;
-    [topToolbarCoordinator start];
-
-    SecondaryToolbarCoordinator* bottomToolbarCoordinator =
-        [[SecondaryToolbarCoordinator alloc]
-            initWithBaseViewController:nil
-                          browserState:_browserState];
-    self.secondaryToolbarCoordinator = bottomToolbarCoordinator;
-    bottomToolbarCoordinator.dispatcher = self.dispatcher;
-    [bottomToolbarCoordinator start];
-
-    ToolbarCoordinatorAdaptor* adaptor = [[ToolbarCoordinatorAdaptor alloc]
-        initWithToolsMenuConfigurationProvider:self
-                                    dispatcher:self.dispatcher];
-    self.toolbarInterface = adaptor;
-    [adaptor addToolbarCoordinator:topToolbarCoordinator];
-    // TODO(crbug.com/800330): Add secondary toolbar.
-  } else {
-    _toolbarCoordinator = [[LegacyToolbarCoordinator alloc]
-            initWithBaseViewController:self
-        toolsMenuConfigurationProvider:self
-                            dispatcher:self.dispatcher
-                          browserState:_browserState];
-    self.primaryToolbarCoordinator = _toolbarCoordinator;
-    self.toolbarInterface = _toolbarCoordinator;
-    [_toolbarCoordinator
-        setToolbarController:
-            [_dependencyFactory
-                newToolbarControllerWithDelegate:self
-                                       urlLoader:self
-                                      dispatcher:self.dispatcher]];
-
-    [_toolbarCoordinator start];
-  }
+  _toolbarCoordinator = [[LegacyToolbarCoordinator alloc]
+          initWithBaseViewController:self
+      toolsMenuConfigurationProvider:self
+                          dispatcher:self.dispatcher
+                        browserState:_browserState];
 
   self.sideSwipeController.toolbarInteractionHandler =
       self.primaryToolbarCoordinator;
 
+  [_toolbarCoordinator
+      setToolbarController:
+          [_dependencyFactory
+              newToolbarControllerWithDelegate:self
+                                     urlLoader:self
+                                    dispatcher:self.dispatcher]];
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
   [self.legacyToolbarCoordinator setTabCount:[_model count]];
+  [_toolbarCoordinator start];
   [self updateBroadcastState];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(
@@ -2013,25 +1972,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self.legacyToolbarCoordinator adjustToolbarHeight];
 
   self.primaryToolbarOffsetConstraint =
-      [self.primaryToolbarCoordinator.viewController.view.topAnchor
+      [self.primaryToolbarCoordinator.toolbarViewController.view.topAnchor
           constraintEqualToAnchor:topAnchor];
   [NSLayoutConstraint activateConstraints:@[
     self.primaryToolbarOffsetConstraint,
-    [self.primaryToolbarCoordinator.viewController.view.leadingAnchor
+    [self.primaryToolbarCoordinator.toolbarViewController.view.leadingAnchor
         constraintEqualToAnchor:[self view].leadingAnchor],
-    [self.primaryToolbarCoordinator.viewController.view.trailingAnchor
+    [self.primaryToolbarCoordinator.toolbarViewController.view.trailingAnchor
         constraintEqualToAnchor:[self view].trailingAnchor],
   ]];
-  if (self.secondaryToolbarCoordinator) {
-    [NSLayoutConstraint activateConstraints:@[
-      [self.secondaryToolbarCoordinator.viewController.view.leadingAnchor
-          constraintEqualToAnchor:[self view].leadingAnchor],
-      [self.secondaryToolbarCoordinator.viewController.view.trailingAnchor
-          constraintEqualToAnchor:[self view].trailingAnchor],
-      [self.secondaryToolbarCoordinator.viewController.view.bottomAnchor
-          constraintEqualToAnchor:[self view].bottomAnchor],
-    ]];
-  }
   [[self view] layoutIfNeeded];
 }
 
@@ -2130,21 +2079,17 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Position the toolbar next, either at the top of the browser view or
   // directly under the tabstrip.
-  if (initialLayout) {
-    [self addChildViewController:self.primaryToolbarCoordinator.viewController];
-    if (self.secondaryToolbarCoordinator)
-      [self addChildViewController:self.secondaryToolbarCoordinator
-                                       .viewController];
-  }
+  if (initialLayout)
+    [self addChildViewController:_toolbarCoordinator.toolbarViewController];
   if (!IsSafeAreaCompatibleToolbarEnabled()) {
     CGFloat minY = self.headerOffset;
     if (self.tabStripView) {
       minY += CGRectGetHeight([self.tabStripView frame]);
     }
-    CGRect toolbarFrame = _toolbarCoordinator.viewController.view.frame;
+    CGRect toolbarFrame = _toolbarCoordinator.toolbarViewController.view.frame;
     toolbarFrame.origin = CGPointMake(0, minY);
     toolbarFrame.size.width = widthOfView;
-    [_toolbarCoordinator.viewController.view setFrame:toolbarFrame];
+    [_toolbarCoordinator.toolbarViewController.view setFrame:toolbarFrame];
   }
 
   // Place the infobar container above the content area.
@@ -2155,28 +2100,17 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // Place the toolbar controller above the infobar container and adds the
   // layout guides.
   if (initialLayout) {
-    [[self view]
-        insertSubview:self.primaryToolbarCoordinator.viewController.view
-         aboveSubview:infoBarContainerView];
-    if (self.secondaryToolbarCoordinator) {
-      [[self view]
-          insertSubview:self.secondaryToolbarCoordinator.viewController.view
-           aboveSubview:infoBarContainerView];
-    }
+    [[self view] insertSubview:_toolbarCoordinator.toolbarViewController.view
+                  aboveSubview:infoBarContainerView];
     AddNamedGuide(kOmniboxGuide, self.view);
     AddNamedGuide(kBackButtonGuide, self.view);
     AddNamedGuide(kForwardButtonGuide, self.view);
     AddNamedGuide(kToolsMenuGuide, self.view);
     AddNamedGuide(kTabSwitcherGuide, self.view);
   }
-  if (initialLayout) {
-    [self.primaryToolbarCoordinator.viewController
+  if (initialLayout)
+    [_toolbarCoordinator.toolbarViewController
         didMoveToParentViewController:self];
-    if (self.secondaryToolbarCoordinator) {
-      [self.secondaryToolbarCoordinator.viewController
-          didMoveToParentViewController:self];
-    }
-  }
 
   // Adjust the content area to be under the toolbar, for fullscreen or below
   // the toolbar is not fullscreen.
@@ -2261,7 +2195,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   Tab* tab = [_model currentTab];
   if (![tab navigationManager])
     return;
-  [self.toolbarInterface updateToolbarState];
+  [_toolbarCoordinator updateToolbarState];
   [self.legacyToolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
   if (_insertedTabWasPrerenderedTab && !_toolbarModelIOS->IsLoading())
@@ -2285,7 +2219,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                     ![self.primaryToolbarCoordinator isOmniboxFirstResponder] &&
                     ![self.primaryToolbarCoordinator showingOmniboxPopup];
     }
-    [self.primaryToolbarCoordinator.viewController.view setHidden:hideToolbar];
+    [self.primaryToolbarCoordinator.toolbarViewController.view
+        setHidden:hideToolbar];
   }
 }
 
@@ -2353,7 +2288,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   for (HeaderDefinition* header in headers) {
     CGFloat yOrigin = height - headerOffset - header.inset;
     BOOL isPrimaryToolbar =
-        header.view == self.primaryToolbarCoordinator.viewController.view;
+        header.view ==
+        self.primaryToolbarCoordinator.toolbarViewController.view;
     // Make sure the toolbarView's constraints are also updated.  Leaving the
     // -setFrame call to minimize changes in this CL -- otherwise the way
     // toolbar_view manages it's alpha changes would also need to be updated.
@@ -2565,6 +2501,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)presentNewIncognitoTabTipBubble {
   DCHECK(self.browserState);
+  DCHECK([self.legacyToolbarCoordinator
+      respondsToSelector:@selector(anchorPointForToolsMenuButton:)]);
   // If the BVC is not visible, do not present the bubble.
   if (!self.viewVisible)
     return;
@@ -2588,8 +2526,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
     toolsButtonAnchor = [guide.owningView convertPoint:anchorPoint
                                                 toView:guide.owningView.window];
   } else {
-    DCHECK([self.legacyToolbarCoordinator
-        respondsToSelector:@selector(anchorPointForToolsMenuButton:)]);
     toolsButtonAnchor = [self.legacyToolbarCoordinator
         anchorPointForToolsMenuButton:BubbleArrowDirectionUp];
   }
@@ -2612,7 +2548,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       presentInViewController:self
                          view:self.view
                   anchorPoint:toolsButtonAnchor];
-  [self.dispatcher triggerToolsMenuButtonAnimation];
+  [_toolbarCoordinator triggerToolsMenuButtonAnimation];
 }
 
 #pragma mark - Private Methods: Find Bar UI
@@ -2847,7 +2783,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   DCHECK(!prerenderService ||
          !prerenderService->IsWebStatePrerendered(tab.webState));
 
-  SnapshotTabHelper::FromWebState(tab.webState)->SetDelegate(self);
+  SnapshotTabHelper::FromWebState(tab.webState)->SetDelegate(tab);
 
   // TODO(crbug.com/777557): do not pass the dispatcher to PasswordTabHelper.
   if (PasswordTabHelper* passwordTabHelper =
@@ -2858,6 +2794,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   tab.dialogDelegate = self;
+  tab.snapshotOverlayProvider = self;
   tab.passKitDialogProvider = self;
   if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = self;
@@ -2866,6 +2803,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tab.overscrollActionsControllerDelegate = self;
   }
   tab.tabHeadersDelegate = self;
+  tab.tabSnapshottingDelegate = self;
   // Install the proper CRWWebController delegates.
   tab.webController.nativeProvider = self;
   tab.webController.swipeRecognizerProvider = self.sideSwipeController;
@@ -2919,6 +2857,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   tab.dialogDelegate = nil;
+  tab.snapshotOverlayProvider = nil;
   tab.passKitDialogProvider = nil;
   if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = nil;
@@ -2927,6 +2866,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tab.overscrollActionsControllerDelegate = nil;
   }
   tab.tabHeadersDelegate = nil;
+  tab.tabSnapshottingDelegate = nil;
   tab.webController.nativeProvider = nil;
   tab.webController.swipeRecognizerProvider = nil;
   StoreKitTabHelper* tabHelper = StoreKitTabHelper::FromWebState(tab.webState);
@@ -3035,38 +2975,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - ** Protocol Implementations and Helpers **
 
-#pragma mark - SnapshotGeneratorDelegate methods
+#pragma mark - SnapshotOverlayProvider methods
 
-- (BOOL)canTakeSnapshotForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  return !PagePlaceholderTabHelper::FromWebState(webState)
-              ->displaying_placeholder();
-}
-
-- (UIEdgeInsets)snapshotEdgeInsetsForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-
-  CGFloat headerHeight = [self headerHeightForTab:tab];
-  id nativeController = [self nativeControllerForTab:tab];
-  if ([nativeController respondsToSelector:@selector(toolbarHeight)])
-    headerHeight += [nativeController toolbarHeight];
-  return UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
-}
-
-- (NSArray<SnapshotOverlay*>*)snapshotOverlaysForWebState:
-    (web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  if (!self.tabModel.webUsageEnabled) {
-    return @[];
-  }
-
+- (NSArray*)snapshotOverlaysForTab:(Tab*)tab {
   NSMutableArray* overlays = [NSMutableArray array];
+  if (![_model webUsageEnabled]) {
+    return overlays;
+  }
   UIView* voiceSearchView = [self voiceSearchOverlayViewForTab:tab];
   if (voiceSearchView) {
     CGFloat voiceSearchYOffset = [self voiceSearchOverlayYOffsetForTab:tab];
@@ -3086,26 +3001,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return overlays;
 }
 
-- (void)willUpdateSnapshotForWebState:(web::WebState*)webState {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  id<CRWNativeContent> nativeController = [self nativeControllerForTab:tab];
-  if ([nativeController respondsToSelector:@selector(willUpdateSnapshot)]) {
-    [nativeController willUpdateSnapshot];
-  }
-  [tab willUpdateSnapshot];
-}
-
-- (void)didUpdateSnapshotForWebState:(web::WebState*)webState
-                           withImage:(UIImage*)snapshot {
-  DCHECK(webState);
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([self.tabModel indexOfTab:tab] != NSNotFound);
-  [self.tabModel notifyTabSnapshotChanged:tab withImage:snapshot];
-}
-
-#pragma mark - SnapshotGeneratorDelegate helpers
+#pragma mark - SnapshotOverlayProvider helpers
 
 // Provides a view that encompasses currently displayed infobar(s) or nil
 // if no infobar is presented.
@@ -3739,11 +3635,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (UIView*)headerView {
-  return self.primaryToolbarCoordinator.viewController.view;
+  return self.primaryToolbarCoordinator.toolbarViewController.view;
 }
 
 - (UIView*)toolbarSnapshotView {
-  return [self.primaryToolbarCoordinator.viewController.view
+  return [self.primaryToolbarCoordinator.toolbarViewController.view
       snapshotViewAfterScreenUpdates:NO];
 }
 
@@ -3757,6 +3653,16 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (CGFloat)overscrollHeaderHeight {
   return self.headerHeight + StatusBarHeight();
+}
+
+#pragma mark - TabSnapshottingDelegate methods.
+
+- (UIEdgeInsets)snapshotEdgeInsetsForTab:(Tab*)tab {
+  CGFloat headerHeight = [self headerHeightForTab:tab];
+  id nativeController = [self nativeControllerForTab:tab];
+  if ([nativeController respondsToSelector:@selector(toolbarHeight)])
+    headerHeight += [nativeController toolbarHeight];
+  return UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
 }
 
 #pragma mark - NewTabPageControllerObserver methods.
@@ -3820,7 +3726,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
                                       ntpObserver:self
                                      browserState:_browserState
                                        colorCache:_dominantColorCache
-                                  toolbarDelegate:self.toolbarInterface
+                                  toolbarDelegate:_toolbarCoordinator
                                          tabModel:_model
                              parentViewController:self
                                        dispatcher:self.dispatcher
@@ -4762,12 +4668,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (CGRect)toolbarFrame {
-  return _toolbarCoordinator.viewController.view.frame;
+  return _toolbarCoordinator.toolbarViewController.view.frame;
 }
 
 - (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
   id<ToolbarSnapshotProviding> toolbarSnapshotProvider = nil;
-  if (_toolbarCoordinator.viewController.view.hidden) {
+  if (_toolbarCoordinator.toolbarViewController.view.hidden) {
     Tab* currentTab = [_model currentTab];
     if (currentTab.webState &&
         UrlHasChromeScheme(currentTab.webState->GetLastCommittedURL())) {
@@ -4985,8 +4891,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     CGRect imageFrame = CGRectZero;
     if (self.isToolbarOnScreen) {
       imageFrame = UIEdgeInsetsInsetRect(
-          _contentArea.bounds,
-          [self snapshotEdgeInsetsForWebState:topTab.webState]);
+          _contentArea.bounds, [self snapshotEdgeInsetsForTab:topTab]);
     } else {
       imageFrame = [topTab.webState->GetView() bounds];
     }
@@ -5190,7 +5095,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (BOOL)preventSideSwipe {
-  if ([self.toolbarInterface isShowingToolsMenu])
+  if ([_toolbarCoordinator isShowingToolsMenu])
     return YES;
 
   if (_voiceSearchController && _voiceSearchController->IsVisible())
@@ -5225,7 +5130,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   BOOL seenInfoBarContainer = NO;
   BOOL seenContentArea = NO;
   for (UIView* view in views.subviews) {
-    if (view == _toolbarCoordinator.viewController.view)
+    if (view == _toolbarCoordinator.toolbarViewController.view)
       seenToolbar = YES;
     else if (view == _infoBarContainer->view())
       seenInfoBarContainer = YES;

@@ -20,7 +20,6 @@
 #include "platform/scheduler/renderer/cpu_time_budget_pool.h"
 #include "platform/scheduler/renderer/wake_up_budget_pool.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
-#include "platform/scheduler/util/tracing_helper.h"
 
 namespace base {
 namespace trace_event {
@@ -48,7 +47,7 @@ enum class QueueBlockType { kAllTasks, kNewTasksOnly };
 // Interface for BudgetPool to interact with TaskQueueThrottler.
 class PLATFORM_EXPORT BudgetPoolController {
  public:
-  virtual ~BudgetPoolController() = default;
+  virtual ~BudgetPoolController() {}
 
   // To be used by BudgetPool only, use BudgetPool::{Add,Remove}Queue
   // methods instead.
@@ -95,11 +94,7 @@ class PLATFORM_EXPORT BudgetPoolController {
 class PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
                                            public BudgetPoolController {
  public:
-  // We use tracing controller from RendererSchedulerImpl because an instance
-  // of this class is always its member, so has the same lifetime.
-  TaskQueueThrottler(
-      RendererSchedulerImpl* renderer_scheduler,
-      TraceableVariableController* tracing_controller);
+  explicit TaskQueueThrottler(RendererSchedulerImpl* renderer_scheduler);
 
   ~TaskQueueThrottler() override;
 
@@ -202,7 +197,6 @@ class PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
       forward_immediate_work_callback_;
   scoped_refptr<TaskQueue> control_task_queue_;
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
-  TraceableVariableController* tracing_controller_;  // NOT OWNED
   base::TickClock* tick_clock_;                // NOT OWNED
   std::unique_ptr<ThrottledTimeDomain> time_domain_;
 

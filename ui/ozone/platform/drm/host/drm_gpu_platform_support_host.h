@@ -42,7 +42,8 @@ class DrmGpuPlatformSupportHost : public GpuPlatformSupportHost,
       const base::Callback<void(IPC::Message*)>& send_callback) override;
   void OnChannelDestroyed(int host_id) override;
 
-  void OnMessageReceived(const IPC::Message& message) override;
+  // IPC::Listener:
+  bool OnMessageReceived(const IPC::Message& message) override;
 
   // IPC::Sender:
   bool Send(IPC::Message* message) override;
@@ -125,7 +126,6 @@ class DrmGpuPlatformSupportHost : public GpuPlatformSupportHost,
   DrmCursor* cursor_;                              // Not owned.
   base::ObserverList<GpuThreadObserver> gpu_thread_observers_;
 
-  base::WeakPtr<DrmGpuPlatformSupportHost> weak_ptr_;
   base::WeakPtrFactory<DrmGpuPlatformSupportHost> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(DrmGpuPlatformSupportHost);
 };

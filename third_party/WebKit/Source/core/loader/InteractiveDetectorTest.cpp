@@ -5,7 +5,7 @@
 #include "core/loader/InteractiveDetector.h"
 
 #include "core/dom/Document.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
@@ -395,7 +395,7 @@ TEST_F(InteractiveDetectorTest, InvalidatingUserInput) {
   EXPECT_EQ(GetDetector()->GetFirstInvalidatingInputTime(), t0 + 5.0);
 }
 
-class InteractiveDetectorTestWithDummyPage : public PageTestBase {
+class InteractiveDetectorTestWithDummyPage : public ::testing::Test {
  public:
   // Public because it's executed on a task queue.
   void DummyTaskWithDuration(double duration_seconds) {
@@ -406,15 +406,17 @@ class InteractiveDetectorTestWithDummyPage : public PageTestBase {
  protected:
   void SetUp() override {
     platform_->AdvanceClockSeconds(1);
-    PageTestBase::SetUp();
+    dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
   }
 
   double GetDummyTaskEndTime() { return dummy_task_end_time_; }
 
+  Document& GetDocument() { return dummy_page_holder_->GetDocument(); }
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
 
  private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   double dummy_task_end_time_ = 0.0;
 };
 

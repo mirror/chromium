@@ -24,7 +24,6 @@
 #include "services/service_manager/sandbox/mac/cdm.sb.h"
 #include "services/service_manager/sandbox/mac/common_v2.sb.h"
 #include "services/service_manager/sandbox/mac/gpu_v2.sb.h"
-#include "services/service_manager/sandbox/mac/nacl_loader.sb.h"
 #include "services/service_manager/sandbox/mac/ppapi_v2.sb.h"
 #include "services/service_manager/sandbox/mac/renderer_v2.sb.h"
 #include "services/service_manager/sandbox/mac/utility.sb.h"
@@ -68,24 +67,16 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
   bool no_sandbox = command_line_->HasSwitch(switches::kNoSandbox) ||
                     service_manager::IsUnsandboxedSandboxType(sandbox_type);
 
-  // TODO(kerrnel): Delete this switch once the V2 sandbox is always enabled.
   bool v2_process = false;
   switch (sandbox_type) {
-    case service_manager::SANDBOX_TYPE_NO_SANDBOX:
-      break;
     case service_manager::SANDBOX_TYPE_CDM:
+    case service_manager::SANDBOX_TYPE_GPU:
     case service_manager::SANDBOX_TYPE_PPAPI:
     case service_manager::SANDBOX_TYPE_RENDERER:
     case service_manager::SANDBOX_TYPE_UTILITY:
-    case service_manager::SANDBOX_TYPE_NACL_LOADER:
-    case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
-    case service_manager::SANDBOX_TYPE_PROFILING:
       v2_process = true;
       break;
     default:
-      // This is a 'break' because the V2 sandbox is not enabled for all
-      // processes yet, and so there are sandbox types like NETWORK that
-      // should not be run under the V2 sandbox.
       break;
   }
 
@@ -104,9 +95,6 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
       case service_manager::SANDBOX_TYPE_GPU:
         profile += service_manager::kSeatbeltPolicyString_gpu_v2;
         break;
-      case service_manager::SANDBOX_TYPE_NACL_LOADER:
-        profile += service_manager::kSeatbeltPolicyString_nacl_loader;
-        break;
       case service_manager::SANDBOX_TYPE_PPAPI:
         profile += service_manager::kSeatbeltPolicyString_ppapi_v2;
         break;
@@ -114,12 +102,10 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
         profile += service_manager::kSeatbeltPolicyString_renderer_v2;
         break;
       case service_manager::SANDBOX_TYPE_UTILITY:
-      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
-      case service_manager::SANDBOX_TYPE_PROFILING:
         profile += service_manager::kSeatbeltPolicyString_utility;
         break;
       default:
-        CHECK(false);
+        NOTREACHED();
     }
 
     // Disable os logging to com.apple.diagnosticd which is a performance
@@ -134,19 +120,16 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
         SetupCDMSandboxParameters(seatbelt_exec_client_.get());
         break;
       case service_manager::SANDBOX_TYPE_GPU:
-      case service_manager::SANDBOX_TYPE_NACL_LOADER:
       case service_manager::SANDBOX_TYPE_PPAPI:
       case service_manager::SANDBOX_TYPE_RENDERER:
         SetupCommonSandboxParameters(seatbelt_exec_client_.get());
         break;
       case service_manager::SANDBOX_TYPE_UTILITY:
-      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
-      case service_manager::SANDBOX_TYPE_PROFILING:
         SetupUtilitySandboxParameters(seatbelt_exec_client_.get(),
                                       *command_line_.get());
         break;
       default:
-        CHECK(false);
+        NOTREACHED();
     }
 
     int pipe = seatbelt_exec_client_->SendProfileAndGetFD();

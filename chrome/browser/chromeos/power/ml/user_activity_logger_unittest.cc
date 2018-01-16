@@ -9,7 +9,6 @@
 
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/timer/timer.h"
-#include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
@@ -70,7 +69,7 @@ class UserActivityLoggerTest : public testing::Test {
     activity_logger_ = std::make_unique<UserActivityLogger>(
         &delegate_, idle_event_notifier_.get(), &user_activity_detector_,
         &fake_power_manager_client_, &session_manager_,
-        mojo::MakeRequest(&observer), &fake_user_manager_);
+        mojo::MakeRequest(&observer));
     activity_logger_->SetTaskRunnerForTesting(task_runner_);
   }
 
@@ -122,7 +121,6 @@ class UserActivityLoggerTest : public testing::Test {
   }
 
   TestingUserActivityLoggerDelegate delegate_;
-  chromeos::FakeChromeUserManager fake_user_manager_;
 
  private:
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
@@ -339,22 +337,7 @@ TEST_F(UserActivityLoggerTest, FeatureExtraction) {
   const UserActivityEvent::Features& features = events[0].features();
   EXPECT_EQ(UserActivityEvent::Features::CLAMSHELL, features.device_mode());
   EXPECT_EQ(23.0f, features.battery_percent());
-  EXPECT_FALSE(features.on_battery());
-  EXPECT_EQ(UserActivityEvent::Features::UNMANAGED,
-            features.device_management());
-}
-
-TEST_F(UserActivityLoggerTest, ManagedDevice) {
-  fake_user_manager_.set_is_enterprise_managed(true);
-
-  ReportIdleEvent({});
-  ReportUserActivity(nullptr);
-
-  const auto& events = delegate_.events();
-  ASSERT_EQ(1U, events.size());
-
-  const UserActivityEvent::Features& features = events[0].features();
-  EXPECT_EQ(UserActivityEvent::Features::MANAGED, features.device_management());
+  EXPECT_DOUBLE_EQ(false, features.on_battery());
 }
 
 TEST_F(UserActivityLoggerTest, UpdateOpenTabsURLsCalledTimes) {

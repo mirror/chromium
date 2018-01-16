@@ -11,7 +11,6 @@
 #include "components/viz/test/fake_external_begin_frame_source.h"
 #include "components/viz/test/fake_surface_observer.h"
 #include "components/viz/test/mock_compositor_frame_sink_client.h"
-#include "components/viz/test/test_frame_sink_manager_client.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -81,9 +80,7 @@ class FakeExternalBeginFrameSourceClient
 
 class SurfaceSynchronizationTest : public testing::Test {
  public:
-  SurfaceSynchronizationTest()
-      : frame_sink_manager_client_(&frame_sink_manager_),
-        surface_observer_(false) {}
+  SurfaceSynchronizationTest() : surface_observer_(false) {}
   ~SurfaceSynchronizationTest() override {}
 
   CompositorFrameSinkSupport& display_support() {
@@ -162,16 +159,6 @@ class SurfaceSynchronizationTest : public testing::Test {
     begin_frame_source_->TestOnBeginFrame(args);
   }
 
-  void SetFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
-                             const FrameSinkId& child_frame_sink_id) {
-    frame_sink_manager_client_.SetFrameSinkHierarchy(parent_frame_sink_id,
-                                                     child_frame_sink_id);
-  }
-
-  void DisableAssignTemporaryReferences() {
-    frame_sink_manager_client_.DisableAssignTemporaryReferences();
-  }
-
   FakeSurfaceObserver& surface_observer() { return surface_observer_; }
 
   // testing::Test:
@@ -183,7 +170,6 @@ class SurfaceSynchronizationTest : public testing::Test {
     begin_frame_source_->SetClient(&begin_frame_source_client_);
     now_src_ = std::make_unique<base::SimpleTestTickClock>();
     frame_sink_manager_.surface_manager()->AddObserver(&surface_observer_);
-    frame_sink_manager_.SetLocalClient(&frame_sink_manager_client_);
     supports_[kDisplayFrameSink] = std::make_unique<CompositorFrameSinkSupport>(
         &support_client_, &frame_sink_manager_, kDisplayFrameSink, kIsRoot,
         kNeedsSyncPoints);
@@ -212,8 +198,6 @@ class SurfaceSynchronizationTest : public testing::Test {
     frame_sink_manager_.surface_manager()->RemoveObserver(&surface_observer_);
     frame_sink_manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
 
-    frame_sink_manager_client_.Reset();
-
     begin_frame_source_->SetClient(nullptr);
     begin_frame_source_.reset();
 
@@ -236,7 +220,6 @@ class SurfaceSynchronizationTest : public testing::Test {
 
  private:
   FrameSinkManagerImpl frame_sink_manager_;
-  TestFrameSinkManagerClient frame_sink_manager_client_;
   FakeSurfaceObserver surface_observer_;
   FakeExternalBeginFrameSourceClient begin_frame_source_client_;
   std::unique_ptr<FakeExternalBeginFrameSource> begin_frame_source_;
@@ -543,9 +526,6 @@ TEST_F(SurfaceSynchronizationTest, NewFrameOverridesOldDependencies) {
 // references. A new surface from a child will continue to exist as a temporary
 // reference until the parent's frame activates.
 TEST_F(SurfaceSynchronizationTest, OnlyActiveFramesAffectSurfaceReferences) {
-  SetFrameSinkHierarchy(kParentFrameSink, kChildFrameSink1);
-  SetFrameSinkHierarchy(kParentFrameSink, kChildFrameSink2);
-
   const SurfaceId parent_id = MakeSurfaceId(kParentFrameSink, 1);
   const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
   const SurfaceId child_id2 = MakeSurfaceId(kChildFrameSink2, 1);
@@ -1857,20 +1837,17 @@ TEST_F(SurfaceSynchronizationTest, FrameIndexWithPendingFrames) {
 // This test verifies that a new surface with a pending CompositorFrame gets
 // a temporary reference immediately, as opposed to when the surface activates.
 TEST_F(SurfaceSynchronizationTest, PendingSurfaceKeptAlive) {
-  SetFrameSinkHierarchy(kDisplayFrameSink, kParentFrameSink);
-  SetFrameSinkHierarchy(kParentFrameSink, kChildFrameSink1);
+  const SurfaceId display_id = MakeSurfaceId(kDisplayFrameSink, 1);
+  const SurfaceId parent_id1 = MakeSurfaceId(kParentFrameSink, 1);
 
-  const SurfaceId parent_id = MakeSurfaceId(kParentFrameSink, 1);
-  const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
-
-  // |parent_id| depends on |child_id1|. It shouldn't activate.
-  parent_support().SubmitCompositorFrame(
-      parent_id.local_surface_id(),
-      MakeCompositorFrame({child_id1}, empty_surface_ids(),
+  // |display_id| depends on |parent_id1|. It shouldn't activate.
+  display_support().SubmitCompositorFrame(
+      display_id.local_surface_id(),
+      MakeCompositorFrame({parent_id1}, empty_surface_ids(),
                           std::vector<TransferableResource>()));
-  EXPECT_FALSE(parent_surface()->HasActiveFrame());
-  EXPECT_TRUE(parent_surface()->HasPendingFrame());
-  EXPECT_TRUE(HasTemporaryReference(parent_id));
+  EXPECT_FALSE(display_surface()->HasActiveFrame());
+  EXPECT_TRUE(display_surface()->HasPendingFrame());
+  EXPECT_TRUE(HasTemporaryReference(display_id));
 }
 
 // Tests getting the correct active frame index.
@@ -1903,8 +1880,6 @@ TEST_F(SurfaceSynchronizationTest, ActiveFrameIndex) {
 // synchronization to present the freshest surfaces available at aggregation
 // time.
 TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
-  SetFrameSinkHierarchy(kParentFrameSink, kChildFrameSink1);
-
   const SurfaceId parent_id = MakeSurfaceId(kParentFrameSink, 1);
   const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
   const SurfaceId child_id2 = MakeSurfaceId(kChildFrameSink1, 2);
@@ -1950,9 +1925,6 @@ TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
   EXPECT_THAT(GetChildReferences(parent_id), UnorderedElementsAre(child_id1));
   EXPECT_EQ(GetSurfaceForId(child_id1),
             GetLatestInFlightSurface(child_id2, child_id1));
-
-  // Don't assign owner for temporary reference to |child_id2|.
-  DisableAssignTemporaryReferences();
 
   // Submit a child CompositorFrame to a new SurfaceId and verify that
   // GetLatestInFlightSurface returns the right surface.

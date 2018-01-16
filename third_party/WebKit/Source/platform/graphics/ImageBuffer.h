@@ -56,6 +56,10 @@ class PLATFORM_EXPORT ImageBuffer {
 
  public:
   static std::unique_ptr<ImageBuffer> Create(
+      const IntSize&,
+      ImageInitializationMode = kInitializeImagePixels,
+      const CanvasColorParams& = CanvasColorParams());
+  static std::unique_ptr<ImageBuffer> Create(
       std::unique_ptr<ImageBufferSurface>);
 
   virtual ~ImageBuffer();
@@ -68,7 +72,8 @@ class PLATFORM_EXPORT ImageBuffer {
   PaintCanvas* Canvas() const;
 
   scoped_refptr<StaticBitmapImage> NewImageSnapshot(
-      AccelerationHint = kPreferNoAcceleration) const;
+      AccelerationHint = kPreferNoAcceleration,
+      SnapshotReason = kSnapshotReasonUnknown) const;
 
   const CanvasColorParams& ColorParams() const {
     return surface_->ColorParams();

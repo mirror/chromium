@@ -10,7 +10,6 @@
 
 #include <vector>
 
-#include "base/macros.h"
 #include "chrome/installer/zucchini/image_utils.h"
 
 namespace zucchini {
@@ -65,8 +64,6 @@ class TargetsAffinity {
   // lookup, given |old_key| or |new_key|.
   std::vector<Association> forward_association_;
   std::vector<Association> backward_association_;
-
-  DISALLOW_COPY_AND_ASSIGN(TargetsAffinity);
 };
 
 }  // namespace zucchini

@@ -107,7 +107,7 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const LayoutSize& size) {
+    const IntSize& size) {
   if (size.IsEmpty())
     return nullptr;
 
@@ -115,7 +115,11 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
     if (!Clients().Contains(&client))
       return nullptr;
 
-    if (Image* result = CSSImageGeneratorValue::GetImage(&client, size))
+    // Need to look up our size.  Create a string of width*height to use as a
+    // hash key.
+    Image* result =
+        this->CSSImageGeneratorValue::GetImage(&client, document, style, size);
+    if (result)
       return result;
   }
 
@@ -147,7 +151,7 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
   }
 
   scoped_refptr<Image> new_image =
-      GradientGeneratedImage::Create(gradient, FloatSize(size));
+      GradientGeneratedImage::Create(gradient, size);
   if (is_cacheable_)
     PutImage(size, new_image);
 
@@ -631,12 +635,11 @@ void CSSGradientValue::AddStops(
 
 static float PositionFromValue(const CSSValue* value,
                                const CSSToLengthConversionData& conversion_data,
-                               const LayoutSize& size,
+                               const IntSize& size,
                                bool is_horizontal) {
-  float origin = 0;
+  int origin = 0;
   int sign = 1;
-  float edge_distance =
-      is_horizontal ? size.Width().ToFloat() : size.Height().ToFloat();
+  int edge_distance = is_horizontal ? size.Width() : size.Height();
 
   // In this case the center of the gradient is given relative to an edge in the
   // form of: [ top | bottom | right | left ] [ <percentage> | <length> ].
@@ -697,7 +700,7 @@ static FloatPoint ComputeEndPoint(
     const CSSValue* horizontal,
     const CSSValue* vertical,
     const CSSToLengthConversionData& conversion_data,
-    const LayoutSize& size) {
+    const IntSize& size) {
   FloatPoint result;
 
   if (horizontal)
@@ -805,7 +808,7 @@ String CSSLinearGradientValue::CustomCSSText() const {
 // Compute the endpoints so that a gradient of the given angle covers a box of
 // the given size.
 static void EndPointsFromAngle(float angle_deg,
-                               const LayoutSize& size,
+                               const IntSize& size,
                                FloatPoint& first_point,
                                FloatPoint& second_point,
                                CSSGradientType type) {
@@ -877,7 +880,7 @@ static void EndPointsFromAngle(float angle_deg,
 
 scoped_refptr<Gradient> CSSLinearGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const LayoutSize& size,
+    const IntSize& size,
     const LayoutObject& object) {
   DCHECK(!size.IsEmpty());
 
@@ -1243,7 +1246,7 @@ FloatSize RadiusToCorner(const FloatPoint& point,
 
 scoped_refptr<Gradient> CSSRadialGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const LayoutSize& size,
+    const IntSize& size,
     const LayoutObject& object) {
   DCHECK(!size.IsEmpty());
 
@@ -1419,7 +1422,7 @@ String CSSConicGradientValue::CustomCSSText() const {
 
 scoped_refptr<Gradient> CSSConicGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const LayoutSize& size,
+    const IntSize& size,
     const LayoutObject& object) {
   DCHECK(!size.IsEmpty());
 

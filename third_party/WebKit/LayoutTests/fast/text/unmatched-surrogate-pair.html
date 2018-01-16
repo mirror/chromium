@@ -29,8 +29,7 @@
             var container = document.createElement('div');
             container.appendChild(nodeA);
             container.appendChild(nodeB);
-            // Rendering of unmatched surrogate pair is not interoperable.
-            // document.body.appendChild(container);
+            document.body.appendChild(container);
 
             appendLine('After element.normalize():');
             var clone = container.cloneNode(true);

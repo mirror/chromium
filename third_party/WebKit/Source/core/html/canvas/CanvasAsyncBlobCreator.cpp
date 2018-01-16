@@ -207,7 +207,7 @@ CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(
   }
 }
 
-CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() = default;
+CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() {}
 
 void CanvasAsyncBlobCreator::Dispose() {
   // Eagerly let go of references to prevent retention of these

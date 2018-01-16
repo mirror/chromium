@@ -4,10 +4,9 @@
 
 #include "media/mojo/services/interface_factory_impl.h"
 
-#include <memory>
 #include "base/guid.h"
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/media_log.h"
@@ -119,7 +118,7 @@ void InterfaceFactoryImpl::CreateAudioDecoder(
   }
 
   audio_decoder_bindings_.AddBinding(
-      std::make_unique<MojoAudioDecoderService>(&cdm_service_context_,
+      base::MakeUnique<MojoAudioDecoderService>(&cdm_service_context_,
                                                 std::move(audio_decoder)),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_AUDIO_DECODER)
@@ -129,7 +128,7 @@ void InterfaceFactoryImpl::CreateVideoDecoder(
     mojom::VideoDecoderRequest request) {
 #if BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
   video_decoder_bindings_.AddBinding(
-      std::make_unique<MojoVideoDecoderService>(mojo_media_client_,
+      base::MakeUnique<MojoVideoDecoderService>(mojo_media_client_,
                                                 &cdm_service_context_),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
@@ -159,7 +158,7 @@ void InterfaceFactoryImpl::CreateRenderer(
   }
 
   std::unique_ptr<MojoRendererService> mojo_renderer_service =
-      std::make_unique<MojoRendererService>(
+      base::MakeUnique<MojoRendererService>(
           &cdm_service_context_, std::move(audio_sink), std::move(video_sink),
           std::move(renderer), MojoRendererService::InitiateSurfaceRequestCB());
 
@@ -186,7 +185,7 @@ void InterfaceFactoryImpl::CreateCdm(
     return;
 
   cdm_bindings_.AddBinding(
-      std::make_unique<MojoCdmService>(&cdm_service_context_, cdm_factory),
+      base::MakeUnique<MojoCdmService>(&cdm_service_context_, cdm_factory),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 }

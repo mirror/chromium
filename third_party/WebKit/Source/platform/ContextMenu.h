@@ -38,7 +38,7 @@ class PLATFORM_EXPORT ContextMenu {
   USING_FAST_MALLOC(ContextMenu);
 
  public:
-  ContextMenu() = default;
+  ContextMenu() {}
   const ContextMenuItem* ItemWithAction(unsigned) const;
   const Vector<ContextMenuItem>& Items() const { return items_; }
   void AppendItem(const ContextMenuItem& item) { items_.push_back(item); }

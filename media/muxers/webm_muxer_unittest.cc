@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <memory>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -148,7 +147,7 @@ TEST_P(WebmMuxerTest, OnEncodedVideoTwoFrames) {
   webm_muxer_.ForceOneLibWebmErrorForTesting();
   EXPECT_FALSE(webm_muxer_.OnEncodedVideo(
       WebmMuxer::VideoParameters(video_frame),
-      std::make_unique<std::string>(encoded_data), nullptr,
+      base::MakeUnique<std::string>(encoded_data), nullptr,
       base::TimeTicks::Now(), true /* keyframe */));
 }
 
@@ -204,7 +203,7 @@ TEST_P(WebmMuxerTest, OnEncodedVideoTwoAlphaFrames) {
   webm_muxer_.ForceOneLibWebmErrorForTesting();
   EXPECT_FALSE(webm_muxer_.OnEncodedVideo(
       WebmMuxer::VideoParameters(video_frame),
-      std::make_unique<std::string>(encoded_data), nullptr,
+      base::MakeUnique<std::string>(encoded_data), nullptr,
       base::TimeTicks::Now(), true /* keyframe */));
 }
 
@@ -227,7 +226,7 @@ TEST_P(WebmMuxerTest, OnEncodedAudioTwoFrames) {
       .WillRepeatedly(
           WithArgs<0>(Invoke(this, &WebmMuxerTest::SaveEncodedDataLen)));
   EXPECT_TRUE(webm_muxer_.OnEncodedAudio(
-      audio_params, std::make_unique<std::string>(encoded_data),
+      audio_params, base::MakeUnique<std::string>(encoded_data),
       base::TimeTicks::Now()));
 
   // First time around WriteCallback() is pinged a number of times to write the
@@ -243,7 +242,7 @@ TEST_P(WebmMuxerTest, OnEncodedAudioTwoFrames) {
       .WillRepeatedly(
           WithArgs<0>(Invoke(this, &WebmMuxerTest::SaveEncodedDataLen)));
   EXPECT_TRUE(webm_muxer_.OnEncodedAudio(
-      audio_params, std::make_unique<std::string>(encoded_data),
+      audio_params, base::MakeUnique<std::string>(encoded_data),
       base::TimeTicks::Now()));
 
   // The second time around the callbacks should include a SimpleBlock header,
@@ -258,7 +257,7 @@ TEST_P(WebmMuxerTest, OnEncodedAudioTwoFrames) {
   // Force an error in libwebm and expect OnEncodedAudio to fail.
   webm_muxer_.ForceOneLibWebmErrorForTesting();
   EXPECT_FALSE(webm_muxer_.OnEncodedAudio(
-      audio_params, std::make_unique<std::string>(encoded_data),
+      audio_params, base::MakeUnique<std::string>(encoded_data),
       base::TimeTicks::Now()));
 }
 

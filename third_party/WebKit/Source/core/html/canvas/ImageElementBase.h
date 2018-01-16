@@ -35,6 +35,7 @@ class CORE_EXPORT ImageElementBase : public CanvasImageSource,
 
   scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                AccelerationHint,
+                                               SnapshotReason,
                                                const FloatSize&) override;
 
   bool WouldTaintOrigin(

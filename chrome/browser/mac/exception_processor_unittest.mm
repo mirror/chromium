@@ -12,7 +12,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/metrics/statistics_recorder.h"
-#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::HistogramBase;
@@ -48,8 +47,9 @@ TEST(ExceptionProcessorTest, ExceptionBinning) {
 }
 
 TEST(ExceptionProcessorTest, RecordException) {
-  EXPECT_THAT(StatisticsRecorder::GetSnapshot("OSX.NSException"),
-              testing::IsEmpty());
+  StatisticsRecorder::Histograms histograms;
+  StatisticsRecorder::GetSnapshot("OSX.NSException", &histograms);
+  EXPECT_EQ(0U, histograms.size());
 
   // Record some known exceptions.
   RecordExceptionWithUma(ExceptionNamed(NSGenericException));
@@ -70,9 +70,8 @@ TEST(ExceptionProcessorTest, RecordException) {
   RecordExceptionWithUma(nil);
 
   // We should have exactly the right number of exceptions.
-  const StatisticsRecorder::Histograms histograms =
-      StatisticsRecorder::GetSnapshot("OSX.NSException");
-  ASSERT_THAT(histograms, testing::SizeIs(1));
+  StatisticsRecorder::GetSnapshot("OSX.NSException", &histograms);
+  EXPECT_EQ(1U, histograms.size());
   EXPECT_EQ(HistogramBase::kUmaTargetedHistogramFlag, histograms[0]->flags());
 
   std::unique_ptr<HistogramSamples> samples(histograms[0]->SnapshotSamples());

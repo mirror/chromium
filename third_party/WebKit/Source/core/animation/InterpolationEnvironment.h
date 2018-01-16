@@ -21,7 +21,7 @@ class InterpolationEnvironment {
   }
 
  protected:
-  virtual ~InterpolationEnvironment() = default;
+  virtual ~InterpolationEnvironment() {}
 
   explicit InterpolationEnvironment(const InterpolationTypesMap& map)
       : interpolation_types_map_(map) {}

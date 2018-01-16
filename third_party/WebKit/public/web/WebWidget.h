@@ -214,7 +214,7 @@ class WebWidget {
   virtual void ShowContextMenu(WebMenuSourceType) {}
 
  protected:
-  ~WebWidget() = default;
+  ~WebWidget() {}
 };
 
 }  // namespace blink

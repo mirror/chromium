@@ -50,7 +50,7 @@ DOMURL::DOMURL(const String& url,
     exception_state.ThrowTypeError("Invalid URL");
 }
 
-DOMURL::~DOMURL() = default;
+DOMURL::~DOMURL() {}
 
 void DOMURL::Trace(blink::Visitor* visitor) {
   visitor->Trace(search_params_);
@@ -79,7 +79,8 @@ void DOMURL::setSearch(const String& value) {
 
 String DOMURL::CreatePublicURL(ExecutionContext* execution_context,
                                URLRegistrable* registrable) {
-  return execution_context->GetPublicURLManager().RegisterURL(registrable);
+  return execution_context->GetPublicURLManager().RegisterURL(execution_context,
+                                                              registrable);
 }
 
 URLSearchParams* DOMURL::searchParams() {

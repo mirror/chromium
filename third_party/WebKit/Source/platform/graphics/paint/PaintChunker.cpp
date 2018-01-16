@@ -10,7 +10,7 @@ namespace blink {
 
 PaintChunker::PaintChunker() : force_new_chunk_(false) {}
 
-PaintChunker::~PaintChunker() = default;
+PaintChunker::~PaintChunker() {}
 
 void PaintChunker::UpdateCurrentPaintChunkProperties(
     const Optional<PaintChunk::Id>& chunk_id,

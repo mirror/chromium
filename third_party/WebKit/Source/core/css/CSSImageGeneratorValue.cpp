@@ -28,6 +28,7 @@
 #include "core/css/CSSCrossfadeValue.h"
 #include "core/css/CSSGradientValue.h"
 #include "core/css/CSSPaintValue.h"
+#include "core/layout/LayoutObject.h"
 #include "platform/graphics/Image.h"
 
 namespace blink {
@@ -43,7 +44,7 @@ CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
 CSSImageGeneratorValue::~CSSImageGeneratorValue() = default;
 
 void CSSImageGeneratorValue::AddClient(const ImageResourceObserver* client,
-                                       const LayoutSize& size) {
+                                       const IntSize& size) {
   DCHECK(client);
   if (clients_.IsEmpty()) {
     DCHECK(!keep_alive_);
@@ -73,9 +74,9 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   SECURITY_DCHECK(it != clients_.end());
 
-  LayoutSize removed_image_size;
+  IntSize removed_image_size;
   SizeAndCount& size_count = it->value;
-  LayoutSize size = size_count.size;
+  IntSize size = size_count.size;
   if (!size.IsEmpty()) {
     sizes_.erase(size);
     if (!sizes_.Contains(size))
@@ -92,11 +93,13 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
 }
 
 Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
-                                        const LayoutSize& size) {
+                                        const Document&,
+                                        const ComputedStyle&,
+                                        const IntSize& size) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   if (it != clients_.end()) {
     SizeAndCount& size_count = it->value;
-    LayoutSize old_size = size_count.size;
+    IntSize old_size = size_count.size;
     if (old_size != size) {
       RemoveClient(client);
       AddClient(client, size);
@@ -111,7 +114,7 @@ Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
   return images_.at(size);
 }
 
-void CSSImageGeneratorValue::PutImage(const LayoutSize& size,
+void CSSImageGeneratorValue::PutImage(const IntSize& size,
                                       scoped_refptr<Image> image) {
   images_.insert(size, std::move(image));
 }
@@ -120,7 +123,7 @@ scoped_refptr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const LayoutSize& container_size) {
+    const IntSize& container_size) {
   switch (GetClassType()) {
     case kCrossfadeClass:
       return ToCSSCrossfadeValue(this)->GetImage(client, document, style,
@@ -161,7 +164,7 @@ bool CSSImageGeneratorValue::IsFixedSize() const {
   return false;
 }
 
-FloatSize CSSImageGeneratorValue::FixedSize(
+IntSize CSSImageGeneratorValue::FixedSize(
     const Document& document,
     const FloatSize& default_object_size) {
   switch (GetClassType()) {
@@ -179,7 +182,7 @@ FloatSize CSSImageGeneratorValue::FixedSize(
     default:
       NOTREACHED();
   }
-  return FloatSize();
+  return IntSize();
 }
 
 bool CSSImageGeneratorValue::IsPending() const {

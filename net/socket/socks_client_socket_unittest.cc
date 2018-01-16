@@ -101,7 +101,7 @@ std::unique_ptr<SOCKSClientSocket> SOCKSClientSocketTest::BuildMockSocket(
   return std::unique_ptr<SOCKSClientSocket>(new SOCKSClientSocket(
       std::move(connection),
       HostResolver::RequestInfo(HostPortPair(hostname, port)), DEFAULT_PRIORITY,
-      host_resolver, TRAFFIC_ANNOTATION_FOR_TESTS));
+      host_resolver));
 }
 
 // Implementation of HostResolver that never completes its resolve request.
@@ -500,7 +500,7 @@ TEST_F(SOCKSClientSocketTest, Tag) {
   SOCKSClientSocket socket(
       std::move(connection),
       HostResolver::RequestInfo(HostPortPair("localhost", 80)),
-      DEFAULT_PRIORITY, &host_resolver, TRAFFIC_ANNOTATION_FOR_TESTS);
+      DEFAULT_PRIORITY, &host_resolver);
 
   EXPECT_EQ(tagging_sock->tag(), SocketTag());
 #if defined(OS_ANDROID)

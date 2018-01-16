@@ -47,7 +47,7 @@ RTCStatsRequestImpl::RTCStatsRequestImpl(ExecutionContext* context,
   DCHECK(requester_);
 }
 
-RTCStatsRequestImpl::~RTCStatsRequestImpl() = default;
+RTCStatsRequestImpl::~RTCStatsRequestImpl() {}
 
 RTCStatsResponseBase* RTCStatsRequestImpl::CreateResponse() {
   return RTCStatsResponse::Create();

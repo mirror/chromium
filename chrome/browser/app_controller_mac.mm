@@ -1396,6 +1396,9 @@ static base::mac::ScopedObjCClassSwizzler* g_swizzle_imk_input_session;
 
 - (void)getUrl:(NSAppleEventDescriptor*)event
      withReply:(NSAppleEventDescriptor*)reply {
+  // Needed if this event has been forwarded by another Chrome instance.
+  // See |ProcessSingleton::ForwardOpenURLEvent|.
+  [NSApp activateIgnoringOtherApps:YES];
   NSString* urlStr = [[event paramDescriptorForKeyword:keyDirectObject]
                       stringValue];
 

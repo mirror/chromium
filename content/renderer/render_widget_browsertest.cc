@@ -3,8 +3,6 @@
 // found in the LICENSE file.
 
 #include "base/strings/utf_string_conversions.h"
-#include "components/viz/common/surfaces/local_surface_id.h"
-#include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "content/common/resize_params.h"
 #include "content/public/renderer/render_frame_visitor.h"
 #include "content/public/test/render_view_test.h"
@@ -55,8 +53,6 @@ class RenderWidgetTest : public RenderViewTest {
 TEST_F(RenderWidgetTest, OnResize) {
   // The initial bounds is empty, so setting it to the same thing should do
   // nothing.
-  viz::LocalSurfaceId local_surface_id;
-  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator;
   ResizeParams resize_params;
   resize_params.screen_info = ScreenInfo();
   resize_params.new_size = gfx::Size();
@@ -65,8 +61,6 @@ TEST_F(RenderWidgetTest, OnResize) {
   resize_params.browser_controls_shrink_blink_size = false;
   resize_params.is_fullscreen_granted = false;
   resize_params.needs_resize_ack = false;
-  local_surface_id = local_surface_id_allocator.GenerateId();
-  resize_params.local_surface_id = local_surface_id;
   OnResize(resize_params);
   EXPECT_EQ(resize_params.needs_resize_ack, next_paint_is_resize_ack());
 
@@ -111,9 +105,8 @@ TEST_F(RenderWidgetTest, OnResize) {
 
 class RenderWidgetInitialSizeTest : public RenderWidgetTest {
  public:
-  RenderWidgetInitialSizeTest() : RenderWidgetTest(), initial_size_(200, 100) {
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
-  }
+  RenderWidgetInitialSizeTest()
+      : RenderWidgetTest(), initial_size_(200, 100) {}
 
  protected:
   std::unique_ptr<ResizeParams> InitialSizeParams() override {
@@ -121,13 +114,10 @@ class RenderWidgetInitialSizeTest : public RenderWidgetTest {
     initial_size_params->new_size = initial_size_;
     initial_size_params->physical_backing_size = initial_size_;
     initial_size_params->needs_resize_ack = true;
-    initial_size_params->local_surface_id = local_surface_id_;
     return initial_size_params;
   }
 
   gfx::Size initial_size_;
-  viz::LocalSurfaceId local_surface_id_;
-  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator_;
 };
 
 TEST_F(RenderWidgetInitialSizeTest, InitialSize) {
@@ -143,18 +133,20 @@ TEST_F(RenderWidgetTest, HitTestAPI) {
       "<iframe style='width: 200px; height: 100px;'"
       "srcdoc='<body style=\"margin: 0px; height: 100px; width: 200px;\">"
       "</body>'></iframe><div></body>");
+  blink::WebFrame* main_web_frame =
+      static_cast<RenderViewImpl*>(view_)->GetMainRenderFrame()->GetWebFrame();
   viz::FrameSinkId main_frame_sink_id =
       widget()->GetFrameSinkIdAtPoint(gfx::Point(10, 10));
-  EXPECT_EQ(static_cast<uint32_t>(widget()->routing_id()),
+  EXPECT_EQ(static_cast<uint32_t>(
+                RenderFrame::GetRoutingIdForWebFrame(main_web_frame)),
             main_frame_sink_id.sink_id());
   EXPECT_EQ(static_cast<uint32_t>(RenderThreadImpl::Get()->GetClientId()),
             main_frame_sink_id.client_id());
 
-  // Targeting a child frame should also return the FrameSinkId for the main
-  // widget.
   viz::FrameSinkId frame_sink_id =
       widget()->GetFrameSinkIdAtPoint(gfx::Point(150, 150));
-  EXPECT_EQ(static_cast<uint32_t>(widget()->routing_id()),
+  EXPECT_EQ(static_cast<uint32_t>(RenderFrame::GetRoutingIdForWebFrame(
+                main_web_frame->FirstChild())),
             frame_sink_id.sink_id());
   EXPECT_EQ(main_frame_sink_id.client_id(), frame_sink_id.client_id());
 }

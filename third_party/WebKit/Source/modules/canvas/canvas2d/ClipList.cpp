@@ -41,6 +41,7 @@ const SkPath& ClipList::GetCurrentClipPath() const {
 
 ClipList::ClipOp::ClipOp() : anti_aliasing_mode_(kAntiAliased) {}
 
-ClipList::ClipOp::ClipOp(const ClipOp& other) = default;
+ClipList::ClipOp::ClipOp(const ClipOp& other)
+    : path_(other.path_), anti_aliasing_mode_(other.anti_aliasing_mode_) {}
 
 }  // namespace blink

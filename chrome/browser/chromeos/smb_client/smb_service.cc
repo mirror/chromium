@@ -24,8 +24,7 @@ SmbService::SmbService(Profile* profile)
     : profile_(profile),
       weak_ptr_factory_(this) {
   if (base::FeatureList::IsEnabled(features::kNativeSmb))
-    GetProviderService()->RegisterProvider(std::make_unique<SmbProvider>(
-        base::BindRepeating(&SmbService::Unmount, base::Unretained(this))));
+    GetProviderService()->RegisterProvider(std::make_unique<SmbProvider>());
 }
 
 SmbService::~SmbService() {}
@@ -63,14 +62,6 @@ void SmbService::OnMountResponse(
       ProviderId::CreateFromNativeId("smb"), mount_options);
 
   std::move(callback).Run(result);
-}
-
-base::File::Error SmbService::Unmount(
-    const ProviderId& provider_id,
-    const std::string& file_system_id,
-    file_system_provider::Service::UnmountReason reason) const {
-  return GetProviderService()->UnmountFileSystem(provider_id, file_system_id,
-                                                 reason);
 }
 
 Service* SmbService::GetProviderService() const {

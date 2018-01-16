@@ -1008,6 +1008,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
     SimpleFileTracker::FileHandle file =
         file_tracker_->Acquire(this, SubFileForFileIndex(i));
     bool success = file.IsOK() && file->GetInfo(&file_info);
+    base::Time file_last_modified;
     if (!success) {
       DLOG(WARNING) << "Could not get platform file info.";
       continue;

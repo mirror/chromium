@@ -207,7 +207,7 @@ public class StubbedProvider implements BackendProvider {
     private final StubbedOfflineContentProvider mOfflineContentProvider;
     private final SelectionDelegate<DownloadHistoryItemWrapper> mSelectionDelegate;
     private final StubbedThumbnailProvider mStubbedThumbnailProvider;
-    private UIDelegate mUIDelegate;
+    private final StubbedUIDelegate mStubbedUIDelegate;
 
     public StubbedProvider() {
         mHandler = new Handler(Looper.getMainLooper());
@@ -215,11 +215,7 @@ public class StubbedProvider implements BackendProvider {
         mOfflineContentProvider = new StubbedOfflineContentProvider();
         mSelectionDelegate = new DownloadItemSelectionDelegate();
         mStubbedThumbnailProvider = new StubbedThumbnailProvider();
-        mUIDelegate = new StubbedUIDelegate();
-    }
-
-    public void setUIDelegate(UIDelegate delegate) {
-        mUIDelegate = delegate;
+        mStubbedUIDelegate = new StubbedUIDelegate();
     }
 
     @Override
@@ -244,7 +240,7 @@ public class StubbedProvider implements BackendProvider {
 
     @Override
     public UIDelegate getUIDelegate() {
-        return mUIDelegate;
+        return mStubbedUIDelegate;
     }
 
     @Override

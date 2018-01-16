@@ -40,7 +40,7 @@ class WebThreadBase::TaskObserverAdapter
   WebThread::TaskObserver* observer_;
 };
 
-WebThreadBase::WebThreadBase() = default;
+WebThreadBase::WebThreadBase() {}
 
 WebThreadBase::~WebThreadBase() {
   for (auto& observer_entry : task_observer_map_) {
@@ -117,7 +117,7 @@ class WebThreadForCompositor : public WebThreadImplForWorkerScheduler {
       : WebThreadImplForWorkerScheduler("Compositor", options) {
     Init();
   }
-  ~WebThreadForCompositor() override = default;
+  ~WebThreadForCompositor() override {}
 
  private:
   // WebThreadImplForWorkerScheduler:

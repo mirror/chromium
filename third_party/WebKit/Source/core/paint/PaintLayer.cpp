@@ -128,7 +128,7 @@ PaintLayerRareData::PaintLayerRareData()
       squashing_disallowed_reasons(SquashingDisallowedReason::kNone),
       grouped_mapping(nullptr) {}
 
-PaintLayerRareData::~PaintLayerRareData() = default;
+PaintLayerRareData::~PaintLayerRareData() {}
 
 PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
     : has_self_painting_layer_descendant_(false),
@@ -392,8 +392,7 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
   ClearClipRects();
-  if (!IsRootLayer())
-    UpdateLayerPositionRecursive();
+  UpdateLayerPositionRecursive();
 }
 
 void PaintLayer::UpdateTransformationMatrix() {
@@ -829,8 +828,7 @@ void PaintLayer::UpdateLayerPosition() {
   }
 
   if (PaintLayer* containing_layer = ContainingLayer()) {
-    if (containing_layer->GetLayoutObject().HasOverflowClip() &&
-        !containing_layer->IsRootLayer()) {
+    if (containing_layer->GetLayoutObject().HasOverflowClip()) {
       // Subtract our container's scroll offset.
       IntSize offset =
           containing_layer->GetLayoutBox()->ScrolledContentOffset();
@@ -1618,16 +1616,23 @@ void PaintLayer::AppendSingleFragmentIgnoringPagination(
     PaintLayerFragments& fragments,
     const PaintLayer* root_layer,
     const LayoutRect& dirty_rect,
+    ClipRectsCacheSlot clip_rects_cache_slot,
+    PaintLayer::GeometryMapperOption geometry_mapper_option,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
     ShouldRespectOverflowClipType respect_overflow_clip,
     const LayoutPoint* offset_from_root,
     const LayoutSize& sub_pixel_accumulation) const {
   PaintLayerFragment fragment;
-  ClipRectsContext clip_rects_context(
-      root_layer, kUncachedClipRects, overlay_scrollbar_clip_behavior,
-      respect_overflow_clip, sub_pixel_accumulation);
-  Clipper(kUseGeometryMapper)
-      .CalculateRects(clip_rects_context, &GetLayoutObject().FirstFragment(),
+  ClipRectsContext clip_rects_context(root_layer, clip_rects_cache_slot,
+                                      overlay_scrollbar_clip_behavior,
+                                      sub_pixel_accumulation);
+  if (respect_overflow_clip == kIgnoreOverflowClip)
+    clip_rects_context.SetIgnoreOverflowClip();
+  Clipper(geometry_mapper_option)
+      .CalculateRects(clip_rects_context,
+                      geometry_mapper_option == kUseGeometryMapper
+                          ? &GetLayoutObject().FirstFragment()
+                          : nullptr,
                       dirty_rect, fragment.layer_bounds,
                       fragment.background_rect, fragment.foreground_rect,
                       offset_from_root);
@@ -1657,14 +1662,21 @@ void PaintLayer::CollectFragments(
     PaintLayerFragments& fragments,
     const PaintLayer* root_layer,
     const LayoutRect& dirty_rect,
+    ClipRectsCacheSlot clip_rects_cache_slot,
+    PaintLayer::GeometryMapperOption geometry_mapper_option,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
     ShouldRespectOverflowClipType respect_overflow_clip,
     const LayoutPoint* offset_from_root,
     const LayoutSize& sub_pixel_accumulation) const {
+  // TODO(chrishtr): enable this once it works with rasterize-and-record.
+  // DCHECK_EQ(DocumentLifecycle::kInPaint,
+  //           GetLayoutObject().GetDocument().Lifecycle().GetState());
   PaintLayerFragment fragment;
-  ClipRectsContext clip_rects_context(
-      root_layer, kUncachedClipRects, overlay_scrollbar_clip_behavior,
-      respect_overflow_clip, sub_pixel_accumulation);
+  ClipRectsContext clip_rects_context(root_layer, clip_rects_cache_slot,
+                                      overlay_scrollbar_clip_behavior,
+                                      sub_pixel_accumulation);
+  if (respect_overflow_clip == kIgnoreOverflowClip)
+    clip_rects_context.SetIgnoreOverflowClip();
 
   // The inherited offset_from_root does not include any pagination offsets.
   // In the presence of fragmentation, we cannot use it.
@@ -1672,7 +1684,7 @@ void PaintLayer::CollectFragments(
       !ShouldFragmentCompositedBounds(root_layer);
   for (auto* fragment_data = &GetLayoutObject().FirstFragment(); fragment_data;
        fragment_data = fragment_data->NextFragment()) {
-    Clipper(kUseGeometryMapper)
+    Clipper(geometry_mapper_option)
         .CalculateRects(
             clip_rects_context, fragment_data, dirty_rect,
             fragment.layer_bounds, fragment.background_rect,
@@ -1885,26 +1897,25 @@ PaintLayer* PaintLayer::HitTestLayer(
   if (!IsSelfPaintingLayer() && !HasSelfPaintingLayerDescendant())
     return nullptr;
 
-  ShouldRespectOverflowClipType clip_behavior = kRespectOverflowClip;
-  if (result.GetHitTestRequest().IgnoreClipping())
-    clip_behavior = kIgnoreOverflowClip;
+  ClipRectsCacheSlot clip_rects_cache_slot =
+      result.GetHitTestRequest().IgnoreClipping()
+          ? kRootRelativeClipRectsIgnoringViewportClip
+          : kRootRelativeClipRects;
 
   // Apply a transform if we have one.
   if (Transform() && !applied_transform) {
-    if (EnclosingPaginationLayer()) {
+    if (EnclosingPaginationLayer())
       return HitTestTransformedLayerInFragments(
           root_layer, container_layer, result, hit_test_rect, hit_test_location,
-          transform_state, z_offset, clip_behavior);
-    }
+          transform_state, z_offset, clip_rects_cache_slot);
 
     // Make sure the parent's clip rects have been calculated.
     if (Parent()) {
       ClipRect clip_rect;
-      Clipper(PaintLayer::kUseGeometryMapper)
+      Clipper(PaintLayer::kDoNotUseGeometryMapper)
           .CalculateBackgroundClipRect(
-              ClipRectsContext(root_layer, kUncachedClipRects,
-                               kExcludeOverlayScrollbarSizeForHitTesting,
-                               clip_behavior),
+              ClipRectsContext(root_layer, clip_rects_cache_slot,
+                               kExcludeOverlayScrollbarSizeForHitTesting),
               clip_rect);
       // Go ahead and test the enclosing clip now.
       if (!clip_rect.Intersects(hit_test_location))
@@ -2011,10 +2022,12 @@ PaintLayer* PaintLayer::HitTestLayer(
   PaintLayerFragments layer_fragments;
   if (applied_transform) {
     AppendSingleFragmentIgnoringPagination(
-        layer_fragments, root_layer, hit_test_rect,
+        layer_fragments, root_layer, hit_test_rect, clip_rects_cache_slot,
+        PaintLayer::kUseGeometryMapper,
         kExcludeOverlayScrollbarSizeForHitTesting);
   } else {
     CollectFragments(layer_fragments, root_layer, hit_test_rect,
+                     clip_rects_cache_slot, PaintLayer::kUseGeometryMapper,
                      kExcludeOverlayScrollbarSizeForHitTesting);
   }
 
@@ -2125,13 +2138,14 @@ PaintLayer* PaintLayer::HitTestTransformedLayerInFragments(
     const HitTestLocation& hit_test_location,
     const HitTestingTransformState* transform_state,
     double* z_offset,
-    ShouldRespectOverflowClipType clip_behavior) {
+    ClipRectsCacheSlot clip_rects_cache_slot) {
   PaintLayerFragments enclosing_pagination_fragments;
   // FIXME: We're missing a sub-pixel offset here crbug.com/348728
 
   EnclosingPaginationLayer()->CollectFragments(
       enclosing_pagination_fragments, root_layer, hit_test_rect,
-      kExcludeOverlayScrollbarSizeForHitTesting, clip_behavior, nullptr,
+      clip_rects_cache_slot, PaintLayer::kUseGeometryMapper,
+      kExcludeOverlayScrollbarSizeForHitTesting, kRespectOverflowClip, nullptr,
       LayoutSize());
 
   for (const auto& fragment : enclosing_pagination_fragments) {
@@ -2310,7 +2324,6 @@ bool PaintLayer::HitTestClippedOutByClipPath(
     ConvertToLayerCoords(root_layer, reference_box);
 
   FloatPoint point(hit_test_location.Point());
-  FloatRect float_reference_box(reference_box);
 
   ClipPathOperation* clip_path_operation =
       GetLayoutObject().Style()->ClipPath();
@@ -2318,7 +2331,7 @@ bool PaintLayer::HitTestClippedOutByClipPath(
   if (clip_path_operation->GetType() == ClipPathOperation::SHAPE) {
     ShapeClipPathOperation* clip_path =
         ToShapeClipPathOperation(clip_path_operation);
-    return !clip_path->GetPath(float_reference_box).Contains(point);
+    return !clip_path->GetPath(FloatRect(reference_box)).Contains(point);
   }
   DCHECK_EQ(clip_path_operation->GetType(), ClipPathOperation::REFERENCE);
   Node* target_node = GetLayoutObject().GetNode();
@@ -2337,12 +2350,7 @@ bool PaintLayer::HitTestClippedOutByClipPath(
   // the point accordingly.
   if (clipper->ClipPathUnits() == SVGUnitTypes::kSvgUnitTypeUserspaceonuse)
     point.MoveBy(-reference_box.Location());
-  // Unzoom the point and the reference box, since the <clipPath> geometry is
-  // not zoomed.
-  float inverse_zoom = 1 / GetLayoutObject().StyleRef().EffectiveZoom();
-  point.Scale(inverse_zoom, inverse_zoom);
-  float_reference_box.Scale(inverse_zoom);
-  return !clipper->HitTestClipContent(float_reference_box, point);
+  return !clipper->HitTestClipContent(FloatRect(reference_box), point);
 }
 
 bool PaintLayer::IntersectsDamageRect(
@@ -3021,19 +3029,6 @@ void PaintLayer::StyleDidChange(StyleDifference diff,
 
   SetNeedsCompositingInputsUpdate();
   GetLayoutObject().SetNeedsPaintPropertyUpdate();
-}
-
-LayoutPoint PaintLayer::Location() const {
-#if DCHECK_IS_ON()
-  DCHECK(!needs_position_update_);
-#endif
-  LayoutPoint result(location_);
-  PaintLayer* containing_layer = ContainingLayer();
-  if (containing_layer && containing_layer->IsRootLayer() &&
-      containing_layer->GetLayoutObject().HasOverflowClip()) {
-    result -= containing_layer->GetLayoutBox()->ScrolledContentOffset();
-  }
-  return result;
 }
 
 PaintLayerClipper PaintLayer::Clipper(

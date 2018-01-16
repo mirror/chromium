@@ -283,7 +283,6 @@ void PaintOpWriter::Write(const PaintFilter* filter) {
   if (!valid_)
     return;
 
-  AlignMemory(4);
   switch (filter->type()) {
     case PaintFilter::Type::kNullFilter:
       NOTREACHED();
@@ -361,6 +360,7 @@ void PaintOpWriter::Write(const PaintFilter* filter) {
 }
 
 void PaintOpWriter::Write(const ColorFilterPaintFilter& filter) {
+  AlignMemory(4);
   WriteFlattenable(filter.color_filter().get());
   Write(filter.input().get());
 }
@@ -383,9 +383,7 @@ void PaintOpWriter::Write(const DropShadowPaintFilter& filter) {
 }
 
 void PaintOpWriter::Write(const MagnifierPaintFilter& filter) {
-  WriteSimple(filter.src_rect());
-  WriteSimple(filter.inset());
-  Write(filter.input().get());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const ComposePaintFilter& filter) {
@@ -394,15 +392,7 @@ void PaintOpWriter::Write(const ComposePaintFilter& filter) {
 }
 
 void PaintOpWriter::Write(const AlphaThresholdPaintFilter& filter) {
-  std::vector<SkIRect> region;
-  for (SkRegion::Iterator it(filter.region()); !it.done(); it.next())
-    region.push_back(it.rect());
-  WriteSimple(static_cast<size_t>(region.size()));
-  for (auto& rect : region)
-    WriteSimple(rect);
-  WriteSimple(filter.inner_min());
-  WriteSimple(filter.outer_max());
-  Write(filter.input().get());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const ImageFilterPaintFilter& filter) {
@@ -426,36 +416,15 @@ void PaintOpWriter::Write(const ArithmeticPaintFilter& filter) {
 }
 
 void PaintOpWriter::Write(const MatrixConvolutionPaintFilter& filter) {
-  WriteSimple(filter.kernel_size());
-  auto size =
-      sk_64_mul(filter.kernel_size().width(), filter.kernel_size().height());
-  for (long i = 0; i < size; ++i)
-    WriteSimple(filter.kernel_at(i));
-  WriteSimple(filter.gain());
-  WriteSimple(filter.bias());
-  WriteSimple(filter.kernel_offset());
-  WriteSimple(static_cast<uint32_t>(filter.tile_mode()));
-  WriteSimple(filter.convolve_alpha());
-  Write(filter.input().get());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const DisplacementMapEffectPaintFilter& filter) {
-  WriteSimple(static_cast<uint32_t>(filter.channel_x()));
-  WriteSimple(static_cast<uint32_t>(filter.channel_y()));
-  WriteSimple(filter.scale());
-  Write(filter.displacement().get());
-  Write(filter.color().get());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const ImagePaintFilter& filter) {
-  DrawImage draw_image(
-      filter.image(),
-      SkIRect::MakeWH(filter.image().width(), filter.image().height()),
-      filter.filter_quality(), SkMatrix::I());
-  Write(draw_image);
-  Write(filter.src_rect());
-  Write(filter.dst_rect());
-  Write(filter.filter_quality());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const RecordPaintFilter& filter) {
@@ -483,9 +452,7 @@ void PaintOpWriter::Write(const OffsetPaintFilter& filter) {
 }
 
 void PaintOpWriter::Write(const TilePaintFilter& filter) {
-  WriteSimple(filter.src());
-  WriteSimple(filter.dst());
-  Write(filter.input().get());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const TurbulencePaintFilter& filter) {
@@ -498,7 +465,7 @@ void PaintOpWriter::Write(const TurbulencePaintFilter& filter) {
 }
 
 void PaintOpWriter::Write(const PaintFlagsPaintFilter& filter) {
-  Write(filter.flags());
+  // TODO(vmpstr): Implement this.
 }
 
 void PaintOpWriter::Write(const MatrixPaintFilter& filter) {

@@ -93,7 +93,8 @@ bool ContainerFullWidthBehavior::IsDragHandle(
 }
 
 void ContainerFullWidthBehavior::HandlePointerEvent(
-    const ui::LocatedEvent& event) {
+    bool isMouseButtonPressed,
+    const gfx::Vector2d& kb_offset) {
   // No-op. Nothing special to do for pointer events.
 }
 

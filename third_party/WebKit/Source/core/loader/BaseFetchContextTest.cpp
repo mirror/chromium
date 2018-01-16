@@ -42,7 +42,7 @@ class MockBaseFetchContext final : public BaseFetchContext {
  public:
   explicit MockBaseFetchContext(ExecutionContext* execution_context)
       : execution_context_(execution_context) {}
-  ~MockBaseFetchContext() override = default;
+  ~MockBaseFetchContext() override {}
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override { return KURL(); }

@@ -247,6 +247,32 @@ void ComputeBuiltInPlugins(std::vector<content::PepperPluginInfo>* plugins) {
     content::WebPluginMimeType mime_type(kWidevineCdmPluginMimeType,
                                          kWidevineCdmPluginExtension,
                                          kWidevineCdmPluginMimeTypeDescription);
+
+    // Put codec support string in additional param.
+    std::vector<std::string> codecs_supported;
+    for (const auto& codec : video_codecs_supported) {
+      if (codec == media::VideoCodec::kCodecVP8)
+        codecs_supported.push_back(kCdmSupportedCodecVp8);
+      else if (codec == media::VideoCodec::kCodecVP9)
+        codecs_supported.push_back(kCdmSupportedCodecVp9);
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
+      else if (codec == media::VideoCodec::kCodecH264)
+        codecs_supported.push_back(kCdmSupportedCodecAvc1);
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
+    }
+    mime_type.additional_params.emplace_back(
+        base::ASCIIToUTF16(kCdmSupportedCodecsParamName),
+        base::ASCIIToUTF16(base::JoinString(
+            codecs_supported,
+            std::string(1, kCdmSupportedCodecsValueDelimiter))));
+
+    // Put persistent license support string in additional param.
+    mime_type.additional_params.emplace_back(
+        base::ASCIIToUTF16(kCdmPersistentLicenseSupportedParamName),
+        base::ASCIIToUTF16(supports_persistent_license
+                               ? kCdmFeatureSupported
+                               : kCdmFeatureNotSupported));
+
     info.mime_types.push_back(mime_type);
 
     plugins->push_back(info);
@@ -581,7 +607,7 @@ void ChromeContentClient::AddContentDecryptionModules(
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
     base::FilePath clear_key_cdm_path =
         command_line->GetSwitchValuePath(switches::kClearKeyCdmPathForTesting);
-    if (!clear_key_cdm_path.empty() && base::PathExists(clear_key_cdm_path)) {
+    if (!clear_key_cdm_path.empty()) {
       // TODO(crbug.com/764480): Remove these after we have a central place for
       // External Clear Key (ECK) related information.
       // Normal External Clear Key key system.

@@ -20,7 +20,7 @@ namespace blink {
 
 class PLATFORM_EXPORT TextureHolder {
  public:
-  virtual ~TextureHolder() = default;
+  virtual ~TextureHolder() {}
 
   // Methods overridden by all sub-classes
   virtual bool IsSkiaTextureHolder() = 0;

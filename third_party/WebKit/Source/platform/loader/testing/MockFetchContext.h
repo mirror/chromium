@@ -36,7 +36,7 @@ class MockFetchContext : public FetchContext {
     return new MockFetchContext(load_policy);
   }
 
-  ~MockFetchContext() override = default;
+  ~MockFetchContext() override {}
 
   void SetLoadComplete(bool complete) { complete_ = complete; }
   long long GetTransferSize() const { return transfer_size_; }

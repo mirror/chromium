@@ -4,8 +4,7 @@
 
 #include "media/gpu/android/surface_chooser_helper.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
@@ -40,9 +39,9 @@ SurfaceChooserHelper::SurfaceChooserHelper(
       promotion_hint_aggregator_(
           promotion_hint_aggregator
               ? std::move(promotion_hint_aggregator)
-              : std::make_unique<PromotionHintAggregatorImpl>()),
+              : base::MakeUnique<PromotionHintAggregatorImpl>()),
       tick_clock_(tick_clock ? std::move(tick_clock)
-                             : std::make_unique<base::DefaultTickClock>()) {
+                             : base::MakeUnique<base::DefaultTickClock>()) {
   surface_chooser_state_.is_required = is_overlay_required_;
   surface_chooser_state_.promote_aggressively = promote_aggressively;
 }

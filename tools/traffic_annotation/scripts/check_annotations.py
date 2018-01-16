@@ -17,8 +17,13 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
+
+# TODO(crbug.com/788035) - this test currently takes up to 20 minutes to
+# execute even on linux_chromium_rel_ng; we need to figure out how to make
+# it be much faster before enabling it anywhere in the CQ.
 # TEST_IS_ENABLED = sys.platform != 'win32'
 TEST_IS_ENABLED = False
+
 
 class NetworkTrafficAnnotationChecker():
   EXTENSIONS = ['.cc', '.mm',]
@@ -112,7 +117,7 @@ class NetworkTrafficAnnotationChecker():
       file_paths = []
 
     args = [self.auditor_path, "--test-only", "--limit=%i" % limit,
-            "--build-path=" + self.build_path, "--error-resilient"] + file_paths
+            "--build-path=" + self.build_path ] + file_paths
 
     if sys.platform.startswith("win"):
       args.insert(0, sys.executable)

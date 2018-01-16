@@ -27,7 +27,7 @@ class PLATFORM_EXPORT CallbackStack final {
     DISALLOW_NEW();
 
    public:
-    Item() = default;
+    Item() {}
     Item(void* object, VisitorCallback callback)
         : object_(object), callback_(callback) {}
     void* Object() { return object_; }

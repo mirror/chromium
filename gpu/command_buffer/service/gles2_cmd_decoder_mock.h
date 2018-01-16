@@ -41,7 +41,7 @@ class MockGLES2Decoder : public GLES2Decoder {
                    Outputter* outputter);
   virtual ~MockGLES2Decoder();
 
-  base::WeakPtr<DecoderContext> AsWeakPtr() override;
+  base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
 
   MOCK_METHOD5(Initialize,
                gpu::ContextResult(const scoped_refptr<gl::GLSurface>& surface,

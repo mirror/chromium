@@ -15,7 +15,7 @@ class TreeScope;
 
 class CORE_EXPORT SVGResourceClient : public ResourceClient {
  public:
-  virtual ~SVGResourceClient() = default;
+  virtual ~SVGResourceClient() {}
 
   virtual TreeScope* GetTreeScope() = 0;
 
@@ -23,7 +23,7 @@ class CORE_EXPORT SVGResourceClient : public ResourceClient {
   virtual void ResourceElementChanged() = 0;
 
  protected:
-  SVGResourceClient() = default;
+  SVGResourceClient() {}
 
   String DebugName() const override { return "SVGResourceClient"; }
   void NotifyFinished(Resource*) override { ResourceElementChanged(); }

@@ -216,7 +216,6 @@
 <translation id="5300589172476337783">แสดง</translation>
 <translation id="5317780077021120954">บันทึก</translation>
 <translation id="5327248766486351172">ชื่อ</translation>
-<translation id="533632423981297619">คนที่ดูไฟล์ที่ส่งออกได้จะเห็นรหัสผ่านของคุณ อย่าแชร์ไฟล์นี้กับผู้อื่น</translation>
 <translation id="5388358297987318779">เปิดภาพ</translation>
 <translation id="5409365236829784218">ไม่ได้ติดตั้งแอปพลิเคชันที่สามารถเปิดไฟล์นี้</translation>
 <translation id="5433691172869980887">คัดลอกชื่อผู้ใช้แล้ว</translation>
@@ -349,7 +348,6 @@
 <translation id="780301667611848630">ไม่ ขอบคุณ</translation>
 <translation id="7859704718976024901">ประวัติการเข้าชม</translation>
 <translation id="7938254975914653459">FaceTime</translation>
-<translation id="7939128259257418052">ส่งออกรหัสผ่าน...</translation>
 <translation id="7947953824732555851">ยอมรับและลงชื่อเข้าใช้</translation>
 <translation id="7961015016161918242">ไม่ต้องเลย</translation>
 <translation id="7971521879845308059">บล็อกป๊อปอัป</translation>
@@ -373,7 +371,7 @@
 <translation id="8487700953926739672">ใช้งานแบบออฟไลน์ได้</translation>
 <translation id="8503813439785031346">ชื่อผู้ใช้</translation>
 <translation id="850600235656508448">เปิดในโหมดไม่ระบุตัวตน</translation>
-<translation id="8517375800490286174">ใบอนุญาตโอเพนซอร์ส</translation>
+<translation id="8517375800490286174">สัญญาอนุญาตโอเพนซอร์ส</translation>
 <translation id="8524799873541103884">แท็บ <ph name="INCOGNITO" /> <ph name="FIRST_VISIBLE_TAB" /> ถึง <ph name="LAST_VISIBLE_TAB" /> จาก <ph name="NUMBER_OF_OPEN_TABS" /></translation>
 <translation id="8532105204136943229">ปีที่หมดอายุ</translation>
 <translation id="8534481786647257214">โพสต์ใน Google+ แล้ว</translation>

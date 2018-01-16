@@ -108,7 +108,8 @@ Geolocation::Geolocation(ExecutionContext* context)
     : ContextLifecycleObserver(context),
       PageVisibilityObserver(GetDocument()->GetPage()) {}
 
-Geolocation::~Geolocation() = default;
+Geolocation::~Geolocation() {
+}
 
 void Geolocation::Trace(blink::Visitor* visitor) {
   visitor->Trace(one_shots_);

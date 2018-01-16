@@ -47,8 +47,8 @@ class FakeResourceProvider : public ResourceProvider {
       viz::SharedBitmapManager* shared_bitmap_manager) {
     viz::ResourceSettings resource_settings;
     resource_settings.texture_id_allocation_chunk_size = 1;
-    return std::make_unique<DisplayResourceProvider>(context_provider,
-                                                     shared_bitmap_manager);
+    return std::make_unique<DisplayResourceProvider>(
+        context_provider, shared_bitmap_manager, resource_settings);
   }
 
  private:
@@ -56,7 +56,10 @@ class FakeResourceProvider : public ResourceProvider {
                        viz::SharedBitmapManager* shared_bitmap_manager,
                        bool delegated_sync_points_required,
                        const viz::ResourceSettings resource_settings)
-      : ResourceProvider(context_provider) {}
+      : ResourceProvider(context_provider,
+                         shared_bitmap_manager,
+                         delegated_sync_points_required,
+                         resource_settings) {}
 };
 
 }  // namespace cc

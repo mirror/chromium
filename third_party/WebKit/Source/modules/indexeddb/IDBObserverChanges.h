@@ -24,9 +24,9 @@ class IDBObserverChanges final : public ScriptWrappable {
   static IDBObserverChanges* Create(
       IDBDatabase*,
       IDBTransaction*,
-      const WebVector<WebIDBObservation>& web_observations,
-      const HeapVector<Member<IDBObservation>>& observations,
-      const WebVector<int32_t>& observation_indices);
+      const WebVector<WebIDBObservation>&,
+      const WebVector<int32_t>& observation_indices,
+      v8::Isolate*);
 
   void Trace(blink::Visitor*);
 
@@ -38,14 +38,13 @@ class IDBObserverChanges final : public ScriptWrappable {
  private:
   IDBObserverChanges(IDBDatabase*,
                      IDBTransaction*,
+                     const WebVector<WebIDBObservation>&,
+                     const WebVector<int32_t>& observation_indices,
+                     v8::Isolate*);
 
-                     const WebVector<WebIDBObservation>& web_observations,
-                     const HeapVector<Member<IDBObservation>>& observations,
-                     const WebVector<int32_t>& observation_indices);
-
-  void ExtractChanges(const WebVector<WebIDBObservation>& web_observations,
-                      const HeapVector<Member<IDBObservation>>& observations,
-                      const WebVector<int32_t>& observation_indices);
+  void ExtractChanges(const WebVector<WebIDBObservation>&,
+                      const WebVector<int32_t>& observation_indices,
+                      v8::Isolate*);
 
   Member<IDBDatabase> database_;
   Member<IDBTransaction> transaction_;

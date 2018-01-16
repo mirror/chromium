@@ -26,6 +26,7 @@
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
 #include "ui/accessibility/platform/ax_platform_relation_win.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/win/atl_module.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
@@ -163,11 +164,12 @@ namespace {
 typedef base::hash_set<AXPlatformNodeWin*> AXPlatformNodeWinSet;
 // Set of all AXPlatformNodeWin objects that were the target of an
 // alert event.
-base::LazyInstance<AXPlatformNodeWinSet>::Leaky g_alert_targets =
+base::LazyInstance<AXPlatformNodeWinSet>::DestructorAtExit g_alert_targets =
     LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<base::ObserverList<IAccessible2UsageObserver>>::Leaky
-    g_iaccessible2_usage_observer_list = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::ObserverList<IAccessible2UsageObserver>>::
+    DestructorAtExit g_iaccessible2_usage_observer_list =
+        LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -226,7 +228,7 @@ AXPlatformNode* AXPlatformNode::FromNativeViewAccessible(
 
 using UniqueIdMap = base::hash_map<int32_t, AXPlatformNode*>;
 // Map from each AXPlatformNode's unique id to its instance.
-base::LazyInstance<UniqueIdMap>::Leaky g_unique_id_map =
+base::LazyInstance<UniqueIdMap>::DestructorAtExit g_unique_id_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
@@ -242,15 +244,15 @@ AXPlatformNode* AXPlatformNodeWin::GetFromUniqueId(int32_t unique_id) {
 // AXPlatformNodeWin
 //
 
-AXPlatformNodeWin::AXPlatformNodeWin() {}
+AXPlatformNodeWin::AXPlatformNodeWin()
+    : unique_id_(GetNextAXPlatformNodeUniqueId()) {
+  g_unique_id_map.Get()[unique_id_] = this;
+}
 
 AXPlatformNodeWin::~AXPlatformNodeWin() {
   ClearOwnRelations();
-}
-
-void AXPlatformNodeWin::Init(AXPlatformNodeDelegate* delegate) {
-  AXPlatformNodeBase::Init(delegate);
-  g_unique_id_map.Get()[GetUniqueId()] = this;
+  if (unique_id_)
+    g_unique_id_map.Get().erase(unique_id_);
 }
 
 // static
@@ -323,7 +325,8 @@ void AXPlatformNodeWin::Dispose() {
 }
 
 void AXPlatformNodeWin::Destroy() {
-  g_unique_id_map.Get().erase(GetUniqueId());
+  g_unique_id_map.Get().erase(unique_id_);
+  unique_id_ = 0;
 
   RemoveAlertTarget();
 
@@ -354,7 +357,7 @@ void AXPlatformNodeWin::NotifyAccessibilityEvent(AXEvent event_type) {
   if (native_event < EVENT_MIN)
     return;
 
-  ::NotifyWinEvent(native_event, hwnd, OBJID_CLIENT, -GetUniqueId());
+  ::NotifyWinEvent(native_event, hwnd, OBJID_CLIENT, -unique_id_);
 
   // Keep track of objects that are a target of an alert event.
   if (event_type == AX_EVENT_ALERT)
@@ -929,10 +932,10 @@ STDMETHODIMP AXPlatformNodeWin::get_states(AccessibleStates* states) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_uniqueID(LONG* id) {
+STDMETHODIMP AXPlatformNodeWin::get_uniqueID(LONG* unique_id) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_UNIQUE_ID);
-  COM_OBJECT_VALIDATE_1_ARG(id);
-  *id = -GetUniqueId();
+  COM_OBJECT_VALIDATE_1_ARG(unique_id);
+  *unique_id = -unique_id_;
   return S_OK;
 }
 
@@ -3263,7 +3266,7 @@ AXHypertext AXPlatformNodeWin::ComputeHypertext() {
       hypertext += child->GetString16Attribute(ui::AX_ATTR_NAME);
     } else {
       int32_t char_offset = static_cast<int32_t>(hypertext.size());
-      int32_t child_unique_id = child->GetUniqueId();
+      int32_t child_unique_id = child->unique_id();
       int32_t index = static_cast<int32_t>(result.hyperlinks.size());
       result.hyperlink_offset_to_index[char_offset] = index;
       result.hyperlinks.push_back(child_unique_id);
@@ -3687,7 +3690,7 @@ int32_t AXPlatformNodeWin::GetHyperlinkIndexFromChild(
     return -1;
 
   auto iterator = std::find(hypertext_.hyperlinks.begin(),
-                            hypertext_.hyperlinks.end(), child->GetUniqueId());
+                            hypertext_.hyperlinks.end(), child->unique_id());
   if (iterator == hypertext_.hyperlinks.end())
     return -1;
 

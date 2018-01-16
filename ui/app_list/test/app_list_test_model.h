@@ -12,10 +12,6 @@
 #include "ash/app_list/model/app_list_model.h"
 #include "base/macros.h"
 
-namespace ui {
-class MenuModel;
-}  // namespace ui
-
 namespace app_list {
 
 namespace test {
@@ -27,8 +23,7 @@ class AppListTestModel : public AppListModel {
    public:
     AppListTestItem(const std::string& id, AppListTestModel* model);
     ~AppListTestItem() override;
-    void Activate(int event_flags);
-    ui::MenuModel* GetContextMenuModel();
+    void Activate(int event_flags) override;
     const char* GetItemType() const override;
 
     void SetPosition(const syncer::StringOrdinal& new_position);

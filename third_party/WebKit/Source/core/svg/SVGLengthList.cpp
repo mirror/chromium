@@ -28,7 +28,7 @@ namespace blink {
 
 SVGLengthList::SVGLengthList(SVGLengthMode mode) : mode_(mode) {}
 
-SVGLengthList::~SVGLengthList() = default;
+SVGLengthList::~SVGLengthList() {}
 
 SVGLengthList* SVGLengthList::Clone() {
   SVGLengthList* ret = SVGLengthList::Create(mode_);

@@ -34,7 +34,6 @@
 #include "content/public/common/network_service_test.mojom.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/content_browser_sanity_checker.h"
@@ -419,9 +418,7 @@ void BrowserTestBase::InitializeNetworkProcess() {
     host_resolver()->DisableModifications();
   }
 
-  // Send the host resolver rules to the network service if it's in use. No need
-  // to do this if it's running in the browser process though.
-  if (!network_service || IsNetworkServiceRunningInProcess())
+  if (!network_service)
     return;
 
   net::RuleBasedHostResolverProc::RuleList rules = host_resolver()->GetRules();

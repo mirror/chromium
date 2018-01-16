@@ -69,12 +69,12 @@ void Button::SetButtonColors(const ButtonColors& colors) {
 }
 
 void Button::HandleHoverEnter() {
-  hovered_ = enabled_;
+  hovered_ = true;
   OnStateUpdated();
 }
 
 void Button::HandleHoverMove(const gfx::PointF& position) {
-  hovered_ = hit_plane_->LocalHitTest(position) && enabled_;
+  hovered_ = hit_plane_->LocalHitTest(position);
   OnStateUpdated();
 }
 
@@ -84,7 +84,7 @@ void Button::HandleHoverLeave() {
 }
 
 void Button::HandleButtonDown() {
-  down_ = enabled_;
+  down_ = true;
   OnStateUpdated();
 }
 
@@ -97,10 +97,6 @@ void Button::HandleButtonUp() {
 
 void Button::OnStateUpdated() {
   pressed_ = hovered_ ? down_ : false;
-  background_->SetColor(colors_.GetBackgroundColor(hovered_, pressed_));
-
-  if (hover_offset_ == 0.0f)
-    return;
 
   if (hovered()) {
     background_->SetTranslate(0.0, 0.0, hover_offset_);
@@ -110,6 +106,7 @@ void Button::OnStateUpdated() {
     background_->SetTranslate(0.0, 0.0, 0.0);
     hit_plane_->SetScale(1.0f, 1.0f, 1.0f);
   }
+  background_->SetColor(colors_.GetBackgroundColor(hovered_, pressed_));
 }
 
 void Button::OnSetDrawPhase() {

@@ -106,7 +106,6 @@ const FieldTranslationEntry openvpn_fields[] = {
     {::onc::openvpn::kTLSRemote, shill::kOpenVPNTLSRemoteProperty},
     {::onc::openvpn::kTLSVersionMin, shill::kOpenVPNTLSVersionMinProperty},
     {::onc::vpn::kUsername, shill::kOpenVPNUserProperty},
-    {::onc::openvpn::kVerb, shill::kOpenVPNVerbProperty},
     {::onc::openvpn::kVerifyHash, shill::kOpenVPNVerifyHashProperty},
     {NULL}};
 

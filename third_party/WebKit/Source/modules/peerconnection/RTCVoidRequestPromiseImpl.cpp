@@ -25,7 +25,7 @@ RTCVoidRequestPromiseImpl::RTCVoidRequestPromiseImpl(
   DCHECK(resolver_);
 }
 
-RTCVoidRequestPromiseImpl::~RTCVoidRequestPromiseImpl() = default;
+RTCVoidRequestPromiseImpl::~RTCVoidRequestPromiseImpl() {}
 
 void RTCVoidRequestPromiseImpl::RequestSucceeded() {
   if (requester_ && requester_->ShouldFireDefaultCallbacks()) {

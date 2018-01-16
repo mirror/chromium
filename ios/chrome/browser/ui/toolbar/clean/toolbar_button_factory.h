@@ -12,8 +12,6 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class ToolbarButton;
-@class ToolbarButtonVisibilityConfiguration;
-@protocol ToolbarCommands;
 @class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
 
@@ -31,19 +29,12 @@
 @property(nonatomic, strong, readonly)
     ToolbarConfiguration* toolbarConfiguration;
 // Dispatcher used to initialize targets for the buttons.
-@property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
-        dispatcher;
-// Configuration object for the visibility of the buttons.
-@property(nonatomic, strong)
-    ToolbarButtonVisibilityConfiguration* visibilityConfiguration;
+@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
 
 // Back ToolbarButton.
 - (ToolbarButton*)backButton;
-// Forward ToolbarButton to be displayed on the leading side of the toolbar.
-- (ToolbarButton*)leadingForwardButton;
-// Forward ToolbarButton to be displayed on the trailing side of the toolbar.
-- (ToolbarButton*)trailingForwardButton;
+// Forward ToolbarButton.
+- (ToolbarButton*)forwardButton;
 // Tab Switcher Strip ToolbarButton.
 - (ToolbarButton*)tabSwitcherStripButton;
 // Tab Switcher Grid ToolbarButton.
@@ -62,8 +53,6 @@
 - (ToolbarButton*)voiceSearchButton;
 // ContractToolbar ToolbarButton.
 - (ToolbarButton*)contractButton;
-// ToolbarButton to focus the omnibox.
-- (ToolbarButton*)omniboxButton;
 // LocationBar LeadingButton. Currently used for the incognito icon when the
 // Toolbar is expanded on incognito mode. It can return nil.
 - (ToolbarButton*)locationBarLeadingButton;

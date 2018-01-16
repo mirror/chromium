@@ -50,8 +50,8 @@ class PLATFORM_EXPORT Theme {
   WTF_MAKE_NONCOPYABLE(Theme);
 
  public:
-  Theme() = default;
-  virtual ~Theme() = default;
+  Theme() {}
+  virtual ~Theme() {}
 
   // A method to obtain the baseline position adjustment for a "leaf" control.
   // This will only be used if a baseline position cannot be determined by

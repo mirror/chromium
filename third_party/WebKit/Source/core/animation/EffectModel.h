@@ -56,8 +56,8 @@ class CORE_EXPORT EffectModel : public GarbageCollectedFinalized<EffectModel> {
                                          ExceptionState* = nullptr);
   static String CompositeOperationToString(CompositeOperation);
 
-  EffectModel() = default;
-  virtual ~EffectModel() = default;
+  EffectModel() {}
+  virtual ~EffectModel() {}
   virtual bool Sample(int iteration,
                       double fraction,
                       double iteration_duration,

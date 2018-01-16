@@ -502,10 +502,6 @@ gfx::Rect BubbleFrameView::GetAvailableScreenBounds(
       .work_area();
 }
 
-bool BubbleFrameView::ExtendClientIntoTitle() const {
-  return false;
-}
-
 bool BubbleFrameView::IsCloseButtonVisible() const {
   return close_->visible();
 }
@@ -640,8 +636,7 @@ gfx::Insets BubbleFrameView::GetTitleLabelInsetsFromFrame() const {
 gfx::Insets BubbleFrameView::GetClientInsetsForFrameWidth(
     int frame_width) const {
   int close_height = 0;
-  if (!ExtendClientIntoTitle() &&
-      GetWidget()->widget_delegate()->ShouldShowCloseButton()) {
+  if (GetWidget()->widget_delegate()->ShouldShowCloseButton()) {
     const int close_margin =
         LayoutProvider::Get()->GetDistanceMetric(DISTANCE_CLOSE_BUTTON_MARGIN);
     // Note: |close_margin| is not applied on the bottom of the icon.

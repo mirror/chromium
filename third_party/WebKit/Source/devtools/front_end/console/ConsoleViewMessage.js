@@ -367,7 +367,7 @@ Console.ConsoleViewMessage = class {
 
     var messageElement = this._buildMessage();
     var icon = UI.Icon.create('smallicon-triangle-right', 'console-message-expand-icon');
-    var clickableElement = contentElement.createChild('div');
+    var clickableElement = contentElement.createChild('div', 'console-message-stack-trace-message');
     clickableElement.appendChild(icon);
 
     clickableElement.appendChild(messageElement);
@@ -848,8 +848,6 @@ Console.ConsoleViewMessage = class {
         var toAppend = Console.ConsoleViewMessage._linkifyStringAsFragment(String(b));
         if (currentStyle) {
           var wrapper = createElement('span');
-          wrapper.style.setProperty('contain', 'paint');
-          wrapper.style.setProperty('display', 'inline-block');
           wrapper.appendChild(toAppend);
           applyCurrentStyle(wrapper);
           for (var child of wrapper.children) {

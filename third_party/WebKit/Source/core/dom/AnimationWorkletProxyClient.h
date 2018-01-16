@@ -16,7 +16,7 @@ class WorkletGlobalScope;
 class CORE_EXPORT AnimationWorkletProxyClient
     : public Supplement<WorkerClients> {
  public:
-  AnimationWorkletProxyClient() = default;
+  AnimationWorkletProxyClient() {}
 
   static AnimationWorkletProxyClient* From(WorkerClients*);
   static const char* SupplementName();

@@ -150,7 +150,7 @@ enum class QuoteType : unsigned { kOpen, kClose, kNoOpen, kNoClose };
 
 enum class EAnimPlayState : unsigned { kPlaying, kPaused };
 
-enum class OffsetRotationType : unsigned { kAuto, kFixed };
+enum OffsetRotationType { kOffsetRotationAuto, kOffsetRotationFixed };
 
 static const size_t kGridAutoFlowBits = 4;
 enum InternalGridAutoFlowAlgorithm {

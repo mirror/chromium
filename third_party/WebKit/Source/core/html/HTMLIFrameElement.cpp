@@ -53,7 +53,7 @@ void HTMLIFrameElement::Trace(blink::Visitor* visitor) {
   Supplementable<HTMLIFrameElement>::Trace(visitor);
 }
 
-HTMLIFrameElement::~HTMLIFrameElement() = default;
+HTMLIFrameElement::~HTMLIFrameElement() {}
 
 void HTMLIFrameElement::SetCollapsed(bool collapse) {
   if (collapsed_by_client_ == collapse)

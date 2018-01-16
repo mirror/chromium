@@ -59,8 +59,7 @@ struct PLATFORM_EXPORT UnicodeRange final {
 class PLATFORM_EXPORT UnicodeRangeSet : public RefCounted<UnicodeRangeSet> {
  public:
   explicit UnicodeRangeSet(const Vector<UnicodeRange>&);
-  UnicodeRangeSet() = default;
-  ;
+  UnicodeRangeSet(){};
   bool Contains(UChar32) const;
   bool IntersectsWith(const String&) const;
   bool IsEntireRange() const { return ranges_.IsEmpty(); }

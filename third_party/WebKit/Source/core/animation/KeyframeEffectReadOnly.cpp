@@ -4,6 +4,7 @@
 
 #include "core/animation/KeyframeEffectReadOnly.h"
 
+#include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8ObjectBuilder.h"
@@ -37,9 +38,9 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
 }
 
 KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
-    ScriptState* script_state,
+    ExecutionContext* execution_context,
     Element* element,
-    const ScriptValue& keyframes,
+    const DictionarySequenceOrDictionary& effect_input,
     const UnrestrictedDoubleOrKeyframeEffectOptions& options,
     ExceptionState& exception_state) {
   DCHECK(RuntimeEnabledFeatures::WebAnimationsAPIEnabled());
@@ -62,15 +63,15 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
   }
 
   return Create(element,
-                EffectInput::Convert(element, keyframes, composite,
-                                     script_state, exception_state),
+                EffectInput::Convert(element, effect_input, composite,
+                                     execution_context, exception_state),
                 timing);
 }
 
 KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
-    ScriptState* script_state,
+    ExecutionContext* execution_context,
     Element* element,
-    const ScriptValue& keyframes,
+    const DictionarySequenceOrDictionary& effect_input,
     ExceptionState& exception_state) {
   DCHECK(RuntimeEnabledFeatures::WebAnimationsAPIEnabled());
   if (element) {
@@ -78,11 +79,11 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
         element->GetDocument(),
         WebFeature::kAnimationConstructorKeyframeListEffectNoTiming);
   }
-  return Create(
-      element,
-      EffectInput::Convert(element, keyframes, EffectModel::kCompositeReplace,
-                           script_state, exception_state),
-      Timing());
+  return Create(element,
+                EffectInput::Convert(element, effect_input,
+                                     EffectModel::kCompositeReplace,
+                                     execution_context, exception_state),
+                Timing());
 }
 
 KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,

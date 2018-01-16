@@ -1784,7 +1784,7 @@ TEST(NetworkQualityEstimatorTest, TestTransportRttUsedForHttpRttComputation) {
       {
           base::TimeDelta::FromMilliseconds(100),
           base::TimeDelta::FromMilliseconds(200), "", "",
-          base::TimeDelta::FromMilliseconds(200), EFFECTIVE_CONNECTION_TYPE_4G,
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
       },
       {
           base::TimeDelta::FromMilliseconds(100),
@@ -1834,13 +1834,12 @@ TEST(NetworkQualityEstimatorTest, TestTransportRttUsedForHttpRttComputation) {
       {
           base::TimeDelta::FromMilliseconds(100),
           base::TimeDelta::FromMilliseconds(200), "foobar", "",
-          base::TimeDelta::FromMilliseconds(200), EFFECTIVE_CONNECTION_TYPE_4G,
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
       },
       {
           base::TimeDelta::FromMilliseconds(100),
           base::TimeDelta::FromMilliseconds(4000), "", "",
-          base::TimeDelta::FromMilliseconds(4000),
-          EFFECTIVE_CONNECTION_TYPE_SLOW_2G,
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
       },
       {
           base::TimeDelta::FromMilliseconds(100),
@@ -2304,7 +2303,7 @@ TEST(NetworkQualityEstimatorTest, TestGlobalSocketWatcherThrottle) {
 
 // TestTCPSocketRTT requires kernel support for tcp_info struct, and so it is
 // enabled only on certain platforms.
-#if defined(TCP_INFO) || defined(OS_LINUX) || defined(OS_ANDROID)
+#if defined(TCP_INFO) || defined(OS_LINUX)
 #define MAYBE_TestTCPSocketRTT TestTCPSocketRTT
 #else
 #define MAYBE_TestTCPSocketRTT DISABLED_TestTCPSocketRTT

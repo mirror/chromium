@@ -785,9 +785,7 @@ void AppsGridView::InitiateDragFromReparentItemInRootLevelGridView(
 
   // Create a new AppListItemView to duplicate the original_drag_view in the
   // folder's grid view.
-  AppListItemView* view = new AppListItemView(
-      this, original_drag_view->item(),
-      contents_view_->app_list_main_view()->view_delegate());
+  AppListItemView* view = new AppListItemView(this, original_drag_view->item());
   AddChildView(view);
   drag_view_ = view;
   drag_view_->SetPaintToLayer();
@@ -1127,9 +1125,7 @@ AppListItemView* AppsGridView::CreateViewForItemAtIndex(size_t index) {
   // The drag_view_ might be pending for deletion, therefore view_model_
   // may have one more item than item_list_.
   DCHECK_LE(index, item_list_->item_count());
-  AppListItemView* view = new AppListItemView(
-      this, item_list_->item_at(index),
-      contents_view_->app_list_main_view()->view_delegate());
+  AppListItemView* view = new AppListItemView(this, item_list_->item_at(index));
   view->SetPaintToLayer();
   view->layer()->SetFillsBoundsOpaquely(false);
   return view;

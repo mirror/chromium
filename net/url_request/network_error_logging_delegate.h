@@ -67,11 +67,6 @@ class NET_EXPORT NetworkErrorLoggingDelegate {
   //
   // |details| is the details of the network error.
   virtual void OnNetworkError(const ErrorDetails& details) = 0;
-
-  // Removes all stored data associated with any origins matching
-  // |origin_filter| (or all origins if null).
-  virtual void RemoveBrowsingData(
-      const base::RepeatingCallback<bool(const GURL&)>& origin_filter) = 0;
 };
 
 }  // namespace net

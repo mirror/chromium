@@ -34,7 +34,3 @@ chrome.metricsPrivate = {
   recordValue: function() {},
   MetricTypeType: {HISTOGRAM_LINEAR: 1}
 };
-
-chrome.commandLinePrivate = {
-  hasSwitch: function() {}
-};

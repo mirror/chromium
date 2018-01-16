@@ -12,7 +12,7 @@
  * All possible actions in the menu.
  * @enum {string}
  */
-const MenuActions = {
+var MenuActions = {
   SET_DEFAULT: 'SetDefault',
   REMOVE: 'Remove',
 };
@@ -22,7 +22,7 @@ const MenuActions = {
  *            protocol: string,
  *            spec: string}}
  */
-let HandlerEntry;
+var HandlerEntry;
 
 /**
  * @typedef {{default_handler: number,
@@ -31,7 +31,7 @@ let HandlerEntry;
  *            is_default_handler_set_by_user: boolean,
  *            protocol: string}}
  */
-let ProtocolEntry;
+var ProtocolEntry;
 
 Polymer({
   is: 'protocol-handlers',
@@ -166,7 +166,7 @@ Polymer({
    * @private
    */
   onDefaultTap_: function() {
-    const item = this.actionMenuModel_.item;
+    var item = this.actionMenuModel_.item;
 
     this.$$('dialog[is=cr-action-menu]').close();
     this.actionMenuModel_ = null;
@@ -178,7 +178,7 @@ Polymer({
    * @private
    */
   onRemoveTap_: function() {
-    const item = this.actionMenuModel_.item;
+    var item = this.actionMenuModel_.item;
 
     this.$$('dialog[is=cr-action-menu]').close();
     this.actionMenuModel_ = null;

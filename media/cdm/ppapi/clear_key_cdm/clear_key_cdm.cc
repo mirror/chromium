@@ -282,7 +282,7 @@ void* CreateCdmInstance(int cdm_interface_version,
       return nullptr;
 
     DVLOG(1) << __func__ << ": Create ClearKeyCdm with CDM_9::Host.";
-    return static_cast<CDM_9*>(new media::ClearKeyCdm(host, key_system_string));
+    return new media::ClearKeyCdm(host, key_system_string);
   }
 
   if (cdm_interface_version == CDM_10::kVersion) {
@@ -292,8 +292,7 @@ void* CreateCdmInstance(int cdm_interface_version,
       return nullptr;
 
     DVLOG(1) << __func__ << ": Create ClearKeyCdm with CDM_10::Host.";
-    return static_cast<CDM_10*>(
-        new media::ClearKeyCdm(host, key_system_string));
+    return new media::ClearKeyCdm(host, key_system_string);
   }
 
   return nullptr;
@@ -381,21 +380,6 @@ void ClearKeyCdm::Initialize(bool allow_distinctive_identifier,
   // Implementation doesn't use distinctive identifier and will only need
   // to check persistent state permission.
   allow_persistent_state_ = allow_persistent_state;
-
-  // CdmProxy must be created during initialization time. OnInitialized() will
-  // be called in OnCdmProxyTestComplete().
-  if (key_system_ == kExternalClearKeyCdmProxyTestKeySystem) {
-    StartCdmProxyTest();
-    return;
-  }
-
-  cdm_host_proxy_->OnInitialized(true);
-}
-
-void ClearKeyCdm::Initialize(bool allow_distinctive_identifier,
-                             bool allow_persistent_state,
-                             bool use_hw_secure_codecs) {
-  Initialize(allow_distinctive_identifier, allow_persistent_state);
 }
 
 void ClearKeyCdm::GetStatusForPolicy(uint32_t promise_id,
@@ -437,8 +421,6 @@ void ClearKeyCdm::CreateSessionAndGenerateRequest(
       std::vector<uint8_t>(init_data, init_data + init_data_size),
       std::move(promise));
 
-  // Run unit tests if applicable. Unit test results are reported in the form of
-  // a session message. Therefore it can only be called after session creation.
   if (key_system_ == kExternalClearKeyFileIOTestKeySystem) {
     StartFileIOTest();
   } else if (key_system_ == kExternalClearKeyOutputProtectionTestKeySystem) {
@@ -447,11 +429,11 @@ void ClearKeyCdm::CreateSessionAndGenerateRequest(
              kExternalClearKeyPlatformVerificationTestKeySystem) {
     StartPlatformVerificationTest();
   } else if (key_system_ == kExternalClearKeyVerifyCdmHostTestKeySystem) {
-    ReportVerifyCdmHostTestResult();
+    VerifyCdmHostTest();
   } else if (key_system_ == kExternalClearKeyStorageIdTestKeySystem) {
     StartStorageIdTest();
   } else if (key_system_ == kExternalClearKeyCdmProxyTestKeySystem) {
-    ReportCdmProxyTestResult();
+    StartCdmProxyTest();
   }
 }
 
@@ -976,7 +958,7 @@ void ClearKeyCdm::StartPlatformVerificationTest() {
                                          challenge.data(), challenge.size());
 }
 
-void ClearKeyCdm::ReportVerifyCdmHostTestResult() {
+void ClearKeyCdm::VerifyCdmHostTest() {
   // VerifyCdmHost() should have already been called and test result stored
   // in |g_verify_host_files_result|.
   OnUnitTestComplete(g_verify_host_files_result);
@@ -1004,15 +986,7 @@ void ClearKeyCdm::OnCdmProxyTestComplete(bool success) {
   DCHECK(cdm_proxy_test_);
 
   cdm_proxy_test_.reset();
-  has_cdm_proxy_test_passed_ = success;
-
-  // Ignore test result here. It will be reported in ReportCdmProxyTestResult().
-  cdm_host_proxy_->OnInitialized(true);
-}
-
-void ClearKeyCdm::ReportCdmProxyTestResult() {
-  // StartCdmProxyTest() should have already been called and finished.
-  OnUnitTestComplete(has_cdm_proxy_test_passed_);
+  OnUnitTestComplete(success);
 }
 
 }  // namespace media

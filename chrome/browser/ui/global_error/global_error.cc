@@ -73,10 +73,6 @@ bool GlobalErrorWithStandardBubble::ShouldShowCloseButton() const {
   return false;
 }
 
-bool GlobalErrorWithStandardBubble::ShouldUseExtraView() const {
-  return false;
-}
-
 bool GlobalErrorWithStandardBubble::ShouldAddElevationIconToAcceptButton() {
   return false;
 }

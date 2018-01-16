@@ -381,26 +381,12 @@ void TestWebContents::SaveFrameWithHeaders(const GURL& url,
   save_frame_headers_ = headers;
 }
 
-void TestWebContents::SetMainFrameMimeType(const std::string& mime_type) {
-  WebContentsImpl::SetMainFrameMimeType(mime_type);
-}
-
 void TestWebContents::SetWasRecentlyAudible(bool audible) {
   audio_stream_monitor()->set_was_recently_audible_for_testing(audible);
 }
 
 void TestWebContents::SetIsCurrentlyAudible(bool audible) {
   audio_stream_monitor()->set_is_currently_audible_for_testing(audible);
-}
-
-void TestWebContents::TestOnUserInteraction(blink::WebInputEvent::Type type) {
-  // Use the first RenderWidgetHost from the frame tree to make sure that the
-  // interaction doesn't get ignored.
-  DCHECK(frame_tree_.Nodes().begin() != frame_tree_.Nodes().end());
-  RenderWidgetHostImpl* render_widget_host = (*frame_tree_.Nodes().begin())
-                                                 ->current_frame_host()
-                                                 ->GetRenderWidgetHost();
-  OnUserInteraction(render_widget_host, type);
 }
 
 }  // namespace content

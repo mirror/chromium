@@ -116,7 +116,7 @@ class PLATFORM_EXPORT GraphicsContextState final {
  private:
   GraphicsContextState();
   explicit GraphicsContextState(const GraphicsContextState&);
-  GraphicsContextState& operator=(const GraphicsContextState&) = delete;
+  GraphicsContextState& operator=(const GraphicsContextState&);
 
   // This is mutable to enable dash path effect updates when the paint is
   // fetched for use.

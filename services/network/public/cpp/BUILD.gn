@@ -8,8 +8,6 @@ static_library("cpp") {
   sources = [
     "cors_error_status.cc",
     "cors_error_status.h",
-    "data_element.cc",
-    "data_element.h",
     "http_raw_request_response_info.cc",
     "http_raw_request_response_info.h",
     "mutable_network_traffic_annotation_tag_struct_traits.h",
@@ -20,8 +18,6 @@ static_library("cpp") {
     "network_param_ipc_traits.h",
     "proxy_resolving_client_socket.cc",
     "proxy_resolving_client_socket.h",
-    "resource_request_body.cc",
-    "resource_request_body.h",
     "url_loader_completion_status.cc",
     "url_loader_completion_status.h",
   ]

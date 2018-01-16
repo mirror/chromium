@@ -88,8 +88,7 @@ constexpr base::TimeDelta kKeepaliveLoadersTimeout =
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, LinkPrefetch)   \
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, MainResource)   \
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Manifest)       \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Audio)          \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Video)          \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Media)          \
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Mock)           \
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Raw)            \
     DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Script)         \
@@ -132,8 +131,7 @@ ResourceLoadPriority TypeToPriority(Resource::Type type) {
       return ResourceLoadPriority::kMedium;
     case Resource::kImage:
     case Resource::kTextTrack:
-    case Resource::kAudio:
-    case Resource::kVideo:
+    case Resource::kMedia:
     case Resource::kSVGDocument:
       // Also async scripts (set explicitly in loadPriority)
       return ResourceLoadPriority::kLow;
@@ -263,9 +261,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
       return WebURLRequest::kRequestContextTrack;
     case Resource::kSVGDocument:
       return WebURLRequest::kRequestContextImage;
-    case Resource::kAudio:
-      return WebURLRequest::kRequestContextAudio;
-    case Resource::kVideo:
+    case Resource::kMedia:  // TODO: Split this.
       return WebURLRequest::kRequestContextVideo;
     case Resource::kManifest:
       return WebURLRequest::kRequestContextManifest;
@@ -289,7 +285,7 @@ ResourceFetcher::ResourceFetcher(FetchContext* new_context)
       allow_stale_resources_(false),
       image_fetched_(false) {}
 
-ResourceFetcher::~ResourceFetcher() = default;
+ResourceFetcher::~ResourceFetcher() {}
 
 Resource* ResourceFetcher::CachedResource(const KURL& resource_url) const {
   KURL url = MemoryCache::RemoveFragmentIdentifierIfNeeded(resource_url);
@@ -817,6 +813,8 @@ Resource* ResourceFetcher::RequestResource(
     InsertAsPreloadIfNecessary(resource, params, resource_type);
   scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
 
+  DCHECK(!resource->ErrorOccurred() ||
+         params.Options().synchronous_policy == kRequestSynchronously);
   return resource;
 }
 
@@ -1260,11 +1258,12 @@ void ResourceFetcher::ClearContext() {
     // The use of WrapPersistent creates a reference cycle intentionally,
     // to keep the ResourceFetcher and ResourceLoaders alive until the requests
     // complete or the timer fires.
-    keepalive_loaders_task_handle_ = PostDelayedCancellableTask(
-        *Context().GetLoadingTaskRunner(), FROM_HERE,
-        WTF::Bind(&ResourceFetcher::StopFetchingIncludingKeepaliveLoaders,
-                  WrapPersistent(this)),
-        kKeepaliveLoadersTimeout);
+    keepalive_loaders_task_handle_ =
+        Context().GetLoadingTaskRunner()->PostDelayedCancellableTask(
+            FROM_HERE,
+            WTF::Bind(&ResourceFetcher::StopFetchingIncludingKeepaliveLoaders,
+                      WrapPersistent(this)),
+            kKeepaliveLoadersTimeout);
   }
 }
 
@@ -1644,8 +1643,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
         fonts++;
         font_misses += miss_count;
         break;
-      case Resource::kAudio:
-      case Resource::kVideo:
+      case Resource::kMedia:
         medias++;
         media_misses += miss_count;
         break;

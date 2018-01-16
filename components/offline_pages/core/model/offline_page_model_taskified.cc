@@ -93,14 +93,14 @@ void ReportPageHistogramAfterSuccessfulSaving(
     const OfflinePageItem& offline_page,
     const base::Time& save_time) {
   base::UmaHistogramCustomTimes(
-      model_utils::AddHistogramSuffix(offline_page.client_id.name_space,
+      model_utils::AddHistogramSuffix(offline_page.client_id,
                                       "OfflinePages.SavePageTime"),
       save_time - offline_page.creation_time,
       base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromSeconds(10),
       50);
 
   base::UmaHistogramCustomCounts(
-      model_utils::AddHistogramSuffix(offline_page.client_id.name_space,
+      model_utils::AddHistogramSuffix(offline_page.client_id,
                                       "OfflinePages.PageSize"),
       offline_page.file_size / 1024, 1, 10000, 50);
 }
@@ -180,7 +180,7 @@ void OfflinePageModelTaskified::SavePage(
   create_archive_params.use_page_problem_detectors =
       save_page_params.use_page_problem_detectors;
   archiver->CreateArchive(
-      GetInternalArchiveDirectory(save_page_params.client_id.name_space),
+      GetArchiveDirectory(save_page_params.client_id.name_space),
       create_archive_params,
       base::Bind(&OfflinePageModelTaskified::OnCreateArchiveDone,
                  weak_ptr_factory_.GetWeakPtr(), save_page_params, offline_id,
@@ -308,11 +308,11 @@ void OfflinePageModelTaskified::GetOfflineIdsForClientId(
   task_queue_.AddTask(std::move(task));
 }
 
-const base::FilePath& OfflinePageModelTaskified::GetInternalArchiveDirectory(
+const base::FilePath& OfflinePageModelTaskified::GetArchiveDirectory(
     const std::string& name_space) const {
   if (policy_controller_->IsRemovedOnCacheReset(name_space))
     return archive_manager_->GetTemporaryArchivesDir();
-  return archive_manager_->GetPrivateArchivesDir();
+  return archive_manager_->GetPersistentArchivesDir();
 }
 
 bool OfflinePageModelTaskified::IsArchiveInInternalDir(
@@ -322,7 +322,7 @@ bool OfflinePageModelTaskified::IsArchiveInInternalDir(
   // TODO(jianli): Update this once persistent archives are moved into the
   // public directory.
   return archive_manager_->GetTemporaryArchivesDir().IsParent(file_path) ||
-         archive_manager_->GetPrivateArchivesDir().IsParent(file_path);
+         archive_manager_->GetPersistentArchivesDir().IsParent(file_path);
 }
 
 ClientPolicyController* OfflinePageModelTaskified::GetPolicyController() {
@@ -342,8 +342,7 @@ void OfflinePageModelTaskified::InformSavePageDone(
                             model_utils::ToNamespaceEnum(client_id.name_space),
                             OfflinePagesNamespaceEnumeration::RESULT_COUNT);
   base::UmaHistogramEnumeration(
-      model_utils::AddHistogramSuffix(client_id.name_space,
-                                      "OfflinePages.SavePageResult"),
+      model_utils::AddHistogramSuffix(client_id, "OfflinePages.SavePageResult"),
       result, SavePageResult::RESULT_COUNT);
 
   if (result == SavePageResult::ARCHIVE_CREATION_FAILED)
@@ -469,7 +468,7 @@ void OfflinePageModelTaskified::ClearLegacyTemporaryPages() {
   // 'legacy' directory and replace the persistent one here.
   auto task = std::make_unique<ClearLegacyTemporaryPagesTask>(
       store_.get(), policy_controller_.get(),
-      archive_manager_->GetPrivateArchivesDir());
+      archive_manager_->GetPersistentArchivesDir());
   task_queue_.AddTask(std::move(task));
 }
 
@@ -504,12 +503,6 @@ void OfflinePageModelTaskified::OnClearCachedPagesDone(
     base::Time start_time,
     size_t deleted_page_count,
     ClearStorageResult result) {
-  UMA_HISTOGRAM_ENUMERATION("OfflinePages.ClearTemporaryPages.Result", result,
-                            ClearStorageResult::RESULT_COUNT);
-  if (deleted_page_count > 0) {
-    UMA_HISTOGRAM_COUNTS("OfflinePages.ClearTemporaryPages.BatchSize",
-                         deleted_page_count);
-  }
   last_clear_cached_pages_time_ = start_time;
 }
 
@@ -538,7 +531,7 @@ void OfflinePageModelTaskified::CheckTemporaryPagesConsistency() {
 void OfflinePageModelTaskified::CheckPersistentPagesConsistency() {
   auto task = std::make_unique<PersistentPagesConsistencyCheckTask>(
       store_.get(), policy_controller_.get(),
-      archive_manager_->GetPrivateArchivesDir());
+      archive_manager_->GetPersistentArchivesDir());
   task_queue_.AddTask(std::move(task));
 }
 

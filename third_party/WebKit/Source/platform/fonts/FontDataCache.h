@@ -72,7 +72,7 @@ class FontDataCache {
   WTF_MAKE_NONCOPYABLE(FontDataCache);
 
  public:
-  FontDataCache() = default;
+  FontDataCache() {}
 
   scoped_refptr<SimpleFontData> Get(const FontPlatformData*,
                                     ShouldRetain = kRetain,

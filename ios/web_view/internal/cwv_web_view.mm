@@ -13,7 +13,6 @@
 #import "components/autofill/ios/browser/autofill_agent.h"
 #import "components/autofill/ios/browser/js_autofill_manager.h"
 #include "google_apis/google_api_keys.h"
-#include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
 #include "ios/web/public/reload_type.h"
@@ -225,11 +224,6 @@ static NSString* gUserAgentProduct = nil;
 
 - (void)webState:(web::WebState*)webState
     didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
-  if (details.is_in_page) {
-    // Do not call webViewDidCommitNavigation: for fragment navigations.
-    return;
-  }
-
   if ([_navigationDelegate
           respondsToSelector:@selector(webViewDidCommitNavigation:)]) {
     [_navigationDelegate webViewDidCommitNavigation:self];

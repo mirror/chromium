@@ -41,7 +41,6 @@
 #include "content/common/url_loader_factory_bundle.h"
 #include "content/common/widget.mojom.h"
 #include "content/public/common/console_message_level.h"
-#include "content/public/common/fullscreen_video_element.mojom.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
@@ -144,6 +143,7 @@ class AssociatedInterfaceProviderImpl;
 class BlinkInterfaceRegistryImpl;
 class ChildURLLoaderFactoryGetter;
 class CompositorDependencies;
+class DevToolsAgent;
 class DocumentState;
 class ExternalPopupMenu;
 class HistoryEntry;
@@ -182,7 +182,6 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::mojom::MediaEngagementClient,
       mojom::Frame,
       mojom::FrameNavigationControl,
-      mojom::FullscreenVideoElementHandler,
       mojom::HostZoom,
       mojom::FrameBindingsControl,
       public blink::WebFrameClient,
@@ -294,6 +293,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Returns the RenderWidget associated with this frame.
   RenderWidget* GetRenderWidget();
+
+  DevToolsAgent* devtools_agent() { return devtools_agent_; }
 
   // This method must be called after the frame has been added to the frame
   // tree. It creates all objects that depend on the frame being at its proper
@@ -522,7 +523,6 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
-      mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
       const base::UnguessableToken& devtools_navigation_token) override;
   void CommitFailedNavigation(
       const CommonNavigationParams& common_params,
@@ -531,9 +531,6 @@ class CONTENT_EXPORT RenderFrameImpl
       int error_code,
       const base::Optional<std::string>& error_page_content,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
-
-  // mojom::FullscreenVideoElementHandler implementation:
-  void RequestFullscreenVideoElement() override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -751,10 +748,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // Binds to the site engagement service in the browser.
   void BindEngagement(blink::mojom::EngagementClientAssociatedRequest request);
 
-  // Binds to the fullscreen service in the browser.
-  void BindFullscreen(
-      mojom::FullscreenVideoElementHandlerAssociatedRequest request);
-
   // Binds to the media engagement service in the browser.
   void BindMediaEngagement(
       blink::mojom::MediaEngagementClientAssociatedRequest request);
@@ -954,6 +947,13 @@ class CONTENT_EXPORT RenderFrameImpl
 
   bool IsLocalRoot() const;
   const RenderFrameImpl* GetLocalRoot() const;
+
+  // Builds and sends DidCommitProvisionalLoad to the host.
+  void SendDidCommitProvisionalLoad(
+      blink::WebLocalFrame* frame,
+      blink::WebHistoryCommitType commit_type,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interface_provider_request);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
@@ -1259,10 +1259,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // Whether or not the frame is controlled by a service worker.
   bool IsControlledByServiceWorker();
 
-  // Build DidCommitProvisionalLoad_Params based on the frame internal state.
-  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-  MakeDidCommitProvisionalLoadParams(blink::WebHistoryCommitType commit_type);
-
   mojom::URLLoaderFactory* custom_url_loader_factory() {
     return custom_url_loader_factory_.get();
   }
@@ -1280,11 +1276,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // Notify render_view_ observers that a commit happened.
   void NotifyObserversOfNavigationCommit(bool is_new_navigation,
                                          bool is_same_document);
-
-  // Updates the internal state following a navigation commit. This should be
-  // called before notifying the FrameHost of the commit.
-  void UpdateStateForCommit(const blink::WebHistoryItem& item,
-                            blink::WebHistoryCommitType commit_type);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
@@ -1428,6 +1419,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // The media permission dispatcher attached to this frame.
   std::unique_ptr<MediaPermissionDispatcher> media_permission_dispatcher_;
 
+  // The devtools agent for this frame; only created for main frame and
+  // local roots.
+  DevToolsAgent* devtools_agent_;
+
   // The presentation dispatcher implementation attached to this frame, lazily
   // initialized.
   PresentationDispatcher* presentation_dispatcher_;
@@ -1526,8 +1521,6 @@ class CONTENT_EXPORT RenderFrameImpl
       frame_bindings_control_binding_;
   mojo::AssociatedBinding<mojom::FrameNavigationControl>
       frame_navigation_control_binding_;
-  mojo::AssociatedBinding<mojom::FullscreenVideoElementHandler>
-      fullscreen_binding_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;
@@ -1583,12 +1576,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // for AppCache).
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       custom_url_loader_factory_;
-
-  // Non-null if this frame is to be controlled by a service worker.
-  // Sent from the browser process on navigation commit. Valid until the
-  // document loader for this frame is actually created (where this is
-  // consumed to initialize a subresource loader).
-  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info_;
 
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
 

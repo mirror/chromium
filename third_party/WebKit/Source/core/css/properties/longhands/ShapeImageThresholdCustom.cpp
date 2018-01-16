@@ -5,7 +5,6 @@
 #include "core/css/properties/longhands/ShapeImageThreshold.h"
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -15,16 +14,6 @@ const CSSValue* ShapeImageThreshold::ParseSingleValue(
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeAll);
-}
-
-const CSSValue* ShapeImageThreshold::CSSValueFromComputedStyleInternal(
-    const ComputedStyle& style,
-    const SVGComputedStyle&,
-    const LayoutObject*,
-    Node*,
-    bool allow_visited_style) const {
-  return CSSPrimitiveValue::Create(style.ShapeImageThreshold(),
-                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
 }  // namespace CSSLonghand

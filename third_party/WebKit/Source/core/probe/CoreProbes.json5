@@ -70,11 +70,6 @@
         "willSendXMLHttpOrFetchNetworkRequest",
       ]
     },
-    Emulation: {
-      probes: [
-        "frameStartedLoading",
-      ]
-    },
     LayerTree: {
       probes: [
         "didPaint",

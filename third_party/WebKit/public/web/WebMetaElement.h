@@ -14,7 +14,7 @@ class HTMLMetaElement;
 class WebMetaElement final : public WebElement {
  public:
   WebMetaElement() : WebElement() {}
-  WebMetaElement(const WebMetaElement& element) = default;
+  WebMetaElement(const WebMetaElement& element) : WebElement(element) {}
 
   WebMetaElement& operator=(const WebMetaElement& element) {
     WebElement::Assign(element);

@@ -8,14 +8,9 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
-
-namespace ui {
-class MenuModel;
-}  // namespace ui
 
 class ChromeAppListItem;
 class SearchModel;
@@ -45,11 +40,6 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
       app_list::SpeechRecognitionState state) override;
   void UpdateSearchBox(const base::string16& text,
                        bool initiated_by_user) override;
-  void PublishSearchResults(
-      std::vector<std::unique_ptr<app_list::SearchResult>> results) override;
-
-  // Methods only for visiting Chrome items that never talk to ash.
-  void ActivateChromeItem(const std::string& id, int event_flags);
 
   // Methods for item querying.
   ChromeAppListItem* FindItem(const std::string& id) override;
@@ -62,7 +52,6 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   app_list::AppListViewState StateFullscreen() override;
   bool SearchEngineIsGoogle() override;
   std::map<std::string, size_t> GetIdToAppListIndexMap() override;
-  ui::MenuModel* GetContextMenuModel(const std::string& id);
 
   // Methods for AppListSyncableService:
   void AddItemToOemFolder(

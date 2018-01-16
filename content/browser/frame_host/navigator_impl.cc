@@ -263,7 +263,7 @@ bool NavigatorImpl::NavigateToEntry(
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
     bool is_pending_entry,
-    const scoped_refptr<network::ResourceRequestBody>& post_body) {
+    const scoped_refptr<ResourceRequestBody>& post_body) {
   TRACE_EVENT0("browser,navigation", "NavigatorImpl::NavigateToEntry");
 
   GURL dest_url = frame_entry.url();
@@ -570,14 +570,13 @@ void NavigatorImpl::RequestOpenURL(
     RenderFrameHostImpl* render_frame_host,
     const GURL& url,
     bool uses_post,
-    const scoped_refptr<network::ResourceRequestBody>& body,
+    const scoped_refptr<ResourceRequestBody>& body,
     const std::string& extra_headers,
     const Referrer& referrer,
     WindowOpenDisposition disposition,
     bool should_replace_current_entry,
     bool user_gesture,
-    blink::WebTriggeringEventInfo triggering_event_info,
-    const base::Optional<std::string>& suggested_filename) {
+    blink::WebTriggeringEventInfo triggering_event_info) {
   // Note: This can be called for subframes (even when OOPIFs are not possible)
   // if the disposition calls for a different window.
 
@@ -626,7 +625,6 @@ void NavigatorImpl::RequestOpenURL(
   params.should_replace_current_entry = should_replace_current_entry;
   params.user_gesture = user_gesture;
   params.triggering_event_info = triggering_event_info;
-  params.suggested_filename = suggested_filename;
 
   // RequestOpenURL is used only for local frames, so we can get here only if
   // the navigation is initiated by a frame in the same SiteInstance as this
@@ -666,7 +664,7 @@ void NavigatorImpl::RequestTransferURL(
     const GlobalRequestID& transferred_global_request_id,
     bool should_replace_current_entry,
     const std::string& method,
-    scoped_refptr<network::ResourceRequestBody> post_body,
+    scoped_refptr<ResourceRequestBody> post_body,
     const std::string& extra_headers) {
   // |method != "POST"| should imply absence of |post_body|.
   if (method != "POST" && post_body) {
@@ -998,7 +996,7 @@ void NavigatorImpl::RequestNavigation(
     PreviewsState previews_state,
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
-    const scoped_refptr<network::ResourceRequestBody>& post_body,
+    const scoped_refptr<ResourceRequestBody>& post_body,
     base::TimeTicks navigation_start) {
   DCHECK(frame_tree_node);
 

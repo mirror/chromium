@@ -18,12 +18,10 @@
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
-#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
@@ -89,10 +87,6 @@ BrowserNonClientFrameViewAsh::~BrowserNonClientFrameViewAsh() {
   if (TabletModeClient::Get())
     TabletModeClient::Get()->RemoveObserver(this);
   ash::Shell::Get()->RemoveShellObserver(this);
-  if (back_button_) {
-    browser_view()->browser()->command_controller()->RemoveCommandObserver(
-        this);
-  }
 }
 
 void BrowserNonClientFrameViewAsh::Init() {
@@ -112,8 +106,7 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (browser->is_app() && IsV1AppBackButtonEnabled()) {
     back_button_ = new ash::FrameBackButton();
     AddChildView(back_button_);
-    // TODO(oshima): Add Tooltip, accessibility name.
-    browser->command_controller()->AddCommandObserver(IDC_BACK, this);
+    // TODO(oshima): Update the back button state.
   }
 
   frame_header_ = CreateFrameHeader();
@@ -430,12 +423,6 @@ bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
 gfx::ImageSkia BrowserNonClientFrameViewAsh::GetFaviconForTabIconView() {
   views::WidgetDelegate* delegate = frame()->widget_delegate();
   return delegate ? delegate->GetWindowIcon() : gfx::ImageSkia();
-}
-
-void BrowserNonClientFrameViewAsh::EnabledStateChangedForCommand(int id,
-                                                                 bool enabled) {
-  if (id == IDC_BACK && back_button_)
-    back_button_->SetEnabled(enabled);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -112,8 +112,6 @@ AnnotationInstance::AnnotationInstance()
     : type(Type::ANNOTATION_COMPLETE),
       unique_id_hash_code(0),
       second_id_hash_code(0),
-      archive_content_hash_code(0),
-      is_loaded_from_archive(false),
       is_merged(false) {}
 
 AnnotationInstance::AnnotationInstance(const AnnotationInstance& other)
@@ -122,8 +120,6 @@ AnnotationInstance::AnnotationInstance(const AnnotationInstance& other)
       second_id(other.second_id),
       unique_id_hash_code(other.unique_id_hash_code),
       second_id_hash_code(other.second_id_hash_code),
-      archive_content_hash_code(other.archive_content_hash_code),
-      is_loaded_from_archive(other.is_loaded_from_archive),
       is_merged(other.is_merged){};
 
 AuditorResult AnnotationInstance::Deserialize(
@@ -396,24 +392,13 @@ AuditorResult AnnotationInstance::CreateCompleteAnnotation(
   combination->type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
   combination->second_id.clear();
   combination->second_id_hash_code = 0;
-
-  // Update comment.
-  std::string new_comments = combination->proto.comments();
-  if (!other->proto.comments().empty()) {
-    if (!new_comments.empty())
-      new_comments += "\n";
-    new_comments += other->proto.comments();
-  }
-  if (!new_comments.empty())
-    new_comments += "\n";
-  new_comments += base::StringPrintf(
+  combination->comments = base::StringPrintf(
       "This annotation is a merge of the following two annotations:\n"
       "'%s' in '%s:%i' and '%s' in '%s:%i'.",
       proto.unique_id().c_str(), proto.source().file().c_str(),
       proto.source().line(), completing_annotation.proto.unique_id().c_str(),
       completing_annotation.proto.source().file().c_str(),
       completing_annotation.proto.source().line());
-  combination->proto.set_comments(new_comments);
 
   // Copy TrafficSemantics.
   const traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics
@@ -486,132 +471,11 @@ AuditorResult AnnotationInstance::CreateCompleteAnnotation(
 }
 
 int AnnotationInstance::GetContentHashCode() const {
-  if (is_loaded_from_archive)
-    return archive_content_hash_code;
-
-  traffic_annotation::NetworkTrafficAnnotation source_free_proto = proto;
-  source_free_proto.clear_source();
+  AnnotationInstance source_free(*this);
   std::string content;
-  google::protobuf::TextFormat::PrintToString(source_free_proto, &content);
+  source_free.proto.clear_source();
+  google::protobuf::TextFormat::PrintToString(source_free.proto, &content);
   return TrafficAnnotationAuditor::ComputeHashValue(content);
-}
-
-// static
-AnnotationInstance AnnotationInstance::LoadFromArchive(
-    AnnotationInstance::Type type,
-    const std::string& unique_id,
-    int unique_id_hash_code,
-    int second_id_hash_code,
-    int content_hash_code,
-    const std::set<int>& semantics_fields,
-    const std::set<int>& policy_fields) {
-  AnnotationInstance annotation;
-
-  annotation.is_loaded_from_archive = true;
-  annotation.type = type;
-  annotation.proto.set_unique_id(unique_id);
-  annotation.unique_id_hash_code = unique_id_hash_code;
-
-  if (annotation.NeedsTwoIDs()) {
-    annotation.second_id_hash_code = second_id_hash_code;
-    // As we don't have the actual second id, a generated value is written to
-    // ensure that the field is not empty. Current set of auditor tests and
-    // unittests just check if this field is not empty when a second id is
-    // required. Tests that are based on matching the ids (like
-    // partial/completing annotations) are based on the hash codes.
-    annotation.second_id =
-        base::StringPrintf("ARCHIVED_ID_%i", annotation.second_id_hash_code);
-  }
-
-  annotation.archive_content_hash_code = content_hash_code;
-
-  // The values of the semantics and policy are set so that the tests would know
-  // which fields were available before archive.
-  if (base::ContainsKey(
-          semantics_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics::
-              kSenderFieldNumber)) {
-    annotation.proto.mutable_semantics()->set_sender("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          semantics_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics::
-              kDescriptionFieldNumber)) {
-    annotation.proto.mutable_semantics()->set_description("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          semantics_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics::
-              kTriggerFieldNumber)) {
-    annotation.proto.mutable_semantics()->set_trigger("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          semantics_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics::
-              kDataFieldNumber)) {
-    annotation.proto.mutable_semantics()->set_data("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          semantics_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics::
-              kDestinationFieldNumber)) {
-    annotation.proto.mutable_semantics()->set_destination(
-        traffic_annotation::
-            NetworkTrafficAnnotation_TrafficSemantics_Destination_WEBSITE);
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kCookiesAllowedFieldNumber)) {
-    annotation.proto.mutable_policy()->set_cookies_allowed(
-        traffic_annotation::
-            NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_YES);
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          -traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kCookiesAllowedFieldNumber)) {
-    annotation.proto.mutable_policy()->set_cookies_allowed(
-        traffic_annotation::
-            NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_NO);
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kCookiesStoreFieldNumber)) {
-    annotation.proto.mutable_policy()->set_cookies_store("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kSettingFieldNumber)) {
-    annotation.proto.mutable_policy()->set_setting("[Archived]");
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kChromePolicyFieldNumber)) {
-    annotation.proto.mutable_policy()->add_chrome_policy();
-  }
-
-  if (base::ContainsKey(
-          policy_fields,
-          traffic_annotation::NetworkTrafficAnnotation_TrafficPolicy::
-              kPolicyExceptionJustificationFieldNumber)) {
-    annotation.proto.mutable_policy()->set_policy_exception_justification(
-        "[Archived]");
-  }
-
-  return annotation;
 }
 
 CallInstance::CallInstance() : line_number(0), is_annotated(false) {}

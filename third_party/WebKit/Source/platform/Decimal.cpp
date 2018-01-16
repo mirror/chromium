@@ -279,9 +279,12 @@ Decimal::Decimal(Sign sign, int exponent, uint64_t coefficient)
 
 Decimal::Decimal(const EncodedData& data) : data_(data) {}
 
-Decimal::Decimal(const Decimal& other) = default;
+Decimal::Decimal(const Decimal& other) : data_(other.data_) {}
 
-Decimal& Decimal::operator=(const Decimal& other) = default;
+Decimal& Decimal::operator=(const Decimal& other) {
+  data_ = other.data_;
+  return *this;
+}
 
 Decimal& Decimal::operator+=(const Decimal& other) {
   data_ = (*this + other).data_;

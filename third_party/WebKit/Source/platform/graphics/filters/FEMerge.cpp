@@ -39,7 +39,8 @@ FEMerge* FEMerge::Create(Filter* filter) {
 sk_sp<PaintFilter> FEMerge::CreateImageFilter() {
   unsigned size = NumberOfEffectInputs();
 
-  auto input_refs = std::make_unique<sk_sp<PaintFilter>[]>(size);
+  std::unique_ptr<sk_sp<PaintFilter>[]> input_refs =
+      WrapArrayUnique(new sk_sp<PaintFilter>[size]);
   for (unsigned i = 0; i < size; ++i) {
     input_refs[i] = PaintFilterBuilder::Build(InputEffect(i),
                                               OperatingInterpolationSpace());

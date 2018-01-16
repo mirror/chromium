@@ -78,8 +78,6 @@ class ArcNotificationManager
                          const AccountId& main_profile_id,
                          message_center::MessageCenter* message_center);
 
-  bool ShouldIgnoreNotification(mojom::ArcNotificationData* data);
-
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   const AccountId main_profile_id_;
   message_center::MessageCenter* const message_center_;

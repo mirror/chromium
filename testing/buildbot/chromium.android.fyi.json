@@ -1807,8 +1807,7 @@
               "device_type": "sprout"
             }
           ],
-          "expiration": 14400,
-          "hard_timeout": 900
+          "expiration": 14400
         },
         "test": "media_unittests"
       },
@@ -3022,7 +3021,7 @@
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 900,
+          "hard_timeout": 960,
           "output_links": [
             {
               "link": [
@@ -4638,8 +4637,7 @@
             {
               "device_type": "coho"
             }
-          ],
-          "hard_timeout": 900
+          ]
         },
         "test": "media_unittests"
       },
@@ -5601,8 +5599,7 @@
             {
               "device_type": "gce_x86"
             }
-          ],
-          "hard_timeout": 900
+          ]
         },
         "test": "media_unittests"
       },

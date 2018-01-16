@@ -5,7 +5,6 @@
 #include "core/layout/ng/ng_fragment_builder.h"
 
 #include "core/layout/LayoutObject.h"
-#include "core/layout/ng/exclusions/ng_exclusion_space.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
@@ -13,6 +12,7 @@
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_break_token.h"
+#include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_fragmentation_utils.h"
 #include "core/layout/ng/ng_layout_result.h"
@@ -43,7 +43,7 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
       is_old_layout_root_(false),
       did_break_(false) {}
 
-NGFragmentBuilder::~NGFragmentBuilder() = default;
+NGFragmentBuilder::~NGFragmentBuilder() {}
 
 NGFragmentBuilder& NGFragmentBuilder::SetIntrinsicBlockSize(
     LayoutUnit intrinsic_block_size) {
@@ -111,7 +111,12 @@ NGFragmentBuilder& NGFragmentBuilder::AddBreakBeforeChild(
     }
     return *this;
   }
-  auto token = NGBlockBreakToken::CreateBreakBefore(child);
+  // TODO(mstensho): Come up with a more intuitive way of creating an unfinished
+  // break token. We currently need to pass a Vector here, just to end up in the
+  // right NGBlockBreakToken constructor - the one that sets the token as
+  // unfinished.
+  Vector<scoped_refptr<NGBreakToken>> dummy;
+  auto token = NGBlockBreakToken::Create(child, LayoutUnit(), dummy);
   child_break_tokens_.push_back(token);
   return *this;
 }

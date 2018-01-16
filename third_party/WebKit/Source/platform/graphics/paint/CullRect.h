@@ -22,7 +22,7 @@ class PLATFORM_EXPORT CullRect {
   DISALLOW_NEW();
 
  public:
-  CullRect() = default;
+  CullRect() {}
   explicit CullRect(const IntRect& rect) : rect_(rect) {}
   CullRect(const CullRect&, const IntPoint& offset);
   CullRect(const CullRect&, const IntSize& offset);

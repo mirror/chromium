@@ -118,7 +118,7 @@ enum class NamedItemType {
 struct FocusParams {
   STACK_ALLOCATED();
 
-  FocusParams() = default;
+  FocusParams() {}
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
               InputDeviceCapabilities* capabilities,
@@ -295,7 +295,7 @@ class CORE_EXPORT Element : public ContainerNode {
   AccessibleNode* ExistingAccessibleNode() const;
   AccessibleNode* accessibleNode();
 
-  ComputedAccessibleNode* GetComputedAccessibleNode();
+  ComputedAccessibleNode* ComputedAccessibleNode();
 
   void DidMoveToNewDocument(Document&) override;
 
@@ -494,8 +494,7 @@ class CORE_EXPORT Element : public ContainerNode {
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot& CreateShadowRootInternal();
-  ShadowRoot& CreateLegacyUserAgentShadowRootV0();
-  ShadowRoot& CreateUserAgentShadowRootV1();
+  ShadowRoot& CreateUserAgentShadowRoot();
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 
@@ -508,8 +507,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ShadowRoot* ShadowRootIfV1() const;
 
-  ShadowRoot& EnsureLegacyUserAgentShadowRootV0();
-  ShadowRoot& EnsureUserAgentShadowRootV1();
+  ShadowRoot& EnsureUserAgentShadowRoot();
 
   bool IsInDescendantTreeOf(const Element* shadow_host) const;
 
@@ -786,7 +784,6 @@ class CORE_EXPORT Element : public ContainerNode {
   bool HasID() const;
   bool HasClass() const;
   const SpaceSplitString& ClassNames() const;
-  bool HasClassName(const AtomicString& class_name) const;
 
   ScrollOffset SavedLayerScrollOffset() const;
   void SetSavedLayerScrollOffset(const ScrollOffset&);
@@ -1189,10 +1186,6 @@ inline const SpaceSplitString& Element::ClassNames() const {
   DCHECK(HasClass());
   DCHECK(GetElementData());
   return GetElementData()->ClassNames();
-}
-
-inline bool Element::HasClassName(const AtomicString& class_name) const {
-  return HasClass() && ClassNames().Contains(class_name);
 }
 
 inline bool Element::HasID() const {

@@ -596,7 +596,6 @@ void ParamTraits<viz::RenderPass>::Log(const param_type& p, std::string* l) {
 
 void ParamTraits<viz::FrameSinkId>::Write(base::Pickle* m,
                                           const param_type& p) {
-  DCHECK(p.is_valid());
   WriteParam(m, p.client_id());
   WriteParam(m, p.sink_id());
 }
@@ -613,7 +612,7 @@ bool ParamTraits<viz::FrameSinkId>::Read(const base::Pickle* m,
     return false;
 
   *p = viz::FrameSinkId(client_id, sink_id);
-  return p->is_valid();
+  return true;
 }
 
 void ParamTraits<viz::FrameSinkId>::Log(const param_type& p, std::string* l) {
@@ -626,8 +625,7 @@ void ParamTraits<viz::FrameSinkId>::Log(const param_type& p, std::string* l) {
 
 void ParamTraits<viz::LocalSurfaceId>::Write(base::Pickle* m,
                                              const param_type& p) {
-  DCHECK(p.is_valid());
-  WriteParam(m, p.parent_sequence_number());
+  WriteParam(m, p.parent_id());
   WriteParam(m, p.child_sequence_number());
   WriteParam(m, p.nonce());
 }
@@ -635,8 +633,8 @@ void ParamTraits<viz::LocalSurfaceId>::Write(base::Pickle* m,
 bool ParamTraits<viz::LocalSurfaceId>::Read(const base::Pickle* m,
                                             base::PickleIterator* iter,
                                             param_type* p) {
-  uint32_t parent_sequence_number;
-  if (!ReadParam(m, iter, &parent_sequence_number))
+  uint32_t parent_id;
+  if (!ReadParam(m, iter, &parent_id))
     return false;
 
   uint32_t child_sequence_number;
@@ -647,15 +645,14 @@ bool ParamTraits<viz::LocalSurfaceId>::Read(const base::Pickle* m,
   if (!ReadParam(m, iter, &nonce))
     return false;
 
-  *p =
-      viz::LocalSurfaceId(parent_sequence_number, child_sequence_number, nonce);
-  return p->is_valid();
+  *p = viz::LocalSurfaceId(parent_id, child_sequence_number, nonce);
+  return true;
 }
 
 void ParamTraits<viz::LocalSurfaceId>::Log(const param_type& p,
                                            std::string* l) {
   l->append("viz::LocalSurfaceId(");
-  LogParam(p.parent_sequence_number(), l);
+  LogParam(p.parent_id(), l);
   l->append(", ");
   LogParam(p.child_sequence_number(), l);
   l->append(", ");

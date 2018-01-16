@@ -24,10 +24,6 @@ namespace gfx {
 class ImageSkia;
 }  // namespace gfx
 
-namespace ui {
-class MenuModel;
-}  // namespace ui
-
 // Base class of all chrome app list items.
 class ChromeAppListItem : public app_list::AppListItem {
  public:
@@ -59,7 +55,7 @@ class ChromeAppListItem : public app_list::AppListItem {
   static gfx::ImageSkia CreateDisabledIcon(const gfx::ImageSkia& icon);
 
   // Activates (opens) the item. Does nothing by default.
-  virtual void Activate(int event_flags);
+  void Activate(int event_flags) override;
 
   // Returns a static const char* identifier for the subclass (defaults to "").
   // Pointers can be compared for quick type checking.
@@ -68,7 +64,7 @@ class ChromeAppListItem : public app_list::AppListItem {
   // Returns the context menu model for this item, or NULL if there is currently
   // no menu for the item (e.g. during install).
   // Note the returned menu model is owned by this item.
-  virtual ui::MenuModel* GetContextMenuModel();
+  ui::MenuModel* GetContextMenuModel() override;
 
   bool CompareForTest(const app_list::AppListItem* other) const override;
 

@@ -337,6 +337,8 @@ void DisplayScheduler::OnSurfaceDamageExpected(const SurfaceId& surface_id,
     ScheduleBeginFrameDeadline();
 }
 
+void DisplayScheduler::OnSurfaceSubtreeDamaged(const SurfaceId& surface_id) {}
+
 base::TimeTicks DisplayScheduler::DesiredBeginFrameDeadlineTime() const {
   switch (AdjustedBeginFrameDeadlineMode()) {
     case BeginFrameDeadlineMode::kImmediate:

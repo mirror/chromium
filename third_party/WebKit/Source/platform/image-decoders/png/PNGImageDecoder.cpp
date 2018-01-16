@@ -56,7 +56,7 @@ PNGImageDecoder::PNGImageDecoder(AlphaOption alpha_option,
       has_alpha_channel_(false),
       current_buffer_saw_alpha_(false) {}
 
-PNGImageDecoder::~PNGImageDecoder() = default;
+PNGImageDecoder::~PNGImageDecoder() {}
 
 bool PNGImageDecoder::SetFailed() {
   reader_.reset();

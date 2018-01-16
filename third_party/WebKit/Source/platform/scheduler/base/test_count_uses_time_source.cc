@@ -10,7 +10,7 @@ namespace scheduler {
 
 TestCountUsesTimeSource::TestCountUsesTimeSource() : now_calls_count_(0) {}
 
-TestCountUsesTimeSource::~TestCountUsesTimeSource() = default;
+TestCountUsesTimeSource::~TestCountUsesTimeSource() {}
 
 base::TimeTicks TestCountUsesTimeSource::NowTicks() {
   now_calls_count_++;

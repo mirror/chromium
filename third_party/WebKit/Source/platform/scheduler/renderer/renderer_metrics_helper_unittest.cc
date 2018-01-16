@@ -27,8 +27,8 @@ using base::Bucket;
 
 class RendererMetricsHelperTest : public ::testing::Test {
  public:
-  RendererMetricsHelperTest() = default;
-  ~RendererMetricsHelperTest() = default;
+  RendererMetricsHelperTest() {}
+  ~RendererMetricsHelperTest() {}
 
   void SetUp() {
     histogram_tester_.reset(new base::HistogramTester());

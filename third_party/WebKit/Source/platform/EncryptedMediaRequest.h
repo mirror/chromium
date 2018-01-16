@@ -19,7 +19,7 @@ class WebVector;
 class EncryptedMediaRequest
     : public GarbageCollectedFinalized<EncryptedMediaRequest> {
  public:
-  virtual ~EncryptedMediaRequest() = default;
+  virtual ~EncryptedMediaRequest() {}
 
   virtual WebString KeySystem() const = 0;
   virtual const WebVector<WebMediaKeySystemConfiguration>&

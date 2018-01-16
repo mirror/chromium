@@ -32,8 +32,7 @@ static_assert(sizeof(struct in6_addr) == 16, "incorrect system size of IPv6");
 
 SOCKS5ClientSocket::SOCKS5ClientSocket(
     std::unique_ptr<ClientSocketHandle> transport_socket,
-    const HostResolver::RequestInfo& req_info,
-    const NetworkTrafficAnnotationTag& traffic_annotation)
+    const HostResolver::RequestInfo& req_info)
     : io_callback_(base::Bind(&SOCKS5ClientSocket::OnIOComplete,
                               base::Unretained(this))),
       transport_(std::move(transport_socket)),
@@ -44,8 +43,7 @@ SOCKS5ClientSocket::SOCKS5ClientSocket(
       read_header_size(kReadHeaderSize),
       was_ever_used_(false),
       host_request_info_(req_info),
-      net_log_(transport_->socket()->NetLog()),
-      traffic_annotation_(traffic_annotation) {}
+      net_log_(transport_->socket()->NetLog()) {}
 
 SOCKS5ClientSocket::~SOCKS5ClientSocket() {
   Disconnect();
@@ -307,7 +305,7 @@ int SOCKS5ClientSocket::DoGreetWrite() {
   memcpy(handshake_buf_->data(), &buffer_.data()[bytes_sent_],
          handshake_buf_len);
   return transport_->socket()->Write(handshake_buf_.get(), handshake_buf_len,
-                                     io_callback_, traffic_annotation_);
+                                     io_callback_);
 }
 
 int SOCKS5ClientSocket::DoGreetWriteComplete(int result) {
@@ -406,7 +404,7 @@ int SOCKS5ClientSocket::DoHandshakeWrite() {
   memcpy(handshake_buf_->data(), &buffer_[bytes_sent_],
          handshake_buf_len);
   return transport_->socket()->Write(handshake_buf_.get(), handshake_buf_len,
-                                     io_callback_, traffic_annotation_);
+                                     io_callback_);
 }
 
 int SOCKS5ClientSocket::DoHandshakeWriteComplete(int result) {

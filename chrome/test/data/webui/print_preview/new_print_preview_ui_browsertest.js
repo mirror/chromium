@@ -93,10 +93,6 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'Other', function() {
   this.runMochaTest(settings_sections_tests.TestNames.Other);
 });
 
-TEST_F('PrintPreviewSettingsSectionsTest', 'SetPages', function() {
-  this.runMochaTest(settings_sections_tests.TestNames.SetPages);
-});
-
 TEST_F('PrintPreviewSettingsSectionsTest', 'SetCopies', function() {
   this.runMochaTest(settings_sections_tests.TestNames.SetCopies);
 });
@@ -123,10 +119,6 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'SetMargins', function() {
 
 TEST_F('PrintPreviewSettingsSectionsTest', 'SetScaling', function() {
   this.runMochaTest(settings_sections_tests.TestNames.SetScaling);
-});
-
-TEST_F('PrintPreviewSettingsSectionsTest', 'SetOther', function() {
-  this.runMochaTest(settings_sections_tests.TestNames.SetOther);
 });
 
 PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {

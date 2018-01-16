@@ -299,15 +299,12 @@ void CreateFrameResourceCoordinator(
       std::move(request));
 }
 
-using FrameCallback =
-    base::RepeatingCallback<void(ResourceDispatcherHostImpl*,
-                                 const GlobalFrameRoutingId&)>;
-
 // The following functions simplify code paths where the UI thread notifies the
 // ResourceDispatcherHostImpl of information pertaining to loading behavior of
 // frame hosts.
 void NotifyRouteChangesOnIO(
-    const FrameCallback& frame_callback,
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback,
     std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
@@ -317,8 +314,10 @@ void NotifyRouteChangesOnIO(
     frame_callback.Run(rdh, routing_id);
 }
 
-void NotifyForEachFrameFromUI(RenderFrameHost* root_frame_host,
-                              const FrameCallback& frame_callback) {
+void NotifyForEachFrameFromUI(
+    RenderFrameHost* root_frame_host,
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
@@ -326,7 +325,8 @@ void NotifyForEachFrameFromUI(RenderFrameHost* root_frame_host,
                               ->frame_tree();
   DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
 
-  auto routing_ids = std::make_unique<std::set<GlobalFrameRoutingId>>();
+  std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
+      new std::set<GlobalFrameRoutingId>());
   for (FrameTreeNode* node : frame_tree->Nodes()) {
     RenderFrameHostImpl* frame_host = node->current_frame_host();
     RenderFrameHostImpl* pending_frame_host =
@@ -1429,7 +1429,7 @@ void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
       this, validated_url, params.uses_post, params.resource_request_body,
       params.extra_headers, params.referrer, params.disposition,
       params.should_replace_current_entry, params.user_gesture,
-      params.triggering_event_info, params.suggested_filename);
+      params.triggering_event_info);
 }
 
 void RenderFrameHostImpl::CancelInitialHistoryLoad() {
@@ -2204,21 +2204,20 @@ int RenderFrameHostImpl::GetEnabledBindings() const {
 void RenderFrameHostImpl::BlockRequestsForFrame() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   NotifyForEachFrameFromUI(
-      this,
-      base::BindRepeating(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
+      this, base::Bind(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
 }
 
 void RenderFrameHostImpl::ResumeBlockedRequestsForFrame() {
   NotifyForEachFrameFromUI(
-      this, base::BindRepeating(
-                &ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
 }
 
 void RenderFrameHostImpl::CancelBlockedRequestsForFrame() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   NotifyForEachFrameFromUI(
-      this, base::BindRepeating(
-                &ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
 }
 
 void RenderFrameHostImpl::DisableBeforeUnloadHangMonitorForTesting() {
@@ -3440,7 +3439,7 @@ void RenderFrameHostImpl::CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojom::URLLoaderClientEndpointsPtr(),
         /*subresource_loader_factories=*/base::nullopt,
-        /*controller_service_worker=*/nullptr, devtools_navigation_token);
+        devtools_navigation_token);
     return;
   }
 
@@ -3463,8 +3462,8 @@ void RenderFrameHostImpl::CommitNavigation(
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
+  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
-  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
     subresource_loader_factories.emplace();
@@ -3551,12 +3550,6 @@ void RenderFrameHostImpl::CommitNavigation(
       subresource_loader_factories->RegisterFactory(factory.first,
                                                     std::move(factory_proxy));
     }
-
-    // Pass the controller service worker info if we have one.
-    if (subresource_loader_params) {
-      controller_service_worker_info =
-          std::move(subresource_loader_params->controller_service_worker_info);
-    }
   }
 
   // It is imperative that cross-document navigations always provide a set of
@@ -3568,8 +3561,7 @@ void RenderFrameHostImpl::CommitNavigation(
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params,
       std::move(url_loader_client_endpoints),
-      std::move(subresource_loader_factories),
-      std::move(controller_service_worker_info), devtools_navigation_token);
+      std::move(subresource_loader_factories), devtools_navigation_token);
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
@@ -4028,7 +4020,7 @@ void RenderFrameHostImpl::GrantFileAccessFromPageState(const PageState& state) {
 }
 
 void RenderFrameHostImpl::GrantFileAccessFromResourceRequestBody(
-    const network::ResourceRequestBody& body) {
+    const ResourceRequestBody& body) {
   GrantFileAccess(GetProcess()->GetID(), body.GetReferencedFiles());
 }
 

@@ -65,8 +65,6 @@ RasterCommandBufferStub::RasterCommandBufferStub(
                         stream_id,
                         route_id) {}
 
-RasterCommandBufferStub::~RasterCommandBufferStub() {}
-
 gpu::ContextResult RasterCommandBufferStub::Initialize(
     CommandBufferStub* share_command_buffer_stub,
     const GPUCreateCommandBufferConfig& init_params,
@@ -133,8 +131,8 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
 
   command_buffer_ = std::make_unique<CommandBufferService>(
       this, context_group_->transfer_buffer_manager());
-  auto decoder = std::make_unique<raster::RasterDecoder>(
-      this, command_buffer_.get(), manager->outputter(), context_group_.get());
+  decoder_.reset(new raster::RasterDecoder(
+      this, command_buffer_.get(), manager->outputter(), context_group_.get()));
 
   sync_point_client_state_ =
       channel_->sync_point_manager()->CreateSyncPointClientState(
@@ -189,7 +187,7 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
            gl::GetGLImplementation() == gl::kGLImplementationMockGL ||
            gl::GetGLImplementation() == gl::kGLImplementationStubGL);
     context = base::MakeRefCounted<GLContextVirtual>(
-        share_group_.get(), context.get(), decoder->AsWeakPtr());
+        share_group_.get(), context.get(), decoder_->AsWeakPtr());
     if (!context->Initialize(surface_.get(),
                              GenerateGLContextAttribs(init_params.attribs,
                                                       context_group_.get()))) {
@@ -225,7 +223,7 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
   }
 
   if (!context->GetGLStateRestorer()) {
-    context->SetGLStateRestorer(new GLStateRestorerImpl(decoder->AsWeakPtr()));
+    context->SetGLStateRestorer(new GLStateRestorerImpl(decoder_->AsWeakPtr()));
   }
 
   if (!context_group_->has_program_cache() &&
@@ -234,18 +232,17 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
   }
 
   // Initialize the decoder with either the view or pbuffer GLContext.
-  auto result = decoder->Initialize(surface_, context, true /* offscreen */,
-                                    gpu::gles2::DisallowedFeatures(),
-                                    init_params.attribs);
+  auto result = decoder_->Initialize(surface_, context, true /* offscreen */,
+                                     gpu::gles2::DisallowedFeatures(),
+                                     init_params.attribs);
   if (result != gpu::ContextResult::kSuccess) {
     DLOG(ERROR) << "Failed to initialize decoder.";
     return result;
   }
 
   if (manager->gpu_preferences().enable_gpu_service_logging) {
-    decoder->set_log_commands(true);
+    decoder_->set_log_commands(true);
   }
-  set_decoder_context(std::move(decoder));
 
   const size_t kSharedStateSize = sizeof(CommandBufferSharedState);
   if (!shared_state_shm->Map(kSharedStateSize)) {
@@ -279,15 +276,6 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
   initialized_ = true;
   return gpu::ContextResult::kSuccess;
 #endif  // defined(OS_FUCHSIA)
-}
-
-// RasterInterface clients should not manipulate the front buffer.
-void RasterCommandBufferStub::OnTakeFrontBuffer(const Mailbox& mailbox) {
-  NOTREACHED();
-}
-void RasterCommandBufferStub::OnReturnFrontBuffer(const Mailbox& mailbox,
-                                                  bool is_lost) {
-  NOTREACHED();
 }
 
 }  // namespace gpu

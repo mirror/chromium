@@ -17,17 +17,15 @@
 #include "base/run_loop.h"
 #include "net/base/completion_callback.h"
 #include "net/base/request_priority.h"
-#include "net/http/http_request_info.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
-#include "net/spdy/chromium/http2_push_promise_index.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/chromium/spdy_session.h"
-#include "net/spdy/chromium/spdy_session_pool.h"
 #include "net/spdy/chromium/spdy_stream_test_util.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -76,7 +74,7 @@ class SpdyStreamTest : public ::testing::Test {
 
   base::WeakPtr<SpdySession> CreateDefaultSpdySession() {
     SpdySessionKey key(HostPortPair::FromURL(url_), ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, SocketTag());
     return CreateSpdySession(session_.get(), key, NetLogWithSource());
   }
 
@@ -137,15 +135,6 @@ class SpdyStreamTest : public ::testing::Test {
         ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
     ASSERT_TRUE(ssl_.ssl_info.cert);
     session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_);
-  }
-
-  static size_t num_pushed_streams(base::WeakPtr<SpdySession> session) {
-    return session->num_pushed_streams_;
-  }
-
-  static SpdySessionPool* spdy_session_pool(
-      base::WeakPtr<SpdySession> session) {
-    return session->pool_;
   }
 
   const GURL url_;
@@ -355,23 +344,9 @@ TEST_F(SpdyStreamTest, PushedStream) {
 
   data.RunUntilPaused();
 
-  const SpdySessionKey key(HostPortPair::FromURL(url_), ProxyServer::Direct(),
-                           PRIVACY_MODE_DISABLED);
-  const GURL pushed_url(kPushUrl);
-  HttpRequestInfo push_request;
-  push_request.url = pushed_url;
-  push_request.method = "GET";
-  base::WeakPtr<SpdySession> session_with_pushed_stream;
-  SpdyStreamId pushed_stream_id;
-  spdy_session_pool(session)->push_promise_index()->ClaimPushedStream(
-      key, pushed_url, push_request, &session_with_pushed_stream,
-      &pushed_stream_id);
-  EXPECT_EQ(session.get(), session_with_pushed_stream.get());
-  EXPECT_EQ(2u, pushed_stream_id);
-
   SpdyStream* push_stream;
-  EXPECT_THAT(session->GetPushedStream(pushed_url, pushed_stream_id, IDLE,
-                                       &push_stream, NetLogWithSource()),
+  EXPECT_THAT(session->GetPushedStream(GURL(kPushUrl), kNoPushedStreamFound,
+                                       IDLE, &push_stream, NetLogWithSource()),
               IsOk());
   ASSERT_TRUE(push_stream);
   EXPECT_EQ(kPushUrl, push_stream->GetUrlFromHeaders().spec());
@@ -682,7 +657,11 @@ TEST_F(SpdyStreamTest, UpperCaseHeadersOnPush) {
 
   data.RunUntilPaused();
 
-  EXPECT_EQ(0u, num_pushed_streams(session));
+  SpdyStream* push_stream;
+  EXPECT_THAT(session->GetPushedStream(GURL(kPushUrl), kNoPushedStreamFound,
+                                       IDLE, &push_stream, NetLogWithSource()),
+              IsOk());
+  EXPECT_FALSE(push_stream);
 
   data.Resume();
 
@@ -754,8 +733,8 @@ TEST_F(SpdyStreamTest, HeadersMustHaveStatusOnPushedStream) {
   SpdySerializedFrame reply(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
   AddRead(reply);
 
-  SpdySerializedFrame push_promise(spdy_util_.ConstructSpdyPushPromise(
-      1, 2, spdy_util_.ConstructGetHeaderBlock(kPushUrl)));
+  SpdySerializedFrame push_promise(spdy_util_.ConstructInitialSpdyPushFrame(
+      spdy_util_.ConstructGetHeaderBlock(kPushUrl), 2, 1));
   AddRead(push_promise);
 
   SpdySerializedFrame priority(
@@ -870,8 +849,8 @@ TEST_F(SpdyStreamTest, HeadersMustPreceedDataOnPushedStream) {
   SpdySerializedFrame reply(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
   AddRead(reply);
 
-  SpdySerializedFrame push_promise(spdy_util_.ConstructSpdyPushPromise(
-      1, 2, spdy_util_.ConstructGetHeaderBlock(kPushUrl)));
+  SpdySerializedFrame push_promise(spdy_util_.ConstructInitialSpdyPushFrame(
+      spdy_util_.ConstructGetHeaderBlock(kPushUrl), 2, 1));
   AddRead(push_promise);
 
   SpdySerializedFrame priority(

@@ -17,7 +17,6 @@
 #include "base/strings/string16.h"
 #include "content/browser/service_worker/service_worker_registration_status.h"
 #include "content/common/service_worker/service_worker.mojom.h"
-#include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
@@ -129,8 +128,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       service_worker_dispatcher_host_unittest::BackgroundSyncManagerTest,
       RegisterWithoutLiveSWRegistration);
 
-  using StatusCallback =
-      base::OnceCallback<void(ServiceWorkerStatusCode status)>;
+  using StatusCallback = base::Callback<void(ServiceWorkerStatusCode status)>;
   enum class ProviderStatus { OK, NO_CONTEXT, DEAD_HOST, NO_HOST, NO_URL };
   // Debugging for https://crbug.com/750267
   enum class Phase { kInitial, kAddedToContext, kRemovedFromContext };
@@ -157,28 +155,36 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
       ServiceWorkerProviderHost* sender_provider_host,
-      StatusCallback callback);
-  template <typename SourceInfoPtr>
+      const StatusCallback& callback);
+  template <typename SourceInfo>
   void DispatchExtendableMessageEventInternal(
       scoped_refptr<ServiceWorkerVersion> worker,
       const base::string16& message,
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
       const base::Optional<base::TimeDelta>& timeout,
-      StatusCallback callback,
-      SourceInfoPtr source_info);
-  template <typename SourceInfoPtr>
+      const StatusCallback& callback,
+      const SourceInfo& source_info);
   void DispatchExtendableMessageEventAfterStartWorker(
       scoped_refptr<ServiceWorkerVersion> worker,
       const base::string16& message,
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
-      SourceInfoPtr source_info,
+      const ExtendableMessageEventSource& source,
       const base::Optional<base::TimeDelta>& timeout,
-      StatusCallback callback,
+      const StatusCallback& callback);
+  template <typename SourceInfo>
+  void DidFailToDispatchExtendableMessageEvent(
+      const std::vector<blink::MessagePortChannel>& sent_message_ports,
+      const SourceInfo& source_info,
+      const StatusCallback& callback,
       ServiceWorkerStatusCode status);
-  void ReleaseSourceInfo(blink::mojom::ServiceWorkerClientInfoPtr source_info);
-  void ReleaseSourceInfo(blink::mojom::ServiceWorkerObjectInfoPtr source_info);
+  bool IsValidSourceInfo(const ServiceWorkerClientInfo& source_info);
+  bool IsValidSourceInfo(
+      const blink::mojom::ServiceWorkerObjectInfo& source_info);
+  void ReleaseSourceInfo(const ServiceWorkerClientInfo& source_info);
+  void ReleaseSourceInfo(
+      const blink::mojom::ServiceWorkerObjectInfo& source_info);
 
   ServiceWorkerContextCore* GetContext();
 

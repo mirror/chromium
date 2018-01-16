@@ -105,10 +105,6 @@ content::WebContents* GetWebContentsFromJavaTab(
   return tab->web_contents();
 }
 
-void SavePageLaterCallback(AddRequestResult result) {
-  // do nothing.
-}
-
 void SavePageIfNotNavigatedAway(const GURL& url,
                                 const GURL& original_url,
                                 const ScopedJavaGlobalRef<jobject>& j_tab_ref,
@@ -145,8 +141,7 @@ void SavePageIfNotNavigatedAway(const GURL& url,
           RequestCoordinator::RequestAvailability::DISABLED_FOR_OFFLINER;
       params.original_url = original_url;
       params.request_origin = origin;
-      request_id = request_coordinator->SavePageLater(
-          params, base::Bind(&SavePageLaterCallback));
+      request_id = request_coordinator->SavePageLater(params);
     } else {
       DVLOG(1) << "SavePageIfNotNavigatedAway has no valid coordinator.";
     }

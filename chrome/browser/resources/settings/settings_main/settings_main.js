@@ -5,7 +5,7 @@
 /**
  * @typedef {{about: boolean, settings: boolean}}
  */
-let MainPageVisibility;
+var MainPageVisibility;
 
 /**
  * @fileoverview
@@ -123,14 +123,14 @@ Polymer({
    * @private
    */
   setOverscroll_: function(opt_minHeight) {
-    const scroller = this.offsetParent;
+    var scroller = this.offsetParent;
     if (!scroller)
       return;
-    const overscroll = this.$.overscroll;
-    const visibleBottom = scroller.scrollTop + scroller.clientHeight;
-    const overscrollBottom = overscroll.offsetTop + overscroll.scrollHeight;
+    var overscroll = this.$.overscroll;
+    var visibleBottom = scroller.scrollTop + scroller.clientHeight;
+    var overscrollBottom = overscroll.offsetTop + overscroll.scrollHeight;
     // How much of the overscroll is visible (may be negative).
-    const visibleOverscroll =
+    var visibleOverscroll =
         overscroll.scrollHeight - (overscrollBottom - visibleBottom);
     this.overscroll_ =
         Math.max(opt_minHeight || 0, Math.ceil(visibleOverscroll));
@@ -150,9 +150,9 @@ Polymer({
       this.ignoreScroll_ = true;
 
       // Prevent scrolling the container.
-      const scrollerWidth = this.offsetParent.clientWidth;
+      var scrollerWidth = this.offsetParent.clientWidth;
       this.offsetParent.style.overflow = 'hidden';
-      const scrollbarWidth = this.offsetParent.clientWidth - scrollerWidth;
+      var scrollbarWidth = this.offsetParent.clientWidth - scrollerWidth;
       this.offsetParent.style.width = 'calc(100% - ' + scrollbarWidth + 'px)';
     } else {
       this.ignoreScroll_ = false;
@@ -177,7 +177,7 @@ Polymer({
    * @private
    */
   updatePagesShown_: function() {
-    const inAbout = settings.routes.ABOUT.contains(settings.getCurrentRoute());
+    var inAbout = settings.routes.ABOUT.contains(settings.getCurrentRoute());
     this.showPages_ = {about: inAbout, settings: !inAbout};
 
     // Calculate and set the overflow padding.
@@ -215,18 +215,18 @@ Polymer({
    * @private
    */
   overscrollHeight_: function() {
-    const route = settings.getCurrentRoute();
+    var route = settings.getCurrentRoute();
     if (!route.section || route.isSubpage() || this.showPages_.about)
       return 0;
 
-    const page = this.getPage_(route);
-    const section = page && page.getSection(route.section);
+    var page = this.getPage_(route);
+    var section = page && page.getSection(route.section);
     if (!section || !section.offsetParent)
       return 0;
 
     // Find the distance from the section's top to the overscroll.
-    const sectionTop = section.offsetParent.offsetTop + section.offsetTop;
-    const distance = this.$.overscroll.offsetTop - sectionTop;
+    var sectionTop = section.offsetParent.offsetTop + section.offsetTop;
+    var distance = this.$.overscroll.offsetTop - sectionTop;
 
     return Math.max(0, this.offsetParent.clientHeight - distance);
   },
@@ -261,7 +261,7 @@ Polymer({
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const whenSearchDone =
+        var whenSearchDone =
             assert(this.getPage_(settings.routes.BASIC)).searchContents(query);
         whenSearchDone.then(result => {
           resolve();

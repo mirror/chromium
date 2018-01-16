@@ -292,11 +292,8 @@ void SingleThreadProxy::Stop() {
     // Take away the LayerTreeFrameSink before destroying things so it doesn't
     // try to call into its client mid-shutdown.
     host_impl_->ReleaseLayerTreeFrameSink();
-
-    // It is important to destroy LTHI before the Scheduler since it can make
-    // callbacks that access it during destruction cleanup.
-    host_impl_ = nullptr;
     scheduler_on_impl_thread_ = nullptr;
+    host_impl_ = nullptr;
   }
   layer_tree_host_ = nullptr;
 }
@@ -626,12 +623,6 @@ bool SingleThreadProxy::MainFrameWillHappenForTesting() {
   if (!scheduler_on_impl_thread_)
     return false;
   return scheduler_on_impl_thread_->MainFrameForTestingWillHappen();
-}
-
-void SingleThreadProxy::ClearHistoryOnNavigation() {
-  DCHECK(task_runner_provider_->IsImplThread());
-  if (scheduler_on_impl_thread_)
-    scheduler_on_impl_thread_->ClearHistoryOnNavigation();
 }
 
 void SingleThreadProxy::WillBeginImplFrame(const viz::BeginFrameArgs& args) {

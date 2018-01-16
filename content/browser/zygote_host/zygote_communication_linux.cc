@@ -16,7 +16,10 @@
 #include "base/pickle.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/unix_domain_socket.h"
+#include "content/browser/zygote_host/zygote_host_impl_linux.h"
 #include "content/common/zygote_commands_linux.h"
+#include "content/public/browser/content_browser_client.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
 #include "media/base/media_switches.h"
@@ -84,7 +87,7 @@ ssize_t ZygoteCommunication::ReadReply(void* buf, size_t buf_len) {
 
 pid_t ZygoteCommunication::ForkRequest(
     const std::vector<std::string>& argv,
-    const base::FileHandleMappingVector& mapping,
+    std::unique_ptr<PosixFileDescriptorInfo> mapping,
     const std::string& process_type) {
   DCHECK(init_);
 
@@ -110,7 +113,7 @@ pid_t ZygoteCommunication::ForkRequest(
 
   // Fork requests contain one file descriptor for the PID oracle, and one
   // more for each file descriptor mapping for the child process.
-  const size_t num_fds_to_send = 1 + mapping.size();
+  const size_t num_fds_to_send = 1 + mapping->GetMappingSize();
   pickle.WriteInt(num_fds_to_send);
 
   std::vector<int> fds;
@@ -121,9 +124,9 @@ pid_t ZygoteCommunication::ForkRequest(
   fds.push_back(peer_sock.get());
 
   // The rest come from mapping.
-  for (const auto& item : mapping) {
-    fds.push_back(item.first);
-    pickle.WriteUInt32(item.second);
+  for (size_t i = 0; i < mapping->GetMappingSize(); ++i) {
+    pickle.WriteUInt32(mapping->GetIDAt(i));
+    fds.push_back(mapping->GetFDAt(i));
   }
 
   // Sanity check that we've populated |fds| correctly.
@@ -134,6 +137,7 @@ pid_t ZygoteCommunication::ForkRequest(
     base::AutoLock lock(control_lock_);
     if (!SendMessage(pickle, &fds))
       return base::kNullProcessHandle;
+    mapping.reset();
     peer_sock.reset();
 
     {
@@ -197,6 +201,17 @@ pid_t ZygoteCommunication::ForkRequest(
       return base::kNullProcessHandle;
   }
 
+#if !defined(OS_OPENBSD)
+  // This is just a starting score for a renderer or extension (the
+  // only types of processes that will be started this way).  It will
+  // get adjusted as time goes on.  (This is the same value as
+  // chrome::kLowestRendererOomScore in chrome/chrome_constants.h, but
+  // that's not something we can include here.)
+  const int kLowestRendererOomScore = 300;
+  ZygoteHostImpl::GetInstance()->AdjustRendererOOMScore(
+      pid, kLowestRendererOomScore);
+#endif
+
   ZygoteChildBorn(pid);
   return pid;
 }
@@ -225,14 +240,13 @@ void ZygoteCommunication::ZygoteChildDied(pid_t process) {
   DCHECK_EQ(1U, num_erased);
 }
 
-void ZygoteCommunication::Init(
-    base::OnceCallback<pid_t(base::CommandLine*, base::ScopedFD*)> launcher) {
+void ZygoteCommunication::Init() {
   CHECK(!init_);
 
   base::FilePath chrome_path;
   CHECK(PathService::Get(base::FILE_EXE, &chrome_path));
-
   base::CommandLine cmd_line(chrome_path);
+
   cmd_line.AppendSwitchASCII(switches::kProcessType, switches::kZygoteProcess);
 
   const base::CommandLine& browser_command_line =
@@ -263,7 +277,9 @@ void ZygoteCommunication::Init(
   cmd_line.CopySwitchesFrom(browser_command_line, kForwardSwitches,
                             arraysize(kForwardSwitches));
 
-  pid_ = std::move(launcher).Run(&cmd_line, &control_fd_);
+  GetContentClient()->browser()->AppendExtraCommandLineSwitches(&cmd_line, -1);
+
+  pid_ = ZygoteHostImpl::GetInstance()->LaunchZygote(&cmd_line, &control_fd_);
 
   base::Pickle pickle;
   pickle.WriteInt(kZygoteCommandGetSandboxStatus);

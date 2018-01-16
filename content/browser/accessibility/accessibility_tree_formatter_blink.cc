@@ -283,13 +283,12 @@ base::string16 AccessibilityTreeFormatterBlink::ProcessTreeForOutput(
   }
 
   // Offscreen and Focused states are not in the state list.
-  bool offscreen = false;
-  dict.GetBoolean(STATE_OFFSCREEN, &offscreen);
-  if (offscreen)
+  bool value = false;
+  dict.GetBoolean(STATE_OFFSCREEN, &value);
+  if (value)
     WriteAttribute(false, STATE_OFFSCREEN, &line);
-  bool focused = false;
-  dict.GetBoolean(STATE_FOCUSED, &focused);
-  if (focused)
+  dict.GetBoolean(STATE_FOCUSED, &value);
+  if (value)
     WriteAttribute(false, STATE_FOCUSED, &line);
 
   WriteAttribute(false,
@@ -395,11 +394,11 @@ base::string16 AccessibilityTreeFormatterBlink::ProcessTreeForOutput(
     WriteAttribute(false, attr_string, &line);
   }
 
-  std::string actions_value;
-  if (dict.GetString("actions", &actions_value)) {
-    WriteAttribute(
-        false, base::StringPrintf("%s=%s", "actions", actions_value.c_str()),
-        &line);
+  std::string string_value;
+  if (dict.GetString("actions", &string_value)) {
+    WriteAttribute(false,
+                   base::StringPrintf("%s=%s", "actions", string_value.c_str()),
+                   &line);
   }
 
   for (const char* attribute_name : TREE_DATA_ATTRIBUTES) {

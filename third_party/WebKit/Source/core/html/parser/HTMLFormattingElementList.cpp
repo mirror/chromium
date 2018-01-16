@@ -37,9 +37,9 @@ namespace blink {
 // Noah's Ark of Formatting Elements can fit three of each element.
 static const size_t kNoahsArkCapacity = 3;
 
-HTMLFormattingElementList::HTMLFormattingElementList() = default;
+HTMLFormattingElementList::HTMLFormattingElementList() {}
 
-HTMLFormattingElementList::~HTMLFormattingElementList() = default;
+HTMLFormattingElementList::~HTMLFormattingElementList() {}
 
 Element* HTMLFormattingElementList::ClosestElementInScopeWithName(
     const AtomicString& target_name) {

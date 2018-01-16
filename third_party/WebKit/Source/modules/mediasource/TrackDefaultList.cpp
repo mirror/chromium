@@ -64,7 +64,7 @@ TrackDefault* TrackDefaultList::item(unsigned index) const {
   return track_defaults_[index].Get();
 }
 
-TrackDefaultList::TrackDefaultList() = default;
+TrackDefaultList::TrackDefaultList() {}
 
 TrackDefaultList::TrackDefaultList(
     const HeapVector<Member<TrackDefault>>& track_defaults)

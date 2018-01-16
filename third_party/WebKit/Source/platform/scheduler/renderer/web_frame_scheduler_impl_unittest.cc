@@ -25,8 +25,8 @@ namespace web_frame_scheduler_impl_unittest {
 
 class WebFrameSchedulerImplTest : public ::testing::Test {
  public:
-  WebFrameSchedulerImplTest() = default;
-  ~WebFrameSchedulerImplTest() override = default;
+  WebFrameSchedulerImplTest() {}
+  ~WebFrameSchedulerImplTest() override {}
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));

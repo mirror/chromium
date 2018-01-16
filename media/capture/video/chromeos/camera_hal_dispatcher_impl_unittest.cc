@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "media/capture/video/chromeos/mojo/arc_camera3_service.mojom.h"
@@ -127,8 +128,8 @@ class CameraHalDispatcherImplTest : public ::testing::Test {
 TEST_F(CameraHalDispatcherImplTest, ServerConnectionError) {
   // First verify that a the CameraHalDispatcherImpl establishes a Mojo channel
   // between the server and the client.
-  auto mock_server = std::make_unique<MockCameraHalServer>();
-  auto mock_client = std::make_unique<MockCameraHalClient>();
+  auto mock_server = base::MakeUnique<MockCameraHalServer>();
+  auto mock_client = base::MakeUnique<MockCameraHalClient>();
 
   EXPECT_CALL(*mock_server, DoCreateChannel(_)).Times(1);
   EXPECT_CALL(*mock_client, DoSetUpChannel(_))
@@ -151,7 +152,7 @@ TEST_F(CameraHalDispatcherImplTest, ServerConnectionError) {
   DoLoop();
 
   // Re-create a new server to simulate a server crash.
-  mock_server = std::make_unique<MockCameraHalServer>();
+  mock_server = base::MakeUnique<MockCameraHalServer>();
 
   // Make sure we creates a new Mojo channel from the new server to the same
   // client.
@@ -176,8 +177,8 @@ TEST_F(CameraHalDispatcherImplTest, ServerConnectionError) {
 TEST_F(CameraHalDispatcherImplTest, ClientConnectionError) {
   // First verify that a the CameraHalDispatcherImpl establishes a Mojo channel
   // between the server and the client.
-  auto mock_server = std::make_unique<MockCameraHalServer>();
-  auto mock_client = std::make_unique<MockCameraHalClient>();
+  auto mock_server = base::MakeUnique<MockCameraHalServer>();
+  auto mock_client = base::MakeUnique<MockCameraHalClient>();
 
   EXPECT_CALL(*mock_server, DoCreateChannel(_)).Times(1);
   EXPECT_CALL(*mock_client, DoSetUpChannel(_))
@@ -200,7 +201,7 @@ TEST_F(CameraHalDispatcherImplTest, ClientConnectionError) {
   DoLoop();
 
   // Re-create a new server to simulate a server crash.
-  mock_client = std::make_unique<MockCameraHalClient>();
+  mock_client = base::MakeUnique<MockCameraHalClient>();
 
   // Make sure we re-create the Mojo channel from the same server to the new
   // client.

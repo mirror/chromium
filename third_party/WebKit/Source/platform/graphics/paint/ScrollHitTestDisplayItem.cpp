@@ -22,7 +22,7 @@ ScrollHitTestDisplayItem::ScrollHitTestDisplayItem(
   DCHECK(scroll_offset_node_->ScrollNode());
 }
 
-ScrollHitTestDisplayItem::~ScrollHitTestDisplayItem() = default;
+ScrollHitTestDisplayItem::~ScrollHitTestDisplayItem() {}
 
 void ScrollHitTestDisplayItem::Replay(GraphicsContext&) const {
   NOTREACHED();

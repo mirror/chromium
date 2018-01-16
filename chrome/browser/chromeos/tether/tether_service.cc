@@ -10,15 +10,14 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
 #include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/ash/network/tether_notification_presenter.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/components/tether/gms_core_notifications_state_tracker_impl.h"
-#include "chromeos/components/tether/tether_component.h"
 #include "chromeos/components/tether/tether_component_impl.h"
 #include "chromeos/components/tether/tether_host_fetcher_impl.h"
 #include "chromeos/network/device_state.h"
@@ -81,10 +80,10 @@ bool TetherService::IsFeatureFlagEnabled() {
 
 // static.
 std::string TetherService::TetherFeatureStateToString(
-    const TetherFeatureState& state) {
+    TetherFeatureState state) {
   switch (state) {
-    case (TetherFeatureState::SHUT_DOWN):
-      return "[TetherService shut down]";
+    case (TetherFeatureState::OTHER_OR_UNKNOWN):
+      return "[other or unknown]";
     case (TetherFeatureState::BLE_ADVERTISING_NOT_SUPPORTED):
       return "[BLE advertising not supported]";
     case (TetherFeatureState::NO_AVAILABLE_HOSTS):
@@ -101,17 +100,10 @@ std::string TetherService::TetherFeatureStateToString(
       return "[Enabled]";
     case (TetherFeatureState::BLE_NOT_PRESENT):
       return "[BLE is not present on the device]";
-    case (TetherFeatureState::WIFI_NOT_PRESENT):
-      return "[Wi-Fi is not present on the device]";
-    case (TetherFeatureState::SUSPENDED):
-      return "[Suspended]";
-    case (TetherFeatureState::TETHER_FEATURE_STATE_MAX):
+    default:
       // |previous_feature_state_| is initialized to TETHER_FEATURE_STATE_MAX,
       // and this value is never actually used in practice.
       return "[TetherService initializing]";
-    default:
-      NOTREACHED();
-      return "[Invalid state]";
   }
 }
 
@@ -210,42 +202,8 @@ void TetherService::StopTetherIfNecessary() {
 
   PA_LOG(INFO) << "Shutting down TetherComponent.";
 
-  chromeos::tether::TetherComponent::ShutdownReason shutdown_reason;
-  switch (GetTetherFeatureState()) {
-    case SHUT_DOWN:
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::USER_LOGGED_OUT;
-      break;
-    case SUSPENDED:
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::USER_CLOSED_LID;
-      break;
-    case CELLULAR_DISABLED:
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::CELLULAR_DISABLED;
-      break;
-    case BLUETOOTH_DISABLED:
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::BLUETOOTH_DISABLED;
-      break;
-    case USER_PREFERENCE_DISABLED:
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::PREF_DISABLED;
-      break;
-    case BLE_NOT_PRESENT:
-      shutdown_reason = chromeos::tether::TetherComponent::ShutdownReason::
-          BLUETOOTH_CONTROLLER_DISAPPEARED;
-      break;
-    default:
-      PA_LOG(ERROR) << "Unexpected shutdown reason. FeatureState is "
-                    << GetTetherFeatureState() << ".";
-      shutdown_reason =
-          chromeos::tether::TetherComponent::ShutdownReason::OTHER;
-      break;
-  }
-
   tether_component_->AddObserver(this);
-  tether_component_->RequestShutdown(shutdown_reason);
+  tether_component_->RequestShutdown();
 }
 
 void TetherService::Shutdown() {
@@ -420,8 +378,7 @@ TetherService::GetTetherTechnologyState() {
   }
 
   switch (new_feature_state) {
-    case SHUT_DOWN:
-    case SUSPENDED:
+    case OTHER_OR_UNKNOWN:
     case BLE_NOT_PRESENT:
     case BLE_ADVERTISING_NOT_SUPPORTED:
     case WIFI_NOT_PRESENT:
@@ -536,11 +493,8 @@ bool TetherService::IsEnabledbyPreference() const {
 }
 
 TetherService::TetherFeatureState TetherService::GetTetherFeatureState() {
-  if (shut_down_)
-    return SHUT_DOWN;
-
-  if (suspended_)
-    return SUSPENDED;
+  if (shut_down_ || suspended_)
+    return OTHER_OR_UNKNOWN;
 
   if (!IsBluetoothPresent())
     return BLE_NOT_PRESENT;
@@ -575,15 +529,6 @@ TetherService::TetherFeatureState TetherService::GetTetherFeatureState() {
 void TetherService::RecordTetherFeatureState() {
   TetherFeatureState tether_feature_state = GetTetherFeatureState();
   DCHECK(tether_feature_state != TetherFeatureState::TETHER_FEATURE_STATE_MAX);
-
-  // If the feature is shut down, there is no need to log a metric. Since this
-  // state occurs every time the user logs out (as of crbug.com/782879), logging
-  // a metric here does not provide any value since it does not indicate
-  // anything about how the user utilizes Instant Tethering and would dilute the
-  // contributions of meaningful states.
-  if (tether_feature_state == TetherFeatureState::SHUT_DOWN)
-    return;
-
   UMA_HISTOGRAM_ENUMERATION("InstantTethering.FeatureState",
                             tether_feature_state,
                             TetherFeatureState::TETHER_FEATURE_STATE_MAX);

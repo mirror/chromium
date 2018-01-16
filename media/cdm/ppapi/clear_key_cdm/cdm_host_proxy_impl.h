@@ -20,10 +20,6 @@ class CdmHostProxyImpl : public CdmHostProxy {
   explicit CdmHostProxyImpl(HostInterface* host) : host_(host) {}
   ~CdmHostProxyImpl() override {}
 
-  void OnInitialized(bool success) final {
-    return host_->OnInitialized(success);
-  }
-
   cdm::Buffer* Allocate(uint32_t capacity) final {
     return host_->Allocate(capacity);
   }
@@ -110,9 +106,7 @@ class CdmHostProxyImpl : public CdmHostProxy {
     return host_->CreateFileIO(client);
   }
 
-  cdm::CdmProxy* CreateCdmProxy(cdm::CdmProxyClient* client) final {
-    return host_->CreateCdmProxy(client);
-  }
+  cdm::CdmProxy* CreateCdmProxy() final { return host_->CreateCdmProxy(); }
 
   void RequestStorageId(uint32_t version) final {
     host_->RequestStorageId(version);
@@ -127,13 +121,7 @@ class CdmHostProxyImpl : public CdmHostProxy {
 // Specialization for cdm::Host_9 methods.
 
 template <>
-void CdmHostProxyImpl<cdm::Host_9>::OnInitialized(bool /* success */) {
-  // OnInitialized() doesn't exist on Host_9.
-}
-
-template <>
-cdm::CdmProxy* CdmHostProxyImpl<cdm::Host_9>::CreateCdmProxy(
-    cdm::CdmProxyClient* /* client */) {
+cdm::CdmProxy* CdmHostProxyImpl<cdm::Host_9>::CreateCdmProxy() {
   NOTREACHED() << "cdm::ContentDecryptionModule_9 CDM should never call this.";
   return nullptr;
 }

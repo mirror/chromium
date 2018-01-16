@@ -39,7 +39,6 @@ TEST(FileTest, Create) {
     File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
     EXPECT_FALSE(file.IsValid());
     EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, file.error_details());
-    EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, base::File::GetLastFileError());
   }
 
   {
@@ -81,7 +80,6 @@ TEST(FileTest, Create) {
     EXPECT_FALSE(file.IsValid());
     EXPECT_FALSE(file.created());
     EXPECT_EQ(base::File::FILE_ERROR_EXISTS, file.error_details());
-    EXPECT_EQ(base::File::FILE_ERROR_EXISTS, base::File::GetLastFileError());
   }
 
   {

@@ -6,15 +6,6 @@ var AutomationEvent = chrome.automation.AutomationEvent;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
 
-// CrosSelectToSpeakStartSpeechMethod enums.
-// These values are persited to logs and should not be renumbered or re-used.
-// See tools/metrics/histograms/enums.xml.
-const START_SPEECH_METHOD_MOUSE = 0;
-const START_SPEECH_METHOD_KEYSTROKE = 1;
-// The number of enum values in CrosSelectToSpeapStartSpeechMethod. This should
-// be kept in sync with the enum count in tools/metrics/histograms/enums.xml.
-const START_SPEECH_METHOD_COUNT = 2;
-
 /**
  * Return the rect that encloses two points.
  * @param {number} x1 The first x coordinate.
@@ -106,8 +97,8 @@ function getNodeState(node) {
     return NodeState.NODE_STATE_INVISIBLE;
   }
   // Walk up the tree to make sure the window it is in is not invisible.
-  var window = getNearestContainingWindow(node);
-  if (window != null && window.state[chrome.automation.StateType.INVISIBLE]) {
+  var parent = getNearestContainingWindow(node);
+  if (parent != null && parent.state[chrome.automation.StateType.INVISIBLE]) {
     return NodeState.NODE_STATE_INVISIBLE;
   }
   // TODO: Also need a check for whether the window is minimized,
@@ -179,8 +170,7 @@ function getNextWordEnd(text, indexAfter, nodeGroupItem) {
     if (nodeGroupItem.node.wordEnds[i] + nodeGroupItem.startChar < indexAfter) {
       continue;
     }
-    let result = nodeGroupItem.node.wordEnds[i] + nodeGroupItem.startChar;
-    return text.length > result ? result : text.length;
+    return nodeGroupItem.node.wordEnds[i] + nodeGroupItem.startChar;
   }
   // Default.
   return text.length;
@@ -210,17 +200,6 @@ function nextWordHelper(text, indexAfter, re, defaultValue) {
 }
 
 /**
- * Returns true if a node should be ignored by Select-to-Speak.
- * @param {AutomationNode} node The node to test
- * @return {boolean} whether this node should be ignored.
- */
-function shouldIgnoreNode(node) {
-  return (
-      !node.name || !node.location || node.state.offscreen ||
-      node.state.invisible);
-}
-
-/**
  * Finds all nodes within the subtree rooted at |node| that overlap
  * a given rectangle.
  * @param {AutomationNode} node The starting node.
@@ -240,9 +219,8 @@ function findAllMatching(node, rect, nodes) {
   if (found)
     return true;
 
-  // Closure needs node.location check here to allow the next few
-  // lines to compile.
-  if (shouldIgnoreNode(node) || node.location === undefined)
+  if (!node.name || !node.location || node.state.offscreen ||
+      node.state.invisible)
     return false;
 
   if (overlaps(node.location, rect)) {
@@ -259,48 +237,6 @@ function findAllMatching(node, rect, nodes) {
   return false;
 }
 
-/**
- * Class representing a position on the accessibility, made of a
- * selected node and the offset of that selection.
- * @typedef {{node: (!AutomationNode),
- *            offset: (number)}}
- */
-var Position;
-
-/**
- * Finds the deep equivalent node where a selection starts given a node
- * object and selection offset. This is meant to be used in conjunction with
- * the anchorObject/anchorOffset and focusObject/focusOffset of the
- * automation API.
- * @param {AutomationNode} parent The parent node of the selection,
- * similar to chrome.automation.focusObject.
- * @param {number} offset The integer offset of the selection. This is
- * similar to chrome.automation.focusOffset.
- * @return {!Position} The node matching the selected offset.
- */
-function getDeepEquivalentForSelection(parent, offset) {
-  if (parent.children.length == 0)
-    return {node: parent, offset: offset};
-  // Create a stack of children nodes to search through.
-  let nodesToCheck = parent.children.slice().reverse();
-  let index = 0;
-  var node;
-  // Delve down into the children recursively to find the
-  // one at this offset.
-  while (nodesToCheck.length > 0) {
-    node = nodesToCheck.pop();
-    if (node.children.length > 0) {
-      nodesToCheck = nodesToCheck.concat(node.children.slice().reverse());
-    } else {
-      index += node.name ? node.name.length : 0;
-      if (index > offset) {
-        return {node: node, offset: offset - index + node.name.length};
-      }
-    }
-  }
-  // We are off the end of the last node.
-  return {node: node, offset: node.name.length};
-}
 
 
 /**
@@ -318,9 +254,6 @@ var SelectToSpeak = function() {
 
   /** @private {boolean} */
   this.isSearchKeyDown_ = false;
-
-  /** @private {boolean} */
-  this.isSelectionKeyDown_ = false;
 
   /** @private {!Set<number>} */
   this.keysCurrentlyDown_ = new Set();
@@ -394,16 +327,6 @@ var SelectToSpeak = function() {
    */
   this.intervalId_;
 
-  // Enable reading selection at keystroke when experimental accessibility
-  // features are enabled.
-  // TODO(katie): When the feature is approved, remove this variable and
-  // callback. The feature will be always enabled.
-  this.readSelectionEnabled_ = false;
-  chrome.commandLinePrivate.hasSwitch(
-      'enable-experimental-accessibility-features', (result) => {
-        this.readSelectionEnabled_ = result;
-      });
-
   this.initPreferences_();
 
   this.setUpEventListeners_();
@@ -414,9 +337,6 @@ SelectToSpeak.SEARCH_KEY_CODE = 91;
 
 /** @const {number} */
 SelectToSpeak.CONTROL_KEY_CODE = 17;
-
-/** @const {number} */
-SelectToSpeak.READ_SELECTION_KEY_CODE = 83;
 
 /** @const {number} */
 SelectToSpeak.NODE_STATE_TEST_INTERVAL_MS = 1000;
@@ -433,9 +353,7 @@ SelectToSpeak.prototype = {
    *    handlers to run.
    */
   onMouseDown_: function(evt) {
-    // If the user hasn't clicked 'search', or if they are currently
-    // trying to highlight a selection, don't track the mouse.
-    if (!this.isSearchKeyDown_ || this.isSelectionKeyDown_)
+    if (!this.isSearchKeyDown_)
       return false;
 
     this.trackingMouse_ = true;
@@ -510,7 +428,6 @@ SelectToSpeak.prototype = {
     // container. In the future we might include other container-like
     // roles here.
     var root = evt.target;
-    // TODO: Use AutomationPredicate.root instead?
     while (root.parent && root.role != RoleType.WINDOW &&
            root.role != RoleType.ROOT_WEB_AREA &&
            root.role != RoleType.DESKTOP && root.role != RoleType.DIALOG &&
@@ -531,7 +448,7 @@ SelectToSpeak.prototype = {
       if (!findAllMatching(root, rect, nodes) && focusedNode)
         findAllMatching(focusedNode.root, rect, nodes);
       this.startSpeechQueue_(nodes);
-      this.recordStartEvent_(START_SPEECH_METHOD_MOUSE);
+      this.recordStartEvent_();
     }.bind(this));
   },
 
@@ -542,12 +459,6 @@ SelectToSpeak.prototype = {
     if (this.keysPressedTogether_.size == 0 &&
         evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
       this.isSearchKeyDown_ = true;
-    } else if (
-        this.readSelectionEnabled_ && this.keysCurrentlyDown_.size == 1 &&
-        evt.keyCode == SelectToSpeak.READ_SELECTION_KEY_CODE &&
-        !this.trackingMouse_) {
-      // Only go into selection mode if we aren't already tracking the mouse.
-      this.isSelectionKeyDown_ = true;
     } else if (!this.trackingMouse_) {
       this.isSearchKeyDown_ = false;
     }
@@ -560,14 +471,7 @@ SelectToSpeak.prototype = {
    * @param {!Event} evt
    */
   onKeyUp_: function(evt) {
-    if (evt.keyCode == SelectToSpeak.READ_SELECTION_KEY_CODE &&
-        this.isSelectionKeyDown_ && this.keysPressedTogether_.size == 2 &&
-        this.keysPressedTogether_.has(evt.keyCode) &&
-        this.keysPressedTogether_.has(SelectToSpeak.SEARCH_KEY_CODE)) {
-      this.isSelectionKeyDown_ = false;
-      chrome.tts.isSpeaking(this.cancelIfSpeaking_.bind(this));
-      chrome.automation.getFocus(this.requestSpeakSelectedText_.bind(this));
-    } else if (evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
+    if (evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
       this.isSearchKeyDown_ = false;
 
       // If we were in the middle of tracking the mouse, cancel it.
@@ -593,79 +497,6 @@ SelectToSpeak.prototype = {
       this.keysPressedTogether_.clear();
       this.didTrackMouse_ = false;
     }
-  },
-
-  /**
-   * Queues up selected text for reading.
-   */
-  requestSpeakSelectedText_: function(focusedNode) {
-    // If nothing is selected, return early.
-    // TODO: Consider playing a tone to let the user know they did the correct
-    // keystroke but nothing was selected.
-    if (!focusedNode || !focusedNode.root || !focusedNode.root.anchorObject ||
-        !focusedNode.root.focusObject)
-      return;
-    let anchorObject = focusedNode.root.anchorObject;
-    let anchorOffset = focusedNode.root.anchorOffset || 0;
-    let focusObject = focusedNode.root.focusObject;
-    let focusOffset = focusedNode.root.focusOffset || 0;
-    if (anchorObject === focusObject && anchorOffset == focusOffset)
-      return;
-    let firstPosition;
-    let lastPosition;
-    let dir = AutomationUtil.getDirection(anchorObject, focusObject);
-    // Highlighting may be forwards or backwards. Make sure we start at the
-    // first node.
-    if (dir == constants.Dir.FORWARD) {
-      firstPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
-      lastPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
-    } else {
-      lastPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
-      firstPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
-    }
-
-    // Adjust such that non-text types don't have offsets into their names.
-    if (firstPosition.node.role != 'staticText' &&
-        firstPosition.node.role != 'inlineTextBox') {
-      firstPosition.offset = 0;
-    }
-    if (lastPosition.node.role != 'staticText' &&
-        lastPosition.node.role != 'inlineTextBox') {
-      lastPosition.offset = lastPosition.node.name.length;
-    }
-
-    let nodes = [];
-    let selectedNode = firstPosition.node;
-    if (firstPosition.offset < selectedNode.name.length) {
-      // Initialize to the first node in the list.
-      nodes.push(selectedNode);
-    } else {
-      // The selectedNode actually has no content selected. Let the list
-      // initialize itself to the next node in the loop below.
-      // This can happen if you click-and-drag starting after the text in
-      // a first line to highlight text in a second line.
-      firstPosition.offset = 0;
-    }
-    while (selectedNode && selectedNode != lastPosition.node &&
-           AutomationUtil.getDirection(selectedNode, lastPosition.node) ===
-               constants.Dir.FORWARD) {
-      // TODO: Is there a way to optimize the directionality checking of
-      // AutomationUtil.getDirection(selectedNode, finalNode)?
-      // For example, by making a helper and storing partial computation?
-      selectedNode = AutomationUtil.findNextNode(
-          selectedNode, constants.Dir.FORWARD,
-          AutomationPredicate.leafWithText);
-      if (selectedNode) {
-        if (!shouldIgnoreNode(selectedNode))
-          nodes.push(selectedNode);
-      } else {
-        break;
-      }
-    }
-
-    this.startSpeechQueue_(nodes, firstPosition.offset, lastPosition.offset);
-
-    this.recordStartEvent_(START_SPEECH_METHOD_KEYSTROKE);
   },
 
   /**
@@ -721,12 +552,8 @@ SelectToSpeak.prototype = {
   /**
    * Enqueue speech commands for all of the given nodes.
    * @param {Array<AutomationNode>} nodes The nodes to speak.
-   * @param {number=} opt_startIndex The index into the first node's text
-   * at which to start speaking. If this is not passed, will start at 0.
-   * @param {number=} opt_endIndex The index into the last node's text
-   * at which to end speech. If this is not passed, will stop at the end.
    */
-  startSpeechQueue_: function(nodes, opt_startIndex, opt_endIndex) {
+  startSpeechQueue_: function(nodes) {
     chrome.tts.stop();
     if (this.intervalRef_ !== undefined) {
       clearInterval(this.intervalRef_);
@@ -736,31 +563,12 @@ SelectToSpeak.prototype = {
         SelectToSpeak.NODE_STATE_TEST_INTERVAL_MS);
     for (var i = 0; i < nodes.length; i++) {
       let node = nodes[i];
+      let textToSpeak = '';
       let nodeGroup = buildNodeGroup(nodes, i);
-      if (i == 0) {
-        // We need to start in the middle of a node. Remove all text before
-        // the start index so that it is not spoken.
-        // Backfill with spaces so that index counting functions don't get
-        // confused.
-        // Must check opt_startIndex in its own if statement to make the
-        // Closure compiler happy.
-        if (opt_startIndex !== undefined) {
-          nodeGroup.text = ' '.repeat(opt_startIndex) +
-              nodeGroup.text.substr(opt_startIndex);
-        }
-      }
-      let isFirst = i == 0;
       // Advance i to the end of this group, to skip all nodes it contains.
       i = nodeGroup.endIndex;
+      textToSpeak = nodeGroup.text;
       let isLast = (i == nodes.length - 1);
-      if (isLast && opt_endIndex !== undefined) {
-        // We need to stop in the middle of a node. Remove all text after
-        // the end index so it is not spoken. Backfill with spaces so that
-        // index counting functions don't get confused.
-        nodeGroup.text = nodeGroup.text.substr(
-            0,
-            nodeGroup.text.length - (nodes[i].name.length - opt_endIndex) - 1);
-      }
       if (nodeGroup.nodes.length == 0 && !isLast) {
         continue;
       }
@@ -770,7 +578,7 @@ SelectToSpeak.prototype = {
         pitch: this.speechPitch_,
         'enqueue': true,
         onEvent:
-            (function(nodeGroup, isFirst, isLast, event) {
+            (function(nodeGroup, isLast, event) {
               if (event.type == 'start' && nodeGroup.nodes.length > 0) {
                 if (nodeGroup.endIndex != nodeGroup.startIndex) {
                   // The block parent only matters if the block has more
@@ -779,31 +587,14 @@ SelectToSpeak.prototype = {
                 } else {
                   this.currentBlockParent_ = null;
                 }
-                // The node group index may not be 0 if we are using
-                // opt_startIndex. For example, if the user highlighted
-                // partway through the second inlineTextBox in a
-                // paragraph.
                 this.currentNodeGroupIndex_ = 0;
-                if (opt_startIndex !== undefined && isFirst) {
-                  for (let i = 0; i < nodeGroup.nodes.length; i++) {
-                    if (opt_startIndex < nodeGroup.nodes[i].startChar +
-                            nodeGroup.nodes[i].node.name.length) {
-                      this.currentNodeGroupIndex_ = i;
-                      break;
-                    }
-                  }
-                }
                 this.currentNode_ =
                     nodeGroup.nodes[this.currentNodeGroupIndex_];
                 if (this.wordHighlight_) {
                   // At 'start', find the first word and highlight that.
                   // Clear the previous word in the node.
                   this.currentNodeWord_ = null;
-                  // If this is the first nodeGroup, pass the opt_startIndex.
-                  // If this is the last nodeGroup, pass the opt_endIndex.
-                  this.updateNodeHighlight_(
-                      nodeGroup.text, 0, isFirst ? opt_startIndex : undefined,
-                      isLast ? opt_endIndex : undefined);
+                  this.updateNodeHighlight_(nodeGroup.text, 0);
                 } else {
                   this.testCurrentNode_();
                 }
@@ -828,6 +619,8 @@ SelectToSpeak.prototype = {
                     // Move to the next node.
                     this.currentNodeGroupIndex_ += 1;
                     this.currentNode_ = next;
+                    // TODO: If the next node is a non-word character, like an
+                    // open or closed paren, we should keep moving.
                     this.currentNodeWord_ = null;
                     if (!this.wordHighlight_) {
                       // If we are doing a per-word highlight, we will test the
@@ -838,14 +631,12 @@ SelectToSpeak.prototype = {
                   }
                 }
                 if (this.wordHighlight_) {
-                  this.updateNodeHighlight_(
-                      nodeGroup.text, event.charIndex, undefined,
-                      isLast ? opt_endIndex : undefined);
+                  this.updateNodeHighlight_(nodeGroup.text, event.charIndex);
                 } else {
                   this.currentNodeWord_ = null;
                 }
               }
-            }).bind(this, nodeGroup, isFirst, isLast)
+            }).bind(this, nodeGroup, isLast)
       };
 
       // Pick the voice name from prefs first, or the one that matches
@@ -871,7 +662,7 @@ SelectToSpeak.prototype = {
         options['voiceName'] = this.voiceNameFromLocale_;
       }
 
-      chrome.tts.speak(nodeGroup.text || '', options);
+      chrome.tts.speak(textToSpeak || '', options);
     }
   },
 
@@ -897,36 +688,17 @@ SelectToSpeak.prototype = {
   },
 
   /**
-   * Converts the speech pitch into an enum based on
-   * tools/metrics/histograms/enums.xml.
-   * These values are persisted to logs. Entries should not be
-   * renumbered and numeric values should never be reused.
-   * @return {number} the current speech pitch as an int for metrics.
-   */
-  speechPitchToSparceHistogramInt_: function() {
-    return this.speechPitch_ * 100;
-  },
-
-  /**
    * Records an event that Select-to-Speak has begun speaking.
-   * @param {number} method The CrosSelectToSpeakStartSpeechMethod enum
-   *    that reflects how this event was triggered by the user.
    */
-  recordStartEvent_: function(method) {
+  recordStartEvent_: function() {
     chrome.metricsPrivate.recordUserAction(
         'Accessibility.CrosSelectToSpeak.StartSpeech');
     chrome.metricsPrivate.recordSparseValue(
         'Accessibility.CrosSelectToSpeak.SpeechRate',
         this.speechRateToSparceHistogramInt_());
-    chrome.metricsPrivate.recordSparseValue(
-        'Accessibility.CrosSelectToSpeak.SpeechPitch',
-        this.speechPitchToSparceHistogramInt_());
     chrome.metricsPrivate.recordBoolean(
         'Accessibility.CrosSelectToSpeak.WordHighlighting',
         this.wordHighlight_);
-    chrome.metricsPrivate.recordEnumerationValue(
-        'Accessibility.CrosSelectToSpeak.StartSpeechMethod', method,
-        START_SPEECH_METHOD_COUNT);
   },
 
   /**
@@ -1112,22 +884,11 @@ SelectToSpeak.prototype = {
     if (this.currentNode_ == null) {
       return;
     }
-    chrome.automation.getFocus(function(focusedNode) {
-      var window = getNearestContainingWindow(evt.target);
-      var currentWindow = getNearestContainingWindow(this.currentNode_.node);
-      var inForeground =
-          currentWindow != null && window != null && currentWindow == window;
-      if (!inForeground && focusedNode && currentWindow) {
-        // See if the focused node window matches the currentWindow.
-        // This may happen in some cases, for example, ARC++, when the window
-        // which received the hit test request is not part of the tree that
-        // contains the actual content. In such cases, use focus to get the
-        // appropriate root.
-        var focusedWindow = getNearestContainingWindow(focusedNode.root);
-        inForeground = focusedWindow != null && currentWindow == focusedWindow;
-      }
-      this.updateFromNodeState_(this.currentNode_.node, inForeground);
-    }.bind(this));
+    var parent = getNearestContainingWindow(evt.target);
+    var currentParent = getNearestContainingWindow(this.currentNode_.node);
+    var inForeground =
+        currentParent != null && parent != null && currentParent == parent;
+    this.updateFromNodeState_(this.currentNode_.node, inForeground);
   },
 
   /**
@@ -1135,26 +896,17 @@ SelectToSpeak.prototype = {
    * and the character index of an event.
    * @param {string} text The current text
    * @param {number} charIndex The index of a current event in the text.
-   * @param {number=} opt_startIndex The index at which to start the highlight.
-   * This takes precedence over the charIndex.
-   * @param {number=} opt_endIndex The index at which to end the highlight. This
-   * takes precedence over the next word end.
    */
-  updateNodeHighlight_: function(
-      text, charIndex, opt_startIndex, opt_endIndex) {
-    if (charIndex >= text.length) {
+  updateNodeHighlight_: function(text, charIndex) {
+    if (charIndex >= text.length - 1) {
       // No need to do work if we are at the end of the paragraph.
       return;
     }
     // Get the next word based on the event's charIndex.
     let nextWordStart = getNextWordStart(text, charIndex, this.currentNode_);
-    let nextWordEnd = getNextWordEnd(
-        text, opt_startIndex === undefined ? nextWordStart : opt_startIndex,
-        this.currentNode_);
+    let nextWordEnd = getNextWordEnd(text, nextWordStart, this.currentNode_);
     // Map the next word into the node's index from the text.
-    let nodeStart = opt_startIndex === undefined ?
-        nextWordStart - this.currentNode_.startChar :
-        opt_startIndex - this.currentNode_.startChar;
+    let nodeStart = nextWordStart - this.currentNode_.startChar;
     let nodeEnd = Math.min(
         nextWordEnd - this.currentNode_.startChar,
         this.currentNode_.node.name.length);
@@ -1169,34 +921,5 @@ SelectToSpeak.prototype = {
       this.currentNodeWord_ = {'start': nodeStart, 'end': nodeEnd};
       this.testCurrentNode_();
     }
-  },
-
-  // ---------- Functionality for testing ---------- //
-
-  /**
-   * Fires a mock key down event for testing.
-   * @param {!Event} event The fake key down event to fire. The object
-   * must contain at minimum a keyCode.
-   */
-  fireMockKeyDownEvent: function(event) {
-    this.onKeyDown_(event);
-  },
-
-  /**
-   * Fires a mock key up event for testing.
-   * @param {!Event} event The fake key up event to fire. The object
-   * must contain at minimum a keyCode.
-   */
-  fireMockKeyUpEvent: function(event) {
-    this.onKeyUp_(event);
-  },
-
-  /**
-   * Overrides default setting to read selected text and enables the
-   * ability to read selected text at a keystroke. Should only be used
-   * for testing.
-   */
-  enableReadSelectedTextForTesting: function() {
-    this.readSelectionEnabled_ = true;
   }
 };

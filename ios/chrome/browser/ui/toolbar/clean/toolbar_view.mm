@@ -130,7 +130,7 @@
 
 - (void)setUpToolbarButtons {
   self.backButton = [self.buttonFactory backButton];
-  self.forwardButton = [self.buttonFactory leadingForwardButton];
+  self.forwardButton = [self.buttonFactory forwardButton];
   self.tabSwitchStripButton = [self.buttonFactory tabSwitcherStripButton];
   self.toolsMenuButton = [self.buttonFactory toolsMenuButton];
   self.shareButton = [self.buttonFactory shareButton];
@@ -377,7 +377,7 @@
   // Stack views constraints.
   // Layout: |[leadingStackView]-[locationBarContainer]-[trailingStackView]|.
   // Safe Area constraints.
-  id<LayoutGuideProvider> viewSafeAreaGuide = SafeAreaLayoutGuideForView(self);
+  UILayoutGuide* viewSafeAreaGuide = SafeAreaLayoutGuideForView(self);
   self.leadingSafeAreaConstraint = [self.leadingStackView.leadingAnchor
       constraintEqualToAnchor:viewSafeAreaGuide.leadingAnchor
                      constant:self.leadingMargin];
@@ -454,21 +454,19 @@
 
   // LocationBarStackView constraints. The StackView inside the
   // LocationBarContainer View.
-  id<LayoutGuideProvider> locationBarContainerSafeAreaGuide =
+  UILayoutGuide* locationBarContainerSafeAreaGuide =
       SafeAreaLayoutGuideForView(self.locationBarContainer);
   [NSLayoutConstraint activateConstraints:@[
     [self.locationBarContainerStackView.bottomAnchor
         constraintEqualToAnchor:self.bottomAnchor
-                       constant:-kLocationBarVerticalMargin],
+                       constant:-(klocationBarStackViewBottomMargin +
+                                  kLocationBarVerticalMargin)],
     [self.locationBarContainerStackView.trailingAnchor
         constraintEqualToAnchor:locationBarContainerSafeAreaGuide
                                     .trailingAnchor],
     [self.locationBarContainerStackView.leadingAnchor
         constraintEqualToAnchor:locationBarContainerSafeAreaGuide
                                     .leadingAnchor],
-    [self.locationBarContainerStackView.heightAnchor
-        constraintEqualToConstant:kToolbarHeight -
-                                  2 * kLocationBarVerticalMargin],
   ]];
 }
 

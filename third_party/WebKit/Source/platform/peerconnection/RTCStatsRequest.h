@@ -42,7 +42,7 @@ class RTCStatsResponseBase;
 
 class RTCStatsRequest : public GarbageCollectedFinalized<RTCStatsRequest> {
  public:
-  virtual ~RTCStatsRequest() = default;
+  virtual ~RTCStatsRequest() {}
 
   virtual RTCStatsResponseBase* CreateResponse() = 0;
   virtual bool HasSelector() = 0;
@@ -52,7 +52,7 @@ class RTCStatsRequest : public GarbageCollectedFinalized<RTCStatsRequest> {
   virtual void Trace(blink::Visitor* visitor) {}
 
  protected:
-  RTCStatsRequest() = default;
+  RTCStatsRequest() {}
 };
 
 }  // namespace blink

@@ -15,7 +15,7 @@ namespace {
 
 class NinePieceImageGridTest : public RenderingTest {
  public:
-  NinePieceImageGridTest() = default;
+  NinePieceImageGridTest() {}
 
   StyleImage* GeneratedImage() {
     cssvalue::CSSGradientValue* gradient =

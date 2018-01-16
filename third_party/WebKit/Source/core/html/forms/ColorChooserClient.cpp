@@ -31,6 +31,6 @@
 
 namespace blink {
 
-ColorChooserClient::~ColorChooserClient() = default;
+ColorChooserClient::~ColorChooserClient() {}
 
 }  // namespace blink

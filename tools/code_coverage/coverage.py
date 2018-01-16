@@ -162,7 +162,6 @@ class _DirectoryCoverageReportHtmlGenerator(object):
 
     self._css_absolute_path = css_absolute_path
     self._table_entries = []
-    self._total_entry = {}
     template_dir = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), 'html_templates')
 
@@ -177,43 +176,27 @@ class _DirectoryCoverageReportHtmlGenerator(object):
 
     The link to be added is assumed to be an entry in this directory.
     """
-    table_entry = self._CreateTableEntryFromCoverageSummary(
-        summary, html_report_path, name,
-        os.path.basename(html_report_path) ==
-        DIRECTORY_COVERAGE_HTML_REPORT_NAME)
-    self._table_entries.append(table_entry)
-
-  def CreateTotalsEntry(self, summary):
-    """Creates an entry corresponds to the 'TOTALS' row in the html report."""
-    self._total_entry = self._CreateTableEntryFromCoverageSummary(summary)
-
-  def _CreateTableEntryFromCoverageSummary(self,
-                                           summary,
-                                           href=None,
-                                           name=None,
-                                           is_dir=None):
-    """Creates an entry to display in the html report."""
-    entry = {}
+    table_entry = {
+        'href':
+            html_report_path,
+        'name':
+            name,
+        'is_dir':
+            os.path.basename(html_report_path) ==
+            DIRECTORY_COVERAGE_HTML_REPORT_NAME
+    }
     summary_dict = summary.Get()
-    for feature in summary_dict:
+    for feature in summary_dict.keys():
       percentage = round((float(summary_dict[feature]['covered']
                                ) / summary_dict[feature]['total']) * 100, 2)
       color_class = self._GetColorClass(percentage)
-      entry[feature] = {
+      table_entry[feature] = {
           'total': summary_dict[feature]['total'],
           'covered': summary_dict[feature]['covered'],
           'percentage': percentage,
           'color_class': color_class
       }
-
-    if href != None:
-      entry['href'] = href
-    if name != None:
-      entry['name'] = name
-    if is_dir != None:
-      entry['is_dir'] = is_dir
-
-    return entry
+    self._table_entries.append(table_entry)
 
   def _GetColorClass(self, percentage):
     """Returns the css color class based on coverage percentage."""
@@ -248,8 +231,7 @@ class _DirectoryCoverageReportHtmlGenerator(object):
     css_path = os.path.join(OUTPUT_DIR, os.extsep.join(['style', 'css']))
     html_header = self._header_template.render(
         css_path=os.path.relpath(css_path, os.path.dirname(output_path)))
-    html_table = self._table_template.render(
-        entries=self._table_entries, total_entry=self._total_entry)
+    html_table = self._table_template.render(entries=self._table_entries)
     html_footer = self._footer_template.render()
 
     with open(output_path, 'w') as html_file:
@@ -419,7 +401,6 @@ def _GenerateCoverageInHtmlForDirectory(
           entry_html_report_relative_path, os.path.basename(entry_path),
           per_file_coverage_summary[entry_path])
 
-  html_generator.CreateTotalsEntry(per_directory_coverage_summary[dir_path])
   html_generator.WriteHtmlCoverageReport(html_report_path)
 
 

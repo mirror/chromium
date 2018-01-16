@@ -1,23 +1,4 @@
 {
-    "AbusiveExperienceEnforce": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "AbusiveExperienceEnforce"
-                    ]
-                }
-            ]
-        }
-    ],
     "AccountConsistencyVariations": [
         {
             "platforms": [
@@ -762,6 +743,34 @@
             ]
         }
     ],
+    "ChromeHome": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Default"
+                },
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "ChromeHome"
+                    ],
+                    "disable_features": [
+                        "ChromeHomeExpandButton"
+                    ]
+                },
+                {
+                    "name": "Enabled_Button",
+                    "enable_features": [
+                        "ChromeHome",
+                        "ChromeHomeExpandButton"
+                    ]
+                }
+            ]
+        }
+    ],
     "ChromeHomeBottomNavLabels": [
         {
             "platforms": [
@@ -773,6 +782,9 @@
                     "enable_features": [
                         "ChromeHomeBottomNavLabels"
                     ]
+                },
+                {
+                    "name": "Default"
                 }
             ]
         }
@@ -784,7 +796,13 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled_3_Hours",
+                    "name": "Enabled",
+                    "enable_features": [
+                        "ChromeHomeInactivitySheetExpansion"
+                    ]
+                },
+                {
+                    "name": "3Hours",
                     "params": {
                         "time_since_backgrounded_in_mins": "180"
                     },
@@ -795,19 +813,20 @@
             ]
         }
     ],
-    "ChromeHomeSuggestionsMemoryReduction": [
+    "ChromeHomePromo": [
         {
             "platforms": [
                 "android"
             ],
             "experiments": [
                 {
-                    "name": "DropAllButFirstThumbnail",
+                    "name": "Default"
+                },
+                {
+                    "name": "Enabled",
                     "enable_features": [
-                        "ChromeHomeDropAllButFirstThumbnail"
-                    ],
-                    "disable_features": [
-                        "ChromeHomeDestroySuggestions"
+                        "ChromeHomeOptOutSnackbar",
+                        "ChromeHomePromo"
                     ]
                 }
             ]
@@ -840,7 +859,13 @@
             ],
             "experiments": [
                 {
-                    "name": "Disabled"
+                    "name": "Default"
+                },
+                {
+                    "name": "ForceTopSites",
+                    "disable_features": [
+                        "DisplaySuggestionsServiceTiles"
+                    ]
                 }
             ]
         }
@@ -1065,6 +1090,21 @@
             ]
         }
     ],
+    "DataReductionProxySiteBreakdown": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "DataReductionProxySiteBreakdown"
+                    ]
+                }
+            ]
+        }
+    ],
     "DecoupleTranslateLanguage": [
         {
             "platforms": [
@@ -1187,21 +1227,6 @@
             ]
         }
     ],
-    "DownloadHomeMoreButton": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "params": {
-                        "show_more_button": "true"
-                    }
-                }
-            ]
-        }
-    ],
     "DownloadableStrings": [
         {
             "platforms": [
@@ -1260,24 +1285,6 @@
             "experiments": [
                 {
                     "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "EnableCastDiscovery": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "EnableCastDiscovery"
-                    ]
                 }
             ]
         }
@@ -2956,6 +2963,25 @@
             ]
         }
     ],
+    "S13nSafeBrowsingParallelUrlCheck": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "CanaryDev_Enabled",
+                    "enable_features": [
+                        "S13nSafeBrowsingParallelUrlCheck"
+                    ]
+                }
+            ]
+        }
+    ],
     "SRTExperimentalEngineTrial": [
         {
             "platforms": [
@@ -3516,26 +3542,6 @@
             ]
         }
     ],
-    "SyncUSSTypedURL": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SyncUSSTypedURL"
-                    ]
-                }
-            ]
-        }
-    ],
     "TLS13Variant": [
         {
             "platforms": [
@@ -3548,19 +3554,13 @@
             ],
             "experiments": [
                 {
-                    "name": "Draft23V4",
-                    "params": {
-                        "variant": "draft23"
-                    }
-                },
-                {
-                    "name": "Experiment2V4",
+                    "name": "Experiment2V3",
                     "params": {
                         "variant": "experiment2"
                     }
                 },
                 {
-                    "name": "Draft22V4",
+                    "name": "Draft22V3",
                     "params": {
                         "variant": "draft22"
                     }
@@ -3675,12 +3675,11 @@
             ],
             "experiments": [
                 {
-                    "name": "Enforcement20180102",
+                    "name": "Enforcement20170329",
                     "params": {
-                        "translate-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/translate/translate_ranker_autoblacklist_20180102.model"
+                        "translate-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/translate/2017/03/translate_ranker_model_20170329.pb.bin"
                     },
                     "enable_features": [
-                        "TranslateRankerAutoBlacklistOverride",
                         "TranslateRankerEnforcement",
                         "TranslateRankerQuery"
                     ]
@@ -3872,12 +3871,6 @@
             "experiments": [
                 {
                     "name": "Experiment",
-                    "enable_features": [
-                        "UseHeuristicLanguageModel"
-                    ]
-                },
-                {
-                    "name": "Beta_Experiment",
                     "enable_features": [
                         "UseHeuristicLanguageModel"
                     ]

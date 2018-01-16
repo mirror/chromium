@@ -43,10 +43,10 @@ class EventFactoryBase {
 
  public:
   virtual Event* Create(ExecutionContext*, const String& event_type) = 0;
-  virtual ~EventFactoryBase() = default;
+  virtual ~EventFactoryBase() {}
 
  protected:
-  EventFactoryBase() = default;
+  EventFactoryBase() {}
 };
 
 class EventFactory final : public EventFactoryBase {

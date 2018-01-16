@@ -9,7 +9,7 @@
 
 namespace blink {
 
-NavigatorPresentation::NavigatorPresentation() = default;
+NavigatorPresentation::NavigatorPresentation() {}
 
 // static
 const char* NavigatorPresentation::SupplementName() {

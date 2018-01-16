@@ -57,7 +57,7 @@ class XPathEvaluator final : public ScriptWrappable {
                         ExceptionState&);
 
  private:
-  XPathEvaluator() = default;
+  XPathEvaluator() {}
 };
 
 }  // namespace blink

@@ -15,9 +15,9 @@
 
 namespace blink {
 
-PageTestBase::PageTestBase() = default;
+PageTestBase::PageTestBase() {}
 
-PageTestBase::~PageTestBase() = default;
+PageTestBase::~PageTestBase() {}
 
 void PageTestBase::SetUp() {
   DCHECK(!dummy_page_holder_) << "Page should be set up only once";

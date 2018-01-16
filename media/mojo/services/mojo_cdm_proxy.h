@@ -28,13 +28,11 @@ class MEDIA_MOJO_EXPORT MojoCdmProxy : public cdm::CdmProxy,
     virtual void DestroyCdmProxy(MojoCdmProxy* cdm_proxy) = 0;
   };
 
-  MojoCdmProxy(Delegate* delegate,
-               mojom::CdmProxyPtr cdm_proxy_ptr,
-               cdm::CdmProxyClient* client);
+  MojoCdmProxy(Delegate* delegate, mojom::CdmProxyPtr cdm_proxy_ptr);
   ~MojoCdmProxy() override;
 
   // cdm::CdmProxy implementation.
-  void Initialize() final;
+  void Initialize(cdm::CdmProxyClient* client) final;
   void Process(Function function,
                uint32_t crypto_session_id,
                const uint8_t* input_data,

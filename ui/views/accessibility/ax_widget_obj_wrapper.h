@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "ui/accessibility/platform/ax_unique_id.h"
 #include "ui/views/accessibility/ax_aura_obj_wrapper.h"
 #include "ui/views/widget/widget_observer.h"
 #include "ui/views/widget/widget_removals_observer.h"
@@ -28,7 +27,7 @@ class AXWidgetObjWrapper : public AXAuraObjWrapper,
   AXAuraObjWrapper* GetParent() override;
   void GetChildren(std::vector<AXAuraObjWrapper*>* out_children) override;
   void Serialize(ui::AXNodeData* out_node_data) override;
-  const ui::AXUniqueId& GetUniqueId() const final;
+  int32_t GetID() override;
 
   // WidgetObserver overrides.
   void OnWidgetDestroying(Widget* widget) override;
@@ -40,8 +39,6 @@ class AXWidgetObjWrapper : public AXAuraObjWrapper,
 
  private:
   Widget* widget_;
-
-  const ui::AXUniqueId unique_id_;
 
   DISALLOW_COPY_AND_ASSIGN(AXWidgetObjWrapper);
 };

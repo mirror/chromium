@@ -14,7 +14,6 @@
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
-#include "ui/accessibility/platform/ax_unique_id.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/views_export.h"
@@ -34,7 +33,7 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
  public:
   ~NativeViewAccessibilityBase() override;
 
-  // ViewAccessibility:
+  // NativeViewAccessibility:
   gfx::NativeViewAccessible GetNativeObject() override;
   void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
 
@@ -54,8 +53,6 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
   bool IsOffscreen() const override;
-  const ui::AXUniqueId& GetUniqueId()
-      const override;  // Also in ViewAccessibility
   std::set<int32_t> GetReverseRelations(ui::AXIntAttribute attr,
                                         int32_t dst_id) override;
   std::set<int32_t> GetReverseRelations(ui::AXIntListAttribute attr,

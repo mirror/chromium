@@ -50,7 +50,7 @@ BlinkGCMemoryDumpProvider* BlinkGCMemoryDumpProvider::Instance() {
   return &instance;
 }
 
-BlinkGCMemoryDumpProvider::~BlinkGCMemoryDumpProvider() = default;
+BlinkGCMemoryDumpProvider::~BlinkGCMemoryDumpProvider() {}
 
 bool BlinkGCMemoryDumpProvider::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,

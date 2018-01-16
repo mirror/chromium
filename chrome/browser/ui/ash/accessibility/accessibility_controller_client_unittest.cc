@@ -37,7 +37,6 @@ class TestAccessibilityController : ash::mojom::AccessibilityController {
   void SetClient(ash::mojom::AccessibilityControllerClientPtr client) override {
     was_client_set_ = true;
   }
-  void SetDarkenScreen(bool darken) override {}
 
   bool was_client_set() const { return was_client_set_; }
 

@@ -52,6 +52,7 @@ class CORE_EXPORT CanvasImageSource {
  public:
   virtual scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                        AccelerationHint,
+                                                       SnapshotReason,
                                                        const FloatSize&) = 0;
 
   // IMPORTANT: Result must be independent of whether destinationContext is
@@ -84,7 +85,7 @@ class CORE_EXPORT CanvasImageSource {
   virtual bool IsAccelerated() const = 0;
 
  protected:
-  virtual ~CanvasImageSource() = default;
+  virtual ~CanvasImageSource() {}
 };
 
 }  // namespace blink

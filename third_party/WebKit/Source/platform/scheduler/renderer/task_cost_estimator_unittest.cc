@@ -15,8 +15,8 @@ namespace scheduler {
 
 class TaskCostEstimatorTest : public ::testing::Test {
  public:
-  TaskCostEstimatorTest() = default;
-  ~TaskCostEstimatorTest() override = default;
+  TaskCostEstimatorTest() {}
+  ~TaskCostEstimatorTest() override {}
 
   base::SimpleTestTickClock clock_;
 };

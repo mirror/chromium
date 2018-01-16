@@ -3631,7 +3631,7 @@ void HTMLMediaElement::AssertShadowRootChildren(ShadowRoot& shadow_root) {
 }
 
 TextTrackContainer& HTMLMediaElement::EnsureTextTrackContainer() {
-  ShadowRoot& shadow_root = EnsureLegacyUserAgentShadowRootV0();
+  ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
   AssertShadowRootChildren(shadow_root);
 
   Node* first_child = shadow_root.firstChild();
@@ -3760,7 +3760,7 @@ void HTMLMediaElement::EnsureMediaControls() {
   if (GetMediaControls())
     return;
 
-  ShadowRoot& shadow_root = EnsureLegacyUserAgentShadowRootV0();
+  ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
   media_controls_ =
       CoreInitializer::GetInstance().CreateMediaControls(*this, shadow_root);
 
@@ -3992,10 +3992,13 @@ void HTMLMediaElement::ScheduleResolvePlayPromises() {
   if (play_promise_resolve_task_handle_.IsActive())
     return;
 
-  play_promise_resolve_task_handle_ = PostCancellableTask(
-      *GetDocument().GetTaskRunner(TaskType::kMediaElementEvent), FROM_HERE,
-      WTF::Bind(&HTMLMediaElement::ResolveScheduledPlayPromises,
-                WrapWeakPersistent(this)));
+  play_promise_resolve_task_handle_ =
+      GetDocument()
+          .GetTaskRunner(TaskType::kMediaElementEvent)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&HTMLMediaElement::ResolveScheduledPlayPromises,
+                        WrapWeakPersistent(this)));
 }
 
 void HTMLMediaElement::ScheduleRejectPlayPromises(ExceptionCode code) {
@@ -4019,10 +4022,13 @@ void HTMLMediaElement::ScheduleRejectPlayPromises(ExceptionCode code) {
   // TODO(nhiroki): Bind this error code to a cancellable task instead of a
   // member field.
   play_promise_error_code_ = code;
-  play_promise_reject_task_handle_ = PostCancellableTask(
-      *GetDocument().GetTaskRunner(TaskType::kMediaElementEvent), FROM_HERE,
-      WTF::Bind(&HTMLMediaElement::RejectScheduledPlayPromises,
-                WrapWeakPersistent(this)));
+  play_promise_reject_task_handle_ =
+      GetDocument()
+          .GetTaskRunner(TaskType::kMediaElementEvent)
+          ->PostCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&HTMLMediaElement::RejectScheduledPlayPromises,
+                        WrapWeakPersistent(this)));
 }
 
 void HTMLMediaElement::ScheduleNotifyPlaying() {

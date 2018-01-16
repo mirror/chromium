@@ -35,7 +35,6 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/vr/assets_loader.h"
 #include "chrome/browser/vr/metrics_helper.h"
-#include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/vr/web_contents_event_forwarder.h"
@@ -59,7 +58,6 @@
 #include "device/vr/vr_device.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "jni/VrShellImpl_jni.h"
-#include "services/device/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/android/window_android.h"
@@ -78,7 +76,7 @@ using base::android::JavaParamRef;
 namespace vr_shell {
 
 namespace {
-vr_shell::VrShell* g_vr_shell_instance;
+vr_shell::VrShell* g_instance;
 
 constexpr base::TimeDelta poll_media_access_interval_ =
     base::TimeDelta::FromSecondsD(0.2);
@@ -147,8 +145,8 @@ VrShell::VrShell(JNIEnv* env,
       display_size_pixels_(display_width_pixels, display_height_pixels),
       weak_ptr_factory_(this) {
   DVLOG(1) << __FUNCTION__ << "=" << this;
-  DCHECK(g_vr_shell_instance == nullptr);
-  g_vr_shell_instance = this;
+  DCHECK(g_instance == nullptr);
+  g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
   gl_thread_ = base::MakeUnique<VrGLThread>(
@@ -156,9 +154,7 @@ VrShell::VrShell(JNIEnv* env,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
-  autocomplete_controller_ = base::MakeUnique<AutocompleteController>(
-      base::BindRepeating(&vr::BrowserUiInterface::SetOmniboxSuggestions,
-                          base::Unretained(ui_)));
+  autocomplete_controller_ = base::MakeUnique<AutocompleteController>(ui_);
 
   gl_thread_->Start();
 
@@ -279,7 +275,7 @@ VrShell::~VrShell() {
     base::ThreadRestrictions::ScopedAllowIO allow_io;
     gl_thread_.reset();
   }
-  g_vr_shell_instance = nullptr;
+  g_instance = nullptr;
 }
 
 void VrShell::PostToGlThread(const base::Location& from_here,
@@ -863,7 +859,7 @@ void VrShell::PollMediaAccessFlag() {
   }
   auto* connector =
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(device::mojom::kServiceName, &geolocation_config_);
+  connector->BindInterface("content_browser", &geolocation_config_);
 
   geolocation_config_->IsHighAccuracyLocationBeingCaptured(
       base::Bind(&VrShell::SetHighAccuracyLocation, base::Unretained(this)));
@@ -993,7 +989,7 @@ void VrShell::OnAssetsComponentReady() {
 jlong JNI_VrShellImpl_Init(JNIEnv* env,
                            const JavaParamRef<jobject>& obj,
                            const JavaParamRef<jobject>& delegate,
-                           const JavaParamRef<jobject>& jwindow_android,
+                           jlong window_android,
                            jboolean for_web_vr,
                            jboolean web_vr_autopresentation_expected,
                            jboolean in_cct,
@@ -1019,7 +1015,7 @@ jlong JNI_VrShellImpl_Init(JNIEnv* env,
       vr::AssetsLoader::GetInstance()->ComponentReady();
 
   return reinterpret_cast<intptr_t>(new VrShell(
-      env, obj, ui::WindowAndroid::FromJavaWindowAndroid(jwindow_android),
+      env, obj, reinterpret_cast<ui::WindowAndroid*>(window_android),
       ui_initial_state,
       VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
       reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering,

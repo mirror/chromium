@@ -7,7 +7,6 @@
 #include "base/callback.h"
 #include "base/strings/string_split.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
-#include "gpu/command_buffer/service/decoder_client.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gl_utils.h"
 #include "gpu/command_buffer/service/gpu_fence_manager.h"
@@ -420,7 +419,7 @@ void GLES2DecoderPassthroughImpl::EmulatedDefaultFramebuffer::Destroy(
 }
 
 GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
-    DecoderClient* client,
+    GLES2DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
     Outputter* outputter,
     ContextGroup* group)
@@ -559,7 +558,7 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
   return result;
 }
 
-base::WeakPtr<DecoderContext> GLES2DecoderPassthroughImpl::AsWeakPtr() {
+base::WeakPtr<GLES2Decoder> GLES2DecoderPassthroughImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
@@ -723,14 +722,9 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
     bound_buffers_[GL_DISPATCH_INDIRECT_BUFFER] = 0;
   }
 
-  if (feature_info_->feature_flags().khr_debug) {
-    // For WebGL contexts, log GL errors so they appear in devtools. Otherwise
-    // only enable debug logging if requested.
-    bool log_non_errors =
-        group_->gpu_preferences().enable_gpu_driver_debug_logging;
-    if (IsWebGLContextType(attrib_helper.context_type) || log_non_errors) {
-      InitializeGLDebugLogging(log_non_errors, &logger_);
-    }
+  if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
+      feature_info_->feature_flags().khr_debug) {
+    InitializeGLDebugLogging();
   }
 
   if (feature_info_->feature_flags().chromium_texture_filtering_hint &&
@@ -1082,8 +1076,8 @@ bool GLES2DecoderPassthroughImpl::MakeCurrent() {
 #if defined(USE_EGL)
   // Establish the program binary caching callback.
   if (group_->has_program_cache()) {
-    auto program_callback = base::BindRepeating(&DecoderClient::CacheShader,
-                                                base::Unretained(client_));
+    auto program_callback = base::BindRepeating(
+        &GLES2DecoderClient::CacheShader, base::Unretained(client_));
     angle::SetCacheProgramCallback(program_callback);
   }
 #endif  // defined(USE_EGL)
@@ -1146,6 +1140,7 @@ gpu::Capabilities GLES2DecoderPassthroughImpl::GetCapabilities() {
   // This is unconditionally true on mac, no need to test for it at runtime.
   caps.iosurface = true;
 #endif
+  caps.flips_vertically = surface_->FlipsVertically();
   caps.blend_equation_advanced =
       feature_info_->feature_flags().blend_equation_advanced;
   caps.blend_equation_advanced_coherent =
@@ -1171,10 +1166,6 @@ gpu::Capabilities GLES2DecoderPassthroughImpl::GetCapabilities() {
   caps.occlusion_query_boolean =
       feature_info_->feature_flags().occlusion_query_boolean;
   caps.timer_queries = feature_info_->feature_flags().ext_disjoint_timer_query;
-  caps.gpu_rasterization =
-      group_->gpu_feature_info()
-          .status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] ==
-      kGpuFeatureStatusEnabled;
   caps.post_sub_buffer = surface_->SupportsPostSubBuffer();
   caps.surfaceless = !offscreen_ && surface_->IsSurfaceless();
   caps.flips_vertically = !offscreen_ && surface_->FlipsVertically();

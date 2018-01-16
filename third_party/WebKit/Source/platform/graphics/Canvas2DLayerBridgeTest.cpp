@@ -39,7 +39,9 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/graphics/CanvasResourceHost.h"
 #include "platform/graphics/CanvasResourceProvider.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
+#include "platform/graphics/UnacceleratedImageBufferSurface.h"
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/graphics/paint/PaintFlags.h"
@@ -73,7 +75,7 @@ namespace {
 
 class Canvas2DLayerBridgePtr {
  public:
-  Canvas2DLayerBridgePtr() = default;
+  Canvas2DLayerBridgePtr() {}
   Canvas2DLayerBridgePtr(std::unique_ptr<Canvas2DLayerBridge> layer_bridge)
       : layer_bridge_(std::move(layer_bridge)) {}
 
@@ -160,7 +162,9 @@ class Canvas2DLayerBridgeTest : public Test {
 
     const GrGLTextureInfo* texture_info =
         skia::GrBackendObjectToGrGLTextureInfo(
-            bridge->NewImageSnapshot(kPreferAcceleration)
+            bridge
+                ->NewImageSnapshot(kPreferAcceleration,
+                                   kSnapshotReasonUnitTests)
                 ->PaintImageForCurrentFrame()
                 .GetSkImage()
                 ->getTextureHandle(true));
@@ -185,8 +189,8 @@ class Canvas2DLayerBridgeTest : public Test {
           CanvasColorParams())));
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_TRUE(bridge->IsAccelerated());
-      scoped_refptr<StaticBitmapImage> snapshot =
-          bridge->NewImageSnapshot(kPreferAcceleration);
+      scoped_refptr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
+          kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsAccelerated());
       EXPECT_TRUE(snapshot->IsTextureBacked());
     }
@@ -205,8 +209,8 @@ class Canvas2DLayerBridgeTest : public Test {
       // This will cause SkSurface_Gpu creation to fail without
       // Canvas2DLayerBridge otherwise detecting that anything was disabled.
       gr->abandonContext();
-      scoped_refptr<StaticBitmapImage> snapshot =
-          bridge->NewImageSnapshot(kPreferAcceleration);
+      scoped_refptr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
+          kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_FALSE(bridge->IsAccelerated());
       EXPECT_FALSE(snapshot->IsTextureBacked());
     }
@@ -231,7 +235,7 @@ class Canvas2DLayerBridgeTest : public Test {
     EXPECT_EQ(nullptr, bridge->GetOrCreateResourceProvider());
     // The following passes by not crashing
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    bridge->NewImageSnapshot(kPreferAcceleration);
+    bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   }
 
   void PrepareMailboxWhenContextIsLost() {
@@ -348,8 +352,8 @@ class Canvas2DLayerBridgeTest : public Test {
           CanvasColorParams())));
       PaintFlags flags;
       bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-      scoped_refptr<StaticBitmapImage> image =
-          bridge->NewImageSnapshot(kPreferAcceleration);
+      scoped_refptr<StaticBitmapImage> image = bridge->NewImageSnapshot(
+          kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_TRUE(bridge->IsAccelerated());
     }
@@ -360,8 +364,8 @@ class Canvas2DLayerBridgeTest : public Test {
           CanvasColorParams())));
       PaintFlags flags;
       bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-      scoped_refptr<StaticBitmapImage> image =
-          bridge->NewImageSnapshot(kPreferNoAcceleration);
+      scoped_refptr<StaticBitmapImage> image = bridge->NewImageSnapshot(
+          kPreferNoAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_FALSE(bridge->IsAccelerated());
     }
@@ -410,7 +414,18 @@ class MockLogger : public Canvas2DLayerBridge::Logger {
   MOCK_METHOD1(ReportHibernationEvent,
                void(Canvas2DLayerBridge::HibernationEvent));
   MOCK_METHOD0(DidStartHibernating, void());
-  virtual ~MockLogger() = default;
+  virtual ~MockLogger() {}
+};
+
+class MockImageBuffer : public ImageBuffer {
+ public:
+  MockImageBuffer()
+      : ImageBuffer(WTF::WrapUnique(
+            new UnacceleratedImageBufferSurface(IntSize(1, 1)))) {}
+
+  MOCK_CONST_METHOD1(ResetCanvas, void(PaintCanvas*));
+
+  virtual ~MockImageBuffer() {}
 };
 
 class MockCanvasResourceHost : public CanvasResourceHost {
@@ -425,7 +440,7 @@ void DrawSomething(Canvas2DLayerBridgePtr& bridge) {
   bridge->DidDraw(FloatRect(0, 0, 1, 1));
   bridge->FinalizeFrame();
   // Grabbing an image forces a flush
-  bridge->NewImageSnapshot(kPreferAcceleration);
+  bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
 }
 
 #if CANVAS2D_HIBERNATION_ENABLED
@@ -639,10 +654,9 @@ TEST_F(
       CanvasColorParams())));
   bridge->DontUseIdleSchedulingForTesting();
   DrawSomething(bridge);
-  MockCanvasResourceHost mock_canvas_resource_host;
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AnyNumber());
-  bridge->SetCanvasResourceHost(&mock_canvas_resource_host);
+  MockImageBuffer mock_image_buffer;
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AnyNumber());
+  bridge->SetImageBuffer(&mock_image_buffer);
   bridge->DisableDeferral(kDisableDeferralReasonUnknown);
 
   // Register an alternate Logger for tracking hibernation events
@@ -658,7 +672,7 @@ TEST_F(
   bridge->SetIsHidden(true);
   platform->RunUntilIdle();
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_FALSE(bridge->IsAccelerated());
   EXPECT_TRUE(bridge->IsHibernating());
   EXPECT_TRUE(bridge->IsValid());
@@ -668,21 +682,19 @@ TEST_F(
               ReportHibernationEvent(
                   Canvas2DLayerBridge::
                       kHibernationEndedWithSwitchToBackgroundRendering));
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AtLeast(1));
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AtLeast(1));
   DrawSomething(bridge);
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_FALSE(bridge->IsAccelerated());
   EXPECT_FALSE(bridge->IsHibernating());
   EXPECT_TRUE(bridge->IsValid());
 
   // Unhide
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AtLeast(1));
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AtLeast(1));
   bridge->SetIsHidden(false);
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_TRUE(
       bridge->IsAccelerated());  // Becoming visible causes switch back to GPU
   EXPECT_FALSE(bridge->IsHibernating());
@@ -703,10 +715,9 @@ TEST_F(Canvas2DLayerBridgeTest,
   bridge->DontUseIdleSchedulingForTesting();
   DrawSomething(bridge);
 
-  MockCanvasResourceHost mock_canvas_resource_host;
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AnyNumber());
-  bridge->SetCanvasResourceHost(&mock_canvas_resource_host);
+  MockImageBuffer mock_image_buffer;
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AnyNumber());
+  bridge->SetImageBuffer(&mock_image_buffer);
 
   // Register an alternate Logger for tracking hibernation events
   std::unique_ptr<MockLogger> mock_logger = WTF::WrapUnique(new MockLogger);
@@ -721,7 +732,7 @@ TEST_F(Canvas2DLayerBridgeTest,
   bridge->SetIsHidden(true);
   platform->RunUntilIdle();
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_FALSE(bridge->IsAccelerated());
   EXPECT_TRUE(bridge->IsHibernating());
   EXPECT_TRUE(bridge->IsValid());
@@ -731,30 +742,27 @@ TEST_F(Canvas2DLayerBridgeTest,
               ReportHibernationEvent(
                   Canvas2DLayerBridge::
                       kHibernationEndedWithSwitchToBackgroundRendering));
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AtLeast(1));
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AtLeast(1));
   bridge->DisableDeferral(kDisableDeferralReasonUnknown);
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_FALSE(bridge->IsAccelerated());
   EXPECT_FALSE(bridge->IsHibernating());
   EXPECT_TRUE(bridge->IsValid());
 
   // Unhide
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AtLeast(1));
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AtLeast(1));
   bridge->SetIsHidden(false);
   ::testing::Mock::VerifyAndClearExpectations(mock_logger_ptr);
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
   EXPECT_TRUE(
       bridge->IsAccelerated());  // Becoming visible causes switch back to GPU
   EXPECT_FALSE(bridge->IsHibernating());
   EXPECT_TRUE(bridge->IsValid());
 
-  EXPECT_CALL(mock_canvas_resource_host, RestoreCanvasMatrixClipStack(_))
-      .Times(AnyNumber());
+  EXPECT_CALL(mock_image_buffer, ResetCanvas(_)).Times(AnyNumber());
   bridge.Clear();
-  ::testing::Mock::VerifyAndClearExpectations(&mock_canvas_resource_host);
+  ::testing::Mock::VerifyAndClearExpectations(&mock_image_buffer);
 }
 
 #if CANVAS2D_HIBERNATION_ENABLED
@@ -827,7 +835,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_SnapshotWhileHibernating)
 
   // Take a snapshot and verify that it is not accelerated due to hibernation
   scoped_refptr<StaticBitmapImage> image =
-      bridge->NewImageSnapshot(kPreferAcceleration);
+      bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   EXPECT_FALSE(image->IsTextureBacked());
   image = nullptr;
 

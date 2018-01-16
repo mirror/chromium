@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "media/base/android/mock_android_overlay.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -98,7 +99,7 @@ class AndroidVideoSurfaceChooserImplTest
   ~AndroidVideoSurfaceChooserImplTest() override {}
 
   void SetUp() override {
-    overlay_ = std::make_unique<MockAndroidOverlay>();
+    overlay_ = base::MakeUnique<MockAndroidOverlay>();
 
     // Advance the clock just so we're not at 0.
     tick_clock_.Advance(base::TimeDelta::FromSeconds(10));
@@ -125,7 +126,7 @@ class AndroidVideoSurfaceChooserImplTest
 
   // Start the chooser, providing |factory| as the initial factory.
   void StartChooser(AndroidOverlayFactoryCB factory) {
-    chooser_ = std::make_unique<AndroidVideoSurfaceChooserImpl>(allow_dynamic_,
+    chooser_ = base::MakeUnique<AndroidVideoSurfaceChooserImpl>(allow_dynamic_,
                                                                 &tick_clock_);
     chooser_->SetClientCallbacks(
         base::Bind(&MockClient::UseOverlayImpl, base::Unretained(&client_)),

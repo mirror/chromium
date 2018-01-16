@@ -35,7 +35,6 @@
         "content_browser": [ "profiling_client" ],
         "device": [
           "device:fingerprint",
-          "device:geolocation_config",
           "device:geolocation_control",
           "device:ip_geolocator"
         ],

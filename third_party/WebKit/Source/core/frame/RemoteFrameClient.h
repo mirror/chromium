@@ -20,7 +20,7 @@ class SecurityOrigin;
 
 class RemoteFrameClient : public FrameClient {
  public:
-  ~RemoteFrameClient() override = default;
+  ~RemoteFrameClient() override {}
 
   virtual void Navigate(const ResourceRequest&,
                         bool should_replace_current_entry) = 0;

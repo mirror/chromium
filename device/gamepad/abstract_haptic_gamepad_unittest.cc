@@ -51,8 +51,6 @@ class AbstractHapticGamepadTest : public testing::Test {
         gamepad_(std::make_unique<FakeHapticGamepad>()),
         task_runner_(new base::TestSimpleTaskRunner) {}
 
-  void TearDown() override { gamepad_->Shutdown(); }
-
   void PostPlayEffect(
       mojom::GamepadHapticEffectType type,
       double duration,

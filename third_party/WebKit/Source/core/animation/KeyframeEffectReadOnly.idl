@@ -7,8 +7,8 @@
 enum CompositeOperation { "replace", "add", "accumulate" };
 
 [
-    Constructor(Element? target, object? keyframes, optional (unrestricted double or KeyframeEffectOptions) options),
-    ConstructorCallWith=ScriptState,
+    Constructor(Element? target, (sequence<Dictionary> or Dictionary)? effect, optional (unrestricted double or KeyframeEffectOptions) options),
+    ConstructorCallWith=ExecutionContext,
     RaisesException=Constructor,
     RuntimeEnabled=WebAnimationsAPI
 ] interface KeyframeEffectReadOnly : AnimationEffectReadOnly {

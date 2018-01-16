@@ -25,14 +25,14 @@
  *   printerStatus: string,
  * }}
  */
-let CupsPrinterInfo;
+var CupsPrinterInfo;
 
 /**
  * @typedef {{
  *   printerList: !Array<!CupsPrinterInfo>,
  * }}
  */
-let CupsPrintersList;
+var CupsPrintersList;
 
 /**
  * @typedef {{
@@ -40,7 +40,7 @@ let CupsPrintersList;
  *   manufacturers: Array<string>
  * }}
  */
-let ManufacturersInfo;
+var ManufacturersInfo;
 
 /**
  * @typedef {{
@@ -48,7 +48,7 @@ let ManufacturersInfo;
  *   models: Array<string>
  * }}
  */
-let ModelsInfo;
+var ModelsInfo;
 
 /**
  * @typedef {{
@@ -58,7 +58,7 @@ let ModelsInfo;
  *   autoconf: boolean
  * }}
  */
-let PrinterMakeModel;
+var PrinterMakeModel;
 
 /**
  * @typedef {{
@@ -66,14 +66,14 @@ let PrinterMakeModel;
  *   ppdModel: string
  * }}
  */
-let PrinterPpdMakeModel;
+var PrinterPpdMakeModel;
 
 /**
  *  @enum {number}
  *  These values must be kept in sync with the PrinterSetupResult enum in
  *  chrome/browser/chromeos/printing/printer_configurer.h.
  */
-const PrinterSetupResult = {
+var PrinterSetupResult = {
   FATAL_ERROR: 0,
   SUCCESS: 1,
   PRINTER_UNREACHABLE: 2,
@@ -89,7 +89,7 @@ const PrinterSetupResult = {
  *   message: string
  * }}
  */
-let QueryFailure;
+var QueryFailure;
 
 cr.define('settings', function() {
   /** @interface */

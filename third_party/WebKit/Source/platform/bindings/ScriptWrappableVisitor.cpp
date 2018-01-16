@@ -23,7 +23,7 @@
 
 namespace blink {
 
-ScriptWrappableVisitor::~ScriptWrappableVisitor() = default;
+ScriptWrappableVisitor::~ScriptWrappableVisitor() {}
 
 void ScriptWrappableVisitor::TracePrologue() {
   // This CHECK ensures that wrapper tracing is not started from scopes

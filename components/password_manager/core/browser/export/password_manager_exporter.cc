@@ -6,12 +6,12 @@
 
 #include <utility>
 
-#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/password_manager/core/browser/export/destination.h"
 #include "components/password_manager/core/browser/export/password_csv_writer.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
 
@@ -34,7 +34,6 @@ PasswordManagerExporter::PasswordManagerExporter(
     password_manager::CredentialProviderInterface*
         credential_provider_interface)
     : credential_provider_interface_(credential_provider_interface),
-      write_function_(&base::WriteFile),
       task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::TaskPriority::USER_VISIBLE, base::MayBlock()})),
       weak_factory_(this) {}
@@ -49,8 +48,8 @@ void PasswordManagerExporter::PreparePasswordsForExport() {
 }
 
 void PasswordManagerExporter::SetDestination(
-    const base::FilePath& destination) {
-  destination_ = destination;
+    std::unique_ptr<Destination> destination) {
+  destination_ = std::move(destination);
 
   if (IsReadyForExport())
     Export();
@@ -60,19 +59,12 @@ void PasswordManagerExporter::Cancel() {
   // Tasks which had their pointers invalidated won't run.
   weak_factory_.InvalidateWeakPtrs();
 
-  destination_.clear();
+  destination_.reset();
   password_list_.clear();
 }
 
-void PasswordManagerExporter::SetWriteForTesting(
-    int (*write_function)(const base::FilePath& filename,
-                          const char* data,
-                          int size)) {
-  write_function_ = write_function;
-}
-
 bool PasswordManagerExporter::IsReadyForExport() {
-  return !destination_.empty() && !password_list_.empty();
+  return destination_ && !password_list_.empty();
 }
 
 void PasswordManagerExporter::Export() {
@@ -88,13 +80,13 @@ void PasswordManagerExporter::Export() {
                      base::Passed(std::move(destination_))));
 
   password_list_.clear();
-  destination_.clear();
+  destination_.reset();
 }
 
 void PasswordManagerExporter::OnPasswordsSerialised(
-    base::FilePath destination,
+    std::unique_ptr<Destination> destination,
     const std::string& serialised) {
-  write_function_(destination, serialised.c_str(), serialised.size());
+  destination->Write(serialised);
 }
 
 }  // namespace password_manager

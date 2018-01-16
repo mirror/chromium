@@ -67,7 +67,7 @@ ShadowRoot::ShadowRoot(Document& document, ShadowRootType type)
       delegates_focus_(false),
       unused_(0) {}
 
-ShadowRoot::~ShadowRoot() = default;
+ShadowRoot::~ShadowRoot() {}
 
 ShadowRoot* ShadowRoot::YoungerShadowRoot() const {
   if (GetType() == ShadowRootType::V0 && shadow_root_rare_data_v0_)
@@ -368,10 +368,7 @@ void ShadowRoot::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
 
 std::ostream& operator<<(std::ostream& ostream, const ShadowRootType& type) {
   switch (type) {
-    case ShadowRootType::kLegacyUserAgentV0:
-      ostream << "UserAgentV0";
-      break;
-    case ShadowRootType::kUserAgentV1:
+    case ShadowRootType::kUserAgent:
       ostream << "UserAgent";
       break;
     case ShadowRootType::V0:

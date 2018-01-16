@@ -44,7 +44,7 @@ RendererResourceCoordinator::RendererResourceCoordinator(
   connector->BindInterface(service_name, &service_);
 }
 
-RendererResourceCoordinator::RendererResourceCoordinator() = default;
+RendererResourceCoordinator::RendererResourceCoordinator() {}
 
 RendererResourceCoordinator::~RendererResourceCoordinator() = default;
 

@@ -40,7 +40,7 @@ Polymer({
    * The |modelIndex| to use when a new search engine is added. Must match with
    * kNewSearchEngineIndex constant specified at
    * chrome/browser/ui/webui/settings/search_engines_handler.cc
-   * @type {number}
+   * @const {number}
    */
   DEFAULT_MODEL_INDEX: -1,
 
@@ -96,7 +96,7 @@ Polymer({
    * @private
    */
   validate_: function(event) {
-    const inputElement = Polymer.dom(event).localTarget;
+    var inputElement = Polymer.dom(event).localTarget;
 
     // If element is empty, disable the action button, but don't show the red
     // invalid message.
@@ -116,7 +116,7 @@ Polymer({
 
   /** @private */
   updateActionButtonState_: function() {
-    const allValid = [
+    var allValid = [
       this.$.searchEngine, this.$.keyword, this.$.queryUrl
     ].every(function(inputElement) {
       return !inputElement.invalid && inputElement.value.length > 0;

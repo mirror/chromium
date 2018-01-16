@@ -114,8 +114,7 @@ class SSLClientSocketPoolTest : public testing::Test {
         socks_socket_params_(
             new SOCKSSocketParams(proxy_transport_socket_params_,
                                   true,
-                                  HostPortPair("sockshost", 443),
-                                  TRAFFIC_ANNOTATION_FOR_TESTS)),
+                                  HostPortPair("sockshost", 443))),
         socks_socket_pool_(kMaxSockets,
                            kMaxSocketsPerGroup,
                            &transport_socket_pool_),
@@ -845,7 +844,7 @@ TEST_F(SSLClientSocketPoolTest, IPPooling) {
     // Setup a SpdySessionKey
     test_hosts[i].key = SpdySessionKey(
         HostPortPair(test_hosts[i].name, kTestPort), ProxyServer::Direct(),
-        PRIVACY_MODE_DISABLED);
+        PRIVACY_MODE_DISABLED, SocketTag());
   }
 
   MockRead reads[] = {
@@ -905,7 +904,7 @@ void SSLClientSocketPoolTest::TestIPPoolingDisabled(
     // Setup a SpdySessionKey
     test_hosts[i].key = SpdySessionKey(
         HostPortPair(test_hosts[i].name, kTestPort), ProxyServer::Direct(),
-        PRIVACY_MODE_DISABLED);
+        PRIVACY_MODE_DISABLED, SocketTag());
   }
 
   MockRead reads[] = {

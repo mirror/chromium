@@ -149,7 +149,7 @@ ShareableElementData* ShareableElementData::CreateWithAttributes(
   return new (slot) ShareableElementData(attributes);
 }
 
-UniqueElementData::UniqueElementData() = default;
+UniqueElementData::UniqueElementData() {}
 
 UniqueElementData::UniqueElementData(const UniqueElementData& other)
     : ElementData(other, true),

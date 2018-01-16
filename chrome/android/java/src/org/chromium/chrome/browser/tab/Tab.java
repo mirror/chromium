@@ -113,7 +113,6 @@ import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.content_public.common.Referrer;
@@ -519,10 +518,8 @@ public class Tab
                 mFullscreenManager.setPersistentFullscreenMode(enable);
             }
 
-            if (enable && getWebContents() != null) {
-                SelectionPopupController controller =
-                        SelectionPopupController.fromWebContents(getWebContents());
-                controller.destroySelectActionMode();
+            if (enable && mContentViewCore != null) {
+                mContentViewCore.destroySelectActionMode();
             }
 
             // When going into fullscreen, we want to remove any cached thumbnail of the Tab.
@@ -1796,10 +1793,9 @@ public class Tab
         cv.setContentDescription(mThemedApplicationContext.getResources().getString(
                 R.string.accessibility_content_view));
         cvc.initialize(new TabViewAndroidDelegate(this, cv), cv, webContents, getWindowAndroid());
-        SelectionPopupController controller = SelectionPopupController.fromWebContents(webContents);
-        ChromeActionModeCallback actionModeCallback =
-                new ChromeActionModeCallback(this, controller.getActionModeCallbackHelper());
-        controller.setActionModeCallback(actionModeCallback);
+        ChromeActionModeCallback actionModeCallback = new ChromeActionModeCallback(
+                mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
+        cvc.setActionModeCallback(actionModeCallback);
         return cvc;
     }
 

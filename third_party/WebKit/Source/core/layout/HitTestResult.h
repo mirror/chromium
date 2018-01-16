@@ -31,6 +31,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDirection.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/VectorTraits.h"
 #include "platform/wtf/text/WTFString.h"
 

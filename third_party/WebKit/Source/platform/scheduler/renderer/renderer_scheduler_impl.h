@@ -185,7 +185,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
   scoped_refptr<MainThreadTaskQueue> LoadingTaskQueue();
   scoped_refptr<MainThreadTaskQueue> TimerTaskQueue();
-  scoped_refptr<MainThreadTaskQueue> V8TaskQueue();
+  scoped_refptr<MainThreadTaskQueue> kV8TaskQueue();
 
   // Returns a new task queue created with given params.
   scoped_refptr<MainThreadTaskQueue> NewTaskQueue(
@@ -217,7 +217,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // Tells the scheduler that all TaskQueues should use virtual time. Returns
   // the TimeTicks that virtual time offsets will be relative to.
   base::TimeTicks EnableVirtualTime();
-  bool IsVirualTimeEnabled() const;
 
   // Migrates all task queues to real time.
   void DisableVirtualTimeForTesting();
@@ -228,9 +227,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void SetMaxVirtualTimeTaskStarvationCount(int max_task_starvation_count);
   void AddVirtualTimeObserver(VirtualTimeObserver*);
   void RemoveVirtualTimeObserver(VirtualTimeObserver*);
-  base::TimeTicks IncrementVirtualTimePauseCount();
+  void IncrementVirtualTimePauseCount();
   void DecrementVirtualTimePauseCount();
-  void MaybeAdvanceVirtualTime(base::TimeTicks new_virtual_time);
 
   void AddWebViewScheduler(WebViewSchedulerImpl* web_view_scheduler);
   void RemoveWebViewScheduler(WebViewSchedulerImpl* web_view_scheduler);
@@ -371,7 +369,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     Policy()
         : rail_mode_(v8::PERFORMANCE_ANIMATION),
           should_disable_throttling_(false) {}
-    ~Policy() = default;
+    ~Policy() {}
 
     TaskQueuePolicy& compositor_queue_policy() {
       return policies_[static_cast<size_t>(
@@ -587,10 +585,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
-  // This controller should be initialized before any TraceableVariables
-  // because they require one to initialize themselves.
-  TraceableVariableController tracing_controller_;
-
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
@@ -721,28 +715,20 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   };
 
   struct AnyThread {
-    explicit AnyThread(RendererSchedulerImpl* renderer_scheduler_impl);
+    AnyThread();
     ~AnyThread();
 
     base::TimeTicks last_idle_period_end_time;
     base::TimeTicks fling_compositor_escalation_deadline;
     UserModel user_model;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        awaiting_touch_start_response;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        in_idle_period;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        begin_main_frame_on_critical_path;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        last_gesture_was_compositor_driven;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        default_gesture_prevented;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        have_seen_a_potentially_blocking_gesture;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        waiting_for_meaningful_paint;
-    TraceableState<bool, kTracingCategoryNameInfo>
-        have_seen_input_since_navigation;
+    bool awaiting_touch_start_response;
+    bool in_idle_period;
+    bool begin_main_frame_on_critical_path;
+    bool last_gesture_was_compositor_driven;
+    bool default_gesture_prevented;
+    bool have_seen_a_potentially_blocking_gesture;
+    bool waiting_for_meaningful_paint;
+    bool have_seen_input_since_navigation;
   };
 
   struct CompositorThreadOnly {

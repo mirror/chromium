@@ -165,7 +165,7 @@ AccessibilityTest.define('CrExtensionsShortcutA11yTestWithNoExtensions', {
   },
 });
 
-var CrExtensionsShortcutA11yTestWithExtensions =
+var CrExtensionsShortcutA11yTestWithMultipleExensions =
     class extends CrExtensionsShortcutA11yTestWithNoExtensions {
   /** @override */
   testGenPreamble() {
@@ -173,7 +173,7 @@ var CrExtensionsShortcutA11yTestWithExtensions =
   }
 };
 
-AccessibilityTest.define('CrExtensionsShortcutA11yTestWithExtensions', {
+AccessibilityTest.define('CrExtensionsShortcutA11yTestWithMultipleExensions', {
   /** @override */
   name: 'ShortcutsWithExtensions',
 
@@ -185,48 +185,10 @@ AccessibilityTest.define('CrExtensionsShortcutA11yTestWithExtensions', {
 
   /** @override */
   tests: {
-    'Accessible with Extensions': function() {
+    'Accessible with Extensions and Apps': function() {
       let list = document.querySelector(
           '* /deep/ extensions-keyboard-shortcuts');
       assertEquals(list.items.length, 1);
-    },
-  },
-});
-
-var CrExtensionsErrorConsoleA11yTest =
-    class extends CrExtensionsShortcutA11yTestWithNoExtensions {
-  /** @override */
-  get browsePreload() {
-    return 'chrome://extensions/?errors=pdlpifnclfacjobnmbpngemkalkjamnf';
-  }
-
-  /** @override */
-  testGenPreamble() {
-    GEN('  SetDevModeEnabled(true);');
-    GEN('  EnableErrorConsole();');
-    GEN('  InstallErrorsExtension();');
-  }
-
-  /** @override */
-  testGenPostamble() {
-    GEN('  SetDevModeEnabled(false);');  // Return this to default.
-  }
-};
-
-AccessibilityTest.define('CrExtensionsErrorConsoleA11yTest', {
-  /** @override */
-  name: 'ErrorConsole',
-
-  /** @override */
-  axeOptions: CrExtensionsA11yTest.axeOptions,
-
-  /** @override */
-  violationFilter: CrExtensionsA11yTest.violationFilter,
-
-  /** @override */
-  tests: {
-    'Accessible Error Console': function() {
-      assertTrue(!!document.querySelector('* /deep/ #errors-list'));
     },
   },
 });

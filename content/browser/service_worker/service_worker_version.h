@@ -43,7 +43,6 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/common/service_worker/service_worker.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
 #include "url/gurl.h"
@@ -63,6 +62,7 @@ class ServiceWorkerContextCore;
 class ServiceWorkerInstalledScriptsSender;
 class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
+struct ServiceWorkerClientInfo;
 struct ServiceWorkerVersionInfo;
 
 namespace service_worker_controllee_request_handler_unittest {
@@ -114,10 +114,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
       public base::RefCounted<ServiceWorkerVersion>,
       public EmbeddedWorkerInstance::Listener {
  public:
+  // TODO(crbug.com/755477): LegacyStatusCallback which does not use
+  // OnceCallback is deprecated and should be removed soon.
+  using LegacyStatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
   using StatusCallback = base::OnceCallback<void(ServiceWorkerStatusCode)>;
   using SimpleEventCallback =
-      base::OnceCallback<void(blink::mojom::ServiceWorkerEventStatus,
-                              base::Time)>;
+      base::Callback<void(blink::mojom::ServiceWorkerEventStatus, base::Time)>;
 
   // Current version status; some of the status (e.g. INSTALLED and ACTIVATED)
   // should be persisted unlike running status.
@@ -263,13 +265,14 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Starts an update now.
   void StartUpdate();
 
-  // Starts the worker if it isn't already running. Calls |callback| with
-  // SERVICE_WORKER_OK when the worker started up successfully or if it is
-  // already running. Otherwise, calls |callback| with an error code.
-  // If the worker is already running, |callback| is executed synchronously
-  // (before this method returns). |purpose| is used for UMA.
+  // Starts the worker if it isn't already running, and calls |task| when the
+  // worker is running, or |error_callback| if starting the worker failed.
+  // If the worker is already running, |task| is executed synchronously (before
+  // this method returns).
+  // |purpose| is used for UMA.
   void RunAfterStartWorker(ServiceWorkerMetrics::EventType purpose,
-                           StatusCallback callback);
+                           base::OnceClosure task,
+                           StatusCallback error_callback);
 
   // Call this while the worker is running before dispatching an event to the
   // worker. This informs ServiceWorkerVersion about the event in progress. The
@@ -327,18 +330,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // S13nServiceWorker:
-  // Returns the 'controller' interface ptr of this worker. It is expected
-  // that the worker is already starting or running, or is going to be started
-  // soon.
-  // TODO(kinuko): Relying on the callsites to start the worker when it's
-  // not running is a bit sketchy, maybe this should queue a task to check
-  // if the pending request is pending too long? https://crbug.com/797222
+  // This must be called when the worker is running.
+  // Returns the 'controller' interface of this worker.
   mojom::ControllerServiceWorker* controller() {
-    if (!controller_ptr_.is_bound()) {
-      DCHECK(!controller_request_.is_pending());
-      controller_request_ = mojo::MakeRequest(&controller_ptr_);
-    }
+    DCHECK(controller_ptr_.is_bound());
     return controller_ptr_.get();
   }
 
@@ -578,8 +573,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
     std::set<InflightRequestTimeoutInfo>::iterator timeout_iter;
   };
 
-  using ServiceWorkerClientPtrs =
-      std::vector<blink::mojom::ServiceWorkerClientInfoPtr>;
+  using ServiceWorkerClients = std::vector<ServiceWorkerClientInfo>;
 
   // The timeout timer interval.
   static constexpr base::TimeDelta kTimeoutTimerDelay =
@@ -627,8 +621,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
                          const std::vector<uint8_t>& data) override;
   void ClearCachedMetadata(const GURL& url) override;
   void ClaimClients(ClaimClientsCallback callback) override;
-  void GetClients(blink::mojom::ServiceWorkerClientQueryOptionsPtr options,
-                  GetClientsCallback callback) override;
 
   void OnSetCachedMetadataFinished(int64_t callback_id,
                                    size_t size,
@@ -640,19 +632,22 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // This corresponds to the spec's get(id) steps.
   void OnGetClient(int request_id, const std::string& client_uuid);
 
+  // This corresponds to the spec's matchAll(options) steps.
+  void OnGetClients(int request_id,
+                    const ServiceWorkerClientQueryOptions& options);
+
   // Currently used for Clients.openWindow() only.
   void OnOpenNewTab(int request_id, const GURL& url);
 
   // Currently used for PaymentRequestEvent.openWindow() only.
-  void OnOpenPaymentHandlerWindow(int request_id, const GURL& url);
+  void OnOpenNewPopup(int request_id, const GURL& url);
 
   void OnOpenWindow(int request_id,
                     GURL url,
                     WindowOpenDisposition disposition);
-  void OnOpenWindowFinished(
-      int request_id,
-      ServiceWorkerStatusCode status,
-      const blink::mojom::ServiceWorkerClientInfo& client_info);
+  void OnOpenWindowFinished(int request_id,
+                            ServiceWorkerStatusCode status,
+                            const ServiceWorkerClientInfo& client_info);
 
   void OnPostMessageToClient(
       const std::string& client_uuid,
@@ -662,16 +657,14 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnNavigateClient(int request_id,
                         const std::string& client_uuid,
                         const GURL& url);
-  void OnNavigateClientFinished(
-      int request_id,
-      ServiceWorkerStatusCode status,
-      const blink::mojom::ServiceWorkerClientInfo& client_info);
+  void OnNavigateClientFinished(int request_id,
+                                ServiceWorkerStatusCode status,
+                                const ServiceWorkerClientInfo& client_info);
   void OnSkipWaiting(int request_id);
   void OnPongFromWorker();
 
-  void OnFocusClientFinished(
-      int request_id,
-      const blink::mojom::ServiceWorkerClientInfo& client_info);
+  void OnFocusClientFinished(int request_id,
+                             const ServiceWorkerClientInfo& client_info);
 
   void DidEnsureLiveRegistrationForStartWorker(
       ServiceWorkerMetrics::EventType purpose,
@@ -691,12 +684,11 @@ class CONTENT_EXPORT ServiceWorkerVersion
                              blink::mojom::ServiceWorkerEventStatus status,
                              base::Time dispatch_event_time);
 
-  void OnGetClientFinished(
-      int request_id,
-      blink::mojom::ServiceWorkerClientInfoPtr client_info);
+  void OnGetClientFinished(int request_id,
+                           const ServiceWorkerClientInfo& client_info);
 
-  void OnGetClientsFinished(GetClientsCallback callback,
-                            std::unique_ptr<ServiceWorkerClientPtrs> clients);
+  void OnGetClientsFinished(int request_id,
+                            std::unique_ptr<ServiceWorkerClients> clients);
 
   // The timeout timer periodically calls OnTimeoutTimer, which stops the worker
   // if it is excessively idle or unresponsive to ping.
@@ -786,13 +778,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
-
-  // S13nServiceWorker: connected to the controller service worker.
-  // |controller_request_| is non-null only when the |controller_ptr_| is
-  // requested before the worker is started, it is passed to the worker (and
-  // becomes null) once it's started.
   mojom::ControllerServiceWorkerPtr controller_ptr_;
-  mojom::ControllerServiceWorkerRequest controller_request_;
 
   std::unique_ptr<ServiceWorkerInstalledScriptsSender>
       installed_scripts_sender_;

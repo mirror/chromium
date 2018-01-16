@@ -19,10 +19,12 @@
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "gpu/config/gpu_feature_info.h"
-#include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/Image.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/OffscreenCanvasFrameDispatcherImpl.h"
 #include "platform/graphics/StaticBitmapImage.h"
+#include "platform/graphics/UnacceleratedImageBufferSurface.h"
+#include "platform/graphics/gpu/AcceleratedImageBufferSurface.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/image-encoders/ImageEncoderUtils.h"
@@ -40,7 +42,7 @@ OffscreenCanvas* OffscreenCanvas::Create(unsigned width, unsigned height) {
       IntSize(clampTo<int>(width), clampTo<int>(height)));
 }
 
-OffscreenCanvas::~OffscreenCanvas() = default;
+OffscreenCanvas::~OffscreenCanvas() {}
 
 void OffscreenCanvas::Dispose() {
   if (context_) {
@@ -117,6 +119,7 @@ ImageBitmap* OffscreenCanvas::transferToImageBitmap(
 scoped_refptr<Image> OffscreenCanvas::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint hint,
+    SnapshotReason reason,
     const FloatSize& size) {
   if (!context_) {
     *status = kInvalidSourceImageStatus;
@@ -129,7 +132,7 @@ scoped_refptr<Image> OffscreenCanvas::GetSourceImageForCanvas(
     *status = kZeroSizeCanvasSourceImageStatus;
     return nullptr;
   }
-  scoped_refptr<Image> image = context_->GetImage(hint);
+  scoped_refptr<Image> image = context_->GetImage(hint, reason);
   if (!image)
     image = CreateTransparentImage(Size());
   *status = image ? kNormalSourceImageStatus : kInvalidSourceImageStatus;
@@ -230,12 +233,12 @@ OffscreenCanvasFrameDispatcher* OffscreenCanvas::GetOrCreateFrameDispatcher() {
 }
 
 void OffscreenCanvas::DiscardImageBuffer() {
-  resource_provider_.reset();
+  image_buffer_.reset();
   needs_matrix_clip_restore_ = true;
 }
 
-CanvasResourceProvider* OffscreenCanvas::GetOrCreateResourceProvider() {
-  if (!resource_provider_) {
+ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
+  if (!image_buffer_) {
     bool is_accelerated_2d_canvas_blacklisted = true;
     if (SharedGpuContext::IsGpuCompositingEnabled()) {
       base::WeakPtr<WebGraphicsContext3DProviderWrapper>
@@ -252,34 +255,27 @@ CanvasResourceProvider* OffscreenCanvas::GetOrCreateResourceProvider() {
     }
 
     IntSize surface_size(width(), height());
+    std::unique_ptr<ImageBufferSurface> surface;
     if (RuntimeEnabledFeatures::Accelerated2dCanvasEnabled() &&
         !is_accelerated_2d_canvas_blacklisted) {
-      resource_provider_ = CanvasResourceProvider::Create(
-          surface_size, CanvasResourceProvider::kAcceleratedResourceUsage,
-          SharedGpuContext::ContextProviderWrapper(), 0,
-          context_->ColorParams());
+      surface.reset(new AcceleratedImageBufferSurface(surface_size,
+                                                      context_->ColorParams()));
     }
 
-    if (!resource_provider_ || !resource_provider_->IsValid()) {
-      resource_provider_ = CanvasResourceProvider::Create(
-          surface_size, CanvasResourceProvider::kSoftwareResourceUsage, nullptr,
-          0, context_->ColorParams());
+    if (!surface || !surface->IsValid()) {
+      surface.reset(new UnacceleratedImageBufferSurface(
+          surface_size, kInitializeImagePixels, context_->ColorParams()));
     }
 
-    if (resource_provider_ && resource_provider_->IsValid()) {
-      resource_provider_->Clear();
-      // Always save an initial frame, to support resetting the top level matrix
-      // and clip.
-      resource_provider_->Canvas()->save();
-    }
+    image_buffer_ = ImageBuffer::Create(std::move(surface));
 
-    if (resource_provider_ && needs_matrix_clip_restore_) {
+    if (image_buffer_ && needs_matrix_clip_restore_) {
       needs_matrix_clip_restore_ = false;
-      context_->RestoreCanvasMatrixClipStack(resource_provider_->Canvas());
+      context_->RestoreCanvasMatrixClipStack(image_buffer_->Canvas());
     }
   }
 
-  return resource_provider_.get();
+  return image_buffer_.get();
 }
 
 ScriptPromise OffscreenCanvas::Commit(scoped_refptr<StaticBitmapImage> image,
@@ -388,8 +384,9 @@ ScriptPromise OffscreenCanvas::convertToBlob(ScriptState* script_state,
 
   CanvasAsyncBlobCreator* async_creator = nullptr;
   scoped_refptr<StaticBitmapImage> snapshot =
-      context_ ? context_->GetImage(kPreferNoAcceleration)
-               : CreateTransparentImage(size_);
+      context_
+          ? context_->GetImage(kPreferNoAcceleration, kSnapshotReasonUnknown)
+          : CreateTransparentImage(size_);
   if (snapshot) {
     String encoding_mime_type = ImageEncoderUtils::ToEncodingMimeType(
         options.type(), ImageEncoderUtils::kEncodeReasonConvertToBlobPromise);

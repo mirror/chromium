@@ -21,7 +21,7 @@ TimedCanvasDrawListener::TimedCanvasDrawListener(
                            this,
                            &TimedCanvasDrawListener::RequestFrameTimerFired) {}
 
-TimedCanvasDrawListener::~TimedCanvasDrawListener() = default;
+TimedCanvasDrawListener::~TimedCanvasDrawListener() {}
 
 // static
 TimedCanvasDrawListener* TimedCanvasDrawListener::Create(

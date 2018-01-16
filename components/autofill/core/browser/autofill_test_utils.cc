@@ -11,7 +11,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "components/autofill/core/browser/autofill_external_delegate.h"
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
@@ -30,7 +29,6 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/gfx/geometry/rect.h"
 
 using base::ASCIIToUTF16;
 
@@ -496,21 +494,6 @@ void FillQueryField(AutofillQueryContents::Form::Field* field,
     field->set_name(name);
   if (control_type)
     field->set_type(control_type);
-}
-
-void GenerateTestAutofillPopup(
-    AutofillExternalDelegate* autofill_external_delegate) {
-  int query_id = 1;
-  FormData form;
-  FormFieldData field;
-  field.is_focusable = true;
-  field.should_autocomplete = true;
-  gfx::RectF bounds(100.f, 100.f);
-  autofill_external_delegate->OnQuery(query_id, form, field, bounds);
-
-  std::vector<Suggestion> suggestions;
-  suggestions.push_back(Suggestion());
-  autofill_external_delegate->OnSuggestionsReturned(query_id, suggestions);
 }
 
 }  // namespace test

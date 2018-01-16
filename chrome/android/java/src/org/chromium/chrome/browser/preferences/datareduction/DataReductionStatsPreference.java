@@ -26,6 +26,7 @@ import android.widget.TextView;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.util.FileSizeUtil;
 import org.chromium.third_party.android.datausagechart.ChartDataUsageView;
@@ -75,9 +76,11 @@ public class DataReductionStatsPreference extends Preference {
      * the breakdown can be shown.
      */
     public static void initializeDataReductionSiteBreakdownPref() {
-        // If the site breakdown pref has already been set, don't set it.
-        if (ContextUtils.getAppSharedPreferences().contains(
-                    PREF_DATA_REDUCTION_SITE_BREAKDOWN_ALLOWED_DATE)) {
+        // If the site breakdown feature isn't enabled or the pref has already been set, don't set
+        // it.
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.DATA_REDUCTION_SITE_BREAKDOWN)
+                || ContextUtils.getAppSharedPreferences().contains(
+                           PREF_DATA_REDUCTION_SITE_BREAKDOWN_ALLOWED_DATE)) {
             return;
         }
 
@@ -98,7 +101,12 @@ public class DataReductionStatsPreference extends Preference {
 
     public DataReductionStatsPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setWidgetLayoutResource(R.layout.data_reduction_stats_layout);
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.DATA_REDUCTION_SITE_BREAKDOWN)) {
+            setWidgetLayoutResource(R.layout.data_reduction_stats_layout);
+        } else {
+            setWidgetLayoutResource(R.layout.data_reduction_old_stats_layout);
+        }
     }
 
     @Override
@@ -183,6 +191,8 @@ public class DataReductionStatsPreference extends Preference {
         super.onBindView(view);
         mDataUsageTextView = (TextView) view.findViewById(R.id.data_reduction_usage);
         mDataSavingsTextView = (TextView) view.findViewById(R.id.data_reduction_savings);
+        mOriginalSizeTextView = (TextView) view.findViewById(R.id.data_reduction_original_size);
+        mReceivedSizeTextView = (TextView) view.findViewById(R.id.data_reduction_compressed_size);
         mPercentReductionTextView = (TextView) view.findViewById(R.id.data_reduction_percent);
         mStartDateTextView = (TextView) view.findViewById(R.id.data_reduction_start_date);
         mEndDateTextView = (TextView) view.findViewById(R.id.data_reduction_end_date);

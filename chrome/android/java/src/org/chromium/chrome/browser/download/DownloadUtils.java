@@ -479,8 +479,8 @@ public class DownloadUtils {
             Uri contentUri = getUriForItem(file);
             String normalizedMimeType = Intent.normalizeMimeType(mimeType);
 
-            Intent intent = MediaViewerUtils.getMediaViewerIntent(
-                    fileUri, contentUri, normalizedMimeType, true /* allowExternalAppHandlers */);
+            Intent intent =
+                    MediaViewerUtils.getMediaViewerIntent(fileUri, contentUri, normalizedMimeType);
             IntentHandler.startActivityForTrustedIntent(intent);
             service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;

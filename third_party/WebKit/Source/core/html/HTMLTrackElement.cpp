@@ -58,7 +58,7 @@ inline HTMLTrackElement::HTMLTrackElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLTrackElement)
 
-HTMLTrackElement::~HTMLTrackElement() = default;
+HTMLTrackElement::~HTMLTrackElement() {}
 
 Node::InsertionNotificationRequest HTMLTrackElement::InsertedInto(
     ContainerNode* insertion_point) {

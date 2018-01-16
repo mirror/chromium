@@ -147,8 +147,6 @@ public class ContextualSearchPanelMetrics {
             // Notifications to Feature Engagement.
             ContextualSearchIPH.doSearchFinishedNotifications(profile, mWasSearchContentViewSeen,
                     mWasActivatedByTap, mWasContextualCardsDataShown);
-
-            writeRankerLoggerOutcomesAndReset();
         }
 
         if (isStartingSearch) {

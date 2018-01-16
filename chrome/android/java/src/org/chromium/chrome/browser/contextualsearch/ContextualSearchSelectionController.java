@@ -15,7 +15,6 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
@@ -207,17 +206,11 @@ public class ContextualSearchSelectionController {
      * Clears the selection.
      */
     void clearSelection() {
-        SelectionPopupController controller = getSelectionPopupController();
-        if (controller != null) controller.clearSelection();
+        ContentViewCore baseContentView = getBaseContentView();
+        if (baseContentView != null) {
+            baseContentView.clearSelection();
+        }
         resetSelectionStates();
-    }
-
-    /**
-     * @return The {@link SelectionPopupController} for the base WebContents.
-     */
-    protected SelectionPopupController getSelectionPopupController() {
-        WebContents baseContents = getBaseWebContents();
-        return baseContents != null ? SelectionPopupController.fromWebContents(baseContents) : null;
     }
 
     /**
@@ -267,8 +260,8 @@ public class ContextualSearchSelectionController {
                 mWasTapGestureDetected = false;
                 mSelectionType = SelectionType.LONG_PRESS;
                 shouldHandleSelection = true;
-                SelectionPopupController controller = getSelectionPopupController();
-                if (controller != null) mSelectedText = controller.getSelectedText();
+                ContentViewCore baseContentView = getBaseContentView();
+                if (baseContentView != null) mSelectedText = baseContentView.getSelectedText();
                 break;
             case SelectionEventType.SELECTION_HANDLES_CLEARED:
                 mHandler.handleSelectionDismissal();
@@ -419,6 +412,18 @@ public class ContextualSearchSelectionController {
     }
 
     /**
+     * Gets the base page ContentViewCore.
+     * Deprecated, use getBaseWebContents instead.
+     * @return The Base Page's {@link ContentViewCore}, or {@code null} if there is no current tab.
+     */
+    @Deprecated
+    @Nullable
+    ContentViewCore getBaseContentView() {
+        Tab currentTab = mActivity.getActivityTab();
+        return currentTab != null ? currentTab.getContentViewCore() : null;
+    }
+
+    /**
      * @return The Base Page's {@link WebContents}, or {@code null} if there is no current tab or
      *         the current tab has no {@link ContentViewCore}.
      */
@@ -528,11 +533,11 @@ public class ContextualSearchSelectionController {
      * @return whether the given selection is considered a valid target for a search.
      */
     private boolean isValidSelection(String selection) {
-        return isValidSelection(selection, getSelectionPopupController());
+        return isValidSelection(selection, getBaseContentView());
     }
 
     @VisibleForTesting
-    boolean isValidSelection(String selection, SelectionPopupController controller) {
+    boolean isValidSelection(String selection, ContentViewCore baseContentView) {
         if (selection.length() > MAX_SELECTION_LENGTH) {
             return false;
         }
@@ -541,7 +546,7 @@ public class ContextualSearchSelectionController {
             return false;
         }
 
-        if (controller != null && controller.isFocusedNodeEditable()) {
+        if (baseContentView != null && baseContentView.isFocusedNodeEditable()) {
             return false;
         }
 

@@ -39,6 +39,7 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerStreamHandle.h"
+#include "public/web/WebDevToolsAgentClient.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom-shared.h"
 #include "v8/include/v8.h"
 
@@ -63,7 +64,7 @@ class WebString;
 // thread.
 class WebServiceWorkerContextClient {
  public:
-  virtual ~WebServiceWorkerContextClient() = default;
+  virtual ~WebServiceWorkerContextClient() {}
 
   // For Clients#get(id). Requests the embedder to return the specified Client.
   virtual void GetClient(const WebString& client_id,
@@ -80,7 +81,7 @@ class WebServiceWorkerContextClient {
                           std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
 
   // Similar to OpenNewTab above. For PaymentRequestEvent#openWindow().
-  virtual void OpenPaymentHandlerWindow(
+  virtual void OpenNewPopup(
       const WebURL&,
       std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
 

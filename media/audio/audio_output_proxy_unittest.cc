@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -100,7 +101,7 @@ class MockAudioOutputStream : public AudioOutputStream {
 class MockAudioManager : public AudioManagerBase {
  public:
   MockAudioManager()
-      : AudioManagerBase(std::make_unique<TestAudioThread>(),
+      : AudioManagerBase(base::MakeUnique<TestAudioThread>(),
                          &fake_audio_log_factory_) {}
   ~MockAudioManager() override { Shutdown(); }
 
@@ -182,7 +183,7 @@ class AudioOutputProxyTest : public testing::Test {
   }
 
   virtual void InitDispatcher(base::TimeDelta close_delay) {
-    dispatcher_impl_ = std::make_unique<AudioOutputDispatcherImpl>(
+    dispatcher_impl_ = base::MakeUnique<AudioOutputDispatcherImpl>(
         &manager(), params_, std::string(), close_delay);
   }
 
@@ -504,7 +505,7 @@ class AudioOutputResamplerTest : public AudioOutputProxyTest {
     resampler_params_ = AudioParameters(
         AudioParameters::AUDIO_PCM_LOW_LATENCY, CHANNEL_LAYOUT_STEREO,
         16000, 16, 1024);
-    resampler_ = std::make_unique<AudioOutputResampler>(
+    resampler_ = base::MakeUnique<AudioOutputResampler>(
         &manager(), params_, resampler_params_, std::string(), close_delay,
         base::BindRepeating(&RegisterDebugRecording));
   }

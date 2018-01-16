@@ -129,6 +129,8 @@ static_library("test_support") {
     "../public/test/test_content_client_initializer.h",
     "../public/test/test_download_http_response.cc",
     "../public/test/test_download_http_response.h",
+    "../public/test/test_download_request_handler.cc",
+    "../public/test/test_download_request_handler.h",
     "../public/test/test_file_error_injector.cc",
     "../public/test/test_file_error_injector.h",
     "../public/test/test_fileapi_operation_waiter.cc",
@@ -302,7 +304,6 @@ static_library("test_support") {
     "//content/browser/speech/proto",
     "//content/child:for_content_tests",
     "//content/gpu",
-    "//content/network",
     "//content/public/browser",
     "//content/public/child",
     "//content/public/common",
@@ -998,6 +999,7 @@ test("content_browsertests") {
     ]
     sources -= [
       "../browser/media/session/audio_focus_delegate_default_browsertest.cc",
+      "../browser/network_service_browsertest.cc",
       "../browser/network_service_restart_browsertest.cc",
       "../browser/pointer_lock_browsertest.cc",
       "../browser/pointer_lock_browsertest.h",
@@ -1540,8 +1542,6 @@ test("content_unittests") {
     "../renderer/categorized_worker_pool_unittest.cc",
     "../renderer/device_sensors/device_motion_event_pump_unittest.cc",
     "../renderer/device_sensors/device_orientation_event_pump_unittest.cc",
-    "../renderer/device_sensors/fake_sensor_and_provider.cc",
-    "../renderer/device_sensors/fake_sensor_and_provider.h",
     "../renderer/dom_storage/dom_storage_cached_area_unittest.cc",
     "../renderer/dom_storage/local_storage_cached_area_unittest.cc",
     "../renderer/dom_storage/local_storage_cached_areas_unittest.cc",
@@ -1789,10 +1789,7 @@ test("content_unittests") {
   }
 
   if (enable_library_cdms) {
-    sources += [
-      "../browser/media/cdm_storage_impl_unittest.cc",
-      "../browser/media/key_system_support_impl_unittest.cc",
-    ]
+    sources += [ "../browser/media/cdm_storage_impl_unittest.cc" ]
   }
 
   if (enable_webrtc) {
@@ -1841,7 +1838,6 @@ test("content_unittests") {
       "../renderer/media/webrtc/media_stream_video_webrtc_sink_unittest.cc",
       "../renderer/media/webrtc/peer_connection_dependency_factory_unittest.cc",
       "../renderer/media/webrtc/processed_local_audio_source_unittest.cc",
-      "../renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
       "../renderer/media/webrtc/rtc_stats_unittest.cc",
       "../renderer/media/webrtc/stun_field_trial_unittest.cc",
       "../renderer/media/webrtc/two_keys_adapter_map_unittest.cc",

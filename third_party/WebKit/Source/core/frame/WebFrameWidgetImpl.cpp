@@ -72,7 +72,6 @@
 #include "platform/graphics/Color.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/wtf/AutoReset.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebPlugin.h"
@@ -138,7 +137,7 @@ WebFrameWidgetImpl::WebFrameWidgetImpl(WebWidgetClient* client,
     SetBackgroundColorOverride(Color::kTransparent);
 }
 
-WebFrameWidgetImpl::~WebFrameWidgetImpl() = default;
+WebFrameWidgetImpl::~WebFrameWidgetImpl() {}
 
 void WebFrameWidgetImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(local_root_);
@@ -827,7 +826,6 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
   DCHECK(client_);
   WebInputEventResult event_result = WebInputEventResult::kNotHandled;
   bool event_cancelled = false;
-  WTF::Optional<ContextMenuAllowedScope> maybe_context_menu_scope;
 
   WebViewImpl* view_impl = View();
   switch (event.GetType()) {
@@ -849,12 +847,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
       View()->SetLastHiddenPagePopup(nullptr);
     case WebInputEvent::kGestureShowPress:
     case WebInputEvent::kGestureDoubleTap:
-      break;
     case WebInputEvent::kGestureTwoFingerTap:
     case WebInputEvent::kGestureLongPress:
     case WebInputEvent::kGestureLongTap:
-      GetPage()->GetContextMenuController().ClearContextMenu();
-      maybe_context_menu_scope.emplace();
       break;
     case WebInputEvent::kGestureFlingStart:
     case WebInputEvent::kGestureFlingCancel:

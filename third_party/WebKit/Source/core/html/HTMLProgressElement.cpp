@@ -28,6 +28,7 @@
 #include "core/html/shadow/ProgressShadowElement.h"
 #include "core/html_names.h"
 #include "core/layout/LayoutProgress.h"
+#include "core/layout/api/LayoutProgressItem.h"
 
 namespace blink {
 
@@ -41,11 +42,11 @@ HTMLProgressElement::HTMLProgressElement(Document& document)
   UseCounter::Count(document, WebFeature::kProgressElement);
 }
 
-HTMLProgressElement::~HTMLProgressElement() = default;
+HTMLProgressElement::~HTMLProgressElement() {}
 
 HTMLProgressElement* HTMLProgressElement::Create(Document& document) {
   HTMLProgressElement* progress = new HTMLProgressElement(document);
-  progress->EnsureLegacyUserAgentShadowRootV0();
+  progress->EnsureUserAgentShadowRoot();
   return progress;
 }
 
@@ -82,8 +83,8 @@ void HTMLProgressElement::ParseAttribute(
 
 void HTMLProgressElement::AttachLayoutTree(AttachContext& context) {
   LabelableElement::AttachLayoutTree(context);
-  if (LayoutProgress* layout_progress = GetLayoutProgress())
-    layout_progress->UpdateFromElement();
+  if (LayoutProgressItem layout_item = LayoutProgressItem(GetLayoutProgress()))
+    layout_item.UpdateFromElement();
 }
 
 double HTMLProgressElement::value() const {
@@ -126,8 +127,8 @@ bool HTMLProgressElement::IsDeterminate() const {
 
 void HTMLProgressElement::DidElementStateChange() {
   SetValueWidthPercentage(position() * 100);
-  if (LayoutProgress* layout_progress = GetLayoutProgress())
-    layout_progress->UpdateFromElement();
+  if (LayoutProgressItem layout_item = LayoutProgressItem(GetLayoutProgress()))
+    layout_item.UpdateFromElement();
 }
 
 void HTMLProgressElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {

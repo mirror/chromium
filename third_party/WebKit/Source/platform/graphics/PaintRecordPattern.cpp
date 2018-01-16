@@ -31,7 +31,7 @@ PaintRecordPattern::PaintRecordPattern(sk_sp<PaintRecord> record,
   // FIXME: we don't have a good way to account for DL memory utilization.
 }
 
-PaintRecordPattern::~PaintRecordPattern() = default;
+PaintRecordPattern::~PaintRecordPattern() {}
 
 sk_sp<PaintShader> PaintRecordPattern::CreateShader(
     const SkMatrix& local_matrix) {

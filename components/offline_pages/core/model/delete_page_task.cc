@@ -81,12 +81,12 @@ void ReportDeletePageHistograms(
   base::Time delete_time = base::Time::Now();
   for (const auto& info_wrapper : info_wrappers) {
     base::UmaHistogramCustomCounts(
-        model_utils::AddHistogramSuffix(info_wrapper.client_id.name_space,
+        model_utils::AddHistogramSuffix(info_wrapper.client_id,
                                         "OfflinePages.PageLifetime"),
         (delete_time - info_wrapper.creation_time).InMinutes(), 1, max_minutes,
         100);
     base::UmaHistogramCustomCounts(
-        model_utils::AddHistogramSuffix(info_wrapper.client_id.name_space,
+        model_utils::AddHistogramSuffix(info_wrapper.client_id,
                                         "OfflinePages.AccessCount"),
         info_wrapper.access_count, 1, 1000000, 50);
   }

@@ -62,7 +62,7 @@ class MockLinkLoaderClient final
 
 class NetworkHintsMock : public NetworkHintsInterface {
  public:
-  NetworkHintsMock() = default;
+  NetworkHintsMock() {}
 
   void DnsPrefetchHost(const String& host) const override {
     did_dns_prefetch_ = true;
@@ -168,7 +168,7 @@ constexpr PreloadTestParams kPreloadTestParams[] = {
     // TODO(yoav): It doesn't seem like the audio context is ever used. That
     // should probably be fixed (or we can consolidate audio and video).
     {"http://example.test/cat.wav", "audio", "", "", "", kReferrerPolicyDefault,
-     ResourceLoadPriority::kLow, WebURLRequest::kRequestContextAudio, nullptr,
+     ResourceLoadPriority::kLow, WebURLRequest::kRequestContextVideo, nullptr,
      true, true, kReferrerPolicyDefault},
     {"http://example.test/cat.mp4", "video", "", "", "", kReferrerPolicyDefault,
      ResourceLoadPriority::kLow, WebURLRequest::kRequestContextVideo, nullptr,
@@ -226,11 +226,11 @@ constexpr PreloadTestParams kPreloadTestParams[] = {
      kReferrerPolicyDefault},
     {"http://example.test/cat.wav", "audio", "audio/wav", "", "",
      kReferrerPolicyDefault, ResourceLoadPriority::kLow,
-     WebURLRequest::kRequestContextAudio, nullptr, true, true,
+     WebURLRequest::kRequestContextVideo, nullptr, true, true,
      kReferrerPolicyDefault},
     {"http://example.test/cat.wav", "audio", "audio/mp57", "", "",
      kReferrerPolicyDefault, ResourceLoadPriority::kUnresolved,
-     WebURLRequest::kRequestContextAudio, nullptr, false, false,
+     WebURLRequest::kRequestContextVideo, nullptr, false, false,
      kReferrerPolicyDefault},
     {"http://example.test/cat.webm", "video", "video/webm", "", "",
      kReferrerPolicyDefault, ResourceLoadPriority::kLow,

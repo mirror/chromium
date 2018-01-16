@@ -30,7 +30,6 @@ namespace content {
 
 class ResourceDispatcher;
 class ThreadSafeSender;
-class URLLoaderThrottleProvider;
 
 // This class is used while fetching resource requests on workers (dedicated
 // worker and shared worker). This class is created on the main thread and
@@ -43,8 +42,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
       mojom::ServiceWorkerWorkerClientRequest service_worker_client_request,
       mojom::ServiceWorkerContainerHostPtrInfo
           service_worker_container_host_info,
-      ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info,
-      std::unique_ptr<URLLoaderThrottleProvider> throttle_provider);
+      ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info);
   ~WorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
@@ -138,8 +136,6 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   // A weak ptr to blink::WebURLLoaderFactory which was created and passed to
   // Blink by CreateURLLoaderFactory().
   base::WeakPtr<URLLoaderFactoryImpl> url_loader_factory_;
-
-  std::unique_ptr<URLLoaderThrottleProvider> throttle_provider_;
 };
 
 }  // namespace content

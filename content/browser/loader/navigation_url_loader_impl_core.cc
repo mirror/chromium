@@ -19,7 +19,6 @@
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/resource_response.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -52,13 +51,12 @@ void NavigationURLLoaderImplCore::Start(
 
   // The ResourceDispatcherHostImpl can be null in unit tests.
   if (ResourceDispatcherHostImpl::Get()) {
-    GlobalRequestID global_request_id;  // unused.
     ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
         resource_context, url_request_context_getter->GetURLRequestContext(),
         upload_file_system_context, *request_info,
         std::move(navigation_ui_data), this, mojom::URLLoaderClientPtr(),
         mojom::URLLoaderRequest(), service_worker_handle_core,
-        appcache_handle_core, mojom::kURLLoadOptionNone, &global_request_id);
+        appcache_handle_core);
   }
 
   // Careful, |this| could be destroyed at this point. Don't notify start if

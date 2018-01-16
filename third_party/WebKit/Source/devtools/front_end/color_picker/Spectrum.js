@@ -507,7 +507,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
    */
   _resizeForSelectedPalette(force) {
     var palette = this._palettes.get(this._selectedColorPalette.get());
-    if (!palette)
+    if (!palette && !force)
       return;
     var numColors = palette.colors.length;
     if (palette === this._customPaletteSetting.get())

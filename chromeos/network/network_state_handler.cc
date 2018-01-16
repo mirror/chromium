@@ -1263,10 +1263,8 @@ void NetworkStateHandler::UpdateIPConfigProperties(
     if (!default_network_path_.empty()) {
       const NetworkState* default_network =
           GetNetworkState(default_network_path_);
-      if (default_network && default_network->device_path() == path) {
-        NotifyNetworkPropertiesUpdated(default_network);
+      if (default_network && default_network->device_path() == path)
         NotifyDefaultNetworkChanged(default_network);
-      }
     }
   }
 }

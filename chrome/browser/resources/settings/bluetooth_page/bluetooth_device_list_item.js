@@ -36,15 +36,15 @@ Polymer({
    * @private
    */
   onMenuButtonTap_: function(event) {
-    const button = /** @type {!HTMLElement} */ (event.target);
-    const menu = /** @type {!CrActionMenuElement} */ (this.$.dotsMenu);
+    var button = /** @type {!HTMLElement} */ (event.target);
+    var menu = /** @type {!CrActionMenuElement} */ (this.$.dotsMenu);
     menu.showAt(button);
     event.stopPropagation();
   },
 
   /** @private */
   onConnectActionTap_: function() {
-    const action = this.isDisconnected_(this.device) ? 'connect' : 'disconnect';
+    var action = this.isDisconnected_(this.device) ? 'connect' : 'disconnect';
     this.fire('device-event', {
       action: action,
       device: this.device,

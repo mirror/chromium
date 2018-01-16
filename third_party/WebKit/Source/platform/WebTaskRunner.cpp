@@ -117,6 +117,30 @@ void WebTaskRunner::PostTask(const base::Location& location,
   PostDelayedTask(location, std::move(task), base::TimeDelta());
 }
 
+TaskHandle WebTaskRunner::PostCancellableTask(const base::Location& location,
+                                              base::OnceClosure task) {
+  DCHECK(RunsTasksInCurrentSequence());
+  scoped_refptr<TaskHandle::Runner> runner =
+      base::AdoptRef(new TaskHandle::Runner(std::move(task)));
+  PostTask(location, WTF::Bind(&TaskHandle::Runner::Run, runner->AsWeakPtr(),
+                               TaskHandle(runner)));
+  return TaskHandle(runner);
+}
+
+TaskHandle WebTaskRunner::PostDelayedCancellableTask(
+    const base::Location& location,
+    base::OnceClosure task,
+    TimeDelta delay) {
+  DCHECK(RunsTasksInCurrentSequence());
+  scoped_refptr<TaskHandle::Runner> runner =
+      base::AdoptRef(new TaskHandle::Runner(std::move(task)));
+  PostDelayedTask(location,
+                  WTF::Bind(&TaskHandle::Runner::Run, runner->AsWeakPtr(),
+                            TaskHandle(runner)),
+                  delay);
+  return TaskHandle(runner);
+}
+
 WebTaskRunner::~WebTaskRunner() = default;
 
 // Use a custom function for base::Bind instead of WTF::Bind to
@@ -137,33 +161,6 @@ void PostDelayedCrossThreadTask(WebTaskRunner& task_runner,
                                 TimeDelta delay) {
   task_runner.PostDelayedTask(
       location, base::BindOnce(&RunCrossThreadClosure, std::move(task)), delay);
-}
-
-TaskHandle PostCancellableTask(WebTaskRunner& task_runner,
-                               const base::Location& location,
-                               base::OnceClosure task) {
-  DCHECK(task_runner.RunsTasksInCurrentSequence());
-  scoped_refptr<TaskHandle::Runner> runner =
-      base::AdoptRef(new TaskHandle::Runner(std::move(task)));
-  task_runner.PostTask(location,
-                       WTF::Bind(&TaskHandle::Runner::Run, runner->AsWeakPtr(),
-                                 TaskHandle(runner)));
-  return TaskHandle(runner);
-}
-
-TaskHandle PostDelayedCancellableTask(WebTaskRunner& task_runner,
-                                      const base::Location& location,
-                                      base::OnceClosure task,
-                                      TimeDelta delay) {
-  DCHECK(task_runner.RunsTasksInCurrentSequence());
-  scoped_refptr<TaskHandle::Runner> runner =
-      base::AdoptRef(new TaskHandle::Runner(std::move(task)));
-  task_runner.PostDelayedTask(
-      location,
-      WTF::Bind(&TaskHandle::Runner::Run, runner->AsWeakPtr(),
-                TaskHandle(runner)),
-      delay);
-  return TaskHandle(runner);
 }
 
 }  // namespace blink

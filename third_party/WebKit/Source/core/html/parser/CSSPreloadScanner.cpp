@@ -42,9 +42,9 @@
 
 namespace blink {
 
-CSSPreloadScanner::CSSPreloadScanner() = default;
+CSSPreloadScanner::CSSPreloadScanner() {}
 
-CSSPreloadScanner::~CSSPreloadScanner() = default;
+CSSPreloadScanner::~CSSPreloadScanner() {}
 
 void CSSPreloadScanner::Reset() {
   state_ = kInitial;
@@ -265,7 +265,7 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                   : kScanOnly),
       preloader_(preloader) {}
 
-CSSPreloaderResourceClient::~CSSPreloaderResourceClient() = default;
+CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
 
 void CSSPreloaderResourceClient::NotifyFinished(Resource*) {
   MaybeClearResource();

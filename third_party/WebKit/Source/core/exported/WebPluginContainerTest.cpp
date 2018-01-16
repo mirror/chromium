@@ -140,7 +140,7 @@ class TestPlugin : public FakeWebPlugin {
   void PrintPage(int page_number, WebCanvas*) override;
 
  private:
-  ~TestPlugin() override = default;
+  ~TestPlugin() override {}
 
   TestPluginWebFrameClient* const test_client_;
 };
@@ -184,7 +184,7 @@ class TestPluginWithEditableText : public FakeWebPlugin {
   }
 
  private:
-  ~TestPluginWithEditableText() override = default;
+  ~TestPluginWithEditableText() override {}
 
   bool cut_called_;
   bool paste_called_;
@@ -742,7 +742,7 @@ class EventTestPlugin : public FakeWebPlugin {
   size_t GetCoalescedEventCount() { return coalesced_event_count_; }
 
  private:
-  ~EventTestPlugin() override = default;
+  ~EventTestPlugin() override {}
 
   size_t coalesced_event_count_;
   WebInputEvent::Type last_event_type_;
@@ -1245,7 +1245,7 @@ TEST_F(WebPluginContainerTest, TopmostAfterDetachTest) {
     }
 
    private:
-    ~TopmostPlugin() override = default;
+    ~TopmostPlugin() override {}
   };
 
   RegisterMockedURL("plugin_container.html");
@@ -1298,7 +1298,7 @@ class CompositedPlugin : public FakeWebPlugin {
   }
 
  private:
-  ~CompositedPlugin() override = default;
+  ~CompositedPlugin() override {}
 
   std::unique_ptr<WebLayer> layer_;
 };

@@ -3,16 +3,16 @@
 // found in the LICENSE file.
 
 suite('<bookmarks-toolbar>', function() {
-  let toolbar;
-  let store;
-  let commandManager;
+  var toolbar;
+  var store;
+  var commandManager;
 
   suiteSetup(function() {
     chrome.bookmarkManagerPrivate.removeTrees = function() {};
   });
 
   setup(function() {
-    const nodes = testTree(createFolder('1', [
+    var nodes = testTree(createFolder('1', [
       createItem('2'),
       createItem('3'),
       createFolder('4', [], {unmodifiable: 'managed'}),
@@ -65,7 +65,7 @@ suite('<bookmarks-toolbar>', function() {
     store.notifyObservers();
 
     Polymer.dom.flush();
-    const button = toolbar.$$('cr-toolbar-selection-overlay').deleteButton;
+    var button = toolbar.$$('cr-toolbar-selection-overlay').deleteButton;
     assertFalse(button.disabled);
     MockInteractions.tap(button);
 
@@ -76,8 +76,8 @@ suite('<bookmarks-toolbar>', function() {
     store.data.selection.items = new Set(['2']);
     store.notifyObservers();
 
-    const input = toolbar.$$('cr-toolbar').getSearchField().getSearchInput();
-    const modifier = cr.isMac ? 'meta' : 'ctrl';
+    var input = toolbar.$$('cr-toolbar').getSearchField().getSearchInput();
+    var modifier = cr.isMac ? 'meta' : 'ctrl';
     MockInteractions.pressAndReleaseKeyOn(input, 67, modifier, 'c');
 
     commandManager.assertLastCommand(null);
@@ -92,5 +92,65 @@ suite('<bookmarks-toolbar>', function() {
     assertTrue(toolbar.showSelectionOverlay);
     assertTrue(
         toolbar.$$('cr-toolbar-selection-overlay').deleteButton.disabled);
+  });
+
+  test('overflow menu options are disabled when appropriate', function() {
+    MockInteractions.tap(toolbar.$.menuButton);
+    Polymer.dom.flush();
+
+    store.data.selectedFolder = '1';
+    store.notifyObservers();
+
+    assertFalse(toolbar.$$('#addBookmarkButton').disabled);
+
+    store.data.selectedFolder = '4';
+    store.notifyObservers();
+
+    assertTrue(toolbar.$$('#addBookmarkButton').disabled);
+    assertFalse(toolbar.$$('#importBookmarkButton').disabled);
+
+    store.data.prefs.canEdit = false;
+    store.notifyObservers();
+
+    assertTrue(toolbar.$$('#addBookmarkButton').disabled);
+    assertTrue(toolbar.$$('#importBookmarkButton').disabled);
+  });
+
+  test('sort button is disabled when folder is empty', function() {
+    MockInteractions.tap(toolbar.$.menuButton);
+
+    store.data.selectedFolder = '6';
+    store.notifyObservers();
+    assertTrue(toolbar.canSortFolder_);
+
+    store.data.selectedFolder = '5';
+    store.notifyObservers();
+
+    assertFalse(toolbar.canSortFolder_);
+    assertTrue(toolbar.$$('#sortButton').disabled);
+
+    // Adding 2 bookmarks should enable sorting.
+    store.setReducersEnabled(true);
+    var item1 = {
+      id: '51',
+      parentId: '5',
+      index: 0,
+      url: 'https://www.example.com',
+    };
+    store.dispatch(bookmarks.actions.createBookmark(
+        item1.id, item1));
+    assertFalse(toolbar.canSortFolder_);
+    assertTrue(toolbar.$$('#sortButton').disabled);
+
+    var item2 = {
+      id: '52',
+      parentId: '5',
+      index: 1,
+      url: 'https://www.example.com',
+    };
+    store.dispatch(bookmarks.actions.createBookmark(
+        item2.id, item2));
+    assertTrue(toolbar.canSortFolder_);
+    assertFalse(toolbar.$$('#sortButton').disabled);
   });
 });

@@ -8,7 +8,7 @@
  * most one section should be expanded at any given time.
  * @polymerBehavior MainPageBehavior
  */
-const MainPageBehaviorImpl = {
+var MainPageBehaviorImpl = {
   properties: {
     /**
      * Help CSS to alter style during the horizontal swipe animation.
@@ -58,7 +58,7 @@ const MainPageBehaviorImpl = {
    * @param {settings.Route} oldRoute
    */
   currentRouteChanged: function(newRoute, oldRoute) {
-    const oldRouteWasSection = !!oldRoute && !!oldRoute.parent &&
+    var oldRouteWasSection = !!oldRoute && !!oldRoute.parent &&
         !!oldRoute.section && oldRoute.parent.section != oldRoute.section;
 
     if (this.scroller) {
@@ -78,7 +78,7 @@ const MainPageBehaviorImpl = {
     // Scroll to the section except for back/forward. Also scroll for any
     // in-page back/forward navigations (from a section or the root page).
     // Also always scroll when coming from either the About or root page.
-    const scrollToSection = !settings.lastRouteChangeWasPopstate() ||
+    var scrollToSection = !settings.lastRouteChangeWasPopstate() ||
         oldRouteWasSection || oldRoute == settings.routes.BASIC ||
         oldRoute == settings.routes.ABOUT;
 
@@ -128,8 +128,8 @@ const MainPageBehaviorImpl = {
    * @private
    */
   tryTransitionToSection_: function(scrollToSection, immediate) {
-    const currentRoute = settings.getCurrentRoute();
-    const currentSection = this.getSection(currentRoute.section);
+    var currentRoute = settings.getCurrentRoute();
+    var currentSection = this.getSection(currentRoute.section);
 
     // If an animation is already playing, try finishing or canceling it.
     if (this.currentAnimation_) {
@@ -139,8 +139,8 @@ const MainPageBehaviorImpl = {
       return;
     }
 
-    let promise;
-    const expandedSection = /** @type {?SettingsSectionElement} */ (
+    var promise;
+    var expandedSection = /** @type {?SettingsSectionElement} */ (
         this.$$('settings-section.expanded'));
     if (expandedSection) {
       // If the section shouldn't be expanded, collapse it.
@@ -188,8 +188,8 @@ const MainPageBehaviorImpl = {
    * @private
    */
   maybeStopCurrentAnimation_: function() {
-    const currentRoute = settings.getCurrentRoute();
-    const animatingSection = /** @type {?SettingsSectionElement} */ (
+    var currentRoute = settings.getCurrentRoute();
+    var animatingSection = /** @type {?SettingsSectionElement} */ (
         this.$$('settings-section.expanding, settings-section.collapsing'));
     assert(animatingSection);
 
@@ -297,13 +297,13 @@ const MainPageBehaviorImpl = {
 
     // Don't animate the collapse if we are transitioning between Basic/Advanced
     // and About, since the section won't be visible.
-    const needAnimate =
+    var needAnimate =
         settings.routes.ABOUT.contains(settings.getCurrentRoute()) ==
         (section.domHost.tagName == 'SETTINGS-ABOUT-PAGE');
 
     // Animate the collapse if the section knows the original height, except
     // when switching between Basic/Advanced and About.
-    const shouldAnimateCollapse = needAnimate && section.canAnimateCollapse();
+    var shouldAnimateCollapse = needAnimate && section.canAnimateCollapse();
     if (shouldAnimateCollapse) {
       this.fire('freeze-scroll', true);
       // Do the initial collapse setup, which takes the section out of the flow,
@@ -327,7 +327,7 @@ const MainPageBehaviorImpl = {
     return new Promise((resolve, reject) => {
       // Wait for the other sections to show up so we can scroll properly.
       setTimeout(() => {
-        const newSection = settings.getCurrentRoute().section &&
+        var newSection = settings.getCurrentRoute().section &&
             this.getSection(settings.getCurrentRoute().section);
 
         // Scroll to the new section or the original position.
@@ -366,9 +366,8 @@ const MainPageBehaviorImpl = {
    * @private
    */
   toggleOtherSectionsHidden_: function(sectionName, hidden) {
-    const sections =
-        Polymer.dom(this.root).querySelectorAll('settings-section');
-    for (let i = 0; i < sections.length; i++)
+    var sections = Polymer.dom(this.root).querySelectorAll('settings-section');
+    for (var i = 0; i < sections.length; i++)
       sections[i].hidden = hidden && (sections[i].section != sectionName);
   },
 
@@ -386,7 +385,7 @@ const MainPageBehaviorImpl = {
 };
 
 /** @polymerBehavior */
-const MainPageBehavior = [
+var MainPageBehavior = [
   settings.RouteObserverBehavior,
   MainPageBehaviorImpl,
 ];

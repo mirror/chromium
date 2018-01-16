@@ -228,7 +228,7 @@ void ManagePasswordsState::ClearData() {
 }
 
 void ManagePasswordsState::AddForm(const autofill::PasswordForm& form) {
-  if (form.origin.GetOrigin() != origin_.GetOrigin())
+  if (form.origin != origin_)
     return;
   if (UpdateForm(form))
     return;

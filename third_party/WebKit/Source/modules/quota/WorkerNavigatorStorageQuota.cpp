@@ -35,7 +35,7 @@
 
 namespace blink {
 
-WorkerNavigatorStorageQuota::WorkerNavigatorStorageQuota() = default;
+WorkerNavigatorStorageQuota::WorkerNavigatorStorageQuota() {}
 
 const char* WorkerNavigatorStorageQuota::SupplementName() {
   return "WorkerNavigatorStorageQuota";

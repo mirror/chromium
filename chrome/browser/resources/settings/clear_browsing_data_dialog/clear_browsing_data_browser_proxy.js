@@ -22,7 +22,7 @@
  *   hasNotifications: boolean
  * }}
  */
-let ImportantSite;
+var ImportantSite;
 
 cr.define('settings', function() {
   /** @interface */

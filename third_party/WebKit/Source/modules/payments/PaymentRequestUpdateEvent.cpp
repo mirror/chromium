@@ -85,7 +85,7 @@ class UpdatePaymentDetailsErrorFunction : public ScriptFunction {
 
 }  // namespace
 
-PaymentRequestUpdateEvent::~PaymentRequestUpdateEvent() = default;
+PaymentRequestUpdateEvent::~PaymentRequestUpdateEvent() {}
 
 PaymentRequestUpdateEvent* PaymentRequestUpdateEvent::Create(
     ExecutionContext* execution_context,

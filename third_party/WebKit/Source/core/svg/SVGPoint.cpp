@@ -38,7 +38,7 @@
 
 namespace blink {
 
-SVGPoint::SVGPoint() = default;
+SVGPoint::SVGPoint() {}
 
 SVGPoint::SVGPoint(const FloatPoint& point) : value_(point) {}
 

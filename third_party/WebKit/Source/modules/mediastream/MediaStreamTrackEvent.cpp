@@ -52,7 +52,7 @@ MediaStreamTrackEvent::MediaStreamTrackEvent(
   DCHECK(track_);
 }
 
-MediaStreamTrackEvent::~MediaStreamTrackEvent() = default;
+MediaStreamTrackEvent::~MediaStreamTrackEvent() {}
 
 MediaStreamTrack* MediaStreamTrackEvent::track() const {
   return track_.Get();

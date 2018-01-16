@@ -26,12 +26,6 @@ void TableSectionPainter::PaintRepeatingHeaderGroup(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
     ItemToPaint item_to_paint) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-      // TODO(wangxianzhu): Use the PaintPropertyTreeBuilder path for printing.
-      (!paint_info.IsPrinting() ||
-       layout_table_section_.FirstFragment().NextFragment()))
-    return;
-
   if (!layout_table_section_.IsRepeatingHeaderGroup())
     return;
 
@@ -43,6 +37,7 @@ void TableSectionPainter::PaintRepeatingHeaderGroup(
 
   // We may paint the header multiple times so can't uniquely identify each
   // display item.
+  // TODO(wangxianzhu): Create multiple FragmentData for repeating headers.
   DisplayItemCacheSkipper cache_skipper(paint_info.context);
 
   LayoutPoint pagination_offset = paint_offset;
@@ -97,12 +92,6 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
     ItemToPaint item_to_paint) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-      // TODO(wangxianzhu): Use the PaintPropertyTreeBuilder path for printing.
-      (!paint_info.IsPrinting() ||
-       layout_table_section_.FirstFragment().NextFragment()))
-    return;
-
   if (!layout_table_section_.IsRepeatingFooterGroup())
     return;
 
@@ -116,6 +105,7 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
 
   // We may paint the footer multiple times so can't uniquely identify each
   // display item.
+  // TODO(wangxianzhu): Create multiple FragmentData for repeating footers.
   DisplayItemCacheSkipper cache_skipper(paint_info.context);
 
   LayoutRect sections_rect(LayoutPoint(), table->Size());

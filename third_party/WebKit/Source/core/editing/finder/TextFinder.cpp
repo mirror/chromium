@@ -785,7 +785,7 @@ TextFinder::TextFinder(WebLocalFrameImpl& owner_frame)
       last_find_request_completed_with_no_matches_(false),
       find_match_rects_are_valid_(false) {}
 
-TextFinder::~TextFinder() = default;
+TextFinder::~TextFinder() {}
 
 bool TextFinder::SetMarkerActive(Range* range, bool active) {
   if (!range || range->collapsed())

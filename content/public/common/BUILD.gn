@@ -204,8 +204,8 @@ jumbo_source_set("common_sources") {
     "request_context_type.h",
     "resource_request.cc",
     "resource_request.h",
-    "resource_request_body_android.cc",
-    "resource_request_body_android.h",
+    "resource_request_body.cc",
+    "resource_request_body.h",
     "resource_response.cc",
     "resource_response.h",
     "resource_response_info.cc",
@@ -268,7 +268,6 @@ jumbo_source_set("common_sources") {
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//net",
-    "//services/network/public/cpp",
     "//services/network/public/interfaces",
     "//services/service_manager/embedder",
     "//services/service_manager/public/cpp",
@@ -306,10 +305,6 @@ jumbo_source_set("common_sources") {
 
   if (use_aura) {
     deps += [ "//ui/aura" ]
-  }
-
-  if (is_android) {
-    deps += [ "//content/public/android:jni" ]
   }
 
   # //content/common needs to include public headers.
@@ -363,7 +358,6 @@ mojom("interfaces") {
   sources = [
     "appcache_info.mojom",
     "download_stream.mojom",
-    "fullscreen_video_element.mojom",
     "network_service.mojom",
     "network_service_test.mojom",
     "proxy_config.mojom",

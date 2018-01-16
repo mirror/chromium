@@ -70,7 +70,7 @@ class WeakIdentifierMap final
  private:
   static WeakIdentifierMap<T, IdentifierType>& Instance();
 
-  WeakIdentifierMap() = default;
+  WeakIdentifierMap() {}
 
   static IdentifierType Next() {
     static IdentifierType last_id = 0;

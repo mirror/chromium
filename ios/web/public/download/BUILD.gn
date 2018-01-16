@@ -7,7 +7,6 @@ import("//ios/build/config.gni")
 source_set("download") {
   deps = [
     "//base",
-    "//ui/base",
   ]
 
   sources = [

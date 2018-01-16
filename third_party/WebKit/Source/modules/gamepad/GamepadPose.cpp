@@ -33,7 +33,7 @@ DOMFloat32Array* QuatToFloat32Array(const device::GamepadQuaternion& quat) {
 
 }  // namespace
 
-GamepadPose::GamepadPose() = default;
+GamepadPose::GamepadPose() {}
 
 void GamepadPose::SetPose(const device::GamepadPose& state) {
   if (state.not_null) {

@@ -21,11 +21,24 @@ class ASH_EXPORT AccessibilityDelegate {
  public:
   virtual ~AccessibilityDelegate() {}
 
+  // Invoked to toggle spoken feedback for accessibility
+  virtual void ToggleSpokenFeedback(
+      AccessibilityNotificationVisibility notify) = 0;
+
+  // Returns true if spoken feedback is enabled.
+  virtual bool IsSpokenFeedbackEnabled() const = 0;
+
   // Invoked to enable the screen magnifier.
   virtual void SetMagnifierEnabled(bool enabled) = 0;
 
   // Returns true if the screen magnifier is enabled.
   virtual bool IsMagnifierEnabled() const = 0;
+
+  // Invoked to enable autoclick.
+  virtual void SetAutoclickEnabled(bool enabled) = 0;
+
+  // Returns if autoclick is enabled or not.
+  virtual bool IsAutoclickEnabled() const = 0;
 
   // Invoked to enable or disable the a11y on-screen keyboard.
   virtual void SetVirtualKeyboardEnabled(bool enabled) = 0;

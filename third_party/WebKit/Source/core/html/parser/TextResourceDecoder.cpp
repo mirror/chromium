@@ -136,7 +136,7 @@ TextResourceDecoder::TextResourceDecoder(
   }
 }
 
-TextResourceDecoder::~TextResourceDecoder() = default;
+TextResourceDecoder::~TextResourceDecoder() {}
 
 void TextResourceDecoder::SetEncoding(const WTF::TextEncoding& encoding,
                                       EncodingSource source) {

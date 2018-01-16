@@ -1,7 +1,7 @@
 #define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
-#if defined(_WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
+#if defined(WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
 #include <win32config.h>
 #else
 #include "config.h"
@@ -68,12 +68,10 @@ static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
  * Registers a function declared by a func:function element
  */
 static void
-exsltFuncRegisterFunc (void *payload, void *vctxt,
+exsltFuncRegisterFunc (exsltFuncFunctionData *data,
+		       xsltTransformContextPtr ctxt,
 		       const xmlChar *URI, const xmlChar *name,
 		       ATTRIBUTE_UNUSED const xmlChar *ignored) {
-    exsltFuncFunctionData *data = (exsltFuncFunctionData *) payload;
-    xsltTransformContextPtr ctxt = (xsltTransformContextPtr) vctxt;
-
     if ((data == NULL) || (ctxt == NULL) || (URI == NULL) || (name == NULL))
 	return;
 
@@ -95,11 +93,10 @@ exsltFuncRegisterFunc (void *payload, void *vctxt,
  * stylesheet.  If not, copies function data and registers function
  */
 static void
-exsltFuncRegisterImportFunc (void *payload, void *vctxt,
+exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
+			     exsltFuncImportRegData *ch,
 			     const xmlChar *URI, const xmlChar *name,
 			     ATTRIBUTE_UNUSED const xmlChar *ignored) {
-    exsltFuncFunctionData *data = (exsltFuncFunctionData *) payload;
-    exsltFuncImportRegData *ch = (exsltFuncImportRegData *) vctxt;
     exsltFuncFunctionData *func=NULL;
 
     if ((data == NULL) || (ch == NULL) || (URI == NULL) || (name == NULL))
@@ -142,7 +139,7 @@ exsltFuncRegisterImportFunc (void *payload, void *vctxt,
  *
  * Returns the data for this transformation
  */
-static void *
+static exsltFuncData *
 exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
     exsltFuncData *ret;
     xsltStylesheetPtr tmp;
@@ -162,13 +159,14 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
     ch.hash = (xmlHashTablePtr) xsltStyleGetExtData(ctxt->style, URI);
     ret->funcs = ch.hash;
-    xmlHashScanFull(ch.hash, exsltFuncRegisterFunc, ctxt);
+    xmlHashScanFull(ch.hash, (xmlHashScannerFull) exsltFuncRegisterFunc, ctxt);
     tmp = ctxt->style;
     ch.ctxt = ctxt;
     while ((tmp=xsltNextImport(tmp))!=NULL) {
 	hash = xsltGetExtInfo(tmp, URI);
 	if (hash != NULL) {
-	    xmlHashScanFull(hash, exsltFuncRegisterImportFunc, &ch);
+	    xmlHashScanFull(hash,
+		    (xmlHashScannerFull) exsltFuncRegisterImportFunc, &ch);
 	}
     }
 
@@ -187,9 +185,7 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 static void
 exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		   const xmlChar *URI ATTRIBUTE_UNUSED,
-		   void *vdata) {
-    exsltFuncData *data = (exsltFuncData *) vdata;
-
+		   exsltFuncData *data) {
     if (data->result != NULL)
 	xmlXPathFreeObject(data->result);
     xmlFree(data);
@@ -205,15 +201,10 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  *
  * Returns the allocated data
  */
-static void *
+static xmlHashTablePtr
 exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 		    const xmlChar *URI ATTRIBUTE_UNUSED) {
     return xmlHashCreate(1);
-}
-
-static void
-exsltFuncFreeDataEntry(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
-    xmlFree(payload);
 }
 
 /**
@@ -228,9 +219,8 @@ exsltFuncFreeDataEntry(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
 static void
 exsltFuncStyleShutdown (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 			const xmlChar *URI ATTRIBUTE_UNUSED,
-			void *vdata) {
-    xmlHashTablePtr data = (xmlHashTablePtr) vdata;
-    xmlHashFree(data, exsltFuncFreeDataEntry);
+			xmlHashTablePtr data) {
+    xmlHashFree(data, (xmlHashDeallocator) xmlFree);
 }
 
 /**
@@ -265,9 +255,7 @@ exsltFuncNewFunctionData (void) {
  * Deallocates an #exsltFuncResultPreComp
  */
 static void
-exsltFreeFuncResultPreComp (xsltElemPreCompPtr ecomp) {
-    exsltFuncResultPreComp *comp = (exsltFuncResultPreComp *) ecomp;
-
+exsltFreeFuncResultPreComp (exsltFuncResultPreComp *comp) {
     if (comp == NULL)
 	return;
 
@@ -431,7 +419,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
     tctxt->insert = fake;
-    xsltApplyOneTemplate (tctxt, tctxt->node,
+    xsltApplyOneTemplate (tctxt, xmlXPathGetContextNode(ctxt),
 			  func->content, NULL, NULL);
     xsltLocalVariablePop(tctxt, tctxt->varsBase, -2);
     tctxt->insert = oldInsert;
@@ -552,7 +540,6 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 	xsltGenericError(xsltGenericErrorContext,
 			 "exsltFuncFunctionComp: no stylesheet data\n");
 	xmlFree(name);
-        xmlFree(func);
 	return;
     }
 
@@ -561,7 +548,6 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 	    "Failed to register function {%s}%s\n",
 			 ns->href, name);
 	style->errors++;
-        xmlFree(func);
     } else {
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "exsltFuncFunctionComp: register {%s}%s\n",
@@ -653,7 +639,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
     memset(ret, 0, sizeof(exsltFuncResultPreComp));
 
     xsltInitElemPreComp ((xsltElemPreCompPtr) ret, style, inst, function,
-		 exsltFreeFuncResultPreComp);
+		 (xsltElemPreCompDeallocator) exsltFreeFuncResultPreComp);
     ret->select = NULL;
 
     /*
@@ -680,8 +666,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 static void
 exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	             xmlNodePtr node ATTRIBUTE_UNUSED, xmlNodePtr inst,
-		     xsltElemPreCompPtr ecomp) {
-    exsltFuncResultPreComp *comp = (exsltFuncResultPreComp *) ecomp;
+		     exsltFuncResultPreComp *comp) {
     exsltFuncData *data;
     xmlXPathObjectPtr ret;
 
@@ -727,7 +712,6 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 
 	ctxt->xpathCtxt->namespaces = comp->nsList;
 	ctxt->xpathCtxt->nsNr = comp->nsNr;
-        ctxt->xpathCtxt->node = ctxt->node;
 
 	ret = xmlXPathCompiledEval(comp->select, ctxt->xpathCtxt);
 
@@ -766,7 +750,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 
 	oldInsert = ctxt->insert;
 	ctxt->insert = (xmlNodePtr) container;
-	xsltApplyOneTemplate (ctxt, ctxt->node,
+	xsltApplyOneTemplate (ctxt, ctxt->xpathCtxt->node,
 			      inst->children, NULL, NULL);
 	ctxt->insert = oldInsert;
 
@@ -796,16 +780,16 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 void
 exsltFuncRegister (void) {
     xsltRegisterExtModuleFull (EXSLT_FUNCTIONS_NAMESPACE,
-		       exsltFuncInit,
-		       exsltFuncShutdown,
-		       exsltFuncStyleInit,
-		       exsltFuncStyleShutdown);
+		       (xsltExtInitFunction) exsltFuncInit,
+		       (xsltExtShutdownFunction) exsltFuncShutdown,
+		       (xsltStyleExtInitFunction) exsltFuncStyleInit,
+		       (xsltStyleExtShutdownFunction) exsltFuncStyleShutdown);
 
     xsltRegisterExtModuleTopLevel ((const xmlChar *) "function",
 				   EXSLT_FUNCTIONS_NAMESPACE,
 				   exsltFuncFunctionComp);
     xsltRegisterExtModuleElement ((const xmlChar *) "result",
 			  EXSLT_FUNCTIONS_NAMESPACE,
-			  exsltFuncResultComp,
-			  exsltFuncResultElem);
+			  (xsltPreComputeFunction)exsltFuncResultComp,
+			  (xsltTransformFunction) exsltFuncResultElem);
 }

@@ -11,7 +11,7 @@
  *           tabs: !Array<!ForeignSessionTab>,
  *           tag: string}}
  */
-let ForeignDeviceInternal;
+var ForeignDeviceInternal;
 
 Polymer({
   is: 'history-synced-device-manager',
@@ -104,11 +104,11 @@ Polymer({
    * @private
    */
   createInternalDevice_: function(session) {
-    let tabs = [];
-    const separatorIndexes = [];
-    for (let i = 0; i < session.windows.length; i++) {
-      const windowId = session.windows[i].sessionId;
-      const newTabs = session.windows[i].tabs;
+    var tabs = [];
+    var separatorIndexes = [];
+    for (var i = 0; i < session.windows.length; i++) {
+      var windowId = session.windows[i].sessionId;
+      var newTabs = session.windows[i].tabs;
       if (newTabs.length == 0)
         continue;
 
@@ -116,15 +116,15 @@ Polymer({
         tab.windowId = windowId;
       });
 
-      let windowAdded = false;
+      var windowAdded = false;
       if (!this.searchTerm) {
         // Add all the tabs if there is no search term.
         tabs = tabs.concat(newTabs);
         windowAdded = true;
       } else {
-        const searchText = this.searchTerm.toLowerCase();
-        for (let j = 0; j < newTabs.length; j++) {
-          const tab = newTabs[j];
+        var searchText = this.searchTerm.toLowerCase();
+        for (var j = 0; j < newTabs.length; j++) {
+          var tab = newTabs[j];
           if (tab.title.toLowerCase().indexOf(searchText) != -1) {
             tabs.push(tab);
             windowAdded = true;
@@ -152,7 +152,7 @@ Polymer({
 
   /** @private */
   onOpenMenu_: function(e) {
-    const menu = /** @type {CrActionMenuElement} */ (this.$.menu.get());
+    var menu = /** @type {CrActionMenuElement} */ (this.$.menu.get());
     this.actionMenuModel_ = e.detail.tag;
     menu.showAt(e.detail.target);
     md_history.BrowserService.getInstance().recordHistogram(
@@ -162,8 +162,8 @@ Polymer({
 
   /** @private */
   onOpenAllTap_: function() {
-    const menu = assert(this.$.menu.getIfExists());
-    const browserService = md_history.BrowserService.getInstance();
+    var menu = assert(this.$.menu.getIfExists());
+    var browserService = md_history.BrowserService.getInstance();
     browserService.recordHistogram(
         SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.OPEN_ALL,
         SyncedTabsHistogram.LIMIT);
@@ -196,8 +196,8 @@ Polymer({
 
   /** @private */
   onDeleteSessionTap_: function() {
-    const menu = assert(this.$.menu.getIfExists());
-    const browserService = md_history.BrowserService.getInstance();
+    var menu = assert(this.$.menu.getIfExists());
+    var browserService = md_history.BrowserService.getInstance();
     browserService.recordHistogram(
         SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.HIDE_FOR_NOW,
         SyncedTabsHistogram.LIMIT);
@@ -234,7 +234,7 @@ Polymer({
    * @return {boolean}
    */
   showSignInGuide: function(signInState, guestSession) {
-    const show = !signInState && !guestSession;
+    var show = !signInState && !guestSession;
     if (show) {
       md_history.BrowserService.getInstance().recordAction(
           'Signin_Impression_FromRecentTabs');
@@ -249,7 +249,7 @@ Polymer({
    * @return {string}
    */
   noSyncedTabsMessage: function() {
-    let stringName = this.fetchingSyncedTabs_ ? 'loading' : 'noSyncedResults';
+    var stringName = this.fetchingSyncedTabs_ ? 'loading' : 'noSyncedResults';
     if (this.searchTerm !== '')
       stringName = 'noSearchResults';
     return loadTimeData.getString(stringName);
@@ -276,9 +276,9 @@ Polymer({
           SyncedTabsHistogram.LIMIT);
     }
 
-    const devices = [];
+    var devices = [];
     sessionList.forEach((session) => {
-      const device = this.createInternalDevice_(session);
+      var device = this.createInternalDevice_(session);
       if (device.tabs.length != 0)
         devices.push(device);
     });

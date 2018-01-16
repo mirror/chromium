@@ -167,7 +167,7 @@ class AVDACodecAllocatorTest : public testing::Test {
     // Create a SurfaceBundle that provides an overlay.  It will provide a null
     // java ref if requested.
     std::unique_ptr<MockAndroidOverlay> overlay =
-        std::make_unique<NiceMock<MockAndroidOverlay>>();
+        base::MakeUnique<NiceMock<MockAndroidOverlay>>();
     scoped_refptr<CodecConfig> codec_config(new CodecConfig);
     ON_CALL(*overlay, GetJavaSurface())
         .WillByDefault(ReturnRef(null_java_ref_));

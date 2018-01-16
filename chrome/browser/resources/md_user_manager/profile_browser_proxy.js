@@ -8,7 +8,7 @@
  */
 
 /** @typedef {{username: string, profilePath: string}} */
-let SignedInUser;
+var SignedInUser;
 
 /**
  * @typedef {{name: string,
@@ -17,7 +17,7 @@ let SignedInUser;
  *            custodianUsername: string,
  *            showConfirmation: boolean}}
  */
-let ProfileInfo;
+var ProfileInfo;
 
 /**
  * @typedef {{id: string,
@@ -25,7 +25,7 @@ let ProfileInfo;
  *            iconURL: string,
  *            onCurrentDevice: boolean}}
  */
-let SupervisedUser;
+var SupervisedUser;
 
 cr.define('signin', function() {
   /** @interface */

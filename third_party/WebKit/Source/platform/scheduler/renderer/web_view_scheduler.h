@@ -18,13 +18,13 @@ class PLATFORM_EXPORT WebViewScheduler {
  public:
   class PLATFORM_EXPORT WebViewSchedulerDelegate {
    public:
-    virtual ~WebViewSchedulerDelegate() = default;
+    virtual ~WebViewSchedulerDelegate() {}
 
     virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
     virtual void SetPageStopped(bool) = 0;
   };
 
-  virtual ~WebViewScheduler() = default;
+  virtual ~WebViewScheduler() {}
 
   // The scheduler may throttle tasks associated with background pages.
   virtual void SetPageVisible(bool) = 0;
@@ -86,7 +86,7 @@ class PLATFORM_EXPORT WebViewScheduler {
 
   class PLATFORM_EXPORT VirtualTimeObserver {
    public:
-    virtual ~VirtualTimeObserver() = default;
+    virtual ~VirtualTimeObserver() {}
 
     // Called when virtual time advances. |virtual_time_offset| is the offset
     // between the current virtual time and the initial virtual time when

@@ -343,14 +343,8 @@ std::unique_ptr<RenderText> RenderText::CreateHarfBuzzInstance() {
 }
 
 // static
-std::unique_ptr<RenderText> RenderText::CreateFor(Typesetter typesetter) {
+std::unique_ptr<RenderText> RenderText::CreateInstanceForPlatformUI() {
 #if defined(OS_MACOSX)
-  if (typesetter == Typesetter::NATIVE)
-    return std::make_unique<RenderTextMac>();
-
-  if (typesetter == Typesetter::HARFBUZZ)
-    return CreateHarfBuzzInstance();
-
   static const bool use_native =
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableHarfBuzzRenderText);
@@ -362,7 +356,7 @@ std::unique_ptr<RenderText> RenderText::CreateFor(Typesetter typesetter) {
 
 // static
 std::unique_ptr<RenderText> RenderText::CreateInstanceDeprecated() {
-  return CreateFor(Typesetter::BROWSER);
+  return CreateInstanceForPlatformUI();
 }
 
 std::unique_ptr<RenderText> RenderText::CreateInstanceOfSameStyle(

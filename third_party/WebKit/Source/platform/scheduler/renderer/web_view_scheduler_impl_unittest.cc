@@ -32,8 +32,8 @@ namespace web_view_scheduler_impl_unittest {
 
 class WebViewSchedulerImplTest : public ::testing::Test {
  public:
-  WebViewSchedulerImplTest() = default;
-  ~WebViewSchedulerImplTest() override = default;
+  WebViewSchedulerImplTest() {}
+  ~WebViewSchedulerImplTest() override {}
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
@@ -390,9 +390,8 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_AllowedToAdvance) {
 class WebViewSchedulerImplTestWithDisabledBackgroundTimerThrottling
     : public WebViewSchedulerImplTest {
  public:
-  WebViewSchedulerImplTestWithDisabledBackgroundTimerThrottling() = default;
-  ~WebViewSchedulerImplTestWithDisabledBackgroundTimerThrottling() override =
-      default;
+  WebViewSchedulerImplTestWithDisabledBackgroundTimerThrottling() {}
+  ~WebViewSchedulerImplTestWithDisabledBackgroundTimerThrottling() override {}
 
   bool DisableBackgroundTimerThrottling() const override { return true; }
 };
@@ -657,7 +656,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTimeBudgetExhaustedCallback) {
 namespace {
 class MockObserver : public WebViewScheduler::VirtualTimeObserver {
  public:
-  ~MockObserver() override = default;
+  ~MockObserver() override {}
 
   void OnVirtualTimeAdvanced(base::TimeDelta virtual_time_offset) override {
     virtual_time_log_.push_back(base::StringPrintf(

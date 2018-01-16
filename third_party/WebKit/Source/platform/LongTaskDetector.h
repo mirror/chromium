@@ -15,7 +15,7 @@ namespace blink {
 
 class PLATFORM_EXPORT LongTaskObserver : public GarbageCollectedMixin {
  public:
-  virtual ~LongTaskObserver() = default;
+  virtual ~LongTaskObserver() {}
 
   virtual void OnLongTaskDetected(double start_time, double end_time) = 0;
 };

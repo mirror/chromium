@@ -5,10 +5,8 @@
 #ifndef CONTENT_COMMON_CROSS_SITE_DOCUMENT_CLASSIFIER_H_
 #define CONTENT_COMMON_CROSS_SITE_DOCUMENT_CLASSIFIER_H_
 
-#include <string>
-
 #include "base/macros.h"
-#include "base/strings/string_piece_forward.h"
+#include "base/strings/string_piece.h"
 #include "content/common/content_export.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -49,7 +47,7 @@ class CONTENT_EXPORT CrossSiteDocumentClassifier {
   // response. For example, this returns the same value for all text/xml mime
   // type families such as application/xml, application/rss+xml.
   static CrossSiteDocumentMimeType GetCanonicalMimeType(
-      base::StringPiece mime_type);
+      const std::string& mime_type);
 
   // Returns whether this scheme is a target of cross-site document
   // policy(XSDP). This returns true only for http://* and https://* urls.

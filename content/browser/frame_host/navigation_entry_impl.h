@@ -30,8 +30,10 @@
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/resource_request_body.h"
 
 namespace content {
+class ResourceRequestBody;
 struct CommonNavigationParams;
 struct RequestNavigationParams;
 
@@ -123,9 +125,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   bool GetHasPostData() const override;
   void SetPostID(int64_t post_id) override;
   int64_t GetPostID() const override;
-  void SetPostData(
-      const scoped_refptr<network::ResourceRequestBody>& data) override;
-  scoped_refptr<network::ResourceRequestBody> GetPostData() const override;
+  void SetPostData(const scoped_refptr<ResourceRequestBody>& data) override;
+  scoped_refptr<ResourceRequestBody> GetPostData() const override;
   const FaviconStatus& GetFavicon() const override;
   FaviconStatus& GetFavicon() override;
   const SSLStatus& GetSSL() const override;
@@ -180,7 +181,7 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // NavigationEntry.
   CommonNavigationParams ConstructCommonNavigationParams(
       const FrameNavigationEntry& frame_entry,
-      const scoped_refptr<network::ResourceRequestBody>& post_body,
+      const scoped_refptr<ResourceRequestBody>& post_body,
       const GURL& dest_url,
       const Referrer& dest_referrer,
       FrameMsg_Navigate_Type::Value navigation_type,
@@ -431,14 +432,6 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
     replaced_entry_data_ = data;
   }
 
-  const base::Optional<std::string> suggested_filename() const {
-    return suggested_filename_;
-  }
-  void set_suggested_filename(
-      const base::Optional<std::string> suggested_filename) {
-    suggested_filename_ = suggested_filename;
-  }
-
  private:
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
   // Session/Tab restore save portions of this class so that it can be recreated
@@ -476,7 +469,7 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // If the post request succeeds, this field is cleared since the same
   // information is stored in PageState. It is also only shallow copied with
   // compiler provided copy constructor.  Cleared in |ResetForCommit|.
-  scoped_refptr<network::ResourceRequestBody> post_data_;
+  scoped_refptr<ResourceRequestBody> post_data_;
 
   // This is also a transient member (i.e. is not persisted with session
   // restore). The screenshot of a page is taken when navigating away from the
@@ -581,11 +574,6 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // subframe navigations but we only need to track it for main frames, that's
   // why the field is listed here.
   base::Optional<ReplacedNavigationEntryData> replaced_entry_data_;
-
-  // If this event was triggered by an anchor element with a download
-  // attribute, |suggested_filename_| will contain the (possibly empty) value of
-  // that attribute. Reset at commit and not persisted.
-  base::Optional<std::string> suggested_filename_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationEntryImpl);
 };

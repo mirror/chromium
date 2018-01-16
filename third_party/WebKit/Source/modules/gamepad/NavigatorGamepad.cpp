@@ -196,7 +196,7 @@ NavigatorGamepad::NavigatorGamepad(Navigator& navigator)
     navigator.DomWindow()->RegisterEventListenerObserver(this);
 }
 
-NavigatorGamepad::~NavigatorGamepad() = default;
+NavigatorGamepad::~NavigatorGamepad() {}
 
 const char* NavigatorGamepad::SupplementName() {
   return "NavigatorGamepad";

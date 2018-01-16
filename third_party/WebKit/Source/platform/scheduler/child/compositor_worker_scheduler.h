@@ -9,7 +9,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "platform/PlatformExport.h"
-#include "platform/scheduler/child/compositor_metrics_helper.h"
 #include "platform/scheduler/child/worker_scheduler.h"
 #include "platform/scheduler/util/task_duration_metric_reporter.h"
 #include "platform/scheduler/util/thread_type.h"
@@ -60,8 +59,8 @@ class PLATFORM_EXPORT CompositorWorkerScheduler
 
  private:
   base::Thread* thread_;
-
-  CompositorMetricsHelper compositor_metrics_helper_;
+  TaskDurationMetricReporter<ThreadType>
+      compositor_thread_task_duration_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(CompositorWorkerScheduler);
 };

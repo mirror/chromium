@@ -17,7 +17,7 @@ LongTaskDetector& LongTaskDetector::Instance() {
   return *long_task_detector;
 }
 
-LongTaskDetector::LongTaskDetector() = default;
+LongTaskDetector::LongTaskDetector() {}
 
 void LongTaskDetector::RegisterObserver(LongTaskObserver* observer) {
   DCHECK(IsMainThread());

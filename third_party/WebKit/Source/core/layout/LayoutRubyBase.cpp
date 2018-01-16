@@ -36,7 +36,7 @@ LayoutRubyBase::LayoutRubyBase() : LayoutBlockFlow(nullptr) {
   SetInline(false);
 }
 
-LayoutRubyBase::~LayoutRubyBase() = default;
+LayoutRubyBase::~LayoutRubyBase() {}
 
 LayoutRubyBase* LayoutRubyBase::CreateAnonymous(Document* document) {
   LayoutRubyBase* layout_object = new LayoutRubyBase();

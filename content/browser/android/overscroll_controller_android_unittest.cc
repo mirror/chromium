@@ -33,7 +33,7 @@ namespace {
 
 class MockCompositor : public WindowAndroidCompositor {
  public:
-  ~MockCompositor() override {}
+  virtual ~MockCompositor() {}
   void AttachLayerForReadback(scoped_refptr<cc::Layer>) override {}
   void RequestCopyOfOutputOnRootLayer(
       std::unique_ptr<viz::CopyOutputRequest>) override {}
@@ -47,7 +47,6 @@ class MockCompositor : public WindowAndroidCompositor {
       base::TimeDelta timeout) override {
     return nullptr;
   }
-  bool IsDrawingFirstVisibleFrame() const override { return false; }
 };
 
 class MockGlowClient : public OverscrollGlowClient {

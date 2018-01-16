@@ -51,7 +51,7 @@ class HashChangeEvent final : public Event {
   virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
 
  private:
-  HashChangeEvent() = default;
+  HashChangeEvent() {}
 
   HashChangeEvent(const String& old_url, const String& new_url)
       : Event(EventTypeNames::hashchange, false, false),

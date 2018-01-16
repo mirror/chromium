@@ -38,7 +38,7 @@ class ObjectPainterBase {
                                  bool antialias = false);
 
  protected:
-  ObjectPainterBase() = default;
+  ObjectPainterBase() {}
   void PaintOutlineRects(const PaintInfo&,
                          const Vector<LayoutRect>&,
                          const ComputedStyle&,

@@ -18,7 +18,6 @@ extern const base::Feature kAutofillEnforceMinRequiredFieldsForQuery;
 extern const base::Feature kAutofillEnforceMinRequiredFieldsForUpload;
 extern const base::Feature kAutofillRestrictUnownedFieldsToFormlessCheckout;
 extern const base::Feature kAutofillShowTypePredictions;
-extern const base::Feature kAutofillUpstreamUseGooglePayBranding;
 extern const base::Feature kAutofillUseNewSettingsNameInDropdown;
 
 }  // namespace features

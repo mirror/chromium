@@ -25,10 +25,6 @@ class TabLifecycleUnitExternal {
   // Returns the WebContents associated with this tab.
   virtual content::WebContents* GetWebContents() const = 0;
 
-  // Whether the tab is playing audio, has played audio recently, is accessing
-  // the microphone, is accessing the camera or is being mirrored.
-  virtual bool IsMediaTab() const = 0;
-
   // Returns true if this tab can be automatically discarded.
   virtual bool IsAutoDiscardable() const = 0;
 
@@ -36,13 +32,10 @@ class TabLifecycleUnitExternal {
   virtual void SetAutoDiscardable(bool auto_discardable) = 0;
 
   // Discards the tab.
-  virtual bool DiscardTab() = 0;
+  virtual void DiscardTab() = 0;
 
   // Returns true if the tab is discarded.
   virtual bool IsDiscarded() const = 0;
-
-  // Returns the number of times that the tab was discarded.
-  virtual int GetDiscardCount() const = 0;
 };
 
 }  // namespace resource_coordinator

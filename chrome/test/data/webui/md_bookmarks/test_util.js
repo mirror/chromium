@@ -33,17 +33,17 @@ function testTree(nodes) {
  * @return {BookmarkTreeNode}
  */
 function createFolder(id, children, config) {
-  const newFolder = {
+  var newFolder = {
     id: id,
     children: children,
     title: '',
   };
   if (config) {
-    for (const key in config)
+    for (var key in config)
       newFolder[key] = config[key];
   }
   if (children.length) {
-    for (let i = 0; i < children.length; i++) {
+    for (var i = 0; i < children.length; i++) {
       children[i].index = i;
       children[i].parentId = newFolder.id;
     }
@@ -59,7 +59,7 @@ function createFolder(id, children, config) {
  */
 function removeChild(tree, index) {
   tree.children.splice(index, 1);
-  for (let i = index; i < tree.children.length; i++)
+  for (var i = index; i < tree.children.length; i++)
     tree.children[i].index = i;
 }
 
@@ -70,13 +70,13 @@ function removeChild(tree, index) {
  * @return {BookmarkTreeNode}
  */
 function createItem(id, config) {
-  const newItem = {
+  var newItem = {
     id: id,
     title: '',
     url: 'http://www.google.com/',
   };
   if (config) {
-    for (const key in config)
+    for (var key in config)
       newItem[key] = config[key];
   }
   return newItem;
@@ -96,7 +96,7 @@ function normalizeIterable(iterable) {
  * @return {FolderOpenState}
  */
 function getAllFoldersOpenState(nodes) {
-  const folderOpenState = new Map();
+  var folderOpenState = new Map();
   Object.keys(nodes).forEach((n) => folderOpenState.set(n, true));
   return folderOpenState;
 }
@@ -110,7 +110,7 @@ function getAllFoldersOpenState(nodes) {
  */
 function customClick(element, config, eventName) {
   eventName = eventName || 'click';
-  const props = {
+  var props = {
     bubbles: true,
     cancelable: true,
     button: 0,
@@ -121,7 +121,7 @@ function customClick(element, config, eventName) {
   };
 
   if (config) {
-    for (const key in config)
+    for (var key in config)
       props[key] = config[key];
   }
 
@@ -144,8 +144,8 @@ function customClick(element, config, eventName) {
  * @return {BookmarksFolderNodeElement}
  */
 function findFolderNode(rootNode, id) {
-  const nodes = [rootNode];
-  let node;
+  var nodes = [rootNode];
+  var node;
   while (nodes.length) {
     node = nodes.pop();
     if (node.itemId == id)

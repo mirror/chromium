@@ -108,7 +108,7 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(route) {
-    const site = settings.getQueryParameters().get('site');
+    var site = settings.getQueryParameters().get('site');
     if (!site)
       return;
     this.origin = site;
@@ -167,7 +167,7 @@ Polymer({
    * @private
    */
   updatePermissions_: function(categoryList) {
-    const permissionsMap =
+    var permissionsMap =
         /** @type {!Object<!settings.ContentSettingsTypes,
          *         !SiteDetailsPermissionElement>} */
         (Array.prototype.reduce.call(
@@ -249,7 +249,7 @@ Polymer({
    * @private
    */
   getCategoryList_: function() {
-    const categoryList = [];
+    var categoryList = [];
     this.root.querySelectorAll('site-details-permission').forEach((element) => {
       if (!element.hidden)
         categoryList.push(element.category);

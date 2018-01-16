@@ -111,7 +111,7 @@ SVGAnimateElement* SVGAnimateElement::Create(Document& document) {
   return new SVGAnimateElement(SVGNames::animateTag, document);
 }
 
-SVGAnimateElement::~SVGAnimateElement() = default;
+SVGAnimateElement::~SVGAnimateElement() {}
 
 bool SVGAnimateElement::IsSVGAnimationAttributeSettingJavaScriptURL(
     const Attribute& attribute) const {

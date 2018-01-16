@@ -38,7 +38,7 @@ class HTTPHeaderMap;
 
 class PLATFORM_EXPORT ContentSecurityPolicyResponseHeaders final {
  public:
-  ContentSecurityPolicyResponseHeaders() = default;
+  ContentSecurityPolicyResponseHeaders() {}
   explicit ContentSecurityPolicyResponseHeaders(const ResourceResponse&);
   explicit ContentSecurityPolicyResponseHeaders(
       const HTTPHeaderMap&,

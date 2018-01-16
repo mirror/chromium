@@ -42,7 +42,6 @@ NGConstraintSpace::NGConstraintSpace(
     bool is_inline_direction_triggers_scrollbar,
     bool is_block_direction_triggers_scrollbar,
     NGFragmentationType block_direction_fragmentation_type,
-    bool separate_leading_fragmentainer_margins,
     bool is_new_fc,
     bool is_anonymous,
     bool use_first_line_style,
@@ -68,8 +67,6 @@ NGConstraintSpace::NGConstraintSpace(
       is_block_direction_triggers_scrollbar_(
           is_block_direction_triggers_scrollbar),
       block_direction_fragmentation_type_(block_direction_fragmentation_type),
-      separate_leading_fragmentainer_margins_(
-          separate_leading_fragmentainer_margins),
       is_new_fc_(is_new_fc),
       is_anonymous_(is_anonymous),
       use_first_line_style_(use_first_line_style),
@@ -227,8 +224,6 @@ bool NGConstraintSpace::operator==(const NGConstraintSpace& other) const {
          block_direction_fragmentation_type_ ==
              other.block_direction_fragmentation_type_ &&
          is_new_fc_ == other.is_new_fc_ &&
-         separate_leading_fragmentainer_margins_ ==
-             other.separate_leading_fragmentainer_margins_ &&
          is_anonymous_ == other.is_anonymous_ &&
          writing_mode_ == other.writing_mode_ &&
          direction_ == other.direction_ &&

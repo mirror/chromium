@@ -33,7 +33,6 @@
 
 #include "core/fileapi/FileError.h"
 #include "modules/ModulesExport.h"
-#include "modules/filesystem/FileSystemCallbacks.h"
 #include "modules/filesystem/FileSystemFlags.h"
 #include "platform/FileSystemType.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -43,13 +42,15 @@
 
 namespace blink {
 class WebFileSystem;
-}  // namespace blink
+}
 
 namespace blink {
 
 class DirectoryReaderBase;
 class DirectoryReaderOnDidReadCallback;
 class EntryBase;
+class EntryCallback;
+class ErrorCallbackBase;
 class ExecutionContext;
 class File;
 class FileMetadata;
@@ -120,13 +121,13 @@ class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
   void Move(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallbacks::OnDidGetEntryCallback*,
+            EntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Copy(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallbacks::OnDidGetEntryCallback*,
+            EntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Remove(const EntryBase*,
@@ -137,19 +138,17 @@ class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
                          VoidCallback*,
                          ErrorCallbackBase*,
                          SynchronousType = kAsynchronous);
-  void GetParent(const EntryBase*,
-                 EntryCallbacks::OnDidGetEntryCallback*,
-                 ErrorCallbackBase*);
+  void GetParent(const EntryBase*, EntryCallback*, ErrorCallbackBase*);
   void GetFile(const EntryBase*,
                const String& path,
                const FileSystemFlags&,
-               EntryCallbacks::OnDidGetEntryCallback*,
+               EntryCallback*,
                ErrorCallbackBase*,
                SynchronousType = kAsynchronous);
   void GetDirectory(const EntryBase*,
                     const String& path,
                     const FileSystemFlags&,
-                    EntryCallbacks::OnDidGetEntryCallback*,
+                    EntryCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   int ReadDirectory(DirectoryReaderBase*,

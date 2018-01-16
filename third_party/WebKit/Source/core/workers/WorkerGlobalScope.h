@@ -39,6 +39,7 @@
 #include "core/workers/WorkerSettings.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
+#include "platform/wtf/ListHashSet.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"

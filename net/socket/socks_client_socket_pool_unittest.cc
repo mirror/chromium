@@ -21,7 +21,6 @@
 #include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/gtest_util.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -59,15 +58,15 @@ scoped_refptr<TransportSocketParams> CreateProxyHostParams() {
 }
 
 scoped_refptr<SOCKSSocketParams> CreateSOCKSv4Params() {
-  return new SOCKSSocketParams(CreateProxyHostParams(), false /* socks_v5 */,
-                               HostPortPair("host", 80),
-                               TRAFFIC_ANNOTATION_FOR_TESTS);
+  return new SOCKSSocketParams(
+      CreateProxyHostParams(), false /* socks_v5 */,
+      HostPortPair("host", 80));
 }
 
 scoped_refptr<SOCKSSocketParams> CreateSOCKSv5Params() {
-  return new SOCKSSocketParams(CreateProxyHostParams(), true /* socks_v5 */,
-                               HostPortPair("host", 80),
-                               TRAFFIC_ANNOTATION_FOR_TESTS);
+  return new SOCKSSocketParams(
+      CreateProxyHostParams(), true /* socks_v5 */,
+      HostPortPair("host", 80));
 }
 
 class SOCKSClientSocketPoolTest : public testing::Test {
@@ -374,8 +373,7 @@ TEST_F(SOCKSClientSocketPoolTest, Tag) {
       HostPortPair("proxy", 80), false, OnHostResolutionCallback(),
       TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
   scoped_refptr<SOCKSSocketParams> params(new SOCKSSocketParams(
-      tcp_params, true /* socks_v5 */, HostPortPair("host", 80),
-      TRAFFIC_ANNOTATION_FOR_TESTS));
+      tcp_params, true /* socks_v5 */, HostPortPair("host", 80)));
 
   // Test socket is tagged when created synchronously.
   SOCKS5MockData data_sync(SYNCHRONOUS);

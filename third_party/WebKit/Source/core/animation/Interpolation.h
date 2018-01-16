@@ -59,7 +59,7 @@ namespace blink {
 //    the subclass documentation for more.
 class CORE_EXPORT Interpolation : public RefCounted<Interpolation> {
  public:
-  virtual ~Interpolation() = default;
+  virtual ~Interpolation() {}
 
   virtual void Interpolate(int iteration, double fraction) = 0;
 
@@ -75,7 +75,7 @@ class CORE_EXPORT Interpolation : public RefCounted<Interpolation> {
   virtual bool DependsOnUnderlyingValue() const { return false; }
 
  protected:
-  Interpolation() = default;
+  Interpolation() {}
   DISALLOW_COPY_AND_ASSIGN(Interpolation);
 };
 

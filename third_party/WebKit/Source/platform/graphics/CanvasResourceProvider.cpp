@@ -8,7 +8,6 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
-#include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/CanvasResource.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
@@ -41,7 +40,7 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
                                std::move(context_provider_wrapper)),
         msaa_sample_count_(msaa_sample_count) {}
 
-  virtual ~CanvasResourceProvider_Texture() = default;
+  virtual ~CanvasResourceProvider_Texture() {}
 
   bool IsValid() const final { return GetSkSurface() && !IsGpuContextLost(); }
   bool IsAccelerated() const final { return true; }
@@ -60,14 +59,6 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
             ->ContextProvider()
             ->GetCapabilities()
             .disable_2d_canvas_copy_on_write) {
-      // A readback operation may alter the texture parameters, which may affect
-      // the compositor's behavior. Therefore, we must trigger copy-on-write
-      // even though we are not technically writing to the texture, only to its
-      // parameters.
-      // If this issue with readback affecting state is ever fixed, then we'll
-      // have to do this instead of triggering a copy-on-write:
-      // static_cast<AcceleratedStaticBitmapImage*>(image.get())
-      //  ->RetainOriginalSkImageForCopyOnWrite();
       GetSkSurface()->notifyContentWillChange(
           SkSurface::kRetain_ContentChangeMode);
     }
@@ -126,7 +117,7 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
                                        color_params,
                                        std::move(context_provider_wrapper)) {}
 
-  virtual ~CanvasResourceProvider_Texture_GpuMemoryBuffer() = default;
+  virtual ~CanvasResourceProvider_Texture_GpuMemoryBuffer() {}
 
  protected:
   scoped_refptr<CanvasResource> CreateResource() final {
@@ -178,7 +169,7 @@ class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
                                color_params,
                                nullptr /*context_provider_wrapper*/) {}
 
-  ~CanvasResourceProvider_Bitmap() = default;
+  ~CanvasResourceProvider_Bitmap() {}
 
   bool IsValid() const final { return GetSkSurface(); }
   bool IsAccelerated() const final { return false; }
@@ -227,10 +218,11 @@ constexpr ResourceType kAcceleratedCompositedFallbackList[] = {
 
 std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
     const IntSize& size,
-    ResourceUsage usage,
-    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     unsigned msaa_sample_count,
-    const CanvasColorParams& colorParams) {
+    const CanvasColorParams& colorParams,
+    ResourceUsage usage,
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+        context_provider_wrapper) {
   const ResourceType* resource_type_fallback_list = nullptr;
   size_t list_length = 0;
 
@@ -302,7 +294,7 @@ CanvasResourceProvider::CanvasResourceProvider(
       size_(size),
       color_params_(color_params) {}
 
-CanvasResourceProvider::~CanvasResourceProvider() = default;
+CanvasResourceProvider::~CanvasResourceProvider() {}
 
 SkSurface* CanvasResourceProvider::GetSkSurface() const {
   if (!surface_) {
@@ -330,8 +322,16 @@ scoped_refptr<StaticBitmapImage> CanvasResourceProvider::Snapshot() {
   scoped_refptr<StaticBitmapImage> image = StaticBitmapImage::Create(
       GetSkSurface()->makeImageSnapshot(), ContextProviderWrapper());
   if (IsAccelerated()) {
-    static_cast<AcceleratedStaticBitmapImage*>(image.get())
-        ->RetainOriginalSkImageForCopyOnWrite();
+    // A readback operation may alter the texture parameters, which may affect
+    // the compositor's behavior. Therefore, we must trigger copy-on-write
+    // even though we are not technically writing to the texture, only to its
+    // parameters.
+    // If this issue with readback affecting state is ever fixed, then we'll
+    // have to do this instead of triggering a copy-on-write:
+    // static_cast<AcceleratedStaticBitmapImage*>(image.get())
+    //   ->RetainOriginalSkImageForCopyOnWrite();
+    GetSkSurface()->notifyContentWillChange(
+        SkSurface::kRetain_ContentChangeMode);
   }
   return image;
 }
@@ -380,29 +380,6 @@ scoped_refptr<CanvasResource> CanvasResourceProvider::NewOrRecycledResource() {
 bool CanvasResourceProvider::IsGpuContextLost() const {
   auto gl = ContextGL();
   return !gl || gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR;
-}
-
-bool CanvasResourceProvider::WritePixels(const SkImageInfo& orig_info,
-                                         const void* pixels,
-                                         size_t row_bytes,
-                                         int x,
-                                         int y) {
-  DCHECK(IsValid());
-  return GetSkSurface()->getCanvas()->writePixels(orig_info, pixels, row_bytes,
-                                                  x, y);
-}
-
-void CanvasResourceProvider::Clear() {
-  // Clear the background transparent or opaque, as required. It would be nice
-  // if this wasn't required, but the canvas is currently filled with the magic
-  // transparency color. Can we have another way to manage this?
-  if (IsValid()) {
-    if (color_params_.GetOpacityMode() == kOpaque) {
-      Canvas()->clear(SK_ColorBLACK);
-    } else {
-      Canvas()->clear(SK_ColorTRANSPARENT);
-    }
-  }
 }
 
 void CanvasResourceProvider::ClearRecycledResources() {

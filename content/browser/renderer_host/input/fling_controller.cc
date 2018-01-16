@@ -237,13 +237,6 @@ void FlingController::ProgressFling(base::TimeTicks current_time) {
   }
 }
 
-void FlingController::StopFling() {
-  if (!fling_curve_)
-    return;
-
-  CancelCurrentFling();
-}
-
 void FlingController::GenerateAndSendWheelEvents(
     gfx::Vector2dF delta,
     blink::WebMouseWheelEvent::Phase phase) {

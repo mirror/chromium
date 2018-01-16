@@ -10,16 +10,12 @@
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/version.h"
-#include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/controller_mesh.h"
-#include "chrome/browser/vr/model/assets.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/test/constants.h"
-#include "chrome/browser/vr/testapp/assets_component_version.h"
 #include "chrome/browser/vr/testapp/test_keyboard_delegate.h"
 #include "chrome/browser/vr/text_input_delegate.h"
 #include "chrome/browser/vr/ui.h"
@@ -27,7 +23,6 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
-#include "chrome/grit/vr_testapp_resources.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
@@ -52,7 +47,6 @@ constexpr float kDefaultViewScaleFactor = 1.2f;
 constexpr float kMinViewScaleFactor = 0.5f;
 constexpr float kMaxViewScaleFactor = 5.0f;
 constexpr float kViewScaleAdjustmentFactor = 0.2f;
-constexpr float kPageLoadTimeMilliseconds = 500;
 
 constexpr gfx::Point3F kLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
@@ -63,24 +57,13 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   transform->PreconcatTransform(gfx::Transform(quat));
 }
 
-#if defined(GOOGLE_CHROME_BUILD)
-bool LoadPng(int resource_id, std::unique_ptr<SkBitmap>* out_image) {
-  base::StringPiece data =
-      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(resource_id);
-  *out_image = base::MakeUnique<SkBitmap>();
-  return gfx::PNGCodec::Decode(
-      reinterpret_cast<const unsigned char*>(data.data()), data.size(),
-      out_image->get());
-}
-#endif
-
 }  // namespace
 
 VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   base::FilePath pak_path;
   PathService::Get(base::DIR_MODULE, &pak_path);
   ui::ResourceBundle::InitSharedInstanceWithPakPath(
-      pak_path.AppendASCII("vr_testapp.pak"));
+      pak_path.AppendASCII("vr_test.pak"));
 
   base::i18n::InitializeICU();
 
@@ -141,11 +124,6 @@ void VrTestContext::DrawFrame() {
   if (model_->web_vr.has_produced_frames()) {
     ui_->ui_renderer()->DrawWebVrOverlayForeground(render_info);
   }
-
-  auto load_progress = (current_time - page_load_start_).InMilliseconds() /
-                       kPageLoadTimeMilliseconds;
-  ui_->SetLoading(load_progress < 1.0f);
-  ui_->SetLoadProgress(std::min(load_progress, 1.0f));
 }
 
 void VrTestContext::HandleInput(ui::Event* event) {
@@ -201,7 +179,6 @@ void VrTestContext::HandleInput(ui::Event* event) {
         break;
       case ui::DomCode::US_O:
         CycleOrigin();
-        model_->can_navigate_back = !model_->can_navigate_back;
         break;
       case ui::DomCode::US_C:
         model_->can_apply_new_background = true;
@@ -460,13 +437,9 @@ void VrTestContext::Navigate(GURL gurl) {
   ToolbarState state(gurl, security_state::SecurityLevel::HTTP_SHOW_WARNING,
                      &toolbar::kHttpIcon, base::string16(), true, false);
   ui_->SetToolbarState(state);
-  page_load_start_ = base::TimeTicks::Now();
 }
 
-void VrTestContext::NavigateBack() {
-  page_load_start_ = base::TimeTicks::Now();
-}
-
+void VrTestContext::NavigateBack() {}
 void VrTestContext::ExitCct() {}
 
 void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
@@ -512,14 +485,11 @@ void VrTestContext::CycleOrigin() {
       {GURL("http://www.domain.com/"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
-      {GURL("http://subdomain.domain.com/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::SECURE, &toolbar::kHttpsValidIcon,
        base::UTF8ToUTF16("Secure"), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
-       security_state::SecurityLevel::DANGEROUS, &toolbar::kHttpsInvalidIcon,
+       security_state::SecurityLevel::DANGEROUS, &toolbar::kHttpsValidIcon,
        base::UTF8ToUTF16("Dangerous"), true, false},
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING,
@@ -532,25 +502,8 @@ void VrTestContext::CycleOrigin() {
 }
 
 void VrTestContext::LoadAssets() {
-  base::Version assets_component_version(VR_ASSETS_COMPONENT_VERSION);
-#if defined(GOOGLE_CHROME_BUILD)
-  auto assets = base::MakeUnique<Assets>();
-  if (!(LoadPng(IDR_VR_BACKGROUND_IMAGE, &assets->background) &&
-        LoadPng(IDR_VR_NORMAL_GRADIENT_IMAGE, &assets->normal_gradient) &&
-        LoadPng(IDR_VR_INCOGNITO_GRADIENT_IMAGE, &assets->incognito_gradient) &&
-        LoadPng(IDR_VR_FULLSCREEN_GRADIENT_IMAGE,
-                &assets->fullscreen_gradient))) {
-    ui_->OnAssetsLoaded(AssetsLoadStatus::kInvalidContent, nullptr,
-                        assets_component_version);
-    return;
-  }
-  ui_->OnAssetsLoaded(AssetsLoadStatus::kSuccess, std::move(assets),
-                      assets_component_version);
-#else   // defined(GOOGLE_CHROME_BUILD)
-  LOG(ERROR) << "Cannot load assets. Make testapp Chrome branded.";
-  ui_->OnAssetsLoaded(AssetsLoadStatus::kNotFound, nullptr,
-                      assets_component_version);
-#endif  // defined(GOOGLE_CHROME_BUILD)
+  // TODO(793380): Load asset files once they are available for development.
+  model_->can_apply_new_background = false;
 }
 
 }  // namespace vr

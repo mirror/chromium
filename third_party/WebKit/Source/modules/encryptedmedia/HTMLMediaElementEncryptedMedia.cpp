@@ -151,7 +151,7 @@ SetMediaKeysHandler::SetMediaKeysHandler(ScriptState* script_state,
   timer_.StartOneShot(TimeDelta(), FROM_HERE);
 }
 
-SetMediaKeysHandler::~SetMediaKeysHandler() = default;
+SetMediaKeysHandler::~SetMediaKeysHandler() {}
 
 void SetMediaKeysHandler::TimerFired(TimerBase*) {
   ClearExistingMediaKeys();

@@ -21,7 +21,7 @@ ImageBitmapRenderingContext::ImageBitmapRenderingContext(
       image_layer_bridge_(
           new ImageLayerBridge(attrs.alpha() ? kNonOpaque : kOpaque)) {}
 
-ImageBitmapRenderingContext::~ImageBitmapRenderingContext() = default;
+ImageBitmapRenderingContext::~ImageBitmapRenderingContext() {}
 
 void ImageBitmapRenderingContext::SetCanvasGetContextResult(
     RenderingContext& result) {
@@ -59,7 +59,8 @@ void ImageBitmapRenderingContext::Stop() {
 }
 
 scoped_refptr<StaticBitmapImage> ImageBitmapRenderingContext::GetImage(
-    AccelerationHint) const {
+    AccelerationHint,
+    SnapshotReason) const {
   return image_layer_bridge_->GetImage();
 }
 

@@ -13,11 +13,15 @@
 #include <utility>
 #include <vector>
 
-#include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
-#include "content/common/dwrite_font_proxy.mojom.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
+#include "ipc/ipc_message.h"
+#include "ipc/ipc_platform_file.h"
+#include "ipc/ipc_sender.h"
+
+struct DWriteFontStyle;
+struct MapCharactersResult;
 
 namespace content {
 
@@ -25,25 +29,24 @@ class FakeFontCollection;
 
 // Creates a new FakeFontCollection, seeded with some basic data, and returns a
 // Sender that can be used to interact with the collection.
-base::RepeatingCallback<mojom::DWriteFontProxyPtrInfo(void)>
-CreateFakeCollectionSender();
+IPC::Sender* CreateFakeCollectionSender();
 
 // Helper class for describing a font object. Use FakeFontCollection instead.
 class FakeFont {
  public:
   explicit FakeFont(const base::string16& name);
 
-  FakeFont(FakeFont&& other);
+  FakeFont(const FakeFont& other);
 
   ~FakeFont();
 
-  FakeFont& AddFilePath(const base::FilePath& file_path) {
+  FakeFont& AddFilePath(const base::string16& file_path) {
     file_paths_.push_back(file_path);
     return *this;
   }
 
-  FakeFont& AddFileHandle(base::File handle) {
-    file_handles_.push_back(std::move(handle));
+  FakeFont& AddFileHandle(IPC::PlatformFileForTransit handle) {
+    file_handles_.push_back(handle);
     return *this;
   }
 
@@ -58,8 +61,8 @@ class FakeFont {
  private:
   friend FakeFontCollection;
   base::string16 font_name_;
-  std::vector<base::FilePath> file_paths_;
-  std::vector<base::File> file_handles_;
+  std::vector<base::string16> file_paths_;
+  std::vector<IPC::PlatformFileForTransit> file_handles_;
   std::vector<std::pair<base::string16, base::string16>> family_names_;
 
   DISALLOW_ASSIGN(FakeFont);
@@ -85,47 +88,102 @@ class FakeFont {
 //       internally call ReplySender::On*() and ReplySender::Send()
 //   ReplySender::Send() will save the reply message, to be used later.
 //   FakeSender::Send() will retrieve the reply message and save the output.
-class FakeFontCollection : public mojom::DWriteFontProxy {
+class FakeFontCollection : public base::RefCounted<FakeFontCollection> {
  public:
-  enum class MessageType {
-    kFindFamily,
-    kGetFamilyCount,
-    kGetFamilyNames,
-    kGetFontFiles,
-    kMapCharacters
-  };
   FakeFontCollection();
-  ~FakeFontCollection() override;
 
   FakeFont& AddFont(const base::string16& font_name);
 
   size_t MessageCount();
-  MessageType GetMessageType(size_t id);
 
-  mojom::DWriteFontProxyPtrInfo CreatePtr();
+  IPC::Message* GetIpcMessage(size_t index);
+
+  IPC::Sender* GetSender();
+
+  // Like GetSender(), but will keep track of all sent messages for inspection.
+  IPC::Sender* GetTrackingSender();
 
  protected:
-  // mojom::DWriteFontProxy:
-  void FindFamily(const base::string16& family_name,
-                  FindFamilyCallback callback) override;
-  void GetFamilyCount(GetFamilyCountCallback callback) override;
-  void GetFamilyNames(uint32_t family_index,
-                      GetFamilyNamesCallback callback) override;
-  void GetFontFiles(uint32_t family_index,
-                    GetFontFilesCallback callback) override;
-  void MapCharacters(const base::string16& text,
-                     mojom::DWriteFontStylePtr font_style,
-                     const base::string16& locale_name,
-                     uint32_t reading_direction,
-                     const base::string16& base_family_name,
-                     MapCharactersCallback callback) override;
+  // This class handles sending the reply message back to the "renderer"
+  class ReplySender : public IPC::Sender {
+   public:
+    explicit ReplySender(FakeFontCollection* collection);
+
+    ~ReplySender() override;
+
+    std::unique_ptr<IPC::Message>& OnMessageReceived(const IPC::Message& msg);
+
+    bool Send(IPC::Message* msg) override;
+
+   private:
+    void OnFindFamily(const base::string16& family_name, uint32_t* index);
+
+    void OnGetFamilyCount(uint32_t* count);
+
+    void OnGetFamilyNames(
+        uint32_t family_index,
+        std::vector<std::pair<base::string16, base::string16>>* family_names);
+    void OnGetFontFiles(uint32_t family_index,
+                        std::vector<base::string16>* file_paths,
+                        std::vector<IPC::PlatformFileForTransit>* file_handles);
+
+    void OnMapCharacters(const base::string16& text,
+                         const DWriteFontStyle& font_style,
+                         const base::string16& locale_name,
+                         uint32_t reading_direction,
+                         const base::string16& base_family_name,
+                         MapCharactersResult* result);
+
+   private:
+    scoped_refptr<FakeFontCollection> collection_;
+    std::unique_ptr<IPC::Message> reply_;
+
+    DISALLOW_COPY_AND_ASSIGN(ReplySender);
+  };
+
+  // This class can be used by the "renderer" to send messages to the "browser"
+  class FakeSender : public IPC::Sender {
+   public:
+    FakeSender(FakeFontCollection* collection, bool track_messages);
+
+    ~FakeSender() override;
+
+    bool Send(IPC::Message* message) override;
+
+   private:
+    bool track_messages_;
+    scoped_refptr<FakeFontCollection> collection_;
+
+    DISALLOW_COPY_AND_ASSIGN(FakeSender);
+  };
+
+  void OnFindFamily(const base::string16& family_name, uint32_t* index);
+
+  void OnGetFamilyCount(uint32_t* count);
+
+  void OnGetFamilyNames(
+      uint32_t family_index,
+      std::vector<std::pair<base::string16, base::string16>>* family_names);
+
+  void OnGetFontFiles(uint32_t family_index,
+                      std::vector<base::string16>* file_paths,
+                      std::vector<IPC::PlatformFileForTransit>* file_handles);
+
+  void OnMapCharacters(const base::string16& text,
+                       const DWriteFontStyle& font_style,
+                       const base::string16& locale_name,
+                       uint32_t reading_direction,
+                       const base::string16& base_family_name,
+                       MapCharactersResult* result);
+
+  std::unique_ptr<ReplySender> GetReplySender();
 
  private:
+  friend class base::RefCounted<FakeFontCollection>;
+  ~FakeFontCollection();
+
   std::vector<FakeFont> fonts_;
-
-  std::vector<MessageType> message_types_;
-
-  mojo::BindingSet<mojom::DWriteFontProxy> bindings_;
+  std::vector<std::unique_ptr<IPC::Message>> messages_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeFontCollection);
 };

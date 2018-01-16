@@ -70,7 +70,7 @@ STAMP_FILE = os.path.normpath(
     os.path.join(LLVM_DIR, '..', 'llvm-build', 'cr_build_revision'))
 VERSION = '6.0.0'
 ANDROID_NDK_DIR = os.path.join(
-    CHROMIUM_DIR, 'third_party', 'android_ndk')
+    CHROMIUM_DIR, 'third_party', 'android_tools', 'ndk')
 
 # URL for pre-built binaries.
 CDS_URL = os.environ.get('CDS_CLANG_BUCKET_OVERRIDE',
@@ -263,42 +263,6 @@ def Checkout(name, url, dir):
 
   print "Retrying."
   RunCommand(command)
-
-
-def CheckoutRepos(args):
-  if args.skip_checkout:
-    return
-
-  Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
-
-  # Back out previous local patches. This needs to be kept around a bit
-  # until all bots have cycled. See https://crbug.com/755777.
-  files = [
-    'lib/Transforms/InstCombine/InstructionCombining.cpp',
-    'test/DebugInfo/X86/formal_parameter.ll',
-    'test/DebugInfo/X86/instcombine-instrinsics.ll',
-    'test/Transforms/InstCombine/debuginfo-skip.ll',
-    'test/Transforms/InstCombine/debuginfo.ll',
-    'test/Transforms/Util/simplify-dbg-declare-load.ll',
-  ]
-  for f in [os.path.join(LLVM_DIR, f) for f in files]:
-    RunCommand(['svn', 'revert', f])
-
-  Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
-  if True:
-    Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
-  elif os.path.exists(LLD_DIR):
-    # In case someone sends a tryjob that temporary adds lld to the checkout,
-    # make sure it's not around on future builds.
-    RmTree(LLD_DIR)
-  Checkout('compiler-rt', LLVM_REPO_URL + '/compiler-rt/trunk', COMPILER_RT_DIR)
-  if sys.platform == 'darwin':
-    # clang needs a libc++ checkout, else -stdlib=libc++ won't find includes
-    # (i.e. this is needed for bootstrap builds).
-    Checkout('libcxx', LLVM_REPO_URL + '/libcxx/trunk', LIBCXX_DIR)
-    # We used to check out libcxxabi on OS X; we no longer need that.
-    if os.path.exists(LIBCXXABI_DIR):
-      RmTree(LIBCXXABI_DIR)
 
 
 def DeleteChromeToolsShim():
@@ -508,10 +472,36 @@ def UpdateClang(args):
 
   DeleteChromeToolsShim()
 
-  CheckoutRepos(args)
+  Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
 
-  if args.skip_build:
-    return
+  # Back out previous local patches. This needs to be kept around a bit
+  # until all bots have cycled. See https://crbug.com/755777.
+  files = [
+    'lib/Transforms/InstCombine/InstructionCombining.cpp',
+    'test/DebugInfo/X86/formal_parameter.ll',
+    'test/DebugInfo/X86/instcombine-instrinsics.ll',
+    'test/Transforms/InstCombine/debuginfo-skip.ll',
+    'test/Transforms/InstCombine/debuginfo.ll',
+    'test/Transforms/Util/simplify-dbg-declare-load.ll',
+  ]
+  for f in [os.path.join(LLVM_DIR, f) for f in files]:
+    RunCommand(['svn', 'revert', f])
+
+  Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
+  if True:
+    Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
+  elif os.path.exists(LLD_DIR):
+    # In case someone sends a tryjob that temporary adds lld to the checkout,
+    # make sure it's not around on future builds.
+    RmTree(LLD_DIR)
+  Checkout('compiler-rt', LLVM_REPO_URL + '/compiler-rt/trunk', COMPILER_RT_DIR)
+  if sys.platform == 'darwin':
+    # clang needs a libc++ checkout, else -stdlib=libc++ won't find includes
+    # (i.e. this is needed for bootstrap builds).
+    Checkout('libcxx', LLVM_REPO_URL + '/libcxx/trunk', LIBCXX_DIR)
+    # We used to check out libcxxabi on OS X; we no longer need that.
+    if os.path.exists(LIBCXXABI_DIR):
+      RmTree(LIBCXXABI_DIR)
 
   cc, cxx = None, None
   libstdcpp = None
@@ -877,10 +867,6 @@ def main():
                       help='print current clang version (e.g. x.y.z) and exit.')
   parser.add_argument('--run-tests', action='store_true',
                       help='run tests after building; only for local builds')
-  parser.add_argument('--skip-build', action='store_true',
-                      help='do not build anything')
-  parser.add_argument('--skip-checkout', action='store_true',
-                      help='do not create or update any checkouts')
   parser.add_argument('--extra-tools', nargs='*', default=[],
                       help='select additional chrome tools to build')
   parser.add_argument('--use-system-cmake', action='store_true',

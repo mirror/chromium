@@ -62,8 +62,7 @@ class LayoutEmbeddedObject final : public LayoutEmbeddedContent {
     return type == kLayoutObjectEmbeddedObject ||
            LayoutEmbeddedContent::IsOfType(type);
   }
-  bool NeedsPreferredWidthsRecalculation() const override;
-  bool GetNestedIntrinsicSizingInfo(IntrinsicSizingInfo&) const override;
+  LayoutReplaced* EmbeddedReplacedContent() const final;
 
   PaintLayerType LayerTypeRequired() const final;
 

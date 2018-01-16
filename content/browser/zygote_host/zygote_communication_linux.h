@@ -12,13 +12,12 @@
 
 #include <sys/types.h>
 
-#include "base/callback.h"
 #include "base/files/scoped_file.h"
 #include "base/process/kill.h"
-#include "base/process/launch.h"
 #include "base/process/process_handle.h"
 #include "base/synchronization/lock.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/posix_file_descriptor_info.h"
 
 namespace base {
 class Pickle;
@@ -34,13 +33,12 @@ class CONTENT_EXPORT ZygoteCommunication {
   ZygoteCommunication();
   ~ZygoteCommunication();
 
-  void Init(
-      base::OnceCallback<pid_t(base::CommandLine*, base::ScopedFD*)> launcher);
+  void Init();
 
   // Tries to start a process of type indicated by process_type.
   // Returns its pid on success, otherwise base::kNullProcessHandle;
   pid_t ForkRequest(const std::vector<std::string>& command_line,
-                    const base::FileHandleMappingVector& mapping,
+                    std::unique_ptr<PosixFileDescriptorInfo> mapping,
                     const std::string& process_type);
 
   void EnsureProcessTerminated(pid_t process);

@@ -14,7 +14,6 @@
 #include "base/supports_user_data.h"
 #import "ios/web/download/download_task_impl.h"
 #import "ios/web/public/download/download_controller.h"
-#include "ui/base/page_transition_types.h"
 
 namespace web {
 
@@ -34,8 +33,7 @@ class DownloadControllerImpl : public DownloadController,
                           const GURL& original_url,
                           const std::string& content_disposition,
                           int64_t total_bytes,
-                          const std::string& mime_type,
-                          ui::PageTransition page_transition) override;
+                          const std::string& mime_type) override;
   void SetDelegate(DownloadControllerDelegate* delegate) override;
   DownloadControllerDelegate* GetDelegate() const override;
 

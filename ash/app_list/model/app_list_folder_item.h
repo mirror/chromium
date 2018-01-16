@@ -7,7 +7,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -66,7 +65,9 @@ class APP_LIST_MODEL_EXPORT AppListFolderItem : public AppListItem,
   FolderType folder_type() const { return folder_type_; }
 
   // AppListItem overrides:
+  void Activate(int event_flags) override;
   const char* GetItemType() const override;
+  ui::MenuModel* GetContextMenuModel() override;
   AppListItem* FindChildItem(const std::string& id) override;
   size_t ChildItemCount() const override;
   bool CompareForTest(const AppListItem* other) const override;

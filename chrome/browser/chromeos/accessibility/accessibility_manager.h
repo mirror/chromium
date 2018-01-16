@@ -8,7 +8,6 @@
 #include <set>
 
 #include "ash/public/cpp/accessibility_types.h"
-#include "ash/public/interfaces/accessibility_controller.mojom.h"
 #include "ash/shell_observer.h"
 #include "base/callback_forward.h"
 #include "base/callback_list.h"
@@ -16,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/accessibility/chromevox_panel.h"
 #include "chrome/browser/extensions/api/braille_display_private/braille_controller.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -27,8 +27,11 @@
 #include "extensions/browser/extension_system.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
-class Browser;
 class Profile;
+
+namespace ash {
+class ScopedBacklightsForcedOff;
+}  // namespace ash
 
 namespace gfx {
 class Rect;
@@ -108,9 +111,6 @@ class AccessibilityManager
   // Returns the existing instance. If there is no instance, returns NULL.
   static AccessibilityManager* Get();
 
-  // Show the accessibility help as a tab in the browser.
-  static void ShowAccessibilityHelp(Browser* browser);
-
   // On a user's first login into a device, any a11y features enabled/disabled
   // by the user on the login screen are enabled/disabled in the user's profile.
   // This class watches for profile changes and copies settings into the user's
@@ -152,6 +152,9 @@ class AccessibilityManager
 
   // Returns true if spoken feedback is enabled, or false if not.
   bool IsSpokenFeedbackEnabled() const;
+
+  // Toggles whether Chrome OS spoken feedback is on or off.
+  void ToggleSpokenFeedback(ash::AccessibilityNotificationVisibility notify);
 
   // Enables or disables the high contrast mode for Chrome.
   void EnableHighContrast(bool enabled);
@@ -319,9 +322,9 @@ class AccessibilityManager
   void UpdateAlwaysShowMenuFromPref();
   void OnLargeCursorChanged();
   void UpdateStickyKeysFromPref();
-  void OnSpokenFeedbackChanged();
+  void UpdateSpokenFeedbackFromPref();
   void OnHighContrastChanged();
-  void OnAutoclickChanged();
+  void UpdateAutoclickFromPref();
   void UpdateAutoclickDelayFromPref();
   void UpdateVirtualKeyboardFromPref();
   void OnMonoAudioChanged();
@@ -396,6 +399,7 @@ class AccessibilityManager
 
   bool sticky_keys_enabled_;
   bool spoken_feedback_enabled_;
+  bool autoclick_enabled_;
   base::TimeDelta autoclick_delay_ms_;
   bool virtual_keyboard_enabled_;
   bool caret_highlight_enabled_;
@@ -440,10 +444,10 @@ class AccessibilityManager
   std::unique_ptr<chromeos::SwitchAccessEventHandler>
       switch_access_event_handler_;
 
-  std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
+  // Used to force the backlights off to darken the screen.
+  std::unique_ptr<ash::ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
 
-  // Ash's mojom::AccessibilityController used to SetDarkenScreen.
-  ash::mojom::AccessibilityControllerPtr accessibility_controller_;
+  std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 

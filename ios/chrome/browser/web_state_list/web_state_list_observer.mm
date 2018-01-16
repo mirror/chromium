@@ -44,4 +44,4 @@ void WebStateListObserver::WebStateActivatedAt(WebStateList* web_state_list,
                                                web::WebState* old_web_state,
                                                web::WebState* new_web_state,
                                                int active_index,
-                                               int reason) {}
+                                               bool user_action) {}

@@ -29,7 +29,6 @@ class BluetoothRemoteGattDescriptorBlueZ
       public device::BluetoothRemoteGattDescriptor {
  public:
   // device::BluetoothRemoteGattDescriptor overrides.
-  ~BluetoothRemoteGattDescriptorBlueZ() override;
   device::BluetoothUUID GetUUID() const override;
   const std::vector<uint8_t>& GetValue() const override;
   device::BluetoothRemoteGattCharacteristic* GetCharacteristic() const override;
@@ -47,6 +46,7 @@ class BluetoothRemoteGattDescriptorBlueZ
   BluetoothRemoteGattDescriptorBlueZ(
       BluetoothRemoteGattCharacteristicBlueZ* characteristic,
       const dbus::ObjectPath& object_path);
+  ~BluetoothRemoteGattDescriptorBlueZ() override;
 
   // Called by dbus:: on unsuccessful completion of a request to read or write
   // the descriptor value.

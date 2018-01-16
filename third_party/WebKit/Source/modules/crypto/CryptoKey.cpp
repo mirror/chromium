@@ -131,7 +131,7 @@ class DictionaryBuilder : public WebCryptoKeyAlgorithmDictionary {
 
 }  // namespace
 
-CryptoKey::~CryptoKey() = default;
+CryptoKey::~CryptoKey() {}
 
 CryptoKey::CryptoKey(const WebCryptoKey& key) : key_(key) {}
 

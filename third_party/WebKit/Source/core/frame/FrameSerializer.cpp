@@ -133,7 +133,7 @@ SerializerMarkupAccumulator::SerializerMarkupAccumulator(
       document_(&document),
       nodes_(nodes) {}
 
-SerializerMarkupAccumulator::~SerializerMarkupAccumulator() = default;
+SerializerMarkupAccumulator::~SerializerMarkupAccumulator() {}
 
 void SerializerMarkupAccumulator::AppendCustomAttributes(
     StringBuilder& result,

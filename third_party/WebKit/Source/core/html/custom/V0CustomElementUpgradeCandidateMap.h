@@ -56,7 +56,7 @@ class V0CustomElementUpgradeCandidateMap final
   virtual void Trace(blink::Visitor*);
 
  private:
-  V0CustomElementUpgradeCandidateMap() = default;
+  V0CustomElementUpgradeCandidateMap() {}
 
   void ElementWasDestroyed(Element*) override;
 

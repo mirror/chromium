@@ -33,7 +33,6 @@
 
 #include "platform/heap/Heap.h"
 #include "platform/heap/HeapAllocator.h"
-#include "platform/heap/HeapTraits.h"
 #include "platform/heap/Member.h"
 #include "platform/heap/Persistent.h"
 #include "platform/heap/ThreadState.h"

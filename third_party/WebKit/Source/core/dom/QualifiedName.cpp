@@ -99,7 +99,7 @@ QualifiedName::QualifiedName(const AtomicString& p,
     impl_->Release();
 }
 
-QualifiedName::~QualifiedName() = default;
+QualifiedName::~QualifiedName() {}
 
 QualifiedName::QualifiedNameImpl::~QualifiedNameImpl() {
   GetQualifiedNameCache().erase(this);

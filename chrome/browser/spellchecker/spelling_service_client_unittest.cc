@@ -348,10 +348,11 @@ TEST_F(SpellingServiceClientTest, RequestTextCheck) {
     pref->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionary);
 
     client_.RequestTextCheck(
-        &profile_, kTests[i].request_type,
+        &profile_,
+        kTests[i].request_type,
         base::WideToUTF16(kTests[i].request_text),
-        base::BindOnce(&SpellingServiceClientTest::OnTextCheckComplete,
-                       base::Unretained(this), 0));
+        base::Bind(&SpellingServiceClientTest::OnTextCheckComplete,
+                   base::Unretained(this), 0));
     client_.CallOnURLFetchComplete();
   }
 }

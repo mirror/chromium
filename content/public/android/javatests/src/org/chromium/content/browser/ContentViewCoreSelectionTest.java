@@ -26,7 +26,6 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.input.ChromiumBaseInputConnection;
 import org.chromium.content.browser.input.ImeTestUtils;
-import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -59,7 +58,7 @@ public class ContentViewCoreSelectionTest {
             + "<div id=\"rich_div\" contentEditable=\"true\" >Rich Editor</div>"
             + "</form></body></html>");
     private ContentViewCore mContentViewCore;
-    private SelectionPopupControllerImpl mSelectionPopupController;
+    private SelectionPopupController mSelectionPopupController;
 
     private static class TestSelectionClient implements SelectionClient {
         private SelectionClient.Result mResult;
@@ -108,8 +107,7 @@ public class ContentViewCoreSelectionTest {
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
 
         mContentViewCore = mActivityTestRule.getContentViewCore();
-        mSelectionPopupController =
-                SelectionPopupControllerImpl.fromWebContents(mContentViewCore.getWebContents());
+        mSelectionPopupController = mContentViewCore.getSelectionPopupControllerForTesting();
         waitForSelectActionBarVisible(false);
         waitForPastePopupStatus(false);
     }
@@ -417,7 +415,7 @@ public class ContentViewCoreSelectionTest {
         waitForSelectActionBarVisible(true);
         Assert.assertTrue(mSelectionPopupController.hasSelection());
         Assert.assertTrue(mSelectionPopupController.isActionModeValid());
-        Assert.assertTrue(mSelectionPopupController.isFocusedNodeEditable());
+        Assert.assertTrue(mSelectionPopupController.isSelectionEditable());
         Assert.assertFalse(mSelectionPopupController.isSelectionPassword());
     }
 
@@ -429,7 +427,7 @@ public class ContentViewCoreSelectionTest {
         waitForSelectActionBarVisible(true);
         Assert.assertTrue(mSelectionPopupController.hasSelection());
         Assert.assertTrue(mSelectionPopupController.isActionModeValid());
-        Assert.assertTrue(mSelectionPopupController.isFocusedNodeEditable());
+        Assert.assertTrue(mSelectionPopupController.isSelectionEditable());
         Assert.assertTrue(mSelectionPopupController.isSelectionPassword());
     }
 
@@ -441,7 +439,7 @@ public class ContentViewCoreSelectionTest {
         waitForSelectActionBarVisible(true);
         Assert.assertTrue(mSelectionPopupController.hasSelection());
         Assert.assertTrue(mSelectionPopupController.isActionModeValid());
-        Assert.assertFalse(mSelectionPopupController.isFocusedNodeEditable());
+        Assert.assertFalse(mSelectionPopupController.isSelectionEditable());
         Assert.assertFalse(mSelectionPopupController.isSelectionPassword());
     }
 
@@ -453,7 +451,7 @@ public class ContentViewCoreSelectionTest {
         waitForSelectActionBarVisible(true);
         Assert.assertTrue(mSelectionPopupController.hasSelection());
         Assert.assertTrue(mSelectionPopupController.isActionModeValid());
-        Assert.assertTrue(mSelectionPopupController.isFocusedNodeEditable());
+        Assert.assertTrue(mSelectionPopupController.isSelectionEditable());
         Assert.assertFalse(mSelectionPopupController.isSelectionPassword());
     }
 
@@ -832,7 +830,7 @@ public class ContentViewCoreSelectionTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mSelectionPopupController.destroySelectActionMode();
+                mContentViewCore.destroySelectActionMode();
             }
         });
     }
@@ -854,7 +852,7 @@ public class ContentViewCoreSelectionTest {
         CriteriaHelper.pollUiThread(Criteria.equals(visible, new Callable<Boolean>() {
             @Override
             public Boolean call() {
-                return mSelectionPopupController.isSelectActionBarShowing();
+                return mContentViewCore.isSelectActionBarShowing();
             }
         }));
     }

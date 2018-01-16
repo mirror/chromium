@@ -111,7 +111,7 @@ DEFINE_RESOURCE_TYPE_CASTS(Font);
 
 class FontResourceClient : public ResourceClient {
  public:
-  ~FontResourceClient() override = default;
+  ~FontResourceClient() override {}
   static bool IsExpectedType(ResourceClient* client) {
     return client->GetResourceClientType() == kFontType;
   }

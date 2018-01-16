@@ -29,6 +29,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
+#include "core/html/HTMLContentElement.h"
 #include "core/html/forms/HTMLFormControlElementWithState.h"
 #include "core/html/forms/HTMLOptionsCollection.h"
 #include "core/html/forms/OptionList.h"
@@ -168,9 +169,6 @@ class CORE_EXPORT HTMLSelectElement final
   void DidMutateSubtree();
 
   void ResetTypeAheadSessionForTesting();
-
-  // Used for slot assignment.
-  static bool CanAssignToSelectSlot(const Node&);
 
   void Trace(blink::Visitor*) override;
 

@@ -4,9 +4,7 @@
 
 // https://drafts.csswg.org/cssom/#the-cssgroupingrule-interface
 
-[
-    Exposed=Window
-] interface CSSGroupingRule : CSSRule {
+interface CSSGroupingRule : CSSRule {
     [SameObject] readonly attribute CSSRuleList cssRules;
     [RaisesException, CallWith=ExecutionContext] unsigned long insertRule(DOMString rule, unsigned long index);
     [RaisesException] void deleteRule(unsigned long index);

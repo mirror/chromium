@@ -46,8 +46,7 @@ Polymer({
 
   listeners: {
     'click': 'deselectItems_',
-    'contextmenu': 'onContextMenu_',
-    'open-command-menu': 'onOpenCommandMenu_',
+    'open-item-menu': 'onOpenItemMenu_',
   },
 
   attached: function() {
@@ -168,10 +167,9 @@ Polymer({
    * @param {Event} e
    * @private
    */
-  onOpenCommandMenu_: function(e) {
+  onOpenItemMenu_: function(e) {
     // If the item is not visible, scroll to it before rendering the menu.
-    if (e.source == MenuSource.ITEM)
-      this.scrollToId_(/** @type {BookmarksItemElement} */ (e.path[0]).itemId);
+    this.scrollToId_(/** @type {BookmarksItemElement} */ (e.path[0]).itemId);
   },
 
   /**
@@ -275,20 +273,5 @@ Polymer({
 
     if (handled)
       e.stopPropagation();
-  },
-
-  /**
-   * @param {Event} e
-   * @private
-   */
-  onContextMenu_: function(e) {
-    e.preventDefault();
-    this.deselectItems_();
-
-    this.fire('open-command-menu', {
-      x: e.clientX,
-      y: e.clientY,
-      source: MenuSource.LIST,
-    });
   },
 });

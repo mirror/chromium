@@ -48,9 +48,9 @@ class SVGListPropertyHelper : public SVGPropertyHelper<Derived> {
  public:
   typedef ItemProperty ItemPropertyType;
 
-  SVGListPropertyHelper() = default;
+  SVGListPropertyHelper() {}
 
-  ~SVGListPropertyHelper() = default;
+  ~SVGListPropertyHelper() {}
 
   // used from Blink C++ code:
 

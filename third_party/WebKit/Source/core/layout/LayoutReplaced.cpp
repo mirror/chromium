@@ -26,6 +26,7 @@
 #include "core/editing/PositionWithAffinity.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutVideo.h"
@@ -55,7 +56,7 @@ LayoutReplaced::LayoutReplaced(Element* element,
   SetIsAtomicInlineLevel(true);
 }
 
-LayoutReplaced::~LayoutReplaced() = default;
+LayoutReplaced::~LayoutReplaced() {}
 
 void LayoutReplaced::WillBeDestroyed() {
   if (!DocumentBeingDestroyed() && Parent())
@@ -142,8 +143,11 @@ static inline bool LayoutObjectHasAspectRatio(
 }
 
 void LayoutReplaced::ComputeIntrinsicSizingInfoForReplacedContent(
+    LayoutReplaced* content_layout_object,
     IntrinsicSizingInfo& intrinsic_sizing_info) const {
-  if (GetNestedIntrinsicSizingInfo(intrinsic_sizing_info)) {
+  if (content_layout_object) {
+    content_layout_object->ComputeIntrinsicSizingInfo(intrinsic_sizing_info);
+
     // Handle zoom & vertical writing modes here, as the embedded document
     // doesn't know about them.
     intrinsic_sizing_info.size.Scale(Style()->EffectiveZoom());
@@ -634,6 +638,9 @@ LayoutRect LayoutReplaced::ReplacedContentRect() const {
 
 void LayoutReplaced::ComputeIntrinsicSizingInfo(
     IntrinsicSizingInfo& intrinsic_sizing_info) const {
+  // If there's an embeddedReplacedContent() of a remote, referenced document
+  // available, this code-path should never be used.
+  DCHECK(!EmbeddedReplacedContent());
   intrinsic_sizing_info.size = FloatSize(IntrinsicLogicalWidth().ToFloat(),
                                          IntrinsicLogicalHeight().ToFloat());
 
@@ -687,11 +694,13 @@ LayoutUnit LayoutReplaced::ComputeReplacedLogicalWidth(
                                          Style()->LogicalWidth()),
         should_compute_preferred);
 
+  LayoutReplaced* content_layout_object = EmbeddedReplacedContent();
+
   // 10.3.2 Inline, replaced elements:
   // http://www.w3.org/TR/CSS21/visudet.html#inline-replaced-width
   IntrinsicSizingInfo intrinsic_sizing_info;
-  ComputeIntrinsicSizingInfoForReplacedContent(intrinsic_sizing_info);
-
+  ComputeIntrinsicSizingInfoForReplacedContent(content_layout_object,
+                                               intrinsic_sizing_info);
   FloatSize constrained_size =
       ConstrainIntrinsicSizeToMinMax(intrinsic_sizing_info);
 
@@ -772,11 +781,13 @@ LayoutUnit LayoutReplaced::ComputeReplacedLogicalHeight(
         ComputeReplacedLogicalHeightUsing(kMainOrPreferredSize,
                                           Style()->LogicalHeight()));
 
+  LayoutReplaced* content_layout_object = EmbeddedReplacedContent();
+
   // 10.6.2 Inline, replaced elements:
   // http://www.w3.org/TR/CSS21/visudet.html#inline-replaced-height
   IntrinsicSizingInfo intrinsic_sizing_info;
-  ComputeIntrinsicSizingInfoForReplacedContent(intrinsic_sizing_info);
-
+  ComputeIntrinsicSizingInfoForReplacedContent(content_layout_object,
+                                               intrinsic_sizing_info);
   FloatSize constrained_size =
       ConstrainIntrinsicSizeToMinMax(intrinsic_sizing_info);
 
@@ -924,7 +935,7 @@ LayoutRect LayoutReplaced::LocalSelectionRect() const {
                     Size().Height());
 }
 
-void IntrinsicSizingInfo::Transpose() {
+void LayoutReplaced::IntrinsicSizingInfo::Transpose() {
   size = size.TransposedSize();
   aspect_ratio = aspect_ratio.TransposedSize();
   std::swap(has_width, has_height);

@@ -4,12 +4,10 @@
 
 #include "core/css/cssom/ComputedStylePropertyMap.h"
 
-#include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSVariableData.h"
 #include "core/css/ComputedStyleCSSValueMapping.h"
 #include "core/dom/Document.h"
 #include "core/dom/PseudoElement.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 
@@ -81,16 +79,6 @@ void ComputedStylePropertyMap::ForEachProperty(
         *property, *style, nullptr /* layout_object */, StyledNode());
     if (value)
       callback(property->GetPropertyName(), *value);
-  }
-
-  const auto& variables = ComputedStyleCSSValueMapping::GetVariables(*style);
-  if (variables) {
-    for (const auto& name_value : *variables) {
-      if (name_value.value) {
-        callback(name_value.key, *CSSCustomPropertyDeclaration::Create(
-                                     name_value.key, name_value.value));
-      }
-    }
   }
 }
 

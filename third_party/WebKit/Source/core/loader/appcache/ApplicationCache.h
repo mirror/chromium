@@ -46,7 +46,7 @@ class ApplicationCache final : public EventTargetWithInlineData,
   static ApplicationCache* Create(LocalFrame* frame) {
     return new ApplicationCache(frame);
   }
-  ~ApplicationCache() override = default;
+  ~ApplicationCache() override {}
 
   unsigned short status() const;
   void update(ExceptionState&);

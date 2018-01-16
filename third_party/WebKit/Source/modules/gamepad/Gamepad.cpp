@@ -36,7 +36,7 @@ Gamepad::Gamepad()
       is_axis_data_dirty_(true),
       is_button_data_dirty_(true) {}
 
-Gamepad::~Gamepad() = default;
+Gamepad::~Gamepad() {}
 
 const Gamepad::DoubleVector& Gamepad::axes() {
   is_axis_data_dirty_ = false;

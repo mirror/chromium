@@ -10,11 +10,7 @@ namespace ui {
 
 BubbleCloser::BubbleCloser(gfx::NativeWindow window,
                            base::RepeatingClosure on_click_outside)
-    : on_click_outside_(std::move(on_click_outside)), factory_(this) {
-  // Capture a WeakPtr via NSObject. This allows the block to detect another
-  // event monitor for the same event deleting |this|.
-  WeakPtrNSObject* handle = factory_.handle();
-
+    : on_click_outside_(std::move(on_click_outside)) {
   // Note that |window| will be retained when captured by the block below.
   // |this| is captured, but not retained.
   auto block = ^NSEvent*(NSEvent* event) {
@@ -37,9 +33,7 @@ BubbleCloser::BubbleCloser(gfx::NativeWindow window,
         return event;
       ancestor = [ancestor parentWindow];
     }
-
-    if (BubbleCloser* owner = WeakPtrNSObjectFactory<BubbleCloser>::Get(handle))
-      owner->OnClickOutside();
+    OnClickOutside();
     return event;
   };
   event_tap_ =

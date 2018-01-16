@@ -220,7 +220,6 @@ struct SpdySessionDependencies {
   bool enable_http2_alternative_service;
   NetLog* net_log;
   bool http_09_on_non_default_ports_enabled;
-  bool disable_idle_sockets_close_on_memory_pressure;
 };
 
 class SpdyURLRequestContext : public URLRequestContext {
@@ -373,10 +372,10 @@ class SpdyTestUtil {
                                            RequestPriority priority,
                                            const HostPortPair& host_port_pair);
 
-  // Constructs a PUSH_PROMISE frame and a HEADERS frame on the pushed stream.
+  // Constructs a SPDY PUSH_PROMISE frame.
   // |extra_headers| are the extra header-value pairs, which typically
   // will vary the most between calls.
-  // Returns a SpdySerializedFrame object with the two frames concatenated.
+  // Returns a SpdySerializedFrame.
   SpdySerializedFrame ConstructSpdyPush(const char* const extra_headers[],
                                         int extra_header_count,
                                         int stream_id,
@@ -390,11 +389,9 @@ class SpdyTestUtil {
                                         const char* status,
                                         const char* location);
 
-  // Constructs a PUSH_PROMISE frame.
-  SpdySerializedFrame ConstructSpdyPushPromise(
-      SpdyStreamId associated_stream_id,
-      SpdyStreamId stream_id,
-      SpdyHeaderBlock headers);
+  SpdySerializedFrame ConstructInitialSpdyPushFrame(SpdyHeaderBlock headers,
+                                                    int stream_id,
+                                                    int associated_stream_id);
 
   SpdySerializedFrame ConstructSpdyPushHeaders(
       int stream_id,

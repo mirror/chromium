@@ -42,7 +42,7 @@ class ThreadControllerForTest : public internal::ThreadControllerImpl {
     ThreadControllerImpl::RemoveNestingObserver(observer);
   }
 
-  ~ThreadControllerForTest() override = default;
+  ~ThreadControllerForTest() override {}
 };
 
 }  // namespace

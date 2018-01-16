@@ -155,10 +155,6 @@ void GraphicsLayer::SetIsResizedByBrowserControls(
       is_resized_by_browser_controls);
 }
 
-void GraphicsLayer::SetIsContainerForFixedPositionLayers(bool is_container) {
-  PlatformLayer()->SetIsContainerForFixedPositionLayers(is_container);
-}
-
 void GraphicsLayer::SetParent(GraphicsLayer* layer) {
 #if DCHECK_IS_ON()
   DCHECK(!layer || !layer->HasAncestor(this));

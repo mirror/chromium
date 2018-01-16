@@ -43,7 +43,6 @@ class FakeProxy : public Proxy {
                                   bool animate) override {}
   void RequestBeginMainFrameNotExpected(bool new_state) override {}
   void SetURLForUkm(const GURL& url) override {}
-  void ClearHistoryOnNavigation() override {}
 
  private:
   LayerTreeHost* layer_tree_host_;

@@ -156,9 +156,9 @@ class WinAudioTest : public ::testing::Test {
  public:
   WinAudioTest() {
     audio_manager_ =
-        AudioManager::CreateForTesting(std::make_unique<TestAudioThread>());
+        AudioManager::CreateForTesting(base::MakeUnique<TestAudioThread>());
     audio_manager_device_info_ =
-        std::make_unique<AudioDeviceInfoAccessorForTests>(audio_manager_.get());
+        base::MakeUnique<AudioDeviceInfoAccessorForTests>(audio_manager_.get());
     base::RunLoop().RunUntilIdle();
   }
   ~WinAudioTest() override { audio_manager_->Shutdown(); }

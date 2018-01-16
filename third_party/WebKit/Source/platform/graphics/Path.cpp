@@ -50,7 +50,7 @@ Path::Path(const SkPath& other) {
   path_ = other;
 }
 
-Path::~Path() = default;
+Path::~Path() {}
 
 Path& Path::operator=(const Path& other) {
   path_ = SkPath(other.path_);

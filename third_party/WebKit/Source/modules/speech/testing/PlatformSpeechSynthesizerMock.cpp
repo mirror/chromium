@@ -54,7 +54,7 @@ PlatformSpeechSynthesizerMock::PlatformSpeechSynthesizerMock(
           this,
           &PlatformSpeechSynthesizerMock::SpeakingFinished) {}
 
-PlatformSpeechSynthesizerMock::~PlatformSpeechSynthesizerMock() = default;
+PlatformSpeechSynthesizerMock::~PlatformSpeechSynthesizerMock() {}
 
 void PlatformSpeechSynthesizerMock::SpeakingErrorOccurred(TimerBase*) {
   DCHECK(current_utterance_);

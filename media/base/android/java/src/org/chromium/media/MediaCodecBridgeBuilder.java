@@ -12,6 +12,7 @@ import android.view.Surface;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.media.MediaCodecUtil.BitrateAdjustmentTypes;
 import org.chromium.media.MediaCodecUtil.CodecCreationInfo;
 import org.chromium.media.MediaCodecUtil.MimeTypes;
 
@@ -64,7 +65,7 @@ class MediaCodecBridgeBuilder {
 
         if (info.mediaCodec == null) return null;
 
-        MediaCodecBridge bridge = new MediaCodecBridge(info.mediaCodec, info.bitrateAdjuster);
+        MediaCodecBridge bridge = new MediaCodecBridge(info.mediaCodec, info.bitrateAdjustmentType);
 
         MediaFormat format = createVideoDecoderFormat(mime, width, height);
         if (format == null) return null;
@@ -94,7 +95,14 @@ class MediaCodecBridgeBuilder {
     }
 
     private static MediaFormat createVideoEncoderFormat(String mime, int width, int height,
-            int bitRate, int frameRate, int iFrameInterval, int colorFormat) {
+            int bitRate, int frameRate, int iFrameInterval, int colorFormat,
+            BitrateAdjustmentTypes bitrateAdjustmentType) {
+        if (bitrateAdjustmentType == BitrateAdjustmentTypes.FRAMERATE_ADJUSTMENT) {
+            frameRate = MediaCodecBridge.BITRATE_ADJUSTMENT_FPS;
+        } else {
+            frameRate = Math.min(frameRate, MediaCodecBridge.MAXIMUM_INITIAL_FPS);
+        }
+
         MediaFormat format = MediaFormat.createVideoFormat(mime, width, height);
         format.setInteger(MediaFormat.KEY_BIT_RATE, bitRate);
         format.setInteger(MediaFormat.KEY_FRAME_RATE, frameRate);
@@ -119,13 +127,15 @@ class MediaCodecBridgeBuilder {
 
         // Create MediaCodecEncoder for H264 to meet WebRTC requirements to IDR/keyframes.
         // See https://crbug.com/761336 for more details.
-        MediaCodecBridge bridge = mime.equals(MimeTypes.VIDEO_H264)
-                ? new MediaCodecEncoder(info.mediaCodec, info.bitrateAdjuster)
-                : new MediaCodecBridge(info.mediaCodec, info.bitrateAdjuster);
+        MediaCodecBridge bridge;
+        if (mime.equals(MimeTypes.VIDEO_H264)) {
+            bridge = new MediaCodecEncoder(info.mediaCodec, info.bitrateAdjustmentType);
+        } else {
+            bridge = new MediaCodecBridge(info.mediaCodec, info.bitrateAdjustmentType);
+        }
 
-        frameRate = info.bitrateAdjuster.getInitialFrameRate(frameRate);
-        MediaFormat format = createVideoEncoderFormat(
-                mime, width, height, bitRate, frameRate, iFrameInterval, colorFormat);
+        MediaFormat format = createVideoEncoderFormat(mime, width, height, bitRate, frameRate,
+                iFrameInterval, colorFormat, info.bitrateAdjustmentType);
 
         if (!bridge.configureVideo(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE,
                     info.supportsAdaptivePlayback)) {
@@ -156,7 +166,7 @@ class MediaCodecBridgeBuilder {
 
         if (info.mediaCodec == null) return null;
 
-        MediaCodecBridge bridge = new MediaCodecBridge(info.mediaCodec, info.bitrateAdjuster);
+        MediaCodecBridge bridge = new MediaCodecBridge(info.mediaCodec, info.bitrateAdjustmentType);
 
         MediaFormat format = createAudioFormat(mime, sampleRate, channelCount);
 

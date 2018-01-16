@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "ash/app_list/model/speech/speech_ui_model_observer.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"

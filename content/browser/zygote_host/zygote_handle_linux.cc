@@ -14,11 +14,10 @@ ZygoteHandle g_generic_zygote = nullptr;
 
 }  // namespace
 
-ZygoteHandle CreateGenericZygote(
-    base::OnceCallback<pid_t(base::CommandLine*, base::ScopedFD*)> launcher) {
+ZygoteHandle CreateGenericZygote() {
   CHECK(!g_generic_zygote);
   g_generic_zygote = new ZygoteCommunication();
-  g_generic_zygote->Init(std::move(launcher));
+  g_generic_zygote->Init();
   return g_generic_zygote;
 }
 

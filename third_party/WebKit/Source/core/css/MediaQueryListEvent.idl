@@ -5,7 +5,6 @@
 // https://drafts.csswg.org/cssom-view/#mediaquerylistevent
 
 [
-    Exposed=Window,
     Constructor(DOMString type, optional MediaQueryListEventInit eventInitDict)
 ] interface MediaQueryListEvent : Event {
     readonly attribute DOMString media;

@@ -53,7 +53,7 @@ class AudioInputTest : public testing::Test {
   AudioInputTest()
       : message_loop_(base::MessageLoop::TYPE_UI),
         audio_manager_(AudioManager::CreateForTesting(
-            std::make_unique<TestAudioThread>())),
+            base::MakeUnique<TestAudioThread>())),
         audio_input_stream_(NULL) {
     base::RunLoop().RunUntilIdle();
   }

@@ -20,7 +20,7 @@ class CORE_EXPORT FocusChangedObserver : public GarbageCollectedMixin {
 
  protected:
   bool IsFrameFocused(LocalFrame*);
-  virtual ~FocusChangedObserver() = default;
+  virtual ~FocusChangedObserver() {}
 };
 
 }  // namespace blink

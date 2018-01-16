@@ -33,7 +33,7 @@ PerformanceNavigationTiming::PerformanceNavigationTiming(
   DCHECK(info);
 }
 
-PerformanceNavigationTiming::~PerformanceNavigationTiming() = default;
+PerformanceNavigationTiming::~PerformanceNavigationTiming() {}
 
 void PerformanceNavigationTiming::Trace(blink::Visitor* visitor) {
   ContextClient::Trace(visitor);

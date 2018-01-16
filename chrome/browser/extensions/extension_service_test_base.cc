@@ -32,7 +32,6 @@
 #include "content/public/browser/browser_context.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
-#include "extensions/browser/pref_names.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/extensions/install_limiter.h"
@@ -191,7 +190,7 @@ void ExtensionServiceTestBase::
 
 size_t ExtensionServiceTestBase::GetPrefKeyCount() {
   const base::DictionaryValue* dict =
-      profile()->GetPrefs()->GetDictionary(pref_names::kExtensions);
+      profile()->GetPrefs()->GetDictionary("extensions.settings");
   if (!dict) {
     ADD_FAILURE();
     return 0;
@@ -213,7 +212,7 @@ testing::AssertionResult ExtensionServiceTestBase::ValidateBooleanPref(
 
   PrefService* prefs = profile()->GetPrefs();
   const base::DictionaryValue* dict =
-      prefs->GetDictionary(pref_names::kExtensions);
+      prefs->GetDictionary("extensions.settings");
   if (!dict) {
     return testing::AssertionFailure()
         << "extension.settings does not exist " << msg;
@@ -246,7 +245,7 @@ void ExtensionServiceTestBase::ValidateIntegerPref(
 
   PrefService* prefs = profile()->GetPrefs();
   const base::DictionaryValue* dict =
-      prefs->GetDictionary(pref_names::kExtensions);
+      prefs->GetDictionary("extensions.settings");
   ASSERT_TRUE(dict != NULL) << msg;
   const base::DictionaryValue* pref = NULL;
   ASSERT_TRUE(dict->GetDictionary(extension_id, &pref)) << msg;
@@ -265,7 +264,7 @@ void ExtensionServiceTestBase::ValidateStringPref(
                                        expected_val.c_str());
 
   const base::DictionaryValue* dict =
-      profile()->GetPrefs()->GetDictionary(pref_names::kExtensions);
+      profile()->GetPrefs()->GetDictionary("extensions.settings");
   ASSERT_TRUE(dict != NULL) << msg;
   const base::DictionaryValue* pref = NULL;
   std::string manifest_path = extension_id + ".manifest";

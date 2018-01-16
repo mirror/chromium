@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "storage/browser/blob/blob_memory_controller.h"
 #include "storage/browser/storage_browser_export.h"
+#include "storage/common/data_element.h"
 
 namespace storage {
 class BlobDataItem;

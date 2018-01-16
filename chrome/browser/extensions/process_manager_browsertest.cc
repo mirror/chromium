@@ -142,7 +142,7 @@ class NavigationCompletedObserver : public content::WebContentsObserver {
       : content::WebContentsObserver(web_contents),
         message_loop_runner_(new content::MessageLoopRunner) {
     web_contents->ForEachFrame(
-        base::BindRepeating(&AddFrameToSet, base::Unretained(&frames_)));
+        base::Bind(&AddFrameToSet, base::Unretained(&frames_)));
   }
 
   void Wait() {
@@ -152,9 +152,8 @@ class NavigationCompletedObserver : public content::WebContentsObserver {
 
   void RenderFrameDeleted(content::RenderFrameHost* rfh) override {
     if (frames_.erase(rfh) != 0 && message_loop_runner_->loop_running() &&
-        AreAllFramesInTab()) {
+        AreAllFramesInTab())
       message_loop_runner_->Quit();
-    }
   }
 
  private:
@@ -163,9 +162,9 @@ class NavigationCompletedObserver : public content::WebContentsObserver {
   bool AreAllFramesInTab() {
     std::set<content::RenderFrameHost*> current_frames;
     web_contents()->ForEachFrame(
-        base::BindRepeating(&AddFrameToSet, base::Unretained(&current_frames)));
+        base::Bind(&AddFrameToSet, base::Unretained(&current_frames)));
     for (content::RenderFrameHost* frame : frames_) {
-      if (!base::ContainsKey(current_frames, frame))
+      if (current_frames.find(frame) == current_frames.end())
         return false;
     }
     return true;

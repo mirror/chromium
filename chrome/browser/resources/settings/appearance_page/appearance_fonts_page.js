@@ -5,14 +5,14 @@
 (function() {
 'use strict';
 
-/** @type {!Array<number>} */
-const FONT_SIZE_RANGE = [
+/** @const @private {!Array<number>} */
+var FONT_SIZE_RANGE_ = [
   9,  10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24,
   26, 28, 30, 32, 34, 36, 40, 44, 48, 56, 64, 72,
 ];
 
-/** @type {!Array<number>} */
-const MINIMUM_FONT_SIZE_RANGE =
+/** @const @private {!Array<number>} */
+var MINIMUM_FONT_SIZE_RANGE_ =
     [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24];
 
 /**
@@ -46,7 +46,7 @@ Polymer({
     fontSizeRange_: {
       readOnly: true,
       type: Array,
-      value: FONT_SIZE_RANGE,
+      value: FONT_SIZE_RANGE_,
     },
 
     /**
@@ -56,7 +56,7 @@ Polymer({
     minimumFontSizeRange_: {
       readOnly: true,
       type: Array,
-      value: MINIMUM_FONT_SIZE_RANGE,
+      value: MINIMUM_FONT_SIZE_RANGE_,
     },
 
     /**
@@ -117,8 +117,8 @@ Polymer({
    * @private
    */
   setFontsData_: function(response) {
-    const fontMenuOptions = [];
-    for (const fontData of response.fontList) {
+    var fontMenuOptions = [];
+    for (var fontData of response.fontList) {
       fontMenuOptions.push({value: fontData[0], name: fontData[1]});
     }
     this.fontOptions_ = fontMenuOptions;
@@ -132,7 +132,7 @@ Polymer({
    */
   computeMinimumFontSize_: function() {
     return this.get('prefs.webkit.webprefs.minimum_font_size.value') ||
-        MINIMUM_FONT_SIZE_RANGE[0];
+        MINIMUM_FONT_SIZE_RANGE_[0];
   },
 });
 })();

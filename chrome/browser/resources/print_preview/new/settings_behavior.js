@@ -8,6 +8,7 @@ cr.exportPath('print_preview_new');
  *   value: *,
  *   valid: boolean,
  *   available: boolean,
+ *   updatesPreview: boolean
  * }}
  */
 print_preview_new.Setting;

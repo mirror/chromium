@@ -270,8 +270,7 @@ PresentationAvailabilityState::AvailabilityListener::AvailabilityListener(
     const Vector<KURL>& availability_urls)
     : urls(availability_urls) {}
 
-PresentationAvailabilityState::AvailabilityListener::~AvailabilityListener() =
-    default;
+PresentationAvailabilityState::AvailabilityListener::~AvailabilityListener() {}
 
 PresentationAvailabilityState::ListeningStatus::ListeningStatus(
     const KURL& availability_url)
@@ -279,6 +278,6 @@ PresentationAvailabilityState::ListeningStatus::ListeningStatus(
       last_known_availability(mojom::blink::ScreenAvailability::UNKNOWN),
       listening_state(ListeningState::INACTIVE) {}
 
-PresentationAvailabilityState::ListeningStatus::~ListeningStatus() = default;
+PresentationAvailabilityState::ListeningStatus::~ListeningStatus() {}
 
 }  // namespace blink

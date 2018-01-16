@@ -19,7 +19,7 @@ class TrackListBase : public EventTargetWithInlineData {
   explicit TrackListBase(HTMLMediaElement* media_element)
       : media_element_(media_element) {}
 
-  ~TrackListBase() override = default;
+  ~TrackListBase() override {}
 
   unsigned length() const { return tracks_.size(); }
   T* AnonymousIndexedGetter(unsigned index) const {

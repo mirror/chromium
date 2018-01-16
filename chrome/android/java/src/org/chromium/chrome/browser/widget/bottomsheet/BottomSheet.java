@@ -29,6 +29,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -55,9 +56,9 @@ import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
+import org.chromium.content.browser.BrowserStartupController;
+import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.content_public.browser.SelectionPopupController;
-import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.ui.UiUtils;
 
@@ -430,9 +431,8 @@ public class BottomSheet
             startX = mVisibleViewportRect.left + (mContainerWidth - allowedSwipeWidth) / 2;
             endX = startX + allowedSwipeWidth;
         } else if (ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_VELOCITY.equals(logicType)
-                || (ChromeFeatureList.isInitialized()
-                           && ChromeFeatureList.isEnabled(
-                                      ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE))) {
+                || ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE)) {
             if (mVelocityLogicBlockSwipe) return false;
 
             double dpPerMs = scrollDistanceDp / (double) timeDeltaMs;
@@ -485,7 +485,17 @@ public class BottomSheet
         addObserver(mMetrics);
 
         mGestureDetector = new BottomSheetSwipeDetector(context, this);
-        mIsTouchEnabled = true;
+
+        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
+                    @Override
+                    public void onSuccess(boolean alreadyStarted) {
+                        mIsTouchEnabled = true;
+                    }
+
+                    @Override
+                    public void onFailure() {}
+                });
 
         // An observer for recording metrics.
         this.addObserver(new EmptyBottomSheetObserver() {
@@ -1044,9 +1054,8 @@ public class BottomSheet
                 : mDefaultToolbarView;
         if (newToolbar != oldToolbar) {
             // For the toolbar transition, make sure we don't detach the default toolbar view.
-            Animator transitionAnimator = getViewTransitionAnimator(
-                    newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar);
-            if (transitionAnimator != null) animators.add(transitionAnimator);
+            animators.add(getViewTransitionAnimator(
+                    newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar));
         }
 
         // Add an animator for the content transition if needed.
@@ -1055,9 +1064,8 @@ public class BottomSheet
             if (oldContent != null) mBottomSheetContentContainer.removeView(oldContent);
         } else {
             View contentView = content.getContentView();
-            Animator transitionAnimator = getViewTransitionAnimator(
-                    contentView, oldContent, mBottomSheetContentContainer, true);
-            if (transitionAnimator != null) animators.add(transitionAnimator);
+            animators.add(getViewTransitionAnimator(
+                    contentView, oldContent, mBottomSheetContentContainer, true));
         }
 
         // Temporarily make the background of the toolbar holder a solid color so the transition
@@ -1115,11 +1123,9 @@ public class BottomSheet
      * before the new view is faded in. There is an option to detach the old view or not.
      * @param newView The new view to transition to.
      * @param oldView The old view to transition from.
-     * @param parent The parent for newView and oldView.
      * @param detachOldView Whether or not to detach the old view once faded out.
-     * @return An animator that runs the specified animation or null if no animation should be run.
+     * @return An animator that runs the specified animation.
      */
-    @Nullable
     private Animator getViewTransitionAnimator(final View newView, final View oldView,
             final ViewGroup parent, final boolean detachOldView) {
         if (newView == oldView) return null;
@@ -1129,21 +1135,6 @@ public class BottomSheet
 
         newView.setVisibility(View.VISIBLE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                && !ValueAnimator.areAnimatorsEnabled()) {
-            if (oldView != null) {
-                // Post a runnable to remove the old view to prevent issues related to the keyboard
-                // showing while swapping contents. See https://crbug.com/799252.
-                post(() -> { swapViews(newView, oldView, parent, detachOldView); });
-            } else {
-                if (parent != newView.getParent()) parent.addView(newView);
-            }
-
-            newView.setAlpha(1);
-
-            return null;
-        }
-
         // Fade out the old view.
         if (oldView != null) {
             ValueAnimator fadeOutAnimator = ObjectAnimator.ofFloat(oldView, View.ALPHA, 0);
@@ -1151,7 +1142,12 @@ public class BottomSheet
             fadeOutAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    swapViews(newView, oldView, parent, detachOldView);
+                    if (detachOldView && oldView.getParent() != null) {
+                        parent.removeView(oldView);
+                    } else {
+                        oldView.setVisibility(View.INVISIBLE);
+                    }
+                    if (parent != newView.getParent()) parent.addView(newView);
                 }
             });
             animators.add(fadeOutAnimator);
@@ -1170,23 +1166,6 @@ public class BottomSheet
         animatorSet.playSequentially(animators);
 
         return animatorSet;
-    }
-
-    /**
-     * Removes the oldView (or sets it to invisible) and adds the new view to the specified parent.
-     * @param newView The new view to transition to.
-     * @param oldView The old view to transition from.
-     * @param parent The parent for newView and oldView.
-     * @param detachOldView Whether or not to detach the old view once faded out.
-     */
-    private void swapViews(final View newView, final View oldView, final ViewGroup parent,
-            final boolean detachOldView) {
-        if (detachOldView && oldView.getParent() != null) {
-            parent.removeView(oldView);
-        } else {
-            oldView.setVisibility(View.INVISIBLE);
-        }
-        if (parent != newView.getParent()) parent.addView(newView);
     }
 
     /**
@@ -1342,9 +1321,9 @@ public class BottomSheet
         Tab activeTab = getActiveTab();
         if (activeTab == null) return;
 
-        WebContents webContents = activeTab.getWebContents();
-        if (webContents == null) return;
-        SelectionPopupController.fromWebContents(webContents).clearSelection();
+        ContentViewCore contentViewCore = activeTab.getContentViewCore();
+        if (contentViewCore == null) return;
+        contentViewCore.clearSelection();
     }
 
     /**

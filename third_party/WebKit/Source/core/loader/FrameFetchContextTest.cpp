@@ -512,7 +512,7 @@ TEST_F(FrameFetchContextModifyRequestTest, SendRequiredCSPHeader) {
 
 class FrameFetchContextHintsTest : public FrameFetchContextTest {
  public:
-  FrameFetchContextHintsTest() = default;
+  FrameFetchContextHintsTest() {}
 
  protected:
   void ExpectHeader(const char* input,
@@ -1427,40 +1427,6 @@ TEST_F(FrameFetchContextMockedLocalFrameClientTest,
   EXPECT_EQ(
       "<https://otherintervention.org>, "
       "<https://www.chromestatus.com/features/6072546726248448>; "
-      "level=\"warning\"",
-      resource_request2.HttpHeaderField("Intervention"));
-}
-
-// Tests if "Intervention" header is added for frame with NoScript enabled.
-TEST_F(FrameFetchContextMockedLocalFrameClientTest,
-       NoScriptInterventionHeader) {
-  // Verify header not added if NoScript not active.
-  EXPECT_CALL(*client, GetPreviewsStateForFrame())
-      .WillRepeatedly(::testing::Return(WebURLRequest::kPreviewsOff));
-  ResourceRequest resource_request("http://www.example.com/style.css");
-  fetch_context->AddAdditionalRequestHeaders(resource_request,
-                                             kFetchMainResource);
-  EXPECT_EQ(g_null_atom, resource_request.HttpHeaderField("Intervention"));
-
-  // Verify header is added if NoScript is active.
-  EXPECT_CALL(*client, GetPreviewsStateForFrame())
-      .WillRepeatedly(::testing::Return(WebURLRequest::kNoScriptOn));
-  fetch_context->AddAdditionalRequestHeaders(resource_request,
-                                             kFetchSubresource);
-  EXPECT_EQ(
-      "<https://www.chromestatus.com/features/4775088607985664>; "
-      "level=\"warning\"",
-      resource_request.HttpHeaderField("Intervention"));
-
-  // Verify appended to an existing "Intervention" header value.
-  ResourceRequest resource_request2("http://www.example.com/getad.js");
-  resource_request2.SetHTTPHeaderField("Intervention",
-                                       "<https://otherintervention.org>");
-  fetch_context->AddAdditionalRequestHeaders(resource_request2,
-                                             kFetchSubresource);
-  EXPECT_EQ(
-      "<https://otherintervention.org>, "
-      "<https://www.chromestatus.com/features/4775088607985664>; "
       "level=\"warning\"",
       resource_request2.HttpHeaderField("Intervention"));
 }

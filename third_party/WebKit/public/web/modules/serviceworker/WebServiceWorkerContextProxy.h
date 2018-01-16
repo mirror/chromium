@@ -54,7 +54,7 @@ class WebURLResponse;
 // All methods of this class must be called on the worker thread.
 class WebServiceWorkerContextProxy {
  public:
-  virtual ~WebServiceWorkerContextProxy() = default;
+  virtual ~WebServiceWorkerContextProxy() {}
 
   virtual void SetRegistration(
       std::unique_ptr<WebServiceWorkerRegistration::Handle>) = 0;

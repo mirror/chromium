@@ -57,7 +57,9 @@ WorkerSchedulerImpl::WorkerSchedulerImpl(
                                           idle_helper_.IdleTaskRunner()),
       load_tracker_(helper_->NowTicks(),
                     base::Bind(&ReportWorkerTaskLoad),
-                    kWorkerThreadLoadTrackerReportingInterval) {
+                    kWorkerThreadLoadTrackerReportingInterval),
+      worker_thread_task_duration_reporter_(
+          "RendererScheduler.TaskDurationPerThreadType") {
   initialized_ = false;
   thread_start_time_ = helper_->NowTicks();
   load_tracker_.Resume(thread_start_time_);
@@ -140,7 +142,8 @@ void WorkerSchedulerImpl::OnTaskCompleted(WorkerTaskQueue* worker_task_queue,
                                           const TaskQueue::Task& task,
                                           base::TimeTicks start,
                                           base::TimeTicks end) {
-  worker_metrics_helper_.RecordTaskMetrics(worker_task_queue, task, start, end);
+  worker_thread_task_duration_reporter_.RecordTask(ThreadType::kWorkerThread,
+                                                   end - start);
 }
 
 SchedulerHelper* WorkerSchedulerImpl::GetSchedulerHelperForTesting() {

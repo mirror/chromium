@@ -105,7 +105,7 @@ class CORE_EXPORT DOMMatrixReadOnly : public ScriptWrappable {
   const TransformationMatrix& Matrix() const { return *matrix_; }
 
  protected:
-  DOMMatrixReadOnly() = default;
+  DOMMatrixReadOnly() {}
   DOMMatrixReadOnly(const String&, ExceptionState&);
   DOMMatrixReadOnly(const TransformationMatrix&, bool is2d = true);
 

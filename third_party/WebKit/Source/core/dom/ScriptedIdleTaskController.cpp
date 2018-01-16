@@ -29,7 +29,7 @@ class IdleRequestCallbackWrapper
       ScriptedIdleTaskController* controller) {
     return base::AdoptRef(new IdleRequestCallbackWrapper(id, controller));
   }
-  virtual ~IdleRequestCallbackWrapper() = default;
+  virtual ~IdleRequestCallbackWrapper() {}
 
   static void IdleTaskFired(
       scoped_refptr<IdleRequestCallbackWrapper> callback_wrapper,
@@ -107,7 +107,7 @@ ScriptedIdleTaskController::ScriptedIdleTaskController(
   PauseIfNeeded();
 }
 
-ScriptedIdleTaskController::~ScriptedIdleTaskController() = default;
+ScriptedIdleTaskController::~ScriptedIdleTaskController() {}
 
 void ScriptedIdleTaskController::Trace(blink::Visitor* visitor) {
   visitor->Trace(idle_tasks_);

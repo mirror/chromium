@@ -62,16 +62,6 @@ class AnnotationInstance : public InstanceBase {
   // -kCookiesAllowedFieldNumber is added.
   void GetPolicyFieldNumbers(std::set<int>* field_numbers) const;
 
-  // Loads annotation based on the data from archive in annotations.xml.
-  static AnnotationInstance LoadFromArchive(
-      AnnotationInstance::Type type,
-      const std::string& unique_id,
-      int unique_id_hash_code,
-      int second_id_hash_code,
-      int content_hash_code,
-      const std::set<int>& semantics_fields,
-      const std::set<int>& policy_fields);
-
   // Checks if an annotation has all required fields.
   AuditorResult IsComplete() const;
 
@@ -92,10 +82,9 @@ class AnnotationInstance : public InstanceBase {
            type == Type::ANNOTATION_BRANCHED_COMPLETING;
   }
 
-  // If annotation is loaded from archive, returns |archive_content_hash_code|.
-  // Otherwise computes a hashcode for the annotation content. Source field is
-  // not used in this computation as we don't need sensitivity to changes in
-  // source location, i.e. filepath, line number and function.
+  // Computes a hashcode for the annotation content. Source field is not used in
+  // this computation as we don't need sensitivity to changes in source
+  // location, i.e. filepath, line number and function.
   int GetContentHashCode() const;
 
   // Combines |*this| partial annotation with a completing/branched_completing
@@ -118,11 +107,7 @@ class AnnotationInstance : public InstanceBase {
   int unique_id_hash_code;
   int second_id_hash_code;
 
-  // The hash code of annotation content for archived annotations.
-  int archive_content_hash_code;
-
-  // Flag stating if annotation is loaded from annotations.xml.
-  bool is_loaded_from_archive;
+  std::string comments;
 
   // This annotation is generated from merging two other incomplete annotations.
   bool is_merged;

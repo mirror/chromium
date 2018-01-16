@@ -43,7 +43,7 @@ class AnimatableFilterOperations final : public AnimatableValue {
     return base::AdoptRef(new AnimatableFilterOperations(operations));
   }
 
-  ~AnimatableFilterOperations() override = default;
+  ~AnimatableFilterOperations() override {}
 
   const FilterOperations& Operations() const {
     return operation_wrapper_->Operations();

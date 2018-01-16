@@ -22,7 +22,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface LegacyToolbarCoordinator ()<ToolbarCommands> {
+@interface LegacyToolbarCoordinator () {
   // Coordinator for the tools menu UI.
   ToolsMenuCoordinator* _toolsMenuCoordinator;
   // The fullscreen updater.
@@ -33,6 +33,7 @@
 @end
 
 @implementation LegacyToolbarCoordinator
+@synthesize toolbarViewController = _toolbarViewController;
 @synthesize toolbarController = _toolbarController;
 
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
@@ -80,8 +81,11 @@
   self.toolbarController = nil;
 }
 
-- (UIViewController*)viewController {
-  return self.toolbarController.viewController;
+- (UIViewController*)toolbarViewController {
+  if (!_toolbarViewController)
+    _toolbarViewController = self.toolbarController.viewController;
+
+  return _toolbarViewController;
 }
 
 #pragma mark - Delegates
@@ -190,7 +194,7 @@
 #pragma mark - SideSwipeToolbarInteracting
 
 - (UIView*)toolbarView {
-  return self.viewController.view;
+  return self.toolbarViewController.view;
 }
 
 - (BOOL)canBeginToolbarSwipe {
@@ -200,7 +204,7 @@
 - (UIImage*)toolbarSideSwipeSnapshotForTab:(Tab*)tab {
   [self.toolbarController updateToolbarForSideSwipeSnapshot:tab];
   UIImage* toolbarSnapshot = CaptureViewWithOption(
-      [self.viewController view], [[UIScreen mainScreen] scale],
+      [self.toolbarViewController view], [[UIScreen mainScreen] scale],
       kClientSideRendering);
 
   [self.toolbarController resetToolbarAfterSideSwipeSnapshot];
@@ -211,32 +215,33 @@
 
 - (UIView*)snapshotForTabSwitcher {
   UIView* toolbarSnapshotView;
-  if ([self.viewController.view window]) {
+  if ([self.toolbarViewController.view window]) {
     toolbarSnapshotView =
-        [self.viewController.view snapshotViewAfterScreenUpdates:NO];
+        [self.toolbarViewController.view snapshotViewAfterScreenUpdates:NO];
   } else {
     toolbarSnapshotView =
-        [[UIView alloc] initWithFrame:self.viewController.view.frame];
-    [toolbarSnapshotView layer].contents = static_cast<id>(
-        CaptureViewWithOption(self.viewController.view, 0, kClientSideRendering)
-            .CGImage);
+        [[UIView alloc] initWithFrame:self.toolbarViewController.view.frame];
+    [toolbarSnapshotView layer].contents =
+        static_cast<id>(CaptureViewWithOption(self.toolbarViewController.view,
+                                              0, kClientSideRendering)
+                            .CGImage);
   }
   return toolbarSnapshotView;
 }
 
 - (UIView*)snapshotForStackViewWithWidth:(CGFloat)width
                           safeAreaInsets:(UIEdgeInsets)safeAreaInsets {
-  CGRect oldFrame = self.viewController.view.superview.frame;
+  CGRect oldFrame = self.toolbarViewController.view.superview.frame;
   CGRect newFrame = oldFrame;
   newFrame.size.width = width;
 
-  self.viewController.view.superview.frame = newFrame;
+  self.toolbarViewController.view.superview.frame = newFrame;
   [self.toolbarController activateFakeSafeAreaInsets:safeAreaInsets];
-  [self.viewController.view.superview layoutIfNeeded];
+  [self.toolbarViewController.view.superview layoutIfNeeded];
 
   UIView* toolbarSnapshotView = [self snapshotForTabSwitcher];
 
-  self.viewController.view.superview.frame = oldFrame;
+  self.toolbarViewController.view.superview.frame = oldFrame;
   [self.toolbarController deactivateFakeSafeAreaInsets];
 
   return toolbarSnapshotView;
@@ -248,7 +253,7 @@
       self.toolbarController.backgroundView.alpha == 0) {
     // If the background view isn't visible, use the base toolbar view's
     // background color.
-    toolbarBackgroundColor = self.viewController.view.backgroundColor;
+    toolbarBackgroundColor = self.toolbarViewController.view.backgroundColor;
   }
   return toolbarBackgroundColor;
 }
@@ -289,10 +294,6 @@
 
 - (void)contractToolbar {
   [self cancelOmniboxEdit];
-}
-
-- (void)navigateToMemexTabSwitcher {
-  [self.toolbarController navigateToMemexTabSwitcher];
 }
 
 #pragma mark - Fullscreen helpers

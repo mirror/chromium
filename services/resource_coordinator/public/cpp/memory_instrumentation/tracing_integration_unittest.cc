@@ -115,11 +115,9 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   void RegisterClientProcess(mojom::ClientProcessPtr,
                              mojom::ProcessType) override {}
 
-  void RequestGlobalMemoryDump(
-      MemoryDumpType dump_type,
-      MemoryDumpLevelOfDetail level_of_detail,
-      const std::vector<std::string>& allocator_dump_names,
-      const RequestGlobalMemoryDumpCallback&) override;
+  void RequestGlobalMemoryDump(MemoryDumpType dump_type,
+                               MemoryDumpLevelOfDetail level_of_detail,
+                               const RequestGlobalMemoryDumpCallback&) override;
 
   void RequestGlobalMemoryDumpForPid(
       base::ProcessId pid,
@@ -249,7 +247,6 @@ class MemoryTracingIntegrationTest : public testing::Test {
 void MockCoordinator::RequestGlobalMemoryDump(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,
-    const std::vector<std::string>& allocator_dump_names,
     const RequestGlobalMemoryDumpCallback& callback) {
   client_->RequestChromeDump(dump_type, level_of_detail);
   callback.Run(true, mojom::GlobalMemoryDumpPtr());

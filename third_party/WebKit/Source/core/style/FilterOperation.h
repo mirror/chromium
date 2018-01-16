@@ -87,7 +87,7 @@ class CORE_EXPORT FilterOperation
     return false;
   }
 
-  virtual ~FilterOperation() = default;
+  virtual ~FilterOperation() {}
   virtual void Trace(blink::Visitor* visitor) {}
 
   static FilterOperation* Blend(const FilterOperation* from,

@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 suite('selection state', function() {
-  let selection;
-  let action;
+  var selection;
+  var action;
 
   function select(items, anchor, clear, toggle) {
     return {
@@ -106,7 +106,7 @@ suite('selection state', function() {
   });
 
   test('deselects items when they are deleted', function() {
-    const nodeMap = testTree(
+    var nodeMap = testTree(
         createFolder(
             '1',
             [
@@ -127,7 +127,7 @@ suite('selection state', function() {
   });
 
   test('deselects items when they are moved to a different folder', function() {
-    const nodeMap = testTree(
+    var nodeMap = testTree(
         createFolder('1', []),
         createItem('2'),
         createItem('3'));
@@ -145,9 +145,9 @@ suite('selection state', function() {
 });
 
 suite('folder open state', function() {
-  let nodes;
-  let folderOpenState;
-  let action;
+  var nodes;
+  var folderOpenState;
+  var action;
 
   setup(function() {
     nodes = testTree(
@@ -214,9 +214,9 @@ suite('folder open state', function() {
 });
 
 suite('selected folder', function() {
-  let nodes;
-  let selectedFolder;
-  let action;
+  var nodes;
+  var selectedFolder;
+  var action;
 
   setup(function() {
     nodes = testTree(createFolder('1', [
@@ -275,8 +275,8 @@ suite('selected folder', function() {
 });
 
 suite('node state', function() {
-  let nodes;
-  let action;
+  var nodes;
+  var action;
 
   setup(function() {
     nodes = testTree(
@@ -319,7 +319,7 @@ suite('node state', function() {
 
   test('updates when a node is created', function() {
     // Create a folder.
-    const folder = {
+    var folder = {
       id: '6',
       parentId: '1',
       index: 2,
@@ -332,7 +332,7 @@ suite('node state', function() {
     assertDeepEquals(['2', '3', '6', '4'], nodes['1'].children);
 
     // Add a new item to that folder.
-    const item = {
+    var item = {
       id: '7',
       parentId: '6',
       index: 0,
@@ -394,7 +394,7 @@ suite('node state', function() {
 });
 
 suite('search state', function() {
-  let state;
+  var state;
 
   setup(function() {
     // Search touches a few different things, so we test using the entire state.
@@ -409,7 +409,7 @@ suite('search state', function() {
   });
 
   test('updates when search is started and finished', function() {
-    let action;
+    var action;
 
     action = bookmarks.actions.selectFolder('2');
     state = bookmarks.reduceAction(state, action);
@@ -425,7 +425,7 @@ suite('search state', function() {
     assertDeepEquals(['3'], bookmarks.util.getDisplayedList(state));
 
     action = bookmarks.actions.setSearchResults(['2', '3']);
-    const searchedState = bookmarks.reduceAction(state, action);
+    var searchedState = bookmarks.reduceAction(state, action);
 
     assertFalse(searchedState.search.inProgress);
 
@@ -436,7 +436,7 @@ suite('search state', function() {
 
     // Case 1: Clear search by setting an empty search term.
     action = bookmarks.actions.setSearchTerm('');
-    const clearedState = bookmarks.reduceAction(searchedState, action);
+    var clearedState = bookmarks.reduceAction(searchedState, action);
 
     // Should go back to displaying the contents of '2', which was shown before
     // the search.
@@ -448,7 +448,7 @@ suite('search state', function() {
 
     // Case 2: Clear search by selecting a new folder.
     action = bookmarks.actions.selectFolder('1');
-    const selectedState = bookmarks.reduceAction(searchedState, action);
+    var selectedState = bookmarks.reduceAction(searchedState, action);
 
     assertEquals('1', selectedState.selectedFolder);
     assertFalse(bookmarks.util.isShowingSearch(selectedState));
@@ -487,7 +487,7 @@ suite('search state', function() {
   });
 
   test('removes deleted nodes', function() {
-    let action;
+    var action;
 
     action = bookmarks.actions.setSearchTerm('test');
     state = bookmarks.reduceAction(state, action);

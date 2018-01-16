@@ -8,16 +8,12 @@
 
 namespace gfx {
 
-int GetStringWidth(const base::string16& text,
-                   const FontList& font_list,
-                   Typesetter typesetter) {
+int GetStringWidth(const base::string16& text, const FontList& font_list) {
   NOTIMPLEMENTED();
   return 0;
 }
 
-float GetStringWidthF(const base::string16& text,
-                      const FontList& font_list,
-                      Typesetter typesetter) {
+float GetStringWidthF(const base::string16& text, const FontList& font_list) {
   NOTIMPLEMENTED();
   return 0;
 }

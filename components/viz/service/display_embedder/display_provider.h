@@ -12,7 +12,6 @@
 namespace viz {
 
 class Display;
-class ExternalBeginFrameControllerImpl;
 class FrameSinkId;
 class RendererSettings;
 class SyntheticBeginFrameSource;
@@ -30,7 +29,6 @@ class DisplayProvider {
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       bool force_software_compositing,
-      ExternalBeginFrameControllerImpl* external_begin_frame_controller,
       const RendererSettings& renderer_settings,
       std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) = 0;
 };

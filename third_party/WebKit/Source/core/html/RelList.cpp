@@ -6,7 +6,6 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/html/HTMLElement.h"
 #include "core/html_names.h"
 #include "core/origin_trials/origin_trials.h"
 #include "platform/runtime_enabled_features.h"
@@ -17,7 +16,7 @@ namespace blink {
 RelList::RelList(Element* element)
     : DOMTokenList(*element, HTMLNames::relAttr) {}
 
-static HashSet<AtomicString>& SupportedTokensLink() {
+static HashSet<AtomicString>& SupportedTokens() {
   DEFINE_STATIC_LOCAL(
       HashSet<AtomicString>, tokens,
       ({
@@ -29,29 +28,13 @@ static HashSet<AtomicString>& SupportedTokensLink() {
   return tokens;
 }
 
-static HashSet<AtomicString>& SupportedTokensAnchorAndArea() {
-  DEFINE_STATIC_LOCAL(HashSet<AtomicString>, tokens,
-                      ({
-                          "noreferrer", "noopener",
-                      }));
-
-  return tokens;
-}
-
 bool RelList::ValidateTokenValue(const AtomicString& token_value,
                                  ExceptionState&) const {
-  //  https://html.spec.whatwg.org/multipage/links.html#linkTypes
-  if (GetElement().HasTagName(HTMLNames::linkTag)) {
-    if (SupportedTokensLink().Contains(token_value) ||
-        (RuntimeEnabledFeatures::ModulePreloadEnabled() &&
-         token_value == "modulepreload")) {
-      return true;
-    }
-  } else if ((GetElement().HasTagName(HTMLNames::aTag) ||
-              GetElement().HasTagName(HTMLNames::areaTag)) &&
-             SupportedTokensAnchorAndArea().Contains(token_value)) {
+  if (SupportedTokens().Contains(token_value))
     return true;
-  }
+  if (RuntimeEnabledFeatures::ModulePreloadEnabled() &&
+      token_value == "modulepreload")
+    return true;
   return false;
 }
 

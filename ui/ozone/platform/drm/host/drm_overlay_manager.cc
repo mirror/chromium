@@ -77,7 +77,6 @@ void DrmOverlayManager::CheckOverlaySupport(
   }
 
   size_t size = candidates->size();
-  base::AutoLock lock(cache_lock_);
   auto iter = cache_.Get(result_candidates);
   if (iter == cache_.end()) {
     // We can skip GPU side validation in case all candidates are invalid.
@@ -115,7 +114,6 @@ void DrmOverlayManager::CheckOverlaySupport(
 }
 
 void DrmOverlayManager::ResetCache() {
-  base::AutoLock lock(cache_lock_);
   cache_.Clear();
 }
 
@@ -144,7 +142,6 @@ void DrmOverlayManager::GpuSentOverlayResult(
   TRACE_EVENT_ASYNC_END0(
       "hwoverlays", "DrmOverlayManager::SendOverlayValidationRequest response",
       this);
-  base::AutoLock lock(cache_lock_);
   auto iter = cache_.Peek(candidates);
   if (iter != cache_.end()) {
     iter->second.status = returns;

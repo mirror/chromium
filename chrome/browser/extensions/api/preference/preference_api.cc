@@ -113,8 +113,6 @@ const PrefMappingEntry kPrefMapping[] = {
      APIPermission::kProxy},
     {"referrersEnabled", prefs::kEnableReferrers, APIPermission::kPrivacy,
      APIPermission::kPrivacy},
-    {"doNotTrackEnabled", prefs::kEnableDoNotTrack, APIPermission::kPrivacy,
-     APIPermission::kPrivacy},
     {"safeBrowsingEnabled", prefs::kSafeBrowsingEnabled,
      APIPermission::kPrivacy, APIPermission::kPrivacy},
     {"safeBrowsingExtendedReportingEnabled",

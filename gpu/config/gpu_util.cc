@@ -333,9 +333,6 @@ GpuFeatureInfo ComputeGpuFeatureInfoForSwiftShader() {
 }
 
 GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
-                                     bool ignore_gpu_blacklist,
-                                     bool disable_gpu_driver_bug_workarounds,
-                                     bool log_gpu_control_list_decisions,
                                      base::CommandLine* command_line) {
   bool use_swift_shader = false;
   bool use_swift_shader_for_webgl = false;
@@ -351,10 +348,8 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
 
   GpuFeatureInfo gpu_feature_info;
   std::set<int> blacklisted_features;
-  if (!ignore_gpu_blacklist) {
+  if (!command_line->HasSwitch(switches::kIgnoreGpuBlacklist)) {
     std::unique_ptr<GpuBlacklist> list(GpuBlacklist::Create());
-    if (log_gpu_control_list_decisions)
-      list->EnableControlListLogging("gpu_blacklist");
     blacklisted_features =
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
   }
@@ -399,7 +394,7 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
 
   std::set<int> enabled_driver_bug_workarounds;
   std::vector<std::string> driver_bug_disabled_extensions;
-  if (!disable_gpu_driver_bug_workarounds) {
+  if (!command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
     std::unique_ptr<gpu::GpuDriverBugList> list(GpuDriverBugList::Create());
     enabled_driver_bug_workarounds =
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);

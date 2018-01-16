@@ -11,6 +11,7 @@
 #include <string>
 #include <utility>
 
+#include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/search/search_result.h"
 #include "base/macros.h"
 #include "base/run_loop.h"

@@ -8,7 +8,6 @@
 
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/service/display/display.h"
-#include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 
 namespace viz {
@@ -18,8 +17,6 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<Display> display,
     std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source,
-    std::unique_ptr<ExternalBeginFrameControllerImpl>
-        external_begin_frame_controller,
     mojom::CompositorFrameSinkAssociatedRequest request,
     mojom::CompositorFrameSinkClientPtr client,
     mojom::DisplayPrivateAssociatedRequest display_private_request,
@@ -35,28 +32,22 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
           true /* is_root */,
           true /* needs_sync_points */)),
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),
-      external_begin_frame_controller_(
-          std::move(external_begin_frame_controller)),
       display_(std::move(display)),
       hit_test_aggregator_(frame_sink_manager->hit_test_manager(), this) {
-  DCHECK(begin_frame_source());
+  DCHECK(synthetic_begin_frame_source_);
   DCHECK(display_);
 
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&RootCompositorFrameSinkImpl::OnClientConnectionLost,
                  base::Unretained(this)));
-  if (external_begin_frame_controller_)
-    external_begin_frame_controller_->SetDisplay(display_.get());
-  frame_sink_manager->RegisterBeginFrameSource(begin_frame_source(),
-                                               frame_sink_id);
+  frame_sink_manager->RegisterBeginFrameSource(
+      synthetic_begin_frame_source_.get(), frame_sink_id);
   display_->Initialize(this, frame_sink_manager->surface_manager());
 }
 
 RootCompositorFrameSinkImpl::~RootCompositorFrameSinkImpl() {
   support_->frame_sink_manager()->UnregisterBeginFrameSource(
-      begin_frame_source());
-  if (external_begin_frame_controller_)
-    external_begin_frame_controller_->SetDisplay(nullptr);
+      synthetic_begin_frame_source_.get());
 }
 
 void RootCompositorFrameSinkImpl::SetDisplayVisible(bool visible) {
@@ -153,12 +144,6 @@ void RootCompositorFrameSinkImpl::DisplayDidDrawAndSwap() {}
 void RootCompositorFrameSinkImpl::OnClientConnectionLost() {
   support_->frame_sink_manager()->OnClientConnectionLost(
       support_->frame_sink_id());
-}
-
-BeginFrameSource* RootCompositorFrameSinkImpl::begin_frame_source() {
-  if (external_begin_frame_controller_)
-    return external_begin_frame_controller_->begin_frame_source();
-  return synthetic_begin_frame_source_.get();
 }
 
 }  // namespace viz

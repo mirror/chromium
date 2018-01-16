@@ -76,7 +76,7 @@ class AudioLowLatencyInputOutputTest : public testing::Test {
  protected:
   AudioLowLatencyInputOutputTest() {
     audio_manager_ =
-        AudioManager::CreateForTesting(std::make_unique<TestAudioThread>());
+        AudioManager::CreateForTesting(base::MakeUnique<TestAudioThread>());
   }
 
   ~AudioLowLatencyInputOutputTest() override { audio_manager_->Shutdown(); }

@@ -9,7 +9,6 @@
 #include <memory>
 #include <vector>
 
-#include "ash/accessibility/accessibility_controller.h"
 #include "ash/login_status.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/ash_switches.h"
@@ -480,10 +479,8 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
     }
 
     system_bubble_ = std::make_unique<SystemBubbleWrapper>();
-    system_bubble_->InitView(
-        this, shelf()->GetSystemTrayAnchor()->GetBubbleAnchor(),
-        shelf()->GetSystemTrayAnchor()->GetBubbleAnchorInsets(), items,
-        system_tray_type, &init_params, persistent);
+    system_bubble_->InitView(this, GetBubbleAnchor(), GetBubbleAnchorInsets(),
+                             items, system_tray_type, &init_params, persistent);
 
     // Record metrics for the system menu when the default view is invoked.
     if (!detailed)
@@ -633,7 +630,7 @@ bool SystemTray::ShouldEnableExtraKeyboardAccessibility() {
   // e.g. volume slider. Persistent system bubble is a bubble which is not
   // closed even if user clicks outside of the bubble.
   return system_bubble_ && !system_bubble_->is_persistent() &&
-         Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled();
+         Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled();
 }
 
 void SystemTray::HideBubble(const TrayBubbleView* bubble_view) {

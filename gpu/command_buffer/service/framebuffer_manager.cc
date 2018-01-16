@@ -52,11 +52,6 @@ class RenderbufferAttachment
 
   GLuint object_name() const override { return renderbuffer_->client_id(); }
 
-  GLint level() const override {
-    NOTREACHED();
-    return -1;
-  }
-
   bool cleared() const override { return renderbuffer_->cleared(); }
 
   void SetCleared(RenderbufferManager* renderbuffer_manager,
@@ -188,7 +183,7 @@ class TextureAttachment
 
   GLenum target() const { return target_; }
 
-  GLint level() const override { return level_; }
+  GLint level() const { return level_; }
 
   GLuint object_name() const override { return texture_ref_->client_id(); }
 
@@ -656,8 +651,14 @@ GLenum Framebuffer::GetReadBufferInternalFormat() const {
 }
 
 GLenum Framebuffer::GetReadBufferTextureType() const {
-  const Attachment* attachment = GetReadBufferAttachment();
-  return attachment ? attachment->texture_type() : 0;
+  if (read_buffer_ == GL_NONE)
+    return 0;
+  AttachmentMap::const_iterator it = attachments_.find(read_buffer_);
+  if (it == attachments_.end()) {
+    return 0;
+  }
+  const Attachment* attachment = it->second.get();
+  return attachment->texture_type();
 }
 
 GLsizei Framebuffer::GetSamples() const {

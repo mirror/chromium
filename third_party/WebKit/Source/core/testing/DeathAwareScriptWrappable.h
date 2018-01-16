@@ -69,7 +69,7 @@ class DeathAwareScriptWrappable : public ScriptWrappable {
   }
 
  private:
-  DeathAwareScriptWrappable() = default;
+  DeathAwareScriptWrappable() {}
 
   Wrapper wrapped_dependency_;
   HeapVector<Wrapper> wrapped_vector_dependency_;

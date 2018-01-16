@@ -55,7 +55,7 @@ Polymer({
 
   /** @private */
   onActionButtonTap_: function() {
-    const whenDone = this.model ?
+    var whenDone = this.model ?
         this.browserProxy_.editStartupPage(this.model.modelIndex, this.url_) :
         this.browserProxy_.addStartupPage(this.url_);
 

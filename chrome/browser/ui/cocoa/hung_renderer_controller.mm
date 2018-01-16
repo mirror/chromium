@@ -60,7 +60,7 @@ using content::WebContents;
 namespace {
 // We only support showing one of these at a time per app.  The
 // controller owns itself and is released when its window is closed.
-HungRendererController* g_hung_renderer_controller_instance = NULL;
+HungRendererController* g_instance = NULL;
 }  // namespace
 
 class HungRendererWebContentsObserverBridge
@@ -103,7 +103,7 @@ class HungRendererWebContentsObserverBridge
 }
 
 - (void)dealloc {
-  DCHECK(!g_hung_renderer_controller_instance);
+  DCHECK(!g_instance);
   [tableView_ setDataSource:nil];
   [tableView_ setDelegate:nil];
   [killButton_ setTarget:nil];
@@ -152,20 +152,20 @@ class HungRendererWebContentsObserverBridge
 
 + (void)showForWebContents:(content::WebContents*)contents {
   if (!logging::DialogsAreSuppressed()) {
-    if (!g_hung_renderer_controller_instance)
-      g_hung_renderer_controller_instance = [[HungRendererController alloc]
+    if (!g_instance)
+      g_instance = [[HungRendererController alloc]
           initWithWindowNibName:@"HungRendererDialog"];
-    [g_hung_renderer_controller_instance showForWebContents:contents];
+    [g_instance showForWebContents:contents];
   }
 }
 
 + (void)endForWebContents:(content::WebContents*)contents {
-  if (!logging::DialogsAreSuppressed() && g_hung_renderer_controller_instance)
-    [g_hung_renderer_controller_instance endForWebContents:contents];
+  if (!logging::DialogsAreSuppressed() && g_instance)
+    [g_instance endForWebContents:contents];
 }
 
 + (bool)isShowing {
-  return g_hung_renderer_controller_instance;
+  return g_instance;
 }
 
 - (IBAction)kill:(id)sender {
@@ -213,11 +213,11 @@ class HungRendererWebContentsObserverBridge
 }
 
 - (void)windowWillClose:(NSNotification*)notification {
-  // We have to reset g_hung_renderer_controller_instance before autoreleasing
-  // the window, because we want to avoid reusing the same dialog if someone
-  // calls chrome::ShowHungRendererDialog() between the autorelease call and the
+  // We have to reset g_instance before autoreleasing the window,
+  // because we want to avoid reusing the same dialog if someone calls
+  // chrome::ShowHungRendererDialog() between the autorelease call and the
   // actual dealloc.
-  g_hung_renderer_controller_instance = nil;
+  g_instance = nil;
 
   // Prevent kills from happening after close if the user had the
   // button depressed just when new activity was detected.
@@ -240,8 +240,7 @@ class HungRendererWebContentsObserverBridge
   base::scoped_nsobject<NSMutableArray> favicons([[NSMutableArray alloc] init]);
   for (TabContentsIterator it; !it.done(); it.Next()) {
     if (it->GetMainFrame()->GetProcess() ==
-            hungContents_->GetMainFrame()->GetProcess() &&
-        !it->IsCrashed()) {
+        hungContents_->GetMainFrame()->GetProcess()) {
       base::string16 title = it->GetTitle();
       if (title.empty())
         title = CoreTabHelper::GetDefaultTitle();

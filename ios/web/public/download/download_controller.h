@@ -10,7 +10,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "ui/base/page_transition_types.h"
 
 class GURL;
 
@@ -69,8 +68,7 @@ class WebState;
 //       info.originalURL,
 //       info.contentDisposition,
 //       info.totalBytes,
-//       info.MIMEType,
-//       info.pageTransition);
+//       info.MIMEType);
 //   );
 // }
 // - (void)applicationWillTerminate:(UIApplication *)application {
@@ -102,8 +100,7 @@ class DownloadController {
                                   const GURL& original_url,
                                   const std::string& content_disposition,
                                   int64_t total_bytes,
-                                  const std::string& mime_type,
-                                  ui::PageTransition page_transition) = 0;
+                                  const std::string& mime_type) = 0;
 
   // Sets DownloadControllerDelegate. Clients must set the delegate to null in
   // DownloadControllerDelegate::OnDownloadControllerDestroyed().

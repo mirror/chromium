@@ -880,13 +880,6 @@ be describing additional metrics about the same event.
       other values indicate the playback ended in an error.
     </summary>
   </metric>
-  <metric name="IsEME">
-    <summary>
-      Boolean value indicating if this event is for an EME playback. Note: EME
-      can be attached anytime during the lifecycle of a WebMediaPlayerImpl, but
-      once attached can't be removed.
-    </summary>
-  </metric>
   <metric name="IsMSE">
     <summary>
       Boolean value indicating if this event is for an MSE playback. If false it
@@ -907,24 +900,6 @@ be describing additional metrics about the same event.
       with Media.BasicPlayback events to understand a playback more deeply.
     </summary>
   </metric>
-  <metric name="TimeToFirstFrame">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until the
-      first video frame has been shown.
-    </summary>
-  </metric>
-  <metric name="TimeToMetadata">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until
-      metadata is known.
-    </summary>
-  </metric>
-  <metric name="TimeToPlayReady">
-    <summary>
-      Time in milliseconds from when WebMediaPlayerImpl starts loading until it
-      has buffered enough to start playback.
-    </summary>
-  </metric>
 </event>
 
 <event name="Media.BasicPlayback">
@@ -942,12 +917,6 @@ be describing additional metrics about the same event.
     <summary>
       media::AudioCodec enum value. Can be kUnknownAudioCodec even with HasAudio
       is true because we don't always know the codec.
-    </summary>
-  </metric>
-  <metric name="AudioDecoderName">
-    <summary>
-      Enumeration of audio decoder names, zero if none or unknown (Cast, HLS,
-      etc). See WatchTimeRecorder::AudioDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="HasAudio">
@@ -1012,12 +981,6 @@ be describing additional metrics about the same event.
     <summary>
       media::VideoCodec enum value. Can be kUnknownVideoCodec even with HasVideo
       is true because we don't always know the codec.
-    </summary>
-  </metric>
-  <metric name="VideoDecoderName">
-    <summary>
-      Enumeration of video decoder names, zero if none or unknown (Cast, HLS,
-      etc). See WatchTimeRecorder::VideoDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="VideoNaturalHeight">
@@ -2231,12 +2194,6 @@ be describing additional metrics about the same event.
       0, [5%, 10%) is mapped to 5 etc.
     </summary>
   </metric>
-  <metric name="DeviceManagement">
-    <summary>
-      An enum representing whether the device is managed, defined in
-      |chromeos::power::ml::UserActivityEvent::Features::ManagementType|.
-    </summary>
-  </metric>
   <metric name="DeviceMode">
     <summary>
       An enum representing the mode of the device, defined in
@@ -2308,28 +2265,6 @@ be describing additional metrics about the same event.
   <metric name="ActivityId">
     <summary>
       The ID of the activity that happened while a page was open.
-    </summary>
-  </metric>
-  <metric name="IsActive">
-    <summary>
-      Boolean value representing whether this tab is selected in its containing
-      browser.
-    </summary>
-  </metric>
-  <metric name="IsBrowserFocused">
-    <summary>
-      Boolean value representing whether the containing browser is in focus.
-    </summary>
-  </metric>
-  <metric name="IsBrowserVisible">
-    <summary>
-      Boolean value representing whether the containing browser is visible.
-    </summary>
-  </metric>
-  <metric name="IsTopmostBrowser">
-    <summary>
-      Boolean value representing whether the containing browser is the topmost
-      one on the screen.
     </summary>
   </metric>
 </event>

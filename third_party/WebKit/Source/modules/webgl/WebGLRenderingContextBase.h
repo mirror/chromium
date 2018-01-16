@@ -45,6 +45,7 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
+#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/gpu/DrawingBuffer.h"
 #include "platform/graphics/gpu/Extensions3DUtil.h"
 #include "platform/graphics/gpu/WebGLImageConversion.h"
@@ -66,7 +67,6 @@ class GLES2Interface;
 
 namespace blink {
 
-class CanvasResourceProvider;
 class EXTDisjointTimerQuery;
 class EXTDisjointTimerQueryWebGL2;
 class ExceptionState;
@@ -74,6 +74,7 @@ class HTMLCanvasElementOrOffscreenCanvas;
 class HTMLImageElement;
 class HTMLVideoElement;
 class ImageBitmap;
+class ImageBuffer;
 class ImageData;
 class IntSize;
 class OESVertexArrayObject;
@@ -590,7 +591,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     // object.
   };
 
-  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint) const override;
+  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
+                                            SnapshotReason) const override;
   void SetFilterQuality(SkFilterQuality) override;
   bool IsWebGL2OrHigher() { return Version() >= 2; }
 
@@ -741,20 +743,19 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
   Vector<GLenum> compressed_texture_formats_;
 
-  // Fixed-size cache of reusable resource providers for video texImage2D calls.
-  class LRUCanvasResourceProviderCache {
+  // Fixed-size cache of reusable image buffers for video texImage2D calls.
+  class LRUImageBufferCache {
    public:
-    LRUCanvasResourceProviderCache(int capacity);
+    LRUImageBufferCache(int capacity);
     // The pointer returned is owned by the image buffer map.
-    CanvasResourceProvider* GetCanvasResourceProvider(const IntSize&);
+    ImageBuffer* GetImageBuffer(const IntSize&);
 
    private:
     void BubbleToFront(int idx);
-    std::unique_ptr<std::unique_ptr<CanvasResourceProvider>[]>
-        resource_providers_;
+    std::unique_ptr<std::unique_ptr<ImageBuffer>[]> buffers_;
     int capacity_;
   };
-  LRUCanvasResourceProviderCache generated_image_cache_;
+  LRUImageBufferCache generated_image_cache_;
 
   GLint max_texture_size_;
   GLint max_cube_map_texture_size_;
@@ -1010,6 +1011,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     kTexImage3D,
     kTexSubImage3D
   };
+
+  static SnapshotReason FunctionIDToSnapshotReason(TexImageFunctionID);
 
   enum TexImageDimension { kTex2D, kTex3D };
   void TexImage2DBase(GLenum target,

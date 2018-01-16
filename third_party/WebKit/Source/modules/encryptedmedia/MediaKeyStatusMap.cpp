@@ -24,7 +24,7 @@ class MediaKeyStatusMap::MapEntry final
     return new MapEntry(key_id, status);
   }
 
-  virtual ~MapEntry() = default;
+  virtual ~MapEntry() {}
 
   DOMArrayBuffer* KeyId() const { return key_id_.Get(); }
 

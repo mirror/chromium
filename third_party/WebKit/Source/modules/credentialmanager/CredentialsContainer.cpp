@@ -46,7 +46,7 @@ using ::password_manager::mojom::blink::CredentialMediationRequirement;
 using ::webauth::mojom::blink::AuthenticatorStatus;
 using MojoMakePublicKeyCredentialOptions =
     ::webauth::mojom::blink::MakePublicKeyCredentialOptions;
-using ::webauth::mojom::blink::MakeCredentialAuthenticatorResponsePtr;
+using ::webauth::mojom::blink::PublicKeyCredentialInfoPtr;
 
 enum class RequiredOriginType { kSecure, kSecureAndSameWithAncestors };
 
@@ -239,25 +239,25 @@ DOMArrayBuffer* VectorToDOMArrayBuffer(const Vector<uint8_t> buffer) {
 void OnMakePublicKeyCredentialComplete(
     std::unique_ptr<ScopedPromiseResolver> scoped_resolver,
     AuthenticatorStatus status,
-    MakeCredentialAuthenticatorResponsePtr credential) {
+    PublicKeyCredentialInfoPtr credential) {
   auto* resolver = scoped_resolver->Release();
   const auto required_origin_type = RequiredOriginType::kSecure;
 
   AssertSecurityRequirementsBeforeResponse(resolver, required_origin_type);
   if (status == AuthenticatorStatus::SUCCESS) {
     DCHECK(credential);
-    DCHECK(!credential->info->client_data_json.IsEmpty());
-    DCHECK(!credential->attestation_object.IsEmpty());
+    DCHECK(!credential->client_data_json.IsEmpty());
+    DCHECK(!credential->response->attestation_object.IsEmpty());
     DOMArrayBuffer* client_data_buffer =
-        VectorToDOMArrayBuffer(std::move(credential->info->client_data_json));
-    DOMArrayBuffer* attestation_buffer =
-        VectorToDOMArrayBuffer(std::move(credential->attestation_object));
+        VectorToDOMArrayBuffer(std::move(credential->client_data_json));
+    DOMArrayBuffer* attestation_buffer = VectorToDOMArrayBuffer(
+        std::move(credential->response->attestation_object));
     DOMArrayBuffer* raw_id =
-        VectorToDOMArrayBuffer(std::move(credential->info->raw_id));
+        VectorToDOMArrayBuffer(std::move(credential->raw_id));
     AuthenticatorAttestationResponse* authenticator_response =
         AuthenticatorAttestationResponse::Create(client_data_buffer,
                                                  attestation_buffer);
-    resolver->Resolve(PublicKeyCredential::Create(credential->info->id, raw_id,
+    resolver->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
                                                   authenticator_response));
   } else {
     DCHECK(!credential);
@@ -272,7 +272,7 @@ CredentialsContainer* CredentialsContainer::Create() {
   return new CredentialsContainer();
 }
 
-CredentialsContainer::CredentialsContainer() = default;
+CredentialsContainer::CredentialsContainer() {}
 
 ScriptPromise CredentialsContainer::get(
     ScriptState* script_state,

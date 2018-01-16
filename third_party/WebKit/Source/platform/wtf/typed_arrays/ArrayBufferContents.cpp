@@ -84,7 +84,7 @@ ArrayBufferContents::ArrayBufferContents(DataHandle data,
   }
 }
 
-ArrayBufferContents::~ArrayBufferContents() = default;
+ArrayBufferContents::~ArrayBufferContents() {}
 
 void ArrayBufferContents::Neuter() {
   holder_ = nullptr;

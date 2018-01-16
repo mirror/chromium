@@ -21,7 +21,6 @@ class ChromeBrowserState;
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @protocol ToolbarCoordinatorDelegate;
-@protocol ToolbarCommands;
 @protocol UrlLoader;
 class WebStateList;
 
@@ -29,11 +28,11 @@ class WebStateList;
 // for LegacyToolbarCoordinator.
 @interface ToolbarAdapter : NSObject<Toolbar>
 
-- (instancetype)
-initWithDispatcher:
-    (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher
-      browserState:(ios::ChromeBrowserState*)browserState
-      webStateList:(WebStateList*)webStateList NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDispatcher:
+                    (id<ApplicationCommands, BrowserCommands>)dispatcher
+                      browserState:(ios::ChromeBrowserState*)browserState
+                      webStateList:(WebStateList*)webStateList
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 

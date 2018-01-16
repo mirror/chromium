@@ -10,7 +10,6 @@
 #include "device/geolocation/geolocation_provider.h"
 #include "device/geolocation/geolocation_provider_impl.h"
 #include "device/geolocation/public/interfaces/geolocation.mojom.h"
-#include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/geolocation/public/interfaces/geolocation_control.mojom.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
@@ -104,7 +103,6 @@ class DeviceService : public service_manager::Service {
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   void BindFingerprintRequest(mojom::FingerprintRequest request);
-  void BindGeolocationConfigRequest(mojom::GeolocationConfigRequest request);
   void BindGeolocationContextRequest(mojom::GeolocationContextRequest request);
   void BindGeolocationControlRequest(mojom::GeolocationControlRequest request);
 

@@ -184,7 +184,6 @@ void ChromeCleanerDialogControllerImpl::OnScanning() {
 }
 
 void ChromeCleanerDialogControllerImpl::OnInfected(
-    bool is_powered_by_partner,
     const ChromeCleanerScannerResults& reported_results) {
   DCHECK(!dialog_shown_);
 
@@ -202,7 +201,6 @@ void ChromeCleanerDialogControllerImpl::OnInfected(
 }
 
 void ChromeCleanerDialogControllerImpl::OnCleaning(
-    bool is_powered_by_partner,
     const ChromeCleanerScannerResults& reported_results) {
   if (!dialog_shown_)
     OnInteractionDone();

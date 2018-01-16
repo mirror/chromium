@@ -29,6 +29,7 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/ListHashSet.h"
 
 namespace blink {
 

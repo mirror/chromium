@@ -48,7 +48,7 @@ RTCDTMFToneChangeEvent::RTCDTMFToneChangeEvent(
     tone_ = initializer.tone();
 }
 
-RTCDTMFToneChangeEvent::~RTCDTMFToneChangeEvent() = default;
+RTCDTMFToneChangeEvent::~RTCDTMFToneChangeEvent() {}
 
 const String& RTCDTMFToneChangeEvent::tone() const {
   return tone_;

@@ -85,7 +85,7 @@ class CORE_EXPORT Shape {
                                                      WritingMode,
                                                      float margin);
 
-  virtual ~Shape() = default;
+  virtual ~Shape() {}
 
   virtual LayoutRect ShapeMarginLogicalBoundingBox() const = 0;
   virtual bool IsEmpty() const = 0;

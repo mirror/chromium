@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "gpu/gpu_gles2_export.h"
+#include "gpu/gpu_export.h"
 #include "ui/gl/gl_context.h"
 
 namespace gl {
@@ -20,14 +20,16 @@ class GLSurface;
 }
 
 namespace gpu {
-class DecoderContext;
+namespace gles2 {
+class GLES2Decoder;
+}
 
 // Encapsulates a virtual OpenGL context.
-class GPU_GLES2_EXPORT GLContextVirtual : public gl::GLContext {
+class GPU_EXPORT GLContextVirtual : public gl::GLContext {
  public:
   GLContextVirtual(gl::GLShareGroup* share_group,
                    gl::GLContext* shared_context,
-                   base::WeakPtr<DecoderContext> decoder);
+                   base::WeakPtr<gles2::GLES2Decoder> decoder);
 
   // Implement GLContext.
   bool Initialize(gl::GLSurface* compatible_surface,
@@ -56,7 +58,7 @@ class GPU_GLES2_EXPORT GLContextVirtual : public gl::GLContext {
   void Destroy();
 
   scoped_refptr<gl::GLContext> shared_context_;
-  base::WeakPtr<DecoderContext> decoder_;
+  base::WeakPtr<gles2::GLES2Decoder> decoder_;
 
   DISALLOW_COPY_AND_ASSIGN(GLContextVirtual);
 };

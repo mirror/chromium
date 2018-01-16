@@ -46,7 +46,7 @@ class DOMArrayBufferView;
 class WebArrayBufferView {
  public:
   ~WebArrayBufferView() { Reset(); }
-  WebArrayBufferView() = default;
+  WebArrayBufferView() {}
   WebArrayBufferView(const WebArrayBufferView& v) { Assign(v); }
 
   BLINK_EXPORT void* BaseAddress() const;

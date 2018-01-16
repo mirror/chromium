@@ -28,8 +28,7 @@ class ProfilingClient : public mojom::ProfilingClient {
   ~ProfilingClient() override;
 
   // mojom::ProfilingClient overrides:
-  void StartProfiling(mojo::ScopedHandle memlog_sender_pipe,
-                      mojom::StackMode stack_mode) override;
+  void StartProfiling(mojo::ScopedHandle memlog_sender_pipe) override;
   void FlushMemlogPipe(uint32_t barrier_id) override;
 
   void OnServiceManagerConnected(content::ServiceManagerConnection* connection);

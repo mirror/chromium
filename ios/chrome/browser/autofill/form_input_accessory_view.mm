@@ -98,7 +98,7 @@ const CGFloat kNavigationAreaSeparatorWidth = 1;
     [[self class] addBackgroundImageInView:self
                              withImageName:@"autofill_keyboard_background"];
 
-    id<LayoutGuideProvider> layoutGuide = SafeAreaLayoutGuideForView(self);
+    UILayoutGuide* layoutGuide = SafeAreaLayoutGuideForView(self);
     [NSLayoutConstraint activateConstraints:@[
       [customViewContainer.topAnchor
           constraintEqualToAnchor:layoutGuide.topAnchor],

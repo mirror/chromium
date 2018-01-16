@@ -140,7 +140,7 @@ void CanvasRenderingContext2D::SetCanvasGetContextResult(
   result.SetCanvasRenderingContext2D(this);
 }
 
-CanvasRenderingContext2D::~CanvasRenderingContext2D() = default;
+CanvasRenderingContext2D::~CanvasRenderingContext2D() {}
 
 void CanvasRenderingContext2D::ValidateStateStack() const {
 #if DCHECK_IS_ON()
@@ -629,10 +629,11 @@ bool CanvasRenderingContext2D::CanCreateCanvas2DBuffer() const {
 }
 
 scoped_refptr<StaticBitmapImage> blink::CanvasRenderingContext2D::GetImage(
-    AccelerationHint hint) const {
+    AccelerationHint hint,
+    SnapshotReason reason) const {
   if (!HasCanvas2DBuffer())
     return nullptr;
-  return canvas()->Canvas2DBuffer()->NewImageSnapshot(hint);
+  return canvas()->Canvas2DBuffer()->NewImageSnapshot(hint, reason);
 }
 
 bool CanvasRenderingContext2D::ParseColorOrCurrentColor(

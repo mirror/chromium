@@ -410,6 +410,7 @@ void VideoDecoderShim::YUVConverter::Convert(
     }
 
     switch (frame->format()) {
+      case media::PIXEL_FORMAT_YV12:  // 420
       case media::PIXEL_FORMAT_I420A:
       case media::PIXEL_FORMAT_I420:
         uv_height_divisor_ = 2;
@@ -894,7 +895,7 @@ bool VideoDecoderShim::Initialize(const Config& vda_config, Client* client) {
     return false;
 
   media::VideoDecoderConfig video_decoder_config(
-      codec, vda_config.profile, media::PIXEL_FORMAT_I420,
+      codec, vda_config.profile, media::PIXEL_FORMAT_YV12,
       media::COLOR_SPACE_UNSPECIFIED, media::VIDEO_ROTATION_0,
       gfx::Size(32, 24),  // Small sizes that won't fail.
       gfx::Rect(32, 24), gfx::Size(32, 24),

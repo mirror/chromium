@@ -42,7 +42,7 @@ class WebArrayBuffer {
  public:
   ~WebArrayBuffer() { Reset(); }
 
-  WebArrayBuffer() = default;
+  WebArrayBuffer() {}
   WebArrayBuffer(const WebArrayBuffer& b) { Assign(b); }
   WebArrayBuffer& operator=(const WebArrayBuffer& b) {
     Assign(b);

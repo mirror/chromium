@@ -52,8 +52,8 @@ function performChromiumSetup() {
       // problem for the new tests that do not use setBluetoothFakeAdapter().
       // TODO(crbug.com/569709): Remove once setBluetoothFakeAdapter is no
       // longer used.
-      .then(() => typeof setBluetoothFakeAdapter === 'undefined' ?
-          undefined : setBluetoothFakeAdapter(''));
+      .then(() => setBluetoothFakeAdapter ? setBluetoothFakeAdapter('')
+                                          : undefined);
 }
 
 
@@ -673,14 +673,7 @@ function getHealthThermometerDeviceWithServicesDiscovered(options) {
       code: HCI_SUCCESS,
     }))
     .then(() => new Promise(resolve => {
-      let src = '/bluetooth/resources/health-thermometer-iframe.html';
-      // TODO(509038): Can be removed once LayoutTests/bluetooth/* that use
-      // health-thermometer-iframe.html have been moved to
-      // LayoutTests/external/wpt/bluetooth/*
-      if (window.location.pathname.includes('/LayoutTests/')) {
-        src = '../../../external/wpt/bluetooth/resources/health-thermometer-iframe.html';
-      }
-      iframe.src = src;
+      iframe.src = '../../../resources/bluetooth/health-thermometer-iframe.html';
       document.body.appendChild(iframe);
       iframe.addEventListener('load', resolve);
     }))

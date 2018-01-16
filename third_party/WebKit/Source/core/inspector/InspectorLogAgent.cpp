@@ -85,7 +85,7 @@ InspectorLogAgent::InspectorLogAgent(
       performance_monitor_(performance_monitor),
       v8_session_(v8_session) {}
 
-InspectorLogAgent::~InspectorLogAgent() = default;
+InspectorLogAgent::~InspectorLogAgent() {}
 
 void InspectorLogAgent::Trace(blink::Visitor* visitor) {
   visitor->Trace(storage_);

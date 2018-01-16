@@ -662,16 +662,8 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     getter responseEnd
 [Worker]     getter responseStart
 [Worker]     getter secureConnectionStart
-[Worker]     getter serverTiming
 [Worker]     getter transferSize
 [Worker]     getter workerStart
-[Worker]     method constructor
-[Worker]     method toJSON
-[Worker] interface PerformanceServerTiming
-[Worker]     attribute @@toStringTag
-[Worker]     getter description
-[Worker]     getter duration
-[Worker]     getter name
 [Worker]     method constructor
 [Worker]     method toJSON
 [Worker] interface PermissionStatus : EventTarget
@@ -939,7 +931,6 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     getter appVersion
 [Worker]     getter budget
 [Worker]     getter connection
-[Worker]     getter deviceMemory
 [Worker]     getter hardwareConcurrency
 [Worker]     getter onLine
 [Worker]     getter permissions

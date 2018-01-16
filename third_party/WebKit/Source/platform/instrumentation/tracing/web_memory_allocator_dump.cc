@@ -14,7 +14,7 @@ WebMemoryAllocatorDump::WebMemoryAllocatorDump(
     : memory_allocator_dump_(memory_allocator_dump),
       guid_(memory_allocator_dump->guid().ToUint64()) {}
 
-WebMemoryAllocatorDump::~WebMemoryAllocatorDump() = default;
+WebMemoryAllocatorDump::~WebMemoryAllocatorDump() {}
 
 void WebMemoryAllocatorDump::AddScalar(const char* name,
                                        const char* units,

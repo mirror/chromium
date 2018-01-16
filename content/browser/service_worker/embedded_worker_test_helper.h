@@ -79,7 +79,17 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
 
    protected:
     // mojom::EmbeddedWorkerInstanceClient implementation.
-    void StartWorker(mojom::EmbeddedWorkerStartParamsPtr params) override;
+    void StartWorker(
+        mojom::EmbeddedWorkerStartParamsPtr params,
+        mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+        mojom::ControllerServiceWorkerRequest controller_request,
+        blink::mojom::ServiceWorkerInstalledScriptsInfoPtr
+            installed_scripts_info,
+        blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
+        mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+        mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+        blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)
+        override;
     void StopWorker() override;
     void ResumeAfterDownload() override;
     void AddMessageToConsole(blink::WebConsoleMessage::Level level,
@@ -103,10 +113,8 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter);
   ~EmbeddedWorkerTestHelper() override;
 
-  // Registers this sender for the process.
-  // TODO(falken): Rename or delete this function. It used to call a function in
-  // ServiceWorkerProcessManager to associate a process with a pattern (hence
-  // the name), but that function no longer exists.
+  // Call this to simulate add/associate a process to a pattern.
+  // This also registers this sender for the process.
   void SimulateAddProcessToPattern(const GURL& pattern, int process_id);
 
   // IPC::Sender implementation.
@@ -293,7 +301,15 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
   void DidSimulateWorkerScriptCached(int embedded_worker_id,
                                      bool pause_after_download);
 
-  void OnStartWorkerStub(mojom::EmbeddedWorkerStartParamsPtr params);
+  void OnStartWorkerStub(
+      mojom::EmbeddedWorkerStartParamsPtr params,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
+      blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
+      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+      blink::mojom::ServiceWorkerInstalledScriptsInfoPtr
+          installed_scripts_info);
   void OnResumeAfterDownloadStub(int embedded_worker_id);
   void OnStopWorkerStub(int embedded_worker_id);
   void OnMessageToWorkerStub(int thread_id,

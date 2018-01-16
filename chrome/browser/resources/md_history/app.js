@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 cr.define('md_history', function() {
-  let lazyLoadPromise = null;
+  var lazyLoadPromise = null;
   function ensureLazyLoaded() {
     if (!lazyLoadPromise) {
       lazyLoadPromise = new Promise(function(resolve, reject) {
@@ -120,7 +120,7 @@ Polymer({
 
     // Focus the search field on load. Done here to ensure the history page
     // is rendered before we try to take focus.
-    const searchField =
+    var searchField =
         /** @type {HistoryToolbarElement} */ (this.$.toolbar).searchField;
     if (!searchField.narrow) {
       searchField.getSearchInput().focus();
@@ -152,7 +152,7 @@ Polymer({
 
   /** @private */
   onCrToolbarMenuTap_: function() {
-    const drawer = /** @type {!CrDrawerElement} */ (this.$.drawer.get());
+    var drawer = /** @type {!CrDrawerElement} */ (this.$.drawer.get());
     drawer.toggle();
     this.showMenuPromo_ = false;
   },
@@ -163,7 +163,7 @@ Polymer({
    * @param {{detail: {countAddition: number}}} e
    */
   checkboxSelected: function(e) {
-    const toolbar = /** @type {HistoryToolbarElement} */ (this.$.toolbar);
+    var toolbar = /** @type {HistoryToolbarElement} */ (this.$.toolbar);
     toolbar.count = /** @type {HistoryListElement} */ (this.$.history)
                         .getSelectedItemCount();
   },
@@ -174,8 +174,8 @@ Polymer({
    * @private
    */
   unselectAll: function() {
-    const list = /** @type {HistoryListElement} */ (this.$.history);
-    const toolbar = /** @type {HistoryToolbarElement} */ (this.$.toolbar);
+    var list = /** @type {HistoryListElement} */ (this.$.history);
+    var toolbar = /** @type {HistoryToolbarElement} */ (this.$.toolbar);
     list.unselectAllItems();
     toolbar.count = 0;
   },
@@ -193,7 +193,7 @@ Polymer({
     this.set('queryState_.querying', false);
     this.set('queryResult_.info', info);
     this.set('queryResult_.results', results);
-    const list = /** @type {HistoryListElement} */ (this.$['history']);
+    var list = /** @type {HistoryListElement} */ (this.$['history']);
     list.historyResult(info, results);
   },
 
@@ -294,8 +294,7 @@ Polymer({
 
   /** @private */
   hasDrawerChanged_: function() {
-    const drawer =
-        /** @type {?CrDrawerElement} */ (this.$.drawer.getIfExists());
+    var drawer = /** @type {?CrDrawerElement} */ (this.$.drawer.getIfExists());
     if (!this.hasDrawer_ && drawer && drawer.open)
       drawer.closeDrawer();
   },
@@ -316,14 +315,14 @@ Polymer({
 
   /** @private */
   closeDrawer_: function() {
-    const drawer = this.$.drawer.get();
+    var drawer = this.$.drawer.get();
     if (drawer && drawer.open)
       drawer.closeDrawer();
   },
 
   /** @private */
   recordHistoryPageView_: function() {
-    let histogramValue = HistoryPageViewHistogram.END;
+    var histogramValue = HistoryPageViewHistogram.END;
     switch (this.selectedPage_) {
       case 'syncedTabs':
         histogramValue = this.isUserSignedIn_ ?

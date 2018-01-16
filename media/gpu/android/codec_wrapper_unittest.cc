@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "media/gpu/android/codec_wrapper.h"
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/mock_callback.h"
@@ -30,10 +29,10 @@ namespace media {
 class CodecWrapperTest : public testing::Test {
  public:
   CodecWrapperTest() {
-    auto codec = std::make_unique<NiceMock<MockMediaCodecBridge>>();
+    auto codec = base::MakeUnique<NiceMock<MockMediaCodecBridge>>();
     codec_ = codec.get();
     surface_bundle_ = base::MakeRefCounted<AVDASurfaceBundle>();
-    wrapper_ = std::make_unique<CodecWrapper>(
+    wrapper_ = base::MakeUnique<CodecWrapper>(
         CodecSurfacePair(std::move(codec), surface_bundle_),
         output_buffer_release_cb_.Get());
     ON_CALL(*codec_, DequeueOutputBuffer(_, _, _, _, _, _, _))

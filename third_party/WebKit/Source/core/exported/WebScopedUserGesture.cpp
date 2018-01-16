@@ -48,6 +48,6 @@ WebScopedUserGesture::WebScopedUserGesture(WebLocalFrame* frame) {
       UserGestureToken::kNewGesture);
 }
 
-WebScopedUserGesture::~WebScopedUserGesture() = default;
+WebScopedUserGesture::~WebScopedUserGesture() {}
 
 }  // namespace blink

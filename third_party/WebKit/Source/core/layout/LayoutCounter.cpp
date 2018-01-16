@@ -459,7 +459,7 @@ LayoutCounter::LayoutCounter(PseudoElement& pseudo,
   View()->AddLayoutCounter();
 }
 
-LayoutCounter::~LayoutCounter() = default;
+LayoutCounter::~LayoutCounter() {}
 
 void LayoutCounter::WillBeDestroyed() {
   if (counter_node_) {

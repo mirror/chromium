@@ -6,6 +6,6 @@
 
 namespace blink {
 
-WebEncryptedMediaClient::~WebEncryptedMediaClient() = default;
+WebEncryptedMediaClient::~WebEncryptedMediaClient() {}
 
 }  // namespace blink

@@ -18,7 +18,7 @@ TextResource::TextResource(const ResourceRequest& resource_request,
     : Resource(resource_request, type, options),
       decoder_(TextResourceDecoder::Create(decoder_options)) {}
 
-TextResource::~TextResource() = default;
+TextResource::~TextResource() {}
 
 void TextResource::SetEncoding(const String& chs) {
   decoder_->SetEncoding(WTF::TextEncoding(chs),

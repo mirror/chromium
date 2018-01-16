@@ -12,7 +12,7 @@
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/graphics/CanvasColorParams.h"
-#include "platform/graphics/CanvasResourceProvider.h"
+#include "platform/graphics/UnacceleratedStaticBitmapImage.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/threading/BackgroundTaskRunner.h"
@@ -510,18 +510,17 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
-  std::unique_ptr<CanvasResourceProvider> resource_provider =
-      CanvasResourceProvider::Create(
-          IntSize(video->videoWidth(), video->videoHeight()),
-          CanvasResourceProvider::kSoftwareResourceUsage);
-  if (!resource_provider)
+  std::unique_ptr<ImageBuffer> buffer =
+      ImageBuffer::Create(IntSize(video->videoWidth(), video->videoHeight()),
+                          kDoNotInitializeImagePixels);
+  if (!buffer)
     return;
 
   video->PaintCurrentFrame(
-      resource_provider->Canvas(),
+      buffer->Canvas(),
       IntRect(IntPoint(), IntSize(video->videoWidth(), video->videoHeight())),
       nullptr);
-  scoped_refptr<StaticBitmapImage> input = resource_provider->Snapshot();
+  scoped_refptr<StaticBitmapImage> input = buffer->NewImageSnapshot();
   image_ = CropImageAndApplyColorSpaceConversion(input, parsed_options);
   if (!image_)
     return;
@@ -535,7 +534,8 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
                          const ImageBitmapOptions& options) {
   SourceImageStatus status;
   scoped_refptr<Image> image_input = canvas->GetSourceImageForCanvas(
-      &status, kPreferAcceleration, FloatSize());
+      &status, kPreferAcceleration, kSnapshotReasonCreateImageBitmap,
+      FloatSize());
   if (status != kNormalSourceImageStatus)
     return;
   DCHECK(image_input->IsStaticBitmapImage());
@@ -560,7 +560,8 @@ ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
                          const ImageBitmapOptions& options) {
   SourceImageStatus status;
   scoped_refptr<Image> raw_input = offscreen_canvas->GetSourceImageForCanvas(
-      &status, kPreferNoAcceleration, FloatSize(offscreen_canvas->Size()));
+      &status, kPreferNoAcceleration, kSnapshotReasonCreateImageBitmap,
+      FloatSize(offscreen_canvas->Size()));
   DCHECK(raw_input->IsStaticBitmapImage());
   scoped_refptr<StaticBitmapImage> input =
       static_cast<StaticBitmapImage*>(raw_input.get());
@@ -727,7 +728,7 @@ scoped_refptr<StaticBitmapImage> ImageBitmap::Transfer() {
   return std::move(image_);
 }
 
-ImageBitmap::~ImageBitmap() = default;
+ImageBitmap::~ImageBitmap() {}
 
 ImageBitmap* ImageBitmap::Create(ImageElementBase* image,
                                  Optional<IntRect> crop_rect,
@@ -991,6 +992,7 @@ ScriptPromise ImageBitmap::CreateImageBitmap(
 scoped_refptr<Image> ImageBitmap::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
+    SnapshotReason,
     const FloatSize&) {
   *status = kNormalSourceImageStatus;
   if (!image_)

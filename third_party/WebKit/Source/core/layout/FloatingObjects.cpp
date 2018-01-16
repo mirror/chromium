@@ -143,7 +143,7 @@ class ComputeFloatOffsetAdapter {
         offset_(offset),
         outermost_float_(nullptr) {}
 
-  virtual ~ComputeFloatOffsetAdapter() = default;
+  virtual ~ComputeFloatOffsetAdapter() {}
 
   LayoutUnit LowValue() const { return line_top_; }
   LayoutUnit HighValue() const { return line_bottom_; }
@@ -174,7 +174,7 @@ class ComputeFloatOffsetForFloatLayoutAdapter
                                                   line_bottom,
                                                   offset) {}
 
-  ~ComputeFloatOffsetForFloatLayoutAdapter() override = default;
+  ~ComputeFloatOffsetForFloatLayoutAdapter() override {}
 
   LayoutUnit HeightRemaining() const;
 
@@ -195,7 +195,7 @@ class ComputeFloatOffsetForLineLayoutAdapter
                                                   line_bottom,
                                                   offset) {}
 
-  ~ComputeFloatOffsetForLineLayoutAdapter() override = default;
+  ~ComputeFloatOffsetForLineLayoutAdapter() override {}
 
  protected:
   bool UpdateOffsetIfNeeded(const FloatingObject&) final;
@@ -307,7 +307,7 @@ LayoutUnit FloatingObjects::FindNextFloatLogicalBottomBelowForBlock(
   return adapter.NextLogicalBottom();
 }
 
-FloatingObjects::~FloatingObjects() = default;
+FloatingObjects::~FloatingObjects() {}
 void FloatingObjects::ClearLineBoxTreePointers() {
   // Clear references to originating lines, since the lines are being deleted
   FloatingObjectSetIterator end = set_.end();

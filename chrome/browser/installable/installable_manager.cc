@@ -334,7 +334,6 @@ void InstallableManager::Reset() {
   has_pwa_check_ = false;
 
   metrics_ = base::MakeUnique<InstallableMetrics>();
-  eligibility_ = base::MakeUnique<EligiblityProperty>();
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
   worker_ = base::MakeUnique<ServiceWorkerProperty>();

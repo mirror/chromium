@@ -2301,6 +2301,28 @@
       # chromium.fyi
       'Fuchsia ARM64',
     ],
+    'modifications': {
+      'KitKat Tablet Tester': {
+        'swarming': {
+          'hard_timeout': 300,
+        },
+      },
+      'Lollipop Tablet Tester': {
+        'swarming': {
+          'hard_timeout': 600,
+        },
+      },
+      'Marshmallow Phone Tester (rel)': {
+        'swarming': {
+          'hard_timeout': 960,
+        },
+      },
+      'Marshmallow Tablet Tester': {
+        'swarming': {
+          'hard_timeout': 600,
+        },
+      },
+    },
   },
   'message_center_unittests': {
     'remove_from': [
@@ -3427,7 +3449,6 @@
       'Linux Tests (dbg)(1)': {
         'args': [
           '--xvfb',
-          '--jobs=1',
         ],
       },
       # chromium.mac
@@ -3451,7 +3472,6 @@
       'Linux Tests SANDBOX': {
         'args': [
           '--xvfb',
-          '--jobs=1',
         ],
       },
     },
@@ -3859,7 +3879,7 @@
       },
       'WebKit Linux slimming_paint_v2 Dummy Builder': {
         'args': [
-          '--additional-driver-flag=--enable-slimming-paint-v175',
+          '--additional-driver-flag=--enable-slimming-paint-v2',
         ],
         'swarming': {
           'shards': 15,

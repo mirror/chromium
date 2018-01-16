@@ -69,9 +69,4 @@ public interface VrDaydreamApi {
      * devices.
      */
     boolean bootsToVr();
-
-    /**
-     * Closes this DaydreamApi instance.
-     */
-    void close();
 }

@@ -714,8 +714,6 @@ jumbo_source_set("browser") {
     "download/download_stats.h",
     "download/download_task_runner.cc",
     "download/download_task_runner.h",
-    "download/download_ukm_helper.cc",
-    "download/download_ukm_helper.h",
     "download/download_utils.cc",
     "download/download_utils.h",
     "download/download_worker.cc",
@@ -1969,8 +1967,6 @@ jumbo_source_set("browser") {
       "media/cdm_file_impl.h",
       "media/cdm_storage_impl.cc",
       "media/cdm_storage_impl.h",
-      "media/key_system_support_impl.cc",
-      "media/key_system_support_impl.h",
     ]
   }
 
@@ -2230,8 +2226,6 @@ jumbo_source_set("browser") {
     sources += [
       "compositor/browser_compositor_output_surface.cc",
       "compositor/browser_compositor_output_surface.h",
-      "compositor/external_begin_frame_controller_client_impl.cc",
-      "compositor/external_begin_frame_controller_client_impl.h",
       "compositor/gpu_browser_compositor_output_surface.cc",
       "compositor/gpu_browser_compositor_output_surface.h",
       "compositor/gpu_output_surface_mac.cc",

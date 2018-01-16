@@ -44,6 +44,8 @@ const char* kIgnoredActions[] = {
     "MobileNewTabOpened",
     "MobileTabClosed",
     "MobileTabStripCloseTab",
+    "MobilePageLoaded",
+    "MobilePageLoadedWithKeyboard",
     "MobileStackViewCloseTab",
     "MobileToolbarShowMenu",
     "MobileToolbarShowStackView",

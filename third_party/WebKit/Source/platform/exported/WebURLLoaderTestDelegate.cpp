@@ -11,9 +11,9 @@
 
 namespace blink {
 
-WebURLLoaderTestDelegate::WebURLLoaderTestDelegate() = default;
+WebURLLoaderTestDelegate::WebURLLoaderTestDelegate() {}
 
-WebURLLoaderTestDelegate::~WebURLLoaderTestDelegate() = default;
+WebURLLoaderTestDelegate::~WebURLLoaderTestDelegate() {}
 
 void WebURLLoaderTestDelegate::DidReceiveResponse(
     WebURLLoaderClient* original_client,

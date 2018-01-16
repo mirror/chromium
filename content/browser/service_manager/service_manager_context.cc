@@ -81,6 +81,10 @@
 #include "jni/ContentNfcDelegate_jni.h"
 #endif
 
+#if defined(OS_WIN)
+#include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
+#endif
+
 #if defined(USE_AURA)
 #include "ui/aura/env.h"
 #endif
@@ -129,6 +133,10 @@ void StartServiceInUtilityProcess(
   } else {
     // Start a new process for this service.
     UtilityProcessHostImpl* impl = new UtilityProcessHostImpl(nullptr, nullptr);
+#if defined(OS_WIN)
+    if (sandbox_type == service_manager::SANDBOX_TYPE_PDF_COMPOSITOR)
+      impl->AddFilter(new DWriteFontProxyMessageFilter());
+#endif
     impl->SetName(process_name);
     impl->SetServiceIdentity(service_manager::Identity(service_name));
     impl->SetSandboxType(sandbox_type);
@@ -532,9 +540,7 @@ ServiceManagerContext::ServiceManagerContext() {
   bool network_service_enabled =
       base::FeatureList::IsEnabled(features::kNetworkService);
   bool network_service_in_process =
-      base::FeatureList::IsEnabled(features::kNetworkServiceInProcess) ||
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kSingleProcess);
+      base::FeatureList::IsEnabled(features::kNetworkServiceInProcess);
   if (network_service_enabled) {
     if (network_service_in_process) {
       service_manager::EmbeddedServiceInfo network_service_info;

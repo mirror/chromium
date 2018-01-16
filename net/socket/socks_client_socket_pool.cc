@@ -27,12 +27,11 @@ class NetLog;
 SOCKSSocketParams::SOCKSSocketParams(
     const scoped_refptr<TransportSocketParams>& proxy_server,
     bool socks_v5,
-    const HostPortPair& host_port_pair,
-    const NetworkTrafficAnnotationTag& traffic_annotation)
+    const HostPortPair& host_port_pair)
     : transport_params_(proxy_server),
       destination_(host_port_pair),
-      socks_v5_(socks_v5),
-      traffic_annotation_(traffic_annotation) {}
+      socks_v5_(socks_v5) {
+}
 
 SOCKSSocketParams::~SOCKSSocketParams() = default;
 
@@ -150,12 +149,11 @@ int SOCKSConnectJob::DoSOCKSConnect() {
   // Add a SOCKS connection on top of the tcp socket.
   if (socks_params_->is_socks_v5()) {
     socket_.reset(new SOCKS5ClientSocket(std::move(transport_socket_handle_),
-                                         socks_params_->destination(),
-                                         socks_params_->traffic_annotation()));
+                                         socks_params_->destination()));
   } else {
-    socket_.reset(new SOCKSClientSocket(
-        std::move(transport_socket_handle_), socks_params_->destination(),
-        priority(), resolver_, socks_params_->traffic_annotation()));
+    socket_.reset(new SOCKSClientSocket(std::move(transport_socket_handle_),
+                                        socks_params_->destination(),
+                                        priority(), resolver_));
   }
   return socket_->Connect(
       base::Bind(&SOCKSConnectJob::OnIOComplete, base::Unretained(this)));

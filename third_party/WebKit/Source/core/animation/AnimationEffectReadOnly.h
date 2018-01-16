@@ -72,13 +72,13 @@ class CORE_EXPORT AnimationEffectReadOnly : public ScriptWrappable {
 
   class EventDelegate : public GarbageCollectedFinalized<EventDelegate> {
    public:
-    virtual ~EventDelegate() = default;
+    virtual ~EventDelegate() {}
     virtual bool RequiresIterationEvents(const AnimationEffectReadOnly&) = 0;
     virtual void OnEventCondition(const AnimationEffectReadOnly&) = 0;
     virtual void Trace(blink::Visitor* visitor) {}
   };
 
-  virtual ~AnimationEffectReadOnly() = default;
+  virtual ~AnimationEffectReadOnly() {}
 
   virtual bool IsKeyframeEffectReadOnly() const { return false; }
   virtual bool IsKeyframeEffect() const { return false; }

@@ -27,7 +27,7 @@ class WebAssociatedURLLoaderClient {
   virtual void DidFail(const WebURLError&) {}
 
  protected:
-  virtual ~WebAssociatedURLLoaderClient() = default;
+  virtual ~WebAssociatedURLLoaderClient() {}
 };
 
 }  // namespace blink

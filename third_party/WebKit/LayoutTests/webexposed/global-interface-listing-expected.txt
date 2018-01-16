@@ -438,6 +438,7 @@ interface BackgroundFetchRegistration : EventTarget
     getter downloaded
     getter id
     getter onprogress
+    getter totalDownloadSize
     getter uploadTotal
     getter uploaded
     method abort
@@ -2146,7 +2147,6 @@ interface HTMLAnchorElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
-    getter relList
     getter rev
     getter search
     getter shape
@@ -2172,7 +2172,6 @@ interface HTMLAnchorElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
-    setter relList
     setter rev
     setter search
     setter shape
@@ -2198,7 +2197,6 @@ interface HTMLAreaElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
-    getter relList
     getter search
     getter shape
     getter target
@@ -2220,7 +2218,6 @@ interface HTMLAreaElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
-    setter relList
     setter search
     setter shape
     setter target
@@ -4511,6 +4508,7 @@ interface Navigator
     getter webkitPersistentStorage
     getter webkitTemporaryStorage
     getter xr
+    method cancelKeyboardLock
     method constructor
     method getBattery
     method getGamepads
@@ -4518,9 +4516,8 @@ interface Navigator
     method getUserMedia
     method getVRDisplays
     method javaEnabled
-    method keyboardLock
-    method keyboardUnlock
     method registerProtocolHandler
+    method requestKeyboardLock
     method requestMIDIAccess
     method requestMediaKeySystemAccess
     method sendBeacon
@@ -5296,7 +5293,6 @@ interface RTCRtpSender
     attribute @@toStringTag
     getter track
     method constructor
-    method replaceTrack
 interface RTCSessionDescription
     attribute @@toStringTag
     getter sdp
@@ -8908,6 +8904,7 @@ interface XRCoordinateSystem
     method getTransformTo
 interface XRDevice : EventTarget
     attribute @@toStringTag
+    getter deviceName
     getter external
     method constructor
     method requestSession

@@ -16,7 +16,13 @@ CSSAnimationData::CSSAnimationData() {
   play_state_list_.push_back(InitialPlayState());
 }
 
-CSSAnimationData::CSSAnimationData(const CSSAnimationData& other) = default;
+CSSAnimationData::CSSAnimationData(const CSSAnimationData& other)
+    : CSSTimingData(other),
+      name_list_(other.name_list_),
+      iteration_count_list_(other.iteration_count_list_),
+      direction_list_(other.direction_list_),
+      fill_mode_list_(other.fill_mode_list_),
+      play_state_list_(other.play_state_list_) {}
 
 const AtomicString& CSSAnimationData::InitialName() {
   DEFINE_STATIC_LOCAL(const AtomicString, name, ("none"));

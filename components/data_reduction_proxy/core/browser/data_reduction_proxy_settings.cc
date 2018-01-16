@@ -12,7 +12,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/clock.h"
 #include "base/time/default_clock.h"
-#include "build/build_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
@@ -89,12 +88,11 @@ void DataReductionProxySettings::InitDataReductionProxySettings(
   InitPrefMembers();
   RecordDataReductionInit();
 
-#if defined(OS_ANDROID)
-  if (spdy_proxy_auth_enabled_.GetValue()) {
+  if (base::FeatureList::IsEnabled(features::kDataReductionSiteBreakdown) &&
+      spdy_proxy_auth_enabled_.GetValue()) {
     data_reduction_proxy_service_->compression_stats()
         ->SetDataUsageReportingEnabled(true);
   }
-#endif  // defined(OS_ANDROID)
 }
 
 void DataReductionProxySettings::OnServiceInitialized() {
@@ -135,10 +133,10 @@ void DataReductionProxySettings::SetDataReductionProxyEnabled(bool enabled) {
   if (spdy_proxy_auth_enabled_.GetValue() != enabled) {
     spdy_proxy_auth_enabled_.SetValue(enabled);
     OnProxyEnabledPrefChange();
-#if defined(OS_ANDROID)
-    data_reduction_proxy_service_->compression_stats()
-        ->SetDataUsageReportingEnabled(enabled);
-#endif  // defined(OS_ANDROID)
+    if (base::FeatureList::IsEnabled(features::kDataReductionSiteBreakdown)) {
+      data_reduction_proxy_service_->compression_stats()
+          ->SetDataUsageReportingEnabled(enabled);
+    }
   }
 }
 

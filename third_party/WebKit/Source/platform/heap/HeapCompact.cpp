@@ -29,7 +29,7 @@ class HeapCompact::MovableObjectFixups final {
     return WTF::WrapUnique(new MovableObjectFixups);
   }
 
-  ~MovableObjectFixups() = default;
+  ~MovableObjectFixups() {}
 
   // For the arenas being compacted, record all pages belonging to them.
   // This is needed to handle 'interior slots', pointers that themselves
@@ -225,7 +225,7 @@ class HeapCompact::MovableObjectFixups final {
 #endif
 
  private:
-  MovableObjectFixups() = default;
+  MovableObjectFixups() {}
 
   // Tracking movable and updatable references. For now, we keep a
   // map which for each movable object, recording the slot that
@@ -275,7 +275,7 @@ HeapCompact::HeapCompact()
       "unexpected ArenaIndices ordering");
 }
 
-HeapCompact::~HeapCompact() = default;
+HeapCompact::~HeapCompact() {}
 
 HeapCompact::MovableObjectFixups& HeapCompact::Fixups() {
   if (!fixups_)

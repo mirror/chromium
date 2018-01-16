@@ -163,7 +163,7 @@ class QuicHttpStreamPeer {
 };
 
 class QuicHttpStreamTest
-    : public ::testing::TestWithParam<std::tuple<QuicTransportVersion, bool>> {
+    : public ::testing::TestWithParam<QuicTransportVersion> {
  public:
   void CloseStream(QuicHttpStream* stream, int /*rv*/) { stream->Close(false); }
 
@@ -184,26 +184,22 @@ class QuicHttpStreamTest
   };
 
   QuicHttpStreamTest()
-      : version_(std::get<0>(GetParam())),
-        client_headers_include_h2_stream_dependency_(std::get<1>(GetParam())),
-        crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
+      : crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
                        TlsClientHandshaker::CreateSslCtx()),
         read_buffer_(new IOBufferWithSize(4096)),
         promise_id_(GetNthServerInitiatedStreamId(0)),
         stream_id_(GetNthClientInitiatedStreamId(0)),
         connection_id_(2),
-        client_maker_(version_,
+        client_maker_(GetParam(),
                       connection_id_,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_CLIENT,
-                      client_headers_include_h2_stream_dependency_),
-        server_maker_(version_,
+                      Perspective::IS_CLIENT),
+        server_maker_(GetParam(),
                       connection_id_,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_SERVER,
-                      false),
+                      Perspective::IS_SERVER),
         random_generator_(0),
         response_offset_(0) {
     IPAddress ip(192, 0, 2, 33);
@@ -283,7 +279,7 @@ class QuicHttpStreamTest
 
     connection_ = new TestQuicConnection(
         SupportedVersions(
-            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, version_)),
+            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, GetParam())),
         connection_id_, peer_addr_, helper_.get(), alarm_factory_.get(),
         new QuicChromiumPacketWriter(
             socket.get(), base::ThreadTaskRunnerHandle::Get().get()));
@@ -316,9 +312,8 @@ class QuicHttpStreamTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
-        client_headers_include_h2_stream_dependency_, /*cert_verify_flags=*/0,
-        DefaultQuicConfig(), &crypto_config_, "CONNECTION_UNKNOWN", dns_start,
-        dns_end, &push_promise_index_, nullptr,
+        /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
+        "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
         base::ThreadTaskRunnerHandle::Get().get(),
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
     session_->Initialize();
@@ -541,15 +536,12 @@ class QuicHttpStreamTest
   }
 
   QuicStreamId GetNthClientInitiatedStreamId(int n) {
-    return test::GetNthClientInitiatedStreamId(version_, n);
+    return test::GetNthClientInitiatedStreamId(GetParam(), n);
   }
 
   QuicStreamId GetNthServerInitiatedStreamId(int n) {
-    return test::GetNthServerInitiatedStreamId(version_, n);
+    return test::GetNthServerInitiatedStreamId(GetParam(), n);
   }
-
-  const QuicTransportVersion version_;
-  const bool client_headers_include_h2_stream_dependency_;
 
   BoundTestNetLog net_log_;
   MockSendAlgorithm* send_algorithm_;
@@ -597,11 +589,9 @@ class QuicHttpStreamTest
   QuicStreamOffset response_offset_;
 };
 
-INSTANTIATE_TEST_CASE_P(
-    VersionIncludeStreamDependencySequnece,
-    QuicHttpStreamTest,
-    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
-                       ::testing::Bool()));
+INSTANTIATE_TEST_CASE_P(Version,
+                        QuicHttpStreamTest,
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicHttpStreamTest, RenewStreamForAuth) {
   Initialize();

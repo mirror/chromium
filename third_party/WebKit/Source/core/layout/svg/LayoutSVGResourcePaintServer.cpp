@@ -187,7 +187,7 @@ bool SVGPaintServer::ExistsForLayoutObject(
 LayoutSVGResourcePaintServer::LayoutSVGResourcePaintServer(SVGElement* element)
     : LayoutSVGResourceContainer(element) {}
 
-LayoutSVGResourcePaintServer::~LayoutSVGResourcePaintServer() = default;
+LayoutSVGResourcePaintServer::~LayoutSVGResourcePaintServer() {}
 
 SVGPaintDescription LayoutSVGResourcePaintServer::RequestPaintDescription(
     const LayoutObject& layout_object,

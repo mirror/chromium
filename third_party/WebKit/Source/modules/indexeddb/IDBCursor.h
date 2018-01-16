@@ -29,7 +29,6 @@
 #include <memory>
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ScriptValue.h"
-#include "bindings/modules/v8/idb_object_store_or_idb_index.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBRequest.h"
 #include "modules/indexeddb/IndexedDB.h"
@@ -41,6 +40,7 @@
 namespace blink {
 
 class ExceptionState;
+class IDBAny;
 class IDBTransaction;
 class IDBValue;
 class ScriptState;
@@ -49,14 +49,12 @@ class IDBCursor : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  using Source = IDBObjectStoreOrIDBIndex;
-
   static WebIDBCursorDirection StringToDirection(const String& mode_string);
 
   static IDBCursor* Create(std::unique_ptr<WebIDBCursor>,
                            WebIDBCursorDirection,
                            IDBRequest*,
-                           const Source&,
+                           IDBAny* source,
                            IDBTransaction*);
   virtual ~IDBCursor();
   void Trace(blink::Visitor*);
@@ -72,7 +70,7 @@ class IDBCursor : public ScriptWrappable {
   ScriptValue key(ScriptState*);
   ScriptValue primaryKey(ScriptState*);
   ScriptValue value(ScriptState*);
-  void source(Source&) const;
+  ScriptValue source(ScriptState*) const;
 
   IDBRequest* update(ScriptState*, const ScriptValue&, ExceptionState&);
   void advance(unsigned, ExceptionState&);
@@ -87,17 +85,15 @@ class IDBCursor : public ScriptWrappable {
   bool isPrimaryKeyDirty() const { return primary_key_dirty_; }
   bool isValueDirty() const { return value_dirty_; }
 
-  void Continue(std::unique_ptr<IDBKey>,
-                std::unique_ptr<IDBKey> primary_key,
+  void Continue(IDBKey*,
+                IDBKey* primary_key,
                 IDBRequest::AsyncTraceState,
                 ExceptionState&);
   void PostSuccessHandlerCallback();
   bool IsDeleted() const;
   void Close();
-  void SetValueReady(std::unique_ptr<IDBKey>,
-                     std::unique_ptr<IDBKey> primary_key,
-                     std::unique_ptr<IDBValue>);
-  const IDBKey* IdbPrimaryKey() const;
+  void SetValueReady(IDBKey*, IDBKey* primary_key, std::unique_ptr<IDBValue>);
+  IDBKey* IdbPrimaryKey() const { return primary_key_; }
   virtual bool IsKeyCursor() const { return true; }
   virtual bool IsCursorWithValue() const { return false; }
 
@@ -105,7 +101,7 @@ class IDBCursor : public ScriptWrappable {
   IDBCursor(std::unique_ptr<WebIDBCursor>,
             WebIDBCursorDirection,
             IDBRequest*,
-            const Source&,
+            IDBAny* source,
             IDBTransaction*);
 
  private:
@@ -114,21 +110,14 @@ class IDBCursor : public ScriptWrappable {
   std::unique_ptr<WebIDBCursor> backend_;
   Member<IDBRequest> request_;
   const WebIDBCursorDirection direction_;
-  Source source_;
+  Member<IDBAny> source_;
   Member<IDBTransaction> transaction_;
   bool got_value_ = false;
   bool key_dirty_ = true;
   bool primary_key_dirty_ = true;
   bool value_dirty_ = true;
-  std::unique_ptr<IDBKey> key_;
-
-  // Owns the cursor's primary key, unless it needs to be injected in the
-  // cursor's value. IDBValue's class comment describes when primary key
-  // injection occurs.
-  //
-  // The cursor's primary key should generally be accessed via IdbPrimaryKey(),
-  // as it handles both cases correctly.
-  std::unique_ptr<IDBKey> primary_key_unless_injected_;
+  Member<IDBKey> key_;
+  Member<IDBKey> primary_key_;
   Member<IDBAny> value_;
 
 #if DCHECK_IS_ON()

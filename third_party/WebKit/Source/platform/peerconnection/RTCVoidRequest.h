@@ -38,7 +38,7 @@ namespace blink {
 
 class RTCVoidRequest : public GarbageCollectedFinalized<RTCVoidRequest> {
  public:
-  virtual ~RTCVoidRequest() = default;
+  virtual ~RTCVoidRequest() {}
 
   virtual void RequestSucceeded() = 0;
   virtual void RequestFailed(const String& error) = 0;
@@ -46,7 +46,7 @@ class RTCVoidRequest : public GarbageCollectedFinalized<RTCVoidRequest> {
   virtual void Trace(blink::Visitor* visitor) {}
 
  protected:
-  RTCVoidRequest() = default;
+  RTCVoidRequest() {}
 };
 
 }  // namespace blink

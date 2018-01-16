@@ -85,7 +85,7 @@ void CopyNewAnimationsToActiveInterpolationsMap(
 
 }  // namespace
 
-EffectStack::EffectStack() = default;
+EffectStack::EffectStack() {}
 
 bool EffectStack::HasActiveAnimationsOnCompositor(
     const PropertyHandle& property) const {

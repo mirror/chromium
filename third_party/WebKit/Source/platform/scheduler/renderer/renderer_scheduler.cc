@@ -16,9 +16,9 @@
 namespace blink {
 namespace scheduler {
 
-RendererScheduler::RendererScheduler() = default;
+RendererScheduler::RendererScheduler() {}
 
-RendererScheduler::~RendererScheduler() = default;
+RendererScheduler::~RendererScheduler() {}
 
 RendererScheduler::RAILModeObserver::~RAILModeObserver() = default;
 

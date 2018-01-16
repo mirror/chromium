@@ -26,7 +26,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.PositionObserver;
 import org.chromium.content.browser.ViewPositionObserver;
-import org.chromium.content.browser.selection.HandleViewResources;
+import org.chromium.content.browser.input.HandleViewResources;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.WebContents;
@@ -150,9 +150,8 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         mContainer.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         mContainer.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        mAlpha = 0.f;
-        mVisible = false;
-        setVisibility(INVISIBLE);
+        mAlpha = 1.f;
+        mVisible = getVisibility() == VISIBLE;
         mFocused = mContentViewCore.getContainerView().hasWindowFocus();
 
         mParentPositionObserver = new ViewPositionObserver(mContentViewCore.getContainerView());

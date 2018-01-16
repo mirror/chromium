@@ -366,9 +366,6 @@ TEST(HashSetTest, HasTraitsForEnum) {
   HashSet<std::pair<TestEnum, TestEnumClass>> set3;
 }
 
-static_assert(!IsTraceable<HashSet<int>>::value,
-              "HashSet<int, int> must not be traceable.");
-
 }  // anonymous namespace
 
 }  // namespace WTF

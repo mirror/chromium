@@ -780,24 +780,6 @@ bool RenderWidgetHostViewChildFrame::TransformPointToCoordSpaceForView(
       transformed_point);
 }
 
-gfx::PointF RenderWidgetHostViewChildFrame::TransformRootPointToViewCoordSpace(
-    const gfx::PointF& point) {
-  if (!frame_connector_)
-    return point;
-
-  RenderWidgetHostViewBase* root_rwhv =
-      frame_connector_->GetRootRenderWidgetHostView();
-  if (!root_rwhv)
-    return point;
-
-  gfx::PointF transformed_point;
-  if (!root_rwhv->TransformPointToCoordSpaceForView(point, this,
-                                                    &transformed_point)) {
-    return point;
-  }
-  return transformed_point;
-}
-
 bool RenderWidgetHostViewChildFrame::IsRenderWidgetHostViewChildFrame() {
   return true;
 }
@@ -919,16 +901,6 @@ void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
     bool needs_begin_frames) {
   if (support_)
     support_->SetNeedsBeginFrame(needs_begin_frames);
-}
-
-TouchSelectionControllerClientManager*
-RenderWidgetHostViewChildFrame::GetTouchSelectionControllerClientManager() {
-  auto* root_view = frame_connector_->GetRootRenderWidgetHostView();
-  if (!root_view)
-    return nullptr;
-
-  // There is only ever one manager, and it's owned by the root view.
-  return root_view->GetTouchSelectionControllerClientManager();
 }
 
 InputEventAckState RenderWidgetHostViewChildFrame::FilterInputEvent(

@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
-#include "net/http/http_request_info.h"
 #include "net/spdy/chromium/spdy_session_key.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "url/gurl.h"
@@ -34,7 +33,8 @@ const SpdyStreamId kNoPushedStreamFound = 0;
 // Each SpdySessionPool owns one instance of this class.
 // SpdySession uses this class to register, unregister and query pushed streams.
 // HttpStreamFactoryImpl::Job uses this class to find a SpdySession with a
-// pushed stream matching the request, if such exists.
+// pushed stream matching the request, if such exists, which is only allowed for
+// requests with a cryptographic scheme.
 class NET_EXPORT Http2PushPromiseIndex {
  public:
   // Interface for validating pushed streams, signaling when a pushed stream is
@@ -44,12 +44,13 @@ class NET_EXPORT Http2PushPromiseIndex {
     Delegate() {}
     virtual ~Delegate() {}
 
-    // Return true if a pushed stream with |url| can be used for a request with
-    // |key|.
-    virtual bool ValidatePushedStream(SpdyStreamId stream_id,
-                                      const GURL& url,
-                                      const HttpRequestInfo& request_info,
-                                      const SpdySessionKey& key) const = 0;
+    // Return true if the pushed stream can be used for a request with |key|.
+    virtual bool ValidatePushedStream(const SpdySessionKey& key) const = 0;
+
+    // Called when a pushed stream is claimed.  Guaranateed to be called
+    // synchronously after ValidatePushedStream() is called and returns true.
+    virtual void OnPushedStreamClaimed(const GURL& url,
+                                       SpdyStreamId stream_id) = 0;
 
     // Generate weak pointer.  Guaranateed to be called synchronously after
     // ValidatePushedStream() is called and returns true.
@@ -93,7 +94,6 @@ class NET_EXPORT Http2PushPromiseIndex {
   // session exists.
   void ClaimPushedStream(const SpdySessionKey& key,
                          const GURL& url,
-                         const HttpRequestInfo& request_info,
                          base::WeakPtr<SpdySession>* session,
                          SpdyStreamId* stream_id);
 

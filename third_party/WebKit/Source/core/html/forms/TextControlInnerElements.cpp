@@ -40,6 +40,7 @@
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutTextControlSingleLine.h"
+#include "core/layout/api/LayoutTextControlItem.h"
 
 namespace blink {
 
@@ -145,9 +146,11 @@ TextControlInnerEditorElement::CustomStyleForLayoutObject() {
   LayoutObject* parent_layout_object = OwnerShadowHost()->GetLayoutObject();
   if (!parent_layout_object || !parent_layout_object->IsTextControl())
     return OriginalStyleForLayoutObject();
-  LayoutTextControl* text_control = ToLayoutTextControl(parent_layout_object);
+  LayoutTextControlItem text_control_layout_item =
+      LayoutTextControlItem(ToLayoutTextControl(parent_layout_object));
   scoped_refptr<ComputedStyle> inner_editor_style =
-      text_control->CreateInnerEditorStyle(text_control->StyleRef());
+      text_control_layout_item.CreateInnerEditorStyle(
+          text_control_layout_item.StyleRef());
   // Using StyleAdjuster::adjustComputedStyle updates unwanted style. We'd like
   // to apply only editing-related and alignment-related.
   StyleAdjuster::AdjustStyleForEditing(*inner_editor_style);

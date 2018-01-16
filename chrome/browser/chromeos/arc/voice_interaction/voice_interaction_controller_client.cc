@@ -26,13 +26,12 @@ namespace arc {
 namespace {
 
 // Weak pointer.  This class is owned by ChromeBrowserMainPartsChromeos.
-VoiceInteractionControllerClient*
-    g_voice_interaction_controller_client_instance = nullptr;
+VoiceInteractionControllerClient* g_instance = nullptr;
 
 }  // namespace
 
 VoiceInteractionControllerClient::VoiceInteractionControllerClient() {
-  DCHECK(!g_voice_interaction_controller_client_instance);
+  DCHECK(!g_instance);
   ConnectToVoiceInteractionController();
 
   notification_registrar_.Add(this,
@@ -43,17 +42,17 @@ VoiceInteractionControllerClient::VoiceInteractionControllerClient() {
   notification_registrar_.Add(this, chrome::NOTIFICATION_PROFILE_DESTROYED,
                               content::NotificationService::AllSources());
 
-  g_voice_interaction_controller_client_instance = this;
+  g_instance = this;
 }
 
 VoiceInteractionControllerClient::~VoiceInteractionControllerClient() {
-  DCHECK_EQ(g_voice_interaction_controller_client_instance, this);
-  g_voice_interaction_controller_client_instance = nullptr;
+  DCHECK_EQ(g_instance, this);
+  g_instance = nullptr;
 }
 
 // static
 VoiceInteractionControllerClient* VoiceInteractionControllerClient::Get() {
-  return g_voice_interaction_controller_client_instance;
+  return g_instance;
 }
 
 void VoiceInteractionControllerClient::NotifyStatusChanged(

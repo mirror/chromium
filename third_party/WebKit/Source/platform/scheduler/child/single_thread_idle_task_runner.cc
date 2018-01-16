@@ -24,11 +24,11 @@ SingleThreadIdleTaskRunner::SingleThreadIdleTaskRunner(
   weak_scheduler_ptr_ = weak_factory_.GetWeakPtr();
 }
 
-SingleThreadIdleTaskRunner::~SingleThreadIdleTaskRunner() = default;
+SingleThreadIdleTaskRunner::~SingleThreadIdleTaskRunner() {}
 
-SingleThreadIdleTaskRunner::Delegate::Delegate() = default;
+SingleThreadIdleTaskRunner::Delegate::Delegate() {}
 
-SingleThreadIdleTaskRunner::Delegate::~Delegate() = default;
+SingleThreadIdleTaskRunner::Delegate::~Delegate() {}
 
 bool SingleThreadIdleTaskRunner::RunsTasksInCurrentSequence() const {
   return idle_priority_task_runner_->RunsTasksInCurrentSequence();

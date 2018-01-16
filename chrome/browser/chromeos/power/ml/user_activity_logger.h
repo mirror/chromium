@@ -11,7 +11,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
@@ -40,8 +39,7 @@ class UserActivityLogger : public ui::UserActivityObserver,
                      ui::UserActivityDetector* detector,
                      chromeos::PowerManagerClient* power_manager_client,
                      session_manager::SessionManager* session_manager,
-                     viz::mojom::VideoDetectorObserverRequest request,
-                     const chromeos::ChromeUserManager* user_manager);
+                     viz::mojom::VideoDetectorObserverRequest request);
   ~UserActivityLogger() override;
 
   // ui::UserActivityObserver overrides.
@@ -126,8 +124,6 @@ class UserActivityLogger : public ui::UserActivityObserver,
   session_manager::SessionManager* const session_manager_;
 
   mojo::Binding<viz::mojom::VideoDetectorObserver> binding_;
-
-  const chromeos::ChromeUserManager* const user_manager_;
 
   // Delay after screen idle event, used to trigger TIMEOUT for user activity
   // logging.

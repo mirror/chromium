@@ -52,8 +52,8 @@ class PLATFORM_EXPORT ImageDecoderFactory {
   WTF_MAKE_NONCOPYABLE(ImageDecoderFactory);
 
  public:
-  ImageDecoderFactory() = default;
-  virtual ~ImageDecoderFactory() = default;
+  ImageDecoderFactory() {}
+  virtual ~ImageDecoderFactory() {}
   virtual std::unique_ptr<ImageDecoder> Create() = 0;
 };
 

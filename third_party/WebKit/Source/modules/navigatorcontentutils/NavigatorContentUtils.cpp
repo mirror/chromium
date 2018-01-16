@@ -130,7 +130,7 @@ NavigatorContentUtils* NavigatorContentUtils::From(Navigator& navigator) {
       Supplement<Navigator>::From(navigator, SupplementName()));
 }
 
-NavigatorContentUtils::~NavigatorContentUtils() = default;
+NavigatorContentUtils::~NavigatorContentUtils() {}
 
 void NavigatorContentUtils::registerProtocolHandler(
     Navigator& navigator,

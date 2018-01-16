@@ -22,6 +22,7 @@
 <translation id="1821985195704844674">arborescence</translation>
 <translation id="1822429046913737220">AM/PM</translation>
 <translation id="1832974991323546415">lire sur un appareil à distance</translation>
+<translation id="1854180393107901205">Arrêter la diffusion</translation>
 <translation id="1921819250265091946">jj</translation>
 <translation id="1930711995431081526">état</translation>
 <translation id="1938124657309484470">La date ou l'heure doit être égale ou antérieure à "<ph name="MAXIMUM_DATE_OR_TIME" />".</translation>
@@ -138,7 +139,7 @@
 <translation id="7223624360433298498">temps écoulé</translation>
 <translation id="7263440858009898357">Sélectionnez un élément dans la liste.</translation>
 <translation id="727747134524199931">en-tête de colonne</translation>
-<translation id="7364796246159120393">Choisir un fichier</translation>
+<translation id="7364796246159120393">Choisissez un fichier</translation>
 <translation id="739024184232394898">Autre…</translation>
 <translation id="7491962110804786152">tabulation</translation>
 <translation id="7514365320538308">Télécharger</translation>
@@ -181,7 +182,6 @@
 <translation id="9132465097189459683">Autre…</translation>
 <translation id="9138385573473225930">alerte</translation>
 <translation id="9155987714137265666"><ph name="WEEK" /> (premier jour de la semaine : <ph name="WEEK_START_DATE" />)</translation>
-<translation id="916607977885256133">Picture-in-picture</translation>
 <translation id="947831847158436616">cellule</translation>
 <translation id="966787709310836684">menu</translation>
 </translationbundle>

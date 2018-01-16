@@ -6,8 +6,7 @@
 
 #include <utility>
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "media/base/android/android_cdm_factory.h"
 #include "media/base/audio_decoder.h"
 #include "media/base/cdm_factory.h"
@@ -27,7 +26,7 @@ std::unique_ptr<ProvisionFetcher> CreateProvisionFetcher(
   DCHECK(host_interfaces);
   mojom::ProvisionFetcherPtr provision_fetcher_ptr;
   service_manager::GetInterface(host_interfaces, &provision_fetcher_ptr);
-  return std::make_unique<MojoProvisionFetcher>(
+  return base::MakeUnique<MojoProvisionFetcher>(
       std::move(provision_fetcher_ptr));
 }
 
@@ -36,7 +35,7 @@ std::unique_ptr<MediaDrmStorage> CreateMediaDrmStorage(
   DCHECK(host_interfaces);
   mojom::MediaDrmStoragePtr media_drm_storage_ptr;
   service_manager::GetInterface(host_interfaces, &media_drm_storage_ptr);
-  return std::make_unique<MojoMediaDrmStorage>(
+  return base::MakeUnique<MojoMediaDrmStorage>(
       std::move(media_drm_storage_ptr));
 }
 
@@ -50,7 +49,7 @@ AndroidMojoMediaClient::~AndroidMojoMediaClient() {}
 
 std::unique_ptr<AudioDecoder> AndroidMojoMediaClient::CreateAudioDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  return std::make_unique<MediaCodecAudioDecoder>(task_runner);
+  return base::MakeUnique<MediaCodecAudioDecoder>(task_runner);
 }
 
 std::unique_ptr<CdmFactory> AndroidMojoMediaClient::CreateCdmFactory(
@@ -61,7 +60,7 @@ std::unique_ptr<CdmFactory> AndroidMojoMediaClient::CreateCdmFactory(
     return nullptr;
   }
 
-  return std::make_unique<AndroidCdmFactory>(
+  return base::MakeUnique<AndroidCdmFactory>(
       base::Bind(&CreateProvisionFetcher, host_interfaces),
       base::Bind(&CreateMediaDrmStorage, host_interfaces));
 }

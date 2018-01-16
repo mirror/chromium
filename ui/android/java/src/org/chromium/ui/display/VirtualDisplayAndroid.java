@@ -10,8 +10,6 @@ import android.graphics.Point;
  * An instance of DisplayAndroid not associated with any physical display.
  */
 public class VirtualDisplayAndroid extends DisplayAndroid {
-    private float mAndroidUiScalingFactor = 1.0f;
-
     public static VirtualDisplayAndroid createVirtualDisplay() {
         return getManager().addVirtualDisplay();
     }
@@ -27,22 +25,14 @@ public class VirtualDisplayAndroid extends DisplayAndroid {
         update(new Point(other.getDisplayWidth(), other.getDisplayHeight()), other.getDipScale(),
                 other.getBitsPerPixel(), other.getBitsPerComponent(), other.getRotation(),
                 other.mIsDisplayWideColorGamut, other.mIsDisplayServerWideColorGamut);
-        mAndroidUiScalingFactor = other.getAndroidUIScaling();
-    }
-
-    public void update(Point size, Float dipScale, Float androidUiScalingFactor,
-            Integer bitsPerPixel, Integer bitsPerComponent, Integer rotation,
-            Boolean isDisplayWideColorGamut, Boolean isDisplayServerWideColorGamut) {
-        super.update(size, dipScale, bitsPerPixel, bitsPerComponent, rotation,
-                isDisplayWideColorGamut, isDisplayServerWideColorGamut);
-        if (androidUiScalingFactor != null) {
-            mAndroidUiScalingFactor = androidUiScalingFactor;
-        }
     }
 
     @Override
-    public float getAndroidUIScaling() {
-        return mAndroidUiScalingFactor;
+    public void update(Point size, Float dipScale, Integer bitsPerPixel, Integer bitsPerComponent,
+            Integer rotation, Boolean isDisplayWideColorGamut,
+            Boolean isDisplayServerWideColorGamut) {
+        super.update(size, dipScale, bitsPerPixel, bitsPerComponent, rotation,
+                isDisplayWideColorGamut, isDisplayServerWideColorGamut);
     }
 
     /**

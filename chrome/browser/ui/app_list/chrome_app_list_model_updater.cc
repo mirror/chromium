@@ -13,7 +13,6 @@
 #include "ash/app_list/model/search/search_model.h"
 #include "chrome/browser/ui/app_list/chrome_app_list_item.h"
 #include "extensions/common/constants.h"
-#include "ui/base/models/menu_model.h"
 
 ChromeAppListModelUpdater::ChromeAppListModelUpdater()
     : model_(std::make_unique<app_list::AppListModel>()),
@@ -84,20 +83,6 @@ void ChromeAppListModelUpdater::SetSearchSpeechRecognitionButton(
 void ChromeAppListModelUpdater::UpdateSearchBox(const base::string16& text,
                                                 bool initiated_by_user) {
   search_model_->search_box()->Update(text, initiated_by_user);
-}
-
-void ChromeAppListModelUpdater::PublishSearchResults(
-    std::vector<std::unique_ptr<app_list::SearchResult>> results) {
-  search_model_->PublishResults(std::move(results));
-}
-
-void ChromeAppListModelUpdater::ActivateChromeItem(const std::string& id,
-                                                   int event_flags) {
-  app_list::AppListItem* item = model_->FindItem(id);
-  if (!item)
-    return;
-  DCHECK(!item->is_folder());
-  static_cast<ChromeAppListItem*>(item)->Activate(event_flags);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -214,15 +199,6 @@ ChromeAppListModelUpdater::ResolveOemFolderPosition(
     model_->SetItemPosition(oem_folder, oem_folder_pos);
   }
   return oem_folder;
-}
-
-ui::MenuModel* ChromeAppListModelUpdater::GetContextMenuModel(
-    const std::string& id) {
-  app_list::AppListItem* item = model_->FindItem(id);
-  // TODO(stevenjb/jennyz): Implement this for folder items
-  if (!item || item->is_folder())
-    return nullptr;
-  return static_cast<ChromeAppListItem*>(item)->GetContextMenuModel();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -55,10 +55,10 @@ bool SpellingServiceClient::RequestTextCheck(
     content::BrowserContext* context,
     ServiceType type,
     const base::string16& text,
-    TextCheckCompleteCallback callback) {
+    const TextCheckCompleteCallback& callback) {
   DCHECK(type == SUGGEST || type == SPELLCHECK);
   if (!context || !IsAvailable(context, type)) {
-    std::move(callback).Run(false, text, std::vector<SpellCheckResult>());
+    callback.Run(false, text, std::vector<SpellCheckResult>());
     return false;
   }
 
@@ -148,7 +148,7 @@ bool SpellingServiceClient::RequestTextCheck(
   fetcher->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                         net::LOAD_DO_NOT_SAVE_COOKIES);
   spellcheck_fetchers_[fetcher] = base::MakeUnique<TextCheckCallbackData>(
-      base::WrapUnique(fetcher), std::move(callback), text);
+      base::WrapUnique(fetcher), callback, text);
   fetcher->Start();
   return true;
 }
@@ -279,9 +279,9 @@ bool SpellingServiceClient::ParseResponse(
 
 SpellingServiceClient::TextCheckCallbackData::TextCheckCallbackData(
     std::unique_ptr<net::URLFetcher> fetcher,
-    TextCheckCompleteCallback&& callback,
+    TextCheckCompleteCallback callback,
     base::string16 text)
-    : fetcher(std::move(fetcher)), callback(std::move(callback)), text(text) {}
+    : fetcher(std::move(fetcher)), callback(callback), text(text) {}
 
 SpellingServiceClient::TextCheckCallbackData::~TextCheckCallbackData() {}
 
@@ -301,7 +301,7 @@ void SpellingServiceClient::OnURLFetchComplete(const net::URLFetcher* source) {
 
   // The callback may release the last (transitive) dependency on |this|. It
   // MUST be the last function called.
-  std::move(callback_data->callback).Run(success, callback_data->text, results);
+  callback_data->callback.Run(success, callback_data->text, results);
 }
 
 std::unique_ptr<net::URLFetcher> SpellingServiceClient::CreateURLFetcher(

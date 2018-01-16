@@ -13,7 +13,6 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "gpu/command_buffer/service/buffer_manager.h"
-#include "gpu/command_buffer/service/decoder_context.h"
 #include "gpu/command_buffer/service/framebuffer_manager.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
@@ -129,7 +128,7 @@ ContextGroup::ContextGroup(
 }
 
 gpu::ContextResult ContextGroup::Initialize(
-    DecoderContext* decoder,
+    GLES2Decoder* decoder,
     ContextType context_type,
     const DisallowedFeatures& disallowed_features) {
   switch (context_type) {
@@ -530,7 +529,7 @@ gpu::ContextResult ContextGroup::Initialize(
 
 namespace {
 
-bool IsNull(const base::WeakPtr<DecoderContext>& decoder) {
+bool IsNull(const base::WeakPtr<gles2::GLES2Decoder>& decoder) {
   return !decoder;
 }
 
@@ -560,9 +559,9 @@ void ContextGroup::ReportProgress() {
     progress_reporter_->ReportProgress();
 }
 
-void ContextGroup::Destroy(DecoderContext* decoder, bool have_context) {
+void ContextGroup::Destroy(GLES2Decoder* decoder, bool have_context) {
   decoders_.erase(std::remove_if(decoders_.begin(), decoders_.end(),
-                                 WeakPtrEquals<DecoderContext>(decoder)),
+                                 WeakPtrEquals<gles2::GLES2Decoder>(decoder)),
                   decoders_.end());
   // If we still have contexts do nothing.
   if (HaveContexts()) {

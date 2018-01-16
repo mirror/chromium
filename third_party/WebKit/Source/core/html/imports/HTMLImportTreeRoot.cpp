@@ -25,7 +25,7 @@ HTMLImportTreeRoot::HTMLImportTreeRoot(Document* document)
   ScheduleRecalcState();  // This recomputes initial state.
 }
 
-HTMLImportTreeRoot::~HTMLImportTreeRoot() = default;
+HTMLImportTreeRoot::~HTMLImportTreeRoot() {}
 
 void HTMLImportTreeRoot::Dispose() {
   for (const auto& import_child : imports_)

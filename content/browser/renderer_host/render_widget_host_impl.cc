@@ -31,7 +31,6 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
-#include "cc/trees/render_frame_metadata.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/switches.h"
@@ -631,8 +630,6 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(DragHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_FrameSwapMessages,
                         OnFrameSwapMessagesReceived)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_OnRenderFrameSubmitted,
-                        OnRenderFrameMetadata)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -1097,7 +1094,7 @@ void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
   }
 
   ForwardMouseEventWithLatencyInfo(mouse_event,
-                                   ui::LatencyInfo(ui::SourceEventType::MOUSE));
+                                   ui::LatencyInfo(ui::SourceEventType::OTHER));
   if (owner_delegate_)
     owner_delegate_->RenderWidgetDidForwardMouseEvent(mouse_event);
 }
@@ -1186,22 +1183,7 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
              blink::WebInputEvent::kGestureFlingStart) {
     if (gesture_event.source_device ==
         blink::WebGestureDevice::kWebGestureDeviceTouchpad) {
-      // TODO(sahel): Remove the VR specific case when motion events are used
-      // for Android VR event processing and VR touchpad scrolling is handled by
-      // sending wheel events rather than directly injecting Gesture Scroll
-      // Events. https://crbug.com/797322
-      if (GetView()->IsInVR()) {
-        // Regardless of the state of the wheel scroll latching
-        // WebContentsEventForwarder doesn't inject any GSE events before GFS.
-        DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
-
-        // Reset the is_in_gesture_scroll since while scrolling in Android VR
-        // the first wheel event sent by the FlingController will cause a GSB
-        // generation in MouseWheelEventQueue. This is because GSU events before
-        // the GFS are directly injected to RWHI rather than being generated
-        // from wheel events in MouseWheelEventQueue.
-        is_in_gesture_scroll_[gesture_event.source_device] = false;
-      } else if (GetView()->wheel_scroll_latching_enabled()) {
+      if (GetView()->wheel_scroll_latching_enabled()) {
         // When wheel scroll latching is enabled, no GSE is sent before GFS, so
         // is_in_gesture_scroll must be true.
         DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
@@ -1209,14 +1191,22 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
         // The FlingController handles GFS with touchpad source and sends wheel
         // events to progress the fling, the wheel events will get processed by
         // the MouseWheelEventQueue and GSU events with inertial phase will be
-        // sent to the renderer. is_in_gesture_scroll must stay true till the
-        // fling progress is finished. Then the FlingController will generate
-        // and send a wheel event with phaseEnded. MouseWheelEventQueue will
-        // process the wheel event to generate and send a GSE which shows the
-        // end of a scroll sequence.
-      } else {  // !GetView()->IsInVR() &&
-                // !GetView()->wheel_scroll_latching_enabled()
-
+        // sent to the renderer.
+        if (GetView()->IsInVR()) {
+          // Reset the is_in_gesture_scroll since while scrolling in Android VR
+          // the first wheel event sent by the FlingController will cause a GSB
+          // generation in MouseWheelEventQueue. This is because
+          // WebContentsEventForwarder injects gesture scroll events to the RWHI
+          // rather than wheel events. TODO(sahel): Remove this when motion
+          // events are used for Android VR event processing.
+          // https://crbug.com/797322
+          is_in_gesture_scroll_[gesture_event.source_device] = false;
+        } else {
+          // is_in_gesture_scroll must stay true till the fling progress is
+          // finished. Then the FlingController will generate and send a GSE
+          // event to show the end of a scroll sequence.
+        }
+      } else {  // !GetView()->wheel_scroll_latching_enabled()
         // When wheel scroll latching is disabled a GSE is sent before a GFS.
         // The GSE has already finished the scroll sequence.
         DCHECK(!is_in_gesture_scroll_[gesture_event.source_device]);
@@ -2920,16 +2910,6 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
 void RenderWidgetHostImpl::ProgressFling(base::TimeTicks current_time) {
   if (input_router_)
     input_router_->ProgressFling(current_time);
-}
-
-void RenderWidgetHostImpl::StopFling() {
-  if (input_router_)
-    input_router_->StopFling();
-}
-
-void RenderWidgetHostImpl::OnRenderFrameMetadata(
-    const cc::RenderFrameMetadata& metadata) {
-  last_render_frame_metadata_ = metadata;
 }
 
 }  // namespace content

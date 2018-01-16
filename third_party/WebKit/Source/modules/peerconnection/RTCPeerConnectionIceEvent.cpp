@@ -53,7 +53,7 @@ RTCPeerConnectionIceEvent::RTCPeerConnectionIceEvent(
     const RTCPeerConnectionIceEventInit& initializer)
     : Event(type, initializer), candidate_(initializer.candidate()) {}
 
-RTCPeerConnectionIceEvent::~RTCPeerConnectionIceEvent() = default;
+RTCPeerConnectionIceEvent::~RTCPeerConnectionIceEvent() {}
 
 RTCIceCandidate* RTCPeerConnectionIceEvent::candidate() const {
   return candidate_.Get();

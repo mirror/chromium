@@ -18,7 +18,6 @@
 |       "
 "
 |       <shadow:root>
-|         <slot>
-|           name="user-agent-default-slot"
+|         <content>
 |     "
 "

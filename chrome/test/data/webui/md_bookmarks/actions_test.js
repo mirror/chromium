@@ -8,8 +8,8 @@
  */
 
 suite('selectItem', function() {
-  let store;
-  let action;
+  var store;
+  var action;
 
   setup(function() {
     store = new bookmarks.TestStore({
@@ -31,7 +31,7 @@ suite('selectItem', function() {
       range: false,
       toggle: false,
     });
-    const expected = {
+    var expected = {
       name: 'select-items',
       items: ['2'],
       clear: false,
@@ -98,11 +98,11 @@ suite('selectItem', function() {
 });
 
 test('selectFolder prevents selecting invalid nodes', function() {
-  const nodes = testTree(createFolder('1', [
+  var nodes = testTree(createFolder('1', [
     createItem('2'),
   ]));
 
-  let action = bookmarks.actions.selectFolder(ROOT_NODE_ID, nodes);
+  var action = bookmarks.actions.selectFolder(ROOT_NODE_ID, nodes);
   assertEquals(null, action);
 
   action = bookmarks.actions.selectFolder('2', nodes);

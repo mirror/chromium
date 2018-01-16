@@ -129,7 +129,7 @@ static bool ShouldBypassMainWorldCSP(const Element& element) {
 
   // Main world CSP is bypassed for style elements in user agent shadow DOM.
   ShadowRoot* root = element.ContainingShadowRoot();
-  if (root && root->IsUserAgent())
+  if (root && root->GetType() == ShadowRootType::kUserAgent)
     return true;
 
   return false;
@@ -154,10 +154,8 @@ StyleElement::ProcessingResult StyleElement::CreateSheet(Element& element,
   // If type is empty or CSS, this is a CSS style sheet.
   const AtomicString& type = this->type();
   if (IsCSS(element, type) && passes_content_security_policy_checks) {
-    scoped_refptr<MediaQuerySet> media_queries;
-    const AtomicString& media_string = media();
-    if (!media_string.IsEmpty())
-      media_queries = MediaQuerySet::Create(media_string);
+    scoped_refptr<MediaQuerySet> media_queries = MediaQuerySet::Create(media());
+
     loading_ = true;
     TextPosition start_position =
         start_position_ == TextPosition::BelowRangePosition()

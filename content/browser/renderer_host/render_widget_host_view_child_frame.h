@@ -153,10 +153,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       const gfx::PointF& point,
       RenderWidgetHostViewBase* target_view,
       gfx::PointF* transformed_point) override;
-  gfx::PointF TransformRootPointToViewCoordSpace(
-      const gfx::PointF& point) override;
-  TouchSelectionControllerClientManager*
-  GetTouchSelectionControllerClientManager() override;
 
   bool IsRenderWidgetHostViewChildFrame() override;
 

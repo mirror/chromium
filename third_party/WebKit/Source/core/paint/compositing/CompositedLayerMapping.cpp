@@ -47,11 +47,13 @@
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutVideo.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/FramePaintTiming.h"
 #include "core/paint/LayerClipRecorder.h"
 #include "core/paint/ObjectPaintInvalidator.h"
@@ -608,9 +610,10 @@ void CompositedLayerMapping::
   // of the inherited state.
   // FIXME: this should use cached clip rects, but this sometimes give
   // inaccurate results (and trips the ASSERTS in PaintLayerClipper).
-  ClipRectsContext clip_rects_context(
-      clip_inheritance_ancestor_, kUncachedClipRects,
-      kIgnorePlatformOverlayScrollbarSize, kIgnoreOverflowClip);
+  ClipRectsContext clip_rects_context(clip_inheritance_ancestor_,
+                                      kUncachedClipRects,
+                                      kIgnorePlatformOverlayScrollbarSize);
+  clip_rects_context.SetIgnoreOverflowClip();
 
   ClipRect clip_rect;
   owning_layer_.Clipper(PaintLayer::kDoNotUseGeometryMapper)
@@ -1354,9 +1357,9 @@ void CompositedLayerMapping::UpdateAncestorClippingLayerGeometry(
   if (!compositing_container || !ancestor_clipping_layer_)
     return;
 
-  ClipRectsContext clip_rects_context(
-      clip_inheritance_ancestor_, kPaintingClipRectsIgnoringOverflowClip,
-      kIgnorePlatformOverlayScrollbarSize, kIgnoreOverflowClip);
+  ClipRectsContext clip_rects_context(clip_inheritance_ancestor_,
+                                      kPaintingClipRectsIgnoringOverflowClip,
+                                      kIgnorePlatformOverlayScrollbarSize);
   // Note: kPaintingClipRectsIgnoringOverflowClip implies SetIgnoreOverflowClip.
 
   ClipRect clip_rect;
@@ -2639,22 +2642,17 @@ void CompositedLayerMapping::RegisterScrollingLayers() {
       owning_layer_.GetLayoutObject().CanContainFixedPositionObjects() &&
       (!owning_layer_.IsRootLayer() ||
        RuntimeEnabledFeatures::RootLayerScrollingEnabled());
-  bool resized_by_url_bar =
-      owning_layer_.GetLayoutObject().IsLayoutView() &&
-      owning_layer_.Compositor()->IsRootScrollerAncestor();
-  graphics_layer_->SetIsContainerForFixedPositionLayers(is_container);
-  graphics_layer_->SetIsResizedByBrowserControls(resized_by_url_bar);
+  scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
+      graphics_layer_.get(), is_container);
   // Fixed-pos descendants inherits the space that has all CSS property applied,
   // including perspective, overflow scroll/clip. Thus we also mark every layers
   // below the main graphics layer so transforms implemented by them don't get
   // skipped.
   ApplyToGraphicsLayers(
       this,
-      [is_container, resized_by_url_bar](GraphicsLayer* layer) {
-        layer->SetIsContainerForFixedPositionLayers(is_container);
-        layer->SetIsResizedByBrowserControls(resized_by_url_bar);
-        if (resized_by_url_bar)
-          layer->SetMasksToBounds(false);
+      [scrolling_coordinator, is_container](GraphicsLayer* layer) {
+        scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
+            layer, is_container);
       },
       kApplyToChildContainingLayers);
 }

@@ -22,6 +22,7 @@ class UrlCheckerDelegate;
 
 // A thin wrapper around BrowserURLLoaderThrottle to adapt to the
 // content::ResourceThrottle interface.
+// Used when --enable-features=S13nSafeBrowsingParallelUrlCheck is in effect.
 class BaseParallelResourceThrottle : public content::ResourceThrottle {
  protected:
   BaseParallelResourceThrottle(

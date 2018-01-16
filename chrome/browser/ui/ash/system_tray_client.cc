@@ -14,7 +14,7 @@
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part.h"
-#include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/login/help_app_launcher.h"
 #include "chrome/browser/chromeos/options/network_config_view.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
@@ -69,7 +69,7 @@ using views::Widget;
 
 namespace {
 
-SystemTrayClient* g_system_tray_client_instance = nullptr;
+SystemTrayClient* g_instance = nullptr;
 
 void ShowSettingsSubPageForActiveUser(const std::string& sub_page) {
   chrome::ShowSettingsSubPageForProfile(ProfileManager::GetActiveUserProfile(),
@@ -138,14 +138,14 @@ SystemTrayClient::SystemTrayClient() : binding_(this) {
     policy_manager->core()->store()->AddObserver(this);
   UpdateEnterpriseDisplayDomain();
 
-  DCHECK(!g_system_tray_client_instance);
-  g_system_tray_client_instance = this;
+  DCHECK(!g_instance);
+  g_instance = this;
   UpgradeDetector::GetInstance()->AddObserver(this);
 }
 
 SystemTrayClient::~SystemTrayClient() {
-  DCHECK_EQ(this, g_system_tray_client_instance);
-  g_system_tray_client_instance = nullptr;
+  DCHECK_EQ(this, g_instance);
+  g_instance = nullptr;
 
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
@@ -160,7 +160,7 @@ SystemTrayClient::~SystemTrayClient() {
 
 // static
 SystemTrayClient* SystemTrayClient::Get() {
-  return g_system_tray_client_instance;
+  return g_instance;
 }
 
 // static
@@ -284,7 +284,7 @@ void SystemTrayClient::ShowHelp() {
 void SystemTrayClient::ShowAccessibilityHelp() {
   chrome::ScopedTabbedBrowserDisplayer displayer(
       ProfileManager::GetActiveUserProfile());
-  chromeos::AccessibilityManager::ShowAccessibilityHelp(displayer.browser());
+  chromeos::accessibility::ShowAccessibilityHelp(displayer.browser());
 }
 
 void SystemTrayClient::ShowAccessibilitySettings() {

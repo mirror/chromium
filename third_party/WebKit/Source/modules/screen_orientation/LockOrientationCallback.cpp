@@ -15,7 +15,7 @@ LockOrientationCallback::LockOrientationCallback(
     ScriptPromiseResolver* resolver)
     : resolver_(resolver) {}
 
-LockOrientationCallback::~LockOrientationCallback() = default;
+LockOrientationCallback::~LockOrientationCallback() {}
 
 void LockOrientationCallback::OnSuccess() {
   resolver_->Resolve();

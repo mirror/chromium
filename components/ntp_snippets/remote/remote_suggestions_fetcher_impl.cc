@@ -237,8 +237,7 @@ void RemoteSuggestionsFetcherImpl::StartTokenRequest() {
   token_fetcher_ = std::make_unique<identity::PrimaryAccountAccessTokenFetcher>(
       "ntp_snippets", signin_manager_, token_service_, scopes,
       base::BindOnce(&RemoteSuggestionsFetcherImpl::AccessTokenFetchFinished,
-                     base::Unretained(this)),
-      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+                     base::Unretained(this)));
 }
 
 void RemoteSuggestionsFetcherImpl::AccessTokenFetchFinished(

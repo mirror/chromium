@@ -13,12 +13,7 @@
  * Must be kept in sync with the C++ enum of the same name.
  * @enum {number}
  */
-const NetworkPredictionOptions = {
-  ALWAYS: 0,
-  WIFI_ONLY: 1,
-  NEVER: 2,
-  DEFAULT: 1,
-};
+var NetworkPredictionOptions = {ALWAYS: 0, WIFI_ONLY: 1, NEVER: 2, DEFAULT: 1};
 
 Polymer({
   is: 'settings-privacy-page',
@@ -132,7 +127,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        const map = new Map();
+        var map = new Map();
         // <if expr="use_nss_certs">
         if (settings.routes.CERTIFICATES) {
           map.set(
@@ -161,12 +156,12 @@ Polymer({
     this.browserProxy_ = settings.PrivacyPageBrowserProxyImpl.getInstance();
 
     // <if expr="_google_chrome and not chromeos">
-    const setMetricsReportingPref = this.setMetricsReportingPref_.bind(this);
+    var setMetricsReportingPref = this.setMetricsReportingPref_.bind(this);
     this.addWebUIListener('metrics-reporting-change', setMetricsReportingPref);
     this.browserProxy_.getMetricsReporting().then(setMetricsReportingPref);
     // </if>
 
-    const setSber = this.setSafeBrowsingExtendedReporting_.bind(this);
+    var setSber = this.setSafeBrowsingExtendedReporting_.bind(this);
     this.addWebUIListener('safe-browsing-extended-reporting-change', setSber);
     this.browserProxy_.getSafeBrowsingExtendedReporting().then(setSber);
   },
@@ -193,7 +188,7 @@ Polymer({
    * @private
    */
   onDoNotTrackChange_: function(event) {
-    const target = /** @type {!SettingsToggleButtonElement} */ (event.target);
+    var target = /** @type {!SettingsToggleButtonElement} */ (event.target);
     if (!target.checked) {
       // Always allow disabling the pref.
       target.sendPrefChange();
@@ -207,7 +202,7 @@ Polymer({
 
   /** @private */
   maybeShowDoNotTrackDialog_: function() {
-    const dialog = this.$$('#confirmDoNotTrackDialog');
+    var dialog = this.$$('#confirmDoNotTrackDialog');
     if (dialog && !dialog.open)
       dialog.showModal();
   },
@@ -259,7 +254,7 @@ Polymer({
    * @private
    */
   onRemoveAllCookiesFromSite_: function() {
-    const node = /** @type {?SiteDataDetailsSubpageElement} */ (
+    var node = /** @type {?SiteDataDetailsSubpageElement} */ (
         this.$$('site-data-details-subpage'));
     if (node)
       node.removeAll();
@@ -288,14 +283,14 @@ Polymer({
 
   /** @private */
   onSberChange_: function() {
-    const enabled = this.$.safeBrowsingExtendedReportingControl.checked;
+    var enabled = this.$.safeBrowsingExtendedReportingControl.checked;
     this.browserProxy_.setSafeBrowsingExtendedReportingEnabled(enabled);
   },
 
   // <if expr="_google_chrome and not chromeos">
   /** @private */
   onMetricsReportingChange_: function() {
-    const enabled = this.$.metricsReportingControl.checked;
+    var enabled = this.$.metricsReportingControl.checked;
     this.browserProxy_.setMetricsReportingEnabled(enabled);
   },
 
@@ -304,8 +299,8 @@ Polymer({
    * @private
    */
   setMetricsReportingPref_: function(metricsReporting) {
-    const hadPreviousPref = this.metricsReportingPref_.value !== undefined;
-    const pref = {
+    var hadPreviousPref = this.metricsReportingPref_.value !== undefined;
+    var pref = {
       key: '',
       type: chrome.settingsPrivate.PrefType.BOOLEAN,
       value: metricsReporting.enabled,

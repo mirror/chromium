@@ -66,46 +66,4 @@ TEST_F(InsertListCommandTest, UnlistifyParagraphCrashOnVisuallyEmptyParagraph) {
       "</ul></dl>",
       GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
 }
-
-// Refer https://crbug.com/798176
-TEST_F(InsertListCommandTest, CleanupNodeSameAsDestinationNode) {
-  GetDocument().setDesignMode("on");
-  InsertStyleElement(
-      "* { -webkit-appearance:checkbox; }"
-      "br { visibility:hidden; }"
-      "colgroup { -webkit-column-count:2; }");
-  Selection().SetSelection(
-      SetSelectionTextToBody("^<table><col></table>"
-                             "<button></button>|"));
-
-  InsertListCommand* command = InsertListCommand::Create(
-      GetDocument(), InsertListCommand::kUnorderedList);
-
-  // Crash happens here.
-  EXPECT_FALSE(command->Apply());
-  EXPECT_EQ(
-      "<ul><li><br></li></ul>"
-      "<br>"
-      "<table>|<colgroup><col>"
-      "<ul><li><br></li></ul>"
-      "</col></colgroup></table>"
-      "<button></button>",
-      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
-}
-
-TEST_F(InsertListCommandTest, InsertListOnEmptyHiddenElements) {
-  GetDocument().setDesignMode("on");
-  InsertStyleElement("br { visibility:hidden; }");
-  Selection().SetSelection(SetSelectionTextToBody("^<button></button>|"));
-  InsertListCommand* command = InsertListCommand::Create(
-      GetDocument(), InsertListCommand::kUnorderedList);
-
-  // Crash happens here.
-  EXPECT_FALSE(command->Apply());
-  EXPECT_EQ(
-      "<button>"
-      "|<ul><li><br></li></ul>"
-      "</button>",
-      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
-}
 }

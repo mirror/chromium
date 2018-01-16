@@ -6,7 +6,6 @@
 /adobe/flash/binaries
 /adobe/flash/symbols
 /amd/
-/android_ndk/
 /android_protobuf/src
 /android_support_test_runner/lib/
 /android_system_sdk/*.jar
@@ -147,7 +146,6 @@
 /pdfsqueeze
 /pdfium
 /pefile
-/perfetto
 /perl
 /ppapi
 /psyco_win32

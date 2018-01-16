@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "chrome/browser/engagement/site_engagement_observer.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 class Browser;
@@ -20,12 +19,10 @@ class ImageSkia;
 
 namespace extensions {
 
-extern const char kPwaWindowEngagementTypeHistogram[];
-
 class Extension;
 
 // Class to encapsulate logic to control the browser UI for hosted apps.
-class HostedAppBrowserController : public SiteEngagementObserver {
+class HostedAppBrowserController {
  public:
   // Indicates whether |browser| is a hosted app browser.
   static bool IsForHostedApp(const Browser* browser);
@@ -34,10 +31,7 @@ class HostedAppBrowserController : public SiteEngagementObserver {
   static bool IsForExperimentalHostedAppBrowser(const Browser* browser);
 
   explicit HostedAppBrowserController(Browser* browser);
-  ~HostedAppBrowserController() override;
-
-  // Returns whether the associated browser is for an installed PWA window.
-  bool IsForInstalledPwa(content::WebContents* web_contents) const;
+  ~HostedAppBrowserController();
 
   // Whether the browser being controlled should be currently showing the
   // location bar.
@@ -68,12 +62,6 @@ class HostedAppBrowserController : public SiteEngagementObserver {
 
   // Gets the extension for this controller.
   const Extension* GetExtension() const;
-
-  // SiteEngagementObserver overrides.
-  void OnEngagementEvent(content::WebContents* web_contents,
-                         const GURL& url,
-                         double score,
-                         SiteEngagementService::EngagementType type) override;
 
  private:
   Browser* const browser_;

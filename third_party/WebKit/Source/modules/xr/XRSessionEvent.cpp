@@ -6,7 +6,7 @@
 
 namespace blink {
 
-XRSessionEvent::XRSessionEvent() = default;
+XRSessionEvent::XRSessionEvent() {}
 
 XRSessionEvent::XRSessionEvent(const AtomicString& type, XRSession* session)
     : Event(type, true, false), session_(session) {}
@@ -18,7 +18,7 @@ XRSessionEvent::XRSessionEvent(const AtomicString& type,
     session_ = initializer.session();
 }
 
-XRSessionEvent::~XRSessionEvent() = default;
+XRSessionEvent::~XRSessionEvent() {}
 
 const AtomicString& XRSessionEvent::InterfaceName() const {
   return EventNames::XRSessionEvent;

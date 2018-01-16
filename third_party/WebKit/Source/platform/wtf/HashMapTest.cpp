@@ -593,9 +593,6 @@ TEST(HashMapTest, InitializerList) {
   EXPECT_TRUE(IsOneTwoThreeMap(ReturnOneTwoThreeMap()));
 }
 
-static_assert(!IsTraceable<HashMap<int, int>>::value,
-              "HashMap<int, int> must not be traceable.");
-
 }  // anonymous namespace
 
 }  // namespace WTF

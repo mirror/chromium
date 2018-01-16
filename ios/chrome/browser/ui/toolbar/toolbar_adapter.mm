@@ -20,8 +20,7 @@
 @synthesize URLLoader = _URLLoader;
 
 - (instancetype)initWithDispatcher:
-                    (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)
-                        dispatcher
+                    (id<ApplicationCommands, BrowserCommands>)dispatcher
                       browserState:(ios::ChromeBrowserState*)browserState
                       webStateList:(WebStateList*)webStateList {
   self = [super init];
@@ -91,10 +90,6 @@
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [self.toolbarCoordinator resetToolbarAfterSideSwipeSnapshot];
-}
-
-- (void)navigateToMemexTabSwitcher {
-  [self.toolbarCoordinator navigateToMemexTabSwitcher];
 }
 
 #pragma mark - Abstract Toolbar

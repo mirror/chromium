@@ -38,7 +38,6 @@ TRAILING WHITESPACE: webaudio/*
 TRAILING WHITESPACE: WebIDL/*
 TRAILING WHITESPACE: webvtt/*
 TRAILING WHITESPACE: encoding/legacy*/*
-TRAILING WHITESPACE: server-timing/resources/parsing/*.sub.headers
 
 ## File types that should never be checked ##
 

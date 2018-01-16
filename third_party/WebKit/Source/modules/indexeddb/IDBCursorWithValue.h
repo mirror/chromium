@@ -34,6 +34,7 @@
 
 namespace blink {
 
+class IDBAny;
 class IDBRequest;
 class IDBTransaction;
 
@@ -44,7 +45,7 @@ class IDBCursorWithValue final : public IDBCursor {
   static IDBCursorWithValue* Create(std::unique_ptr<WebIDBCursor>,
                                     WebIDBCursorDirection,
                                     IDBRequest*,
-                                    const Source&,
+                                    IDBAny* source,
                                     IDBTransaction*);
   ~IDBCursorWithValue() override;
 
@@ -59,7 +60,7 @@ class IDBCursorWithValue final : public IDBCursor {
   IDBCursorWithValue(std::unique_ptr<WebIDBCursor>,
                      WebIDBCursorDirection,
                      IDBRequest*,
-                     const Source&,
+                     IDBAny* source,
                      IDBTransaction*);
 };
 

@@ -379,18 +379,17 @@ int GetLoadFlagsForWebURLRequest(const WebURLRequest& request) {
   return load_flags;
 }
 
-WebHTTPBody GetWebHTTPBodyForRequestBody(
-    const network::ResourceRequestBody& input) {
+WebHTTPBody GetWebHTTPBodyForRequestBody(const ResourceRequestBody& input) {
   WebHTTPBody http_body;
   http_body.Initialize();
   http_body.SetIdentifier(input.identifier());
   http_body.SetContainsPasswordData(input.contains_sensitive_info());
   for (auto& element : *input.elements()) {
     switch (element.type()) {
-      case network::DataElement::TYPE_BYTES:
+      case ResourceRequestBody::Element::TYPE_BYTES:
         http_body.AppendData(WebData(element.bytes(), element.length()));
         break;
-      case network::DataElement::TYPE_FILE:
+      case ResourceRequestBody::Element::TYPE_FILE:
         http_body.AppendFileRange(
             blink::FilePathToWebString(element.path()), element.offset(),
             (element.length() != std::numeric_limits<uint64_t>::max())
@@ -398,10 +397,10 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
                 : -1,
             element.expected_modification_time().ToDoubleT());
         break;
-      case network::DataElement::TYPE_BLOB:
+      case ResourceRequestBody::Element::TYPE_BLOB:
         http_body.AppendBlob(WebString::FromASCII(element.blob_uuid()));
         break;
-      case network::DataElement::TYPE_DATA_PIPE: {
+      case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
         // Append the cloned data pipe to the |http_body|. This might not be
         // needed for all callsites today but it respects the constness of
         // |input|, as opposed to moving the data pipe out of |input|.
@@ -412,11 +411,11 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
             cloned_data_pipe_getter.PassInterface().PassHandle());
         break;
       }
-      case network::DataElement::TYPE_UNKNOWN:
-      case network::DataElement::TYPE_BYTES_DESCRIPTION:
-      case network::DataElement::TYPE_DISK_CACHE_ENTRY:
-      case network::DataElement::TYPE_FILE_FILESYSTEM:
-      case network::DataElement::TYPE_RAW_FILE:
+      case ResourceRequestBody::Element::TYPE_UNKNOWN:
+      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
+      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
+      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
+      case ResourceRequestBody::Element::TYPE_RAW_FILE:
         NOTREACHED();
         break;
     }
@@ -424,9 +423,9 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
   return http_body;
 }
 
-scoped_refptr<network::ResourceRequestBody> GetRequestBodyForWebURLRequest(
+scoped_refptr<ResourceRequestBody> GetRequestBodyForWebURLRequest(
     const WebURLRequest& request) {
-  scoped_refptr<network::ResourceRequestBody> request_body;
+  scoped_refptr<ResourceRequestBody> request_body;
 
   if (request.HttpBody().IsNull()) {
     return request_body;
@@ -444,10 +443,9 @@ void GetBlobRegistry(blink::mojom::BlobRegistryRequest request) {
       mojom::kBrowserServiceName, std::move(request));
 }
 
-scoped_refptr<network::ResourceRequestBody> GetRequestBodyForWebHTTPBody(
+scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
     const blink::WebHTTPBody& httpBody) {
-  scoped_refptr<network::ResourceRequestBody> request_body =
-      new network::ResourceRequestBody();
+  scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody();
   size_t i = 0;
   WebHTTPBody::Element element;
   // TODO(jam): cache this somewhere so we don't request it each time?

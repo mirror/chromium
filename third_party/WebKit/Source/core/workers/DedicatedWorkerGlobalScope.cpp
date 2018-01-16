@@ -51,7 +51,7 @@ DedicatedWorkerGlobalScope::DedicatedWorkerGlobalScope(
     double time_origin)
     : WorkerGlobalScope(std::move(creation_params), thread, time_origin) {}
 
-DedicatedWorkerGlobalScope::~DedicatedWorkerGlobalScope() = default;
+DedicatedWorkerGlobalScope::~DedicatedWorkerGlobalScope() {}
 
 const AtomicString& DedicatedWorkerGlobalScope::InterfaceName() const {
   return EventTargetNames::DedicatedWorkerGlobalScope;

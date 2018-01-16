@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -48,14 +47,7 @@ struct MidiEvent {
 
 class FakeMidiManager : public midi::MidiManager {
  public:
-  explicit FakeMidiManager(midi::MidiService* service)
-      : MidiManager(service), weak_factory_(this) {}
-  ~FakeMidiManager() override = default;
-
-  base::WeakPtr<FakeMidiManager> GetWeakPtr() {
-    return weak_factory_.GetWeakPtr();
-  }
-
+  explicit FakeMidiManager(midi::MidiService* service) : MidiManager(service) {}
   void DispatchSendMidiData(midi::MidiManagerClient* client,
                             uint32_t port_index,
                             const std::vector<uint8_t>& data,
@@ -67,33 +59,31 @@ class FakeMidiManager : public midi::MidiManager {
   }
   std::vector<MidiEvent> events_;
 
-  base::WeakPtrFactory<FakeMidiManager> weak_factory_;
-
   DISALLOW_COPY_AND_ASSIGN(FakeMidiManager);
 };
 
 class FakeMidiManagerFactory : public midi::MidiService::ManagerFactory {
  public:
-  FakeMidiManagerFactory() : weak_factory_(this) {}
+  FakeMidiManagerFactory() = default;
   ~FakeMidiManagerFactory() override = default;
   std::unique_ptr<midi::MidiManager> Create(
       midi::MidiService* service) override {
     std::unique_ptr<FakeMidiManager> manager =
         std::make_unique<FakeMidiManager>(service);
-    manager_ = manager->GetWeakPtr();
+    // |manaegr| will be owned by the caller MidiService instance, and valid
+    // while the MidiService instance is running.
+    // MidiService::Shutdown() or destructor will destruct it, and |manager_|
+    // get to be invalid after that.
+    manager_ = manager.get();
     return manager;
   }
-
-  base::WeakPtr<FakeMidiManagerFactory> GetWeakPtr() {
-    return weak_factory_.GetWeakPtr();
+  FakeMidiManager* GetCreatedManager() {
+    DCHECK(manager_);
+    return manager_;
   }
 
-  base::WeakPtr<FakeMidiManager> GetCreatedManager() { return manager_; }
-
  private:
-  base::WeakPtr<FakeMidiManager> manager_;
-
-  base::WeakPtrFactory<FakeMidiManagerFactory> weak_factory_;
+  FakeMidiManager* manager_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(FakeMidiManagerFactory);
 };
@@ -123,13 +113,12 @@ class MidiHostTest : public testing::Test {
         port_id_(0) {
     std::unique_ptr<FakeMidiManagerFactory> factory =
         std::make_unique<FakeMidiManagerFactory>();
-    factory_ = factory->GetWeakPtr();
+    factory_ = factory.get();
     service_ = std::make_unique<midi::MidiService>(std::move(factory));
+    manager_ = factory_->GetCreatedManager();
     host_ = new MidiHostForTesting(kRenderProcessId, service_.get());
-    host_->OnStartSession();
   }
   ~MidiHostTest() override {
-    host_->OnEndSession();
     service_->Shutdown();
     RunLoopUntilIdle();
   }
@@ -152,19 +141,13 @@ class MidiHostTest : public testing::Test {
     host_->OnMessageReceived(*message.get());
   }
 
-  size_t GetEventSize() const {
-    if (!factory_->GetCreatedManager())
-      return 0U;
-    return factory_->GetCreatedManager()->events_.size();
-  }
+  size_t GetEventSize() const { return manager_->events_.size(); }
 
   void CheckSendEventAt(size_t at, uint32_t port) {
-    base::WeakPtr<FakeMidiManager> manager = factory_->GetCreatedManager();
-    ASSERT_TRUE(manager);
-    EXPECT_EQ(DISPATCH_SEND_MIDI_DATA, manager->events_[at].type);
-    EXPECT_EQ(port, manager->events_[at].port_index);
-    EXPECT_EQ(data_, manager->events_[at].data);
-    EXPECT_EQ(0.0, manager->events_[at].timestamp);
+    EXPECT_EQ(DISPATCH_SEND_MIDI_DATA, manager_->events_[at].type);
+    EXPECT_EQ(port, manager_->events_[at].port_index);
+    EXPECT_EQ(data_, manager_->events_[at].data);
+    EXPECT_EQ(0.0, manager_->events_[at].timestamp);
   }
 
   void RunLoopUntilIdle() {
@@ -178,7 +161,8 @@ class MidiHostTest : public testing::Test {
 
   std::vector<uint8_t> data_;
   int32_t port_id_;
-  base::WeakPtr<FakeMidiManagerFactory> factory_;
+  FakeMidiManager* manager_;  // Raw pointer for testing, owned by |service_|.
+  FakeMidiManagerFactory* factory_;  // Owned by |service_|.
   std::unique_ptr<midi::MidiService> service_;
   scoped_refptr<MidiHostForTesting> host_;
 

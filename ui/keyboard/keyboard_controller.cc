@@ -735,8 +735,9 @@ bool KeyboardController::IsOverscrollAllowed() const {
   return container_behavior_->IsOverscrollAllowed();
 }
 
-void KeyboardController::HandlePointerEvent(const ui::LocatedEvent& event) {
-  container_behavior_->HandlePointerEvent(event);
+void KeyboardController::HandlePointerEvent(bool isMouseButtonPressed,
+                                            const gfx::Vector2d& kb_offset) {
+  container_behavior_->HandlePointerEvent(isMouseButtonPressed, kb_offset);
 }
 
 void KeyboardController::SetContainerType(const ContainerType type) {

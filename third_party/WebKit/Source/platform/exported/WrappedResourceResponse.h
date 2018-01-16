@@ -42,7 +42,7 @@ class WrappedResourceResponse : public WebURLResponse {
   WTF_MAKE_NONCOPYABLE(WrappedResourceResponse);
 
  public:
-  ~WrappedResourceResponse() = default;
+  ~WrappedResourceResponse() {}
 
   explicit WrappedResourceResponse(ResourceResponse& resource_response)
       : WebURLResponse(resource_response) {}

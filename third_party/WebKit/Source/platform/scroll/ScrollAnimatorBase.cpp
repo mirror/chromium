@@ -38,7 +38,7 @@ namespace blink {
 ScrollAnimatorBase::ScrollAnimatorBase(ScrollableArea* scrollable_area)
     : scrollable_area_(scrollable_area) {}
 
-ScrollAnimatorBase::~ScrollAnimatorBase() = default;
+ScrollAnimatorBase::~ScrollAnimatorBase() {}
 
 ScrollOffset ScrollAnimatorBase::ComputeDeltaToConsume(
     const ScrollOffset& delta) const {

@@ -21,6 +21,16 @@ std::unique_ptr<T> WrapUnique(T* ptr) {
   return std::unique_ptr<T>(ptr);
 }
 
+template <typename T>
+std::unique_ptr<T[]> WrapArrayUnique(T* ptr) {
+  static_assert(
+      !WTF::IsGarbageCollectedType<T>::value,
+      "Garbage collected types should not be stored in std::unique_ptr!");
+  return std::unique_ptr<T[]>(ptr);
+}
+
 }  // namespace WTF
+
+using WTF::WrapArrayUnique;
 
 #endif  // PtrUtil_h

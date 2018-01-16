@@ -189,10 +189,11 @@ function initialize() {
       // Round all scores to 2 decimal places.
       info.baseScore = roundScore(info.baseScore);
       info.installedBonus = roundScore(info.installedBonus);
+      info.notificationsBonus = roundScore(info.notificationsBonus);
       info.totalScore = roundScore(info.totalScore);
 
       // Collate the bonuses into a value for the bonusScore column.
-      info.bonusScore = info.installedBonus;
+      info.bonusScore = info.installedBonus + info.notificationsBonus;
 
       engagementTableBody.appendChild(createRow(info));
     });

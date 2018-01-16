@@ -58,7 +58,7 @@ class ListInterpolationFunctions {
 
 class NonInterpolableList : public NonInterpolableValue {
  public:
-  ~NonInterpolableList() final = default;
+  ~NonInterpolableList() final {}
 
   static scoped_refptr<NonInterpolableList> Create() {
     return base::AdoptRef(new NonInterpolableList());
@@ -80,7 +80,7 @@ class NonInterpolableList : public NonInterpolableValue {
   DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
  private:
-  NonInterpolableList() = default;
+  NonInterpolableList() {}
   NonInterpolableList(Vector<scoped_refptr<NonInterpolableValue>>&& list)
       : list_(list) {}
 

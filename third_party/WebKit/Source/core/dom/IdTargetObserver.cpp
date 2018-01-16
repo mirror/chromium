@@ -35,7 +35,7 @@ IdTargetObserver::IdTargetObserver(IdTargetObserverRegistry& observer_registry,
   Registry().AddObserver(id_, this);
 }
 
-IdTargetObserver::~IdTargetObserver() = default;
+IdTargetObserver::~IdTargetObserver() {}
 
 void IdTargetObserver::Trace(blink::Visitor* visitor) {
   visitor->Trace(registry_);

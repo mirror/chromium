@@ -130,7 +130,7 @@ LinkLoader::LinkLoader(LinkLoaderClient* client,
   DCHECK(client_);
 }
 
-LinkLoader::~LinkLoader() = default;
+LinkLoader::~LinkLoader() {}
 
 void LinkLoader::NotifyFinished() {
   DCHECK(finish_observer_);
@@ -262,9 +262,9 @@ WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
   } else if (as == "style") {
     return Resource::kCSSStyleSheet;
   } else if (as == "video") {
-    return Resource::kVideo;
+    return Resource::kMedia;
   } else if (as == "audio") {
-    return Resource::kAudio;
+    return Resource::kMedia;
   } else if (as == "track") {
     return Resource::kTextTrack;
   } else if (as == "font") {
@@ -292,8 +292,7 @@ static bool IsSupportedType(Resource::Type resource_type,
       return MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type);
     case Resource::kFont:
       return MIMETypeRegistry::IsSupportedFontMIMEType(mime_type);
-    case Resource::kAudio:
-    case Resource::kVideo:
+    case Resource::kMedia:
       return MIMETypeRegistry::IsSupportedMediaMIMEType(mime_type, String());
     case Resource::kTextTrack:
       return MIMETypeRegistry::IsSupportedTextTrackMIMEType(mime_type);

@@ -20,11 +20,11 @@ import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.net.test.util.TestWebServer;
 
 /**
@@ -140,16 +140,15 @@ public class PopupWindowTest {
 
         // Now long press on some texts and see if the text handles show up.
         DOMUtils.longPressNode(popupContents.getContentViewCore(), "plain_text");
-        SelectionPopupController controller =
-                SelectionPopupController.fromWebContents(popupContents.getWebContents());
-        assertWaitForSelectActionBarStatus(true, controller);
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> controller.hasSelection()));
+        assertWaitForSelectActionBarStatus(true, popupContents.getContentViewCore());
+        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> popupContents.getContentViewCore()
+                    .getSelectionPopupControllerForTesting().hasSelection()));
 
         // Now hide the select action bar. This should hide the text handles and
         // clear the selection.
-        hideSelectActionMode(controller);
+        hideSelectActionMode(popupContents.getContentViewCore());
 
-        assertWaitForSelectActionBarStatus(false, controller);
+        assertWaitForSelectActionBarStatus(false, popupContents.getContentViewCore());
         String jsGetSelection = "window.getSelection().toString()";
         // Test window.getSelection() returns empty string "" literally.
         Assert.assertEquals("\"\"",
@@ -158,14 +157,12 @@ public class PopupWindowTest {
     }
 
     // Copied from imeTest.java.
-    private void assertWaitForSelectActionBarStatus(
-            boolean show, final SelectionPopupController controller) {
-        CriteriaHelper.pollUiThread(
-                Criteria.equals(show, () -> controller.isSelectActionBarShowing()));
+    private void assertWaitForSelectActionBarStatus(boolean show, final ContentViewCore cvc) {
+        CriteriaHelper.pollUiThread(Criteria.equals(show, () -> cvc.isSelectActionBarShowing()));
     }
 
-    private void hideSelectActionMode(final SelectionPopupController controller) {
+    private void hideSelectActionMode(final ContentViewCore cvc) {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> controller.destroySelectActionMode());
+                () -> cvc.destroySelectActionMode());
     }
 }

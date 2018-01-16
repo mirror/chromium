@@ -360,8 +360,8 @@ void ServiceWorkerRegisterJob::UpdateAndContinue() {
   }
   new_version()->StartWorker(
       ServiceWorkerMetrics::EventType::INSTALL,
-      base::BindOnce(&ServiceWorkerRegisterJob::OnStartWorkerFinished,
-                     weak_factory_.GetWeakPtr()));
+      base::Bind(&ServiceWorkerRegisterJob::OnStartWorkerFinished,
+                 weak_factory_.GetWeakPtr()));
 }
 
 void ServiceWorkerRegisterJob::OnStartWorkerFinished(
@@ -413,6 +413,8 @@ void ServiceWorkerRegisterJob::InstallAndContinue() {
   new_version()->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::INSTALL,
       base::BindOnce(&ServiceWorkerRegisterJob::DispatchInstallEvent,
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&ServiceWorkerRegisterJob::OnInstallFailed,
                      weak_factory_.GetWeakPtr()));
 
   // A subsequent registration job may terminate our installing worker. It can
@@ -422,21 +424,15 @@ void ServiceWorkerRegisterJob::InstallAndContinue() {
     Complete(SERVICE_WORKER_ERROR_INSTALL_WORKER_FAILED);
 }
 
-void ServiceWorkerRegisterJob::DispatchInstallEvent(
-    ServiceWorkerStatusCode start_worker_status) {
-  if (start_worker_status != SERVICE_WORKER_OK) {
-    OnInstallFailed(start_worker_status);
-    return;
-  }
-
+void ServiceWorkerRegisterJob::DispatchInstallEvent() {
   DCHECK_EQ(ServiceWorkerVersion::INSTALLING, new_version()->status())
       << new_version()->status();
   DCHECK_EQ(EmbeddedWorkerStatus::RUNNING, new_version()->running_status())
       << "Worker stopped too soon after it was started.";
   int request_id = new_version()->StartRequest(
       ServiceWorkerMetrics::EventType::INSTALL,
-      base::BindOnce(&ServiceWorkerRegisterJob::OnInstallFailed,
-                     weak_factory_.GetWeakPtr()));
+      base::Bind(&ServiceWorkerRegisterJob::OnInstallFailed,
+                 weak_factory_.GetWeakPtr()));
 
   new_version()->event_dispatcher()->DispatchInstallEvent(
       base::BindOnce(&ServiceWorkerRegisterJob::OnInstallFinished,
@@ -466,17 +462,21 @@ void ServiceWorkerRegisterJob::OnInstallFinished(
           ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
           : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
   context_->storage()->StoreRegistration(
-      registration(), new_version(),
-      base::BindOnce(&ServiceWorkerRegisterJob::OnStoreRegistrationComplete,
-                     weak_factory_.GetWeakPtr()));
+      registration(),
+      new_version(),
+      base::Bind(&ServiceWorkerRegisterJob::OnStoreRegistrationComplete,
+                 weak_factory_.GetWeakPtr()));
 }
 
 void ServiceWorkerRegisterJob::OnInstallFailed(ServiceWorkerStatusCode status) {
   ServiceWorkerMetrics::RecordInstallEventStatus(status);
-  DCHECK_NE(status, SERVICE_WORKER_OK)
-      << "OnInstallFailed should not handle SERVICE_WORKER_OK";
-  Complete(status, std::string("ServiceWorker failed to install: ") +
-                       ServiceWorkerStatusToString(status));
+
+  if (status != SERVICE_WORKER_OK) {
+    Complete(status, std::string("ServiceWorker failed to install: ") +
+                         ServiceWorkerStatusToString(status));
+  } else {
+    NOTREACHED() << "OnInstallFailed should not handle SERVICE_WORKER_OK";
+  }
 }
 
 void ServiceWorkerRegisterJob::OnStoreRegistrationComplete(
@@ -551,8 +551,9 @@ void ServiceWorkerRegisterJob::CompleteInternal(
           !registration()->active_version()) {
         registration()->NotifyRegistrationFailed();
         context_->storage()->DeleteRegistration(
-            registration()->id(), registration()->pattern().GetOrigin(),
-            base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
+            registration()->id(),
+            registration()->pattern().GetOrigin(),
+            base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
       }
     }
     if (!is_promise_resolved_)

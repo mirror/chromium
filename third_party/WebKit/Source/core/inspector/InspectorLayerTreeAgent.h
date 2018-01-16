@@ -54,7 +54,7 @@ class CORE_EXPORT InspectorLayerTreeAgent final
  public:
   class Client {
    public:
-    virtual ~Client() = default;
+    virtual ~Client() {}
     virtual bool IsInspectorLayer(GraphicsLayer*) = 0;
   };
 

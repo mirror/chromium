@@ -16,8 +16,7 @@ PrimaryAccountAccessTokenFetcher::PrimaryAccountAccessTokenFetcher(
     SigninManagerBase* signin_manager,
     OAuth2TokenService* token_service,
     const OAuth2TokenService::ScopeSet& scopes,
-    TokenCallback callback,
-    Mode mode)
+    TokenCallback callback)
     : OAuth2TokenService::Consumer(oauth_consumer_name),
       signin_manager_(signin_manager),
       token_service_(token_service),
@@ -25,9 +24,7 @@ PrimaryAccountAccessTokenFetcher::PrimaryAccountAccessTokenFetcher(
       callback_(std::move(callback)),
       waiting_for_sign_in_(false),
       waiting_for_refresh_token_(false),
-      access_token_retried_(false),
-      mode_(mode),
-      weak_factory_(this) {
+      access_token_retried_(false) {
   Start();
 }
 
@@ -41,11 +38,6 @@ PrimaryAccountAccessTokenFetcher::~PrimaryAccountAccessTokenFetcher() {
 }
 
 void PrimaryAccountAccessTokenFetcher::Start() {
-  if (mode_ == Mode::kImmediate) {
-    ScheduleStartAccessTokenRequest();
-    return;
-  }
-
   if (signin_manager_->IsAuthenticated()) {
     // Already signed in: Make sure we have a refresh token, then get the access
     // token.
@@ -61,7 +53,6 @@ void PrimaryAccountAccessTokenFetcher::Start() {
 }
 
 void PrimaryAccountAccessTokenFetcher::WaitForRefreshToken() {
-  DCHECK_EQ(Mode::kWaitUntilAvailable, mode_);
   DCHECK(signin_manager_->IsAuthenticated());
   DCHECK(!waiting_for_refresh_token_);
 
@@ -81,12 +72,10 @@ void PrimaryAccountAccessTokenFetcher::WaitForRefreshToken() {
 void PrimaryAccountAccessTokenFetcher::ScheduleStartAccessTokenRequest() {
   // Fire off the request asynchronously to mimic the asynchronous flow that
   // will occur when this request is going through the Identity Service.
-  // NOTE: Posting the task using a WeakPtr is necessary as this instance
-  // might die before the posted task runs (https://crbug.com/800263).
   base::SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest,
-                     weak_factory_.GetWeakPtr()));
+                     base::Unretained(this)));
 }
 
 void PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest() {
@@ -101,7 +90,6 @@ void PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest() {
 void PrimaryAccountAccessTokenFetcher::GoogleSigninSucceeded(
     const std::string& account_id,
     const std::string& username) {
-  DCHECK_EQ(Mode::kWaitUntilAvailable, mode_);
   DCHECK(waiting_for_sign_in_);
   DCHECK(!waiting_for_refresh_token_);
   DCHECK(signin_manager_->IsAuthenticated());
@@ -113,7 +101,6 @@ void PrimaryAccountAccessTokenFetcher::GoogleSigninSucceeded(
 
 void PrimaryAccountAccessTokenFetcher::GoogleSigninFailed(
     const GoogleServiceAuthError& error) {
-  DCHECK_EQ(Mode::kWaitUntilAvailable, mode_);
   DCHECK(waiting_for_sign_in_);
   DCHECK(!waiting_for_refresh_token_);
   waiting_for_sign_in_ = false;
@@ -124,7 +111,6 @@ void PrimaryAccountAccessTokenFetcher::GoogleSigninFailed(
 
 void PrimaryAccountAccessTokenFetcher::OnRefreshTokenAvailable(
     const std::string& account_id) {
-  DCHECK_EQ(Mode::kWaitUntilAvailable, mode_);
   DCHECK(waiting_for_refresh_token_);
   DCHECK(!waiting_for_sign_in_);
 
@@ -139,7 +125,6 @@ void PrimaryAccountAccessTokenFetcher::OnRefreshTokenAvailable(
 }
 
 void PrimaryAccountAccessTokenFetcher::OnRefreshTokensLoaded() {
-  DCHECK_EQ(Mode::kWaitUntilAvailable, mode_);
   DCHECK(waiting_for_refresh_token_);
   DCHECK(!waiting_for_sign_in_);
   DCHECK(!access_token_request_);
@@ -183,7 +168,7 @@ void PrimaryAccountAccessTokenFetcher::OnGetTokenFailure(
   // so only retry if there (still) is a valid refresh token.
   // NOTE: Maybe we should retry for all transient errors here, so that clients
   // don't have to.
-  if (mode_ == Mode::kWaitUntilAvailable && !access_token_retried_ &&
+  if (!access_token_retried_ &&
       error.state() == GoogleServiceAuthError::State::REQUEST_CANCELED &&
       token_service_->RefreshTokenIsAvailable(
           signin_manager_->GetAuthenticatedAccountId())) {

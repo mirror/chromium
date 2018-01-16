@@ -44,7 +44,7 @@ class WebURLRequest;
 // This class is used to implement WebFrame::createAssociatedURLLoader.
 class BLINK_EXPORT WebAssociatedURLLoader {
  public:
-  virtual ~WebAssociatedURLLoader() = default;
+  virtual ~WebAssociatedURLLoader() {}
 
   virtual void LoadAsynchronously(const WebURLRequest&,
                                   WebAssociatedURLLoaderClient*) = 0;

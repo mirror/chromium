@@ -34,7 +34,7 @@ Node* ChildNodeList::VirtualOwnerNode() const {
   return &OwnerNode();
 }
 
-ChildNodeList::~ChildNodeList() = default;
+ChildNodeList::~ChildNodeList() {}
 
 void ChildNodeList::ChildrenChanged(
     const ContainerNode::ChildrenChange& change) {

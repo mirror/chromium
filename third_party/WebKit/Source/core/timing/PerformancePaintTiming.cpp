@@ -15,7 +15,7 @@ PerformancePaintTiming::PerformancePaintTiming(PaintType type,
                        start_time,
                        start_time) {}
 
-PerformancePaintTiming::~PerformancePaintTiming() = default;
+PerformancePaintTiming::~PerformancePaintTiming() {}
 
 String PerformancePaintTiming::FromPaintTypeToString(PaintType type) {
   switch (type) {

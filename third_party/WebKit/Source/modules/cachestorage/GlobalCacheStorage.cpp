@@ -76,7 +76,7 @@ class GlobalCacheStorageImpl final
   }
 
  private:
-  GlobalCacheStorageImpl() = default;
+  GlobalCacheStorageImpl() {}
 
   static const char* GetName() { return "CacheStorage"; }
 

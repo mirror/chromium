@@ -22,7 +22,7 @@ class MainThreadTaskQueueForTest : public MainThreadTaskQueue {
                                 MainThreadTaskQueue::QueueType::kTest)),
                             QueueCreationParams(queue_type),
                             nullptr) {}
-  ~MainThreadTaskQueueForTest() = default;
+  ~MainThreadTaskQueueForTest() {}
 };
 
 // A dummy WebFrameScheduler for tests.
@@ -49,11 +49,11 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
         is_exempt_from_throttling_(is_exempt_from_throttling) {
     DCHECK(frame_type_ != FrameType::kMainFrame || !is_cross_origin);
   }
-  ~FakeWebFrameScheduler() override = default;
+  ~FakeWebFrameScheduler() override {}
 
   class Builder {
    public:
-    Builder() = default;
+    Builder() {}
 
     std::unique_ptr<FakeWebFrameScheduler> Build() {
       return std::make_unique<FakeWebFrameScheduler>(

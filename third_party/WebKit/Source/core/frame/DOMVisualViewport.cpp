@@ -40,7 +40,7 @@ namespace blink {
 DOMVisualViewport::DOMVisualViewport(LocalDOMWindow* window)
     : window_(window) {}
 
-DOMVisualViewport::~DOMVisualViewport() = default;
+DOMVisualViewport::~DOMVisualViewport() {}
 
 void DOMVisualViewport::Trace(blink::Visitor* visitor) {
   visitor->Trace(window_);

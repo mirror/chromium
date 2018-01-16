@@ -202,6 +202,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h"
 #include "chrome/browser/chromeos/customization/customization_document.h"
+#include "chrome/browser/chromeos/display/display_prefs.h"
 #include "chrome/browser/chromeos/extensions/echo_private_api.h"
 #include "chrome/browser/chromeos/file_system_provider/registry.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
@@ -234,6 +235,7 @@
 #include "chrome/browser/chromeos/resource_reporter/resource_reporter.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_cache.h"
+#include "chrome/browser/chromeos/status/data_promo_notification.h"
 #include "chrome/browser/chromeos/system/automatic_reboot_manager.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.h"
@@ -241,7 +243,6 @@
 #include "chrome/browser/media/protected_media_identifier_permission_context.h"
 #include "chrome/browser/metrics/chromeos_metrics_provider.h"
 #include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
-#include "chrome/browser/ui/ash/network/data_promo_notification.h"
 #include "chrome/browser/ui/webui/chromeos/login/enable_debugging_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/hid_detection_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
@@ -408,10 +409,10 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 
 #if defined(OS_CHROMEOS)
   ChromeOSMetricsProvider::RegisterPrefs(registry);
-  DataPromoNotification::RegisterPrefs(registry);
   chromeos::ArcKioskAppManager::RegisterPrefs(registry);
   chromeos::AudioDevicesPrefHandlerImpl::RegisterPrefs(registry);
   chromeos::ChromeUserManagerImpl::RegisterPrefs(registry);
+  chromeos::DataPromoNotification::RegisterPrefs(registry);
   chromeos::DeviceOAuth2TokenService::RegisterPrefs(registry);
   chromeos::device_settings_cache::RegisterPrefs(registry);
   chromeos::EnableDebuggingScreenHandler::RegisterPrefs(registry);
@@ -423,6 +424,7 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   chromeos::NetworkThrottlingObserver::RegisterPrefs(registry);
   chromeos::PowerMetricsReporter::RegisterLocalStatePrefs(registry);
   chromeos::Preferences::RegisterPrefs(registry);
+  chromeos::DisplayPrefs::RegisterLocalStatePrefs(registry);
   chromeos::ResetScreen::RegisterPrefs(registry);
   chromeos::ResourceReporter::RegisterPrefs(registry);
   chromeos::ServicesCustomizationDocument::RegisterPrefs(registry);

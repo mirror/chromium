@@ -60,11 +60,11 @@ Polymer({
    * @private
    */
   onSliderChanged_: function() {
-    const sliderValue = isNaN(this.$.slider.immediateValue) ?
+    var sliderValue = isNaN(this.$.slider.immediateValue) ?
         this.$.slider.value :
         this.$.slider.immediateValue;
 
-    let newValue;
+    var newValue;
     if (this.tickValues && this.tickValues.length > 0)
       newValue = this.tickValues[sliderValue];
     else
@@ -94,10 +94,10 @@ Polymer({
     assert(this.scale == 1);
 
     // First update the slider settings if |tickValues| was set.
-    const numTicks = Math.max(1, this.tickValues.length);
+    var numTicks = Math.max(1, this.tickValues.length);
     this.$.slider.max = numTicks - 1;
     // Limit the number of ticks to 10 to keep the slider from looking too busy.
-    const MAX_TICKS = 10;
+    /** @const */ var MAX_TICKS = 10;
     this.$.slider.snaps = numTicks < MAX_TICKS;
     this.$.slider.maxMarkers = numTicks < MAX_TICKS ? numTicks : 0;
 
@@ -107,7 +107,7 @@ Polymer({
       // knob, so set the value back to where the knob was.
       // Async so we don't confuse Polymer's data binding.
       this.async(function() {
-        const newValue = this.tickValues[this.$.slider.immediateValue];
+        var newValue = this.tickValues[this.$.slider.immediateValue];
         this.set('pref.value', newValue);
       });
       return;
@@ -115,7 +115,7 @@ Polymer({
 
     // Convert from the public |value| to the slider index (where the knob
     // should be positioned on the slider).
-    let sliderIndex = this.tickValues.length > 0 ?
+    var sliderIndex = this.tickValues.length > 0 ?
         this.tickValues.indexOf(/** @type {number} */ (this.pref.value)) :
         0;
     if (sliderIndex == -1) {
@@ -135,10 +135,10 @@ Polymer({
    * @private
    */
   findNearestIndex_: function(arr, value) {
-    let closestIndex;
-    let minDifference = Number.MAX_VALUE;
-    for (let i = 0; i < arr.length; i++) {
-      const difference = Math.abs(arr[i] - value);
+    var closestIndex;
+    var minDifference = Number.MAX_VALUE;
+    for (var i = 0; i < arr.length; i++) {
+      var difference = Math.abs(arr[i] - value);
       if (difference < minDifference) {
         closestIndex = i;
         minDifference = difference;

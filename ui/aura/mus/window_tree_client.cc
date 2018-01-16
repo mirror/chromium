@@ -1478,7 +1478,6 @@ void WindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     Id window_id,
     int64_t display_id,
-    Id display_root_window_id,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
@@ -1547,20 +1546,7 @@ void WindowTreeClient::OnWindowInputEvent(
     event_to_dispatch = mapped_event_with_native.get();
   }
 #endif
-
-  WindowMus* display_root_window = GetWindowByServerId(display_root_window_id);
-  if (display_root_window && window && event->IsLocatedEvent() &&
-      display::Screen::GetScreen()->GetPrimaryDisplay().id() ==
-          display::kUnifiedDisplayId) {
-    // Dispatch to the root window of the display supplying the event. This
-    // allows Ash to determine the event position in the unified desktop mode,
-    // where each physical display mirrors part of a single virtual display.
-    // This paralells the behavior of unified desktop mode in classic Ash mode.
-    DispatchEventToTarget(event_to_dispatch, display_root_window);
-  } else {
-    DispatchEventToTarget(event_to_dispatch, window);
-  }
-
+  DispatchEventToTarget(event_to_dispatch, window);
   ack_handler.set_handled(event_to_dispatch->handled());
 }
 
@@ -2227,13 +2213,6 @@ void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
   DCHECK_NE(display_id1, display_id2);
   window_tree_host1->set_display_id(display_id2);
   window_tree_host2->set_display_id(display_id1);
-
-  // Swap the accelerated widgets so each host paints to the correct display.
-  gfx::AcceleratedWidget widget1 = window_tree_host1->GetAcceleratedWidget();
-  gfx::AcceleratedWidget widget2 = window_tree_host2->GetAcceleratedWidget();
-  window_tree_host1->OverrideAcceleratedWidget(widget2);
-  window_tree_host2->OverrideAcceleratedWidget(widget1);
-
   if (window_manager_client_) {
     window_manager_client_->SwapDisplayRoots(
         display_id1, display_id2, base::Bind(&OnAckMustSucceed, FROM_HERE));

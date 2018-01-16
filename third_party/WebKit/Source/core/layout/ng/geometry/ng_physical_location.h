@@ -14,7 +14,7 @@ namespace blink {
 // NGPhysicalLocation is the position of a rect (typically a fragment) relative
 // to the root document.
 struct CORE_EXPORT NGPhysicalLocation {
-  NGPhysicalLocation() = default;
+  NGPhysicalLocation() {}
   NGPhysicalLocation(LayoutUnit left, LayoutUnit top) : left(left), top(top) {}
   LayoutUnit left;
   LayoutUnit top;

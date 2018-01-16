@@ -90,12 +90,7 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
                     LayoutObject* = nullptr);
 
   // Append a Bidi control character, for LTR or RTL depends on the style.
-  void EnterBidiContext(LayoutObject*,
-                        const ComputedStyle*,
-                        UChar ltr_enter,
-                        UChar rtl_enter,
-                        UChar exit);
-  void EnterBidiContext(LayoutObject*, UChar enter, UChar exit);
+  void AppendBidiControl(const ComputedStyle*, UChar ltr, UChar rtl);
 
   void EnterBlock(const ComputedStyle*);
   void ExitBlock();
@@ -113,18 +108,15 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
   // white space is collapsed.
   OffsetMappingBuilder mapping_builder_;
 
-  struct BidiContext {
+  typedef struct OnExitNode {
     LayoutObject* node;
-    UChar enter;
-    UChar exit;
-  };
-  Vector<BidiContext> bidi_context_;
+    UChar character;
+  } OnExitNode;
+  Vector<OnExitNode> exits_;
 
-  enum class CollapsibleSpace { kNone, kSpace, kNewline };
+  enum class CollapsibleSpace { kNone, kSpace, kNewline, kSpaceNoWrap };
 
   CollapsibleSpace last_collapsible_space_ = CollapsibleSpace::kSpace;
-  bool auto_wrap_ = true;
-  bool last_auto_wrap_ = false;
   bool is_svgtext_ = false;
   bool has_bidi_controls_ = false;
   bool is_empty_inline_ = true;
@@ -153,8 +145,6 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
                                     LayoutText*);
 
   void AppendForcedBreak(const ComputedStyle*, LayoutObject*);
-  void AppendForcedBreakWithoutWhiteSpaceCollapsing(const ComputedStyle*,
-                                                    LayoutObject*);
 
   void RemoveTrailingCollapsibleSpaceIfExists();
   void RemoveTrailingCollapsibleSpace(unsigned);
@@ -162,6 +152,7 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
                                                 unsigned,
                                                 const ComputedStyle*);
 
+  void Enter(LayoutObject*, UChar);
   void Exit(LayoutObject*);
 };
 

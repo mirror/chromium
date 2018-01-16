@@ -100,7 +100,7 @@ class WorkerSchedulerImplTest : public ::testing::Test {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~WorkerSchedulerImplTest() override = default;
+  ~WorkerSchedulerImplTest() override {}
 
   void TearDown() override {
     // Check that all tests stop posting tasks.

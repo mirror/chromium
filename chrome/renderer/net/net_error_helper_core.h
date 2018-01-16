@@ -134,15 +134,14 @@ class NetErrorHelperCore {
                      bool is_visible);
   ~NetErrorHelperCore();
 
-  // Sets values in |pending_error_page_info_|. If |error_html| is not null, it
-  // initializes |error_html| with the HTML of an error page in response to
+  // Initializes |error_html| with the HTML of an error page in response to
   // |error|.  Updates internals state with the assumption the page will be
   // loaded immediately.
-  void PrepareErrorPage(FrameType frame_type,
-                        const error_page::Error& error,
-                        bool is_failed_post,
-                        bool is_ignoring_cache,
-                        std::string* error_html);
+  void GetErrorHTML(FrameType frame_type,
+                    const error_page::Error& error,
+                    bool is_failed_post,
+                    bool is_ignoring_cache,
+                    std::string* error_html);
 
   // These methods handle tracking the actual state of the page.
   void OnStartLoad(FrameType frame_type, PageType page_type);
@@ -209,13 +208,11 @@ class NetErrorHelperCore {
  private:
   struct ErrorPageInfo;
 
-  // Sets values in |pending_error_page_info| for a main frame error page. If
-  // |error_html| is not null, it also fetches the string containing the error
-  // page HTML, and sets error_html to it. Depending on
+  // Gets HTML for a main frame error page.  Depending on
   // |pending_error_page_info|, may use the navigation correction service, or
   // show a DNS probe error page.  May modify |pending_error_page_info|.
-  void PrepareErrorPageForMainFrame(ErrorPageInfo* pending_error_page_info,
-                                    std::string* error_html);
+  void GetErrorHtmlForMainFrame(ErrorPageInfo* pending_error_page_info,
+                                std::string* error_html);
 
   // Updates the currently displayed error page with a new error based on the
   // most recently received DNS probe result.  The page must have finished

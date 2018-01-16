@@ -260,7 +260,7 @@ void MojoDecryptorService::OnVideoDecoded(
   // to it until the other side is done with the memory.
   mojom::FrameResourceReleaserPtr releaser;
   if (frame->storage_type() == VideoFrame::STORAGE_MOJO_SHARED_BUFFER) {
-    mojo::MakeStrongBinding(std::make_unique<FrameResourceReleaserImpl>(frame),
+    mojo::MakeStrongBinding(base::MakeUnique<FrameResourceReleaserImpl>(frame),
                             mojo::MakeRequest(&releaser));
   }
 

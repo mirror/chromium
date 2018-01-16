@@ -26,9 +26,7 @@
 // https://drafts.csswg.org/cssom/#the-medialist-interface
 
 // TODO(foolip): MediaList should be an [ArrayClass].
-[
-    Exposed=Window
-] interface MediaList {
+interface MediaList {
     // TODO(foolip): [TreatNullAs=EmptyString] stringifier attribute DOMString mediaText;
     attribute DOMString? mediaText;
     readonly attribute unsigned long length;

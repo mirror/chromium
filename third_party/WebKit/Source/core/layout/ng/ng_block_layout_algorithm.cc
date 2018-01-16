@@ -18,6 +18,7 @@
 #include "core/layout/ng/ng_floats_utils.h"
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_fragmentation_utils.h"
+#include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_out_of_flow_layout_part.h"
@@ -108,7 +109,6 @@ NGBlockLayoutAlgorithm::NGBlockLayoutAlgorithm(NGBlockNode node,
                                                const NGConstraintSpace& space,
                                                NGBlockBreakToken* break_token)
     : NGLayoutAlgorithm(node, space, break_token),
-      is_resuming_(break_token && !break_token->IsBreakBefore()),
       exclusion_space_(new NGExclusionSpace(space.ExclusionSpace())) {}
 
 Optional<MinMaxSize> NGBlockLayoutAlgorithm::ComputeMinMaxSize() const {
@@ -294,7 +294,7 @@ scoped_refptr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   // If we are resuming from a break token our start border and padding is
   // within a previous fragment.
   intrinsic_block_size_ =
-      is_resuming_ ? LayoutUnit() : border_scrollbar_padding_.block_start;
+      BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
 
@@ -335,9 +335,8 @@ scoped_refptr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   // then the BFC offset is still {} as the margin strut from the constraint
   // space must also be empty.
   // If we are resuming layout from a break token the same rule applies. Margin
-  // struts cannot pass through break tokens (unless it's a break token before
-  // the first fragment (the one we're about to create)).
-  if (ConstraintSpace().IsNewFormattingContext() || is_resuming_) {
+  // struts cannot pass through break tokens.
+  if (ConstraintSpace().IsNewFormattingContext() || BreakToken()) {
     MaybeUpdateFragmentBfcOffset(input_bfc_block_offset);
     DCHECK(input_margin_strut.IsEmpty());
 #if DCHECK_IS_ON()
@@ -566,8 +565,7 @@ void NGBlockLayoutAlgorithm::HandleFloat(
 
   // If there is a break token for a float we must be resuming layout, we must
   // always know our position in the BFC.
-  DCHECK(!child_break_token || child_break_token->IsBreakBefore() ||
-         container_builder_.BfcOffset());
+  DCHECK(!child_break_token || container_builder_.BfcOffset());
 
   // No need to postpone the positioning if we know the correct offset.
   if (container_builder_.BfcOffset() || ConstraintSpace().FloatsBfcOffset()) {
@@ -634,9 +632,8 @@ bool NGBlockLayoutAlgorithm::HandleNewFormattingContext(
   //
   // This re-layout *must* produce a fragment and opportunity which fits within
   // the exclusion space.
-  if (opportunity.rect.start_offset.block_offset != child_bfc_offset_estimate ||
-      (is_fixed_inline_size &&
-       fragment_block_size > opportunity.rect.BlockSize())) {
+  if (opportunity.offset.block_offset != child_bfc_offset_estimate ||
+      (is_fixed_inline_size && fragment_block_size > opportunity.BlockSize())) {
     NGMarginStrut non_adjoining_margin_strut(
         previous_inflow_position->margin_strut);
     child_bfc_offset_estimate = child_data.bfc_offset_estimate.block_offset +
@@ -662,12 +659,12 @@ bool NGBlockLayoutAlgorithm::HandleNewFormattingContext(
 
   // Auto-margins are applied within the layout opportunity which fits.
   NGBoxStrut auto_margins;
-  ApplyAutoMargins(child_style, Style(), opportunity.rect.InlineSize(),
+  ApplyAutoMargins(child_style, Style(), opportunity.InlineSize(),
                    fragment.InlineSize(), &auto_margins);
 
-  NGBfcOffset child_bfc_offset(opportunity.rect.start_offset.line_offset +
-                                   auto_margins.LineLeft(direction),
-                               opportunity.rect.start_offset.block_offset);
+  NGBfcOffset child_bfc_offset(
+      opportunity.offset.line_offset + auto_margins.LineLeft(direction),
+      opportunity.offset.block_offset);
 
   NGLogicalOffset logical_offset = LogicalFromBfcOffsets(
       fragment, child_bfc_offset, ContainerBfcOffset(),
@@ -774,8 +771,8 @@ NGBlockLayoutAlgorithm::LayoutNewFormattingContext(
     // TODO(ikilpatrick): Investigate tables 'auto' size as this is subtly
     // different to normal 'auto' sizing behaviour.
     opportunity = tmp_exclusion_space.FindLayoutOpportunity(
-        origin_offset, child_available_size.inline_size, NGLogicalSize());
-    fixed_inline_size = ConstrainByMinMax(opportunity->rect.InlineSize(),
+        origin_offset, child_available_size, NGLogicalSize());
+    fixed_inline_size = ConstrainByMinMax(opportunity->InlineSize(),
                                           min_inline_size, max_inline_size);
   }
 
@@ -794,7 +791,7 @@ NGBlockLayoutAlgorithm::LayoutNewFormattingContext(
     // TODO(ikilpatrick): child_available_size is probably wrong as the area we
     // need to search shrinks by the origin_offset and LineRight margin.
     opportunity = tmp_exclusion_space.FindLayoutOpportunity(
-        origin_offset, child_available_size.inline_size,
+        origin_offset, child_available_size,
         NGLogicalSize{fragment.InlineSize(), fragment.BlockSize()});
   }
 
@@ -1286,8 +1283,8 @@ bool NGBlockLayoutAlgorithm::BreakBeforeChild(
     // sufficient to make the child fit right here in the current fragment.
     NGFragment fragment(ConstraintSpace().GetWritingMode(),
                         *layout_result.PhysicalFragment());
-    LayoutUnit space_left = space_available - block_offset;
-    space_shortage = fragment.BlockSize() - space_left;
+    LayoutUnit block_end_offset = block_offset + fragment.BlockSize();
+    space_shortage = block_end_offset - space_available;
   } else {
     // However, if space shortage was reported inside the child, use that. If we
     // broke inside the child, we didn't complete layout, so calculating space
@@ -1408,6 +1405,13 @@ NGBlockLayoutAlgorithm::BreakType NGBlockLayoutAlgorithm::BreakTypeBeforeChild(
     return fragment.BlockSize() > space_left ? SoftBreak : NoBreak;
   }
 
+  // If the block offset is past the fragmentainer boundary (or exactly at the
+  // boundary), no part of the fragment is going to fit in the current
+  // fragmentainer. Fragments may be pushed past the fragmentainer boundary by
+  // margins.
+  if (space_left <= LayoutUnit())
+    return SoftBreak;
+
   EBreakBetween break_before = JoinFragmentainerBreakValues(
       child.Style().BreakBefore(), layout_result.InitialBreakBefore());
   EBreakBetween break_between =
@@ -1418,13 +1422,6 @@ NGBlockLayoutAlgorithm::BreakType NGBlockLayoutAlgorithm::BreakTypeBeforeChild(
     if (has_processed_first_child_)
       return ForcedBreak;
   }
-
-  // If the block offset is past the fragmentainer boundary (or exactly at the
-  // boundary), no part of the fragment is going to fit in the current
-  // fragmentainer. Fragments may be pushed past the fragmentainer boundary by
-  // margins.
-  if (space_left <= LayoutUnit())
-    return SoftBreak;
 
   const auto* token = physical_fragment.BreakToken();
   if (!token || token->IsFinished())
@@ -1470,7 +1467,9 @@ NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(
 
   NGBoxStrut margins =
       ComputeMarginsFor(*space, child_style, ConstraintSpace());
-  if (ShouldIgnoreBlockStartMargin(ConstraintSpace(), child, child_break_token))
+
+  // The block-start margin should only be used in the first fragment.
+  if (child_break_token)
     margins.block_start = LayoutUnit();
 
   // TODO(ikilpatrick): Move the auto margins calculation for different writing
@@ -1556,12 +1555,6 @@ NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
     if (is_new_fc) {
       space_available -= child_data.bfc_offset_estimate.block_offset;
     }
-    // The policy regarding collapsing block-start margin with the fragmentainer
-    // block-start is the same throughout the entire fragmentainer (although it
-    // really only matters at the beginning of each fragmentainer, we don't need
-    // to bother to check whether we're actually at the start).
-    space_builder.SetSeparateLeadingFragmentainerMargins(
-        ConstraintSpace().HasSeparateLeadingFragmentainerMargins());
   }
   space_builder.SetFragmentainerBlockSize(
       ConstraintSpace().FragmentainerBlockSize());

@@ -38,7 +38,7 @@ namespace blink {
 LayoutImageResource::LayoutImageResource()
     : layout_object_(nullptr), cached_image_(nullptr) {}
 
-LayoutImageResource::~LayoutImageResource() = default;
+LayoutImageResource::~LayoutImageResource() {}
 
 void LayoutImageResource::Initialize(LayoutObject* layout_object) {
   DCHECK(!layout_object_);
@@ -92,20 +92,19 @@ bool LayoutImageResource::ImageHasRelativeSize() const {
   return cached_image_ && cached_image_->GetImage()->HasRelativeSize();
 }
 
-FloatSize LayoutImageResource::ImageSize(float multiplier) const {
+LayoutSize LayoutImageResource::ImageSize(float multiplier) const {
   if (!cached_image_)
-    return FloatSize();
-  FloatSize size(cached_image_->IntrinsicSize(
+    return LayoutSize();
+  LayoutSize size(cached_image_->IntrinsicSize(
       LayoutObject::ShouldRespectImageOrientation(layout_object_)));
   if (multiplier != 1 && !ImageHasRelativeSize()) {
     // Don't let images that have a width/height >= 1 shrink below 1 when
     // zoomed.
-    FloatSize minimum_size(size.Width() > 0 ? 1 : 0, size.Height() > 0 ? 1 : 0);
+    LayoutSize minimum_size(
+        size.Width() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit(),
+        size.Height() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit());
     size.Scale(multiplier);
-    if (size.Width() < minimum_size.Width())
-      size.SetWidth(minimum_size.Width());
-    if (size.Height() < minimum_size.Height())
-      size.SetHeight(minimum_size.Height());
+    size.ClampToMinimumSize(minimum_size);
   }
   if (layout_object_ && layout_object_->IsLayoutImage() && size.Width() &&
       size.Height())
@@ -137,7 +136,7 @@ void LayoutImageResource::UseBrokenImage() {
 }
 
 scoped_refptr<Image> LayoutImageResource::GetImage(
-    const LayoutSize& container_size) const {
+    const IntSize& container_size) const {
   if (!cached_image_)
     return Image::NullImage();
 

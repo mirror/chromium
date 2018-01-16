@@ -30,11 +30,23 @@ base::TimeDelta MidiService::TimestampToTimeDeltaDelay(double timestamp) {
   return delay;
 }
 
-MidiService::MidiService() : MidiService(std::make_unique<ManagerFactory>()) {}
+MidiService::MidiService(void)
+    : MidiService(std::make_unique<ManagerFactory>(), true) {}
 
+// TODO(toyoshim): Stop enforcing to disable dynamic instantiation mode for
+// testing once the mode is enabled by default.
 MidiService::MidiService(std::unique_ptr<ManagerFactory> factory)
+    : MidiService(std::move(factory), false) {}
+
+MidiService::MidiService(std::unique_ptr<ManagerFactory> factory,
+                         bool enable_dynamic_instantiation)
     : manager_factory_(std::move(factory)),
-      task_service_(std::make_unique<TaskService>()) {}
+      task_service_(std::make_unique<TaskService>()),
+      is_dynamic_instantiation_enabled_(enable_dynamic_instantiation) {
+  base::AutoLock lock(lock_);
+  if (!is_dynamic_instantiation_enabled_)
+    manager_ = manager_factory_->Create(this);
+}
 
 MidiService::~MidiService() {
   base::AutoLock lock(lock_);
@@ -48,11 +60,9 @@ MidiService::~MidiService() {
 void MidiService::Shutdown() {
   base::AutoLock lock(lock_);
   if (manager_) {
-    DCHECK(manager_destructor_runner_);
-    manager_destructor_runner_->PostTask(
-        FROM_HERE, base::BindOnce(&MidiManager::Shutdown,
-                                  base::Unretained(manager_.get())));
-    manager_destructor_runner_->DeleteSoon(FROM_HERE, std::move(manager_));
+    manager_->Shutdown();
+    if (is_dynamic_instantiation_enabled_)
+      manager_destructor_runner_->DeleteSoon(FROM_HERE, std::move(manager_));
     manager_destructor_runner_ = nullptr;
   }
 }
@@ -60,36 +70,35 @@ void MidiService::Shutdown() {
 void MidiService::StartSession(MidiManagerClient* client) {
   base::AutoLock lock(lock_);
   if (!manager_) {
+    DCHECK(is_dynamic_instantiation_enabled_);
     manager_ = manager_factory_->Create(this);
-    DCHECK(!manager_destructor_runner_);
-    manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get();
+    if (!manager_destructor_runner_)
+      manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get();
   }
   manager_->StartSession(client);
 }
 
-bool MidiService::EndSession(MidiManagerClient* client) {
+void MidiService::EndSession(MidiManagerClient* client) {
   base::AutoLock lock(lock_);
 
   // |client| does not seem to be valid.
   if (!manager_ || !manager_->EndSession(client))
-    return false;
+    return;
 
 // Do not destruct MidiManager on macOS to avoid a Core MIDI issue that
 // MIDIClientCreate starts failing with the OSStatus -50 after repeated calls
 // of MIDIClientDispose. It rarely happens, but once it starts, it will never
 // get back to be sane. See https://crbug.com/718140.
 #if !defined(OS_MACOSX)
-  if (!manager_->HasOpenSession()) {
+  if (is_dynamic_instantiation_enabled_ && !manager_->HasOpenSession()) {
     // MidiManager for each platform should be able to shutdown correctly even
-    // if following destruction happens in the middle of StartInitialization().
+    // if following Shutdown() call happens in the middle of
+    // StartInitialization() to support the dynamic instantiation feature.
     manager_->Shutdown();
     manager_.reset();
-    DCHECK(manager_destructor_runner_);
-    DCHECK(manager_destructor_runner_->BelongsToCurrentThread());
     manager_destructor_runner_ = nullptr;
   }
 #endif
-  return true;
 }
 
 void MidiService::DispatchSendMidiData(MidiManagerClient* client,

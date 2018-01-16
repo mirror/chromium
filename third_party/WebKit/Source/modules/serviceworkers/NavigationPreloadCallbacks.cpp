@@ -18,7 +18,7 @@ EnableNavigationPreloadCallbacks::EnableNavigationPreloadCallbacks(
   DCHECK(resolver_);
 }
 
-EnableNavigationPreloadCallbacks::~EnableNavigationPreloadCallbacks() = default;
+EnableNavigationPreloadCallbacks::~EnableNavigationPreloadCallbacks() {}
 
 void EnableNavigationPreloadCallbacks::OnSuccess() {
   if (!resolver_->GetExecutionContext() ||
@@ -41,8 +41,7 @@ GetNavigationPreloadStateCallbacks::GetNavigationPreloadStateCallbacks(
   DCHECK(resolver_);
 }
 
-GetNavigationPreloadStateCallbacks::~GetNavigationPreloadStateCallbacks() =
-    default;
+GetNavigationPreloadStateCallbacks::~GetNavigationPreloadStateCallbacks() {}
 
 void GetNavigationPreloadStateCallbacks::OnSuccess(
     const WebNavigationPreloadState& state) {
@@ -69,8 +68,7 @@ SetNavigationPreloadHeaderCallbacks::SetNavigationPreloadHeaderCallbacks(
   DCHECK(resolver_);
 }
 
-SetNavigationPreloadHeaderCallbacks::~SetNavigationPreloadHeaderCallbacks() =
-    default;
+SetNavigationPreloadHeaderCallbacks::~SetNavigationPreloadHeaderCallbacks() {}
 
 void SetNavigationPreloadHeaderCallbacks::OnSuccess() {
   if (!resolver_->GetExecutionContext() ||

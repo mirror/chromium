@@ -35,7 +35,6 @@
 #include "build/build_config.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/NodeWithIndex.h"
-#include "core/dom/Range.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/dom/Text.h"
 #include "core/frame/LocalFrameView.h"
@@ -315,8 +314,8 @@ class MockDocumentValidationMessageClient
 
 class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
  public:
-  MockWebApplicationCacheHost() = default;
-  ~MockWebApplicationCacheHost() override = default;
+  MockWebApplicationCacheHost() {}
+  ~MockWebApplicationCacheHost() override {}
 
   void SelectCacheWithoutManifest() override {
     without_manifest_was_called_ = true;
@@ -331,20 +330,6 @@ class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
 };
 
 }  // anonymous namespace
-
-TEST_F(DocumentTest, CreateRangeAdjustedToTreeScopeWithPositionInShadowTree) {
-  GetDocument().body()->SetInnerHTMLFromString(
-      "<div><select><option>012</option></div>");
-  Element* const select_element = GetDocument().QuerySelector("select");
-  const Position& position =
-      Position::AfterNode(*select_element->UserAgentShadowRoot());
-  Range* const range =
-      Document::CreateRangeAdjustedToTreeScope(GetDocument(), position);
-  EXPECT_EQ(range->startContainer(), select_element->parentNode());
-  EXPECT_EQ(static_cast<unsigned>(range->startOffset()),
-            select_element->NodeIndex());
-  EXPECT_TRUE(range->collapsed());
-}
 
 TEST_F(DocumentTest, DomTreeVersionForRemoval) {
   // ContainerNode::CollectChildrenAndRemoveFromOldParentWithCheck assumes this

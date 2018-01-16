@@ -56,15 +56,16 @@ class CORE_EXPORT KeyframeEffect final : public KeyframeEffectReadOnly {
                                 EventDelegate* = nullptr);
   // Web Animations API Bindings constructors.
   static KeyframeEffect* Create(
-      ScriptState*,
+      ExecutionContext*,
       Element*,
-      const ScriptValue&,
+      const DictionarySequenceOrDictionary& effect_input,
       const UnrestrictedDoubleOrKeyframeEffectOptions&,
       ExceptionState&);
-  static KeyframeEffect* Create(ScriptState*,
-                                Element*,
-                                const ScriptValue&,
-                                ExceptionState&);
+  static KeyframeEffect* Create(
+      ExecutionContext*,
+      Element*,
+      const DictionarySequenceOrDictionary& effect_input,
+      ExceptionState&);
 
   ~KeyframeEffect() override;
 

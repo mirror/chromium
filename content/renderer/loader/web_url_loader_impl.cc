@@ -32,6 +32,7 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_request.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
@@ -401,8 +402,6 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
           mojom::URLLoaderFactory* factory,
           mojom::KeepAliveHandlePtr keep_alive_handle);
 
-  ResourceDispatcher* resource_dispatcher() { return resource_dispatcher_; }
-  int request_id() const { return request_id_; }
   WebURLLoaderClient* client() const { return client_; }
   void set_client(WebURLLoaderClient* client) { client_ = client; }
 
@@ -485,32 +484,6 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
  private:
   scoped_refptr<Context> context_;
   DISALLOW_COPY_AND_ASSIGN(RequestPeerImpl);
-};
-
-// A sink peer that doesn't forward the data.
-class WebURLLoaderImpl::SinkPeer : public RequestPeer {
- public:
-  explicit SinkPeer(Context* context) : context_(context) {}
-
-  // RequestPeer implementation:
-  void OnUploadProgress(uint64_t position, uint64_t size) override {}
-  bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                          const ResourceResponseInfo& info) override {
-    return true;
-  }
-  void OnReceivedResponse(const ResourceResponseInfo& info) override {}
-  void OnDownloadedData(int len, int encoded_data_length) override {}
-  void OnReceivedData(std::unique_ptr<ReceivedData> data) override {}
-  void OnTransferSizeUpdated(int transfer_size_diff) override {}
-  void OnReceivedCachedMetadata(const char* data, int len) override {}
-  void OnCompletedRequest(
-      const network::URLLoaderCompletionStatus& status) override {
-    context_->resource_dispatcher()->Cancel(context_->request_id());
-  }
-
- private:
-  scoped_refptr<Context> context_;
-  DISALLOW_COPY_AND_ASSIGN(SinkPeer);
 };
 
 // WebURLLoaderImpl::Context --------------------------------------------------
@@ -659,11 +632,11 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   resource_request->is_external_request = request.IsExternalRequest();
   resource_request->cors_preflight_policy = request.GetCORSPreflightPolicy();
   resource_request->service_worker_mode =
-      static_cast<int>(GetServiceWorkerModeForWebURLRequest(request));
+      GetServiceWorkerModeForWebURLRequest(request);
   resource_request->fetch_request_mode = request.GetFetchRequestMode();
   resource_request->fetch_credentials_mode = request.GetFetchCredentialsMode();
   resource_request->fetch_redirect_mode =
-      static_cast<int>(GetFetchRedirectModeForWebURLRequest(request));
+      GetFetchRedirectModeForWebURLRequest(request);
   resource_request->fetch_integrity =
       GetFetchIntegrityForWebURLRequest(request);
   resource_request->fetch_request_context_type =
@@ -685,7 +658,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   }
   resource_request->report_raw_headers = request.ReportRawHeaders();
   resource_request->previews_state =
-      static_cast<int>(request.GetPreviewsState());
+      static_cast<PreviewsState>(request.GetPreviewsState());
 
   // PlzNavigate: The network request has already been made by the browser.
   // The renderer should request a stream which contains the body of the
@@ -724,20 +697,14 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     return;
   }
 
-  std::unique_ptr<RequestPeer> peer;
-  if (extra_data->download_to_network_cache_only()) {
-    peer = std::make_unique<SinkPeer>(this);
-  } else {
-    peer = std::make_unique<WebURLLoaderImpl::RequestPeerImpl>(this);
-  }
-
   TRACE_EVENT_WITH_FLOW0("loading", "WebURLLoaderImpl::Context::Start", this,
                          TRACE_EVENT_FLAG_FLOW_OUT);
   request_id_ = resource_dispatcher_->StartAsync(
       std::move(resource_request), request.RequestorID(), task_runner_,
       extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-      false /* is_sync */, std::move(peer), url_loader_factory_,
-      extra_data->TakeURLLoaderThrottles(),
+      false /* is_sync */,
+      std::make_unique<WebURLLoaderImpl::RequestPeerImpl>(this),
+      url_loader_factory_, extra_data->TakeURLLoaderThrottles(),
       std::move(url_loader_client_endpoints));
 
   if (defers_loading_ != NOT_DEFERRING)

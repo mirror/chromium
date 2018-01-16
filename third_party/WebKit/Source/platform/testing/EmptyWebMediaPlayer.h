@@ -14,7 +14,7 @@ namespace blink {
 // they don't care their behavior.
 class EmptyWebMediaPlayer : public WebMediaPlayer {
  public:
-  ~EmptyWebMediaPlayer() override = default;
+  ~EmptyWebMediaPlayer() override {}
 
   void Load(LoadType, const WebMediaPlayerSource&, CORSMode) override {}
   void Play() override {}

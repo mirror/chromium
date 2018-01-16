@@ -48,7 +48,7 @@ class HTMLImport : public GarbageCollectedFinalized<HTMLImport>,
  public:
   enum SyncMode { kSync = 0, kAsync = 1 };
 
-  virtual ~HTMLImport() = default;
+  virtual ~HTMLImport() {}
 
   // FIXME: Consider returning HTMLImportTreeRoot.
   HTMLImport* Root();

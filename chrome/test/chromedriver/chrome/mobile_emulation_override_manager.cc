@@ -68,7 +68,6 @@ Status MobileEmulationOverrideManager::ApplyOverrideIfNeeded() {
     if (status.IsError())
       return status;
 
-#if 0  // Temporarily disabled due to https://crbug.com/chromedriver/2144
     base::DictionaryValue emit_touch_for_mouse_params;
     emit_touch_for_mouse_params.SetBoolean("enabled", true);
     emit_touch_for_mouse_params.SetString("configuration", "mobile");
@@ -83,7 +82,6 @@ Status MobileEmulationOverrideManager::ApplyOverrideIfNeeded() {
             "'Emulation.setEmitTouchEventsForMouse' wasn't found") ==
             std::string::npos)
       return status;
-#endif
   }
 
   return Status(kOk);

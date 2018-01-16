@@ -18,7 +18,7 @@ class MODULES_EXPORT NavigatorContentUtilsClient
     : public GarbageCollectedFinalized<NavigatorContentUtilsClient> {
  public:
   static NavigatorContentUtilsClient* Create(WebLocalFrameImpl*);
-  virtual ~NavigatorContentUtilsClient() = default;
+  virtual ~NavigatorContentUtilsClient() {}
 
   virtual void RegisterProtocolHandler(const String& scheme,
                                        const KURL&,

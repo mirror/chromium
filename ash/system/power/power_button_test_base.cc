@@ -5,6 +5,7 @@
 #include "ash/system/power/power_button_test_base.h"
 
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
@@ -53,6 +54,14 @@ void PowerButtonTestBase::SetUp() {
   lock_state_controller_ = Shell::Get()->lock_state_controller();
   lock_state_test_api_ =
       std::make_unique<LockStateControllerTestApi>(lock_state_controller_);
+}
+
+void PowerButtonTestBase::TearDown() {
+  const Config config = Shell::GetAshConfig();
+  AshTestBase::TearDown();
+  // Mash/mus shuts down dbus after each test.
+  if (config == Config::CLASSIC)
+    chromeos::DBusThreadManager::Shutdown();
 }
 
 void PowerButtonTestBase::ResetPowerButtonController() {

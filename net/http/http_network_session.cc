@@ -135,10 +135,8 @@ HttpNetworkSession::Params::Params()
       quic_force_hol_blocking(false),
       quic_race_cert_verification(false),
       quic_estimate_initial_rtt(false),
-      quic_headers_include_h2_stream_dependency(false),
       enable_token_binding(false),
-      http_09_on_non_default_ports_enabled(false),
-      disable_idle_sockets_close_on_memory_pressure(false) {
+      http_09_on_non_default_ports_enabled(false) {
   quic_supported_versions.push_back(QUIC_VERSION_39);
 }
 
@@ -217,7 +215,6 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
           params.quic_allow_server_migration,
           params.quic_race_cert_verification,
           params.quic_estimate_initial_rtt,
-          params.quic_headers_include_h2_stream_dependency,
           params.quic_connection_options,
           params.quic_client_connection_options,
           params.enable_token_binding),
@@ -257,12 +254,8 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
   http_server_properties_->SetMaxServerConfigsStoredInProperties(
       params.quic_max_server_configs_stored_in_properties);
 
-  if (!params_.disable_idle_sockets_close_on_memory_pressure) {
-    memory_pressure_listener_.reset(
-        new base::MemoryPressureListener(base::BindRepeating(
-            &HttpNetworkSession::OnMemoryPressure, base::Unretained(this))));
-  }
-
+  memory_pressure_listener_.reset(new base::MemoryPressureListener(base::Bind(
+      &HttpNetworkSession::OnMemoryPressure, base::Unretained(this))));
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
@@ -500,13 +493,10 @@ ClientSocketPoolManager* HttpNetworkSession::GetSocketPoolManager(
 
 void HttpNetworkSession::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
-  DCHECK(!params_.disable_idle_sockets_close_on_memory_pressure);
-
   switch (memory_pressure_level) {
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
-      break;
-
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
+      break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
       CloseIdleConnections();
       break;

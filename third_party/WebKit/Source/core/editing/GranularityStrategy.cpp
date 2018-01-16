@@ -53,13 +53,13 @@ static VisiblePosition NextWordBound(const VisiblePosition& pos,
   return StartOfWord(pos, word_side);
 }
 
-GranularityStrategy::GranularityStrategy() = default;
+GranularityStrategy::GranularityStrategy() {}
 
-GranularityStrategy::~GranularityStrategy() = default;
+GranularityStrategy::~GranularityStrategy() {}
 
-CharacterGranularityStrategy::CharacterGranularityStrategy() = default;
+CharacterGranularityStrategy::CharacterGranularityStrategy() {}
 
-CharacterGranularityStrategy::~CharacterGranularityStrategy() = default;
+CharacterGranularityStrategy::~CharacterGranularityStrategy() {}
 
 SelectionStrategy CharacterGranularityStrategy::GetType() const {
   return SelectionStrategy::kCharacter;
@@ -89,7 +89,7 @@ DirectionGranularityStrategy::DirectionGranularityStrategy()
       granularity_(TextGranularity::kCharacter),
       offset_(0) {}
 
-DirectionGranularityStrategy::~DirectionGranularityStrategy() = default;
+DirectionGranularityStrategy::~DirectionGranularityStrategy() {}
 
 SelectionStrategy DirectionGranularityStrategy::GetType() const {
   return SelectionStrategy::kDirection;

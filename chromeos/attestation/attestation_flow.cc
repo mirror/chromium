@@ -91,9 +91,8 @@ std::string AttestationFlow::GetKeyNameForProfile(
     const std::string& request_origin) {
   switch (certificate_profile) {
     case PROFILE_ENTERPRISE_MACHINE_CERTIFICATE:
-      return kEnterpriseMachineKey;
     case PROFILE_ENTERPRISE_ENROLLMENT_CERTIFICATE:
-      return kEnterpriseEnrollmentKey;
+      return kEnterpriseMachineKey;
     case PROFILE_ENTERPRISE_USER_CERTIFICATE:
       return kEnterpriseUserKey;
     case PROFILE_CONTENT_PROTECTION_CERTIFICATE:

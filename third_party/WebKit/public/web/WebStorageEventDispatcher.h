@@ -61,7 +61,7 @@ class WebStorageEventDispatcher {
       WebStorageArea* source_area_instance);
 
  private:
-  WebStorageEventDispatcher() = default;
+  WebStorageEventDispatcher() {}
 };
 
 }  // namespace blink

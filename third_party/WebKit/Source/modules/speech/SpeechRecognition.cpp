@@ -174,7 +174,7 @@ SpeechRecognition::SpeechRecognition(Page* page, ExecutionContext* context)
   // changes.
 }
 
-SpeechRecognition::~SpeechRecognition() = default;
+SpeechRecognition::~SpeechRecognition() {}
 
 void SpeechRecognition::Trace(blink::Visitor* visitor) {
   visitor->Trace(grammars_);

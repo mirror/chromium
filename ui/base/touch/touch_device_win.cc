@@ -39,16 +39,14 @@ int GetAvailablePointerTypes() {
   // - The device has a touch screen.
   // - It is used as a tablet which means that it has no keyboard connected.
   // On Windows 10 it means that it is verifying with ConvertibleSlateMode.
-  if (base::win::IsDeviceUsedAsATablet(nullptr))
+  if (base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()))
     return POINTER_TYPE_COARSE;
 
-  bool is_touch_device_present = IsTouchDevicePresent();
-
-  if (GetSystemMetrics(SM_MOUSEPRESENT) == 0 && !is_touch_device_present)
+  if (GetSystemMetrics(SM_MOUSEPRESENT) == 0)
     return POINTER_TYPE_NONE;
 
   int available_pointer_types = POINTER_TYPE_FINE;
-  if (is_touch_device_present)
+  if (IsTouchDevicePresent())
     available_pointer_types |= POINTER_TYPE_COARSE;
 
   return available_pointer_types;
@@ -56,7 +54,7 @@ int GetAvailablePointerTypes() {
 
 // This method follows the same logic as above but with hover types.
 int GetAvailableHoverTypes() {
-  if (base::win::IsDeviceUsedAsATablet(nullptr))
+  if (base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()))
     return HOVER_TYPE_NONE;
 
   if (GetSystemMetrics(SM_MOUSEPRESENT) != 0)

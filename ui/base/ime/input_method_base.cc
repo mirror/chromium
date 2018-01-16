@@ -16,12 +16,6 @@
 
 namespace ui {
 
-ui::IMEEngineHandlerInterface* InputMethodBase::GetEngine() {
-  if (ui::IMEBridge::Get())
-    return ui::IMEBridge::Get()->GetCurrentEngineHandler();
-  return nullptr;
-}
-
 InputMethodBase::InputMethodBase()
     : sending_key_event_(false),
       delegate_(nullptr),
@@ -42,7 +36,8 @@ void InputMethodBase::SetDelegate(internal::InputMethodDelegate* delegate) {
 void InputMethodBase::OnFocus() {
   if (ui::IMEBridge::Get()) {
     ui::IMEBridge::Get()->SetInputContextHandler(this);
-    ui::IMEEngineHandlerInterface* engine = GetEngine();
+    ui::IMEEngineHandlerInterface* engine =
+        ui::IMEBridge::Get()->GetCurrentEngineHandler();
     if (engine)
       engine->MaybeSwitchEngine();
   }

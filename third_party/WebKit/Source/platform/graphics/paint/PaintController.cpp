@@ -472,19 +472,20 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
     }
   }
 
+#if DCHECK_IS_ON()
+  ShowDebugData();
+  LOG(ERROR) << id.client.DebugName() << " " << id.ToString();
+#endif
+
   // The display item newly appears while the client is not invalidated. The
   // situation alone (without other kinds of under-invalidations) won't corrupt
   // rendering, but causes AddItemToIndexIfNeeded() for all remaining display
   // item, which is not the best for performance. In this case, the caller
   // should fall back to repaint the display item.
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
-#if DCHECK_IS_ON()
-    ShowDebugData();
-#endif
     // Ensure our paint invalidation tests don't trigger the less performant
     // situation which should be rare.
-    CHECK(false) << "Can't find cached display item: " << id.client.DebugName()
-                 << " " << id.ToString();
+    CHECK(false) << "Can't find cached display item";
   }
   return kNotFound;
 }
@@ -918,11 +919,9 @@ void PaintController::GenerateRasterInvalidation(
   }
 
   auto reason = client.GetPaintInvalidationReason();
-  if ((reason != PaintInvalidationReason::kRectangle &&
-       reason != PaintInvalidationReason::kSelection &&
-       reason != PaintInvalidationReason::kIncremental) ||
-      // Need full invalidation when visual rect location changed.
-      old_item->VisualRect().Location() != new_item->VisualRect().Location()) {
+  if (reason != PaintInvalidationReason::kRectangle &&
+      reason != PaintInvalidationReason::kSelection &&
+      reason != PaintInvalidationReason::kIncremental) {
     GenerateFullRasterInvalidation(chunk, *old_item, *new_item);
     return;
   }

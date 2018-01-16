@@ -9,14 +9,14 @@
  */
 
 /** @enum {string} */
-const LockScreenUnlockType = {
+var LockScreenUnlockType = {
   VALUE_PENDING: 'value_pending',
   PASSWORD: 'password',
   PIN_PASSWORD: 'pin+password'
 };
 
 /** @polymerBehavior */
-const LockStateBehavior = {
+var LockStateBehavior = {
   properties: {
     /**
      * The currently selected unlock type.

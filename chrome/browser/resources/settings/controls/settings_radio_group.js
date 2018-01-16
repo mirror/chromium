@@ -34,7 +34,7 @@ Polymer({
 
   /** @private */
   prefChanged_: function() {
-    const pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (this.pref);
+    var pref = /** @type {!chrome.settingsPrivate.PrefObject} */ (this.pref);
     this.selected = Settings.PrefUtil.prefToString(pref);
   },
 

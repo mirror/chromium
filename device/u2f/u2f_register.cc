@@ -119,20 +119,19 @@ bool U2fRegister::CheckedForDuplicateRegistration() {
 void U2fRegister::OnTryDevice(bool is_duplicate_registration,
                               U2fReturnCode return_code,
                               const std::vector<uint8_t>& response_data) {
+  base::Optional<RegisterResponseData> response;
   switch (return_code) {
     case U2fReturnCode::SUCCESS:
       state_ = State::COMPLETE;
       if (is_duplicate_registration) {
-        std::move(completion_callback_)
-            .Run(U2fReturnCode::CONDITIONS_NOT_SATISFIED, base::nullopt);
+        return_code = U2fReturnCode::CONDITIONS_NOT_SATISFIED;
       } else {
         // TODO(kpaulhamus): Add fuzzers for the response parsers.
         // https://crbug.com/785957.
-        std::move(completion_callback_)
-            .Run(U2fReturnCode::SUCCESS,
-                 RegisterResponseData::CreateFromU2fRegisterResponse(
-                     relying_party_id_, std::move(response_data)));
+        response = RegisterResponseData::CreateFromU2fRegisterResponse(
+            relying_party_id_, std::move(response_data));
       }
+      std::move(completion_callback_).Run(return_code, std::move(response));
       break;
     case U2fReturnCode::CONDITIONS_NOT_SATISFIED:
       // Waiting for user touch, move on and try this device later.

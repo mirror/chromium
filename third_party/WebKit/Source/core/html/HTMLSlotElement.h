@@ -42,9 +42,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static HTMLSlotElement* Create(Document&);
-  static HTMLSlotElement* CreateUserAgentDefaultSlot(Document&);
-  static HTMLSlotElement* CreateUserAgentCustomAssignSlot(Document&);
+  DECLARE_NODE_FACTORY(HTMLSlotElement);
 
   const HeapVector<Member<Node>>& AssignedNodes() const;
   const HeapVector<Member<Node>>& GetDistributedNodes();
@@ -118,10 +116,6 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   void ClearAssignedNodes();
 
   static AtomicString NormalizeSlotName(const AtomicString&);
-
-  // For User-Agent Shadow DOM
-  static const AtomicString& UserAgentCustomAssignSlotName();
-  static const AtomicString& UserAgentDefaultSlotName();
 
   virtual void Trace(blink::Visitor*);
 

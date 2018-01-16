@@ -20,7 +20,7 @@ PerformanceServerTiming::PerformanceServerTiming(
       description_(description),
       shouldAllowTimingDetails_(shouldAllowTimingDetails) {}
 
-PerformanceServerTiming::~PerformanceServerTiming() = default;
+PerformanceServerTiming::~PerformanceServerTiming() {}
 
 String PerformanceServerTiming::name() const {
   return name_;

@@ -6,7 +6,7 @@
 
 namespace blink {
 
-WebMediaPlayerSource::WebMediaPlayerSource() = default;
+WebMediaPlayerSource::WebMediaPlayerSource() {}
 
 WebMediaPlayerSource::WebMediaPlayerSource(const WebURL& url) : url_(url) {}
 

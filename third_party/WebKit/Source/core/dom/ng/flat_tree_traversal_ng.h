@@ -38,11 +38,7 @@
 namespace blink {
 
 class ContainerNode;
-class ElementShadow;
 class Node;
-
-ElementShadow* ShadowFor(const Node& node);
-bool CanBeDistributedToV0InsertionPoint(const Node& node);
 
 // Flat tree version of |NodeTraversal|.
 //

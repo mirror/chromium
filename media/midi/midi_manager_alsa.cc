@@ -17,6 +17,7 @@
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/safe_strerror.h"
@@ -619,7 +620,7 @@ void MidiManagerAlsa::AlsaSeqState::ClientStart(int client_id,
                                                 snd_seq_client_type_t type) {
   ClientExit(client_id);
   clients_.insert(
-      std::make_pair(client_id, std::make_unique<Client>(client_name, type)));
+      std::make_pair(client_id, base::MakeUnique<Client>(client_name, type)));
   if (IsCardClient(type, client_id))
     ++card_client_count_;
 }
@@ -646,7 +647,7 @@ void MidiManagerAlsa::AlsaSeqState::PortStart(
   auto it = clients_.find(client_id);
   if (it != clients_.end())
     it->second->AddPort(port_id,
-                        std::make_unique<Port>(port_name, direction, midi));
+                        base::MakeUnique<Port>(port_name, direction, midi));
 }
 
 void MidiManagerAlsa::AlsaSeqState::PortExit(int client_id, int port_id) {
@@ -719,13 +720,13 @@ MidiManagerAlsa::AlsaSeqState::ToMidiPortState(const AlsaCardMap& alsa_cards) {
         PortDirection direction = port->direction();
         if (direction == PortDirection::kInput ||
             direction == PortDirection::kDuplex) {
-          midi_ports->push_back(std::make_unique<MidiPort>(
+          midi_ports->push_back(base::MakeUnique<MidiPort>(
               path, id, client_id, port_id, midi_device, client->name(),
               port->name(), manufacturer, version, MidiPort::Type::kInput));
         }
         if (direction == PortDirection::kOutput ||
             direction == PortDirection::kDuplex) {
-          midi_ports->push_back(std::make_unique<MidiPort>(
+          midi_ports->push_back(base::MakeUnique<MidiPort>(
               path, id, client_id, port_id, midi_device, client->name(),
               port->name(), manufacturer, version, MidiPort::Type::kOutput));
         }

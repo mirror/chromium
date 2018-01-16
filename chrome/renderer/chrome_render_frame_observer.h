@@ -29,8 +29,9 @@ class TranslateHelper;
 
 // This class holds the Chrome specific parts of RenderFrame, and has the same
 // lifetime.
-class ChromeRenderFrameObserver : public content::RenderFrameObserver,
-                                  public chrome::mojom::ChromeRenderFrame {
+class ChromeRenderFrameObserver
+    : public content::RenderFrameObserver,
+      public chrome::mojom::ChromeRenderFrame {
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
@@ -54,8 +55,7 @@ class ChromeRenderFrameObserver : public content::RenderFrameObserver,
   void OnDestruct() override;
 
   // IPC handlers
-  void OnSetIsPrerendering(prerender::PrerenderMode mode,
-                           const std::string& histogram_prefix);
+  void OnSetIsPrerendering(prerender::PrerenderMode mode);
   void OnRequestThumbnailForContextNode(
       int thumbnail_min_area_pixels,
       const gfx::Size& thumbnail_max_size_pixels,
@@ -76,9 +76,6 @@ class ChromeRenderFrameObserver : public content::RenderFrameObserver,
   void SetClientSidePhishingDetection(bool enable_phishing_detection) override;
   void GetWebApplicationInfo(
       const GetWebApplicationInfoCallback& callback) override;
-  void UpdateBrowserControlsState(content::BrowserControlsState constraints,
-                                  content::BrowserControlsState current,
-                                  bool animate) override;
 
   void OnRenderFrameObserverRequest(
       chrome::mojom::ChromeRenderFrameAssociatedRequest request);

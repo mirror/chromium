@@ -46,7 +46,7 @@ const char* NotificationManager::SupplementName() {
 NotificationManager::NotificationManager(ExecutionContext& execution_context)
     : Supplement<ExecutionContext>(execution_context) {}
 
-NotificationManager::~NotificationManager() = default;
+NotificationManager::~NotificationManager() {}
 
 mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus() {
   if (GetSupplementable()->IsContextDestroyed())

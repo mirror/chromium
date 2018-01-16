@@ -40,7 +40,7 @@
 
 namespace blink {
 
-DeprecatedStorageInfo::DeprecatedStorageInfo() = default;
+DeprecatedStorageInfo::DeprecatedStorageInfo() {}
 
 void DeprecatedStorageInfo::queryUsageAndQuota(
     ScriptState* script_state,

@@ -11,11 +11,19 @@
 
 namespace device {
 
-AuthenticatorData::AuthenticatorData(
-    std::string relying_party_id,
-    uint8_t flags,
-    std::vector<uint8_t> counter,
-    base::Optional<AttestedCredentialData> data)
+// static
+AuthenticatorData AuthenticatorData::Create(std::string relying_party_id,
+                                            uint8_t flags,
+                                            std::vector<uint8_t> counter,
+                                            AttestedCredentialData data) {
+  return AuthenticatorData(std::move(relying_party_id), flags,
+                           std::move(counter), std::move(data));
+}
+
+AuthenticatorData::AuthenticatorData(std::string relying_party_id,
+                                     uint8_t flags,
+                                     std::vector<uint8_t> counter,
+                                     AttestedCredentialData data)
     : relying_party_id_(std::move(relying_party_id)),
       flags_(flags),
       counter_(std::move(counter)),
@@ -38,12 +46,9 @@ std::vector<uint8_t> AuthenticatorData::SerializeToByteArray() const {
   u2f_parsing_utils::Append(&authenticator_data, rp_id_hash);
   authenticator_data.insert(authenticator_data.end(), flags_);
   u2f_parsing_utils::Append(&authenticator_data, counter_);
-  if (attested_data_) {
-    // Attestations are returned in registration responses but not in assertion
-    // responses.
-    u2f_parsing_utils::Append(&authenticator_data,
-                              attested_data_->SerializeAsBytes());
-  }
+  std::vector<uint8_t> attestation_bytes = attested_data_.SerializeAsBytes();
+  u2f_parsing_utils::Append(&authenticator_data, attestation_bytes);
+
   return authenticator_data;
 }
 

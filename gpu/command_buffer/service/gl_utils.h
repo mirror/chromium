@@ -19,8 +19,7 @@
 // Define this for extra GL error debugging (slower).
 // #define GL_ERROR_DEBUGGING
 #ifdef GL_ERROR_DEBUGGING
-#define CHECK_GL_ERROR()                                                \
-  do {                                                                  \
+#define CHECK_GL_ERROR() do {                                           \
     GLenum gl_error = glGetError();                                     \
     LOG_IF(ERROR, gl_error != GL_NO_ERROR) << "GL Error :" << gl_error; \
   } while (0)
@@ -39,7 +38,6 @@ struct Capabilities;
 namespace gles2 {
 
 class FeatureInfo;
-class Logger;
 
 struct CALayerSharedState {
   float opacity;
@@ -80,13 +78,21 @@ const char* GetServiceVersionString(const FeatureInfo* feature_info);
 const char* GetServiceShadingLanguageVersionString(
     const FeatureInfo* feature_info);
 
-void InitializeGLDebugLogging(bool log_non_errors, Logger* error_logger);
+void APIENTRY LogGLDebugMessage(GLenum source,
+                                GLenum type,
+                                GLuint id,
+                                GLenum severity,
+                                GLsizei length,
+                                const GLchar* message,
+                                GLvoid* user_param);
+
+void InitializeGLDebugLogging();
 
 bool ValidContextLostReason(GLenum reason);
 error::ContextLostReason GetContextLostReasonFromResetStatus(
     GLenum reset_status);
 
-}  // namespace gles2
-}  // namespace gpu
+} // gles2
+} // gpu
 
 #endif  // GPU_COMMAND_BUFFER_SERVICE_GL_UTILS_H_

@@ -45,6 +45,7 @@ namespace blink {
 
 class Document;
 class DocumentLoader;
+class EncodedFormData;
 class ExecutionContext;
 struct FetchInitiatorInfo;
 class LocalFrame;
@@ -130,6 +131,7 @@ class CORE_EXPORT InspectorNetworkAgent final
                    const AtomicString& method,
                    const KURL&,
                    bool async,
+                   scoped_refptr<EncodedFormData> body,
                    const HTTPHeaderMap& headers,
                    bool include_crendentials);
   void DidFailXHRLoading(ExecutionContext*,
@@ -198,8 +200,7 @@ class CORE_EXPORT InspectorNetworkAgent final
 
   // Called from frontend
   protocol::Response enable(Maybe<int> total_buffer_size,
-                            Maybe<int> resource_buffer_size,
-                            Maybe<int> max_post_data_size) override;
+                            Maybe<int> resource_buffer_size) override;
   protocol::Response disable() override;
   protocol::Response setUserAgentOverride(const String&) override;
   protocol::Response setExtraHTTPHeaders(
@@ -234,9 +235,6 @@ class CORE_EXPORT InspectorNetworkAgent final
       const String& origin,
       std::unique_ptr<protocol::Array<String>>* certificate) override;
 
-  protocol::Response getRequestPostData(const String& request_id,
-                                        String* post_data) override;
-
   // Called from other agents.
   protocol::Response GetResponseBody(const String& request_id,
                                      String* content,
@@ -248,9 +246,7 @@ class CORE_EXPORT InspectorNetworkAgent final
   bool CacheDisabled();
 
  private:
-  void Enable(int total_buffer_size,
-              int resource_buffer_size,
-              int max_post_data_size);
+  void Enable(int total_buffer_size, int resource_buffer_size);
   void WillSendRequestInternal(ExecutionContext*,
                                unsigned long identifier,
                                DocumentLoader*,
@@ -300,7 +296,6 @@ class CORE_EXPORT InspectorNetworkAgent final
   HeapHashSet<Member<XMLHttpRequest>> replay_xhrs_;
   HeapHashSet<Member<XMLHttpRequest>> replay_xhrs_to_be_deleted_;
   TaskRunnerTimer<InspectorNetworkAgent> remove_finished_replay_xhr_timer_;
-  int max_post_data_size_;
 };
 
 }  // namespace blink

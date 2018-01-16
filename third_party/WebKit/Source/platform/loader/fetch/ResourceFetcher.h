@@ -41,6 +41,7 @@
 #include "platform/loader/fetch/SubstituteData.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/text/StringHash.h"
 
 namespace blink {

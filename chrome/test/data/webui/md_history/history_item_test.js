@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const TEST_HISTORY_RESULTS = [
+var TEST_HISTORY_RESULTS = [
   createHistoryEntry('2016-03-16 10:00', 'http://www.google.com'),
   createHistoryEntry('2016-03-16 9:00', 'http://www.example.com'),
   createHistoryEntry('2016-03-16 7:01', 'http://www.badssl.com'),
@@ -11,14 +11,14 @@ const TEST_HISTORY_RESULTS = [
   createHistoryEntry('2016-03-15 11:00', 'http://www.example.com'),
 ];
 
-const SEARCH_HISTORY_RESULTS = [
+var SEARCH_HISTORY_RESULTS = [
   createSearchEntry('2016-03-16', "http://www.google.com"),
   createSearchEntry('2016-03-14 11:00', "http://calendar.google.com"),
   createSearchEntry('2016-03-14 10:00', "http://mail.google.com")
 ];
 
 suite('<history-item> unit test', function() {
-  let item;
+  var item;
 
   setup(function() {
     item = document.createElement('history-item');
@@ -27,7 +27,7 @@ suite('<history-item> unit test', function() {
   });
 
   test('click targets for selection', function() {
-    let selectionCount = 0;
+    var selectionCount = 0;
     item.addEventListener('history-checkbox-select', function() {
       selectionCount++;
     });
@@ -56,11 +56,11 @@ suite('<history-item> unit test', function() {
   });
 
   test('title changes with item', function() {
-    const time = item.$['time-accessed'];
+    var time = item.$['time-accessed'];
     assertEquals('', time.title);
 
     time.dispatchEvent(new CustomEvent('mouseover'));
-    const initialTitle = time.title;
+    var initialTitle = time.title;
     item.item = TEST_HISTORY_RESULTS[5];
     time.dispatchEvent(new CustomEvent('mouseover'));
     assertNotEquals(initialTitle, time.title);
@@ -68,7 +68,7 @@ suite('<history-item> unit test', function() {
 });
 
 suite('<history-item> integration test', function() {
-  let element;
+  var element;
 
   setup(function() {
     element = replaceApp().$.history;
@@ -78,7 +78,7 @@ suite('<history-item> integration test', function() {
     element.addNewResults(TEST_HISTORY_RESULTS);
     return PolymerTest.flushTasks().then(function() {
       // Check that the correct number of time gaps are inserted.
-      const items = Polymer.dom(element.root).querySelectorAll('history-item');
+      var items = Polymer.dom(element.root).querySelectorAll('history-item');
 
       assertTrue(items[0].hasTimeGap);
       assertTrue(items[1].hasTimeGap);
@@ -94,7 +94,7 @@ suite('<history-item> integration test', function() {
     element.searchedTerm = 'search';
 
     return PolymerTest.flushTasks().then(function() {
-      const items = Polymer.dom(element.root).querySelectorAll('history-item');
+      var items = Polymer.dom(element.root).querySelectorAll('history-item');
 
       assertTrue(items[0].hasTimeGap);
       assertFalse(items[1].hasTimeGap);
@@ -105,7 +105,7 @@ suite('<history-item> integration test', function() {
   test('separator insertion after deletion', function() {
     element.addNewResults(TEST_HISTORY_RESULTS);
     return PolymerTest.flushTasks().then(function() {
-      const items = Polymer.dom(element.root).querySelectorAll('history-item');
+      var items = Polymer.dom(element.root).querySelectorAll('history-item');
 
       element.removeItemsByIndex_([3]);
       assertEquals(5, element.historyData_.length);

@@ -8,12 +8,10 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/command_line.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/process.h"
 #include "content/public/child/child_thread.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/test/test_service.h"
@@ -79,11 +77,7 @@ std::unique_ptr<service_manager::Service> CreateTestService() {
 
 }  // namespace
 
-ShellContentUtilityClient::ShellContentUtilityClient() {
-  if (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kProcessType) == switches::kUtilityProcess)
-    network_service_test_helper_ = std::make_unique<NetworkServiceTestHelper>();
-}
+ShellContentUtilityClient::ShellContentUtilityClient() {}
 
 ShellContentUtilityClient::~ShellContentUtilityClient() {
 }
@@ -110,7 +104,7 @@ void ShellContentUtilityClient::RegisterServices(StaticServiceMap* services) {
 
 void ShellContentUtilityClient::RegisterNetworkBinders(
     service_manager::BinderRegistry* registry) {
-  network_service_test_helper_->RegisterNetworkBinders(registry);
+  network_service_test_helper_.RegisterNetworkBinders(registry);
 }
 
 }  // namespace content

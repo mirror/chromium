@@ -9,7 +9,7 @@
 
 namespace blink {
 
-CanvasDrawListener::~CanvasDrawListener() = default;
+CanvasDrawListener::~CanvasDrawListener() {}
 
 void CanvasDrawListener::SendNewFrame(
     sk_sp<SkImage> image,

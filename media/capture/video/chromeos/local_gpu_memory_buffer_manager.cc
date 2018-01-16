@@ -6,7 +6,8 @@
 
 #include <drm_fourcc.h>
 #include <xf86drm.h>
-#include <memory>
+
+#include "base/memory/ptr_util.h"
 
 namespace media {
 
@@ -217,7 +218,7 @@ LocalGpuMemoryBufferManager::CreateGpuMemoryBuffer(
     return std::unique_ptr<gfx::GpuMemoryBuffer>();
   }
 
-  return std::make_unique<GpuMemoryBufferImplGbm>(format, buffer_object);
+  return base::MakeUnique<GpuMemoryBufferImplGbm>(format, buffer_object);
 }
 
 void LocalGpuMemoryBufferManager::SetDestructionSyncToken(

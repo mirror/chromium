@@ -165,11 +165,6 @@ InspectorFrontendHostAPI.prototype = {
   /**
    * @param {string} fileSystemPath
    */
-  showItemInFolder(fileSystemPath) {},
-
-  /**
-   * @param {string} fileSystemPath
-   */
   removeFileSystem(fileSystemPath) {},
 
   requestFileSystems() {},

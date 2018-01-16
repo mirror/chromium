@@ -34,7 +34,7 @@ namespace blink {
 
 FakeWebPlugin::FakeWebPlugin(const WebPluginParams& params) {}
 
-FakeWebPlugin::~FakeWebPlugin() = default;
+FakeWebPlugin::~FakeWebPlugin() {}
 
 bool FakeWebPlugin::Initialize(WebPluginContainer* container) {
   container_ = container;

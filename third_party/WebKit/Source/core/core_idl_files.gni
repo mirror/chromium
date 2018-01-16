@@ -500,7 +500,6 @@ core_dependency_idl_files =
                     "frame/NavigatorAutomationInformation.idl",
                     "frame/NavigatorConcurrentHardware.idl",
                     "frame/NavigatorCookies.idl",
-                    "frame/NavigatorDeviceMemory.idl",
                     "frame/NavigatorID.idl",
                     "frame/NavigatorLanguage.idl",
                     "frame/NavigatorOnLine.idl",
@@ -546,7 +545,6 @@ core_callback_function_idl_files =
 core_dictionary_idl_files =
     get_path_info([
                     "animation/AnimationEffectTimingProperties.idl",
-                    "animation/BasePropertyIndexedKeyframe.idl",
                     "animation/ComputedTimingProperties.idl",
                     "animation/DocumentTimelineOptions.idl",
                     "animation/KeyframeAnimationOptions.idl",

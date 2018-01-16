@@ -21,7 +21,7 @@ class PLATFORM_EXPORT ContentSettingCallbacks {
   static std::unique_ptr<ContentSettingCallbacks> Create(
       base::OnceClosure allowed,
       base::OnceClosure denied);
-  virtual ~ContentSettingCallbacks() = default;
+  virtual ~ContentSettingCallbacks() {}
 
   void OnAllowed() { std::move(allowed_).Run(); }
   void OnDenied() { std::move(denied_).Run(); }

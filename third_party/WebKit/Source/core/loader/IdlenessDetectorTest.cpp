@@ -4,21 +4,23 @@
 
 #include "core/loader/IdlenessDetector.h"
 
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class IdlenessDetectorTest : public PageTestBase {
+class IdlenessDetectorTest : public ::testing::Test {
  protected:
   void SetUp() override {
     platform_time_ = 1;
     platform_->AdvanceClockSeconds(platform_time_);
-    PageTestBase::SetUp();
+    page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
   }
 
-  IdlenessDetector* Detector() { return GetFrame().GetIdlenessDetector(); }
+  IdlenessDetector* Detector() {
+    return page_holder_->GetFrame().GetIdlenessDetector();
+  }
 
   bool IsNetworkQuietTimerActive() {
     return Detector()->network_quiet_timer_.IsActive();
@@ -53,6 +55,7 @@ class IdlenessDetectorTest : public PageTestBase {
 
  private:
   double platform_time_;
+  std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
 TEST_F(IdlenessDetectorTest, NetworkQuietBasic) {

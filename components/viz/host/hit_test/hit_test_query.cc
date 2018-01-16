@@ -119,15 +119,9 @@ bool HitTestQuery::FindTargetInRegionForLocation(
       ShouldUseTouchBounds(event_source)
           ? (region->flags & mojom::kHitTestTouch) != 0u
           : (region->flags & mojom::kHitTestMouse) != 0u;
-  if (!match_touch_or_mouse_region)
-    return false;
-  if (region->flags & mojom::kHitTestMine) {
+  if ((region->flags & mojom::kHitTestMine) && match_touch_or_mouse_region) {
     target->frame_sink_id = region->frame_sink_id;
     target->location_in_target = location_in_target;
-    target->flags = region->flags;
-    return true;
-  }
-  if (region->flags & mojom::kHitTestAsk) {
     target->flags = region->flags;
     return true;
   }

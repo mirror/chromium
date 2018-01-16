@@ -24,6 +24,9 @@
             if (window.testRunner)
                 testRunner.dumpAsText();
 
+            // DOM objects with custom toString() functions
+            test(window.location, "Location");
+
             // Other DOM objects
             test(document.createElement('div'), "HTMLDivElement");
             test(document, "HTMLDocument");

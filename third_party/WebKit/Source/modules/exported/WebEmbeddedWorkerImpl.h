@@ -39,6 +39,7 @@
 #include "modules/serviceworkers/ServiceWorkerContentSettingsProxy.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
+#include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebEmbeddedWorker.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -93,11 +94,11 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void OnShadowPageInitialized() override;
 
  private:
-  // WebDevToolsAgentImpl::Client overrides.
-  bool SendProtocolMessage(int session_id,
+  // WebDevToolsAgentClient overrides.
+  void SendProtocolMessage(int session_id,
                            int call_id,
-                           const String&,
-                           const String&) override;
+                           const WebString&,
+                           const WebString&) override;
   void ResumeStartup() override;
   const WebString& GetInstrumentationToken() override;
 

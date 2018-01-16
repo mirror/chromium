@@ -139,7 +139,7 @@ Database::DatabaseTransactionTask::DatabaseTransactionTask(
     : DatabaseTask(transaction->GetDatabase(), nullptr),
       transaction_(transaction) {}
 
-Database::DatabaseTransactionTask::~DatabaseTransactionTask() = default;
+Database::DatabaseTransactionTask::~DatabaseTransactionTask() {}
 
 void Database::DatabaseTransactionTask::DoPerformTask() {
   transaction_->PerformNextStep();

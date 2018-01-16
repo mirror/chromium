@@ -70,10 +70,6 @@ enum PrivacyCAType {
 // as a DEVICE_KEY.
 CHROMEOS_EXPORT extern const char kEnterpriseMachineKey[];
 
-// A key name for the Enterprise Enrollmnent Key.  This key should always be
-// stored as a DEVICE_KEY.
-CHROMEOS_EXPORT extern const char kEnterpriseEnrollmentKey[];
-
 // A key name for the Enterprise User Key.  This key should always be stored as
 // a USER_KEY.
 CHROMEOS_EXPORT extern const char kEnterpriseUserKey[];

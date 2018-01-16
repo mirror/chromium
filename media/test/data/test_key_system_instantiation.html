@@ -31,7 +31,7 @@
       // Calls navigator.requestMediaKeySystemAccess() using the supplied codec
       // lists, and then verifies the result. Sets page title when done.
       function requestMediaKeySystemAccessAndVerifyConfiguration(
-          keySystem, initDataType, audioCapabilities, videoCapabilities, 
+          keySystem, initDataType, audioCodecList, videoCodecList,
           sessionType) {
         var configuration = {
             initDataTypes: [initDataType],
@@ -39,11 +39,15 @@
             videoCapabilities: [],
             sessionTypes: [sessionType]
         };
-        if (audioCapabilities !== null) {
-          configuration.audioCapabilities = audioCapabilities;
+        if (audioCodecList !== null) {
+          for (entry of audioCodecList) {
+            configuration.audioCapabilities.push({contentType: entry});
+          };
         }
-        if (videoCapabilities !== null) {
-          configuration.videoCapabilities = videoCapabilities;
+        if (videoCodecList !== null) {
+          for (entry of videoCodecList) {
+            configuration.videoCapabilities.push({contentType: entry});
+          };
         }
         // This is using promises which will run asynchronously.
         navigator.requestMediaKeySystemAccess(keySystem, [configuration])
@@ -59,7 +63,7 @@
                                  ", expected " + initDataType);
                 return;
               }
-              if (audioCapabilities !== null) {
+              if (audioCodecList !== null) {
                 var result =
                     verifyCapabilitiesAreEqual(allowedConfig.audioCapabilities,
                                             configuration.audioCapabilities);
@@ -71,7 +75,7 @@
                 setResultInTitle("audioCapabilities set when none expected");
                 return;
               }
-              if (videoCapabilities !== null) {
+              if (videoCodecList !== null) {
                 setResultInTitle(
                     verifyCapabilitiesAreEqual(allowedConfig.videoCapabilities,
                                             configuration.videoCapabilities));
@@ -86,10 +90,10 @@
       };
 
       function checkKeySystemWithMediaMimeType(keySystem, initDataType,
-          audioCapabilities, videoCapabilities, sessionType) {
+          audioCodecList, videoCodecList, sessionType) {
         setResultInTitle("");
         requestMediaKeySystemAccessAndVerifyConfiguration(keySystem,
-            initDataType, audioCapabilities, videoCapabilities, sessionType);
+            initDataType, audioCodecList, videoCodecList, sessionType);
       };
     </script>
   </body>

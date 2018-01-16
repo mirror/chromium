@@ -80,7 +80,7 @@ class GlTestSuite : public base::TestSuite {
     OzoneDrmTestService* service = service_ptr.get();
 
     connector_factory_ =
-        service_manager::TestConnectorFactory::CreateForUniqueService(
+        std::make_unique<service_manager::TestConnectorFactory>(
             std::move(service_ptr));
     connector_ = connector_factory_->CreateConnector();
 

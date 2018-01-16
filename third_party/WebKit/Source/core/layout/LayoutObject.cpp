@@ -75,6 +75,7 @@
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/layout_ng_table_cell.h"
@@ -134,7 +135,7 @@ LayoutObject::SetLayoutNeededForbiddenScope::~SetLayoutNeededForbiddenScope() {
 #endif
 
 struct SameSizeAsLayoutObject : DisplayItemClient {
-  ~SameSizeAsLayoutObject() override = default;  // Allocate vtable pointer.
+  ~SameSizeAsLayoutObject() override {}  // Allocate vtable pointer.
   void* pointers[5];
   Member<void*> members[1];
 #if DCHECK_IS_ON()
@@ -3248,9 +3249,10 @@ Element* LayoutObject::OffsetParent(const Element* base) const {
     // TODO(kochi): If |base| or |node| is nested deep in shadow roots, this
     // loop may get expensive, as isUnclosedNodeOf() can take up to O(N+M) time
     // (N and M are depths).
-    if (base && (node->IsClosedShadowHiddenFrom(*base) ||
-                 (node->IsInShadowTree() &&
-                  node->ContainingShadowRoot()->IsUserAgent()))) {
+    if (base &&
+        (node->IsClosedShadowHiddenFrom(*base) ||
+         (node->IsInShadowTree() && node->ContainingShadowRoot()->GetType() ==
+                                        ShadowRootType::kUserAgent))) {
       // If 'position: fixed' node is found while traversing up, terminate the
       // loop and return null.
       if (ancestor->IsFixedPositioned())

@@ -139,13 +139,6 @@ class ExtendedDesktopTest : public AshTestBase {
   ExtendedDesktopTest() = default;
   ~ExtendedDesktopTest() override = default;
 
-  void SetUp() override {
-    AshTestBase::SetUp();
-
-    // Shell hides the cursor by default; show it for these tests.
-    Shell::Get()->cursor_manager()->ShowCursor();
-  }
-
   views::Widget* CreateTestWidget(const gfx::Rect& bounds) {
     return CreateTestWidgetWithParentAndContext(nullptr, CurrentContext(),
                                                 bounds, false);

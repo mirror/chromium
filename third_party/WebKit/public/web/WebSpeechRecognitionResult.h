@@ -37,7 +37,7 @@ class SpeechRecognitionResult;
 
 class WebSpeechRecognitionResult {
  public:
-  WebSpeechRecognitionResult() = default;
+  WebSpeechRecognitionResult() {}
   WebSpeechRecognitionResult(const WebSpeechRecognitionResult& result) {
     Assign(result);
   }

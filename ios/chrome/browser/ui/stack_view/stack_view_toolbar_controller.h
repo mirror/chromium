@@ -12,7 +12,6 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class NewTabButton;
-@protocol ToolbarCommands;
 
 // Toolbar controller for the card stack view, adding a new tab button.
 @interface StackViewToolbarController : ToolbarController
@@ -20,7 +19,7 @@
 @property(nonatomic, readonly) NewTabButton* openNewTabButton;
 
 - (instancetype)initWithDispatcher:
-    (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher;
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 
 @end
 

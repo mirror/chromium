@@ -113,7 +113,7 @@ DOMFileSystemSync* WorkerGlobalScopeFileSystem::webkitRequestFileSystemSync(
 void WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemURL(
     WorkerGlobalScope& worker,
     const String& url,
-    V8EntryCallback* success_callback,
+    EntryCallback* success_callback,
     V8ErrorCallback* error_callback) {
   KURL completed_url = worker.CompleteURL(url);
   ExecutionContext* secure_context = worker.GetExecutionContext();
@@ -136,9 +136,9 @@ void WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemURL(
 
   LocalFileSystem::From(worker)->ResolveURL(
       &worker, completed_url,
-      ResolveURICallbacks::Create(
-          ResolveURICallbacks::OnDidGetEntryV8Impl::Create(success_callback),
-          ScriptErrorCallback::Wrap(error_callback), &worker));
+      ResolveURICallbacks::Create(success_callback,
+                                  ScriptErrorCallback::Wrap(error_callback),
+                                  &worker));
 }
 
 EntrySync* WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemSyncURL(
@@ -161,17 +161,18 @@ EntrySync* WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemSyncURL(
     return nullptr;
   }
 
-  EntryCallbacksSyncHelper* sync_helper = EntryCallbacksSyncHelper::Create();
+  EntrySyncCallbackHelper* resolve_url_helper =
+      EntrySyncCallbackHelper::Create();
   std::unique_ptr<AsyncFileSystemCallbacks> callbacks =
-      ResolveURICallbacks::Create(sync_helper->GetSuccessCallback(),
-                                  sync_helper->GetErrorCallback(), &worker);
+      ResolveURICallbacks::Create(resolve_url_helper->GetSuccessCallback(),
+                                  resolve_url_helper->GetErrorCallback(),
+                                  &worker);
   callbacks->SetShouldBlockUntilCompletion(true);
 
   LocalFileSystem::From(worker)->ResolveURL(&worker, completed_url,
                                             std::move(callbacks));
 
-  Entry* entry = sync_helper->GetResultOrThrow(exception_state);
-  return entry ? EntrySync::Create(entry) : nullptr;
+  return resolve_url_helper->GetResult(exception_state);
 }
 
 static_assert(static_cast<int>(WorkerGlobalScopeFileSystem::kTemporary) ==

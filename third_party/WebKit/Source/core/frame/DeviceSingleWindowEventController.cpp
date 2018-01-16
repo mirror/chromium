@@ -18,8 +18,7 @@ DeviceSingleWindowEventController::DeviceSingleWindowEventController(
   document.domWindow()->RegisterEventListenerObserver(this);
 }
 
-DeviceSingleWindowEventController::~DeviceSingleWindowEventController() =
-    default;
+DeviceSingleWindowEventController::~DeviceSingleWindowEventController() {}
 
 void DeviceSingleWindowEventController::DidUpdateData() {
   DispatchDeviceEvent(LastEvent());

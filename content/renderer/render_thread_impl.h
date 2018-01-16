@@ -42,7 +42,6 @@
 #include "content/common/storage_partition_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_thread.h"
-#include "content/public/renderer/url_loader_throttle_provider.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
 #include "content/renderer/layout_test_dependencies.h"
 #include "content/renderer/media/audio_ipc_factory.h"
@@ -198,8 +197,7 @@ class CONTENT_EXPORT RenderThreadImpl
       RendererBlinkPlatformImpl* blink_platform_impl);
 
   // Returns the task runner for the main thread where the RenderThread lives.
-  static scoped_refptr<base::SingleThreadTaskRunner>
-  DeprecatedGetMainTaskRunner();
+  static scoped_refptr<base::SingleThreadTaskRunner> GetMainTaskRunner();
 
   ~RenderThreadImpl() override;
   void Shutdown() override;
@@ -358,10 +356,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   ResourceDispatcher* resource_dispatcher() const {
     return resource_dispatcher_.get();
-  }
-
-  URLLoaderThrottleProvider* url_loader_throttle_provider() const {
-    return url_loader_throttle_provider_.get();
   }
 
 #if defined(OS_ANDROID)
@@ -545,9 +539,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   bool NeedsToRecordFirstActivePaint(int metric_type) const;
 
-  // Sets the current pipeline rendering color space.
-  void SetRenderingColorSpace(const gfx::ColorSpace& color_space);
-
  protected:
   RenderThreadImpl(
       const InProcessChildThreadParams& params,
@@ -656,7 +647,6 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<CacheStorageDispatcher> main_thread_cache_storage_dispatcher_;
   std::unique_ptr<FileSystemDispatcher> file_system_dispatcher_;
   std::unique_ptr<QuotaDispatcher> quota_dispatcher_;
-  std::unique_ptr<URLLoaderThrottleProvider> url_loader_throttle_provider_;
 
   // Used on the renderer and IPC threads.
   scoped_refptr<BlobMessageFilter> blob_message_filter_;
@@ -787,9 +777,6 @@ class CONTENT_EXPORT RenderThreadImpl
   bool is_elastic_overscroll_enabled_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
-
-  // Target rendering ColorSpace.
-  gfx::ColorSpace rendering_color_space_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:

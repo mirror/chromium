@@ -4,7 +4,6 @@
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
 
-#include "base/ios/ios_util.h"
 #import "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
@@ -22,7 +21,6 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view.h"
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
-#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -313,6 +311,8 @@
 
 - (void)setUpToolbarButtons {
   // Back button.
+  self.view.backButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
+                                        ToolbarComponentVisibilityRegularWidth;
   UILongPressGestureRecognizer* backHistoryLongPress =
       [[UILongPressGestureRecognizer alloc]
           initWithTarget:self
@@ -321,6 +321,9 @@
   [self addStandardActionsForButton:self.view.backButton];
 
   // Forward button.
+  self.view.forwardButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled |
+      ToolbarComponentVisibilityRegularWidth;
   UILongPressGestureRecognizer* forwardHistoryLongPress =
       [[UILongPressGestureRecognizer alloc]
           initWithTarget:self
@@ -329,42 +332,52 @@
   [self addStandardActionsForButton:self.view.forwardButton];
 
   // TabSwitcher button.
+  self.view.tabSwitchStripButton.visibilityMask =
+      ToolbarComponentVisibilityIPhoneOnly;
   [self addStandardActionsForButton:self.view.tabSwitchStripButton];
 
-  // TODO(crbug.com/799601): Delete this once its not needed.
-  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
-    UILongPressGestureRecognizer* tabSwitcherLongPress =
-        [[UILongPressGestureRecognizer alloc]
-            initWithTarget:self
-                    action:@selector(handleLongPress:)];
-    [self.view.tabSwitchStripButton addGestureRecognizer:tabSwitcherLongPress];
-  }
-
   // Tools menu button.
+  self.view.toolsMenuButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidth |
+      ToolbarComponentVisibilityRegularWidth;
   [self addStandardActionsForButton:self.view.toolsMenuButton];
 
   // Share button.
+  self.view.shareButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
   [self addStandardActionsForButton:self.view.shareButton];
 
   // Reload button.
+  self.view.reloadButton.visibilityMask =
+      ToolbarComponentVisibilityRegularWidth;
   [self addStandardActionsForButton:self.view.reloadButton];
 
   // Stop button.
+  self.view.stopButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
   self.view.stopButton.hiddenInCurrentState = YES;
   [self addStandardActionsForButton:self.view.stopButton];
 
   // Voice Search button.
+  self.view.voiceSearchButton.visibilityMask =
+      ToolbarComponentVisibilityRegularWidth;
   self.view.voiceSearchButton.enabled = NO;
   [self addStandardActionsForButton:self.view.voiceSearchButton];
 
   // Bookmark button.
+  self.view.bookmarkButton.visibilityMask =
+      ToolbarComponentVisibilityRegularWidth;
   [self addStandardActionsForButton:self.view.bookmarkButton];
 
   // Contract button.
+  self.view.contractButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidth |
+      ToolbarComponentVisibilityRegularWidth;
   self.view.contractButton.alpha = 0;
   self.view.contractButton.hidden = YES;
 
   // LocationBar LeadingButton
+  self.view.locationBarLeadingButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidth |
+      ToolbarComponentVisibilityRegularWidth;
   self.view.locationBarLeadingButton.alpha = 0;
   self.view.locationBarLeadingButton.hidden = YES;
 
@@ -384,9 +397,6 @@
     [self.dispatcher showTabHistoryPopupForBackwardHistory];
   } else if (gesture.view == self.view.forwardButton) {
     [self.dispatcher showTabHistoryPopupForForwardHistory];
-  } else if (gesture.view == self.view.tabSwitchStripButton) {
-    // TODO(crbug.com/799601): Delete this once its not needed.
-    [self.dispatcher displayTabSwitcher];
   }
 }
 
@@ -488,13 +498,6 @@
       [[self.view.tabSwitchStripButton titleLabel]
           setFont:[fontLoader boldFontOfSize:kFontSizeTenTabsOrMore]];
     }
-  }
-
-  // TODO(crbug.com/799601): Delete this once its not needed.
-  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
-    tabStripButtonTitle = @"M";
-    [[self.view.tabSwitchStripButton titleLabel]
-        setFont:[fontLoader boldFontOfSize:kFontSizeFewerThanTenTabs]];
   }
 
   [self.view.tabSwitchStripButton setTitle:tabStripButtonTitle

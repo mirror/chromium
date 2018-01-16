@@ -69,7 +69,8 @@ ui::BaseWindow* GetBaseWindowForWebContents(
 void LoadRiskData(
     uint64_t obfuscated_gaia_id,
     content::WebContents* web_contents,
-    const base::RepeatingCallback<void(const std::string&)>& callback) {
+    const base::RepeatingCallback<void(const std::string&)>& callback,
+    service_manager::Connector* connector) {
   // No easy way to get window bounds on Android, and that signal isn't very
   // useful anyway (given that we're also including the bounds of the web
   // contents).
@@ -89,8 +90,10 @@ void LoadRiskData(
 
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(content::ServiceManagerConnection::GetForProcess());
-  service_manager::Connector* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  if (!connector) {
+    connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  }
 
   risk::GetFingerprint(
       obfuscated_gaia_id, window_bounds, web_contents,

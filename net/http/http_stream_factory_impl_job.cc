@@ -208,7 +208,8 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
                             : GetSpdySessionKey(spdy_session_direct_,
                                                 proxy_info_.proxy_server(),
                                                 origin_url_,
-                                                request_info_.privacy_mode)),
+                                                request_info_.privacy_mode,
+                                                request_info_.socket_tag)),
       stream_type_(HttpStreamRequest::BIDIRECTIONAL_STREAM),
       init_connection_already_resumed_(false),
       ptr_factory_(this) {
@@ -402,16 +403,17 @@ SpdySessionKey HttpStreamFactoryImpl::Job::GetSpdySessionKey(
     bool spdy_session_direct,
     const ProxyServer& proxy_server,
     const GURL& origin_url,
-    PrivacyMode privacy_mode) {
+    PrivacyMode privacy_mode,
+    const SocketTag& socket_tag) {
   // In the case that we're using an HTTPS proxy for an HTTP url,
   // we look for a SPDY session *to* the proxy, instead of to the
   // origin server.
   if (!spdy_session_direct) {
     return SpdySessionKey(proxy_server.host_port_pair(), ProxyServer::Direct(),
-                          PRIVACY_MODE_DISABLED);
+                          PRIVACY_MODE_DISABLED, socket_tag);
   }
   return SpdySessionKey(HostPortPair::FromURL(origin_url), proxy_server,
-                        privacy_mode);
+                        privacy_mode, socket_tag);
 }
 
 bool HttpStreamFactoryImpl::Job::CanUseExistingSpdySession() const {
@@ -919,7 +921,7 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
   // that.
   if (CanUseExistingSpdySession()) {
     session_->spdy_session_pool()->push_promise_index()->ClaimPushedStream(
-        spdy_session_key_, origin_url_, request_info_, &existing_spdy_session_,
+        spdy_session_key_, origin_url_, &existing_spdy_session_,
         &pushed_stream_id_);
     if (!existing_spdy_session_) {
       existing_spdy_session_ =
@@ -1204,7 +1206,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   // time Job checked above.
   if (!existing_spdy_session_) {
     session_->spdy_session_pool()->push_promise_index()->ClaimPushedStream(
-        spdy_session_key_, origin_url_, request_info_, &existing_spdy_session_,
+        spdy_session_key_, origin_url_, &existing_spdy_session_,
         &pushed_stream_id_);
     // It is also possible that an HTTP/2 connection has been established since
     // last time Job checked above.

@@ -100,9 +100,9 @@ struct CompositorDependencies {
     // TODO(crbug.com/676384): Remove flag along with surface sequences.
     auto surface_lifetime_type =
         base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableSurfaceReferences)
-            ? viz::SurfaceManager::LifetimeType::SEQUENCES
-            : viz::SurfaceManager::LifetimeType::REFERENCES;
+            switches::kEnableSurfaceReferences)
+            ? viz::SurfaceManager::LifetimeType::REFERENCES
+            : viz::SurfaceManager::LifetimeType::SEQUENCES;
 
     // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
     // Gpu process, instead get the mojo pointer from the Gpu process.
@@ -480,6 +480,7 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       window_(NULL),
       surface_handle_(gpu::kNullSurfaceHandle),
       client_(client),
+      root_window_(root_window),
       needs_animate_(false),
       pending_frames_(0U),
       layer_tree_frame_sink_request_pending_(false),
@@ -491,8 +492,15 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
                                                     "CompositorImpl");
 #endif
   DCHECK(client);
-
-  SetRootWindow(root_window);
+  DCHECK(root_window);
+  DCHECK(root_window->GetLayer() == nullptr);
+  root_window->SetLayer(cc::Layer::Create());
+  readback_layer_tree_ = cc::Layer::Create();
+  readback_layer_tree_->SetHideLayerAndSubtree(true);
+  root_window->GetLayer()->AddChild(readback_layer_tree_);
+  root_window->AttachCompositor(this);
+  CreateLayerTreeHost();
+  resource_manager_.Init(host_->GetUIResourceManager());
 
   // Listen to display density change events and update painted device scale
   // factor accordingly.
@@ -501,15 +509,11 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
 
 CompositorImpl::~CompositorImpl() {
   display::Screen::GetScreen()->RemoveObserver(this);
-  DetachRootWindow();
+  root_window_->DetachCompositor();
+  root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
   SetSurface(NULL);
   GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
-}
-
-void CompositorImpl::DetachRootWindow() {
-  root_window_->DetachCompositor();
-  root_window_->SetLayer(nullptr);
 }
 
 bool CompositorImpl::IsForSubframe() {
@@ -524,50 +528,14 @@ ui::ResourceManager& CompositorImpl::GetResourceManager() {
   return resource_manager_;
 }
 
-void CompositorImpl::SetRootWindow(gfx::NativeWindow root_window) {
-  DCHECK(root_window);
-  DCHECK(!root_window->GetLayer());
-
-  // TODO(mthiesse): Right now we only support swapping the root window without
-  // a surface. If we want to support swapping with a surface we need to
-  // handle visibility, swapping begin frame sources, etc.
-  // These checks ensure we have no begin frame source, and that we don't need
-  // to register one on the new window.
-  DCHECK(!display_);
-  DCHECK(!window_);
-
-  scoped_refptr<cc::Layer> root_layer;
-  if (root_window_) {
-    root_layer = root_window_->GetLayer();
-    DetachRootWindow();
-  }
-
-  root_window_ = root_window;
-  root_window_->SetLayer(root_layer ? root_layer : cc::Layer::Create());
-  root_window_->GetLayer()->SetBounds(size_);
-  if (!readback_layer_tree_) {
-    readback_layer_tree_ = cc::Layer::Create();
-    readback_layer_tree_->SetHideLayerAndSubtree(true);
-  }
-  root_window->GetLayer()->AddChild(readback_layer_tree_);
-  root_window->AttachCompositor(this);
-  if (!host_) {
-    CreateLayerTreeHost();
-    resource_manager_.Init(host_->GetUIResourceManager());
-  }
-  host_->SetRootLayer(root_window_->GetLayer());
-  host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
-}
-
 void CompositorImpl::SetRootLayer(scoped_refptr<cc::Layer> root_layer) {
   if (subroot_layer_.get()) {
     subroot_layer_->RemoveFromParent();
-    subroot_layer_ = nullptr;
+    subroot_layer_ = NULL;
   }
   if (root_window_->GetLayer()) {
     subroot_layer_ = root_window_->GetLayer();
-    subroot_layer_->RemoveAllChildren();
-    subroot_layer_->AddChild(root_layer);
+    root_window_->GetLayer()->AddChild(root_layer);
   }
 }
 
@@ -632,9 +600,11 @@ void CompositorImpl::CreateLayerTreeHost() {
   params.mutator_host = animation_host_.get();
   host_ = cc::LayerTreeHost::CreateSingleThreaded(this, &params);
   DCHECK(!host_->IsVisible());
+  host_->SetRootLayer(root_window_->GetLayer());
   host_->SetFrameSinkId(frame_sink_id_);
   host_->SetViewportSize(size_);
   host_->SetDeviceScaleFactor(1);
+  host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
 
   if (needs_animate_)
     host_->SetNeedsAnimate();
@@ -662,7 +632,6 @@ void CompositorImpl::SetVisible(bool visible) {
     display_.reset();
   } else {
     host_->SetVisible(true);
-    has_submitted_frame_since_became_visible_ = false;
     if (layer_tree_frame_sink_request_pending_)
       HandlePendingLayerTreeFrameSinkRequest();
   }
@@ -907,7 +876,6 @@ bool CompositorImpl::SupportsETC1NonPowerOfTwo() const {
 void CompositorImpl::DidSubmitCompositorFrame() {
   TRACE_EVENT0("compositor", "CompositorImpl::DidSubmitCompositorFrame");
   pending_frames_++;
-  has_submitted_frame_since_became_visible_ = true;
 }
 
 void CompositorImpl::DidReceiveCompositorFrameAck() {
@@ -994,10 +962,6 @@ std::unique_ptr<ui::CompositorLock> CompositorImpl::GetCompositorLock(
     ui::CompositorLockClient* client,
     base::TimeDelta timeout) {
   return lock_manager_.GetCompositorLock(client, timeout);
-}
-
-bool CompositorImpl::IsDrawingFirstVisibleFrame() const {
-  return !has_submitted_frame_since_became_visible_;
 }
 
 void CompositorImpl::OnCompositorLockStateChanged(bool locked) {

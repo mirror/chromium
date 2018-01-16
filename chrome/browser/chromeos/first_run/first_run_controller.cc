@@ -26,7 +26,7 @@ size_t NONE_STEP_INDEX = std::numeric_limits<size_t>::max();
 
 // Instance of currently running controller, or NULL if controller is not
 // running now.
-chromeos::FirstRunController* g_first_run_controller_instance;
+chromeos::FirstRunController* g_instance;
 
 void RecordCompletion(chromeos::first_run::TutorialCompletion type) {
   UMA_HISTOGRAM_ENUMERATION("CrosFirstRun.TutorialCompletion",
@@ -42,28 +42,27 @@ FirstRunController::~FirstRunController() {}
 
 // static
 void FirstRunController::Start() {
-  if (g_first_run_controller_instance) {
+  if (g_instance) {
     LOG(WARNING) << "First-run tutorial is running already.";
     return;
   }
-  g_first_run_controller_instance = new FirstRunController();
-  g_first_run_controller_instance->Init();
+  g_instance = new FirstRunController();
+  g_instance->Init();
 }
 
 // static
 void FirstRunController::Stop() {
-  if (!g_first_run_controller_instance) {
+  if (!g_instance) {
     LOG(WARNING) << "First-run tutorial is not running.";
     return;
   }
-  g_first_run_controller_instance->Finalize();
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
-      FROM_HERE, g_first_run_controller_instance);
-  g_first_run_controller_instance = NULL;
+  g_instance->Finalize();
+  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, g_instance);
+  g_instance = NULL;
 }
 
 FirstRunController* FirstRunController::GetInstanceForTest() {
-  return g_first_run_controller_instance;
+  return g_instance;
 }
 
 FirstRunController::FirstRunController()

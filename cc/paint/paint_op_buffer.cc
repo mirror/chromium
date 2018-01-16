@@ -15,7 +15,6 @@
 #include "cc/paint/scoped_raster_flags.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "third_party/skia/include/core/SkSerialProcs.h"
 
@@ -278,9 +277,9 @@ PaintOp::SerializeOptions::SerializeOptions(
     TransferCacheSerializeHelper* transfer_cache,
     SkCanvas* canvas,
     const SkMatrix& original_ctm)
-    : transfer_cache(transfer_cache),
+    : image_provider(image_provider),
+      transfer_cache(transfer_cache),
       canvas(canvas),
-      image_provider(image_provider),
       original_ctm(original_ctm) {}
 
 size_t AnnotateOp::Serialize(const PaintOp* base_op,
@@ -357,6 +356,7 @@ size_t DrawImageOp::Serialize(const PaintOp* base_op,
                               void* memory,
                               size_t size,
                               const SerializeOptions& options) {
+  DCHECK(options.canvas);
   auto* op = static_cast<const DrawImageOp*>(base_op);
   PaintOpWriter helper(memory, size, options.transfer_cache,
                        options.image_provider);
@@ -376,6 +376,7 @@ size_t DrawImageRectOp::Serialize(const PaintOp* base_op,
                                   void* memory,
                                   size_t size,
                                   const SerializeOptions& options) {
+  DCHECK(options.canvas);
   auto* op = static_cast<const DrawImageRectOp*>(base_op);
   PaintOpWriter helper(memory, size, options.transfer_cache,
                        options.image_provider);
@@ -1283,17 +1284,6 @@ bool PaintOp::AreSkPointsEqual(const SkPoint& left, const SkPoint& right) {
 }
 
 // static
-bool PaintOp::AreSkPoint3sEqual(const SkPoint3& left, const SkPoint3& right) {
-  if (!AreEqualEvenIfNaN(left.fX, right.fX))
-    return false;
-  if (!AreEqualEvenIfNaN(left.fY, right.fY))
-    return false;
-  if (!AreEqualEvenIfNaN(left.fZ, right.fZ))
-    return false;
-  return true;
-}
-
-// static
 bool PaintOp::AreSkRectsEqual(const SkRect& left, const SkRect& right) {
   if (!AreEqualEvenIfNaN(left.fLeft, right.fLeft))
     return false;
@@ -1334,21 +1324,6 @@ bool PaintOp::AreSkMatricesEqual(const SkMatrix& left, const SkMatrix& right) {
   if (left.getType() != right.getType())
     return false;
 
-  return true;
-}
-
-// static
-bool PaintOp::AreSkFlattenablesEqual(SkFlattenable* left,
-                                     SkFlattenable* right) {
-  if (!right || !left)
-    return !right && !left;
-
-  sk_sp<SkData> left_data(SkValidatingSerializeFlattenable(left));
-  sk_sp<SkData> right_data(SkValidatingSerializeFlattenable(right));
-  if (left_data->size() != right_data->size())
-    return false;
-  if (!left_data->equals(right_data.get()))
-    return false;
   return true;
 }
 
@@ -1707,9 +1682,6 @@ void PaintOp::Raster(SkCanvas* canvas, const PlaybackParams& params) const {
 size_t PaintOp::Serialize(void* memory,
                           size_t size,
                           const SerializeOptions& options) const {
-  DCHECK(options.transfer_cache);
-  DCHECK(options.canvas);
-
   // Need at least enough room for a skip/type header.
   if (size < 4)
     return 0u;
@@ -2112,11 +2084,6 @@ void PaintOpBuffer::PlaybackFoldingIterator::FindNextOp() {
     if (!second)
       break;
 
-    if (second->GetType() == PaintOpType::Restore) {
-      // Drop a SaveLayerAlpha/Restore combo.
-      continue;
-    }
-
     // Find a nested drawing PaintOp to replace |second| if possible, while
     // holding onto the pointer to |second| in case we can't find a nested
     // drawing op to replace it with.
@@ -2124,6 +2091,11 @@ void PaintOpBuffer::PlaybackFoldingIterator::FindNextOp() {
 
     const PaintOp* third = nullptr;
     if (draw_op) {
+      if (draw_op->GetType() == PaintOpType::Restore) {
+        // Drop a SaveLayerAlpha/Restore combo.
+        continue;
+      }
+
       third = NextUnfoldedOp();
       if (third && third->GetType() == PaintOpType::Restore) {
         auto* save_op = static_cast<const SaveLayerAlphaOp*>(current_op_);

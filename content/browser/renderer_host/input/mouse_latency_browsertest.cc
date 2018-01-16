@@ -258,8 +258,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
 // MouseDown events in the case where no swap is generated.
 // Disabled on Android because we don't support synthetic mouse input on
 // Android (crbug.com/723618).
-// Disabled on Windows due to flakyness (https://crbug.com/800303).
-#if defined(OS_ANDROID) || defined(OS_WIN)
+#if defined(OS_ANDROID)
 #define MAYBE_MouseDownAndUpRecordedWithoutSwap \
   DISABLED_MouseDownAndUpRecordedWithoutSwap
 #else

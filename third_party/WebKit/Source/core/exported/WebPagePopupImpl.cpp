@@ -45,6 +45,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/loader/EmptyClients.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/FocusController.h"

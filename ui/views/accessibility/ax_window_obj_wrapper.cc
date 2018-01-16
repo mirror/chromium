@@ -10,7 +10,6 @@
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/aura_window_properties.h"
-#include "ui/accessibility/platform/ax_unique_id.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/window.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
@@ -58,7 +57,7 @@ void AXWindowObjWrapper::GetChildren(
 }
 
 void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
-  out_node_data->id = GetUniqueId().Get();
+  out_node_data->id = GetID();
   ui::AXRole role = window_->GetProperty(ui::kAXRoleOverride);
   if (role != ui::AX_ROLE_NONE)
     out_node_data->role = role;
@@ -93,8 +92,8 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   }
 }
 
-const ui::AXUniqueId& AXWindowObjWrapper::GetUniqueId() const {
-  return unique_id_;
+int32_t AXWindowObjWrapper::GetID() {
+  return AXAuraObjCache::GetInstance()->GetID(window_);
 }
 
 void AXWindowObjWrapper::OnWindowDestroyed(aura::Window* window) {

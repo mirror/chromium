@@ -29,6 +29,7 @@
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/test/test_file_system_context.h"
+#include "storage/common/data_element.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {

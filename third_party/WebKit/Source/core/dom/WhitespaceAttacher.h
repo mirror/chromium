@@ -34,7 +34,7 @@ class CORE_EXPORT WhitespaceAttacher {
   STACK_ALLOCATED();
 
  public:
-  WhitespaceAttacher() = default;
+  WhitespaceAttacher() {}
   ~WhitespaceAttacher();
 
   void DidVisitText(Text*);

@@ -107,7 +107,7 @@ class MediaKeySystemAccessInitializer final : public EncryptedMediaRequest {
       ScriptState*,
       const String& key_system,
       const HeapVector<MediaKeySystemConfiguration>& supported_configurations);
-  ~MediaKeySystemAccessInitializer() override = default;
+  ~MediaKeySystemAccessInitializer() override {}
 
   // EncryptedMediaRequest implementation.
   WebString KeySystem() const override { return key_system_; }

@@ -454,9 +454,9 @@
   base::string16 message;
   if (notification->UseOriginAsContextMessage()) {
     gfx::FontList font_list((gfx::Font([message_ font])));
-    message = url_formatter::ElideHost(notification->origin_url(), font_list,
-                                       message_center::kContextMessageViewWidth,
-                                       gfx::Typesetter::NATIVE);
+    message =
+        url_formatter::ElideHost(notification->origin_url(), font_list,
+                                 message_center::kContextMessageViewWidth);
   } else {
     message = notification->context_message();
   }
@@ -957,8 +957,8 @@
   int height = (lines + 1) * font_list.GetHeight();
 
   std::vector<base::string16> wrapped;
-  gfx::ElideRectangleTextForNativeUi(text, font_list, width, height,
-                                     gfx::WRAP_LONG_WORDS, &wrapped);
+  gfx::ElideRectangleText(text, font_list, width, height,
+                          gfx::WRAP_LONG_WORDS, &wrapped);
 
   // This could be possible when the input text contains only spaces.
   if (wrapped.empty())
@@ -969,10 +969,8 @@
     // too wide, that line will be further elided by the gfx::ElideText below.
     base::string16 last =
         wrapped[lines - 1] + base::UTF8ToUTF16(gfx::kEllipsis);
-    if (gfx::GetStringWidth(last, font_list, gfx::Typesetter::NATIVE) > width) {
-      last = gfx::ElideText(last, font_list, width, gfx::ELIDE_TAIL,
-                            gfx::Typesetter::NATIVE);
-    }
+    if (gfx::GetStringWidth(last, font_list) > width)
+      last = gfx::ElideText(last, font_list, width, gfx::ELIDE_TAIL);
     wrapped.resize(lines - 1);
     wrapped.push_back(last);
   }

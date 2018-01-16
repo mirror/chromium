@@ -14,7 +14,7 @@ const double kDefaultEmulationHeight = 1.6;
 XRFrameOfReference::XRFrameOfReference(XRSession* session, Type type)
     : XRCoordinateSystem(session), type_(type) {}
 
-XRFrameOfReference::~XRFrameOfReference() = default;
+XRFrameOfReference::~XRFrameOfReference() {}
 
 void XRFrameOfReference::UpdatePoseTransform(
     std::unique_ptr<TransformationMatrix> transform) {

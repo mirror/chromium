@@ -12,7 +12,7 @@
 namespace blink {
 namespace scheduler {
 
-TimeDomain::TimeDomain() = default;
+TimeDomain::TimeDomain() {}
 
 TimeDomain::~TimeDomain() {
   DCHECK(main_thread_checker_.CalledOnValidThread());

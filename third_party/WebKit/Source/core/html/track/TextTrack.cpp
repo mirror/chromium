@@ -97,7 +97,7 @@ TextTrack::TextTrack(const AtomicString& kind,
       rendered_track_index_(kInvalidTrackIndex),
       has_been_configured_(false) {}
 
-TextTrack::~TextTrack() = default;
+TextTrack::~TextTrack() {}
 
 bool TextTrack::IsValidKindKeyword(const String& value) {
   if (value == SubtitlesKeyword())
@@ -215,7 +215,9 @@ TextTrackCueList* TextTrack::activeCues() {
 void TextTrack::addCue(TextTrackCue* cue) {
   DCHECK(cue);
 
-  if (std::isnan(cue->startTime()) || std::isnan(cue->endTime()))
+  // TODO(93143): Add spec-compliant behavior for negative time values.
+  if (std::isnan(cue->startTime()) || std::isnan(cue->endTime()) ||
+      cue->startTime() < 0 || cue->endTime() < 0)
     return;
 
   // https://html.spec.whatwg.org/multipage/embedded-content.html#dom-texttrack-addcue

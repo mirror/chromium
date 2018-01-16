@@ -31,7 +31,6 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/WTFString.h"
-#include "third_party/WebKit/common/blob/blob_url_store.mojom-blink.h"
 
 namespace blink {
 
@@ -51,7 +50,7 @@ class PublicURLManager final
   // Generates a new Blob URL and registers the URLRegistrable to the
   // corresponding URLRegistry with the Blob URL. Returns the serialization
   // of the Blob URL.
-  String RegisterURL(URLRegistrable*);
+  String RegisterURL(ExecutionContext*, URLRegistrable*);
   // Revokes the given URL.
   void Revoke(const KURL&);
 
@@ -69,8 +68,6 @@ class PublicURLManager final
   URLToRegistryMap url_to_registry_;
 
   bool is_stopped_;
-
-  mojom::blink::BlobURLStoreAssociatedPtr url_store_;
 };
 
 }  // namespace blink

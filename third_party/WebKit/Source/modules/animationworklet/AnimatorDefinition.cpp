@@ -18,7 +18,7 @@ AnimatorDefinition::AnimatorDefinition(v8::Isolate* isolate,
     : constructor_(isolate, this, constructor),
       animate_(isolate, this, animate) {}
 
-AnimatorDefinition::~AnimatorDefinition() = default;
+AnimatorDefinition::~AnimatorDefinition() {}
 
 void AnimatorDefinition::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {

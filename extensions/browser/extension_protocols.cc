@@ -628,8 +628,12 @@ ExtensionProtocolHandler::MaybeCreateJob(
     }
   }
 
-  if (g_test_handler)
-    g_test_handler->Run(&directory_path, &relative_path);
+  if (g_test_handler) {
+    net::URLRequestJob* test_job =
+        g_test_handler->Run(request, network_delegate, relative_path);
+    if (test_job)
+      return test_job;
+  }
 
   ContentVerifyJob* verify_job = nullptr;
   ContentVerifier* verifier = extension_info_map_->content_verifier();
@@ -705,8 +709,8 @@ class FileLoaderObserver : public content::FileURLLoaderObserver {
         verify_job_->BytesRead(num_bytes_read, static_cast<const char*>(data));
     } else {
       net::Error net_error = net::FileErrorToNetError(read_result);
-      base::UmaHistogramSparse("ExtensionUrlRequest.OnReadCompleteError",
-                               net_error);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("ExtensionUrlRequest.OnReadCompleteError",
+                                  net_error);
     }
   }
 
@@ -807,9 +811,7 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
     const Extension* extension = registry->GetInstalledExtension(extension_id);
 
     if (!AllowExtensionResourceLoad(
-            request.url,
-            static_cast<content::ResourceType>(request.resource_type),
-            static_cast<ui::PageTransition>(request.transition_type),
+            request.url, request.resource_type, request.transition_type,
             process_host->GetID(), browser_context->IsOffTheRecord(), extension,
             util::IsIncognitoEnabled(extension_id, browser_context),
             registry->enabled_extensions(),
@@ -905,9 +907,6 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
         return;
       }
     }
-
-    if (g_test_handler)
-      g_test_handler->Run(&directory_path, &relative_path);
 
     if (!extension_info_map_) {
       extension_info_map_ =

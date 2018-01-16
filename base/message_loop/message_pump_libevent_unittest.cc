@@ -21,7 +21,6 @@
 #include "base/synchronization/waitable_event_watcher.h"
 #include "base/test/gtest_util.h"
 #include "base/third_party/libevent/event.h"
-#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -260,9 +259,9 @@ TEST_F(MessagePumpLibeventTest, QuitWatcher) {
   WaitableEventWatcher::EventCallback write_fd_task =
       BindOnce(&WriteFDWrapper, pipefds_[1], &buf, 1);
   io_loop()->task_runner()->PostTask(
-      FROM_HERE, BindOnce(IgnoreResult(&WaitableEventWatcher::StartWatching),
-                          Unretained(watcher.get()), &event,
-                          std::move(write_fd_task), io_loop()->task_runner()));
+      FROM_HERE,
+      BindOnce(IgnoreResult(&WaitableEventWatcher::StartWatching),
+               Unretained(watcher.get()), &event, std::move(write_fd_task)));
 
   // Queue |event| to signal on |loop|.
   loop.task_runner()->PostTask(

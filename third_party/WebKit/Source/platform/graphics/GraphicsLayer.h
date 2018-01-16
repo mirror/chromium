@@ -281,7 +281,6 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
 
   void SetOverscrollBehavior(const WebOverscrollBehavior&);
   void SetIsResizedByBrowserControls(bool);
-  void SetIsContainerForFixedPositionLayers(bool);
 
   void SetLayerState(PropertyTreeState&&, const IntPoint& layer_offset);
 

@@ -8,7 +8,7 @@
  * just provodes a summary and link to the subpage.
  */
 
-const bluetoothApis = window['bluetoothApis'] || {
+var bluetoothApis = bluetoothApis || {
   /**
    * Set this to provide a fake implementation for testing.
    * @type {Bluetooth}
@@ -71,7 +71,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        const map = new Map();
+        var map = new Map();
         if (settings.routes.BLUETOOTH_DEVICES) {
           map.set(
               settings.routes.BLUETOOTH_DEVICES.path,
@@ -206,7 +206,7 @@ Polymer({
     this.bluetoothToggleDisabled_ = true;
     this.bluetoothPrivate.setAdapterState(
         {powered: this.bluetoothToggleState_}, () => {
-          const error = chrome.runtime.lastError;
+          var error = chrome.runtime.lastError;
           if (error && error != 'Error setting adapter properties: powered') {
             console.error('Error enabling bluetooth: ' + error.message);
             return;

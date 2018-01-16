@@ -13,7 +13,6 @@
 #include "base/strings/stringprintf.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/app_list/app_list_constants.h"
-#include "ui/base/models/menu_model.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace app_list {
@@ -44,10 +43,6 @@ AppListTestModel::AppListTestItem::~AppListTestItem() {
 
 void AppListTestModel::AppListTestItem::Activate(int event_flags) {
   model_->ItemActivated(this);
-}
-
-ui::MenuModel* AppListTestModel::AppListTestItem::GetContextMenuModel() {
-  return nullptr;
 }
 
 const char* AppListTestModel::AppListTestItem::GetItemType() const {

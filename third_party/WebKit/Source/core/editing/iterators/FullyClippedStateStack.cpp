@@ -41,12 +41,10 @@ unsigned DepthCrossingShadowBoundaries(const Node& node) {
 }  // namespace
 
 template <typename Strategy>
-FullyClippedStateStackAlgorithm<Strategy>::FullyClippedStateStackAlgorithm() =
-    default;
+FullyClippedStateStackAlgorithm<Strategy>::FullyClippedStateStackAlgorithm() {}
 
 template <typename Strategy>
-FullyClippedStateStackAlgorithm<Strategy>::~FullyClippedStateStackAlgorithm() =
-    default;
+FullyClippedStateStackAlgorithm<Strategy>::~FullyClippedStateStackAlgorithm() {}
 
 template <typename Strategy>
 void FullyClippedStateStackAlgorithm<Strategy>::PushFullyClippedState(

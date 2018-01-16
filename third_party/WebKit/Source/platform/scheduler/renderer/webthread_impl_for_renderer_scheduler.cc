@@ -23,8 +23,7 @@ WebThreadImplForRendererScheduler::WebThreadImplForRendererScheduler(
       web_task_runner_(WebTaskRunnerImpl::Create(scheduler->DefaultTaskQueue(),
                                                  base::nullopt)) {}
 
-WebThreadImplForRendererScheduler::~WebThreadImplForRendererScheduler() =
-    default;
+WebThreadImplForRendererScheduler::~WebThreadImplForRendererScheduler() {}
 
 blink::PlatformThreadId WebThreadImplForRendererScheduler::ThreadId() const {
   return thread_id_;

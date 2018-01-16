@@ -52,11 +52,9 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void RegisterClientProcess(mojom::ClientProcessPtr,
                              mojom::ProcessType) override;
   void UnregisterClientProcess(mojom::ClientProcess*);
-  void RequestGlobalMemoryDump(
-      base::trace_event::MemoryDumpType,
-      base::trace_event::MemoryDumpLevelOfDetail,
-      const std::vector<std::string>& allocator_dump_names,
-      const RequestGlobalMemoryDumpCallback&) override;
+  void RequestGlobalMemoryDump(base::trace_event::MemoryDumpType,
+                               base::trace_event::MemoryDumpLevelOfDetail,
+                               const RequestGlobalMemoryDumpCallback&) override;
   void RequestGlobalMemoryDumpForPid(
       base::ProcessId,
       const RequestGlobalMemoryDumpForPidCallback&) override;

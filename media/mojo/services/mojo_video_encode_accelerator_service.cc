@@ -21,7 +21,7 @@ void MojoVideoEncodeAcceleratorService::Create(
     const CreateAndInitializeVideoEncodeAcceleratorCallback&
         create_vea_callback,
     const gpu::GpuPreferences& gpu_preferences) {
-  mojo::MakeStrongBinding(std::make_unique<MojoVideoEncodeAcceleratorService>(
+  mojo::MakeStrongBinding(base::MakeUnique<MojoVideoEncodeAcceleratorService>(
                               create_vea_callback, gpu_preferences),
                           std::move(request));
 }

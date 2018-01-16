@@ -56,21 +56,20 @@ cr.define('settings.WebsiteUsagePrivateApi', function() {
    * @type {Object} An instance of the polymer object defined above.
    * All data will be set here.
    */
-  const websiteUsagePolymerInstance = null;
+  var websiteUsagePolymerInstance = null;
 
   /**
    * @type {string} The host for which the usage total is being fetched.
    */
-  let hostName;
+  var hostName;
 
   /**
    * Encapsulates the calls between JS and C++ to fetch how much storage the
    * host is using.
    * Will update the data in |websiteUsagePolymerInstance|.
    */
-  const fetchUsageTotal = function(host) {
-    const instance =
-        settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
+  var fetchUsageTotal = function(host) {
+    var instance = settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
     if (instance != null)
       instance.websiteDataUsage = '';
 
@@ -85,9 +84,8 @@ cr.define('settings.WebsiteUsagePrivateApi', function() {
    *     is using.
    * @param {number} type The storage type.
    */
-  const returnUsageTotal = function(host, usage, type) {
-    const instance =
-        settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
+  var returnUsageTotal = function(host, usage, type) {
+    var instance = settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
     if (instance == null)
       return;
 
@@ -102,7 +100,7 @@ cr.define('settings.WebsiteUsagePrivateApi', function() {
    * @param {string} origin The origin to delete storage for.
    * @param {number} type The type of storage to delete.
    */
-  const clearUsage = function(origin, type) {
+  var clearUsage = function(origin, type) {
     chrome.send('clearUsage', [origin, type]);
   };
 
@@ -110,9 +108,8 @@ cr.define('settings.WebsiteUsagePrivateApi', function() {
    * Callback for when the usage has been cleared.
    * @param {string} origin The origin that the usage was fetched for.
    */
-  const onUsageCleared = function(origin) {
-    const instance =
-        settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
+  var onUsageCleared = function(origin) {
+    var instance = settings.WebsiteUsagePrivateApi.websiteUsagePolymerInstance;
     if (instance == null)
       return;
 

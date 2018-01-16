@@ -4,7 +4,6 @@
 
 #include "chrome/browser/chromeos/power/ml/user_activity_logging_controller.h"
 
-#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/system/devicetype.h"
 #include "components/session_manager/session_manager_types.h"
@@ -39,8 +38,7 @@ UserActivityLoggingController::UserActivityLoggingController() {
   user_activity_logger_ = std::make_unique<UserActivityLogger>(
       &user_activity_logger_delegate_, idle_event_notifier_.get(), detector,
       power_manager_client, session_manager,
-      mojo::MakeRequest(&video_observer_user_logger),
-      chromeos::ChromeUserManager::Get());
+      mojo::MakeRequest(&video_observer_user_logger));
 }
 
 UserActivityLoggingController::~UserActivityLoggingController() = default;

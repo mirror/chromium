@@ -4,14 +4,38 @@
 
 #include "core/layout/ng/geometry/ng_bfc_rect.h"
 
+#include "platform/wtf/text/WTFString.h"
+
 namespace blink {
 
 bool NGBfcRect::IsEmpty() const {
-  return start_offset == end_offset;
+  return size.IsEmpty() && offset.line_offset == LayoutUnit() &&
+         offset.block_offset == LayoutUnit();
+}
+
+bool NGBfcRect::IsContained(const NGBfcRect& other) const {
+  return !(LineEndOffset() <= other.LineStartOffset() ||
+           BlockEndOffset() <= other.BlockStartOffset() ||
+           LineStartOffset() >= other.LineEndOffset() ||
+           BlockStartOffset() >= other.BlockEndOffset());
 }
 
 bool NGBfcRect::operator==(const NGBfcRect& other) const {
-  return start_offset == other.start_offset && end_offset == other.end_offset;
+  return std::tie(other.offset, other.size) == std::tie(offset, size);
+}
+
+String NGBfcRect::ToString() const {
+  return IsEmpty()
+             ? "(empty)"
+             : String::Format("%sx%s at (%s,%s)",
+                              size.inline_size.ToString().Ascii().data(),
+                              size.block_size.ToString().Ascii().data(),
+                              offset.line_offset.ToString().Ascii().data(),
+                              offset.block_offset.ToString().Ascii().data());
+}
+
+std::ostream& operator<<(std::ostream& os, const NGBfcRect& value) {
+  return os << value.ToString();
 }
 
 }  // namespace blink

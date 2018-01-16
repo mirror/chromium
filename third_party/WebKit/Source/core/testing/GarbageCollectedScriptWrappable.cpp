@@ -10,6 +10,6 @@ GarbageCollectedScriptWrappable::GarbageCollectedScriptWrappable(
     const String& string)
     : string_(string) {}
 
-GarbageCollectedScriptWrappable::~GarbageCollectedScriptWrappable() = default;
+GarbageCollectedScriptWrappable::~GarbageCollectedScriptWrappable() {}
 
 }  // namespace blink

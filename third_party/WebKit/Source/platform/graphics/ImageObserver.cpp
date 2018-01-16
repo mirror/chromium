@@ -31,6 +31,6 @@
 
 namespace blink {
 
-ImageObserver::~ImageObserver() = default;
+ImageObserver::~ImageObserver() {}
 
 }  // namespace blink

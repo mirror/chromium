@@ -84,16 +84,13 @@ public class AccountFirstRunFragment
             }
         };
 
-        final Bundle arguments;
         if (forceAccountTo == null) {
-            arguments = AccountSigninView.createArgumentsForDefaultFlow(
-                    SigninAccessPoint.START_PAGE, isChildAccount);
+            mView.initFromSelectionPage(
+                    SigninAccessPoint.START_PAGE, isChildAccount, this, listener);
         } else {
-            arguments = AccountSigninView.createArgumentsForConfirmationFlow(
-                    SigninAccessPoint.START_PAGE, isChildAccount, forceAccountTo, false,
-                    AccountSigninView.UNDO_INVISIBLE);
+            mView.initFromConfirmationPage(SigninAccessPoint.START_PAGE, isChildAccount,
+                    forceAccountTo, false, AccountSigninView.UNDO_INVISIBLE, this, listener);
         }
-        mView.init(arguments, this, listener);
 
         RecordUserAction.record("MobileFre.SignInShown");
         RecordUserAction.record("Signin_Signin_FromStartPage");

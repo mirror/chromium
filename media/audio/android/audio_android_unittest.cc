@@ -420,7 +420,7 @@ class AudioAndroidOutputTest : public testing::Test {
   AudioAndroidOutputTest()
       : loop_(new base::MessageLoopForUI()),
         audio_manager_(AudioManager::CreateForTesting(
-            std::make_unique<TestAudioThread>())),
+            base::MakeUnique<TestAudioThread>())),
         audio_manager_device_info_(audio_manager_.get()),
         audio_output_stream_(NULL) {
     // Flush the message loop to ensure that AudioManager is fully initialized.

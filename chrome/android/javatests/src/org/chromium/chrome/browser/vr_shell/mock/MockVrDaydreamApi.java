@@ -70,7 +70,4 @@ public class MockVrDaydreamApi implements VrDaydreamApi {
     public boolean bootsToVr() {
         return false;
     }
-
-    @Override
-    public void close() {}
 }

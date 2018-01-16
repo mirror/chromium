@@ -6,7 +6,7 @@ package org.chromium.chrome.browser.widget.bottomsheet;
 
 import android.support.annotation.IntDef;
 
-import org.chromium.base.metrics.CachedMetrics;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -37,60 +37,6 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     private static final int OPENED_BY_STARTUP = 4;
     private static final int OPENED_BY_BOUNDARY = 5;
 
-    private static final CachedMetrics.TimesHistogramSample TIMES_FIRST_OPEN =
-            new CachedMetrics.TimesHistogramSample(
-                    "Android.ChromeHome.TimeToFirstOpen", TimeUnit.MILLISECONDS);
-
-    private static final CachedMetrics.TimesHistogramSample TIMES_BETWEEN_CLOSE_AND_NEXT_OPEN =
-            new CachedMetrics.TimesHistogramSample(
-                    "Android.ChromeHome.TimeBetweenCloseAndNextOpen", TimeUnit.MILLISECONDS);
-
-    private static final CachedMetrics.TimesHistogramSample TIMES_DURATION_OPEN =
-            new CachedMetrics.TimesHistogramSample(
-                    "Android.ChromeHome.DurationOpen", TimeUnit.MILLISECONDS);
-
-    private static final CachedMetrics.EnumeratedHistogramSample ENUMERATED_OPEN_REASON =
-            new CachedMetrics.EnumeratedHistogramSample(
-                    "Android.ChromeHome.OpenReason", OPENED_BY_BOUNDARY);
-
-    private static final CachedMetrics.ActionEvent ACTION_HALF_STATE =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.HalfState");
-    private static final CachedMetrics.ActionEvent ACTION_FULL_STATE =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.FullState");
-
-    private static final CachedMetrics.ActionEvent ACTION_SHOW_SUGGESTIONS =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ShowSuggestions");
-    private static final CachedMetrics.ActionEvent ACTION_SHOW_DOWNLOADS =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ShowDownloads");
-    private static final CachedMetrics.ActionEvent ACTION_SHOW_BOOKMARKS =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ShowBookmarks");
-    private static final CachedMetrics.ActionEvent ACTION_SHOW_HISTORY =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ShowHistory");
-    private static final CachedMetrics.ActionEvent ACTION_SHOW_INCOGNITO_HOME =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ShowIncognitoHome");
-
-    private static final CachedMetrics.ActionEvent ACTION_OPENED_BY_SWIPE =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.OpenedBySwipe");
-    private static final CachedMetrics.ActionEvent ACTION_OPENED_BY_OMNIBOX_FOCUS =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.OpenedByOmnibox");
-    private static final CachedMetrics.ActionEvent ACTION_OPENED_BY_NEW_TAB_CREATION =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.OpenedByNTP");
-    private static final CachedMetrics.ActionEvent ACTION_OPENED_BY_EXPAND_BUTTON =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.OpenedByExpandButton");
-    private static final CachedMetrics.ActionEvent ACTION_OPENED_BY_STARTUP =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.OpenedByStartup");
-
-    private static final CachedMetrics.ActionEvent ACTION_CLOSED_BY_SWIPE =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ClosedBySwipe");
-    private static final CachedMetrics.ActionEvent ACTION_CLOSED_BY_BACK_PRESS =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ClosedByBackPress");
-    private static final CachedMetrics.ActionEvent ACTION_CLOSED_BY_TAP_SCRIM =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ClosedByTapScrim");
-    private static final CachedMetrics.ActionEvent ACTION_CLOSED_BY_NAVIGATION =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.ClosedByNavigation");
-    private static final CachedMetrics.ActionEvent ACTION_CLOSED =
-            new CachedMetrics.ActionEvent("Android.ChromeHome.Closed");
-
     /** Whether the sheet is currently open. */
     private boolean mIsSheetOpen;
 
@@ -118,9 +64,12 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
         mLastOpenTime = System.currentTimeMillis();
 
         if (isFirstOpen) {
-            TIMES_FIRST_OPEN.record(mLastOpenTime - mCreationTime);
+            RecordHistogram.recordMediumTimesHistogram("Android.ChromeHome.TimeToFirstOpen",
+                    mLastOpenTime - mCreationTime, TimeUnit.MILLISECONDS);
         } else {
-            TIMES_BETWEEN_CLOSE_AND_NEXT_OPEN.record(mLastOpenTime - mLastCloseTime);
+            RecordHistogram.recordMediumTimesHistogram(
+                    "Android.ChromeHome.TimeBetweenCloseAndNextOpen",
+                    mLastOpenTime - mLastCloseTime, TimeUnit.MILLISECONDS);
         }
 
         recordSheetOpenReason(reason);
@@ -129,19 +78,19 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     @Override
     public void onSheetClosed(@StateChangeReason int reason) {
         mIsSheetOpen = false;
-
         recordSheetCloseReason(reason);
 
         mLastCloseTime = System.currentTimeMillis();
-        TIMES_DURATION_OPEN.record(mLastCloseTime - mLastOpenTime);
+        RecordHistogram.recordMediumTimesHistogram("Android.ChromeHome.DurationOpen",
+                mLastCloseTime - mLastOpenTime, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void onSheetStateChanged(int newState) {
         if (newState == BottomSheet.SHEET_STATE_HALF) {
-            ACTION_HALF_STATE.record();
+            RecordUserAction.record("Android.ChromeHome.HalfState");
         } else if (newState == BottomSheet.SHEET_STATE_FULL) {
-            ACTION_FULL_STATE.record();
+            RecordUserAction.record("Android.ChromeHome.FullState");
         }
     }
 
@@ -158,15 +107,15 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
         int contentType = newContent.getType();
 
         if (contentType == BottomSheetContentController.TYPE_SUGGESTIONS) {
-            ACTION_SHOW_SUGGESTIONS.record();
+            RecordUserAction.record("Android.ChromeHome.ShowSuggestions");
         } else if (contentType == BottomSheetContentController.TYPE_DOWNLOADS) {
-            ACTION_SHOW_DOWNLOADS.record();
+            RecordUserAction.record("Android.ChromeHome.ShowDownloads");
         } else if (contentType == BottomSheetContentController.TYPE_BOOKMARKS) {
-            ACTION_SHOW_BOOKMARKS.record();
+            RecordUserAction.record("Android.ChromeHome.ShowBookmarks");
         } else if (contentType == BottomSheetContentController.TYPE_HISTORY) {
-            ACTION_SHOW_HISTORY.record();
+            RecordUserAction.record("Android.ChromeHome.ShowHistory");
         } else if (contentType == BottomSheetContentController.TYPE_INCOGNITO_HOME) {
-            ACTION_SHOW_INCOGNITO_HOME.record();
+            RecordUserAction.record("Android.ChromeHome.ShowIncognitoHome");
         }
 
         if (contentType == BottomSheetContentController.TYPE_DOWNLOADS
@@ -189,23 +138,23 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
         switch (reason) {
             case StateChangeReason.SWIPE:
                 metricsReason = OPENED_BY_SWIPE;
-                ACTION_OPENED_BY_SWIPE.record();
+                RecordUserAction.record("Android.ChromeHome.OpenedBySwipe");
                 break;
             case StateChangeReason.OMNIBOX_FOCUS:
                 metricsReason = OPENED_BY_OMNIBOX_FOCUS;
-                ACTION_OPENED_BY_OMNIBOX_FOCUS.record();
+                RecordUserAction.record("Android.ChromeHome.OpenedByOmnibox");
                 break;
             case StateChangeReason.NEW_TAB:
                 metricsReason = OPENED_BY_NEW_TAB_CREATION;
-                ACTION_OPENED_BY_NEW_TAB_CREATION.record();
+                RecordUserAction.record("Android.ChromeHome.OpenedByNTP");
                 break;
             case StateChangeReason.EXPAND_BUTTON:
                 metricsReason = OPENED_BY_EXPAND_BUTTON;
-                ACTION_OPENED_BY_EXPAND_BUTTON.record();
+                RecordUserAction.record("Android.ChromeHome.OpenedByExpandButton");
                 break;
             case StateChangeReason.STARTUP:
                 metricsReason = OPENED_BY_STARTUP;
-                ACTION_OPENED_BY_STARTUP.record();
+                RecordUserAction.record("Android.ChromeHome.OpenedByStartup");
                 break;
             case StateChangeReason.NONE:
                 // Intentionally empty.
@@ -214,7 +163,8 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
                 assert false;
         }
 
-        ENUMERATED_OPEN_REASON.record(metricsReason);
+        RecordHistogram.recordEnumeratedHistogram(
+                "Android.ChromeHome.OpenReason", metricsReason, OPENED_BY_BOUNDARY);
     }
 
     /**
@@ -224,19 +174,19 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     private void recordSheetCloseReason(@StateChangeReason int reason) {
         switch (reason) {
             case StateChangeReason.SWIPE:
-                ACTION_CLOSED_BY_SWIPE.record();
+                RecordUserAction.record("Android.ChromeHome.ClosedBySwipe");
                 break;
             case StateChangeReason.BACK_PRESS:
-                ACTION_CLOSED_BY_BACK_PRESS.record();
+                RecordUserAction.record("Android.ChromeHome.ClosedByBackPress");
                 break;
             case StateChangeReason.TAP_SCRIM:
-                ACTION_CLOSED_BY_TAP_SCRIM.record();
+                RecordUserAction.record("Android.ChromeHome.ClosedByTapScrim");
                 break;
             case StateChangeReason.NAVIGATION:
-                ACTION_CLOSED_BY_NAVIGATION.record();
+                RecordUserAction.record("Android.ChromeHome.ClosedByNavigation");
                 break;
             case StateChangeReason.NONE:
-                ACTION_CLOSED.record();
+                RecordUserAction.record("Android.ChromeHome.Closed");
                 break;
             default:
                 assert false;

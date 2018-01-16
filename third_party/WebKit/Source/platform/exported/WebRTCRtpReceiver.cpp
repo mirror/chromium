@@ -6,6 +6,6 @@
 
 namespace blink {
 
-WebRTCRtpReceiver::~WebRTCRtpReceiver() = default;
+WebRTCRtpReceiver::~WebRTCRtpReceiver() {}
 
 }  // namespace blink

@@ -26,10 +26,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/browser/render_frame_host.h"
-#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/child_process_host.h"
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
@@ -105,11 +102,7 @@ DataReductionProxyMetricsObserver::DataReductionProxyMetricsObserver()
       num_network_resources_(0),
       original_network_bytes_(0),
       network_bytes_proxied_(0),
-      network_bytes_(0),
-      process_id_(base::kNullProcessId),
-      renderer_memory_usage_kb_(0),
-      render_process_host_id_(content::ChildProcessHost::kInvalidUniqueID),
-      weak_ptr_factory_(this) {}
+      network_bytes_(0) {}
 
 DataReductionProxyMetricsObserver::~DataReductionProxyMetricsObserver() {}
 
@@ -142,15 +135,6 @@ DataReductionProxyMetricsObserver::OnCommit(
   if (!data || !data->used_data_reduction_proxy())
     return STOP_OBSERVING;
   data_ = data->DeepCopy();
-  process_id_ = base::GetProcId(navigation_handle->GetWebContents()
-                                    ->GetMainFrame()
-                                    ->GetProcess()
-                                    ->GetHandle());
-  render_process_host_id_ = navigation_handle->GetWebContents()
-                                ->GetMainFrame()
-                                ->GetProcess()
-                                ->GetID();
-
   // DataReductionProxy page loads should only occur on HTTP navigations.
   DCHECK(!navigation_handle->GetURL().SchemeIsCryptographic());
   DCHECK_EQ(data_->request_url(), navigation_handle->GetURL());
@@ -323,21 +307,12 @@ void DataReductionProxyMetricsObserver::SendPingback(
     parse_stop = timing.parse_timing->parse_stop;
   }
 
-  // If a crash happens, report the host |render_process_host_id_| to the
-  // pingback client. Otherwise report kInvalidUniqueID.
-  int host_id = content::ChildProcessHost::kInvalidUniqueID;
-  if (info.page_end_reason ==
-      page_load_metrics::PageEndReason::END_RENDER_PROCESS_GONE) {
-    host_id = render_process_host_id_;
-  }
-
   DataReductionProxyPageLoadTiming data_reduction_proxy_timing(
       timing.navigation_start, response_start, load_event_start,
       first_image_paint, first_contentful_paint,
       experimental_first_meaningful_paint,
       parse_blocked_on_script_load_duration, parse_stop, network_bytes_,
-      original_network_bytes_, app_background_occurred, opted_out_,
-      renderer_memory_usage_kb_, host_id);
+      original_network_bytes_, app_background_occurred, opted_out_);
   GetPingbackClient()->SendPingback(*data_, data_reduction_proxy_timing);
 }
 
@@ -357,12 +332,6 @@ void DataReductionProxyMetricsObserver::OnLoadEventStart(
   RECORD_FOREGROUND_HISTOGRAMS_FOR_SUFFIX(
       info, data_, timing.document_timing->load_event_start,
       ::internal::kHistogramLoadEventFiredSuffix);
-  if (process_id_ != base::kNullProcessId) {
-    auto callback = base::BindRepeating(
-        &DataReductionProxyMetricsObserver::ProcessMemoryDump,
-        weak_ptr_factory_.GetWeakPtr());
-    RequestProcessDump(process_id_, callback);
-  }
 }
 
 void DataReductionProxyMetricsObserver::OnFirstLayout(
@@ -482,26 +451,6 @@ void DataReductionProxyMetricsObserver::OnEventOccurred(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (event_key == PreviewsInfoBarDelegate::OptOutEventKey())
     opted_out_ = true;
-}
-
-void DataReductionProxyMetricsObserver::ProcessMemoryDump(
-    bool success,
-    memory_instrumentation::mojom::GlobalMemoryDumpPtr memory_dump) {
-  if (!success || !memory_dump)
-    return;
-  // There should only be one process in the dump.
-  DCHECK_EQ(1u, memory_dump->process_dumps.size());
-  DCHECK_EQ(process_id_, memory_dump->process_dumps[0]->pid);
-  renderer_memory_usage_kb_ = static_cast<int64_t>(
-      memory_dump->process_dumps[0]->os_dump->private_footprint_kb);
-}
-
-void DataReductionProxyMetricsObserver::RequestProcessDump(
-    base::ProcessId pid,
-    memory_instrumentation::MemoryInstrumentation::RequestGlobalDumpCallback
-        callback) {
-  memory_instrumentation::MemoryInstrumentation::GetInstance()
-      ->RequestGlobalDumpForPid(pid, callback);
 }
 
 }  // namespace data_reduction_proxy

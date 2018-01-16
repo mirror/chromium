@@ -16,7 +16,8 @@ using base::android::ScopedJavaLocalRef;
 namespace offline_pages {
 namespace android {
 
-bool OfflinePagesDownloadManagerBridge::IsDownloadManagerInstalled() {
+// Returns true if ADM is available on this phone.
+bool OfflinePagesDownloadManagerBridge::IsAndroidDownloadManagerInstalled() {
   JNIEnv* env = base::android::AttachCurrentThread();
   jboolean is_installed =
       Java_OfflinePagesDownloadManagerBridge_isAndroidDownloadManagerInstalled(
@@ -24,7 +25,9 @@ bool OfflinePagesDownloadManagerBridge::IsDownloadManagerInstalled() {
   return is_installed;
 }
 
-int64_t OfflinePagesDownloadManagerBridge::AddCompletedDownload(
+// Returns the ADM ID of the download, which we will place in the offline
+// pages database as part of the offline page item.
+long OfflinePagesDownloadManagerBridge::addCompletedDownload(
     const std::string& title,
     const std::string& description,
     const std::string& path,
@@ -44,11 +47,13 @@ int64_t OfflinePagesDownloadManagerBridge::AddCompletedDownload(
   ScopedJavaLocalRef<jstring> j_referer =
       base::android::ConvertUTF8ToJavaString(env, referer);
 
-  return Java_OfflinePagesDownloadManagerBridge_addCompletedDownload(
+  long count = Java_OfflinePagesDownloadManagerBridge_addCompletedDownload(
       env, j_title, j_description, j_path, length, j_uri, j_referer);
+  return count;
 }
 
-int OfflinePagesDownloadManagerBridge::Remove(
+// Returns the number of pages removed.
+int OfflinePagesDownloadManagerBridge::remove(
     const std::vector<int64_t>& android_download_manager_ids) {
   JNIEnv* env = base::android::AttachCurrentThread();
   // Build a JNI array with our ID data.

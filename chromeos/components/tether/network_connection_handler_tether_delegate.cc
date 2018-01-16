@@ -73,9 +73,7 @@ void NetworkConnectionHandlerTetherDelegate::DisconnectFromNetwork(
       base::Bind(&NetworkConnectionHandlerTetherDelegate::OnRequestSuccess,
                  weak_ptr_factory_.GetWeakPtr(), request_num),
       base::Bind(&NetworkConnectionHandlerTetherDelegate::OnRequestError,
-                 weak_ptr_factory_.GetWeakPtr(), request_num),
-      TetherSessionCompletionLogger::SessionCompletionReason::
-          USER_DISCONNECTED);
+                 weak_ptr_factory_.GetWeakPtr(), request_num));
 }
 
 void NetworkConnectionHandlerTetherDelegate::ConnectToNetwork(

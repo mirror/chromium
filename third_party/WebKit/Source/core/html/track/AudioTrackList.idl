@@ -5,8 +5,7 @@
 // https://html.spec.whatwg.org/#audiotracklist
 
 [
-    RuntimeEnabled=AudioVideoTracks,
-    Exposed=Window
+    RuntimeEnabled=AudioVideoTracks
 ] interface AudioTrackList : EventTarget {
   readonly attribute unsigned long length;
   getter AudioTrack (unsigned long index);

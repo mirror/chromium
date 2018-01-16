@@ -13,8 +13,10 @@
 
 namespace blink {
 
+class DictionarySequenceOrDictionary;
 class Element;
 class ExceptionState;
+class ExecutionContext;
 class PropertyHandle;
 class SampledEffect;
 class ScriptState;
@@ -35,17 +37,18 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
                                         EventDelegate* = nullptr);
   // Web Animations API Bindings constructors.
   static KeyframeEffectReadOnly* Create(
-      ScriptState*,
+      ExecutionContext*,
       Element*,
-      const ScriptValue&,
+      const DictionarySequenceOrDictionary& effect_input,
       const UnrestrictedDoubleOrKeyframeEffectOptions&,
       ExceptionState&);
-  static KeyframeEffectReadOnly* Create(ScriptState*,
-                                        Element*,
-                                        const ScriptValue&,
-                                        ExceptionState&);
+  static KeyframeEffectReadOnly* Create(
+      ExecutionContext*,
+      Element*,
+      const DictionarySequenceOrDictionary& effect_input,
+      ExceptionState&);
 
-  ~KeyframeEffectReadOnly() override = default;
+  ~KeyframeEffectReadOnly() override {}
 
   bool IsKeyframeEffectReadOnly() const override { return true; }
 

@@ -3,10 +3,6 @@
 # Copyright 2016 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-#
-# TODO(509038): Delete this file after generate.py has been deleted, as it will
-# no longer be needed. There is a copy of this file in wpt/ that tests the
-# generate.py file in that directory.
 """Test that the set of gen-* files is the same as the generated files."""
 
 import fnmatch

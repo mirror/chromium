@@ -76,7 +76,6 @@ source_set("toolbar_ui") {
     "//ios/chrome/browser/ui/fullscreen:new_fullscreen_ui",
     "//ios/chrome/browser/ui/history_popup/requirements",
     "//ios/chrome/browser/ui/toolbar/public",
-    "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
     "//ios/chrome/browser/ui/util",
     "//ios/chrome/browser/ui/voice",
     "//ios/chrome/common",
@@ -94,8 +93,6 @@ source_set("toolbar_components_ui") {
     "toolbar_button_factory.mm",
     "toolbar_button_tints.h",
     "toolbar_button_tints.mm",
-    "toolbar_button_visibility_configuration.h",
-    "toolbar_button_visibility_configuration.mm",
     "toolbar_component_options.h",
     "toolbar_configuration.h",
     "toolbar_configuration.mm",
@@ -104,7 +101,6 @@ source_set("toolbar_components_ui") {
     "toolbar_style.h",
     "toolbar_tools_menu_button.h",
     "toolbar_tools_menu_button.mm",
-    "toolbar_type.h",
   ]
   deps = [
     "//base",
@@ -115,7 +111,6 @@ source_set("toolbar_components_ui") {
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/toolbar:resource_macros",
     "//ios/chrome/browser/ui/toolbar/public",
-    "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/images",
     "//ui/base",

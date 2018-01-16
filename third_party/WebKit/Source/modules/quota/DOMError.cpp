@@ -27,7 +27,7 @@
 
 namespace blink {
 
-DOMError::~DOMError() = default;
+DOMError::~DOMError() {}
 
 DOMError::DOMError(const String& name) : name_(name) {}
 

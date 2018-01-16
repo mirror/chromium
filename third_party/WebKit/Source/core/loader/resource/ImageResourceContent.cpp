@@ -16,22 +16,19 @@
 #include "platform/graphics/BitmapImage.h"
 #include "platform/graphics/PlaceholderImage.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
-#include "platform/network/HTTPParsers.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Vector.h"
 #include "v8/include/v8.h"
 
 namespace blink {
-
 namespace {
-
 class NullImageResourceInfo final
     : public GarbageCollectedFinalized<NullImageResourceInfo>,
       public ImageResourceInfo {
   USING_GARBAGE_COLLECTED_MIXIN(NullImageResourceInfo);
 
  public:
-  NullImageResourceInfo() = default;
+  NullImageResourceInfo() {}
 
   void Trace(blink::Visitor* visitor) override {
     ImageResourceInfo::Trace(visitor);
@@ -69,31 +66,6 @@ class NullImageResourceInfo final
   const KURL url_;
   const ResourceResponse response_;
 };
-
-int64_t EstimateOriginalImageSizeForPlaceholder(
-    const ResourceResponse& response) {
-  if (response.HttpHeaderField("chrome-proxy-content-transform") ==
-      "empty-image") {
-    const String& str = response.HttpHeaderField("chrome-proxy");
-    size_t index = str.Find("ofcl=");
-    if (index != kNotFound) {
-      bool ok = false;
-      int bytes = str.Substring(index + (sizeof("ofcl=") - 1)).ToInt(&ok);
-      if (ok && bytes >= 0)
-        return bytes;
-    }
-  }
-
-  int64_t first = -1, last = -1, length = -1;
-  if (response.HttpStatusCode() == 206 &&
-      ParseContentRangeHeaderFor206(response.HttpHeaderField("content-range"),
-                                    &first, &last, &length) &&
-      length >= 0) {
-    return length;
-  }
-
-  return response.EncodedBodyLength();
-}
 
 }  // namespace
 
@@ -443,9 +415,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         if (image_ && !image_->IsNull()) {
           IntSize dimensions = image_->Size();
           ClearImage();
-          image_ = PlaceholderImage::Create(
-              this, dimensions,
-              EstimateOriginalImageSizeForPlaceholder(info_->GetResponse()));
+          image_ = PlaceholderImage::Create(this, dimensions);
         }
       }
 

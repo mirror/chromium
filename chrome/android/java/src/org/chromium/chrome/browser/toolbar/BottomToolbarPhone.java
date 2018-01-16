@@ -66,7 +66,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
             // focused, the new content description is read immediately.
             if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
 
-            if (isNativeLibraryReady()) mLocationBar.updateLoadingState(true);
+            mLocationBar.updateLoadingState(true);
             updateContentDescription();
         }
 
@@ -742,7 +742,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
         super.onNativeLibraryReady();
 
         mNewTabButton.setIsModern();
-        if (mBottomSheet != null) mLocationBar.updateLoadingState(true);
     }
 
     @Override

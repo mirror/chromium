@@ -497,7 +497,7 @@ struct Complicated {
   static int objects_constructed_;
 
  private:
-  Complicated() = delete;
+  Complicated();
 };
 
 int Complicated::objects_constructed_ = 0;

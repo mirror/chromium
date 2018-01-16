@@ -42,14 +42,7 @@
 # Flaky: https://crbug.com/776424.
 -RenderWidgetHostViewAuraOverscrollTest.*
 -RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest.*
--RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest.*
 -RenderWidgetHostViewGuestSurfaceTest.TestGuestSurface
-
-# Flaky: https://crbug.com/800877.
--RenderWidgetHostViewAuraTest.SetCanScrollForWebMouseWheelEvent
-
-# Flaky: https://crbug.com/800415.
--RenderWidgetHostViewAuraTest.CursorVisibilityChange
 
 # Flaky: https://crbug.com/777916.
 -NotificationDatabaseTest.NotificationIdCorruption

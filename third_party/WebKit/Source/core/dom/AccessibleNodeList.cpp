@@ -25,7 +25,7 @@ AccessibleNodeList::AccessibleNodeList() {
   DCHECK(RuntimeEnabledFeatures::AccessibilityObjectModelEnabled());
 }
 
-AccessibleNodeList::~AccessibleNodeList() = default;
+AccessibleNodeList::~AccessibleNodeList() {}
 
 void AccessibleNodeList::AddOwner(AOMRelationListProperty property,
                                   AccessibleNode* node) {

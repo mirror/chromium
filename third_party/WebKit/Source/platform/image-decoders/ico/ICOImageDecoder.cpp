@@ -51,7 +51,7 @@ ICOImageDecoder::ICOImageDecoder(AlphaOption alpha_option,
       dir_entries_count_(0),
       color_behavior_(color_behavior) {}
 
-ICOImageDecoder::~ICOImageDecoder() = default;
+ICOImageDecoder::~ICOImageDecoder() {}
 
 void ICOImageDecoder::OnSetData(SegmentReader* data) {
   fast_reader_.SetData(data);

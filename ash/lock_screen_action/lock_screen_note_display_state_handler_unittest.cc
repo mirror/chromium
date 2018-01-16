@@ -117,6 +117,7 @@ class LockScreenNoteDisplayStateHandlerTest : public AshTestBase {
   void TearDown() override {
     AshTestBase::TearDown();
     power_manager_observer_.reset();
+    chromeos::DBusThreadManager::Shutdown();
   }
 
   bool LaunchTimeoutRunning() {

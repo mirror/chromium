@@ -775,8 +775,9 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
 }
 
 - (BOOL)handleResponseComplete:(const base::DictionaryValue&)message {
-  if (!_pendingPaymentRequest)
-    return YES;
+  DCHECK(_pendingPaymentRequest);
+
+  // TODO(crbug.com/602666): Check that there *is* a pending response here.
 
   [_unblockEventQueueTimer invalidate];
   [_paymentResponseTimeoutTimer invalidate];
@@ -1093,10 +1094,6 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
-  // Ignore navigations within the same document, e.g., history.pushState().
-  if (navigation->IsSameDocument())
-    return;
-
   DCHECK_EQ(_activeWebState, webState);
   payments::JourneyLogger::AbortReason abortReason =
       navigation->IsRendererInitiated()

@@ -96,7 +96,7 @@ void NavigatorShare::Trace(blink::Visitor* visitor) {
   Supplement<Navigator>::Trace(visitor);
 }
 
-NavigatorShare::NavigatorShare() = default;
+NavigatorShare::NavigatorShare() {}
 
 const char* NavigatorShare::SupplementName() {
   return "NavigatorShare";

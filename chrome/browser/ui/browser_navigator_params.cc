@@ -57,5 +57,4 @@ void NavigateParams::FillNavigateParamsFromOpenURLParams(
   this->uses_post = params.uses_post;
   this->post_data = params.post_data;
   this->started_from_context_menu = params.started_from_context_menu;
-  this->suggested_filename = params.suggested_filename;
 }

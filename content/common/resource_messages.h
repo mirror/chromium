@@ -18,6 +18,7 @@
 #include "content/common/navigation_params.h"
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/resource_request.h"
+#include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_message_macros.h"
@@ -25,7 +26,6 @@
 #include "net/http/http_response_info.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/cpp/network_param_ipc_traits.h"
-#include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
@@ -39,8 +39,8 @@ struct LoadTimingInfo;
 namespace IPC {
 
 template <>
-struct CONTENT_EXPORT ParamTraits<network::DataElement> {
-  typedef network::DataElement param_type;
+struct CONTENT_EXPORT ParamTraits<storage::DataElement> {
+  typedef storage::DataElement param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,
@@ -59,8 +59,8 @@ struct ParamTraits<net::LoadTimingInfo> {
 };
 
 template <>
-struct ParamTraits<scoped_refptr<network::ResourceRequestBody>> {
-  typedef scoped_refptr<network::ResourceRequestBody> param_type;
+struct ParamTraits<scoped_refptr<content::ResourceRequestBody>> {
+  typedef scoped_refptr<content::ResourceRequestBody> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,

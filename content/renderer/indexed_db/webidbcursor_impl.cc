@@ -19,7 +19,6 @@ using blink::WebBlobInfo;
 using blink::WebData;
 using blink::WebIDBCallbacks;
 using blink::WebIDBKey;
-using blink::WebIDBKeyView;
 using blink::WebIDBValue;
 using indexed_db::mojom::CallbacksAssociatedPtrInfo;
 using indexed_db::mojom::CursorAssociatedPtrInfo;
@@ -41,7 +40,7 @@ class WebIDBCursorImpl::IOThreadHelper {
                 std::unique_ptr<IndexedDBCallbacksImpl> callbacks);
   void PrefetchReset(int32_t used_prefetches,
                      int32_t unused_prefetches,
-                     std::vector<std::string> unused_blob_uuids);
+                     const std::vector<std::string>& unused_blob_uuids);
 
  private:
   CallbacksAssociatedPtrInfo GetCallbacksProxy(
@@ -101,8 +100,8 @@ void WebIDBCursorImpl::Advance(unsigned long count,
                      base::Passed(&callbacks_impl)));
 }
 
-void WebIDBCursorImpl::Continue(WebIDBKeyView key,
-                                WebIDBKeyView primary_key,
+void WebIDBCursorImpl::Continue(const WebIDBKey& key,
+                                const WebIDBKey& primary_key,
                                 WebIDBCallbacks* callbacks_ptr) {
   std::unique_ptr<WebIDBCallbacks> callbacks(callbacks_ptr);
 
@@ -172,11 +171,10 @@ void WebIDBCursorImpl::PostSuccessHandlerCallback() {
 void WebIDBCursorImpl::SetPrefetchData(
     const std::vector<IndexedDBKey>& keys,
     const std::vector<IndexedDBKey>& primary_keys,
-    std::vector<WebIDBValue> values) {
+    const std::vector<WebIDBValue>& values) {
   prefetch_keys_.assign(keys.begin(), keys.end());
   prefetch_primary_keys_.assign(primary_keys.begin(), primary_keys.end());
-  prefetch_values_.assign(std::make_move_iterator(values.begin()),
-                          std::make_move_iterator(values.end()));
+  prefetch_values_.assign(values.begin(), values.end());
 
   used_prefetches_ = 0;
   pending_onsuccess_callbacks_ = 0;
@@ -206,7 +204,7 @@ void WebIDBCursorImpl::CachedContinue(WebIDBCallbacks* callbacks) {
 
   IndexedDBKey key = prefetch_keys_.front();
   IndexedDBKey primary_key = prefetch_primary_keys_.front();
-  WebIDBValue value = std::move(prefetch_values_.front());
+  WebIDBValue value = prefetch_values_.front();
 
   prefetch_keys_.pop_front();
   prefetch_primary_keys_.pop_front();
@@ -224,7 +222,7 @@ void WebIDBCursorImpl::CachedContinue(WebIDBCallbacks* callbacks) {
   }
 
   callbacks->OnSuccess(WebIDBKeyBuilder::Build(key),
-                       WebIDBKeyBuilder::Build(primary_key), std::move(value));
+                       WebIDBKeyBuilder::Build(primary_key), value);
 }
 
 void WebIDBCursorImpl::ResetPrefetchCache() {
@@ -237,25 +235,17 @@ void WebIDBCursorImpl::ResetPrefetchCache() {
   }
 
   // Ack any unused blobs.
-  //
-  // The extra memory allocations and copying here could be reduced by having an
-  // AppendBlobUuidsTo that takes in a std::vector<std::string> reference.
-  // However, that would be a deviation from the Blink API standards.
-  // TODO(pwnall): Ensure that the code here is deleted when
-  // https://crbug.com/611935 is completed and non-Mojo Blob code paths are
-  // removed from the codebase.
   std::vector<std::string> uuids;
   for (const auto& value : prefetch_values_) {
-    blink::WebVector<blink::WebString> web_uuids = value.BlobUuids();
-    for (const blink::WebString& web_uuid : web_uuids)
-      uuids.emplace_back(web_uuid.Latin1());
+    for (size_t i = 0, size = value.web_blob_info.size(); i < size; ++i)
+      uuids.push_back(value.web_blob_info[i].Uuid().Latin1());
   }
 
   // Reset the back-end cursor.
   io_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&IOThreadHelper::PrefetchReset,
-                                base::Unretained(helper_), used_prefetches_,
-                                prefetch_keys_.size(), std::move(uuids)));
+      FROM_HERE,
+      base::BindOnce(&IOThreadHelper::PrefetchReset, base::Unretained(helper_),
+                     used_prefetches_, prefetch_keys_.size(), uuids));
 
   // Reset the prefetch cache.
   prefetch_keys_.clear();
@@ -296,7 +286,7 @@ void WebIDBCursorImpl::IOThreadHelper::Prefetch(
 void WebIDBCursorImpl::IOThreadHelper::PrefetchReset(
     int32_t used_prefetches,
     int32_t unused_prefetches,
-    std::vector<std::string> unused_blob_uuids) {
+    const std::vector<std::string>& unused_blob_uuids) {
   cursor_->PrefetchReset(used_prefetches, unused_prefetches, unused_blob_uuids);
 }
 

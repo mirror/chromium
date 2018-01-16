@@ -147,7 +147,9 @@ class CORE_EXPORT HTMLCanvasElement final
     return context_.Get();
   }
 
-  scoped_refptr<Image> CopiedImage(SourceDrawingBuffer, AccelerationHint);
+  scoped_refptr<Image> CopiedImage(SourceDrawingBuffer,
+                                   AccelerationHint,
+                                   SnapshotReason);
   void ClearCopiedImage();
 
   bool OriginClean() const;
@@ -186,6 +188,7 @@ class CORE_EXPORT HTMLCanvasElement final
   // CanvasImageSource implementation
   scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                AccelerationHint,
+                                               SnapshotReason,
                                                const FloatSize&) override;
   bool WouldTaintOrigin(const SecurityOrigin*) const override;
   FloatSize ElementSize(const FloatSize&) const override;
@@ -318,7 +321,8 @@ class CORE_EXPORT HTMLCanvasElement final
   CanvasColorParams ColorParams() const;
 
   scoped_refptr<StaticBitmapImage> ToStaticBitmapImage(SourceDrawingBuffer,
-                                                       AccelerationHint) const;
+                                                       AccelerationHint,
+                                                       SnapshotReason) const;
 
   String ToDataURLInternal(const String& mime_type,
                            const double& quality,
@@ -347,7 +351,8 @@ class CORE_EXPORT HTMLCanvasElement final
   std::unique_ptr<AcceleratedImageBufferSurface> webgl_buffer_;
   void ReplaceExistingCanvas2DBuffer(std::unique_ptr<Canvas2DLayerBridge>);
 
-  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint);
+  scoped_refptr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
+                                                    SnapshotReason);
 
   // FIXME: This is temporary for platforms that have to copy the image buffer
   // to render (and for CSSCanvasValue).

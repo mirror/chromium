@@ -17,7 +17,6 @@
 #include "content/public/renderer/v8_value_converter.h"
 #include "extensions/renderer/bindings/api_event_listeners.h"
 #include "extensions/renderer/bindings/event_emitter.h"
-#include "extensions/renderer/bindings/get_per_context_data.h"
 #include "extensions/renderer/bindings/js_runner.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
@@ -31,9 +30,9 @@ void DoNothingOnListenersChanged(binding::EventListenersChanged change,
                                  bool update_lazy_listeners,
                                  v8::Local<v8::Context> context) {}
 
-struct APIEventPerContextData : public base::SupportsUserData::Data {
-  static constexpr char kPerContextDataKey[] = "extension_api_events";
+const char kExtensionAPIEventPerContextKey[] = "extension_api_events";
 
+struct APIEventPerContextData : public base::SupportsUserData::Data {
   APIEventPerContextData(v8::Isolate* isolate) : isolate(isolate) {}
   ~APIEventPerContextData() override {
     DCHECK(emitters.empty())
@@ -57,15 +56,26 @@ struct APIEventPerContextData : public base::SupportsUserData::Data {
 
   // The collection of anonymous events.
   std::vector<v8::Global<v8::Object>> anonymous_emitters;
-
-  static APIEventPerContextData* GetFrom(v8::Local<v8::Context> context,
-                                         CreatePerContextData should_create) {
-    return GetPerContextData<APIEventPerContextData>(context, should_create,
-                                                     context->GetIsolate());
-  }
 };
 
-constexpr char APIEventPerContextData::kPerContextDataKey[];
+APIEventPerContextData* GetContextData(v8::Local<v8::Context> context,
+                                       bool should_create) {
+  gin::PerContextData* per_context_data = gin::PerContextData::From(context);
+  if (!per_context_data)
+    return nullptr;
+  auto* data = static_cast<APIEventPerContextData*>(
+      per_context_data->GetUserData(kExtensionAPIEventPerContextKey));
+
+  if (!data && should_create) {
+    auto api_data =
+        std::make_unique<APIEventPerContextData>(context->GetIsolate());
+    data = api_data.get();
+    per_context_data->SetUserData(kExtensionAPIEventPerContextKey,
+                                  std::move(api_data));
+  }
+
+  return data;
+}
 
 void DispatchEvent(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
@@ -76,8 +86,7 @@ void DispatchEvent(const v8::FunctionCallbackInfo<v8::Value>& info) {
   }
 
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, false);
   DCHECK(data);
   std::string event_name = gin::V8ToString(info.Data());
   auto iter = data->emitters.find(event_name);
@@ -118,8 +127,7 @@ v8::Local<v8::Object> APIEventHandler::CreateEventInstance(
   // context directly.
   v8::Context::Scope context_scope(context);
 
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, true);
   DCHECK(data->emitters.find(event_name) == data->emitters.end());
 
   APIEventListeners::ListenersUpdated updated =
@@ -153,8 +161,7 @@ v8::Local<v8::Object> APIEventHandler::CreateEventInstance(
 v8::Local<v8::Object> APIEventHandler::CreateAnonymousEventInstance(
     v8::Local<v8::Context> context) {
   v8::Context::Scope context_scope(context);
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, true);
   bool supports_filters = false;
   std::unique_ptr<APIEventListeners> listeners =
       std::make_unique<UnfilteredEventListeners>(
@@ -174,8 +181,7 @@ v8::Local<v8::Object> APIEventHandler::CreateAnonymousEventInstance(
 void APIEventHandler::InvalidateCustomEvent(v8::Local<v8::Context> context,
                                             v8::Local<v8::Object> event) {
   EventEmitter* emitter = nullptr;
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, false);
   if (!data || !gin::Converter<EventEmitter*>::FromV8(context->GetIsolate(),
                                                       event, &emitter)) {
     NOTREACHED();
@@ -225,8 +231,7 @@ void APIEventHandler::FireEventInContext(
     std::vector<v8::Local<v8::Value>>* arguments,
     const EventFilteringInfo* filter,
     JSRunner::ResultCallback callback) {
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, false);
   if (!data)
     return;
 
@@ -280,16 +285,14 @@ void APIEventHandler::RegisterArgumentMassager(
     v8::Local<v8::Context> context,
     const std::string& event_name,
     v8::Local<v8::Function> massager) {
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, true);
   DCHECK(data->massagers.find(event_name) == data->massagers.end());
   data->massagers[event_name].Reset(context->GetIsolate(), massager);
 }
 
 bool APIEventHandler::HasListenerForEvent(const std::string& event_name,
                                           v8::Local<v8::Context> context) {
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, false);
   if (!data)
     return false;
 
@@ -304,10 +307,10 @@ bool APIEventHandler::HasListenerForEvent(const std::string& event_name,
 }
 
 void APIEventHandler::InvalidateContext(v8::Local<v8::Context> context) {
-  DCHECK(gin::PerContextData::From(context))
-      << "Trying to invalidate an already-invalid context.";
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  gin::PerContextData* per_context_data = gin::PerContextData::From(context);
+  DCHECK(per_context_data);
+  APIEventPerContextData* data = static_cast<APIEventPerContextData*>(
+      per_context_data->GetUserData(kExtensionAPIEventPerContextKey));
   if (!data)
     return;
 
@@ -345,8 +348,7 @@ void APIEventHandler::InvalidateContext(v8::Local<v8::Context> context) {
 size_t APIEventHandler::GetNumEventListenersForTesting(
     const std::string& event_name,
     v8::Local<v8::Context> context) {
-  APIEventPerContextData* data =
-      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
+  APIEventPerContextData* data = GetContextData(context, false);
   DCHECK(data);
 
   auto iter = data->emitters.find(event_name);

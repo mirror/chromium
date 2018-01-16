@@ -45,7 +45,7 @@ class WebPepperSocketClient {
     kClosingHandshakeComplete
   };
 
-  virtual ~WebPepperSocketClient() = default;
+  virtual ~WebPepperSocketClient() {}
   virtual void DidConnect(const WebString& subprotocol,
                           const WebString& extensions) {}
   virtual void DidReceiveMessage(const WebString& message) {}

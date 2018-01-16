@@ -5,12 +5,12 @@
 #include "media/cdm/cdm_adapter.h"
 
 #include <stddef.h>
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
@@ -471,7 +471,7 @@ void CdmAdapter::Create(
       session_closed_cb, session_keys_change_cb, session_expiration_update_cb);
 
   // |cdm| ownership passed to the promise.
-  cdm->Initialize(std::make_unique<CdmInitializedPromise>(cdm_created_cb, cdm));
+  cdm->Initialize(base::MakeUnique<CdmInitializedPromise>(cdm_created_cb, cdm));
 }
 
 CdmAdapter::CdmAdapter(
@@ -547,18 +547,9 @@ void CdmAdapter::Initialize(std::unique_ptr<media::SimpleCdmPromise> promise) {
     return;
   }
 
-  init_promise_id_ = cdm_promise_adapter_.SavePromise(std::move(promise));
-
-  if (!cdm_->Initialize(cdm_config_.allow_distinctive_identifier,
-                        cdm_config_.allow_persistent_state,
-                        cdm_config_.use_hw_secure_codecs)) {
-    // OnInitialized() will not be called by the CDM, which is the case for
-    // CDM interfaces prior to CDM_10.
-    OnInitialized(true);
-    return;
-  }
-
-  // OnInitialized() will be called by the CDM.
+  cdm_->Initialize(cdm_config_.allow_distinctive_identifier,
+                   cdm_config_.allow_persistent_state);
+  promise->resolve();
 }
 
 int CdmAdapter::GetInterfaceVersion() {
@@ -681,8 +672,8 @@ void CdmAdapter::RegisterNewKeyCB(StreamType stream_type,
 void CdmAdapter::Decrypt(StreamType stream_type,
                          const scoped_refptr<DecoderBuffer>& encrypted,
                          const DecryptCB& decrypt_cb) {
-  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
   DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
 
   TRACE_EVENT0("media", "CdmAdapter::Decrypt");
 
@@ -784,8 +775,8 @@ void CdmAdapter::InitializeVideoDecoder(const VideoDecoderConfig& config,
 void CdmAdapter::DecryptAndDecodeAudio(
     const scoped_refptr<DecoderBuffer>& encrypted,
     const AudioDecodeCB& audio_decode_cb) {
-  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
   DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
 
   TRACE_EVENT0("media", "CdmAdapter::DecryptAndDecodeAudio");
 
@@ -819,8 +810,8 @@ void CdmAdapter::DecryptAndDecodeAudio(
 void CdmAdapter::DecryptAndDecodeVideo(
     const scoped_refptr<DecoderBuffer>& encrypted,
     const VideoDecodeCB& video_decode_cb) {
-  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
   DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__ << ": " << encrypted->AsHumanReadableString();
 
   TRACE_EVENT0("media", "CdmAdapter::DecryptAndDecodeVideo");
 
@@ -978,7 +969,7 @@ void CdmAdapter::OnSessionKeysChange(const char* session_id,
   keys.reserve(keys_info_count);
   for (uint32_t i = 0; i < keys_info_count; ++i) {
     const auto& info = keys_info[i];
-    keys.push_back(std::make_unique<CdmKeyInformation>(
+    keys.push_back(base::MakeUnique<CdmKeyInformation>(
         info.key_id, info.key_id_size,
         ToCdmKeyInformationKeyStatus(info.status), info.system_code));
   }
@@ -1168,8 +1159,8 @@ void CdmAdapter::OnDeferredInitializationDone(cdm::StreamType stream_type,
 }
 
 cdm::FileIO* CdmAdapter::CreateFileIO(cdm::FileIOClient* client) {
-  DVLOG(3) << __func__;
   DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__;
 
   return helper_->CreateCdmFileIO(client);
 }
@@ -1185,37 +1176,11 @@ void CdmAdapter::RequestStorageId(uint32_t version) {
                                             weak_factory_.GetWeakPtr()));
 }
 
-void CdmAdapter::OnInitialized(bool success) {
-  DVLOG(3) << __func__ << ": success = " << success;
+cdm::CdmProxy* CdmAdapter::CreateCdmProxy() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  DCHECK_NE(init_promise_id_, CdmPromiseAdapter::kInvalidPromiseId);
-
-  if (!success) {
-    cdm_promise_adapter_.RejectPromise(
-        init_promise_id_, CdmPromise::Exception::INVALID_STATE_ERROR, 0,
-        "Unable to create CDM.");
-  } else {
-    cdm_promise_adapter_.ResolvePromise(init_promise_id_);
-  }
-
-  init_promise_id_ = CdmPromiseAdapter::kInvalidPromiseId;
-}
-
-cdm::CdmProxy* CdmAdapter::CreateCdmProxy(cdm::CdmProxyClient* client) {
   DVLOG(3) << __func__;
-  DCHECK(task_runner_->BelongsToCurrentThread());
 
-  // CdmProxy should only be created once, at CDM initialization time.
-  if (cdm_proxy_created_ ||
-      init_promise_id_ == CdmPromiseAdapter::kInvalidPromiseId) {
-    DVLOG(1) << __func__
-             << ": CdmProxy can only be created once, and must be created "
-                "during CDM initialization.";
-    return nullptr;
-  }
-
-  cdm_proxy_created_ = true;
-  return helper_->CreateCdmProxy(client);
+  return helper_->CreateCdmProxy();
 }
 
 void CdmAdapter::OnStorageIdObtained(uint32_t version,

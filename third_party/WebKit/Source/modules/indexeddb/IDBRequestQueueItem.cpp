@@ -5,7 +5,6 @@
 #include "modules/indexeddb/IDBRequestQueueItem.h"
 
 #include <memory>
-#include <utility>
 
 #include "base/memory/scoped_refptr.h"
 #include "core/dom/DOMException.h"
@@ -59,10 +58,10 @@ IDBRequestQueueItem::IDBRequestQueueItem(
 
 IDBRequestQueueItem::IDBRequestQueueItem(
     IDBRequest* request,
-    std::unique_ptr<IDBKey> key,
+    IDBKey* key,
     base::OnceClosure on_result_load_complete)
     : request_(request),
-      key_(std::move(key)),
+      key_(key),
       on_result_load_complete_(std::move(on_result_load_complete)),
       response_type_(kKey),
       ready_(true) {
@@ -107,14 +106,14 @@ IDBRequestQueueItem::IDBRequestQueueItem(
 
 IDBRequestQueueItem::IDBRequestQueueItem(
     IDBRequest* request,
-    std::unique_ptr<IDBKey> key,
-    std::unique_ptr<IDBKey> primary_key,
+    IDBKey* key,
+    IDBKey* primary_key,
     std::unique_ptr<IDBValue> value,
     bool attach_loader,
     base::OnceClosure on_result_load_complete)
     : request_(request),
-      key_(std::move(key)),
-      primary_key_(std::move(primary_key)),
+      key_(key),
+      primary_key_(primary_key),
       on_result_load_complete_(std::move(on_result_load_complete)),
       response_type_(kKeyPrimaryKeyValue),
       ready_(!attach_loader) {
@@ -129,14 +128,14 @@ IDBRequestQueueItem::IDBRequestQueueItem(
 IDBRequestQueueItem::IDBRequestQueueItem(
     IDBRequest* request,
     std::unique_ptr<WebIDBCursor> cursor,
-    std::unique_ptr<IDBKey> key,
-    std::unique_ptr<IDBKey> primary_key,
+    IDBKey* key,
+    IDBKey* primary_key,
     std::unique_ptr<IDBValue> value,
     bool attach_loader,
     base::OnceClosure on_result_load_complete)
     : request_(request),
-      key_(std::move(key)),
-      primary_key_(std::move(primary_key)),
+      key_(key),
+      primary_key_(primary_key),
       cursor_(std::move(cursor)),
       on_result_load_complete_(std::move(on_result_load_complete)),
       response_type_(kCursorKeyPrimaryKeyValue),
@@ -234,8 +233,7 @@ void IDBRequestQueueItem::EnqueueResponse() {
 
     case kCursorKeyPrimaryKeyValue:
       DCHECK_EQ(values_.size(), 1U);
-      request_->EnqueueResponse(std::move(cursor_), std::move(key_),
-                                std::move(primary_key_),
+      request_->EnqueueResponse(std::move(cursor_), key_, primary_key_,
                                 std::move(values_.front()));
       break;
 
@@ -246,13 +244,12 @@ void IDBRequestQueueItem::EnqueueResponse() {
 
     case kKeyPrimaryKeyValue:
       DCHECK_EQ(values_.size(), 1U);
-      request_->EnqueueResponse(std::move(key_), std::move(primary_key_),
-                                std::move(values_.front()));
+      request_->EnqueueResponse(key_, primary_key_, std::move(values_.front()));
       break;
 
     case kKey:
       DCHECK_EQ(values_.size(), 0U);
-      request_->EnqueueResponse(std::move(key_));
+      request_->EnqueueResponse(key_);
       break;
 
     case kNumber:

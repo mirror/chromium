@@ -649,9 +649,6 @@
       name: "MojoBlobs",
     },
     {
-      name: "MojoBlobURLs",
-    },
-    {
       name: "MojoJS",
       status: "test",
     },
@@ -902,10 +899,6 @@
       name: "RootLayerScrolling",
     },
     {
-      name: "RTCRtpSenderReplaceTrack",
-      status: "experimental",
-    },
-    {
       name: "RTCUnifiedPlan",
       status: "experimental",
     },
@@ -952,7 +945,7 @@
     },
     {
       name: "ServerTiming",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "ServiceWorkerScriptFullCodeCache",

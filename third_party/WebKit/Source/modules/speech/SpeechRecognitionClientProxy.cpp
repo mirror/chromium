@@ -45,7 +45,7 @@
 
 namespace blink {
 
-SpeechRecognitionClientProxy::~SpeechRecognitionClientProxy() = default;
+SpeechRecognitionClientProxy::~SpeechRecognitionClientProxy() {}
 
 std::unique_ptr<SpeechRecognitionClientProxy>
 SpeechRecognitionClientProxy::Create(WebSpeechRecognizer* recognizer) {

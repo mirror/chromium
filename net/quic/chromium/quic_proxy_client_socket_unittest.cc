@@ -76,7 +76,7 @@ const QuicStreamId kClientDataStreamId1 = kHeadersStreamId + 2;
 }  // namespace
 
 class QuicProxyClientSocketTest
-    : public ::testing::TestWithParam<std::tuple<QuicTransportVersion, bool>> {
+    : public ::testing::TestWithParam<QuicTransportVersion> {
  protected:
   static const bool kFin = true;
   static const bool kIncludeVersion = true;
@@ -105,8 +105,7 @@ class QuicProxyClientSocketTest
   }
 
   QuicProxyClientSocketTest()
-      : version_(std::get<0>(GetParam())),
-        client_headers_include_h2_stream_dependency_(std::get<1>(GetParam())),
+      : version_(GetParam()),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
                        TlsClientHandshaker::CreateSslCtx()),
         connection_id_(2),
@@ -114,14 +113,12 @@ class QuicProxyClientSocketTest
                       connection_id_,
                       &clock_,
                       kProxyHost,
-                      Perspective::IS_CLIENT,
-                      client_headers_include_h2_stream_dependency_),
+                      Perspective::IS_CLIENT),
         server_maker_(version_,
                       connection_id_,
                       &clock_,
                       kProxyHost,
-                      Perspective::IS_SERVER,
-                      false),
+                      Perspective::IS_SERVER),
         random_generator_(0),
         header_stream_offset_(0),
         response_offset_(0),
@@ -177,7 +174,7 @@ class QuicProxyClientSocketTest
         helper_.get(), alarm_factory_.get(), writer, true /* owns_writer */,
         Perspective::IS_CLIENT,
         SupportedVersions(
-            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, version_)));
+            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, GetParam())));
     connection->set_visitor(&visitor_);
     QuicConnectionPeer::SetSendAlgorithm(connection, send_algorithm_);
 
@@ -207,9 +204,8 @@ class QuicProxyClientSocketTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
-        client_headers_include_h2_stream_dependency_, /*cert_verify_flags=*/0,
-        DefaultQuicConfig(), &crypto_config_, "CONNECTION_UNKNOWN", dns_start,
-        dns_end, &push_promise_index_, nullptr,
+        /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
+        "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
         base::ThreadTaskRunnerHandle::Get().get(),
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
 
@@ -490,8 +486,7 @@ class QuicProxyClientSocketTest
     ASSERT_EQ(SpdyString(data, len), SpdyString(read_buf_->data(), len));
   }
 
-  const QuicTransportVersion version_;
-  const bool client_headers_include_h2_stream_dependency_;
+  QuicTransportVersion version_;
 
   // order of destruction of these members matter
   MockClock clock_;
@@ -1508,11 +1503,9 @@ TEST_P(QuicProxyClientSocketTest, RstWithReadAndWritePendingDelete) {
   EXPECT_FALSE(write_callback_.have_result());
 }
 
-INSTANTIATE_TEST_CASE_P(
-    VersionIncludeStreamDependencySequnece,
-    QuicProxyClientSocketTest,
-    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
-                       ::testing::Bool()));
+INSTANTIATE_TEST_CASE_P(Version,
+                        QuicProxyClientSocketTest,
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 }  // namespace test
 }  // namespace net

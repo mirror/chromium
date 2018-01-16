@@ -60,7 +60,7 @@ RTCSessionDescriptionRequestImpl::RTCSessionDescriptionRequestImpl(
   DCHECK(requester_);
 }
 
-RTCSessionDescriptionRequestImpl::~RTCSessionDescriptionRequestImpl() = default;
+RTCSessionDescriptionRequestImpl::~RTCSessionDescriptionRequestImpl() {}
 
 void RTCSessionDescriptionRequestImpl::RequestSucceeded(
     const WebRTCSessionDescription& web_session_description) {

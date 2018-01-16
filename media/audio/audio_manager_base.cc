@@ -4,12 +4,11 @@
 
 #include "media/audio/audio_manager_base.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
 #include "base/single_thread_task_runner.h"
@@ -396,7 +395,7 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
   }
 
   std::unique_ptr<DispatcherParams> dispatcher_params =
-      std::make_unique<DispatcherParams>(params, output_params,
+      base::MakeUnique<DispatcherParams>(params, output_params,
                                          output_device_id);
 
   auto it = std::find_if(output_dispatchers_.begin(), output_dispatchers_.end(),
@@ -411,7 +410,7 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
       !output_params.IsBitstreamFormat()) {
     // Using unretained for |debug_recording_manager_| is safe since it
     // outlives the dispatchers (cleared in ShutdownOnAudioThread()).
-    dispatcher = std::make_unique<AudioOutputResampler>(
+    dispatcher = base::MakeUnique<AudioOutputResampler>(
         this, params, output_params, output_device_id, kCloseDelay,
         debug_recording_manager_
             ? base::BindRepeating(
@@ -420,7 +419,7 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
                   FILE_PATH_LITERAL("output"))
             : base::BindRepeating(&GetNullptrAudioDebugRecorder));
   } else {
-    dispatcher = std::make_unique<AudioOutputDispatcherImpl>(
+    dispatcher = base::MakeUnique<AudioOutputDispatcherImpl>(
         this, output_params, output_device_id, kCloseDelay);
   }
 
@@ -590,7 +589,7 @@ void AudioManagerBase::DisableDebugRecording() {
 std::unique_ptr<AudioDebugRecordingManager>
 AudioManagerBase::CreateAudioDebugRecordingManager(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  return std::make_unique<AudioDebugRecordingManager>(std::move(task_runner));
+  return base::MakeUnique<AudioDebugRecordingManager>(std::move(task_runner));
 }
 
 void AudioManagerBase::SetMaxStreamCountForTesting(int max_input,

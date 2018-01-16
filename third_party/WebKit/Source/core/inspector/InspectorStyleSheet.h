@@ -85,11 +85,11 @@ class InspectorStyleSheetBase
  public:
   class CORE_EXPORT Listener {
    public:
-    Listener() = default;
-    virtual ~Listener() = default;
+    Listener() {}
+    virtual ~Listener() {}
     virtual void StyleSheetChanged(InspectorStyleSheetBase*) = 0;
   };
-  virtual ~InspectorStyleSheetBase() = default;
+  virtual ~InspectorStyleSheetBase() {}
   virtual void Trace(blink::Visitor* visitor) {}
 
   String Id() { return id_; }

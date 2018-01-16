@@ -58,8 +58,6 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
 
   void DidDraw(const SkIRect&) final;
 
-  void setShadowBlur(double) final;
-
   bool StateHasFilter() final;
   sk_sp<PaintFilter> StateGetFilter() final;
   void SnapshotStateForFilter() final {}
@@ -92,7 +90,6 @@ class MODULES_EXPORT PaintRenderingContext2D : public ScriptWrappable,
   const CanvasColorParams& color_params_;
   PaintRenderingContext2DSettings context_settings_;
   bool did_record_draw_commands_in_paint_recorder_;
-  float effective_zoom_;
 };
 
 }  // namespace blink

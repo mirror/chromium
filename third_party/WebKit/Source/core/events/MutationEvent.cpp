@@ -41,7 +41,7 @@ MutationEvent::MutationEvent(const AtomicString& type,
       attr_name_(attr_name),
       attr_change_(attr_change) {}
 
-MutationEvent::~MutationEvent() = default;
+MutationEvent::~MutationEvent() {}
 
 void MutationEvent::initMutationEvent(const AtomicString& type,
                                       bool can_bubble,

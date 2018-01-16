@@ -79,6 +79,11 @@ public class ContentViewScrollingTest {
         }
 
         @Override
+        public boolean awakenScrollBars() {
+            return false;
+        }
+
+        @Override
         public boolean super_awakenScrollBars(int startDelay, boolean invalidate) {
             return false;
         }

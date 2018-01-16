@@ -19,7 +19,9 @@ namespace base {
 HistogramTester::HistogramTester() {
   // Record any histogram data that exists when the object is created so it can
   // be subtracted later.
-  for (const auto* const histogram : StatisticsRecorder::GetHistograms()) {
+  StatisticsRecorder::Histograms histograms;
+  StatisticsRecorder::GetSnapshot(std::string(), &histograms);
+  for (const auto* histogram : histograms) {
     histograms_snapshot_[histogram->histogram_name()] =
         histogram->SnapshotSamples();
   }
@@ -121,10 +123,12 @@ HistogramTester::CountsMap HistogramTester::GetTotalCountsForPrefix(
       << "|prefix| ought to contain at least one period, to avoid matching too"
       << " many histograms.";
 
-  CountsMap result;
-
   // Find candidate matches by using the logic built into GetSnapshot().
-  for (HistogramBase* histogram : StatisticsRecorder::GetSnapshot(prefix)) {
+  StatisticsRecorder::Histograms candidate_matches;
+  StatisticsRecorder::GetSnapshot(prefix, &candidate_matches);
+
+  CountsMap result;
+  for (HistogramBase* histogram : candidate_matches) {
     if (!StartsWith(histogram->histogram_name(), prefix,
                     CompareCase::SENSITIVE)) {
       continue;

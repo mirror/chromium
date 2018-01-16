@@ -23,8 +23,6 @@ class ResourceManager;
 // Android interface for compositor-related tasks.
 class UI_ANDROID_EXPORT WindowAndroidCompositor {
  public:
-  virtual ~WindowAndroidCompositor() {}
-
   virtual void AttachLayerForReadback(scoped_refptr<cc::Layer> layer) = 0;
   virtual void RequestCopyOfOutputOnRootLayer(
       std::unique_ptr<viz::CopyOutputRequest> request) = 0;
@@ -36,7 +34,6 @@ class UI_ANDROID_EXPORT WindowAndroidCompositor {
   virtual std::unique_ptr<CompositorLock> GetCompositorLock(
       CompositorLockClient* client,
       base::TimeDelta timeout) = 0;
-  virtual bool IsDrawingFirstVisibleFrame() const = 0;
 };
 
 }  // namespace ui

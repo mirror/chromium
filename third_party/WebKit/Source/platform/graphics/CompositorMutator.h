@@ -14,7 +14,7 @@ namespace blink {
 class PLATFORM_EXPORT CompositorMutator
     : public GarbageCollectedFinalized<CompositorMutator> {
  public:
-  virtual ~CompositorMutator() = default;
+  virtual ~CompositorMutator() {}
 
   virtual void Trace(blink::Visitor* visitor) {}
 

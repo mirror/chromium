@@ -153,7 +153,6 @@ class FakeDownloadItem : public DownloadItem {
   void SetOpened(bool opened) override;
   void SetDisplayName(const base::FilePath& name) override;
   std::string DebugString(bool verbose) const override;
-  void SimulateErrorForTesting(DownloadInterruptReason reason) override;
 
  private:
   base::ObserverList<Observer> observers_;

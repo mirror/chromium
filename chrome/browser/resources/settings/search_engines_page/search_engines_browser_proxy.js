@@ -26,7 +26,7 @@
  *            urlLocked: boolean}}
  * @see chrome/browser/ui/webui/settings/search_engine_manager_handler.cc
  */
-let SearchEngine;
+var SearchEngine;
 
 /**
  * @typedef {{
@@ -35,7 +35,7 @@ let SearchEngine;
  *   extensions: !Array<!SearchEngine>
  * }}
  */
-let SearchEnginesInfo;
+var SearchEnginesInfo;
 
 cr.define('settings', function() {
   /** @interface */

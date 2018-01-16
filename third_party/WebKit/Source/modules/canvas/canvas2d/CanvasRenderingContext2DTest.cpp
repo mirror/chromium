@@ -53,6 +53,7 @@ class FakeImageSource : public CanvasImageSource {
 
   scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                AccelerationHint,
+                                               SnapshotReason,
                                                const FloatSize&) override;
 
   bool WouldTaintOrigin(
@@ -65,7 +66,7 @@ class FakeImageSource : public CanvasImageSource {
   bool IsOpaque() const override { return is_opaque_; }
   bool IsAccelerated() const { return false; }
 
-  ~FakeImageSource() override = default;
+  ~FakeImageSource() override {}
 
  private:
   IntSize size_;
@@ -85,6 +86,7 @@ FakeImageSource::FakeImageSource(IntSize size, BitmapOpacity opacity)
 scoped_refptr<Image> FakeImageSource::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
+    SnapshotReason,
     const FloatSize&) {
   if (status)
     *status = kNormalSourceImageStatus;
@@ -264,7 +266,7 @@ class FakeAcceleratedImageBufferSurface : public Canvas2DLayerBridge {
                                     CanvasColorParams color_params)
       : Canvas2DLayerBridge(size, 0, kDisableAcceleration, color_params),
         is_accelerated_(true) {}
-  ~FakeAcceleratedImageBufferSurface() override = default;
+  ~FakeAcceleratedImageBufferSurface() override {}
   bool IsAccelerated() const override { return is_accelerated_; }
   void SetIsAccelerated(bool is_accelerated) {
     if (is_accelerated != is_accelerated_)
@@ -285,7 +287,7 @@ class MockImageBufferSurfaceForOverwriteTesting : public Canvas2DLayerBridge {
                             0,
                             Canvas2DLayerBridge::kDisableAcceleration,
                             color_params) {}
-  ~MockImageBufferSurfaceForOverwriteTesting() override = default;
+  ~MockImageBufferSurfaceForOverwriteTesting() override {}
   MOCK_METHOD0(WillOverwriteCanvas, void());
 };
 
@@ -1095,7 +1097,8 @@ TEST_F(CanvasRenderingContext2DTestWithTestingPlatform,
 
   EXPECT_TRUE(CanvasElement().Canvas2DBuffer()->IsAccelerated());
   // Take a snapshot to trigger lazy resource provider creation
-  CanvasElement().Canvas2DBuffer()->NewImageSnapshot(kPreferAcceleration);
+  CanvasElement().Canvas2DBuffer()->NewImageSnapshot(kPreferAcceleration,
+                                                     kSnapshotReasonUnknown);
   EXPECT_TRUE(CanvasElement().GetLayoutBoxModelObject());
   PaintLayer* layer = CanvasElement().GetLayoutBoxModelObject()->Layer();
   EXPECT_TRUE(layer);

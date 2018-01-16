@@ -153,7 +153,7 @@ class GitCL(object):
         self._host.print_('Timed out waiting%s.' % message)
         return None
 
-    def latest_try_jobs(self, builder_names=None, cq_only=False, patchset=None):
+    def latest_try_jobs(self, builder_names=None, cq_only=False):
         """Fetches a dict of Build to TryJobStatus for the latest try jobs.
 
         This includes jobs that are not yet finished and builds with infra
@@ -163,7 +163,6 @@ class GitCL(object):
         Args:
             builder_names: Optional list of builders used to filter results.
             cq_only: If True, only include CQ jobs.
-            patchset: If given, use this patchset instead of the latest.
 
         Returns:
             A dict mapping Build objects to TryJobStatus objects, with
@@ -172,8 +171,7 @@ class GitCL(object):
         # TODO(crbug.com/771438): Update filter_latest to handle Swarming tasks.
         return self.filter_latest(
             self.try_job_results(
-                builder_names, include_swarming_tasks=False, cq_only=cq_only,
-                patchset=patchset))
+                builder_names, include_swarming_tasks=False, cq_only=cq_only))
 
     @staticmethod
     def filter_latest(try_results):
@@ -185,9 +183,9 @@ class GitCL(object):
 
     def try_job_results(
             self, builder_names=None, include_swarming_tasks=True,
-            cq_only=False, patchset=None):
+            cq_only=False):
         """Returns a dict mapping Build objects to TryJobStatus objects."""
-        raw_results = self.fetch_raw_try_job_results(patchset=patchset)
+        raw_results = self.fetch_raw_try_job_results()
         build_to_status = {}
         for result in raw_results:
             if builder_names and result['builder_name'] not in builder_names:
@@ -202,7 +200,7 @@ class GitCL(object):
             build_to_status[self._build(result)] = self._try_job_status(result)
         return build_to_status
 
-    def fetch_raw_try_job_results(self, patchset=None):
+    def fetch_raw_try_job_results(self):
         """Requests results of try jobs for the current CL and the parsed JSON.
 
         The return value is expected to be a list of dicts, which each are
@@ -211,10 +209,7 @@ class GitCL(object):
         """
         with self._host.filesystem.mkdtemp() as temp_directory:
             results_path = self._host.filesystem.join(temp_directory, 'try-results.json')
-            command = ['try-results', '--json', results_path]
-            if patchset:
-                command.extend(['--patchset', str(patchset)])
-            self.run(command)
+            self.run(['try-results', '--json', results_path])
             contents = self._host.filesystem.read_text_file(results_path)
             _log.debug('Fetched try results to file "%s".', results_path)
             self._host.filesystem.remove(results_path)

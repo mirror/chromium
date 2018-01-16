@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_CHROMEOS_EXTENSIONS_ACTIVE_TAB_PERMISSION_GRANTER_DELEGATE_CHROMEOS_H_
 
 #include "base/macros.h"
-#include "chrome/browser/chromeos/extensions/public_session_permission_helper.h"
 #include "chrome/browser/extensions/active_tab_permission_granter.h"
 
 namespace content {
@@ -26,9 +25,6 @@ class ActiveTabPermissionGranterDelegateChromeOS
  public:
   ActiveTabPermissionGranterDelegateChromeOS();
   ~ActiveTabPermissionGranterDelegateChromeOS() override;
-
-  static void SetRequestResolvedCallbackForTesting(
-      permission_helper::RequestResolvedCallback* callback);
 
   // ActiveTabPermissionGranter::Delegate
   bool ShouldGrantActiveTab(const Extension* extension,

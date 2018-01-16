@@ -18,7 +18,7 @@
  * Keep in sync with the string keys provided by settings.
  * @enum {string}
  */
-const MessageType = {
+var MessageType = {
   TOO_SHORT: 'configurePinTooShort',
   TOO_LONG: 'configurePinTooLong',
   TOO_WEAK: 'configurePinWeakPin',
@@ -26,10 +26,7 @@ const MessageType = {
 };
 
 /** @enum {string} */
-const ProblemType = {
-  WARNING: 'warning',
-  ERROR: 'error'
-};
+var ProblemType = {WARNING: 'warning', ERROR: 'error'};
 
 Polymer({
   is: 'settings-setup-pin-dialog',
@@ -158,7 +155,7 @@ Polymer({
    *     The requirements received from getCredentialRequirements.
    */
   processPinRequirements_: function(messageId, requirements) {
-    let additionalInformation = '';
+    var additionalInformation = '';
     switch (messageId) {
       case MessageType.TOO_SHORT:
         additionalInformation = requirements.minLength.toString();

@@ -24,7 +24,7 @@ class PLATFORM_EXPORT WebScheduler {
  public:
   class PLATFORM_EXPORT InterventionReporter {
    public:
-    virtual ~InterventionReporter() = default;
+    virtual ~InterventionReporter() {}
 
     // The scheduler has performed an intervention, described by |message|,
     // which should be reported to the developer.
@@ -33,7 +33,7 @@ class PLATFORM_EXPORT WebScheduler {
 
   using RendererPauseHandle = scheduler::RendererScheduler::RendererPauseHandle;
 
-  virtual ~WebScheduler() = default;
+  virtual ~WebScheduler() {}
 
   // Called to prevent any more pending tasks from running. Must be called on
   // the associated WebThread.

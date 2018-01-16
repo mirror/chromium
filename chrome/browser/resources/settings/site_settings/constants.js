@@ -72,12 +72,12 @@ settings.SiteSettingSource = {
 
 /**
  * A category value to use for the All Sites list.
- * @type {string}
+ * @const {string}
  */
 settings.ALL_SITES = 'all-sites';
 
 /**
  * An invalid subtype value.
- * @type {string}
+ * @const {string}
  */
 settings.INVALID_CATEGORY_SUBTYPE = '';

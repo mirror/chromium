@@ -162,7 +162,6 @@ component("gpu") {
     "//ui/gfx/geometry",
   ]
   deps = [
-    "//gpu/command_buffer/service:gles2",
     "//gpu/ipc/service",
     "//ui/base",
     "//ui/display/types",
@@ -537,38 +536,6 @@ if (use_v4l2_codec || use_vaapi || is_mac || is_win) {
     sources = [
       "video_accelerator_unittest_helpers.h",
       "video_encode_accelerator_unittest.cc",
-    ]
-    if (use_x11) {
-      deps += [ "//ui/gfx/x" ]
-    }
-    if (use_ozone) {
-      deps += [ "//ui/ozone" ]
-    }
-  }
-}
-
-if (use_vaapi) {
-  test("jpeg_encode_accelerator_unittest") {
-    deps = [
-      "//base",
-      "//base/test:test_support",
-      "//media:test_support",
-      "//media/gpu",
-      "//media/gpu/ipc/service",
-      "//testing/gtest",
-      "//third_party:jpeg",
-      "//third_party/libyuv",
-      "//ui/base",
-      "//ui/gfx",
-      "//ui/gfx:test_support",
-      "//ui/gfx/geometry",
-      "//ui/gl",
-      "//ui/gl:test_support",
-    ]
-    configs += [ "//third_party/libyuv:libyuv_config" ]
-    sources = [
-      "jpeg_encode_accelerator_unittest.cc",
-      "video_accelerator_unittest_helpers.h",
     ]
     if (use_x11) {
       deps += [ "//ui/gfx/x" ]

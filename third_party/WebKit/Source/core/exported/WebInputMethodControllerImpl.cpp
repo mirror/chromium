@@ -29,7 +29,7 @@ WebInputMethodControllerImpl::WebInputMethodControllerImpl(
     WebLocalFrameImpl& web_frame)
     : web_frame_(&web_frame) {}
 
-WebInputMethodControllerImpl::~WebInputMethodControllerImpl() = default;
+WebInputMethodControllerImpl::~WebInputMethodControllerImpl() {}
 
 void WebInputMethodControllerImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(web_frame_);

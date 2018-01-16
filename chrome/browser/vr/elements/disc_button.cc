@@ -50,7 +50,7 @@ void DiscButton::OnStateUpdated() {
     foreground_->SetTranslate(0.0, 0.0, 0.0);
   }
 
-  foreground_->SetColor(colors().GetForegroundColor(!enabled()));
+  foreground_->SetColor(colors().GetForegroundColor(disabled()));
 }
 
 void DiscButton::OnSetDrawPhase() {

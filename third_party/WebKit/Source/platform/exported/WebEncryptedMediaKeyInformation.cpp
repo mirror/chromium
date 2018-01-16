@@ -6,9 +6,9 @@
 
 namespace blink {
 
-WebEncryptedMediaKeyInformation::WebEncryptedMediaKeyInformation() = default;
+WebEncryptedMediaKeyInformation::WebEncryptedMediaKeyInformation() {}
 
-WebEncryptedMediaKeyInformation::~WebEncryptedMediaKeyInformation() = default;
+WebEncryptedMediaKeyInformation::~WebEncryptedMediaKeyInformation() {}
 
 WebData WebEncryptedMediaKeyInformation::Id() const {
   return id_;

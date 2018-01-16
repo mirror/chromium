@@ -191,6 +191,7 @@ class SiteEngagementService : public KeyedService,
                            GetTotalNotificationPoints);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, RestrictedToHTTPAndHTTPS);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, LastShortcutLaunch);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, NotificationPermission);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
                            CleanupOriginsOnHistoryDeletion);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, IsBootstrapped);
@@ -204,7 +205,6 @@ class SiteEngagementService : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(banners::AppBannerManagerBrowserTest,
                            CheckOnLoadWithoutSufficientEngagement);
   FRIEND_TEST_ALL_PREFIXES(AppBannerSettingsHelperTest, SiteEngagementTrigger);
-  FRIEND_TEST_ALL_PREFIXES(HostedAppPWAOnlyTest, EngagementHistogram);
 
 #if defined(OS_ANDROID)
   // Shim class to expose the service to Java.

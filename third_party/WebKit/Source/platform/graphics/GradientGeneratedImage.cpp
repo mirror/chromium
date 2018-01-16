@@ -40,7 +40,7 @@ void GradientGeneratedImage::Draw(PaintCanvas* canvas,
                                   ImageDecodingMode) {
   SkRect visible_src_rect = src_rect;
   if (!visible_src_rect.intersect(
-          SkRect::MakeWH(size_.Width(), size_.Height())))
+          SkRect::MakeIWH(size_.Width(), size_.Height())))
     return;
 
   const SkMatrix transform =

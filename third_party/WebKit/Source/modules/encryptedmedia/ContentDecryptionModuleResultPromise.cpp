@@ -38,8 +38,7 @@ ContentDecryptionModuleResultPromise::ContentDecryptionModuleResultPromise(
     ScriptState* script_state)
     : resolver_(ScriptPromiseResolver::Create(script_state)) {}
 
-ContentDecryptionModuleResultPromise::~ContentDecryptionModuleResultPromise() =
-    default;
+ContentDecryptionModuleResultPromise::~ContentDecryptionModuleResultPromise() {}
 
 void ContentDecryptionModuleResultPromise::Complete() {
   NOTREACHED();

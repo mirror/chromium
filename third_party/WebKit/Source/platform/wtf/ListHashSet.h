@@ -514,7 +514,7 @@ class ListHashSetIterator {
       : iterator_(set, position) {}
 
  public:
-  ListHashSetIterator() = default;
+  ListHashSetIterator() {}
 
   // default copy, assignment and destructor are OK
 
@@ -574,7 +574,7 @@ class ListHashSetConstIterator {
       : set_(set), position_(position) {}
 
  public:
-  ListHashSetConstIterator() = default;
+  ListHashSetConstIterator() {}
 
   PointerType Get() const { return &position_->value_; }
   ReferenceType operator*() const { return *Get(); }
@@ -636,7 +636,7 @@ class ListHashSetReverseIterator {
       : iterator_(set, position) {}
 
  public:
-  ListHashSetReverseIterator() = default;
+  ListHashSetReverseIterator() {}
 
   // default copy, assignment and destructor are OK
 
@@ -696,7 +696,7 @@ class ListHashSetConstReverseIterator {
       : set_(set), position_(position) {}
 
  public:
-  ListHashSetConstReverseIterator() = default;
+  ListHashSetConstReverseIterator() {}
 
   PointerType Get() const { return &position_->value_; }
   ReferenceType operator*() const { return *Get(); }

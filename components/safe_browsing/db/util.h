@@ -10,7 +10,6 @@
 #include <stdint.h>
 
 #include <cstring>
-#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -18,7 +17,6 @@
 #include "base/containers/flat_map.h"
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
-#include "base/trace_event/trace_event_argument.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 
@@ -38,7 +36,11 @@ enum class ThreatPatternType : int {
   THREAT_PATTERN_TYPE_MAX_VALUE
 };
 
-enum class SubresourceFilterType : int { ABUSIVE = 0, BETTER_ADS = 1 };
+enum class SubresourceFilterType : int {
+  ABUSIVE = 0,
+  BETTER_ADS = 1,
+  SUBRESOURCE_FILTER_TYPE_MAX_VALUE
+};
 
 enum class SubresourceFilterLevel : int { WARN = 0, ENFORCE = 1 };
 
@@ -49,8 +51,7 @@ using SubresourceFilterMatch =
 // of the PB (from Pver3, or Pver4 local) or JSON (from Pver4 via GMSCore).
 // Some fields are only applicable to certain lists.
 //
-// When adding elements to this struct, make sure you update operator== and
-// ToTracedValue.
+// When adding elements to this struct, make sure you update operator==.
 struct ThreatMetadata {
   ThreatMetadata();
   ThreatMetadata(const ThreatMetadata& other);
@@ -58,9 +59,6 @@ struct ThreatMetadata {
 
   bool operator==(const ThreatMetadata& other) const;
   bool operator!=(const ThreatMetadata& other) const;
-
-  // Returns the metadata in a format tracing can support.
-  std::unique_ptr<base::trace_event::TracedValue> ToTracedValue() const;
 
   // Type of blacklisted page. Used on malware and UwS lists.
   // This will be NONE if it wasn't present in the reponse.

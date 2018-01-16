@@ -80,12 +80,26 @@ HitTestLocation::HitTestLocation(const HitTestLocation& other,
   Move(offset);
 }
 
-HitTestLocation::HitTestLocation(const HitTestLocation& other) = default;
+HitTestLocation::HitTestLocation(const HitTestLocation& other)
+    : point_(other.point_),
+      bounding_box_(other.bounding_box_),
+      transformed_point_(other.transformed_point_),
+      transformed_rect_(other.transformed_rect_),
+      is_rect_based_(other.is_rect_based_),
+      is_rectilinear_(other.is_rectilinear_) {}
 
-HitTestLocation::~HitTestLocation() = default;
+HitTestLocation::~HitTestLocation() {}
 
-HitTestLocation& HitTestLocation::operator=(const HitTestLocation& other) =
-    default;
+HitTestLocation& HitTestLocation::operator=(const HitTestLocation& other) {
+  point_ = other.point_;
+  bounding_box_ = other.bounding_box_;
+  transformed_point_ = other.transformed_point_;
+  transformed_rect_ = other.transformed_rect_;
+  is_rect_based_ = other.is_rect_based_;
+  is_rectilinear_ = other.is_rectilinear_;
+
+  return *this;
+}
 
 void HitTestLocation::Move(const LayoutSize& offset) {
   point_.Move(offset);

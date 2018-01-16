@@ -31,6 +31,6 @@
 
 namespace blink {
 
-LightSource::~LightSource() = default;
+LightSource::~LightSource() {}
 
 }  // namespace blink

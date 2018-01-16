@@ -29,7 +29,7 @@ class IntWrapper : public blink::GarbageCollectedFinalized<IntWrapper> {
     return new IntWrapper(x, verify);
   }
 
-  virtual ~IntWrapper() = default;
+  virtual ~IntWrapper() {}
 
   void Trace(blink::Visitor* visitor) {
     // Verify if compaction is indeed activated.
@@ -61,7 +61,7 @@ class IntWrapper : public blink::GarbageCollectedFinalized<IntWrapper> {
   IntWrapper(int x, VerifyArenaCompaction verify) : x_(x), verify_(verify) {}
 
  private:
-  IntWrapper() = delete;
+  IntWrapper();
 
   int x_;
   VerifyArenaCompaction verify_;

@@ -62,7 +62,7 @@ class WebRemoteFrameClient {
   virtual void FrameFocused() {}
 
  protected:
-  virtual ~WebRemoteFrameClient() = default;
+  virtual ~WebRemoteFrameClient() {}
 };
 
 }  // namespace blink

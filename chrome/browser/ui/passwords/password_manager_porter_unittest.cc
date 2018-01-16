@@ -15,6 +15,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
+#include "chrome/browser/ui/passwords/destination_file_system.h"
 #include "chrome/browser/ui/passwords/password_manager_presenter.h"
 #include "chrome/browser/ui/passwords/password_ui_view.h"
 #include "chrome/test/base/testing_profile.h"
@@ -123,7 +124,12 @@ class MockPasswordManagerExporter
 
   MOCK_METHOD0(PreparePasswordsForExport, void());
   MOCK_METHOD0(Cancel, void());
-  MOCK_METHOD1(SetDestination, void(const base::FilePath&));
+
+  void SetDestination(
+      std::unique_ptr<password_manager::Destination> destination) override {
+    SetDestinationPtr(destination.get());
+  }
+  MOCK_METHOD1(SetDestinationPtr, void(password_manager::Destination*));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPasswordManagerExporter);
@@ -182,6 +188,12 @@ TEST_F(PasswordManagerPorterTest, PasswordImport) {
   password_manager_porter()->Load();
 }
 
+// Matches a DestinationFileSystem* that is set to |path|.
+MATCHER_P(DestinationPointsToPath, path, "") {
+  DestinationFileSystem* destination = static_cast<DestinationFileSystem*>(arg);
+  return destination->GetDestinationPathForTesting() == path;
+}
+
 TEST_F(PasswordManagerPorterTest, PasswordExport) {
   // PasswordManagerPorter will take ownership of this, but we keep a pointer.
   MockPasswordManagerExporter* mock_password_manager_exporter_ =
@@ -190,7 +202,8 @@ TEST_F(PasswordManagerPorterTest, PasswordExport) {
       mock_password_manager_exporter_)));
 
   EXPECT_CALL(*mock_password_manager_exporter_, PreparePasswordsForExport());
-  EXPECT_CALL(*mock_password_manager_exporter_, SetDestination(selected_file_));
+  EXPECT_CALL(*mock_password_manager_exporter_,
+              SetDestinationPtr(DestinationPointsToPath(selected_file_)));
 
   porter.set_web_contents(web_contents());
   porter.Store();

@@ -29,7 +29,7 @@ cr.define('md_history', function() {
         });
       }
 
-      const removalList = items.map(function(item) {
+      var removalList = items.map(function(item) {
         return {
           url: item.url,
           timestamps: item.allTimestamps,

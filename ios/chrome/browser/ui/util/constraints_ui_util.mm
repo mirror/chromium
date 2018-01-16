@@ -97,14 +97,12 @@ NSArray* VisualConstraintsWithMetricsAndOptions(
   return [layoutConstraints copy];
 }
 
-void AddSameCenterConstraints(id<LayoutGuideProvider> view1,
-                              id<LayoutGuideProvider> view2) {
+void AddSameCenterConstraints(UIView* view1, UIView* view2) {
   AddSameCenterXConstraint(view1, view2);
   AddSameCenterYConstraint(view1, view2);
 }
 
-void AddSameCenterXConstraint(id<LayoutGuideProvider> view1,
-                              id<LayoutGuideProvider> view2) {
+void AddSameCenterXConstraint(UIView* view1, UIView* view2) {
   [view1.centerXAnchor constraintEqualToAnchor:view2.centerXAnchor].active =
       YES;
 }
@@ -115,8 +113,7 @@ void AddSameCenterXConstraint(UIView* unused_parentView,
   AddSameCenterXConstraint(subview1, subview2);
 }
 
-void AddSameCenterYConstraint(id<LayoutGuideProvider> view1,
-                              id<LayoutGuideProvider> view2) {
+void AddSameCenterYConstraint(UIView* view1, UIView* view2) {
   [view1.centerYAnchor constraintEqualToAnchor:view2.centerYAnchor].active =
       YES;
 }
@@ -127,8 +124,7 @@ void AddSameCenterYConstraint(UIView* unused_parentView,
   AddSameCenterYConstraint(subview1, subview2);
 }
 
-void AddSameConstraints(id<LayoutGuideProvider> view1,
-                        id<LayoutGuideProvider> view2) {
+void AddSameConstraints(UIView* view1, UIView* view2) {
   [NSLayoutConstraint activateConstraints:@[
     [view1.leadingAnchor constraintEqualToAnchor:view2.leadingAnchor],
     [view1.trailingAnchor constraintEqualToAnchor:view2.trailingAnchor],
@@ -137,16 +133,56 @@ void AddSameConstraints(id<LayoutGuideProvider> view1,
   ]];
 }
 
-void PinToSafeArea(id<LayoutGuideProvider> innerView, UIView* outerView) {
-  id<LayoutGuideProvider> outerSafeAreaGuide =
-      SafeAreaLayoutGuideForView(outerView);
-  AddSameConstraints(innerView, outerSafeAreaGuide);
+void AddSameConstraints(UIView* view, UILayoutGuide* layoutGuide) {
+  [NSLayoutConstraint activateConstraints:@[
+    [view.leadingAnchor constraintEqualToAnchor:layoutGuide.leadingAnchor],
+    [view.trailingAnchor constraintEqualToAnchor:layoutGuide.trailingAnchor],
+    [view.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor],
+    [view.bottomAnchor constraintEqualToAnchor:layoutGuide.bottomAnchor]
+  ]];
 }
 
-id<LayoutGuideProvider> SafeAreaLayoutGuideForView(UIView* view) {
+void PinToSafeArea(UIView* innerView, UIView* outerView) {
+  if (@available(iOS 11.0, *)) {
+    [NSLayoutConstraint activateConstraints:@[
+      [innerView.topAnchor
+          constraintEqualToAnchor:outerView.safeAreaLayoutGuide.topAnchor],
+      [innerView.leadingAnchor
+          constraintEqualToAnchor:outerView.safeAreaLayoutGuide.leadingAnchor],
+      [innerView.trailingAnchor
+          constraintEqualToAnchor:outerView.safeAreaLayoutGuide.trailingAnchor],
+      [innerView.bottomAnchor
+          constraintEqualToAnchor:outerView.safeAreaLayoutGuide.bottomAnchor],
+    ]];
+  } else {
+    AddSameConstraints(innerView, outerView);
+  }
+}
+
+UILayoutGuide* SafeAreaLayoutGuideForView(UIView* view) {
   if (@available(iOS 11, *)) {
     return view.safeAreaLayoutGuide;
   } else {
-    return view;
+    NSString* kChromeSafeAreaLayoutGuideShim = @"ChromeSafeAreaLayoutGuideShim";
+    // Search for an existing shim safe area layout guide:
+    for (UILayoutGuide* guide in view.layoutGuides) {
+      if ([guide.identifier isEqualToString:kChromeSafeAreaLayoutGuideShim]) {
+        return guide;
+      }
+    }
+    // If no existing shim exist, create and return a new one.
+    UILayoutGuide* safeAreaLayoutShim = [[UILayoutGuide alloc] init];
+    safeAreaLayoutShim.identifier = kChromeSafeAreaLayoutGuideShim;
+    [view addLayoutGuide:safeAreaLayoutShim];
+    [NSLayoutConstraint activateConstraints:@[
+      [safeAreaLayoutShim.leadingAnchor
+          constraintEqualToAnchor:view.leadingAnchor],
+      [safeAreaLayoutShim.trailingAnchor
+          constraintEqualToAnchor:view.trailingAnchor],
+      [safeAreaLayoutShim.topAnchor constraintEqualToAnchor:view.topAnchor],
+      [safeAreaLayoutShim.bottomAnchor
+          constraintEqualToAnchor:view.bottomAnchor]
+    ]];
+    return safeAreaLayoutShim;
   }
 }

@@ -84,16 +84,14 @@ class SyncChannel::ReceivedSyncMsgQueue :
   class NestedSendDoneWatcher {
    public:
     NestedSendDoneWatcher(SyncChannel::SyncContext* context,
-                          base::RunLoop* run_loop,
-                          scoped_refptr<base::SequencedTaskRunner> task_runner)
+                          base::RunLoop* run_loop)
         : sync_msg_queue_(context->received_sync_msgs()),
           outer_state_(sync_msg_queue_->top_send_done_event_watcher_),
           event_(context->GetSendDoneEvent()),
           callback_(
               base::BindOnce(&SyncChannel::SyncContext::OnSendDoneEventSignaled,
                              context,
-                             run_loop)),
-          task_runner_(std::move(task_runner)) {
+                             run_loop)) {
       sync_msg_queue_->top_send_done_event_watcher_ = this;
       if (outer_state_)
         outer_state_->StopWatching();
@@ -113,10 +111,8 @@ class SyncChannel::ReceivedSyncMsgQueue :
     }
 
     void StartWatching() {
-      watcher_.StartWatching(
-          event_,
-          base::BindOnce(&NestedSendDoneWatcher::Run, base::Unretained(this)),
-          task_runner_);
+      watcher_.StartWatching(event_, base::BindOnce(&NestedSendDoneWatcher::Run,
+                                                    base::Unretained(this)));
     }
 
     void StopWatching() { watcher_.StopWatching(); }
@@ -127,7 +123,6 @@ class SyncChannel::ReceivedSyncMsgQueue :
     base::WaitableEvent* const event_;
     base::WaitableEventWatcher::EventCallback callback_;
     base::WaitableEventWatcher watcher_;
-    scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
     DISALLOW_COPY_AND_ASSIGN(NestedSendDoneWatcher);
   };
@@ -211,10 +206,9 @@ class SyncChannel::ReceivedSyncMsgQueue :
         }
         for (; it != message_queue_.end(); it++) {
           int message_group = it->context->restrict_dispatch_group();
-          if (message_group == kRestrictDispatchGroup_None ||
-              (dispatching_context &&
-               message_group ==
-                   dispatching_context->restrict_dispatch_group())) {
+          if (!dispatching_context ||
+              message_group == kRestrictDispatchGroup_None ||
+              message_group == dispatching_context->restrict_dispatch_group()) {
             message = it->message;
             context = it->context;
             it = message_queue_.erase(it);
@@ -498,8 +492,7 @@ void SyncChannel::SyncContext::OnChannelOpened() {
   shutdown_watcher_.StartWatching(
       shutdown_event_,
       base::Bind(&SyncChannel::SyncContext::OnShutdownEventSignaled,
-                 base::Unretained(this)),
-      ipc_task_runner());
+                 base::Unretained(this)));
   Context::OnChannelOpened();
 }
 
@@ -696,8 +689,7 @@ void SyncChannel::WaitForReply(mojo::SyncHandleRegistry* registry,
 
 void SyncChannel::WaitForReplyWithNestedMessageLoop(SyncContext* context) {
   base::RunLoop nested_loop(base::RunLoop::Type::kNestableTasksAllowed);
-  ReceivedSyncMsgQueue::NestedSendDoneWatcher watcher(
-      context, &nested_loop, context->listener_task_runner());
+  ReceivedSyncMsgQueue::NestedSendDoneWatcher watcher(context, &nested_loop);
   nested_loop.Run();
 }
 
@@ -718,9 +710,8 @@ void SyncChannel::StartWatching() {
   // immediately if woken up by a message which it's allowed to dispatch.
   dispatch_watcher_.StartWatching(
       sync_context()->GetDispatchEvent(),
-      base::BindOnce(&SyncChannel::OnDispatchEventSignaled,
-                     base::Unretained(this)),
-      sync_context()->listener_task_runner());
+      base::Bind(&SyncChannel::OnDispatchEventSignaled,
+                 base::Unretained(this)));
 }
 
 void SyncChannel::OnChannelInit() {

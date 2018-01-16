@@ -39,7 +39,7 @@ namespace blink {
 
 using namespace XPath;
 
-XPathExpression::XPathExpression() = default;
+XPathExpression::XPathExpression() {}
 
 XPathExpression* XPathExpression::CreateExpression(
     const String& expression,

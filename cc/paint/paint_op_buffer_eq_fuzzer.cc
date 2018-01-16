@@ -6,9 +6,7 @@
 #include <stdint.h>
 
 #include "cc/paint/paint_op_buffer.h"
-#include "cc/test/paint_op_helper.h"
 #include "cc/test/transfer_cache_test_helper.h"
-#include "third_party/skia/include/utils/SkNoDrawCanvas.h"
 
 // paint_op_buffer_eq_fuzzer deserializes and reserializes paint ops to
 // make sure that this does not modify or incorrectly serialize them.
@@ -37,13 +35,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   const size_t kMaxSerializedSize = 1000000;
 
   // TODO(enne): add an image provider here once deserializing supports that.
-  SkNoDrawCanvas canvas(100, 100);
   cc::TransferCacheTestHelper transfer_cache_helper;
   cc::PaintOp::SerializeOptions serialize_options;
   serialize_options.transfer_cache = &transfer_cache_helper;
-  serialize_options.canvas = &canvas;
   cc::PaintOp::DeserializeOptions deserialize_options;
-  deserialize_options.transfer_cache = &transfer_cache_helper;
+  serialize_options.transfer_cache = &transfer_cache_helper;
 
   // Need 4 bytes to be able to read the type/skip.
   if (size < 4)
@@ -116,9 +112,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
       serialized3.get(), written_bytes2, serialize_options);
   CHECK_EQ(written_bytes2, written_bytes3);
 
-  CHECK(*deserialized_op1 == *deserialized_op2)
-      << "\n1: " << cc::PaintOpHelper::ToString(deserialized_op1)
-      << "\n2: " << cc::PaintOpHelper::ToString(deserialized_op2);
+  CHECK(*deserialized_op1 == *deserialized_op2);
   CHECK_EQ(0, memcmp(serialized2.get(), serialized3.get(), written_bytes2));
 
   deserialized_op1->DestroyThis();

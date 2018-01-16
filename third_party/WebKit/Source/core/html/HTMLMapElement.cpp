@@ -42,7 +42,7 @@ inline HTMLMapElement::HTMLMapElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLMapElement)
 
-HTMLMapElement::~HTMLMapElement() = default;
+HTMLMapElement::~HTMLMapElement() {}
 
 HTMLAreaElement* HTMLMapElement::AreaForPoint(
     const LayoutPoint& location,

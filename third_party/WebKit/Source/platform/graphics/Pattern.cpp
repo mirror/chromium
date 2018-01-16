@@ -53,7 +53,8 @@ scoped_refptr<Pattern> Pattern::CreatePaintRecordPattern(
 
 Pattern::Pattern(RepeatMode repeat_mode) : repeat_mode_(repeat_mode) {}
 
-Pattern::~Pattern() = default;
+Pattern::~Pattern() {
+}
 
 void Pattern::ApplyToFlags(PaintFlags& flags, const SkMatrix& local_matrix) {
   if (!cached_shader_ || IsLocalMatrixChanged(local_matrix))

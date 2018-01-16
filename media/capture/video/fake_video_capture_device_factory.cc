@@ -131,18 +131,18 @@ FakeVideoCaptureDeviceFactory::CreateDeviceWithSettings(
   }
 
   const VideoCaptureFormat& initial_format = settings.supported_formats.front();
-  auto device_state = std::make_unique<FakeDeviceState>(
+  auto device_state = base::MakeUnique<FakeDeviceState>(
       kInitialZoom, initial_format.frame_rate, initial_format.pixel_format);
 
-  auto photo_frame_painter = std::make_unique<PacmanFramePainter>(
+  auto photo_frame_painter = base::MakeUnique<PacmanFramePainter>(
       PacmanFramePainter::Format::SK_N32, device_state.get());
-  auto photo_device = std::make_unique<FakePhotoDevice>(
+  auto photo_device = base::MakeUnique<FakePhotoDevice>(
       std::move(photo_frame_painter), device_state.get(),
       settings.photo_device_config);
 
-  return std::make_unique<FakeVideoCaptureDevice>(
+  return base::MakeUnique<FakeVideoCaptureDevice>(
       settings.supported_formats,
-      std::make_unique<FrameDelivererFactory>(settings.delivery_mode,
+      base::MakeUnique<FrameDelivererFactory>(settings.delivery_mode,
                                               device_state.get()),
       std::move(photo_device), std::move(device_state));
 }
@@ -164,7 +164,7 @@ FakeVideoCaptureDeviceFactory::CreateDeviceWithDefaultResolutions(
 // static
 std::unique_ptr<VideoCaptureDevice>
 FakeVideoCaptureDeviceFactory::CreateErrorDevice() {
-  return std::make_unique<ErrorFakeDevice>();
+  return base::MakeUnique<ErrorFakeDevice>();
 }
 
 void FakeVideoCaptureDeviceFactory::SetToDefaultDevicesConfig(

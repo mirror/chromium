@@ -132,7 +132,8 @@ TEST_F(StructTraitsTest, BeginFrameAck) {
 
   EXPECT_EQ(source_id, output.source_id);
   EXPECT_EQ(sequence_number, output.sequence_number);
-  EXPECT_TRUE(output.has_damage);
+  // |has_damage| is not transmitted.
+  EXPECT_FALSE(output.has_damage);
 }
 
 namespace {

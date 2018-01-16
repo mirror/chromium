@@ -10,12 +10,12 @@
  *   value: (number|string)
  * }}
  */
-let DropdownMenuOption;
+var DropdownMenuOption;
 
 /**
  * @typedef {!Array<!DropdownMenuOption>}
  */
-let DropdownMenuOptionList;
+var DropdownMenuOptionList;
 
 /**
  * 'settings-dropdown-menu' is a control for displaying options
@@ -71,12 +71,12 @@ Polymer({
    * @private
    */
   onChange_: function() {
-    const selected = this.$.dropdownMenu.value;
+    var selected = this.$.dropdownMenu.value;
 
     if (selected == this.notFoundValue_)
       return;
 
-    const prefValue =
+    var prefValue =
         Settings.PrefUtil.stringToPrefValue(selected, assert(this.pref));
     if (prefValue !== undefined)
       this.set('pref.value', prefValue);
@@ -90,8 +90,8 @@ Polymer({
     if (this.menuOptions === null || !this.menuOptions.length)
       return;
 
-    const prefValue = this.pref.value;
-    const option = this.menuOptions.find(function(menuItem) {
+    var prefValue = this.pref.value;
+    var option = this.menuOptions.find(function(menuItem) {
       return menuItem.value == prefValue;
     });
 
@@ -115,7 +115,7 @@ Polymer({
     if (!menuOptions || !menuOptions.length)
       return false;
 
-    const option = menuOptions.find(function(menuItem) {
+    var option = menuOptions.find(function(menuItem) {
       return menuItem.value == prefValue;
     });
     return !option;

@@ -30,7 +30,7 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "bindings/core/v8/string_or_string_sequence.h"
+#include "bindings/modules/v8/string_or_string_sequence.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMStringList.h"
 #include "modules/EventModules.h"
@@ -120,7 +120,7 @@ class MODULES_EXPORT IDBDatabase final
   void OnAbort(int64_t, DOMException*);
   void OnComplete(int64_t);
   void OnChanges(const WebIDBDatabaseCallbacks::ObservationIndexMap&,
-                 WebVector<WebIDBObservation> observations,
+                 const WebVector<WebIDBObservation>& observations,
                  const WebIDBDatabaseCallbacks::TransactionMap& transactions);
 
   // ScriptWrappable

@@ -35,7 +35,7 @@ namespace blink {
 
 LayoutRubyText::LayoutRubyText(Element* element) : LayoutBlockFlow(element) {}
 
-LayoutRubyText::~LayoutRubyText() = default;
+LayoutRubyText::~LayoutRubyText() {}
 
 bool LayoutRubyText::IsChildAllowed(LayoutObject* child,
                                     const ComputedStyle&) const {

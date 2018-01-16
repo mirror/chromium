@@ -251,9 +251,12 @@ Polymer({
     },
 
     /** @private */
-    isPoweredByPartner_: {
+    isPartnerPowered_: {
       type: Boolean,
-      value: false,
+      value: function() {
+        return loadTimeData.valueExists('cleanupPoweredByPartner') &&
+            loadTimeData.getBoolean('cleanupPoweredByPartner');
+      },
     },
   },
 
@@ -341,12 +344,12 @@ Polymer({
    */
   toggleExpandButton_: function(e) {
     // The expand button handles toggling itself.
-    const expandButtonTag = 'CR-EXPAND-BUTTON';
+    var expandButtonTag = 'CR-EXPAND-BUTTON';
     if (e.target.tagName == expandButtonTag)
       return;
 
     /** @type {!CrExpandButtonElement} */
-    const expandButton = e.currentTarget.querySelector(expandButtonTag);
+    var expandButton = e.currentTarget.querySelector(expandButtonTag);
     assert(expandButton);
     expandButton.expanded = !expandButton.expanded;
   },
@@ -366,6 +369,14 @@ Polymer({
    */
   learnMore_: function() {
     this.browserProxy_.notifyLearnMoreClicked();
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  showPoweredBy_: function() {
+    return this.itemsToRemoveSectionExpanded_ && this.isPartnerPowered_;
   },
 
   /**
@@ -506,14 +517,11 @@ Polymer({
   /**
    * Listener of event 'chrome-cleanup-on-infected'.
    * Offers a cleanup to the user and enables presenting files to be removed.
-   * @param {boolean} isPoweredByPartner If scanning results are provided by a
-   *     partner's engine.
    * @param {!settings.ChromeCleanerScannerResults} scannerResults The cleanup
    *     items to be presented to the user.
    * @private
    */
-  onInfected_: function(isPoweredByPartner, scannerResults) {
-    this.isPoweredByPartner_ = isPoweredByPartner;
+  onInfected_: function(scannerResults) {
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.NONE;
     this.renderScanOfferedByDefault_ = false;
     this.scannerResults_ = scannerResults;
@@ -525,14 +533,11 @@ Polymer({
    * Listener of event 'chrome-cleanup-on-cleaning'.
    * Shows a spinner indicating that an on-going action and enables presenting
    * files to be removed.
-   * @param {boolean} isPoweredByPartner If scanning results are provided by a
-   *     partner's engine.
    * @param {!settings.ChromeCleanerScannerResults} scannerResults The cleanup
    *     items to be presented to the user.
    * @private
    */
-  onCleaning_: function(isPoweredByPartner, scannerResults) {
-    this.isPoweredByPartner_ = isPoweredByPartner;
+  onCleaning_: function(scannerResults) {
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.CLEANING;
     this.renderScanOfferedByDefault_ = false;
     this.scannerResults_ = scannerResults;
@@ -560,7 +565,7 @@ Polymer({
    * @private
    */
   renderCleanupCard_: function(state) {
-    const components = this.cardStateToComponentsMap_.get(state);
+    var components = this.cardStateToComponentsMap_.get(state);
     assert(components);
 
     this.title_ = components.title || '';
@@ -648,9 +653,12 @@ Polymer({
     };
   },
 
-  /** @private */
-  changeLogsPermission_: function() {
-    const enabled = this.$.chromeCleanupLogsUploadControl.checked;
+  /**
+   * @param {boolean} enabled Whether to enable logs upload.
+   * @private
+   */
+  changeLogsPermission_: function(enabled) {
+    var enabled = this.$.chromeCleanupLogsUploadControl.checked;
     this.browserProxy_.setLogsUploadPermission(enabled);
   },
 
@@ -703,7 +711,7 @@ Polymer({
    * |chromeCleanupLinkShowItems|.
    */
   updateShowItemsLinklabel_: function() {
-    const setShowItemsLabel = text => this.showItemsLinkLabel_ = text;
+    var setShowItemsLabel = text => this.showItemsLinkLabel_ = text;
     if (this.userInitiatedCleanupsEnabled_) {
       this.browserProxy_
           .getItemsToRemovePluralString(
@@ -726,7 +734,7 @@ Polymer({
      * The icons to show on the card.
      * @enum {settings.ChromeCleanupCardIcon}
      */
-    const icons = {
+    var icons = {
       // Card's icon indicates a cleanup offer.
       SYSTEM: {
         statusIcon: 'settings:security',
@@ -750,7 +758,7 @@ Polymer({
      * The action buttons to show on the card.
      * @enum {settings.ChromeCleanupCardActionButton}
      */
-    const actionButtons = {
+    var actionButtons = {
       FIND: {
         label: this.i18n('chromeCleanupFindButtonLable'),
         doAction: this.startScanning_.bind(this),
@@ -791,7 +799,7 @@ Polymer({
     // If user-initiated cleanups are enabled, there is no need for a custom
     // link to the Help Center article, as all settings page sections contain
     // a help link by default.
-    const learnMoreIfUserInitiatedCleanupsDisabled =
+    var learnMoreIfUserInitiatedCleanupsDisabled =
         this.userInitiatedCleanupsEnabled_ ?
         0 :
         settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE;

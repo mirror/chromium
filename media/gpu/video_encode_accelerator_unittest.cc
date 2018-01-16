@@ -19,6 +19,7 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/memory/aligned_memory.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
@@ -390,7 +391,7 @@ static void ParseAndReadTestStreamData(
     }
     LOG_ASSERT(fields.size() >= 4U) << data;
     LOG_ASSERT(fields.size() <= 9U) << data;
-    auto test_stream = std::make_unique<TestStream>();
+    auto test_stream = base::MakeUnique<TestStream>();
 
     test_stream->in_filename = FilePathStringTypeToString(fields[0]);
     int width, height;
@@ -1583,7 +1584,7 @@ void VEAClient::RequireBitstreamBuffers(unsigned int input_count,
   ASSERT_GT(output_buffer_size_, 0UL);
 
   for (unsigned int i = 0; i < kNumOutputBuffers; ++i) {
-    auto shm = std::make_unique<base::SharedMemory>();
+    auto shm = base::MakeUnique<base::SharedMemory>();
     LOG_ASSERT(shm->CreateAndMapAnonymous(output_buffer_size_));
     FeedEncoderWithOutput(shm.get());
     output_shms_.push_back(std::move(shm));
@@ -2070,7 +2071,7 @@ void SimpleVEAClientBase::RequireBitstreamBuffers(
   ASSERT_GT(output_size, 0UL);
 
   for (unsigned int i = 0; i < kNumOutputBuffers; ++i) {
-    auto shm = std::make_unique<base::SharedMemory>();
+    auto shm = base::MakeUnique<base::SharedMemory>();
     LOG_ASSERT(shm->CreateAndMapAnonymous(output_size));
     FeedEncoderWithOutput(shm.get(), output_size);
     output_shms_.push_back(std::move(shm));
@@ -2269,8 +2270,8 @@ TEST_P(VideoEncodeAcceleratorTest, TestSimpleEncode) {
         (save_to_file &&
          !g_env->test_streams_[test_stream_index]->out_filename.empty());
 
-    notes.push_back(std::make_unique<ClientStateNotification<ClientState>>());
-    clients.push_back(std::make_unique<VEAClient>(
+    notes.push_back(base::MakeUnique<ClientStateNotification<ClientState>>());
+    clients.push_back(base::MakeUnique<VEAClient>(
         g_env->test_streams_[test_stream_index].get(), notes.back().get(),
         encoder_save_to_file, keyframe_period, force_bitrate, test_perf,
         mid_stream_bitrate_switch, mid_stream_framerate_switch, verify_output,

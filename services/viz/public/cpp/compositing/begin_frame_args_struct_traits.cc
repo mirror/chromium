@@ -32,7 +32,6 @@ bool StructTraits<viz::mojom::BeginFrameAckDataView, viz::BeginFrameAck>::Read(
     return false;
   out->source_id = data.source_id();
   out->sequence_number = data.sequence_number();
-  out->has_damage = data.has_damage();
   return true;
 }
 

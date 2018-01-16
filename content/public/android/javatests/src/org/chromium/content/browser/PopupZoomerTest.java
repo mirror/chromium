@@ -27,7 +27,6 @@ import org.chromium.content.browser.input.ImeAdapter;
 import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
-import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
@@ -104,7 +103,8 @@ public class PopupZoomerTest {
                 Context context = mActivityTestRule.getActivity();
                 WebContents webContents = mActivityTestRule.getContentViewCore().getWebContents();
                 mContentViewCore = (ContentViewCoreImpl) ContentViewCore.create(context, "");
-                mContentViewCore.setWebContentsForTesting((WebContentsImpl) webContents);
+                mContentViewCore.setSelectionPopupControllerForTesting(
+                        new SelectionPopupController(context, null, webContents, null));
                 ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();
                 mContentViewCore.setImeAdapterForTest(new ImeAdapter(webContents, containerView,
                         new TestInputMethodManagerWrapper(mContentViewCore)));

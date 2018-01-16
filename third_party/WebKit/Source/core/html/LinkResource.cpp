@@ -40,7 +40,7 @@ LinkResource::LinkResource(HTMLLinkElement* owner) : owner_(owner) {
   DCHECK(owner_);
 }
 
-LinkResource::~LinkResource() = default;
+LinkResource::~LinkResource() {}
 
 bool LinkResource::ShouldLoadResource() const {
   return GetDocument().GetFrame() || GetDocument().ImportsController();

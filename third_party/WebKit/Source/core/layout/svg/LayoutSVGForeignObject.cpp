@@ -32,7 +32,7 @@ namespace blink {
 LayoutSVGForeignObject::LayoutSVGForeignObject(SVGForeignObjectElement* node)
     : LayoutSVGBlock(node), needs_transform_update_(true) {}
 
-LayoutSVGForeignObject::~LayoutSVGForeignObject() = default;
+LayoutSVGForeignObject::~LayoutSVGForeignObject() {}
 
 bool LayoutSVGForeignObject::IsChildAllowed(LayoutObject* child,
                                             const ComputedStyle& style) const {

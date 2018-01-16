@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include <string>
-
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -21,7 +19,8 @@ namespace {
 
 // Translates DevTools log level strings into Log::Level.
 bool ConsoleLevelToLogLevel(const std::string& name, Log::Level *out_level) {
-  if (name == "verbose")
+  // TODO(gmanikpure): Delete debug level once we stop supporting Chrome 57.
+  if (name =="debug" || name == "verbose")
     *out_level = Log::kDebug;
   else if (name == "log" || name == "info")
     *out_level = Log::kInfo;
@@ -49,8 +48,9 @@ Status ConsoleLogger::OnConnected(DevToolsClient* client) {
       // earlier. Enable the Console domain so we can listen for
       // Console.messageAdded events.
       return client->SendCommand("Console.enable", params);
+    } else {
+      return status;
     }
-    return status;
   }
   // Otherwise, we're on Chrome 54+. Enable the Log and Runtime domains so we
   // can listen for Log.entryAdded and Runtime.exceptionThrown events.
@@ -63,13 +63,14 @@ Status ConsoleLogger::OnEvent(
     const base::DictionaryValue& params) {
   if (method == "Console.messageAdded")
     return OnConsoleMessageAdded(params);
-  if (method == "Log.entryAdded")
+  else if (method == "Log.entryAdded")
     return OnLogEntryAdded(params);
-  if (method == "Runtime.consoleAPICalled")
+  else if (method == "Runtime.consoleAPICalled")
     return OnRuntimeConsoleApiCalled(params);
-  if (method == "Runtime.exceptionThrown")
+  else if (method == "Runtime.exceptionThrown")
     return OnRuntimeExceptionThrown(params);
-  return Status(kOk);
+  else
+    return Status(kOk);
 }
 
 Status ConsoleLogger::OnConsoleMessageAdded(
@@ -84,6 +85,7 @@ Status ConsoleLogger::OnConsoleMessageAdded(
     if (message_dict->GetString("text", &text) && !text.empty() &&
         message_dict->GetString("level", &level_name) &&
         ConsoleLevelToLogLevel(level_name, &level)) {
+
       const char* origin_cstr = "unknown";
       std::string origin;
       if ((message_dict->GetString("url", &origin) && !origin.empty()) ||
@@ -204,11 +206,10 @@ Status ConsoleLogger::OnRuntimeConsoleApiCalled(
   std::string text;
   const base::ListValue* args = nullptr;
   const base::DictionaryValue* first_arg = nullptr;
-  if (!params.GetList("args", &args) || args->GetSize() < 1 ||
-      !args->GetDictionary(0, &first_arg)) {
+  if (!params.GetList("args", &args) ||
+      args->GetSize() < 1 ||
+      !args->GetDictionary(0, &first_arg))
     return Status(kUnknownError, "missing or invalid args");
-  }
-
   std::string arg_type;
   if (first_arg->GetString("type", &arg_type) && arg_type == "undefined") {
     text = "undefined";

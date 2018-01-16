@@ -88,7 +88,7 @@ SharedWorker* SharedWorker::Create(ExecutionContext* context,
   return worker;
 }
 
-SharedWorker::~SharedWorker() = default;
+SharedWorker::~SharedWorker() {}
 
 const AtomicString& SharedWorker::InterfaceName() const {
   return EventTargetNames::SharedWorker;

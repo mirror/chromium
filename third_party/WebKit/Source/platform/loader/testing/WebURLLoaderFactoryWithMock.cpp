@@ -13,7 +13,7 @@ WebURLLoaderFactoryWithMock::WebURLLoaderFactoryWithMock(
     WebURLLoaderMockFactory* mock_factory)
     : mock_factory_(mock_factory) {}
 
-WebURLLoaderFactoryWithMock::~WebURLLoaderFactoryWithMock() = default;
+WebURLLoaderFactoryWithMock::~WebURLLoaderFactoryWithMock() {}
 
 std::unique_ptr<WebURLLoader> WebURLLoaderFactoryWithMock::CreateURLLoader(
     const WebURLRequest& request,

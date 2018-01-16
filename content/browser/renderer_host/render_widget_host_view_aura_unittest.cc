@@ -221,7 +221,7 @@ class FakeFrameSubscriber : public RenderWidgetHostViewFrameSubscriber {
     if (!should_capture_)
       return false;
     last_present_time_ = present_time;
-    *storage = media::VideoFrame::CreateFrame(media::PIXEL_FORMAT_I420, size_,
+    *storage = media::VideoFrame::CreateFrame(media::PIXEL_FORMAT_YV12, size_,
                                               gfx::Rect(size_), size_,
                                               base::TimeDelta());
     *callback = base::Bind(&FakeFrameSubscriber::CallbackMethod, callback_);
@@ -532,10 +532,8 @@ enum WheelScrollingMode {
 
 class RenderWidgetHostViewAuraTest : public testing::Test {
  public:
-  RenderWidgetHostViewAuraTest(
-      WheelScrollingMode wheel_scrolling_mode = kWheelScrollingModeNone)
-      : wheel_scrolling_mode_(wheel_scrolling_mode),
-        widget_host_uses_shutdown_to_destroy_(false),
+  RenderWidgetHostViewAuraTest()
+      : widget_host_uses_shutdown_to_destroy_(false),
         is_guest_view_hack_(false) {}
 
   static void InstallDelegatedFrameHostClient(
@@ -647,16 +645,27 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
 
   const ui::MotionEventAura& pointer_state() { return view_->pointer_state(); }
 
-  void SetFeatureList() {
-    if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
+  void EnableWheelScrollLatching() {
+    feature_list_.InitFromCommandLine(
+        features::kTouchpadAndWheelScrollLatching.name, "");
+  }
+
+  void DisableWheelScrollLatching() {
+    feature_list_.InitFromCommandLine(
+        "", features::kTouchpadAndWheelScrollLatching.name);
+  }
+
+  void SetFeatureList(
+      WheelScrollingMode wheel_scrolling_mode = kWheelScrollLatching) {
+    if (wheel_scrolling_mode == kAsyncWheelEvents) {
       feature_list_.InitWithFeatures({features::kTouchpadAndWheelScrollLatching,
                                       features::kAsyncWheelEvents},
                                      {});
-    } else if (wheel_scrolling_mode_ == kWheelScrollLatching) {
+    } else if (wheel_scrolling_mode == kWheelScrollLatching) {
       feature_list_.InitWithFeatures(
           {features::kTouchpadAndWheelScrollLatching},
           {features::kAsyncWheelEvents});
-    } else if (wheel_scrolling_mode_ == kWheelScrollingModeNone) {
+    } else if (wheel_scrolling_mode == kWheelScrollingModeNone) {
       feature_list_.InitWithFeatures({},
                                      {features::kTouchpadAndWheelScrollLatching,
                                       features::kAsyncWheelEvents});
@@ -665,13 +674,6 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
     vsync_feature_list_.InitAndEnableFeature(
         features::kVsyncAlignedInputEvents);
   }
-
-  void TimerBasedWheelEventPhaseInfo();
-  void TimerBasedLatchingBreaksWithMouseMove();
-  void TouchpadFlingStartResetsWheelPhaseState();
-  void GSBWithTouchSourceStopsWheelScrollSequence();
-
-  WheelScrollingMode wheel_scrolling_mode_;
 
  protected:
   BrowserContext* browser_context() { return browser_context_.get(); }
@@ -757,23 +759,8 @@ class RenderWidgetHostViewAuraSurfaceSynchronizationTest
 class RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest
     : public RenderWidgetHostViewAuraTest {
  public:
-  RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest()
-      : RenderWidgetHostViewAuraTest(kWheelScrollLatching) {}
   void SetUp() override {
-    SetFeatureList();
-    ui::GestureConfiguration::GetInstance()->set_scroll_debounce_interval_in_ms(
-        0);
-    RenderWidgetHostViewAuraTest::SetUp();
-  }
-};
-
-class RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest
-    : public RenderWidgetHostViewAuraTest {
- public:
-  RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest()
-      : RenderWidgetHostViewAuraTest(kAsyncWheelEvents) {}
-  void SetUp() override {
-    SetFeatureList();
+    EnableWheelScrollLatching();
     ui::GestureConfiguration::GetInstance()->set_scroll_debounce_interval_in_ms(
         0);
     RenderWidgetHostViewAuraTest::SetUp();
@@ -829,9 +816,9 @@ class RenderWidgetHostViewAuraOverscrollTest
  public:
   RenderWidgetHostViewAuraOverscrollTest(
       WheelScrollingMode wheel_scrolling_mode = kWheelScrollLatching)
-      : RenderWidgetHostViewAuraTest(wheel_scrolling_mode),
-        wheel_scroll_latching_enabled_(wheel_scrolling_mode !=
-                                       kWheelScrollingModeNone) {}
+      : wheel_scroll_latching_enabled_(wheel_scrolling_mode !=
+                                       kWheelScrollingModeNone),
+        wheel_scrolling_mode_(wheel_scrolling_mode) {}
 
   // We explicitly invoke SetUp to allow gesture debounce customization.
   void SetUp() override {}
@@ -883,7 +870,7 @@ class RenderWidgetHostViewAuraOverscrollTest
   void SetUpOverscrollEnvironment() { SetUpOverscrollEnvironmentImpl(0); }
 
   void SetUpOverscrollEnvironmentImpl(int debounce_interval_in_ms) {
-    SetFeatureList();
+    SetFeatureList(wheel_scrolling_mode_);
     ui::GestureConfiguration::GetInstance()->set_scroll_debounce_interval_in_ms(
         debounce_interval_in_ms);
 
@@ -1219,6 +1206,7 @@ class RenderWidgetHostViewAuraOverscrollTest
   std::unique_ptr<TestOverscrollDelegate> overscroll_delegate_;
 
   bool wheel_scroll_latching_enabled_;
+  WheelScrollingMode wheel_scrolling_mode_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewAuraOverscrollTest);
@@ -1742,11 +1730,8 @@ TEST_F(RenderWidgetHostViewAuraTest, TouchEventState) {
   EXPECT_EQ(0U, events.size());
 }
 
-void RenderWidgetHostViewAuraTest::TimerBasedWheelEventPhaseInfo() {
-  // The test is valid only when wheel scroll latching is enabled.
-  if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
-    return;
-
+TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
+       TimerBasedWheelEventPhaseInfo) {
   view_->InitAsChild(nullptr);
   view_->Show();
   sink_->ClearMessages();
@@ -1791,16 +1776,11 @@ void RenderWidgetHostViewAuraTest::TimerBasedWheelEventPhaseInfo() {
   base::TimeTicks wheel_event_timestamp =
       ui::EventTimeStampFromSeconds(wheel_event->TimeStampSeconds());
   EXPECT_EQ(WebMouseWheelEvent::kPhaseChanged, wheel_event->phase);
-  if (wheel_scrolling_mode_ == kWheelScrollLatching) {
-    events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-    events = GetAndResetDispatchedMessages();
-    gesture_event = static_cast<const WebGestureEvent*>(
-        events[0]->ToEvent()->Event()->web_event.get());
-  } else {  // wheel_scrolling_mode_ == kAsyncWheelEvents.
-    gesture_event = static_cast<const WebGestureEvent*>(
-        events[1]->ToEvent()->Event()->web_event.get());
-  }
+  events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
 
+  events = GetAndResetDispatchedMessages();
+  gesture_event = static_cast<const WebGestureEvent*>(
+      events[0]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebInputEvent::kGestureScrollUpdate, gesture_event->GetType());
   EXPECT_EQ(0U, gesture_event->data.scroll_update.delta_x);
   EXPECT_EQ(2U, gesture_event->data.scroll_update.delta_y);
@@ -1830,23 +1810,12 @@ void RenderWidgetHostViewAuraTest::TimerBasedWheelEventPhaseInfo() {
   EXPECT_EQ(WebInputEvent::kGestureScrollEnd, gesture_event->GetType());
   EXPECT_TRUE(gesture_event->data.scroll_end.synthetic);
 }
-TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
-       TimerBasedWheelEventPhaseInfo) {
-  TimerBasedWheelEventPhaseInfo();
-}
-TEST_F(RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest,
-       TimerBasedWheelEventPhaseInfo) {
-  TimerBasedWheelEventPhaseInfo();
-}
 
 // Tests that latching breaks when the difference between location of the first
 // wheel event in the sequence and the location of the current wheel event is
 // larger than some maximum threshold.
-void RenderWidgetHostViewAuraTest::TimerBasedLatchingBreaksWithMouseMove() {
-  // The test is valid only when wheel scroll latching is enabled.
-  if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
-    return;
-
+TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
+       TimerBasedLatchingBreaksWithMouseMove) {
   view_->InitAsChild(nullptr);
   view_->Show();
   sink_->ClearMessages();
@@ -1876,16 +1845,11 @@ void RenderWidgetHostViewAuraTest::TimerBasedLatchingBreaksWithMouseMove() {
   view_->OnMouseEvent(&event2);
   base::RunLoop().RunUntilIdle();
   events = GetAndResetDispatchedMessages();
-  if (wheel_scrolling_mode_ == kWheelScrollLatching)
-    EXPECT_EQ("MouseWheel", GetMessageNames(events));
-  else
-    EXPECT_EQ("MouseWheel GestureScrollUpdate", GetMessageNames(events));
-
+  EXPECT_EQ("MouseWheel", GetMessageNames(events));
   wheel_event = static_cast<const WebMouseWheelEvent*>(
       events[0]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebMouseWheelEvent::kPhaseChanged, wheel_event->phase);
-  if (wheel_scrolling_mode_ == kWheelScrollLatching)
-    events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   events = GetAndResetDispatchedMessages();
 
   // Send the third wheel event with a location outside of the slop region. The
@@ -1906,22 +1870,11 @@ void RenderWidgetHostViewAuraTest::TimerBasedLatchingBreaksWithMouseMove() {
       events[2]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebMouseWheelEvent::kPhaseBegan, wheel_event->phase);
 }
-TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
-       TimerBasedLatchingBreaksWithMouseMove) {
-  TimerBasedLatchingBreaksWithMouseMove();
-}
-TEST_F(RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest,
-       TimerBasedLatchingBreaksWithMouseMove) {
-  TimerBasedLatchingBreaksWithMouseMove();
-}
 
 // Tests that a gesture fling start with touchpad source resets wheel phase
 // state.
-void RenderWidgetHostViewAuraTest::TouchpadFlingStartResetsWheelPhaseState() {
-  // The test is valid only when wheel scroll latching is enabled.
-  if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
-    return;
-
+TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
+       TouchpadFlingStartResetsWheelPhaseState) {
   // When the user puts their fingers down a GFC is receieved.
   ui::ScrollEvent fling_cancel(ui::ET_SCROLL_FLING_CANCEL, gfx::Point(2, 2),
                                ui::EventTimeForNow(), 0, 0, 0, 0, 0, 2);
@@ -1968,29 +1921,20 @@ void RenderWidgetHostViewAuraTest::TouchpadFlingStartResetsWheelPhaseState() {
   view_->OnScrollEvent(&scroll1);
   base::RunLoop().RunUntilIdle();
   events = GetAndResetDispatchedMessages();
-  if (wheel_scrolling_mode_ == kWheelScrollLatching)
-    EXPECT_EQ(1U, events.size());
-  else
-    EXPECT_EQ(2U, events.size());
+  EXPECT_EQ(1U, events.size());
   wheel_event = static_cast<const WebMouseWheelEvent*>(
       events[0]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebMouseWheelEvent::kPhaseChanged, wheel_event->phase);
-  if (wheel_scrolling_mode_ == kWheelScrollLatching) {
-    events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-    events = GetAndResetDispatchedMessages();
-    EXPECT_EQ("GestureScrollUpdate", GetMessageNames(events));
-    gesture_event = static_cast<const WebGestureEvent*>(
-        events[0]->ToEvent()->Event()->web_event.get());
-    events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_CONSUMED);
-  } else {  // wheel_scrolling_mode_ == kAsyncWheelEvents
-    EXPECT_EQ("MouseWheel GestureScrollUpdate", GetMessageNames(events));
-    gesture_event = static_cast<const WebGestureEvent*>(
-        events[1]->ToEvent()->Event()->web_event.get());
-    events[1]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_CONSUMED);
-  }
+  events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("GestureScrollUpdate", GetMessageNames(events));
+  gesture_event = static_cast<const WebGestureEvent*>(
+      events[0]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebInputEvent::kGestureScrollUpdate, gesture_event->GetType());
   EXPECT_EQ(0U, gesture_event->data.scroll_update.delta_x);
   EXPECT_EQ(15U, gesture_event->data.scroll_update.delta_y);
+  events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_CONSUMED);
 
   // A GFS is received showing that the user has lifted their fingers. This will
   // reset the scroll state of the wheel phase handler.
@@ -2020,21 +1964,9 @@ void RenderWidgetHostViewAuraTest::TouchpadFlingStartResetsWheelPhaseState() {
       events[2]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebMouseWheelEvent::kPhaseBegan, wheel_event->phase);
 }
+
 TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
-       TouchpadFlingStartResetsWheelPhaseState) {
-  TouchpadFlingStartResetsWheelPhaseState();
-}
-TEST_F(RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest,
-       TouchpadFlingStartResetsWheelPhaseState) {
-  TouchpadFlingStartResetsWheelPhaseState();
-}
-
-void RenderWidgetHostViewAuraTest::
-    GSBWithTouchSourceStopsWheelScrollSequence() {
-  // The test is valid only when wheel scroll latching is enabled.
-  if (wheel_scrolling_mode_ == kWheelScrollingModeNone)
-    return;
-
+       GSBWithTouchSourceStopsWheelScrollSequence) {
   ui::ScrollEvent scroll0(ui::ET_SCROLL, gfx::Point(2, 2),
                           ui::EventTimeForNow(), 0, 0, 5, 0, 5, 2);
   view_->OnScrollEvent(&scroll0);
@@ -2086,16 +2018,6 @@ void RenderWidgetHostViewAuraTest::
       events[2]->ToEvent()->Event()->web_event.get());
   EXPECT_EQ(WebInputEvent::kGestureScrollBegin, gesture_event->GetType());
   EXPECT_EQ(blink::kWebGestureDeviceTouchscreen, gesture_event->source_device);
-}
-
-TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
-       GSBWithTouchSourceStopsWheelScrollSequence) {
-  GSBWithTouchSourceStopsWheelScrollSequence();
-}
-
-TEST_F(RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest,
-       GSBWithTouchSourceStopsWheelScrollSequence) {
-  GSBWithTouchSourceStopsWheelScrollSequence();
 }
 
 // Checks that touch-event state is maintained correctly for multiple touch
@@ -2644,11 +2566,6 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_FullscreenResize) {
 // If the view size is larger than the compositor frame then extra layers
 // should be created to fill the gap.
 TEST_F(RenderWidgetHostViewAuraTest, DelegatedFrameGutter) {
-  // TODO(fsamuel): Delete this test once surface synchronization is on for
-  // all platforms.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
   gfx::Size large_size(100, 100);
   gfx::Size small_size(40, 45);
   gfx::Size medium_size(40, 95);
@@ -2836,11 +2753,6 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
 
 // Skipped frames should not drop their damage.
 TEST_F(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames) {
-  // TODO(fsamuel): Delete this test once surface synchronization is on for
-  // all platforms.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
   gfx::Rect view_rect(100, 100);
   gfx::Size frame_size = view_rect.size();
   viz::LocalSurfaceId local_surface_id =
@@ -2955,11 +2867,6 @@ TEST_F(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames) {
 
 // If resize races with a renderer frame, we should lock for the right size.
 TEST_F(RenderWidgetHostViewAuraTest, ResizeAfterReceivingFrame) {
-  // TODO(fsamuel): Delete this test once surface synchronization is on for
-  // all platforms.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
   gfx::Rect view_rect(100, 100);
   gfx::Size frame_size = view_rect.size();
   viz::LocalSurfaceId local_surface_id =
@@ -3035,11 +2942,6 @@ TEST_F(RenderWidgetHostViewAuraTest, ResizeAfterReceivingFrame) {
 // no reason to lock the compositor as there can't be guttering around a
 // renderer frame that doesn't exist.
 TEST_F(RenderWidgetHostViewAuraTest, MissingFramesDontLock) {
-  // TODO(fsamuel): Delete this test once surface synchronization is on for
-  // all platforms.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
   gfx::Rect view_rect(100, 100);
   gfx::Size frame_size = view_rect.size();
 
@@ -3394,11 +3296,6 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
 }
 
 TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
-  // TODO(fsamuel): Delete this test once surface synchronization is on for
-  // all platforms.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
   view_->InitAsChild(nullptr);
 
   size_t max_renderer_frames =

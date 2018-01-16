@@ -8,8 +8,8 @@
 
 goog.provide('__crWeb.legacy');
 
-// Requires __crWeb.common and __crWeb.message provided by
-// __crWeb.allFramesWebBundle.
+goog.require('__crWeb.common');
+goog.require('__crWeb.message');
 
 /** Beginning of anonymouse object */
 (function() {

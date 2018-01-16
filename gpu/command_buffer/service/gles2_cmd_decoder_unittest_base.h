@@ -17,7 +17,6 @@
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/buffer_manager.h"
 #include "gpu/command_buffer/service/context_group.h"
-#include "gpu/command_buffer/service/decoder_client.h"
 #include "gpu/command_buffer/service/framebuffer_manager.h"
 #include "gpu/command_buffer/service/gl_context_mock.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
@@ -49,7 +48,7 @@ namespace gles2 {
 class MemoryTracker;
 
 class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
-                             public DecoderClient {
+                             public GLES2DecoderClient {
  public:
   GLES2DecoderTestBase();
   ~GLES2DecoderTestBase() override;
@@ -823,7 +822,7 @@ MATCHER_P2(PointsToArray, array, size, "") {
 }
 
 class GLES2DecoderPassthroughTestBase : public testing::Test,
-                                        public DecoderClient {
+                                        public GLES2DecoderClient {
  public:
   GLES2DecoderPassthroughTestBase(ContextType context_type);
   ~GLES2DecoderPassthroughTestBase() override;

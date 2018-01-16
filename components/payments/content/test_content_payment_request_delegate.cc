@@ -95,9 +95,6 @@ PrefService* TestContentPaymentRequestDelegate::GetPrefService() {
   return core_delegate_.GetPrefService();
 }
 
-void TestContentPaymentRequestDelegate::EmbedPaymentHandlerWindow(
-    const GURL& url) {}
-
 autofill::TestAddressNormalizer*
 TestContentPaymentRequestDelegate::test_address_normalizer() {
   return core_delegate_.test_address_normalizer();

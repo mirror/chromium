@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -142,7 +143,7 @@ class VideoFrameStreamTest
     // parameterized tests which need to pass in all combinations.
     std::vector<std::unique_ptr<VideoDecoder>> decoders;
     for (int i = 0; i < 3; ++i) {
-      auto decoder = std::make_unique<FakeVideoDecoder>(
+      auto decoder = base::MakeUnique<FakeVideoDecoder>(
           GetDecoderName(i), GetParam().decoding_delay,
           GetParam().parallel_decoding,
           base::Bind(&VideoFrameStreamTest::OnBytesDecoded,

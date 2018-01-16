@@ -61,9 +61,9 @@ class ChromeNetLog;
 }
 
 namespace policy {
-class ChromeBrowserPolicyConnector;
+class BrowserPolicyConnector;
 class PolicyService;
-}  // namespace policy
+};
 
 // Real implementation of BrowserProcess that creates and returns the services.
 class BrowserProcessImpl : public BrowserProcess,
@@ -112,7 +112,7 @@ class BrowserProcessImpl : public BrowserProcess,
   NotificationUIManager* notification_ui_manager() override;
   NotificationPlatformBridge* notification_platform_bridge() override;
   message_center::MessageCenter* message_center() override;
-  policy::ChromeBrowserPolicyConnector* browser_policy_connector() override;
+  policy::BrowserPolicyConnector* browser_policy_connector() override;
   policy::PolicyService* policy_service() override;
   IconManager* icon_manager() override;
   GpuModeManager* gpu_mode_manager() override;
@@ -209,15 +209,14 @@ class BrowserProcessImpl : public BrowserProcess,
 
   std::unique_ptr<IOThread> io_thread_;
 
-  bool created_watchdog_thread_ = false;
+  bool created_watchdog_thread_;
   std::unique_ptr<WatchDogThread> watchdog_thread_;
 
-  bool created_browser_policy_connector_ = false;
+  bool created_browser_policy_connector_;
   // Must be destroyed after |local_state_|.
-  std::unique_ptr<policy::ChromeBrowserPolicyConnector>
-      browser_policy_connector_;
+  std::unique_ptr<policy::BrowserPolicyConnector> browser_policy_connector_;
 
-  bool created_profile_manager_ = false;
+  bool created_profile_manager_;
   std::unique_ptr<ProfileManager> profile_manager_;
 
   std::unique_ptr<PrefService> local_state_;
@@ -227,7 +226,7 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<content::NetworkConnectionTracker>
       network_connection_tracker_;
 
-  bool created_icon_manager_ = false;
+  bool created_icon_manager_;
   std::unique_ptr<IconManager> icon_manager_;
 
 #if defined(OS_ANDROID)
@@ -260,34 +259,34 @@ class BrowserProcessImpl : public BrowserProcess,
 #endif
 
   // Manager for desktop notification UI.
-  bool created_notification_ui_manager_ = false;
+  bool created_notification_ui_manager_;
   std::unique_ptr<NotificationUIManager> notification_ui_manager_;
 
   std::unique_ptr<IntranetRedirectDetector> intranet_redirect_detector_;
 
   std::unique_ptr<StatusTray> status_tray_;
 
-  bool created_notification_bridge_ = false;
+  bool created_notification_bridge_;
   std::unique_ptr<NotificationPlatformBridge> notification_bridge_;
 
 #if BUILDFLAG(ENABLE_BACKGROUND_MODE)
   std::unique_ptr<BackgroundModeManager> background_mode_manager_;
 #endif
 
-  bool created_safe_browsing_service_ = false;
+  bool created_safe_browsing_service_;
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service_;
 
-  bool created_subresource_filter_ruleset_service_ = false;
+  bool created_subresource_filter_ruleset_service_;
   std::unique_ptr<subresource_filter::ContentRulesetService>
       subresource_filter_ruleset_service_;
 
-  bool created_optimization_guide_service_ = false;
+  bool created_optimization_guide_service_;
   std::unique_ptr<optimization_guide::OptimizationGuideService>
       optimization_guide_service_;
 
-  bool shutting_down_ = false;
+  bool shutting_down_;
 
-  bool tearing_down_ = false;
+  bool tearing_down_;
 
   // Ensures that all the print jobs are finished before closing the browser.
   std::unique_ptr<printing::PrintJobManager> print_job_manager_;
@@ -362,8 +361,7 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
 #endif
 
-  shell_integration::DefaultWebClientState cached_default_web_client_state_ =
-      shell_integration::UNKNOWN_DEFAULT;
+  shell_integration::DefaultWebClientState cached_default_web_client_state_;
 
   std::unique_ptr<physical_web::PhysicalWebDataSource>
       physical_web_data_source_;

@@ -42,8 +42,6 @@ enum TabLoadingState {
 
 // Internal class used by TabManager to record the needed data for
 // WebContentses.
-// TODO(michaelpg): Merge implementation into
-// TabActivityWatcher::WebContentsData and expose necessary properties publicly.
 class TabManager::WebContentsData
     : public content::WebContentsObserver,
       public content::WebContentsUserData<TabManager::WebContentsData> {

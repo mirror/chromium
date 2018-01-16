@@ -37,7 +37,7 @@ class TestObserver : public blink::WebThread::TaskObserver {
  public:
   explicit TestObserver(std::string* calls) : calls_(calls) {}
 
-  ~TestObserver() override = default;
+  ~TestObserver() override {}
 
   void WillProcessTask() override { calls_->append(" willProcessTask"); }
 
@@ -69,9 +69,9 @@ void ShutdownOnThread(WebThreadImplForWorkerScheduler* thread) {
 
 class WebThreadImplForWorkerSchedulerTest : public ::testing::Test {
  public:
-  WebThreadImplForWorkerSchedulerTest() = default;
+  WebThreadImplForWorkerSchedulerTest() {}
 
-  ~WebThreadImplForWorkerSchedulerTest() override = default;
+  ~WebThreadImplForWorkerSchedulerTest() override {}
 
   void SetUp() override {
     thread_.reset(new WebThreadImplForWorkerScheduler("test thread"));

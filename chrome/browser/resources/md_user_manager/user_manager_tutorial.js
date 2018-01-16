@@ -9,7 +9,7 @@
 (function() {
 
 /** @enum {string} */
-const TutorialSteps = {
+var TutorialSteps = {
   YOUR_CHROME: 'yourChrome',
   FRIENDS: 'friends',
   GUESTS: 'guests',
@@ -57,7 +57,7 @@ Polymer({
    * @private
    */
   onNextTap_: function(event) {
-    const element = Polymer.dom(event).rootTarget;
+    var element = Polymer.dom(event).rootTarget;
     this.currentStep_ = element.dataset.next;
   },
 
@@ -83,7 +83,7 @@ Polymer({
     // If there's only one pod, show the steps to the side of the pod.
     // Otherwise, center the steps and disable interacting with the pods
     // while the tutorial is showing.
-    const podRow = /** @type {{focusPod: !function(), pods: !Array}} */
+    var podRow = /** @type {{focusPod: !function(), pods: !Array}} */
         ($('pod-row'));
 
     this.classList.toggle('single-pod', podRow.pods.length == 1);

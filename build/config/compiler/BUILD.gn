@@ -394,12 +394,6 @@ config("compiler") {
 
   if (is_posix && use_lld && !is_nacl) {
     ldflags += [ "-fuse-ld=lld" ]
-    if (current_cpu == "arm64") {
-      # Reduce the page size from 65536 in order to reduce binary size slightly
-      # by shrinking the alignment gap between segments. This also causes all
-      # segments to be mapped adjacently, which breakpad relies on.
-      ldflags += [ "-Wl,-z,max-page-size=4096" ]
-    }
   } else if (use_gold) {
     ldflags += [ "-fuse-ld=gold" ]
     if (!is_android) {
@@ -688,20 +682,18 @@ config("compiler_cpu_abi") {
       }
 
       if (mips_arch_variant == "r6") {
-        cflags += [ "-mno-odd-spreg" ]
-        ldflags += [ "-mips32r6" ]
         if (is_clang) {
-          cflags += [
-            "-march=mipsel",
-            "-mcpu=mips32r6",
-          ]
+          cflags += [ "-march=mips32r6" ]
         } else {
           cflags += [
             "-mips32r6",
             "-Wa,-mips32r6",
           ]
           if (is_android) {
-            ldflags += [ "-Wl,-melf32ltsmip" ]
+            ldflags += [
+              "-mips32r6",
+              "-Wl,-melf32ltsmip",
+            ]
           }
         }
         if (mips_use_msa == true) {
@@ -711,12 +703,18 @@ config("compiler_cpu_abi") {
           ]
         }
       } else if (mips_arch_variant == "r2") {
-        ldflags += [ "-mips32r2" ]
         if (is_clang) {
-          cflags += [
-            "-march=mipsel",
-            "-mcpu=mips32r2",
-          ]
+          if (is_android) {
+            cflags += [
+              "-march=mipsel",
+              "-mcpu=mips32r2",
+            ]
+          } else {
+            cflags += [
+              "-march=mipsel",
+              "-mcpu=mips32r2",
+            ]
+          }
         } else {
           cflags += [
             "-mips32r2",
@@ -727,12 +725,18 @@ config("compiler_cpu_abi") {
           }
         }
       } else if (mips_arch_variant == "r1") {
-        ldflags += [ "-mips32" ]
         if (is_clang) {
-          cflags += [
-            "-march=mipsel",
-            "-mcpu=mips32",
-          ]
+          if (is_android) {
+            cflags += [
+              "-march=mipsel",
+              "-mcpu=mips32",
+            ]
+          } else {
+            cflags += [
+              "-march=mipsel",
+              "-mcpu=mips32",
+            ]
+          }
         } else {
           cflags += [
             "-mips32",
@@ -1595,9 +1599,7 @@ if (is_win) {
 
   if (is_official_build) {
     common_optimize_on_ldflags += [ "/OPT:REF" ]  # Remove unreferenced data.
-
-    # TODO(thakis): Remove is_clang here, https://crbug.com/598772
-    if (!use_lld && !is_clang) {
+    if (!use_lld) {
       common_optimize_on_ldflags += [
         # Set the number of LTCG code-gen threads to eight. The default is four.
         # This gives a 5-10% link speedup.

@@ -64,7 +64,7 @@ class CORE_EXPORT InspectorPageAgent final
  public:
   class Client {
    public:
-    virtual ~Client() = default;
+    virtual ~Client() {}
     virtual void PageLayoutInvalidated(bool resized) {}
   };
 

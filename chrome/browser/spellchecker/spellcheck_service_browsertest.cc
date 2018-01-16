@@ -19,7 +19,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
+#include "chrome/browser/spellchecker/spell_check_host_impl.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
 #include "chrome/browser/ui/browser.h"
@@ -82,8 +82,8 @@ class SpellcheckServiceBrowserTest : public InProcessBrowserTest,
     // interface so we can test the SpellChecker request flow.
     renderer_->OverrideBinderForTesting(
         spellcheck::mojom::SpellChecker::Name_,
-        base::BindRepeating(&SpellcheckServiceBrowserTest::Bind,
-                            base::Unretained(this)));
+        base::Bind(&SpellcheckServiceBrowserTest::Bind,
+                   base::Unretained(this)));
   }
 
   void EnableSpellcheck(bool enable_spellcheck) {
@@ -256,7 +256,7 @@ class SpellcheckServiceHostBrowserTest : public SpellcheckServiceBrowserTest {
   void RequestSpellCheckHost(spellcheck::mojom::SpellCheckHostPtr* interface) {
     service_manager::BindSourceInfo source_info;
     source_info.identity = GetRenderer()->GetChildIdentity();
-    SpellCheckHostChromeImpl::Create(mojo::MakeRequest(interface), source_info);
+    SpellCheckHostImpl::Create(mojo::MakeRequest(interface), source_info);
   }
 
   void SpellingServiceDone(bool success,

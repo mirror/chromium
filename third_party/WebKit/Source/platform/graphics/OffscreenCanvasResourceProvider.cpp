@@ -25,7 +25,7 @@ OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(int width,
                                                                  int height)
     : width_(width), height_(height), next_resource_id_(0u) {}
 
-OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() = default;
+OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
 
 std::unique_ptr<OffscreenCanvasResourceProvider::FrameResource>
 OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
@@ -105,7 +105,7 @@ void OffscreenCanvasResourceProvider::
   resources_.insert(next_resource_id_, std::move(frame_resource));
 }
 
-OffscreenCanvasResourceProvider::FrameResource::~FrameResource() = default;
+OffscreenCanvasResourceProvider::FrameResource::~FrameResource() {}
 
 void OffscreenCanvasResourceProvider::ReclaimResources(
     const WTF::Vector<viz::ReturnedResource>& resources) {

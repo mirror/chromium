@@ -14,7 +14,7 @@
  *   children: !Array<CookieDetails>,
  * }}
  */
-let CookieList;
+var CookieList;
 
 /**
  * @typedef {{
@@ -22,7 +22,7 @@ let CookieList;
  *   id: string,
  * }}
  */
-let LocalDataItem;
+var LocalDataItem;
 
 /**
  * TODO(dschuyler): add |filter| and |order|.
@@ -31,7 +31,7 @@ let LocalDataItem;
  *   total: number,
  * }}
  */
-let LocalDataList;
+var LocalDataList;
 
 cr.define('settings', function() {
   /** @interface */

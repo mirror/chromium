@@ -80,6 +80,7 @@
 #include "third_party/WebKit/public/platform/modules/app_banner/app_banner.mojom.h"
 #include "third_party/WebKit/public/web/WebArrayBufferView.h"
 #include "third_party/WebKit/public/web/WebContextMenuData.h"
+#include "third_party/WebKit/public/web/WebDevToolsAgent.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -97,6 +98,7 @@
 using blink::Platform;
 using blink::WebArrayBufferView;
 using blink::WebContextMenuData;
+using blink::WebDevToolsAgent;
 using device::MotionData;
 using device::OrientationData;
 using blink::WebElement;

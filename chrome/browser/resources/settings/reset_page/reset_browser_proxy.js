@@ -82,11 +82,11 @@ cr.define('settings', function() {
     /** @override */
     showReportedSettings() {
       cr.sendWithPromise('getReportedSettings').then(function(settings) {
-        const output = settings.map(function(entry) {
+        var output = settings.map(function(entry) {
           return entry.key + ': ' + entry.value.replace(/\n/g, ', ');
         });
-        const win = window.open('about:blank');
-        const div = win.document.createElement('div');
+        var win = window.open('about:blank');
+        var div = win.document.createElement('div');
         div.textContent = output.join('\n');
         div.style.whiteSpace = 'pre';
         win.document.body.appendChild(div);

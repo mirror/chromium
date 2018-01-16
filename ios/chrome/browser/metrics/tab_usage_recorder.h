@@ -232,7 +232,7 @@ class TabUsageRecorder : public web::WebStateObserver,
                            web::WebState* old_web_state,
                            web::WebState* new_web_state,
                            int active_index,
-                           int reason) override;
+                           bool user_action) override;
 
   // Keep track of when the most recent tab restore begins, to record the time
   // between evicted-tab-reloads.

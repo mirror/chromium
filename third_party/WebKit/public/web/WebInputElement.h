@@ -42,7 +42,8 @@ class WebOptionElement;
 class BLINK_EXPORT WebInputElement final : public WebFormControlElement {
  public:
   WebInputElement() : WebFormControlElement() {}
-  WebInputElement(const WebInputElement& element) = default;
+  WebInputElement(const WebInputElement& element)
+      : WebFormControlElement(element) {}
 
   WebInputElement& operator=(const WebInputElement& element) {
     WebFormControlElement::Assign(element);

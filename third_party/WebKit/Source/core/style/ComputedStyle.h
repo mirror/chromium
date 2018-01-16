@@ -716,50 +716,52 @@ class ComputedStyle : public ComputedStyleBase,
       SetScrollPaddingBottom(v);
   }
 
-  // scroll-margin-block-start
-  float ScrollMarginBlockStart() const {
-    return IsHorizontalWritingMode() ? ScrollMarginTop() : ScrollMarginLeft();
+  // scroll-snap-margin-block-start
+  float ScrollSnapMarginBlockStart() const {
+    return IsHorizontalWritingMode() ? ScrollSnapMarginTop()
+                                     : ScrollSnapMarginLeft();
   }
-  void SetScrollMarginBlockStart(float v) {
+  void SetScrollSnapMarginBlockStart(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollMarginTop(v);
+      SetScrollSnapMarginTop(v);
     else
-      SetScrollMarginLeft(v);
+      SetScrollSnapMarginLeft(v);
   }
 
-  // scroll-margin-block-end
-  float ScrollMarginBlockEnd() const {
-    return IsHorizontalWritingMode() ? ScrollMarginBottom()
-                                     : ScrollMarginRight();
+  // scroll-snap-margin-block-end
+  float ScrollSnapMarginBlockEnd() const {
+    return IsHorizontalWritingMode() ? ScrollSnapMarginBottom()
+                                     : ScrollSnapMarginRight();
   }
-  void SetScrollMarginBlockEnd(float v) {
+  void SetScrollSnapMarginBlockEnd(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollMarginBottom(v);
+      SetScrollSnapMarginBottom(v);
     else
-      SetScrollMarginRight(v);
+      SetScrollSnapMarginRight(v);
   }
 
-  // scroll-margin-inline-start
-  float ScrollMarginInlineStart() const {
-    return IsHorizontalWritingMode() ? ScrollMarginLeft() : ScrollMarginTop();
+  // scroll-snap-margin-inline-start
+  float ScrollSnapMarginInlineStart() const {
+    return IsHorizontalWritingMode() ? ScrollSnapMarginLeft()
+                                     : ScrollSnapMarginTop();
   }
-  void SetScrollMarginInlineStart(float v) {
+  void SetScrollSnapMarginInlineStart(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollMarginLeft(v);
+      SetScrollSnapMarginLeft(v);
     else
-      SetScrollMarginTop(v);
+      SetScrollSnapMarginTop(v);
   }
 
-  // scroll-margin-inline-end
-  float ScrollMarginInlineEnd() const {
-    return IsHorizontalWritingMode() ? ScrollMarginRight()
-                                     : ScrollMarginBottom();
+  // scroll-snap-margin-inline-end
+  float ScrollSnapMarginInlineEnd() const {
+    return IsHorizontalWritingMode() ? ScrollSnapMarginRight()
+                                     : ScrollSnapMarginBottom();
   }
-  void SetScrollMarginInlineEnd(float v) {
+  void SetScrollSnapMarginInlineEnd(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollMarginRight(v);
+      SetScrollSnapMarginRight(v);
     else
-      SetScrollMarginBottom(v);
+      SetScrollSnapMarginBottom(v);
   }
 
   // shape-image-threshold (aka -webkit-shape-image-threshold)

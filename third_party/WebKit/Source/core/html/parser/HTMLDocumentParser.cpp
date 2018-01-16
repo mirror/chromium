@@ -158,7 +158,7 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
   DCHECK(!document.IsPrefetchOnly() || !ShouldUseThreading());
 }
 
-HTMLDocumentParser::~HTMLDocumentParser() = default;
+HTMLDocumentParser::~HTMLDocumentParser() {}
 
 void HTMLDocumentParser::Dispose() {
   // In Oilpan, HTMLDocumentParser can die together with Document, and detach()

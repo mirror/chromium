@@ -152,9 +152,7 @@ public class BottomSheetContentController
         public void onSheetClosed(@StateChangeReason int reason) {
             removeIcons();
 
-            if (ChromeFeatureList.isInitialized()
-                    && ChromeFeatureList.isEnabled(
-                               ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
                 // TODO(bauerb): Implement support for destroying the home sheet after a delay.
                 mSelectedItemId = NO_CONTENT_ID;
                 mBottomSheet.showContent(null);
@@ -250,7 +248,6 @@ public class BottomSheetContentController
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
                         initBottomNavMenu();
-                        setIconsEnabled(true);
                     }
 
                     @Override
@@ -270,7 +267,6 @@ public class BottomSheetContentController
         mBottomSheet.addObserver(mBottomSheetObserver);
         mActivity = activity;
         mTabModelSelector = tabModelSelector;
-        setIconsEnabled(mActivity.didFinishNativeInitialization());
 
         mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
             @Override
@@ -361,8 +357,7 @@ public class BottomSheetContentController
         mLabelsEnabled =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_BOTTOM_NAV_LABELS);
         if (mLabelsEnabled) {
-            ImageView bottomNavShadow = (ImageView) findViewById(R.id.bottom_nav_shadow);
-            if (bottomNavShadow != null) bottomNavShadow.setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.bottom_nav_shadow)).setVisibility(View.VISIBLE);
         } else {
             hideMenuLabels();
         }
@@ -589,12 +584,6 @@ public class BottomSheetContentController
         getMenu().findItem(R.id.action_downloads).setIcon(null);
         getMenu().findItem(R.id.action_bookmarks).setIcon(null);
         getMenu().findItem(R.id.action_history).setIcon(null);
-    }
-
-    private void setIconsEnabled(boolean enabled) {
-        getMenu().findItem(R.id.action_downloads).setEnabled(enabled);
-        getMenu().findItem(R.id.action_bookmarks).setEnabled(enabled);
-        getMenu().findItem(R.id.action_history).setEnabled(enabled);
     }
 
     /**

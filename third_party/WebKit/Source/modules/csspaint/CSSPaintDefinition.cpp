@@ -64,7 +64,7 @@ CSSPaintDefinition::CSSPaintDefinition(
   input_argument_types_ = input_argument_types;
 }
 
-CSSPaintDefinition::~CSSPaintDefinition() = default;
+CSSPaintDefinition::~CSSPaintDefinition() {}
 
 scoped_refptr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
@@ -126,7 +126,7 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
   }
 
   return PaintGeneratedImage::Create(rendering_context->GetRecord(),
-                                     FloatSize(container_size));
+                                     container_size);
 }
 
 void CSSPaintDefinition::MaybeCreatePaintInstance() {

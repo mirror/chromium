@@ -48,7 +48,6 @@
 #include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyPath.h"
-#include "public/platform/modules/indexeddb/WebIDBObservation.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
 #include <limits>
@@ -193,15 +192,8 @@ void IDBDatabase::OnComplete(int64_t transaction_id) {
 
 void IDBDatabase::OnChanges(
     const WebIDBDatabaseCallbacks::ObservationIndexMap& observation_index_map,
-    WebVector<WebIDBObservation> web_observations,
+    const WebVector<WebIDBObservation>& observations,
     const WebIDBDatabaseCallbacks::TransactionMap& transactions) {
-  HeapVector<Member<IDBObservation>> observations;
-  observations.ReserveInitialCapacity(web_observations.size());
-  for (WebIDBObservation& web_observation : web_observations) {
-    observations.emplace_back(
-        IDBObservation::Create(std::move(web_observation), isolate_));
-  }
-
   for (const auto& map_entry : observation_index_map) {
     auto it = observers_.find(map_entry.first);
     if (it != observers_.end()) {
@@ -221,9 +213,8 @@ void IDBDatabase::OnChanges(
       }
 
       observer->Callback()->InvokeAndReportException(
-          observer,
-          IDBObserverChanges::Create(this, transaction, web_observations,
-                                     observations, map_entry.second));
+          observer, IDBObserverChanges::Create(this, transaction, observations,
+                                               map_entry.second, isolate_));
       if (transaction)
         transaction->SetActive(false);
     }
@@ -297,7 +288,7 @@ IDBObjectStore* IDBDatabase::createObjectStore(
   }
 
   if (auto_increment && ((key_path.GetType() == IDBKeyPath::kStringType &&
-                          key_path.String().IsEmpty()) ||
+                          key_path.GetString().IsEmpty()) ||
                          key_path.GetType() == IDBKeyPath::kArrayType)) {
     exception_state.ThrowDOMException(
         kInvalidAccessError,

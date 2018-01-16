@@ -454,7 +454,7 @@ const char kRateThisAppCommand[] = "ratethisapp";
     didChangeActiveWebState:(web::WebState*)newWebState
                 oldWebState:(web::WebState*)oldWebState
                     atIndex:(int)atIndex
-                     reason:(int)reason {
+                 userAction:(BOOL)userAction {
   if (newWebState) {
     self.webState = newWebState;
     web::NavigationManager* navigationManager =

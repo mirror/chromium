@@ -134,7 +134,7 @@ BackgroundHTMLParser::BackgroundHTMLParser(
   DCHECK_GE(outstanding_token_limit_, pending_token_limit_);
 }
 
-BackgroundHTMLParser::~BackgroundHTMLParser() = default;
+BackgroundHTMLParser::~BackgroundHTMLParser() {}
 
 void BackgroundHTMLParser::AppendRawBytesFromMainThread(
     std::unique_ptr<Vector<char>> buffer) {

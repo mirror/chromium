@@ -70,7 +70,7 @@ ScrollableArea::ScrollableArea()
       mouse_over_scrollbar_(false),
       needs_show_scrollbar_layers_(false) {}
 
-ScrollableArea::~ScrollableArea() = default;
+ScrollableArea::~ScrollableArea() {}
 
 void ScrollableArea::ClearScrollableArea() {
 #if defined(OS_MACOSX)

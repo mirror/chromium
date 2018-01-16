@@ -487,10 +487,8 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   bool CloseOneIdleConnection() override;
 
   // Http2PushPromiseIndex::Delegate implementation:
-  bool ValidatePushedStream(SpdyStreamId stream_id,
-                            const GURL& url,
-                            const HttpRequestInfo& request_info,
-                            const SpdySessionKey& key) const override;
+  bool ValidatePushedStream(const SpdySessionKey& key) const override;
+  void OnPushedStreamClaimed(const GURL& url, SpdyStreamId stream_id) override;
   base::WeakPtr<SpdySession> GetWeakPtrToSession() override;
 
   // Dumps memory allocation stats to |stats|. Sets |*is_session_active| to
@@ -730,6 +728,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Called right before closing a (possibly-inactive) stream for a
   // reason other than being requested to by the stream.
   void LogAbandonedStream(SpdyStream* stream, Error status);
+
+  // Called when a pushed stream is claimed by a request.
+  void LogPushStreamClaimed(const GURL& url, SpdyStreamId stream_id);
 
   // Called right before closing an active stream for a reason other
   // than being requested to by the stream.

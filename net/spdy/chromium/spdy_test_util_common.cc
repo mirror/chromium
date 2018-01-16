@@ -326,8 +326,7 @@ SpdySessionDependencies::SpdySessionDependencies(
       time_func(&base::TimeTicks::Now),
       enable_http2_alternative_service(false),
       net_log(nullptr),
-      http_09_on_non_default_ports_enabled(false),
-      disable_idle_sockets_close_on_memory_pressure(false) {
+      http_09_on_non_default_ports_enabled(false) {
   // Note: The CancelledTransaction test does cleanup by running all
   // tasks in the message loop (RunAllPending).  Unfortunately, that
   // doesn't clean up tasks on the host resolver thread; and
@@ -381,8 +380,6 @@ HttpNetworkSession::Params SpdySessionDependencies::CreateSessionParams(
       session_deps->enable_http2_alternative_service;
   params.http_09_on_non_default_ports_enabled =
       session_deps->http_09_on_non_default_ports_enabled;
-  params.disable_idle_sockets_close_on_memory_pressure =
-      session_deps->disable_idle_sockets_close_on_memory_pressure;
   return params;
 }
 
@@ -811,8 +808,10 @@ SpdySerializedFrame SpdyTestUtil::ConstructSpdyPush(
   SpdyHeaderBlock push_promise_header_block;
   push_promise_header_block[kHttp2MethodHeader] = "GET";
   AddUrlToHeaderBlock(url, &push_promise_header_block);
-  SpdySerializedFrame push_promise_frame(ConstructSpdyPushPromise(
-      associated_stream_id, stream_id, std::move(push_promise_header_block)));
+  SpdyPushPromiseIR push_promise(associated_stream_id, stream_id,
+                                 std::move(push_promise_header_block));
+  SpdySerializedFrame push_promise_frame(
+      response_spdy_framer_.SerializeFrame(push_promise));
 
   SpdyHeaderBlock headers_header_block;
   headers_header_block[kHttp2StatusHeader] = "200";
@@ -836,8 +835,10 @@ SpdySerializedFrame SpdyTestUtil::ConstructSpdyPush(
   SpdyHeaderBlock push_promise_header_block;
   push_promise_header_block[kHttp2MethodHeader] = "GET";
   AddUrlToHeaderBlock(url, &push_promise_header_block);
-  SpdySerializedFrame push_promise_frame(ConstructSpdyPushPromise(
-      associated_stream_id, stream_id, std::move(push_promise_header_block)));
+  SpdyPushPromiseIR push_promise(associated_stream_id, stream_id,
+                                 std::move(push_promise_header_block));
+  SpdySerializedFrame push_promise_frame(
+      response_spdy_framer_.SerializeFrame(push_promise));
 
   SpdyHeaderBlock headers_header_block;
   headers_header_block["hello"] = "bye";
@@ -851,10 +852,10 @@ SpdySerializedFrame SpdyTestUtil::ConstructSpdyPush(
   return CombineFrames({&push_promise_frame, &headers_frame});
 }
 
-SpdySerializedFrame SpdyTestUtil::ConstructSpdyPushPromise(
-    SpdyStreamId associated_stream_id,
-    SpdyStreamId stream_id,
-    SpdyHeaderBlock headers) {
+SpdySerializedFrame SpdyTestUtil::ConstructInitialSpdyPushFrame(
+    SpdyHeaderBlock headers,
+    int stream_id,
+    int associated_stream_id) {
   SpdyPushPromiseIR push_promise(associated_stream_id, stream_id,
                                  std::move(headers));
   return SpdySerializedFrame(

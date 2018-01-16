@@ -68,7 +68,7 @@ class WebAXSparseAttributeClientAdapter : public AXSparseAttributeClient {
  public:
   WebAXSparseAttributeClientAdapter(WebAXSparseAttributeClient& attribute_map)
       : attribute_map_(attribute_map) {}
-  virtual ~WebAXSparseAttributeClientAdapter() = default;
+  virtual ~WebAXSparseAttributeClientAdapter() {}
 
  private:
   WebAXSparseAttributeClient& attribute_map_;

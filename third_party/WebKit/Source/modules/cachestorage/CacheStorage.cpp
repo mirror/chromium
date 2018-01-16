@@ -39,7 +39,7 @@ class CacheStorage::Callbacks final
 
  public:
   explicit Callbacks(ScriptPromiseResolver* resolver) : resolver_(resolver) {}
-  ~Callbacks() override = default;
+  ~Callbacks() override {}
 
   void OnSuccess() override {
     if (!resolver_->GetExecutionContext() ||
@@ -76,7 +76,7 @@ class CacheStorage::WithCacheCallbacks final
       : cache_name_(cache_name),
         cache_storage_(cache_storage),
         resolver_(resolver) {}
-  ~WithCacheCallbacks() override = default;
+  ~WithCacheCallbacks() override {}
 
   void OnSuccess(std::unique_ptr<WebServiceWorkerCache> web_cache) override {
     if (!resolver_->GetExecutionContext() ||
@@ -156,7 +156,7 @@ class CacheStorage::DeleteCallbacks final
       : cache_name_(cache_name),
         cache_storage_(cache_storage),
         resolver_(resolver) {}
-  ~DeleteCallbacks() override = default;
+  ~DeleteCallbacks() override {}
 
   void OnSuccess() override {
     if (!resolver_->GetExecutionContext() ||
@@ -193,7 +193,7 @@ class CacheStorage::KeysCallbacks final
  public:
   explicit KeysCallbacks(ScriptPromiseResolver* resolver)
       : resolver_(resolver) {}
-  ~KeysCallbacks() override = default;
+  ~KeysCallbacks() override {}
 
   void OnSuccess(const WebVector<WebString>& keys) override {
     if (!resolver_->GetExecutionContext() ||
@@ -329,7 +329,7 @@ CacheStorage::CacheStorage(
     : scoped_fetcher_(fetcher),
       web_cache_storage_(std::move(web_cache_storage)) {}
 
-CacheStorage::~CacheStorage() = default;
+CacheStorage::~CacheStorage() {}
 
 void CacheStorage::Dispose() {
   web_cache_storage_.reset();

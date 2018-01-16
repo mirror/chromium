@@ -105,7 +105,7 @@ class LinearGradientAttributesWrapper
   void Trace(blink::Visitor* visitor) { visitor->Trace(attributes_); }
 
  private:
-  LinearGradientAttributesWrapper() = default;
+  LinearGradientAttributesWrapper() {}
 
   LinearGradientAttributes attributes_;
 };

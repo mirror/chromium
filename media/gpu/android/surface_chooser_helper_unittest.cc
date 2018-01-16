@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "media/gpu/android/mock_android_video_surface_chooser.h"
 #include "media/gpu/android/mock_promotion_hint_aggregator.h"
@@ -36,17 +37,17 @@ class SurfaceChooserHelperTest : public testing::Test {
   void ReplaceHelper(bool is_overlay_required, bool promote_aggressively) {
     // Advance the clock so that time 0 isn't recent.
     std::unique_ptr<base::SimpleTestTickClock> tick_clock =
-        std::make_unique<base::SimpleTestTickClock>();
+        base::MakeUnique<base::SimpleTestTickClock>();
     tick_clock_ = tick_clock.get();
     tick_clock_->Advance(TimeDelta::FromSeconds(10000));
 
     std::unique_ptr<MockAndroidVideoSurfaceChooser> chooser =
-        std::make_unique<MockAndroidVideoSurfaceChooser>();
+        base::MakeUnique<MockAndroidVideoSurfaceChooser>();
     chooser_ = chooser.get();
     std::unique_ptr<MockPromotionHintAggregator> aggregator =
-        std::make_unique<MockPromotionHintAggregator>();
+        base::MakeUnique<MockPromotionHintAggregator>();
     aggregator_ = aggregator.get();
-    helper_ = std::make_unique<SurfaceChooserHelper>(
+    helper_ = base::MakeUnique<SurfaceChooserHelper>(
         std::move(chooser), is_overlay_required, promote_aggressively,
         std::move(aggregator), std::move(tick_clock));
   }

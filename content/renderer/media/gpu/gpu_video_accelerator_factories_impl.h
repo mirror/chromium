@@ -88,7 +88,7 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
 
   bool ShouldUseGpuMemoryBuffersForVideoFrames() const override;
   unsigned ImageTextureTarget(gfx::BufferFormat format) override;
-  OutputFormat VideoFrameOutputFormat(size_t bit_depth) override;
+  OutputFormat VideoFrameOutputFormat() override;
   std::unique_ptr<media::GpuVideoAcceleratorFactories::ScopedGLContextLock>
   GetGLContextLock() override;
   bool CheckContextLost();
@@ -101,8 +101,6 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
   GetVideoEncodeAcceleratorSupportedProfiles() override;
 
   viz::ContextProvider* GetMediaContextProvider() override;
-
-  void SetRenderingColorSpace(const gfx::ColorSpace& color_space) override;
 
   void ReleaseContextProvider();
   scoped_refptr<ui::ContextProviderCommandBuffer> ContextProviderMainThread();
@@ -140,8 +138,6 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
   bool enable_gpu_memory_buffer_video_frames_;
   // Whether video acceleration encoding/decoding should be enabled.
   const bool video_accelerator_enabled_;
-
-  gfx::ColorSpace rendering_color_space_;
 
   gpu::GpuMemoryBufferManager* const gpu_memory_buffer_manager_;
 

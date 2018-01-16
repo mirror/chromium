@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -29,10 +30,12 @@ import org.chromium.ui.base.PageTransition;
  * A class that handles selection action mode for an associated {@link Tab}.
  */
 public class ChromeActionModeCallback implements ActionMode.Callback {
+    private final Context mContext;
     private final Tab mTab;
     private final ActionModeCallbackHelper mHelper;
 
-    public ChromeActionModeCallback(Tab tab, ActionModeCallbackHelper helper) {
+    public ChromeActionModeCallback(Context context, Tab tab, ActionModeCallbackHelper helper) {
+        mContext = context;
         mTab = tab;
         mHelper = helper;
     }

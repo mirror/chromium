@@ -18,7 +18,7 @@
 #if defined(OS_CHROMEOS)
 #include "base/bind.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
-#include "mojo/public/cpp/bindings/callback_helpers.h"
+#include "media/base/scoped_callback_runner.h"
 #endif
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -105,8 +105,7 @@ void ComputeStorageId(const std::vector<uint8_t>& profile_salt,
 
 #elif defined(OS_CHROMEOS)
   CdmStorageIdCallback scoped_callback =
-      mojo::WrapCallbackWithDefaultInvokeIfNotRun(std::move(callback),
-                                                  std::vector<uint8_t>());
+      media::ScopedCallbackRunner(std::move(callback), std::vector<uint8_t>());
   chromeos::SystemSaltGetter::Get()->GetSystemSalt(
       base::Bind(&ComputeAndReturnStorageId, profile_salt, origin,
                  base::Passed(&scoped_callback)));

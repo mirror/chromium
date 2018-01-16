@@ -197,7 +197,7 @@ std::unique_ptr<FrameDeliverer> FrameDelivererFactory::CreateFrameDeliverer(
       painter_format = PacmanFramePainter::Format::I420;
   }
   auto frame_painter =
-      std::make_unique<PacmanFramePainter>(painter_format, device_state_);
+      base::MakeUnique<PacmanFramePainter>(painter_format, device_state_);
 
   FakeVideoCaptureDevice::DeliveryMode delivery_mode = delivery_mode_;
   if (format.pixel_format == PIXEL_FORMAT_MJPEG &&
@@ -213,14 +213,14 @@ std::unique_ptr<FrameDeliverer> FrameDelivererFactory::CreateFrameDeliverer(
   switch (delivery_mode) {
     case FakeVideoCaptureDevice::DeliveryMode::USE_DEVICE_INTERNAL_BUFFERS:
       if (format.pixel_format == PIXEL_FORMAT_MJPEG) {
-        return std::make_unique<JpegEncodingFrameDeliverer>(
+        return base::MakeUnique<JpegEncodingFrameDeliverer>(
             std::move(frame_painter));
       } else {
-        return std::make_unique<OwnBufferFrameDeliverer>(
+        return base::MakeUnique<OwnBufferFrameDeliverer>(
             std::move(frame_painter));
       }
     case FakeVideoCaptureDevice::DeliveryMode::USE_CLIENT_PROVIDED_BUFFERS:
-      return std::make_unique<ClientBufferFrameDeliverer>(
+      return base::MakeUnique<ClientBufferFrameDeliverer>(
           std::move(frame_painter));
   }
   NOTREACHED();

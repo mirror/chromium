@@ -65,7 +65,7 @@ class SVGPathByteStream {
   }
 
  private:
-  SVGPathByteStream() = default;
+  SVGPathByteStream() {}
   SVGPathByteStream(const Data& data) : data_(data) {}
 
   Data data_;

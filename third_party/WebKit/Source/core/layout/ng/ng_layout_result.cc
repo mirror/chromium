@@ -4,7 +4,7 @@
 
 #include "core/layout/ng/ng_layout_result.h"
 
-#include "core/layout/ng/exclusions/ng_exclusion_space.h"
+#include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_positioned_float.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/PtrUtil.h"
@@ -42,7 +42,7 @@ NGLayoutResult::NGLayoutResult(
 
 // Keep the implementation of the destructor here, to avoid dependencies on
 // NGUnpositionedFloat in the header file.
-NGLayoutResult::~NGLayoutResult() = default;
+NGLayoutResult::~NGLayoutResult() {}
 
 scoped_refptr<NGLayoutResult> NGLayoutResult::CloneWithoutOffset() const {
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants(

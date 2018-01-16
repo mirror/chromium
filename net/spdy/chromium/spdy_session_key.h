@@ -8,6 +8,7 @@
 #include "net/base/net_export.h"
 #include "net/base/privacy_mode.h"
 #include "net/proxy/proxy_server.h"
+#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -17,7 +18,8 @@ class NET_EXPORT_PRIVATE SpdySessionKey {
   SpdySessionKey();
   SpdySessionKey(const HostPortPair& host_port_pair,
                  const ProxyServer& proxy_server,
-                 PrivacyMode privacy_mode);
+                 PrivacyMode privacy_mode,
+                 const SocketTag& socket_tag);
 
   SpdySessionKey(const SpdySessionKey& other);
 
@@ -52,6 +54,7 @@ class NET_EXPORT_PRIVATE SpdySessionKey {
   HostPortProxyPair host_port_proxy_pair_;
   // If enabled, then session cannot be tracked by the server.
   PrivacyMode privacy_mode_ = PRIVACY_MODE_DISABLED;
+  SocketTag socket_tag_;
 };
 
 }  // namespace net

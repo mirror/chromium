@@ -52,7 +52,6 @@ class TEST_RUNNER_EXPORT GamepadController
   void SetButtonData(int index, int button, double data);
   void SetAxisCount(int index, int axes);
   void SetAxisData(int index, int axis, double data);
-  void SetDualRumbleVibrationActuator(int index, bool enabled);
 
   blink::WebGamepadListener* listener_;
 

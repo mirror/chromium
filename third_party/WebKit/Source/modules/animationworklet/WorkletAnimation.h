@@ -44,7 +44,7 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
       scoped_refptr<SerializedScriptValue>,
       ExceptionState&);
 
-  ~WorkletAnimation() override = default;
+  ~WorkletAnimation() override {}
 
   String playState();
   void play();

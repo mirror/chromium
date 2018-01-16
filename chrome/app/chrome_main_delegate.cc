@@ -343,7 +343,7 @@ bool HandleVersionSwitches(const base::CommandLine& command_line) {
   return false;
 }
 
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#if !defined(OS_MACOSX) && !defined(OS_CHROMEOS)
 // Show the man page if --help or -h is on the command line.
 void HandleHelpSwitches(const base::CommandLine& command_line) {
   if (command_line.HasSwitch(switches::kHelp) ||
@@ -353,7 +353,7 @@ void HandleHelpSwitches(const base::CommandLine& command_line) {
     PLOG(FATAL) << "execlp failed";
   }
 }
-#endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#endif
 
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
 void SIGTERMProfilingShutdown(int signal) {
@@ -487,8 +487,7 @@ void RecordMainStartupMetrics(base::TimeTicks exe_entry_point_ticks) {
 // from the Java side until it has initialized the JNI. See
 // ChromeMainDelegateAndroid.
 #if !defined(OS_ANDROID)
-  startup_metric_utils::RecordMainEntryPointTime(base::Time::Now(),
-                                                 base::TimeTicks::Now());
+  startup_metric_utils::RecordMainEntryPointTime(base::Time::Now());
 #endif
 }
 #endif  // !defined(CHROME_MULTIPLE_DLL_CHILD)
@@ -558,7 +557,7 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
     *exit_code = 0;
     return true;  // Got a --version switch; exit with a success error code.
   }
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#if !defined(OS_MACOSX) && !defined(OS_CHROMEOS)
   // This will directly exit if the user asked for help.
   HandleHelpSwitches(command_line);
 #endif

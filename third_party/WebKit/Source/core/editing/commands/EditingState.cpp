@@ -6,9 +6,9 @@
 
 namespace blink {
 
-EditingState::EditingState() = default;
+EditingState::EditingState() {}
 
-EditingState::~EditingState() = default;
+EditingState::~EditingState() {}
 
 void EditingState::Abort() {
   DCHECK(!is_aborted_);
@@ -16,9 +16,9 @@ void EditingState::Abort() {
 }
 
 // ---
-IgnorableEditingAbortState::IgnorableEditingAbortState() = default;
+IgnorableEditingAbortState::IgnorableEditingAbortState() {}
 
-IgnorableEditingAbortState::~IgnorableEditingAbortState() = default;
+IgnorableEditingAbortState::~IgnorableEditingAbortState() {}
 
 #if DCHECK_IS_ON()
 // ---

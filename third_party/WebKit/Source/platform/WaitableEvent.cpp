@@ -23,7 +23,7 @@ WaitableEvent::WaitableEvent(ResetPolicy policy, InitialState state) {
           : base::WaitableEvent::InitialState::NOT_SIGNALED));
 }
 
-WaitableEvent::~WaitableEvent() = default;
+WaitableEvent::~WaitableEvent() {}
 
 void WaitableEvent::Reset() {
   impl_->Reset();

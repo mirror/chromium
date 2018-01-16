@@ -4,8 +4,6 @@
 
 #include "media/gpu/gpu_video_decode_accelerator_factory.h"
 
-#include <memory>
-
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -242,7 +240,7 @@ GpuVideoDecodeAcceleratorFactory::CreateAndroidVDA(
   std::unique_ptr<VideoDecodeAccelerator> decoder;
   decoder.reset(new AndroidVideoDecodeAccelerator(
       AVDACodecAllocator::GetInstance(base::ThreadTaskRunnerHandle::Get()),
-      std::make_unique<AndroidVideoSurfaceChooserImpl>(
+      base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
           DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
       make_context_current_cb_, get_context_group_cb_, overlay_factory_cb_,
       DeviceInfo::GetInstance()));

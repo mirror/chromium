@@ -13,8 +13,7 @@ DeviceOrientationAbsoluteController::DeviceOrientationAbsoluteController(
     Document& document)
     : DeviceOrientationController(document) {}
 
-DeviceOrientationAbsoluteController::~DeviceOrientationAbsoluteController() =
-    default;
+DeviceOrientationAbsoluteController::~DeviceOrientationAbsoluteController() {}
 
 const char* DeviceOrientationAbsoluteController::SupplementName() {
   return "DeviceOrientationAbsoluteController";

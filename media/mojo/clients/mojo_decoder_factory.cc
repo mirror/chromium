@@ -4,9 +4,8 @@
 
 #include "media/mojo/clients/mojo_decoder_factory.h"
 
-#include <memory>
-
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
 #include "media/base/media_switches.h"
@@ -34,7 +33,7 @@ void MojoDecoderFactory::CreateAudioDecoders(
   mojom::AudioDecoderPtr audio_decoder_ptr;
   interface_factory_->CreateAudioDecoder(mojo::MakeRequest(&audio_decoder_ptr));
 
-  audio_decoders->push_back(std::make_unique<MojoAudioDecoder>(
+  audio_decoders->push_back(base::MakeUnique<MojoAudioDecoder>(
       task_runner, std::move(audio_decoder_ptr)));
 #endif
 }
@@ -52,7 +51,7 @@ void MojoDecoderFactory::CreateVideoDecoders(
   mojom::VideoDecoderPtr video_decoder_ptr;
   interface_factory_->CreateVideoDecoder(mojo::MakeRequest(&video_decoder_ptr));
 
-  video_decoders->push_back(std::make_unique<MojoVideoDecoder>(
+  video_decoders->push_back(base::MakeUnique<MojoVideoDecoder>(
       task_runner, gpu_factories, media_log, std::move(video_decoder_ptr),
       request_overlay_info_cb));
 #endif

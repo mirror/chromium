@@ -11,8 +11,7 @@
 
 namespace blink {
 
-PaymentAppServiceWorkerRegistration::~PaymentAppServiceWorkerRegistration() =
-    default;
+PaymentAppServiceWorkerRegistration::~PaymentAppServiceWorkerRegistration() {}
 
 // static
 PaymentAppServiceWorkerRegistration& PaymentAppServiceWorkerRegistration::From(

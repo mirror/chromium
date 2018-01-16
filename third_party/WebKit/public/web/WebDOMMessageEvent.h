@@ -55,7 +55,7 @@ class WebDOMMessageEvent : public WebDOMEvent {
       const WebFrame* source_frame = nullptr,
       const WebDocument& target_document = WebDocument(),
       WebVector<MessagePortChannel> ports = WebVector<MessagePortChannel>());
-  WebDOMMessageEvent() = default;
+  WebDOMMessageEvent() {}
 
   BLINK_EXPORT WebSerializedScriptValue Data() const;
   BLINK_EXPORT WebString Origin() const;

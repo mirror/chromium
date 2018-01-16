@@ -8,11 +8,11 @@
  * @extends {bookmarks.CommandManager}
  */
 function TestCommandManager() {
-  const commandManager = document.createElement('bookmarks-command-manager');
-  let lastCommand = null;
-  let lastCommandIds = null;
+  var commandManager = document.createElement('bookmarks-command-manager');
+  var lastCommand = null;
+  var lastCommandIds = null;
 
-  const realHandle = commandManager.handle.bind(commandManager);
+  var realHandle = commandManager.handle.bind(commandManager);
   commandManager.handle = function(command, itemIds) {
     lastCommand = command;
     lastCommandIds = itemIds;

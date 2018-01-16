@@ -173,13 +173,6 @@ void WorkerThread::Terminate() {
                                  CrossThreadUnretained(this)));
 }
 
-void WorkerThread::TerminateForTesting() {
-  // Schedule a regular async worker thread termination task, and forcibly
-  // terminate the V8 script execution to ensure the task runs.
-  Terminate();
-  EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
-}
-
 void WorkerThread::TerminateAllWorkersForTesting() {
   DCHECK(IsMainThread());
 
@@ -188,7 +181,10 @@ void WorkerThread::TerminateAllWorkersForTesting() {
   HashSet<WorkerThread*> threads = WorkerThreads();
 
   for (WorkerThread* thread : threads) {
-    thread->TerminateForTesting();
+    // Schedule a regular async worker thread termination task, and forcibly
+    // terminate the V8 script execution to ensure the task runs.
+    thread->Terminate();
+    thread->EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
   }
 
   for (WorkerThread* thread : threads)
@@ -344,11 +340,14 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
 
 void WorkerThread::ScheduleToTerminateScriptExecution() {
   DCHECK(!forcible_termination_task_handle_.IsActive());
-  forcible_termination_task_handle_ = PostDelayedCancellableTask(
-      *parent_frame_task_runners_->Get(TaskType::kUnspecedTimer), FROM_HERE,
-      WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
-                WTF::Unretained(this), ExitCode::kAsyncForciblyTerminated),
-      forcible_termination_delay_);
+  forcible_termination_task_handle_ =
+      parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
+          ->PostDelayedCancellableTask(
+              FROM_HERE,
+              WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
+                        WTF::Unretained(this),
+                        ExitCode::kAsyncForciblyTerminated),
+              forcible_termination_delay_);
 }
 
 bool WorkerThread::ShouldTerminateScriptExecution(const MutexLocker& lock) {

@@ -23,7 +23,7 @@ class PrimitiveInterpolation {
   USING_FAST_MALLOC(PrimitiveInterpolation);
 
  public:
-  virtual ~PrimitiveInterpolation() = default;
+  virtual ~PrimitiveInterpolation() {}
 
   virtual void InterpolateValue(
       double fraction,
@@ -34,7 +34,7 @@ class PrimitiveInterpolation {
   virtual bool IsFlip() const { return false; }
 
  protected:
-  PrimitiveInterpolation() = default;
+  PrimitiveInterpolation() {}
   DISALLOW_COPY_AND_ASSIGN(PrimitiveInterpolation);
 };
 
@@ -42,7 +42,7 @@ class PrimitiveInterpolation {
 // eg. "0px" and "100px".
 class PairwisePrimitiveInterpolation : public PrimitiveInterpolation {
  public:
-  ~PairwisePrimitiveInterpolation() override = default;
+  ~PairwisePrimitiveInterpolation() override {}
 
   static std::unique_ptr<PairwisePrimitiveInterpolation> Create(
       const InterpolationType& type,
@@ -101,7 +101,7 @@ class PairwisePrimitiveInterpolation : public PrimitiveInterpolation {
 // behaviour eg. "auto" and "0px".
 class FlipPrimitiveInterpolation : public PrimitiveInterpolation {
  public:
-  ~FlipPrimitiveInterpolation() override = default;
+  ~FlipPrimitiveInterpolation() override {}
 
   static std::unique_ptr<FlipPrimitiveInterpolation> Create(
       std::unique_ptr<TypedInterpolationValue> start,

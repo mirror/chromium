@@ -73,6 +73,8 @@
 #include "core/layout/ScrollAlignment.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/TracedLayoutObject.h"
+#include "core/layout/api/LayoutBoxModel.h"
+#include "core/layout/api/LayoutItem.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
@@ -1100,8 +1102,8 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
       // We need to ensure that we mark up all layoutObjects up to the
       // LayoutView for paint invalidation. This simplifies our code as we
       // just always do a full tree walk.
-      if (LayoutObject* container = root->Container())
-        container->SetMayNeedPaintInvalidation();
+      if (LayoutItem container = LayoutItem(root->Container()))
+        container.SetMayNeedPaintInvalidation();
     }
     layout_subtree_root_list_.Clear();
   } else {
@@ -1397,6 +1399,21 @@ void LocalFrameView::SetSubtreeNeedsPaintPropertyUpdate() {
     layout_view->SetSubtreeNeedsPaintPropertyUpdate();
 }
 
+IntRect LocalFrameView::ComputeVisibleArea() {
+  // Return our clipping bounds in the root frame.
+  IntRect us(FrameRect());
+  if (LocalFrameView* parent = ParentFrameView()) {
+    us = parent->ContentsToRootFrame(us);
+    IntRect parent_rect = parent->ComputeVisibleArea();
+    if (parent_rect.IsEmpty())
+      return IntRect();
+
+    us.Intersect(parent_rect);
+  }
+
+  return us;
+}
+
 FloatSize LocalFrameView::ViewportSizeForViewportUnits() const {
   float zoom = 1;
   if (!frame_->GetDocument() || !frame_->GetDocument()->Printing())
@@ -1458,19 +1475,6 @@ LayoutReplaced* LocalFrameView::EmbeddedReplacedContent() const {
     return ToLayoutSVGRoot(first_child);
 
   return nullptr;
-}
-
-bool LocalFrameView::GetIntrinsicSizingInfo(
-    IntrinsicSizingInfo& intrinsic_sizing_info) const {
-  if (LayoutReplaced* content_layout_object = EmbeddedReplacedContent()) {
-    content_layout_object->ComputeIntrinsicSizingInfo(intrinsic_sizing_info);
-    return true;
-  }
-  return false;
-}
-
-bool LocalFrameView::HasIntrinsicSizingInfo() const {
-  return EmbeddedReplacedContent();
 }
 
 void LocalFrameView::UpdateGeometries() {
@@ -1803,10 +1807,11 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
   for (const auto& viewport_constrained_object :
        *viewport_constrained_objects_) {
     LayoutObject* layout_object = viewport_constrained_object;
-    DCHECK(layout_object->Style()->HasViewportConstrainedPosition() ||
-           layout_object->Style()->HasStickyConstrainedPosition());
-    DCHECK(layout_object->HasLayer());
-    PaintLayer* layer = ToLayoutBoxModelObject(layout_object)->Layer();
+    LayoutItem layout_item = LayoutItem(layout_object);
+    DCHECK(layout_item.Style()->HasViewportConstrainedPosition() ||
+           layout_item.Style()->HasStickyConstrainedPosition());
+    DCHECK(layout_item.HasLayer());
+    PaintLayer* layer = LayoutBoxModel(layout_item).Layer();
 
     if (layer->IsPaintInvalidationContainer())
       continue;
@@ -1815,8 +1820,8 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
       continue;
 
     // invalidate even if there is an ancestor with a filter that moves pixels.
-    layout_object
-        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    layout_item
+        .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
 
     TRACE_EVENT_INSTANT1(
         TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),

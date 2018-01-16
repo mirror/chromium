@@ -18,9 +18,9 @@ class ClipList {
   DISALLOW_NEW();
 
  public:
-  ClipList() = default;
+  ClipList() {}
   ClipList(const ClipList&);
-  ~ClipList() = default;
+  ~ClipList() {}
 
   void ClipPath(const SkPath&, AntiAliasingMode, const SkMatrix&);
   void Playback(PaintCanvas*) const;

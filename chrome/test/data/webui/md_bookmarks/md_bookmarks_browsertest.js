@@ -5,7 +5,7 @@
 /**
  * @fileoverview Test suite for the Material Design bookmarks page.
  */
-const ROOT_PATH = '../../../../../';
+var ROOT_PATH = '../../../../../';
 
 GEN_INCLUDE(
     [ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);

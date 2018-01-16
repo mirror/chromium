@@ -74,9 +74,8 @@ public class OverlayPanel extends OverlayPanelAnimation implements ActivityState
         OPTIN,
         OPTOUT,
         CLOSE_BUTTON,
-        PANEL_SUPPRESS,
-        PANEL_UNSUPPRESS,
-        TAP_SUPPRESS
+        SUPPRESS,
+        UNSUPPRESS
     }
 
     /** The activity this panel is in. */

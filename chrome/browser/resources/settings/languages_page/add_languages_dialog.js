@@ -63,10 +63,10 @@ Polymer({
    * @private
    */
   getLanguages_: function() {
-    const filterValue =
+    var filterValue =
         this.filterValue_ ? this.filterValue_.toLowerCase() : null;
     return this.languages.supported.filter(language => {
-      const isAvailableLanguage =
+      var isAvailableLanguage =
           !this.languageHelper.isLanguageEnabled(language.code);
 
       if (!isAvailableLanguage)
@@ -86,7 +86,7 @@ Polymer({
    * @private
    */
   getDisplayText_: function(language) {
-    let displayText = language.displayName;
+    var displayText = language.displayName;
     // If the native name is different, add it.
     if (language.displayName != language.nativeDisplayName)
       displayText += ' - ' + language.nativeDisplayName;
@@ -114,7 +114,7 @@ Polymer({
     // willAdd_ is called to initialize the checkbox state (in case the
     // iron-list re-uses a previous checkbox), and the checkbox can only be
     // changed after that by user action.
-    const language = e.model.item;
+    var language = e.model.item;
     if (e.target.checked)
       this.languagesToAdd_.add(language.code);
     else

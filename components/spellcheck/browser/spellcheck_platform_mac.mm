@@ -240,10 +240,9 @@ void CloseDocumentWithTag(int tag) {
 
 void RequestTextCheck(int document_tag,
                       const base::string16& text,
-                      TextCheckCompleteCallback passed_callback) {
+                      TextCheckCompleteCallback callback) {
   NSString* text_to_check = base::SysUTF16ToNSString(text);
   NSRange range_to_check = NSMakeRange(0, [text_to_check length]);
-  __block TextCheckCompleteCallback callback(std::move(passed_callback));
 
   [SharedSpellChecker()
       requestCheckingOfString:text_to_check
@@ -271,7 +270,7 @@ void RequestTextCheck(int document_tag,
                 [result range].length));
           }
           // TODO(groby): Verify we don't need to post from here.
-          std::move(callback).Run(check_results);
+          callback.Run(check_results);
       }];
 }
 

@@ -25,10 +25,8 @@
 
 // https://w3c.github.io/deviceorientation/spec-source-orientation.html#devicemotion
 
-[
-    Constructor(DOMString type, optional DeviceMotionEventInit eventInitDict),
-    Exposed=Window
-] interface DeviceMotionEvent : Event {
+[Constructor(DOMString type, optional DeviceMotionEventInit eventInitDict)]
+interface DeviceMotionEvent : Event {
     readonly attribute DeviceAcceleration? acceleration;
     readonly attribute DeviceAcceleration? accelerationIncludingGravity;
     readonly attribute DeviceRotationRate? rotationRate;

@@ -36,6 +36,7 @@
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/ViewFragmentationContext.h"
+#include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -105,7 +106,7 @@ LayoutView::LayoutView(Document* document)
   SetPositionState(EPosition::kAbsolute);  // to 0,0 :)
 }
 
-LayoutView::~LayoutView() = default;
+LayoutView::~LayoutView() {}
 
 bool LayoutView::HitTest(HitTestResult& result) {
   // We have to recursively update layout/style here because otherwise, when the

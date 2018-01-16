@@ -14,7 +14,7 @@ namespace scheduler {
 VirtualTimeDomain::VirtualTimeDomain(base::TimeTicks initial_time)
     : now_(initial_time), task_queue_manager_(nullptr) {}
 
-VirtualTimeDomain::~VirtualTimeDomain() = default;
+VirtualTimeDomain::~VirtualTimeDomain() {}
 
 void VirtualTimeDomain::OnRegisterWithTaskQueueManager(
     TaskQueueManager* task_queue_manager) {

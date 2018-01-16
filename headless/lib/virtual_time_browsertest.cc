@@ -7,6 +7,7 @@
 #include "base/strings/stringprintf.h"
 #include "content/public/test/browser_test.h"
 #include "headless/public/devtools/domains/emulation.h"
+#include "headless/public/devtools/domains/page.h"
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/headless_devtools_client.h"
 #include "headless/public/util/testing/test_in_memory_protocol_handler.h"
@@ -22,6 +23,7 @@ namespace headless {
 
 class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
                                public emulation::ExperimentalObserver,
+                               public page::ExperimentalObserver,
                                public runtime::Observer {
  public:
   void SetInitialURL(const std::string& initial_url) {
@@ -30,11 +32,19 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
 
   void RunDevTooledTest() override {
     devtools_client_->GetEmulation()->GetExperimental()->AddObserver(this);
+    devtools_client_->GetPage()->GetExperimental()->AddObserver(this);
     devtools_client_->GetRuntime()->AddObserver(this);
+
+    devtools_client_->GetPage()->Enable(base::Bind(
+        &VirtualTimeBrowserTest::PageEnabled, base::Unretained(this)));
     devtools_client_->GetRuntime()->Enable(base::Bind(
         &VirtualTimeBrowserTest::RuntimeEnabled, base::Unretained(this)));
   }
 
+  void PageEnabled() {
+    page_enabled = true;
+    MaybeSetVirtualTimePolicy();
+  }
 
   void RuntimeEnabled() {
     runtime_enabled = true;
@@ -42,7 +52,7 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
   }
 
   virtual void MaybeSetVirtualTimePolicy() {
-    if (!runtime_enabled)
+    if (!page_enabled || !runtime_enabled)
       return;
 
     // To avoid race conditions start with virtual time paused.
@@ -52,8 +62,6 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
             .Build(),
         base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
                    base::Unretained(this)));
-
-    SetAfterLoadVirtualTimePolicy();
   }
 
   void SetVirtualTimePolicyDone(
@@ -63,13 +71,18 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     devtools_client_->GetPage()->Navigate(initial_url_);
   }
 
-  virtual void SetAfterLoadVirtualTimePolicy() {
+  void OnFrameStartedLoading(
+      const page::FrameStartedLoadingParams& params) override {
+    if (initial_load_seen_)
+      return;
+    initial_load_seen_ = true;
+    // The navigation is underway, so allow virtual time to advance while
+    // network fetches are not pending.
     devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
         emulation::SetVirtualTimePolicyParams::Builder()
             .SetPolicy(
                 emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
             .SetBudget(5000)
-            .SetWaitForNavigation(true)
             .Build());
   }
 
@@ -86,6 +99,7 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
   std::string initial_url_;
   std::vector<std::string> log_;
   bool initial_load_seen_ = false;
+  bool page_enabled = false;
   bool runtime_enabled = false;
 };
 
@@ -100,18 +114,14 @@ class VirtualTimeObserverTest : public VirtualTimeBrowserTest {
   // emulation::Observer implementation:
   void OnVirtualTimeBudgetExpired(
       const emulation::VirtualTimeBudgetExpiredParams& params) override {
-    std::vector<std::string> expected_log = {"Paused @ 0ms",
-                                             "Advanced to 10ms",
-                                             "step1",
-                                             "Advanced to 110ms",
+    std::vector<std::string> expected_log = {"step1",
+                                             "Advanced to 100ms",
                                              "step2",
-                                             "Paused @ 110ms",
-                                             "Advanced to 120ms",
-                                             "Advanced to 210ms",
+                                             "Paused @ 100ms",
+                                             "Advanced to 200ms",
                                              "step3",
-                                             "Paused @ 210ms",
-                                             "Advanced to 220ms",
-                                             "Advanced to 310ms",
+                                             "Paused @ 200ms",
+                                             "Advanced to 300ms",
                                              "step4",
                                              "pass"};
     // Note after the PASS step there are a number of virtual time advances, but
@@ -150,14 +160,19 @@ class MaxVirtualTimeTaskStarvationCountTest : public VirtualTimeBrowserTest {
                       .spec());
   }
 
-  void SetAfterLoadVirtualTimePolicy() override {
+  void OnFrameStartedLoading(
+      const page::FrameStartedLoadingParams& params) override {
+    if (initial_load_seen_)
+      return;
+    initial_load_seen_ = true;
+    // The navigation is underway, so allow virtual time to advance while
+    // network fetches are not pending.
     devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
         emulation::SetVirtualTimePolicyParams::Builder()
             .SetPolicy(
                 emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
-            .SetBudget(4001)
+            .SetBudget(4000)
             .SetMaxVirtualTimeTaskStarvationCount(100)
-            .SetWaitForNavigation(true)
             .Build());
   }
 
@@ -277,13 +292,19 @@ class VirtualTimeLocalStorageTest : public VirtualTimeBrowserTest {
                       .spec());
   }
 
-  void SetAfterLoadVirtualTimePolicy() override {
+  void OnFrameStartedLoading(
+      const page::FrameStartedLoadingParams& params) override {
+    if (initial_load_seen_)
+      return;
+    initial_load_seen_ = true;
+    // The navigation is underway, so allow virtual time to advance while
+    // network fetches are not pending.
     devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
         emulation::SetVirtualTimePolicyParams::Builder()
             .SetPolicy(
                 emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
-            .SetBudget(5000)
-            .SetWaitForNavigation(true)
+            .SetBudget(4001)
+            .SetMaxVirtualTimeTaskStarvationCount(100)
             .Build());
   }
 
@@ -296,7 +317,10 @@ class VirtualTimeLocalStorageTest : public VirtualTimeBrowserTest {
     std::string count_string = (*params.GetArgs())[0]->GetValue()->GetString();
     int count;
     ASSERT_TRUE(base::StringToInt(count_string, &count)) << count_string;
-    EXPECT_EQ(count, 400);
+    // We don't care what exact number |count| has as long as it's not too small
+    // or too large.
+    EXPECT_GT(count, 100);
+    EXPECT_LT(count, 1000);
     console_log_seen_ = true;
   }
 
@@ -323,13 +347,19 @@ class VirtualTimeSessionStorageTest : public VirtualTimeBrowserTest {
                       .spec());
   }
 
-  void SetAfterLoadVirtualTimePolicy() override {
+  void OnFrameStartedLoading(
+      const page::FrameStartedLoadingParams& params) override {
+    if (initial_load_seen_)
+      return;
+    initial_load_seen_ = true;
+    // The navigation is underway, so allow virtual time to advance while
+    // network fetches are not pending.
     devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
         emulation::SetVirtualTimePolicyParams::Builder()
             .SetPolicy(
                 emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
-            .SetBudget(5000)
-            .SetWaitForNavigation(true)
+            .SetBudget(4001)
+            .SetMaxVirtualTimeTaskStarvationCount(100)
             .Build());
   }
 
@@ -342,7 +372,10 @@ class VirtualTimeSessionStorageTest : public VirtualTimeBrowserTest {
     std::string count_string = (*params.GetArgs())[0]->GetValue()->GetString();
     int count;
     ASSERT_TRUE(base::StringToInt(count_string, &count)) << count_string;
-    EXPECT_EQ(count, 400);
+    // We don't care what exact number |count| has as long as it's not too small
+    // or too large.
+    EXPECT_GT(count, 100);
+    EXPECT_LT(count, 1000);
     console_log_seen_ = true;
   }
 
@@ -376,23 +409,6 @@ class DeferredLoadDoesntBlockVirtualTimeTest : public VirtualTimeBrowserTest {
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(DeferredLoadDoesntBlockVirtualTimeTest);
-
-class Http404DoesntBlockVirtualTimeTest : public VirtualTimeBrowserTest {
- public:
-  Http404DoesntBlockVirtualTimeTest() {
-    EXPECT_TRUE(embedded_test_server()->Start());
-    SetInitialURL(embedded_test_server()->GetURL("/NoSuchFile.html").spec());
-  }
-
-  // emulation::Observer implementation:
-  void OnVirtualTimeBudgetExpired(
-      const emulation::VirtualTimeBudgetExpiredParams& params) override {
-    // The video should not block virtual time.
-    FinishAsynchronousTest();
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(Http404DoesntBlockVirtualTimeTest);
 
 class RedirectVirtualTimeTest : public VirtualTimeBrowserTest {
  public:
@@ -582,50 +598,5 @@ class VirtualTimeAndHistoryNavigationTest : public VirtualTimeBrowserTest {
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndHistoryNavigationTest);
-
-namespace {
-static constexpr char kResourceErrorLoop[] = R"(
-<html>
-<script>
-var counter = 1;
-</script>
-<img src="1" onerror="this.src='' + ++counter;">
-</html>
-)";
-}
-
-class VirtualTimeAndResourceErrorLoopTest : public VirtualTimeBrowserTest {
- public:
-  VirtualTimeAndResourceErrorLoopTest() { SetInitialURL("http://foo.com/"); }
-
-  ProtocolHandlerMap GetProtocolHandlers() override {
-    ProtocolHandlerMap protocol_handlers;
-    std::unique_ptr<TestInMemoryProtocolHandler> http_handler(
-        new TestInMemoryProtocolHandler(browser()->BrowserIOThread(), nullptr));
-    http_handler_ = http_handler.get();
-    http_handler->InsertResponse("http://foo.com/",
-                                 {kResourceErrorLoop, "text/html"});
-    protocol_handlers[url::kHttpScheme] = std::move(http_handler);
-    return protocol_handlers;
-  }
-
-  void RunDevTooledTest() override {
-    http_handler_->SetHeadlessBrowserContext(browser_context_);
-    VirtualTimeBrowserTest::RunDevTooledTest();
-  }
-
-  // emulation::Observer implementation:
-  void OnVirtualTimeBudgetExpired(
-      const emulation::VirtualTimeBudgetExpiredParams& params) override {
-    // The budget is 5000 virtual ms.  The resources are delivered with 10
-    // virtual ms delay, so we should have 500 urls.
-    EXPECT_EQ(500u, http_handler_->urls_requested().size());
-    FinishAsynchronousTest();
-  }
-
-  TestInMemoryProtocolHandler* http_handler_;  // NOT OWNED
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndResourceErrorLoopTest);
 
 }  // namespace headless

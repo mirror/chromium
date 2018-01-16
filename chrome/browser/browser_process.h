@@ -106,7 +106,7 @@ class PhysicalWebDataSource;
 }
 
 namespace policy {
-class ChromeBrowserPolicyConnector;
+class BrowserPolicyConnector;
 class PolicyService;
 }
 
@@ -203,7 +203,7 @@ class BrowserProcess {
   virtual WatchDogThread* watchdog_thread() = 0;
 
   // Starts and manages the policy system.
-  virtual policy::ChromeBrowserPolicyConnector* browser_policy_connector() = 0;
+  virtual policy::BrowserPolicyConnector* browser_policy_connector() = 0;
 
   // This is the main interface for chromium components to retrieve policy
   // information from the policy system.

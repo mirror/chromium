@@ -4,5 +4,4 @@ include_rules = [
   "+media/base",  # For basic media functions.
   "+media/cast",  # For cast streaming library.
   "+media/capture",  # For capture library.
-  "+media/mojo/interfaces",  # For mojo interfaces.
 ]

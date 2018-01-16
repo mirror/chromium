@@ -35,7 +35,7 @@ inline SVGStyleElement::SVGStyleElement(Document& document,
     : SVGElement(SVGNames::styleTag, document),
       StyleElement(&document, created_by_parser) {}
 
-SVGStyleElement::~SVGStyleElement() = default;
+SVGStyleElement::~SVGStyleElement() {}
 
 SVGStyleElement* SVGStyleElement::Create(Document& document,
                                          bool created_by_parser) {

@@ -11,7 +11,6 @@
 
 #include "ash/app_list/model/app_list_model.h"
 #include "ash/app_list/model/app_list_view_state.h"
-#include "ash/app_list/model/search/search_model.h"
 #include "ash/app_list/model/speech/speech_ui_model.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/command_line.h"
@@ -25,7 +24,6 @@
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
-#include "chrome/browser/ui/app_list/search/search_controller.h"
 #include "chrome/browser/ui/app_list/search/search_controller_factory.h"
 #include "chrome/browser/ui/app_list/search/search_resource_manager.h"
 #include "chrome/browser/ui/app_list/start_page_service.h"
@@ -50,6 +48,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
+#include "ui/app_list/search_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/controls/webview/webview.h"
@@ -210,8 +209,8 @@ void AppListViewDelegate::SetUpSearchUI() {
   search_resource_manager_.reset(new app_list::SearchResourceManager(
       profile_, model_updater_, speech_ui_.get()));
 
-  search_controller_ =
-      app_list::CreateSearchController(profile_, model_updater_, controller_);
+  search_controller_ = CreateSearchController(profile_, model_updater_,
+                                              search_model_, controller_);
 }
 
 void AppListViewDelegate::OnWallpaperColorsChanged(
@@ -356,14 +355,6 @@ bool AppListViewDelegate::IsSpeechRecognitionEnabled() {
 void AppListViewDelegate::GetWallpaperProminentColors(
     std::vector<SkColor>* colors) {
   *colors = wallpaper_prominent_colors_;
-}
-
-void AppListViewDelegate::ActivateItem(const std::string& id, int event_flags) {
-  model_updater_->ActivateChromeItem(id, event_flags);
-}
-
-ui::MenuModel* AppListViewDelegate::GetContextMenuModel(const std::string& id) {
-  return model_updater_->GetContextMenuModel(id);
 }
 
 void AppListViewDelegate::AddObserver(

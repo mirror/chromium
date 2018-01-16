@@ -53,7 +53,7 @@ namespace blink {
 static const char kPermissionDeniedErrorMessage[] =
     "The user denied permission to access the database.";
 
-IDBFactory::IDBFactory() = default;
+IDBFactory::IDBFactory() {}
 
 static bool IsContextValid(ExecutionContext* context) {
   DCHECK(context->IsDocument() || context->IsWorkerGlobalScope());
@@ -225,9 +225,8 @@ short IDBFactory::cmp(ScriptState* script_state,
                       const ScriptValue& first_value,
                       const ScriptValue& second_value,
                       ExceptionState& exception_state) {
-  const std::unique_ptr<IDBKey> first =
-      ScriptValue::To<std::unique_ptr<IDBKey>>(script_state->GetIsolate(),
-                                               first_value, exception_state);
+  IDBKey* first = ScriptValue::To<IDBKey*>(script_state->GetIsolate(),
+                                           first_value, exception_state);
   if (exception_state.HadException())
     return 0;
   DCHECK(first);
@@ -237,9 +236,8 @@ short IDBFactory::cmp(ScriptState* script_state,
     return 0;
   }
 
-  const std::unique_ptr<IDBKey> second =
-      ScriptValue::To<std::unique_ptr<IDBKey>>(script_state->GetIsolate(),
-                                               second_value, exception_state);
+  IDBKey* second = ScriptValue::To<IDBKey*>(script_state->GetIsolate(),
+                                            second_value, exception_state);
   if (exception_state.HadException())
     return 0;
   DCHECK(second);
@@ -249,7 +247,7 @@ short IDBFactory::cmp(ScriptState* script_state,
     return 0;
   }
 
-  return static_cast<short>(first->Compare(second.get()));
+  return static_cast<short>(first->Compare(second));
 }
 
 }  // namespace blink

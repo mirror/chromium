@@ -25,7 +25,7 @@ class TerminatedArray {
  public:
   // When TerminatedArray::Allocator implementations grow the backing
   // store, old is copied into the new and larger block.
-  static_assert(VectorTraits<T>::kCanMoveWithMemcpy,
+  static_assert(VectorTraits<T>::kCanCopyWithMemcpy,
                 "Array elements must be memory copyable");
 
   T& at(size_t index) { return reinterpret_cast<T*>(this)[index]; }
@@ -115,7 +115,7 @@ class TerminatedArray {
 
   // Prohibit construction. Allocator makes TerminatedArray instances for
   // TerminatedArrayBuilder by pointer casting.
-  TerminatedArray() = delete;
+  TerminatedArray();
 
   template <typename, template <typename> class>
   friend class TerminatedArrayBuilder;

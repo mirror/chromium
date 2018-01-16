@@ -195,7 +195,8 @@ scoped_refptr<SharedBuffer> ReadFile(const char* file_name) {
   if (s.st_size <= 0)
     return SharedBuffer::Create();
 
-  auto buffer = std::make_unique<unsigned char[]>(file_size);
+  std::unique_ptr<unsigned char[]> buffer =
+      WrapArrayUnique(new unsigned char[file_size]);
   if (file_size != fread(buffer.get(), 1, file_size, fp)) {
     fprintf(stderr, "Error reading file %s\n", file_name);
     exit(2);

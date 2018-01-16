@@ -681,11 +681,24 @@ static ParseState CheckDepthAndIndex(int* depth, CSSParserTokenRange tokens) {
   return OK;
 }
 
+namespace {
+
+CSSCalcExpressionNode* CreateCalcBinaryOperation(CSSCalcExpressionNode* lhs,
+                                                 CSSCalcExpressionNode* rhs,
+                                                 CalcOperator op,
+                                                 bool simplify) {
+  if (simplify)
+    return CSSCalcBinaryOperation::CreateSimplified(lhs, rhs, op);
+  return CSSCalcBinaryOperation::Create(lhs, rhs, op);
+}
+
+}  // namespace
+
 class CSSCalcExpressionNodeParser {
   STACK_ALLOCATED();
 
  public:
-  CSSCalcExpressionNodeParser() {}
+  CSSCalcExpressionNodeParser(bool simplify) : simplify_(simplify) {}
 
   CSSCalcExpressionNode* ParseCalc(CSSParserTokenRange tokens) {
     Value result;
@@ -766,9 +779,9 @@ class CSSCalcExpressionNodeParser {
       if (!ParseValueTerm(tokens, depth, &rhs))
         return false;
 
-      result->value = CSSCalcBinaryOperation::CreateSimplified(
+      result->value = CreateCalcBinaryOperation(
           result->value, rhs.value,
-          static_cast<CalcOperator>(operator_character));
+          static_cast<CalcOperator>(operator_character), simplify_);
 
       if (!result->value)
         return false;
@@ -801,9 +814,9 @@ class CSSCalcExpressionNodeParser {
       if (!ParseValueMultiplicativeExpression(tokens, depth, &rhs))
         return false;
 
-      result->value = CSSCalcBinaryOperation::CreateSimplified(
+      result->value = CreateCalcBinaryOperation(
           result->value, rhs.value,
-          static_cast<CalcOperator>(operator_character));
+          static_cast<CalcOperator>(operator_character), simplify_);
 
       if (!result->value)
         return false;
@@ -817,6 +830,9 @@ class CSSCalcExpressionNodeParser {
                             Value* result) {
     return ParseAdditiveValueExpression(tokens, depth, result);
   }
+
+ private:
+  const bool simplify_;
 };
 
 CSSCalcExpressionNode* CSSCalcValue::CreateExpressionNode(
@@ -847,7 +863,15 @@ CSSCalcExpressionNode* CSSCalcValue::CreateExpressionNode(double pixels,
 
 CSSCalcValue* CSSCalcValue::Create(const CSSParserTokenRange& tokens,
                                    ValueRange range) {
-  CSSCalcExpressionNodeParser parser;
+  CSSCalcExpressionNodeParser parser(false /* simplify */);
+  CSSCalcExpressionNode* expression = parser.ParseCalc(tokens);
+
+  return expression ? new CSSCalcValue(expression, range) : nullptr;
+}
+
+CSSCalcValue* CSSCalcValue::CreateSimplified(const CSSParserTokenRange& tokens,
+                                             ValueRange range) {
+  CSSCalcExpressionNodeParser parser(true /* simplify */);
   CSSCalcExpressionNode* expression = parser.ParseCalc(tokens);
 
   return expression ? new CSSCalcValue(expression, range) : nullptr;

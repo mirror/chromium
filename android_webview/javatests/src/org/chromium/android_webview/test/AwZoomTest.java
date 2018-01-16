@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 
@@ -154,7 +153,6 @@ public class AwZoomTest {
     }
 
     @Test
-    @DisabledTest(message = "crbug.com/800015")
     @SmallTest
     @Feature({"AndroidWebView"})
     @RetryOnFailure // Flaky (times out). See http://crbug.com/661879.
@@ -166,7 +164,6 @@ public class AwZoomTest {
     // According to Android CTS test, zoomIn/Out must work
     // even if supportZoom is turned off.
     @Test
-    @DisabledTest(message = "crbug.com/800015")
     @SmallTest
     @Feature({"AndroidWebView"})
     @RetryOnFailure

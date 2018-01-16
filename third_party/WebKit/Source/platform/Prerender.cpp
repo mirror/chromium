@@ -43,7 +43,7 @@ Prerender::Prerender(PrerenderClient* client,
                      const Referrer& referrer)
     : client_(client), url_(url), rel_types_(rel_types), referrer_(referrer) {}
 
-Prerender::~Prerender() = default;
+Prerender::~Prerender() {}
 
 void Prerender::Trace(blink::Visitor* visitor) {
   visitor->Trace(client_);

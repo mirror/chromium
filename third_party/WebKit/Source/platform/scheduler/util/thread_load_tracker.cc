@@ -20,7 +20,7 @@ ThreadLoadTracker::ThreadLoadTracker(base::TimeTicks now,
   next_reporting_time_ = now + reporting_interval_;
 }
 
-ThreadLoadTracker::~ThreadLoadTracker() = default;
+ThreadLoadTracker::~ThreadLoadTracker() {}
 
 void ThreadLoadTracker::Pause(base::TimeTicks now) {
   Advance(now, TaskState::kIdle);

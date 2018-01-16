@@ -41,7 +41,7 @@ class MediaCodecUtil {
     public static class CodecCreationInfo {
         public MediaCodec mediaCodec;
         public boolean supportsAdaptivePlayback;
-        public BitrateAdjuster bitrateAdjuster = BitrateAdjuster.NO_ADJUSTMENT;
+        public BitrateAdjustmentTypes bitrateAdjustmentType = BitrateAdjustmentTypes.NO_ADJUSTMENT;
     }
 
     public static final class MimeTypes {
@@ -51,6 +51,16 @@ class MediaCodecUtil {
         public static final String VIDEO_H265 = "video/hevc";
         public static final String VIDEO_VP8 = "video/x-vnd.on2.vp8";
         public static final String VIDEO_VP9 = "video/x-vnd.on2.vp9";
+    }
+
+    // Type of bitrate adjustment for video encoder.
+    public enum BitrateAdjustmentTypes {
+        // No adjustment - video encoder has no known bitrate problem.
+        NO_ADJUSTMENT,
+        // Framerate based bitrate adjustment is required - HW encoder does not use frame
+        // timestamps to calculate frame bitrate budget and instead is relying on initial
+        // fps configuration assuming that all frames are coming at fixed initial frame rate.
+        FRAMERATE_ADJUSTMENT,
     }
 
     /**
@@ -496,25 +506,25 @@ class MediaCodecUtil {
     // List of supported HW encoders.
     private static enum HWEncoderProperties {
         QcomVp8(MimeTypes.VIDEO_VP8, "OMX.qcom.", Build.VERSION_CODES.KITKAT,
-                BitrateAdjuster.NO_ADJUSTMENT),
+                BitrateAdjustmentTypes.NO_ADJUSTMENT),
         QcomH264(MimeTypes.VIDEO_H264, "OMX.qcom.", Build.VERSION_CODES.KITKAT,
-                BitrateAdjuster.NO_ADJUSTMENT),
+                BitrateAdjustmentTypes.NO_ADJUSTMENT),
         ExynosVp8(MimeTypes.VIDEO_VP8, "OMX.Exynos.", Build.VERSION_CODES.M,
-                BitrateAdjuster.NO_ADJUSTMENT),
+                BitrateAdjustmentTypes.NO_ADJUSTMENT),
         ExynosH264(MimeTypes.VIDEO_H264, "OMX.Exynos.", Build.VERSION_CODES.LOLLIPOP,
-                BitrateAdjuster.FRAMERATE_ADJUSTMENT);
+                BitrateAdjustmentTypes.FRAMERATE_ADJUSTMENT);
 
         private final String mMime;
         private final String mPrefix;
         private final int mMinSDK;
-        private final BitrateAdjuster mBitrateAdjuster;
+        private final BitrateAdjustmentTypes mBitrateAdjustmentType;
 
-        private HWEncoderProperties(
-                String mime, String prefix, int minSDK, BitrateAdjuster bitrateAdjuster) {
+        private HWEncoderProperties(String mime, String prefix, int minSDK,
+                BitrateAdjustmentTypes bitrateAdjustmentType) {
             this.mMime = mime;
             this.mPrefix = prefix;
             this.mMinSDK = minSDK;
-            this.mBitrateAdjuster = bitrateAdjuster;
+            this.mBitrateAdjustmentType = bitrateAdjustmentType;
         }
 
         public String getMime() {
@@ -529,8 +539,8 @@ class MediaCodecUtil {
             return mMinSDK;
         }
 
-        public BitrateAdjuster getBitrateAdjuster() {
-            return mBitrateAdjuster;
+        public BitrateAdjustmentTypes getBitrateAdjustmentType() {
+            return mBitrateAdjustmentType;
         }
     }
 
@@ -558,7 +568,7 @@ class MediaCodecUtil {
         try {
             result.mediaCodec = MediaCodec.createEncoderByType(mime);
             result.supportsAdaptivePlayback = false;
-            result.bitrateAdjuster = encoderProperties.getBitrateAdjuster();
+            result.bitrateAdjustmentType = encoderProperties.getBitrateAdjustmentType();
         } catch (Exception e) {
             Log.e(TAG, "Failed to create MediaCodec: %s", mime, e);
         }

@@ -38,7 +38,7 @@
 
 namespace blink {
 
-FileWriterBase::~FileWriterBase() = default;
+FileWriterBase::~FileWriterBase() {}
 
 void FileWriterBase::Initialize(std::unique_ptr<WebFileWriter> writer,
                                 long long length) {

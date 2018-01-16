@@ -50,7 +50,7 @@ ServiceWorkerClient::ServiceWorkerClient(const WebServiceWorkerClientInfo& info)
       type_(info.client_type),
       frame_type_(info.frame_type) {}
 
-ServiceWorkerClient::~ServiceWorkerClient() = default;
+ServiceWorkerClient::~ServiceWorkerClient() {}
 
 String ServiceWorkerClient::type() const {
   switch (type_) {

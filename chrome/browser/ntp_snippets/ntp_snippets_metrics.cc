@@ -20,17 +20,17 @@ const char kContentSuggestionsNotificationOptOuts[] =
 void RecordContentSuggestionsNotificationImpression(
     ContentSuggestionsNotificationImpression what) {
   UMA_HISTOGRAM_ENUMERATION(kContentSuggestionsNotificationImpressions, what,
-                            ContentSuggestionsNotificationImpression::MAX);
+                            MAX_CONTENT_SUGGESTIONS_NOTIFICATION_IMPRESSION);
 }
 
 void RecordContentSuggestionsNotificationAction(
     ContentSuggestionsNotificationAction what) {
   UMA_HISTOGRAM_ENUMERATION(kContentSuggestionsNotificationActions, what,
-                            ContentSuggestionsNotificationAction::MAX);
+                            MAX_CONTENT_SUGGESTIONS_NOTIFICATION_ACTION);
 }
 
 void RecordContentSuggestionsNotificationOptOut(
     ContentSuggestionsNotificationOptOut what) {
   UMA_HISTOGRAM_ENUMERATION(kContentSuggestionsNotificationOptOuts, what,
-                            ContentSuggestionsNotificationOptOut::MAX);
+                            MAX_CONTENT_SUGGESTIONS_NOTIFICATION_OPT_OUT);
 }

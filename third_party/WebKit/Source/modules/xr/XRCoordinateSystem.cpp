@@ -11,7 +11,7 @@ namespace blink {
 XRCoordinateSystem::XRCoordinateSystem(XRSession* session)
     : session_(session) {}
 
-XRCoordinateSystem::~XRCoordinateSystem() = default;
+XRCoordinateSystem::~XRCoordinateSystem() {}
 
 // If possible, get the matrix required to transform between two coordinate
 // systems.

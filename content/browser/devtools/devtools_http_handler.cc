@@ -362,6 +362,7 @@ static std::string GetMimeType(const std::string& filename) {
   LOG(ERROR) << "GetMimeType doesn't know mime type for: "
              << filename
              << " text/plain will be returned";
+  NOTREACHED();
   return "text/plain";
 }
 

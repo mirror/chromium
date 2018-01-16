@@ -43,7 +43,7 @@ AXImageMapLink::AXImageMapLink(HTMLAreaElement* area,
                                AXObjectCacheImpl& ax_object_cache)
     : AXNodeObject(area, ax_object_cache) {}
 
-AXImageMapLink::~AXImageMapLink() = default;
+AXImageMapLink::~AXImageMapLink() {}
 
 AXImageMapLink* AXImageMapLink::Create(HTMLAreaElement* area,
                                        AXObjectCacheImpl& ax_object_cache) {

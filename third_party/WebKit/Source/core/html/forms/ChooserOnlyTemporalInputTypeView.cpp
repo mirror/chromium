@@ -28,7 +28,6 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/events/Event.h"
 #include "core/html/HTMLDivElement.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/page/ChromeClient.h"
@@ -58,28 +57,25 @@ void ChooserOnlyTemporalInputTypeView::Trace(blink::Visitor* visitor) {
   DateTimeChooserClient::Trace(visitor);
 }
 
-void ChooserOnlyTemporalInputTypeView::HandleDOMActivateEvent(Event* event) {
-  Document& document = GetElement().GetDocument();
+void ChooserOnlyTemporalInputTypeView::HandleDOMActivateEvent(Event*) {
   if (GetElement().IsDisabledOrReadOnly() || !GetElement().GetLayoutObject() ||
-      !Frame::HasTransientUserActivation(document.GetFrame()) ||
+      !Frame::HasTransientUserActivation(
+          GetElement().GetDocument().GetFrame()) ||
       GetElement().OpenShadowRoot())
     return;
 
   if (date_time_chooser_)
     return;
-  if (!document.IsActive())
+  if (!GetElement().GetDocument().IsActive())
     return;
   DateTimeChooserParameters parameters;
   if (!GetElement().SetupDateTimeChooserParameters(parameters))
     return;
-  UseCounter::Count(
-      document,
-      (event->UnderlyingEvent() && event->UnderlyingEvent()->isTrusted())
-          ? WebFeature::kTemporalInputTypeChooserByTrustedClick
-          : WebFeature::kTemporalInputTypeChooserByUntrustedClick);
-  date_time_chooser_ =
-      document.GetPage()->GetChromeClient().OpenDateTimeChooser(this,
-                                                                parameters);
+  date_time_chooser_ = GetElement()
+                           .GetDocument()
+                           .GetPage()
+                           ->GetChromeClient()
+                           .OpenDateTimeChooser(this, parameters);
 }
 
 void ChooserOnlyTemporalInputTypeView::CreateShadowSubtree() {

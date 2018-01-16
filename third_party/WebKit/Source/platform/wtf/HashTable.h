@@ -335,7 +335,7 @@ class HashTableConstIterator final {
   }
 
  public:
-  HashTableConstIterator() = default;
+  HashTableConstIterator() {}
 
   GetType Get() const {
     CheckModifications();
@@ -463,7 +463,7 @@ class HashTableIterator final {
       : iterator_(pos, end, container, tag) {}
 
  public:
-  HashTableIterator() = default;
+  HashTableIterator() {}
 
   // default copy, assignment and destructor are OK
 
@@ -792,8 +792,8 @@ class HashTable final
   template <typename HashTranslator, typename T>
   const ValueType* Lookup(const T&) const;
 
-  template <typename VisitorDispatcher, typename A = Allocator>
-  std::enable_if_t<A::kIsGarbageCollected> Trace(VisitorDispatcher);
+  template <typename VisitorDispatcher>
+  void Trace(VisitorDispatcher);
 
 #if DCHECK_IS_ON()
   void EnterAccessForbiddenScope() {
@@ -2089,10 +2089,14 @@ template <typename Key,
           typename Traits,
           typename KeyTraits,
           typename Allocator>
-template <typename VisitorDispatcher, typename A>
-std::enable_if_t<A::kIsGarbageCollected>
-HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
-    Trace(VisitorDispatcher visitor) {
+template <typename VisitorDispatcher>
+void HashTable<Key,
+               Value,
+               Extractor,
+               HashFunctions,
+               Traits,
+               KeyTraits,
+               Allocator>::Trace(VisitorDispatcher visitor) {
 #if DUMP_HASHTABLE_STATS_PER_TABLE
 // XXX: this will simply crash.
 // Allocator::MarkNoTracing(visitor, stats_);
@@ -2177,7 +2181,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
 template <typename HashTableType, typename Traits>
 struct HashTableConstIteratorAdapter {
   STACK_ALLOCATED();
-  HashTableConstIteratorAdapter() = default;
+  HashTableConstIteratorAdapter() {}
   HashTableConstIteratorAdapter(
       const typename HashTableType::const_iterator& impl)
       : impl_(impl) {}
@@ -2215,7 +2219,7 @@ struct HashTableIteratorAdapter {
   typedef typename Traits::IteratorGetType GetType;
   typedef typename HashTableType::ValueTraits::IteratorGetType SourceGetType;
 
-  HashTableIteratorAdapter() = default;
+  HashTableIteratorAdapter() {}
   HashTableIteratorAdapter(const typename HashTableType::iterator& impl)
       : impl_(impl) {}
 

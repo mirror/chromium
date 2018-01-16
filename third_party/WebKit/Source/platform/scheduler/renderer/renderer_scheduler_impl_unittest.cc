@@ -272,7 +272,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~RendererSchedulerImplTest() override = default;
+  ~RendererSchedulerImplTest() override {}
 
   void SetUp() override {
     if (!message_loop_) {
@@ -295,7 +295,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
         MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
     timer_task_runner_ = scheduler_->TimerTaskQueue();
-    v8_task_runner_ = scheduler_->V8TaskQueue();
+    v8_task_runner_ = scheduler_->kV8TaskQueue();
     fake_queue_ = scheduler_->NewLoadingTaskQueue(
         MainThreadTaskQueue::QueueType::kFrameLoading);
   }
@@ -2084,7 +2084,7 @@ class RendererSchedulerImplWithMessageLoopTest
  public:
   RendererSchedulerImplWithMessageLoopTest()
       : RendererSchedulerImplTest(new base::MessageLoop()) {}
-  ~RendererSchedulerImplWithMessageLoopTest() override = default;
+  ~RendererSchedulerImplWithMessageLoopTest() override {}
 
   void PostFromNestedRunloop(
       std::vector<std::pair<SingleThreadIdleTaskRunner::IdleTask, bool>>*
@@ -3133,7 +3133,7 @@ class WebViewSchedulerImplForTest : public WebViewSchedulerImpl {
  public:
   WebViewSchedulerImplForTest(RendererSchedulerImpl* scheduler)
       : WebViewSchedulerImpl(nullptr, nullptr, scheduler, false) {}
-  ~WebViewSchedulerImplForTest() override = default;
+  ~WebViewSchedulerImplForTest() override {}
 
   void ReportIntervention(const std::string& message) override {
     interventions_.push_back(message);
@@ -3778,7 +3778,7 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->VirtualTimeControlTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
-  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(scheduler_->kV8TaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
 
   // The main control task queue remains in the real time domain.
@@ -3856,7 +3856,7 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
-  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(scheduler_->kV8TaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_FALSE(scheduler_->VirtualTimeControlTaskQueue());
 }

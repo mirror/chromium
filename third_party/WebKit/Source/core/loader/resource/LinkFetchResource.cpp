@@ -24,6 +24,6 @@ LinkFetchResource::LinkFetchResource(const ResourceRequest& request,
                                      const ResourceLoaderOptions& options)
     : Resource(request, type, options) {}
 
-LinkFetchResource::~LinkFetchResource() = default;
+LinkFetchResource::~LinkFetchResource() {}
 
 }  // namespace blink

@@ -5,9 +5,9 @@
 cr.define('md_history.history_routing_test', function() {
   function registerTests() {
     suite('routing-test', function() {
-      let app;
-      let list;
-      let toolbar;
+      var app;
+      var list;
+      var toolbar;
 
       function navigateTo(route) {
         window.history.replaceState({}, '', route);
@@ -34,7 +34,7 @@ cr.define('md_history.history_routing_test', function() {
       });
 
       test('route updates from sidebar', function() {
-        const menu = sidebar.$.menu;
+        var menu = sidebar.$.menu;
         assertEquals('history', app.selectedPage_);
         assertEquals('chrome://history/', window.location.href);
 
@@ -49,22 +49,22 @@ cr.define('md_history.history_routing_test', function() {
 
       test('search updates from route', function() {
         assertEquals('chrome://history/', window.location.href);
-        const searchTerm = 'Mei';
+        var searchTerm = 'Mei';
         assertEquals('history', app.$.content.selected);
         navigateTo('/?q=' + searchTerm);
         assertEquals(searchTerm, toolbar.searchTerm);
       });
 
       test('route updates from search', function() {
-        const searchTerm = 'McCree';
+        var searchTerm = 'McCree';
         assertEquals('history', app.$.content.selected);
         app.fire('change-query', {search: searchTerm});
         assertEquals('chrome://history/?q=' + searchTerm, window.location.href);
       });
 
       test('search preserved across menu items', function() {
-        const searchTerm = 'Soldier76';
-        const menu = sidebar.$.menu;
+        var searchTerm = 'Soldier76';
+        var menu = sidebar.$.menu;
         assertEquals('history', app.selectedPage_);
         navigateTo('/?q=' + searchTerm);
 
@@ -90,9 +90,9 @@ cr.define('md_history.history_routing_test', function() {
 cr.define('md_history.history_routing_test_with_query_param', function() {
   function registerTests() {
     suite('routing-with-query-param', function() {
-      let app;
-      let toolbar;
-      let expectedQuery;
+      var app;
+      var toolbar;
+      var expectedQuery;
 
       suiteSetup(function() {
         app = $('history-app');
@@ -101,7 +101,7 @@ cr.define('md_history.history_routing_test_with_query_param', function() {
       });
 
       test('search initiated on load', function(done) {
-        const verifyFunction = function(info) {
+        var verifyFunction = function(info) {
           assertEquals(expectedQuery, info[0]);
           PolymerTest.flushTasks().then(function() {
             assertEquals(

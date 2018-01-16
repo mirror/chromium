@@ -46,6 +46,24 @@ std::string SanitizeRegion(const std::string& region,
   return AutofillCountry::CountryCodeForLocale(app_locale);
 }
 
+// Returns true if |phone_number| is a possible number.
+bool IsPossiblePhoneNumber(
+    const ::i18n::phonenumbers::PhoneNumber& phone_number) {
+  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
+  return phone_util->IsPossibleNumber(phone_number);
+}
+
+bool IsPossiblePhoneNumber(const std::string& phone_number,
+                           const std::string& country_code) {
+  ::i18n::phonenumbers::PhoneNumber parsed_number;
+  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
+  auto result = phone_util->ParseAndKeepRawInput(phone_number, country_code,
+                                                 &parsed_number);
+
+  return result == ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR &&
+         phone_util->IsPossibleNumber(parsed_number);
+}
+
 // Formats the given |number| as a human-readable string, and writes the result
 // into |formatted_number|.  Also, normalizes the formatted number, and writes
 // that result into |normalized_number|.  This function should only be called
@@ -92,35 +110,6 @@ void FormatValidatedNumber(const ::i18n::phonenumbers::PhoneNumber& number,
 }  // namespace
 
 namespace i18n {
-
-// Returns true if |phone_number| is a possible number.
-bool IsPossiblePhoneNumber(
-    const ::i18n::phonenumbers::PhoneNumber& phone_number) {
-  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
-  return phone_util->IsPossibleNumber(phone_number);
-}
-
-bool IsPossiblePhoneNumber(const std::string& phone_number,
-                           const std::string& country_code) {
-  ::i18n::phonenumbers::PhoneNumber parsed_number;
-  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
-  auto result = phone_util->ParseAndKeepRawInput(phone_number, country_code,
-                                                 &parsed_number);
-
-  return result == ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR &&
-         phone_util->IsPossibleNumber(parsed_number);
-}
-
-bool IsValidPhoneNumber(const std::string& phone_number,
-                        const std::string& country_code) {
-  ::i18n::phonenumbers::PhoneNumber parsed_number;
-  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
-  auto result = phone_util->ParseAndKeepRawInput(phone_number, country_code,
-                                                 &parsed_number);
-
-  return result == ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR &&
-         phone_util->IsValidNumber(parsed_number);
-}
 
 // Parses the number stored in |value| as it should be interpreted in the given
 // |default_region|, and stores the results into the remaining arguments.
@@ -283,37 +272,24 @@ base::string16 GetFormattedPhoneNumberForDisplay(const AutofillProfile& profile,
   // being a valid number.
   const std::string country_code =
       autofill::data_util::GetCountryCodeWithFallback(profile, locale);
-  if (IsValidPhoneNumber(tentative_intl_phone, country_code)) {
+  if (IsPossiblePhoneNumber(tentative_intl_phone, country_code)) {
     return base::UTF8ToUTF16(
-        FormatPhoneNumber(tentative_intl_phone, country_code,
-                          PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL));
+        FormatPhoneForDisplay(tentative_intl_phone, country_code));
   }
 
-  if (IsValidPhoneNumber(phone, country_code)) {
-    return base::UTF8ToUTF16(
-        FormatPhoneNumber(phone, country_code,
-                          PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL));
-  }
-
-  return base::UTF8ToUTF16(phone);
+  return base::UTF8ToUTF16(FormatPhoneForDisplay(phone, country_code));
 }
 
 std::string FormatPhoneForDisplay(const std::string& phone_number,
                                   const std::string& country_code) {
-  if (IsValidPhoneNumber(phone_number, country_code)) {
-    return FormatPhoneNumber(phone_number, country_code,
-                             PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL);
-  }
-  return phone_number;
+  return FormatPhoneNumber(phone_number, country_code,
+                           PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL);
 }
 
 std::string FormatPhoneForResponse(const std::string& phone_number,
                                    const std::string& country_code) {
-  if (IsValidPhoneNumber(phone_number, country_code)) {
-    return FormatPhoneNumber(phone_number, country_code,
-                             PhoneNumberUtil::PhoneNumberFormat::E164);
-  }
-  return phone_number;
+  return FormatPhoneNumber(phone_number, country_code,
+                           PhoneNumberUtil::PhoneNumberFormat::E164);
 }
 
 PhoneObject::PhoneObject(const base::string16& number,

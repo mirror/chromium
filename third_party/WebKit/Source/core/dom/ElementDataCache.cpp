@@ -62,7 +62,7 @@ ElementDataCache::CachedShareableElementDataWithAttributes(
   return it->value.Get();
 }
 
-ElementDataCache::ElementDataCache() = default;
+ElementDataCache::ElementDataCache() {}
 
 void ElementDataCache::Trace(blink::Visitor* visitor) {
   visitor->Trace(shareable_element_data_cache_);

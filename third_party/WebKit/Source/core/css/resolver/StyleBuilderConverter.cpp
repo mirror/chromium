@@ -1126,17 +1126,17 @@ StyleOffsetRotation StyleBuilderConverter::ConvertOffsetRotate(
 
 StyleOffsetRotation StyleBuilderConverter::ConvertOffsetRotate(
     const CSSValue& value) {
-  StyleOffsetRotation result(0, OffsetRotationType::kFixed);
+  StyleOffsetRotation result(0, kOffsetRotationFixed);
 
   const CSSValueList& list = ToCSSValueList(value);
   DCHECK(list.length() == 1 || list.length() == 2);
   for (const auto& item : list) {
     if (item->IsIdentifierValue() &&
         ToCSSIdentifierValue(*item).GetValueID() == CSSValueAuto) {
-      result.type = OffsetRotationType::kAuto;
+      result.type = kOffsetRotationAuto;
     } else if (item->IsIdentifierValue() &&
                ToCSSIdentifierValue(*item).GetValueID() == CSSValueReverse) {
-      result.type = OffsetRotationType::kAuto;
+      result.type = kOffsetRotationAuto;
       result.angle = clampTo<float>(result.angle + 180);
     } else {
       const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(*item);

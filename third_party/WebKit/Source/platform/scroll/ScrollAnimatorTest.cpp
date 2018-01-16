@@ -150,7 +150,7 @@ class TestScrollAnimator : public ScrollAnimator {
   TestScrollAnimator(ScrollableArea* scrollable_area,
                      WTF::TimeFunction timing_function)
       : ScrollAnimator(scrollable_area, timing_function) {}
-  ~TestScrollAnimator() override = default;
+  ~TestScrollAnimator() override {}
 
   void SetShouldSendToCompositor(bool send) {
     should_send_to_compositor_ = send;

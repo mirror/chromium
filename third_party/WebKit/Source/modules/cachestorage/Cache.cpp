@@ -371,7 +371,7 @@ class Cache::BlobHandleCallbackForPut final
     request->PopulateWebServiceWorkerRequest(web_request_);
     response->PopulateWebServiceWorkerResponse(web_response_);
   }
-  ~BlobHandleCallbackForPut() override = default;
+  ~BlobHandleCallbackForPut() override {}
 
   void DidFetchDataLoadedBlobHandle(
       scoped_refptr<BlobDataHandle> handle) override {
@@ -418,7 +418,7 @@ class Cache::CodeCacheHandleCallbackForPut final
     request->PopulateWebServiceWorkerRequest(web_request_);
     response->PopulateWebServiceWorkerResponse(web_response_);
   }
-  ~CodeCacheHandleCallbackForPut() override = default;
+  ~CodeCacheHandleCallbackForPut() override {}
 
   void DidFetchDataLoadedArrayBuffer(DOMArrayBuffer* array_buffer) override {
     WebServiceWorkerCache::BatchOperation batch_operation;

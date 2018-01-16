@@ -277,8 +277,8 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
           : CanvasResourceProvider::kSoftwareCompositedResourceUsage;
 
   resource_provider_ = CanvasResourceProvider::Create(
-      Size(), usage, SharedGpuContext::ContextProviderWrapper(),
-      msaa_sample_count_, color_params_);
+      Size(), msaa_sample_count_, color_params_, usage,
+      SharedGpuContext::ContextProviderWrapper());
 
   if (resource_provider_) {
     // Always save an initial frame, to support resetting the top level matrix
@@ -596,9 +596,9 @@ bool Canvas2DLayerBridge::Restore() {
   if (shared_gl && shared_gl->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
     std::unique_ptr<CanvasResourceProvider> resource_provider =
         CanvasResourceProvider::Create(
-            Size(), CanvasResourceProvider::kAcceleratedCompositedResourceUsage,
-            std::move(context_provider_wrapper), msaa_sample_count_,
-            color_params_);
+            Size(), msaa_sample_count_, color_params_,
+            CanvasResourceProvider::kAcceleratedCompositedResourceUsage,
+            std::move(context_provider_wrapper));
 
     if (!resource_provider)
       ReportResourceProviderCreationFailure();
@@ -732,7 +732,8 @@ void Canvas2DLayerBridge::DoPaintInvalidation(const FloatRect& dirty_rect) {
 }
 
 scoped_refptr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
-    AccelerationHint hint) {
+    AccelerationHint hint,
+    SnapshotReason) {
   if (snapshot_state_ == kInitialSnapshotState)
     snapshot_state_ = kDidAcquireSnapshot;
   if (IsHibernating())

@@ -116,14 +116,15 @@ Polymer({
     });
     // </if>
 
+    this.addEventListener('change-password-dismissed', () => {
+      this.showChangePassword = false;
+    });
+
     this.addWebUIListener('change-password-visibility', visibility => {
       this.showChangePassword = visibility;
     });
-
-    if (loadTimeData.getBoolean('passwordProtectionAvailable')) {
-      settings.ChangePasswordBrowserProxyImpl.getInstance()
-          .initializeChangePasswordHandler();
-    }
+    settings.ChangePasswordBrowserProxyImpl.getInstance()
+        .initializeChangePasswordHandler();
 
     if (settings.AndroidAppsBrowserProxyImpl) {
       this.addWebUIListener(
@@ -173,7 +174,7 @@ Polymer({
    *     searching finished.
    */
   searchContents: function(query) {
-    const whenSearchDone = [
+    var whenSearchDone = [
       settings.getSearchManager().search(query, assert(this.$$('#basicPage'))),
     ];
 
@@ -229,7 +230,7 @@ Polymer({
    * @private
    */
   shouldShowAndroidApps_: function() {
-    const visibility = /** @type {boolean|undefined} */ (
+    var visibility = /** @type {boolean|undefined} */ (
         this.get('pageVisibility.androidApps'));
     if (!this.showAndroidApps || !this.showPage_(visibility)) {
       return false;
@@ -250,7 +251,7 @@ Polymer({
    * @private
    */
   shouldShowMultidevice_: function() {
-    const visibility = /** @type {boolean|undefined} */ (
+    var visibility = /** @type {boolean|undefined} */ (
         this.get('pageVisibility.multidevice'));
     return this.showMultidevice && this.showPage_(visibility);
   },

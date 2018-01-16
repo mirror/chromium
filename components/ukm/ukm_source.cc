@@ -53,12 +53,7 @@ void UkmSource::UpdateUrl(const GURL& url) {
   DCHECK(!url.is_empty());
   if (url_ == url)
     return;
-  // We only track multiple URLs for navigation-based Sources.  These are
-  // currently the only sources that intentionally record multiple entries,
-  // and this makes it easier to compare other source URLs against a
-  // whitelist.
-  if (initial_url_.is_empty() &&
-      GetSourceIdType(id_) == SourceIdType::NAVIGATION_ID)
+  if (initial_url_.is_empty())
     initial_url_ = url_;
   url_ = url;
 }
@@ -70,10 +65,8 @@ void UkmSource::PopulateProto(Source* proto_source) const {
 
   proto_source->set_id(id_);
   proto_source->set_url(GetShortenedURL(url_));
-  if (!initial_url_.is_empty()) {
-    DCHECK_EQ(SourceIdType::NAVIGATION_ID, GetSourceIdType(id_));
+  if (!initial_url_.is_empty())
     proto_source->set_initial_url(GetShortenedURL(initial_url_));
-  }
 
   if (custom_tab_state_ != kCustomTabUnset)
     proto_source->set_is_custom_tab(custom_tab_state_ == kCustomTabTrue);

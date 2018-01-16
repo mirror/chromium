@@ -51,7 +51,6 @@ import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.TestTouchUtils;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content.browser.test.util.UiUtils;
-import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.concurrent.Callable;
@@ -522,9 +521,8 @@ public class FullscreenManagerTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                SelectionPopupController controller =
-                        SelectionPopupController.fromWebContents(tab.getWebContents());
-                return !controller.isFocusedNodeEditable();
+                ContentViewCore contentViewCore = tab.getContentViewCore();
+                return !contentViewCore.isFocusedNodeEditable();
             }
         });
     }

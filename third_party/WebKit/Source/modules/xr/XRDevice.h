@@ -31,6 +31,7 @@ class XRDevice final : public EventTargetWithInlineData,
            device::mojom::blink::VRDisplayInfoPtr);
   XR* xr() const { return xr_; }
 
+  const String& deviceName() const { return device_name_; }
   bool external() const { return is_external_; }
 
   ScriptPromise supportsSession(ScriptState*,
@@ -74,6 +75,7 @@ class XRDevice final : public EventTargetWithInlineData,
 
   Member<XR> xr_;
   Member<XRFrameProvider> frame_provider_;
+  String device_name_;
   bool is_external_;
   bool supports_exclusive_;
 

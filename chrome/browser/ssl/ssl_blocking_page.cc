@@ -90,7 +90,6 @@ SSLBlockingPage* SSLBlockingPage::Create(
     const GURL& request_url,
     int options_mask,
     const base::Time& time_triggered,
-    const GURL& support_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     bool is_superfish,
     const base::Callback<void(content::CertificateRequestResultType)>&
@@ -101,7 +100,7 @@ SSLBlockingPage* SSLBlockingPage::Create(
   metrics_helper.get()->StartRecordingCaptivePortalMetrics(overridable);
 
   return new SSLBlockingPage(web_contents, cert_error, ssl_info, request_url,
-                             options_mask, time_triggered, support_url,
+                             options_mask, time_triggered,
                              std::move(ssl_cert_reporter), overridable,
                              std::move(metrics_helper), is_superfish, callback);
 }
@@ -137,7 +136,6 @@ SSLBlockingPage::SSLBlockingPage(
     const GURL& request_url,
     int options_mask,
     const base::Time& time_triggered,
-    const GURL& support_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     bool overridable,
     std::unique_ptr<ChromeMetricsHelper> metrics_helper,
@@ -177,7 +175,6 @@ SSLBlockingPage::SSLBlockingPage(
                                              ssl_info,
                                              options_mask,
                                              time_triggered,
-                                             support_url,
                                              controller())) {
   // Creating an interstitial without showing (e.g. from chrome://interstitials)
   // it leaks memory, so don't create it here.

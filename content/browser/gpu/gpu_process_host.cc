@@ -160,7 +160,9 @@ static const char* const kSwitchNames[] = {
     switches::kGpuTestingGLVendor,
     switches::kGpuTestingGLRenderer,
     switches::kGpuTestingGLVersion,
+    switches::kDisableGpuDriverBugWorkarounds,
     switches::kUseCmdDecoder,
+    switches::kIgnoreGpuBlacklist,
     switches::kForceVideoOverlays,
 #if defined(OS_ANDROID)
     switches::kMadviseRandomExecutableCode,
@@ -195,6 +197,13 @@ void SendGpuProcessMessage(base::WeakPtr<GpuProcessHost> host,
     host->Send(message);
   else
     delete message;
+}
+
+void RouteMessageToOzoneOnUI(const IPC::Message& message) {
+  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+  ui::OzonePlatform::GetInstance()
+      ->GetGpuPlatformSupportHost()
+      ->OnMessageReceived(message);
 }
 
 #endif  // defined(USE_OZONE)
@@ -683,9 +692,8 @@ bool GpuProcessHost::Send(IPC::Message* msg) {
 bool GpuProcessHost::OnMessageReceived(const IPC::Message& message) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 #if defined(USE_OZONE)
-  ui::OzonePlatform::GetInstance()
-      ->GetGpuPlatformSupportHost()
-      ->OnMessageReceived(message);
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&RouteMessageToOzoneOnUI, message));
 #endif
   return true;
 }

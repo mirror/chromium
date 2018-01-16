@@ -14,7 +14,6 @@
 #include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
 #include "ash/test_shell_delegate.h"
@@ -428,11 +427,8 @@ class ShelfWidgetViewsVisibilityTest : public AshTestBase {
   void ExpectVisible(session_manager::SessionState state,
                      ShelfVisibility shelf_visibility) {
     GetSessionControllerClient()->SetSessionState(state);
-    EXPECT_EQ(shelf_visibility == kNone, !GetShelfWidget()->IsVisible());
-    if (shelf_visibility != kNone) {
-      EXPECT_EQ(shelf_visibility == kLoginShelf, login_shelf_view_->visible());
-      EXPECT_EQ(shelf_visibility == kShelf, shelf_view_->visible());
-    }
+    EXPECT_EQ(shelf_visibility == kLoginShelf, login_shelf_view_->visible());
+    EXPECT_EQ(shelf_visibility == kShelf, shelf_view_->visible());
   }
 
  private:
@@ -444,7 +440,7 @@ class ShelfWidgetViewsVisibilityTest : public AshTestBase {
 
 TEST_F(ShelfWidgetViewsVisibilityTest, LoginWebUiLockViews) {
   // Web UI login enabled by default. Views lock enabled by default.
-  ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
+  InitShelfVariables();
 
   // Both shelf views are hidden when session state hasn't been initialized.
   ExpectVisible(SessionState::UNKNOWN, kNone);
@@ -466,10 +462,10 @@ TEST_F(ShelfWidgetViewsVisibilityTest, LoginViewsLockViews) {
   // Enable views login. Views lock enabled by default.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kShowViewsLogin);
-  ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
+  InitShelfVariables();
 
   ExpectVisible(SessionState::UNKNOWN, kNone);
-  ExpectVisible(SessionState::OOBE, kNone);
+  ExpectVisible(SessionState::OOBE, kLoginShelf);
   ExpectVisible(SessionState::LOGIN_PRIMARY, kLoginShelf);
 
   SimulateUserLogin("user1@test.com");
@@ -486,7 +482,7 @@ TEST_F(ShelfWidgetViewsVisibilityTest, LoginWebUiLockWebUi) {
   // Enable web UI lock. Web UI login enabled by default.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kShowWebUiLock);
-  ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
+  InitShelfVariables();
 
   // Views based shelf is never visible.
   ExpectVisible(SessionState::UNKNOWN, kNone);

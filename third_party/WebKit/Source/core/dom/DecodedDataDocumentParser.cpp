@@ -35,7 +35,7 @@ namespace blink {
 DecodedDataDocumentParser::DecodedDataDocumentParser(Document& document)
     : DocumentParser(&document), needs_decoder_(true) {}
 
-DecodedDataDocumentParser::~DecodedDataDocumentParser() = default;
+DecodedDataDocumentParser::~DecodedDataDocumentParser() {}
 
 void DecodedDataDocumentParser::SetDecoder(
     std::unique_ptr<TextResourceDecoder> decoder) {

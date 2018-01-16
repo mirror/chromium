@@ -385,8 +385,9 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   bool use_occlusion_query_ = false;
   bool use_swap_with_bounds_ = false;
 
-  // If true, tints all the composited content to red.
-  bool tint_gl_composited_content_ = true;
+  // If true, draw a green border after compositing a overlay candidate quad
+  // using GL.
+  bool gl_composited_overlay_candidate_quad_border_;
 
   // The method FlippedFramebuffer determines whether the framebuffer associated
   // with a DrawingFrame is flipped. It makes the assumption that the

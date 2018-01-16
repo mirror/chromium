@@ -4,8 +4,7 @@
 
 #include "media/remoting/courier_renderer.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/simple_test_tick_clock.h"
@@ -279,7 +278,7 @@ class CourierRendererTest : public testing::Test {
   }
 
   void SetUp() override {
-    controller_ = std::make_unique<RendererController>(
+    controller_ = base::MakeUnique<RendererController>(
         FakeRemoterFactory::CreateSharedSession(false));
     controller_->OnMetadataChanged(DefaultMetadata());
 

@@ -180,7 +180,7 @@ class PatternAttributesWrapper
   void Trace(blink::Visitor* visitor) { visitor->Trace(attributes_); }
 
  private:
-  PatternAttributesWrapper() = default;
+  PatternAttributesWrapper() {}
 
   PatternAttributes attributes_;
 };

@@ -12,7 +12,6 @@
 #include "ash/shell.h"
 #include "ash/system/power/convertible_power_button_controller_test_api.h"
 #include "ash/system/power/power_button_test_base.h"
-#include "ash/system/power/power_button_util.h"
 #include "ash/test_media_client.h"
 #include "ash/touch/touch_devices_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
@@ -72,8 +71,9 @@ class ConvertiblePowerButtonControllerTest : public PowerButtonTestBase {
   // off is not ignored since we will ignore the repeated power button up if
   // they come too close.
   void AdvanceClockToAvoidIgnoring() {
-    tick_clock_->Advance(power_button_util::kIgnoreRepeatedButtonUpDelay +
-                         base::TimeDelta::FromMilliseconds(1));
+    tick_clock_->Advance(
+        ConvertiblePowerButtonController::kIgnoreRepeatedButtonUpDelay +
+        base::TimeDelta::FromMilliseconds(1));
   }
 
   DISALLOW_COPY_AND_ASSIGN(ConvertiblePowerButtonControllerTest);
@@ -644,8 +644,9 @@ TEST_F(ConvertiblePowerButtonControllerTest,
   EXPECT_FALSE(power_manager_client_->backlights_forced_off());
 
   // Since display could still be off, ignore forcing off.
-  tick_clock_->Advance(power_button_util::kScreenStateChangeDelay -
-                       base::TimeDelta::FromMilliseconds(1));
+  tick_clock_->Advance(
+      ConvertiblePowerButtonController::kScreenStateChangeDelay -
+      base::TimeDelta::FromMilliseconds(1));
   PressPowerButton();
   ReleasePowerButton();
   EXPECT_FALSE(power_manager_client_->backlights_forced_off());

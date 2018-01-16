@@ -54,7 +54,7 @@ class MaybeRenderEarlyTest : public testing::Test {
 
   void AddImage(ImageKind kind, Phase phase, Expectation expectation) {
     owned_images_.push_back(
-        std::make_unique<NiceMock<MockImage>>(kind, phase, expectation));
+        base::MakeUnique<NiceMock<MockImage>>(kind, phase, expectation));
     images_.push_back(owned_images_.back().get());
   }
 

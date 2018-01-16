@@ -16,7 +16,7 @@
 #include "extensions/browser/api/device_permissions_prompt.h"
 #include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/common/api/hid.h"
-#include "mojo/public/cpp/bindings/callback_helpers.h"
+#include "extensions/utility/scoped_callback_runner.h"
 #include "services/device/public/cpp/hid/hid_device_filter.h"
 
 namespace hid = extensions::api::hid;
@@ -248,7 +248,7 @@ bool HidReceiveFunction::ReadParameters() {
 }
 
 void HidReceiveFunction::StartWork(device::mojom::HidConnection* connection) {
-  connection->Read(mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+  connection->Read(ScopedCallbackRunner(
       base::BindOnce(&HidReceiveFunction::OnFinished, this), false, 0,
       base::nullopt));
 }
@@ -286,8 +286,8 @@ void HidSendFunction::StartWork(device::mojom::HidConnection* connection) {
 
   connection->Write(
       static_cast<uint8_t>(parameters_->report_id), buffer,
-      mojo::WrapCallbackWithDefaultInvokeIfNotRun(
-          base::BindOnce(&HidSendFunction::OnFinished, this), false));
+      ScopedCallbackRunner(base::BindOnce(&HidSendFunction::OnFinished, this),
+                           false));
 }
 
 void HidSendFunction::OnFinished(bool success) {
@@ -314,7 +314,7 @@ void HidReceiveFeatureReportFunction::StartWork(
     device::mojom::HidConnection* connection) {
   connection->GetFeatureReport(
       static_cast<uint8_t>(parameters_->report_id),
-      mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+      ScopedCallbackRunner(
           base::BindOnce(&HidReceiveFeatureReportFunction::OnFinished, this),
           false, base::nullopt));
 }
@@ -350,7 +350,7 @@ void HidSendFeatureReportFunction::StartWork(
 
   connection->SendFeatureReport(
       static_cast<uint8_t>(parameters_->report_id), buffer,
-      mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+      ScopedCallbackRunner(
           base::BindOnce(&HidSendFeatureReportFunction::OnFinished, this),
           false));
 }

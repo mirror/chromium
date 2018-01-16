@@ -270,7 +270,12 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     return curr;
   }
 
-  LayoutPoint Location() const;
+  const LayoutPoint& Location() const {
+#if DCHECK_IS_ON()
+    DCHECK(!needs_position_update_);
+#endif
+    return location_;
+  }
 
   // FIXME: size() should DCHECK(!needs_position_update_) as well, but that
   // fails in some tests, for example, fast/repaint/clipped-relative.html.
@@ -286,7 +291,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
   // For LayoutTreeAsText
   LayoutRect RectIgnoringNeedsPositionUpdate() const {
-    return LayoutRect(Location(), size_);
+    return LayoutRect(location_, size_);
   }
 #if DCHECK_IS_ON()
   bool NeedsPositionUpdate() const { return needs_position_update_; }
@@ -887,6 +892,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
+      ClipRectsCacheSlot,
+      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -896,6 +903,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
+      ClipRectsCacheSlot,
+      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -1113,7 +1122,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const HitTestLocation&,
       const HitTestingTransformState*,
       double* z_offset,
-      ShouldRespectOverflowClipType);
+      ClipRectsCacheSlot);
   bool HitTestClippedOutByClipPath(PaintLayer* root_layer,
                                    const HitTestLocation&) const;
 

@@ -211,6 +211,9 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
   userInitiatedCleanupsEnabled = safe_browsing::UserInitiatedCleanupsEnabled();
 
 #if defined(GOOGLE_CHROME_BUILD)
+  if (cleaner_controller->IsPoweredByPartner())
+    html_source->AddBoolean("cleanupPoweredByPartner", true);
+
   html_source->AddResourcePath("partner-logo.svg", IDR_CHROME_CLEANUP_PARTNER);
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   exclude_from_gzip.push_back("partner-logo.svg");
@@ -225,19 +228,15 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 
 #endif  // defined(OS_WIN)
 
-  bool password_protection_available = false;
 #if defined(SAFE_BROWSING_DB_LOCAL)
   safe_browsing::ChromePasswordProtectionService* password_protection =
       safe_browsing::ChromePasswordProtectionService::
           GetPasswordProtectionService(profile);
-  password_protection_available = !!password_protection;
   if (password_protection) {
     AddSettingsPageUIHandler(
         base::MakeUnique<ChangePasswordHandler>(profile, password_protection));
   }
 #endif
-  html_source->AddBoolean("passwordProtectionAvailable",
-                          password_protection_available);
 
 #if defined(OS_CHROMEOS)
   chromeos::settings::EasyUnlockSettingsHandler* easy_unlock_handler =
@@ -359,12 +358,14 @@ void MdSettingsUI::DocumentOnLoadCompletedInMainFrame() {
 }
 
 #if defined(OS_WIN)
-void MdSettingsUI::UpdateCleanupDataSource(bool cleanupEnabled) {
+void MdSettingsUI::UpdateCleanupDataSource(bool cleanupEnabled,
+                                           bool partnerPowered) {
   DCHECK(web_ui());
   Profile* profile = Profile::FromWebUI(web_ui());
 
   std::unique_ptr<base::DictionaryValue> update(new base::DictionaryValue);
   update->SetBoolean("chromeCleanupEnabled", cleanupEnabled);
+  update->SetBoolean("cleanupPoweredByPartner", partnerPowered);
 
   content::WebUIDataSource::Update(profile, chrome::kChromeUISettingsHost,
                                    std::move(update));

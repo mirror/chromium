@@ -4,9 +4,8 @@
 
 #include "media/gpu/android/promotion_hint_aggregator_impl.h"
 
-#include <memory>
-
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/time/default_tick_clock.h"
 
 namespace media {
@@ -31,7 +30,7 @@ PromotionHintAggregatorImpl::PromotionHintAggregatorImpl(
     base::TickClock* tick_clock)
     : weak_ptr_factory_(this) {
   if (!tick_clock) {
-    clock_we_own_ = std::make_unique<base::DefaultTickClock>();
+    clock_we_own_ = base::MakeUnique<base::DefaultTickClock>();
     tick_clock = clock_we_own_.get();
   }
 

@@ -28,7 +28,7 @@ namespace blink {
 MediaControlsResourceLoader::MediaControlsResourceLoader()
     : UAStyleSheetLoader() {}
 
-MediaControlsResourceLoader::~MediaControlsResourceLoader() = default;
+MediaControlsResourceLoader::~MediaControlsResourceLoader() {}
 
 // Official Android builds that have enable_resource_whitelist_generation
 // turned on will fail to compile due to an unknown-pragmas warning. In

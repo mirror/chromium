@@ -24,24 +24,6 @@ Object.prototype.toJSON = function() {
 // Keep track of the tab that we're running tests in, for simplicity.
 var testTab = null;
 
-function compareSenders(expected, actual) {
-  // The `tab` property on the sender is the full tabs.Tab definition of the
-  // tab that the message was sent from. This includes a *bunch* of extraneous
-  // data, like dimensions, loading status, etc, which can change over the
-  // course of the test. In order to help ensure determinism, only compare the
-  // properties we really care about.
-  if (expected.tab) {
-    chrome.test.assertEq(expected.tab.id, actual.tab.id);
-    chrome.test.assertEq(expected.tab.url, actual.tab.url);
-  } else {
-    chrome.test.assertFalse(!!actual.tab);
-  }
-
-  chrome.test.assertEq(expected.frameId, actual.frameId);
-  chrome.test.assertEq(expected.url, actual.url);
-  chrome.test.assertEq(expected.id, actual.id);
-}
-
 chrome.test.getConfig(function(config) {
   chrome.test.runTests([
     function setupTestTab() {
@@ -86,13 +68,12 @@ chrome.test.getConfig(function(config) {
     // Tests that postMessage from the tab and its response works.
     function postMessageFromTab() {
       listenOnce(chrome.runtime.onConnect, function(port) {
-        let expectedSender = {
+        chrome.test.assertEq({
           tab: testTab,
           frameId: 0, // Main frame
           url: testTab.url,
-          id: chrome.runtime.id,
-        };
-        compareSenders(expectedSender, port.sender);
+           id: chrome.runtime.id
+        }, port.sender);
         listenOnce(port.onMessage, function(msg) {
           chrome.test.assertTrue(msg.testPostMessageFromTab);
           port.postMessage({success: true, portName: port.name});
@@ -113,13 +94,12 @@ chrome.test.getConfig(function(config) {
       var doneListening = listenForever(
         chrome.runtime.onMessage,
         function(request, sender, sendResponse) {
-          let expectedSender = {
+          chrome.test.assertEq({
             tab: testTab,
             frameId: 0, // Main frame
             url: testTab.url,
-            id: chrome.runtime.id
-          };
-          compareSenders(expectedSender, sender);
+             id: chrome.runtime.id
+          }, sender);
           if (request.step == 1) {
             // Step 1: Page should send another request for step 2.
             chrome.test.log("sendMessageFromTab: got step 1");
@@ -140,40 +120,41 @@ chrome.test.getConfig(function(config) {
 
     // Tests that a message from a child frame has a correct frameId.
     function sendMessageFromFrameInTab() {
-      var actualSenders = [];
+      var senders = [];
       var doneListening = listenForever(
         chrome.runtime.onMessage,
         function(request, sender, sendResponse) {
-          actualSenders.push(sender);
+          // The tab's load status could either be "loading" or "complete",
+          // depending on whether all frames have finished loading. Since we
+          // want this test to be deterministic, set status to "complete".
+          sender.tab.status = 'complete';
+          // Child frames have a positive frameId.
+          senders.push(sender);
 
           // testSendMessageFromFrame() in page.js adds 2 frames. Wait for
           // messages from each.
-          if (actualSenders.length < 2)
-            return;
-
-          chrome.webNavigation.getAllFrames({
-            tabId: testTab.id
-          }, function(details) {
-            function sortByFrameId(a, b) {
-              return a.frameId < b.frameId ? 1 : -1;
-            }
-            var expectedSenders = details.filter(function(frame) {
-              return frame.frameId > 0; // Exclude main frame.
-            }).map(function(frame) {
-              return {
-                tab: testTab,
-                frameId: frame.frameId,
-                url: frame.url,
-                id: chrome.runtime.id
-              };
-            }).sort(sortByFrameId);
-
-            actualSenders.sort(sortByFrameId);
-
-            compareSenders(expectedSenders[0], actualSenders[0]);
-            compareSenders(expectedSenders[1], actualSenders[1]);
-            doneListening();
-          });
+          if (senders.length == 2) {
+            chrome.webNavigation.getAllFrames({
+              tabId: testTab.id
+            }, function(details) {
+              function sortByFrameId(a, b) {
+                return a.frameId < b.frameId ? 1 : -1;
+              }
+              var expectedSenders = details.filter(function(frame) {
+                return frame.frameId > 0; // Exclude main frame.
+              }).map(function(frame) {
+                return {
+                  tab: testTab,
+                  frameId: frame.frameId,
+                  url: frame.url,
+                  id: chrome.runtime.id
+                };
+              }).sort(sortByFrameId);
+              senders.sort(sortByFrameId);
+              chrome.test.assertEq(expectedSenders, senders);
+              doneListening();
+            });
+          }
         }
       );
 

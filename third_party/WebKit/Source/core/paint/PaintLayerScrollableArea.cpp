@@ -68,6 +68,7 @@
 #include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutBoxItem.h"
 #include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/ChromeClient.h"
@@ -105,7 +106,7 @@ static LayoutRect LocalToAbsolute(LayoutBox& offset, LayoutRect rect) {
           .BoundingBox());
 }
 
-PaintLayerScrollableAreaRareData::PaintLayerScrollableAreaRareData() = default;
+PaintLayerScrollableAreaRareData::PaintLayerScrollableAreaRareData() {}
 
 const int kResizerControlExpandRatioForTouch = 2;
 
@@ -1274,7 +1275,7 @@ static inline const LayoutObject& ScrollbarStyleSource(
       return layout_object;
 
     if (ShadowRoot* shadow_root = node->ContainingShadowRoot()) {
-      if (shadow_root->IsUserAgent()) {
+      if (shadow_root->GetType() == ShadowRootType::kUserAgent) {
         if (LayoutObject* host_layout_object =
                 shadow_root->host().GetLayoutObject())
           return *host_layout_object;

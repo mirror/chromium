@@ -37,9 +37,9 @@ class CSSPaintValue : public CSSImageGeneratorValue {
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const LayoutSize& container_size);
+                                const IntSize& container_size);
   bool IsFixedSize() const { return false; }
-  FloatSize FixedSize(const Document&) { return FloatSize(); }
+  IntSize FixedSize(const Document&) { return IntSize(); }
 
   bool IsPending() const { return true; }
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const;

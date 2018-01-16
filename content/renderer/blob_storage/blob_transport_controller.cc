@@ -31,21 +31,22 @@
 #include "content/renderer/blob_storage/blob_consolidation.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_sender.h"
-#include "services/network/public/cpp/data_element.h"
 #include "storage/common/blob_storage/blob_item_bytes_request.h"
 #include "storage/common/blob_storage/blob_item_bytes_response.h"
+#include "storage/common/data_element.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 
 using base::File;
 using base::SharedMemory;
 using base::SharedMemoryHandle;
-using network::DataElement;
 using storage::BlobItemBytesRequest;
 using storage::BlobItemBytesResponse;
+using storage::IPCBlobItemRequestStrategy;
+using storage::DataElement;
+
 using storage::BlobItemBytesResponse;
 using storage::BlobItemBytesRequest;
 using storage::BlobStatus;
-using storage::IPCBlobItemRequestStrategy;
 
 namespace content {
 using ConsolidatedItem = BlobConsolidation::ConsolidatedItem;
@@ -168,7 +169,7 @@ void BlobTransportController::InitiateBlobTransfer(
   }
 
   storage::BlobStorageLimits quotas;
-  std::vector<network::DataElement> descriptions;
+  std::vector<storage::DataElement> descriptions;
   BlobTransportController::GetDescriptions(
       consolidation.get(), quotas.max_ipc_memory_size, &descriptions);
   // I post the task first to make sure that we store our consolidation before
@@ -326,7 +327,7 @@ void BlobTransportController::CancelAllBlobTransfers() {
 void BlobTransportController::GetDescriptions(
     BlobConsolidation* consolidation,
     size_t max_data_population,
-    std::vector<network::DataElement>* out) {
+    std::vector<storage::DataElement>* out) {
   DCHECK(out->empty());
   DCHECK(consolidation);
   const auto& consolidated_items = consolidation->consolidated_items();

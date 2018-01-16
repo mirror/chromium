@@ -16,7 +16,6 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class ToolbarButtonUpdater;
-@protocol ToolbarCommands;
 @protocol ToolbarCoordinatorDelegate;
 @protocol UrlLoader;
 class WebStateList;
@@ -36,16 +35,12 @@ class WebState;
 // Weak reference to ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // The dispatcher for this view controller.
-@property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
-        dispatcher;
+@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
 // The web state list this ToolbarCoordinator is handling.
 @property(nonatomic, assign) WebStateList* webStateList;
 // Delegate for this coordinator.
-// TODO(crbug.com/799446): Change this.
 @property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
 // URL loader for the toolbar.
-// TODO(crbug.com/799446): Remove this.
 @property(nonatomic, weak) id<UrlLoader> URLLoader;
 // UIViewController managed by this coordinator.
 @property(nonatomic, strong, readonly) UIViewController* viewController;
@@ -91,9 +86,6 @@ class WebState;
 - (void)activateFakeSafeAreaInsets:(UIEdgeInsets)fakeSafeAreaInsets;
 // Deactivates the constraints used to create a fake safe area.
 - (void)deactivateFakeSafeAreaInsets;
-// Navigates to the Memex tab switcher.
-// TODO(crbug.com/799601): Delete this once its not needed.
-- (void)navigateToMemexTabSwitcher;
 
 @end
 

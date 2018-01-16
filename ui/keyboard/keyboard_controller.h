@@ -12,7 +12,6 @@
 #include "ui/aura/window_observer.h"
 #include "ui/base/ime/input_method_observer.h"
 #include "ui/base/ime/text_input_type.h"
-#include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/keyboard/container_behavior.h"
@@ -162,7 +161,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // Handle mouse and touch events on the keyboard. The effects of this method
   // will not stop propagation to the keyboard extension.
-  void HandlePointerEvent(const ui::LocatedEvent& event);
+  void HandlePointerEvent(bool isMouseButtonPressed,
+                          const gfx::Vector2d& kb_scoped_location);
 
   // Moves an already loaded keyboard.
   void MoveKeyboard(const gfx::Rect new_bounds);

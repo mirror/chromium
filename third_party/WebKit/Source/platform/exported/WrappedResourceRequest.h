@@ -43,7 +43,7 @@ class WrappedResourceRequest : public WebURLRequest {
   WTF_MAKE_NONCOPYABLE(WrappedResourceRequest);
 
  public:
-  ~WrappedResourceRequest() = default;
+  ~WrappedResourceRequest() {}
 
   explicit WrappedResourceRequest(ResourceRequest& resource_request)
       : WebURLRequest(resource_request) {}
