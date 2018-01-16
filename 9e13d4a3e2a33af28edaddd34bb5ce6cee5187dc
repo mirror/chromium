@@ -16,6 +16,24 @@
       "revId": "9e13d4a3e2a33af28edaddd34bb5ce6cee5187dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0c9e46_88510105",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-16T23:57:45Z",
+      "side": 1,
+      "message": "Yup. That\u0027s Roboto (I saw that, too. Both Android and Chrome OS use Roboto as the primary UI font).  Given that host names are in lowercase in Omnibox, I\u0027d go with \"L\" in that case. (users are more likely to see it as lowercase L than uppercase I in omnibox).",
+      "parentUuid": "59d31154_80a82352",
+      "revId": "9e13d4a3e2a33af28edaddd34bb5ce6cee5187dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
