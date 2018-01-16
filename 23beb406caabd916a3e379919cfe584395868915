@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a46f3a8_01c89144",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-16T12:23:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aaa2416b_b54cdcab",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c7e07b_0df7b842",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "23beb406caabd916a3e379919cfe584395868915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f616e22d_8ebf4097",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-16T12:23:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97c7e07b_0df7b842",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "24349c6c_3c9984c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/prefetch-helper.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-16T12:23:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dda097b1_6531206e",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d081b46_8477a1b0",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-16T10:11:03Z",
       "side": 1,
       "message": "Unrelated nit: My DRY OCD would have made me take out the \"Refused to\" from the individual strings and set it at the top, but maybe that\u0027s just me",
+      "revId": "23beb406caabd916a3e379919cfe584395868915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fd81ba_4f583f4c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-16T12:23:43Z",
+      "side": 1,
+      "message": "Fair. I think the original thought was to avoid an extra allocation, but I guess the overhead from all these strings more than outweighs. I\u0027ll send you a followup.",
+      "parentUuid": "9d081b46_8477a1b0",
       "revId": "23beb406caabd916a3e379919cfe584395868915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
