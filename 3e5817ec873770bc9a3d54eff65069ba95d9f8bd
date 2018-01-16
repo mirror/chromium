@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f430408_dac21afc",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-16T12:04:16Z",
+      "side": 1,
+      "message": "I know that I am going back and forth on this, but let\u0027s keep did_user_explicitly_interact \u003d true in HandleUndo (just like we do for the HandleGoToSettings and HandleConfirm).\n\nThat way we make sure that if CloseModalSigninWindow is ever called without user interaction, we do not set  did_user_explicitly_interact to true.",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "3e5817ec873770bc9a3d54eff65069ba95d9f8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
