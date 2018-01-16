@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87c7746_e8b7f6be",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-16T14:49:25Z",
+      "side": 1,
+      "message": "We\u0027re actively trying to get rid of the sequence number (https://docs.google.com/document/d/10Ytvqz3CSKzE7ENdHaBv_zPvNuX7spPTuCQ-aDSqirE/edit#, https://codereview.chromium.org/2914023002/).\n\nPerhaps we could add another field on the latency info object which stored this information?",
+      "range": {
+        "startLine": 744,
+        "startChar": 6,
+        "endLine": 744,
+        "endChar": 26
+      },
+      "revId": "1052144e5374f30363d53abee01b17d550bf792c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
