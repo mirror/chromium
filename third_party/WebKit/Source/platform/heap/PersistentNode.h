@@ -15,7 +15,7 @@
 
 namespace blink {
 
-class CrossThreadPersistentRegion;
+class CrossThreadPersistentRegions;
 
 class PersistentNode final {
   DISALLOW_NEW();
@@ -93,7 +93,7 @@ struct PersistentNodeSlots final {
   PersistentNodeSlots* next_;
   PersistentNode slot_[kSlotCount];
   friend class PersistentRegion;
-  friend class CrossThreadPersistentRegion;
+  friend class CrossThreadPersistentRegions;
 };
 
 // PersistentRegion provides a region of PersistentNodes. PersistentRegion
@@ -147,13 +147,14 @@ class PLATFORM_EXPORT PersistentRegion final {
   void ReleasePersistentNode(PersistentNode*,
                              ThreadState::PersistentClearCallback);
   using ShouldTraceCallback = bool (*)(Visitor*, PersistentNode*);
-  void TracePersistentNodes(
+  bool TracePersistentNodes(
       Visitor*,
+      double deadline_seconds,
       ShouldTraceCallback = PersistentRegion::ShouldTracePersistentNode);
   int NumberOfPersistents();
 
  private:
-  friend CrossThreadPersistentRegion;
+  friend CrossThreadPersistentRegions;
 
   void EnsurePersistentNodeSlots(void*, TraceCallback);
 
@@ -164,12 +165,13 @@ class PLATFORM_EXPORT PersistentRegion final {
 #endif
 };
 
-class CrossThreadPersistentRegion final {
-  USING_FAST_MALLOC(CrossThreadPersistentRegion);
+class CrossThreadPersistentRegions final {
+  USING_FAST_MALLOC(CrossThreadPersistentRegions);
 
  public:
-  CrossThreadPersistentRegion()
-      : persistent_region_(WTF::WrapUnique(new PersistentRegion)) {}
+  CrossThreadPersistentRegions()
+      : persistent_region_(WTF::WrapUnique(new PersistentRegion)),
+        weak_persistent_region_(WTF::WrapUnique(new PersistentRegion)) {}
 
   void AllocatePersistentNode(PersistentNode*& persistent_node,
                               void* self,
@@ -198,11 +200,38 @@ class CrossThreadPersistentRegion final {
     ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), nullptr);
   }
 
+  void AllocateWeakPersistentNode(PersistentNode*& persistent_node,
+                                  void* self,
+                                  TraceCallback trace) {
+    MutexLocker lock(mutex_);
+    PersistentNode* node =
+        weak_persistent_region_->AllocatePersistentNode(self, trace);
+    ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), node);
+  }
+
+  void FreeWeakPersistentNode(PersistentNode*& persistent_node) {
+    MutexLocker lock(mutex_);
+    // When the thread that holds the heap object that the cross-thread
+    // persistent shuts down, prepareForThreadStateTermination() will clear out
+    // the associated CrossThreadPersistent<> and PersistentNode so as to avoid
+    // unsafe access. This can overlap with a holder of the
+    // CrossThreadPersistent<> also clearing the persistent and freeing the
+    // PersistentNode.
+    //
+    // The lock ensures the updating is ordered, but by the time lock has been
+    // acquired the PersistentNode reference may have been cleared out already;
+    // check for this.
+    if (!persistent_node)
+      return;
+    weak_persistent_region_->FreePersistentNode(persistent_node);
+    ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), nullptr);
+  }
+
   class LockScope final {
     STACK_ALLOCATED();
 
    public:
-    LockScope(CrossThreadPersistentRegion& persistent_region,
+    LockScope(CrossThreadPersistentRegions& persistent_region,
               bool try_lock = false)
         : persistent_region_(persistent_region), locked_(true) {
       if (try_lock)
@@ -221,17 +250,34 @@ class CrossThreadPersistentRegion final {
     bool HasLock() const { return locked_; }
 
    private:
-    CrossThreadPersistentRegion& persistent_region_;
+    CrossThreadPersistentRegions& persistent_region_;
     bool locked_;
   };
 
-  void TracePersistentNodes(Visitor* visitor) {
+  bool TracePersistentNodes(Visitor* visitor, double deadline_seconds) {
 // If this assert triggers, you're tracing without being in a LockScope.
 #if DCHECK_IS_ON()
     DCHECK(mutex_.Locked());
 #endif
-    persistent_region_->TracePersistentNodes(
-        visitor, CrossThreadPersistentRegion::ShouldTracePersistentNode);
+    return persistent_region_->TracePersistentNodes(
+        visitor, deadline_seconds,
+        CrossThreadPersistentRegions::ShouldTracePersistentNode);
+  }
+
+  bool TraceWeakPersistentNodes(Visitor* visitor, double deadline_seconds) {
+    // Access to the CrossThreadPersistentRegions has to be prevented
+    // while in the marking phase because otherwise other threads may
+    // allocate or free PersistentNodes and we can't handle
+    // that. Grabbing this lock also prevents non-attached threads
+    // from accessing any GCed heap while a GC runs.
+    LockScope lock(*this);
+// If this assert triggers, you're tracing without being in a LockScope.
+#if DCHECK_IS_ON()
+    DCHECK(mutex_.Locked());
+#endif
+    return weak_persistent_region_->TracePersistentNodes(
+        visitor, deadline_seconds,
+        CrossThreadPersistentRegions::ShouldTracePersistentNode);
   }
 
   void PrepareForThreadStateTermination(ThreadState*);
@@ -252,14 +298,15 @@ class CrossThreadPersistentRegion final {
 
   bool TryLock() { return mutex_.TryLock(); }
 
-  // We don't make CrossThreadPersistentRegion inherit from PersistentRegion
+  // We don't make CrossThreadPersistentRegions inherit from PersistentRegion
   // because we don't want to virtualize performance-sensitive methods
   // such as PersistentRegion::allocate/freePersistentNode.
   std::unique_ptr<PersistentRegion> persistent_region_;
+  std::unique_ptr<PersistentRegion> weak_persistent_region_;
 
   // Recursive as prepareForThreadStateTermination() clears a PersistentNode's
   // associated Persistent<> -- it in turn freeing the PersistentNode. And both
-  // CrossThreadPersistentRegion operations need a lock on the region before
+  // CrossThreadPersistentRegions operations need a lock on the region before
   // mutating.
   RecursiveMutex mutex_;
 };

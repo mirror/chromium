@@ -75,8 +75,8 @@ void ProcessHeap::ResetHeapCounters() {
   total_marked_object_size_ = 0;
 }
 
-CrossThreadPersistentRegion& ProcessHeap::GetCrossThreadPersistentRegion() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(CrossThreadPersistentRegion,
+CrossThreadPersistentRegions& ProcessHeap::GetCrossThreadPersistentRegions() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(CrossThreadPersistentRegions,
                                   persistent_region, ());
   return persistent_region;
 }
@@ -532,12 +532,11 @@ bool ThreadHeap::IsAddressInHeapDoesNotContainCache(Address address) {
   return heap_does_not_contain_cache_->Lookup(address);
 }
 
-void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
+bool ThreadHeap::VisitPersistentRoots(Visitor* visitor,
+                                      double deadline_seconds) {
   DCHECK(thread_state_->IsInGC());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitPersistentRoots");
-  ProcessHeap::GetCrossThreadPersistentRegion().TracePersistentNodes(visitor);
-
-  thread_state_->VisitPersistents(visitor);
+  return thread_state_->VisitPersistents(visitor, deadline_seconds);
 }
 
 void ThreadHeap::VisitStackRoots(Visitor* visitor) {
@@ -672,26 +671,26 @@ void ThreadHeap::PromptlyFreed(size_t gc_info_index) {
 
 #if defined(ADDRESS_SANITIZER)
 void ThreadHeap::PoisonAllHeaps() {
-  CrossThreadPersistentRegion::LockScope persistent_lock(
-      ProcessHeap::GetCrossThreadPersistentRegion());
+  CrossThreadPersistentRegions::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegions());
   // Poisoning all unmarked objects in the other arenas.
   for (int i = 1; i < BlinkGC::kNumberOfArenas; i++)
     arenas_[i]->PoisonArena();
   // CrossThreadPersistents in unmarked objects may be accessed from other
-  // threads (e.g. in CrossThreadPersistentRegion::shouldTracePersistent) and
+  // threads (e.g. in CrossThreadPersistentRegions::shouldTracePersistent) and
   // that would be fine.
-  ProcessHeap::GetCrossThreadPersistentRegion()
+  ProcessHeap::GetCrossThreadPersistentRegions()
       .UnpoisonCrossThreadPersistents();
 }
 
 void ThreadHeap::PoisonEagerArena() {
-  CrossThreadPersistentRegion::LockScope persistent_lock(
-      ProcessHeap::GetCrossThreadPersistentRegion());
+  CrossThreadPersistentRegions::LockScope persistent_lock(
+      ProcessHeap::GetCrossThreadPersistentRegions());
   arenas_[BlinkGC::kEagerSweepArenaIndex]->PoisonArena();
   // CrossThreadPersistents in unmarked objects may be accessed from other
-  // threads (e.g. in CrossThreadPersistentRegion::shouldTracePersistent) and
+  // threads (e.g. in CrossThreadPersistentRegions::shouldTracePersistent) and
   // that would be fine.
-  ProcessHeap::GetCrossThreadPersistentRegion()
+  ProcessHeap::GetCrossThreadPersistentRegions()
       .UnpoisonCrossThreadPersistents();
 }
 #endif
