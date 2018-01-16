@@ -325,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "ba314353_244d10fb",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T21:46:34Z",
+      "side": 1,
+      "message": "I\u0027m fine with that, though should look at callers to see if any of them should have the DCHECK_GE that this starts with.",
+      "parentUuid": "4d577ea4_db0abf48",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 48
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98a9ac9e_1a9b6324",
         "filename": "net/dns/dns_response.cc",
         "patchSetId": 20
