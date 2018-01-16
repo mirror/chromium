@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7e03588_a7ec07c9",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-16T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f8eeda_e1168209",
+      "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc58d285_af74f1bc",
         "filename": "extensions/browser/api/system_display/system_display_api.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T19:34:11Z",
       "side": 1,
       "message": "I\u0027m not sure if this is useful. How are we going to use this?",
+      "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef317d95_3c1739b8",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-16T21:08:21Z",
+      "side": 1,
+      "message": "Maybe in case in the future we improve the speeding of setting mirror mode and we want to know how much we have improved? Should I remove this?",
+      "parentUuid": "fc58d285_af74f1bc",
       "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
