@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d2eb83f_e0a8f2ad",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-16T16:55:08Z",
+      "side": 1,
+      "message": "Are there other async events in the \"input,latency\" category? If so, these IDs may collide with those. In any case, to avoid collision, now or in future, I think it\u0027s better to specify a scope string, too.",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "3215431848da8b9efdd14a0ba89358bf88b25c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
