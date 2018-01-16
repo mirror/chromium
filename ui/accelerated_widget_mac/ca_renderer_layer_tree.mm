@@ -79,7 +79,32 @@ bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
                        kCMSampleAttachmentKey_DisplayImmediately,
                        kCFBooleanTrue);
 
+  CHECK([av_layer isReadyForMoreMediaData]);
   [av_layer enqueueSampleBuffer:sample_buffer];
+
+  if (@available(macOS 10.10, *)) {
+    AVQueuedSampleBufferRenderingStatus status = [av_layer status];
+    switch (status) {
+      case AVQueuedSampleBufferRenderingStatusUnknown:
+        LOG(ERROR)
+            << "AVSampleBufferDisplayLayer has status unknown, but should "
+               "be rendering.";
+        return false;
+      case AVQueuedSampleBufferRenderingStatusFailed:
+        LOG(ERROR) << "AVSampleBufferDisplayLayer has status failed, error: "
+                   << [[[av_layer error] description]
+                          cStringUsingEncoding:NSUTF8StringEncoding];
+        return false;
+      case AVQueuedSampleBufferRenderingStatusRendering:
+        break;
+    }
+    if ([av_layer error]) {
+      LOG(ERROR) << "AVSampleBufferDisplayLayer has status failed, error: "
+                 << [[[av_layer error] description]
+                        cStringUsingEncoding:NSUTF8StringEncoding];
+    }
+  }
+
   return true;
 }
 
@@ -198,9 +223,9 @@ bool CARendererLayerTree::ScheduleCALayer(const CARendererLayerParams& params) {
   return root_layer_.AddContentLayer(this, params);
 }
 
-void CARendererLayerTree::CommitScheduledCALayers(
+void CARendererLayerTree::PreCommitScheduledCALayers(
     CALayer* superlayer,
-    std::unique_ptr<CARendererLayerTree> old_tree,
+    CARendererLayerTree* old_tree,
     float scale_factor) {
   TRACE_EVENT0("gpu", "CARendererLayerTree::CommitScheduledCALayers");
   RootLayer* old_root_layer = nullptr;
@@ -209,13 +234,14 @@ void CARendererLayerTree::CommitScheduledCALayers(
     if (old_tree->scale_factor_ == scale_factor)
       old_root_layer = &old_tree->root_layer_;
   }
-
-  root_layer_.CommitToCA(superlayer, old_root_layer, scale_factor);
-  // If there are any extra CALayers in |old_tree| that were not stolen by this
-  // tree, they will be removed from the CALayer tree in this deallocation.
-  old_tree.reset();
-  has_committed_ = true;
   scale_factor_ = scale_factor;
+  root_layer_.PreCommitToCA(superlayer, old_root_layer, scale_factor);
+}
+
+void CARendererLayerTree::CommitScheduledCALayers(CALayer* superlayer) {
+  TRACE_EVENT0("gpu", "CARendererLayerTree::CommitScheduledCALayers");
+  root_layer_.CommitToCA(superlayer, scale_factor_);
+  has_committed_ = true;
 }
 
 bool CARendererLayerTree::RootLayer::WantsFullcreenLowPowerBackdrop(
@@ -443,7 +469,9 @@ CARendererLayerTree::ContentLayer::ContentLayer(ContentLayer&& layer)
       ca_filter(layer.ca_filter),
       ca_layer(std::move(layer.ca_layer)),
       av_layer(std::move(layer.av_layer)),
-      use_av_layer(layer.use_av_layer) {
+      use_av_layer(layer.use_av_layer),
+      av_is_io(layer.av_is_io),
+      av_is_cv(layer.av_is_cv) {
   DCHECK(!layer.ca_layer);
   DCHECK(!layer.av_layer);
 }
@@ -525,21 +553,33 @@ void CARendererLayerTree::TransformLayer::AddContentLayer(
                    params.opacity, params.filter));
 }
 
-void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
-                                                RootLayer* old_layer,
-                                                float scale_factor) {
+void CARendererLayerTree::RootLayer::PreCommitToCA(CALayer* superlayer,
+                                                   RootLayer* old_layer,
+                                                   float scale_factor) {
   if (old_layer) {
     DCHECK(old_layer->ca_layer);
     std::swap(ca_layer, old_layer->ca_layer);
   } else {
     ca_layer.reset([[CALayer alloc] init]);
+  }
+  for (size_t i = 0; i < clip_and_sorting_layers.size(); ++i) {
+    ClipAndSortingLayer* old_clip_and_sorting_layer = nullptr;
+    if (old_layer && i < old_layer->clip_and_sorting_layers.size()) {
+      old_clip_and_sorting_layer = &old_layer->clip_and_sorting_layers[i];
+    }
+    clip_and_sorting_layers[i].PreCommitToCA(
+        ca_layer.get(), old_clip_and_sorting_layer, scale_factor);
+  }
+}
+
+void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
+                                                float scale_factor) {
+  if ([ca_layer superlayer] != superlayer) {
+    CHECK(![ca_layer superlayer]);
     [ca_layer setAnchorPoint:CGPointZero];
+    [superlayer setBorderWidth:0];
     [superlayer setSublayers:nil];
     [superlayer addSublayer:ca_layer];
-    [superlayer setBorderWidth:0];
-  }
-  if ([ca_layer superlayer] != superlayer) {
-    DLOG(ERROR) << "CARendererLayerTree root layer not attached to tree.";
   }
 
   gfx::RectF bg_rect;
@@ -555,22 +595,14 @@ void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
       [ca_layer setBackgroundColor:nil];
   }
 
-  for (size_t i = 0; i < clip_and_sorting_layers.size(); ++i) {
-    ClipAndSortingLayer* old_clip_and_sorting_layer = nullptr;
-    if (old_layer && i < old_layer->clip_and_sorting_layers.size()) {
-      old_clip_and_sorting_layer = &old_layer->clip_and_sorting_layers[i];
-    }
-    clip_and_sorting_layers[i].CommitToCA(
-        ca_layer.get(), old_clip_and_sorting_layer, scale_factor);
-  }
+  for (size_t i = 0; i < clip_and_sorting_layers.size(); ++i)
+    clip_and_sorting_layers[i].CommitToCA(ca_layer.get(), scale_factor);
 }
 
-void CARendererLayerTree::ClipAndSortingLayer::CommitToCA(
+void CARendererLayerTree::ClipAndSortingLayer::PreCommitToCA(
     CALayer* superlayer,
     ClipAndSortingLayer* old_layer,
     float scale_factor) {
-  bool update_is_clipped = true;
-  bool update_clip_rect = true;
   if (old_layer) {
     DCHECK(old_layer->ca_layer);
     std::swap(ca_layer, old_layer->ca_layer);
@@ -578,11 +610,23 @@ void CARendererLayerTree::ClipAndSortingLayer::CommitToCA(
     update_clip_rect = update_is_clipped || old_layer->clip_rect != clip_rect;
   } else {
     ca_layer.reset([[CALayer alloc] init]);
+  }
+
+  for (size_t i = 0; i < transform_layers.size(); ++i) {
+    TransformLayer* old_transform_layer = nullptr;
+    if (old_layer && i < old_layer->transform_layers.size())
+      old_transform_layer = &old_layer->transform_layers[i];
+    transform_layers[i].PreCommitToCA(ca_layer.get(), old_transform_layer,
+                                      scale_factor);
+  }
+}
+
+void CARendererLayerTree::ClipAndSortingLayer::CommitToCA(CALayer* superlayer,
+                                                          float scale_factor) {
+  if ([ca_layer superlayer] != superlayer) {
+    CHECK(![ca_layer superlayer]);
     [ca_layer setAnchorPoint:CGPointZero];
     [superlayer addSublayer:ca_layer];
-  }
-  if ([ca_layer superlayer] != superlayer) {
-    DLOG(ERROR) << "CARendererLayerTree root layer not attached to tree.";
   }
 
   if (update_is_clipped)
@@ -605,29 +649,37 @@ void CARendererLayerTree::ClipAndSortingLayer::CommitToCA(
     }
   }
 
-  for (size_t i = 0; i < transform_layers.size(); ++i) {
-    TransformLayer* old_transform_layer = nullptr;
-    if (old_layer && i < old_layer->transform_layers.size())
-      old_transform_layer = &old_layer->transform_layers[i];
-    transform_layers[i].CommitToCA(ca_layer.get(), old_transform_layer,
-                                   scale_factor);
-  }
+  for (size_t i = 0; i < transform_layers.size(); ++i)
+    transform_layers[i].CommitToCA(ca_layer.get(), scale_factor);
 }
 
-void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
-                                                     TransformLayer* old_layer,
-                                                     float scale_factor) {
-  bool update_transform = true;
+void CARendererLayerTree::TransformLayer::PreCommitToCA(
+    CALayer* superlayer,
+    TransformLayer* old_layer,
+    float scale_factor) {
   if (old_layer) {
     DCHECK(old_layer->ca_layer);
     std::swap(ca_layer, old_layer->ca_layer);
     update_transform = old_layer->transform != transform;
   } else {
     ca_layer.reset([[CATransformLayer alloc] init]);
+  }
+
+  for (size_t i = 0; i < content_layers.size(); ++i) {
+    ContentLayer* old_content_layer = nullptr;
+    if (old_layer && i < old_layer->content_layers.size())
+      old_content_layer = &old_layer->content_layers[i];
+    content_layers[i].PreCommitToCA(ca_layer.get(), old_content_layer,
+                                    scale_factor);
+  }
+}
+
+void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
+                                                     float scale_factor) {
+  if ([ca_layer superlayer] != superlayer) {
+    CHECK(![ca_layer superlayer]);
     [superlayer addSublayer:ca_layer];
   }
-  DCHECK_EQ([ca_layer superlayer], superlayer);
-
   if (update_transform) {
     gfx::Transform pre_scale;
     gfx::Transform post_scale;
@@ -640,25 +692,17 @@ void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
     [ca_layer setTransform:ca_transform];
   }
 
-  for (size_t i = 0; i < content_layers.size(); ++i) {
-    ContentLayer* old_content_layer = nullptr;
-    if (old_layer && i < old_layer->content_layers.size())
-      old_content_layer = &old_layer->content_layers[i];
-    content_layers[i].CommitToCA(ca_layer.get(), old_content_layer,
-                                 scale_factor);
-  }
+  for (size_t i = 0; i < content_layers.size(); ++i)
+    content_layers[i].CommitToCA(ca_layer.get(), scale_factor);
 }
 
-void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
-                                                   ContentLayer* old_layer,
-                                                   float scale_factor) {
-  bool update_contents = true;
-  bool update_contents_rect = true;
-  bool update_rect = true;
-  bool update_background_color = true;
-  bool update_ca_edge_aa_mask = true;
-  bool update_opacity = true;
-  bool update_ca_filter = true;
+void CARendererLayerTree::ContentLayer::PreCommitToCA(CALayer* superlayer,
+                                                      ContentLayer* old_layer,
+                                                      float scale_factor) {
+  if (old_layer && old_layer->use_av_layer == use_av_layer) {
+    if (!!old_layer->cv_pixel_buffer != !!cv_pixel_buffer)
+      LOG(ERROR) << "CV Mismatch!!";
+  }
   if (old_layer && old_layer->use_av_layer == use_av_layer) {
     DCHECK(old_layer->ca_layer);
     std::swap(ca_layer, old_layer->ca_layer);
@@ -674,23 +718,14 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     update_ca_filter = old_layer->ca_filter != ca_filter;
   } else {
     if (use_av_layer) {
+      LOG(ERROR) << "New AV: " << !!cv_pixel_buffer;
       av_layer.reset([[AVSampleBufferDisplayLayer109 alloc] init]);
       ca_layer.reset([av_layer retain]);
-      [av_layer setVideoGravity:AVLayerVideoGravityResize];
     } else {
       ca_layer.reset([[CALayer alloc] init]);
     }
-    [ca_layer setAnchorPoint:CGPointZero];
-    if (old_layer && old_layer->ca_layer)
-      [superlayer replaceSublayer:old_layer->ca_layer with:ca_layer];
-    else
-      [superlayer addSublayer:ca_layer];
   }
-  DCHECK_EQ([ca_layer superlayer], superlayer);
-  bool update_anything = update_contents || update_contents_rect ||
-                         update_rect || update_background_color ||
-                         update_ca_edge_aa_mask || update_opacity ||
-                         update_ca_filter;
+
   if (use_av_layer) {
     if (update_contents) {
       if (cv_pixel_buffer) {
@@ -700,7 +735,37 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
         AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
       }
     }
-  } else {
+  }
+}
+
+void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
+                                                   float scale_factor) {
+  [ca_layer setAnchorPoint:CGPointZero];
+  if ([ca_layer superlayer] != superlayer) {
+    CHECK(![ca_layer superlayer]);
+    [ca_layer setAnchorPoint:CGPointZero];
+    if (av_layer)
+      [av_layer setVideoGravity:AVLayerVideoGravityResize];
+    if (ca_layer_to_replace)
+      [superlayer replaceSublayer:ca_layer_to_replace with:ca_layer];
+    else
+      [superlayer addSublayer:ca_layer];
+  }
+
+  CHECK_EQ([ca_layer superlayer], superlayer);
+  bool update_anything = update_contents || update_contents_rect ||
+                         update_rect || update_background_color ||
+                         update_ca_edge_aa_mask || update_opacity ||
+                         update_ca_filter;
+  if (!use_av_layer) {
+    if ([ca_layer respondsToSelector:(@selector(enqueueSampleBuffer:))]) {
+      LOG(ERROR) << "********";
+      LOG(ERROR) << "********";
+      LOG(ERROR) << "BADNESSSSSS!!!!";
+      LOG(ERROR) << "********";
+      LOG(ERROR) << "********";
+    }
+
     if (update_contents) {
       if (io_surface) {
         [ca_layer setContents:static_cast<id>(io_surface.get())];
@@ -714,31 +779,32 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     }
     if (update_contents_rect)
       [ca_layer setContentsRect:contents_rect.ToCGRect()];
+    if (update_background_color) {
+      CGFloat rgba_color_components[4] = {
+          SkColorGetR(background_color) / 255.,
+          SkColorGetG(background_color) / 255.,
+          SkColorGetB(background_color) / 255.,
+          SkColorGetA(background_color) / 255.,
+      };
+      base::ScopedCFTypeRef<CGColorRef> srgb_background_color(
+          CGColorCreate(CGColorSpaceCreateWithName(kCGColorSpaceSRGB),
+                        rgba_color_components));
+      [ca_layer setBackgroundColor:srgb_background_color];
+    }
+    if (update_ca_edge_aa_mask)
+      [ca_layer setEdgeAntialiasingMask:ca_edge_aa_mask];
+    if (update_opacity)
+      [ca_layer setOpacity:opacity];
+    if (update_ca_filter) {
+      [ca_layer setMagnificationFilter:ca_filter];
+      [ca_layer setMinificationFilter:ca_filter];
+    }
   }
   if (update_rect) {
     gfx::RectF dip_rect = gfx::RectF(rect);
     dip_rect.Scale(1 / scale_factor);
     [ca_layer setPosition:CGPointMake(dip_rect.x(), dip_rect.y())];
     [ca_layer setBounds:CGRectMake(0, 0, dip_rect.width(), dip_rect.height())];
-  }
-  if (update_background_color) {
-    CGFloat rgba_color_components[4] = {
-        SkColorGetR(background_color) / 255.,
-        SkColorGetG(background_color) / 255.,
-        SkColorGetB(background_color) / 255.,
-        SkColorGetA(background_color) / 255.,
-    };
-    base::ScopedCFTypeRef<CGColorRef> srgb_background_color(CGColorCreate(
-        CGColorSpaceCreateWithName(kCGColorSpaceSRGB), rgba_color_components));
-    [ca_layer setBackgroundColor:srgb_background_color];
-  }
-  if (update_ca_edge_aa_mask)
-    [ca_layer setEdgeAntialiasingMask:ca_edge_aa_mask];
-  if (update_opacity)
-    [ca_layer setOpacity:opacity];
-  if (update_ca_filter) {
-    [ca_layer setMagnificationFilter:ca_filter];
-    [ca_layer setMinificationFilter:ca_filter];
   }
 
   static bool show_borders = base::CommandLine::ForCurrentProcess()->HasSwitch(

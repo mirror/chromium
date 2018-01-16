@@ -49,9 +49,10 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   // to re-use the CALayers of |old_tree| as much as possible. |old_tree| will
   // be destroyed at the end of the function, and any CALayers in it which were
   // not re-used by |this| will be removed from the CALayer hierarchy.
-  void CommitScheduledCALayers(CALayer* superlayer,
-                               std::unique_ptr<CARendererLayerTree> old_tree,
-                               float scale_factor);
+  void PreCommitScheduledCALayers(CALayer* superlayer,
+                                  CARendererLayerTree* old_tree,
+                                  float scale_factor);
+  void CommitScheduledCALayers(CALayer* superlayer);
 
   // Returns the contents used for a given solid color.
   id ContentsForSolidColorForTesting(unsigned int color);
@@ -84,9 +85,10 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // properties appropriately. Re-use the CALayers from |old_layer| if
     // possible. If re-using a CALayer from |old_layer|, reset its |ca_layer|
     // to nil, so that its destructor will not remove an active CALayer.
-    void CommitToCA(CALayer* superlayer,
-                    RootLayer* old_layer,
-                    float scale_factor);
+    void PreCommitToCA(CALayer* parent,
+                       RootLayer* old_layer,
+                       float scale_factor);
+    void CommitToCA(CALayer* superlayer, float scale_factor);
 
     // Check to see if the CALayer tree is just a video layer on a black
     // background. If so, return true and set background_rect to the
@@ -100,6 +102,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     base::scoped_nsobject<CALayer> ca_layer;
 
    private:
+    gfx::RectF bg_rect;
     DISALLOW_COPY_AND_ASSIGN(RootLayer);
   };
   struct ClipAndSortingLayer {
@@ -114,9 +117,10 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     ~ClipAndSortingLayer();
     void AddContentLayer(CARendererLayerTree* tree,
                          const CARendererLayerParams& params);
-    void CommitToCA(CALayer* superlayer,
-                    ClipAndSortingLayer* old_layer,
-                    float scale_factor);
+    void PreCommitToCA(CALayer* superlayer,
+                       ClipAndSortingLayer* old_layer,
+                       float scale_factor);
+    void CommitToCA(CALayer* superlayer, float scale_factor);
 
     std::vector<TransformLayer> transform_layers;
     bool is_clipped = false;
@@ -126,6 +130,9 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     base::scoped_nsobject<CALayer> ca_layer;
 
    private:
+    bool update_is_clipped = true;
+    bool update_clip_rect = true;
+    gfx::RectF dip_clip_rect;
     DISALLOW_COPY_AND_ASSIGN(ClipAndSortingLayer);
   };
   struct TransformLayer {
@@ -137,15 +144,17 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     ~TransformLayer();
     void AddContentLayer(CARendererLayerTree* tree,
                          const CARendererLayerParams& params);
-    void CommitToCA(CALayer* superlayer,
-                    TransformLayer* old_layer,
-                    float scale_factor);
+    void PreCommitToCA(CALayer* superlayer,
+                       TransformLayer* old_layer,
+                       float scale_factor);
+    void CommitToCA(CALayer* superlayer, float scale_factor);
 
     gfx::Transform transform;
     std::vector<ContentLayer> content_layers;
     base::scoped_nsobject<CALayer> ca_layer;
 
    private:
+    bool update_transform = true;
     DISALLOW_COPY_AND_ASSIGN(TransformLayer);
   };
   struct ContentLayer {
@@ -163,9 +172,10 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // See the behavior of RootLayer for the effects of these functions on the
     // |ca_layer| member and |old_layer| argument.
     ~ContentLayer();
-    void CommitToCA(CALayer* parent,
-                    ContentLayer* old_layer,
-                    float scale_factor);
+    void PreCommitToCA(CALayer* parent,
+                       ContentLayer* old_layer,
+                       float scale_factor);
+    void CommitToCA(CALayer* parent, float scale_factor);
 
     // Ensure that the IOSurface be marked as in-use as soon as it is received.
     // When they are committed to the window server, that will also increment
@@ -187,8 +197,19 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // AVSampleBufferDisplayLayer, then |ca_layer| will point to |av_layer|.
     base::scoped_nsobject<AVSampleBufferDisplayLayer109> av_layer;
     bool use_av_layer = false;
+    bool av_is_io = false;
+    bool av_is_cv = false;
+    int use_av_counter = 0;
 
    private:
+    bool update_contents = true;
+    bool update_contents_rect = true;
+    bool update_rect = true;
+    bool update_background_color = true;
+    bool update_ca_edge_aa_mask = true;
+    bool update_opacity = true;
+    bool update_ca_filter = true;
+    CALayer* ca_layer_to_replace = nil;
     DISALLOW_COPY_AND_ASSIGN(ContentLayer);
   };
 

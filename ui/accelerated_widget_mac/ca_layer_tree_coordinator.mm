@@ -43,13 +43,19 @@ CARendererLayerTree* CALayerTreeCoordinator::GetPendingCARendererLayerTree() {
 
 void CALayerTreeCoordinator::CommitPendingTreesToCA(
     const gfx::Rect& pixel_damage_rect) {
+  if (pending_ca_renderer_layer_tree_) {
+    pending_ca_renderer_layer_tree_->PreCommitScheduledCALayers(
+        root_ca_layer_.get(), current_ca_renderer_layer_tree_.get(),
+        scale_factor_);
+  }
+
   // Update the CALayer hierarchy.
   ScopedCAActionDisabler disabler;
   if (pending_ca_renderer_layer_tree_) {
     pending_ca_renderer_layer_tree_->CommitScheduledCALayers(
-        root_ca_layer_.get(), std::move(current_ca_renderer_layer_tree_),
-        scale_factor_);
-    current_ca_renderer_layer_tree_.swap(pending_ca_renderer_layer_tree_);
+        root_ca_layer_.get());
+    current_ca_renderer_layer_tree_ =
+        std::move(pending_ca_renderer_layer_tree_);
   } else {
     TRACE_EVENT0("gpu", "Blank frame: No overlays or CALayers");
     DLOG(WARNING) << "Blank frame: No overlays or CALayers";
