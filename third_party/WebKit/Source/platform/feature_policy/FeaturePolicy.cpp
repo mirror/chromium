@@ -210,6 +210,7 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
       return true;
     case FeaturePolicyFeature::kSyncXHR:
     case FeaturePolicyFeature::kVibrate:
+    case FeaturePolicyFeature::kUnsizedMedia:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
     default:
       return false;
@@ -251,6 +252,8 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
       default_feature_name_map.Set("sync-script",
                                    FeaturePolicyFeature::kSyncScript);
       default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
+      default_feature_name_map.Set("unsized-media",
+                                   FeaturePolicyFeature::kUnsizedMedia);
     }
     if (RuntimeEnabledFeatures::FeaturePolicyAutoplayFeatureEnabled()) {
       default_feature_name_map.Set("autoplay", FeaturePolicyFeature::kAutoplay);

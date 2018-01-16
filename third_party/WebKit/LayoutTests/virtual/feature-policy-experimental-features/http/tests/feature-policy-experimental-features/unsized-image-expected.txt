@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS Test image size (default) on src resources/image.jpg
+PASS Test image size (500 x 150) on src resources/image.jpg
+PASS Test image size (300 x 800) on src resources/image.jpg
+PASS Test image size (default) on src resources/image.png
+PASS Test image size (500 x 150) on src resources/image.png
+PASS Test image size (300 x 800) on src resources/image.png
+PASS Test image size (default) on src resources/image.svg
+PASS Test image size (500 x 150) on src resources/image.svg
+PASS Test image size (300 x 800) on src resources/image.svg
+PASS Test image size is correctly rendered in iframe of src resources/feature-policy-image.html
+PASS Test image size is correctly rendered in iframe of src http://localhost:8000/feature-policy-experimental-features/resources/feature-policy-image.html
+Harness: the test ran to completion.
+
