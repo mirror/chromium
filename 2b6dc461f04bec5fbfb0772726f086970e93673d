@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948ef704_fc32684d",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-16T18:55:44Z",
+      "side": 1,
+      "message": "It\u0027s generally best to remove print statements before checking in. The tests are generally configured to generate verbose log file, which would contain the value of frame_ur.",
+      "range": {
+        "startLine": 1638,
+        "startChar": 4,
+        "endLine": 1638,
+        "endChar": 19
+      },
+      "revId": "2b6dc461f04bec5fbfb0772726f086970e93673d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
