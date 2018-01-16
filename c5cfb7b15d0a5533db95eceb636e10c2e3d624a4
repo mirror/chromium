@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab948e8_ab17db46",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "Do we need this class, or can we just merge the create and bind/merge and connect calls to be methods on the top level interface?  I\u0027m not sure we get anything by returning a single-use object on our way to getting to a stream.  This certainly works, just not sure it\u0027s the simplest option, particularly as this introduces another callback with a NetworkError result, in addition to the one returned by Connect.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b290fcb_f04f77b1",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "This needs a local port (I think a local IP address, too?)",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc2f761_73816337",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "Describe result, and how to close the socket?",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6f7c84_7d453153",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "Are the consumer / producer right?  If these are passed in by the caller, I think we\u0027d read from the send stream, and write to the receive stream.  But I assume one writes to a consumer and reads from the producer.  If these were passed to the caller, along with result, I think they\u0027d be correct (I\u0027m fine with either approach - not providing them until connect makes it a bit easier to be sure if the connection failed, while letting the consumer provide them lets the consumer start writing data immediately, and not worry about waiting for the connect event first).",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2d12d5_40a8b612",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "Should describe result - I\u0027m not sure if it\u0027s the final result on close/error, or just the result of the connection attempt.  If there\u0027s no way to get the final result on close/error, there should be.",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fd731e_e3ef01d3",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "Maybe a TODO about thinking if we want to support multiple accepts at once?",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4a1f8c_06d7916f",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T23:04:38Z",
+      "side": 1,
+      "message": "I think the pipes should be created by the network service and passed back to the caller here, rather than the other way around.  The discourages writing data in anticipation of a connection, and reduces memory use as we won\u0027t need buffers sitting around until someone connects to us...\n\nThat also suggests, if you prefer similar interfaces, that you may want to do the same for Connect().  I think we can reasonably go with either approach there, though making it work like this also reduces memory usage while connecting.",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "c5cfb7b15d0a5533db95eceb636e10c2e3d624a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
