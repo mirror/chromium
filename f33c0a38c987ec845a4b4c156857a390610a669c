@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd2f6fd_13941b90",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T10:37:30Z",
+      "side": 1,
+      "message": "Add comment?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e1a037_f65a6cf3",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T10:37:30Z",
+      "side": 1,
+      "message": "Move it to its own file? :)",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e8fa21_6e78f3f8",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T10:37:30Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
