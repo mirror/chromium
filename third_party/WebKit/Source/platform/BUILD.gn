@@ -1619,9 +1619,9 @@ jumbo_component("platform") {
     deps += [ "//third_party/openmax_dl/dl" ]
   }
 
-  if (remove_webcore_debug_symbols) {
+  if (blink_symbol_level != -1) {
     configs -= [ "//build/config/compiler:default_symbols" ]
-    configs += remove_webcore_symbols_config
+    configs += blink_symbols_config
   }
 }
 

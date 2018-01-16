@@ -169,9 +169,9 @@ target("jumbo_" + modules_target_type, "modules") {
     cflags = [ "/wd4334" ]  # Result of 32-bit shift implicitly converted to 64 bits.
   }
 
-  if (remove_webcore_debug_symbols) {
+  if (blink_symbol_level != -1) {
     configs -= [ "//build/config/compiler:default_symbols" ]
-    configs += remove_webcore_symbols_config
+    configs += blink_symbols_config
   }
 }
 
