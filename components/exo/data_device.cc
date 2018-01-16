@@ -78,8 +78,7 @@ void DataDevice::StartDrag(const DataSource* source_resource,
 }
 
 void DataDevice::SetSelection(DataSource* source, uint32_t serial) {
-  // TODO(hirono): Check if serial is valid. crbug.com/746111
-  seat_->SetSelection(source);
+  seat_->SetSelection(source, serial, delegate_->GetClientSerial());
 }
 
 void DataDevice::OnDragEntered(const ui::DropTargetEvent& event) {

@@ -88,7 +88,7 @@ TEST_F(SeatTest, SetSelection) {
   TestDataSourceDelegate delegate;
   DataSource source(&delegate);
   source.Offer("text/plain;charset=utf-8");
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 1, 10);
 
   RunReadingTask();
 
@@ -105,9 +105,9 @@ TEST_F(SeatTest, SetSelection_TwiceSame) {
   TestDataSourceDelegate delegate;
   DataSource source(&delegate);
 
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 1, 10);
   RunReadingTask();
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 2, 10);
   RunReadingTask();
 
   EXPECT_FALSE(delegate.cancelled());
@@ -118,17 +118,50 @@ TEST_F(SeatTest, SetSelection_TwiceDifferent) {
 
   TestDataSourceDelegate delegate1;
   DataSource source1(&delegate1);
-  seat.SetSelection(&source1);
+  seat.SetSelection(&source1, 1, 10);
   RunReadingTask();
 
   EXPECT_FALSE(delegate1.cancelled());
 
   TestDataSourceDelegate delegate2;
   DataSource source2(&delegate2);
-  seat.SetSelection(&source2);
+  seat.SetSelection(&source2, 2, 10);
   RunReadingTask();
 
   EXPECT_TRUE(delegate1.cancelled());
+}
+
+TEST_F(SeatTest, SetSelection_SerialTooBig) {
+  Seat seat;
+
+  TestDataSourceDelegate delegate1;
+  DataSource source1(&delegate1);
+  // Passes a serial number bigger than the client serial.
+  seat.SetSelection(&source1, 15 /* serial */, 10 /* client_serial */);
+  RunReadingTask();
+
+  EXPECT_TRUE(delegate1.cancelled());
+}
+
+TEST_F(SeatTest, SetSelection_SerialTooSmall) {
+  Seat seat;
+
+  TestDataSourceDelegate delegate1;
+  DataSource source1(&delegate1);
+  seat.SetSelection(&source1, 2 /* serial */, 10 /* client_serial */);
+  RunReadingTask();
+
+  EXPECT_FALSE(delegate1.cancelled());
+
+  TestDataSourceDelegate delegate2;
+  DataSource source2(&delegate2);
+  // Passes a serial number smaller than the previous serial.
+  seat.SetSelection(&source2, 1 /* serial */, 10 /* client_serial */);
+  RunReadingTask();
+
+  // source2 is cancelled due to the invalid serial.
+  EXPECT_FALSE(delegate1.cancelled());
+  EXPECT_TRUE(delegate2.cancelled());
 }
 
 TEST_F(SeatTest, SetSelection_ClipboardChangedDuringSetSelection) {
@@ -136,7 +169,7 @@ TEST_F(SeatTest, SetSelection_ClipboardChangedDuringSetSelection) {
 
   TestDataSourceDelegate delegate;
   DataSource source(&delegate);
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 1, 10);
 
   {
     ui::ScopedClipboardWriter writer(ui::CLIPBOARD_TYPE_COPY_PASTE);
@@ -159,7 +192,7 @@ TEST_F(SeatTest, SetSelection_ClipboardChangedAfterSetSelection) {
 
   TestDataSourceDelegate delegate;
   DataSource source(&delegate);
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 1, 10);
   RunReadingTask();
 
   {
@@ -187,7 +220,7 @@ TEST_F(SeatTest, SetSelection_SourceDestroyedDuringSetSelection) {
   {
     TestDataSourceDelegate delegate;
     DataSource source(&delegate);
-    seat.SetSelection(&source);
+    seat.SetSelection(&source, 1, 10);
     // source destroyed here.
   }
 
@@ -205,7 +238,7 @@ TEST_F(SeatTest, SetSelection_SourceDestroyedAfterSetSelection) {
   TestDataSourceDelegate delegate1;
   {
     DataSource source(&delegate1);
-    seat.SetSelection(&source);
+    seat.SetSelection(&source, 1, 10);
     RunReadingTask();
     // source destroyed here.
   }
@@ -215,7 +248,7 @@ TEST_F(SeatTest, SetSelection_SourceDestroyedAfterSetSelection) {
   {
     TestDataSourceDelegate delegate2;
     DataSource source(&delegate2);
-    seat.SetSelection(&source);
+    seat.SetSelection(&source, 2, 10);
     RunReadingTask();
     // source destroyed here.
   }
@@ -233,12 +266,12 @@ TEST_F(SeatTest, SetSelection_NullSource) {
   TestDataSourceDelegate delegate;
   DataSource source(&delegate);
   source.Offer("text/plain;charset=utf-8");
-  seat.SetSelection(&source);
+  seat.SetSelection(&source, 1, 10);
 
   RunReadingTask();
 
   // Should clear the clipboard.
-  seat.SetSelection(nullptr);
+  seat.SetSelection(nullptr, 2, 10);
 
   ASSERT_TRUE(delegate.cancelled());
 

@@ -220,6 +220,7 @@ class TestDataDeviceDelegate : public DataDeviceDelegate {
   bool CanAcceptDataEventsForSurface(Surface* surface) override {
     return false;
   }
+  uint32_t GetClientSerial() override { return 1000; }
 };
 
 class TestFileHelper : public FileHelper {
