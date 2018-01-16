@@ -176,10 +176,22 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       if (!window_state->IsUserPositionable())
         return;
 
+      gfx::Rect display_area = ScreenUtil::GetDisplayBoundsInParent(window);
+      if (window_state->center_offset_ratio()) {
+        const gfx::Vector2dF center_offset_ratio =
+            *window_state->center_offset_ratio();
+        int x_offset =
+            static_cast<int>(center_offset_ratio.x() * display_area.width()) -
+            bounds.CenterPoint().x();
+        int y_offset =
+            static_cast<int>(center_offset_ratio.y() * display_area.height()) -
+            bounds.CenterPoint().y();
+        bounds.Offset(x_offset, y_offset);
+      }
+
       // Use entire display instead of workarea. The logic ensures 30%
       // visibility which should be enough to see where the window gets
       // moved.
-      gfx::Rect display_area = ScreenUtil::GetDisplayBoundsInParent(window);
       int min_width = bounds.width() * wm::kMinimumPercentOnScreenArea;
       int min_height = bounds.height() * wm::kMinimumPercentOnScreenArea;
       wm::AdjustBoundsToEnsureWindowVisibility(display_area, min_width,

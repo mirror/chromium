@@ -10,6 +10,7 @@
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/shell.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
@@ -163,6 +164,15 @@ void HandleMoveActiveWindowToDisplay(DisplayMoveWindowDirection direction) {
   int64_t dest_display_id = GetNextDisplay(origin_display, direction);
   if (dest_display_id == display::kInvalidDisplayId)
     return;
+
+  const gfx::Point window_center = window->bounds().CenterPoint();
+  float x_ratio = static_cast<float>(window_center.x()) /
+                  static_cast<float>(origin_display.bounds().width());
+  float y_ratio = static_cast<float>(window_center.y()) /
+                  static_cast<float>(origin_display.bounds().height());
+  wm::GetWindowState(window)->SetCenterOffsetRatio(
+      gfx::Vector2dF(x_ratio, y_ratio));
+
   wm::MoveWindowToDisplay(window, dest_display_id);
 
   // Send a11y alert.

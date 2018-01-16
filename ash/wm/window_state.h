@@ -19,6 +19,7 @@
 
 namespace gfx {
 class Rect;
+class Vector2dF;
 }
 
 namespace ash {
@@ -255,6 +256,11 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
 
+  base::Optional<gfx::Vector2dF> center_offset_ratio() const {
+    return center_offset_ratio_;
+  }
+  void SetCenterOffsetRatio(const gfx::Vector2dF& center_offset_ratio);
+
   // Layout related properties
 
   void AddObserver(WindowStateObserver* observer);
@@ -424,6 +430,8 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // A property which resets when bounds is changed by user and sets when it is
   // nullptr, and window is removing from a workspace.
   base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds_;
+
+  base::Optional<gfx::Vector2dF> center_offset_ratio_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
