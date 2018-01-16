@@ -63,6 +63,24 @@
       "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8defe4b4_20c8e856",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/findability_isolation/page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T16:49:36Z",
+      "side": 1,
+      "message": "\u003e This is loaded in the guest, right? Any reason for the embedder.js filename?\n\nDone.  I\u0027ve also renamed the file under |dom_storage_isolation|.",
+      "parentUuid": "b3e597b5_bbb3fc8c",
+      "revId": "87e773d909d62f49b6fdc5c843be6e996f9a10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -93,6 +93,30 @@
       "revId": "1b83178b3145478a8865e3824f201258560af3ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e84f3d8_e85de8ad",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-16T16:49:36Z",
+      "side": 1,
+      "message": "\u003e While I couldn\u0027t find any case where this would break, it seems a bit strange that it\u0027s ok for a RFPH to not have a RVH.\n\nAFAICT, RenderFrameProxyHost\u0027s constructor used to have a CHECK that |render_view_host| argument is never null, but this has changed in r336565 (e.g. see https://codereview.chromium.org/972313002/patch/1060001/1070020).\n\n\u003e If you go ahead with this change, please land it separately so that it can be reverted on its own if there are any issues.\n\nOk.  I\u0027ve split this off into https://crbug.com/802278 and https://crrev.com/c/868631 (your comments are addressed over there;  I\u0027ll abandon the current CL under review).\n\u003e \n\u003e I\u0027ll also comment on the bug with more questions.\n\nAck.  This reminds me that I still have to try the PDF test scenario that you suggested.",
+      "parentUuid": "1a92a533_b3ca7305",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1933,
+        "endChar": 33
+      },
+      "revId": "1b83178b3145478a8865e3824f201258560af3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
