@@ -106,6 +106,7 @@ jumbo_source_set("browser") {
     "//media/mojo/interfaces:constants",
     "//media/mojo/services",
     "//mojo/common",
+    "//mojo/common:values_struct_traits",
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//mojo/public/js:resources",
