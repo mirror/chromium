@@ -34,6 +34,24 @@
       "revId": "3c970145a1d56b002b586ecf4f203994e8e2963a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46350be8_07bc3d49",
+        "filename": "base/guid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T19:10:45Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this. I feel like trying to match the standard GUID format is a little awkward still, because it\u0027s split across two assignments anyway (and the ULL suffix throws off the spacing). So I\u0027ll leave it to the Cl author in this case \u003d)",
+      "parentUuid": "bb33e2f7_c953f89a",
+      "revId": "3c970145a1d56b002b586ecf4f203994e8e2963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
