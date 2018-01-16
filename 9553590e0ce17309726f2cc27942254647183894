@@ -34,6 +34,24 @@
       "revId": "9553590e0ce17309726f2cc27942254647183894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df7d99f_929e35f9",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T19:37:51Z",
+      "side": 1,
+      "message": "There is no reason to change the mode for 1 because there is no for simple display right? And in suspend, we shouldn\u0027t disable the mirror mode because that can change the desktop state.",
+      "parentUuid": "f8108b36_3e296020",
+      "revId": "9553590e0ce17309726f2cc27942254647183894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
