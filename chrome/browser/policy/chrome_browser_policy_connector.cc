@@ -12,12 +12,15 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/path_service.h"
+#include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/policy/configuration_policy_handler_list_factory.h"
 #include "chrome/browser/policy/device_management_service_configuration.h"
 #include "chrome/common/chrome_paths.h"
+#include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/async_policy_provider.h"
 #include "components/policy/core/common/cloud/device_management_service.h"
 #include "components/policy/core/common/configuration_policy_provider.h"
@@ -28,6 +31,7 @@
 #include "components/policy/policy_constants.h"
 #include "content/public/common/content_switches.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "ui/base/resource/resource_bundle.h"
 
 #if defined(OS_WIN)
 #include "components/policy/core/common/policy_loader_win.h"
@@ -59,6 +63,19 @@ base::FilePath GetManagedPolicyPath() {
 }
 #endif  // defined(OS_MACOSX)
 
+// XXX move this to Chrome.
+// Policies are loaded early on startup, before PolicyErrorMaps are ready to
+// be retrieved. This function is posted to UI to log any errors found on
+// Refresh below.
+void LogErrors(policy::PolicyErrorMap* errors) {
+  DCHECK(errors->IsReady());
+  PolicyErrorMap::const_iterator iter;
+  for (iter = errors->begin(); iter != errors->end(); ++iter) {
+    base::string16 policy = base::ASCIIToUTF16(iter->first);
+    DLOG(WARNING) << "Policy " << policy << ": " << iter->second;
+  }
+}
+
 }  // namespace
 
 ChromeBrowserPolicyConnector::ChromeBrowserPolicyConnector()
@@ -70,6 +87,13 @@ ChromeBrowserPolicyConnector::ChromeBrowserPolicyConnector()
 }
 
 ChromeBrowserPolicyConnector::~ChromeBrowserPolicyConnector() {}
+
+void ChromeBrowserPolicyConnector::OnResourceBundleCreated() {
+  LOG(ERROR) << "OnResourceBundleCreated errors=" << pending_errors_.size();
+  for (auto& error_map : pending_errors_)
+    LogErrors(error_map.get());
+  pending_errors_.clear();
+}
 
 void ChromeBrowserPolicyConnector::Init(
     PrefService* local_state,
@@ -83,6 +107,14 @@ void ChromeBrowserPolicyConnector::Init(
       kServiceInitializationStartupDelay);
 
   InitInternal(local_state, std::move(device_management_service));
+}
+
+void ChromeBrowserPolicyConnector::OnConfigurationPolicyErrors(
+    std::unique_ptr<policy::PolicyErrorMap> errors) {
+  if (ui::ResourceBundle::HasSharedInstance())
+    LogErrors(errors.get());
+  else
+    pending_errors_.push_back(std::move(errors));
 }
 
 std::unique_ptr<ConfigurationPolicyProvider>

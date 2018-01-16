@@ -11,6 +11,7 @@
 #include "base/values.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
 #include "components/policy/core/browser/configuration_policy_pref_store_test.h"
+#include "components/policy/core/browser/test_configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/policy_service_impl.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_constants.h"
@@ -24,6 +25,9 @@ namespace policy {
 class ProxyPolicyHandlerTest
     : public ConfigurationPolicyPrefStoreTest {
  public:
+  ProxyPolicyHandlerTest() = default;
+  ~ProxyPolicyHandlerTest() override = default;
+
   void SetUp() override {
     ConfigurationPolicyPrefStoreTest::SetUp();
     handler_list_.AddHandler(
@@ -34,7 +38,8 @@ class ProxyPolicyHandlerTest
     store_ = nullptr;
     policy_service_.reset(new PolicyServiceImpl(providers_));
     store_ = new ConfigurationPolicyPrefStore(
-        policy_service_.get(), &handler_list_, POLICY_LEVEL_MANDATORY);
+        policy_service_.get(), &handler_list_, POLICY_LEVEL_MANDATORY,
+        &error_handler_);
   }
 
  protected:
@@ -72,6 +77,11 @@ class ProxyPolicyHandlerTest
     ASSERT_TRUE(dict.GetMode(&mode));
     EXPECT_EQ(expected_proxy_mode, mode);
   }
+
+ private:
+  TestConfigurationPolicyPrefStoreErrorHandler error_handler_;
+
+  DISALLOW_COPY_AND_ASSIGN(ProxyPolicyHandlerTest);
 };
 
 TEST_F(ProxyPolicyHandlerTest, ManualOptions) {

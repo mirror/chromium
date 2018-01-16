@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "components/policy/core/browser/configuration_policy_handler_parameters.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
+#include "components/policy/core/browser/configuration_policy_pref_store_error_handler.h"
 #include "components/policy/core/common/policy_details.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_service_impl.h"
@@ -31,8 +32,9 @@ ConfigurationPolicyPrefStoreTest::ConfigurationPolicyPrefStoreTest()
   provider_.Init();
   providers_.push_back(&provider_);
   policy_service_.reset(new PolicyServiceImpl(providers_));
-  store_ = new ConfigurationPolicyPrefStore(
-      policy_service_.get(), &handler_list_, POLICY_LEVEL_MANDATORY);
+  store_ =
+      new ConfigurationPolicyPrefStore(policy_service_.get(), &handler_list_,
+                                       POLICY_LEVEL_MANDATORY, &error_handler_);
 }
 
 ConfigurationPolicyPrefStoreTest::~ConfigurationPolicyPrefStoreTest() {}
