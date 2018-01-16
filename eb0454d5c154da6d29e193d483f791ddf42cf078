@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "212a77ab_13ccdd8c",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-16T18:20:23Z",
+      "side": 1,
+      "message": "newline",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 2
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63fc7242_4baa8114",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-16T18:20:23Z",
+      "side": 1,
+      "message": "can we mention what the \"int\" represents, and perhaps it\u0027s type.",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ed63cd_c84d63ea",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-16T18:20:23Z",
+      "side": 1,
+      "message": "network-\u003ethe network",
+      "range": {
+        "startLine": 184,
+        "startChar": 13,
+        "endLine": 184,
+        "endChar": 20
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b541e42f_3e450094",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-16T18:20:23Z",
+      "side": 1,
+      "message": "Can we mention on what thread this is called?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c7bd0a_faa78f56",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-16T18:20:23Z",
+      "side": 1,
+      "message": "These methods could use some comments",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 67
+      },
+      "revId": "eb0454d5c154da6d29e193d483f791ddf42cf078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
