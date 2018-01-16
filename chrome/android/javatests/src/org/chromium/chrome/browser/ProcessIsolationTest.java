@@ -7,6 +7,8 @@ package org.chromium.chrome.browser;
 import android.support.test.filters.MediumTest;
 import android.text.TextUtils;
 
+import com.google.common.base.Splitter;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Test to make sure browser and renderer are seperated process.
@@ -67,10 +70,10 @@ public class ProcessIsolationTest {
             reader = new BufferedReader(new InputStreamReader(psProcess.getInputStream()));
             String line = reader.readLine();
             Assert.assertNotNull(line);
-            final String[] lineSections = line.split("\\s+");
+            List<String> lineSections = Splitter.onPattern("\\s+").splitToList(line);
             int pidIndex = -1;
-            for (int index = 0; index < lineSections.length; index++) {
-                if ("PID".equals(lineSections[index])) {
+            for (int index = 0; index < lineSections.size(); index++) {
+                if ("PID".equals(lineSections.get(index))) {
                     pidIndex = index;
                     break;
                 }
@@ -80,7 +83,7 @@ public class ProcessIsolationTest {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append('\n');
                 if (line.indexOf(packageName) != -1) {
-                    final String uid = line.split("\\s+")[pidIndex];
+                    final String uid = Splitter.onPattern("\\s+").splitToList(line).get(pidIndex);
                     Assert.assertNotNull("Failed to retrieve UID from " + line, uid);
                     if (line.indexOf("sandboxed_process") != -1) {
                         // Renderer process.
