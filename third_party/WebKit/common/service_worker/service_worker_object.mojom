@@ -26,4 +26,21 @@ struct ServiceWorkerObjectInfo {
 
   // ServiceWorker#scriptURL
   url.mojom.Url url;
+
+  // Holds one mojo connection to browser process, acts as a reference count to
+  // control lifetime of ServiceWorkerVersion in the browser process.
+  associated ServiceWorkerObjectHost? host_ptr_info;
+};
+
+// This interface lives in the browser process, it corresponds to one
+// ServiceWorker JavaScript object. The renderer uses it to ask the browser to
+// do operations needed to implement ServiceWorker methods.
+interface ServiceWorkerObjectHost {
+  // TODO(leonhsl): Implement all methods.
+  // Replace ServiceWorkerHostMsg_PostMessageToWorker.
+  // PostMessage(string message, url.mojom.Origin source_origin,
+  //     array<handle<message_pipe>> sent_message_ports);
+
+  // Replace ServiceWorkerHostMsg_TerminateWorker.
+  // Terminate();
 };

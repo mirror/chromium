@@ -138,9 +138,11 @@ class ServiceWorkerHandleTest : public testing::Test {
 };
 
 TEST_F(ServiceWorkerHandleTest, OnVersionStateChanged) {
-  std::unique_ptr<ServiceWorkerHandle> handle =
-      ServiceWorkerHandle::Create(helper_->context()->AsWeakPtr(),
-                                  provider_host_->AsWeakPtr(), version_.get());
+  // ServiceWorkerHandle ctor will make |handle| be owned by
+  // |dispatcher_host_|.
+  auto* handle = new ServiceWorkerHandle(
+      dispatcher_host_.get(), helper_->context()->AsWeakPtr(),
+      provider_host_->AsWeakPtr(), version_.get());
 
   // Start the worker, and then...
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;

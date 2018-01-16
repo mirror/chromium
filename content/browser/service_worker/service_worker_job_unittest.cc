@@ -58,9 +58,18 @@ class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
   KeepHandlesDispatcherHost(int render_process_id,
                             ResourceContext* resource_context)
       : ServiceWorkerDispatcherHost(render_process_id, resource_context) {}
-  void RegisterServiceWorkerHandle(
-      std::unique_ptr<ServiceWorkerHandle> handle) override {
-    handles_.push_back(std::move(handle));
+  void RegisterServiceWorkerHandle(ServiceWorkerHandle* handle) override {
+    handles_.push_back(base::WrapUnique(handle));
+  }
+
+  void UnregisterServiceWorkerHandle(int handle_id) override {
+    auto iter = handles_.begin();
+    for (; iter != handles_.end(); ++iter) {
+      if ((*iter)->handle_id() == handle_id)
+        break;
+    }
+    ASSERT_NE(handles_.end(), iter);
+    handles_.erase(iter);
   }
 
   void Clear() {
