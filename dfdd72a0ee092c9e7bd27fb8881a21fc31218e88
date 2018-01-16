@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbd4364c_4442e60e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-16T19:39:59Z",
+      "side": 1,
+      "message": "I agree its a bit awkward, but I think its more confusing the other way. I renamed it to this._forceShowAll to try to make things more clear.",
+      "parentUuid": "6a4c6183_6f28febf",
+      "range": {
+        "startLine": 753,
+        "startChar": 9,
+        "endLine": 753,
+        "endChar": 20
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd6dcd4f_2b7bd9be",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T19:14:29Z",
       "side": 1,
       "message": "When do we want maxProperties !\u003d\u003d 50?",
+      "range": {
+        "startLine": 1309,
+        "startChar": 81,
+        "endLine": 1309,
+        "endChar": 105
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977026bd_9c28ff6a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-16T19:39:59Z",
+      "side": 1,
+      "message": "When the style gets properties added by the user, we don\u0027t want to remove any properties.",
+      "parentUuid": "fd6dcd4f_2b7bd9be",
       "range": {
         "startLine": 1309,
         "startChar": 81,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b8e28b3b_52bdf8d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-16T19:39:59Z",
+      "side": 1,
+      "message": "I forgot to remove the TODO after I added this._showAllItems();\nThanks.",
+      "parentUuid": "aab9d4a5_c18902ec",
+      "range": {
+        "startLine": 1344,
+        "startChar": 7,
+        "endLine": 1344,
+        "endChar": 11
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16b1a0a5_0dda5662",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/stylesSidebarPane.css",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-16T19:14:29Z",
       "side": 1,
       "message": "prefix as \u0027styles-show-all\u0027 to avoid possible selector conflicts?",
+      "range": {
+        "startLine": 221,
+        "startChar": 1,
+        "endLine": 221,
+        "endChar": 5
+      },
+      "revId": "dfdd72a0ee092c9e7bd27fb8881a21fc31218e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d01fe59_35ef5576",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/stylesSidebarPane.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-16T19:39:59Z",
+      "side": 1,
+      "message": "I\u0027m not too worried because this is in shadow.",
+      "parentUuid": "16b1a0a5_0dda5662",
       "range": {
         "startLine": 221,
         "startChar": 1,
