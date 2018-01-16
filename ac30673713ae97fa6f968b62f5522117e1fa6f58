@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a4aede_bcfc6d60",
+        "filename": "base/time/time.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-16T11:45:36Z",
+      "side": 1,
+      "message": "I\u0027m not entirely certain whether we need to override this as well. But it feels like we should treat it the same way as Now(), since it usually delegates to Now() in the implementations. WDYT?",
+      "range": {
+        "startLine": 533,
+        "startChar": 14,
+        "endLine": 533,
+        "endChar": 31
+      },
+      "revId": "ac30673713ae97fa6f968b62f5522117e1fa6f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
