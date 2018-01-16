@@ -626,6 +626,7 @@ class CORE_EXPORT HTMLMediaElement
 
   // FIXME: HTMLMediaElement has way too many state bits.
   bool playing_ : 1;
+  bool pending_play_ : 1;
   bool should_delay_load_event_ : 1;
   bool have_fired_loaded_data_ : 1;
   bool can_autoplay_ : 1;
