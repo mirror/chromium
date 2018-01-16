@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a7ccda2_c38c2030",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-16T15:19:54Z",
+      "side": 1,
+      "message": "Would it be reasonable to do something like:\n- set/unset a class (name \u0027dark\u0027 for example) if needed, based on the current `video_element` status;\n- add to modernMediaControls_loading.css something like `#spinner.dark { background-color: black; }`.\n\nI think it has the benefit of only updating the class when needed (we could probably read the property but it may have a cost) and separates the logic (in C++) from the design (in CSS). WDYT?",
+      "revId": "3706aee2e6a7702a4bfd1f23b94e612e37c007aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
