@@ -380,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "ac989e7e_e75ed70a",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-16T20:50:29Z",
+      "side": 1,
+      "message": "There is no translation of auto-detect --\u003e direct that happens prior to your ProxyResolver[Factory], since you are passing expects_pac_bytes\u003dfalse.\n\nexpect_pac_bytes\u003dfalse is the same mechanism used for the WinHTTP proxy resolver, which is also responsible for doing the auto-detect logic itself. When expect_pac_bytes\u003dtrue ProxyScriptDecider handles auto-detect and feeds the ProxyResolver with the detected script data. However, when it is false as in your case here, ProxyResolver[Factory] needs to internalize any auto-detect logic and PAC file fetching.",
+      "parentUuid": "67b712b4_7fd5409f",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57f5ed7_745615db",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
