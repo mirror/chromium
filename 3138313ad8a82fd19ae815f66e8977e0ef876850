@@ -69,6 +69,24 @@
       "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a11ce_e8308e5b",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T08:34:44Z",
+      "side": 1,
+      "message": "Yeah, I double-checked and I agree that this seems fine.",
+      "parentUuid": "345e6154_2319a5ce",
+      "revId": "3138313ad8a82fd19ae815f66e8977e0ef876850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
