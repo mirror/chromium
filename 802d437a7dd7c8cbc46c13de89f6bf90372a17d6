@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b3af888_d6a35588",
+        "filename": "ash/wm/fullscreen_window_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-16T20:29:08Z",
+      "side": 1,
+      "message": "Maybe a better fix would be to change the IsFullscreen function from:\n\nbool WindowState::IsFullscreen() const {\n  return GetStateType() \u003d\u003d mojom::WindowStateType::FULLSCREEN;\n}\n\nto:\n\nbool WindowState::IsFullscreen() const {\n  return GetStateType() \u003d\u003d mojom::WindowStateType::FULLSCREEN ||\n         IsPinned();\n}\n\nWDYT? I\u0027ve been thinking about this for some time now (since I first started working on the locked fullscreen feature which is basically the TRUSTED_PINNED mode), and it probably makes sense as all three of FULLSCREEN/PINNED/TRUSTED_PINNED are fullscreen modes, but since this is a low level function in ash/ it may break some things.",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "802d437a7dd7c8cbc46c13de89f6bf90372a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
