@@ -16,6 +16,24 @@
       "revId": "da7b22a601e88eebeb8f6e71d8b5db7eab90117a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fa925c_851631ce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-bottom.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-16T18:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e4fd16f_b7e12123",
+      "revId": "da7b22a601e88eebeb8f6e71d8b5db7eab90117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
