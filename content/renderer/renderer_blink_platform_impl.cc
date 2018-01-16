@@ -297,9 +297,13 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     blob_registry_.reset(new WebBlobRegistryImpl(
         RenderThreadImpl::current()->GetIOTaskRunner().get(),
         base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
+    // TODO(hajimehoshi): Pass a task runner with TaskType::kInternalIndexedDB
+    // instead of DeprecatedGetMainTaskRunner().get() after that type is
+    // introduced.
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
-        RenderThreadImpl::current()->GetIOTaskRunner().get()));
+        RenderThreadImpl::current()->GetIOTaskRunner().get(),
+        RenderThreadImpl::current()->DeprecatedGetMainTaskRunner().get()));
     notification_dispatcher_ =
         RenderThreadImpl::current()->notification_dispatcher();
   } else {
