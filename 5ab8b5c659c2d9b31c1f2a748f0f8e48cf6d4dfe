@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0fa20de_a78daf8a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-16T00:57:56Z",
+      "side": 1,
+      "message": "Revert the change?",
+      "revId": "5ab8b5c659c2d9b31c1f2a748f0f8e48cf6d4dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
