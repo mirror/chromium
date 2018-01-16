@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73f382d_765eb8e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-16T07:08:33Z",
+      "side": 1,
+      "message": "Wrap to 72 characters.",
+      "revId": "1afa8d9af351229dd87b3d6849c763760b9dffdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
