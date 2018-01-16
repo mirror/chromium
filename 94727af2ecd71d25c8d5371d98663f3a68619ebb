@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a5c42346_cf66b73c",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T22:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a2b1ef0_b56d22f0",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "110ff652_e6eb9154",
         "filename": "chrome/browser/supervised_user/child_accounts/family_info_fetcher.cc",
         "patchSetId": 2
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "I guess kFamilyApiScope makes sense. Anyway, I don\u0027t feel strongly either way, I don\u0027t mind short names in .cc files (and if jumbo didn\u0027t reduce the build times so massively, I\u0027d probably oppose these renames ;) )",
       "parentUuid": "f6d9fed0_0f7215df",
+      "range": {
+        "startLine": 24,
+        "startChar": 76,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "94727af2ecd71d25c8d5371d98663f3a68619ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b2ca4aa_8cd2fd77",
+        "filename": "chrome/browser/supervised_user/child_accounts/family_info_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-16T22:12:03Z",
+      "side": 1,
+      "message": "Leaving as is.\n\nYes, I am also not happy about having to change so much code. Even if it\u0027s a small fraction of all code it\u0027s still hundreds of places all over the code base.\n\nI try to comfort myself with: \n\n* It\u0027s just a very small number of global symbols that are affected over all. Probably  \u003c0.1% (and no local variables or member variables). There were 20-35 rename patches in content/browser which has 43,000 public exported symbols.\n\n* One day someone might save a lot of time thanks to a symbol in a stack trace having a unique name so that there is no confusion. Maybe.\n\n* A lot of code is just habit. We (I) dislike change more than what the change leads to so I think the impact over time will be small. Maybe a bad thought towards me once per month when seeing a line break that might not have been needed otherwise. :-(\n\nBut the impact is really huge. Or rather, normal C++ compilation is really terribly inefficient. When I test compile right now I compile all of chrome/browser:browser in one file and the compiler needs about 250 CPU seconds for it. When compiling normally, one file at a time, the compiler needs 5,700 CPU seconds (1.6 CPU hours), \u003e20 times more. From that I get that 95% of the job compiling Chromium is repeated work. Header parsing, and (probably the big culprit) template processing.\n\nSince we want quick single-file editing and good use of parallel hardware nobody is going to have everything in a single file (brucedawson tuned jumbo for goma and ended up with max 8 cc files per jumbo unit, rather than up to 1000).\n\n(I\u0027d ask you to give it a go, but v8 broke the jumbo build an hour ago and it will take several hours for the fix to come to chromium master)",
+      "parentUuid": "0f4ff18e_bb9028a5",
       "range": {
         "startLine": 24,
         "startChar": 76,
