@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a82cc7d7_da6ace1d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T16:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bada39b_4d19d3a2",
+      "revId": "27fc1300dc94a0586433cba0ddb4c91d9383b15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fa1b58_f2f3f228",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/UnpackedSerializedScriptValue.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "27fc1300dc94a0586433cba0ddb4c91d9383b15a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b89d840_0e111ff2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/UnpackedSerializedScriptValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-16T16:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fa1b58_f2f3f228",
+      "revId": "27fc1300dc94a0586433cba0ddb4c91d9383b15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
