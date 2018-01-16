@@ -8,14 +8,18 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/ui/location_bar/location_bar_view.h"
+#import "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 
 namespace ios {
 class ChromeBrowserState;
 }
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
+@protocol UrlLoader;
+@protocol ToolbarCoordinatorDelegate;
+class LocationBarControllerImpl;
 
-@interface LocationBarCoordinator : NSObject
+@interface LocationBarCoordinator : NSObject<LocationBarURLLoader>
 
 // LocationBarView containing the omnibox.
 @property(nonatomic, strong) LocationBarView* locationBarView;
@@ -23,11 +27,21 @@ class ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // The dispatcher for this view controller.
 @property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
+// URL loader for the location bar.
+@property(nonatomic, weak) id<UrlLoader> URLLoader;
+// The location bar controller.
+// TODO: this class needs to own this instance instead of ToolbarCoordinator.
+@property(nonatomic, assign) LocationBarControllerImpl* locationBarController;
+// Delegate for this coordinator.
+// TODO(crbug.com/799446): Change this.
+@property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
 
 // Start this coordinator.
 - (void)start;
 // Stop this coordinator.
 - (void)stop;
+
+- (void)updateOmniboxState;
 
 @end
 
