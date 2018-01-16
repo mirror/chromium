@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0a73670f_a751cb0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:11:20Z",
+      "side": 1,
+      "message": "Sure I\u0027m ok with waiting on pushing the checks to Java.\n\nThe reason why I suggested it is that this class then honors the guarantee that for every \"showDialog\" it will trigger an onComplete.\"  With the earlier returns we have to push the complexity up a layer to the caller, which makes it a bit harder to reason about who is responsible for what as someone else looks at the code.",
+      "parentUuid": "7ba65d70_3fa3cbe4",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "01be011ae6a23580cd10e8db904d6905e9e6f3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17c35fa9_10883a20",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
         "patchSetId": 10
