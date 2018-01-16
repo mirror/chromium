@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f59c2093_9154c49b",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 0,
+      "message": "Why\u0027d this disappear?",
+      "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

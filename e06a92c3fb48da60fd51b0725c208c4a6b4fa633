@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7de77c5a_e228c759",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "Can this use the createExceptionForTest function below?",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d2be11_8eaf63bc",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "Probably worth making simple util method here too.\n\ncreatePrefDefaults(Map\u003cContentSettingsType, ContentSetting\u003e defaults)\n\nActually, see the example below for what might be the nicest API.",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c07534_7d021f31",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "I had no idea this was a thing.\n\nBut\n\nhttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/es6_chromium.md#Object-Static-Methods\n\nI don\u0027t think this feature is allowed T_T\n\nYou can probably use a Map() for most of your purposes.",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874c5191_4711a86d",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "Closure annotations.",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511eedfc_7e7b49f4",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "Why not have these initialized above with the declaration?",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a65b30a_b9d4d6dd",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-16T14:22:11Z",
+      "side": 1,
+      "message": "Personally, I would expect something more like:\n\nexceptionMap \u003d new Map();\nexceptionMap[settings.ContentSettingsTypes.GEOLOCATION] \u003d [\n      createExceptionForTest(\u0027https://bar-allow.com:443\u0027, {\n        setting: settings.ContentSetting.ALLOW,\n      }),\n      createExceptionForTest(\u0027https://foo-allow.com:443\u0027, {\n        setting: settings.ContentSetting.ALLOW,\n      }),\n      createExceptionForTest(\u0027https://bar-block.com:443\u0027, {}),\n      createExceptionForTest(\u0027https://foo-block.com:443\u0027, {}),\n];\n\nprefsGeolocation \u003d createPrefs(exceptionMap, defaultsMap);",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
