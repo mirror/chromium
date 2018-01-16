@@ -4,6 +4,7 @@
 
 #include "content/browser/loader/resource_message_filter.h"
 
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
@@ -14,6 +15,7 @@
 #include "content/common/resource_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/content_features.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
 namespace content {
@@ -56,6 +58,9 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel*) {
 
 void ResourceMessageFilter::OnChannelClosing() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+
+  if (url_loader_factory_impl_)
+    url_loader_factory_impl_ = nullptr;
 
   // Close all additional Mojo connections opened to this object so that
   // messages are not dispatched while it is being shut down.
@@ -107,10 +112,18 @@ void ResourceMessageFilter::CreateLoaderAndStart(
     return;
   }
 
-  URLLoaderFactoryImpl::CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      net::NetworkTrafficAnnotationTag(traffic_annotation));
+  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
+    DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+    DCHECK(url_loader_factory_impl_);
+    url_loader_factory_impl_->CreateLoaderAndStart(
+        std::move(request), routing_id, request_id, options, url_request,
+        std::move(client), traffic_annotation);
+  } else {
+    URLLoaderFactoryImpl::CreateLoaderAndStart(
+        requester_info_.get(), std::move(request), routing_id, request_id,
+        options, url_request, std::move(client),
+        net::NetworkTrafficAnnotationTag(traffic_annotation));
+  }
 }
 
 void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
@@ -143,6 +156,12 @@ void ResourceMessageFilter::InitializeOnIOThread() {
   // The WeakPtr of the filter must be created on the IO thread. So sets the
   // WeakPtr of |requester_info_| now.
   requester_info_->set_filter(GetWeakPtr());
+
+  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
+    URLLoaderFactoryImpl::Create(requester_info_,
+                                 mojo::MakeRequest(&url_loader_factory_impl_),
+                                 io_thread_task_runner_);
+  }
 }
 
 }  // namespace content
