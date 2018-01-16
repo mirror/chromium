@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 
+#include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
@@ -51,6 +52,68 @@ class AddAllFilter {
  public:
   bool AddOnEnter(const NGPhysicalFragment*) const { return true; }
   bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+};
+
+// The filter for CollectInlineFragments() collecting fragments generated from
+// the given LayoutInline with supporting culled inline boxes.
+class LayoutInlineFilter {
+ public:
+  explicit LayoutInlineFilter(const LayoutInline& container)
+      : container_(container) {
+    PopulateWithDescendnats(container);
+  }
+
+  bool AddOnEnter(const NGPhysicalFragment* fragment) {
+    if (fragment->IsLineBox())
+      return false;
+    LayoutObject* const node = fragment->GetLayoutObject();
+    switch (state_) {
+      case kMaybeCulled:
+        if (container_ == node) {
+          state_ = kNotCulled;
+          return true;
+        }
+        if (!descendants_.Contains(node))
+          return false;
+        state_ = kCulled;
+        return true;
+      case kCulled:
+        DCHECK_NE(&container_, node);
+        return descendants_.Contains(node);
+      case kNotCulled:
+        return container_ == node;
+    }
+    NOTREACHED();
+    return false;
+  }
+
+  bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+
+ private:
+  void PopulateWithDescendnats(const LayoutInline& container) {
+    for (const LayoutObject* node = container.FirstChild(); node;
+         node = node->NextSibling()) {
+      if (node->IsFloatingOrOutOfFlowPositioned())
+        continue;
+      if (node->IsBox() || node->IsText()) {
+        descendants_.insert(node);
+        continue;
+      }
+      if (!node->IsLayoutInline())
+        continue;
+      descendants_.insert(node);
+      PopulateWithDescendnats(ToLayoutInline(*node));
+      continue;
+    }
+  }
+
+  const LayoutInline& container_;
+  HashSet<const LayoutObject*> descendants_;
+  enum {
+    kMaybeCulled,
+    kCulled,
+    kNotCulled,
+  } state_ = kMaybeCulled;
 };
 
 // The filter for CollectInlineFragments() collecting fragments generated from
@@ -116,6 +179,12 @@ class InclusiveAncestorFilter {
 Vector<Result, 1> NGInlineFragmentTraversal::SelfFragmentsOf(
     const NGPhysicalContainerFragment& container,
     const LayoutObject* layout_object) {
+  if (layout_object->IsLayoutInline()) {
+    LayoutInlineFilter filter(*ToLayoutInline(layout_object));
+    Vector<Result, 1> results;
+    CollectInlineFragments(container, {}, filter, &results);
+    return results;
+  }
   LayoutObjectFilter filter(layout_object);
   Vector<Result, 1> results;
   CollectInlineFragments(container, {}, filter, &results);
