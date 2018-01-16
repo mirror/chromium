@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "8073f01b_96d0f324",
+        "filename": "base/memory/singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-16T23:45:56Z",
+      "side": 1,
+      "message": "Agree it\u0027s somewhat orthogonal, though note that it\u0027s not quite equivalent to Singleton\u003cT\u003e... though Singleton is kind of evil anyway.\n\nIf we\u0027re going to go down this route though, we should consider getting rid of CR_DEFINE_STATIC_LOCAL in favor of something like base::NoDestructor\u003cT\u003e with a forwarding constructor: this removes the heap indirection introduced by CR_DEFINE_STATIC_LOCAL while still guaranteeing that global destructors aren\u0027t generated.",
+      "parentUuid": "c2d3c08e_c1ad3320",
+      "revId": "3e77a195003a88fc43dc699fdccf53e4267dca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7f625d0_8c3bb8fd",
         "filename": "base/memory/singleton.h",
         "patchSetId": 2
