@@ -108,6 +108,8 @@ component("events") {
     "cocoa/events_mac.mm",
     "event.cc",
     "event.h",
+    "event_auto_repeat_handler.cc",
+    "event_auto_repeat_handler.h",
     "event_dispatcher.cc",
     "event_dispatcher.h",
     "event_handler.cc",
