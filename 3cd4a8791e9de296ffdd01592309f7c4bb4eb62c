@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5984582_07754eab",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-16T13:32:07Z",
+      "side": 1,
+      "message": "Could you add affiliated user case, too?",
+      "revId": "3cd4a8791e9de296ffdd01592309f7c4bb4eb62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
