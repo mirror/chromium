@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <memory>
 
 #include "base/json/json_reader.h"
 #include "base/json/string_escape.h"

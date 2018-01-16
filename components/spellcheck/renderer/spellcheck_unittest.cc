@@ -12,7 +12,6 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -74,7 +73,7 @@ class SpellCheckTest : public testing::Test {
     // TODO(groby): Forcing spellcheck to use hunspell, even on OSX.
     // Instead, tests should exercise individual spelling engines.
     spell_check_->languages_.push_back(
-        base::MakeUnique<SpellcheckLanguage>(nullptr));
+        std::make_unique<SpellcheckLanguage>(nullptr));
     spell_check_->languages_.front()->platform_spelling_engine_.reset(
         new HunspellEngine(nullptr));
     spell_check_->languages_.front()->Init(std::move(file), language);
