@@ -16,6 +16,24 @@
       "revId": "acbf1d475adfd72964c449e7db273f92e0b7b3fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f0c5f0_cb31dec2",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1159827
+      },
+      "writtenOn": "2018-01-16T15:56:06Z",
+      "side": 1,
+      "message": "TRACE_EVENT_BEGIN should always have a matching TRACE_EVENT_END, so it cannot be in \"else\" here.\nIt should not be confusing, because RequestRender also has a trace in it, so we can see on which thread it is called.",
+      "parentUuid": "463f3f0f_349b70cb",
+      "revId": "acbf1d475adfd72964c449e7db273f92e0b7b3fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
