@@ -160,6 +160,12 @@ namespace blink {
 
 namespace {
 
+// Used for innerHTML setter optimization check, if innerHTML string only
+// contains non-markup character, we can just set its TextContent instead.
+inline bool IsHTMLMarkupCharacter(UChar c) {
+  return c == '<' || c == '&' || c == '\r' || c == '\0';
+}
+
 // We need to retain the scroll customization callbacks until the element
 // they're associated with is destroyed. It would be simplest if the callbacks
 // could be stored in ElementRareData, but we can't afford the space increase.
@@ -3130,12 +3136,17 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
-  if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
-          html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
-    ContainerNode* container = this;
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
-      container = template_element->content();
-    ReplaceChildrenWithFragment(container, fragment, exception_state);
+  if (!HasNonInBodyInsertionMode() && html.length() < 100 &&
+      html.Find(IsHTMLMarkupCharacter) == kNotFound) {
+    setTextContent(html);
+  } else {
+    if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
+            html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
+      ContainerNode* container = this;
+      if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
+        container = template_element->content();
+      ReplaceChildrenWithFragment(container, fragment, exception_state);
+    }
   }
 }
 
