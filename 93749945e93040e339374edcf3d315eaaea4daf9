@@ -46,6 +46,29 @@
       "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9fcbc36_1c5de746",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-16T22:06:25Z",
+      "side": 1,
+      "message": "I get that these are placeholders, but just curious on why this is 512x512 and not 1x1 (or not just a @color if that works)?",
+      "range": {
+        "startLine": 376,
+        "startChar": 44,
+        "endLine": 376,
+        "endChar": 58
+      },
+      "revId": "93749945e93040e339374edcf3d315eaaea4daf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
