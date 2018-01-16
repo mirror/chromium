@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a71aa909_eeb3255f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-16T22:28:04Z",
+      "side": 1,
+      "message": "Yes this seems to have been fixed in the recent sync to ToT",
+      "parentUuid": "b836f697_85e45a9d",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "1cfbd09894a471063209224321a1bc435e90fcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c14da9_6e0a2923",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 4
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "00990fcd_1e72233e",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-16T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9477f2_777baba9",
+      "revId": "1cfbd09894a471063209224321a1bc435e90fcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea56516d_d74b9001",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 4
@@ -80,6 +122,30 @@
       "revId": "1cfbd09894a471063209224321a1bc435e90fcf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3737bc24_037f8752",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-16T22:28:04Z",
+      "side": 1,
+      "message": "Yes this was updated from percentage to fraction. Updating comment with example.",
+      "parentUuid": "ea56516d_d74b9001",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 26
+      },
+      "revId": "1cfbd09894a471063209224321a1bc435e90fcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
