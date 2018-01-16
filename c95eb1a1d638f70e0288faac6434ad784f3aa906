@@ -22,6 +22,47 @@
       "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f927e8d_c38e8a4b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2018-01-16T15:33:52Z",
+      "side": 1,
+      "message": "I don\u0027t think the list of supported values is same for both elements, unfortunately. Still, might be worth sharing some of the code.",
+      "parentUuid": "84495b50_a21873e0",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 24
+      },
+      "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a61d43_12b7d4c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/the-link-element/rellist-feature-detection.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2018-01-16T15:33:52Z",
+      "side": 1,
+      "message": "If one of those assertions fails, it\u0027ll be pretty annoying to figure out which one. Can you add a description to the assert_true/false calls?",
+      "revId": "c95eb1a1d638f70e0288faac6434ad784f3aa906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
