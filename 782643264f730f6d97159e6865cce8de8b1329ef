@@ -404,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "902e131d_6ed28f86",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-16T20:55:01Z",
+      "side": 1,
+      "message": "So expect_pac_bytes completely bypasses using the ProxyConfigService?  That\u0027s not the behavior I expected.  I had assumed that just bypassed using the PacScriptFetcher (Or whatever it\u0027s called), but still looked at the ProxyConfig.",
+      "parentUuid": "ac989e7e_e75ed70a",
+      "range": {
+        "startLine": 4563,
+        "startChar": 23,
+        "endLine": 4563,
+        "endChar": 69
+      },
+      "revId": "782643264f730f6d97159e6865cce8de8b1329ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57f5ed7_745615db",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 7
