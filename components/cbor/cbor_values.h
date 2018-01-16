@@ -12,6 +12,7 @@
 
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "components/cbor/cbor_export.h"
 
@@ -81,6 +82,7 @@ class CBOR_EXPORT CBORValue {
     STRING = 3,
     ARRAY = 4,
     MAP = 5,
+    TAG = 6,
     SIMPLE_VALUE = 7,
     NONE = -1,
   };
@@ -97,23 +99,35 @@ class CBOR_EXPORT CBORValue {
 
   explicit CBORValue(Type type);
   explicit CBORValue(int integer_value);
+  explicit CBORValue(int integer_value, uint64_t tag);
   explicit CBORValue(int64_t integer_value);
+  explicit CBORValue(int64_t integer_value, uint64_t tag);
   explicit CBORValue(uint64_t integer_value) = delete;
 
   explicit CBORValue(const BinaryValue& in_bytes);
+  explicit CBORValue(const BinaryValue& in_bytes, uint64_t tag);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
+  explicit CBORValue(BinaryValue&& in_bytes, uint64_t tag) noexcept;
 
   explicit CBORValue(const char* in_string);
+  explicit CBORValue(const char* in_string, uint64_t tag);
   explicit CBORValue(std::string&& in_string) noexcept;
+  explicit CBORValue(std::string&& in_string, uint64_t tag) noexcept;
   explicit CBORValue(base::StringPiece in_string);
+  explicit CBORValue(base::StringPiece in_string, uint64_t tag);
 
   explicit CBORValue(const ArrayValue& in_array);
+  explicit CBORValue(const ArrayValue& in_array, uint64_t tag);
   explicit CBORValue(ArrayValue&& in_array) noexcept;
+  explicit CBORValue(ArrayValue&& in_array, uint64_t tag) noexcept;
 
   explicit CBORValue(const MapValue& in_map);
+  explicit CBORValue(const MapValue& in_map, uint64_t tag);
   explicit CBORValue(MapValue&& in_map) noexcept;
+  explicit CBORValue(MapValue&& in_map, uint64_t tag) noexcept;
 
   explicit CBORValue(SimpleValue in_simple);
+  explicit CBORValue(SimpleValue in_simple, uint64_t tag);
 
   CBORValue& operator=(CBORValue&& that) noexcept;
 
@@ -148,9 +162,11 @@ class CBOR_EXPORT CBORValue {
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
   const MapValue& GetMap() const;
+  const base::Optional<uint64_t> GetTag() const;
 
  private:
   Type type_;
+  uint64_t tag_;
 
   union {
     SimpleValue simple_value_;

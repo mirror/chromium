@@ -6,6 +6,7 @@
 #define CONTENT_COMMON_NAVIGATION_SUBRESOURCE_LOADER_PARAMS_H_
 
 #include "content/common/service_worker/controller_service_worker.mojom.h"
+#include "content/common/webpackage_subresource_manager.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
 namespace content {
@@ -29,6 +30,8 @@ struct CONTENT_EXPORT SubresourceLoaderParams {
   // The controller service worker, non-null if the frame is to be
   // controlled by the service worker.
   mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
+
+  mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info;
 };
 
 }  // namespace content

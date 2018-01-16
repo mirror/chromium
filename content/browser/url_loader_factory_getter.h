@@ -8,6 +8,7 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "content/browser/loader/webpackage_loader_manager.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -15,6 +16,7 @@
 namespace content {
 
 class StoragePartitionImpl;
+class WebPackageLoaderManager;
 
 // Holds on to URLLoaderFactory for a given StoragePartition and allows code
 // running on the IO thread to access them. Note these are the factories used by
@@ -64,6 +66,9 @@ class URLLoaderFactoryGetter
   // Call |network_factory_.FlushForTesting()| on IO thread. For test use only.
   CONTENT_EXPORT void FlushNetworkInterfaceOnIOThreadForTesting();
 
+  // Called on the IO thread to get the WebPackageLoaderManager.
+  WebPackageLoaderManager* GetWebPackageLoaderManager();
+
  private:
   friend class base::DeleteHelper<URLLoaderFactoryGetter>;
   friend struct BrowserThread::DeleteOnThread<BrowserThread::IO>;
@@ -83,6 +88,7 @@ class URLLoaderFactoryGetter
   mojom::URLLoaderFactoryPtr network_factory_;
   mojom::URLLoaderFactoryPtr blob_factory_;
   mojom::URLLoaderFactory* test_factory_ = nullptr;
+  std::unique_ptr<WebPackageLoaderManager> webpackage_loader_manager_;
 
   // Used to re-create |network_factory_| when connection error happens. Can
   // only be accessed on UI thread. Must be cleared by |StoragePartitionImpl|

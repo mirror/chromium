@@ -731,6 +731,9 @@ bool FrameFetchContext::AllowImage(bool images_enabled, const KURL& url) const {
 }
 
 bool FrameFetchContext::IsControlledByServiceWorker() const {
+  return false;
+
+  /*
   if (IsDetached())
     return false;
 
@@ -754,6 +757,7 @@ bool FrameFetchContext::IsControlledByServiceWorker() const {
       MasterDocumentLoader()->GetServiceWorkerNetworkProvider();
   return service_worker_network_provider &&
          service_worker_network_provider->HasControllerServiceWorker();
+         */
 }
 
 int64_t FrameFetchContext::ServiceWorkerID() const {

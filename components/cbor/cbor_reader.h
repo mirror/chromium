@@ -6,6 +6,7 @@
 #define COMPONENTS_CBOR_CBOR_READER_H_
 
 #include <stddef.h>
+#include <stdint.h>
 #include <string>
 #include <vector>
 
@@ -32,6 +33,7 @@
 //
 // Known limitations and interpretations of the RFC:
 //  - Does not support negative integers, indefinite data streams and tagging.
+//  - Does not check the validity of CBOR value type following a tag.
 //  - Floating point representations and BREAK stop code in major
 //    type 7 are not supported.
 //  - Non-character codepoint are not supported for Major type 3.
@@ -67,6 +69,7 @@ class CBOR_EXPORT CBORReader {
     UNSUPPORTED_SIMPLE_VALUE,
     UNSUPPORTED_FLOATING_POINT_VALUE,
     OUT_OF_RANGE_INTEGER_VALUE,
+    UNSUPPORTED_TAG_FORMAT,
   };
 
   // CBOR nested depth sufficient for most use cases.
@@ -88,17 +91,26 @@ class CBOR_EXPORT CBORReader {
 
  private:
   CBORReader(Bytes::const_iterator it, const Bytes::const_iterator end);
-  base::Optional<CBORValue> DecodeCBOR(int max_nesting_level);
-  base::Optional<CBORValue> DecodeValueToNegative(uint64_t value);
-  base::Optional<CBORValue> DecodeValueToUnsigned(uint64_t value);
+  base::Optional<CBORValue> DecodeCBOR(int max_nesting_level,
+                                       uint64_t tag = UINT64_MAX);
+  base::Optional<CBORValue> DecodeValueToNegative(uint64_t value,
+                                                  uint64_t tag = UINT64_MAX);
+  base::Optional<CBORValue> DecodeValueToUnsigned(uint64_t value,
+                                                  uint64_t tag = UINT64_MAX);
   base::Optional<CBORValue> ReadSimpleValue(uint8_t additional_info,
-                                            uint64_t value);
+                                            uint64_t value,
+                                            uint64_t tag = UINT64_MAX);
   bool ReadVariadicLengthInteger(uint8_t additional_info, uint64_t* value);
-  base::Optional<CBORValue> ReadBytes(uint64_t num_bytes);
-  base::Optional<CBORValue> ReadString(uint64_t num_bytes);
+  base::Optional<CBORValue> ReadBytes(uint64_t num_bytes,
+                                      uint64_t tag = UINT64_MAX);
+  base::Optional<CBORValue> ReadString(uint64_t num_bytes,
+                                       uint64_t tag = UINT64_MAX);
   base::Optional<CBORValue> ReadCBORArray(uint64_t length,
-                                          int max_nesting_level);
-  base::Optional<CBORValue> ReadCBORMap(uint64_t length, int max_nesting_level);
+                                          int max_nesting_level,
+                                          uint64_t tag = UINT64_MAX);
+  base::Optional<CBORValue> ReadCBORMap(uint64_t length,
+                                        int max_nesting_level,
+                                        uint64_t tag = UINT64_MAX);
   bool CanConsume(uint64_t bytes);
   void CheckExtraneousData();
   bool CheckDuplicateKey(const CBORValue& new_key, CBORValue::MapValue* map);
