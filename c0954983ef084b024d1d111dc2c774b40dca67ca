@@ -92,6 +92,24 @@
       "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1e9913_7e1d202c",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-16T22:30:41Z",
+      "side": 1,
+      "message": "I tested Firefox (Gecko) and Dolphin (WebKit).\n\nIt appears that neither of these browsers fires compositionstart or compositionupdate events for SetCompositionWithText(). I\u0027m not sure if Firefox even updates the composition range properly (it doesn\u0027t draw the composition underline in this case, but editing seems to work fine).\n\nI guess it doesn\u0027t really matter whether we set composition_range_ before or after calling DispatchCompositionUpdateEvent() since JS doesn\u0027t have any way to access it (as far as I\u0027m aware). If we did have a JS API for this though, I think it would make the most sense for it to have access to the new range already.",
+      "parentUuid": "d44d5b8f_588f79ff",
+      "revId": "c0954983ef084b024d1d111dc2c774b40dca67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
