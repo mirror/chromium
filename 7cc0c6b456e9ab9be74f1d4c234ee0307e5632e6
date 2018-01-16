@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e77386_a8e78ef2",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "nit: TimeTicks is probably more appropriate",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4b6f33_62e32f3b",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "Does this cover the expected range?  (It\u0027s 1ms-10 seconds.)",
+      "range": {
+        "startLine": 372,
+        "startChar": 2,
+        "endLine": 372,
+        "endChar": 21
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b67dee_c8233817",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9044,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "Did you want to consider using the enum\nUnifiedDesktopDisplayCountRanges\ninstead of creating a new one?",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b4c40a_c82b0cab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15478,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "nit: missing \"the\" before display.",
+      "range": {
+        "startLine": 15478,
+        "startChar": 35,
+        "endLine": 15478,
+        "endChar": 42
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca3a9ef_57fc50ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15479,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "Questions that the above description leaves me:\nCan an API caller request normal mirror mode?\nCan the user enable mixed mirror mode?",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2b303b_518e8654",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 88413,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "Please mention is only recorded on *successful* calls.",
+      "range": {
+        "startLine": 88413,
+        "startChar": 68,
+        "endLine": 88413,
+        "endChar": 69
+      },
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e306f2_f2b16b90",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 88414,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-16T21:29:37Z",
+      "side": 1,
+      "message": "It would be great for a rough guideline here on how often the API is called.  E.g., upon screen unlock?  Only when user changes mirroring settings?  etc.",
+      "revId": "7cc0c6b456e9ab9be74f1d4c234ee0307e5632e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
