@@ -18,4 +18,19 @@ const wchar_t kFileSubdir[] =
 // Packed module data cache file.
 const wchar_t kBlFileName[] = L"\\bldata";
 
+uint32_t GetLogEntrySize(uint32_t path_len) {
+  // LogEvent.path already has 4 bytes of space due to padding.
+  uint32_t extra = (path_len > 3) ? (path_len - 3) : 0;
+
+  // The full entry is 32-bit aligned.  Get the modulo, and leave 0
+  // alone.
+  uint32_t align = (sizeof(LogEntry) + extra) % 4;
+  if (align) {
+    // Flip the remainder, for how many bytes were added for alignment.
+    align = 4 - align;
+  }
+
+  return sizeof(LogEntry) + extra + align;
+}
+
 }  // namespace whitelist
