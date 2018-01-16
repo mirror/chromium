@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e92f53f_b912c3ab",
+        "filename": "content/public/common/feature_webrtc_dual_stream_mode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T10:48:56Z",
+      "side": 1,
+      "message": "Why do you create a new file for this feature instead of putting it with other content/ features? Also, will this be used inside content?",
+      "revId": "5fa2799a307cab5cd19dd914d09711a4435b3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47854410_5d188391",
+        "filename": "third_party/webrtc_overrides/runtime_enabled_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-16T10:48:56Z",
+      "side": 1,
+      "message": "nit: why don\u0027t you declare a function IsWebRtcDualStreamModeEnabled that checks if that particular feature is enabled, instead of doing string comparisons? This is what we generally do in content/.",
+      "revId": "5fa2799a307cab5cd19dd914d09711a4435b3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
