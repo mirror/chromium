@@ -4,6 +4,7 @@
 
 #include "components/signin/core/browser/signin_manager_base.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 

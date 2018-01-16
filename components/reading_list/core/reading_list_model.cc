@@ -4,6 +4,8 @@
 
 #include "components/reading_list/core/reading_list_model.h"
 
+#include <memory>
+
 #include "base/logging.h"
 
 ReadingListModel::ReadingListModel() : current_batch_updates_count_(0) {}

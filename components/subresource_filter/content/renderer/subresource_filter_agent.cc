@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/renderer/subresource_filter_agent.h"
 
+#include <memory>
 #include <vector>
 
 #include "base/feature_list.h"

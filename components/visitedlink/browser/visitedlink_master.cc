@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -16,7 +17,6 @@
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/rand_util.h"
 #include "base/strings/string_util.h"
@@ -226,10 +226,9 @@ VisitedLinkMaster::VisitedLinkMaster(content::BrowserContext* browser_context,
                                      bool persist_to_disk)
     : browser_context_(browser_context),
       delegate_(delegate),
-      listener_(base::MakeUnique<VisitedLinkEventListener>(browser_context)),
+      listener_(std::make_unique<VisitedLinkEventListener>(browser_context)),
       persist_to_disk_(persist_to_disk),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 VisitedLinkMaster::VisitedLinkMaster(Listener* listener,
                                      VisitedLinkDelegate* delegate,

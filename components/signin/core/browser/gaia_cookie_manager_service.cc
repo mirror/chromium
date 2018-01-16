@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <queue>
 
 #include "base/format_macros.h"

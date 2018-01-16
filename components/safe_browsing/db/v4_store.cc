@@ -4,6 +4,8 @@
 
 #include "components/safe_browsing/db/v4_store.h"
 
+#include <memory>
+
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/files/file_util.h"

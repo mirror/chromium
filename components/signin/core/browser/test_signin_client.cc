@@ -4,6 +4,8 @@
 
 #include "components/signin/core/browser/test_signin_client.h"
 
+#include <memory>
+
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"

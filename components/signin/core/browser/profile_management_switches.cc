@@ -4,6 +4,7 @@
 
 #include "components/signin/core/browser/profile_management_switches.h"
 
+#include <memory>
 #include <string>
 
 #include "base/callback.h"

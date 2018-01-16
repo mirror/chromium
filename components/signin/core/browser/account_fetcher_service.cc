@@ -4,6 +4,7 @@
 
 #include "components/signin/core/browser/account_fetcher_service.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/command_line.h"

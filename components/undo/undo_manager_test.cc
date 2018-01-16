@@ -138,7 +138,7 @@ void TestUndoService::Redo() {
 }
 
 void TestUndoService::TriggerOperation() {
-  undo_manager_.AddUndoOperation(base::MakeUnique<TestUndoOperation>(this));
+  undo_manager_.AddUndoOperation(std::make_unique<TestUndoOperation>(this));
 }
 
 void TestUndoService::RecordUndoCall() {

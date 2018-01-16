@@ -4,6 +4,8 @@
 
 #include "components/signin/core/browser/child_account_info_fetcher.h"
 
+#include <memory>
+
 #include "build/build_config.h"
 
 #if defined(OS_ANDROID)

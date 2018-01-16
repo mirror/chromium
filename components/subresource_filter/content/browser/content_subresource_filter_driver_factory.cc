@@ -4,6 +4,7 @@
 
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/rand_util.h"
