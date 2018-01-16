@@ -16,7 +16,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
@@ -24,6 +23,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -83,6 +83,7 @@ public class SavePasswordsPreferences
     // True if the user triggered the password export flow and this fragment is waiting for the
     // result of the user's reauthentication.
     private boolean mExportRequested;
+    private String mActiveFilter;
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
@@ -112,11 +113,26 @@ public class SavePasswordsPreferences
         searchItem.setVisible(providesPasswordSearch());
         searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
         if (providesPasswordSearch()) {
-            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+            searchView.setOnSearchClickListener(view -> filterPasswords(""));
+            searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    filterPasswords(""); // Hide other menu elements.
+                    return true; // Continue expanding.
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    rebuildPasswordLists(); // Bring back all preferences and passwords.
+                    return true; // Continue collapsing.
+                }
+            });
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @java.lang.Override
                 public boolean onQueryTextSubmit(java.lang.String query) {
-                    return filterPasswords(query);
+                    return true; // Continue with default action - nothing.
                 }
 
                 @java.lang.Override
@@ -174,7 +190,13 @@ public class SavePasswordsPreferences
     }
 
     private boolean filterPasswords(java.lang.String query) {
-        // TODO(crbug.com/794108): Filter the passwords.
+        mActiveFilter = query;
+        mNoPasswords = false;
+        mNoPasswordExceptions = false;
+        getPreferenceScreen().removeAll();
+        PasswordManagerHandlerProvider.getInstance()
+                .getPasswordManagerHandler()
+                .updatePasswordLists();
         return false; // Query has not been handled yet. Triggers SearchView default action.
     }
 
@@ -196,6 +218,7 @@ public class SavePasswordsPreferences
     }
 
     void rebuildPasswordLists() {
+        mActiveFilter = null;
         mNoPasswords = false;
         mNoPasswordExceptions = false;
         getPreferenceScreen().removeAll();
@@ -240,7 +263,9 @@ public class SavePasswordsPreferences
             return;
         }
 
-        displayManageAccountLink();
+        if (mActiveFilter == null) {
+            displayManageAccountLink();
+        }
 
         PreferenceCategory profileCategory = new PreferenceCategory(getActivity());
         profileCategory.setKey(PREF_KEY_CATEGORY_SAVED_PASSWORDS);
@@ -251,10 +276,14 @@ public class SavePasswordsPreferences
             SavedPasswordEntry saved = PasswordManagerHandlerProvider.getInstance()
                                                .getPasswordManagerHandler()
                                                .getSavedPasswordEntry(i);
-            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             String url = saved.getUrl();
             String name = saved.getUserName();
             String password = saved.getPassword();
+            if (mActiveFilter != null
+                    && !(url.contains(mActiveFilter) || name.contains(mActiveFilter))) {
+                continue; // The current password won't show with the active filter, try the next.
+            }
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             screen.setTitle(url);
             screen.setOnPreferenceClickListener(this);
             screen.setSummary(name);
@@ -264,6 +293,11 @@ public class SavePasswordsPreferences
             args.putString(PASSWORD_LIST_PASSWORD, password);
             args.putInt(PASSWORD_LIST_ID, i);
             profileCategory.addPreference(screen);
+        }
+        mNoPasswords = profileCategory.getPreferenceCount() == 0;
+        if (mNoPasswords) {
+            displayManageAccountLink(); // Maybe the password is just not on the device.
+            displayEmptyScreenMessage();
         }
     }
 

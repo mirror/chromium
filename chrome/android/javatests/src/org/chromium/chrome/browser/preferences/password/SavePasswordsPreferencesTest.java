@@ -5,6 +5,8 @@
 package org.chromium.chrome.browser.preferences.password;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -18,6 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -493,4 +496,142 @@ public class SavePasswordsPreferencesTest {
 
         Espresso.onView(withId(R.id.menu_id_search)).check(doesNotExist());
     }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedShowsUserResult() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("Pot"));
+
+        Espresso.onView(withText("Harry Potter")).perform(scrollTo()).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedShowsUrlResult() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("hog"));
+
+        Espresso.onView(withText("Harry Potter")).perform(scrollTo()).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedHidesFilteredEntries() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+        Espresso.onView(withId(R.id.search_src_text)).perform(click(), typeText("no-maj"));
+
+        Espresso.onView(withText("Harry Potter")).check(doesNotExist());
+        // There is no result, so now, link to the synced list.
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedHidesGeneralPrefs() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackButtonBringsBackGeneralPrefs() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.onView(withContentDescription("Collapse")).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search actually filters the list.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackKeyBringsBackGeneralPrefs() throws Exception {
+        setPasswordSource(
+                new SavedPasswordEntry("https://hogwarts.co.uk", "Harry Potter", "Fortuna Major"));
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withId(R.id.menu_id_search)).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.pressBack(); // Close keyboard.
+        Espresso.pressBack(); // Close search view.
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    // TODO Check rotation
+    // TODO Check empty screen message
 }
