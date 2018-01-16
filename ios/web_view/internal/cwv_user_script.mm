@@ -8,11 +8,13 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVUserScript
 
 @synthesize source = _source;
 
-- (nonnull instancetype)initWithSource:(nonnull NSString*)source {
+- (instancetype)initWithSource:(NSString*)source {
   self = [super init];
   if (self) {
     _source = [source copy];
@@ -21,3 +23,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

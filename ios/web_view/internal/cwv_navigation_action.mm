@@ -8,6 +8,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVNavigationAction
 @synthesize request = _request;
 @synthesize userInitiated = _userInitiated;
@@ -23,3 +25,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

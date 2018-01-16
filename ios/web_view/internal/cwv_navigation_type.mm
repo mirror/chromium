@@ -11,6 +11,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 CWVNavigationType CWVNavigationTypeFromPageTransition(
     ui::PageTransition ui_page_transition) {
   CWVNavigationType cwv_navigation_type = 0;
@@ -89,3 +91,5 @@ CWVNavigationType CWVNavigationTypeFromPageTransition(
 
   return cwv_navigation_type;
 }
+
+NS_ASSUME_NONNULL_END

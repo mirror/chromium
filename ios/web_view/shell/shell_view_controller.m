@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 // Externed accessibility identifier.
 NSString* const kWebViewShellBackButtonAccessibilityLabel = @"Back";
 NSString* const kWebViewShellForwardButtonAccessibilityLabel = @"Forward";
@@ -141,10 +143,11 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
                                            defaultConfiguration]];
 }
 
-- (void)observeValueForKeyPath:(NSString*)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id>*)change
-                       context:(void*)context {
+- (void)
+observeValueForKeyPath:(nullable NSString*)keyPath
+              ofObject:(nullable id)object
+                change:(nullable NSDictionary<NSKeyValueChangeKey, id>*)change
+               context:(nullable void*)context {
   if ([keyPath isEqualToString:@"canGoBack"]) {
     _backButton.enabled = [_webView canGoBack];
   } else if ([keyPath isEqualToString:@"canGoForward"]) {
@@ -397,7 +400,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     runJavaScriptTextInputPanelWithPrompt:(NSString*)prompt
                               defaultText:(NSString*)defaultText
                                   pageURL:(NSURL*)URL
-                        completionHandler:(void (^)(NSString*))handler {
+                        completionHandler:
+                            (void (^)(NSString* __nullable))handler {
   UIAlertController* alert =
       [UIAlertController alertControllerWithTitle:nil
                                           message:prompt
@@ -476,7 +480,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   return YES;
 }
 
-- (UIViewController*)webView:(CWVWebView*)webView
+- (nullable UIViewController*)webView:(CWVWebView*)webView
     previewingViewControllerForElement:(CWVPreviewElementInfo*)elementInfo {
   NSLog(@"%@", NSStringFromSelector(_cmd));
   return nil;
@@ -488,3 +492,5 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

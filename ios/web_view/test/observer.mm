@@ -8,6 +8,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation Observer
 
 @synthesize keyPath = _keyPath;
@@ -28,10 +30,11 @@
                context:nil];
 }
 
-- (void)observeValueForKeyPath:(NSString*)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id>*)change
-                       context:(void*)context {
+- (void)
+observeValueForKeyPath:(nullable NSString*)keyPath
+              ofObject:(nullable id)object
+                change:(nullable NSDictionary<NSKeyValueChangeKey, id>*)change
+               context:(nullable void*)context {
   if (![object isEqual:_object] || ![keyPath isEqualToString:_keyPath]) {
     // Ignore extraneous call from previous |_object| or |_keyPath|.
     return;
@@ -45,3 +48,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

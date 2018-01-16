@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVWebViewConfiguration (Sync)
 
 - (CWVAuthenticationController*)authenticationController {
@@ -30,3 +32,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

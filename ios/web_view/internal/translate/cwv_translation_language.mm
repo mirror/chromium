@@ -11,6 +11,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVTranslationLanguage
 
 @synthesize languageCode = _languageCode;
@@ -36,3 +38,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

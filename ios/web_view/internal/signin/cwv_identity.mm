@@ -8,6 +8,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVIdentity
 
 @synthesize email = _email;
@@ -27,3 +29,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

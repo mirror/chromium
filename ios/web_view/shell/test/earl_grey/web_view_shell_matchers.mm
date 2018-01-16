@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace ios_web_view {
 
 id<GREYMatcher> AddressFieldText(const std::string& text) {
@@ -59,3 +61,5 @@ id<GREYMatcher> AddressField() {
 }
 
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

@@ -23,6 +23,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CWVAuthenticationController {
   ios_web_view::WebViewBrowserState* _browserState;
 }
@@ -48,7 +50,7 @@
 
 #pragma mark - Public Methods
 
-- (void)setDelegate:(id<CWVAuthenticationControllerDelegate>)delegate {
+- (void)setDelegate:(nullable id<CWVAuthenticationControllerDelegate>)delegate {
   _delegate = delegate;
 
   std::string authenticatedAccountID = [self authenticatedAccountID];
@@ -57,7 +59,7 @@
   }
 }
 
-- (CWVIdentity*)currentIdentity {
+- (nullable CWVIdentity*)currentIdentity {
   AccountInfo accountInfo =
       [self accountInfoForAccountID:[self authenticatedAccountID]];
   if (!accountInfo.IsValid()) {
@@ -127,3 +129,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

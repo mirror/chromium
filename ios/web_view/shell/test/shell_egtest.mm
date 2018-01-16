@@ -19,6 +19,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace {
 
 // Returns current web view for root view controller.
@@ -90,3 +92,5 @@ void WaitForWebViewContainingText(NSString* text) {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

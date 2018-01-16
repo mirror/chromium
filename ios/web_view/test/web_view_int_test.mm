@@ -21,6 +21,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace {
 
 // Test server path which renders a basic html page.
@@ -133,3 +135,5 @@ GURL WebViewIntTest::GetUrlForPageWithTitleAndBody(const std::string& title,
 }
 
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 namespace ios_web_view {
 
 class CWVPreferencesTest : public PlatformTest {
@@ -60,3 +62,5 @@ TEST_F(CWVPreferencesTest, TranslationEnabled) {
 }
 
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

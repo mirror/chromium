@@ -10,9 +10,13 @@
 #error "This file requires ARC support."
 #endif
 
-int main(int argc, char* argv[]) {
+NS_ASSUME_NONNULL_BEGIN
+
+int main(int argc, char* __nullable argv[]) {
   @autoreleasepool {
     return UIApplicationMain(argc, argv, nil,
                              NSStringFromClass([ShellAppDelegate class]));
   }
 }
+
+NS_ASSUME_NONNULL_END

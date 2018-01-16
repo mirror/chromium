@@ -10,12 +10,14 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation ShellAppDelegate
 
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication*)application
-    willFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
+    willFinishLaunchingWithOptions:(nullable NSDictionary*)launchOptions {
   // Note that initialization of the window and the root view controller must be
   // done here, not in -application:didFinishLaunchingWithOptions: when state
   // restoration is supported.
@@ -33,7 +35,7 @@
 }
 
 - (BOOL)application:(UIApplication*)application
-    didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
+    didFinishLaunchingWithOptions:(nullable NSDictionary*)launchOptions {
   [self.window makeKeyAndVisible];
   return YES;
 }
@@ -65,3 +67,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

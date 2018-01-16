@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 using testing::WaitUntilConditionOrTimeout;
 using testing::kWaitForJSCompletionTimeout;
 
@@ -83,3 +85,5 @@ bool WaitForWebViewLoadCompletionOrTimeout(CWVWebView* web_view) {
 
 }  // namespace test
 }  // namespace ios_web_view
+
+NS_ASSUME_NONNULL_END

@@ -10,6 +10,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ShellAutofillDelegate ()
 // Alert controller to present autofill suggestions.
 @property(nonatomic, strong) UIAlertController* alertController;
@@ -115,3 +117,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

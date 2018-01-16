@@ -14,6 +14,8 @@
 #error "This file requires ARC support."
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CWVUserContentController ()
 @property(weak, nonatomic) CWVWebViewConfiguration* configuration;
 @end
@@ -64,3 +66,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
