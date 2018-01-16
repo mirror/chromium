@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a66d8281_a17ad232",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af9b79ca_a083c163",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8275b3c8_abe31833",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca83b756_ff9371e2",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "loadingState is not a property.\nBut I have added a check.",
+      "parentUuid": "8275b3c8_abe31833",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b4a5e4a_87744821",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f157a55_0afe1c9a",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "230f059e_e5b21c45",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c64c56_ee23b52d",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "I don\u0027t think so. The problem comes from MDC I think. The way they do the \"setProgress\" not animated is colliding with other calls to setProgress animated, and the non-animated call becomes animated.\n\nI don\u0027t think it can have a test as it is purely visual.",
+      "parentUuid": "230f059e_e5b21c45",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2dfbd93e_2b4f8a3d",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f4228f_377b41ff",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01e923f_5d6008d2",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac5f733_b3f8f822",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01e923f_5d6008d2",
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1dc50b1_fde1166b",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-16T12:33:40Z",
+      "side": 1,
+      "message": "I don\u0027t like using lazy instantiation here as the instantiation can be quite long (it is fine for this one, but not for the other).\nKeeping it as a -setUp... method gives a coherence to the file.",
+      "parentUuid": "ef4cab26_15a4cb6f",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 24
+      },
+      "revId": "133bec3bc72a4b69b804a64cb25a5ccfb19147cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
