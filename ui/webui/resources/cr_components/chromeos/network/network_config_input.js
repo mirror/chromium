@@ -13,6 +13,8 @@ Polymer({
   properties: {
     label: String,
 
+    autofocus: Boolean,
+
     disabled: {
       type: Boolean,
       reflectToAttribute: true,
