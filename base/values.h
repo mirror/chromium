@@ -192,6 +192,15 @@ class BASE_EXPORT Value {
   Value* FindKeyOfType(StringPiece key, Type type);
   const Value* FindKeyOfType(StringPiece key, Type type) const;
 
+  // |FindOrCreateKeyOfType| is similar to |FindKeyOfType|, but it creates a new
+  // value of type |type| if |key| is not yet present.
+  // Note: This fatally asserts if type() is not Type::DICTIONARY.
+  //
+  // Example:
+  //   Value* foo = FindOrCreateKeyOfType("foo", Type::DICTIONARY);
+  //   foo->SetKey("bar", ...);
+  Value* FindOrCreateKeyOfType(StringPiece key, Type type);
+
   // |SetKey| looks up |key| in the underlying dictionary and sets the mapped
   // value to |value|. If |key| could not be found, a new element is inserted.
   // A pointer to the modified item is returned.
@@ -249,14 +258,22 @@ class BASE_EXPORT Value {
                               Type type) const;
   const Value* FindPathOfType(span<const StringPiece> path, Type type) const;
 
+  // |FindOrCreateKeyOfType| is similar to |FindKeyOfType|, but it creates a new
+  // value of type |type| if |key| is not yet present.
+  // Note: This fatally asserts if type() is not Type::DICTIONARY.
+  //
+  // Example:
+  //   Value* foobar = FindOrCreatePathOfType({"foo", "bar"}, Type::DICTIONARY);
+  //   foobar->SetKey("baz", ...);
+  Value* FindOrCreatePathOfType(std::initializer_list<StringPiece> path,
+                                Type type);
+  Value* FindOrCreatePathOfType(span<const StringPiece> path, Type type);
+
   // Sets the given path, expanding and creating dictionary keys as necessary.
   //
-  // If the current value is not a dictionary, the function returns nullptr. If
-  // path components do not exist, they will be created. If any but the last
-  // components matches a value that is not a dictionary, the function will fail
-  // (it will not overwrite the value) and return nullptr. The last path
-  // component will be unconditionally overwritten if it exists, and created if
-  // it doesn't.
+  // If the current value is not a dictionary, this fatallly asserts. If path
+  // components do not exist, they will be created. Existing path components
+  // will be overwritten if they are not already dictionaries.
   //
   // Example:
   //   value.SetPath({"foo", "bar"}, std::move(myvalue));

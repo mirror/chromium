@@ -42,10 +42,7 @@ const char kAcknowledged[] = "acknowledged";
 const char kValue[] = "value";
 
 Value* FindOrCreateDictionary(Value* parent, const std::string& key) {
-  Value* dict = parent->FindKeyOfType(key, base::Value::Type::DICTIONARY);
-  if (dict)
-    return dict;
-  return parent->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
+  return parent->FindOrCreateKeyOfType(key, base::Value::Type::DICTIONARY);
 }
 
 class ScopedSupervisedUserSharedSettingsUpdate {
@@ -104,7 +101,7 @@ void SupervisedUserSharedSettingsService::SetValueInternal(
   Value* update_dict = update.Get();
 
   Value* dict = update_dict->FindKeyOfType(key, base::Value::Type::DICTIONARY);
-  bool has_key = static_cast<bool>(dict);
+  const bool has_key = static_cast<bool>(dict);
   if (!has_key) {
     dict = update_dict->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
   }

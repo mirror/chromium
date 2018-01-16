@@ -560,13 +560,8 @@ void SupervisedUserWhitelistInstallerImpl::RegisterWhitelist(
   }
 
   if (!client_id.empty()) {
-    base::Value* clients =
-        whitelist_dict->FindKeyOfType(kClients, base::Value::Type::LIST);
-    if (!clients) {
-      DCHECK(newly_added);
-      clients = whitelist_dict->SetKey(kClients,
-                                       base::Value(base::Value::Type::LIST));
-    }
+    base::Value* clients = whitelist_dict->FindOrCreateKeyOfType(
+        kClients, base::Value::Type::LIST);
 
     base::Value client(client_id);
     DCHECK(!base::ContainsValue(clients->GetList(), client));

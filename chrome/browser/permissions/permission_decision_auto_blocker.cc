@@ -73,12 +73,8 @@ std::unique_ptr<base::DictionaryValue> GetOriginDict(
 
 base::Value* GetOrCreatePermissionDict(base::Value* origin_dict,
                                        const std::string& permission) {
-  base::Value* permission_dict =
-      origin_dict->FindKeyOfType(permission, base::Value::Type::DICTIONARY);
-  if (permission_dict)
-    return permission_dict;
-  return origin_dict->SetKey(permission,
-                             base::Value(base::Value::Type::DICTIONARY));
+  return origin_dict->FindOrCreateKeyOfType(permission,
+                                            base::Value::Type::DICTIONARY);
 }
 
 int RecordActionInWebsiteSettings(const GURL& url,
@@ -92,9 +88,9 @@ int RecordActionInWebsiteSettings(const GURL& url,
   base::Value* permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  base::Value* value =
-      permission_dict->FindKeyOfType(key, base::Value::Type::INTEGER);
-  int current_count = value ? value->GetInt() : 0;
+  int current_count =
+      permission_dict->FindOrCreateKeyOfType(key, base::Value::Type::INTEGER)
+          ->GetInt();
   permission_dict->SetKey(key, base::Value(++current_count));
 
   map->SetWebsiteSettingDefaultScope(
@@ -111,21 +107,21 @@ int GetActionCount(const GURL& url,
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile);
   std::unique_ptr<base::DictionaryValue> dict = GetOriginDict(map, url);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  const base::Value* permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  base::Value* value =
+  const base::Value* value =
       permission_dict->FindKeyOfType(key, base::Value::Type::INTEGER);
   return value ? value->GetInt() : 0;
 }
 
-bool IsUnderEmbargo(base::Value* permission_dict,
+bool IsUnderEmbargo(const base::Value& permission_dict,
                     const base::Feature& feature,
                     const char* key,
                     base::Time current_time,
                     base::TimeDelta offset) {
-  base::Value* found =
-      permission_dict->FindKeyOfType(key, base::Value::Type::DOUBLE);
+  const base::Value* found =
+      permission_dict.FindKeyOfType(key, base::Value::Type::DOUBLE);
   if (found && base::FeatureList::IsEnabled(feature) &&
       current_time <
           base::Time::FromInternalValue(found->GetDouble()) + offset) {
@@ -218,24 +214,24 @@ PermissionResult PermissionDecisionAutoBlocker::GetEmbargoResult(
   DCHECK(settings_map);
   std::unique_ptr<base::DictionaryValue> dict =
       GetOriginDict(settings_map, request_origin);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  const base::Value* permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  if (IsUnderEmbargo(permission_dict, features::kPermissionsBlacklist,
+  if (IsUnderEmbargo(*permission_dict, features::kPermissionsBlacklist,
                      kPermissionBlacklistEmbargoKey, current_time,
                      base::TimeDelta::FromDays(g_blacklist_embargo_days))) {
     return PermissionResult(CONTENT_SETTING_BLOCK,
                             PermissionStatusSource::SAFE_BROWSING_BLACKLIST);
   }
 
-  if (IsUnderEmbargo(permission_dict, features::kBlockPromptsIfDismissedOften,
+  if (IsUnderEmbargo(*permission_dict, features::kBlockPromptsIfDismissedOften,
                      kPermissionDismissalEmbargoKey, current_time,
                      base::TimeDelta::FromDays(g_dismissal_embargo_days))) {
     return PermissionResult(CONTENT_SETTING_BLOCK,
                             PermissionStatusSource::MULTIPLE_DISMISSALS);
   }
 
-  if (IsUnderEmbargo(permission_dict, features::kBlockPromptsIfIgnoredOften,
+  if (IsUnderEmbargo(*permission_dict, features::kBlockPromptsIfIgnoredOften,
                      kPermissionIgnoreEmbargoKey, current_time,
                      base::TimeDelta::FromDays(g_ignore_embargo_days))) {
     return PermissionResult(CONTENT_SETTING_BLOCK,

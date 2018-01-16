@@ -285,10 +285,9 @@ void SupervisedUserSyncService::UpdateSupervisedUserImpl(
 
   // If we're already syncing, create a new change and upload it.
   SyncChangeList change_list;
-  change_list.push_back(
-      SyncChange(FROM_HERE,
-                 add_user ? SyncChange::ACTION_ADD : SyncChange::ACTION_UPDATE,
-                 CreateSyncDataFromDictionaryEntry(id, *entry)));
+  change_list.push_back(SyncChange(
+      FROM_HERE, add_user ? SyncChange::ACTION_ADD : SyncChange::ACTION_UPDATE,
+      CreateSyncDataFromDictionaryEntry(id, *entry)));
   SyncError error =
       sync_processor_->ProcessSyncChanges(FROM_HERE, change_list);
   DCHECK(!error.IsSet()) << error.ToString();

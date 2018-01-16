@@ -28,10 +28,7 @@ namespace {
 // for |key|, creating it if necessary.
 base::Value* GetOrCreateList(base::DictionaryValue* dictionary,
                              const std::string& key) {
-  base::Value* list = dictionary->FindKeyOfType(key, base::Value::Type::LIST);
-  if (list)
-    return list;
-  return dictionary->SetKey(key, base::Value(base::Value::Type::LIST));
+  return dictionary->FindOrCreateKeyOfType(key, base::Value::Type::LIST);
 }
 
 }  // namespace
@@ -122,8 +119,9 @@ void ParsedDataPresenter::FeedNext(const net::UploadElementReader& reader) {
 
   FormDataParser::Result result;
   while (parser_->GetNextNameValue(&result)) {
-    base::Value* list = GetOrCreateList(dictionary_.get(), result.name());
-    list->GetList().emplace_back(result.value());
+    GetOrCreateList(dictionary_.get(), result.name())
+        ->GetList()
+        .emplace_back(result.value());
   }
 }
 

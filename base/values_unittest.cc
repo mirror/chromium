@@ -574,6 +574,27 @@ TEST(ValuesTest, FindKeyOfTypeConst) {
   EXPECT_NE(nullptr, dict.FindKeyOfType("dict", Value::Type::DICTIONARY));
 }
 
+TEST(ValuesTest, FindOrCreateKeyOfType) {
+  Value dict(Value::Type::DICTIONARY);
+  dict.SetKey("foo", base::Value(1.0));
+  dict.SetKey("bar", base::Value("bar"));
+
+  // Existing values of the correct type should be left untouched.
+  Value* foo = dict.FindOrCreateKeyOfType("foo", Value::Type::DOUBLE);
+  EXPECT_TRUE(foo->is_double());
+  EXPECT_EQ(1.0, foo->GetDouble());
+
+  // Existing values of a different type should be replaced.
+  Value* bar = dict.FindOrCreateKeyOfType("bar", Value::Type::BOOLEAN);
+  EXPECT_TRUE(bar->is_bool());
+  EXPECT_FALSE(bar->GetBool());
+
+  // Missing values should be created from scratch.
+  Value* baz = dict.FindOrCreateKeyOfType("baz", Value::Type::LIST);
+  EXPECT_TRUE(baz->is_list());
+  EXPECT_TRUE(baz->GetList().empty());
+}
+
 TEST(ValuesTest, SetKey) {
   Value::DictStorage storage;
   storage.emplace("null", std::make_unique<Value>(Value::Type::NONE));
@@ -621,32 +642,83 @@ TEST(ValuesTest, FindPath) {
   EXPECT_EQ(123, found->GetInt());
 }
 
+TEST(ValuesTest, FindOrCreatePathOfType) {
+  Value dict(Value::Type::DICTIONARY);
+  dict.SetPath({"root", "foo"}, base::Value(1.0));
+  dict.SetPath({"root", "bar"}, base::Value("bar"));
+
+  // Existing values of the correct type should be left untouched.
+  Value* foo =
+      dict.FindOrCreatePathOfType({"root", "foo"}, Value::Type::DOUBLE);
+  EXPECT_TRUE(foo->is_double());
+  EXPECT_EQ(1.0, foo->GetDouble());
+
+  // Existing values of a different type should be replaced.
+  Value* bar =
+      dict.FindOrCreatePathOfType({"root", "bar"}, Value::Type::BOOLEAN);
+  EXPECT_TRUE(bar->is_bool());
+  EXPECT_FALSE(bar->GetBool());
+
+  // Missing values should be created from scratch.
+  Value* baz = dict.FindOrCreatePathOfType({"root", "baz"}, Value::Type::LIST);
+  EXPECT_TRUE(baz->is_list());
+  EXPECT_TRUE(baz->GetList().empty());
+
+  // Intermediate existing values should be turned into dictionaries.
+  EXPECT_FALSE(dict.FindPathOfType({"root", "baz"}, Value::Type::DICTIONARY));
+  Value* qux =
+      dict.FindOrCreatePathOfType({"root", "baz", "qux"}, Value::Type::INTEGER);
+  EXPECT_TRUE(qux->is_int());
+  EXPECT_EQ(0, qux->GetInt());
+  EXPECT_TRUE(dict.FindPathOfType({"root", "baz"}, Value::Type::DICTIONARY));
+
+  // Intermediate missing values should be created into dictionaries.
+  EXPECT_FALSE(dict.FindKey("bla"));
+  Value* bla = dict.FindOrCreatePathOfType({"bla", "bla"}, Value::Type::BINARY);
+  EXPECT_TRUE(bla->is_blob());
+  EXPECT_TRUE(bla->GetBlob().empty());
+  EXPECT_TRUE(dict.FindKeyOfType("bla", Value::Type::DICTIONARY));
+}
+
 TEST(ValuesTest, SetPath) {
   Value root(Value::Type::DICTIONARY);
 
-  Value* inserted = root.SetPath({"one", "two"}, Value(123));
-  Value* found = root.FindPathOfType({"one", "two"}, Value::Type::INTEGER);
-  ASSERT_TRUE(found);
-  EXPECT_EQ(inserted, found);
-  EXPECT_EQ(123, found->GetInt());
+  {
+    Value* inserted = root.SetPath({"one", "two"}, Value(123));
+    Value* found = root.FindPathOfType({"one", "two"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(inserted, found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 
-  inserted = root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
-  found = root.FindPathOfType({"foo", "bar"}, Value::Type::INTEGER);
-  ASSERT_TRUE(found);
-  EXPECT_EQ(inserted, found);
-  EXPECT_EQ(123, found->GetInt());
+  {
+    Value* inserted =
+        root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
+    Value* found = root.FindPathOfType({"foo", "bar"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(inserted, found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 
-  // Overwrite with a different value.
-  root.SetPath({"foo", "bar"}, Value("hello"));
-  found = root.FindPathOfType(std::vector<StringPiece>{"foo", "bar"},
-                              Value::Type::STRING);
-  ASSERT_TRUE(found);
-  EXPECT_EQ("hello", found->GetString());
+  {
+    // Overwrite with a different value.
+    root.SetPath({"foo", "bar"}, Value("hello"));
+    root.SetPath({"foo", "bar"}, Value("world"));
+    Value* found = root.FindPathOfType(std::vector<StringPiece>{"foo", "bar"},
+                                       Value::Type::STRING);
+    ASSERT_TRUE(found);
+    EXPECT_EQ("world", found->GetString());
+  }
 
-  // Can't change existing non-dictionary keys to dictionaries.
-  found =
-      root.SetPath(std::vector<StringPiece>{"foo", "bar", "baz"}, Value(123));
-  EXPECT_FALSE(found);
+  {
+    // Can't change existing non-dictionary keys to dictionaries.
+    root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
+    root.SetPath(std::vector<StringPiece>{"foo", "bar", "baz"}, Value(123));
+    Value* found =
+        root.FindPathOfType({"foo", "bar", "baz"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 }
 
 TEST(ValuesTest, RemoveKey) {
