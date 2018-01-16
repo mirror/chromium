@@ -16,6 +16,126 @@
       "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd8ba0ea_30405bba",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "Ack. The meaning of \"Media.InputStreamDuration\" is a bit different though.",
+      "parentUuid": "85cdc814_ea4d02e1",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec41003b_05f12124",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32870,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89782d72_79f48784",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33039,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694130a6_9c630930",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33097,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "It\u0027s not clear why this info is needed and how to interpret it.",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea916a25_de2c8bbe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33280,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "units\u003d\"ms\"?",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f82c16_d585c866",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33283,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "\"as seen\"?",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df731f2_81c14109",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34983,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-16T10:05:15Z",
+      "side": 1,
+      "message": "This is confusing: there is a mention of \"pause\" but no mention of \"play\" , and there is \"start\" but no \"stop\", and \"close\", but no \"open\" :)\nWe measure audio output stream lifetime in the controller. And device change also results in stream recreation and will be recorded in the stat:\nSee https://cs.chromium.org/chromium/src/media/audio/audio_output_controller.h?sq\u003dpackage:chromium\u0026l\u003d295",
+      "revId": "51c75dcf502c24dbaaab15040cc737081cbbec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
