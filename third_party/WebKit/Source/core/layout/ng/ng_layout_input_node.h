@@ -74,6 +74,8 @@ class CORE_EXPORT NGLayoutInputNode {
 
   Document& GetDocument() const;
 
+  NGPhysicalSize InitialContainingBlockSize() const;
+
   // Returns the LayoutObject which is associated with this node.
   LayoutObject* GetLayoutObject() const;
 
