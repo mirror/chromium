@@ -850,7 +850,7 @@ void DisplayManager::OnNativeDisplaysChanged(
 
   // Do not clear current mirror state before calling ShouldSetMirrorModeOn()
   // as it depends on the state.
-  software_mirroring_display_list_.clear();
+  ClearMirroringSourceAndDestination();
   hardware_mirroring_display_id_list_ = hardware_mirroring_display_id_list;
   mirroring_source_id_ = mirroring_source_id;
   num_connected_displays_ = updated_displays.size();
@@ -1352,8 +1352,8 @@ void DisplayManager::ToggleDisplayScaleFactor() {
 
 #if defined(OS_CHROMEOS)
 void DisplayManager::SetSoftwareMirroring(bool enabled) {
-  SetMultiDisplayMode(enabled ? MIRRORING
-                              : current_default_multi_display_mode_);
+  multi_display_mode_ =
+      enabled ? MIRRORING : current_default_multi_display_mode_;
 }
 
 bool DisplayManager::SoftwareMirroringEnabled() const {
