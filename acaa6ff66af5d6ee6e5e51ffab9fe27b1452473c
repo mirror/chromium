@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9fde5d_74f7b7d8",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T18:22:24Z",
+      "side": 1,
+      "message": "Yes, this should work, and it\u0027s what a bunch of Blink layout tests do to simulate cross-origin iframes.",
+      "range": {
+        "startLine": 1612,
+        "startChar": 43,
+        "endLine": 1612,
+        "endChar": 76
+      },
+      "revId": "acaa6ff66af5d6ee6e5e51ffab9fe27b1452473c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c7edc1_e39b23a9",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T18:22:24Z",
+      "side": 1,
+      "message": "I think it should be sufficient to only specify one of these.  --site-per-process is roughly equivalent to saying --isolate-origins for all sites, so it\u0027s enough to just have --site-per-process.",
+      "range": {
+        "startLine": 1620,
+        "startChar": 24,
+        "endLine": 1620,
+        "endChar": 77
+      },
+      "revId": "acaa6ff66af5d6ee6e5e51ffab9fe27b1452473c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
