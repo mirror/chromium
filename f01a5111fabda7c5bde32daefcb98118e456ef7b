@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd0057b_bed7a360",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-16T16:01:09Z",
+      "side": 1,
+      "message": "ignorable nit: the return value of this function feels odd given the function\u0027s name. Perhaps you could have a separate accessor for grabbing the compositorview after decoupling or rename the function.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22577957_c8e955ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-16T16:01:09Z",
+      "side": 1,
+      "message": "It\u0027s not obvious why only a portion of the code is conditional on this version. If we had a min-vr-version constant, or a isVrBrowsingSupported() function (maybe cached in an mIsVrBrowsingSupported member), this would be much clearer.\n\nIt also seems like much more code could be skipped if vr browsing was not supported. If so, perhaps a TODO could be added.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421dd04d_d1482c11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-16T16:01:09Z",
+      "side": 1,
+      "message": "Please replace this with an \"is-greater-than-min-version-for-vr\" check (or make an mIsVrBrowsingSupported boolean or something more readable).",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6d62bf_82b856c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-16T16:01:09Z",
+      "side": 1,
+      "message": "Could we short circuit if vr browsing is not supported and then assert that we have a mNonVrViews? Here and other places where we check that it\u0027s not null. Likewise for the mNativeVrShell checks.",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea90087_12a5d25d",
+        "filename": "chrome/browser/android/vr_shell/android_ui_gesture_target.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-16T16:01:09Z",
+      "side": 1,
+      "message": "This is another case where we\u0027d expect object to be non-null if vr browsing is supported?",
+      "revId": "f01a5111fabda7c5bde32daefcb98118e456ef7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
