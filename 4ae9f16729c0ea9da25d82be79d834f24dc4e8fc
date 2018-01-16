@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "199f9399_b291bd02",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e35545_c089afce",
+      "range": {
+        "startLine": 205,
+        "startChar": 41,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e13d1afc_2c298d1a",
         "filename": "remoting/ios/app/host_view_controller.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ae617f_ceed58da",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Done. Maybe not deleting PhysicalKeyboardDetector in this CL...",
+      "parentUuid": "e13d1afc_2c298d1a",
+      "range": {
+        "startLine": 208,
+        "startChar": 60,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca0999d8_5b06174e",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7c6661_7d51216c",
+      "range": {
+        "startLine": 292,
+        "startChar": 64,
+        "endLine": 292,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3805c328_87401650",
         "filename": "remoting/ios/app/host_view_controller.mm",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f45208_d02d0dfc",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Nope. Removed.",
+      "parentUuid": "3805c328_87401650",
+      "range": {
+        "startLine": 295,
+        "startChar": 52,
+        "endLine": 295,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "eb8a3601_1d42bef8",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1e9823_459a8ca9",
+      "range": {
+        "startLine": 300,
+        "startChar": 6,
+        "endLine": 300,
+        "endChar": 39
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0baa8f6a_247fa292",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "f8823fc7_2a34aaad",
+      "range": {
+        "startLine": 300,
+        "startChar": 43,
+        "endLine": 300,
+        "endChar": 77
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2259e6b_5e7419a9",
         "filename": "remoting/ios/app/host_view_controller.mm",
         "patchSetId": 3
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cc1e190c_971b99cd",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2259e6b_5e7419a9",
+      "range": {
+        "startLine": 486,
+        "startChar": 30,
+        "endLine": 486,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4542d14b_9dfc5534",
         "filename": "remoting/ios/app/host_view_controller.mm",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d119d5d_bf3078de",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-16T23:10:40Z",
+      "side": 1,
+      "message": "Looks like this is no longer needed, since becomeFirstResponder is already called in viewDidAppear..",
+      "parentUuid": "4542d14b_9dfc5534",
+      "range": {
+        "startLine": 502,
+        "startChar": 65,
+        "endLine": 502,
+        "endChar": 0
+      },
+      "revId": "4ae9f16729c0ea9da25d82be79d834f24dc4e8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
