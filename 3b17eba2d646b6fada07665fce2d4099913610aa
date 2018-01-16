@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c887620_ffabebc4",
+        "filename": "third_party/zlib/arm.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T03:56:59Z",
+      "side": 1,
+      "message": "Glad I added this, the fuchsia_arm64 bot failed right here, we should add support for them.",
+      "revId": "3b17eba2d646b6fada07665fce2d4099913610aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5493ec4_f931d56e",
+        "filename": "third_party/zlib/names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T03:56:59Z",
+      "side": 1,
+      "message": "Remove this, I have pmull code, but Chrome Android can\u0027t support it given their aarch32 arm build at this time.",
+      "revId": "3b17eba2d646b6fada07665fce2d4099913610aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

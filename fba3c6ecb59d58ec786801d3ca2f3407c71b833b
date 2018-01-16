@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2c1a01a_f3347993",
+        "filename": "third_party/zlib/arm.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T03:56:59Z",
+      "side": 1,
+      "message": "cc wez@chromium.org for chrome fuchsia questions.",
+      "revId": "fba3c6ecb59d58ec786801d3ca2f3407c71b833b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

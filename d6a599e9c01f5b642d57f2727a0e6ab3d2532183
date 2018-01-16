@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55f06e4_ce6fad02",
+        "filename": "third_party/zlib/arm.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-16T03:56:59Z",
+      "side": 1,
+      "message": "wez@ zlib goes much faster if we used neon on armv8.  Is there some way to detect these armv8 CPU optional features on fuchsia/zircon from user space?\n\nAndroid [1] and Linux provide \u003casm/hwcap.h\u003e and \u003csys/auxv.h\u003e for user space CPU optional feature detection.  Is there something similar in __Fuchsia__?\n\n[1] https://android-review.googlesource.com/c/platform/ndk/+/106360",
+      "revId": "d6a599e9c01f5b642d57f2727a0e6ab3d2532183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
