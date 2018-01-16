@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ac7ecc_1a7f7d18",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 0,
+      "message": "Did this change need to be a part of this CL, or was this an opportunistic cleanup? \n\nDo you know the history of why the code used to work this way instead of using the WebContents event?",
+      "range": {
+        "startLine": 1505,
+        "startChar": 10,
+        "endLine": 1505,
+        "endChar": 37
+      },
+      "revId": "c8a184fe4f84a8a393ee243fefc25e278b9d25f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

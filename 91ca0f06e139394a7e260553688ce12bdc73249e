@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "dc7c6331_2b7621d5",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Unrelated to your change here, but this is no longer true with HTTPBad Phase 3, which introduces new variables into the calculation of whether the warning is user-visible.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 32
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0daa13e6_7e91f9a9",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Would it make sense to set the HTTPBad state here now to avoid blowing up this test when the field_trial_config gets updated in the future?",
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9b8a23_eb3d5f11",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms calls for a standard comment\n\n// These values are persisted to logs. Entries should not be renumbered and\n// numeric values should never be reused.\n\nand we should explicitly set all enum values except the last.\n\nIt\u0027s not clear to me how important this guidance is.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4145b2_a645bfe1",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Would it make sense for this to be named e.g. COUNT because \"SECURITY_LEVEL_MAX\" kinda sounds like a valid value.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27483ab1_fc53728e",
+        "filename": "components/security_state/core/security_state_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Peter had a question about this pattern in the toolbar_model_impl\u0027s switch statement. I assume we should be consistent no matter which way you decide.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79d419b4_8551a2ab",
         "filename": "components/toolbar/toolbar_model_impl.cc",
         "patchSetId": 4
@@ -13,6 +122,52 @@
       "writtenOn": "2018-01-16T20:06:24Z",
       "side": 1,
       "message": "Is this required to avoid a warning?  If not, I\u0027d leave it out.\n\nIf it is, I\u0027m weakly inclined to remove the code post-switch and add a default case in here instead, but that admittedly will downgrade from \"compile-time warning\" to \"runtime warning\" anyone in the future adding a state and forgetting to put it here.",
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fce14cd_61c5d40d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38249,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Maybe \"Non-Secure\", given that we use this for more than just HTTP?",
+      "range": {
+        "startLine": 38249,
+        "startChar": 24,
+        "endLine": 38249,
+        "endChar": 28
+      },
+      "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5167120c_f7e6dff0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38252,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-16T22:13:11Z",
+      "side": 1,
+      "message": "Secure",
+      "range": {
+        "startLine": 38252,
+        "startChar": 24,
+        "endLine": 38252,
+        "endChar": 32
+      },
       "revId": "91ca0f06e139394a7e260553688ce12bdc73249e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
