@@ -27,6 +27,12 @@ namespace base {
 
 namespace {
 
+// kCFRunLoopCommonModes is const but not constexpr; hence kAllModes is
+// initialized at run-time. This initialization being trivial, constant, and
+// without side-effects: this is fine.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+
 // AppKit RunLoop modes observed to potentially run tasks posted to Chrome's
 // main thread task runner. Some are internal to AppKit but must be observed to
 // keep Chrome's UI responsive. Others that may be interesting, but are not
@@ -45,6 +51,8 @@ const CFStringRef kAllModes[] = {
     // Process work when AppKit is highlighting an item on the main menubar.
     CFSTR("NSUnhighlightMenuRunLoopMode"),
 };
+
+#pragma clang diagnostic pop  // -Wglobal-constructors
 
 // Mask that determines which modes in |kAllModes| to use.
 enum { kCommonModeMask = 0x1, kAllModesMask = 0xf };
