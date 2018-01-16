@@ -16,6 +16,8 @@ static_library("cpp") {
     "net_adapters.h",
     "proxy_resolving_client_socket.cc",
     "proxy_resolving_client_socket.h",
+    "proxy_resolving_client_socket_factory.cc",
+    "proxy_resolving_client_socket_factory.h",
     "resource_request.cc",
     "resource_request.h",
     "resource_request_body.cc",
