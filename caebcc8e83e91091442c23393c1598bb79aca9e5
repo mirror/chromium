@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1454130_a284b19a",
+        "filename": "cc/layers/append_quads_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-16T20:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299afd60_377c63b1",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c8aa5fa_8d104b28",
         "filename": "cc/layers/surface_layer.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T19:33:16Z",
       "side": 1,
       "message": "Should we skip only if deadline_in_frames is not set?\nTrying to think of the semantics if one did:\nSetPrimarySurfaceId(surface_id, 5);\nSetPrimarySurfaceId(surface_id, 10);\n\nIt seems like the latter would be expected to override the former, wdyt?",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50253153_d024c852",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-16T20:15:55Z",
+      "side": 1,
+      "message": "SGTM, added that check and added to a unit test to verify behavior.",
+      "parentUuid": "1c8aa5fa_8d104b28",
       "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "36ddfb83_4448393a",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-16T20:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d495fa1f_e26f1ca7",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "558de3bf_3ea9928e",
         "filename": "cc/layers/surface_layer_impl.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3afc82_1c71c114",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-16T20:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558de3bf_3ea9928e",
+      "revId": "caebcc8e83e91091442c23393c1598bb79aca9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
