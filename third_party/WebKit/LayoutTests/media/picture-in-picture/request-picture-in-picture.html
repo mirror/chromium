@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<title>Test request picture in picture</title>
+<script src='../../resources/testharness.js'></script>
+<script src='../../resources/testharnessreport.js'></script>
+<script src='../media-file.js'></script>
+<script>
+promise_test(t => {
+  const video = document.createElement('video');
+  video.src = findMediaFile('video', '../content/test');
+  return video.requestPictureInPicture();
+}, 'Test that calling requestPictureInPicture returns a resolved promise');
+</script>
