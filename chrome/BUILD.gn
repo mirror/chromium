@@ -207,6 +207,7 @@ if (!is_android && !is_mac) {
           "//sandbox",
           "//third_party/breakpad:breakpad_handler",
           "//third_party/breakpad:breakpad_sender",
+          "//win10/delegate_execute",
         ]
         data_deps = [
           "//chrome/app/version_assembly:version_assembly_manifest",
