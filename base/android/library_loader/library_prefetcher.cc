@@ -37,7 +37,7 @@ constexpr size_t kPageSize = 4096;
 constexpr char kLibchromeSuffix[] = "libchrome.so";
 // "base.apk" is a suffix because the library may be loaded directly from the
 // APK.
-constexpr char* const kSuffixesToMatch[] = {kLibchromeSuffix, "base.apk"};
+constexpr const char* kSuffixesToMatch[] = {kLibchromeSuffix, "base.apk"};
 
 bool IsReadableAndPrivate(const base::debug::MappedMemoryRegion& region) {
   return region.permissions & base::debug::MappedMemoryRegion::READ &&
