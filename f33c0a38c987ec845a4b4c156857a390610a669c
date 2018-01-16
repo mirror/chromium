@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8412290b_cafdca8b",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T14:36:36Z",
+      "side": 1,
+      "message": "I don\u0027t have any comments.\nJK, DONE",
+      "parentUuid": "2fd2f6fd_13941b90",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e1a037_f65a6cf3",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5dd05070_7ed2931d",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T14:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e1a037_f65a6cf3",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e8fa21_6e78f3f8",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92f62a6_be8d37fa",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-16T14:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e8fa21_6e78f3f8",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "f33c0a38c987ec845a4b4c156857a390610a669c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
