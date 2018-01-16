@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76678de3_fcb92d5f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/origin-exact-matching/43-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-16T08:18:49Z",
+      "side": 0,
+      "message": "to be consistent, we should handle \"nuill\" as a valid value.",
+      "range": {
+        "startLine": 2,
+        "startChar": 183,
+        "endLine": 2,
+        "endChar": 190
+      },
+      "revId": "8abc2815165c7bdeade44a4aacd0252abe7494aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

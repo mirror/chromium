@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec9db4d_e4283266",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-16T08:18:49Z",
+      "side": 1,
+      "message": "sorry for confusions, but this comment explains what makes me confused.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 67
+      },
+      "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa2f4e94_2f92af33",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-16T08:18:49Z",
+      "side": 1,
+      "message": "this wrapper is needed because including //url and //services/network are not permitted in core/",
+      "revId": "be9fcc72e90890e34662313bb269a7703e19d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
