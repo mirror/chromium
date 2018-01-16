@@ -22,6 +22,23 @@
       "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4b61f0_d101ab5d",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-16T06:59:42Z",
+      "side": 1,
+      "message": "It\u0027s annoying we already have views::ImageButton::SetImageAlignment(..), but LabelButton only shares Button as a common base :/\n\nI think we want these APIs to be consistent (maybe one day we can delete ImageButton -- it can just be a LabelButton with an image but no text..). There is actually http://crbug.com/155363 still open, which might relate to this.\n\nI think a sensible step for this CL would be:\n - move ImageButton::VerticalAlignment to views::Button  (consistent, e.g., with Button::ButtonStyle in that it\u0027s not used in other parts of the Button API..)\n - name this void SetImageAlignment(VerticalAlignment v_align)\n\n\nI\u0027ll defer to msw@ on this since he\u0027s been absorbed in views buttons much longer than me for http://crbug.com/155363\n\n\n(I also considered [but I\u0027m leaning against] moving ImageButton::ComputeImagePaintPosition to something like Button::ComputeImagePaintOffset  -- this doesn\u0027t really fit\n\nit\u0027s also a bit confusing having gfx::HorizontalAlignment and ImageButton::HorizontalAlignment LabelButton uses gfx:: but ImageButton uses its own, but that doesn\u0027t need to be fixed now).",
+      "revId": "7eb9f4f6bde3bd6fe97c55d9cbe47a481030dd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
