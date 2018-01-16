@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9350c2c9_ee878a7f",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-16T21:23:38Z",
+      "side": 1,
+      "message": "IIRC, Mike suggested the following fix to make the compiler happy:\nuint8x8x4_t foo \u003d {{\n  vdup_n_u8(0),\n  vdup_n_u8(0),\n  vdup_n_u8(0),\n  vdup_n_u8(0),\n}};\n\nThat will also require to update the .patch file (hopefully we will get free of it as soon we are done with upstreaming this optimization).",
+      "revId": "a44e2ce2609371218aa383bf63263bdf2e102ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
