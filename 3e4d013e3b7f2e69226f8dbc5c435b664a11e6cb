@@ -16,6 +16,24 @@
       "revId": "3e4d013e3b7f2e69226f8dbc5c435b664a11e6cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79fc59d_068d2fb4",
+        "filename": "components/guest_view/browser/guest_view_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2018-01-16T23:20:25Z",
+      "side": 1,
+      "message": "Actually, we could just have a GuestViewBase method which takes the extra callback. We wouldn\u0027t need to touch content/public. That would probably be safer and easier to follow.",
+      "parentUuid": "9360496e_de619755",
+      "revId": "3e4d013e3b7f2e69226f8dbc5c435b664a11e6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
