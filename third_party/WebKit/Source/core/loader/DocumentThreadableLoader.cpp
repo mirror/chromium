@@ -483,7 +483,8 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
   if (request.GetFetchRequestMode() !=
       network::mojom::FetchRequestMode::kCORSWithForcedPreflight) {
     if (request.CORSPreflightPolicy() ==
-        network::mojom::CORSPreflightPolicy::kPreventPreflight) {
+            network::mojom::CORSPreflightPolicy::kPreventPreflight ||
+        request.Url().ProtocolIs("data")) {
       PrepareCrossOriginRequest(cross_origin_request);
       LoadRequest(cross_origin_request, cross_origin_options);
       return;
