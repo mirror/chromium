@@ -5,7 +5,6 @@
 package org.chromium.content.app;
 
 import org.chromium.base.BaseChromiumApplication;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.MainDex;
 
 /**
@@ -14,21 +13,5 @@ import org.chromium.base.annotations.MainDex;
  */
 @MainDex
 public abstract class ContentApplication extends BaseChromiumApplication {
-    private boolean mLibraryDependenciesInitialized;
 
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mLibraryDependenciesInitialized = true;
-    }
-
-    /**
-     * @return Whether the library dependencies have been initialized and it is safe to issue
-     *         requests to load the native library.
-     */
-    @VisibleForTesting
-    public boolean areLibraryDependenciesInitialized() {
-        return mLibraryDependenciesInitialized;
-    }
 }
