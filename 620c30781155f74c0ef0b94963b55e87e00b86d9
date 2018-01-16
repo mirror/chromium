@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a4877c_c02d31fa",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-16T15:07:42Z",
+      "side": 1,
+      "message": "Would it be worth changing the name of the class/file to avoid people wondering why it\u0027s called \"client\"?",
+      "range": {
+        "startLine": 26,
+        "startChar": 46,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "620c30781155f74c0ef0b94963b55e87e00b86d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d6b608_8e232dd2",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-16T15:07:42Z",
+      "side": 1,
+      "message": "Just a suggesting: renaming it to \"SetScreenOrientationServiceForTests\" might be clearer as it may sound like setting the orientation. The parameter makes it clear though.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "620c30781155f74c0ef0b94963b55e87e00b86d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
