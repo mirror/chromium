@@ -93,6 +93,23 @@ class ASH_EXPORT MagnificationController {
   virtual void SwitchTargetRootWindow(aura::Window* new_root_window,
                                       bool redraw_original_root) = 0;
 
+  // Calculates the new scale if it were to be adjusted exponentially by the
+  // given |linear_offset|. This  allows linear changes in scroll offset
+  // to have exponential changes on the  scale, so that as the user zooms in,
+  // they appear to zoom faster through higher resolutions. This also has the
+  // effect that whether the user moves their fingers quickly or slowly on
+  // the trackpad (changing the number of events fired), the resulting zoom
+  // will only depend on the distance their fingers traveled.
+  // |linear_offset| should generally be between 0 and 1, to result in a set
+  // scale between |kNonMagnifiedScale| and |kMaxMagnifiedScale|.
+  // The resulting scale should be an exponential of the form
+  // y = M * x ^ 2 + c, where y is the resulting scale, M is the difference
+  // between |kNonMagnifiedScale| and |kMaxMagnifiedScale|, and c is
+  // |kNonMagnifiedScale| scale. This creates a mapping from |linear_offset|
+  // in (0, 1) to scale in (min, max).
+  // Visible for testing.
+  float GetScaleFromScroll(float linear_offset);
+
  protected:
   MagnificationController() {}
 
