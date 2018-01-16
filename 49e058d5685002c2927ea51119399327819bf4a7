@@ -142,6 +142,40 @@
       "revId": "49e058d5685002c2927ea51119399327819bf4a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8e206a_9b491ee2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-16T09:37:22Z",
+      "side": 1,
+      "message": "De-referencing a raw ptr here feels a bit scary as the DCHECK above doesn\u0027t really guarantee that this keeps working and bad renderers could drop the handle anytime, is that right?  Could we use weak ptr or should this also keep ObjectInfoPtr?",
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a06cc0_4468d01a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-16T09:37:22Z",
+      "side": 1,
+      "message": "\u003d nullptr;",
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
