@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f2f8a35_bb856391",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBeforeNativeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:27:42Z",
+      "side": 1,
+      "message": "I don\u0027t think the open is due to a swipe, so maybe the name should be something like testOpen_SetState?",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "15f3398d9b50ec96f7e61ef06f9f8ca3d11c8f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee10db93_640b8b18",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBeforeNativeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:27:42Z",
+      "side": 1,
+      "message": "Is native initialization sometimes finished when these tests run? If so, is there a way to prevent native initialization or simulate native not being initialized so that these tests are consistently checking sheet open before native initialization?",
+      "range": {
+        "startLine": 66,
+        "startChar": 74,
+        "endLine": 66,
+        "endChar": 96
+      },
+      "revId": "15f3398d9b50ec96f7e61ef06f9f8ca3d11c8f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9207c5_947c327c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBeforeNativeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-16T16:27:42Z",
+      "side": 1,
+      "message": "s/tabbing/tapping and tabScrim/tapScrim",
+      "revId": "15f3398d9b50ec96f7e61ef06f9f8ca3d11c8f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
