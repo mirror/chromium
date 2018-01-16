@@ -18,6 +18,7 @@
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/overview_window_drag_controller.h"
 #include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/window_grid.h"
@@ -273,7 +274,7 @@ void WindowSelector::Init(const WindowList& windows,
 
     std::unique_ptr<WindowGrid> grid(
         new WindowGrid(root, windows, this, GetGridBoundsInScreen(root)));
-    if (grid->empty())
+    if (!IsNewOverviewUi() && grid->empty())
       continue;
     num_items_ += grid->size();
     grid_list_.push_back(std::move(grid));
@@ -305,7 +306,8 @@ void WindowSelector::Init(const WindowList& windows,
                                                &text_filter_bottom_));
   }
 
-  DCHECK(!grid_list_.empty());
+  if (!IsNewOverviewUi())
+    DCHECK(!grid_list_.empty());
   UMA_HISTOGRAM_COUNTS_100("Ash.WindowSelector.Items", num_items_);
 
   Shell::Get()->activation_client()->AddObserver(this);
