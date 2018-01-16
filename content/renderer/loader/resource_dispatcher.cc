@@ -271,6 +271,17 @@ void ResourceDispatcher::OnRequestComplete(
   peer->OnCompletedRequest(renderer_status);
 }
 
+mojom::DownloadedTempFilePtr ResourceDispatcher::TakeDownloadedTempFile(
+    int request_id) {
+  PendingRequestMap::iterator it = pending_requests_.find(request_id);
+  if (it == pending_requests_.end())
+    return nullptr;
+  PendingRequestInfo* request_info = it->second.get();
+  if (!request_info->url_loader_client)
+    return nullptr;
+  return request_info->url_loader_client->TakeDownloadedTempFile();
+}
+
 bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end())
@@ -370,13 +381,15 @@ void ResourceDispatcher::StartSync(
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
     mojom::URLLoaderFactory* url_loader_factory,
-    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
+    std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    double timeout) {
   CheckSchemeForReferrerPolicy(*request);
 
   mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
   url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
-  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
-                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+  base::WaitableEvent completed_event(
+      base::WaitableEvent::ResetPolicy::MANUAL,
+      base::WaitableEvent::InitialState::NOT_SIGNALED);
 
   // Prepare the configured throttles for use on a separate thread.
   for (const auto& throttle : throttles)
@@ -392,9 +405,10 @@ void ResourceDispatcher::StartSync(
                      std::move(request), routing_id, frame_origin,
                      traffic_annotation, std::move(url_loader_factory_copy),
                      std::move(throttles), base::Unretained(response),
-                     base::Unretained(&event)));
+                     base::Unretained(&completed_event),
+                     base::Unretained(terminate_sync_load_event_), timeout));
 
-  event.Wait();
+  completed_event.Wait();
 }
 
 int ResourceDispatcher::StartAsync(

@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 
+#include "base/synchronization/waitable_event.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/service_worker_modes.h"
@@ -48,6 +49,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   ~WorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
+  base::WaitableEvent* GetTerminateSyncLoadEvent() override;
   void InitializeOnWorkerThread(
       scoped_refptr<base::SingleThreadTaskRunner>) override;
   std::unique_ptr<blink::WebURLLoaderFactory> CreateURLLoaderFactory() override;
@@ -140,6 +142,8 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   base::WeakPtr<URLLoaderFactoryImpl> url_loader_factory_;
 
   std::unique_ptr<URLLoaderThrottleProvider> throttle_provider_;
+
+  base::WaitableEvent terminate_sync_load_event_;
 };
 
 }  // namespace content
