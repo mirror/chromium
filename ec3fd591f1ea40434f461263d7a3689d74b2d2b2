@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec1571d5_6c3d5ac7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 33083,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2018-01-16T21:29:22Z",
+      "side": 1,
+      "message": "nit: please add a units here, probably just \"streams\".",
+      "range": {
+        "startLine": 33083,
+        "startChar": 61,
+        "endLine": 33083,
+        "endChar": 0
+      },
+      "revId": "ec3fd591f1ea40434f461263d7a3689d74b2d2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
