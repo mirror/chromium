@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb25f21_fc48c2f9",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3854,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-16T18:55:14Z",
+      "side": 1,
+      "message": "hmm, maybe DCHECK the condition above:\nDCHECK(child_process_launcher_)\nDCHECK(!child_process_launcher_-\u003eIsStarting())\n\njust so these things don\u0027t get out of sync",
+      "revId": "38690e2a9a816b7d16bab44e726978d4b799f401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
