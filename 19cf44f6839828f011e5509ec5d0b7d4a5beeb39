@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9752d36c_9ccb298f",
+        "filename": "components/viz/service/display/skia_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-16T20:08:21Z",
+      "side": 1,
+      "message": "Is this size redundant with the surface\u0027s width/height? Similarly, color_space? Just wondering if some of these are just input parameters to the surface but not things that need to be stored/updated.",
+      "revId": "19cf44f6839828f011e5509ec5d0b7d4a5beeb39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
