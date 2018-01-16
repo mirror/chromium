@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c71935f_5eb13f9b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "I think this should be std::unique_ptr\u003c\u003e if the dispatcher host manages the lifetime of SWHandle.",
+      "range": {
+        "startLine": 102,
+        "startChar": 43,
+        "endLine": 102,
+        "endChar": 63
+      },
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e3846b_817e90f6",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "DCHECK(ServiceWorkerUtils::IsServicificationEnabled())",
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0beafc0_2d524106",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "base::WrapUnique(this)",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c611c1c7_07c7443d",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "I prefer:\nif (!dispatcher_host_) {\n  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());\n  delete this;\n  return;\n}\ndispatcher_host_-\u003eUnregisterServiceWorkerHandle(handle_id_);",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 23
+      },
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adaa9d8a_4d462b17",
+        "filename": "content/browser/service_worker/service_worker_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "It\u0027d be more descriptive to add a factory method and call the ctor and CreateObjectInfo() in there with some comments (ex: the lifetime of SWHandle is kept by the Mojo connection etc).\nWhat do you think?",
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385bf0af_41648baf",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "DCHECK(ServiceWorkerUtils::IsServicificationEnabled());",
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d4a888_fad67229",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-16T09:34:39Z",
+      "side": 1,
+      "message": "Should this be base::WeakPtr? Or, can we ensure the controller handle is alive until CompleteNavigationInitialized()?",
+      "range": {
+        "startLine": 515,
+        "startChar": 4,
+        "endLine": 515,
+        "endChar": 33
+      },
+      "revId": "49e058d5685002c2927ea51119399327819bf4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
