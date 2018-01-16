@@ -168,10 +168,12 @@ class RulesetService : public base::SupportsWeakPtr<RulesetService> {
   // Creates a new instance that will immediately publish the most recently
   // indexed version of the ruleset if one is available according to prefs.
   // See class comments for details of arguments.
-  RulesetService(PrefService* local_state,
-                 scoped_refptr<base::SequencedTaskRunner> blocking_task_runner,
-                 RulesetServiceDelegate* delegate,
-                 const base::FilePath& indexed_ruleset_base_dir);
+  RulesetService(
+      PrefService* local_state,
+      scoped_refptr<base::SequencedTaskRunner> blocking_task_runner,
+      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+      RulesetServiceDelegate* delegate,
+      const base::FilePath& indexed_ruleset_base_dir);
   virtual ~RulesetService();
 
   // Indexes, stores, and publishes the given unindexed ruleset, unless its
@@ -248,7 +250,15 @@ class RulesetService : public base::SupportsWeakPtr<RulesetService> {
   void OnOpenedRuleset(base::File::Error error);
 
   PrefService* const local_state_;
+
+  // Task runner for tasks critical for user experience. The current ruleset
+  // file opening should be done on this task runner so as it throttles the
+  // first page load.
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner_;
+
+  // Task runner for tasks that don't influe user experience. Obsolete files
+  // deletion and ruleset indexing should be done on this task runner.
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   // Must outlive |this| object.
   RulesetServiceDelegate* delegate_;
