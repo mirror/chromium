@@ -1,0 +1,18 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This file contains arguments that subprojects may choose to override. It
+# asserts that those overrides are used, to prevent unused args warnings.
+
+declare_args() {
+  # Android API level for 32 bits platforms
+  android_api_level = 16
+  # Android API level for 64 bits platforms
+  android64_api_level = 21
+}
+
+if (!is_android) {
+  assert(android_api_level == 16 || true)
+  assert(android64_api_level == 21 || true)
+}

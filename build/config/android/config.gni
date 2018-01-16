@@ -5,6 +5,7 @@
 # This file contains common system config stuff for the Android build.
 
 if (is_android) {
+  import("//build/config/android/overrides.gni")
   import("//build_overrides/build.gni")
   import("abi.gni")
 
@@ -253,21 +254,16 @@ if (is_android) {
 
   # Subdirectories inside android_ndk_root that contain the sysroot for the
   # associated platform.
-  _android_api_level = 16
-  x86_android_sysroot_subdir =
-      "platforms/android-${_android_api_level}/arch-x86"
-  arm_android_sysroot_subdir =
-      "platforms/android-${_android_api_level}/arch-arm"
+  x86_android_sysroot_subdir = "platforms/android-${android_api_level}/arch-x86"
+  arm_android_sysroot_subdir = "platforms/android-${android_api_level}/arch-arm"
   mips_android_sysroot_subdir =
-      "platforms/android-${_android_api_level}/arch-mips"
-
-  _android64_api_level = 21
+      "platforms/android-${android_api_level}/arch-mips"
   x86_64_android_sysroot_subdir =
-      "platforms/android-${_android64_api_level}/arch-x86_64"
+      "platforms/android-${android64_api_level}/arch-x86_64"
   arm64_android_sysroot_subdir =
-      "platforms/android-${_android64_api_level}/arch-arm64"
+      "platforms/android-${android64_api_level}/arch-arm64"
   mips64_android_sysroot_subdir =
-      "platforms/android-${_android64_api_level}/arch-mips64"
+      "platforms/android-${android64_api_level}/arch-mips64"
 
   # Toolchain root directory for each build. The actual binaries are inside
   # a "bin" directory inside of these.
