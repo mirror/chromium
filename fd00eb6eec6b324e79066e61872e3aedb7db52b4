@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ca52ddf_5872ef9e",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-16T22:25:59Z",
+      "side": 1,
+      "message": "nit: Can you assign explicit values to the enum e.g., PROCESSED_NO_PREVIEWS_HINTS \u003d 0",
+      "revId": "fd00eb6eec6b324e79066e61872e3aedb7db52b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41185d91_f842bd4e",
         "filename": "components/previews/content/previews_optimization_guide.cc",
         "patchSetId": 7
