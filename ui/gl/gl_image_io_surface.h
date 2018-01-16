@@ -68,7 +68,6 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
 
   gfx::GenericSharedMemoryId io_surface_id() const { return io_surface_id_; }
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface();
-  base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer();
 
   // Whether checking IOSurfaceIsInUse() will actually provide a meaningful
   // signal about whether the Window Server is still using the IOSurface.
@@ -104,7 +103,7 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
 
   gfx::BufferFormat format_;
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface_;
-  base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer_;
+  bool initialized_from_cv_pixel_buffer_ = false;
   gfx::GenericSharedMemoryId io_surface_id_;
 
   // Cache the color space, because re-assigning the same value can be
