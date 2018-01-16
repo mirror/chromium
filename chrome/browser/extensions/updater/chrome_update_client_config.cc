@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/version.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_updater_utils.h"
 #include "chrome/browser/google/google_brand.h"
 #include "chrome/browser/update_client/chrome_update_query_params_delegate.h"
@@ -84,8 +85,6 @@ void ExtensionActivityDataService::ClearActiveBit(const std::string& id) {
 ChromeUpdateClientConfig::ChromeUpdateClientConfig(
     content::BrowserContext* context)
     : impl_(base::CommandLine::ForCurrentProcess(),
-            content::BrowserContext::GetDefaultStoragePartition(context)
-                ->GetURLRequestContext(),
             /*require_encryption=*/true),
       pref_service_(ExtensionPrefs::Get(context)->pref_service()),
       activity_data_service_(std::make_unique<ExtensionActivityDataService>(
@@ -152,8 +151,9 @@ std::string ChromeUpdateClientConfig::GetDownloadPreference() const {
   return std::string();
 }
 
-net::URLRequestContextGetter* ChromeUpdateClientConfig::RequestContext() const {
-  return impl_.RequestContext();
+scoped_refptr<net::URLRequestContextGetter>
+ChromeUpdateClientConfig::RequestContext() const {
+  return g_browser_process->system_request_context();
 }
 
 std::unique_ptr<service_manager::Connector>
