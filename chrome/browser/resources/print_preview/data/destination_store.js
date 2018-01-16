@@ -373,7 +373,7 @@ cr.define('print_preview', function() {
       this.pdfPrinterEnabled_ = !isInAppKioskMode;
       this.systemDefaultDestinationId_ = systemDefaultDestinationId;
       this.createLocalPdfPrintDestination_();
-
+      recentDestinations = [];
       const isRecentDestinationValid = recentDestinations.length > 0 &&
           this.isDestinationValid(recentDestinations[0]);
 
