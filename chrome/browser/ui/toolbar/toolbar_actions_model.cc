@@ -300,6 +300,17 @@ bool ToolbarActionsModel::ShouldAddExtension(
       !extensions::util::IsIncognitoEnabled(extension->id(), profile_))
     return false;
 
+#if defined(OS_CHROMEOS)
+  // TODO(isandrk, https://crbug.com/801215): Don't display "Assessment
+  // Assistant" icon in the Chrome menu to avoid confusing users (temporary
+  // until M66 when it will become a component extension and won't be shown
+  // anyway).
+  constexpr char kAssessmentAssistantExtensionId[] =
+      "gndmhdcefbhlchkhipcnnbkcmicncehk";
+  if (extension->id() == kAssessmentAssistantExtensionId)
+    return false;
+#endif
+
   // In this case, we don't care about the browser action visibility, because
   // we want to show each extension regardless.
   return extension_action_manager_->GetExtensionAction(*extension) != nullptr;
