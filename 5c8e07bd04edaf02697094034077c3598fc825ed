@@ -69,6 +69,24 @@
       "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793cd0b7_52b39327",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T22:24:06Z",
+      "side": 1,
+      "message": "This is probably not so useful for following reasons:\n\n* It\u0027s mixing hardware and software mirroring, which have very characteristics.\n* It\u0027s also mixing all transitions (turning on/off/mixed).\n* This also depends on the display used to miror.\n\nSoftware mirroring shouldn\u0027t take long. If you think that\u0027s going to be an issue, then it\u0027s probably better to focus on the software mirroring (or record separately) but I\u0027d recommend to consult with PM first.",
+      "parentUuid": "ef317d95_3c1739b8",
+      "revId": "5c8e07bd04edaf02697094034077c3598fc825ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
