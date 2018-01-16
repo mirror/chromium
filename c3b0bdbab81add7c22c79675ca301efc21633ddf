@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "536a509b_75795ab1",
+        "filename": "components/cronet/android/cronet_url_request_adapter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T15:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbeff9f9_95b5223b",
+      "range": {
+        "startLine": 214,
+        "startChar": 54,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "c3b0bdbab81add7c22c79675ca301efc21633ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29f4ef9a_b7bd1cc0",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 11
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd62e65a_23beec06",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T15:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29f4ef9a_b7bd1cc0",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "c3b0bdbab81add7c22c79675ca301efc21633ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "689ee92a_65f754d2",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 11
@@ -112,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "eebb7a16_809d3ee0",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T15:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "689ee92a_65f754d2",
+      "revId": "c3b0bdbab81add7c22c79675ca301efc21633ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f974c2_09a1005c",
         "filename": "components/cronet/cronet_url_request.h",
         "patchSetId": 11
@@ -126,6 +192,24 @@
       "revId": "c3b0bdbab81add7c22c79675ca301efc21633ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499516f1_98455dc3",
+        "filename": "components/cronet/cronet_url_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-16T15:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2f974c2_09a1005c",
+      "revId": "c3b0bdbab81add7c22c79675ca301efc21633ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
