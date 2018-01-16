@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bd4bb907_4cbf354f",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-16T23:58:35Z",
+      "side": 1,
+      "message": "CreateSession/StartUserSession are used to simulate user login. They are hacks in the sense that we are not exercising the regular login code path. The failure is probably something we did not properly setup in the test.\n\nI have tried to figure out what is wrong but failed, even forcing ConfigurationPolicyPrefStore::IsInitializationComplete does not work for me. :(",
+      "parentUuid": "5179a0ef_93f3d451",
+      "revId": "4a60c00a169b9550739a483249ef40cb10a800ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0732d1_83170048",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 6
