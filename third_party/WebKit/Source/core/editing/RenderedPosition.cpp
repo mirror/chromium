@@ -319,14 +319,14 @@ void RenderedPosition::GetLocalSelectionEndpoints(
   is_text_direction_rtl = layout_object_->HasFlippedBlocksWritingMode();
 }
 
-void RenderedPosition::PositionInGraphicsLayerBacking(
-    CompositedSelectionBound& bound,
+CompositedSelectionBound RenderedPosition::PositionInGraphicsLayerBacking(
     bool selection_start) const {
+  CompositedSelectionBound bound;
   bound.layer = nullptr;
   bound.edge_top_in_layer = bound.edge_bottom_in_layer = FloatPoint();
 
   if (IsNull())
-    return;
+    return bound;
 
   LayoutPoint edge_top_in_layer;
   LayoutPoint edge_bottom_in_layer;
@@ -337,6 +337,7 @@ void RenderedPosition::PositionInGraphicsLayerBacking(
       LocalToInvalidationBackingPoint(edge_top_in_layer, &bound.layer);
   bound.edge_bottom_in_layer =
       LocalToInvalidationBackingPoint(edge_bottom_in_layer, nullptr);
+  return bound;
 }
 
 LayoutPoint RenderedPosition::GetSamplePointForVisibility(
