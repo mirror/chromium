@@ -164,12 +164,14 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
     void OnUploadProgress(uint64_t position, uint64_t size) override {}
 
-    bool OnReceivedRedirect(const net::RedirectInfo& redirect_info,
-                            const ResourceResponseInfo& info) override {
+    bool OnReceivedRedirect(
+        const net::RedirectInfo& redirect_info,
+        const network::ResourceResponseInfo& info) override {
       return false;
     }
 
-    void OnReceivedResponse(const ResourceResponseInfo& info) override {
+    void OnReceivedResponse(
+        const network::ResourceResponseInfo& info) override {
       response_info_ = info;
     }
 
@@ -192,7 +194,7 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
    private:
     std::unique_ptr<RequestPeer> original_peer_;
-    ResourceResponseInfo response_info_;
+    network::ResourceResponseInfo response_info_;
     std::string data_;
 
     DISALLOW_COPY_AND_ASSIGN(WrapperPeer);
@@ -315,10 +317,12 @@ class TimeConversionTest : public ResourceDispatcherTest {
     client->OnReceiveResponse(response_head, {}, {});
   }
 
-  const ResourceResponseInfo& response_info() const { return response_info_; }
+  const network::ResourceResponseInfo& response_info() const {
+    return response_info_;
+  }
 
  private:
-  ResourceResponseInfo response_info_;
+  network::ResourceResponseInfo response_info_;
 };
 
 // TODO(simonjam): Enable this when 10829031 lands.
