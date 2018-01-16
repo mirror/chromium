@@ -128,7 +128,7 @@ void PlatformSensorProviderBase::NotifySensorCreated(
     sensor_map_[type] = sensor.get();
 
   auto it = requests_map_.find(type);
-  CallbackQueue callback_queue = it->second;
+  const CallbackQueue& callback_queue = it->second;
   requests_map_.erase(type);
 
   FreeResourcesIfNeeded();
