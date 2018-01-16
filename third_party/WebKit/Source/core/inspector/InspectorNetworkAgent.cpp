@@ -78,6 +78,7 @@
 #include "platform/wtf/Time.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/TaskType.h"
+#include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebMixedContentContextType.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLRequest.h"
@@ -1450,11 +1451,29 @@ Response InspectorNetworkAgent::emulateNetworkConditions(
   }
   // TODO(dgozman): networkStateNotifier is per-process. It would be nice to
   // have per-frame override instead.
-  if (offline || latency || download_throughput || upload_throughput)
+  if (offline || latency || download_throughput || upload_throughput) {
+    WebEffectiveConnectionType effective_type =
+        WebEffectiveConnectionType::kTypeUnknown;
+    if (latency > 0) {
+      // Threshold values taken from
+      // net/nqe/network_quality_estimator_params.cc.
+      if (latency >= 2010) {
+        effective_type = WebEffectiveConnectionType::kTypeSlow2G;
+      } else if (latency >= 1420) {
+        effective_type = WebEffectiveConnectionType::kType2G;
+      } else if (latency >= 270) {
+        effective_type = WebEffectiveConnectionType::kType3G;
+      } else {
+        effective_type = WebEffectiveConnectionType::kType4G;
+      }
+    }
+
     GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
-        !offline, type, download_throughput / (1024 * 1024 / 8));
-  else
+        !offline, type, effective_type, latency,
+        download_throughput / (1024 * 1024 / 8));
+  } else {
     GetNetworkStateNotifier().ClearOverride();
+  }
   return Response::OK();
 }
 

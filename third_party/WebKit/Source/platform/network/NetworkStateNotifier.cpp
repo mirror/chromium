@@ -168,6 +168,8 @@ NetworkStateNotifier::AddOnLineObserver(
 void NetworkStateNotifier::SetNetworkConnectionInfoOverride(
     bool on_line,
     WebConnectionType type,
+    WebEffectiveConnectionType effective_type,
+    unsigned long http_rtt_msec,
     double max_bandwidth_mbps) {
   DCHECK(IsMainThread());
   ScopedNotifier notifier(*this);
@@ -179,25 +181,9 @@ void NetworkStateNotifier::SetNetworkConnectionInfoOverride(
     override_.connection_initialized = true;
     override_.type = type;
     override_.max_bandwidth_mbps = max_bandwidth_mbps;
-  }
-}
-
-void NetworkStateNotifier::SetNetworkQualityInfoOverride(
-    WebEffectiveConnectionType effective_type,
-    unsigned long transport_rtt_msec,
-    double downlink_throughput_mbps) {
-  DCHECK(IsMainThread());
-  ScopedNotifier notifier(*this);
-  {
-    MutexLocker locker(mutex_);
-    has_override_ = true;
-    override_.on_line_initialized = true;
-    override_.connection_initialized = true;
     override_.effective_type = effective_type;
-    override_.http_rtt = base::TimeDelta::FromMilliseconds(transport_rtt_msec);
-    override_.downlink_throughput_mbps = base::nullopt;
-    if (downlink_throughput_mbps >= 0)
-      override_.downlink_throughput_mbps = downlink_throughput_mbps;
+    override_.http_rtt = base::TimeDelta::FromMilliseconds(http_rtt_msec);
+    override_.downlink_throughput_mbps = max_bandwidth_mbps;
   }
 }
 
