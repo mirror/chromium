@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce71a084_268f2769",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Good question/suggestion.  I can see this going either way, but I think we might need public access to isolated origins for other things as well, now that they\u0027re exposed via enterprise policy, so I think I\u0027ll keep it in CPSP for now.  This also allows us to remove the plumbing for is_isolated_origin or optional isolated origin from places that don\u0027t really need it (like ChromeContentBrowserClient).",
+      "parentUuid": "0395932b_a0279e17",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f6a05f8_cb3c4c08",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccad4d24_06e2a193",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f6a05f8_cb3c4c08",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "3a3a4f46_47618379",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bb10e1_7fa63546",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35924506_6246ad0c",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 4
@@ -106,6 +166,24 @@
       "writtenOn": "2018-01-16T20:18:36Z",
       "side": 1,
       "message": "This made me nervous until I dug a bit more.  To avoid panicking once I forget what I found out, can we add a comment similar to this:\n// We allow matching subdomains here because |origin| is the precise origin\n// retrieved from the isolation policy. Thus, we\u0027ll only allow an extent\n// of foo.example.com and bar.example.com if the isolated origin was\n// example.com; if the isolated origin is foo.example.com, this will\n// correctly fail.\n\nBut on that note (out of curiosity), do we have a \"include subdomains\" toggle on isolated origins?  For instance, what if someone wanted to isolate google.com, but *not* include maps.google.com, etc in the same process?",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53a41c4_f03b9759",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "\u003e This made me nervous until I dug a bit more.  To avoid panicking once I forget what I found out, can we add a comment similar to this:\n\u003e // We allow matching subdomains here because |origin| is the precise origin\n\u003e // retrieved from the isolation policy. Thus, we\u0027ll only allow an extent\n\u003e // of foo.example.com and bar.example.com if the isolated origin was\n\u003e // example.com; if the isolated origin is foo.example.com, this will\n\u003e // correctly fail.\n\nYes, comment added - indeed, it correctly explains the intent of allowing subdomains.  An example in practice would be that we want a hosted app that covers https://docs.google.com/ and https://drive.google.com/ to still work with --isolate-origins\u003dhttps://google.com/.\n\n\u003e \n\u003e But on that note (out of curiosity), do we have a \"include subdomains\" toggle on isolated origins?  For instance, what if someone wanted to isolate google.com, but *not* include maps.google.com, etc in the same process?\n\nWe don\u0027t currently have this - isolated origins always include subdomains - but we might in the future. :)  One use case I can think of is if we know that for a particular isolated origin (say, https://google.com/), none of its subdomains will ever use document.domain, then we can put the subdomains in separate processes as well for greater security.  (There are discussions about doing that via an origin policy.)  That will increase our process count though, so we\u0027d need to be careful analyzing the tradeoffs.",
+      "parentUuid": "35924506_6246ad0c",
       "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "de4f767d_90f1c219",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef034855_b0d690ec",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd835ecc_38ff1bb4",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 4
@@ -152,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "0daeae10_6a902804",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "It was deliberate - that call initializes a different --isolate-origins list than what I need here, and I think it might be better not to append the flag twice.",
+      "parentUuid": "bd835ecc_38ff1bb4",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03712771_77c8c11e",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 4
@@ -163,6 +283,24 @@
       "writtenOn": "2018-01-16T20:18:36Z",
       "side": 1,
       "message": "optional: IMO this might be *slightly* more readable as:\nbase::StringPrintf(\"%s,%s\", GetURL(\"isolated.com\", \"/\").spec().c_str(),\n                            GetURL(\"very.isolated.com\", \"/\").spec().c_str());\n\nBut I don\u0027t feel strongly.",
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd1e68c_24d48167",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Good suggestion, done.",
+      "parentUuid": "03712771_77c8c11e",
       "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +327,30 @@
       "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591a00cf_b9986b4a",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-16T22:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7dde9e3_457a80ce",
+      "range": {
+        "startLine": 1089,
+        "startChar": 64,
+        "endLine": 1089,
+        "endChar": 73
+      },
+      "revId": "01bd1d303900febf0ba146b6ce1ce49fe0178899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
