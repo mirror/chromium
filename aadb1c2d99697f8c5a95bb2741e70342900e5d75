@@ -52,6 +52,24 @@
       "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd3a546_dc1c0553",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-16T14:05:38Z",
+      "side": 1,
+      "message": "Yeah, if we had parent constraint space, we can add an accessor. ComputeMinMaxSize() runs without knowledge of parent constraint space.",
+      "parentUuid": "a320a3f4_3d8405a4",
+      "revId": "aadb1c2d99697f8c5a95bb2741e70342900e5d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
