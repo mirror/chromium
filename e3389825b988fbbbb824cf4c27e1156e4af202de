@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccdfbe5a_cbc8bfb3",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T18:26:23Z",
+      "side": 1,
+      "message": "Changes to ShellSurfaceBase::CanResize changed the default resizability, which broke the unit test. Does this look reasonable to you or do you have any suggestion?",
+      "revId": "e3389825b988fbbbb824cf4c27e1156e4af202de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdced1d8_85ae6218",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 45
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-16T18:26:23Z",
+      "side": 1,
+      "message": "I made move/resize separated because Pre N apps can refuse the resize operation.",
+      "revId": "e3389825b988fbbbb824cf4c27e1156e4af202de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
