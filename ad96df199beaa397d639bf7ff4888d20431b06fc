@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9295084_b002af36",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T06:31:00Z",
+      "side": 1,
+      "message": "For simplicity, can we have two versions of this method (and stringifyKeyboardStates) - one with textInputModeHistory and one without textInputModeHistory? That way, you don\u0027t have to change existing tests. Probably getKeyboardStates() should be inlined.",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "ad96df199beaa397d639bf7ff4888d20431b06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba2b782_3eb72196",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeExperimentalFeaturesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-16T06:31:00Z",
+      "side": 1,
+      "message": "This is somewhat gross at the moment, but could you add a new html file for this test? (with javascripts in it) There were test failures on small screen devices we found when trying to click on some of the input forms that do not fit in one screen.",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 61
+      },
+      "revId": "ad96df199beaa397d639bf7ff4888d20431b06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
