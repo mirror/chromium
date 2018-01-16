@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7fc5b530_f3f1bd85",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-16T22:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839cd7f6_64be081b",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e014c7ae_f3608127",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
