@@ -52,6 +52,24 @@
       "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ef7b4e_233d2b12",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-invalid-color-values-expected.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-16T21:48:09Z",
+      "side": 1,
+      "message": "That\u0027s true, I hadn\u0027t considered that. The potential for damage should be less since the original value would still be shown in either the \"original\" or \"RGB\" modes, and only the other modes would show the rounded value. However, I\u0027m not sure if this is enough.\n\nWould you recommend just making it so that an RGB value that contains a decimal cannot be changed into other forms?",
+      "parentUuid": "3065643a_daee2997",
+      "revId": "85fd6414b74c03c39c35e8e99e540c4eef0778bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
