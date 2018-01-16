@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c735c0_9aa2a7cb",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-16T10:59:53Z",
+      "side": 1,
+      "message": "nit: I would use |mtp_manager_| here (e.g., in case things ever change so that the copy above becomes a move, and just as a general pattern to guard against problems like that).",
+      "revId": "3691caa9f6d1fa451e2cec218ca2a25f7f468453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
